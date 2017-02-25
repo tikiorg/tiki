@@ -140,7 +140,7 @@ $smarty->assign('cached_page', 'n');
 // Get ~pp~, ~np~ and <pre> out of the way. --rlpowell, 24 May 2004
 $preparsed = array();
 $noparsed = array();
-$parserlib->parse_first($info["data"], $preparsed, $noparsed);
+$parserlib->parse_first($info["data"], $noparsed);
 
 $pdata = $wikilib->get_parse($page, $canBeRefreshed);
 

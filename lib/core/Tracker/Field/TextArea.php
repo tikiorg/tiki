@@ -143,6 +143,15 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 		return $data;
 	}
 
+	protected function attemptParse($text)
+	{
+		$parseOptions = array();
+		if ($this->getOption('wysiwyg') === 'y') {
+			$parseOptions['is_html'] = true;
+		}
+		return TikiLib::lib('parser')->parse_data($text, $parseOptions);
+	}
+
 	function renderInput($context = array())
 	{
 		static $firstTime = true;
@@ -213,6 +222,11 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 
 			return $data;
 		}
+	}
+
+	protected function getIndexableType()
+	{
+		return 'wikitext';
 	}
 
 	function getProvidedFields()
@@ -334,20 +348,6 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 		}
 
 		return $schema;
-	}
-
-	protected function attemptParse($text)
-	{
-		$parseOptions = array();
-		if ($this->getOption('wysiwyg') === 'y') {
-			$parseOptions['is_html'] = true;
-		}
-		return TikiLib::lib('tiki')->parse_data($text, $parseOptions);
-	}
-
-	protected function getIndexableType()
-	{
-		return 'wikitext';
 	}
 }
 

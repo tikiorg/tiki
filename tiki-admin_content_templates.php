@@ -101,7 +101,7 @@ if (isset($_REQUEST["preview"])) {
 		$parsed = nl2br($_REQUEST["content"]);
 	} else {
 		$info["section_html"] = 'n';
-		$parsed = $tikilib->parse_data($_REQUEST["content"], array('is_html' => $info['section_wiki_html'] === 'y'));
+		$parsed = TikiLib::lib('parser')->parse_data($_REQUEST["content"], array('is_html' => $info['section_wiki_html'] === 'y'));
 	}
 	$smarty->assign('parsed', $parsed);
 	if (isset($_REQUEST["section_wiki"]) && $_REQUEST["section_wiki"] == 'on') {

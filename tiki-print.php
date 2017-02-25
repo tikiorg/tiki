@@ -82,7 +82,7 @@ if ($prefs['feature_wiki_structure'] == 'y') {
 		}
 	}
 }
-$pdata = $tikilib->parse_data($info["data"], array('is_html' => $info["is_html"], 'print' => 'y', 'namespace' => $info["namespace"]));
+$pdata = TikiLib::lib('parser')->parse_data($info["data"], array('is_html' => $info["is_html"], 'print' => 'y', 'namespace' => $info["namespace"]));
 
 //replacing bootstrap classes for print version.
 

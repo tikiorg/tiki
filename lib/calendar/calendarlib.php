@@ -20,20 +20,6 @@ if (!defined('weekInSeconds')) define('weekInSeconds', 604800);
 class CalendarLib extends TikiLib
 {
     /**
-     * @param $sort_mode
-     * @return string
-     */
-	function convertSortMode($sort_mode, $fields = null)
-	{
-		$tmp = explode("_", $sort_mode);
-		if (count($tmp) == 2) {
-			if ($tmp[0] == "categoryName" || $tmp[0] == "locationName")
-				return "name " . $tmp[1];
-		}
-		return parent::convertSortMode($sort_mode, $fields);
-	}
-
-    /**
      * @param int $offset
      * @param $maxRecords
      * @param string $sort_mode
@@ -75,6 +61,20 @@ class CalendarLib extends TikiLib
 		$retval["data"] = $res;
 		$retval["cant"] = $cant;
 		return $retval;
+	}
+
+    /**
+     * @param $sort_mode
+     * @return string
+     */
+	function convertSortMode($sort_mode, $fields = null)
+	{
+		$tmp = explode("_", $sort_mode);
+		if (count($tmp) == 2) {
+			if ($tmp[0] == "categoryName" || $tmp[0] == "locationName")
+				return "name " . $tmp[1];
+		}
+		return parent::convertSortMode($sort_mode, $fields);
 	}
 
     /**
@@ -147,32 +147,6 @@ class CalendarLib extends TikiLib
 	}
 
     /**
-     * @param $calendarId
-     * @return array
-     */
-    function get_calendar($calendarId)
-	{
-		global $prefs;
-		$res = $this->query("select * from `tiki_calendars` where `calendarId`=?", array((int)$calendarId));
-		$cal = $res->fetchRow();
-		$res2 = $this->query("select `optionName`,`value` from `tiki_calendar_options` where `calendarId`=?", array((int)$calendarId));
-		while ($r = $res2->fetchRow()) {
-			$cal[$r['optionName']] = $r['value'];
-		}
-		if (!isset($cal['startday']) and !isset($cal['endday'])) {
-			$cal['startday'] = 0;
-			$cal['endday'] = 23*60*60;
-		}
-		if ( isset($cal['viewdays']) ) {
-			$cal['viewdays'] = unserialize($cal['viewdays']);
-		} else {
-			$cal['viewdays'] = $prefs['calendar_view_days'];
-		}
-		$cal = array_merge(array('allday'=>'n', 'nameoneachday' => 'n'), $cal);
-		return $cal;
-	}
-
-    /**
      * @param $calitemId
      * @return mixed
      */
@@ -214,7 +188,73 @@ class CalendarLib extends TikiLib
 		$this->query($query, array($calendarId));
 	}
 
+    /**
+     * @param $calIds
+     * @param $user
+     * @param $tstart
+     * @param $tstop
+     * @param $offset
+     * @param $maxRecords
+     * @param string $sort_mode
+     * @param string $find
+     * @param array $customs
+     * @return array
+     */
+    function list_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='', $customs=array())
+	{
+		global $tiki_p_change_events, $prefs;
+		$ret = array();
+		$list = $this->list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode, $find, $customs);
+		foreach ($list as $res) {
+			$mloop = TikiLib::date_format("%m", $res['start']);
+			$dloop = TikiLib::date_format("%d", $res['start']);
+			$yloop = TikiLib::date_format("%Y", $res['start']);
+			$dstart = TikiLib::make_time(0, 0, 0, $mloop, $dloop, $yloop);
+			$dend = TikiLib::make_time(0, 0, 0, TikiLib::date_format("%m", $res['end']), TikiLib::date_format("%d", $res['end']), TikiLib::date_format("%Y", $res['end']));
+			$tstart = TikiLib::date_format("%H%M", $res["start"]);
+			$tend = TikiLib::date_format("%H%M", $res["end"]);
+			for ($i = $dstart; $i <= $dend; $i = TikiLib::make_time(0, 0, 0, $mloop, ++$dloop, $yloop)) {
+				/* $head is in user time */
+				if ($dstart == $dend) {
+					$head = TikiLib::date_format($prefs['short_time_format'], $res["start"]). " - " . TikiLib::date_format($prefs['short_time_format'], $res["end"]);
+				} elseif ($i == $dstart) {
+					$head = TikiLib::date_format($prefs['short_time_format'], $res["start"]). " ...";
+				} elseif ($i == $dend) {
+					$head = " ... " . TikiLib::date_format($prefs['short_time_format'], $res["end"]);
+				} else {
+					$head = " ... " . tra("continued"). " ... ";
+				}
+
+				/* $i is timestamp unix of the beginning of a day */
+				$ret["$i"][] = array(
+					'result' => $res,
+					'calitemId' => $res['calitemId'],
+					'calname' => tra($res['calname']),
+					'time' => $tstart, /* user time */
+					'end' => $tend, /* user time */
+					'type' => $res['status'],
+					'web' => $res['url'],
+					'startTimeStamp' => $res['start'],
+					'endTimeStamp' => $res['end'],
+					'nl' => $res['nlId'],
+					'prio' => $res['priority'],
+					'location' => $res['locationName'],
+					'category' => $res['categoryName'],
+					'name' => $res['name'],
+					'head' => $head,
+					'parsedDescription' => TikiLib::lib('parser')->parse_data($res['description'], array('is_html' => $prefs['calendar_description_is_html'] === 'y')),
+					'description' => str_replace("\n|\r", '', $res['description']),
+					'calendarId' => $res['calendarId'],
+					'status' => $res['status'],
+					'user' => $res['user']
+				);
+			}
+		}
+		return $ret;
+	}
+
 	/* tsart ans tstop are in user time - the data base is in server time */
+
     /**
      * @param $calIds
      * @param $user
@@ -282,130 +322,6 @@ class CalendarLib extends TikiLib
 	}
 
     /**
-     * @param $calIds
-     * @param $user
-     * @param $tstart
-     * @param $tstop
-     * @param $offset
-     * @param $maxRecords
-     * @param string $sort_mode
-     * @param string $find
-     * @param array $customs
-     * @return array
-     */
-    function list_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='', $customs=array())
-	{
-		global $tiki_p_change_events, $prefs;
-		$ret = array();
-		$list = $this->list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode, $find, $customs);
-		foreach ($list as $res) {
-			$mloop = TikiLib::date_format("%m", $res['start']);
-			$dloop = TikiLib::date_format("%d", $res['start']);
-			$yloop = TikiLib::date_format("%Y", $res['start']);
-			$dstart = TikiLib::make_time(0, 0, 0, $mloop, $dloop, $yloop);
-			$dend = TikiLib::make_time(0, 0, 0, TikiLib::date_format("%m", $res['end']), TikiLib::date_format("%d", $res['end']), TikiLib::date_format("%Y", $res['end']));
-			$tstart = TikiLib::date_format("%H%M", $res["start"]);
-			$tend = TikiLib::date_format("%H%M", $res["end"]);
-			for ($i = $dstart; $i <= $dend; $i = TikiLib::make_time(0, 0, 0, $mloop, ++$dloop, $yloop)) {
-				/* $head is in user time */
-				if ($dstart == $dend) {
-					$head = TikiLib::date_format($prefs['short_time_format'], $res["start"]). " - " . TikiLib::date_format($prefs['short_time_format'], $res["end"]);
-				} elseif ($i == $dstart) {
-					$head = TikiLib::date_format($prefs['short_time_format'], $res["start"]). " ...";
-				} elseif ($i == $dend) {
-					$head = " ... " . TikiLib::date_format($prefs['short_time_format'], $res["end"]);
-				} else {
-					$head = " ... " . tra("continued"). " ... ";
-				}
-
-				/* $i is timestamp unix of the beginning of a day */
-				$ret["$i"][] = array(
-					'result' => $res,
-					'calitemId' => $res['calitemId'],
-					'calname' => tra($res['calname']),
-					'time' => $tstart, /* user time */
-					'end' => $tend, /* user time */
-					'type' => $res['status'],
-					'web' => $res['url'],
-					'startTimeStamp' => $res['start'],
-					'endTimeStamp' => $res['end'],
-					'nl' => $res['nlId'],
-					'prio' => $res['priority'],
-					'location' => $res['locationName'],
-					'category' => $res['categoryName'],
-					'name' => $res['name'],
-					'head' => $head,
-					'parsedDescription' => $this->parse_data($res['description'], array('is_html' => $prefs['calendar_description_is_html'] === 'y')),
-					'description' => str_replace("\n|\r", '', $res['description']),
-					'calendarId' => $res['calendarId'],
-					'status' => $res['status'],
-					'user' => $res['user']
-				);
-			}
-		}
-		return $ret;
-	}
-
-    /**
-     * @param $calIds
-     * @param $user
-     * @param $tstart
-     * @param $tstop
-     * @param $offset
-     * @param $maxRecords
-     * @param string $sort_mode
-     * @param string $find
-     * @param array $customs
-     * @return array
-     */
-    function list_items_by_day($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='', $customs=array())
-	{
-		global $prefs;
-		$ret = array();
-		$list = $this->list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode, $find, $customs);
-		foreach ($list as $res) {
-			$mloop = TikiLib::date_format("%m", $res['start']);
-			$dloop = TikiLib::date_format("%d", $res['start']);
-			$yloop = TikiLib::date_format("%Y", $res['start']);
-			$dstart = TikiLib::make_time(0, 0, 0, $mloop, $dloop, $yloop);
-			$dend = TikiLib::make_time(0, 0, 0, TikiLib::date_format("%m", $res['end']), TikiLib::date_format("%d", $res['end']), TikiLib::date_format("%Y", $res['end']));
-			$tstart = TikiLib::date_format("%H%M", $res["start"]);
-			$tend = TikiLib::date_format("%H%M", $res["end"]);
-			for ( $i = $dstart; $i <= $dend; $i = TikiLib::make_time(0, 0, 0, $mloop, ++$dloop, $yloop) ) {
-				/* $head is in user time */
-				if ($res['allday'] == '1') {
-					$head = tra('All day');
-				} elseif ($dstart == $dend) {
-					$head = TikiLib::date_format($prefs['short_time_format'], $res["start"]). " - " . TikiLib::date_format($prefs['short_time_format'], $res["end"]);
-				} elseif ($i == $dstart) {
-					$head = TikiLib::date_format($prefs['short_time_format'], $res["start"]). " ...";
-				} elseif ($i == $dend) {
-					$head = " ... " . TikiLib::date_format($prefs['short_time_format'], $res["end"]);
-				} else {
-					$head = " ... " . tra("continued"). " ... ";
-				}
-
-				/* $i is timestamp unix of the beginning of a day */
-				$j = (isset($ret[$i]) && is_array($ret[$i])) ? count($ret[$i]) : 0;
-
-				$ret[$i][$j] = $res;
-				$ret[$i][$j]['head'] = $head;
-				$ret[$i][$j]['parsedDescription'] = $this->parse_data($res["description"], array('is_html' => $prefs['calendar_description_is_html'] === 'y'));
-				$ret[$i][$j]['description'] = str_replace("\n|\r", "", $res["description"]);
-				$ret[$i][$j]['visible'] = 'y';
-				$ret[$i][$j]['where'] = $res['locationName'];
-
-				$ret[$i][$j]['show_description'] = 'y';
-				/*	'time' => $tstart, /* user time */
-				/*	'end' => $tend, /* user time */
-
-				$ret[$i][$j]['group_description'] = htmlspecialchars($res['name']) . '<span class="calgrouptime">, '.$head.'</span>';
-			}
-		}
-		return $ret;
-	}
-
-    /**
      * @param $calitemId
      * @param array $customs
      * @return mixed
@@ -448,9 +364,163 @@ class CalendarLib extends TikiLib
 		$res['date_end'] = (int)$res['end'];
 
 		$res['duration'] = $res['end'] - $res['start'];
-		$res['parsed'] = $this->parse_data($res['description'], array('is_html' => $prefs['calendar_description_is_html'] === 'y'));
-		$res['parsedName'] = $this->parse_data($res['name']);
+		$res['parsed'] = TikiLib::lib('parser')->parse_data($res['description'], array('is_html' => $prefs['calendar_description_is_html'] === 'y'));
+		$res['parsedName'] = TikiLib::lib('parser')->parse_data($res['name']);
 		return $res;
+	}
+
+    /**
+     * @param $user
+     * @param $calitemId
+     */
+    function drop_item($user, $calitemId)
+	{
+		if ($calitemId) {
+			$query = "delete from `tiki_calendar_items` where `calitemId`=?";
+			$this->query($query, array($calitemId));
+		}
+	}
+
+    /**
+     * @param $calitemId
+     * @param int $delay
+     */
+    function move_item($calitemId,$delay = 0)
+	{
+		if ( $delay != 0 ) {
+			$query = 'UPDATE `tiki_calendar_items` set start = start + ?, end = end + ? WHERE `calitemId`=?';
+			$this->query($query, array($delay,$delay,$calitemId));
+		}
+	}
+
+    /**
+     * @param $calitemId
+     * @param int $delay
+     */
+    function resize_item($calitemId,$delay = 0)
+	{
+		if ( $delay != 0 ) {
+			$query = 'UPDATE `tiki_calendar_items` set end = end + ? WHERE `calitemId`=?';
+			$this->query($query, array($delay,$calitemId));
+		}
+	}
+
+    /**
+     * @param $calendarId
+     * @return array
+     */
+    function list_locations($calendarId)
+	{
+		$res = array();
+		if ($calendarId > 0) {
+			$query = "select `callocId` as `locationId`, `name` from `tiki_calendar_locations` where `calendarId`=? order by `name`";
+			return $this->fetchAll($query, array($calendarId));
+		}
+		return $res;
+	}
+
+    /**
+     * @param $calendarId
+     * @return array
+     */
+    function list_categories($calendarId)
+	{
+		$res = array();
+		if ($calendarId > 0) {
+			$query = "select `calcatId` as `categoryId`, `name` from `tiki_calendar_categories` where `calendarId`=? order by `name`";
+			return $this->fetchAll($query, array($calendarId));
+		}
+		return $res;
+	}
+
+    /**
+     * @param $maxrows
+     * @param int $calendarId
+     * @return mixed
+     */
+    function last_modif_events($maxrows = -1, $calendarId = 0)
+	{
+
+		if ($calendarId > 0) {
+			$cond = "where `calendarId` = ? ";
+			$bindvars = array($calendarId);
+		} else {
+			$cond = '';
+			$bindvars = array();
+		}
+
+		$query = "select `start`, `name`, `calitemId`, `calendarId`, `user`, `lastModif` from `tiki_calendar_items` ".$cond."order by ".$this->convertSortMode('lastModif_desc');
+
+		return $this->fetchAll($query, $bindvars, $maxrows, 0);
+	}
+
+    /**
+     * @param $fname
+     * @param $calendarId
+     * @return int
+     */
+    function importCSV($fname, $calendarId)
+	{
+		global $user, $smarty;
+		$fields = false;
+		if ($fhandle = fopen($fname, 'r')) {
+			$fields = fgetcsv($fhandle, 1000);
+		}
+		if ($fields === false || !array_search('name', $fields)) {
+			$smarty->assign('msg', tra("The file has incorrect syntax or is not a CSV file"));
+			$smarty->display("error.tpl");
+			die;
+		}
+		$nb = 0;
+		while (($data = fgetcsv($fhandle, 1000)) !== FALSE) {
+			$d = array(
+						'calendarId' => $calendarId,
+						'calitemId' => '0',
+						'name' => '',
+						'description' => '',
+						'locationId' => '',
+					  'organizers' => '',
+						'participants' => '',
+						'status' => '1',
+						'priority' => '5',
+						'categoryId' => '0',
+						'newloc' => '0',
+						'newcat' => '',
+						'nlId' => '',
+						'lang' => '',
+						'start' => '',
+						'end' => ''
+			);
+
+			foreach ($fields as $field) {
+				$d[$field] = $data[array_search($field, $fields)];
+			}
+
+			if (isset($d["subject"]) && empty($d["name"]))
+				$d["name"] = $d["subject"];
+			if (isset($d['start date'])) {
+				if (isset($d['start time'])) {
+					$d['start'] = strtotime($d['start time'], strtotime($d['start date']));
+				} else {
+					$d['start'] = strtotime($d['start date']);
+				}
+			}
+			if (isset($d['end date'])) {
+				if (isset($d['end time'])) {
+					$d['end'] = strtotime($d['end time'], strtotime($d['end date']));
+				} else {
+					$d['end'] = strtotime($d['end date']);
+				}
+			}
+
+			// TODO do a replace if name, calendarId, start, end exists
+			if (!empty($d['start']) && !empty($d['end'])) {
+				$this->set_item($user, 0, $d);
+				++$nb;
+			}
+		}
+		fclose($fhandle);
+		return $nb;
 	}
 
     /**
@@ -616,6 +686,35 @@ class CalendarLib extends TikiLib
 	}
 
     /**
+     * @param $calendarId
+     * @return array
+     */
+    function get_calendar($calendarId)
+	{
+		global $prefs;
+		$res = $this->query("select * from `tiki_calendars` where `calendarId`=?", array((int)$calendarId));
+		$cal = $res->fetchRow();
+		$res2 = $this->query("select `optionName`,`value` from `tiki_calendar_options` where `calendarId`=?", array((int)$calendarId));
+		while ($r = $res2->fetchRow()) {
+			$cal[$r['optionName']] = $r['value'];
+		}
+		if (!isset($cal['startday']) and !isset($cal['endday'])) {
+			$cal['startday'] = 0;
+			$cal['endday'] = 23*60*60;
+		}
+		if ( isset($cal['viewdays']) ) {
+			$cal['viewdays'] = unserialize($cal['viewdays']);
+		} else {
+			$cal['viewdays'] = $prefs['calendar_view_days'];
+		}
+		$cal = array_merge(array('allday'=>'n', 'nameoneachday' => 'n'), $cal);
+		return $cal;
+	}
+
+	// Returns the last $maxrows of modified events for an
+	// optional $calendarId
+
+    /**
      * @param $calitemId
      * @param $data
      */
@@ -661,179 +760,7 @@ class CalendarLib extends TikiLib
 		}
 	}
 
-    /**
-     * @param $user
-     * @param $calitemId
-     */
-    function drop_item($user, $calitemId)
-	{
-		if ($calitemId) {
-			$query = "delete from `tiki_calendar_items` where `calitemId`=?";
-			$this->query($query, array($calitemId));
-		}
-	}
 
-    /**
-     * @param $calitemId
-     * @param int $delay
-     */
-    function move_item($calitemId,$delay = 0)
-	{
-		if ( $delay != 0 ) {
-			$query = 'UPDATE `tiki_calendar_items` set start = start + ?, end = end + ? WHERE `calitemId`=?';
-			$this->query($query, array($delay,$delay,$calitemId));
-		}
-	}
-
-    /**
-     * @param $calitemId
-     * @param int $delay
-     */
-    function resize_item($calitemId,$delay = 0)
-	{
-		if ( $delay != 0 ) {
-			$query = 'UPDATE `tiki_calendar_items` set end = end + ? WHERE `calitemId`=?';
-			$this->query($query, array($delay,$calitemId));
-		}
-	}
-
-    /**
-     * @param $calendarId
-     * @return array
-     */
-    function list_locations($calendarId)
-	{
-		$res = array();
-		if ($calendarId > 0) {
-			$query = "select `callocId` as `locationId`, `name` from `tiki_calendar_locations` where `calendarId`=? order by `name`";
-			return $this->fetchAll($query, array($calendarId));
-		}
-		return $res;
-	}
-
-    /**
-     * @param $calendarId
-     * @return array
-     */
-    function list_categories($calendarId)
-	{
-		$res = array();
-		if ($calendarId > 0) {
-			$query = "select `calcatId` as `categoryId`, `name` from `tiki_calendar_categories` where `calendarId`=? order by `name`";
-			return $this->fetchAll($query, array($calendarId));
-		}
-		return $res;
-	}
-
-	// Returns the last $maxrows of modified events for an
-	// optional $calendarId
-    /**
-     * @param $maxrows
-     * @param int $calendarId
-     * @return mixed
-     */
-    function last_modif_events($maxrows = -1, $calendarId = 0)
-	{
-
-		if ($calendarId > 0) {
-			$cond = "where `calendarId` = ? ";
-			$bindvars = array($calendarId);
-		} else {
-			$cond = '';
-			$bindvars = array();
-		}
-
-		$query = "select `start`, `name`, `calitemId`, `calendarId`, `user`, `lastModif` from `tiki_calendar_items` ".$cond."order by ".$this->convertSortMode('lastModif_desc');
-
-		return $this->fetchAll($query, $bindvars, $maxrows, 0);
-	}
-
-    /**
-     * @param $fname
-     * @param $calendarId
-     * @return int
-     */
-    function importCSV($fname, $calendarId)
-	{
-		global $user, $smarty;
-		$fields = false;
-		if ($fhandle = fopen($fname, 'r')) {
-			$fields = fgetcsv($fhandle, 1000);
-		}
-		if ($fields === false || !array_search('name', $fields)) {
-			$smarty->assign('msg', tra("The file has incorrect syntax or is not a CSV file"));
-			$smarty->display("error.tpl");
-			die;
-		}
-		$nb = 0;
-		while (($data = fgetcsv($fhandle, 1000)) !== FALSE) {
-			$d = array(
-						'calendarId' => $calendarId,
-						'calitemId' => '0',
-						'name' => '',
-						'description' => '',
-						'locationId' => '',
-					  'organizers' => '',
-						'participants' => '',
-						'status' => '1',
-						'priority' => '5',
-						'categoryId' => '0',
-						'newloc' => '0',
-						'newcat' => '',
-						'nlId' => '',
-						'lang' => '',
-						'start' => '',
-						'end' => ''
-			);
-
-			foreach ($fields as $field) {
-				$d[$field] = $data[array_search($field, $fields)];
-			}
-
-			if (isset($d["subject"]) && empty($d["name"]))
-				$d["name"] = $d["subject"];
-			if (isset($d['start date'])) {
-				if (isset($d['start time'])) {
-					$d['start'] = strtotime($d['start time'], strtotime($d['start date']));
-				} else {
-					$d['start'] = strtotime($d['start date']);
-				}
-			}
-			if (isset($d['end date'])) {
-				if (isset($d['end time'])) {
-					$d['end'] = strtotime($d['end time'], strtotime($d['end date']));
-				} else {
-					$d['end'] = strtotime($d['end date']);
-				}
-			}
-
-			// TODO do a replace if name, calendarId, start, end exists
-			if (!empty($d['start']) && !empty($d['end'])) {
-				$this->set_item($user, 0, $d);
-				++$nb;
-			}
-		}
-		fclose($fhandle);
-		return $nb;
-	}
-
-	/**
-	 * Returns an array of a maximum of $maxrows upcoming (but possibly past) events in the given $order.
-	 * If $calendarId is set, events not in the specified calendars are filtered. $calendarId
-	 * can be a calendar identifier or an array of calendar identifiers. If $maxDaysEnd is
-	 * a natural, events ending after $maxDaysEnd days are filtered. If $maxDaysStart is a
-	 * natural, events starting after $maxDaysStart days are filtered.
-	 * Events ending more than $priorDays in the past are filtered.
-	 *
-	 * Each event is represented by a string-indexed array with indices start, end,
-	 * name, description, calitemId, calendarId, user, lastModif, url, allday
-	 * in the same format as tiki_calendar_items fields, as well as location
-	 * for the event's locations, parsed for the parsed description and category
-	 * for the event's calendar category.
-	 *
-	 */
-
-	//Pagination
 	function upcoming_events($maxrows = -1, $calendarId = null, $maxDaysEnd = -1, $order = 'start_asc', $priorDays = 0, $maxDaysStart = -1, $start = 0)
 	{
 
@@ -880,7 +807,7 @@ class CalendarLib extends TikiLib
 		$cant = $this->getOne($query_cant, $bindvars);
 
 		foreach ( $ret as &$res ) {
-			$res['parsed'] = $this->parse_data($res['description'], array('is_html' => $prefs['calendar_description_is_html'] === 'y'));
+			$res['parsed'] = TikiLib::lib('parser')->parse_data($res['description'], array('is_html' => $prefs['calendar_description_is_html'] === 'y'));
 		}
 
     $retval = array();
@@ -889,6 +816,23 @@ class CalendarLib extends TikiLib
 		return $retval;
 	}
 
+	/**
+	 * Returns an array of a maximum of $maxrows upcoming (but possibly past) events in the given $order.
+	 * If $calendarId is set, events not in the specified calendars are filtered. $calendarId
+	 * can be a calendar identifier or an array of calendar identifiers. If $maxDaysEnd is
+	 * a natural, events ending after $maxDaysEnd days are filtered. If $maxDaysStart is a
+	 * natural, events starting after $maxDaysStart days are filtered.
+	 * Events ending more than $priorDays in the past are filtered.
+	 *
+	 * Each event is represented by a string-indexed array with indices start, end,
+	 * name, description, calitemId, calendarId, user, lastModif, url, allday
+	 * in the same format as tiki_calendar_items fields, as well as location
+	 * for the event's locations, parsed for the parsed description and category
+	 * for the event's calendar category.
+	 *
+	 */
+
+	//Pagination
     /**
      * @param $maxrows
      * @param null $calendarId
@@ -945,7 +889,7 @@ class CalendarLib extends TikiLib
 		$cant = $this->getOne($query_cant, $bindvars);
 
 		foreach ( $ret as &$res ) {
-			$res['parsed'] = $this->parse_data($res['description'], array('is_html' => $prefs['calendar_description_is_html'] === 'y'));
+			$res['parsed'] = TikiLib::lib('parser')->parse_data($res['description'], array('is_html' => $prefs['calendar_description_is_html'] === 'y'));
 		}
 
 	    $retval = array();
@@ -1008,7 +952,7 @@ class CalendarLib extends TikiLib
 		$cant = $this->getOne($query_cant, $bindvars);
 
 		foreach ( $ret as &$res ) {
-			$res['parsed'] = $this->parse_data($res['description'], array('is_html' => $prefs['calendar_description_is_html'] === 'y'));
+			$res['parsed'] = TikiLib::lib('parser')->parse_data($res['description'], array('is_html' => $prefs['calendar_description_is_html'] === 'y'));
 		}
 
 	    $retval = array();
@@ -1050,24 +994,7 @@ class CalendarLib extends TikiLib
 		}
 		return $firstDayofWeek;
 	}
-	// return detail on a date
-    /**
-     * @param $focusDate
-     * @return array
-     */
-    function infoDate($focusDate)
-	{
-		$focus = array (
-			'day' => intval(TikiLib::date_format('%d', $focusDate)),
-			'month' => intval(TikiLib::date_format('%m', $focusDate)),
-			'year' => TikiLib::date_format('%Y', $focusDate),
-			'date' => $focusDate,
-			'weekDay' => TikiLib::date_format('%w', $focusDate) // in (0, 6)
-		);
-		$focus['daysInMonth'] = Date_Calc::daysInMonth($focus['month'], $focus['year']);
-		return $focus;
-	}
-	// Compute the start date (the 1 first of the month of the focus date or the day) and the next start date from the period around a focus date
+
     /**
      * @param $focus
      * @param string $view
@@ -1092,7 +1019,8 @@ class CalendarLib extends TikiLib
 		$startNext['year'] = TikiLib::date_format('%Y', $startNext['date']);
 		$startNext['weekDay'] = TikiLib::date_format('%w', $startNext['date']);
 	}
-	// Compute the date just $view from the focus
+	// return detail on a date
+
     /**
      * @param $focus
      * @param string $view
@@ -1119,7 +1047,26 @@ class CalendarLib extends TikiLib
 		$previous = $this->infoDate($previous['date']); // get back real day, month, year
 		return $previous;
 	}
-	// Compute the date just $view after the focus
+	// Compute the start date (the 1 first of the month of the focus date or the day) and the next start date from the period around a focus date
+
+    /**
+     * @param $focusDate
+     * @return array
+     */
+    function infoDate($focusDate)
+	{
+		$focus = array (
+			'day' => intval(TikiLib::date_format('%d', $focusDate)),
+			'month' => intval(TikiLib::date_format('%m', $focusDate)),
+			'year' => TikiLib::date_format('%Y', $focusDate),
+			'date' => $focusDate,
+			'weekDay' => TikiLib::date_format('%w', $focusDate) // in (0, 6)
+		);
+		$focus['daysInMonth'] = Date_Calc::daysInMonth($focus['month'], $focus['year']);
+		return $focus;
+	}
+	// Compute the date just $view from the focus
+
     /**
      * @param $focus
      * @param string $view
@@ -1145,8 +1092,8 @@ class CalendarLib extends TikiLib
 		$next = $this->infoDate($next['date']); // get back real day, month, year
 		return $next;
 	}
-	// Compute a table view of dates (one line per week)
-	// $firstWeekDay = 0 (Sunday), 1 (Monday)
+	// Compute the date just $view after the focus
+
     /**
      * @param $start
      * @param $startNext
@@ -1207,6 +1154,8 @@ class CalendarLib extends TikiLib
 		//echo '<pre>CELL'; print_r($cell); echo '</pre>';
 		return $cell;
 	}
+	// Compute a table view of dates (one line per week)
+	// $firstWeekDay = 0 (Sunday), 1 (Monday)
 
     /**
      * @param int $firstDayofWeek
@@ -1416,6 +1365,65 @@ class CalendarLib extends TikiLib
 			'daysnames_abr' => $daysnames_abr,
 			'trunc' => $trunc
 		);
+	}
+
+    /**
+     * @param $calIds
+     * @param $user
+     * @param $tstart
+     * @param $tstop
+     * @param $offset
+     * @param $maxRecords
+     * @param string $sort_mode
+     * @param string $find
+     * @param array $customs
+     * @return array
+     */
+    function list_items_by_day($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='', $customs=array())
+	{
+		global $prefs;
+		$ret = array();
+		$list = $this->list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode, $find, $customs);
+		foreach ($list as $res) {
+			$mloop = TikiLib::date_format("%m", $res['start']);
+			$dloop = TikiLib::date_format("%d", $res['start']);
+			$yloop = TikiLib::date_format("%Y", $res['start']);
+			$dstart = TikiLib::make_time(0, 0, 0, $mloop, $dloop, $yloop);
+			$dend = TikiLib::make_time(0, 0, 0, TikiLib::date_format("%m", $res['end']), TikiLib::date_format("%d", $res['end']), TikiLib::date_format("%Y", $res['end']));
+			$tstart = TikiLib::date_format("%H%M", $res["start"]);
+			$tend = TikiLib::date_format("%H%M", $res["end"]);
+			for ( $i = $dstart; $i <= $dend; $i = TikiLib::make_time(0, 0, 0, $mloop, ++$dloop, $yloop) ) {
+				/* $head is in user time */
+				if ($res['allday'] == '1') {
+					$head = tra('All day');
+				} elseif ($dstart == $dend) {
+					$head = TikiLib::date_format($prefs['short_time_format'], $res["start"]). " - " . TikiLib::date_format($prefs['short_time_format'], $res["end"]);
+				} elseif ($i == $dstart) {
+					$head = TikiLib::date_format($prefs['short_time_format'], $res["start"]). " ...";
+				} elseif ($i == $dend) {
+					$head = " ... " . TikiLib::date_format($prefs['short_time_format'], $res["end"]);
+				} else {
+					$head = " ... " . tra("continued"). " ... ";
+				}
+
+				/* $i is timestamp unix of the beginning of a day */
+				$j = (isset($ret[$i]) && is_array($ret[$i])) ? count($ret[$i]) : 0;
+
+				$ret[$i][$j] = $res;
+				$ret[$i][$j]['head'] = $head;
+				$ret[$i][$j]['parsedDescription'] = TikiLib::lib('parser')->parse_data($res["description"], array('is_html' => $prefs['calendar_description_is_html'] === 'y'));
+				$ret[$i][$j]['description'] = str_replace("\n|\r", "", $res["description"]);
+				$ret[$i][$j]['visible'] = 'y';
+				$ret[$i][$j]['where'] = $res['locationName'];
+
+				$ret[$i][$j]['show_description'] = 'y';
+				/*	'time' => $tstart, /* user time */
+				/*	'end' => $tend, /* user time */
+
+				$ret[$i][$j]['group_description'] = htmlspecialchars($res['name']) . '<span class="calgrouptime">, '.$head.'</span>';
+			}
+		}
+		return $ret;
 	}
 
     /**

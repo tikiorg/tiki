@@ -137,7 +137,6 @@ function wikiplugin_trackerquerytemplate_info()
 
 function wikiplugin_trackerquerytemplate($data, $params)
 {
-	global $tikilib;
 
 	$params = array_merge(
 		array(
@@ -234,7 +233,7 @@ function wikiplugin_trackerquerytemplate($data, $params)
 		$handler->set($pattern, $fields, $query->itemsRaw[$itemId], $itemId, $trackerId);
 
 		$newData .= $handler->parse($data);
-		$newData = "~np~" . $tikilib->parse_data($newData, array('is_html'=>true)) . "~/np~";
+		$newData = "~np~" . TikiLib::lib('parser')->parse_data($newData, array('is_html'=>true)) . "~/np~";
 		$handler->pop();
 	}
 
@@ -243,12 +242,12 @@ function wikiplugin_trackerquerytemplate($data, $params)
 
 class dataToFieldHandler
 {
+	public static $itemStack = array();
 	public $pattern;
 	private $trackerId;
 	private $itemId;
 	private $fields;
 	private $fieldsRaw;
-	public static $itemStack = array();
 
 	function __construct() //initially set it to the last called item from trackers if it exists
 	{

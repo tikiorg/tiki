@@ -214,8 +214,6 @@ function wikiplugin_mouseover_info()
 
 function wikiplugin_mouseover( $data, $params )
 {
-	$tikilib = TikiLib::lib('tiki');
-	$smarty = TikiLib::lib('smarty');
 	$default = array('parse'=>'y', 'parselabel'=>'y');
 	$params = array_merge($default, $params);
 
@@ -259,7 +257,7 @@ function wikiplugin_mouseover( $data, $params )
 		if (containsStringHTML($text)) {
 			$options = array('is_html' => 1);
 		}
-		$text = $tikilib->parse_data($text, $options);
+		$text = TikiLib::lib('parser')->parse_data($text, $options);
 	}
 	if ( $params['parselabel'] == 'y' ) {
 		$label = "~/np~$label~np~";

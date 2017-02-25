@@ -189,10 +189,10 @@ if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 
 	$body = $article_data['body'];
 	$heading = $article_data['heading'];
-	$smarty->assign('parsed_body', $tikilib->parse_data($body, array('is_html' => $artlib->is_html($article_data))));
+	$smarty->assign('parsed_body', TikiLib::lib('parser')->parse_data($body, array('is_html' => $artlib->is_html($article_data))));
 	$smarty->assign(
 		'parsed_heading',
-		$tikilib->parse_data(
+		TikiLib::lib('parser')->parse_data(
 			$heading,
 			array(
 				'min_one_paragraph' => true,
@@ -436,8 +436,8 @@ if (isset($_REQUEST['preview']) or !empty($errors)) {
 
 	$smarty->assign('size', strlen($body));
 
-	$parsed_body = $tikilib->parse_data($body, array('is_html' => $artlib->is_html(array($body))));
-	$parsed_heading = $tikilib->parse_data($heading, array('is_html' => 'y'));
+	$parsed_body = TikiLib::lib('parser')->parse_data($body, array('is_html' => $artlib->is_html(array($body))));
+	$parsed_heading = TikiLib::lib('parser')->parse_data($heading, array('is_html' => 'y'));
 
 	$smarty->assign('parsed_body', $parsed_body);
 	$smarty->assign('parsed_heading', $parsed_heading);

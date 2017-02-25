@@ -574,8 +574,6 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, array $listfields=ar
 {
 	global $tiki_p_admin_trackers;
 	$trklib = TikiLib::lib('trk');
-	$tikilib = TikiLib::lib('tiki');
-	$smarty = TikiLib::lib('smarty');
 	$filters = array();
 	if (empty($trackerId) && !empty($listfields[0])) {
 		$field = $trklib->get_tracker_field($listfields[0]);
@@ -698,7 +696,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, array $listfields=ar
 			case 'M': // Multiple Values
 				$cumul = '';
 				foreach ($field['options_array'] as $val) {
-					$sval = strip_tags($tikilib->parse_data($val, array('parsetoc' => false)));
+					$sval = strip_tags(TikiLib::lib('parser')->parse_data($val, array('parsetoc' => false)));
 					$opt['id'] = $val;
 					if ($field['type'] == '*') {
 						$cumul = $opt['name'] = "$cumul*";
@@ -765,7 +763,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, array $listfields=ar
 					sort($res, SORT_NATURAL);
 				}
 				foreach ($res as $val) {
-					$sval = strip_tags($tikilib->parse_data($val, array('parsetoc'=> false)));
+					$sval = strip_tags(TikiLib::lib('parser')->parse_data($val, array('parsetoc'=> false)));
 					$opt['id'] = $val;
 					$opt['name'] = $sval;
 					if ($field['type'] == 'y') { // country

@@ -88,7 +88,7 @@ function wikiplugin_redirect($data, $params)
 		$areturn = tra("REDIRECT plugin: redirect loop detected!");
 	} else if (isset(TikiLib::lib('parser')->option['print']) && TikiLib::lib('parser')->option['print'] == 'y') {
 		$info = $tikilib->get_page_info($location);
-		return $tikilib->parse_data($info['data'], TikiLib::lib('parser')->option);
+		return TikiLib::lib('parser')->parse_data($info['data'], TikiLib::lib('parser')->option);
 	} else {
 
 		if (isset($perspective)) {

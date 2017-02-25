@@ -92,7 +92,6 @@ function wikiplugin_fade_info()
 function wikiplugin_fade( $body, $params )
 {
 	static $id = 0;
-	global $tikilib;
 	//set defaults
 	$plugininfo = wikiplugin_fade_info();
 	foreach ($plugininfo['params'] as $key => $param) {
@@ -121,7 +120,7 @@ function wikiplugin_fade( $body, $params )
 		
   	// We specify format html, so parse the contained wiki text
 	$body = trim($body);
-	$body = $tikilib->parse_data($body);
+	$body = TikiLib::lib('parser')->parse_data($body);
 
     // Both variants will need $headerlib
     $headerlib = TikiLib::lib('header');

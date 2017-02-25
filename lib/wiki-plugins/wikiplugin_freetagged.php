@@ -261,7 +261,7 @@ function wikiplugin_freetagged($data, $params)
 					$artlib = TikiLib::lib('art');
 					$info = $artlib->get_article($obj['itemId']);
 					$obj['date'] = $info['publishDate'];
-					$obj['description'] = $tikilib->parse_data($info['heading']);
+					$obj['description'] = TikiLib::lib('parser')->parse_data($info['heading']);
 					if ($info['useImage'] == 'y') {
 						$obj['image'] = 'article_image.php?id='.$obj['itemId'];
 					} else if (!empty($info['topicId'])) {

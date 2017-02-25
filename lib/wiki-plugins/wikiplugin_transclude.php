@@ -64,7 +64,7 @@ function wikiplugin_transclude( $data, $params )
 
 	if ( $info = $tikilib->get_page_info($page) ) {
 		$parts = preg_split('/%%%text%%%/', $info['data']);
-		$data = $tikilib->parse_data($data);
+		$data = TikiLib::lib('parser')->parse_data($data);
                 $pass = $parts[0] . $data . $parts[1];
 		return preg_replace_callback(
 			'/%%%([A-z0-9]+)%%%/',

@@ -81,7 +81,7 @@ if ($info['parse_mode'] == 'raw') {
 	$smarty->assign('wysiwyg', 'n');
 } else {
 	include 'lib/setup/editmode.php';
-	$info['parsed'] = $tikilib->parse_data($info['data'], array('is_html' => $is_html));
+	$info['parsed'] = TikiLib::lib('parser')->parse_data($info['data'], array('is_html' => $is_html));
 }
 $smarty->assign('noteId', $_REQUEST["noteId"]);
 $smarty->assign('info', $info);

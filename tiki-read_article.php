@@ -123,7 +123,7 @@ if ( $prefs['article_paginate'] == 'y' ) {
 	$noparsed = array();
 
 	$parserlib->plugins_remove($article_data["body"], $noparsed);
-	$parserlib->parse_first($article_data["body"], $preparsed, $noparsed);
+	$parserlib->parse_first($article_data["body"], $noparsed);
 	$pages = $artlib->get_number_of_pages($article_data["body"]);
 	$article_data["body"] = $artlib->get_page($article_data["body"], $_REQUEST['page']);
 	$smarty->assign('pages', $pages);
@@ -176,10 +176,10 @@ if ($prefs['feature_theme_control'] == 'y') {
 	include ('tiki-tc.php');
 }
 
-$smarty->assign('parsed_body', $tikilib->parse_data($body, array('is_html' => $artlib->is_html($article_data))));
+$smarty->assign('parsed_body', TikiLib::lib('parser')->parse_data($body, array('is_html' => $artlib->is_html($article_data))));
 $smarty->assign(
 	'parsed_heading',
-	$tikilib->parse_data(
+	TikiLib::lib('parser')->parse_data(
 		$heading,
 		array(
 			'min_one_paragraph' => true,

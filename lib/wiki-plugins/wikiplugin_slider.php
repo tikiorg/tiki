@@ -355,7 +355,6 @@ function wikiplugin_slider_info()
 
 function wikiplugin_slider($data, $params)
 {
-	$tikilib = TikiLib::lib('tiki');
 	$headerlib = TikiLib::lib('header');
 	
 	// set default params
@@ -482,13 +481,13 @@ function wikiplugin_slider($data, $params)
 	);
 
 	if (!empty($titles)) {
-		$titles = $tikilib->parse_data($titles, array('suppress_icons' => true));
+		$titles = TikiLib::lib('parser')->parse_data($titles, array('suppress_icons' => true));
 		$titles = explode('|', $titles);
 	}
 
 	$sliderData = array();
 	if (!empty($data)) {
-		$data = $tikilib->parse_data($data, array('suppress_icons' => true));
+		$data = TikiLib::lib('parser')->parse_data($data, array('suppress_icons' => true));
 		$data = preg_replace('/<p>\/\/\/\/\/\s*<\/p>/', '/////', $data);	// remove surrounding <p> tags on slide boundaries
 		$sliderData = explode('/////', $data);
 	}

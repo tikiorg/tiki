@@ -10,7 +10,7 @@ class WikiParser_PluginArgumentParser
 	function parse( $data )
 	{
 		$arguments = array();
-		$data = TikiLib::lib("parser")->unprotectSpecialChars($data, true);	// need to get &quot; converted back to " etc
+		$data = TikiLib::lib("parser")->unprotectSpecialChars($data);	// need to get &quot; converted back to " etc
 
 		// Handle parameters one by one
 		while (is_string($data) && false !== $pos = strpos($data, '=') ) {

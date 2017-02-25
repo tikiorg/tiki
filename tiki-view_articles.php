@@ -116,7 +116,7 @@ $topics = $artlib->list_topics();
 $smarty->assign_by_ref('topics', $topics);
 $temp_max = count($listpages["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
-	$listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data(
+	$listpages["data"][$i]["parsed_heading"] = TikiLib::lib('parser')->parse_data(
 		$listpages["data"][$i]["heading"],
 		array(
 			'min_one_paragraph' => true,

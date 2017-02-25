@@ -14,7 +14,7 @@ function wikiplugin_colorbox_info()
 		'prefs' => array( 'feature_file_galleries', 'feature_shadowbox', 'wikiplugin_colorbox' ),
 		'introduced' => 5,
 		'iconname' => 'image',
-		'tags' => array( 'basic' ),		
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'fgalId' => array(
 				'required' => false,
@@ -191,14 +191,14 @@ function wikiplugin_colorbox($data, $params)
 			$str .= $file['filename'];
 		}
 		if (!empty($file['description'])) {
-			global $tikilib, $prefs;
+			global $prefs;
 			$str .= empty($str) ? '' : '<br />';
 			if ($params['parsedescriptions'] == 'y') {
 				$op = $prefs['feature_wiki_paragraph_formatting'];
 				$op2 = $prefs['feature_wiki_paragraph_formatting_add_br'];
 				$prefs['feature_wiki_paragraph_formatting'] = 'n';
 				$prefs['feature_wiki_paragraph_formatting_add_br'] = 'n';
-				$str .= $tikilib->parse_data($file['description'], array( 'suppress_icons' => true ));
+				$str .= TikiLib::lib('parser')->parse_data($file['description'], array( 'suppress_icons' => true ));
 				$prefs['feature_wiki_paragraph_formatting'] = $op;
 				$prefs['feature_wiki_paragraph_formatting_add_br'] = $op2;
 			} else {

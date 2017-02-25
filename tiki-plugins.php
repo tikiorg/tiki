@@ -46,7 +46,7 @@ if (isset($_REQUEST['refresh'])) {
 				'is_html' => $apage['is_html'],
 			)
 		);
-		$parserlib->parse_first($apage['data'], $pre, $no);
+		$parserlib->parse_first($apage['data'], $no);
 	}
 
 	$headerlib = unserialize($temp);

@@ -641,10 +641,10 @@ if ($prefs['feature_wiki_footnotes'] === 'y') {
 		$smarty->assign('footnote', $footnote);
 		if ($footnote)
 			$smarty->assign('has_footnote', 'y');
-		$smarty->assign('parsed_footnote', $tikilib->parse_data($footnote));
+		$smarty->assign('parsed_footnote', TikiLib::lib('parser')->parse_data($footnote));
 		if (isset($_REQUEST['footnote'])) {
 			check_ticket('edit-page');
-			$smarty->assign('parsed_footnote', $tikilib->parse_data($_REQUEST['footnote']));
+			$smarty->assign('parsed_footnote', TikiLib::lib('parser')->parse_data($_REQUEST['footnote']));
 			$smarty->assign('footnote', $_REQUEST['footnote']);
 			$smarty->assign('has_footnote', 'y');
 			if (empty($_REQUEST['footnote'])) {
@@ -938,7 +938,7 @@ if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) && !$useWikiLingo
 				unset($_REQUEST['save']);	// don't save an ajax error
 			}
 		} else {
-		 	$parsed = $tikilib->parse_data(
+		 	$parsed = TikiLib::lib('parser')->parse_data(
 				$edit_data,
 				array(
 					'absolute_links'=>true,
@@ -965,9 +965,9 @@ if (isset($_REQUEST["preview"])) {
 
 	if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y') {
 		$parsed = $editlib->partialParseWysiwygToWiki($parsed);
-		$parsed = $tikilib->parse_data($parsed, array('absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'preview_mode'=>true, 'is_html' => $is_html));
+		$parsed = TikiLib::lib('parser')->parse_data($parsed, array('absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'preview_mode'=>true, 'is_html' => $is_html));
 	} else {
-		$parsed = $tikilib->parse_data($parsed, array('is_html' => $is_html, 'preview_mode'=>true));
+		$parsed = TikiLib::lib('parser')->parse_data($parsed, array('is_html' => $is_html, 'preview_mode'=>true));
 	}
 	// If we are in preview mode then preview it!
 	$smarty->assign('preview', 1);
@@ -1361,7 +1361,7 @@ if (
 	Feedback::success(sprintf(tra('Page %s saved (version %d).'), $_REQUEST["page"], $info['version']), 'session');
 
 	if (!empty($_REQUEST['hdr'])) {
-		$tmp = $tikilib->parse_data($edit);			// fills $anch[] so page refreshes at the section being edited
+		$tmp = TikiLib::lib('parser')->parse_data($edit);			// fills $anch[] so page refreshes at the section being edited
 		$url .= "#".$anch[$_REQUEST['hdr']-1]['id'];
 	}
 

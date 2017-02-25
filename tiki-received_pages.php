@@ -46,7 +46,7 @@ $smarty->assign('pageName', $info["pageName"]);
 $smarty->assign('data', $info["data"]);
 $smarty->assign('comment', $info["comment"]);
 // Assign parsed
-$smarty->assign('parsed', $tikilib->parse_data($info["data"]));
+$smarty->assign('parsed', TikiLib::lib('parser')->parse_data($info["data"]));
 if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();
 	$commlib->remove_received_page($_REQUEST["remove"]);
@@ -58,7 +58,7 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('data', $_REQUEST["data"]);
 	$smarty->assign('comment', $_REQUEST["comment"]);
 	$smarty->assign('receivedPageId', 0);
-	$smarty->assign('parsed', $tikilib->parse_data($_REQUEST["data"]));
+	$smarty->assign('parsed', TikiLib::lib('parser')->parse_data($_REQUEST["data"]));
 }
 if (!empty($_REQUEST['checked']) && (!empty($_REQUEST['prefix']) || !empty($_REQUEST['postfix']))) {
 	check_ticket('received-pages');

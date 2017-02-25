@@ -194,7 +194,7 @@ foreach ($listevents as $event) {
 	}
 	$events[] = array ( 'id' => $event['calitemId'],
 											'title' => $event['name'],
-											'description' => !empty($event["description"]) ? $tikilib->parse_data($event["description"], array('is_html' => $prefs['calendar_description_is_html'] === 'y')) : "",
+											'description' => !empty($event["description"]) ? TikiLib::lib('parser')->parse_data($event["description"], array('is_html' => $prefs['calendar_description_is_html'] === 'y')) : "",
 											'url' => $url,
 											'allDay' => $event['allday'] != 0 ,
 											'start' => TikiLib::date_format("c", $event['date_start'], false, 5, false),

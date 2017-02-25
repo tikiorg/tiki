@@ -267,7 +267,7 @@ if (isset($_REQUEST['tiki_view_mode']) and $_REQUEST['tiki_view_mode'] == 'view'
 	$smarty->assign('show_view', $show_view);
 	$show_form = false;
 	$smarty->assign('show_form', $show_form);
-	$info['parsed'] = $tikilib->parse_data($info['description']);
+	$info['parsed'] = TikiLib::lib('parser')->parse_data($info['description']);
 }
 if (isset($_REQUEST['tiki_view_mode']) and $_REQUEST['tiki_view_mode'] == 'edit') {
 	$show_form = true;
@@ -452,7 +452,7 @@ if ((isset($_REQUEST['save'])) || (isset($_REQUEST['preview']))) {
 			$info['status'] = null;
 		}
 		$info['info'] = (isset($_REQUEST['task_info_message'])) ? $_REQUEST['task_info_message'] : '';
-		$info['parsed'] = (isset($info['description'])) ? $tikilib->parse_data($info['description']) : '';
+		$info['parsed'] = (isset($info['description'])) ? TikiLib::lib('parser')->parse_data($info['description']) : '';
 	}
 }
 if (isset($_REQUEST['save'])) {

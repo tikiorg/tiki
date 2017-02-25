@@ -71,10 +71,8 @@ function wikiplugin_shorten_info()
 
 function wikiplugin_shorten($data, $params)
 {
-	global $prefs;
 	static $shorten_count;
 	$headerlib = TikiLib::lib('header');
-	$tikilib = TikiLib::lib('tiki');
 
 	extract(array(
 		'length' => 20,
@@ -155,10 +153,10 @@ function wikiplugin_shorten($data, $params)
 
 		$sample = substr($data, 0, $index);
 		$sample .= '{button _text="'.$moreText.'" _class="btn_more" href="#"}';
-		$sample = $tikilib->parse_data($sample, array());
+		$sample = TikiLib::lib('parser')->parse_data($sample, array());
 
 		$content = $data . '{button _text="'.$lessText.'" _class="btn_less" href="#"}';
-		$content = $tikilib->parse_data($content, array());
+		$content = TikiLib::lib('parser')->parse_data($content, array());
 
 		$out = sprintf($html, $sample, $content);
 		return $out;

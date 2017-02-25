@@ -196,7 +196,6 @@ function wikiplugin_trackertimeline_info()
 function wikiplugin_trackertimeline( $data, $params )
 {
 	$trklib = TikiLib::lib('trk');
-	$tikilib = TikiLib::lib('tiki');
 	$smarty = TikiLib::lib('smarty');
 
 	static $instance = 0;
@@ -267,7 +266,7 @@ function wikiplugin_trackertimeline( $data, $params )
 
 		$detail['fstart'] = date($formats[$params['scale1']], $detail['start']);
 		$detail['fend'] = date($formats[$params['scale1']], $detail['end']);
-		$detail['psummary'] = $tikilib->parse_data($detail['summary']);
+		$detail['psummary'] = TikiLib::lib('parser')->parse_data($detail['summary']);
 
 		$detail['encoded'] = json_encode($detail);
 

@@ -57,7 +57,7 @@ if ($output["data"] == "EMPTY") {
 	$tmp = array();
 	include_once ('tiki-sefurl.php');
 	foreach ($changes["data"] as $data) {
-		$data["$descId"] = $tikilib->parse_data(
+		$data["$descId"] = TikiLib::lib('parser')->parse_data(
 			$data[$descId],
 			array(
 				'print' => true,

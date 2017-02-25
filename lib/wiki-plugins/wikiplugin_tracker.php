@@ -1659,7 +1659,7 @@ function wikiplugin_tracker($data, $params)
 		}
 		if ($showdesc == 'y' && $tracker['description']) {
 			if ($tracker['descriptionIsParsed'] == 'y') {
-				$back .= '<div class="wikitext">'.$tikilib->parse_data($tracker['description']).'</div><br />';
+				$back .= '<div class="wikitext">'.TikiLib::lib('parser')->parse_data($tracker['description']).'</div><br />';
 			} else {
 				$back.= '<div class="wikitext">'.tra($tracker["description"]).'</div><br />';
 			}
@@ -1750,7 +1750,7 @@ function wikiplugin_tracker($data, $params)
 					} else {
 						$mand =  ($showmandatory == 'y' and $f['isMandatory'] == 'y')? "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;":'';
 						if (!empty($f['description'])) {
-							$desc = $f['descriptionIsParsed'] == 'y' ? $tikilib->parse_data($f['description']) : tra($f['description']);
+							$desc = $f['descriptionIsParsed'] == 'y' ? TikiLib::lib('parser')->parse_data($f['description']) : tra($f['description']);
 							$desc = '<div class="trackerplugindesc">' . $desc . '</div>';
 						} else {
 							$desc = '';
@@ -1845,7 +1845,7 @@ function wikiplugin_tracker($data, $params)
 							. ' trackerplugindesc help-block">';
 
 						if ($f['descriptionIsParsed'] == 'y') {
-							$back .= $tikilib->parse_data($f['description']);
+							$back .= TikiLib::lib('parser')->parse_data($f['description']);
 						} else {
 							$back .= tra($f['description']);
 						}

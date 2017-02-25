@@ -10,6 +10,31 @@ use Symfony\Component\Yaml\Yaml;
 /**
  *
  */
+interface OIntegrate_Converter
+{
+    /**
+     * @param $content
+     * @return mixed
+     */
+    function convert( $content );
+}
+
+/**
+ *
+ */
+interface OIntegrate_Engine
+{
+    /**
+     * @param $data
+     * @param $templateFile
+     * @return mixed
+     */
+    function process( $data, $templateFile );
+}
+
+/**
+ *
+ */
 class OIntegrate
 {
 	private $schemaVersion = array();
@@ -361,31 +386,6 @@ class OIntegrate_Response
 /**
  *
  */
-interface OIntegrate_Converter
-{
-    /**
-     * @param $content
-     * @return mixed
-     */
-    function convert( $content );
-}
-
-/**
- *
- */
-interface OIntegrate_Engine
-{
-    /**
-     * @param $data
-     * @param $templateFile
-     * @return mixed
-     */
-    function process( $data, $templateFile );
-}
-
-/**
- *
- */
 class OIntegrate_Engine_JavaScript implements OIntegrate_Engine // {{{
 {
     /**
@@ -524,8 +524,7 @@ class OIntegrate_Converter_TikiToHtml implements OIntegrate_Converter // {{{
      */
     function convert( $content )
 	{
-		global $tikilib;
-		return $tikilib->parse_data(htmlentities($content, ENT_QUOTES, 'UTF-8'));
+		return TikiLib::lib('parser')->parse_data(htmlentities($content, ENT_QUOTES, 'UTF-8'));
 	}
 } // }}}
 

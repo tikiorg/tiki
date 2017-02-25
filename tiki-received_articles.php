@@ -116,7 +116,7 @@ $smarty->assign('rating', $info["rating"]);
 // Assign parsed
 $smarty->assign(
 	'parsed_heading',
-	$tikilib->parse_data(
+	TikiLib::lib('parser')->parse_data(
 		$info["heading"],
 		array(
 			'min_one_paragraph' => true,
@@ -124,7 +124,7 @@ $smarty->assign(
 		)
 	)
 );
-$smarty->assign('parsed_body', $tikilib->parse_data($info["body"], array('is_html' => $artlib->is_html($info))));
+$smarty->assign('parsed_body', TikiLib::lib('parser')->parse_data($info["body"], array('is_html' => $artlib->is_html($info))));
 if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();
 	$commlib->remove_received_article($_REQUEST["remove"]);

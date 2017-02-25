@@ -146,8 +146,8 @@ class Services_Edit_Controller
 						$diffnew = $data;
 					}
 					if ($diffstyle === 'htmldiff') {
-						$diffnew = $tikilib->parse_data($diffnew, $options);
-						$diffold = $tikilib->parse_data($diffold, $options);
+						$diffnew = TikiLib::lib('parser')->parse_data($diffnew, $options);
+						$diffold = TikiLib::lib('parser')->parse_data($diffold, $options);
 					}
 					$data = diff2($diffold, $diffnew, $diffstyle);
 					$smarty->assign_by_ref('diffdata', $data);
@@ -156,7 +156,7 @@ class Services_Edit_Controller
 					$smarty->assign('show_version_info', 'n');	// disables the headings etc
 					$data = $smarty->fetch('pagehistory.tpl');
 				} else {
-					$data = $tikilib->parse_data($data, $options);
+					$data = TikiLib::lib('parser')->parse_data($data, $options);
 				}
 				$parsed = $data;
 
@@ -205,7 +205,7 @@ $(window).on("load", function(){
 
 				$footnote = $input->footnote->text();
 				if ($footnote) {
-					$footnote = $tikilib->parse_data($footnote);
+					$footnote = TikiLib::lib('parser')->parse_data($footnote);
 				} else {
 					$footnote = $wikilib->get_footnote($user, $page);
 				}
@@ -314,6 +314,27 @@ $(window).on("load", function(){
         return $result;
     }
 
+    public static function page_editable($autoSaveId = null, &$page = null)
+    {
+        global $user;
+        $tikilib = TikiLib::lib('tiki');
+
+        if ($autoSaveId !== null) {
+            $autoSaveIdParts = explode(':', $autoSaveId);	// user, section, object id
+            foreach ($autoSaveIdParts as & $part) {
+                $part = urldecode($part);
+            }
+
+            $page = $autoSaveIdParts[2];	// plugins use global $page for approval
+        }
+
+        if (!Perms::get('wiki page', $page)->edit || $user != $tikilib->get_semaphore_user($page)) {
+            return false;
+        }
+
+        return true;
+    }
+
     function action_update_output_type(JitFilter $input)
     {
         $page = $input->page->text();
@@ -334,27 +355,6 @@ $(window).on("load", function(){
         }
 
         return false;
-    }
-
-    public static function page_editable($autoSaveId = null, &$page = null)
-    {
-        global $user;
-        $tikilib = TikiLib::lib('tiki');
-
-        if ($autoSaveId !== null) {
-            $autoSaveIdParts = explode(':', $autoSaveId);	// user, section, object id
-            foreach ($autoSaveIdParts as & $part) {
-                $part = urldecode($part);
-            }
-
-            $page = $autoSaveIdParts[2];	// plugins use global $page for approval
-        }
-
-        if (!Perms::get('wiki page', $page)->edit || $user != $tikilib->get_semaphore_user($page)) {
-            return false;
-        }
-
-        return true;
     }
 
 	public function action_help($input)

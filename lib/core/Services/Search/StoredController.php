@@ -78,6 +78,56 @@ class Services_Search_StoredController
 		);
 	}
 
+	private function getResultSet($query)
+	{
+		try {
+			$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+
+			return $query->search($unifiedsearchlib->getIndex());
+		} catch (Search_Elastic_TransportException $e) {
+			Feedback::error(tr('Search functionality currently unavailable.'), 'session');
+		} catch (Exception $e) {
+			Feedback::error($e->getMessage(), 'session');
+		}
+	}
+
+	private function renderResults($resultset)
+	{
+		global $prefs;
+
+		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+		$dataSource = $unifiedsearchlib->getDataSource('formatting');
+
+		$plugin = new Search_Formatter_Plugin_SmartyTemplate('searchresults-plain.tpl');
+		$plugin->setData(
+			array(
+				'prefs' => $prefs,
+			)
+		);
+		$fields = array(
+			'title' => null,
+			'url' => null,
+			'modification_date' => null,
+			'highlight' => null,
+		);
+		if ($prefs['feature_search_show_visit_count'] === 'y') {
+			$fields['visits'] = null;
+		}
+		$plugin->setFields($fields);
+
+		$formatter = Search_Formatter_Factory::newFormatter($plugin);
+
+		$wiki = $formatter->format($resultset);
+		$results = TikiLib::lib('parser')->parse_data(
+			$wiki,
+			array(
+				'is_html' => true,
+			)
+		);
+
+		return $results;
+	}
+
 	function action_delete($input)
 	{
 		if (! $input->queryId->int()) {
@@ -107,7 +157,7 @@ class Services_Search_StoredController
 
 		return $out;
 	}
-
+	
 	function action_edit($input)
 	{
 		if (! $input->queryId->int()) {
@@ -148,56 +198,5 @@ class Services_Search_StoredController
 		}
 
 		return $out;
-	}
-
-	private function getResultSet($query)
-	{
-		try {
-			$unifiedsearchlib = TikiLib::lib('unifiedsearch');
-
-			return $query->search($unifiedsearchlib->getIndex());
-		} catch (Search_Elastic_TransportException $e) {
-			Feedback::error(tr('Search functionality currently unavailable.'), 'session');
-		} catch (Exception $e) {
-			Feedback::error($e->getMessage(), 'session');
-		}
-	}
-	
-	private function renderResults($resultset)
-	{
-		global $prefs;
-
-		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
-		$dataSource = $unifiedsearchlib->getDataSource('formatting');
-
-		$plugin = new Search_Formatter_Plugin_SmartyTemplate('searchresults-plain.tpl');
-		$plugin->setData(
-			array(
-				'prefs' => $prefs,
-			)
-		);
-		$fields = array(
-			'title' => null,
-			'url' => null,
-			'modification_date' => null,
-			'highlight' => null,
-		);
-		if ($prefs['feature_search_show_visit_count'] === 'y') {
-			$fields['visits'] = null;
-		}
-		$plugin->setFields($fields);
-
-		$formatter = Search_Formatter_Factory::newFormatter($plugin);
-
-		$wiki = $formatter->format($resultset);
-		$tikilib = TikiLib::lib('tiki');
-		$results = $tikilib->parse_data(
-			$wiki,
-			array(
-				'is_html' => true,
-			)
-		);
-
-		return $results;
 	}
 }

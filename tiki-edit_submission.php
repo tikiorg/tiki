@@ -153,8 +153,8 @@ if (isset($_REQUEST['subId'])) {
 
 	$body = $article_data['body'];
 	$heading = $article_data['heading'];
-	$smarty->assign('parsed_body', $tikilib->parse_data($body, array('is_html' => 'y')));
-	$smarty->assign('parsed_heading', $tikilib->parse_data($heading), array('is_html' => 'y'));
+	$smarty->assign('parsed_body', TikiLib::lib('parser')->parse_data($body, array('is_html' => 'y')));
+	$smarty->assign('parsed_heading', TikiLib::lib('parser')->parse_data($heading), array('is_html' => 'y'));
 }
 if (!empty($_REQUEST['translationOf'])) {
 	$translationOf = $_REQUEST['translationOf'];
@@ -343,8 +343,8 @@ if (isset($_REQUEST['preview']) || !empty($errors)) {
 
 	$smarty->assign('size', strlen($body));
 
-	$parsed_body = $tikilib->parse_data($body, array('is_html' => 'y'));
-	$parsed_heading = $tikilib->parse_data($heading, array('is_html' => 'y'));
+	$parsed_body = TikiLib::lib('parser')->parse_data($body, array('is_html' => 'y'));
+	$parsed_heading = TikiLib::lib('parser')->parse_data($heading, array('is_html' => 'y'));
 
 	$smarty->assign('parsed_body', $parsed_body);
 	$smarty->assign('parsed_heading', $parsed_heading);

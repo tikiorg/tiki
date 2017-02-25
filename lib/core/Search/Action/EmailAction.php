@@ -98,8 +98,21 @@ class Search_Action_EmailAction implements Search_Action_Action
 		}
 	}
 
-	function requiresInput(JitFilter $data) {
-		return false;
+	private function dereference($email_or_username) {
+		if( empty($email_or_username) ) {
+			return null;
+		}
+		$email_or_username = $this->stripNp($email_or_username);
+		if( strstr($email_or_username, '@') ) {
+			return $email_or_username;
+		} else {
+			return TikiLib::lib('user')->get_user_email($email_or_username);
+		}
+	}
+
+	private function stripNp($content)
+	{
+		return str_replace(array('~np~', '~/np~'), '', $content);
 	}
 
 	private function parse($content)
@@ -113,23 +126,6 @@ class Search_Action_EmailAction implements Search_Action_Action
 		);
 
 		return trim($parserlib->parse_data($content, $options));
-	}
-
-	private function stripNp($content)
-	{
-		return str_replace(array('~np~', '~/np~'), '', $content);
-	}
-
-	private function dereference($email_or_username) {
-		if( empty($email_or_username) ) {
-			return null;
-		}
-		$email_or_username = $this->stripNp($email_or_username);
-		if( strstr($email_or_username, '@') ) {
-			return $email_or_username;
-		} else {
-			return TikiLib::lib('user')->get_user_email($email_or_username);
-		}
 	}
 
 	private function getPDFAttachment($pageName) {
@@ -155,7 +151,7 @@ class Search_Action_EmailAction implements Search_Action_Action
 				return false;
 			}
 
-			$pdata = $tikilib->parse_data($info["data"], array(
+			$pdata = TikiLib::lib('parser')->parse_data($info["data"], array(
 				'page' => $pageName,
 				'is_html' => $info["is_html"],
 				'print' => 'y',
@@ -166,6 +162,10 @@ class Search_Action_EmailAction implements Search_Action_Action
 
 			return $generator->getPdf('tiki-print.php', $params, $pdata);
 		}
+	}
+
+	function requiresInput(JitFilter $data) {
+		return false;
 	}
 }
 

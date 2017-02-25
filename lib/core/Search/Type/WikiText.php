@@ -16,8 +16,8 @@ class Search_Type_WikiText implements Search_Type_Interface
 
 	function getValue()
 	{
-		global $tikilib, $prefs;
-		$out = $tikilib->parse_data(
+		global $prefs;
+		$out = TikiLib::lib('parser')->parse_data(
 			$this->value, array(
 				'parsetoc' => false,
 				'indexing' => true,
