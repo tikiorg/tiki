@@ -56,10 +56,28 @@
 	text-align: center;
 }
 
+.footlink::before{
+	content: "["
+}
+.footlink::after{
+	content: "]"
+}
+.footlink{
+	vertical-align: super;
+	font-size: smaller
+}
 // /* wikiplugin_footnotearea */
 .footnotearea {
 	margin-top: 2em;
-	font-size: 0.9em;
+	font-size: 0.9em
+}
+.footnotearea .sameas {
+	vertical-align: super;
+	font-size: smaller
+}
+
+	.footnotearea > div > span > a:first-child::after{
+	content: "."
 }
 
 // /* Versions plugin */
