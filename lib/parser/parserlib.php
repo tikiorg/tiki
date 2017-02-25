@@ -100,14 +100,37 @@ class ParserLib extends TikiDb_Bridge
 	}
 	//*
 
-	function parse_data_raw($data)
-	{
-		$data = $this->parse_data($data);
-		$data = str_replace("tiki-index", "tiki-index_raw", $data);
-		return $data;
-	}
 
-	//*
+	/**
+	 *
+	 * intended for use within wiki plugins. This option preserves opening and closing whitespace that renders into
+	 * annoying <p> tags when parsed, and also respects HTML rendering preferences.
+	 *
+	 * @param $data string wiki/html to be parsed
+	 * @param $optionsOverride array options to override the current defaults
+	 *
+	 * @return string parsed data
+	 */
+	function parse_data_plugin($data,$optionsOverride= array())
+	{
+		$options = $this->option;
+
+		foreach ($optionsOverride as $name => $value)
+			$options[$name] = $value;
+
+		// record initial whitespace
+		preg_match('(^\W*)',$data,$bwhite);
+		preg_match('(\W*$)',$data,$ewhite);
+
+		// remove all the whitespace
+		$data = trim($data);
+		$data = $this->parse_data($data,$options);
+		// remove whitespace that was added while parsing (yes it does happen)
+		$data = trim($data);
+
+		// add original whitespace back to preserve spacing
+		return ($bwhite[0].$data.$ewhite[0]);
+	}
 
 	/**
 	 * @param string $data the wiki formatted text to turn into HTML
@@ -724,8 +747,6 @@ class ParserLib extends TikiDb_Bridge
 		}
 	}
 
-	// add a post edit filter which is called when a wiki page is edited and before
-	// it is committed to the database (see tiki-handlers.php on its usage)
 	//*
 
 	private function strip_unparsed_block(& $data, & $noparsed, $protect = false)
@@ -747,7 +768,8 @@ class ParserLib extends TikiDb_Bridge
 		}
 	}
 
-	// apply all the post edit handlers to the wiki page data
+	// add a post edit filter which is called when a wiki page is edited and before
+	// it is committed to the database (see tiki-handlers.php on its usage)
 	//*
 
 	function protectSpecialChars($data)
@@ -760,8 +782,7 @@ class ParserLib extends TikiDb_Bridge
 		return $data;
 	}
 
-	// This function handles wiki codes for those special HTML characters
-	// that textarea won't leave alone.
+	// apply all the post edit handlers to the wiki page data
 	//*
 
 	function parse_first(&$data, &$noparsed)
@@ -945,8 +966,9 @@ if ( \$('#$id') ) {
 		}
 	}
 
-	// This function handles the protection of html entities so that they are not mangled when
-	// parse_htmlchar runs, and as well so they can be properly seen, be it html or non-html
+	// This function handles wiki codes for those special HTML characters
+	// that textarea won't leave alone.
+	//*
 
 	function plugin_enabled( $name, & $output )
 	{
@@ -970,7 +992,8 @@ if ( \$('#$id') ) {
 		return true;
 	}
 
-	// This function removed the protection of html entities so that they are rendered as expected by the viewer
+	// This function handles the protection of html entities so that they are not mangled when
+	// parse_htmlchar runs, and as well so they can be properly seen, be it html or non-html
 
 	function plugin_info( $name, $args = array() )
 	{
@@ -1029,8 +1052,7 @@ if ( \$('#$id') ) {
 		return $known[$name] = $func_name_info();
 	}
 
-	// Reverses parse_first.
-	//*
+	// This function removed the protection of html entities so that they are rendered as expected by the viewer
 
 	function plugin_exists( $name, $include = false )
 	{
@@ -1052,6 +1074,8 @@ if ( \$('#$id') ) {
 		return false;
 	}
 
+	// Reverses parse_first.
+	//*
 
 	function plugin_can_execute( $name, $data = '', $args = array(), $dont_modify = false )
 	{
@@ -1159,8 +1183,6 @@ if ( \$('#$id') ) {
 		return "$name-$bodyHash-$argsHash-$bodyLen-$argsLen";
 	}
 
-	//*
-
 	function unprotectSpecialChars($data, $is_html = false)
 	{
 		if (( $is_html != false || ( isset($this->option['is_html']) && $this->option['is_html']))
@@ -1224,7 +1246,6 @@ if ( \$('#$id') ) {
 		return '';
 	}
 
-	// get all the plugins of a text- can be limitted only to some
 	//*
 
 	function plugin_fingerprint_store( $fp, $type )
@@ -1245,7 +1266,7 @@ if ( \$('#$id') ) {
 		);
 	}
 
-	// This recursive function handles pre- and no-parse sections and plugins
+	// get all the plugins of a text- can be limitted only to some
 	//*
 
 	function plugin_execute( $name, $data = '', $args = array(), $offset = 0, $validationPerformed = false, $option = array()  )
@@ -1337,6 +1358,9 @@ if ( \$('#$id') ) {
 		}
 	}
 
+	// This recursive function handles pre- and no-parse sections and plugins
+	//*
+
 	private function convert_plugin_output( $output, $from, $to )
 	{
 		if ( ! $output instanceof WikiParser_PluginOutput ) {
@@ -1353,8 +1377,6 @@ if ( \$('#$id') ) {
 			return $output->toWiki();
 		}
 	}
-
-	//*
 
 	private function plugin_apply_filters( $name, & $data, & $args )
 	{
@@ -1721,16 +1743,9 @@ if ( \$('#$id') ) {
 		return $link->getHtml($ck_editor);
 	}
 
-	/**
-	 * Check if possible to execute a plugin
-	 *
-	 * @param string $name
-	 * @param string $data
-	 * @param array $args
-	 * @param bool $dont_modify
-	 * @return bool|string Boolean true if can execute, string 'rejected' if can't execute and plugin fingerprint if pending
-	 */
 	//*
+
+
 	private function get_hotwords()
 	{
 		static $cache_hotwords;
@@ -1747,8 +1762,16 @@ if ( \$('#$id') ) {
 		return $ret;
 	}
 
+	/**
+	 * Check if possible to execute a plugin
+	 *
+	 * @param string $name
+	 * @param string $data
+	 * @param array $args
+	 * @param bool $dont_modify
+	 * @return bool|string Boolean true if can execute, string 'rejected' if can't execute and plugin fingerprint if pending
+	 */
 	//*
-
 	function parse_smileys($data)
 	{
 		global $prefs;
@@ -2779,7 +2802,6 @@ if ( \$('#$id') ) {
 
 	//*
 
-
 	function close_blocks(&$data, &$in_paragraph, &$listbeg, &$divdepth, $close_paragraph, $close_lists, $close_divs)
 	{
 
@@ -2866,6 +2888,8 @@ if ( \$('#$id') ) {
 		return $line;
 	}
 
+	//*
+
 	function autolinks($text)
 	{
 		if ($text) {
@@ -2922,8 +2946,6 @@ if ( \$('#$id') ) {
 		//		}
 	}
 
-	//*
-
 	function contains_html_br($inHtml)
 	{
 		$block_detect_regexp = '/<(?:br)/i';
@@ -2971,6 +2993,15 @@ if ( \$('#$id') ) {
 		}
 
 		$data = $this->unprotectSpecialChars($data, $is_html);
+	}
+
+	//*
+
+	function parse_data_raw($data)
+	{
+		$data = $this->parse_data($data);
+		$data = str_replace("tiki-index", "tiki-index_raw", $data);
+		return $data;
 	}
 
 	//*
