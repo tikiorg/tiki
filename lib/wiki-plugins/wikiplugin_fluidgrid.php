@@ -104,7 +104,6 @@ function wikiplugin_fluidgrid_rollback($data, $hashes)
  */
 function wikiplugin_fluidgrid($data, $params, $pos)
 {
-    global $tikilib;
 
     //
     // The following function uses a regular expression in the form
@@ -466,7 +465,7 @@ function wikiplugin_fluidgrid($data, $params, $pos)
         //    because it is a mixture of html and wiki syntax. 
       	$c = trim($c);
         $c = wikiplugin_fluidgrid_rollback($c, $hashes);
-      	$c = $tikilib->parse_data($c);
+      	$c = TikiLib::lib('parser')->parse_data_plugin($c);
         $result .= "<div class='col-" . $devicesize . "-" . $w . "'>" . $c . "</div>" ;
         
         // Increment the column number (because we are using while, not for)

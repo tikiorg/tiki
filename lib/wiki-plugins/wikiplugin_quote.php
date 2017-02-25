@@ -60,26 +60,30 @@ function wikiplugin_quote($data, $params)
 	global $smarty;
 
 	$source_url = '';
+	$comment_info = '';
+	$replyto = '';
 	$date = null;
 
-	if ($params['thread_id']) {
+	if (isset($params['thread_id'])) {
 		$commentslib = TikiLib::lib('comments');
 		$comment_info = $commentslib->get_comment($params['thread_id']);
 		$replyto = $comment_info['userName'];
-	} elseif ($params['replyto']) {
+	} elseif (isset($params['replyto'])) {
 		$replyto = $params['replyto'];
 	}
-	if ($params['source_url']) {
+	if (isset($params['source_url'])) {
 		$source_url = $params['source_url'];
 	}
-	if ($params['date']) {
+	if (isset($params['date'])) {
 		$date = strtotime($params['date']);
 	}
+
+	$data = TikiLib::lib('parser')->parse_data_plugin($data);
 
 	$smarty->assign('date', $date);
 	$smarty->assign('comment_info', $comment_info);
 	$smarty->assign('replyto', $replyto);
-	$smarty->assign('data', trim($data));
+	$smarty->assign('data', $data);
 	$smarty->assign('source_url', trim($source_url));
 
 	return $smarty->fetch("wiki-plugins/wikiplugin_quote.tpl");
