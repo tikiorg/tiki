@@ -119,8 +119,8 @@ class ParserLib extends TikiDb_Bridge
 			$options[$name] = $value;
 
 		// record initial whitespace
-		preg_match('(^\W*)',$data,$bwhite);
-		preg_match('(\W*$)',$data,$ewhite);
+		preg_match('(^\s*)',$data,$bwhite);
+		preg_match('(\s*$)',$data,$ewhite);
 
 		// remove all the whitespace
 		$data = trim($data);
