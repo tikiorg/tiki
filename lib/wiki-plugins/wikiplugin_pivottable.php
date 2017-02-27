@@ -366,39 +366,6 @@ function wikiplugin_pivottable($data, $params)
 		}
 		$pivotData[] = $row;
 	}
-
-	$highlight = array();
-	if( !empty($params['highlightMine']) && $params['highlightMine'] === 'y' ) {
-		$ownerFields = array_map(function($fieldId) use($definition) {
-			return $definition->getField($fieldId);
-		}, $definition->getItemOwnerFields());
-		foreach( $pivotData as $item ) {
-			foreach( $ownerFields as $ownerField ) {
-				$itemUsers = TikiLib::lib('trk')->parse_user_field(@$item[$ownerField['name']]);
-				if( in_array($user, $itemUsers) ) {
-					$highlight[] = $item;
-					break;
-				}
-			}
-		}
-	}
-	if( !empty($params['highlightGroup']) && $params['highlightGroup'] === 'y' ) {
-		$groupField = null;
-		foreach( $fields as $field ) {
-			if( $field['type'] == 'g' ) {
-				$groupField = $field;
-				break;
-			}
-		}
-		if( $groupField ) {
-			$myGroups = TikiLib::lib('tiki')->get_user_groups($user);
-			foreach( $pivotData as $item ) {
-				if( in_array(@$item[$groupField['name']], $myGroups) ) {
-					$highlight[] = $item;
-				}
-			}
-		}
-	}
 	
 	//translating permName to field name for columns and rows
 	$cols = array();
@@ -488,6 +455,39 @@ function wikiplugin_pivottable($data, $params)
 		}
 	} else {
 		$params['aggregateDetails'] = array();
+	}
+
+	$highlight = array();
+	if( !empty($params['highlightMine']) && $params['highlightMine'] === 'y' ) {
+		$ownerFields = array_map(function($fieldId) use($definition) {
+			return $definition->getField($fieldId);
+		}, $definition->getItemOwnerFields());
+		foreach( $pivotData as $item ) {
+			foreach( $ownerFields as $ownerField ) {
+				$itemUsers = TikiLib::lib('trk')->parse_user_field(@$item[$ownerField['name']]);
+				if( in_array($user, $itemUsers) ) {
+					$highlight[] = $item;
+					break;
+				}
+			}
+		}
+	}
+	if( !empty($params['highlightGroup']) && $params['highlightGroup'] === 'y' ) {
+		$groupField = null;
+		foreach( $fields as $field ) {
+			if( $field['type'] == 'g' ) {
+				$groupField = $field;
+				break;
+			}
+		}
+		if( $groupField ) {
+			$myGroups = TikiLib::lib('tiki')->get_user_groups($user);
+			foreach( $pivotData as $item ) {
+				if( in_array(@$item[$groupField['name']], $myGroups) ) {
+					$highlight[] = $item;
+				}
+			}
+		}
 	}
 	
 	//checking if user can see edit button
