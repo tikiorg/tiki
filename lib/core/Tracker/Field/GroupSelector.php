@@ -41,6 +41,17 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract implements Trac
 						'filter' => 'int',
 						'legacy_index' => 1,
 					),
+					'userGroups' => array(
+						'name' => tr('User Groups'),
+						'description' => tr('Show groups user belongs to instead of the ones user has permission to see.'),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('No'),
+							1 => tr('Yes'),
+						),
+						'default' => 0,
+						'legacy_index' => 4,
+					),
 					'assign' => array(
 						'name' => tr('Assign to the group'),
 						'description' => tr('For no auto-assigned field, the user (user selector if it exists, or user) will be assigned to the group and it will be his or her default group. The group must have the user choice setting activated.'),
@@ -77,7 +88,12 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract implements Trac
 		
 		$groupId = $this->getOption('groupId');
 		if (empty($groupId)) {
-			$data['list'] = TikiLib::lib('user')->list_all_groups_with_permission();
+			if( $this->getOption('userGroups') ) {
+				$data['list'] = array_keys(TikiLib::lib('user')->get_user_groups_inclusion($user));
+				sort($data['list']);
+			} else {
+				$data['list'] = TikiLib::lib('user')->list_all_groups_with_permission();
+			}
 		} else {
 			$group_info = TikiLib::lib('user')->get_groupId_info($groupId);
 			$data['list'] =	TikiLib::lib('user')->get_including_groups($group_info['groupName']);
