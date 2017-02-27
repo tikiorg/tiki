@@ -319,6 +319,8 @@ class CleanVendors
 		$fs->remove($vendors . 'phpcas/phpcas/CAS-1.3.3/docs');
 		$fs->remove($vendors . 'jquery/plugins/jquery-json/test');
 
+		$fs->remove($vendors . 'chartjs/Chart.js/samples');
+
 
 		self::removeMultiple($vendors . 'blueimp/jquery-file-upload/css', ['demo-ie8.css', 'demo.css']);
 		self::removeMultiple($vendors . 'blueimp/jquery-file-upload',
