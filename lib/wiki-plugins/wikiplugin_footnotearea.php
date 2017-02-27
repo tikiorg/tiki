@@ -53,8 +53,10 @@ function wikiplugin_footnotearea($data, $params)
 			unset ($footnotes['lists'][$params['class']]['entry']);
 		}
 	}else{                                                        // if no params are given, render in default way
-		foreach ($footnotes['lists'] as $listName => $list)
+		foreach ($footnotes['lists'] as $listName => $list) {
 			$html .= genFootnoteArea($listName, $list);
+		}
+	unset($footnotes['lists']);
 	}
 
 	return $html;
