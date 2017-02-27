@@ -312,7 +312,7 @@ class Services_Language_Controller
 			}
 				
 			//verify file type
-			if($_FILES['language_file']['type'] !== 'application/x-httpd-php'){
+			if( ! preg_match('/^\w+\.php$/', $_FILES['language_file']['name'])){
 				throw new Services_Exception_Denied(tr('Invalid file type (expected file type: php)'));
 			}
 			
@@ -330,7 +330,9 @@ class Services_Language_Controller
 				}
 				//move the uploaded file to /temp directory
 				move_uploaded_file($_FILES['language_file']['tmp_name'], 'temp/' . $_FILES['language_file']['name']);
-				
+
+				$lang = array();
+				// TODO: spawn php process; include this file; var_export($lang_custom); eval result here
 				//read $lang_custom array from the uploaded custom.php file
 				include('temp/custom.php');
 				if (isset($lang_custom) && is_array($lang_custom)){
