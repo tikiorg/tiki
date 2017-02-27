@@ -13,7 +13,7 @@ function wikiplugin_chartjs_info()
 		'description' => tra('Create a JS Chart'),
 		'prefs' => array('wikiplugin_chartjs'),
 		'body' => tra('A chart using ChartJS'),
-		'tags' => array( 'advanced' ),
+		'tags' => array('advanced'),
 		'introduced' => 16,
 		'params' => array(
 			'id' => array(
@@ -25,9 +25,9 @@ function wikiplugin_chartjs_info()
 			),
 			'type' => array(
 				'name' => tra('Chart Type'),
-				'description' => tr('The type of chart. Currently works with Pie and Doughnut'),
+				'description' => tr('The type of chart. Currently works with pie, bar and doughnut'),
 				'filter' => 'text',
-				'default' => 'Pie',
+				'default' => 'pie',
 				'since' => '16.0',
 			),
 			'height' => array(
@@ -69,7 +69,7 @@ function wikiplugin_chartjs_info()
 				'name' => tra('Chart highlight'),
 				'description' => tr('Colon-separated color of chart section when highlighted'),
 				'filter' => 'text',
-				'default' => 'data_colors',
+				'default' => '',
 				'since' => '16.0',
 			),
 		),
@@ -79,47 +79,49 @@ function wikiplugin_chartjs_info()
 
 function wikiplugin_chartjs($data, $params)
 {
-	$headerlib = TikiLib::lib('header');
-	$headerlib->add_jsfile("vendor/nnnick/chartjs/Chart.min.js");
-
 	global $smarty;
 
-	/*set defaults*/
-	$id = "tikiChart";
-	$type = "Pie";
-	$height = "200";
-	$width = "200";
-	$data_labels = "A:B:C:D:E:F:G:H:I:J";
-	$data_colors = "red:blue:green:purple:grey:orange:yellow:black:brown:cyan";
-	/*end defaults*/
+	//set defaults
+	$plugininfo = wikiplugin_chartjs_info();
+	$defaults = array();
+	foreach ($plugininfo['params'] as $key => $param) {
+		$defaults[$key] = $param['default'];
+	}
+	$params = array_merge($defaults, $params);
 
-	//extract all params, overwriting defaults
-	extract($params, EXTR_OVERWRITE);
-	if (empty($data_highlights)) {
-		$data_highlights = $data_colors;
+	if (empty($params['data_highlights'])) {
+		$params['data_highlights'] = $params['data_colors'];
 	}
 
-	$values = explode(":",$params['values']);
-	$data_labels = explode(":",$data_labels);
-	$data_colors = explode(":",$data_colors);
-	$data_highlights = explode(":",$data_highlights);
+	$values = explode(':', $params['values']);
+	$data_labels = explode(':', $params['data_labels']);
+	$data_colors = explode(':', $params['data_colors']);
+	$data_highlights = explode(':', $params['data_highlights']);
 
-	if (empty($values)){
-		return "Values must be set for chart";
+	if (empty($values)) {
+		return tr('Values must be set for chart');
 	}
-	$data = array();
-	foreach ($values as $key=>$value) {
-		$data[$key]['value'] = $value;
-		$data[$key]['color'] = $data_colors[$key];
-		$data[$key]['highlight'] = $data_highlights[$key];
-		$data[$key]['label'] = $data_labels[$key];
-	}
+	$data = [
+		'labels' => array_slice($data_labels, 0, count($values)),
+		'datasets' => [
+			[
+				'data' => $values,
+				'backgroundColor' => array_slice($data_colors, 0, count($values)),
+				'hoverBackgroundColor' => array_slice($data_highlights, 0, count($values)),
+			],
+		],
+	];
 
-	$smarty->assign("id", $id);
-	$smarty->assign("type", $type);
-	$smarty->assign("height", $height);
-	$smarty->assign("width", $width);
-	$smarty->assign("data", json_encode($data));
+	TikiLib::lib('header')->add_jsfile("vendor/chartjs/Chart.js/Chart.min.js")
+		->add_jq_onready('
+setTimeout(function () {
+	var chartjs_' . $params['id'] . ' = new Chart("' . $params['id'] . '", {
+		type: "' . $params['type'] . '",
+		data: ' . json_encode($data) . '
+	})
+},
+500);');
 
-	return $smarty->fetch("wiki-plugins/wikiplugin_chartjs.tpl");
+	return '<div class="tiki-chartjs"><canvas id="' . $params['id'] . '" width="' . $params['width'] .
+					'" height="' . $params['height'] . '"></canvas></div>';
 }
