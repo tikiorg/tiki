@@ -1189,6 +1189,9 @@ class TrackerLib extends TikiLib
 				if (isset($ff_array['sqlsearch']) && is_array($ff_array['sqlsearch'])) {
 					$mid .= " AND ttif$i.`fieldId` in (".implode(',', array_fill(0, count($ff_array['sqlsearch']), '?')).')';
 					$bindvars = array_merge($bindvars, $ff_array['sqlsearch']);
+				} elseif (isset($ff_array['usersearch']) && is_array($ff_array['usersearch'])) {
+					$mid .= " AND ttif$i.`fieldId` in (".implode(',', array_fill(0, count($ff_array['usersearch']), '?')).')';
+					$bindvars = array_merge($bindvars, $ff_array['usersearch']);
 				} elseif ( $ff ) {
 					if( $search_for_blank ) {
 						$cat_table .= " AND ttif$i.`fieldId` = ".intval($ff);
@@ -1320,6 +1323,9 @@ class TrackerLib extends TikiLib
 					} elseif (isset($ff_array['sqlsearch']) && is_array($ff_array['sqlsearch'])) {
 						$mid .= " AND MATCH(ttif$i.`value`) AGAINST(? IN BOOLEAN MODE)";
 						$bindvars[] = $ev;
+					} elseif (isset($ff_array['usersearch']) && is_array($ff_array['usersearch'])) {
+						$mid.= " AND ttif$i.`value` REGEXP ? ";
+						$bindvars[] = "[[:<:]]{$ev}[[:>:]]";
 					} else {
 						$mid.= " AND ttif$i.`value`=? ";
 						$bindvars[] = $ev == ''? $fv: $ev;

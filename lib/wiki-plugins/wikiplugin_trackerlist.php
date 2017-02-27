@@ -1564,8 +1564,8 @@ function wikiplugin_trackerlist($data, $params)
 		$smarty->assign_by_ref('tr_initial', $tr_initial);
 
 		if ((isset($view) && $view == 'user') || isset($view_user) || isset($_REQUEST['tr_user'])) {
-			if ($f = $definition->getAuthorField()) {
-				$filterfield[] = $f;
+			if ($f = $definition->getItemOwnerFields()) {
+				$filterfield[] = array('usersearch' => $f);
 				$filtervalue[] = '';
 				if (!isset($_REQUEST['tr_user'])) {
 					$exactvalue[] = isset($view)? (empty($user)?'Anonymous':$user): $view_user;
