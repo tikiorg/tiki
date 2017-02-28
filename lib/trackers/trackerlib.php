@@ -1314,7 +1314,7 @@ class TrackerLib extends TikiLib
 							$bindvars[] = $ev[$keys[0]];
 							$bindvars[] = $ev[$keys[0]];
 						} elseif ($keys[0] === 'not') {
-							$mid .= " AND ttif$i.`value` not in (".implode(',', array_fill(0, count($ev), '?')).")";
+							$mid .= " AND ( ttif$i.`value` not in (".implode(',', array_fill(0, count($ev), '?')).") OR ttif$i.`value` IS NULL )";
 							$bindvars = array_merge($bindvars, array_values($ev));
 						} else {
 							$mid .= " AND ttif$i.`value` in (".implode(',', array_fill(0, count($ev), '?')).")";
