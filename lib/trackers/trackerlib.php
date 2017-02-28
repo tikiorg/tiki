@@ -1283,8 +1283,22 @@ class TrackerLib extends TikiLib
 					$bindvars[] = $userFieldId;
 					$bindvars[] = empty($ev)?$fv: $ev;
 				} elseif ( $filter['type'] == 'u' && $ev > '') { // user selector and exact value
-					$mid.= " AND ttif$i.`value` REGEXP ? ";
-					$bindvars[] = "[[:<:]]{$ev}[[:>:]]";
+					if (is_array($ev)) {
+						$keys = array_keys($ev);
+						if ($keys[0] === 'not') {
+							$mid .= " AND ( ttif$i.`value` NOT REGEXP ".implode(' OR ttif$i.`value` NOT REGEXP ', array_fill(0, count($ev), '?'))." OR ttif$i.`value` IS NULL )";
+						} else {
+							$mid .= " AND ( ttif$i.`value` REGEXP ".implode(' OR ttif$i.`value` REGEXP ', array_fill(0, count($ev), '?'))." )";
+						}
+						$bindvars = array_merge($bindvars,
+							array_values(array_map(function($ev){
+								return "[[:<:]]{$ev}[[:>:]]";
+							}, $ev))
+						);
+					} else {
+						$mid.= " AND ttif$i.`value` REGEXP ? ";
+						$bindvars[] = "[[:<:]]{$ev}[[:>:]]";
+					}
 				} elseif ( $filter['type'] == '*') { // star
 					$mid .= " AND ttif$i.`value`*1>=? ";
 					$bindvars[] = $ev;
@@ -1399,8 +1413,22 @@ class TrackerLib extends TikiLib
 				$filterfield = array($filterfield);
 			}
 			foreach ($filterfield as $f) {
-				if (!in_array($f, $fieldIds)) {
-					$fieldIds[] = $f;
+				if( !empty($f['sqlsearch']) ) {
+					foreach( $f['sqlsearch'] as $subf ) {
+						if (!in_array($subf, $fieldIds)) {
+							$fieldIds[] = $subf;
+						}
+					}
+				} elseif( !empty($f['usersearch']) ) {
+					foreach( $f['usersearch'] as $subf ) {
+						if (!in_array($subf, $fieldIds)) {
+							$fieldIds[] = $subf;
+						}
+					}
+				} else {
+					if (!in_array($f, $fieldIds)) {
+						$fieldIds[] = $f;
+					}
 				}
 			}
 		}
