@@ -349,6 +349,7 @@ class TikiSheet
 				$handler = new TikiSheetDatabaseHandler($childSheetId, $date );
 				$childSheet = new TikiSheet();
 				$childSheet->import($handler);
+				$childSheet->parseValues = true;
 				$data .= $childSheet->getTableHtml( false );
 			}
 		}
