@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ce9743789821533aa02821b7c0a34aa5",
+    "content-hash": "3fd2747dec8e14c5dd96cb03a6b18291",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -3908,33 +3908,42 @@
         },
         {
             "name": "zendframework/zendservice-recaptcha",
-            "version": "2.0.1",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/ZendService_ReCaptcha.git",
-                "reference": "4324cca8502d9f47b3b43a18acdd3fdbeb965536"
+                "reference": "6c6877c07c8ac73b187911ea5d264a640b234361"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/zendframework/zendservice-recaptcha/zendframework-zendservice-recaptcha-4324cca8502d9f47b3b43a18acdd3fdbeb965536-zip-8c45bf.zip",
-                "reference": "4324cca8502d9f47b3b43a18acdd3fdbeb965536",
-                "shasum": "0a608083d2f5e3cd95faca010620c4e693b38113"
+                "url": "https://api.github.com/repos/zendframework/ZendService_ReCaptcha/zipball/6c6877c07c8ac73b187911ea5d264a640b234361",
+                "reference": "6c6877c07c8ac73b187911ea5d264a640b234361",
+                "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3",
-                "zendframework/zend-http": ">=2.0.0",
-                "zendframework/zend-uri": ">=2.0.0",
-                "zendframework/zend-version": ">=2.0.0"
+                "php": "^5.6 || ^7.0",
+                "zendframework/zend-http": "^2.5.4",
+                "zendframework/zend-json": "^2.6.1 || ^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7 || ^6.0",
+                "zendframework/zend-coding-standard": "~1.0.0",
+                "zendframework/zend-config": "^2.0",
+                "zendframework/zend-validator": "^2.8.2"
+            },
+            "suggest": {
+                "zendframework/zend-validator": "~2.0, if using ReCaptcha's Mailhide API"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "3.0-dev",
+                    "dev-develop": "3.1-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "ZendService": "library/"
+                "psr-4": {
+                    "ZendService\\ReCaptcha\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3947,7 +3956,7 @@
                 "recaptcha",
                 "zf2"
             ],
-            "time": "2012-09-24T15:18:29+00:00"
+            "time": "2017-02-09T21:38:25+00:00"
         },
         {
             "name": "zendframework/zendservice-twitter",
