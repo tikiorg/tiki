@@ -26,11 +26,24 @@
 
 	{if $storedName}
 		<h2>{$storedName|escape}:</h2>
-		<p>
-			{$url|escape}<br>
-			<input type="hidden" name="name" value="{$storedName|escape}"/>
+		<div class="form-group">
+			<label class="col-sm-4"> {tr}URL:{/tr}</label>
+			<div class="col-sm-8">
+				<code>{$url|escape}</code>
+			</div>
+		</div>
+		{if $postbody}
+			<div class="form-group">
+				<label class="col-sm-4"> {tr}Body of POST request:{/tr}</label>
+				<div class="col-sm-8">
+					<pre style="max-height: 40em; overflow: auto; white-space: pre-wrap">{$postbody|escape}</pre>
+				</div>
+			</div>
+		{/if}
+		<div class="col-sm-8 col-sm-offset-4">
+			<input type="hidden" name="name" value="{$storedName|escape}">
 			{button _icon_name='delete' _text="{tr}Delete{/tr}" _script="tiki-admin.php?page=webservices&name={$storedName|escape}&delete" _class='btn btn-danger btn-sm'}
-		</p>
+		</div>
 	{else}
 		{remarksbox type="tip" title="{tr}Tip{/tr}"}
 			{tr}Enter the URL of a web services returning either JSON or YAML. Parameters can be specified by enclosing a name between percentage signs. For example: %name%. %service% and %template% are reserved keywords and cannot be used.{/tr}
