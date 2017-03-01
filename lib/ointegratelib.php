@@ -82,6 +82,7 @@ class OIntegrate
 			}
 			break;
 		case 'index':
+		case 'mindex':
 			if ($to == 'index') {
 				return new OIntegrate_Converter_Indexer;
 			} elseif ( $to == 'html' ) {
@@ -552,7 +553,18 @@ class OIntegrate_Converter_Indexer implements OIntegrate_Converter
 
 				$source = new Search_ContentSource_WebserviceSource();
 				$factory = new Search_Type_Factory_Direct();
-				$data = $source->getDocument($_REQUEST['nt_name'], $factory);
+
+				if ($_REQUEST['nt_output'] === 'mindex') {
+					$documents = $source->getDocuments();
+					$data = [];
+					foreach ($documents as $document) {
+						if (strpos($document, $_REQUEST['nt_name']) === 0) {
+							$data[$document] = $source->getDocument($document, $factory);
+						}
+					}
+				} else {
+					$data = $source->getDocument($_REQUEST['nt_name'], $factory);
+				}
 
 				$output = '<h3>' . tr('Parsed Data') . '</h3>';
 				$output .= '<pre style="max-height: 40em; overflow: auto; white-space: pre-wrap">';

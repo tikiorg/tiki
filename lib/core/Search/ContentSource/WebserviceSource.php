@@ -20,7 +20,26 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 	function getDocuments()
 	{
 		// get webservice templates using the index "engine"
-		return $this->tiki_webservice_template->fetchColumn('template', ['engine' => 'index']);
+		$rows = $this->tiki_webservice_template->fetchAll(['service', 'template', 'output',], ['engine' => 'index']);
+
+		$out = [];
+
+		foreach ($rows as $row) {
+			if ($row['output'] === 'mindex') {	// multi-index
+				$data = $this->getData($row['service'], $row['template']);
+				if ($data) {
+					foreach($data['mapping'] as $topObject => $topValue) {
+						foreach($data['data'][$topObject] as $key => $val) {
+							$out[] = $row['template'] . ':' . $key;
+						}
+					}
+				}
+			} else {
+				$out[] = $row['template'];
+			}
+		}
+
+		return $out;
 	}
 
 	/**
@@ -60,19 +79,28 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 	 */
 	function getDocument($templateName, Search_Type_Factory_Interface $typeFactory)
 	{
-		require_once 'lib/webservicelib.php';
+		if (strpos($templateName, ':') !== false) {	// multi-index template from getDocuments
 
-		$serviceName = $this->tiki_webservice_template->fetchOne('service', ['template' => $templateName]);
-		$webservice = \Tiki_Webservice::getService($serviceName);
+			list ($templateName, $index) = explode(':', $templateName);
+			$serviceName = $this->tiki_webservice_template->fetchOne('service', ['template' => $templateName]);
 
-		if (! $webservice) {
-			return false;
+		} else {
+
+			$row = $this->tiki_webservice_template->fetchRow(['service', 'template', 'output',], ['template' => $templateName]);
+
+			if ($row['output'] === 'mindex') {
+				return [];							// TODO only works when reindexing
+			} else {
+				$serviceName = $row['service'];
+				$index = false;
+			}
 		}
 
-		$params = [];	// TODO get the params here somehow?
-		$response = $webservice->performRequest($params);
-		$template = $webservice->getTemplate($templateName);
-		$output = $template->render($response, 'index');
+		if (! $serviceName) {
+			return [];
+		}
+
+		$output = $this->getData($serviceName, $templateName);
 
 		$data = [
 			'title' => $typeFactory->sortable($templateName),
@@ -88,27 +116,24 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 		foreach($output['mapping'] as $topObject => $topValue) {
 			$dataObject = $output['data'][$topObject];
 			foreach ($dataObject as $key => $val) {
-				if (is_int($key)) {    // array of objects
-					$row = [];
-					foreach ($val as $key2 => $val2) {
-						if (! empty($dataObject[$key][$key2])) {
-							if (! $this->mapValue($dataObject[$key][$key2], $output['mapping'][$topObject][0][$key2], $typeFactory, $row, true)) {
-								foreach ($val2 as $key3 => $val3) {
-									if (! empty($dataObject[$key][$key2][$key3])) {
-										$this->mapValue($dataObject[$key][$key2][$key3], $output['mapping'][$topObject][0][$key2][$key3], $typeFactory, $row, true);
-									}
+				if (is_int($key) && $index !== false) {    		// array of objects
+					$val = $dataObject[$index];
+					if (! empty($val)) {	// we have the index # to get
+						if (! $this->mapValue($val, $output['mapping'][$topObject][0], $typeFactory, $data)) {
+							foreach ($val as $key2 => $val2) {
+								if (! empty($val[$key2])) {
+									$this->mapValue($val[$key2], $output['mapping'][$topObject][0][$key2], $typeFactory, $data);
 								}
 							}
 						}
 					}
-					//$rows[] = $typeFactory->multivalue($row);
-					$rows[] = $row;
+					break;	// we just get this index item
 				} else {
 					if (! empty($dataObject[$key])) {
 						if (! $this->mapValue($dataObject[$key], $output['mapping'][$topObject][$key], $typeFactory, $data)) {
-							foreach ($val as $key2 => $val2) {
-								if (! empty($dataObject[$key][$key2])) {
-									$this->mapValue($dataObject[$key][$key2], $output['mapping'][$topObject][$key][$key2], $typeFactory, $data);
+							foreach ($val as $index => $val2) {
+								if (! empty($dataObject[$key][$index])) {
+									$this->mapValue($dataObject[$key][$index], $output['mapping'][$topObject][$key][$index], $typeFactory, $data);
 								}
 							}
 						}
@@ -145,6 +170,27 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * @param $serviceName
+	 * @param $templateName
+	 * @return bool|mixed|string
+	 */
+	private function getData($serviceName, $templateName) {
+		require_once 'lib/webservicelib.php';
+
+		$webservice = \Tiki_Webservice::getService($serviceName);
+
+		if (! $webservice) {
+			return false;
+		}
+
+		$params = [];	// TODO get the params here somehow?
+		$response = $webservice->performRequest($params);
+		$template = $webservice->getTemplate($templateName);
+
+		return $template->render($response, 'index');
 	}
 
 	function getProvidedFields()
