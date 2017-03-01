@@ -190,6 +190,7 @@
 				<li><a href="tiki-admin_system.php">{tr}System Cache{/tr}</a></li>
 			{/if}
 			<li><a href="tiki-syslog.php">{tr}System Logs{/tr}</a></li>
+			<li><a href="tiki-admin_schedulers.php ">{tr}Scheduler{/tr}</a></li>
 			<li class="divider"></li>
 			<li><a href="tiki-wizard_admin.php">{tr}Wizards{/tr}</a></li>
 		</ul>

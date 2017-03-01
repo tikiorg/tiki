@@ -116,6 +116,11 @@
 							{icon name="module"} {tr}Modules{/tr}
 						</a>
 					</li>
+					<li>
+						<a href="tiki-admin_schedulers.php">
+							{icon name="calendar"} {tr}Scheduler{/tr}
+						</a>
+					</li>
 					{if $prefs.feature_debug_console}
 						<li>
 							<a href="{query _type='relative' show_smarty_debug=1}">

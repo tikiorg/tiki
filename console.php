@@ -47,6 +47,8 @@ if (! is_readable($local_php)) {
 
 $console = new Tiki\Command\Application;
 
+Tiki\Command\Application::setInstance($console);
+
 $console->add(new Tiki\Command\ConfigureCommand);
 if (is_file($local_php) || TikiInit::getEnvironmentCredentials()) {
 	require_once 'db/tiki-db.php';
@@ -119,6 +121,7 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\RecommendationBatchCommand);
 	$console->add(new Tiki\Command\RefreshRssCommand);
 	$console->add(new Tiki\Command\RssClearCacheCommand);
+	$console->add(new Tiki\Command\SchedulerRunCommand);
 	$console->add(new Tiki\Command\TrackerImportCommand);
 	$console->add(new Tiki\Command\TrackerClearCommand);
 	$console->add(new Tiki\Command\AdminIndexRebuildCommand);
@@ -148,6 +151,7 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\UnavailableCommand('recommendation:batch'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('rss:refresh'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('rss:clear'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('scheduler:run'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('tracker:import'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('tracker:clear'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('preferences:rebuild-index'))->ignoreValidationErrors();

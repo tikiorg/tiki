@@ -6,6 +6,8 @@ use Symfony\Component\Console\Input\InputOption;
 
 class Application extends SymfonyApplication
 {
+	private static $instance;
+
     /**
      * Gets the default input definition.
      *
@@ -19,6 +21,16 @@ class Application extends SymfonyApplication
 		
 		return $definition;
     }
+
+	public static function getInstance()
+	{
+		return self::$instance;
+	}
+
+	public static function setInstance(self $instance)
+	{
+		self::$instance = $instance;
+	}
 
 }
 

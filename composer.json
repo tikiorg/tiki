@@ -135,6 +135,7 @@
 			"Multilingual": "lib/core/",
 			"Tracker": "lib/core/",
 			"Services": "lib/core/",
+			"Scheduler": "lib/core/",
             "Table": "lib/core/",
 			"Tiki": "lib/core/",
 			"TikiDb": "lib/core/",

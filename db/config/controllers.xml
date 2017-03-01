@@ -47,6 +47,7 @@
 		<service id="tiki.controller.relation" class="Services_Relation_Controller"/>
 		<service id="tiki.controller.report" class="Services_Report_Controller"/>
 		<service id="tiki.controller.recommendation_dev" class="Services_Recommendation_DevelopmentController"/>
+		<service id="tiki.controller.scheduler" class="Services_Scheduler_Controller"/>
 		<service id="tiki.controller.score" class="Services_Score_Controller"/>
 		<service id="tiki.controller.search" class="Services_Search_Controller"/>
 		<service id="tiki.controller.search_customsearch" class="Services_Search_CustomSearchController"/>
