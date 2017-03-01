@@ -194,6 +194,10 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 							0 => tr('No'),
 							1 => tr('Yes'),
 						),
+						'depends' => array(
+							'field' => 'displayFieldsListType',
+							'value' => 'dropdown'
+						),
 						'legacy_index' => 12,
 					),
 					'indexRemote' => array(
@@ -858,7 +862,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 	{
 		// if selectMultipleValues is enabled, convert the array
 		// of options to string before saving the field value in the db
-		if ($this->getOption('selectMultipleValues')) {
+		if ($this->getOption('selectMultipleValues') || $this->getOption('displayFieldsListType') === 'table') {
 			$value = implode(',', $value);
 		} else {
 			$value = (int) $value;
