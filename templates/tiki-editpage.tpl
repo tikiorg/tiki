@@ -578,7 +578,7 @@
 											{/if}
 										</span>
 									</div
-								</div>
+								></div>
 							</fieldset>
 							{if $trads|@count > 1 and $urgent_allowed}
 								<div class="form-group">
@@ -608,7 +608,8 @@
 								</div>
 							</div>
 						{/if}
-						{if $prefs.wiki_auto_toc eq 'y' or $prefs.wiki_page_hide_title eq 'y'}
+						{* check if wiki_auto_toc is set - but don't understand why wiki_page_hide_title is checked - also the logic made into an 'and' since the previous 'or' made no sense *}
+						{if $prefs.wiki_auto_toc eq 'y' and $prefs.wiki_page_hide_title eq 'y'}
 							<div class="form-group clearfix">
 								<label for="pageAutoToc" class="col-md-4 control-label">{tr}Automatic table of contents{/tr}</label>
 								<div class="col-md-8">
