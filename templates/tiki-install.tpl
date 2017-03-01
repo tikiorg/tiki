@@ -448,7 +448,7 @@
 											{/literal}
 											//--><!]]></script>
 											<div id="install-link">
-												<p><a class="btn btn-warning" href="javascript:install()">{tr}Reinstall the database{/tr}</a></p>
+												<p class="text-center"><a class="btn btn-warning" href="javascript:install()">{tr}Reinstall the database{/tr}</a></p>
 											</div>
 											<div id="install-table" style="visibility:hidden">
 										{else}
@@ -463,7 +463,7 @@
 										{else}
 											<input type="hidden" name="useInnoDB" value="0">
 										{/if}
-										<p align="center">
+										<p class="text-center">
 											<input type="submit" class="btn btn-warning" name="scratch" value="{if $tikidb_created}{tr}Reinstall{/tr}{else}{tr}Install{/tr}{/if}" style="margin: 32px;">
 										</p>
 										</div><!-- End of install-table -->
@@ -479,7 +479,7 @@
 											<p>{tr}Automatically upgrade your existing database to version{/tr}
 												<strong>{$tiki_version_name}</strong>.
 											</p>
-											<p align="center"><input type="submit" class="btn btn-primary" name="update" value="{tr}Upgrade{/tr}"></p>
+											<p class="text-center"><input type="submit" class="btn btn-primary" name="update" value="{tr}Upgrade{/tr}"></p>
 										</div><!-- End of db-upgrade -->
 									{/if}
 								</form>
