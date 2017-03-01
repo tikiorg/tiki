@@ -234,7 +234,11 @@ class Tracker_Item
 			
 		}, $this->definition->getItemOwnerFields());
 
-		return call_user_func_array('array_merge', $owners);
+		if( $owners ) {
+			return call_user_func_array('array_merge', $owners);
+		} else {
+			return array();
+		}
 	}
 
 	private function getItemGroupOwner()

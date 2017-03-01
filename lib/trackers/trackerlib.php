@@ -1623,7 +1623,9 @@ class TrackerLib extends TikiLib
 			return isset($info[$userField]) ? $this->parse_user_field($info[$userField]) : array();
 		}, $definition->getItemOwnerFields());
 
-		$itemUsers = call_user_func_array('array_merge', $itemUsers);
+		if( $itemUsers ) {
+			$itemUsers = call_user_func_array('array_merge', $itemUsers);
+		}
 
 		$fields = array();
 		foreach ($listfields as $fieldId => $fopt) {
@@ -3705,7 +3707,11 @@ class TrackerLib extends TikiLib
 			
 		}, $definition->getItemOwnerFields());
 
-		return call_user_func_array('array_merge', $owners);
+		if( $owners ) {
+			return call_user_func_array('array_merge', $owners);
+		} else {
+			return array();
+		}
 	}
 
 	/* find the best fieldwhere you can do a filter on the initial
