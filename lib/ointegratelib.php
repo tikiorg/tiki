@@ -190,7 +190,7 @@ class OIntegrate
 				serialize(array('expires' => $expiry, 'data' => $response))
 			);
 		// Unless service specifies not to cache result, apply a default cache
-		} elseif ( $nocache !== null && $prefs['webservice_consume_defaultcache'] > 0 ) {
+		} elseif (empty($nocache) && $prefs['webservice_consume_defaultcache'] > 0 ) {
 			$expiry = time() + $prefs['webservice_consume_defaultcache'];
 
 			$cachelib->cacheItem($cacheKey, serialize(array('expires' => $expiry, 'data' => $response)));
