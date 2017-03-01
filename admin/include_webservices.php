@@ -16,7 +16,8 @@ if (basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__)) {
 }
 
 if (isset($_REQUEST['name']) && $webservice = Tiki_Webservice::getService($_REQUEST['name'])) {
-	if (isset($_REQUEST['delete']) && empty($_REQUEST['delete'])) {
+	if (isset($_REQUEST['delete'])) {
+		$access->check_authenticity(tr('Are you sure you want to delete the webservice "%0"?', $_REQUEST['name']));
 		$webservice->delete();
 		$webservice = new Tiki_Webservice;
 		$url = '';
@@ -54,7 +55,14 @@ if (!isset($_REQUEST['params'])) {
 	$_REQUEST['params'] = array();
 }
 
-if (!isset($_REQUEST['parse']) && $response = $webservice->performRequest($_REQUEST['params'])) {
+if (!isset($_REQUEST['parse']) &&
+		$response = $webservice->performRequest(
+			$_REQUEST['params'],
+			false,
+			! empty($_REQUEST['nocache'])
+		)
+) {
+
 	$data = $response->data;
 	if (is_array($data)) {
 		unset($data['_template']);

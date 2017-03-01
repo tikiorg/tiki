@@ -25,7 +25,12 @@
 	</div>
 
 	{if $storedName}
-		<p><strong>{$storedName|escape}</strong>: {$url|escape}<input type="hidden" name="name" value="{$storedName|escape}"/> <a href="tiki-admin.php?page=webservices&amp;name={$storedName|escape}&amp;delete">{icon name='delete' iclass='tips' title=":{tr}Delete{/tr}"}</a></p>
+		<h2>{$storedName|escape}:</h2>
+		<p>
+			{$url|escape}<br>
+			<input type="hidden" name="name" value="{$storedName|escape}"/>
+			{button _icon_name='delete' _text="{tr}Delete{/tr}" _script="tiki-admin.php?page=webservices&name={$storedName|escape}&delete" _class='btn btn-danger btn-sm'}
+		</p>
 	{else}
 		{remarksbox type="tip" title="{tr}Tip{/tr}"}
 			{tr}Enter the URL of a web services returning either JSON or YAML. Parameters can be specified by enclosing a name between percentage signs. For example: %name%. %service% and %template% are reserved keywords and cannot be used.{/tr}
@@ -51,20 +56,25 @@
 	{/if}
 	{if $url}
 		<h3>{tr}Parameters{/tr}</h3>
-			{if $params|@count}
-				{foreach from=$params key=name item=value}
-					<div class="form-group">
-						<label>{$name|escape}
-							<input type="text" name="params[{$name|escape}]" value="{$value|escape}" class="form-control"/>
-						</label>
+		{if $params|@count}
+			{foreach from=$params key=name item=value}
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="params[{$name|escape}]">{$name|escape}</label>
+					<div class="col-sm-8">
+						<input type="text" name="params[{$name|escape}]" id="params[{$name|escape}]" value="{$value|escape}" class="form-control">
 					</div>
-				{/foreach}
-			{else}
-				<div>{tr}{$url} requires no parameter.{/tr}</div>
-			{/if}
-			<div class="form-group">
-				<input type="submit" class="btn btn-default btn-sm" name="test" value="{tr}Test Input{/tr}" />
-			</div>
+				</div>
+			{/foreach}
+		{else}
+			<div>{tr _0=$storedName|escape}%0 requires no parameter.{/tr}</div>
+		{/if}
+		<div class="form-group">
+			<input type="submit" class="btn btn-default btn-sm col-sm-2" name="test" value="{tr}Test Input{/tr}">
+			<label class="col-sm-10">
+				<input type="checkbox" checked="checked" name="nocache">
+				{tr}Bypass cache{/tr}
+			</label>
+		</div>
 	{/if}
 	{if $data}
 		<h3>{tr}Response Information{/tr}</h3>

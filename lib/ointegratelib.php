@@ -93,21 +93,25 @@ class OIntegrate
 
 	} // }}}
 
-    /**
-     * @param $url
-     * @param null $postBody
-     * @return OIntegrate_Response
-     */
-    function performRequest( $url, $postBody = null ) // {{{
+	/**
+	 * @param string $url
+	 * @param string $postBody url or json encoded post parameters
+	 * @param bool $clearCache
+	 * @return OIntegrate_Response
+	 */
+    function performRequest( $url, $postBody = null, $clearCache = false ) // {{{
 	{
 		$cachelib = TikiLib::lib('cache');
 		$tikilib = TikiLib::lib('tiki');
 
-		if ( $cache = $cachelib->getSerialized($url.$postBody)) {
-			if ( time() < $cache['expires'] )
-				return $cache['data'];
+		$cacheKey = $url . $postBody;
 
-			$cachelib->invalidate($url.$postBody);
+		if ( $cache = $cachelib->getSerialized($cacheKey)) {
+			if (time() < $cache['expires'] && ! $clearCache) {
+				return $cache['data'];
+			}
+
+			$cachelib->invalidate($cacheKey);
 		}
 
 		$client = $tikilib->get_http_client($url);
@@ -182,14 +186,14 @@ class OIntegrate
 			$expiry = time() + $maxage;
 
 			$cachelib->cacheItem(
-				$url,
+				$cacheKey,
 				serialize(array('expires' => $expiry, 'data' => $response))
 			);
 		// Unless service specifies not to cache result, apply a default cache
 		} elseif ( $nocache !== null && $prefs['webservice_consume_defaultcache'] > 0 ) {
 			$expiry = time() + $prefs['webservice_consume_defaultcache'];
 
-			$cachelib->cacheItem($url, serialize(array('expires' => $expiry, 'data' => $response)));
+			$cachelib->cacheItem($cacheKey, serialize(array('expires' => $expiry, 'data' => $response)));
 		}
 
 		return $response;
