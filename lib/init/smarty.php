@@ -171,101 +171,11 @@ class Smarty_Tiki extends Smarty
 		$this->registerPlugin('modifier', 'escape', 'smarty_modifier_escape');
 	}
 
-	function initializePaths()
-	{
-		global $prefs, $tikidomainslash, $section;
-
-		if (! $this->main_template_dir) {
-			// First run only
-			$this->main_template_dir = TIKI_PATH . '/templates/';
-			$this->setCompileDir(TIKI_PATH . "/temp/templates_c");
-			$this->setPluginsDir(
-				array(	// the directory order must be like this to overload a plugin
-					TIKI_PATH . '/' . TIKI_SMARTY_DIR,
-					SMARTY_DIR.'plugins'
-				)
-			);
-		}
-
-		$this->setTemplateDir([]);
-
-		// when called from release.php TikiLib isn't initialised so we can ignore the themes and addons
-		if (class_exists('TikiLib')) {
-			// Theme templates
-			$themelib = TikiLib::lib('theme');
-			if (!empty($prefs['theme']) && !in_array($prefs['theme'], ['custom_url'])) {
-				$theme_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], '', 'templates'); // path to the theme options
-				$this->addTemplateDir(TIKI_PATH . "/$theme_path/");
-				//if theme_admin is empty, use main theme and site_layout instead of site_layout_admin
-				if ($section != "admin" || empty($prefs['theme_admin'])) {
-					$layout = TIKI_PATH . "/$theme_path/" . 'layouts/' . $prefs['site_layout'] . '/';
-					if (! is_readable($layout)) {
-						$layout = TIKI_PATH . "/$theme_path/" . 'layouts/basic/';
-					}
-					$this->addTemplateDir($layout);
-				} else {
-					$layout = TIKI_PATH . "/$theme_path/" . 'layouts/' . $prefs['site_layout_admin'] . '/';
-					if (! is_readable($layout)) {
-						$layout = TIKI_PATH . "/$theme_path/" . 'layouts/basic/';
-					}
-					$this->addTemplateDir($layout);
-				}
-				$this->addTemplateDir(TIKI_PATH . "/$theme_path/" . 'layouts/');
-
-				$main_theme_path = $themelib->get_theme_path($prefs['theme'], '', '', 'templates'); // path to the main theme
-				$this->addTemplateDir(TIKI_PATH . "/$main_theme_path/");
-				//if theme_admin is empty, use main theme and site_layout instead of site_layout_admin
-				if ($section != "admin" || empty($prefs['theme_admin'])) {
-					$layout = TIKI_PATH . "/$main_theme_path/" . 'layouts/' . $prefs['site_layout'] . '/';
-					if (! is_readable($layout)) {
-						$layout = TIKI_PATH . "/$main_theme_path/" . 'layouts/basic/';
-					}
-					$this->addTemplateDir($layout);
-				} else {
-					$layout = TIKI_PATH . "/$main_theme_path/" . 'layouts/' . $prefs['site_layout_admin'] . '/';
-					if (! is_readable($layout)) {
-						$layout = TIKI_PATH . "/$main_theme_path/" . 'layouts/basic/';
-					}
-					$this->addTemplateDir($layout);
-				}
-			}
-			// Tikidomain main template folder
-			if (!empty($tikidomainslash)) {
-				$this->addTemplateDir(TIKI_PATH . "/themes/{$tikidomainslash}templates/"); // This dir is for all the themes in the tikidomain
-				$this->addTemplatedir($this->main_template_dir . '/' . $tikidomainslash); // legacy tpls just in case, for example: /templates/mydomain.ltd/
-			}
-
-			$this->addTemplateDir(TIKI_PATH . "/themes/templates/"); //This dir stores templates for all the themes
-
-			//Addon templates
-			foreach (TikiAddons::getPaths() as $path) {
-				$this->addTemplateDir($path . '/templates/');
-			}
-		}
-
-		//Layout templates
-		if (!empty($prefs['site_layout']) && ($section != "admin" || empty($prefs['theme_admin']))){ //use the admin layout if in the admin section
-			$layout = $this->main_template_dir . '/layouts/' . $prefs['site_layout'] . '/';
-			if (! is_readable($layout)) {
-				$layout =  $this->main_template_dir . '/layouts/basic/';
-			}
-			$this->addTemplateDir($layout);
-		} elseif (!empty($prefs['site_layout_admin'])) {
-			$layout = $this->main_template_dir . '/layouts/' . $prefs['site_layout_admin'] . '/';
-			if (! is_readable($layout)) {
-				$layout =  $this->main_template_dir . '/layouts/basic/';
-			}
-			$this->addTemplateDir($layout);
-		}
-		$this->addTemplateDir($this->main_template_dir.'/layouts/');
-		$this->addTemplateDir($this->main_template_dir);
-	}
-
 	/**
 	 * Fetch templates from plugins (smarty plugins, wiki plugins, modules, ...) that may need to :
 	 * - temporarily override some smarty vars,
 	 * - prefix their self_link / button / query URL arguments
-	 *
+	 * 
 	 * @param      $_smarty_tpl_file
 	 * @param null $override_vars
 	 *
@@ -366,52 +276,10 @@ class Smarty_Tiki extends Smarty
 		if (! defined('TIKI_IN_INSTALLER') && ! defined('TIKI_IN_TEST')) {
 			require_once 'tiki-modules.php';
 		}
-
+		
 		$_smarty_tpl_file = $this->get_filename($_smarty_tpl_file);
 
 		return parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $parent, $_smarty_display);
-	}
-
-	function refreshLanguage()
-	{
-		global $tikidomain, $prefs;
-
-		$lang = $prefs['language'];
-		if (empty($lang)) {
-			$lang = 'default';
-		}
-
-		if (! empty($prefs['site_layout'])) {
-			$layout = $prefs['site_layout'];
-		} else {
-			$layout = 'classic';
-		}
-
-		$this->setCompileId("$lang-$tikidomain-$layout");
-		$this->initializePaths();
-	}
-
-	/**
-	 * Returns the file path associated to the template name
-	 * @param $template
-	 * @return string
-	 */
-	function get_filename($template)
-	{
-		if (preg_match('/^[a-z]+\:/', $template) || file_exists($template)) {
-			return $template;
-		}
-        //get the list of template directories
-        $dirs = $this->getTemplateDir();
-
-        //go through directories in search of the template
-        foreach ($dirs as $dir){
-            if (file_exists($dir.$template)){
-                return $dir.$template;
-            }
-        }
-        return "";
-
 	}
 
 	/**
@@ -566,6 +434,28 @@ class Smarty_Tiki extends Smarty
 
 		}
 	}
+	/**
+	 * Returns the file path associated to the template name
+	 * @param $template
+	 * @return string
+	 */
+	function get_filename($template)
+	{
+		if (preg_match('/^[a-z]+\:/', $template) || file_exists($template)) {
+			return $template;
+		}
+        //get the list of template directories
+        $dirs = $this->getTemplateDir();
+
+        //go through directories in search of the template
+        foreach ($dirs as $dir){
+            if (file_exists($dir.$template)){
+                return $dir.$template;
+            }
+        }
+        return "";
+
+	}
 
 	/**
 	 * needs a proper description
@@ -577,10 +467,6 @@ class Smarty_Tiki extends Smarty
 		$this->url_overriding_prefix_stack[] = array( $url_arguments_prefix . '-', $arguments_list );
 		$this->url_overriding_prefix =& $this->url_overriding_prefix_stack[ count($this->url_overriding_prefix_stack) - 1 ];
 	}
-	
-	/*
-	Add smarty template paths from where tpl files should be loaded. This function also gets called from lib/setup/theme.php to initialize theme specific paths
-	*/
 
 	/**
 	 * needs a proper description
@@ -594,5 +480,117 @@ class Smarty_Tiki extends Smarty
 			trigger_error('URL Overriding prefix stack is in a bad state', E_USER_ERROR);
 		}
 		$this->url_overriding_prefix =& $this->url_overriding_prefix_stack[ count($this->url_overriding_prefix_stack) - 1 ];;
+	}
+
+	function refreshLanguage()
+	{
+		global $tikidomain, $prefs;
+
+		$lang = $prefs['language'];
+		if (empty($lang)) {
+			$lang = 'default';
+		}
+
+		if (! empty($prefs['site_layout'])) {
+			$layout = $prefs['site_layout'];
+		} else {
+			$layout = 'classic';
+		}
+
+		$this->setCompileId("$lang-$tikidomain-$layout");
+		$this->initializePaths();
+	}
+	
+	/*
+	Add smarty template paths from where tpl files should be loaded. This function also gets called from lib/setup/theme.php to initialize theme specific paths
+	*/
+	function initializePaths()
+	{
+		global $prefs, $tikidomainslash, $section;
+
+		if (! $this->main_template_dir) {
+			// First run only
+			$this->main_template_dir = TIKI_PATH . '/templates/';
+			$this->setCompileDir(TIKI_PATH . "/temp/templates_c");
+			$this->setPluginsDir(
+				array(	// the directory order must be like this to overload a plugin
+					TIKI_PATH . '/' . TIKI_SMARTY_DIR,
+					SMARTY_DIR.'plugins'
+				)
+			);
+		}
+
+		$this->setTemplateDir([]);
+
+		// when called from release.php TikiLib isn't initialised so we can ignore the themes and addons
+		if (class_exists('TikiLib')) {
+			// Theme templates
+			$themelib = TikiLib::lib('theme');
+			if (!empty($prefs['theme']) && !in_array($prefs['theme'], ['custom_url'])) {
+				$theme_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], '', 'templates'); // path to the theme options
+				$this->addTemplateDir(TIKI_PATH . "/$theme_path/");
+				//if theme_admin is empty, use main theme and site_layout instead of site_layout_admin
+				if ($section != "admin" || empty($prefs['theme_admin'])) {
+					$layout = TIKI_PATH . "/$theme_path/" . 'layouts/' . $prefs['site_layout'] . '/';
+					if (! is_readable($layout)) {
+						$layout = TIKI_PATH . "/$theme_path/" . 'layouts/basic/';
+					}
+					$this->addTemplateDir($layout);
+				} else {
+					$layout = TIKI_PATH . "/$theme_path/" . 'layouts/' . $prefs['site_layout_admin'] . '/';
+					if (! is_readable($layout)) {
+						$layout = TIKI_PATH . "/$theme_path/" . 'layouts/basic/';
+					}
+					$this->addTemplateDir($layout);
+				}
+				$this->addTemplateDir(TIKI_PATH . "/$theme_path/" . 'layouts/');
+
+				$main_theme_path = $themelib->get_theme_path($prefs['theme'], '', '', 'templates'); // path to the main theme
+				$this->addTemplateDir(TIKI_PATH . "/$main_theme_path/");
+				//if theme_admin is empty, use main theme and site_layout instead of site_layout_admin
+				if ($section != "admin" || empty($prefs['theme_admin'])) {
+					$layout = TIKI_PATH . "/$main_theme_path/" . 'layouts/' . $prefs['site_layout'] . '/';
+					if (! is_readable($layout)) {
+						$layout = TIKI_PATH . "/$main_theme_path/" . 'layouts/basic/';
+					}
+					$this->addTemplateDir($layout);
+				} else {
+					$layout = TIKI_PATH . "/$main_theme_path/" . 'layouts/' . $prefs['site_layout_admin'] . '/';
+					if (! is_readable($layout)) {
+						$layout = TIKI_PATH . "/$main_theme_path/" . 'layouts/basic/';
+					}
+					$this->addTemplateDir($layout);
+				}
+			}
+			// Tikidomain main template folder
+			if (!empty($tikidomainslash)) {
+				$this->addTemplateDir(TIKI_PATH . "/themes/{$tikidomainslash}templates/"); // This dir is for all the themes in the tikidomain
+				$this->addTemplatedir($this->main_template_dir . '/' . $tikidomainslash); // legacy tpls just in case, for example: /templates/mydomain.ltd/
+			}
+
+			$this->addTemplateDir(TIKI_PATH . "/themes/templates/"); //This dir stores templates for all the themes
+
+			//Addon templates
+			foreach (TikiAddons::getPaths() as $path) {
+				$this->addTemplateDir($path . '/templates/');
+			}
+		}
+		
+		//Layout templates
+		if (!empty($prefs['site_layout']) && ($section != "admin" || empty($prefs['theme_admin']))){ //use the admin layout if in the admin section
+			$layout = $this->main_template_dir . '/layouts/' . $prefs['site_layout'] . '/';
+			if (! is_readable($layout)) {
+				$layout =  $this->main_template_dir . '/layouts/basic/';
+			}
+			$this->addTemplateDir($layout);
+		} elseif (!empty($prefs['site_layout_admin'])) {
+			$layout = $this->main_template_dir . '/layouts/' . $prefs['site_layout_admin'] . '/';
+			if (! is_readable($layout)) {
+				$layout =  $this->main_template_dir . '/layouts/basic/';
+			}
+			$this->addTemplateDir($layout);
+		}
+		$this->addTemplateDir($this->main_template_dir.'/layouts/');
+		$this->addTemplateDir($this->main_template_dir);
 	}
 }
