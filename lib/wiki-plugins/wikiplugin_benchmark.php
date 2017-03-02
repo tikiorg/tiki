@@ -32,7 +32,7 @@ function wikiplugin_benchmark_info()
 				'name' => tra('Each Iteration Details'),
 				'description' => tra('Provides time and memory of each iteration.'),
 				'since' => '17.0',
-				'default' => 'false',
+				'default' => 'true',
 				'filter' => 'alpha',
 				//'profile_reference' => 'wiki_page',
 			),
@@ -48,68 +48,63 @@ function wikiplugin_benchmark( $data, $params ){
 	if (!isset($params['times']))
 		$params['times'] = 100;
 
-	// Overhead Benchmark
-	$parserlib->parse_data_plugin('a');
-	$begin = microtime(true);
-	for ($times = 0; $times < 10; $times++)
-		$parserlib->parse_data_plugin('a');
-	$end = microtime(true);
+	if (isset($params['details']) && ($params['details'] == ''||$params['details'] == 'false')){
 
-	$smarty->assign('overTime',round((($end - $begin)/10),4));
+		// if were not disclosing details
 
-	if (isset($params['details'])){
 		$iterations = array();
 		// Complete iterations benchmark
 		$begin = microtime(true);
-		$memBegin = memory_get_usage(true);
-		for ($times = 0; $times < ($params['times']-2); $times++) {
-			$timeBeginI = microtime(true);
-			$memBeginI = memory_get_usage(true);
+		$memBeginReal = memory_get_usage(true);
+		$memBegin = memory_get_usage();
+		for ($times = 0; $times < ($params['times']); $times++) {
 			$parserlib->parse_data_plugin($data);
-			$memEndI = memory_get_usage(true);
-			$timeEndI = microtime(true);
-			$iterations['time'][] = round(($timeEndI - $timeBeginI),4);
-			$iterations['mem'][] = $memEndI - $memBeginI;
 		}
 		$end = microtime(true);
-		$memEnd = memory_get_usage(true);
+		$memEnd = memory_get_usage();
+		$memEndReal = memory_get_usage(true);
 
 		$smarty->assign('iterations',$iterations);
 		$smarty->assign('times',$params['times']);
 		$smarty->assign('time',round(($end - $begin)/60,4));
 		$smarty->assign('memory',$memEnd - $memBegin);
+		$smarty->assign('memoryReal',$memEndReal - $memBeginReal);
 		return $smarty->fetch('lib/wiki-plugins/wikiplugin_benchmark.tpl').$parserlib->parse_data_plugin($data);
-
-
 	}
 
-	// if were not disclosing details, provide some
-
 	// Complete iterations benchmark
-	$memBegin = memory_get_usage(true);
-	$parserlib->parse_data_plugin($data);
-	$memEnd = memory_get_usage(true);
 
-	$smarty->assign('firstMemory',$memEnd - $memBegin);
-
-	// Complete iterations benchmark
-	$memBegin = memory_get_usage(true);
-	$parserlib->parse_data_plugin($data);
-	$memEnd = memory_get_usage(true);
-
-	$smarty->assign('secondMemory',$memEnd - $memBegin);
-
-	// Complete iterations benchmark
+	$iterations = array();
 	$begin = microtime(true);
-	$memBegin = memory_get_usage(true);
-	for ($times = 0; $times < $params['times']; $times++) {
+	$memBeginReal = memory_get_usage(true);
+	$memBegin = memory_get_usage();
+	for ($times = 0; $times < ($params['times']); $times++) {
+		$timeBeginI = microtime(true);
+		$memBeginIReal = memory_get_usage(true);
+		$memBeginI = memory_get_usage();
 		$parserlib->parse_data_plugin($data);
+		$memEndI = memory_get_usage();
+		$memEndIReal = memory_get_usage(true);
+		$timeEndI = microtime(true);
+		$iterations['time'][] = round(($timeEndI - $timeBeginI),4);
+		$iterations['mem'][] = $memEndI - $memBeginI;
+		$iterations['memR'][] = $memEndIReal - $memBeginIReal;
 	}
 	$end = microtime(true);
-	$memEnd = memory_get_usage(true);
+	$memEnd = memory_get_usage();
+	$memEndReal = memory_get_usage(true);
 
+	$smarty->assign('iterations',$iterations);
 	$smarty->assign('times',$params['times']);
-	$smarty->assign('time',round(($end - $begin)/60,4));
+	$smarty->assign('time',round(($end - $begin),4));
+	$smarty->assign('timeMicro',round(($end - $begin)*60,4));
 	$smarty->assign('memory',$memEnd - $memBegin);
+	$smarty->assign('memoryReal',$memEndReal - $memBeginReal);
+	$smarty->assign('timeA',round(array_sum($iterations['time']) / $params['times'] /60,4));
+	$smarty->assign('timeAMicro',round(array_sum($iterations['time']) / $params['times'],4));
+	$smarty->assign('memoryA',round(array_sum($iterations['mem']) / $params['times'],0));
+	$smarty->assign('memoryRealA',array_sum($iterations['memR']) / $params['times']);
 	return $smarty->fetch('lib/wiki-plugins/wikiplugin_benchmark.tpl').$parserlib->parse_data_plugin($data);
+
+
 }
