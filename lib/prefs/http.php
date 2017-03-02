@@ -93,6 +93,7 @@ function prefs_http_list()
 		'http_header_content_security_policy_value' => array(
 			'name' => tra('Header Value'),
 			'type' => 'text',
+			'default' => '',
 			'perspective' => false,
 			'tags' => array('basic'),
 			'dependencies' => array(
@@ -110,6 +111,7 @@ function prefs_http_list()
 		'http_header_strict_transport_security_value' => array(
 			'name' => tra('Header Value'),
 			'type' => 'text',
+			'default' => '',
 			'perspective' => false,
 			'tags' => array('basic'),
 			'dependencies' => array(
@@ -127,6 +129,7 @@ function prefs_http_list()
 		'http_header_public_key_pins_value' => array(
 			'name' => tra('Header Value'),
 			'type' => 'textarea',
+			'default' => '',
 			'perspective' => false,
 			'tags' => array('basic'),
 			'dependencies' => array(
