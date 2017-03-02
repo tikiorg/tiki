@@ -30,6 +30,19 @@ class TikiCalendarLib extends CalendarLib
 	}
 
     /**
+     * @param $calIds
+     * @param $viewstart
+     * @param $viewend
+     * @param string $group_by
+     * @param string $item_name
+     * @return array
+     */
+	function getCalendar($calIds, &$viewstart, &$viewend, $group_by = '', $item_name = 'actions')
+	{
+		return parent::getCalendar($calIds, $viewstart, $viewend, $group_by, $item_name);
+	}
+
+    /**
      * @param $tikiobj
      * @param $user
      * @param $tstart
@@ -81,7 +94,7 @@ class TikiCalendarLib extends CalendarLib
 
 						switch ( $res['type'] ) {
 							case 'art':
-								$res['description'] = TikiLib::lib('parser')->parse_data($res['description']);
+								$res['description'] = $this->parse_data($res['description']);
 								break;
 
 							case 'blog':
@@ -317,19 +330,6 @@ class TikiCalendarLib extends CalendarLib
 				return vsprintf($url, array_map('urlencode', array_slice($bindvars, 0, $nb_vars)));
 			} else return $url;
 		}
-	}
-
-    /**
-     * @param $calIds
-     * @param $viewstart
-     * @param $viewend
-     * @param string $group_by
-     * @param string $item_name
-     * @return array
-     */
-	function getCalendar($calIds, &$viewstart, &$viewend, $group_by = '', $item_name = 'actions')
-	{
-		return parent::getCalendar($calIds, $viewstart, $viewend, $group_by, $item_name);
 	}
 
     /**

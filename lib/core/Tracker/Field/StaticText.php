@@ -49,12 +49,13 @@ class Tracker_Field_StaticText extends Tracker_Field_Abstract implements Tracker
 
 	function getFieldData(array $requestData = array())
 	{
+		global $tikilib;
 		
 		$value = $this->getConfiguration('description');
 
 		if ($this->getOption('wikiparse') == 1) {
 
-			$value = TikiLib::lib('parser')->parse_data($value);
+			$value = $tikilib->parse_data($value);
 
 		} else if ($this->getOption('wikiparse') == 2) {	// do pretty tracker replacements
 
@@ -73,7 +74,7 @@ class Tracker_Field_StaticText extends Tracker_Field_Abstract implements Tracker
 				}
 			}
 
-			$value = TikiLib::lib('parser')->parse_data($value);
+			$value = $tikilib->parse_data($value);
 		}
 		
 		return array('value' => $value);

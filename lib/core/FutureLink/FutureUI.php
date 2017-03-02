@@ -15,13 +15,13 @@
 
 Class FutureLink_FutureUI extends Feed_Abstract
 {
-	static $pagesParsed = array();
-	static $parsedDatas = array();
 	var $type = 'futurelink';
 	var $version = 0.1;
 	var $isFileGal = true;
 	var $debug = false;
 	var $page = '';
+	static $pagesParsed = array();
+	static $parsedDatas = array();
 	var $metadata = array();
 	var $verifications = array();
 	var $itemsAdded = array();
@@ -33,30 +33,17 @@ Class FutureLink_FutureUI extends Feed_Abstract
 		return parent::__construct($page);
 	}
 
-	static function wikiView($args)
+	private function getTimeStamp()
 	{
-		$headerlib = TikiLib::lib('header');
-
-		$page = $args['object'];
-		$version = $args['version'];
-
-		$headerlib
-			->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-core.js')
-			->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-cssclassapplier.js')
-			->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-selectionsaverestore.js')
-			->add_jsfile('lib/rangy_tiki/rangy-phraser.js')
-			->add_jsfile('vendor/jquery/jquery-sheet/plugins/ZeroClipboard.min.js')
-			->add_jsfile('lib/core/JisonParser/Phraser.js')
-			->add_jsfile('vendor/jquery/md5/js/md5.js');
-
-		$me = new FutureLink_FutureUI($page);
-
-		$phrase = (!empty($_POST['phrase']) ? $_POST['phrase'] : '');
-		FutureLink_Search::goToNewestWikiRevision($version, $phrase);
-        FutureLink_Search::restoreFutureLinkPhrasesInWikiPage($me->getItems(), $phrase);
-
-		$me->editInterfaces();
-		$me->createPastLinksInterface();
+		//May be used soon for encrypting futurelinks
+		if (isset($_REQUEST['action'], $_REQUEST['hash']) && $_REQUEST['action'] == 'timestamp') {
+			$client = TikiLib::lib('tiki')->get_http_client(TikiLib::tikiUrl() . 'tiki-timestamp.php', array('timeout' => 60));
+			$client->getRequest()->getQuery()->set('hash', $_REQUEST['hash']);
+			$client->getRequest()->getQuery()->set('clienttime', time());
+			$response = $client->send();
+			echo $response->getBody();
+			exit();
+		}
 	}
 
 	function editInterfaces()
@@ -568,11 +555,37 @@ JQ
 		);
 	}
 
+	static function wikiView($args)
+	{
+		$headerlib = TikiLib::lib('header');
+
+		$page = $args['object'];
+		$version = $args['version'];
+
+		$headerlib
+			->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-core.js')
+			->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-cssclassapplier.js')
+			->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-selectionsaverestore.js')
+			->add_jsfile('lib/rangy_tiki/rangy-phraser.js')
+			->add_jsfile('vendor/jquery/jquery-sheet/plugins/ZeroClipboard.min.js')
+			->add_jsfile('lib/core/JisonParser/Phraser.js')
+			->add_jsfile('vendor/jquery/md5/js/md5.js');
+
+		$me = new FutureLink_FutureUI($page);
+
+		$phrase = (!empty($_POST['phrase']) ? $_POST['phrase'] : '');
+		FutureLink_Search::goToNewestWikiRevision($version, $phrase);
+        FutureLink_Search::restoreFutureLinkPhrasesInWikiPage($me->getItems(), $phrase);
+
+		$me->editInterfaces();
+		$me->createPastLinksInterface();
+	}
+
 	static function wikiSave($args)
 	{
 		global $groupPluginReturnAll;
 		$groupPluginReturnAll = true;
-		$body = TikiLib::lib('parser')->parse_data($args['data']);
+		$body = TikiLib::lib('tiki')->parse_data($args['data']);
 		$groupPluginReturnAll = false;
 
 		$page = $args['object'];
@@ -719,19 +732,6 @@ JQ
 			}
 
 			$contents->entry = array_merge($contents->entry, $item->feed->entry);
-		}
-	}
-
-	private function getTimeStamp()
-	{
-		//May be used soon for encrypting futurelinks
-		if (isset($_REQUEST['action'], $_REQUEST['hash']) && $_REQUEST['action'] == 'timestamp') {
-			$client = TikiLib::lib('tiki')->get_http_client(TikiLib::tikiUrl() . 'tiki-timestamp.php', array('timeout' => 60));
-			$client->getRequest()->getQuery()->set('hash', $_REQUEST['hash']);
-			$client->getRequest()->getQuery()->set('clienttime', time());
-			$response = $client->send();
-			echo $response->getBody();
-			exit();
 		}
 	}
 }

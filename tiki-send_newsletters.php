@@ -178,7 +178,7 @@ if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && (!isset($_R
 		$_REQUEST['wysiwyg'] ='y';
 	}
 	if (isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] == 'y' || $_REQUEST['wysiwyg'] === 'y') {
-		$_REQUEST['data'] = TikiLib::lib('parser')->parse_data($_REQUEST['data'], array('is_html'=>$info['is_html'], 'absolute_links' => true, 'suppress_icons' => true));
+		$_REQUEST['data'] = $tikilib->parse_data($_REQUEST['data'], array('is_html'=>$info['is_html'], 'absolute_links' => true, 'suppress_icons' => true));
 	}
 	$_REQUEST["preview"] = 1;
 	$smarty->assign("templateId", $_REQUEST["templateId"]);
@@ -263,7 +263,7 @@ if (isset($_REQUEST["preview"])) {
 		$info["datatxt"] = '';
 	}
 	if (!empty($_REQUEST["usedTpl"])) {
-		$smarty->assign('dataparsed', (($info['wikiparse'] == 'y') ? TikiLib::lib('parser')->parse_data($info["data"], array('absolute_links' => true, 'suppress_icons' => true)) : $info['data']));
+		$smarty->assign('dataparsed', (($info['wikiparse'] == 'y') ? $tikilib->parse_data($info["data"], array('absolute_links' => true, 'suppress_icons' => true)) : $info['data']));
 		$smarty->assign('subject', $info["subject"]);
 		$info["dataparsed"] = $smarty->fetch("newsletters/" . $_REQUEST["usedTpl"]);
 		if (stristr($info['dataparsed'], "<body") === false) {
@@ -274,7 +274,7 @@ if (isset($_REQUEST["preview"])) {
 		$info['dataparsed'] = '<html><body>';
 		if ($info['wikiparse'] === 'y') {
 			$data = $info['data'];
-			$info['dataparsed'] .= TikiLib::lib('parser')->parse_data($data, array('absolute_links' => true, 'suppress_icons' => true,'is_html' => $info['is_html']));
+			$info['dataparsed'] .= $tikilib->parse_data($data, array('absolute_links' => true, 'suppress_icons' => true,'is_html' => $info['is_html']));
 			if (empty($info['data'])) {
 				$info['data'] = $data;		// somehow on massive pages this gets reset somewhere inside parse_data
 			}
@@ -326,11 +326,11 @@ if (isset($_REQUEST["save"])) {
 	$info['is_html'] = !empty($_REQUEST['is_html']);
 	$tikilib = TikiLib::lib('tiki');
 	if (!empty($_REQUEST["usedTpl"])) {
-		$smarty->assign('dataparsed', (($wikiparse == 'y') ? TikiLib::lib('parser')->parse_data($_REQUEST["data"], array('absolute_links' => true, 'suppress_icons' => true)) : $_REQUEST['data']));
+		$smarty->assign('dataparsed', (($wikiparse == 'y') ? $tikilib->parse_data($_REQUEST["data"], array('absolute_links' => true, 'suppress_icons' => true)) : $_REQUEST['data']));
 		$smarty->assign('subject', $_REQUEST["subject"]);
 		$parsed = $smarty->fetch("newsletters/" . $_REQUEST["usedTpl"]);
 	} else {
-		$parsed = ($wikiparse == 'y') ? TikiLib::lib('parser')->parse_data($_REQUEST["data"], array('is_html' => $info['is_html'], 'absolute_links' => true, 'suppress_icons' => true)) : $_REQUEST['data'];
+		$parsed = ($wikiparse == 'y') ? $tikilib->parse_data($_REQUEST["data"], array('is_html' => $info['is_html'], 'absolute_links' => true, 'suppress_icons' => true)) : $_REQUEST['data'];
 	}
 	if (empty($parsed) && !empty($_REQUEST['datatxt'])) {
 		$parsed = $_REQUEST['datatxt'];

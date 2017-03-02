@@ -33,7 +33,7 @@ class WikiGet extends WikiPut
 		$info = $tikilib->get_page_info($page);
 
 		if ($info) {
-			$data = TikiLib::lib('parser')->parse_data($info["data"]);
+			$data = $tikilib->parse_data($info["data"]);
 
 			$mail = $account->getReplyMail($message);
 			$mail->setSubject($page);

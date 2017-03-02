@@ -122,6 +122,24 @@ class Tracker_Field_Wiki extends Tracker_Field_Text
 		);
 	}
 
+	function isValid($ins_fields_data)
+	{
+		$pagenameField = $this->getOption('fieldIdForPagename');
+		$pagename = $ins_fields_data[$pagenameField]['value'];
+		$itemId = $this->getItemId();
+
+		if (TikiLib::lib('trk')->check_field_value_exists($pagename, $pagenameField, $itemId)) {
+			return tr('The page name provided already exists. Please choose another.');
+		}
+
+		if (TikiLib::lib('wiki')->contains_badchars($pagename)) {
+			$bad_chars = TikiLib::lib('wiki')->get_badchars();
+			return tr('The page name specified contains unallowed characters. It will not be possible to save the page until those are removed: %0', $bad_chars);
+		}
+
+		return true;
+	}
+
 	function getFieldData(array $requestData = array())
 	{
 		$ins_id = $this->getInsertId();
@@ -198,24 +216,6 @@ class Tracker_Field_Wiki extends Tracker_Field_Text
 		return $data;
 	}
 
-	function isValid($ins_fields_data)
-	{
-		$pagenameField = $this->getOption('fieldIdForPagename');
-		$pagename = $ins_fields_data[$pagenameField]['value'];
-		$itemId = $this->getItemId();
-
-		if (TikiLib::lib('trk')->check_field_value_exists($pagename, $pagenameField, $itemId)) {
-			return tr('The page name provided already exists. Please choose another.');
-		}
-
-		if (TikiLib::lib('wiki')->contains_badchars($pagename)) {
-			$bad_chars = TikiLib::lib('wiki')->get_badchars();
-			return tr('The page name specified contains unallowed characters. It will not be possible to save the page until those are removed: %0', $bad_chars);
-		}
-
-		return true;
-	}
-
 	function renderInput($context = array())
 	{
 		global $prefs;
@@ -256,17 +256,6 @@ class Tracker_Field_Wiki extends Tracker_Field_Text
 	function renderOutput($context = array())
 	{
 		return $this->attemptParse($this->getConfiguration('page_data'));
-	}
-
-	protected function attemptParse($text)
-	{
-		global $prefs;
-
-		$parseOptions = array();
-		if ($this->getOption('wysiwyg') === 'y' && $prefs['wysiwyg_htmltowiki'] != 'y') {
-			$parseOptions['is_html'] = true;
-		}
-		return TikiLib::lib('parser')->parse_data($text, $parseOptions);
 	}
 
 	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
@@ -316,6 +305,17 @@ class Tracker_Field_Wiki extends Tracker_Field_Text
 	function getTabularSchema()
 	{
 		// TODO
+	}
+
+	protected function attemptParse($text)
+	{
+		global $prefs;
+
+		$parseOptions = array();
+		if ($this->getOption('wysiwyg') === 'y' && $prefs['wysiwyg_htmltowiki'] != 'y') {
+			$parseOptions['is_html'] = true;
+		}
+		return TikiLib::lib('tiki')->parse_data($text, $parseOptions);
 	}
 
 }

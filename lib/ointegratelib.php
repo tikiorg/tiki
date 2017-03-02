@@ -82,7 +82,6 @@ class OIntegrate
 			}
 			break;
 		case 'index':
-		case 'mindex':
 			if ($to == 'index') {
 				return new OIntegrate_Converter_Indexer;
 			} elseif ( $to == 'html' ) {
@@ -93,25 +92,21 @@ class OIntegrate
 
 	} // }}}
 
-	/**
-	 * @param string $url
-	 * @param string $postBody url or json encoded post parameters
-	 * @param bool $clearCache
-	 * @return OIntegrate_Response
-	 */
-    function performRequest( $url, $postBody = null, $clearCache = false ) // {{{
+    /**
+     * @param $url
+     * @param null $postBody
+     * @return OIntegrate_Response
+     */
+    function performRequest( $url, $postBody = null ) // {{{
 	{
 		$cachelib = TikiLib::lib('cache');
 		$tikilib = TikiLib::lib('tiki');
 
-		$cacheKey = $url . $postBody;
-
-		if ( $cache = $cachelib->getSerialized($cacheKey)) {
-			if (time() < $cache['expires'] && ! $clearCache) {
+		if ( $cache = $cachelib->getSerialized($url.$postBody)) {
+			if ( time() < $cache['expires'] )
 				return $cache['data'];
-			}
 
-			$cachelib->invalidate($cacheKey);
+			$cachelib->invalidate($url.$postBody);
 		}
 
 		$client = $tikilib->get_http_client($url);
@@ -186,14 +181,14 @@ class OIntegrate
 			$expiry = time() + $maxage;
 
 			$cachelib->cacheItem(
-				$cacheKey,
+				$url,
 				serialize(array('expires' => $expiry, 'data' => $response))
 			);
 		// Unless service specifies not to cache result, apply a default cache
-		} elseif (empty($nocache) && $prefs['webservice_consume_defaultcache'] > 0 ) {
+		} elseif ( $nocache !== null && $prefs['webservice_consume_defaultcache'] > 0 ) {
 			$expiry = time() + $prefs['webservice_consume_defaultcache'];
 
-			$cachelib->cacheItem($cacheKey, serialize(array('expires' => $expiry, 'data' => $response)));
+			$cachelib->cacheItem($url, serialize(array('expires' => $expiry, 'data' => $response)));
 		}
 
 		return $response;
@@ -557,18 +552,7 @@ class OIntegrate_Converter_Indexer implements OIntegrate_Converter
 
 				$source = new Search_ContentSource_WebserviceSource();
 				$factory = new Search_Type_Factory_Direct();
-
-				if ($_REQUEST['nt_output'] === 'mindex') {
-					$documents = $source->getDocuments();
-					$data = [];
-					foreach ($documents as $document) {
-						if (strpos($document, $_REQUEST['nt_name']) === 0) {
-							$data[$document] = $source->getDocument($document, $factory);
-						}
-					}
-				} else {
-					$data = $source->getDocument($_REQUEST['nt_name'], $factory);
-				}
+				$data = $source->getDocument($_REQUEST['nt_name'], $factory);
 
 				$output = '<h3>' . tr('Parsed Data') . '</h3>';
 				$output .= '<pre style="max-height: 40em; overflow: auto; white-space: pre-wrap">';

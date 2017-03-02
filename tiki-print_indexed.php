@@ -155,19 +155,19 @@ abstract class ObjectRenderer // {{{
 	}
 
     /**
-     * @param $smarty
-     * @param $template
-     * @return mixed
-     */
-    abstract function _render($smarty, $template);
-
-    /**
      * @return bool
      */
     function isValid()
 	{
 		return true;
 	}
+
+    /**
+     * @param $smarty
+     * @param $template
+     * @return mixed
+     */
+    abstract function _render($smarty, $template);
 
     /**
      * @param $key
@@ -244,18 +244,6 @@ class ObjectRenderer_TrackerItem extends ObjectRenderer // {{{
 	}
 
     /**
-     * @return mixed
-     */
-    function getTitle()
-	{
-		foreach ($this->tracker['fields'] as $field) {
-			if ($field['isMain'] == 'y') {
-				return $field['value'];
-			}
-		}
-	}
-
-    /**
      * @param $key
      * @return mixed
      */
@@ -264,6 +252,18 @@ class ObjectRenderer_TrackerItem extends ObjectRenderer // {{{
 		switch( $key ) {
 			case 'title':
 				return $this->getTitle();
+		}
+	}
+
+    /**
+     * @return mixed
+     */
+    function getTitle()
+	{
+		foreach ($this->tracker['fields'] as $field) {
+			if ($field['isMain'] == 'y') {
+				return $field['value'];
+			}
 		}
 	}
 } // }}}
@@ -286,7 +286,7 @@ class ObjectRenderer_Wiki extends ObjectRenderer // {{{
 
 		$info = $tikilib->get_page_info($objectId);
 
-		$info['parsed'] = TikiLib::lib('parser')->parse_data(
+		$info['parsed'] = $tikilib->parse_data(
 			$info['data'],
 			array(
 				'is_html' => $info['is_html'],
