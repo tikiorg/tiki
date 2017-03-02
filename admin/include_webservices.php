@@ -80,9 +80,10 @@ if (!isset($_REQUEST['parse']) &&
 	$smarty->assign('data', print_r($data, true));
 	$smarty->assign('templates', $templates);
 	$smarty->assign('response', $response);
-	if (isset($_REQUEST['delete']) && $webservice->getTemplate($_REQUEST['delete'])) {
-		$webservice->removeTemplate($_REQUEST['delete']);
-		unset($storedTemplates[$_REQUEST['delete']]);
+	if (isset($_REQUEST['deletetemplate']) && $webservice->getTemplate($_REQUEST['deletetemplate'])) {
+		$access->check_authenticity(tr('Are you sure you want to delete the template "%0"?', $_REQUEST['deletetemplate']));
+		$webservice->removeTemplate($_REQUEST['deletetemplate']);
+		unset($storedTemplates[$_REQUEST['deletetemplate']]);
 	}
 
 	// Load template data in the form for modification
@@ -152,6 +153,7 @@ if (!isset($_REQUEST['parse']) &&
 			Feedback::error(implode(', ', $response->errors));
 		}
 
+		$smarty->assign('preview', $_REQUEST['preview']);
 		$smarty->assign('preview', $_REQUEST['preview']);
 		$smarty->assign('preview_output', $output);
 

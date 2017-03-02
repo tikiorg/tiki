@@ -161,8 +161,8 @@
 					{foreach from=$storedTemplates item=template}
 						<tr>
 							<td>
-								<input type="submit" class="btn btn-default btn-sm" name="loadtemplate" value="{$template->name|escape}"/>
-								<a href="tiki-admin.php?page=webservices&amp;name={$storedName|escape}&amp;delete={$template->name|escape}">{icon name='delete' iclass='tips' title=":{tr}Delete{/tr}"}</a>
+								<input type="submit" class="btn btn-default btn-sm" name="loadtemplate" value="{$template->name|escape}" title="{tr}Edit{/tr}">
+								{icon name='delete' title='{tr}Delete{/tr}' href='tiki-admin.php?page=webservices&name='|cat:($storedName|escape)|cat:'&deletetemplate='|cat:($template->name|escape)}
 							</td>
 							<td>{$template->engine|escape}</td>
 							<td>{$template->output|escape}</td>
