@@ -133,7 +133,7 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 						if (! $this->mapValue($dataObject[$key], $output['mapping'][$topObject][$key], $typeFactory, $data)) {
 							foreach ($val as $index => $val2) {
 								if (! empty($dataObject[$key][$index])) {
-									$this->mapValue($dataObject[$key][$index], $output['mapping'][$topObject][$key][$index], $typeFactory, $data);
+									$this->mapValue($dataObject[$key][$index], $output['mapping'][$topObject][0][$index], $typeFactory, $data);
 								}
 							}
 						}
