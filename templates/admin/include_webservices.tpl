@@ -15,6 +15,11 @@
 		{preference name=feature_webservices visible="always"}
 	</fieldset>
 
+	<fieldset>
+		<legend>{tr}Options{/tr}</legend>
+		{preference name=webservice_consume_defaultcache}
+	</fieldset>
+
 	<div class="t_navbar margin-bottom-md">
 		{foreach from=$webservices item=name}
 			{button href="tiki-admin.php?page=webservices&amp;name=$name" class="btn btn-default" _text=$name}

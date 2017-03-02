@@ -76,9 +76,6 @@ function get_default_prefs()
 			'wiki_validate_plugin' => 'y',
 			'wiki_pagealias_tokens' => 'alias',
 
-			// webservices
-			'webservice_consume_defaultcache' => 300, // 5 min
-
 			// File galleries
 
 			// Root galleries fake preferences. These are automatically overridden by schema upgrade scripts
