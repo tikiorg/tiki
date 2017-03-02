@@ -26,7 +26,8 @@
 			{if $field.options_map.preSelectFieldThere}
 				<a class="btn btn-default update-tracker-links" href="{service controller=tracker action=link_items trackerId=$field.options_map.trackerId next=$data.next|escape}">{tr}Update{/tr}</a>
 			{jq}
-				var preselectedValue = $('#ins_{{$field.options_map.preSelectFieldHere}}').length > 0 ? $('#ins_{{$field.options_map.preSelectFieldHere}}').val() : $('#trackerinput_{{$field.options_map.preSelectFieldHere}}').text();
+				var preselectedEl = $("#il{{$field.ins_id}}").closest('form').find('[name=ins_{{$field.options_map.preSelectFieldHere}}]');
+				var preselectedValue = preselectedEl.length > 0 ? preselectedEl.val() : $("#il{{$field.ins_id}}").closest('form').find('#trackerinput_{{$field.options_map.preSelectFieldHere}}').text();
 				$("#il{{$field.ins_id}}").find('.insert-tracker-item').on('click', function() {
 					var itemId = $('#il{{$field.ins_id}} select[name=addaction]').val();
 					if( itemId ) {
