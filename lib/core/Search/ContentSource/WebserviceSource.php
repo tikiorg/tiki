@@ -121,7 +121,7 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 					if (! empty($val)) {	// we have the index # to get
 						if (! $this->mapValue($val, $output['mapping'][$topObject][0], $typeFactory, $data)) {
 							foreach ($val as $key2 => $val2) {
-								if (! empty($val[$key2])) {
+								if (! empty($val[$key2]) && ! empty( $output['mapping'][$topObject][0][$key2])) {
 									$this->mapValue($val[$key2], $output['mapping'][$topObject][0][$key2], $typeFactory, $data);
 								}
 							}
@@ -131,9 +131,9 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 				} else {
 					if (! empty($dataObject[$key])) {
 						if (! $this->mapValue($dataObject[$key], $output['mapping'][$topObject][$key], $typeFactory, $data)) {
-							foreach ($val as $index => $val2) {
-								if (! empty($dataObject[$key][$index])) {
-									$this->mapValue($dataObject[$key][$index], $output['mapping'][$topObject][0][$index], $typeFactory, $data);
+							foreach ($val as $key2 => $val2) {
+								if (! empty($dataObject[$key][$key2]) && ! empty($output['mapping'][$topObject][$key][$key2])) {
+									$this->mapValue($dataObject[$key][$key2], $output['mapping'][$topObject][$key][$key2], $typeFactory, $data);
 								}
 							}
 						}
