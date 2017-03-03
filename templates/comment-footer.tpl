@@ -48,6 +48,12 @@
 
 	{if $thread_style != 'commentStyle_headers' and isset($comment.approved) and $comment.approved eq 'y'}
 	<div class="actions">
+		{if ($prefs.feature_sefurl eq 'y') }
+			<a href="{$comments_parentId|sefurl:'forum post'}{if ($comment.threadId neq $comments_parentId)}#threadId{$comment.threadId}{/if}">{tr}Link{/tr}</a>
+		{else}
+			<a href="?tiki-view_forum_thread.php?forumId={$forumId}&comments_parentId={$comments_parentId}#threadId{$comment.threadId}">{tr}Link{/tr}</a>
+		{/if}
+
 		{if ( $prefs.feature_comments_locking neq 'y' or $thread_is_locked neq 'y' ) and
 			( $tiki_p_forum_post eq 'y' and ( $forum_is_locked neq 'y' or $prefs.feature_comments_locking neq 'y' ) )}
 			{if $first eq 'y'}
