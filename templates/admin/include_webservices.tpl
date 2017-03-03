@@ -122,7 +122,7 @@
 					<th colspan="2">{tr}Returned Data{/tr}</th>
 				</tr>
 				<tr>
-					<td colspan="2"><pre style="max-height: 40em; overflow: auto; white-space: pre-wrap">{$data|escape}</pre></td>
+					<td colspan="2"><pre style="max-height: 40em; overflow: auto; white-space: pre-wrap">{$data|truncate:100000:"\n[{tr}tuncated at approx. 1MB{/tr}]"|escape}</pre></td>
 				</tr>
 				<tr>
 					<th colspan="2">{tr}Proposed Templates{/tr}</th>
