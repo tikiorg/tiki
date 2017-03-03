@@ -1,37 +1,29 @@
 {* $Id$ *}
 
 {title help="Groups Management" admpage="login"}{tr}Admin groups{/tr}{/title}
-
-<div class="t_navbar margin-bottom-md">
-	{button href="tiki-adminusers.php" class="btn btn-default" _type="link" _icon_name="user" _text="{tr}Admin Users{/tr}"}
-	{button href="tiki-admingroups.php?clean=y" class="btn btn-link" _type="link" _icon_name="trash" _text="{tr}Clear cache{/tr}"}
-	{if $groupname}
-		{if $prefs.feature_tabs ne 'y'}
-			{button href="tiki-admingroups.php?add=1&amp;cookietab=2#tab2" class="btn btn-default" _icon_name="create" _text="{tr}Add New Group{/tr}"}
-		{else}
-			{button href="tiki-admingroups.php?add=1&amp;cookietab=2" class="btn btn-default" _icon_name="create" _text="{tr}Add New Group{/tr}"}
+{if !$ts.ajax}
+	<div class="t_navbar margin-bottom-md">
+		{button href="tiki-adminusers.php" class="btn btn-default" _type="link" _icon_name="user" _text="{tr}Admin Users{/tr}"}
+		{button href="tiki-admingroups.php?clean=y" class="btn btn-link" _type="link" _icon_name="trash" _text="{tr}Clear cache{/tr}"}
+		{if $groupname}
+			{if $prefs.feature_tabs ne 'y'}
+				{button href="tiki-admingroups.php?add=1&amp;cookietab=2#tab2" class="btn btn-default" _icon_name="create" _text="{tr}Add New Group{/tr}"}
+			{else}
+				{button href="tiki-admingroups.php?add=1&amp;cookietab=2" class="btn btn-default" _icon_name="create" _text="{tr}Add New Group{/tr}"}
+			{/if}
 		{/if}
-	{/if}
-	<button class="btn btn-link">
-		{permission_link mode=text _type="link"}
-	</button>
-	{if $prefs.feature_invite eq 'y' and $tiki_p_invite eq 'y'}
-		{button href="tiki-list_invite.php" class="btn btn-default" _type="link" _icon_name="thumbs-up" _text="{tr}Invitation List{/tr}"}
-	{/if}
-</div>
-
+		<button class="btn btn-link">
+			{permission_link mode=text _type="link"}
+		</button>
+		{if $prefs.feature_invite eq 'y' and $tiki_p_invite eq 'y'}
+			{button href="tiki-list_invite.php" class="btn btn-default" _type="link" _icon_name="thumbs-up" _text="{tr}Invitation List{/tr}"}
+		{/if}
+	</div>
+{/if}
 {tabset name='tabs_admingroups'}
 
 	{tab name="{tr}List{/tr}"}
 		{* ----------------------- tab with list --------------------------------------- *}
-		<h2>{tr}List of existing groups{/tr}</h2>
-
-		{include file='find.tpl' find_show_num_rows='y'}
-
-		{if $cant_pages > $maxRecords or !empty($initial) or !empty($find)}
-			{initials_filter_links}
-		{/if}
-
 		{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
 		{if $prefs.javascript_enabled !== 'y'}
 			{$js = 'n'}
@@ -42,85 +34,96 @@
 			{$libeg = ''}
 			{$liend = ''}
 		{/if}
-		<form name="checkform1" id="checkform" method="post">
-			<div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
-				<table class="table table-striped table-hover">
-					<tr>
-						<th style="width: 20px;">{select_all checkbox_names='checked[]'}</th>
-						<th>{self_link _sort_arg='sort_mode' _sort_field='id'}{tr}ID{/tr}{/self_link}</th>
-						<th>{self_link _sort_arg='sort_mode' _sort_field='groupName'}{tr}Name{/tr}{/self_link}</th>
-						<th>{tr}Inherits Permissions from{/tr}</th>
-
-						{if $prefs.useGroupHome eq 'y'}
-							<th>{self_link _sort_arg='sort_mode' _sort_field='groupHome'}{tr}Homepage{/tr}{/self_link}</th>
-						{/if}
-
-						<th>{self_link _sort_arg='sort_mode' _sort_field='userChoice'}{tr}User Choice{/tr}{/self_link}</th>
-						<th></th>
-					</tr>
-
-					{section name=user loop=$users}
-						<tr>
-							<td class="checkbox-cell">
-								{if $users[user].groupName ne 'Admins' and $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered'}
-									<input type="checkbox" name="checked[]" value="{$users[user].groupName|escape}">
+	{if !$ts.ajax}
+		<h2>{tr}List of existing groups{/tr}</h2>
+		{if !$ts.enabled}
+			{include file='find.tpl' find_show_num_rows='y'}
+			{if $cant_pages > $maxRecords or !empty($initial) or !empty($find)}
+				{initials_filter_links}
+			{/if}
+		{/if}
+		<form id="checkform1" method="post">
+			<div class="{if $js === 'y'}table-responsive {/if}ts-wrapperdiv"> {* table-responsive class cuts off css drop-down menus *}
+	{/if}
+				<table id="{$ts.tableid}" class="table normal table-striped table-hover" data-count="{$cant_pages|escape}">
+						<thead>
+							<tr>
+								<th id="checkbox" style="width: 20px;">{select_all checkbox_names='checked[]'}</th>
+								<th id="id">{self_link _sort_arg='sort_mode' _sort_field='id'}{tr}ID{/tr}{/self_link}</th>
+								<th id="group">{self_link _sort_arg='sort_mode' _sort_field='groupName'}{tr}Name{/tr}{/self_link}</th>
+								<th id="inherits">{tr}Inherits Permissions from{/tr}</th>
+								{if $prefs.useGroupHome eq 'y'}
+									<th id="home">{self_link _sort_arg='sort_mode' _sort_field='groupHome'}{tr}Homepage{/tr}{/self_link}</th>
 								{/if}
-							</td>
-							<td class="id">{$users[user].id|escape}</td>
-							<td class="text">
-								<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $prefs.feature_tabs ne 'y'}#tab2{/if}" title="{tr}Edit{/tr}">{$users[user].groupName|escape}</a>
-								<div class="text">{tr}{$users[user].groupDesc|escape|nl2br}{/tr}</div>
-							</td>
-							<td class="text">
-								{foreach $users[user].included as $incl}
-									<div>
-										{if in_array($incl, $users[user].included_direct)}
-											{$incl|escape}
-										{else}
-											<i>{$incl|escape}</i>
-										{/if}
-									</div>
-								{/foreach}
-							</td>
-
-							{if $prefs.useGroupHome eq 'y'}
-								<td class="text">
-									<a class="link" href="tiki-index.php?page={$users[user].groupHome|escape:"url"}" title="{tr}Group Homepage{/tr}">{tr}{$users[user].groupHome}{/tr}</a>
+								<th id="choice">{self_link _sort_arg='sort_mode' _sort_field='userChoice'}{tr}User Choice{/tr}{/self_link}</th>
+								<th id="actions"></th>
+							</tr>
+						</thead>
+					<tbody>
+						{section name=user loop=$users}
+							<tr>
+								<td class="checkbox-cell">
+									{if $users[user].groupName ne 'Admins' and $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered'}
+										<input type="checkbox" name="checked[]" value="{$users[user].groupName|escape}">
+									{/if}
 								</td>
-							{/if}
+								<td class="id">{$users[user].id|escape}</td>
+								<td class="text">
+									<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $prefs.feature_tabs ne 'y'}#tab2{/if}" title="{tr}Edit{/tr}">{$users[user].groupName|escape}</a>
+									<div class="text">{tr}{$users[user].groupDesc|escape|nl2br}{/tr}</div>
+								</td>
+								<td class="text">
+									{foreach $users[user].included as $incl}
+										<div>
+											{if in_array($incl, $users[user].included_direct)}
+												{$incl|escape}
+											{else}
+												<i>{$incl|escape}</i>
+											{/if}
+										</div>
+									{/foreach}
+								</td>
 
-							<td class="text">{tr}{$users[user].userChoice}{/tr}</td>
-							<td class="action">
-								{capture name=group_actions}
-									{strip}
-										{$libeg}<a href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $prefs.feature_tabs ne 'y'}#tab2{/if}">
-											{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-										</a>{$liend}
-										{$libeg}{permission_link mode=text group=$users[user].groupName count=$users[user].permcant}{$liend}
-										{if $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered' and $users[user].groupName ne 'Admins'}
-											{$libeg}<a href="{bootstrap_modal controller=group action=remove_groups checked=$users[user].groupName}">
-												{icon name="remove" _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
-											</a>{$liend}
-										{/if}
-									{/strip}
-								{/capture}
-								{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
-								<a
-									class="tips"
-									title="{tr}Actions{/tr}"
-									href="#"
-									{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.group_actions|escape:"javascript"|escape:"html"}{/if}
-									style="padding:0; margin:0; border:0"
-								>
-									{icon name='wrench'}
-								</a>
-								{if $js === 'n'}
-									<ul class="dropdown-menu" role="menu">{$smarty.capture.group_actions}</ul></li></ul>
+								{if $prefs.useGroupHome eq 'y'}
+									<td class="text">
+										<a class="link" href="tiki-index.php?page={$users[user].groupHome|escape:"url"}" title="{tr}Group Homepage{/tr}">{tr}{$users[user].groupHome}{/tr}</a>
+									</td>
 								{/if}
-							</td>
-						</tr>
-					{/section}
+
+								<td class="text">{tr}{$users[user].userChoice}{/tr}</td>
+								<td class="action">
+									{capture name=group_actions}
+										{strip}
+											{$libeg}<a href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $prefs.feature_tabs ne 'y'}#tab2{/if}">
+											{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+											</a>{$liend}
+											{$libeg}{permission_link mode=text group=$users[user].groupName count=$users[user].permcant}{$liend}
+											{if $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered' and $users[user].groupName ne 'Admins'}
+												{$libeg}<a href="{bootstrap_modal controller=group action=remove_groups checked=$users[user].groupName}">
+												{icon name="remove" _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+												</a>{$liend}
+											{/if}
+										{/strip}
+									{/capture}
+									{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+											<a
+													class="tips"
+													title="{tr}Actions{/tr}"
+													href="#"
+													{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.group_actions|escape:"javascript"|escape:"html"}{/if}
+													style="padding:0; margin:0; border:0"
+											>
+												{icon name='wrench'}
+											</a>
+											{if $js === 'n'}
+											<ul class="dropdown-menu" role="menu">{$smarty.capture.group_actions}</ul></li></ul>
+									{/if}
+								</td>
+							</tr>
+						{/section}
+					</tbody>
 				</table>
+	{if !$ts.ajax}
 			</div>
 				<div class="input-group col-sm-6">
 					<label for="submit_mult" class="control-label sr-only">{tr}Select action to perform with checked{/tr}</label>
@@ -140,7 +143,10 @@
 					</div>
 				</div>
 		</form>
-		{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+		{if !$ts.enabled}
+			{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+		{/if}
+	{/if}
 	{/tab}
 
 	{if $groupname}
@@ -153,7 +159,7 @@
 
 	{tab name="{$tabaddeditgroup_admgrp} {$gname}"}
 		{* ----------------------- tab with form --------------------------------------- *}
-
+	{if !$ts.ajax}
 		{if !empty($user) and $prefs.feature_user_watches eq 'y' && !empty($groupname)}
 			<div class="pull-right">
 				{if not $group_info.isWatching}
@@ -169,7 +175,7 @@
 		{/if}
 		<h2>{$tabaddeditgroup_admgrp}</h2>
 
-		<form class="form-horizontal" action="tiki-admingroups.php" id="group" method="post">
+		<form class="form-horizontal" action="tiki-admingroups.php" id="groupEdit" method="post">
 			<div class="form-group">
 				<label for="groups_group" class="control-label col-md-3">{tr}Group{/tr}</label>
 				<div class="col-md-9">
@@ -454,9 +460,13 @@
 				<div class="col-md-9 col-md-offset-3">
 					{if $group ne ''}
 						<input type="hidden" name="olgroup" value="{$group|escape}">
-						<input type="submit" class="btn btn-primary confirm-submit" form="group" formaction="{bootstrap_modal controller=group action=modify_group}" value="{tr}Save{/tr}">
+						<button type="submit" class="btn btn-primary confirm-submit" form="groupEdit" formaction="{bootstrap_modal controller=group action=modify_group}">
+							{tr}Save{/tr}
+						</button>
 					{else}
-						<input type="submit" class="btn btn-primary confirm-submit" form="group" formaction="{bootstrap_modal controller=group action=new_group}" value="{tr}Add{/tr}">
+						<button type="submit" class="btn btn-primary confirm-submit" form="groupEdit" formaction="{bootstrap_modal controller=group action=new_group}">
+							{tr}Add{/tr}
+						</button>
 					{/if}
 				</div>
 			</div>
@@ -481,28 +491,22 @@
 			</div>
 			{/if}
 		</form>
+	{/if}
 	{/tab}
 
 
 	{if $groupname}
-		{if $prefs.javascript_enabled !== 'y'}
-			{$js = 'n'}
-			{$libeg = '<li>'}
-			{$liend = '</li>'}
-		{else}
-			{$js = 'y'}
-			{$libeg = ''}
-			{$liend = ''}
-		{/if}
 		{tab name="{tr _0="<i>{$groupname|escape}</i>"}Group %0 members{/tr}"}
 		{* ----------------------- tab with memberlist --------------------------------------- *}
 			{if $membersCount > 0}
+		{if !$ts.ajax}
 				<div class="form-group">
 					<div class="col-sm-5">
 						<h2>{tr}Members{/tr} <span class="badge">{$membersCount}</span></h2>
-						<form id="checkform2" name="checkform" method="post">
+						<form id="checkform2" method="post">
 							<input type="hidden" name="group" value="{$group|escape}">
 							<div class="table-responsive">
+		{/if}
 								<table class="table">
 									<tr>
 										<th class="auto">{if $memberslist}{select_all checkbox_names='checked[]'}{/if}</th>
@@ -548,6 +552,7 @@
 									</tr>
 									{/foreach}
 								</table>
+		{if !$ts.ajax}
 							</div>
 
 							{if $groupname neq 'Registered'}
@@ -566,8 +571,9 @@
 						</form>
 					</div>
 				</div>
-
-				{pagination_links cant=$membersCount step=$prefs.maxRecords offset=$membersOffset offset_arg='membersOffset'}{/pagination_links}
+				{if !$ts.enabled}
+					{pagination_links cant=$membersCount step=$prefs.maxRecords offset=$membersOffset offset_arg='membersOffset'}{/pagination_links}
+				{/if}
 			{else}
 				<div class="col-sm-6">
 					<h2>{tr}Members{/tr} <span class="badge">{$membersCount}</span></h2>
@@ -597,6 +603,7 @@
 					</div>
 				</div>
 			{/if}
+		{/if}
 		{/tab}
 		{tab name="{tr _0="<i>{$groupname|escape}</i>"}Users banned from group %0{/tr}"}
 			{* ----------------------- tab with users banned from group --------------------------------------- *}
@@ -626,6 +633,7 @@
 						<input type="hidden" name="group" value="{$groupname}">
 						<input type="hidden" name="anchor" value="#contenttabs_admingroups-4">
 				</div>
+		{if !$ts.ajax}
 				<div class="input-group col-sm-6">
 					<select class="form-control" name="action">
 						<option value="no_action" selected="selected">
@@ -643,11 +651,13 @@
 					<em>{tr}No banned members{/tr}</em>
 				</div><br>
 			{/if}
+		{/if}
 		{/tab}
 	{/if}
 
 	{if $groupname}
 		{tab name="{tr _0="<i>{$groupname|escape}</i>"}Group %0 import/export{/tr}"}
+		{if !$ts.ajax}
 			{* ----------------------- tab with import/export --------------------------------------- *}
 			<form method="post" action="tiki-admingroups.php" enctype="multipart/form-data" class="form-horizontal">
 				<input type="hidden" name="group" value="{$groupname|escape}">
@@ -710,6 +720,7 @@
 					</div>
 				</div>
 			</form>
+		{/if}
 		{/tab}
 	{/if}
 

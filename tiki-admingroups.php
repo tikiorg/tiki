@@ -282,6 +282,22 @@ if (!empty($memberslist)) {
 		}
 	}
 }
+
+//add tablesorter sorting and filtering
+$ts = Table_Check::setVars('admingroups', true);
+if ($ts['enabled'] && !$ts['ajax']) {
+	//delete anonymous out of group list used for dropdown
+	//set tablesorter code
+	Table_Factory::build(
+		'TikiAdminGroups',
+		array(
+			'id' => $ts['tableid'],
+			'total' => $users['cant'],
+		)
+	);
+}
+
+
 $smarty->assign('userslist', $userslist);
 $smarty->assign('inc', $inc);
 $smarty->assign('group', $_REQUEST["group"]);

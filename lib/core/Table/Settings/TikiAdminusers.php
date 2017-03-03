@@ -45,7 +45,6 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Standard
 			'#checkbox' => array(
 				'sort' => array(
 					'type' => false,
-					'group' => 'checkbox',
 				),
 				'filter' => array(
 					'type' => false,
@@ -58,7 +57,6 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Standard
 					'type' => true,
 					'dir' => 'asc',
 					'ajax' => 'login',
-					'group' => 'letter'
 				),
 				'filter' => array(
 					'type' => 'text',
@@ -70,7 +68,6 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Standard
 				'sort' => array(
 					'type' => true,
 					'ajax' =>'email',
-					'group' => 'letter'
 				),
 				'filter' => array(
 					'type' => 'text',
@@ -83,7 +80,6 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Standard
 				'sort' => array(
 					'type' => true,
 					'ajax' => 'openid_url',
-					'group' => 'letter'
 				),
 				'filter' => array(
 					'type' => false,	//no filter since $userlib->get_users doesn't have it
@@ -94,7 +90,6 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Standard
 				'sort' => array(
 					'type' => 'text',
 					'ajax' => 'currentLogin',
-					'group' => 'false'
 				),
 				'filter' => array(
 					'type' => false,
@@ -105,7 +100,6 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Standard
 				'sort' => array(
 					'type' => 'isoDate',
 					'ajax' => 'registrationDate',
-					'group' => 'false'
 				),
 				'filter' => array(
 					'type' => false,	//no filter since $userlib->get_users doesn't have it
