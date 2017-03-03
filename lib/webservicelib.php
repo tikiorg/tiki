@@ -364,8 +364,14 @@ class Tiki_Webservice_Template
 			)
 		);
 
-		require_once 'lib/search/refresh-functions.php';
-		refresh_index('webservice', $this->name);
+		if ($this->engine === 'index') {
+			if ($this->output === 'mindex') {
+				Feedback::warning(tra('You will need to rebuild the search index to see these changes'));
+			}
+
+			require_once 'lib/search/refresh-functions.php';
+			refresh_index('webservice', $this->name);
+		}
 	}
 
     /**
