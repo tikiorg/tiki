@@ -26,14 +26,16 @@
 			{if $field.options_map.preSelectFieldThere}
 				<a class="btn btn-default update-tracker-links" href="{service controller=tracker action=link_items trackerId=$field.options_map.trackerId next=$data.next|escape}">{tr}Update{/tr}</a>
 			{jq}
-				var preselectedEl = $("#il{{$field.ins_id}}").closest('form').find('[name=ins_{{$field.options_map.preSelectFieldHere}}]');
-				var preselectedValue = preselectedEl.length > 0 ? preselectedEl.val() : $("#il{{$field.ins_id}}").closest('form').find('#trackerinput_{{$field.options_map.preSelectFieldHere}}').text();
+				var preselectedValue = function() {
+					var preselectedEl = $("#il{{$field.ins_id}}").closest('form').find('[name=ins_{{$field.options_map.preSelectFieldHere}}]');
+					return preselectedEl.length > 0 ? preselectedEl.val() : $("#il{{$field.ins_id}}").closest('form').find('#trackerinput_{{$field.options_map.preSelectFieldHere}}').text();
+				}
 				$("#il{{$field.ins_id}}").find('.insert-tracker-item').on('click', function() {
 					var itemId = $('#il{{$field.ins_id}} select[name=addaction]').val();
 					if( itemId ) {
-						$(this).attr('href', "tiki-ajax_services.php?controller=tracker&action=clone_item&trackerId={{$field.options_map.trackerId}}&next={{$data.next|escape}}&itemId="+itemId+'&ins_{{$field.options_map.preSelectFieldThere}}='+preselectedValue);
+						$(this).attr('href', "tiki-ajax_services.php?controller=tracker&action=clone_item&trackerId={{$field.options_map.trackerId}}&next={{$data.next|escape}}&itemId="+itemId+'&ins_{{$field.options_map.preSelectFieldThere}}='+tiki_encodeURIComponent(preselectedValue()));
 					} else {
-						$(this).attr('href', "tiki-ajax_services.php?controller=tracker&action=insert_item&trackerId={{$field.options_map.trackerId}}&next={{$data.next|escape}}&ins_{{$field.options_map.preSelectFieldThere}}="+preselectedValue);
+						$(this).attr('href', "tiki-ajax_services.php?controller=tracker&action=insert_item&trackerId={{$field.options_map.trackerId}}&next={{$data.next|escape}}&ins_{{$field.options_map.preSelectFieldThere}}="+tiki_encodeURIComponent(preselectedValue()));
 					}
 				});
 				$("#il{{$field.ins_id}}").find('.update-tracker-links').on('click', function(e) {
@@ -43,7 +45,7 @@
 						data: {
 							items: $('input[name="{{$field.ins_id}}[]"]:checked').map(function(i, el){ return $(el).val(); }).toArray(),
 							linkField: {{$field.options_map.preSelectFieldThere|json_encode}},
-							linkValue: preselectedValue,
+							linkValue: preselectedValue(),
 							trackerlistParams: {{$data.trackerListOptions|json_encode}}
 						},
 						success: function(data) {
