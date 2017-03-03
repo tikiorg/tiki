@@ -14,7 +14,6 @@ function wikiplugin_html_info()
 		'prefs' => array('wikiplugin_html'),
 		'body' => tra('HTML code'),
 		'validate' => 'all',
-		'format' => 'html',
 		'filter' => 'rawhtml_unsafe',
 		'iconname' => 'code',
 		'tags' => array( 'basic' ),
@@ -26,7 +25,7 @@ function wikiplugin_html_info()
 				'description' => tra('Insert the code in the HTML head section rather than in the body.'),
 				'since' => '17.0',
 				'options' => array(
-					array('text' => '', 'value' => ''),
+					array('text' => '', 'value' => ''), 
 					array('text' => tra('No'), 'value' => 0),
 					array('text' => tra('Yes'), 'value' => 1),
 				),
@@ -58,18 +57,18 @@ function wikiplugin_html($data, $params)
 
 	// strip out sanitation which may have occurred when using nested plugins
 	$html = str_replace('<x>', '', $data);
-
+	
 	// parse using is_html if wiki param set, or just decode html entities
-	if ($params['wiki'] == 1) {
-		$html = TikiLib::lib('parser')->parse_data_plugin($html, array('is_html' => true));
+	if ($params['wiki'] == 1 ) {
+		$html = TikiLib::lib('tiki')->parse_data($html, array('is_html' => true));
 	} else {
-		$html = html_entity_decode($html, ENT_NOQUOTES, 'UTF-8');
+		$html  = html_entity_decode($html, ENT_NOQUOTES, 'UTF-8');
 	}
 
 	if ( isset($params['tohead']) && $params['tohead'] == 1 ) {
 		// Insert in HTML head rather than in body
 		TikiLib::lib('header')->add_rawhtml($html);
 	} else {
-		return $html;
+		return '~np~' . $html . '~/np~';
 	}
 }

@@ -17,19 +17,13 @@ function wikiplugin_center_info()
 		'filter' => 'wikicontent',
 		'tags' => array( 'basic' ),
 		'introduced' => 1,
-		'format' => 'html',
 		'params' => array(
 		),
 	);
 }
 
-/**
- * @param $data string data to center
- * @param $params array ignored
- *
- * @return string HTML formatted centered text.
- */
 function wikiplugin_center($data, $params)
 {
-	return '<div style="text-align:center">' . TikiLib::lib('parser')->parse_data_plugin($data). '</div>';
+	$data = '<div style="text-align:center">' . trim($data). '</div>';
+	return $data;
 }

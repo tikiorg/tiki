@@ -39,7 +39,6 @@ function wikiplugin_font_info()
 		'tags' => array( 'basic' ),
 		'iconname' => 'font',
 		'introduced' => 8,
-		'format' => 'html',
 		'params' => array(
 			'family' => array(
 				'required' => false,
@@ -81,9 +80,6 @@ function wikiplugin_font($data, $params)
 	$style  = '';
 	$style .= ($family and in_array($family, $all_fonts)) ? "font-family: $family;" : '';
 	$style .= (intval($size) and $size>0)  ? ("font-size: $size". "px;") : '';
-
-	$data = TikiLib::lib('parser')->parse_data_plugin($data);
-
 
 	if ($style) {
 		return "<$tag style=\"$style\">$data</$tag>";
