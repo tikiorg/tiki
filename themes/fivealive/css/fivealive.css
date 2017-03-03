@@ -7497,6 +7497,16 @@ a.admbox.off:active {
 .tiki .col1 .table-responsive {
   border: 1px solid #dddddd;
 }
+.codecaption {
+  display: inline-block;
+  color: #444444;
+  background: #f8f8f8;
+  border: 1px solid #dddddd;
+  border-bottom: none;
+  padding: 2px 9.5px;
+  font-size: 0.8em;
+  font-weight: bold;
+}
 code,
 pre.codelisting {
   color: #444444;
