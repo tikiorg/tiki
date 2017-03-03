@@ -183,7 +183,9 @@ function wikiplugin_customsearch($data, $params)
 	if (empty($params['wiki']) && empty($params['tpl'])) {
 		return tra('Template is not specified');
 	} elseif (!empty($params['wiki']) && !TikiLib::lib('tiki')->page_exists($params['wiki'])) {
-		return tra('Template page not found');
+		$link = new WikiParser_OutputLink;
+		$link->setIdentifier($params['wiki']);
+		return tra('Template page not found') . ' ' . $link->getHtml();
 	}
 
 	if (isset($params['id'])) {
