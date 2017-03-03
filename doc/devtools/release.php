@@ -293,8 +293,8 @@ function md5_check_dir($root, $dir, $version, &$queries)
 			if (preg_match('/\.(sql|css|tpl|js|php)$/', $e) && realpath($entry) != __FILE__ && $entry != './db/local.php') {
 				$file = '.' . substr($entry, strlen($root));
 
+				// Escape filename. Since this requires a connection to MySQL (due to the charset), do so conditionally to reduce the risk of connection failure. 
 				if (! preg_match('/^[a-zA-Z0-9\/ _+.-]+$/', $file) ) {
-
 					if (! $link) {
 						$link = mysqli_connect();
 
@@ -309,7 +309,6 @@ function md5_check_dir($root, $dir, $version, &$queries)
 							);
 						}
 					}
-
 					$file = @mysqli_real_escape_string($link,$file);
 				}
 
