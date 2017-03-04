@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "198dedb45a3af4938526711579e6c2e0",
+    "content-hash": "cd888ecc47fa446c12bb6433703245f6",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -1051,12 +1051,12 @@
         },
         {
             "name": "jquery/plugins/tablesorter",
-            "version": "2.27.7",
+            "version": "2.28.5",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery/plugins/tablesorter/jquery-plugins-tablesorter-2.27.7.zip",
+                "url": "https://composer.tiki.org/dist/jquery/plugins/tablesorter/jquery-plugins-tablesorter-2.28.5.zip",
                 "reference": null,
-                "shasum": "ca6c30254a19bdeaff2cedbf588780c80cd28ec3"
+                "shasum": "75294f1492548a8f23724f2f5dd5d86f5d35b337"
             },
             "type": "library"
         },
@@ -4221,7 +4221,7 @@
                 "testing",
                 "unit"
             ],
-            "time": "2016-03-14T11:52:02+00:00"
+            "time": "2016-03-14 11:52:02"
         },
         {
             "name": "doctrine/instantiator",
