@@ -14,7 +14,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 /**
  * Class Table_Settings_TikiAdminGroups
  *
- * Tablesorter settings for the table listing users at tiki-admingroups.php
+ * Tablesorter settings for the table listing groups at tiki-admingroups.php
  *
  * @package Tiki
  * @subpackage Table
