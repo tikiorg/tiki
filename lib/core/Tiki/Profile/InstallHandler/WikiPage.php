@@ -20,6 +20,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 	private $wiki_authors_style;
 	private $geolocation;
 	private $hide_title;
+	private $locked;
     private $freetags;
 	private $mode = 'create_or_update';
 	private $exists;
@@ -63,6 +64,8 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 			$this->geolocation = $data['geolocation'];
 		if ( array_key_exists('hide_title', $data) )
 			$this->hide_title = $data['hide_title'];
+		if ( array_key_exists('locked', $data) )
+			$this->locked = $data['locked'];
 
 	}
 
@@ -128,6 +131,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 		$this->replaceReferences($this->wiki_authors_style);
 		$this->replaceReferences($this->geolocation);
 		$this->replaceReferences($this->hide_title);
+		$this->replaceReferences($this->locked);
 
 		$this->mode = $this->convertMode();
 
@@ -137,6 +141,8 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 		}
 
 		$finalName = $this->getPageName();
+		
+		$hash = array();
 
 		if ( $this->mode == 'create' ) {
 			if ( $this->wysiwyg ) {
@@ -146,10 +152,16 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 				$this->wysiwyg = 'n';
 				$is_html = false;
 			}
+			if ( $this->locked == 'y') {
+				$hash['lock_it'] = 'y';
+			} else {
+				$this->locked = 'n';
+				$hash = NULL;
+			}
 			if ( ! $this->message ) {
 				$this->message = tra('Created by profile installer');
 			}
-			if ( ! $tikilib->create_page($finalName, 0, $this->content, time(), $this->message, 'admin', '0.0.0.0', $this->description, $this->lang, $is_html, null, $this->wysiwyg, $this->wiki_authors_style))
+			if ( ! $tikilib->create_page($finalName, 0, $this->content, time(), $this->message, 'admin', '0.0.0.0', $this->description, $this->lang, $is_html, $hash, $this->wysiwyg, $this->wiki_authors_style))
 				return null;
 		} else {
 			$info = $tikilib->get_page_info($finalName, true, true);
