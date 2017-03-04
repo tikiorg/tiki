@@ -283,11 +283,11 @@
 						<div id="groupfielddiv"{if empty($grouptrackerid) and $prefs.javascript_enabled eq 'y' and $prefs.jquery_ui_chosen neq 'y'} style="display: none;"{/if}>
 							<select name="groupfield" class="form-control">
 								<option value="0">{tr}choose a field ...{/tr}</option>
-								{section name=ix loop=$groupFields}
-									{if isset($groupFields)}
-										<option value="{$groupFields[ix].fieldId}"{if $groupFields[ix].fieldId eq $groupfieldid} selected="selected"{/if}>{$groupFields[ix].name|escape}</option>
-									{/if}
-								{/section}
+								{if isset($groupFields)}
+									{section name=ix loop=$groupFields}
+											<option value="{$groupFields[ix].fieldId}"{if $groupFields[ix].fieldId eq $groupfieldid} selected="selected"{/if}>{$groupFields[ix].name|escape}</option>
+									{/section}
+								{/if}
 							</select>
 							<div class="help-block">
 								{tr}Select the user selector field from the above tracker.{/tr}
@@ -297,7 +297,7 @@
 						{if isset($grouptrackerid)}
 							{button href="tiki-admin_tracker_fields.php?trackerId=$grouptrackerid" _text="{tr}Admin{/tr} $ggr"}
 						{else}
-							{button href="tiki-list_trackers.php" _text="{tr}Go to trackers list{/tr} $ggr"}
+							{button href="tiki-list_trackers.php" _text="{tr}Go to trackers list{/tr}"}
 						{/if}
 					</div>
 				</div>
@@ -475,10 +475,10 @@
 			{if $prefs.groupTracker eq 'y'}
 			<div class="form-group">
 				<div class="col-md-9 col-md-offset-3">
-					{if $grouptrackerid and $groupitemid}
+					{if !empty($grouptrackerid) and $groupitemid}
 						{tr}Group tracker item : {$groupitemid}{/tr}
 						{button href="tiki-view_tracker_item.php?trackerId=$grouptrackerid&amp;itemId=$groupitemid&amp;show=mod" _text="{tr}Edit Item{/tr}"}
-					{elseif $grouptrackerid}
+					{elseif !empty($grouptrackerid)}
 						{if $groupfieldid}
 							{tr}Group tracker item not found{/tr}
 							{button href="tiki-view_tracker.php?trackerId=$grouptrackerid" _text="{tr}Create Item{/tr}"}
@@ -505,52 +505,54 @@
 						<h2>{tr}Members{/tr} <span class="badge">{$membersCount}</span></h2>
 						<form id="checkform2" method="post">
 							<input type="hidden" name="group" value="{$group|escape}">
-							<div class="table-responsive">
+							<div class="{if $js === 'y'}table-responsive {/if}ts-wrapperdiv">
 		{/if}
-								<table class="table">
-									<tr>
-										<th class="auto">{if $memberslist}{select_all checkbox_names='checked[]'}{/if}</th>
-										<th>{self_link _sort_arg='sort_mode_member' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
-										<th>{self_link _sort_arg='sort_mode_member' _sort_field='created'}{tr}Assigned{/tr}{/self_link}</th>
-										<th>{self_link _sort_arg='sort_mode_member' _sort_field='expire'}{tr}Expires{/tr}{/self_link}</th>
-										<th></th>
-									</tr>
-
-									<tr>
+								<table id="groupsMembers" class="table normal table-striped table-hover" data-count="{$membersCount}">
+									<thead>
+										<tr>
+											<th id="checkbox" class="auto">{if $memberslist}{select_all checkbox_names='checked[]'}{/if}</th>
+											<th id="user">{self_link _sort_arg='sort_mode_member' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
+											<th id="assigned">{self_link _sort_arg='sort_mode_member' _sort_field='created'}{tr}Assigned{/tr}{/self_link}</th>
+											<th id="expires">{self_link _sort_arg='sort_mode_member' _sort_field='expire'}{tr}Expires{/tr}{/self_link}</th>
+											<th id="actions"></th>
+										</tr>
+									</thead>
+									<tbody>
 										{foreach from=$memberslist item=member}
-									<tr>
-										<td class="checkbox-cell"><input type="checkbox" name="checked[]" value="{$member.login}"></td>
-										<td class="username">{$member.login|userlink}</td>
-										<td class="date">{$member.created|tiki_short_datetime}</td>
-										<td class="date">{if !empty($member.expire)}{$member.expire|tiki_short_datetime}{/if}</td>
-										<td class="action">
-											{capture name=members_actions}
-												{strip}
-													{$libeg}<a href="tiki-adminusers.php?user={$member.userId|escape:"url"}{if $prefs.feature_tabs ne 'y'}#tab2{/if}">
-													{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit user{/tr}"}
-													</a>{$liend}
-													{if $groupname neq 'Registered'}
-														{$libeg}<a href="{bootstrap_modal controller=user action=manage_groups checked=$member.login groupremove=$groupname anchor='#contenttabs_admingroups-3'}">
-														{icon name="remove" _menu_text='y' _menu_icon='y' alt="{tr}Remove from group{/tr}"}
-														</a>{$liend}
+											<tr>
+												<td class="checkbox-cell"><input type="checkbox" name="checked[]" value="{$member.login}"></td>
+												<td class="username">{$member.login|userlink}</td>
+												<td class="date">{$member.created|tiki_short_datetime}</td>
+												<td class="date">{if !empty($member.expire)}{$member.expire|tiki_short_datetime}{/if}</td>
+												<td class="action">
+													{capture name=members_actions}
+														{strip}
+															{$libeg}<a href="tiki-adminusers.php?user={$member.userId|escape:"url"}{if $prefs.feature_tabs ne 'y'}#tab2{/if}">
+															{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit user{/tr}"}
+															</a>{$liend}
+															{if $groupname neq 'Registered'}
+																{$libeg}<a href="{bootstrap_modal controller=user action=manage_groups checked=$member.login groupremove=$groupname anchor='#contenttabs_admingroups-3'}">
+																{icon name="remove" _menu_text='y' _menu_icon='y' alt="{tr}Remove from group{/tr}"}
+																</a>{$liend}
+															{/if}
+														{/strip}
+													{/capture}
+													{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+															<a
+																	class="tips"
+																	title="{tr}Actions{/tr}" href="#"
+																	{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.members_actions|escape:"javascript"|escape:"html"}{/if}
+																	style="padding:0; margin:0; border:0"
+															>
+																{icon name='settings'}
+															</a>
+															{if $js === 'n'}
+															<ul class="dropdown-menu" role="menu">{$smarty.capture.user_actions}</ul></li></ul>
 													{/if}
-												{/strip}
-											{/capture}
-											{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
-													<a
-															class="tips"
-															title="{tr}Actions{/tr}" href="#"
-															{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.members_actions|escape:"javascript"|escape:"html"}{/if}
-															style="padding:0; margin:0; border:0"
-													>
-														{icon name='settings'}
-													</a>
-													{if $js === 'n'}
-													<ul class="dropdown-menu" role="menu">{$smarty.capture.user_actions}</ul></li></ul>
-											{/if}
-										</td>
-									</tr>
-									{/foreach}
+												</td>
+											</tr>
+										{/foreach}
+									</tbody>
 								</table>
 		{if !$ts.ajax}
 							</div>
@@ -607,28 +609,31 @@
 		{/tab}
 		{tab name="{tr _0="<i>{$groupname|escape}</i>"}Users banned from group %0{/tr}"}
 			{* ----------------------- tab with users banned from group --------------------------------------- *}
-			<h2>{tr}Banned members{/tr} <span class="badge">{$bannedlist|count}</span></h2>
+			<h2>{tr}Banned members{/tr} <span class="badge">{$bannedCount}</span></h2>
 			{if $bannedlist|count > 0}
-				<div class="table-responsive">
+				<div class="{if $js === 'y'}table-responsive {/if}ts-wrapperdiv"> {* table-responsive class cuts off css drop-down menus *}
 					<form id="checkform3" method="post">
-						<table class="table">
-							<tr>
-								<th class="auto">{select_all checkbox_names='user[]'}</th>
-								<th>{tr}User{/tr}</th>
-								<th>{tr}Unban user{/tr}</th>
-							</tr>
-							<tr>
+						<table id="bannedMembers" class="table normal table-striped table-hover" data-count="{$bannedCount}">
+							<thead>
+								<tr>
+									<th id="checkbox" class="auto">{select_all checkbox_names='user[]'}</th>
+									<th id="user">{tr}User{/tr}</th>
+									<th id="unban">{tr}Unban user{/tr}</th>
+								</tr>
+							</thead>
+							<tbody>
 								{foreach from=$bannedlist item=member}
-							<tr>
-								<td class="checkbox-cell"><input type="checkbox" name="user[]" value="{$member}"></td>
-								<td class="username">{$member|userlink}</td>
-								<td class="action">
-									<a href="{bootstrap_modal controller=group action=unban_user user=$member group=$groupname}" class="tips" title=":{tr _0=$member _1=$group}Unban user %0 from group %1{/tr}">
-										{icon name="ok"}
-									</a>
-								</td>
-							</tr>
-							{/foreach}
+									<tr>
+										<td class="checkbox-cell"><input type="checkbox" name="user[]" value="{$member}"></td>
+										<td class="username">{$member|userlink}</td>
+										<td class="action">
+											<a href="{bootstrap_modal controller=group action=unban_user user=$member group=$groupname}" class="tips" title=":{tr _0=$member _1=$group}Unban user %0 from group %1{/tr}">
+												{icon name="ok"}
+											</a>
+										</td>
+									</tr>
+								{/foreach}
+							</tbody>
 						</table>
 						<input type="hidden" name="group" value="{$groupname}">
 						<input type="hidden" name="anchor" value="#contenttabs_admingroups-4">
