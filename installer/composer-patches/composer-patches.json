@@ -1,0 +1,7 @@
+{
+  "patches": {
+    "adodb/adodb-php": {
+      "Remove references to ADOdb Extension": "installer/composer-patches/adodb-php__remove_references_to_adodb_extension.patch"
+    }
+  }
+}

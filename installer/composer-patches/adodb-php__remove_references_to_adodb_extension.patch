@@ -1,0 +1,507 @@
+From 77d6354f24f0ab783b72f77c8d23697d09e211e4 Mon Sep 17 00:00:00 2001
+From: Damien Regad <dregad@mantisbt.org>
+Date: Wed, 14 Sep 2016 18:15:05 +0200
+Subject: [PATCH] Remove references to ADOdb Extension
+
+Source: https://github.com/ADOdb/ADOdb/commit/376249c45f9e51e327ab0af22e9bfc9918abc0b4.patch
+Backport to 5.20.9 by rjsmelo (2017/03/04)
+
+The ADOdb Extension's development stopped at version 5.04. It is no
+longer maintained or supported, yet the library still contains code
+referencing it. If those code branches are executed, ADOdb will not
+perform properly, due to missing constant declarations (among other
+things).
+
+This commit removes all references to the Extension.
+
+Fixes #270, #269
+---
+ adodb-lib.inc.php             |  15 +---
+ adodb.inc.php                 | 191 ++++++++++++++++--------------------------
+ drivers/adodb-access.inc.php  |   8 --
+ drivers/adodb-mysql.inc.php   |   7 --
+ drivers/adodb-mysqli.inc.php  |   9 --
+ drivers/adodb-mysqlpo.inc.php |   5 --
+ drivers/adodb-mysqlt.inc.php  |   5 --
+ drivers/adodb-oci8.inc.php    |   3 -
+ drivers/adodb-oci8po.inc.php  |   1 -
+ tests/test.php                |   8 +-
+ 10 files changed, 79 insertions(+), 173 deletions(-)
+
+diff --git a/adodb-lib.inc.php b/adodb-lib.inc.php
+index 6028530..2bb1023 100644
+--- a/adodb-lib.inc.php
++++ b/adodb-lib.inc.php
+@@ -465,18 +465,11 @@ function _adodb_getcount(&$zthis, $sql,$inputarr=false,$secs2cache=0)
+ 		if (!$rstest) $rstest = $zthis->Execute($sql,$inputarr);
+ 	}
+ 	if ($rstest) {
+-	  		$qryRecs = $rstest->RecordCount();
++		$qryRecs = $rstest->RecordCount();
+ 		if ($qryRecs == -1) {
+-		global $ADODB_EXTENSION;
+-		// some databases will return -1 on MoveLast() - change to MoveNext()
+-			if ($ADODB_EXTENSION) {
+-				while(!$rstest->EOF) {
+-					adodb_movenext($rstest);
+-				}
+-			} else {
+-				while(!$rstest->EOF) {
+-					$rstest->MoveNext();
+-				}
++			// some databases will return -1 on MoveLast() - change to MoveNext()
++			while(!$rstest->EOF) {
++				$rstest->MoveNext();
+ 			}
+ 			$qryRecs = $rstest->_currentRow;
+ 		}
+diff --git a/adodb.inc.php b/adodb.inc.php
+index 62607a2..ca6f1ac 100644
+--- a/adodb.inc.php
++++ b/adodb.inc.php
+@@ -75,7 +75,6 @@ if (!defined('_ADODB_LAYER')) {
+ 		$ADODB_CACHE_DIR,	// directory to cache recordsets
+ 		$ADODB_CACHE,
+ 		$ADODB_CACHE_CLASS,
+-		$ADODB_EXTENSION,   // ADODB extension installed
+ 		$ADODB_COMPAT_FETCH, // If $ADODB_COUNTRECS and this is true, $rs->fields is available on EOF
+ 		$ADODB_FETCH_MODE,	// DEFAULT, NUM, ASSOC or BOTH. Default follows native driver default...
+ 		$ADODB_GETONE_EOF,
+@@ -85,8 +84,6 @@ if (!defined('_ADODB_LAYER')) {
+ 	// GLOBAL SETUP
+ 	//==============================================================================================
+ 
+-	$ADODB_EXTENSION = defined('ADODB_EXTENSION');
+-
+ 	// ********************************************************
+ 	// Controls $ADODB_FORCE_TYPE mode. Default is ADODB_FORCE_VALUE (3).
+ 	// Used in GetUpdateSql and GetInsertSql functions. Thx to Niko, nuko#mbnet.fi
+@@ -103,17 +100,30 @@ if (!defined('_ADODB_LAYER')) {
+ 	// ********************************************************
+ 
+ 
+-	if (!$ADODB_EXTENSION || ADODB_EXTENSION < 4.0) {
++	/**
++	 * Constants for returned values from the charMax and textMax methods.
++	 * If not specifically defined in the driver, methods return the NOTSET value.
++	 */
++	define ('ADODB_STRINGMAX_NOTSET', -1);
++	define ('ADODB_STRINGMAX_NOLIMIT',-2);
++
++	/*
++	* Defines the the default meta type returned
++	* when ADOdb encounters a type that it is not
++	* defined in the metaTypes.
++	*/
++	if (!defined('ADODB_DEFAULT_METATYPE'))
++		define ('ADODB_DEFAULT_METATYPE','N');
+ 
+-		define('ADODB_BAD_RS','<p>Bad $rs in %s. Connection or SQL invalid. Try using $connection->debug=true;</p>');
++	define('ADODB_BAD_RS','<p>Bad $rs in %s. Connection or SQL invalid. Try using $connection->debug=true;</p>');
+ 
+ 	// allow [ ] @ ` " and . in table names
+-		define('ADODB_TABLE_REGEX','([]0-9a-z_\:\"\`\.\@\[-]*)');
++	define('ADODB_TABLE_REGEX','([]0-9a-z_\:\"\`\.\@\[-]*)');
+ 
+ 	// prefetching used by oracle
+-		if (!defined('ADODB_PREFETCH_ROWS')) {
+-			define('ADODB_PREFETCH_ROWS',10);
+-		}
++	if (!defined('ADODB_PREFETCH_ROWS')) {
++		define('ADODB_PREFETCH_ROWS',10);
++	}
+ 
+ 
+ 	/**
+@@ -128,10 +138,10 @@ if (!defined('_ADODB_LAYER')) {
+ 	 *   - BOTH:    array(0 => 456, 'id' => 456, 1 => 'john', 'name' => 'john')
+ 	 *   - DEFAULT: driver-dependent
+ 	 */
+-		define('ADODB_FETCH_DEFAULT', 0);
+-		define('ADODB_FETCH_NUM', 1);
+-		define('ADODB_FETCH_ASSOC', 2);
+-		define('ADODB_FETCH_BOTH', 3);
++	define('ADODB_FETCH_DEFAULT', 0);
++	define('ADODB_FETCH_NUM', 1);
++	define('ADODB_FETCH_ASSOC', 2);
++	define('ADODB_FETCH_BOTH', 3);
+ 
+ 	/**
+ 	 * Associative array case constants
+@@ -148,34 +158,34 @@ if (!defined('_ADODB_LAYER')) {
+ 	 * NOTE: This functionality is not implemented everywhere, it currently
+ 	 * works only with: mssql, odbc, oci8 and ibase derived drivers
+ 	 */
+-		define('ADODB_ASSOC_CASE_LOWER', 0);
+-		define('ADODB_ASSOC_CASE_UPPER', 1);
+-		define('ADODB_ASSOC_CASE_NATIVE', 2);
++	define('ADODB_ASSOC_CASE_LOWER', 0);
++	define('ADODB_ASSOC_CASE_UPPER', 1);
++	define('ADODB_ASSOC_CASE_NATIVE', 2);
+ 
+ 
+-		if (!defined('TIMESTAMP_FIRST_YEAR')) {
+-			define('TIMESTAMP_FIRST_YEAR',100);
+-		}
++	if (!defined('TIMESTAMP_FIRST_YEAR')) {
++		define('TIMESTAMP_FIRST_YEAR',100);
++	}
+ 
+-		/**
+-		 * AutoExecute constants
+-		 * (moved from adodb-pear.inc.php since they are only used in here)
+-		 */
+-		define('DB_AUTOQUERY_INSERT', 1);
+-		define('DB_AUTOQUERY_UPDATE', 2);
++	/**
++	 * AutoExecute constants
++	 * (moved from adodb-pear.inc.php since they are only used in here)
++	 */
++	define('DB_AUTOQUERY_INSERT', 1);
++	define('DB_AUTOQUERY_UPDATE', 2);
+ 
+ 
+-		// PHP's version scheme makes converting to numbers difficult - workaround
+-		$_adodb_ver = (float) PHP_VERSION;
+-		if ($_adodb_ver >= 5.2) {
+-			define('ADODB_PHPVER',0x5200);
+-		} else if ($_adodb_ver >= 5.0) {
+-			define('ADODB_PHPVER',0x5000);
+-		} else {
+-			die("PHP5 or later required. You are running ".PHP_VERSION);
+-		}
+-		unset($_adodb_ver);
++	// PHP's version scheme makes converting to numbers difficult - workaround
++	$_adodb_ver = (float) PHP_VERSION;
++	if ($_adodb_ver >= 5.2) {
++		define('ADODB_PHPVER',0x5200);
++	} else if ($_adodb_ver >= 5.0) {
++		define('ADODB_PHPVER',0x5000);
++	} else {
++		die("PHP5 or later required. You are running ".PHP_VERSION);
+ 	}
++	unset($_adodb_ver);
++
+ 
+ 
+ 	/**
+@@ -3381,10 +3391,6 @@ http://www.stanford.edu/dept/itss/docs/oracle/10g/server.101/b10759/statements_1
+ 	 * @return an array indexed by the rows (0-based) from the recordset
+ 	 */
+ 	function GetArray($nRows = -1) {
+-		global $ADODB_EXTENSION; if ($ADODB_EXTENSION) {
+-		$results = adodb_getall($this,$nRows);
+-		return $results;
+-	}
+ 		$results = array();
+ 		$cnt = 0;
+ 		while (!$this->EOF && $nRows != $cnt) {
+@@ -3456,7 +3462,7 @@ http://www.stanford.edu/dept/itss/docs/oracle/10g/server.101/b10759/statements_1
+ 	 *
+ 	 * @param [force_array] has only meaning if we have 2 data columns. If false, a 1 dimensional
+ 	 * array is returned, otherwise a 2 dimensional array is returned. If this sounds confusing,
+-	 * read the source.
++	 * 								read the source.
+ 	 *
+ 	 * @param [first2cols] means if there are more than 2 cols, ignore the remaining cols and
+ 	 * instead of returning array[col0] => array(remaining cols), return array[col0] => col1
+@@ -3465,7 +3471,6 @@ http://www.stanford.edu/dept/itss/docs/oracle/10g/server.101/b10759/statements_1
+ 	 * or false if the  data has less than 2 cols.
+ 	 */
+ 	function GetAssoc($force_array = false, $first2cols = false) {
+-		global $ADODB_EXTENSION;
+ 
+ 		$cols = $this->_numOfFields;
+ 		if ($cols < 2) {
+@@ -3483,80 +3488,39 @@ http://www.stanford.edu/dept/itss/docs/oracle/10g/server.101/b10759/statements_1
+ 		$results = array();
+ 
+ 		if (!$first2cols && ($cols > 2 || $force_array)) {
+-			if ($ADODB_EXTENSION) {
+-				if ($numIndex) {
+-					while (!$this->EOF) {
+-						$results[trim($this->fields[0])] = array_slice($this->fields, 1);
+-						adodb_movenext($this);
+-					}
+-				} else {
+-					while (!$this->EOF) {
+-					// Fix for array_slice re-numbering numeric associative keys
+-						$keys = array_slice(array_keys($this->fields), 1);
+-						$sliced_array = array();
+-
+-						foreach($keys as $key) {
+-							$sliced_array[$key] = $this->fields[$key];
+-						}
+-
+-						$results[trim(reset($this->fields))] = $sliced_array;
+-						adodb_movenext($this);
+-					}
++			if ($numIndex) {
++				while (!$this->EOF) {
++					$results[trim($this->fields[0])] = array_slice($this->fields, 1);
++					$this->MoveNext();
+ 				}
+ 			} else {
+-				if ($numIndex) {
+-					while (!$this->EOF) {
+-						$results[trim($this->fields[0])] = array_slice($this->fields, 1);
+-						$this->MoveNext();
+-					}
+-				} else {
+-					while (!$this->EOF) {
+-					// Fix for array_slice re-numbering numeric associative keys
+-						$keys = array_slice(array_keys($this->fields), 1);
+-						$sliced_array = array();
++				while (!$this->EOF) {
++				// Fix for array_slice re-numbering numeric associative keys
++					$keys = array_slice(array_keys($this->fields), 1);
++					$sliced_array = array();
+ 
+-						foreach($keys as $key) {
+-							$sliced_array[$key] = $this->fields[$key];
+-						}
+-
+-						$results[trim(reset($this->fields))] = $sliced_array;
+-						$this->MoveNext();
++					foreach($keys as $key) {
++						$sliced_array[$key] = $this->fields[$key];
+ 					}
++
++					$results[trim(reset($this->fields))] = $sliced_array;
++					$this->MoveNext();
+ 				}
+ 			}
+ 		} else {
+-			if ($ADODB_EXTENSION) {
+-				// return scalar values
+-				if ($numIndex) {
+-					while (!$this->EOF) {
+-					// some bug in mssql PHP 4.02 -- doesn't handle references properly so we FORCE creating a new string
+-						$results[trim(($this->fields[0]))] = $this->fields[1];
+-						adodb_movenext($this);
+-					}
+-				} else {
+-					while (!$this->EOF) {
+-					// some bug in mssql PHP 4.02 -- doesn't handle references properly so we FORCE creating a new string
+-						$v1 = trim(reset($this->fields));
+-						$v2 = ''.next($this->fields);
+-						$results[$v1] = $v2;
+-						adodb_movenext($this);
+-					}
++			if ($numIndex) {
++				while (!$this->EOF) {
++				// some bug in mssql PHP 4.02 -- doesn't handle references properly so we FORCE creating a new string
++					$results[trim(($this->fields[0]))] = $this->fields[1];
++					$this->MoveNext();
+ 				}
+ 			} else {
+-				if ($numIndex) {
+-					while (!$this->EOF) {
+-					// some bug in mssql PHP 4.02 -- doesn't handle references properly so we FORCE creating a new string
+-						$results[trim(($this->fields[0]))] = $this->fields[1];
+-						$this->MoveNext();
+-					}
+-				} else {
+-					while (!$this->EOF) {
+-					// some bug in mssql PHP 4.02 -- doesn't handle references properly so we FORCE creating a new string
+-						$v1 = trim(reset($this->fields));
+-						$v2 = ''.next($this->fields);
+-						$results[$v1] = $v2;
+-						$this->MoveNext();
+-					}
++				while (!$this->EOF) {
++				// some bug in mssql PHP 4.02 -- doesn't handle references properly so we FORCE creating a new string
++					$v1 = trim(reset($this->fields));
++					$v2 = ''.next($this->fields);
++					$results[$v1] = $v2;
++					$this->MoveNext();
+ 				}
+ 			}
+ 		}
+@@ -3784,18 +3748,11 @@ http://www.stanford.edu/dept/itss/docs/oracle/10g/server.101/b10759/statements_1
+ 			if ($rowNumber < $this->_currentRow) {
+ 				return false;
+ 			}
+-			global $ADODB_EXTENSION;
+-			if ($ADODB_EXTENSION) {
+-				while (!$this->EOF && $this->_currentRow < $rowNumber) {
+-					adodb_movenext($this);
+-				}
+-			} else {
+-				while (! $this->EOF && $this->_currentRow < $rowNumber) {
+-					$this->_currentRow++;
++			while (! $this->EOF && $this->_currentRow < $rowNumber) {
++				$this->_currentRow++;
+ 
+-					if (!$this->_fetch()) {
+-						$this->EOF = true;
+-					}
++				if (!$this->_fetch()) {
++					$this->EOF = true;
+ 				}
+ 			}
+ 			return !($this->EOF);
+diff --git a/drivers/adodb-access.inc.php b/drivers/adodb-access.inc.php
+index 3a5a8ed..5370167 100644
+--- a/drivers/adodb-access.inc.php
++++ b/drivers/adodb-access.inc.php
+@@ -31,14 +31,6 @@ class  ADODB_access extends ADODB_odbc {
+ 	var $hasTransactions = false;
+ 	var $upperCase = 'ucase';
+ 
+-	function __construct()
+-	{
+-	global $ADODB_EXTENSION;
+-
+-		$ADODB_EXTENSION = false;
+-		parent::__construct();
+-	}
+-
+ 	function Time()
+ 	{
+ 		return time();
+diff --git a/drivers/adodb-mysql.inc.php b/drivers/adodb-mysql.inc.php
+index 2d999c6..0459fc4 100644
+--- a/drivers/adodb-mysql.inc.php
++++ b/drivers/adodb-mysql.inc.php
+@@ -51,11 +51,6 @@ class ADODB_mysql extends ADOConnection {
+ 	var $nameQuote = '`';		/// string to use to quote identifiers and names
+ 	var $compat323 = false; 		// true if compat with mysql 3.23
+ 
+-	function __construct()
+-	{
+-		if (defined('ADODB_EXTENSION')) $this->rsPrefix .= 'ext_';
+-	}
+-
+ 
+ 	// SetCharSet - switch the client encoding
+ 	function SetCharSet($charset_name)
+@@ -794,8 +789,6 @@ class ADORecordSet_mysql extends ADORecordSet{
+ 
+ 	function MoveNext()
+ 	{
+-		//return adodb_movenext($this);
+-		//if (defined('ADODB_EXTENSION')) return adodb_movenext($this);
+ 		if (@$this->fields = mysql_fetch_array($this->_queryID,$this->fetchMode)) {
+ 			$this->_updatefields();
+ 			$this->_currentRow += 1;
+diff --git a/drivers/adodb-mysqli.inc.php b/drivers/adodb-mysqli.inc.php
+index 188efc9..0c4e174 100644
+--- a/drivers/adodb-mysqli.inc.php
++++ b/drivers/adodb-mysqli.inc.php
+@@ -29,9 +29,6 @@ if (! defined("_ADODB_MYSQLI_LAYER")) {
+  if (! defined("MYSQLI_BINARY_FLAG"))  define("MYSQLI_BINARY_FLAG", 128);
+  if (!defined('MYSQLI_READ_DEFAULT_GROUP')) define('MYSQLI_READ_DEFAULT_GROUP',1);
+ 
+- // disable adodb extension - currently incompatible.
+- global $ADODB_EXTENSION; $ADODB_EXTENSION = false;
+-
+ class ADODB_mysqli extends ADOConnection {
+ 	var $databaseType = 'mysqli';
+ 	var $dataProvider = 'mysql';
+@@ -63,12 +60,6 @@ class ADODB_mysqli extends ADOConnection {
+ 	var $arrayClass = 'ADORecordSet_array_mysqli';
+ 	var $multiQuery = false;
+ 
+-	function __construct()
+-	{
+-		// if(!extension_loaded("mysqli"))
+-		//trigger_error("You must have the mysqli extension installed.", E_USER_ERROR);
+-	}
+-
+ 	function SetTransactionMode( $transaction_mode )
+ 	{
+ 		$this->_transmode = $transaction_mode;
+diff --git a/drivers/adodb-mysqlpo.inc.php b/drivers/adodb-mysqlpo.inc.php
+index 26b354a..dc3a29f 100644
+--- a/drivers/adodb-mysqlpo.inc.php
++++ b/drivers/adodb-mysqlpo.inc.php
+@@ -32,11 +32,6 @@ class ADODB_mysqlt extends ADODB_mysql {
+ 	var $hasTransactions = true;
+ 	var $autoRollback = true; // apparently mysql does not autorollback properly
+ 
+-	function __construct()
+-	{
+-	global $ADODB_EXTENSION; if ($ADODB_EXTENSION) $this->rsPrefix .= 'ext_';
+-	}
+-
+ 	function BeginTrans()
+ 	{
+ 		if ($this->transOff) return true;
+diff --git a/drivers/adodb-mysqlt.inc.php b/drivers/adodb-mysqlt.inc.php
+index 79c9376..481a01d 100644
+--- a/drivers/adodb-mysqlt.inc.php
++++ b/drivers/adodb-mysqlt.inc.php
+@@ -29,11 +29,6 @@ class ADODB_mysqlt extends ADODB_mysql {
+ 	var $hasTransactions = true;
+ 	var $autoRollback = true; // apparently mysql does not autorollback properly
+ 
+-	function __construct()
+-	{
+-	global $ADODB_EXTENSION; if ($ADODB_EXTENSION) $this->rsPrefix .= 'ext_';
+-	}
+-
+ 	/* set transaction mode
+ 
+ 	SET [GLOBAL | SESSION] TRANSACTION ISOLATION LEVEL
+diff --git a/drivers/adodb-oci8.inc.php b/drivers/adodb-oci8.inc.php
+index 928d1b8..f798788 100644
+--- a/drivers/adodb-oci8.inc.php
++++ b/drivers/adodb-oci8.inc.php
+@@ -106,9 +106,6 @@ END;
+ 	function __construct()
+ 	{
+ 		$this->_hasOciFetchStatement = ADODB_PHPVER >= 0x4200;
+-		if (defined('ADODB_EXTENSION')) {
+-			$this->rsPrefix .= 'ext_';
+-		}
+ 	}
+ 
+ 	/*  function MetaColumns($table, $normalize=true) added by smondino@users.sourceforge.net*/
+diff --git a/drivers/adodb-oci8po.inc.php b/drivers/adodb-oci8po.inc.php
+index 6b939b0..caa5328 100644
+--- a/drivers/adodb-oci8po.inc.php
++++ b/drivers/adodb-oci8po.inc.php
+@@ -33,7 +33,6 @@ class ADODB_oci8po extends ADODB_oci8 {
+ 	function __construct()
+ 	{
+ 		$this->_hasOCIFetchStatement = ADODB_PHPVER >= 0x4200;
+-		# oci8po does not support adodb extension: adodb_movenext()
+ 	}
+ 
+ 	function Param($name,$type='C')
+diff --git a/tests/test.php b/tests/test.php
+index 50e74ad..ee9f244 100644
+--- a/tests/test.php
++++ b/tests/test.php
+@@ -40,13 +40,9 @@ function Err($msg)
+ 
+ function CheckWS($conn)
+ {
+-global $ADODB_EXTENSION;
+-
+ 	include_once('../session/adodb-session.php');
+ 	if (defined('CHECKWSFAIL')){ echo " TESTING $conn ";flush();}
+-	$saved = $ADODB_EXTENSION;
+ 	$db = ADONewConnection($conn);
+-	$ADODB_EXTENSION = $saved;
+ 	if (headers_sent()) {
+ 		print "<p><b>White space detected in adodb-$conn.inc.php or include file...</b></p>";
+ 		//die();
+@@ -125,12 +121,10 @@ FROM `nuke_stories` `t1`, `nuke_authors` `t2`, `nuke_stories_cat` `t3`, `nuke_to
+ 	//print $db->UnixTimeStamp('2003-7-22 23:00:00');
+ 
+ 	$phpv = phpversion();
+-	if (defined('ADODB_EXTENSION')) $ext = ' &nbsp; Extension '.ADODB_EXTENSION.' installed';
+-	else $ext = '';
+ 	print "<h3>ADODB Version: $ADODB_vers";
+ 	print "<p>Host: <i>$db->host</i>";
+ 	print "<br>Database: <i>$db->database</i>";
+-	print "<br>PHP: <i>$phpv $ext</i></h3>";
++	print "<br>PHP: <i>$phpv</i></h3>";
+ 
+ 	flush();
+ 
+-- 
+2.10.1 (Apple Git-78)
+

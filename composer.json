@@ -106,7 +106,8 @@
 		"zendframework/zend-mime": "~2.4",
 		"zendframework/zend-mail": "~2.4",
 		"zendframework/zendsearch": "~2.0.0@RC",
-		"adodb/adodb-php": "^5.20"
+		"adodb/adodb-php": "^5.20",
+		"cweagans/composer-patches": "^1.6"
 	},
 	"require-dev": {
 		"mikey179/vfsStream": "1.1.0",
@@ -114,6 +115,9 @@
 		"phpunit/phpunit": "^5",
 		"phpunit/phpunit-selenium": ">=1.2",
 		"phpunit/dbunit": ">=1.2"
+	},
+	"extra": {
+		"patches-file": "installer/composer-patches/composer-patches.json"
 	},
 	"config": {
 		"process-timeout": 5000,
