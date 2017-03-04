@@ -67,7 +67,7 @@ function prefs_http_list()
 				'1' => tra('1'),
 				'1;mode=block' => tra('1;mode=block'),
 			),
-			'default' => '1;mode:block',
+			'default' => '1;mode=block',
 			'perspective' => false,
 			'tags' => array('basic'),
 			'dependencies' => array(
