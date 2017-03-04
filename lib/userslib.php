@@ -6476,13 +6476,16 @@ class UsersLib extends TikiLib
 		}
 	}
 
-	function get_group_banned_users($group, $offset = 0, $max = -1, $what = 'login', $sort_mode = 'login_asc')
+	function get_group_banned_users($group, $offset = 0, $max = -1, $what = 'login', $sort_mode = 'source_itemId_asc')
 	{
-		$res = TikiLib::lib('relation')->get_relations_to('group', $group, 'tiki.user.banned');
-		$ret = array();
+		$res = TikiLib::lib('relation')->get_relations_to('group', $group, 'tiki.user.banned', $sort_mode);
+		$temp = array();
 		foreach ($res as $r) {
-			$ret[] = $r['itemId'];
+			$temp[] = $r['itemId'];
 		}
+		$max = $max > 0 ? $max : null;
+		$ret['data'] = array_slice($temp, $offset, $max);
+		$ret['cant'] = count($res);
 		return $ret;
 	}
 
