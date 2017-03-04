@@ -40,6 +40,10 @@ class TikiFilter
 			case 'alnumspace':
 				// Only alphabetic characters, digits and spaces. All other characters are suppressed. I18n support
 				return new TikiFilter_Alnum(true);
+			case 'alnumdash':
+				// Removes everything except alphabetic characters, digits, dashes and underscores. Could be used for
+				// class names, sortmode values, etc.
+				return new Zend\Filter\PregReplace('/[^\p{L}\p{N}\p{Pc}\p{Pd}]*/', '');
 			case 'digits':
 				// Removes everything except digits eg. '12345 to 67890' returns 1234567890
 				return new Zend\Filter\Digits;
