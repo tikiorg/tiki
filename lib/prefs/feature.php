@@ -1133,7 +1133,7 @@ function prefs_feature_list($partial = false)
 			'description' => tra("nofollow is used to instruct some search engines that the link should not influence the ranking of the link's target in the search engine's index"),
 			'type' => 'flag',
 			'keywords' => 'no follow spam',
-			'default' => 'y',
+			'default' => 'n',
 			'tags' => array('basic'),
 		),
 		'feature_semantic' => array(
