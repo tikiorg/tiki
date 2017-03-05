@@ -12,12 +12,12 @@ $errors = [];
 
 $inputConfiguration = array(
 	array( 'staticKeyFilters' => array(
-				'offset' => 'digits',
-				'numrows' => 'digits',
+				'offset' => 'int',
+				'numrows' => 'int',
 				'find' => 'text',
 				'filterEmail' => 'xss',
-				'sort_mode' => 'text',
-				'initial' => 'text',
+				'sort_mode' => 'alnumdash',
+				'initial' => 'alpha',
 				'filterGroup' => 'text',
 			)
 		)
