@@ -348,10 +348,9 @@ $smarty->assign('groupperms', $groupperms);
 $smarty->assign_by_ref('userChoice', $userChoice);
 $smarty->assign_by_ref('cant_pages', $users["cant"]);
 $smarty->assign('group_info', $re);
-setcookie('tab', $cookietab);
-$smarty->assign('cookietab', $cookietab);
+
 ask_ticket('admin-groups');
-$smarty->assign('uses_tabs', 'y');
+
 // Assign the list of groups
 $smarty->assign_by_ref('users', $users["data"]);
 // disallow robots to index page:

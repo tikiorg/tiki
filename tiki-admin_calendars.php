@@ -181,8 +181,8 @@ if ($prefs['feature_groupalert'] == 'y') {
 	$smarty->assign_by_ref('groupforAlertList', $groupforAlertList);
 	$smarty->assign_by_ref('showeachuser', $showeachuser);
 }
-setcookie('tab', $cookietab);
-$smarty->assign_by_ref('cookietab', $cookietab);
+
+
 $smarty->assign('name', $info["name"]);
 $smarty->assign('description', $info["description"]);
 $smarty->assign('owner', $info["user"]);
@@ -260,6 +260,5 @@ ask_ticket('admin-calendars');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
-$smarty->assign('uses_tabs', 'y');
 $smarty->assign('mid', 'tiki-admin_calendars.tpl');
 $smarty->display("tiki.tpl");

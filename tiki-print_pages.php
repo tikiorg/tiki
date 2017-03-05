@@ -96,7 +96,7 @@ foreach ($printstructures as $page_ref_id) {
 	}
 }
 $smarty->assign_by_ref('printnamestructures', $printnamestructures);
-$smarty->assign('cookietab', $cookietab);
+
 include_once ('tiki-section_options.php');
 ask_ticket('print-pages');
 // disallow robots to index page:

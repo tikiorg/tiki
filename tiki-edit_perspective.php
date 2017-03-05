@@ -116,10 +116,6 @@ $headtitle = breadcrumb_buildHeadTitle($crumbs);
 $smarty->assign('headtitle', $headtitle);
 $smarty->assign('trail', $crumbs);
 
-if (!isset($cookietab)) {
-	$cookietab = '1';
-}
-setcookie('tab', $cookietab);
 
 $smarty->assign('perspectives', $perspectives);
 $smarty->assign('mid', 'tiki-edit_perspective.tpl');

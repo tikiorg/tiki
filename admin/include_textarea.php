@@ -239,4 +239,4 @@ if (isset($_REQUEST['disabled']) && $tiki_p_admin == 'y') {
 	} while (true);
 	$smarty->assign_by_ref('disabled', $disabled);
 }
-setcookie('tab', $cookietab);
+

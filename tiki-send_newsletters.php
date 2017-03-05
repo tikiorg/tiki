@@ -544,8 +544,7 @@ if (count($tpls) > 0) {
 	$smarty->assign_by_ref('tpls', $tpls);
 }
 include_once ('tiki-section_options.php');
-setcookie('tab', $cookietab);
-$smarty->assign('cookietab', $_REQUEST['cookietab']);
+
 ask_ticket('send-newsletter');
 $wikilib = TikiLib::lib('wiki');
 $plugins = $wikilib->list_plugins(true, 'editwiki');

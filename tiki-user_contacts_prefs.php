@@ -73,8 +73,7 @@ if (isset($_REQUEST['ext_down'])) {
 }
 $exts = $contactlib->get_ext_list($user);
 $smarty->assign('exts', $exts);
-setcookie('tab', $cookietab);
-$smarty->assign_by_ref('cookietab', $cookietab);
+
 include_once ('tiki-mytiki_shared.php');
 //ask_ticket('user-contacts_prefs');
 include_once ('tiki-section_options.php');

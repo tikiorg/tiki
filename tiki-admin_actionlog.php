@@ -146,10 +146,7 @@ $smarty->assign('nbViewedConfs', $nbViewedConfs);
 if (empty($nbViewedConfs)) {
 	$cookietab = 2;
 }
-if (!empty($cookietab)) {
-	setcookie('tab', $cookietab);
-	$smarty->assign('cookietab', $cookietab);
-}
+
 $smarty->assign_by_ref('actionlogConf', $confs);
 
 if (!empty($_REQUEST['actionId']) && $tiki_p_admin == 'y') {

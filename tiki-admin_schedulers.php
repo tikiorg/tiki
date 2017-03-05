@@ -143,8 +143,6 @@ $smarty->assign('schedulerStatus', array(
 	Scheduler_Item::STATUS_INACTIVE => tra('Inactive'),
 ));
 
-$smarty->assign('cookietab', $cookietab);
-$smarty->assign('uses_tabs', 'y');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('mid', 'tiki-admin_schedulers.tpl');

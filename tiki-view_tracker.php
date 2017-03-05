@@ -535,7 +535,7 @@ if ($tiki_p_export_tracker == 'y') {
 	$smarty->assign('recordsOffset', 1);
 }
 include_once ('tiki-section_options.php');
-$smarty->assign('uses_tabs', 'y');
+
 $smarty->assign('show_filters', 'n');
 if (count($fields['data']) > 0) {
 	foreach ($fields['data'] as $it) {
@@ -550,8 +550,7 @@ if (isset($tracker_info['useRatings']) && $tracker_info['useRatings'] == 'y' && 
 		$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker." . $_REQUEST["trackerId"] . '.' . $items['data'][$f]['itemId'], $user);
 	}
 }
-setcookie('tab', $cookietab);
-$smarty->assign('cookietab', $cookietab);
+
 ask_ticket('view-trackers');
 
 // Generate validation js
