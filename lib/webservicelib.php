@@ -33,8 +33,8 @@ class Tiki_Webservice
      */
     public static function create( $name )
 	{
-		if ( ! ctype_alpha($name) ) {
-			return;
+		if ( ! ctype_alpha($name) || self::getService($name) ) {
+			return null;
 		}
 
 		$ws = new self;
@@ -120,6 +120,27 @@ class Tiki_Webservice
 		global $tikilib;
 		$tikilib->query("DELETE FROM tiki_webservice WHERE service = ?", array( $this->name ));
 		$tikilib->query("DELETE FROM tiki_webservice_template WHERE service = ?", array( $this->name ));
+	}
+
+	/**
+	 * @param $newName
+	 * @return $this|null
+	 */
+	function rename($newName)
+	{
+		$tiki_webservice = TikiDb::get()->table('tiki_webservice');
+		if (ctype_alpha($newName) && $tiki_webservice->fetchCount(['service' => $newName]) == 0) {
+
+			TikiDb::get()->table('tiki_webservice_template')->updateMultiple(
+				['service' => $newName,],
+				['service' => $this->name]
+			);
+			$tiki_webservice->update(['service' => $newName,], ['service' => $this->name]);
+			$this->name = $newName;
+			return $this;
+		} else {
+			return null;
+		}
 	}
 
     /**

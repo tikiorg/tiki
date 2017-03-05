@@ -7,11 +7,11 @@
 			{button href="tiki-admin_webservices.php?name=$name" class="btn btn-default" _text=$name}
 		{/foreach}
 		{if $storedName}
-			{button href="tiki-admin.php?page=webservices" class="btn btn-default" _text="{tr}Create New{/tr}"}
+			{button href="tiki-admin_webservices.php" class="btn btn-default" _text="{tr}Create New{/tr}"}
 		{/if}
 	</div>
 
-	{if $storedName}
+	{if $storedName and not $edit}
 		<h2>{$storedName|escape}:</h2>
 		<div class="row">
 			<div class="form-group clearfix">
@@ -30,6 +30,7 @@
 			{/if}
 			<div class="col-sm-8 col-sm-offset-4 clearfix">
 				<input type="hidden" name="name" value="{$storedName|escape}">
+				{button _icon_name='edit' _text="{tr}Edit{/tr}" _script="tiki-admin_webservices.php?name={$storedName|escape}&edit" _class='btn btn-primary btn-sm'}
 				{button _icon_name='delete' _text="{tr}Delete{/tr}" _script="tiki-admin_webservices.php?name={$storedName|escape}&delete" _class='btn btn-danger btn-sm'}
 			</div>
 		</div>
@@ -59,6 +60,10 @@
 				<p><input type="submit" class="btn btn-default btn-sm" name="parse" value="{tr}Lookup{/tr}"/></p>
 			</div>
 		</div>
+		{if $edit}
+			<input type="hidden" name="edit" value="1">
+			<input type="hidden" name="name" value="{$storedName|escape}">
+		{/if}
 	{/if}
 	{if $url}
 		<div class="row">
@@ -144,10 +149,15 @@
 						{/foreach}
 					</table>
 				</div>
-				{if ! $storedName}
+				{if empty($storedName) or $edit}
 					<p>{tr}Register this web service. It will be possible to register the templates afterwards. Service name must only contain letters.{/tr}</p>
 					<p>
-						<input type="text" name="new_name" class="form-control"/>
+						{if $edit}
+							<input type="hidden" name="old_name" class="form-control" value="{$storedName}">
+							<input type="text" name="new_name" class="form-control" value="{$storedName}">
+						{else}
+							<input type="text" name="new_name" class="form-control">
+						{/if}
 						<input type="submit" class="btn btn-default btn-sm" name="register" value="{tr}Register Service{/tr}"/>
 					</p>
 				{else}
@@ -221,8 +231,8 @@
 							</tr>
 						</table>
 					</div>
-				</div>
+				{/if}
 			</div>
-		{/if}
+		</div>
 	{/if}
 </form>

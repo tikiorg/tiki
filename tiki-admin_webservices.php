@@ -16,44 +16,42 @@ $access->check_permission('tiki_p_admin');
 require_once 'lib/ointegratelib.php';
 require_once 'lib/webservicelib.php';
 
-if (isset($_REQUEST['name']) && $webservice = Tiki_Webservice::getService($_REQUEST['name'])) {
-	if (isset($_REQUEST['delete'])) {
+if (! empty($_REQUEST['name'])) {
+	$webservice = Tiki_Webservice::getService($_REQUEST['name']);
+	if ($webservice && isset($_REQUEST['delete'])) {
 		$access->check_authenticity(tr('Are you sure you want to delete the webservice "%0"?', $_REQUEST['name']));
 		$webservice->delete();
-		$webservice = new Tiki_Webservice;
-		$url = '';
-		$storedTemplates = array();
-	} else {
-		$url = $webservice->url;
-		$storedTemplates = $webservice->getTemplates();
+		$webservice = null;
 	}
+}
+
+if (! empty($webservice)) {
+	$storedTemplates = $webservice->getTemplates();
 } else {
-	$url = '';
-	$body = '';
-	$wstype = '';
-	$operation = '';
-	if (isset($_REQUEST['url'])) {
-		$url = $_REQUEST['url'];
-	}
-	if (isset($_REQUEST['wstype'])) {
-		$wstype = $_REQUEST['wstype'];
-	}
-	if (isset($_REQUEST['operation'])) {
-		$operation = $_REQUEST['operation'];
-	}
-	if (isset($_REQUEST['postbody'])) {
-		$body = $_REQUEST['postbody'];
-	}
 	$webservice = new Tiki_Webservice;
-	$webservice->url = $url;
-	$webservice->wstype = $wstype;
-	$webservice->body = $body;
-	$webservice->operation = $operation;
-	$storedTemplates = array();
+	$storedTemplates = [];
+}
+
+if (isset($_REQUEST['url'])) {
+	$webservice->url = $_REQUEST['url'];
+}
+if (isset($_REQUEST['wstype'])) {
+	$webservice->wstype = $_REQUEST['wstype'];
+}
+if (isset($_REQUEST['operation'])) {
+	$webservice->operation = $_REQUEST['operation'];
+}
+if (isset($_REQUEST['postbody'])) {
+	$webservice->body = $_REQUEST['postbody'];
+}
+
+
+if (isset($_REQUEST['edit'])) {
+	$smarty->assign('edit', true);
 }
 
 if (!isset($_REQUEST['params'])) {
-	$_REQUEST['params'] = array();
+	$_REQUEST['params'] = [];
 }
 
 if (!isset($_REQUEST['parse']) &&
@@ -106,27 +104,44 @@ if (!isset($_REQUEST['parse']) &&
 		}
 	}
 
-	// Create new registered service
-	if (isset($_REQUEST['new_name'])) {
+	// Create new or save existing service
+	if (isset($_REQUEST['register'])) {
 		$name = $_REQUEST['new_name'];
-		if (!empty($name) && !Tiki_Webservice::getService($name)) {
-			if ($service = Tiki_Webservice::create($name)) {
-				$service->url = $url;
-				$service->wstype = $wstype;
-				$service->body = $body;
-				$service->operation = $operation;
+		$newService = Tiki_Webservice::getService($name);
+
+		if (! empty($name)) {
+			if (isset($_REQUEST['old_name'])) {	// editing
+				if ($name !== $_REQUEST['old_name']) {
+					$service = $webservice->rename($name);
+				} else {
+					$service = $webservice;
+				}
+			} else {
+				$service = Tiki_Webservice::create($name);
+			}
+			if ($service) {
+				$service->url = $_REQUEST['url'];
+				$service->wstype =  $_REQUEST['wstype'];
+				$service->body =  $_REQUEST['postbody'];
+				$service->operation =  $_REQUEST['$operation'];
 				$service->schemaDocumentation = $response->schemaDocumentation;
 				$service->schemaVersion = $response->schemaVersion;
 				$service->save();
 				$webservice = $service;
+				unset($_REQUEST['edit'], $_REQUEST['old_name']);
+				$smarty->clear_assign('edit');
 			} else {
 				Feedback::error(tr('Webservice error "%0" not saved (alpha characters only)', $name), 'session');
-				$webservice = new Tiki_Webservice;
-				$webservice->url = $url;
-				$webservice->wstype = $wstype;
-				$webservice->body = $body;
-				$webservice->operation = $operation;
-				$storedTemplates = array();
+				if (isset($_REQUEST['old_name'])) {    // editing
+					$webservice = Tiki_Webservice::getService($_REQUEST['old_name']);
+				} else {
+					$webservice = new Tiki_Webservice();
+				}
+				$service->url = $_REQUEST['url'];
+				$service->wstype =  $_REQUEST['wstype'];
+				$service->body =  $_REQUEST['postbody'];
+				$service->operation =  $_REQUEST['$operation'];
+				$storedTemplates = [];
 			}
 		}
 	}
