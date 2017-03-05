@@ -1,0 +1,39 @@
+From b9e26a51cd49fd75a6a11f16dde3c826a665ed64 Mon Sep 17 00:00:00 2001
+From: Ricardo Melo <rjsmelo@gmail.com>
+Date: Sun, 5 Mar 2017 09:47:54 +0000
+Subject: [PATCH] Remove the check if the ADOdb php_ext is enabled
+
+To be applied together with the patch that removes references to ADOdb in the library
+---
+ adodb.inc.php | 15 ---------------
+ 1 file changed, 15 deletions(-)
+
+diff --git a/adodb.inc.php b/adodb.inc.php
+index ca6f1ac..248dd3b 100644
+--- a/adodb.inc.php
++++ b/adodb.inc.php
+@@ -37,21 +37,6 @@
+ if (!defined('_ADODB_LAYER')) {
+ 	define('_ADODB_LAYER',1);
+ 
+-	// The ADOdb extension is no longer maintained and effectively unsupported
+-	// since v5.04. The library will not function properly if it is present.
+-	if(defined('ADODB_EXTENSION')) {
+-		$msg = "Unsupported ADOdb Extension (v" . ADODB_EXTENSION . ") detected! "
+-			. "Disable it to use ADOdb";
+-
+-		$errorfn = defined('ADODB_ERROR_HANDLER') ? ADODB_ERROR_HANDLER : false;
+-		if ($errorfn) {
+-			$conn = false;
+-			$errorfn('ADOdb', basename(__FILE__), -9999, $msg, null, null, $conn);
+-		} else {
+-			die($msg . PHP_EOL);
+-		}
+-	}
+-
+ 	//==============================================================================================
+ 	// CONSTANT DEFINITIONS
+ 	//==============================================================================================
+-- 
+2.10.1 (Apple Git-78)
+
