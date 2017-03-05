@@ -1510,6 +1510,7 @@ INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `s
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42, 'o', 'TimeSheet', 'tiki-timesheet.php', 39, 'feature_time_sheet', '', '', 0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o',  'Reports','tiki-edit_report.php',38,'feature_reports','tiki_p_admin','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Scheduler','tiki-admin_schedulers.php',1270,'','tiki_p_admin','', 0);
+INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Webservices','tiki-admin_webservices.php',1280,'feature_webservices','tiki_p_admin','', 0);
 
 DROP TABLE IF EXISTS `tiki_menus`;
 CREATE TABLE `tiki_menus` (
