@@ -60,7 +60,7 @@ if (!isset($_REQUEST['parse']) &&
 		$response = $webservice->performRequest(
 			$_REQUEST['params'],
 			false,
-			! empty($_REQUEST['nocache'])
+			(! empty($_REQUEST['nocache'] && isset($_REQUEST['test'])))
 		)
 ) {
 
@@ -132,7 +132,7 @@ if (!isset($_REQUEST['parse']) &&
 	}
 
 	// Save template modification
-	if (isset($_REQUEST['nt_name'])) {
+	if (isset($_REQUEST['nt_name']) && empty($_REQUEST['loadtemplate']) && empty($_REQUEST['preview'])) {
 		$name = $_REQUEST['nt_name'];
 		if (($template = $webservice->getTemplate($name)) || ($template = $webservice->addTemplate($name))) {
 			$template->engine = $_REQUEST['nt_engine'];
@@ -149,12 +149,16 @@ if (!isset($_REQUEST['parse']) &&
 	}
 
 	if (isset($_REQUEST['preview']) && $template = $webservice->getTemplate($_REQUEST['preview'])) {
+		$_REQUEST['nt_name'] = $template->name;
+		$_REQUEST['nt_engine'] = $template->engine;
+		$_REQUEST['nt_output'] = $template->output;	// needed for multi-index preview
+		$_REQUEST['nt_content'] = $template->content;
+
 		$output = $template->render($response, 'html');
 		if ($response->errors) {
 			Feedback::error(implode(', ', $response->errors));
 		}
 
-		$smarty->assign('preview', $_REQUEST['preview']);
 		$smarty->assign('preview', $_REQUEST['preview']);
 		$smarty->assign('preview_output', $output);
 

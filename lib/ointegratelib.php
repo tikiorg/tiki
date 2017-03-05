@@ -561,9 +561,14 @@ class OIntegrate_Converter_Indexer implements OIntegrate_Converter
 				if ($_REQUEST['nt_output'] === 'mindex') {
 					$documents = $source->getDocuments();
 					$data = [];
+					$count = 0;
 					foreach ($documents as $document) {
 						if (strpos($document, $_REQUEST['nt_name']) === 0) {
 							$data[$document] = $source->getDocument($document, $factory);
+							$count++;
+							if ($count > 100) {	// enough for a preview?
+								break;
+							}
 						}
 					}
 				} else {
