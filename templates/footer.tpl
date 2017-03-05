@@ -45,7 +45,7 @@
 {if (! isset($display) or $display eq '')}
 	{if count($phpErrors)}
 		{if ($prefs.error_reporting_adminonly eq 'y' and $tiki_p_admin eq 'y') or $prefs.error_reporting_adminonly eq 'n'}
-	<div class="container{if $smarty.session.fullscreen eq 'y'}-fluid{/if}">
+	<div class="container{if isset($smarty.session.fullscreen) && $smarty.session.fullscreen eq 'y'}-fluid{/if}">
 		{button _ajax="n" _id="show-errors-button" _onclick="flip('errors');return false;" _text="{tr}Show php error messages{/tr}"}
 		<div id="errors" class="alert alert-warning" style="display:{if (isset($smarty.session.tiki_cookie_jar.show_errors) and $smarty.session.tiki_cookie_jar.show_errors eq 'y') or $prefs.javascript_enabled ne 'y'}block{else}none{/if};">
 			&nbsp;{listfilter selectors='#errors>div.rbox-data'}
