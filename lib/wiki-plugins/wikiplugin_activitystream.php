@@ -19,7 +19,10 @@ function wikiplugin_activitystream_info()
 		'filter' => 'wikicontent',
 		'profile_reference' => 'search_plugin_content',
 		'iconname' => 'move',
-		'tags' => array('advanced'),
+		'tags' => array(
+			'advanced',
+			'experimental' // Poor interface, poor documentation (hour-long outdated video in insufficient resolution). Chealer 2017-03-05
+		),
 		'params' => array(
 			'auto' => array(
 				'name' => tr('Auto-Scroll'),
