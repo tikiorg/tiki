@@ -1771,7 +1771,7 @@ function wikiplugin_tracker($data, $params)
 						$smarty->assign('f_'.$f['permName'], $prettyout);
 					}
 				} else {
-					$back.= '<div class="form-group tracker_input_label"'; // <tr><td class="tracker_input_label"
+					$back.= '<div class="form-group tracker_input_label tracker_field' . $f['fieldId'] . '"'; // <tr><td class="tracker_input_label"
 
 					// If type is has a samerow param and samerow is "No", show text on one line and the input field on the next
 					$isTextOnSameRow = true;
@@ -1840,7 +1840,7 @@ function wikiplugin_tracker($data, $params)
 
 				if ($f['type'] != 'S' && empty($tpl) && empty($wiki)) {
 					if ($showfieldsdesc == 'y') {
-						$back .= '<div class="form-group tracker-help-block"><div class="' . $labelclass
+						$back .= '<div class="form-group tracker-help-block tracker_field' . $f['fieldId'] . ' "><div class="' . $labelclass
 							. ' control-label sr-only">Label</div><div class="' . $inputclass
 							. ' trackerplugindesc help-block">';
 
