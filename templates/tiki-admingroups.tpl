@@ -61,6 +61,13 @@
 						</thead>
 					<tbody>
 						{section name=user loop=$users}
+							{if $groupname == $users[user].groupName}
+								{$href = '#'}
+								{$onclick = "onclick='goToTab(this, 2); return false;'"}
+							{else}
+								{$href = "tiki-admingroups.php?group={$users[user].groupName|escape:'url'}"}
+								{$onclick = ''}
+							{/if}
 							<tr>
 								<td class="checkbox-cell">
 									{if $users[user].groupName ne 'Admins' and $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered'}
@@ -69,7 +76,9 @@
 								</td>
 								<td class="id">{$users[user].id|escape}</td>
 								<td class="text">
-									<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $prefs.feature_tabs ne 'y'}#tab2{/if}" title="{tr}Edit{/tr}">{$users[user].groupName|escape}</a>
+									<a class="link tips" href="{$href}"{$onclick} title="{tr}Edit group{/tr}:{$users[user].groupName|escape}">
+										{$users[user].groupName|escape}
+									</a>
 									<div class="text">{tr}{$users[user].groupDesc|escape|nl2br}{/tr}</div>
 								</td>
 								<td class="text">
@@ -498,11 +507,11 @@
 	{if $groupname}
 		{tab name="{tr _0="<i>{$groupname|escape}</i>"}Group %0 members{/tr}"}
 		{* ----------------------- tab with memberlist --------------------------------------- *}
-			{if $membersCount > 0}
+		<h2>{tr}Members{/tr} <span class="badge">{$membersCount}</span></h2>
+		{if $membersCount > 0}
 		{if !$ts.ajax}
 				<div class="form-group">
 					<div class="col-sm-5">
-						<h2>{tr}Members{/tr} <span class="badge">{$membersCount}</span></h2>
 						<form id="checkform2" method="post">
 							<input type="hidden" name="group" value="{$group|escape}">
 							<div class="{if $js === 'y'}table-responsive {/if}ts-wrapperdiv">
@@ -576,12 +585,6 @@
 				{if !$ts.enabled}
 					{pagination_links cant=$membersCount step=$prefs.maxRecords offset=$membersOffset offset_arg='membersOffset'}{/pagination_links}
 				{/if}
-			{else}
-				<div class="col-sm-6">
-					<h2>{tr}Members{/tr} <span class="badge">{$membersCount}</span></h2>
-					<em>{tr}No members{/tr}</em>
-				</div>
-			{/if}
 			{if ! empty($userslist)}
 				<div class="form-group">
 					<div class="col-sm-7">
@@ -604,8 +607,13 @@
 							</form>
 					</div>
 				</div>
-			{/if}
+				{/if}
 		{/if}
+			{else}
+				<div class="col-sm-6">
+					<em>{tr}No members{/tr}</em>
+				</div>
+			{/if}
 		{/tab}
 		{tab name="{tr _0="<i>{$groupname|escape}</i>"}Users banned from group %0{/tr}"}
 			{* ----------------------- tab with users banned from group --------------------------------------- *}
@@ -638,7 +646,7 @@
 						<input type="hidden" name="group" value="{$groupname}">
 						<input type="hidden" name="anchor" value="#contenttabs_admingroups-4">
 				</div>
-		{if !$ts.ajax}
+			{if !$ts.ajax}
 				<div class="input-group col-sm-6">
 					<select class="form-control" name="action">
 						<option value="no_action" selected="selected">
@@ -651,11 +659,11 @@
 					</span>
 				</div>
 					</form><br>
-			{else}
-				<div class="col-sm-12">
-					<em>{tr}No banned members{/tr}</em>
-				</div><br>
 			{/if}
+		{else}
+			<div class="col-sm-12">
+				<em>{tr}No banned members{/tr}</em>
+			</div><br>
 		{/if}
 		{/tab}
 	{/if}
