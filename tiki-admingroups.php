@@ -8,6 +8,35 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+$inputConfiguration = [
+	[
+		'staticKeyFilters' => [
+			'groupstracker'             => 'int',
+			'groupfield'                => 'int',
+			'userstracker'              => 'int',
+			'usersfield'                => 'int',
+			'registrationUsersFieldIds' => 'digitscolons',
+			'watch'                     => 'striptags',
+			'unwatch'                   => 'striptags',
+			'home'                      => 'pagename',
+			'defcat'                    => 'int',
+			'theme'                     => 'themename',
+			'maxRecords'                => 'int',
+			'membersMax'                => 'int',
+			'bannedMax'                 => 'int',
+			'sort_mode'                 => 'alnumdash',
+			'sort_mode_member'          => 'alnumdash',
+			'bannedSort'                => 'alnumdash',
+			'offset'                    => 'int',
+			'membersOffset'             => 'int',
+			'bannedOffset'              => 'int',
+			'initial'                   => 'alpha',
+			'find'                      => 'groupname',
+			'group'                     => 'groupname',
+		]
+	]
+];
+
 require_once ('tiki-setup.php');
 
 $access->check_permission('tiki_p_admin');
@@ -137,7 +166,9 @@ if (!empty($_REQUEST["group"])) {
 				$smarty->assign('usersfieldid', $usersfieldid);
 			}
 		}
-		if (isset($re['registrationUsersFieldIds'])) $smarty->assign('registrationUsersFieldIds', $re['registrationUsersFieldIds']);
+		!empty($re['registrationUsersFieldIds'])
+			?  $smarty->assign('registrationUsersFieldIds', $re['registrationUsersFieldIds'])
+			: $smarty->assign('registrationUsersFieldIds', '');
 	}
 	if ($prefs['groupTracker'] == 'y') {
 		$groupFields = array();
@@ -166,6 +197,8 @@ if (!empty($_REQUEST["group"])) {
 			$smarty->assign('hasOneIncludedGroup', "y");
 		}
 	}
+
+	//group members
 	if (!isset($_REQUEST['membersOffset'])) $_REQUEST['membersOffset'] = 0;
 	if (empty($_REQUEST['sort_mode_member'])) $_REQUEST['sort_mode_member'] = 'login_asc';
 	$membersMax = isset($_REQUEST['membersMax']) && is_numeric($_REQUEST['membersMax'])
@@ -184,26 +217,22 @@ if (!empty($_REQUEST["group"])) {
 	$smarty->assign('membersOffset', $_REQUEST['membersOffset']);
 	$smarty->assign('memberslist', $memberslist);
 
-	$bannedOffset = isset($_REQUEST['bannedOffset']) && is_numeric($_REQUEST['bannedOffset'])
-		? $_REQUEST['bannedOffset'] : 0;
-	$bannedMax = isset($_REQUEST['bannedMax']) && is_numeric($_REQUEST['bannedMax'])
-		? $_REQUEST['bannedMax'] : $prefs['maxRecords'];
+	//banned members of a group
+	$bannedOffset = isset($_REQUEST['bannedOffset']) ? $_REQUEST['bannedOffset'] : 0;
+	$bannedMax = isset($_REQUEST['bannedMax']) ? $_REQUEST['bannedMax'] : $prefs['maxRecords'];
 	if (empty($_REQUEST['bannedSort'])) {
 		$bannedSort = ['source_itemId' => 'asc'];
-	} else
-	if (!empty($_REQUEST['bannedSort']) && substr($_REQUEST['bannedSort'], -4) === 'desc') {
+	} elseif (!empty($_REQUEST['bannedSort']) && substr($_REQUEST['bannedSort'], -4) === 'desc') {
 		$bannedSort = ['source_itemId' => 'desc'];
 	} else {
 		$bannedSort = ['source_itemId' => 'asc'];
 	}
-
 	$bannedlist = $userlib->get_group_banned_users($_REQUEST['group'], $bannedOffset, $bannedMax, null, $bannedSort);
 	$smarty->assign('bannedlist', $bannedlist['data']);
 	$smarty->assign('bannedCount', $bannedlist['cant']);
 
 	$userslist=$userlib->list_all_users();
 	if (!empty($memberslist)) {
-		if ($cookietab == 1 && !isset($_REQUEST["save"])) $cookietab = 3;
 		foreach ($memberslist as $key => $values) {
 			if ( in_array($values["login"], $userslist) ) {
 				unset($userslist[array_search($values["login"], $userslist, true)]);
