@@ -9,6 +9,7 @@
 				pivotId: {{$pivottable.id|json_encode}},
 				highlight: {{$pivottable.highlight|json_encode}}
 			},
+			derivedAttributes: { {{','|implode:$pivottable.derivedAttributes}} },
 			cols: {{$pivottable.tcolumns|json_encode}}, rows: {{$pivottable.trows|json_encode}},
 			rendererName: {{$pivottable.rendererName|json_encode}},
 			width: {{$pivottable.width|json_encode}},
