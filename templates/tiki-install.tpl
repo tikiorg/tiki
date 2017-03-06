@@ -780,7 +780,7 @@
 							</legend>
 							{tr}Tiki contains thousands of options and parameters (what we call "preferences"), which can be overwhelming for a new site administrator.{/tr}
 							{tr}That's why we suggest you to start by using our <a class='alert-link' target='tikihelp' href='https://doc.tiki.org/Wizards'>Wizards</a> ({icon name='magic'}).{/tr}
-							{tr}Once basic parameters will be set, you will always be able to gain full control of the options using the Control Panels. Note : basic preferences will be displayed by default after a new install.{/tr}<br /><br />
+							{tr}Once basic parameters will be set, you will always be able to gain full control of the options using the Control Panels. Note: basic preferences will be displayed by default after a new install.{/tr}<br /><br />
 							{tr}You can modify the default filter choice at your own convenience to also display Advanced, Experimental or Unavailable preferences in Control Panels.{/tr}
 							{tr}You'll find the <a class='alert-link' target='tikihelp' href='https://doc.tiki.org/Preference+Filters'>Preference Filter</a> at the top of the Navigation Bar in the <a class='alert-link' target='tikihelp' href='https://doc.tiki.org/Control+Panels'>Control Panels</a> by clicking on the funnel icon ({icon name='filter'}) or use the search box provided.{/tr}<br />
 						</fieldset>
