@@ -17,6 +17,7 @@ $adminlib = TikiLib::lib('admin');
 $auto_query_args = array('page');
 
 $access->check_permission('tiki_p_admin');
+$check = $access->check_authenticity(null, false);
 $logslib = TikiLib::lib('logs');
 
 /**
@@ -170,7 +171,6 @@ $temp_filters = isset($_REQUEST['filters']) ? explode(' ', $_REQUEST['filters'])
 $smarty->assign('pref_filters', $prefslib->getFilters($temp_filters));
 
 if ( isset( $_REQUEST['lm_preference'] ) ) {
-	$check = key_check(null, false);
 	if ($check === true) {
 		$changes = $prefslib->applyChanges((array) $_REQUEST['lm_preference'], $_REQUEST);
 		foreach ( $changes as $pref => $val ) {
@@ -209,7 +209,6 @@ if ( isset( $_REQUEST['lm_preference'] ) ) {
 }
 
 if ( isset( $_REQUEST['lm_criteria'] ) ) {
-	$check = key_get(null, null, null, false);
 	$smarty->assign('ticket', $check['ticket']);
 	set_time_limit(0);
 	try {
@@ -524,7 +523,7 @@ $admin_icons = array(
 
 if (isset($_REQUEST['page'])) {
 	$adminPage = $_REQUEST['page'];
-	$check = key_get(null, null, null, false);
+	$check = $access->check_authenticity(null, false);
 	$smarty->assign('ticket', $check['ticket']);
 	// Check if the associated incude_*.php file exists. If not, check to see if it might exist in the Addons.
 	// If it exists, include the associated file and generate the ticket.
@@ -556,7 +555,7 @@ if (isset($_REQUEST['page'])) {
 		}
 	}
 
-	if (!empty($changes) && key_check(null, false)) {
+	if (!empty($changes) && $check) {
 		$access->redirect($_SERVER['REQUEST_URI'], '', 200);
 	}
 

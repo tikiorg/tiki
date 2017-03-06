@@ -283,15 +283,20 @@ class TikiAccessLib extends TikiLib
 	}
 
 	/**
-	 *  Checks whether the request was willingly submitted by the user, instead of being triggered by Cross-Site Request Forgery.
-	 *  This uses random tokens. The first call brings to a request confirmation screen with
-	 *   a new token in the form. The second call, in the second request, verifies the submitted token matches.
-	 *  Typical usage: $access->check_authenticity();
+	 * Create a ticket to place in a form to check upon form submission to guard against Cross-Site Request Forgery.
+	 * Places a random token into the $_SESSION variable - ['ticket' => '360b9cecc77ae4f0688bf8bd130966d9'] - and either:
+	 *   - Returns the same ticket array for use including in a form, or
+	 *   - Includes the ticket in a confirmation page
+	 *
+	 * If placing in a form, also include a hidden input named 'daconfirm' with a value of y.
+	 * When the form is submitted or the confirmation page is acknowledged, the $_REQUEST['daconfirm'] value will tell
+	 * the function to check the ticket in the form against the ticket stored in the $_SESSION variable
+	 *
 	 *  Warning: this mechanism does not allow passing uploaded files ($_FILES). For that, see check_ticket().
-
-	 * @param string $confirmation_text Text on the confirmation screen. Default: 'Click here to confirm your action'
-	 * @access public
-	 * @return array
+	 * @param string $confirmation_text     Custom text to use if a confirmation page is brought up first
+	 * @param bool $returnHtml              Set to false to not use the standard confirmation page and to not use the
+	 *                                         standard error page. Suitable for popup confirmations when set to false.
+	 * @return array|bool
 	 */
 	function check_authenticity($confirmation_text = '', $returnHtml = true)
 	{
@@ -304,24 +309,87 @@ class TikiAccessLib extends TikiLib
 		if ($prefs['feature_ticketlib2'] == 'y' || $returnHtml === false) {
 			if (isset($daconfirm)) {
 				if ($returnHtml) {
-					key_check();
+					$this->key_check();
 				} else {
-					$ret = key_check(null, false);
+					return $this->key_check(false);
 				}
 			} else {
 				if ($returnHtml) {
-					key_get(null, $confirmation_text);
+					$this->key_get($confirmation_text);
 				} else {
-					$ret = key_get(null, null, null, false);
+					return $this->key_get(null, null, false);
 				}
-			}
-			if (!$returnHtml) {
-				return $ret;
 			}
 		}
 	}
 
-    /**
+	/**
+	 *
+	 *
+	 * @param string $confirmation_text
+	 * @param string $confirmaction
+	 * @param bool $returnHtml
+	 * @return array
+	 */
+	private function key_get($confirmation_text = '', $confirmaction = '',  $returnHtml = true)
+	{
+		global $prefs;
+		if ($prefs['feature_ticketlib2'] == 'y' || $returnHtml === false) {
+			$ticket = md5(uniqid(rand()));
+			$_SESSION['tickets'][$ticket] = time();
+			if ($returnHtml) {
+				$smarty = TikiLib::lib('smarty');
+				$smarty->assign('ticket', $ticket);
+				if (empty($confirmation_text)) {
+					$confirmation_text = tra('Click here to confirm your action');
+				}
+
+				if (empty($confirmaction)) {
+					$confirmaction = $_SERVER['PHP_SELF'];
+				}
+
+				// Display the confirmation in the main tiki.tpl template
+				$smarty->assign('post', $_POST);
+				$smarty->assign('print_page', 'n');
+				$smarty->assign('confirmation_text', $confirmation_text);
+				$smarty->assign('confirmaction', $confirmaction);
+				$smarty->assign('mid', 'confirm.tpl');
+				$smarty->display('tiki.tpl');
+				die();
+			} else {
+				return ['ticket' => $ticket];
+			}
+		}
+	}
+// * @param string $area is not used any longer
+	private function key_check($returnHtml = true)
+	{
+		global $prefs, $jitRequest;
+		if ($prefs['feature_ticketlib2'] == 'y' || $returnHtml === false) {
+			if (isset($_REQUEST['ticket'])) {
+				$ticket = $_REQUEST['ticket'];
+			} elseif (isset($jitRequest['ticket'])) {
+				$ticket = $jitRequest->ticket->alnum();
+			}
+			if (isset($ticket) && isset($_SESSION['tickets'][$ticket])) {
+				$time = $_SESSION['tickets'][$ticket];
+				if ($time < time() && $time > (time()-(60*15))) {
+					return true;
+				}
+			}
+			if ($returnHtml) {
+				$smarty = TikiLib::lib('smarty');
+				$smarty->assign('msg', tra('Possible cross-site request forgery (CSRF, or "sea surfing") detected. Operation blocked.'));
+				$smarty->display('error.tpl');
+				exit();
+			} else {
+				return false;
+			}
+		}
+	}
+
+
+	/**
      * @return bool
      */
     function check_ticket()
@@ -425,7 +493,7 @@ class TikiAccessLib extends TikiLib
 			$smarty->assign('errortitle', $detail['errortitle']);
 			$smarty->assign('msg', $detail['message']);
 			$smarty->assign('errortype', $detail['code']);
-			$check = key_get(null, null, null, false);
+			$check = $this->check_authenticity(null, false);
 			$smarty->assign('ticket', $check['ticket']);
 			if ( isset( $detail['page'] ) ) {
 				$smarty->assign('page', $page);

@@ -21,7 +21,8 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 /**
  * @param $area
- * @deprecated in favor of key_get($area)
+ * @return bool
+ * @deprecated in favor of check_authenticity in tikiaccesslib.php, which uses the key_get function
  */
 function ask_ticket($area)
 {
@@ -31,7 +32,8 @@ function ask_ticket($area)
 
 /**
  * @param $area
- * @deprecated in favor of key_check($area)
+ * @return bool
+ * @deprecated in favor of check_authenticity in tikiaccesslib.php, which uses the key_check function
  */
 function check_ticket($area)
 {
@@ -55,61 +57,3 @@ function check_ticket($area)
 	return true;
 }
 
-// newer valid functions for ticketing:
-// * @param string $area is not used any longer
-function key_get($area = null, $confirmation_text = '', $confirmaction = '',  $returnHtml = true)
-{
-	global $prefs;
-	if ($prefs['feature_ticketlib2'] == 'y' || $returnHtml === false) {
-		$ticket = md5(uniqid(rand()));
-		$_SESSION['tickets'][$ticket] = time();
-		if ($returnHtml) {
-			$smarty = TikiLib::lib('smarty');
-			$smarty->assign('ticket', $ticket);
-			if (empty($confirmation_text)) {
-				$confirmation_text = tra('Click here to confirm your action');
-			}
-
-			if (empty($confirmaction)) {
-				$confirmaction = $_SERVER['PHP_SELF'];
-			}
-
-			// Display the confirmation in the main tiki.tpl template
-			$smarty->assign('post', $_POST);
-			$smarty->assign('print_page', 'n');
-			$smarty->assign('confirmation_text', $confirmation_text);
-			$smarty->assign('confirmaction', $confirmaction);
-			$smarty->assign('mid', 'confirm.tpl');
-			$smarty->display('tiki.tpl');
-			die();
-		} else {
-			return ['ticket' => $ticket];
-		}
-	}
-}
-// * @param string $area is not used any longer
-function key_check($area = null, $returnHtml = true)
-{
-	global $prefs, $jitRequest;
-	if ($prefs['feature_ticketlib2'] == 'y' || $returnHtml === false) {
-		if (isset($_REQUEST['ticket'])) {
-			$ticket = $_REQUEST['ticket'];
-		} elseif (isset($jitRequest['ticket'])) {
-			$ticket = $jitRequest->ticket->alnum();
-		}
-		if (isset($ticket) && isset($_SESSION['tickets'][$ticket])) {
-			$time = $_SESSION['tickets'][$ticket];
-			if ($time < time() && $time > (time()-(60*15))) {
-				return true;
-			}
-		}
-		if ($returnHtml) {
-			$smarty = TikiLib::lib('smarty');
-			$smarty->assign('msg', tra('Possible cross-site request forgery (CSRF, or "sea surfing") detected. Operation blocked.'));
-			$smarty->display('error.tpl');
-			exit();
-		} else {
-			return false;
-		}
-	}
-}

@@ -48,7 +48,7 @@ if (isset($_REQUEST['new_prefs'])) {
 
 $smarty->assign('now', $tikilib->now);
 
-if (!empty($_REQUEST['testMail']) && key_check(null, false)) {
+if (!empty($_REQUEST['testMail']) && $access->check_authenticity(null, false)) {
 	include_once('lib/webmail/tikimaillib.php');
 	$mail = new TikiMail();
 	$mail->setSubject(tra('Tiki Email Test'));
