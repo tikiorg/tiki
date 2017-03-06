@@ -61,6 +61,24 @@ function wikiplugin_pivottable_info()
 				'profile_reference' => 'tracker_field',
 				'separator' => ':',
 			),
+			'heatmapDomain' => array(
+				'required' => false,
+				'name' => tra('Values used to decide what heatmapColors to use.'),
+				'description' => tr(''),
+				'since' => '17',
+				'filter' => 'text',
+				'default' => '',
+				'separator' => ':',
+			),
+			'heatmapColors' => array(
+				'required' => false,
+				'name' => tra('Color for each heatmapDomain value.'),
+				'description' => tr(''),
+				'since' => '17',
+				'filter' => 'text',
+				'default' => '',
+				'separator' => ':',
+			),
 			'rendererName' => array(
 				'name' => tr('Renderer Name'),
 				'description' => tr('Display format of data'),
@@ -288,6 +306,23 @@ function wikiplugin_pivottable($data, $params)
 		$height=$params['height'];	
 	} else {
 		$height="1000px";	
+	}
+	
+	$heatmapParams = array();
+	if ($rendererName === 'Heatmap') {
+		$validConfig =  is_array($params['heatmapDomain'])
+			&& is_array($params['heatmapColors'])
+			&& !(empty($params['heatmapDomain']) && empty($params['heatmapColors']))
+			&& count($params['heatmapDomain']) === count($params['heatmapColors']);
+
+		if($validConfig) {
+			$heatmapParams = array(
+				'domain' => array_map(floatval, $params['heatmapDomain']),
+				'colors' => $params['heatmapColors']
+			);
+		}
+
+		unset($validConfig);
 	}
 
 	$query = new Search_Query;
@@ -538,6 +573,7 @@ function wikiplugin_pivottable($data, $params)
 		'vals'=>$vals,
 		'width'=>$width,
 		'height'=>$height,
+		'heatmapParams' => $heatmapParams,
 		'showControls'=>$showControls,
 		'page'=>$sourcepage,
 		'fieldsArr'=>$fieldsArr,
