@@ -278,14 +278,11 @@ if (!empty($_REQUEST["group"])) {
 	} else {
 		 $re['isWatching'] = false;
 	}
-	if ($cookietab == '1' && !isset($_REQUEST["save"])) $cookietab = "2";
+	$cookietab = "2";
 } else {
 	$allgroups = $userlib->list_all_groups();
 	foreach ($allgroups as $rr) {
 		$inc["$rr"] = "n";
-	}
-	if (!isset($cookietab)) {
-		$cookietab = '1';
 	}
 	$_REQUEST["group"] = 0;
 }
@@ -350,7 +347,7 @@ if (!empty($_REQUEST['group']) && isset($_REQUEST['import'])) {
 	if (!empty($errors)) {
 		Feedback::error($errors);
 	}
-	$cookietab = 4;
+	$cookietab = 3; // members list tab
 }
 if ($prefs['feature_categories'] == 'y') {
 	$categlib = TikiLib::lib('categ');
