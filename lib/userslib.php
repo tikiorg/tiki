@@ -6024,6 +6024,15 @@ class UsersLib extends TikiLib
 				'scope' => 'global',
 			),
 			array(
+				'name' => 'tiki_p_view_webservices',
+				'description' => tra('Can view results from webservice requests'),
+				'level' => 'basic',
+				'type' => 'tiki',
+				'admin' => false,
+				'prefs' => array('feature_webservices'),
+				'scope' => 'global',
+			),
+			array(
 				'name' => 'tiki_p_admin_toolbars',
 				'description' => tra('Can admin toolbars'),
 				'level' => 'admin',

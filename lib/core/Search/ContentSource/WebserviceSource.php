@@ -107,8 +107,7 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 			'description' => $typeFactory->sortable(''),
 			'modification_date' => $typeFactory->timestamp(TikiLib::lib('tiki')->now),
 
-			// hmm, no perms?
-			//'view_permission' => $typeFactory->identifier('tiki_p_view_sheet'),
+			'view_permission' => $typeFactory->identifier('tiki_p_view_webservices'),
 		];
 
 		$rows = [];
@@ -200,8 +199,8 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 			'description',
 			'modification_date',
 
+			'view_permission',
 			// TODO more
-			//'view_permission',
 		);
 	}
 
