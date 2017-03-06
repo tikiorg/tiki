@@ -3,7 +3,7 @@
 {/remarksbox}
 
 <form class="admin form-horizontal" action="tiki-admin.php?page=stats" method="post">
-	<input type="hidden" name="ticket" value="{$ticket|escape}">
+	{include file='access/include_ticket.tpl'}
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="pull-right">

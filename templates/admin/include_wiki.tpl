@@ -4,7 +4,7 @@
 	{tr}Use the 'Quick Edit' module to easily create or edit wiki pages.{/tr} <a class="btn btn-default" href="tiki-admin_modules.php">{icon name="module"} {tr}Modules{/tr}</a>
 {/remarksbox}
 <form class="form-horizontal" action="tiki-admin.php?page=wiki" method="post">
-	<input type="hidden" name="ticket" value="{$ticket|escape}">
+	{include file='access/include_ticket.tpl'}
 	<div class="heading input_submit_container text-right">
 	</div>
 	<div class="t_navbar margin-bottom-md clearfix">

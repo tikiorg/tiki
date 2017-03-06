@@ -14,7 +14,7 @@
 <fieldset>
 	<legend>{tr}Home Gallery{/tr}</legend>
 	<form action="tiki-admin.php?page=gal" method="post">
-		<input type="hidden" name="ticket" value="{$ticket|escape}">
+		{include file='access/include_ticket.tpl'}
 		{preference name=home_gallery}
 		<input type="submit" class="btn btn-default btn-sm" name="galset" value="{tr}OK{/tr}" />
 	</form>
@@ -23,7 +23,7 @@
 <fieldset>
 	<legend>{tr}Galleries features{/tr}</legend>
 	<form class="form-horizontal" action="tiki-admin.php?page=gal" method="post">
-		<input type="hidden" name="ticket" value="{$ticket|escape}">
+		{include file='access/include_ticket.tpl'}
 		<table class="table">
 			<tr>
 				<td><label>{tr}Rankings:{/tr}</label></td>
@@ -178,7 +178,7 @@
 <fieldset>
 	<legend>{tr}Exterminator{/tr}</legend>
 	<form action="tiki-admin.php?page=gal" method="post">
-		<input type="hidden" name="ticket" value="{$ticket|escape}">
+		{include file='access/include_ticket.tpl'}
 		<table class="table">
 			<tr>
 				<td>
@@ -196,7 +196,7 @@
 <fieldset>
 	<legend>{tr}Mover{/tr}</legend>
 		<form action="tiki-admin.php?page=gal" method="post">
-		<input type="hidden" name="ticket" value="{$ticket|escape}">
+			{include file='access/include_ticket.tpl'}
 		<table class="table">
 			<tr>
 				<td>
@@ -242,7 +242,7 @@
 <fieldset>
 	<legend>{tr}Gallery listing configuration{/tr}</legend>
 	<form method="post" action="tiki-admin.php?page=gal">
-		<input type="hidden" name="ticket" value="{$ticket|escape}">
+		{include file='access/include_ticket.tpl'}
 		<table class="table">
 			<tr>
 				<td><label>{tr}Name{/tr}</label></td>
@@ -286,7 +286,7 @@
 <fieldset>
 	<legend>{tr}Image galleries comments settings{/tr}</legend>
 	<form method="post" action="tiki-admin.php?page=gal">
-		<input type="hidden" name="ticket" value="{$ticket|escape}">
+		{include file='access/include_ticket.tpl'}
 		<table class="table">
 			<tr>
 				<td><label>{tr}Default number of comments per page:{/tr} </label></td>

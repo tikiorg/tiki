@@ -1,5 +1,5 @@
 <form class="form-horizontal" action="tiki-admin.php?page=calendar" method="post">
-	<input type="hidden" name="ticket" value="{$ticket|escape}">
+	{include file='access/include_ticket.tpl'}
 	<div class="t_navbar margin-bottom-md clearfix">
 		<a role="link" class="btn btn-link" href="tiki-admin_calendars.php" title="{tr}List{/tr}">
 			{icon name="list"} {tr}Calendars{/tr}

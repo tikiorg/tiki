@@ -1,5 +1,5 @@
 <form class="form-horizontal" action="tiki-admin.php?page=video" method="post">
-	<input type="hidden" name="ticket" value="{$ticket|escape}">
+	{include file='access/include_ticket.tpl'}
 
 	{tabset name="admin_video"}
 

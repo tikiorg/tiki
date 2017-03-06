@@ -3,7 +3,7 @@
 	{tab name="{tr}Intertiki client{/tr}"}
 		<h2>{tr}Intertiki client{/tr}</h2>
 		<form action="tiki-admin.php?page=intertiki" method="post" name="intertiki" class="form-horizontal">
-			<input type="hidden" name="ticket" value="{$ticket|escape}">
+			{include file='access/include_ticket.tpl'}
 			<div class="form-group">
 				<label class="col-sm-3 control-label">{tr}Feature{/tr}</label>
 				<div class="col-sm-7">
@@ -129,7 +129,7 @@
 		{tab name="{tr}Intertiki server{/tr}"}
 			<h2>{tr}Intertiki server{/tr}</h2>
 			<form action="tiki-admin.php?page=intertiki" method="post" name="intertiki" class="form-horizontal">
-				<input type="hidden" name="ticket" value="{$ticket|escape}">
+				{include file='access/include_ticket.tpl'}
 				<div class="form-group">
 					<label class="col-sm-3 control-label">{tr}Intertiki shared cookie for sliding auth under same domain{/tr}</label>
 					<div class="col-sm-7">

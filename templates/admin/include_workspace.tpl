@@ -1,6 +1,6 @@
 {* $Id$ *}
 <form class="form-horizontal" action="tiki-admin.php?page=workspace" method="post">
-	<input type="hidden" name="ticket" value="{$ticket|escape}">
+	{include file='access/include_ticket.tpl'}
 	<div class="clearfix margin-bottom-md">
 		{if $prefs.workspace_ui eq "y"}
 			<a class="btn btn-default btn-sm" href="{service controller=workspace action=list_templates}" title="{tr}List{/tr}">

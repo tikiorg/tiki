@@ -12,7 +12,7 @@
 	{/remarksbox}
 {/if}
 <form action="tiki-admin.php?page=login" class="admin form-horizontal" method="post" name="LogForm">
-	<input type="hidden" name="ticket" value="{$ticket|escape}">
+	{include file='access/include_ticket.tpl'}
 	<input type="hidden" name="loginprefs" />
 	<div class="t_navbar margin-bottom-md">
 		{button href="tiki-admingroups.php" _type="text" _class="btn btn-link tips" _icon_name="group" _text="{tr}Groups{/tr}" _title=":{tr}Group Administration{/tr}"}

@@ -3,7 +3,7 @@
 	{tr}See also{/tr} <a class="alert-link" href="tiki-admin.php?page=metatags">{tr}Meta tags{/tr}</a>.
 {/remarksbox}
 <form class="admin form-horizontal" method="post" action="tiki-admin.php?page=sefurl" role="form" class="form">
-	<input type="hidden" name="ticket" value="{$ticket|escape}">
+	{include file='access/include_ticket.tpl'}
 	<div class="t_navbar clearfix">
 		<div class="pull-right">
 			<input type="submit" class="btn btn-primary btn-sm" name="save" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">

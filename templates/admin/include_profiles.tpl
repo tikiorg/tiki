@@ -258,7 +258,7 @@
 				{/remarksbox}
 			{/if}
 			<form method="get" action="tiki-admin.php">
-				<input type="hidden" name="ticket" value="{$ticket|escape}">
+				{include file='access/include_ticket.tpl'}
 				<h4>{tr}Find Profiles{/tr} <small>{tr}Search by name, types and repository{/tr}</small></h4>
 				<div class="row">
 					<div class="col-sm-6">
@@ -384,7 +384,7 @@
 	{tab name="{tr}Export{/tr}"}
 		<h2>{tr}Export{/tr}</h2>
 		<form class="form-horizontal" action="tiki-admin.php?page=profiles" method="post" role="form">
-			<input type="hidden" name="ticket" value="{$ticket|escape}">
+			{include file='access/include_ticket.tpl'}
 			<fieldset id="export_to_yaml">
 				<legend>{tr}Export YAML{/tr}</legend>
 				{if !empty($export_yaml)}
@@ -514,7 +514,7 @@
 				{/foreach}
 			</table>
 			<form class="form-horizontal" action="tiki-admin.php?page=profiles" method="post">
-				<input type="hidden" name="ticket" value="{$ticket|escape}">
+				{include file='access/include_ticket.tpl'}
 				{preference name=profile_unapproved}
 				{preference name=profile_sources}
 				{preference name=profile_channels}
@@ -525,7 +525,7 @@
 		</fieldset>
 		<fieldset><legend>{tr}Profile tester{/tr}</legend>
 			<form class="form-horizontal" action="tiki-admin.php?page=profiles" method="post">
-				<input type="hidden" name="ticket" value="{$ticket|escape}">
+				{include file='access/include_ticket.tpl'}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
 					{tr}Paste or type wiki markup and YAML (with or without the {literal}{CODE}{/literal} tags) into the text area below{/tr}<br>
 					<em><strong>{tr}This will run the profile and make potentially unrecoverable changes in your database!{/tr}</strong></em>

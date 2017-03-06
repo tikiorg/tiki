@@ -1,6 +1,6 @@
 {* $ID:$ *}
 <form method="post" action="tiki-admin.php?page=webservices" class="form-horizontal">
-	<input type="hidden" name="ticket" value="{$ticket|escape}">
+	{include file='access/include_ticket.tpl'}
 
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">

@@ -10,7 +10,7 @@
 	</div>
 {/if}
 <form role="form" class="form-horizontal" method="post" action="tiki-admin.php?page=articles">
-	<input type="hidden" name="ticket" value="{$ticket|escape}">
+	{include file='access/include_ticket.tpl'}
 	<div class="t_navbar margin-bottom-md clearfix">
 		<a role="link" class="btn btn-link" href="tiki-list_articles.php" title=":{tr}List{/tr}">
 			{icon name="list"} {tr}Articles{/tr}

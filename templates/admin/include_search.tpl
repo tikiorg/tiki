@@ -14,7 +14,7 @@
 
 
 <form class="form-horizontal" action="tiki-admin.php?page=search" method="post">
-	<input type="hidden" name="ticket" value="{$ticket|escape}">
+	{include file='access/include_ticket.tpl'}
 	<input type="hidden" name="searchprefs">
 
 	<div class="row">

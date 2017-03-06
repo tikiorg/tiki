@@ -1,6 +1,6 @@
 {* $Id: include_general.tpl 59571 2016-09-01 07:37:31Z yonixxx $ *}
 <form class="form-horizontal" action="tiki-admin.php?page=print" class="admin" method="post">
-	<input type="hidden" name="ticket" value="{$ticket|escape}">
+	{include file='access/include_ticket.tpl'}
 	<input type="hidden" name="new_prefs" />
 			<fieldset>
 				<legend>{tr}PDF Settings{/tr}</legend>

@@ -1,7 +1,7 @@
 {* $Id$ *}
 <form class="form-horizontal" action="tiki-admin.php?page=category" method="post">
-	<input type="hidden" name="ticket" value="{$ticket|escape}">
-	<input type="hidden" name="categorysetup" />
+	{include file='access/include_ticket.tpl'}
+	<input type="hidden" name="categorysetup">
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<a role="link" class="btn btn-link" href="tiki-browse_categories.php" title="{tr}List{/tr}">
