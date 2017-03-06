@@ -44,7 +44,7 @@ function prefs_article_list()
 			'default' => 'n',
 		),
 		'article_remembers_creator' => array(
-			'name' => tra('Article creator remains article owner.'),
+			'name' => tra('Article creator remains article owner'),
 			'description' => tra('Last article editor does not automatically become author (owner).'),
 			'type' => 'flag',
 			'default' => 'n',
