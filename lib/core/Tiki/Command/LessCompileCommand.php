@@ -71,6 +71,7 @@ class LessCompileCommand  extends Command
                     if (!empty($only) && ! in_array($themename, $only) && ! $all) {
                         continue;
                     }
+					$files = [];
 
 					if ($themename === 'base_files') {
 						$less_file = "themes/$themename/less/tiki_base.less";
@@ -79,14 +80,15 @@ class LessCompileCommand  extends Command
 						$less_file = "themes/$themename/less/$themename.less";
 						$css_file = "themes/$themename/css/$themename.css";
 					}
-                    if (! file_exists($less_file)) {
-                        continue;
+                    if (file_exists($less_file) && (! file_exists($css_file) || filemtime($css_file) < filemtime($less_file))) {
+						$files[] = ['less' => $less_file, 'css' => $css_file];
                     }
-                    if (file_exists($css_file && filemtime($css_file) >= filemtime($less_file))) {
-                        continue;
-                    }
-					$files = [];
-					$files[] = ['less' => $less_file, 'css' => $css_file];
+
+					$less_file = "themes/$themename/less/newsletter.less";
+					$css_file = "themes/$themename/css/newsletter.css";
+					if (file_exists($less_file) && (! file_exists($css_file) || filemtime($css_file) < filemtime($less_file))) {
+						$files[] = ['less' => $less_file, 'css' => $css_file];
+					}
 
 					if (! $input->getOption('without-options') && is_dir("themes/$themename/options")) {
 
@@ -96,14 +98,10 @@ class LessCompileCommand  extends Command
 							}
 							$optionname = $fileInfo2->getFilename();
 							$less_file = "themes/$themename/options/$optionname/less/$optionname.less";
-							if (! file_exists($less_file)) {
-								continue;
-							}
 							$css_file = "themes/$themename/options/$optionname/css/$optionname.css";
-							if (file_exists($css_file && filemtime($css_file) >= filemtime($less_file))) {
-								continue;
+							if (file_exists($less_file) && (! file_exists($css_file) || filemtime($css_file) < filemtime($less_file))) {
+								$files[] = ['less' => $less_file, 'css' => $css_file];
 							}
-							$files[] = ['less' => $less_file, 'css' => $css_file];
 						}
 					}
 
