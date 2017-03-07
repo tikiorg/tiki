@@ -26,37 +26,19 @@
 			{self_link _icon_name="view" _class="previewBtn tips" _ajax="n" _title=":{tr}Preview your changes{/tr}"}
 			{/self_link}
 		</div>
-		{if $prefs.feature_wikilingo eq "y" && $useWikiLingo eq TRUE}
-			{if $wysiwyg eq 'y'}
-				{jq}
-					$(".previewBtn").click(function(){
-						$(document).trigger('previewWikiLingo', [true, $('#editwiki-ui'), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
-						return false;
-					});
-				{/jq}
-			{else}
-				{jq}
-					$(".previewBtn").click(function(){
-						$(document).trigger('previewWikiLingo', [false, $('#editwiki').val(), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
-						return false;
-					});
-				{/jq}
-			{/if}
-		{else}
-			{jq} $(".previewBtn").click(function(){
-				auto_save('editwiki', autoSaveId);
-				if ($('#autosave_preview:visible').length === 0) {
-					if (!ajaxPreviewWindow) {
-						setCookie("preview_diff_style", "", "preview", "session");
-						$("#preview_diff_style").val("").trigger("chosen:updated");
-						$('#autosave_preview').slideDown('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});
-					}
-				} else {
-					ajax_preview( 'editwiki', autoSaveId, true );
+		{jq} $(".previewBtn").click(function(){
+			auto_save('editwiki', autoSaveId);
+			if ($('#autosave_preview:visible').length === 0) {
+				if (!ajaxPreviewWindow) {
+					setCookie("preview_diff_style", "", "preview", "session");
+					$("#preview_diff_style").val("").trigger("chosen:updated");
+					$('#autosave_preview').slideDown('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});
 				}
-				return false;
-			});{/jq}
-		{/if}
+			} else {
+				ajax_preview( 'editwiki', autoSaveId, true );
+			}
+			return false;
+		});{/jq}
 	{/if}
 	{if isset($data.draft)}
 		{tr}Draft written on{/tr} {$data.draft.lastModif|tiki_long_time}<br/>
@@ -194,7 +176,7 @@
 							{tr}Reproduce the changes highlighted on the left using the editor below{/tr}.
 						</div>
 					{/if}
-					{textarea codemirror='true' syntax='tiki' useWikiLingo=$useWikiLingo}{$pagedata}{/textarea}
+					{textarea codemirror='true' syntax='tiki'}{$pagedata}{/textarea}
 					{if $prefs.wiki_freetags_edit_position eq 'edit'}
 							{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
 								<fieldset>
@@ -309,17 +291,6 @@
 								<label for="lock_it" class="col-md-4 control-label">{tr}Lock this page{/tr}</label>
 								<div class="col-md-8">
 									<input type="checkbox" id="lock_it" name="lock_it" {if $lock_it eq 'y'}checked="checked"{/if}>
-								</div>
-							</div>
-						{/if}
-						{if $prefs.feature_wikilingo eq 'y'}
-							<div class="form-group">
-								<label for="wiki-parser" class="col-md-4 control-label">{tr}Choose your parser{/tr}</label>
-								<div class="col-md-8">
-									<select id="wiki-parser-choice" name="wiki_parser" onchange="window.update_output_type(this);">
-										<option value="">{tr}tiki Wiki Syntax Parser {/tr}</option>
-										<option value="wikiLingo" {if $outputType eq 'wikiLingo' or $quickedit eq TRUE}selected="selected"{/if}>{tr}wikiLingo{/tr}</option>
-									</select>
 								</div>
 							</div>
 						{/if}

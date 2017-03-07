@@ -23,9 +23,6 @@ $inputConfiguration = array(
 		'returnto' => 'pagename',
 		'watch' => 'digits',
 	) ),
-	array( 'staticKeyUnset' => array(
-        ($prefs['feature_wikilingo'] == 'n' ? 'edit' : ''),
-	) ),
 );
 
 $section = "wiki page";
@@ -893,13 +890,9 @@ if ( isset( $_REQUEST['translation_critical'] ) ) {
 	$smarty->assign('translation_critical', 0);
 }
 
-//override the feature if info tells us not to use it
-$useWikiLingo = ($prefs['feature_wikilingo'] === 'y' && isset($info['outputType']) && $info['outputType'] === 'wikiLingo');
-$smarty->assign('useWikiLingo', $useWikiLingo);
-
 // Parse (or not) $edit_data into $parsed
 // Handles switching editor modes
-if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) && !$useWikiLingo) {
+if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save'])) {
 	if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal'] ==='y') {
 		// Parsing page data as first time seeing html page in normal editor
 		$smarty->assign('msg', "Parsing html to wiki");

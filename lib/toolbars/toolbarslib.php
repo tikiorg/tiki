@@ -791,10 +791,6 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 	{
 		global $prefs;
 
-        $isWikiLingo = false;
-        if ($prefs['feature_wikilingo'] === 'y') {
-            $isWikiLingo = true;
-        }
         $isFutureLinkProtocol = false;
         if ($prefs['feature_futurelinkprotocol'] === 'y') {
             $isFutureLinkProtocol = true;
@@ -822,7 +818,7 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			$syntax = '---';
 			break;
         case 'pastlink':
-            if ($isWikiLingo && $isFutureLinkProtocol) {
+            if ($isFutureLinkProtocol) {
                 $label = tra('PastLink');
                 $iconname = 'copy';
                 $wysiwyg = 'PastLink';
@@ -833,20 +829,12 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
                 return;
             }
 		case 'pagebreak':
-            if ($isWikiLingo) {
-                return;
-            }
-
 			$label = tra('Page Break');
 			$iconname = 'page-break';
 			$wysiwyg = 'PageBreak';
 			$syntax = '...page...';
 			break;
 		case 'box':
-            if ($isWikiLingo) {
-                return;
-            }
-
 			$label = tra('Box');
 			$iconname = 'box';
 			$wysiwyg = 'Box';
@@ -873,9 +861,6 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			$syntax = '-=text=-';
 			break;
 		case 'toc':
-            if ($isWikiLingo) {
-                return;
-            }
 			$label = tra('Table of contents');
 			$iconname = 'book';
 			$wysiwyg = 'TOC';
@@ -971,11 +956,6 @@ class ToolbarPicker extends Toolbar
 		global $section, $prefs;
 		$headerlib = TikiLib::lib('header');
 
-        $isWikiLingo = false;
-        if ($prefs['feature_wikilingo'] === 'y') {
-            $isWikiLingo = true;
-        }
-
 		$tool_prefs = array();
 		$styleType = '';
 
@@ -989,9 +969,6 @@ class ToolbarPicker extends Toolbar
 			$list = array_combine($list, $list);
 			break;
 		case 'smiley':
-            if ($isWikiLingo) {
-                return;
-            }
 
             $wysiwyg = 'Smiley';
             $label = tra('Smileys');

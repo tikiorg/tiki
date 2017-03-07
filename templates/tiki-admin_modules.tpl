@@ -268,11 +268,8 @@
                 <label class="col-sm-4 control-label">{tr}Parse using{/tr}</label>
                 <div class="col-sm-6">
                     <select name="um_parse" id="um_parse" class="form-control margin-bottom-sm">
-                        <option value=""{if $um_parse eq "" and $um_wikiLingo eq ""} selected="selected"{/if}>{tr}None{/tr}</option>
-                        <option value="y"{if $um_parse eq "y" and $um_wikiLingo eq ""} selected="selected"{/if}>{tr}Wiki Markup{/tr}</option>
-                        {if $prefs.feature_wikilingo eq 'y'}
-                            <option value="wikiLingo"{if $um_wikiLingo eq "y" and $um_parse eq "y"} selected="selected"{/if}>{tr}wikiLingo{/tr}</option>
-                        {/if}
+                        <option value=""{if $um_parse eq ""} selected="selected"{/if}>{tr}None{/tr}</option>
+                        <option value="y"{if $um_parse eq "y"} selected="selected"{/if}>{tr}Wiki Markup{/tr}</option>
                     </select>
                 </div>
             </div>

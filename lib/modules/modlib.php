@@ -68,25 +68,11 @@ class ModLib extends TikiLib
 			$query = "delete from `tiki_user_modules` where `name`=?";
 			$result = $this->query($query, array($name), -1, -1, false);
 			$query = "insert into `tiki_user_modules`(`name`,`title`,`data`, `parse`) values(?,?,?,?)";
-
-            //BEGIN wikiLingo integration
-            if ($prefs['feature_wikilingo'] == 'y') {
-                $this->query("DELETE FROM `tiki_output` WHERE `objectType` = ? AND `entityId` = ?", array("userModule", $name));
-
-                switch (strtolower($parse))
-                {
-                    case 'wikilingo':
-                        $this->query("INSERT INTO `tiki_output` (`objectType`, `entityId`, `version`) VALUES  (?, ?, ?)", array("userModule", $name, 1));
-                        $parse = 'y';
-                }
-            }
-            //END wikiLingo integration
 			$result = $this->query($query, array($name,$title,$data,$parse));
 
 			$cachelib = TikiLib::lib('cache');
 			$cachelib->invalidate("user_modules_$name");
 
-			$wikilib = TikiLib::lib('wiki');
 			$converter = new convertToTiki9();
 			$converter->saveObjectStatus($name, 'tiki_user_modules', 'new9.0+');
 
@@ -1211,26 +1197,8 @@ class ModLib extends TikiLib
     {
         global $prefs, $headerlib;
 		$tikilib = TikiLib::lib('tiki');
-        //allow for wikiLingo parsing, will only return 'y' if turned on AND enabled for this particular module
-        if (isset($info['wikiLingo']) && $info['wikiLingo'] == 'y' && $prefs['feature_wikilingo'] == 'y') {
-	        //TODO: correct the paths for scripts and output them to the header
-	        $scripts = new WikiLingo\Utilities\Scripts();
-	        $parser = new WikiLingo\Parser($scripts);
-	        $info['data'] = $parser->parse($info['data']);
-	        $info['title'] = $parser->parse($info['title']);
 
-	        /* output css from wikiLingo in a literal so smarty doesn't throw up.
-	         * NOTE: this is not added to headerlib because it has already passed the opportunity to get more css
-	         */
-	        $info['data'] = '{literal}' . $scripts->renderCss() . '{/literal}' . $info['data'];
-
-	        //output js to headerlib, because js is at bottom and has not yet been output
-	        foreach ( $scripts->scriptLocations as $scriptLocation ) {
-		        $headerlib->add_jsfile($scriptLocation);
-	        }
-	        $headerlib->add_js(implode($scripts->scripts));
-
-        } else if (isset($info['parse']) && $info['parse'] == 'y') {
+		if (isset($info['parse']) && $info['parse'] == 'y') {
             $info['data'] = $tikilib->parse_data($info['data'], array('is_html' => true, 'suppress_icons' => true));
             $info['title'] = $tikilib->parse_data($info['title'], array('noparseplugins' => true, 'is_html' => true));
         }
@@ -1436,18 +1404,7 @@ class ModLib extends TikiLib
      */
     function get_user_module($name)
 	{
-        global $prefs;
-
-		$info = $this->table('tiki_user_modules')
-            ->fetchFullRow(array('name' => $name));
-
-        if ($prefs['feature_wikilingo'] == 'y') {
-            if ($this->getOne('SELECT 1 FROM `tiki_output` WHERE `objectType` = ? AND `entityId` = ?', array('userModule', $name)) != null) {
-                $info['wikiLingo'] = 'y';
-            }
-        }
-
-        return $info;
+		return $this->table('tiki_user_modules')->fetchFullRow(array('name' => $name));
 	}
 
 	/**

@@ -155,127 +155,40 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 
 		$wysiwyglib = TikiLib::lib('wysiwyg');
 
-        // set up wikiLingo wysiwyg
-        if ($prefs['feature_wikilingo'] != 'y' || $params['useWikiLingo'] != true) {
-            if (!isset($params['name'])) {
-                $params['name'] = 'edit';
-            }
+		if (!isset($params['name'])) {
+			$params['name'] = 'edit';
+		}
 
-            $ckoptions = $wysiwyglib->setUpEditor($params['_is_html'], $as_id, $params, $auto_save_referrer);
+		$ckoptions = $wysiwyglib->setUpEditor($params['_is_html'], $as_id, $params, $auto_save_referrer);
 
-			$html .= '<input type="hidden" name="wysiwyg" value="y" />';
-            $html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;';	// missing closing quotes, closed in condition
+		$html .= '<input type="hidden" name="wysiwyg" value="y" />';
+		$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;';	// missing closing quotes, closed in condition
 
-            if (empty($params['cols'])) {
-                $html .= 'width:100%;'. (empty($params['rows']) ? 'height:500px;' : '') .'"';
-            } else {
-                $html .= '" cols="'.$params['cols'].'"';
-            }
-            if (!empty($params['rows'])) {
-                $html .= ' rows="'.$params['rows'].'"';
-            }
-            $html .= '>'.htmlspecialchars($content).'</textarea>';
+		if (empty($params['cols'])) {
+			$html .= 'width:100%;'. (empty($params['rows']) ? 'height:500px;' : '') .'"';
+		} else {
+			$html .= '" cols="'.$params['cols'].'"';
+		}
+		if (!empty($params['rows'])) {
+			$html .= ' rows="'.$params['rows'].'"';
+		}
+		$html .= '>'.htmlspecialchars($content).'</textarea>';
 
-            $headerlib->add_jq_onready(
-                '
+		$headerlib->add_jq_onready(
+			'
 CKEDITOR.replace( "'.$as_id.'",' . $ckoptions . ');
 CKEDITOR.on("instanceReady", function(event) {
 if (typeof ajaxLoadingHide == "function") { ajaxLoadingHide(); }
 this.instances.'.$as_id.'.resetDirty();
 });
 ',
-                20
-            );	// after dialog tools init (10)
+			20
+		);	// after dialog tools init (10)
 
-        }
-        //setup wikiLingo without wysiwyg
-        else
-        {
-            $scripts = new WikiLingo\Utilities\Scripts("vendor/wikilingo/wikilingo/editor/");
-            $parserWYSIWYG = new WikiLingoWYSIWYG\Parser($scripts);
-	        require_once('lib/wikiLingo_tiki/WikiLingoWYSIWYGEvents.php');
-	        (new WikiLingoWYIWYGEvents($parserWYSIWYG));
-
-            $contentSafe = $parserWYSIWYG->parse($content);
-            $expressionSyntaxes = new WikiLingoWYSIWYG\ExpressionSyntaxes($scripts);
-
-            //register expression types so that they can be turned into json and sent to browser
-            $expressionSyntaxes->registerExpressionTypes();
-
-            $expressionSyntaxesJson = json_encode($expressionSyntaxes->parsedExpressionSyntaxes);
-            $wLPlugins = json_encode($parserWYSIWYG->plugins);
-            $name = $params['name'];
-            $parserWYSIWYG->scripts
-                ->addCssLocation("vendor/mediumjs/mediumjs/medium.css")
-                ->addCssLocation("vendor/wikilingo/wikilingo/editor/bubble.css")
-                ->addCssLocation("vendor/wikilingo/wikilingo/editor/pastLink.css")
-                ->addCssLocation("vendor/wikilingo/wikilingo/editor/IcoMoon/sprites/sprites.css")
-                ->addCss(".wikiedit.wikilingo{min-height:500px;}");
-            $css = $parserWYSIWYG->scripts->renderCss();
-            $html .= <<<HTML
-$css
-<div
-    id="$as_id-ui"
-    class="wikiedit wikilingo ui-widget-content"
-    contenteditable="true"
-    onchange="this.input.value = this.innerHTML">$contentSafe</div>
-<input type="hidden" name="$name" id="$as_id"/>
-<script>
-var ui = document.getElementById('$as_id-ui'),
-    input = document.getElementById('$as_id');
-
-ui.input = input;
-input.value = ui.innerHTML;
-
-window.expressionSyntaxes = $expressionSyntaxesJson;
-window.wLPlugins = $wLPlugins;
-</script>
-HTML
-;
-            $headerlib
-                //->add_jsfile("vendor/wikilingo/wikilingo/editor/editor.js")
-                //add some javascript
-                ->add_jsfile("vendor/undojs/undojs/undo.js")
-                ->add_jsfile("vendor/rangy/rangy/uncompressed/rangy-core.js")
-                ->add_jsfile("vendor/rangy/rangy/uncompressed/rangy-cssclassapplier.js")
-                ->add_jsfile("vendor/mediumjs/mediumjs/medium.js")
-
-
-                ->add_jsfile("vendor/wikilingo/wikilingo/editor/WLExpressionUI.js")
-                ->add_jsfile("vendor/wikilingo/wikilingo/editor/WLPluginEditor.js")
-                ->add_jsfile("vendor/wikilingo/wikilingo/editor/WLPluginAssistant.js")
-                ->add_jsfile("vendor/wikilingo/wikilingo/editor/bubble.js")
-                ->add_jsfile("lib/wikiLingo_tiki/tiki_wikiLingo_edit.js")
-
-                ->add_js(<<<JS
-(new WikiLingoEdit(document.getElementById('$as_id-ui'), document.getElementById('$as_id')));
-$(function() {
-    $('#$as_id-ui').after(
-        $('<a class="ui-button" style="float:right;" href="' + document.location + '&wysiwyg=n">' + tr('Edit Source') + '</a>')
-            .button()
-    );
-});
-JS
-);
-
-            //join wikiLingo's scripts with tiki's
-            foreach($scripts->scriptLocations as $scriptLocation) {
-                $headerlib->add_jsfile($scriptLocation);
-            }
-
-            foreach($scripts->scripts as $script) {
-                $headerlib->add_js($script);
-            }
-        }
 	} else {
 		// end of if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n')
 
 		// setup for wiki editor
-
-        //when wikiLingo enabled
-        if ($prefs['feature_wikilingo'] === 'y') {
-            $headerlib->add_jsfile("lib/wikiLingo_tiki/tiki_wikiLingo_edit.js");
-        }
 
 		$params['rows'] = !empty($params['rows']) ? $params['rows'] : 20;
 //		$params['cols'] = !empty($params['cols']) ? $params['cols'] : 80;

@@ -334,9 +334,6 @@
 		<service id="tiki.lib.wizard" class="WizardLib">
 			<file>%kernel.root_dir%/lib/wizard/wizardlib.php</file>
 		</service>
-		<service id="tiki.lib.wlte" class="WikiLingoTikiEvents">
-			<file>%kernel.root_dir%/lib/wikiLingo_tiki/WikiLingoTikiEvents.php</file>
-		</service>
 		<service id="tiki.lib.wysiwyg" class="WYSIWYGLib">
 			<file>%kernel.root_dir%/lib/ckeditor_tiki/wysiwyglib.php</file>
 		</service>

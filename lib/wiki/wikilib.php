@@ -1917,76 +1917,15 @@ class WikiLibOutput
     public $parsedValue;
     public $options;
 
-    private static $init = false;
-    private static $wikiLingo;
-    private static $wikiLingoScripts;
-
     public function __construct($info, $originalValue, $options = array())
     {
         $tikilib = TikiLib::lib('tiki');
-        $prefslib = TikiLib::lib('prefs');
-        $headerlib = TikiLib::lib('header');
 
         //TODO: info may have an override, we need to build it in using MYSQL
         $this->info = $info;
         $this->originalValue = $originalValue;
         $this->options = $options;
 
-        $feature_wikilingo = $prefslib->getPreference('feature_wikilingo')['value'];
-
-        if($feature_wikilingo === 'y'
-            && isset($info['outputType']) && $info['outputType'] == 'wikiLingo') {
-
-            if (self::$init) {
-                $scripts = self::$wikiLingoScripts;
-                $wikiLingo = self::$wikiLingo;
-            } else {
-                self::$init = true;
-                $scripts = self::$wikiLingoScripts = new WikiLingo\Utilities\Scripts(TikiLib::tikiUrl() . "vendor/wikilingo/wikilingo/");
-                $wikiLingo = self::$wikiLingo = new WikiLingo\Parser($scripts);
-	            require_once('lib/wikiLingo_tiki/WikiLingoEvents.php');
-	            (new WikiLingoEvents($wikiLingo));
-            }
-
-            if (isset($_POST['protocol']) && $_POST['protocol'] === 'futurelink')
-            {
-                $this->parsedValue = '';
-            } else {
-                $this->parsedValue = $wikiLingo->parse($this->originalValue);
-
-                //recover from failure, but DO NOT just output
-                if ($this->parsedValue === null)
-                {
-                    $possibleCause = '';
-                    if (!empty($wikiLingo->pluginStack)) {
-                        foreach ($wikiLingo->pluginStack as $pluginName) {
-                            $possibleCause .= "<li>" . tr('Unclosed Plugin: ') . $pluginName . "</li>";
-                        }
-                    }
-                    $errors = htmlspecialchars(implode($wikiLingo->lexerErrors + $wikiLingo->parserErrors, "\n"));
-
-                    $this->parsedValue = '<pre><code>' . htmlspecialchars($this->originalValue) . '</code></pre>' .
-                        '<div class="ui-state-error">' . tr("wikiLingo markup could not be parsed.") .
-                            '<br />' .
-                            (!empty($possibleCause) ? "<ul>" . $possibleCause . "</ul>" : '') .
-                            tr('Error Details: ') . '<pre><code>' . $errors . '</code></pre>' .
-                        '</div>';
-                }
-                //transfer scripts over to headerlib
-                //css is already processed at this point, as it is in the header, at the top, so we expose it here
-                $this->parsedValue .= $scripts->renderCss();
-
-                //js
-                foreach($scripts->scripts as $script) {
-                    $headerlib->add_js($script);
-                }
-                //js files
-                foreach($scripts->scriptLocations as $scriptLocation) {
-                    $headerlib->add_jsfile($scriptLocation);
-                }
-            }
-        } else {
-            $this->parsedValue = $tikilib->parse_data($this->originalValue, $this->options = $options);
-        }
+		$this->parsedValue = $tikilib->parse_data($this->originalValue, $this->options = $options);
     }
 }

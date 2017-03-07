@@ -154,13 +154,8 @@ function tiki_setup_events()
 	}
 
 	if ($prefs['feature_futurelinkprotocol'] == 'y') {
-		if ($prefs['feature_wikilingo'] == 'y') {
-			$events->bind("tiki.wiki.view", $defer('wlte', 'wikilingo_flp_view'));
-			$events->bind("tiki.wiki.save", $defer('wlte', 'wikilingo_flp_save'));
-		} else {
-			$events->bind("tiki.wiki.view", $defer('wlte', 'tiki_wiki_view_pastlink'));
-			$events->bind("tiki.wiki.save", $defer('wlte', 'tiki_wiki_save_pastlink'));
-		}
+		$events->bind("tiki.wiki.view", $defer('wlte', 'tiki_wiki_view_pastlink'));
+		$events->bind("tiki.wiki.save", $defer('wlte', 'tiki_wiki_save_pastlink'));
 	}
 
 	if ($prefs['goal_enabled'] == 'y') {

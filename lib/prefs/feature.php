@@ -2701,16 +2701,6 @@ function prefs_feature_list($partial = false)
 			),
 			'default' => 'off',
 		),
-        'feature_wikilingo' => array(
-            'name' => tra('wikiLingo'),
-            'description' => tra('A wiki content platform'),
-            'type' => 'flag',
-            'help' => 'wikiLingo',
-            'keywords' => 'parser',
-            'default' => 'n',
-            'warning' => tra('Experimental'),
-            'tags' => array('experimental'),
-        ),
 		'feature_dummy' => array(
 			'name' => tra('Dummy preference'),
             'description' => tra('This is useful for developers to learn how to create a new preference.'),

@@ -230,9 +230,10 @@ class RatingLib extends TikiDb_Bridge
 
         if ( is_string($value) && strpos($value, '=') !== false ){
             $hasLabels = true;
-            $parser = new WikiLingo\Utilities\Parameters\Parser();
-            $parsedPref = $parser->parse($value);
-            return $parsedPref;
+            // FIXME? No idea what this was supposed to do
+            //$parser = new WikiLingo\Utilities\Parameters\Parser();
+            //$parsedPref = $parser->parse($value);
+            //return $parsedPref;
         }
 
 		$result = $tikilib->get_preference($pref, range(1, 5), ($expectedArray && is_array($value)));

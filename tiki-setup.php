@@ -427,12 +427,6 @@ if ($prefs['feature_syntax_highlighter'] == 'y') {
 	require_once("lib/codemirror_tiki/tiki_codemirror.php");
 	createCodemirrorModes();
 }
-if ($prefs['feature_wikilingo'] == 'y') {
-	$headerlib
-		//flp stuff
-		->add_cssfile('vendor/jquery/plugins/tablesorter/css/theme.dropbox.css')
-		->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.js');
-}
 
 if ( $prefs['feature_jquery_carousel'] == 'y' ) {
 	$headerlib->add_jsfile('vendor/jquery/plugins/infinitecarousel/jquery.infinitecarousel3.js');
