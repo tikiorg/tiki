@@ -1349,12 +1349,10 @@ if ( \$('#$id') ) {
 	function replace_hotwords($line, $words)
 	{
 		global $prefs;
-		$hotw_nw = ($prefs['feature_hotwords_nw'] == 'y') ? "target='_blank'" : '';
 
-		// Replace Hotwords
 		if ($prefs['feature_hotwords'] == 'y') {
-			$sep =  $prefs['feature_hotwords_sep'];
-			$sep = empty($sep)? " \n\t\r\,\;\(\)\.\:\[\]\{\}\!\?\"":"$sep";
+			$hotw_nw = ($prefs['feature_hotwords_nw'] == 'y') ? "target='_blank'" : '';
+			$sep = empty($prefs['feature_hotwords_sep']) ? " \n\t\r\,\;\(\)\.\:\[\]\{\}\!\?\"" : $prefs['feature_hotwords_sep'];
 			foreach ($words as $word => $url) {
 				// \b is a word boundary, \s is a space char
 				$escapedWord = preg_quote($word, '/');
