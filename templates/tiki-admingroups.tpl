@@ -63,7 +63,7 @@
 						{section name=user loop=$users}
 							{if $groupname == $users[user].groupName}
 								{$href = '#'}
-								{$onclick = "onclick='goToTab(2, this); return false;'"}
+								{$onclick = "onclick='showTab(2); return false;'"}
 							{else}
 								{$href = "tiki-admingroups.php?group={$users[user].groupName|escape:'url'}"}
 								{$onclick = ''}
