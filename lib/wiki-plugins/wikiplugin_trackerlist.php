@@ -1727,13 +1727,13 @@ function wikiplugin_trackerlist($data, $params)
 			if (is_array($filterfield))
 				$filterfield[] = array('usersearch' => $userCreatorFieldIds);
 			elseif (empty($filterfield))
-				$filterfield = array('usersearch' => $userCreatorFieldIds);
+				$filterfield = array(array('usersearch' => $userCreatorFieldIds));
 			else
 				$filterfield = array($filterfield, array('usersearch' => $userCreatorFieldIds));
 			if (is_array($exactvalue))
 				$exactvalue[] = $user;
 			elseif (empty($exactvalue))
-				$exactvalue = $user;
+				$exactvalue = array($user);
 			else
 				$exactvalue = array($exactvalue, $user);
 		}

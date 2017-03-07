@@ -1182,8 +1182,7 @@ class TrackerLib extends TikiLib
 						)
 					);
 				
-				$j = ( $last > 0 ) ? '0' : '';
-				$cat_table .= ' ' . ( $search_for_blank ? 'LEFT' : 'INNER' ) . " JOIN `tiki_tracker_item_fields` ttif$i ON ttif$i.`itemId` = ttif$j.`itemId`";
+				$cat_table .= ' ' . ( $search_for_blank ? 'LEFT' : 'INNER' ) . " JOIN `tiki_tracker_item_fields` ttif$i ON ttif$i.`itemId` = tti.`itemId`";
 				$last++;
 
 				if (isset($ff_array['sqlsearch']) && is_array($ff_array['sqlsearch'])) {
