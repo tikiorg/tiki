@@ -643,5 +643,6 @@ include_once ('installer/installlib.php');
 $installer = new Installer;
 $smarty->assign('db_requires_update', $installer->requiresUpdate());
 $smarty->assign('installer_not_locked', $installer->checkInstallerLocked());
+$smarty->assign('search_index_outdated', \TikiLib::lib('unifiedsearch')->isOutdated());
 
 $smarty->display('tiki.tpl');

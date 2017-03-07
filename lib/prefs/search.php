@@ -87,5 +87,14 @@ function prefs_search_list()
 			'filter' => 'digits',
 			'default' => '10',
 		),
+		'search_index_outdated' => array(
+			'name' => tra('Search Index Outdated'),
+			'description' => tra('Number of days to consider the search index outdated.'),
+			'type' => 'text',
+			'size' => 8,
+			'filter' => 'digits',
+			'default' => '2',
+			'tags' => array('basic'),
+		),
 	);
 }

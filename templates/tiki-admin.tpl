@@ -36,6 +36,12 @@
 		{/remarksbox}
 	{/if}
 
+    {if $search_index_outdated}
+        {remarksbox type="error" title="{tr}Search Index outdated{/tr}"}
+        {tr}The search index might be outdated. It is recommended to rebuild the search index.{/tr}
+        {/remarksbox}
+    {/if}
+
 	{*{tr}{$description}{/tr}*}
 </div>
 

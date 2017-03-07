@@ -1018,5 +1018,133 @@ class UnifiedSearchLib
 			}
 		}, $document);
 	}
+
+	function isOutdated()
+	{
+
+		global $prefs;
+
+		// If incremental update is enabled we cannot rely on the unified_last_rebuild date.
+		if ($prefs['feature_search'] == 'n' || $prefs['unified_incremental_update'] == 'y') {
+			return false;
+		}
+
+		$tikilib = TikiLib::lib('tiki');
+
+		$last_rebuild = $tikilib->get_preference('unified_last_rebuild');
+		$threshold = strtotime('+ '. $prefs['search_index_outdated'] .' days', $last_rebuild);
+
+		$types = $this->getSupportedTypes();
+
+		// Content Sources
+		if (isset ($types['wiki page'])) {
+
+			$last_page = $tikilib->list_pages(0, 1, 'lastModif_desc', '', '', true, false, false, false);
+			if (!empty($last_page['data'][0]['lastModif']) && $last_page['data'][0]['lastModif'] > $threshold) {
+				return true;
+			}
+		}
+
+		if (isset ($types['forum post'])) {
+			$commentslib = TikiLib::lib('comments');
+
+			$last_forum_post = $commentslib->get_all_comments('forum', 0, -1, 'commentDate_desc');
+			if (!empty($last_forum_post['data'][0]['commentDate']) && $last_forum_post['data'][0]['commentDate'] > $threshold) {
+				return true;
+			}
+
+			$last_forum = $commentslib->list_forums(0, 1, 'created_desc');
+			if (!empty($last_forum['data'][0]['created']) && $last_forum['data'][0]['created'] > $threshold) {
+				return true;
+			}
+		}
+
+		if (isset ($types['blog post'])) {
+
+			$last_blog_post = $tikilib->list_blog_posts(0, false, 0, 1, 'lastModif_desc');
+			if (!empty($last_blog_post['data'][0]['lastModif']) && $last_blog_post['data'][0]['lastModif'] > $threshold) {
+				return true;
+			}
+		}
+
+		if (isset ($types['article'])) {
+
+			$last_article = $tikilib->list_articles(0, 1, 'lastModif_desc');
+			if (!empty($last_article['data'][0]['lastModif']) && $last_article['data'][0]['lastModif'] > $threshold) {
+				return true;
+			}
+		}
+
+		if (isset ($types['file'])) {
+			// todo: files are indexed automatically, probably nothing to do here.
+		}
+
+		if (isset ($types['trackeritem'])) {
+			$trackerlib = TikiLib::lib('trk');
+
+			$last_tracker_item = $trackerlib->list_tracker_items(-1, 0, 1, 'lastModif_desc');
+			if (!empty($last_tracker_item['data'][0]['lastModif']) && $last_tracker_item['data'][0]['lastModif'] > $threshold) {
+				return true;
+			}
+
+			$last_tracker = $trackerlib->list_trackers(0, 1, 'lastModif_desc');
+			if (!empty($last_tracker['data'][0]['lastModif']) && $last_tracker['data'][0]['lastModif'] > $threshold) {
+				return true;
+			}
+
+			// todo: Missing tracker_fields
+		}
+
+		if (isset ($types['sheet'])) {
+			$sheetlib = TikiLib::lib('sheet');
+
+			$last_sheet = $sheetlib->list_sheets(0, 1, 'begin_desc');
+			if (!empty($last_sheet['data'][0]['begin']) && $last_sheet['data'][0]['begin'] > $threshold) {
+				return true;
+			}
+		}
+
+		if (isset($types['comment'])) {
+
+			$commentTypes = array();
+			if ($prefs['feature_wiki_comments'] == 'y') {
+				$commentTypes[] = 'wiki page';
+			}
+			if ($prefs['feature_article_comments'] == 'y') {
+				$commentTypes[] = 'article';
+			}
+			if ($prefs['feature_poll_comments'] == 'y') {
+				$commentTypes[] = 'poll';
+			}
+			if ($prefs['feature_file_galleries_comments'] == 'y') {
+				$commentTypes[] = 'file gallery';
+			}
+			if ($prefs['feature_trackers'] == 'y') {
+				$commentTypes[] = 'trackeritem';
+			}
+
+			$commentslib = TikiLib::lib('comments');
+
+			$last_comment = $commentslib->get_all_comments($commentTypes, 0, 1, 'commentDate_desc');
+			if (!empty($last_comment['data'][0]['commentDate']) && $last_comment['data'][0]['commentDate'] > $threshold) {
+				return true;
+			}
+
+		}
+
+		if (isset($types['user'])) {
+			$userlib = TikiLib::lib('user');
+
+			$last_user = $userlib->get_users(0, 1, 'created_desc');
+			if (!empty($last_user['data'][0]['created']) && $last_user['data'][0]['created'] > $threshold) {
+				return true;
+			}
+		}
+
+		if (isset($types['group'])) {
+			// todo: unable to track groups by dates
+		}
+
+	}
 }
 
