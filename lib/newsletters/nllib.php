@@ -1287,7 +1287,7 @@ class NlLib extends TikiLib
 						$news_css .= $headerlib->minify_css($news_cssfile_option);
 					}
 					if (empty($news_css)) {
-						$news_css = 'themes/base_files/css/newsletter.css';
+						$news_css = $headerlib->minify_css('themes/base_files/css/newsletter.css');
 					}
 					$news_head = "<html><head><base href=\"$base_url\" /><style type=\"text/css\">{$news_css}</style></head>";
 					$html = str_ireplace('<html>', $news_head, $html);
