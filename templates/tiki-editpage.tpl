@@ -577,8 +577,8 @@
 												<input type="hidden" name="translationOf" value="{$translationOf|escape}">
 											{/if}
 										</span>
-									</div
-								></div>
+									</div>
+								</div>
 							</fieldset>
 							{if $trads|@count > 1 and $urgent_allowed}
 								<div class="form-group">
