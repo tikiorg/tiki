@@ -21,7 +21,7 @@ if (! file_exists('vendor/autoload.php')) {
 	$title="Tiki Installer missing third party software files";
 	$content="<p>Your Tiki is not completely installed because Composer has not been run to fetch package dependencies.</p>";
 	$content.="<p>You need to run <b>sh setup.sh</b> from the command line.</p>";
-	$content.="<p>See <a href='http://dev.tiki.org/Composer' target='_blank' >http://dev.tiki.org/Composer</a> for details.</p>";
+	$content.="<p>See <a href='https://dev.tiki.org/Composer' target='_blank' >https://dev.tiki.org/Composer</a> for details.</p>";
 	createPage($title, $content);
 	exit;
 }
@@ -78,7 +78,7 @@ function createPage($title, $content)
 		<footer id="footer" class="footer" style="margin-top: 50px;">
 			<div class="footer_liner">
 				<div class="footerbgtrap fixedwidth" style="padding: 10px 0;">
-					<a href="http://tiki.org" target="_blank" title="Powered by Tiki Wiki CMS Groupware"><img src="img/tiki/tikibutton.png" alt="Powered by Tiki Wiki CMS Groupware" /></a>
+					<a href="https://tiki.org" target="_blank" title="Powered by Tiki Wiki CMS Groupware"><img src="img/tiki/tikibutton.png" alt="Powered by Tiki Wiki CMS Groupware" /></a>
 				</div>
 			</div>
 		</footer>
