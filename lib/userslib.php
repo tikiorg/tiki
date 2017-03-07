@@ -2141,6 +2141,8 @@ class UsersLib extends TikiLib
 	{
 		if( !is_array($group) ) {
 			$group = array($group);
+		} elseif( count($group) == 0 ) {
+			return array();
 		}
 		$users = $this->fetchAll('SELECT ug.groupName, u.login FROM `users_usergroups` ug INNER JOIN `users_users` u ON u.userId = ug.userId WHERE ug.groupName IN ('
 			.implode(',', array_fill(0, count($group), '?')).')', $group);
