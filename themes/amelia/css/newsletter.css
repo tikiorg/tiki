@@ -1,3 +1,5 @@
+@import url("//fonts.googleapis.com/css?family=Lobster|Cabin:400,700");
+/* Amelia theme newsletter stylesheet */
 .margin-bottom-xs {
   margin-bottom: 5px;
 }
@@ -13,4 +15,29 @@
 body {
   background: #108a93;
   color: #ffffff;
+  font-family: "Cabin", Arial, sans-serif;
+}
+a,
+a:visited {
+  color: #e8d069;
+  text-decoration: underline;
+}
+a:hover {
+  color: #e8d069;
+  text-decoration: underline;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: 'Lobster', cursive;
+  font-weight: 500;
 }
