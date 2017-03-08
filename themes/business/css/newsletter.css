@@ -1,0 +1,50 @@
+/* Business theme newsletter stylesheet */
+.margin-bottom-xs {
+  margin-bottom: 5px;
+}
+.margin-bottom-sm {
+  margin-bottom: 10px;
+}
+.margin-bottom-md {
+  margin-bottom: 20px;
+}
+.margin-bottom-lg {
+  margin-bottom: 40px;
+}
+body {
+  background: #ffffff;
+  color: #737373;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+a,
+a:visited {
+  color: #0082e0;
+  text-decoration: underline;
+}
+a:hover {
+  color: #005693;
+  text-decoration: underline;
+}
+body {
+  background: #fbfbfb url('../images/image2.jpg') 100% 0 no-repeat;
+  color: #737373;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+a,
+a:visited {
+  color: #0082e0;
+  text-decoration: none;
+}
+a:hover {
+  color: #005693;
+  text-decoration: underline;
+}
+h3.panel-title {
+  font-size: 90%;
+  font-weight: 700;
+}
+.well {
+  background: url('../images/market.jpg') 0 100% no-repeat;
+  background-size: 100% 100%;
+  color: #404040;
+}

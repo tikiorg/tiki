@@ -1,0 +1,35 @@
+// $Id$
+/* Business theme newsletter stylesheet */
+@import "../../base_files/less/newsletter.less";
+@import "bootstrap-variables.less";
+
+
+@imagePath: ~"../images/";
+
+body {
+	background: #fbfbfb url('@{imagePath}image2.jpg') 100% 0 no-repeat;
+	color : @text-color;
+	font-family: @font-family-base;
+}
+
+a,
+a:visited {
+	color: @link-color;
+	text-decoration: none;
+}
+
+a:hover {
+	color: @link-hover-color;
+	text-decoration: @link-hover-decoration;
+}
+
+h3.panel-title {
+	font-size: 90%;
+	font-weight: 700;
+}
+
+.well {
+	background: url('@{imagePath}market.jpg') 0 100% no-repeat;
+	background-size: 100% 100%;
+	color: @gray-base;
+}
