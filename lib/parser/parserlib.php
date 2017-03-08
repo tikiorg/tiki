@@ -1352,9 +1352,11 @@ if ( \$('#$id') ) {
 
 		if ($prefs['feature_hotwords'] == 'y') {
 			$hotw_nw = ($prefs['feature_hotwords_nw'] == 'y') ? "target='_blank'" : '';
+			
+			// FIXME: Replacements may fail if the value contains an unescaped metacharacters (which is why the default value contains escape characters). The value should probably be escaped with preg_quote().  
 			$sep = empty($prefs['feature_hotwords_sep']) ? " \n\t\r\,\;\(\)\.\:\[\]\{\}\!\?\"" : $prefs['feature_hotwords_sep'];
+			
 			foreach ($words as $word => $url) {
-				// \b is a word boundary, \s is a space char
 				$escapedWord = preg_quote($word, '/');
 				$line = preg_replace("/(=(\"|')[^\"']*[$sep'])$escapedWord([$sep][^\"']*(\"|'))/i", "$1:::::$word,:::::$3", $line);
 				$line = preg_replace("/([$sep']|^)$escapedWord($|[$sep])/i", "$1<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$2", $line);
