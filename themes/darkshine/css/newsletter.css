@@ -187,3 +187,6 @@ h6,
 .panel-danger > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #ebccd1;
 }
+body {
+  background: #f3f3f3;
+}
