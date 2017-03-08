@@ -525,7 +525,7 @@ class ParserLib extends TikiDb_Bridge
 					"\$(document).ready( function() {
 if ( \$('#$id') ) {
 \$('#$id').click( function(event) {
-	popup_plugin_form("
+	popupPluginForm("
 					. json_encode('editwiki')
 					. ', '
 					. json_encode($plugin_name)

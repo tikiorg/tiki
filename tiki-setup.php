@@ -699,6 +699,8 @@ if (true) {
 	if ($prefs['wikiplugin_module'] === 'y' && $prefs['wikiplugininline_module'] === 'n') {
 		$headerlib->add_jsfile_dynamic('tiki-jsmodule.php?language='.$prefs['language']);
 	}
+
+	$headerlib->add_jsfile('lib/jquery_tiki/tiki-pluginedit.js');
 }
 
 if ( session_id() ) {
