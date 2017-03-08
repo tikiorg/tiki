@@ -268,7 +268,7 @@
 {assign var=sensitive_data_box_title value="{tr}Sensitive Data Exposure{/tr}"}
 {if $sensitive_data_detected_files}
 {remarksbox type='error' title="{$sensitive_data_box_title}" close='n'}
-	<p>{tr}Tiki detected that there are temporary files in the db folder that may expose credentials or other sensitive information.{/tr}</p>
+	<p>{tr}Tiki detected that there are temporary files in the db folder which may expose credentials or other sensitive information.{/tr}</p>
 	<ul>
 		{foreach from=$sensitive_data_detected_files item=file}
 			<li>
@@ -279,7 +279,7 @@
 {/remarksbox}
 {else}
 {remarksbox type='info' title="{$sensitive_data_box_title}" close='n'}
-	<p>{tr}Tiki did not detected temporary files in the db folder that may expose credentials or other sensitive information.{/tr}</p>
+	<p>{tr}Tiki did not detect temporary files in the db folder which may expose credentials or other sensitive information.{/tr}</p>
 {/remarksbox}
 {/if}
 

@@ -2166,18 +2166,19 @@ if ($standalone && !$nagios) {
 }
 
 /**
- * Check for files, like backup copies made by editors, or manual copies of the local.php files
- * that may available to be read remotely and because are not interpretable as PHP, may expose the source,
- * that might contain credentials or other sensitive information.
+ * Identify files, like backup copies made by editors, or manual copies of the local.php files,
+ * that may be accessed remotely and, because they are not interpreted as PHP, may expose the source,
+ * which might contain credentials or other sensitive information.
  * Ref: http://feross.org/cmsploit/
  *
- * @param array $files
- * @param string $sourceDir
+ * @param array $files Array of filenames. Suspicious files will be added to this array. 
+ * @param string $sourceDir Path of the directory to check
  */
 function check_for_remote_readable_files(array &$files, $sourceDir = 'db')
 {
 	//fix dir slash
 	$sourceDir = str_replace('\\', '/', $sourceDir);
+	
 	if (substr($sourceDir, -1, 1) != '/') {
 		$sourceDir .= '/';
 	}
@@ -2185,7 +2186,6 @@ function check_for_remote_readable_files(array &$files, $sourceDir = 'db')
 	$sourceDirHandler = opendir($sourceDir);
 
 	while ($file = readdir($sourceDirHandler)) {
-
 		// Skip ".", ".."
 		if ($file == '.' || $file == '..') {
 			continue;
