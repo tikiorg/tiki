@@ -1496,13 +1496,13 @@ if ( function_exists('apache_get_version')) {
 						$apache_properties['SefURL Test'] = array(
 							'setting' => tra('Not Working'),
 							'fitness' => tra('info') ,
-							'message' => tra('An automated test was done and, based on the results, the server appears to be not configured correctly to handle Search Engine Friendly URLs. The server returned a unexpected http code: "'.$apache_return_code.'". This automated test may fail due to the infrastructure setup, but the Apache configuration should be checked. For further information go to Admin->SefURL in your Tiki.')
+							'message' => sprintf(tra('An automated test was done and, based on the results, the server does not appear to be configured correctly to handle Search Engine Friendly URLs. The server returned an unexpected HTTP code: "%s". This automated test may fail due to the infrastructure setup, but the Apache configuration should be checked. For further information go to Admin->SefURL in your Tiki.'), $apache_return_code)
 						);
 					} else {
 						$apache_properties['SefURL Test'] = array(
 							'setting' => tra('Not Working'),
 							'fitness' => tra('info') ,
-							'message' => tra('An automated test was done and, based on the results, the server appears to be not configured correctly to handle Search Engine Friendly URLs. This automated test may fail due to the infrastructure setup, but the Apache configuration should be checked. For further information go to Admin->SefURL in your Tiki.')
+							'message' => tra('An automated test was done and, based on the results, the server does not appear to be configured correctly to handle Search Engine Friendly URLs. This automated test may fail due to the infrastructure setup, but the Apache configuration should be checked. For further information go to Admin->SefURL in your Tiki.')
 						);
 					}
 				}
