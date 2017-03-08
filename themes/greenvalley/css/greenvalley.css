@@ -7812,6 +7812,10 @@ body.fullscreen #footer {
   padding-top: 20px;
   padding-bottom: 20px;
 }
+.layout_fixed_top_modules #middle {
+  background: url('../images/page_background_ltr.jpg') repeat;
+  padding-bottom: 20px;
+}
 #page-data {
   text-shadow: 1px 1px 0 #ffffff;
 }
