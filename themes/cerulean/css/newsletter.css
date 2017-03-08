@@ -1,0 +1,27 @@
+/* Cerulean theme newsletter stylesheet */
+.margin-bottom-xs {
+  margin-bottom: 5px;
+}
+.margin-bottom-sm {
+  margin-bottom: 10px;
+}
+.margin-bottom-md {
+  margin-bottom: 20px;
+}
+.margin-bottom-lg {
+  margin-bottom: 40px;
+}
+body {
+  background: #ffffff;
+  color: #555555;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+a,
+a:visited {
+  color: #2fa4e7;
+  text-decoration: underline;
+}
+a:hover {
+  color: #157ab5;
+  text-decoration: underline;
+}
