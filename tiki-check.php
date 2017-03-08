@@ -1491,11 +1491,20 @@ if ( function_exists('apache_get_version')) {
 						'message' => tra('An automated test was done, and the server appears to be configured correctly to handle Search Engine Friendly URLs.')
 					);
 				} else {
-					$apache_properties['SefURL Test'] = array(
-						'setting' => tra('Not Working'),
-						'fitness' => tra('info') ,
-						'message' => tra('An automated test was done and, based on the results, the server appears to be not configured correctly to handle Search Engine Friendly URLs. This automated test may fail due to the infrastructure setup, but the Apache configuration should be checked. For further information go to Admin->SefURL in your Tiki.')
-					);
+					if (strncmp('fail-http-', $pong_value, 10) == 0){
+						$apache_return_code = substr($pong_value, 10);
+						$apache_properties['SefURL Test'] = array(
+							'setting' => tra('Not Working'),
+							'fitness' => tra('info') ,
+							'message' => tra('An automated test was done and, based on the results, the server appears to be not configured correctly to handle Search Engine Friendly URLs. The server returned a unexpected http code: "'.$apache_return_code.'". This automated test may fail due to the infrastructure setup, but the Apache configuration should be checked. For further information go to Admin->SefURL in your Tiki.')
+						);
+					} else {
+						$apache_properties['SefURL Test'] = array(
+							'setting' => tra('Not Working'),
+							'fitness' => tra('info') ,
+							'message' => tra('An automated test was done and, based on the results, the server appears to be not configured correctly to handle Search Engine Friendly URLs. This automated test may fail due to the infrastructure setup, but the Apache configuration should be checked. For further information go to Admin->SefURL in your Tiki.')
+						);
+					}
 				}
 			}
 		}
@@ -2157,9 +2166,13 @@ function get_content_from_url($url)
 		curl_setopt($curl, CURLOPT_URL, $url);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
+		if (isset($_SERVER) && isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])){
+			curl_setopt($curl, CURLOPT_USERPWD, $_SERVER['PHP_AUTH_USER'] . ":" . $_SERVER['PHP_AUTH_PW']);
+		}
 		$content = curl_exec($curl);
-		if (curl_getinfo($curl, CURLINFO_HTTP_CODE) != 200) {
-			$content = false;
+		$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+		if ($http_code != 200) {
+			$content = "fail-http-".$http_code;
 		}
 		curl_close($curl);
 	} else {
