@@ -1,4 +1,14 @@
 // $Id$
 /* Darkly theme newsletter stylesheet */
+@web-font-path: "https://fonts.googleapis.com/css?family=Lato:400,700,400italic";
+
+.web-font(@path) {
+	@import url("@{path}");
+}
+.web-font(@web-font-path);
 @import "../../base_files/less/newsletter.less";
 @import "variables.less";
+
+@font-family-sans-serif:  "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-base:        @font-family-sans-serif;
+@font-size-base:          15px;
