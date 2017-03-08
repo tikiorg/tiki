@@ -1358,8 +1358,18 @@ if ( \$('#$id') ) {
 			
 			foreach ($words as $word => $url) {
 				$escapedWord = preg_quote($word, '/');
+				
+				/* In CVS revisions 1.429 and 1.373.2.40 of tikilib.php, mose added the following magic steps, commenting "fixed the hotwords autolinking in case it is in a description field".
+				 * I do not understand what description fields this refers to. I do not know if this is correct and still needed. Step 1 seems to prevent replacements in an HTML tag. Chealer 2017-03-08
+				 */
+				
+				// Step 1: Insert magic sequences which will neutralize step 2 in some cases.
 				$line = preg_replace("/(=(\"|')[^\"']*[$sep'])$escapedWord([$sep][^\"']*(\"|'))/i", "$1:::::$word,:::::$3", $line);
+				
+				// Step 2: Add links where the hotword appears (not neutralized)
 				$line = preg_replace("/([$sep']|^)$escapedWord($|[$sep])/i", "$1<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$2", $line);
+				
+				// Step 3: Remove magic sequences inserted in step 1
 				$line = preg_replace("/:::::$escapedWord,:::::/i", "$word", $line);
 			}
 		}
