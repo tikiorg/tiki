@@ -1900,6 +1900,22 @@ if (!$standalone) {
 	deack_on_state_change($security, 'PHP Security');
 }
 
+$sensitiveDataDetectedFiles = [];
+check_for_remote_readable_files($sensitiveDataDetectedFiles);
+
+if (!empty($sensitiveDataDetectedFiles)) {
+	$files = ' (Files: '. trim(implode(', ', $sensitiveDataDetectedFiles)) .')';
+	$tiki_security['Sensitive Data Exposure'] = array(
+		'fitness' => tra('risky'),
+		'message' => tra('Tiki detected that there are temporary files in the db folder that may expose credentials or other sensitive information.') . $files
+	);
+} else {
+	$tiki_security['Sensitive Data Exposure'] = array(
+		'fitness' => tra('safe'),
+		'message' => tra('Tiki did not detected temporary files in the db folder that may expose credentials or other sensitive information.')
+	);
+}
+
 if ($standalone && !$nagios) {
 	$render .= '<style type="text/css">td, th { border: 1px solid #000000; vertical-align: baseline; padding: .5em; }</style>';
 //	$render .= '<h1>Tiki Server Compatibility</h1>';
@@ -1986,6 +2002,8 @@ if ($standalone && !$nagios) {
 	renderTable($php_properties);
 	$render .= '<h2>PHP security properties</h2>';
 	renderTable($security);
+	$render .= '<h2>Tiki Security</h2>';
+	renderTable($tiki_security);
 	$render .= '<h2>MySQL Variables</h2>';
 	renderTable($mysql_variables);
 
@@ -2063,6 +2081,7 @@ if ($standalone && !$nagios) {
 	}
 	update_overall_status($php_properties, "PHP");
 	update_overall_status($security, "PHP Security");
+	update_overall_status($tiki_security, "Tiki Security");
 	$return = json_encode($monitoring_info);
 	echo $return;
 } else {	// not stand-alone
@@ -2139,9 +2158,64 @@ if ($standalone && !$nagios) {
 		$smarty->assign('bom_detected_files', $BOMFiles);
 	}
 
+	$smarty->assign('sensitive_data_detected_files', $sensitiveDataDetectedFiles);
+
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 	$smarty->assign('mid', 'tiki-check.tpl');
 	$smarty->display('tiki.tpl');
+}
+
+/**
+ * Check for files, like backup copies made by editors, or manual copies of the local.php files
+ * that my available to be read remotely and because are not interpretable as PHP, may expose the source,
+ * that might contain credentials or other sensitive information
+ *
+ * @param array $files
+ * @param string $sourceDir
+ */
+function check_for_remote_readable_files(array &$files, $sourceDir = 'db')
+{
+	//fix dir slash
+	$sourceDir = str_replace('\\', '/', $sourceDir);
+	if (substr($sourceDir, -1, 1) != '/') {
+		$sourceDir .= '/';
+	}
+
+	$sourceDirHandler = opendir($sourceDir);
+
+	while ($file = readdir($sourceDirHandler)) {
+
+		// Skip ".", ".."
+		if ($file == '.' || $file == '..') {
+			continue;
+		}
+
+		$sourceFilePath = $sourceDir . $file;
+
+		if (is_dir($sourceFilePath)) {
+			check_for_remote_readable_files($files, $sourceFilePath);
+		}
+
+		if (!is_file($sourceFilePath)) {
+			continue;
+		}
+
+		$pattern = '/(^#.*#|~|.sw[op])$/';
+		preg_match($pattern, $file, $matches);
+
+		if (!empty($matches[1])) {
+			$files[] = $file;
+			continue;
+		}
+
+		$pattern = '/local(?!.*[.]php$).*$/';
+		preg_match($pattern, $file, $matches);
+
+		if (!empty($matches[0])) {
+			$files[] = $file;
+			continue;
+		}
+	}
 }
 
 function check_isIIS()

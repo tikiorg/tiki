@@ -264,6 +264,25 @@
 </div>
 </form>
 
+<h2>{tr}Tiki Security{/tr}</h2>
+{assign var=sensitive_data_box_title value="{tr}Sensitive Data Exposure{/tr}"}
+{if $sensitive_data_detected_files}
+{remarksbox type='error' title="{$sensitive_data_box_title}" close='n'}
+	<p>{tr}Tiki detected that there are temporary files in the db folder that may expose credentials or other sensitive information.{/tr}</p>
+	<ul>
+		{foreach from=$sensitive_data_detected_files item=file}
+			<li>
+				{$file}
+			</li>
+		{/foreach}
+	</ul>
+{/remarksbox}
+{else}
+{remarksbox type='info' title="{$sensitive_data_box_title}" close='n'}
+	<p>{tr}Tiki did not detected temporary files in the db folder that may expose credentials or other sensitive information.{/tr}</p>
+{/remarksbox}
+{/if}
+
 <h2>{tr}File Gallery Search Indexing{/tr}</h2>
 {icon name='help' href='https://doc.tiki.org/Search+within+files'} <em>{tr _0='<a href="https://doc.tiki.org/Search+within+files">' _1='</a>'}More information %0 here %1{/tr}</em>
 {if $prefs.fgal_enable_auto_indexing eq 'y'}
