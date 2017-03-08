@@ -917,7 +917,7 @@ if ($s) {
 		$php_properties['mbstring'] = array(
 			'fitness' => tra('ugly'),
 			'setting' => 'Badly configured',
-			'message' => tra('mbstring extension is loaded, but mbstring.func_overload = '.' '.$func_overload.'.'.' '.'Tiki only works with mbsring.func_overload = 0. Please check the php.ini file.')
+			'message' => tra('mbstring extension is loaded, but mbstring.func_overload = '.' '.$func_overload.'.'.' '.'Tiki only works with mbstring.func_overload = 0. Please check the php.ini file.')
 		);
 	} else {
 		$php_properties['mbstring'] = array(
