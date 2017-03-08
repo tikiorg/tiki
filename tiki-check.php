@@ -2167,8 +2167,9 @@ if ($standalone && !$nagios) {
 
 /**
  * Check for files, like backup copies made by editors, or manual copies of the local.php files
- * that my available to be read remotely and because are not interpretable as PHP, may expose the source,
- * that might contain credentials or other sensitive information
+ * that may available to be read remotely and because are not interpretable as PHP, may expose the source,
+ * that might contain credentials or other sensitive information.
+ * Ref: http://feross.org/cmsploit/
  *
  * @param array $files
  * @param string $sourceDir
