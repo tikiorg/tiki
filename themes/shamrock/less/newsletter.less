@@ -1,4 +1,14 @@
 // $Id$
 /* Shamrock theme newsletter stylesheet */
+@import url('//fonts.googleapis.com/css?family=Marcellus');
 @import "../../base_files/less/newsletter.less";
 @import "bootstrap-variables.less";
+
+@font-family-sans-serif:  "Marcellus", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-base:        @font-family-sans-serif;
+@font-size-base:          15px;
+
+h1::before {
+	content: "\2663";
+	margin-right: 10px;
+}

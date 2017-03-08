@@ -1,4 +1,14 @@
 // $Id$
 /* Readable theme newsletter stylesheet */
+@web-font-path: "https://fonts.googleapis.com/css?family=Raleway:400,700";
+
+.web-font(@path) {
+	@import url("@{path}");
+}
+.web-font(@web-font-path);
 @import "../../base_files/less/newsletter.less";
 @import "variables.less";
+
+@font-family-sans-serif:  "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-base:        @font-family-serif;
+@font-size-base:          16px;
