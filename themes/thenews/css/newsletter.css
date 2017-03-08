@@ -1,4 +1,4 @@
-/* FiveAlive theme newsletter stylesheet */
+/* TheNews theme newsletter stylesheet */
 .panel {
   margin-bottom: 20px;
   background-color: #ffffff;
@@ -34,7 +34,7 @@
 }
 .panel-footer {
   padding: 10px 15px;
-  background-color: #f5f5f5;
+  background-color: transparent;
   border-top: 1px solid #dddddd;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
@@ -239,36 +239,36 @@
 }
 .panel-default > .panel-heading {
   color: #333333;
-  background-color: #f5f5f5;
+  background-color: transparent;
   border-color: #dddddd;
 }
 .panel-default > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #dddddd;
 }
 .panel-default > .panel-heading .badge {
-  color: #f5f5f5;
+  color: transparent;
   background-color: #333333;
 }
 .panel-default > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #dddddd;
 }
 .panel-primary {
-  border-color: #1174a5;
+  border-color: #005faa;
 }
 .panel-primary > .panel-heading {
   color: #ffffff;
-  background-color: #1174a5;
-  border-color: #1174a5;
+  background-color: #005faa;
+  border-color: #005faa;
 }
 .panel-primary > .panel-heading + .panel-collapse > .panel-body {
-  border-top-color: #1174a5;
+  border-top-color: #005faa;
 }
 .panel-primary > .panel-heading .badge {
-  color: #1174a5;
+  color: #005faa;
   background-color: #ffffff;
 }
 .panel-primary > .panel-footer + .panel-collapse > .panel-body {
-  border-bottom-color: #1174a5;
+  border-bottom-color: #005faa;
 }
 .panel-success {
   border-color: #d6e9c6;
@@ -355,17 +355,17 @@
   margin-bottom: 40px;
 }
 body {
-  background: #ffffff;
+  background: #f4f4f4;
   color: #333333;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
 a,
 a:visited {
-  color: #1174a5;
+  color: #005faa;
   text-decoration: underline;
 }
 a:hover {
-  color: #0a4360;
+  color: #00345e;
   text-decoration: underline;
 }
 h1,
@@ -381,6 +381,6 @@ h6,
 .h5,
 .h6 {
   font-family: inherit;
-  font-weight: 700;
+  font-weight: 500;
   color: inherit;
 }

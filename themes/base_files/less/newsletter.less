@@ -1,6 +1,7 @@
 // $Id$
 // For newsletter styling. Variables defined in tiki-variables.less. A theme-specific newsletter.css file can be loaded with priority.
 
+@import "../../../vendor/twitter/bootstrap/less/panels.less";
 @import "../../../vendor/twitter/bootstrap/less/variables.less";
 @import "../../../vendor/twitter/bootstrap/less/mixins.less";
 @import "tiki-variables.less";
@@ -8,5 +9,23 @@
 body {
 	background: @body-bg;
 	color : @text-color;
+	font-family: @font-family-base;
+	padding: 15px;
 }
 
+a,
+a:visited {
+	color: @link-color;
+	text-decoration: @link-hover-decoration;
+}
+
+a:hover {
+	color: @link-hover-color;
+	text-decoration: @link-hover-decoration;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+	font-family: @headings-font-family;
+	font-weight: @headings-font-weight;
+	color: @headings-color
+}

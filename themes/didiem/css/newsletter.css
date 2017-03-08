@@ -1,4 +1,4 @@
-/* FiveAlive theme newsletter stylesheet */
+/* Didiem theme newsletter stylesheet */
 .panel {
   margin-bottom: 20px;
   background-color: #ffffff;
@@ -253,22 +253,22 @@
   border-bottom-color: #dddddd;
 }
 .panel-primary {
-  border-color: #1174a5;
+  border-color: #8bbb47;
 }
 .panel-primary > .panel-heading {
   color: #ffffff;
-  background-color: #1174a5;
-  border-color: #1174a5;
+  background-color: #8bbb47;
+  border-color: #8bbb47;
 }
 .panel-primary > .panel-heading + .panel-collapse > .panel-body {
-  border-top-color: #1174a5;
+  border-top-color: #8bbb47;
 }
 .panel-primary > .panel-heading .badge {
-  color: #1174a5;
+  color: #8bbb47;
   background-color: #ffffff;
 }
 .panel-primary > .panel-footer + .panel-collapse > .panel-body {
-  border-bottom-color: #1174a5;
+  border-bottom-color: #8bbb47;
 }
 .panel-success {
   border-color: #d6e9c6;
@@ -356,16 +356,16 @@
 }
 body {
   background: #ffffff;
-  color: #333333;
-  font-family: Arial, Helvetica, sans-serif;
+  color: #363636;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 a,
 a:visited {
-  color: #1174a5;
+  color: #8bbb47;
   text-decoration: underline;
 }
 a:hover {
-  color: #0a4360;
+  color: #8bbb47;
   text-decoration: underline;
 }
 h1,
@@ -381,6 +381,13 @@ h6,
 .h5,
 .h6 {
   font-family: inherit;
-  font-weight: 700;
+  font-weight: 500;
   color: inherit;
+}
+.navbar-fixed-top,
+.navbar-fixed-bottom {
+  left: 0;
+  position: fixed !important;
+  right: 0;
+  z-index: 1030;
 }

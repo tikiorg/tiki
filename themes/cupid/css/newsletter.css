@@ -1,6 +1,6 @@
-/* FiveAlive theme newsletter stylesheet */
+/* Cupid theme newsletter stylesheet */
 .panel {
-  margin-bottom: 20px;
+  margin-bottom: 22px;
   background-color: #ffffff;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -22,7 +22,7 @@
 .panel-title {
   margin-top: 0;
   margin-bottom: 0;
-  font-size: 16px;
+  font-size: 18px;
   color: inherit;
 }
 .panel-title > a,
@@ -35,7 +35,7 @@
 .panel-footer {
   padding: 10px 15px;
   background-color: #f5f5f5;
-  border-top: 1px solid #dddddd;
+  border-top: 1px solid transparent;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
 }
@@ -212,7 +212,7 @@
   margin-bottom: 0;
 }
 .panel-group {
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 .panel-group .panel {
   margin-bottom: 0;
@@ -226,49 +226,49 @@
 }
 .panel-group .panel-heading + .panel-collapse > .panel-body,
 .panel-group .panel-heading + .panel-collapse > .list-group {
-  border-top: 1px solid #dddddd;
+  border-top: 1px solid transparent;
 }
 .panel-group .panel-footer {
   border-top: 0;
 }
 .panel-group .panel-footer + .panel-collapse .panel-body {
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid transparent;
 }
 .panel-default {
-  border-color: #dddddd;
+  border-color: transparent;
 }
 .panel-default > .panel-heading {
-  color: #333333;
-  background-color: #f5f5f5;
-  border-color: #dddddd;
+  color: #f0569f;
+  background-color: #f49ac0;
+  border-color: transparent;
 }
 .panel-default > .panel-heading + .panel-collapse > .panel-body {
-  border-top-color: #dddddd;
+  border-top-color: transparent;
 }
 .panel-default > .panel-heading .badge {
-  color: #f5f5f5;
-  background-color: #333333;
+  color: #f49ac0;
+  background-color: #f0569f;
 }
 .panel-default > .panel-footer + .panel-collapse > .panel-body {
-  border-bottom-color: #dddddd;
+  border-bottom-color: transparent;
 }
 .panel-primary {
-  border-color: #1174a5;
+  border-color: #ffffff;
 }
 .panel-primary > .panel-heading {
-  color: #ffffff;
-  background-color: #1174a5;
-  border-color: #1174a5;
+  color: #f0569f;
+  background-color: #ffffff;
+  border-color: #ffffff;
 }
 .panel-primary > .panel-heading + .panel-collapse > .panel-body {
-  border-top-color: #1174a5;
+  border-top-color: #ffffff;
 }
 .panel-primary > .panel-heading .badge {
-  color: #1174a5;
-  background-color: #ffffff;
+  color: #ffffff;
+  background-color: #f0569f;
 }
 .panel-primary > .panel-footer + .panel-collapse > .panel-body {
-  border-bottom-color: #1174a5;
+  border-bottom-color: #ffffff;
 }
 .panel-success {
   border-color: #d6e9c6;
@@ -343,29 +343,29 @@
   border-bottom-color: #ebccd1;
 }
 .margin-bottom-xs {
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 .margin-bottom-sm {
-  margin-bottom: 10px;
+  margin-bottom: 11px;
 }
 .margin-bottom-md {
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 .margin-bottom-lg {
-  margin-bottom: 40px;
+  margin-bottom: 44px;
 }
 body {
-  background: #ffffff;
-  color: #333333;
-  font-family: Arial, Helvetica, sans-serif;
+  background: #fce0ec;
+  color: #f0569f;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 a,
 a:visited {
-  color: #1174a5;
+  color: #51acd0;
   text-decoration: underline;
 }
 a:hover {
-  color: #0a4360;
+  color: #3395bb;
   text-decoration: underline;
 }
 h1,
@@ -381,6 +381,6 @@ h6,
 .h5,
 .h6 {
   font-family: inherit;
-  font-weight: 700;
-  color: inherit;
+  font-weight: 500;
+  color: #f0569f;
 }

@@ -1,4 +1,4 @@
-/* FiveAlive theme newsletter stylesheet */
+/* Feb12 theme newsletter stylesheet */
 .panel {
   margin-bottom: 20px;
   background-color: #ffffff;
@@ -253,22 +253,22 @@
   border-bottom-color: #dddddd;
 }
 .panel-primary {
-  border-color: #1174a5;
+  border-color: #428bca;
 }
 .panel-primary > .panel-heading {
   color: #ffffff;
-  background-color: #1174a5;
-  border-color: #1174a5;
+  background-color: #428bca;
+  border-color: #428bca;
 }
 .panel-primary > .panel-heading + .panel-collapse > .panel-body {
-  border-top-color: #1174a5;
+  border-top-color: #428bca;
 }
 .panel-primary > .panel-heading .badge {
-  color: #1174a5;
+  color: #428bca;
   background-color: #ffffff;
 }
 .panel-primary > .panel-footer + .panel-collapse > .panel-body {
-  border-bottom-color: #1174a5;
+  border-bottom-color: #428bca;
 }
 .panel-success {
   border-color: #d6e9c6;
@@ -355,18 +355,18 @@
   margin-bottom: 40px;
 }
 body {
-  background: #ffffff;
+  background: #e6f3f6;
   color: #333333;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Trebuchet MS", "Tahoma", sans-serif;
 }
 a,
 a:visited {
-  color: #1174a5;
-  text-decoration: underline;
+  color: #428bca;
+  text-decoration: none;
 }
 a:hover {
-  color: #0a4360;
-  text-decoration: underline;
+  color: #2a6496;
+  text-decoration: none;
 }
 h1,
 h2,
@@ -382,5 +382,5 @@ h6,
 .h6 {
   font-family: inherit;
   font-weight: 700;
-  color: inherit;
+  color: #93554a;
 }

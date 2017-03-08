@@ -1,7 +1,7 @@
-/* FiveAlive theme newsletter stylesheet */
+/* Darkroom theme newsletter stylesheet */
 .panel {
-  margin-bottom: 20px;
-  background-color: #ffffff;
+  margin-bottom: 22px;
+  background-color: #474747;
   border: 1px solid transparent;
   border-radius: 4px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
@@ -22,7 +22,7 @@
 .panel-title {
   margin-top: 0;
   margin-bottom: 0;
-  font-size: 16px;
+  font-size: 18px;
   color: inherit;
 }
 .panel-title > a,
@@ -34,8 +34,8 @@
 }
 .panel-footer {
   padding: 10px 15px;
-  background-color: #f5f5f5;
-  border-top: 1px solid #dddddd;
+  background-color: #474747;
+  border-top: 1px solid #474747;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
 }
@@ -149,7 +149,7 @@
 .panel > .panel-body + .table-responsive,
 .panel > .table + .panel-body,
 .panel > .table-responsive + .panel-body {
-  border-top: 1px solid #dddddd;
+  border-top: 1px solid #696969;
 }
 .panel > .table > tbody:first-child > tr:first-child th,
 .panel > .table > tbody:first-child > tr:first-child td {
@@ -212,7 +212,7 @@
   margin-bottom: 0;
 }
 .panel-group {
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 .panel-group .panel {
   margin-bottom: 0;
@@ -226,146 +226,146 @@
 }
 .panel-group .panel-heading + .panel-collapse > .panel-body,
 .panel-group .panel-heading + .panel-collapse > .list-group {
-  border-top: 1px solid #dddddd;
+  border-top: 1px solid #474747;
 }
 .panel-group .panel-footer {
   border-top: 0;
 }
 .panel-group .panel-footer + .panel-collapse .panel-body {
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid #474747;
 }
 .panel-default {
-  border-color: #dddddd;
+  border-color: #292929;
 }
 .panel-default > .panel-heading {
-  color: #333333;
-  background-color: #f5f5f5;
-  border-color: #dddddd;
+  color: #d8d8d8;
+  background-color: #292929;
+  border-color: #292929;
 }
 .panel-default > .panel-heading + .panel-collapse > .panel-body {
-  border-top-color: #dddddd;
+  border-top-color: #292929;
 }
 .panel-default > .panel-heading .badge {
-  color: #f5f5f5;
-  background-color: #333333;
+  color: #292929;
+  background-color: #d8d8d8;
 }
 .panel-default > .panel-footer + .panel-collapse > .panel-body {
-  border-bottom-color: #dddddd;
+  border-bottom-color: #292929;
 }
 .panel-primary {
-  border-color: #1174a5;
+  border-color: #ababab;
 }
 .panel-primary > .panel-heading {
   color: #ffffff;
-  background-color: #1174a5;
-  border-color: #1174a5;
+  background-color: #ababab;
+  border-color: #ababab;
 }
 .panel-primary > .panel-heading + .panel-collapse > .panel-body {
-  border-top-color: #1174a5;
+  border-top-color: #ababab;
 }
 .panel-primary > .panel-heading .badge {
-  color: #1174a5;
+  color: #ababab;
   background-color: #ffffff;
 }
 .panel-primary > .panel-footer + .panel-collapse > .panel-body {
-  border-bottom-color: #1174a5;
+  border-bottom-color: #ababab;
 }
 .panel-success {
-  border-color: #d6e9c6;
+  border-color: #547f31;
 }
 .panel-success > .panel-heading {
-  color: #3c763d;
-  background-color: #dff0d8;
-  border-color: #d6e9c6;
+  color: #88c389;
+  background-color: #529138;
+  border-color: #547f31;
 }
 .panel-success > .panel-heading + .panel-collapse > .panel-body {
-  border-top-color: #d6e9c6;
+  border-top-color: #547f31;
 }
 .panel-success > .panel-heading .badge {
-  color: #dff0d8;
-  background-color: #3c763d;
+  color: #529138;
+  background-color: #88c389;
 }
 .panel-success > .panel-footer + .panel-collapse > .panel-body {
-  border-bottom-color: #d6e9c6;
+  border-bottom-color: #547f31;
 }
 .panel-info {
-  border-color: #bce8f1;
+  border-color: #1e7c8f;
 }
 .panel-info > .panel-heading {
-  color: #31708f;
-  background-color: #d9edf7;
-  border-color: #bce8f1;
+  color: #84bad5;
+  background-color: #247fad;
+  border-color: #1e7c8f;
 }
 .panel-info > .panel-heading + .panel-collapse > .panel-body {
-  border-top-color: #bce8f1;
+  border-top-color: #1e7c8f;
 }
 .panel-info > .panel-heading .badge {
-  color: #d9edf7;
-  background-color: #31708f;
+  color: #247fad;
+  background-color: #84bad5;
 }
 .panel-info > .panel-footer + .panel-collapse > .panel-body {
-  border-bottom-color: #bce8f1;
+  border-bottom-color: #1e7c8f;
 }
 .panel-warning {
-  border-color: #faebcc;
+  border-color: #b37f13;
 }
 .panel-warning > .panel-heading {
-  color: #8a6d3b;
-  background-color: #fcf8e3;
-  border-color: #faebcc;
+  color: #cfb88f;
+  background-color: #caad16;
+  border-color: #b37f13;
 }
 .panel-warning > .panel-heading + .panel-collapse > .panel-body {
-  border-top-color: #faebcc;
+  border-top-color: #b37f13;
 }
 .panel-warning > .panel-heading .badge {
-  color: #fcf8e3;
-  background-color: #8a6d3b;
+  color: #caad16;
+  background-color: #cfb88f;
 }
 .panel-warning > .panel-footer + .panel-collapse > .panel-body {
-  border-bottom-color: #faebcc;
+  border-bottom-color: #b37f13;
 }
 .panel-danger {
-  border-color: #ebccd1;
+  border-color: #843441;
 }
 .panel-danger > .panel-heading {
-  color: #a94442;
-  background-color: #f2dede;
-  border-color: #ebccd1;
+  color: #dda8a7;
+  background-color: #963b3b;
+  border-color: #843441;
 }
 .panel-danger > .panel-heading + .panel-collapse > .panel-body {
-  border-top-color: #ebccd1;
+  border-top-color: #843441;
 }
 .panel-danger > .panel-heading .badge {
-  color: #f2dede;
-  background-color: #a94442;
+  color: #963b3b;
+  background-color: #dda8a7;
 }
 .panel-danger > .panel-footer + .panel-collapse > .panel-body {
-  border-bottom-color: #ebccd1;
+  border-bottom-color: #843441;
 }
 .margin-bottom-xs {
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 .margin-bottom-sm {
-  margin-bottom: 10px;
+  margin-bottom: 11px;
 }
 .margin-bottom-md {
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 .margin-bottom-lg {
-  margin-bottom: 40px;
+  margin-bottom: 44px;
 }
 body {
-  background: #ffffff;
-  color: #333333;
-  font-family: Arial, Helvetica, sans-serif;
+  background: #474747;
+  color: #d8d8d8;
+  font-family: "Trebuchet MS", "Bitstream Vera Sans", sans-serif;
 }
 a,
 a:visited {
-  color: #1174a5;
+  color: #ababab;
   text-decoration: underline;
 }
 a:hover {
-  color: #0a4360;
+  color: #858585;
   text-decoration: underline;
 }
 h1,
@@ -381,6 +381,6 @@ h6,
 .h5,
 .h6 {
   font-family: inherit;
-  font-weight: 700;
+  font-weight: 500;
   color: inherit;
 }
