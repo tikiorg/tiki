@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {if $prefs.javascript_enabled eq 'y' && $area_id}
-	<a href="javascript:void(0);" onclick="needToConfirm=false;$.closeModal();popup_plugin_form('{$area_id}','{$plugin_name|lower|@addslashes}');return false;">{icon name=$plugin.iconname|default:"plugin" _text="{tr}Insert{/tr}"}</a>
+	<a href="javascript:void(0);" onclick="needToConfirm=false;$.closeModal();$(document).one('hidden.bs.modal', function () {ldelim}popupPluginForm('{$area_id}','{$plugin_name|lower|@addslashes}');{rdelim}); return false;">{icon name=$plugin.iconname|default:"plugin" _text="{tr}Insert{/tr}"}</a>
 {/if}
 <strong>{$plugin.name|escape}</strong>
 <em>{$plugin_name|lower}</em>

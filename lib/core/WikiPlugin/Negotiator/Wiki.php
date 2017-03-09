@@ -601,7 +601,7 @@ class WikiPlugin_Negotiator_Wiki
 			$headerlib->add_jq_onready(
 				'$("#' . $id . '")
 					.click( function(event) {'
-				. '		popup_plugin_form('
+				. '		popupPluginForm('
 				. json_encode('editwiki') . ', '
 				. json_encode($this->name) . ', '
 				. json_encode($this->index) . ', '

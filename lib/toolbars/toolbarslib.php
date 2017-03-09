@@ -1809,7 +1809,7 @@ class ToolbarWikiplugin extends Toolbar
 	function getWikiHtml( $areaId ) // {{{
 	{
 		return $this->getSelfLink(
-			'popup_plugin_form(\'' . $areaId . '\',\'' . $this->pluginName . '\')',
+			'popupPluginForm(\'' . $areaId . '\',\'' . $this->pluginName . '\')',
 			htmlentities($this->label, ENT_QUOTES, 'UTF-8'),
 			'qt-plugin'
 		);
@@ -1817,7 +1817,7 @@ class ToolbarWikiplugin extends Toolbar
 	function getWysiwygToken( $areaId, $add_js = true ) // {{{
 	{
 		if (!empty($this->wysiwyg) && $add_js) {
-			$js = "popup_plugin_form(editor.name,'{$this->pluginName}');";
+			$js = "popupPluginForm(editor.name,'{$this->pluginName}');";
 			//CKEditor needs image icons so get legacy plugin icons for the toolbar
 			if (!$this->icon && !empty($this->iconname)) {
 				$iconsetlib = TikiLib::lib('iconset');
