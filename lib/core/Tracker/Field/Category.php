@@ -155,6 +155,11 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 
 	public function renderInput($context = array())
 	{
+		$perms = Perms::get(array('type' => 'trackeritem', 'object' => $this->getItemId()));
+		if( !$perms->modify_object_categories ) {
+			return $this->renderOutput($context);
+		}
+
 		$smarty = TikiLib::lib('smarty');
 		$smarty->assign('cat_tree', array());
 		if ($this->getOption('descendants') > 0 && $this->getOption('inputtype') === 'checkbox') {
