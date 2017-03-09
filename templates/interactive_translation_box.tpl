@@ -44,7 +44,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button id="intertrans-close" type="button" class="btn btn-default">
+					<button id="intertrans-close" type="button" class="btn btn-default" data-dismiss="modal">
 						{tr}Close{/tr}
 					</button>
 					<input id="intertrans-submit" type="submit" class="btn btn-primary" value="{tr}Save translations{/tr}">
