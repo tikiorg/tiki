@@ -7838,3 +7838,6 @@ table.tablesorter thead tr.tablesorter-filter-row {
 .tiki .ui-widget-header a {
   color: #dd4814;
 }
+.siteloginbar_poppedup .list-unstyled li {
+  background: none !important;
+}
