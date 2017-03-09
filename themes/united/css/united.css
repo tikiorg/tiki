@@ -7669,3 +7669,6 @@ table.tablesorter thead tr.tablesorter-headerRow,
 table.tablesorter thead tr.tablesorter-filter-row {
   background-color: #ffffff;
 }
+.siteloginbar_poppedup .list-unstyled li {
+  background: none !important;
+}
