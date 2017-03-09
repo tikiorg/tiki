@@ -1138,6 +1138,8 @@ class WikiLib extends TikiLib
 					if ( $enabled ) {
 						$info = $parserlib->plugin_info($name);
 						$pinfo['title'] = $info['name'];
+						unset($info['name']);
+						$pinfo = array_merge($pinfo, $info);
 
 						$plugins[] = $pinfo;
 					}
@@ -1158,7 +1160,7 @@ class WikiLib extends TikiLib
 			);
 			return $plugins;
 		} else {
-			// Only used by PluginManager ... what is that anyway?
+			// Only used by WikiPluginPluginManager
 			$files = array();
 
 			if (is_dir(PLUGINS_DIR)) {

@@ -171,26 +171,37 @@
 			<fieldset class="margin-bottom-lg" id="plugins">
 				<legend>{tr}Plugins{/tr}</legend>
 				<fieldset class="margin-bottom-lg donthide">
-					{listfilter selectors='#plugins > fieldset' exclude=".donthide"}
+					<label for="pluginfilter" class="col-sm-4 control-label">{tr}Filter:{/tr}</label>
+					<div class="col-sm-8">
+						<input type="text" id="pluginfilter" class="form-control">
+					</div>
 				</fieldset>
-				{foreach from=$plugins key=plugin item=info}
-					<fieldset class="margin-bottom-lg">
-						<legend>
-							{if $info.iconname}{icon name=$info.iconname}{else}{icon name='plugin'}{/if} {$info.name|escape}
-						</legend>
-						<div class="adminoptionbox">
-							<strong>{$plugin|escape}</strong>: {$info.description|default:''|escape}
-							{help url="Plugin$plugin"}
-						</div>
-						{assign var=pref value="wikiplugin_$plugin"}
-						{if in_array( $pref, $info.prefs)}
+				<div id="pluginlist">
+					{remarksbox type='tip' title='{tr}Plugin List{/tr}'}
+						{tr}Use the filter input above to find plugins, or enter return to see the whole list{/tr}
+						<a href="{bootstrap_modal controller=search action=help}">{tr}Search Help{/tr} {icon name='help'}</a>
+					{/remarksbox}
+				</div>
+				<noscript>
+					{foreach from=$plugins key=plugin item=info}
+						<fieldset class="margin-bottom-lg">
+							<legend>
+								{if $info.iconname}{icon name=$info.iconname}{else}{icon name='plugin'}{/if} {$info.name|escape}
+							</legend>
+							<div class="adminoptionbox">
+								<strong>{$plugin|escape}</strong>: {$info.description|default:''|escape}
+								{help url="Plugin$plugin"}
+							</div>
 							{assign var=pref value="wikiplugin_$plugin"}
-							{assign var=pref_inline value="wikiplugininline_$plugin"}
-							{preference name=$pref label="{tr}Enable{/tr}"}
-							{preference name=$pref_inline label="{tr}Disable edit plugin icon (make plugin inline){/tr}"}
-						{/if}
-					</fieldset>
-				{/foreach}
+							{if in_array( $pref, $info.prefs)}
+								{assign var=pref value="wikiplugin_$plugin"}
+								{assign var=pref_inline value="wikiplugininline_$plugin"}
+								{preference name=$pref label="{tr}Enable{/tr}"}
+								{preference name=$pref_inline label="{tr}Disable edit plugin icon (make plugin inline){/tr}"}
+							{/if}
+						</fieldset>
+					{/foreach}
+				</noscript>
 			</fieldset>
 		{/tab}
 
