@@ -2209,7 +2209,8 @@ function check_for_remote_readable_files(array &$files, $sourceDir = 'db')
 			continue;
 		}
 
-		$pattern = '/local(?!.*[.]php$).*$/';
+		// Match "local.php.bak", "local.php.bck", "local.php.save", "local.php." or "local.txt", for example
+		$pattern = '/local(?!.*[.]php$).*$/'; // The negative lookahead prevents local.php and other files which will be interpreted as PHP from matching.
 		preg_match($pattern, $file, $matches);
 
 		if (!empty($matches[0])) {
