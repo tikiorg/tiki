@@ -127,6 +127,8 @@
 					{preference name=unified_add_to_categ_search}
 					{preference name=unified_trim_sorted_search}
 
+					{preference name=search_error_missing_field}
+
 					{preference name=unified_stopwords}
 				</div>
 			</fieldset>
