@@ -1826,15 +1826,17 @@ class UsersLib extends TikiLib
 
 	function get_members($group)
 	{
+		$group_results = true;
 		if( !is_array($group) ) {
 			$group = array($group);
+			$group_results = false;
 		} elseif( count($group) == 0 ) {
 			return array();
 		}
 		$users = $this->fetchAll('SELECT ug.groupName, u.login FROM `users_usergroups` ug INNER JOIN `users_users` u ON u.userId = ug.userId WHERE ug.groupName IN ('
 			.implode(',', array_fill(0, count($group), '?')).')', $group);
 
-		if( count($group) == 1 ) {
+		if( !$group_results ) {
 			return array_map(function ($row) {
 				return $row['login'];
 			}, $users);
