@@ -133,25 +133,25 @@ foreach ($chans as $chan) {
                     $t = date("H:i", $row['ts']);
                 }
             }
-            $msgtotal = "<span class='minichat_ts'>[$t]</span><span class='minichat_nick'>&lt;" . ($row['nick'] === null ? '' : $row['nick']) . "&gt;</span><span class='minichat_msg'>" . htmlentities($row['msg'], ENT_QUOTES, 'UTF-8') . "</span><br>" . $msgtotal;
+            $msgtotal = "<span class='minichat_ts'>[$t]</span>&nbsp;<span class='minichat_nick'>&lt;" . ($row['nick'] === null ? '' : $row['nick']) . "&gt;</span> <span class='minichat_msg'>" . htmlentities($row['msg'], ENT_QUOTES, 'UTF-8') . "</span><br>" . $msgtotal;
 		}
-		$msgtotal = str_replace(":-D", "<img src='img/smiles/icon_biggrin.png' width='15' height='15'>", $msgtotal);
-		$msgtotal = str_replace(":D", "<img src='img/smiles/icon_biggrin.png' width='15' height='15'>", $msgtotal);
-		$msgtotal = str_replace(":-/", "<img src='img/smiles/icon_confused.png' width='15' height='15'>", $msgtotal);
-		$msgtotal = str_replace("8-)", "<img src='img/smiles/icon_cool.png' width='19' height='25'>", $msgtotal);
-		$msgtotal = str_replace("8)", "<img src='img/smiles/icon_cool.png' width='19' height='25'>", $msgtotal);
-		$msgtotal = str_replace(":-)", "<img src='img/smiles/icon_smile.png' width='16' height='16'>", $msgtotal);
-		$msgtotal = str_replace(":)", "<img src='img/smiles/icon_smile.png' width='16' height='16'>", $msgtotal);
-		$msgtotal = str_replace(":-(", "<img src='img/smiles/icon_sad.png' width='40' height='15'>", $msgtotal);
-		$msgtotal = str_replace(":(", "<img src='img/smiles/icon_sad.png' width='40' height='15'>", $msgtotal);
-		$msgtotal = str_replace(":-|", "<img src='img/smiles/icon_neutral.png' width='40' height='15'>", $msgtotal);
-		$msgtotal = str_replace(":|", "<img src='img/smiles/icon_neutral.png' width='40' height='15'>", $msgtotal);
-		$msgtotal = str_replace(":-p", "<img src='img/smiles/icon_razz.png' width='15' height='15'>", $msgtotal);
-		$msgtotal = str_replace(":p", "<img src='img/smiles/icon_razz.png' width='15' height='15'>", $msgtotal);
-		$msgtotal = str_replace(":-o", "<img src='img/smiles/icon_surprised.png' width='15' height='15'>", $msgtotal);
-		$msgtotal = str_replace(":o", "<img src='img/smiles/icon_surprised.png' width='15' height='15'>", $msgtotal);
-		$msgtotal = str_replace(";-)", "<img src='img/smiles/icon_wink.png' width='15' height='15'>", $msgtotal);
-		$msgtotal = str_replace(";)", "<img src='img/smiles/icon_wink.png' width='15' height='15'>", $msgtotal);
+		$msgtotal = str_replace(":-D", "<img src='img/smiles/icon_biggrin.gif' width='15' height='15'>", $msgtotal);
+		$msgtotal = str_replace(":D", "<img src='img/smiles/icon_biggrin.gif' width='15' height='15'>", $msgtotal);
+		$msgtotal = str_replace(":-/", "<img src='img/smiles/icon_confused.gif' width='15' height='15'>", $msgtotal);
+		$msgtotal = str_replace("8-)", "<img src='img/smiles/icon_cool.gif' width='19' height='25'>", $msgtotal);
+		$msgtotal = str_replace("8)", "<img src='img/smiles/icon_cool.gif' width='19' height='25'>", $msgtotal);
+		$msgtotal = str_replace(":-)", "<img src='img/smiles/icon_smile.gif' width='16' height='16'>", $msgtotal);
+		$msgtotal = str_replace(":)", "<img src='img/smiles/icon_smile.gif' width='16' height='16'>", $msgtotal);
+		$msgtotal = str_replace(":-(", "<img src='img/smiles/icon_sad.gif' width='40' height='15'>", $msgtotal);
+		$msgtotal = str_replace(":(", "<img src='img/smiles/icon_sad.gif' width='40' height='15'>", $msgtotal);
+		$msgtotal = str_replace(":-|", "<img src='img/smiles/icon_neutral.gif' width='40' height='15'>", $msgtotal);
+		$msgtotal = str_replace(":|", "<img src='img/smiles/icon_neutral.gif' width='40' height='15'>", $msgtotal);
+		$msgtotal = str_replace(":-p", "<img src='img/smiles/icon_razz.gif' width='15' height='15'>", $msgtotal);
+		$msgtotal = str_replace(":p", "<img src='img/smiles/icon_razz.gif' width='15' height='15'>", $msgtotal);
+		$msgtotal = str_replace(":-o", "<img src='img/smiles/icon_surprised.gif' width='15' height='15'>", $msgtotal);
+		$msgtotal = str_replace(":o", "<img src='img/smiles/icon_surprised.gif' width='15' height='15'>", $msgtotal);
+		$msgtotal = str_replace(";-)", "<img src='img/smiles/icon_wink.gif' width='15' height='15'>", $msgtotal);
+		$msgtotal = str_replace(";)", "<img src='img/smiles/icon_wink.gif' width='15' height='15'>", $msgtotal);
 		echo "document.getElementById('minichatdiv_'+minichat_getchanid('$channel')).innerHTML=\"$msgtotal\";\n";
 		echo "document.getElementById('minichat').scrollTop=99999;\n";
 	}
