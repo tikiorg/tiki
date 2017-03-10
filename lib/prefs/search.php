@@ -96,5 +96,11 @@ function prefs_search_list()
 			'default' => '2',
 			'tags' => array('basic'),
 		),
+		'search_error_missing_field' => array(
+			'name' => tra('Show error on missing field'),
+			'description' => tra('When using LIST plugin to specify certain fields, especially tracker fields, this check helps ensure their names were entered correctly.'),
+			'type' => 'flag',
+			'default' => 'y',
+		),
 	);
 }
