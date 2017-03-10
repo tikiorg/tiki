@@ -18,7 +18,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * One may also select a 'footnote' value, which will use traditional footnote markers.
  *
  * Eastern languages are not implemented, they require a different formula as they use a modifier
- * bonfire 10 instead of repeating it.
+ * before 10 instead of repeating it.
  *
  * @param $num int the number to be converted
  * @param $type string the CSS List-Style-Type to format the number to
@@ -32,6 +32,8 @@ function smarty_modifier_numStyle($num,$type)
 {
 	$style = new StyleType;
 	$num = (int)$num;                     // some basic filtering, using negative or 0 may result in failure, depending on selection
+    if ($num <1)
+        return $num;
 	switch (strtolower($type)) {
 		case "decimal-leading-zero":
 			return '0' . $num;
@@ -52,7 +54,7 @@ function smarty_modifier_numStyle($num,$type)
 		case 'upper-roman':
 			return $style->numerals($num);
 		case 'hebrew':
-			return $style->numerals($num,array('א׳א׳‎'=>1000000 ,'א׳ק‎'=>100000 ,'א׳י‎'=>10000 ,'ה׳‎'=>5000 ,'ב׳‎'=>2000 ,'א׳‎'=>1000 ,'ץ‎'=>900 ,'ף‎'=>800 ,'ן‎'=>700 ,'ם‎'=>600 ,'ך‎'=>500 ,'ת‎'=>400 ,'ש‎'=>300 ,'ר‎'=>200 ,'ק‎'=>100 ,'צ‎'=>90 ,'פ‎'=>80 ,'ע‎'=>70 ,'ס‎'=>60 ,'נ‎'=>50 ,'מ‎'=>40 ,'ל‎'=>30 ,'כ‎'=>20 ,'יט‎'=>19 ,'יח‎'=>18 ,'יז‎'=>17 ,'ט״ז‎'=>16 ,'ט״ו‎'=>15 ,'יד‎'=>14 ,'יג‎'=>13 ,'יב‎'=>12 ,'יא‎'=>11 ,'י‎'=>10 ,'ט‎'=>9 ,'ח‎'=>8 ,'ז‎'=>7,'ו‎'=>6 ,'ה‎'=>5 ,'ד‎'=>4 ,'ג‎'=>3 ,'ב‎'=>2 ,'א‎'=>1 ,'-'=>0));
+			return $style->numerals($num,array('א׳א׳‎'=>1000000 ,'א׳ק‎'=>100000 ,'א׳י‎'=>10000 ,'ה׳‎'=>5000 ,'ב׳‎'=>2000 ,'א׳‎'=>1000 ,'ץ‎'=>900 ,'ף‎'=>800 ,'ן‎'=>700 ,'ם‎'=>600 ,'ך‎'=>500 ,'ת‎'=>400 ,'ש‎'=>300 ,'ר‎'=>200 ,'ק‎'=>100 ,'צ‎'=>90 ,'פ‎'=>80 ,'ע‎'=>70 ,'ס‎'=>60 ,'נ‎'=>50 ,'מ‎'=>40 ,'ל‎'=>30 ,'כ‎'=>20 ,'יט‎'=>19 ,'יח‎'=>18 ,'יז‎'=>17 ,'ט״ז‎'=>16 ,'ט״ו‎'=>15 ,'יד‎'=>14 ,'יג‎'=>13 ,'יב‎'=>12 ,'יא‎'=>11 ,'י‎'=>10 ,'ט‎'=>9 ,'ח‎'=>8 ,'ז‎'=>7,'ו‎'=>6 ,'ה‎'=>5 ,'ד‎'=>4 ,'ג‎'=>3 ,'ב‎'=>2 ,'א‎'=>1));
 		case 'georgian':
 			return $style->numerals($num,array('ჵ'=>10000, 'ჰ'=>9000, 'ჯ'=>8000, 'ჴ'=>7000, 'ხ'=>6000, 'ჭ'=>5000, 'წ'=>4000, 'ძ'=>3000, 'ც'=>2000, 'ჩ'=>1000, 'შ'=>900, 'ყ'=>800, 'ღ'=>700, 'ქ'=>600, 'ფ'=>500, 'ჳ'=>400, 'ტ'=>300, 'ს'=>200, 'რ'=>100, 'ჟ'=>90, 'პ'=>80, 'ო'=>70, 'ჲ'=>60, 'ნ'=>50, 'მ'=>40, 'ლ'=>30, 'კ'=>20, 'ი'=>10, 'თ'=>9, 'ჱ'=>8, 'ზ'=>7, 'ვ'=>6, 'ე'=>5, 'დ'=>4, 'გ'=>3, 'ბ'=>2, 'ა'=>1));
 		case 'footnote':
@@ -71,7 +73,7 @@ function smarty_modifier_numStyle($num,$type)
 }
 
 /**
- * Class listStyleType
+ * Class StyleType
  *
  * functions for converting numbers to different formats defined by css List-Style-Type
  *
@@ -80,21 +82,22 @@ function smarty_modifier_numStyle($num,$type)
 class StyleType{
 
 	/**
-	 * Takes a positive integer and returns the equivalent alpha value eg.
+	 * Takes a positive integer and returns the equivalent alpha value.
 	 *
-	 * The below returns a lower case alphabetic value for 90.
+	 * eg. The below returns a lower case alphabetic value for 90.
 	 * toAlpha(90,range('a','z')
 	 *
-	 * The below returns a lower case greek letters for 128.
+	 * eg. The below returns a lower case greek letters for 128.
 	 * toAlpha(128,array('α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω'));
 	 *
 	 * @param $number int The number to be turned into characters
 	 *
 	 * @param $alphabet array set of letters
 	 *
-	 * @return string
+	 * @return string alpha representation of $number
 	 */
 	public function toAlpha($number, $alphabet){
+
 		$count = count($alphabet);
 		if($number <= $count)
 			return $alphabet[$number-1];
@@ -112,18 +115,18 @@ class StyleType{
 	/**
 	 *
 	 * Turns a positive integer into a uppercase roman numeral.
-	 * @param $integer int
+	 * @param $number int The value to be converted into a roman numeral
+     * @param $table array An array of roman numerals, (zero normally specified)
 	 *
-	 * @return string
+	 * @return string|int   Roman numeral of $number
 	 */
-	public function numerals($integer,$table = array('M'=>1000, 'CM'=>900, 'D'=>500, 'CD'=>400, 'C'=>100, 'XC'=>90, 'L'=>50, 'XL'=>40, 'X'=>10, 'IX'=>9, 'V'=>5, 'IV'=>4, 'I'=>1))
+	public function numerals($number,$table = array('M'=>1000, 'CM'=>900, 'D'=>500, 'CD'=>400, 'C'=>100, 'XC'=>90, 'L'=>50, 'XL'=>40, 'X'=>10, 'IX'=>9, 'V'=>5, 'IV'=>4, 'I'=>1))
 	{
-		$integer = (int)$integer;
 		$return = '';
-		while($integer > 0){
-			foreach($table as $rom=>$arb){
-				if($integer >= $arb){
-					$integer -= $arb;
+		while($number > 0){
+			foreach($table as $rom=>$value){
+				if($number >= $value){
+                    $number -= $value;
 					$return .= $rom;
 					break;
 				}
