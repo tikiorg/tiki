@@ -10,7 +10,7 @@
 require_once ('tiki-setup.php');
 $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
-if (isset($_REQUEST['new_prefs'])) {
+if (isset($_REQUEST['new_prefs']) && $check === true) {
 	$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 	$in = array();
 	$out = array();
@@ -32,7 +32,6 @@ if (isset($_REQUEST['new_prefs'])) {
 			$in[] = $gr['groupName'];
 		}
 	}
-	check_ticket('admin-inc-general');
 	$pref_toggles = array(
 		'feature_wiki_1like_redirection',
 	);
@@ -48,7 +47,7 @@ if (isset($_REQUEST['new_prefs'])) {
 
 $smarty->assign('now', $tikilib->now);
 
-if (!empty($_REQUEST['testMail']) && $access->check_authenticity(null, false)) {
+if (!empty($_REQUEST['testMail']) && $check === true) {
 	include_once('lib/webmail/tikimaillib.php');
 	$mail = new TikiMail();
 	$mail->setSubject(tra('Tiki Email Test'));
@@ -67,4 +66,3 @@ if (!empty($_REQUEST['testMail']) && $access->check_authenticity(null, false)) {
 $engine_type = getCurrentEngine();
 $smarty->assign('db_engine_type', $engine_type);
 
-ask_ticket('admin-inc-general');
