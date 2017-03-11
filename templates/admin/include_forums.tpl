@@ -22,7 +22,6 @@
 				<legend>
 					{tr}Features{/tr}
 				</legend>
-				<input type="hidden" name="forumprefs" />
 				{preference name=feature_forum_rankings}
 				{preference name=feature_forum_parse}
 				<div class="adminoptionboxchild" id="feature_forum_parse_childcontainer">
@@ -50,7 +49,6 @@
 			</fieldset>
 			<fieldset>
 				<legend>{tr}Threads{/tr}</legend>
-				<input type="hidden" name="forumthreadprefs" />
 				{preference name=forum_thread_defaults_by_forum}
 				{preference name=forum_thread_user_settings}
 				<div class="adminoptionboxchild" id="forum_thread_user_settings_childcontainer">
@@ -75,7 +73,6 @@
 		{/tab}
 		{tab name="{tr}Forum Listing{/tr}"}
 			<h2>{tr}Forum Listing{/tr}</h2>
-			<input type="hidden" name="forumlistprefs" />
 			{preference name=forums_ordering}
 			{preference name=forum_list_topics}
 			{preference name=forum_list_posts}
