@@ -11,11 +11,6 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
-if (isset($_REQUEST['connectprefs'])) {
-	check_ticket('admin-inc-connect');
-}
-
-ask_ticket('admin-inc-connect');
 global $prefs, $base_url;
 $userlib = TikiLib::lib('user');
 $headerlib = TikiLib::lib('header');

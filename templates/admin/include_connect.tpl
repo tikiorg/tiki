@@ -172,9 +172,13 @@
 			<fieldset>
 				<legend>{tr}Jitsi{/tr}</legend>
 
-				<div class="form-row">
-					<label for="jitsi-url">{tr}Provision URL{/tr}</label>
-					<input id="jitsi-url" readonly type="text" value="{$jitsi_url|escape}" class="form-control">
+				<div class="form-group">
+					<label class="control-label col-sm-4" for="jitsi-url">
+						{tr}Provision URL{/tr}
+					</label>
+					<div class="col-sm-8">
+						<input id="jitsi-url" readonly type="text" value="{$jitsi_url|escape}" class="form-control">
+					</div>
 				</div>
 				{preference name=suite_jitsi_provision}
 				{preference name=suite_jitsi_configuration}
