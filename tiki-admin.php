@@ -523,8 +523,7 @@ $admin_icons = array(
 
 if (isset($_REQUEST['page'])) {
 	$adminPage = $_REQUEST['page'];
-	$check = $access->check_authenticity(null, false);
-	$smarty->assign('ticket', $check['ticket']);
+	$smarty->assign('ticket', !empty($check['ticket']) ? $check['ticket'] : '');
 	// Check if the associated incude_*.php file exists. If not, check to see if it might exist in the Addons.
 	// If it exists, include the associated file and generate the ticket.
 	$utilities = new TikiAddons_Utilities();
