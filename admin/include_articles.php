@@ -11,21 +11,16 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
-if (isset($_REQUEST["cmsprefs"])) {
-	check_ticket('admin-inc-cms');
-}
-if (isset($_REQUEST["articlecomprefs"])) {
-	check_ticket('admin-inc-cms');
-}
 if (isset($_REQUEST['import'])) {
-	$artlib = TikiLib::lib('art');
-	check_ticket('admin-inc-cms');
-	$fname = $_FILES['csvlist']['tmp_name'];
-	$msgs = array();
-	$artlib->import_csv($fname, $msgs);
-	if (!empty($msgs)) {
-		print_r($msgs);
-		$smarty->assign_by_ref('msgs', $msgs);
+	if ($check === true) {
+		$artlib = TikiLib::lib('art');
+		$fname = $_FILES['csvlist']['tmp_name'];
+		$msgs = array();
+		$result = $artlib->import_csv($fname, $msgs);
+		if ($result) {
+			Feedback::success(tr('File %0 succesfully imported.', $_FILES['csvlist']['name']), 'session');
+		} elseif (!empty($msgs)) {
+			Feedback::error(['mes' => $msgs], 'session');
+		}
 	}
 }
-ask_ticket('admin-inc-cms');
