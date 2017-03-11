@@ -1008,10 +1008,16 @@ class ArtLib extends TikiLib
 				$data[$fields['emails']]
 			);
 			if (empty($articleId)) {
-				$msgs[] = sprintf(tra('Error line: %d'), $line);
+				$msgs[] = sprintf(tr('Error line: %d'), $line);
+				return false;
 			}
 		}
-		return true;
+		if (isset($articleId) && $articleId) {
+			return true;
+		} else {
+			$msgs[] = tr('Import failed due to data format. Make sure the file has Unix-style line breaks.');
+			return false;
+		}
 	}
 
 	function delete_image_cache($image_type, $imageId)
