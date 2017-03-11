@@ -11,7 +11,6 @@
 			</div>
 		</div>
 	</div>
-	<input type="hidden" name="adssetup">
 
 	<fieldset>
 		<legend>{tr}Activate the feature{/tr}</legend>
@@ -26,12 +25,9 @@
 	<fieldset>
 		<legend>{tr}Site Ads and Banners{/tr}{help url="Banners"}</legend>
 
-		{preference name=sitead}
+		{preference name=sitead_publish}
 		{preference name=feature_sitead}
 		<div class="adminoptionbox" id="feature_sitead_childcontainer">
-			{remarksbox type="note" title="{tr}Note{/tr}"}
-				{tr}<strong>Activate</strong> will display content for Admin only. Select <strong>Publish</strong> to display for all users.{/tr}
-			{/remarksbox}
 			{preference name=sitead_publish}
 		</div>
 	</fieldset>
