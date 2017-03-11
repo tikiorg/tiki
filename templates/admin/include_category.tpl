@@ -1,7 +1,6 @@
 {* $Id$ *}
 <form class="form-horizontal" action="tiki-admin.php?page=category" method="post">
 	{include file='access/include_ticket.tpl'}
-	<input type="hidden" name="categorysetup">
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<a role="link" class="btn btn-link" href="tiki-browse_categories.php" title="{tr}List{/tr}">
@@ -63,7 +62,13 @@
 		</div>
 		{preference name=category_jail}
 		{preference name=category_defaults}
-		{if !empty($prefs.category_defaults)}{button href="tiki-admin.php?page=category&amp;assignWikiCategories=y" _text="{tr}Re-apply the last saved category defaults to the wiki pages{/tr}"}{/if}
+		<div class="form-group">
+			<div class="col-sm-8 col-sm-offset-4">
+				{if !empty($prefs.category_defaults)}
+					{button href="tiki-admin.php?page=category&amp;assignWikiCategories=y&amp;daconfirm=y" _text="{tr}Re-apply last saved category defaults to wiki pages{/tr}"}
+				{/if}
+			</div>
+		</div>
 		{preference name=category_autogeocode_within}
 		{preference name=category_autogeocode_replace}
 		{preference name=category_autogeocode_fudge}

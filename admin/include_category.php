@@ -10,11 +10,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
-if (isset($_REQUEST["categorysetup"])) {
-	ask_ticket('admin-inc-category');
-}
-if (!empty($_REQUEST['assignWikiCategories']) && $prefs['category_defaults']) {
-	check_ticket('admin-inc-category');
+if (!empty($_REQUEST['assignWikiCategories']) && $prefs['category_defaults'] && $check === true) {
 	$categlib = TikiLib::lib('categ');
 	$maxRecords = 100;
 	// The outer loop attemps to limit memory usage by fetching pages gradually
@@ -27,4 +23,3 @@ if (!empty($_REQUEST['assignWikiCategories']) && $prefs['category_defaults']) {
 	}
 	Feedback::success(tr('Category defaults successfully applied.'));
 }
-ask_ticket('admin-inc-category');
