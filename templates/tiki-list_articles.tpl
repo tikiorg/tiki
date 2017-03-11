@@ -16,7 +16,7 @@
 		{button href="tiki-list_submissions.php" _type="link" class="btn btn-link" _icon_name="view" _text="{tr}View Submissions{/tr}"}
 	{/if}
 	{if $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
-		{button href="tiki-admin_topics.php"  _type="link" class="btn btn-link" _icon_name="structure" _text="{tr}Article Topics{/tr}"}
+		{button href="tiki-admin_topics.php"  _type="link" class="btn btn-link" _icon_name="flag" _text="{tr}Article Topics{/tr}"}
 		{button href="tiki-article_types.php"  _type="link" class="btn btn-link" _icon_name="structure" _text="{tr}Article Types{/tr}"}
 	{/if}
 </div>
