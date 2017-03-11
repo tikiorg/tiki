@@ -25,7 +25,6 @@
 				<legend>
 					{tr}Features{/tr}{help url="Blog+Config"}
 				</legend>
-				<input type="hidden" name="blogfeatures" />
 				{preference name=feature_blog_rankings}
 				{preference name=feature_blog_heading}
 				{preference name=feature_blog_edit_publish_date}
@@ -55,7 +54,6 @@
 		{/tab}
 		{tab name="{tr}Blogs Listings{/tr}"}
 			<h2>{tr}Blogs Listings{/tr}</h2>
-			<input type="hidden" name="bloglistconf" />
 			{preference name=blog_list_order}
 			<fieldset>
 				<legend>{tr}Select which items to display when listing blogs:{/tr}</legend>
