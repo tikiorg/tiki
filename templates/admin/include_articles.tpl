@@ -9,17 +9,17 @@
 		{/foreach}
 	</div>
 {/if}
-<form role="form" class="form-horizontal" method="post" action="tiki-admin.php?page=articles">
+<form role="form" class="form-horizontal" method="post" action="tiki-admin.php?page=articles" enctype="multipart/form-data">
 	{include file='access/include_ticket.tpl'}
 	<div class="t_navbar margin-bottom-md clearfix">
-		<a role="link" class="btn btn-link" href="tiki-list_articles.php" title=":{tr}List{/tr}">
+		<a role="link" class="btn btn-link tips" href="tiki-list_articles.php" title=":{tr}List of articles{/tr}">
 			{icon name="list"} {tr}Articles{/tr}
 		</a>
-		<a role="link" class="btn btn-link" href="tiki-article_types.php" title=":{tr}List{/tr}">
-			{icon name="list"} {tr}Article Types{/tr}
+		<a role="link" class="btn btn-link tips" href="tiki-article_types.php" title=":{tr}List of article types{/tr}">
+			{icon name="structure"} {tr}Article Types{/tr}
 		</a>
-		<a role="link" class="btn btn-link" href="tiki-admin_topics.php" title=":{tr}List{/tr}">
-			{icon name="list"} {tr}Article Topics{/tr}
+		<a role="link" class="btn btn-link tips" href="tiki-admin_topics.php" title=":{tr}List of article topics{/tr}">
+			{icon name="flag"} {tr}Article Topics{/tr}
 		</a>
 		{if $prefs.feature_submissions eq "y"}
 			<a role="link" class="btn btn-default btn-sm tips" href="tiki-list_submissions.php" title=":{tr}List{/tr}">
@@ -33,7 +33,6 @@
 	{tabset name="admin_articles"}
 		{tab name="{tr}General Settings{/tr}"}
 			<h2>{tr}General Settings{/tr}</h2>
-			<input type="hidden" name="articlesprefs" />
 			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_articles visible="always"}
@@ -76,7 +75,6 @@
 				<div class="adminoptionboxchild" id="tracker_article_tracker_container">
 					{preference name=tracker_article_trackerId}
 				</div>
-				<input type="hidden" name="articlesfeatures" />
 				{preference name=article_feature_copyrights}
 			</fieldset>
 			<legend>
@@ -102,7 +100,7 @@
 				<div class="adminoptionbox">
 					<label for="csvlist" class="control-label col-sm-4">{tr}Batch upload (CSV file){/tr}</label>
 					<div class="col-sm-8">
-						<input type="file" name="csvlist" id="csvlist" />
+						<input type="file" name="csvlist" id="csvlist">
 						<span class="help-block">{tr}File format: title,authorName,heading,body,lang,user{/tr}....</span>
 						<div align="center">
 							<input type="submit" class="btn btn-default btn-sm" name="import" value="{tr}Import{/tr}" />
@@ -115,7 +113,6 @@
 			<h2>{tr}Articles Listing{/tr}</h2>
 			<fieldset>
 				<legend>{tr}List Articles{/tr}</legend>
-				<input type="hidden" name="artlist" />
 				{preference name=art_sort_mode}
 				{preference name=art_list_title}
 				<div class="adminoptionboxchild" id="art_list_title_childcontainer">
