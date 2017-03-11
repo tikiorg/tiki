@@ -9,19 +9,13 @@
 
 require_once ('tiki-setup.php');
 $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
-if (isset($_REQUEST["freetagsfeatures"])) {
-	check_ticket('admin-inc-freetags');
-}
 
-if (isset($_REQUEST["cleanup"])) {
-	check_ticket('admin-inc-freetags');
+if (isset($_REQUEST["cleanup"]) && $check === true) {
 	$freetaglib = TikiLib::lib('freetag');
-	$freetaglib->cleanup_tags();
+	$result = $freetaglib->cleanup_tags();
+	if ($result) {
+		Feedback::success(tr('Tags successfully cleaned up.'));
+	} else {
+		Feedback::error(tr('Tag cleanup failed.'));
+	}
 }
-
-if (isset($_REQUEST["morelikethisoptions"])) {
-	check_ticket('admin-inc-freetags');
-}
-
-$headerlib->add_cssfile('themes/base_files/feature_css/admin.css');
-ask_ticket('admin-inc-freetags');
