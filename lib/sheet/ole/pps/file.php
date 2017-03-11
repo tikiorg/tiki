@@ -41,7 +41,7 @@ class OLE_PPS_File extends OLE_PPS
     * @param string $name The name of the file (in Unicode)
     * @see OLE::Asc2Ucs()
     */
-    function OLE_PPS_File($name)
+    function __construct($name)
     {
         $this->_tmp_dir = '';
         $this->OLE_PPS(
