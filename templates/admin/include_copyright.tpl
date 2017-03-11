@@ -23,7 +23,6 @@
 		</fieldset>
 	</div>
 	<div class="t_navbar margin-bottom-md text-center">
-		<input type="hidden" name="setcopyright" />
 		<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 	</div>
 </form>
