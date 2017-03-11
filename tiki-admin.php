@@ -18,6 +18,9 @@ $auto_query_args = array('page');
 
 $access->check_permission('tiki_p_admin');
 $check = $access->check_authenticity(null, false);
+if ($check === false) {
+	Feedback::error(tr('Bad request - potential cross-site request forgery (CSRF) detected. Operation blocked. The security ticket may have expired - try reloading the page in this case.'));
+}
 $logslib = TikiLib::lib('logs');
 
 /**
@@ -203,8 +206,6 @@ if ( isset( $_REQUEST['lm_preference'] ) ) {
 				}
 			}
 		}
-	} else {
-		Feedback::error(tr('Bad request - potential cross-site request forgery (CSRF) detected. Operation blocked. The security ticket may have expired - try reloading the page in this case.'));
 	}
 }
 
