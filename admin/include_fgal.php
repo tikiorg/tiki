@@ -10,135 +10,134 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	header('location: index.php');
 	exit;
 }
+
 $filegallib = TikiLib::lib('filegal');
-if (isset($_REQUEST["filegalset"])) {
-	simple_set_value("home_file_gallery");
-}
-if (isset($_REQUEST["filegalfeatures"])) {
-	check_ticket('admin-inc-fgal');
-	// Check for last character being a / or a \
-	if (substr($_REQUEST["fgal_use_dir"], -1) != "\\" && substr($_REQUEST["fgal_use_dir"], -1) != "/" && $_REQUEST["fgal_use_dir"] != "") {
-		$_REQUEST["fgal_use_dir"].= "/";
+
+if ($check === true) {
+	if (isset($_REQUEST["filegalset"])) {
+		simple_set_value("home_file_gallery");
 	}
-	// Check for last character being a / or a \
-	if (substr($_REQUEST["fgal_podcast_dir"], -1) != "\\" && substr($_REQUEST["fgal_podcast_dir"], -1) != "/" && $_REQUEST["fgal_podcast_dir"] != "") {
-		$_REQUEST["fgal_podcast_dir"].= "/";
-	}
-	if (substr($_REQUEST["fgal_batch_dir"], -1) != "\\" && substr($_REQUEST["fgal_batch_dir"], -1) != "/" && $_REQUEST["fgal_batch_dir"] != "") {
-		$_REQUEST["fgal_batch_dir"].= "/";
-	}
-	simple_set_value("fgal_use_dir");
-	simple_set_value("fgal_podcast_dir");
-	simple_set_value("fgal_batch_dir");
-	if (!empty($_REQUEST['fgal_quota']) && !empty($_REQUEST['fgal_quota_default']) && $_REQUEST['fgal_quota_default'] > $_REQUEST['fgal_quota']) {
-		$_REQUEST['fgal_quota_default'] = $_REQUEST['fgal_quota'];
-	}
-	simple_set_value('fgal_quota_default');
-}
-if (!empty($_REQUEST['updateMime'])) {
-	$files = $filegallib->table('tiki_files');
-	$rows = $files->fetchAll(array('fileId', 'filename', 'filetype'), array('archiveId' => 0, 'filetype' => 'application/octet-stream'));
-	foreach ($rows as $row) {
-		$t = $filegallib->fixMime($row);
-		if ($t != 'application/octet-stream') {
-			$files->update(array('filetype' => $t), array('fileId' => $row['fileId']));
+	if (isset($_REQUEST["filegalfeatures"])) {
+		// Check for last character being a / or a \
+		if (substr($_REQUEST["fgal_use_dir"], -1) != "\\" && substr($_REQUEST["fgal_use_dir"], -1) != "/" && $_REQUEST["fgal_use_dir"] != "") {
+			$_REQUEST["fgal_use_dir"].= "/";
 		}
-	}
-}
-
-if (!empty($_REQUEST['move'])) {
-	if ($_REQUEST['move'] == 'to_fs') {
-		if (empty($prefs['fgal_use_dir'])) {
-			$errors[] = tra('You must specify a directory');
-		} else {
-			$feedbacks = array();
-			$errors = $filegallib->moveFiles($_REQUEST['move'], $feedbacks);
+		// Check for last character being a / or a \
+		if (substr($_REQUEST["fgal_podcast_dir"], -1) != "\\" && substr($_REQUEST["fgal_podcast_dir"], -1) != "/" && $_REQUEST["fgal_podcast_dir"] != "") {
+			$_REQUEST["fgal_podcast_dir"].= "/";
 		}
-	} elseif ($_REQUEST['move'] == 'to_db') {
-		$feedbacks = array();
-		$errors = $filegallib->moveFiles($_REQUEST['move'], $feedbacks);
+		if (substr($_REQUEST["fgal_batch_dir"], -1) != "\\" && substr($_REQUEST["fgal_batch_dir"], -1) != "/" && $_REQUEST["fgal_batch_dir"] != "") {
+			$_REQUEST["fgal_batch_dir"].= "/";
+		}
+		simple_set_value("fgal_use_dir");
+		simple_set_value("fgal_podcast_dir");
+		simple_set_value("fgal_batch_dir");
+		if (!empty($_REQUEST['fgal_quota']) && !empty($_REQUEST['fgal_quota_default']) && $_REQUEST['fgal_quota_default'] > $_REQUEST['fgal_quota']) {
+			$_REQUEST['fgal_quota_default'] = $_REQUEST['fgal_quota'];
+		}
+		simple_set_value('fgal_quota_default');
 	}
-	if (!empty($errors)) {
-		Feedback::error(['mes' => $errors]);
-	}
-	if (!empty($feedbacks)) {
-		Feedback::note(['mes' => $feedbacks]);
-	}
-}
-
-if (isset($_REQUEST["filegallistprefs"])) {
-	check_ticket('admin-inc-fgal');
-	simple_set_value('fgal_list_id');
-	simple_set_value('fgal_list_type');
-	simple_set_value('fgal_list_name');
-	simple_set_value('fgal_list_description');
-	simple_set_value('fgal_list_size');
-	simple_set_value('fgal_list_created');
-	simple_set_value('fgal_list_lastModif');
-	simple_set_value('fgal_list_creator');
-	simple_set_value('fgal_list_author');
-	simple_set_value('fgal_list_last_user');
-	simple_set_value('fgal_list_comment');
-	simple_set_value('fgal_list_files');
-	simple_set_value('fgal_list_hits');
-	simple_set_value('fgal_list_lastDownload');
-	simple_set_value('fgal_list_deleteAfter');
-	simple_set_value('fgal_show_checked');
-	simple_set_value('fgal_list_share');
-	simple_set_value('fgal_list_lockedby');
-	$_REQUEST['fgal_sort_mode'] = (empty($_REQUEST['fgal_sortorder']) ? 'created' : $_REQUEST['fgal_sortorder']) . '_' . (empty($_REQUEST['fgal_sortdirection']) ? 'desc' : $_REQUEST['fgal_sortdirection']);
-	$prefs['fgal_sort_mode'] = $_REQUEST['fgal_sort_mode'];
-	simple_set_value('fgal_sort_mode');
-	simple_set_toggle('fgal_show_explorer');
-	simple_set_toggle('fgal_show_path');
-	simple_set_toggle('fgal_show_slideshow');
-	simple_set_toggle('fgal_list_ratio_hits');
-	simple_set_value('fgal_default_view');
-	simple_set_value('fgal_icon_fileId');
-	simple_set_value('fgal_list_backlinks');
-	simple_set_value('fgal_list_id_admin');
-	simple_set_value('fgal_list_type_admin');
-	simple_set_value('fgal_list_name_admin');
-	simple_set_value('fgal_list_description_admin');
-	simple_set_value('fgal_list_size_admin');
-	simple_set_value('fgal_list_created_admin');
-	simple_set_value('fgal_list_lastModif_admin');
-	simple_set_value('fgal_list_creator_admin');
-	simple_set_value('fgal_list_author_admin');
-	simple_set_value('fgal_list_last_user_admin');
-	simple_set_value('fgal_list_comment_admin');
-	simple_set_value('fgal_list_files_admin');
-	simple_set_value('fgal_list_hits_admin');
-	simple_set_value('fgal_list_lastDownload_admin');
-	simple_set_value('fgal_list_lockedby_admin');
-	simple_set_value('fgal_list_backlinks_admin');
-}
-
-$usedSize = $filegallib->getUsedSize();
-$smarty->assign_by_ref('usedSize', $usedSize);
-if (isset($_REQUEST["filegalhandlers"])) {
-	check_ticket('admin-inc-fgal');
-	if (!empty($_REQUEST['mimes'])) {
-		$mimes = $_REQUEST['mimes'];
-		foreach ($mimes as $mime => $cmd) {
-			$mime = trim($mime);
-			if (empty($cmd)) {
-				$filegallib->delete_file_handler($mime);
-			} else {
-				$filegallib->change_file_handler($mime, $cmd);
+	if (!empty($_REQUEST['updateMime'])) {
+		$files = $filegallib->table('tiki_files');
+		$rows = $files->fetchAll(array('fileId', 'filename', 'filetype'), array('archiveId' => 0, 'filetype' => 'application/octet-stream'));
+		foreach ($rows as $row) {
+			$t = $filegallib->fixMime($row);
+			if ($t != 'application/octet-stream') {
+				$files->update(array('filetype' => $t), array('fileId' => $row['fileId']));
 			}
 		}
 	}
-	if (!empty($_REQUEST['newMime']) && !empty($_REQUEST['newCmd'])) {
-		$filegallib->change_file_handler($_REQUEST['newMime'], $_REQUEST['newCmd']);
-	}
-}
-if (isset($_REQUEST["filegalredosearch"])) {
-	$filegallib->reindex_all_files_for_search_text();
-}
 
-if (isset($_REQUEST["filegalfixvndmsfiles"])) {
-	$filegallib->fix_vnd_ms_files();
+	if (!empty($_REQUEST['move'])) {
+		if ($_REQUEST['move'] == 'to_fs') {
+			if (empty($prefs['fgal_use_dir'])) {
+				$errors[] = tra('You must specify a directory');
+			} else {
+				$feedbacks = array();
+				$errors = $filegallib->moveFiles($_REQUEST['move'], $feedbacks);
+			}
+		} elseif ($_REQUEST['move'] == 'to_db') {
+			$feedbacks = array();
+			$errors = $filegallib->moveFiles($_REQUEST['move'], $feedbacks);
+		}
+		if (!empty($errors)) {
+			Feedback::error(['mes' => $errors]);
+		}
+		if (!empty($feedbacks)) {
+			Feedback::note(['mes' => $feedbacks]);
+		}
+	}
+
+	if (isset($_REQUEST["filegallistprefs"])) {
+		simple_set_value('fgal_list_id');
+		simple_set_value('fgal_list_type');
+		simple_set_value('fgal_list_name');
+		simple_set_value('fgal_list_description');
+		simple_set_value('fgal_list_size');
+		simple_set_value('fgal_list_created');
+		simple_set_value('fgal_list_lastModif');
+		simple_set_value('fgal_list_creator');
+		simple_set_value('fgal_list_author');
+		simple_set_value('fgal_list_last_user');
+		simple_set_value('fgal_list_comment');
+		simple_set_value('fgal_list_files');
+		simple_set_value('fgal_list_hits');
+		simple_set_value('fgal_list_lastDownload');
+		simple_set_value('fgal_list_deleteAfter');
+		simple_set_value('fgal_show_checked');
+		simple_set_value('fgal_list_share');
+		simple_set_value('fgal_list_lockedby');
+		$_REQUEST['fgal_sort_mode'] = (empty($_REQUEST['fgal_sortorder']) ? 'created' : $_REQUEST['fgal_sortorder']) . '_' . (empty($_REQUEST['fgal_sortdirection']) ? 'desc' : $_REQUEST['fgal_sortdirection']);
+		$prefs['fgal_sort_mode'] = $_REQUEST['fgal_sort_mode'];
+		simple_set_value('fgal_sort_mode');
+		simple_set_toggle('fgal_show_explorer');
+		simple_set_toggle('fgal_show_path');
+		simple_set_toggle('fgal_show_slideshow');
+		simple_set_toggle('fgal_list_ratio_hits');
+		simple_set_value('fgal_default_view');
+		simple_set_value('fgal_icon_fileId');
+		simple_set_value('fgal_list_backlinks');
+		simple_set_value('fgal_list_id_admin');
+		simple_set_value('fgal_list_type_admin');
+		simple_set_value('fgal_list_name_admin');
+		simple_set_value('fgal_list_description_admin');
+		simple_set_value('fgal_list_size_admin');
+		simple_set_value('fgal_list_created_admin');
+		simple_set_value('fgal_list_lastModif_admin');
+		simple_set_value('fgal_list_creator_admin');
+		simple_set_value('fgal_list_author_admin');
+		simple_set_value('fgal_list_last_user_admin');
+		simple_set_value('fgal_list_comment_admin');
+		simple_set_value('fgal_list_files_admin');
+		simple_set_value('fgal_list_hits_admin');
+		simple_set_value('fgal_list_lastDownload_admin');
+		simple_set_value('fgal_list_lockedby_admin');
+		simple_set_value('fgal_list_backlinks_admin');
+	}
+
+	if (isset($_REQUEST["filegalhandlers"])) {
+		if (!empty($_REQUEST['mimes'])) {
+			$mimes = $_REQUEST['mimes'];
+			foreach ($mimes as $mime => $cmd) {
+				$mime = trim($mime);
+				if (empty($cmd)) {
+					$filegallib->delete_file_handler($mime);
+				} else {
+					$filegallib->change_file_handler($mime, $cmd);
+				}
+			}
+		}
+		if (!empty($_REQUEST['newMime']) && !empty($_REQUEST['newCmd'])) {
+			$filegallib->change_file_handler($_REQUEST['newMime'], $_REQUEST['newCmd']);
+		}
+	}
+	if (isset($_REQUEST["filegalredosearch"])) {
+		$filegallib->reindex_all_files_for_search_text();
+	}
+
+	if (isset($_REQUEST["filegalfixvndmsfiles"])) {
+		$filegallib->fix_vnd_ms_files();
+	}
 }
 
 if ($prefs['fgal_viewerjs_feature'] === 'y') {
@@ -171,6 +170,10 @@ if (!empty($prefs['fgal_sort_mode']) && preg_match('/(.*)_(asc|desc)/', $prefs['
 	$smarty->assign('fgal_sortorder', 'created');
 	$smarty->assign('fgal_sortdirection', 'desc');
 }
+
+$usedSize = $filegallib->getUsedSize();
+$smarty->assign_by_ref('usedSize', $usedSize);
+
 $options_sortorder = array(
 	tra('Creation Date') => 'created',
 	tra('Name') => 'name',
@@ -200,4 +203,3 @@ foreach ($usedTypes as $type) {
 $smarty->assign_by_ref('missingHandlers', $missingHandlers);
 $smarty->assign('vnd_ms_files_exist', $vnd_ms_files_exist);
 include_once ('fgal_listing_conf.php');
-ask_ticket('admin-inc-fgal');
