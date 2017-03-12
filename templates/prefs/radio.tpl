@@ -1,8 +1,8 @@
-<div class="adminoptionbox preference clearfix {$p.tagstring|escape}{if isset($smarty.request.highlight) and $smarty.request.highlight eq $p.preference} highlight{/if}">
+<div class="adminoptionbox preference clearfix form-group {$p.tagstring|escape}{if isset($smarty.request.highlight) and $smarty.request.highlight eq $p.preference} highlight{/if}">
 	{if $p.name}
-		<label for="{$p.id|escape}" class="control-label col-md-4">{$p.name|escape}</label>
+		<label for="{$p.id|escape}" class="control-label col-sm-4">{$p.name|escape}</label>
 	{/if}
-	<div class="col-md-8">
+	<div class="col-sm-8">
 		{foreach from=$p.options key=value item=label name=loop}
 			<div class="adminoptionlabel">
 				<input id="{$p.id|cat:'_'|cat:$smarty.foreach.loop.index|escape}" type="radio" name="{$p.preference|escape}"
@@ -13,7 +13,7 @@
 			</div>
 		{/foreach}
 		{if $p.detail}
-			{$p.detail|simplewiki}
+			<div class="help-block">{$p.detail|simplewiki}</div>
 		{/if}
 		{include file="prefs/shared-flags.tpl"}
 		{if $p.hint}
