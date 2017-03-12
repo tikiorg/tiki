@@ -629,7 +629,7 @@ function prefs_wiki_list($partial = false)
 		),
 		'wiki_inline_auto_toc' => array(
 			'name' => tr('Inline auto-toc'),
-			'description' => tr('Change the dispay of the table of contents for wiki pages to inline.'),
+			'description' => tr('Change the display of the table of contents for wiki pages to inline.'),
 			'type' => 'flag',
 			'default' => 'n',
 			'dependencies' => array(
