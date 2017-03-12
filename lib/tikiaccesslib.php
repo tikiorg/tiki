@@ -49,10 +49,10 @@ class TikiAccessLib extends TikiLib
 		}
 	}
 
-    /**
-     * @param $user
-     */
-    function check_user($user)
+	/**
+	 * @param $user
+	 */
+	function check_user($user)
 	{
 		global $prefs;
 		require_once ('tiki-setup.php');
@@ -63,13 +63,13 @@ class TikiAccessLib extends TikiLib
 		}
 	}
 
-    /**
-     * @param string $user
-     * @param array $features
-     * @param array $permissions
-     * @param string $permission_name
-     */
-    function check_page($user = 'y', $features = array(), $permissions = array(), $permission_name = '')
+	/**
+	 * @param string $user
+	 * @param array $features
+	 * @param array $permissions
+	 * @param string $permission_name
+	 */
+	function check_page($user = 'y', $features = array(), $permissions = array(), $permission_name = '')
 	{
 		require_once ('tiki-setup.php');
 
@@ -156,7 +156,7 @@ class TikiAccessLib extends TikiLib
 	 * @param bool|string $objectType		optional object type (e.g. 'wiki page')
 	 * @param bool|string $objectId			optional object id (e.g. 'HomePage' or '42' depending on object type)
 	 */
-    function check_permission($permissions, $permission_name = '', $objectType = false, $objectId = false)
+	function check_permission($permissions, $permission_name = '', $objectType = false, $objectId = false)
 	{
 		require_once ('tiki-setup.php');
 
@@ -283,40 +283,56 @@ class TikiAccessLib extends TikiLib
 	}
 
 	/**
-	 * Create a ticket to place in a form to check upon form submission to guard against Cross-Site Request Forgery.
-	 * Places a random token into the $_SESSION variable - ['ticket' => '360b9cecc77ae4f0688bf8bd130966d9'] - and either:
-	 *   - Returns the same ticket array for use including in a form, or
-	 *   - Includes the ticket in a confirmation page
+	 * Use to protect against Cross-Site Request Forgery when submitting a form. Designed to work in two passes:
 	 *
-	 * If placing in a form, also include a hidden input named 'daconfirm' with a value of y.
-	 * When the form is submitted or the confirmation page is acknowledged, the $_REQUEST['daconfirm'] value will tell
-	 * the function to check the ticket in the form against the ticket stored in the $_SESSION variable
+	 * - First it creates the token which is placed in the $_SESSION variable and should either be placed with other
+	 *     code as hidden input in the form, or is automatically placed in a confirmation page form. If placing in a
+	 *     form, also include a hidden input named 'daconfirm' with a value of y.
+	 * - Second, upon form or confirmation page submission, if  $_REQUEST['daconfirm'] is set the function compares
+	 *     the ticket value and age in the $_SESSION variable against the ticket value submitted with the form and
+	 *     the timing of the submission. The function optionally returns false and optionally sends a Feedback error
+	 *     message, or redirects to an error page, if the ticket doesn't match or is older than 15 minutes.
+	 *     Otherwise it returns true. If $_REQUEST['daconfirm'] is not set it will think it's th first pass and will
+	 *     set another ticket.
+	 *
+	 * Other code should be designed to stop the form action if the function returns false. A common way to use the
+	 * function is to set $check = $access->check_authenticity(null, false, true) at the beginning of a file. Then
+	 * only run the relevent form actions if $check = true.
 	 *
 	 *  Warning: this mechanism does not allow passing uploaded files ($_FILES). For that, see check_ticket().
+	 *
 	 * @param string $confirmation_text     Custom text to use if a confirmation page is brought up first
 	 * @param bool $returnHtml              Set to false to not use the standard confirmation page and to not use the
 	 *                                         standard error page. Suitable for popup confirmations when set to false.
+	 * @param bool $errorMsg                Set to true to have the Feedback error message sent automatically
 	 * @return array|bool
 	 */
-	function check_authenticity($confirmation_text = '', $returnHtml = true)
+	function check_authenticity($confirmation_text = '', $returnHtml = true, $errorMsg = false)
 	{
 		global $prefs, $jitRequest;
-		if (isset($_REQUEST['daconfirm'])) {
+		if (!empty($_REQUEST['daconfirm'])) {
 			$daconfirm = $_REQUEST['daconfirm'];
-		} elseif (isset($jitRequest['daconfirm'])) {
+		} elseif (!empty($jitRequest['daconfirm'])) {
 			$daconfirm = $jitRequest->daconfirm->alpha();
 		}
 		if ($prefs['feature_ticketlib2'] == 'y' || $returnHtml === false) {
-			if (isset($daconfirm)) {
+			//check against ticket if $_REQUEST['daconfirm'] is set
+			if (!empty($daconfirm)) {
 				if ($returnHtml) {
-					$this->key_check();
+					//redirects to an error page if ticket doesn't match or is too old
+					$this->key_check(true, $errorMsg);
 				} else {
-					return $this->key_check(false);
+					//returns true or false and optionally sends a Feedback error message if ticket doesn't match or is
+					//too old
+					return $this->key_check(false, $errorMsg);
 				}
+			//set ticket
 			} else {
 				if ($returnHtml) {
-					$this->key_get($confirmation_text);
+					//redirect to a confirmation page with the ticket and daconfirm hidden input
+					$this->key_get($confirmation_text, '', true);
 				} else {
+					//returns the ticket that should be placed in a form with the daconfirm hidden input with other code
 					return $this->key_get(null, null, false);
 				}
 			}
@@ -324,30 +340,31 @@ class TikiAccessLib extends TikiLib
 	}
 
 	/**
+	 * Used by check_authenticity function to set the $_SESSION ticket and optionally return or place in a confirmation
+	 * page
 	 *
-	 *
-	 * @param string $confirmation_text
-	 * @param string $confirmaction
-	 * @param bool $returnHtml
+	 * @param string $confirmation_text     Text to use if redirecting to a confirmation page
+	 * @param string $confirmaction         Url to go back to when acknowledging the confirmation page
+	 * @param bool $returnHtml              Set to false to not use the standard confirmation page and to not use the
+	 *                                         standard error page. Suitable for popup confirmations when set to false.
 	 * @return array
 	 */
-	private function key_get($confirmation_text = '', $confirmaction = '',  $returnHtml = true)
+	private function key_get($confirmation_text, $confirmaction,  $returnHtml)
 	{
 		global $prefs;
 		if ($prefs['feature_ticketlib2'] == 'y' || $returnHtml === false) {
 			$ticket = md5(uniqid(rand()));
 			$_SESSION['tickets'][$ticket] = time();
+			$smarty = TikiLib::lib('smarty');
+			$smarty->assign('ticket', $ticket);
 			if ($returnHtml) {
-				$smarty = TikiLib::lib('smarty');
-				$smarty->assign('ticket', $ticket);
+				//redirect to a confirmation page
 				if (empty($confirmation_text)) {
 					$confirmation_text = tra('Click here to confirm your action');
 				}
-
 				if (empty($confirmaction)) {
 					$confirmaction = $_SERVER['PHP_SELF'];
 				}
-
 				// Display the confirmation in the main tiki.tpl template
 				$smarty->assign('post', $_POST);
 				$smarty->assign('print_page', 'n');
@@ -357,21 +374,33 @@ class TikiAccessLib extends TikiLib
 				$smarty->display('tiki.tpl');
 				die();
 			} else {
+				//return ticket to be placed in a form with other code
 				return ['ticket' => $ticket];
 			}
 		}
 	}
-// * @param string $area is not used any longer
-	private function key_check($returnHtml = true)
+
+	/**
+	 * Used by check_authenticity function to match the ticket value returned with a form to the previously set
+	 * $_SESSION ticket and to check the time of submission against the time when the $_SESSION ticket was set. Returns
+	 * true if the ticket matches and the form submission is less than 15 minutes after the $_SESSION ticket was set.
+	 * Otherwise either returns false and optionally sends a Feedback error message, or redirects to an error page.
+	 *
+	 * @param bool $returnHtml              Set to false to not use the standard confirmation page and to not use the
+	 *                                         standard error page. Suitable for popup confirmations when set to false.
+	 * @param bool $errorMsg                Set to true to have the Feedback error message sent automatically
+	 * @return bool
+	 */
+	private function key_check($returnHtml, $errorMsg)
 	{
 		global $prefs, $jitRequest;
 		if ($prefs['feature_ticketlib2'] == 'y' || $returnHtml === false) {
-			if (isset($_REQUEST['ticket'])) {
+			if (!empty($_REQUEST['ticket'])) {
 				$ticket = $_REQUEST['ticket'];
-			} elseif (isset($jitRequest['ticket'])) {
+			} elseif (!empty($jitRequest['ticket'])) {
 				$ticket = $jitRequest->ticket->alnum();
 			}
-			if (isset($ticket) && isset($_SESSION['tickets'][$ticket])) {
+			if (!empty($ticket) && !empty($_SESSION['tickets'][$ticket])) {
 				$time = $_SESSION['tickets'][$ticket];
 				if ($time < time() && $time > (time()-(60*15))) {
 					return true;
@@ -383,6 +412,10 @@ class TikiAccessLib extends TikiLib
 				$smarty->display('error.tpl');
 				exit();
 			} else {
+				if ($errorMsg) {
+					Feedback::error(tr('Bad request - potential cross-site request forgery (CSRF) detected. Operation blocked. The security ticket may have expired - try reloading the page in this case.'),
+						'session');
+				}
 				return false;
 			}
 		}
@@ -390,9 +423,9 @@ class TikiAccessLib extends TikiLib
 
 
 	/**
-     * @return bool
-     */
-    function check_ticket()
+	 * @return bool
+	 */
+	function check_ticket()
 	{
 		global $prefs, $user;
 		$smarty = TikiLib::lib('smarty');
@@ -408,14 +441,14 @@ class TikiAccessLib extends TikiLib
 		}
 	}
 
-    /**
-     * @param $page
-     * @param string $errortitle
-     * @param string $errortype
-     * @param bool $enableRedirect
-     * @param string $message
-     */
-    function display_error($page, $errortitle = "", $errortype = "", $enableRedirect = true, $message = '')
+	/**
+	 * @param $page
+	 * @param string $errortitle
+	 * @param string $errortype
+	 * @param bool $enableRedirect
+	 * @param string $message
+	 */
+	function display_error($page, $errortitle = "", $errortype = "", $enableRedirect = true, $message = '')
 	{
 		global $prefs, $tikiroot, $user;
 		require_once ('tiki-setup.php');
@@ -503,11 +536,11 @@ class TikiAccessLib extends TikiLib
 		die;
 	}
 
-    /**
-     * @param string $page
-     * @return string
-     */
-    function get_home_page($page = '')
+	/**
+	 * @param string $page
+	 * @return string
+	 */
+	function get_home_page($page = '')
 	{
 		global $prefs, $use_best_language, $user;
 		$userlib = TikiLib::lib('user');
@@ -580,10 +613,10 @@ class TikiAccessLib extends TikiLib
 		exit();
 	}
 
-    /**
-     * @param $message
-     */
-    function flash( $message )
+	/**
+	 * @param $message
+	 */
+	function flash( $message )
 	{
 		$this->redirect($_SERVER['REQUEST_URI'], $message);
 	}
@@ -643,10 +676,10 @@ class TikiAccessLib extends TikiLib
 		return $result;
 	}
 
-    /**
-     * @return bool
-     */
-    function http_auth()
+	/**
+	 * @return bool
+	 */
+	function http_auth()
 	{
 		global $tikidomain, $user;
 		$userlib = TikiLib::lib('user');
@@ -680,11 +713,11 @@ class TikiAccessLib extends TikiLib
 		}
 	}
 
-    /**
-     * @param bool $acceptFeed
-     * @return array
-     */
-    function get_accept_types($acceptFeed = false)
+	/**
+	 * @param bool $acceptFeed
+	 * @return array
+	 */
+	function get_accept_types($acceptFeed = false)
 	{
 		$accept = explode(',', $_SERVER['HTTP_ACCEPT']);
 
@@ -718,10 +751,10 @@ class TikiAccessLib extends TikiLib
 		return $types;
 	}
 
-    /**
-     * @return bool
-     */
-    function is_machine_request()
+	/**
+	 * @return bool
+	 */
+	function is_machine_request()
 	{
 		foreach ( $this->get_accept_types() as $name => $full ) {
 			switch ( $name ) {
@@ -736,11 +769,11 @@ class TikiAccessLib extends TikiLib
 		return false;
 	}
 
-    /**
-     * @param bool $acceptFeed
-     * @return bool
-     */
-    function is_serializable_request($acceptFeed = false)
+	/**
+	 * @param bool $acceptFeed
+	 * @return bool
+	 */
+	function is_serializable_request($acceptFeed = false)
 	{
 		foreach ( $this->get_accept_types($acceptFeed) as $name => $full ) {
 			switch ( $name ) {
@@ -758,10 +791,10 @@ class TikiAccessLib extends TikiLib
 		return false;
 	}
 
-    /**
-     * @return bool
-     */
-    function is_xml_http_request()
+	/**
+	 * @return bool
+	 */
+	function is_xml_http_request()
 	{
 		return ! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 	}
