@@ -192,6 +192,17 @@ class PEAR
         }
     }
 
+    /**
+     * Only here for backwards compatibility.
+     *
+     * @param string $error_class Which class to use for error objects,
+     *                            defaults to PEAR_Error.
+     */
+    public function PEAR($error_class = null)
+    {
+        self::__construct($error_class);
+    }
+
     // }}}
     // {{{ destructor
 
@@ -916,6 +927,24 @@ class PEAR_Error
             trigger_error("PEAR_ERROR_EXCEPTION is obsolete, use class PEAR_Exception for exceptions", E_USER_WARNING);
             eval('$e = new Exception($this->message, $this->code);throw($e);');
         }
+    }
+
+    /**
+     * Only here for backwards compatibility.
+     *
+     * Class "Cache_Error" still uses it, among others.
+     *
+     * @param string $message  Message
+     * @param int    $code     Error code
+     * @param int    $mode     Error mode
+     * @param mixed  $options  See __construct()
+     * @param string $userinfo Additional user/debug info
+     */
+    public function PEAR_Error(
+      $message = 'unknown error', $code = null, $mode = null,
+      $options = null, $userinfo = null
+    ) {
+        self::__construct($message, $code, $mode, $options, $userinfo);
     }
 
     // }}}
