@@ -140,6 +140,7 @@ function get_default_prefs()
 			'gal_batch_dir' => '',
 			'feature_gal_rankings' => 'n',
 			'feature_image_galleries_comments' => 'n',
+			'feature_image_gallery_mandatory_category' => -1,
 			'image_galleries_comments_default_order' => 'points_desc',
 			'image_galleries_comments_per_page' => 10,
 			'gal_list_name' => 'y',
@@ -152,6 +153,11 @@ function get_default_prefs()
 			'gal_list_visits' => 'y',
 			'preset_galleries_info' =>'n',
 			'gal_image_mouseover' => 'n',
+			'maxRowsGalleries' => '',
+			'rowImagesGalleries' => '',
+			'scaleSizeGalleries' => '',
+			'thumbSizeXGalleries' => '',
+			'thumbSizeYGalleries' => '',
 
 			// articles
 			'cms_bot_bar' => 'y',
@@ -287,12 +293,7 @@ function get_default_prefs()
 			'feature_intertiki_imported_groups' => '',
 			'feature_contributor_wiki' => '',
 			'https_login_required' => '',
-			'maxRowsGalleries' => '',
 			'replimaster' => '',
-			'rowImagesGalleries' => '',
-			'scaleSizeGalleries' => '',
-			'thumbSizeXGalleries' => '',
-			'thumbSizeYGalleries' => '',
 			'javascript_enabled' => 'n',
 
 

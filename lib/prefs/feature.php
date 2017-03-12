@@ -80,6 +80,22 @@ function prefs_feature_list($partial = false)
 				'permType' => 'blogs',
 			),
 		),
+		'feature_gal_batch' => [
+			'name' => tra('Enable directory batch loading'),
+			'type' => 'flag',
+			'default' => 'n',
+			'hint' => tra('If you enable Directory Batch Loading, you need to setup a web-readable directory (outside of your web space is better). Then setup a way to upload images in that dir, either by scp, ftp, or other protocols.')
+		],
+		'feature_gal_rankings' => [
+			'name' => tra('Rankings'),
+			'type' => 'flag',
+			'default' => 'n',
+		],
+		'feature_gal_slideshow' => [
+			'name' => tra('Slideshow'),
+			'type' => 'flag',
+			'default' => 'n',
+		],
 		'feature_galleries' => array(
 			'name' => tra('Image Gallery'),
 			'description' => tra('Collections of images for viewing or downloading (photo albums)'),
@@ -91,6 +107,22 @@ function prefs_feature_list($partial = false)
 			'view' => 'tiki-galleries.php',
 			'tags' => array('experimental'),
 		),
+		'feature_image_galleries_comments' => [
+			'name' => tra('Comments'),
+			'description' => '',
+			'type' => 'flag',
+			'default' => 'n',
+		],
+		'feature_image_gallery_mandatory_category' => [
+			'name' => tra('Limit categorization to this category\'s subtrees'),
+			'description' => '',
+			'type' => 'list',
+			'dependencies' => [
+				'feature_categories',
+			],
+			'options' => $catree,
+			'default' => -1,
+		],
 		'feature_machine_translation' => array(
 			'name' => tra('Machine Translation'),
 			'description' => tra('Uses machine translation to translate the content of the site to other languages. Note that this feature relies on external services thay may not be free. Google Translate is a paid service.'),
@@ -2324,17 +2356,6 @@ function prefs_feature_list($partial = false)
 			'dependencies' => array(
 				'feature_categories',
 				'feature_wiki',
-			),
-			'default' => -1,
-		),
-		'feature_image_gallery_mandatory_category' => array(
-			'name' =>  tra('Image Gallery:').' '.tra('Limit categorization to within the subtree of'),
-			'description' => tra('If an error message indicates a mandatory category is required when editing an image (in an image gallery), set this option to "None".'),
-			'type' => 'list',
-			'options' => $catree,
-			'dependencies' => array(
-				'feature_categories',
-				'feature_galleries',
 			),
 			'default' => -1,
 		),

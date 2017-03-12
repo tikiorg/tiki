@@ -15,11 +15,6 @@ $imagegallib = TikiLib::lib('imagegal');
 
 if ($check === true) {
 	if (isset($_REQUEST['galfeatures'])) {
-		simple_set_toggle('feature_gal_rankings');
-		simple_set_toggle('feature_image_galleries_comments');
-		simple_set_toggle('feature_gal_slideshow');
-		simple_set_toggle('feature_gal_batch');
-		simple_set_toggle('preset_galleries_info');
 		// Check for last character being a / or a \
 		// My next commit is to create a clas to put this code into
 		if (substr($_REQUEST['gal_use_dir'], -1) != '\\'
@@ -35,25 +30,12 @@ if ($check === true) {
 		) {
 			$_REQUEST['gal_batch_dir'] .= '/';
 		}
-
-		$pref_simple_values = array(
-			'gal_use_db',
-			'gal_use_lib',
-			'gal_use_dir',
-			'gal_match_regex',
-			'gal_nmatch_regex',
-			'gal_batch_dir',
-			'feature_image_gallery_mandatory_category',
-			'gal_image_mouseover',
-		);
-
-		foreach ($pref_simple_values as $svitem) {
-			simple_set_value($svitem);
-		}
 	}
 
 	if (isset($_REQUEST['rmvorphimg'])) {
 		$adminlib->remove_orphan_images();
+		Feedback::success(tra('Orphan images successfully removed'), 'session');
+		$adminRedirect = true;
 	}
 
 	if (isset($_REQUEST['mvimg']) && isset($_REQUEST['move_gallery'])) {
@@ -65,30 +47,9 @@ if ($check === true) {
 			if ($mvresult['timeout']) {
 				$mvmsg.= ' ' . tra('a timeout occurred. Hit the reload button to move the rest');
 			}
-			Feedback::note($mvmsg);
+			Feedback::note($mvmsg, 'session');
+			$adminRedirect = true;
 		}
-	}
-
-	if (isset($_REQUEST['imagegallistprefs'])) {
-		$pref_toggles = array(
-			'gal_list_name',
-			'gal_list_parent',
-			'gal_list_description',
-			'gal_list_created',
-			'gal_list_lastmodif',
-			'gal_list_user',
-			'gal_list_imgs',
-			'gal_list_visits',
-		);
-
-		foreach ($pref_toggles as $toggle) {
-			simple_set_toggle($toggle);
-		}
-	}
-
-	if (isset($_REQUEST['imagegalcomprefs'])) {
-		simple_set_value('image_galleries_comments_per_page');
-		simple_set_value('image_galleries_comments_default_order');
 	}
 
 	if (isset($_REQUEST['mvimg']) && isset($_REQUEST['move_gallery'])) {
@@ -103,53 +64,6 @@ if ($check === true) {
 			Feedback::note($mvmsg);
 		}
 	}
-
-	if (!isset($_REQUEST['maxRows'])) {
-		$_REQUEST['maxRows'] = $prefs['maxRowsGalleries'];
-	}
-	if (!isset($_REQUEST['rowImages'])) {
-		$_REQUEST['rowImages'] = $prefs['rowImagesGalleries'];
-	}
-	if (!isset($_REQUEST['thumbSizeX'])) {
-		$_REQUEST['thumbSizeX'] = $prefs['thumbSizeXGalleries'];
-	}
-	if (!isset($_REQUEST['thumbSizeY'])) {
-		$_REQUEST['thumbSizeY'] = $prefs['thumbSizeYGalleries'];
-	}
-	if (!isset($_REQUEST['scaleSize'])) {
-		$_REQUEST['scaleSize'] = $prefs['scaleSizeGalleries'];
-	}
-	$tikilib->set_preference('maxRowsGalleries', $_REQUEST['maxRows']);
-	$tikilib->set_preference('rowImagesGalleries', $_REQUEST['rowImages']);
-	$tikilib->set_preference('thumbSizeXGalleries', $_REQUEST['thumbSizeX']);
-	$tikilib->set_preference('thumbSizeYGalleries', $_REQUEST['thumbSizeY']);
-	$tikilib->set_preference('scaleSizeGalleries', $_REQUEST['scaleSize']);
-	$smarty->assign('maxRows', $_REQUEST['maxRows']);
-	$smarty->assign('rowImages', $_REQUEST['rowImages']);
-	$smarty->assign('thumbSizeX', $_REQUEST['thumbSizeX']);
-	$smarty->assign('thumbSizeY', $_REQUEST['thumbSizeY']);
-	$smarty->assign('scaleSize', $_REQUEST['scaleSize']);
-}
-
-if ($imagegallib->havegd) {
-	$gdlib = tra('Detected, Version:') . ' ' . $imagegallib->gdversion . ' (' . tra('Test Image') . ': <img src="tiki-testGD.php" />)';
-} else {
-	$gdlib = tra('Not detected.');
-}
-
-if ($imagegallib->haveimagick) {
-	$imagicklib = tra('Detected, Version:') . ' ' . tra('Unknown');
-} else {
-	$imagicklib = tra('Not detected.');
-}
-
-$smarty->assign('gdlib', $gdlib);
-$smarty->assign('imagicklib', $imagicklib);
-
-if ($prefs['feature_categories'] == 'y') {
-	$categlib = TikiLib::lib('categ');
-	$catree = $categlib->getCategories(null, true, false);
-	$smarty->assign('catree', $catree);
 }
 
 $galleries = $imagegallib->list_visible_galleries(0, -1, 'name_desc', 'admin', '');

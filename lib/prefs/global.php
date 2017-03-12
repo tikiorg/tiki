@@ -399,6 +399,35 @@ function prefs_global_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'maxRowsGalleries' => [
+			'name' => tra('Maximum rows per page'),
+			'type' => 'text',
+			'hint' => tra('Default is 10 when not set.'),
+			'default' => '',
+		],
+		'rowImagesGalleries' => [
+			'name' => tra('Images per row'),
+			'type' => 'text',
+			'hint' => tra('Default is 6 when not set.'),
+			'default' => '',
+		],
+		'thumbSizeXGalleries' => [
+			'name' => tra('Thumbnail width in pixels'),
+			'type' => 'text',
+			'hint' => tra('Default is 80 when not set.'),
+			'default' => '',
+		],
+		'thumbSizeYGalleries' => [
+			'name' => tra('Thumbnail height in pixels'),
+			'type' => 'text',
+			'hint' => tra('Default is 80 when not set.'),
+			'default' => '',
+		],
+		'scaleSizeGalleries' => [
+			'name' => tra('Default scale size in pixels'),
+			'type' => 'text',
+			'default' => '',
+		],
 	);
 }
 
