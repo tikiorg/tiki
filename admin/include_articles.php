@@ -23,4 +23,5 @@ if (isset($_REQUEST['import'])) {
 			Feedback::error(['mes' => $msgs], 'session');
 		}
 	}
+	$adminRedirect = true;
 }
