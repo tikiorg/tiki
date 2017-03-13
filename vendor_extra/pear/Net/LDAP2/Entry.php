@@ -144,7 +144,7 @@ class Net_LDAP2_Entry extends PEAR
 	* @access protected
 	* @return none
 	*/
-	protected function __construct(&$ldap, $entry = null)
+	public function __construct(&$ldap, $entry = null)
 	{
 		$this->PEAR('Net_LDAP2_Error');
 
