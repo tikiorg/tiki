@@ -548,8 +548,9 @@ if (isset($_REQUEST['page'])) {
 		}
 	}
 
-	if ((!empty($changes) || (isset($adminRedirect) && $adminRedirect)) && $check) {
-		$access->redirect($_SERVER['REQUEST_URI'], '', 200);
+	if ($check === true) {
+		$smarty->assign('ticket', $_REQUEST['ticket']);
+		$smarty->assign('daconfirm', 'y');
 	}
 
 } else {
