@@ -62,6 +62,9 @@ class ImageGalsLib extends TikiLib
 		// Do we have the imagick PECL module?
 		// Module can be downloaded at http://pecl.php.net/package/imagick
 		// Also check on 'imagick_rotate' function because the first check may detect imagick 2.x which has a completely different API
+		//*** Function is now called imagerotate but the API in Tiki has not been updated to use it.
+		//*** Therfore this test will falsely show that imagick is not detected even when it is loaded
+		//*** TODO update API to use imagerotate
 		if (in_array('imagick', $exts) && function_exists('imagick_rotate')) {
 			$this->haveimagick = true;
 		} else {
