@@ -35,7 +35,6 @@ if ($check === true) {
 	if (isset($_REQUEST['rmvorphimg'])) {
 		$adminlib->remove_orphan_images();
 		Feedback::success(tra('Orphan images successfully removed'), 'session');
-		$adminRedirect = true;
 	}
 
 	if (isset($_REQUEST['mvimg']) && isset($_REQUEST['move_gallery'])) {
@@ -48,20 +47,6 @@ if ($check === true) {
 				$mvmsg.= ' ' . tra('a timeout occurred. Hit the reload button to move the rest');
 			}
 			Feedback::note($mvmsg, 'session');
-			$adminRedirect = true;
-		}
-	}
-
-	if (isset($_REQUEST['mvimg']) && isset($_REQUEST['move_gallery'])) {
-		if (($_REQUEST['mvimg'] == 'to_fs' && $prefs['gal_use_db'] == 'n')
-			|| ($_REQUEST['mvimg'] == 'to_db' && $prefs['gal_use_db'] == 'y')
-		) {
-			$mvresult = $imagegallib->move_gallery_store($_REQUEST['move_gallery'], $_REQUEST['mvimg']);
-			$mvmsg = sprintf(tra('moved %d images, %d errors occurred.'), $mvresult['moved_images'], $mvresult['errors']);
-			if ($mvresult['timeout']) {
-				$mvmsg .= ' ' . tra('a timeout occurred. Hit the reload button to move the rest');
-			}
-			Feedback::note($mvmsg);
 		}
 	}
 }

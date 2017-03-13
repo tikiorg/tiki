@@ -14,9 +14,6 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 $filegallib = TikiLib::lib('filegal');
 
 if ($check === true) {
-	if (isset($_REQUEST["filegalset"])) {
-		simple_set_value("home_file_gallery");
-	}
 	if (isset($_REQUEST["filegalfeatures"])) {
 		// Check for last character being a / or a \
 		if (substr($_REQUEST["fgal_use_dir"], -1) != "\\" && substr($_REQUEST["fgal_use_dir"], -1) != "/" && $_REQUEST["fgal_use_dir"] != "") {
@@ -61,10 +58,10 @@ if ($check === true) {
 			$errors = $filegallib->moveFiles($_REQUEST['move'], $feedbacks);
 		}
 		if (!empty($errors)) {
-			Feedback::error(['mes' => $errors]);
+			Feedback::error(['mes' => $errors], 'session');
 		}
 		if (!empty($feedbacks)) {
-			Feedback::note(['mes' => $feedbacks]);
+			Feedback::note(['mes' => $feedbacks], 'session');
 		}
 	}
 

@@ -21,6 +21,5 @@ if (!empty($_REQUEST['assignWikiCategories']) && $prefs['category_defaults'] && 
 			$categlib->update_object_categories($categories, $page['pageName'], 'wiki page', $page['description'], $page['pageName'], $page['href']);
 		}
 	}
-	Feedback::success(tr('Category defaults successfully applied.'));
-	$adminRedirect = true;
+	add_feedback('category_defaults', tr('category defaults'), 2);
 }

@@ -65,7 +65,9 @@
 		<div class="form-group">
 			<div class="col-sm-8 col-sm-offset-4">
 				{if !empty($prefs.category_defaults)}
-					{button href="tiki-admin.php?page=category&amp;assignWikiCategories=y&amp;daconfirm=y" _text="{tr}Re-apply last saved category defaults to wiki pages{/tr}"}
+					<button type="submit" class="btn btn-default" name="assignWikiCategories" value="y">
+						{tr}Re-apply last saved category defaults to wiki pages{/tr}
+					</button>
 				{/if}
 			</div>
 		</div>

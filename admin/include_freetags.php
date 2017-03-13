@@ -14,8 +14,8 @@ if (isset($_REQUEST["cleanup"]) && $check === true) {
 	$freetaglib = TikiLib::lib('freetag');
 	$result = $freetaglib->cleanup_tags();
 	if ($result) {
-		Feedback::success(tr('Tags successfully cleaned up.'));
+		Feedback::success(tr('Tags successfully cleaned up.'), 'session');
 	} else {
-		Feedback::error(tr('Tag cleanup failed.'));
+		Feedback::error(tr('Tag cleanup failed.'), 'session');
 	}
 }

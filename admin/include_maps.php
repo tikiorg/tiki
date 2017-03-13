@@ -13,4 +13,5 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 if (isset($_REQUEST['geo_zoomlevel_to_found_location'])) {
 	$tikilib->set_preference('geo_zoomlevel_to_found_location', $_REQUEST['geo_zoomlevel_to_found_location']);
+	add_feedback('geo_zoomlevel_to_found_location', tra('zoom level to searched location'), 2);
 }

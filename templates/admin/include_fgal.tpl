@@ -36,8 +36,12 @@
 				{preference name='fgal_use_dir'}
 			</div>
 			<div class="col-sm-8 col-sm-offset-4 margin-bottom-md">
-			{button href="tiki-admin.php?page=fgal&amp;move=to_fs" _text="{tr}Move files from database to directory{/tr}"}
-			{button href="tiki-admin.php?page=fgal&amp;move=to_db" _text="{tr}Move files from directory to database{/tr}"}
+				<button role="button" type="submit" class="btn btn-default" name="move" value="to_fs">
+					{tr}Move files from database to directory{/tr}
+				</button>
+				<button role="button" type="submit" class="btn btn-default" name="move" value="to_db">
+					{tr}Move files from directory to database{/tr}
+				</button>
 			</div>
 
 			{preference name='fgal_podcast_dir'}
