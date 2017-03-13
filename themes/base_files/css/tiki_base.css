@@ -2393,13 +2393,6 @@ ul.tree {
 .searchresults li {
   margin: 10px 0 0;
 }
-.tiki_sheet * {
-  line-height: normal;
-  font-size: 14px;
-}
-.tiki_sheet table td {
-  padding: 0;
-}
 .jSBarTopParent .jSBarController {
   height: 0 !important;
 }
