@@ -22,4 +22,5 @@ if (!empty($_REQUEST['assignWikiCategories']) && $prefs['category_defaults'] && 
 		}
 	}
 	Feedback::success(tr('Category defaults successfully applied.'));
+	$adminRedirect = true;
 }
