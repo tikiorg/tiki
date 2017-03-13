@@ -233,7 +233,7 @@ function wikiplugin_pivottable($data, $params)
 				}
 			}
 		}
-		if( !$hasFieldPermissions && !$perms->view_trackers ) {
+		if( !$hasFieldPermissions && !$perms->view_trackers && !$definition->isEnabled('userCanSeeOwn') && !$definition->isEnabled('writerCanModify') ) {
 			return WikiParser_PluginOutput::userError(tr('You do not have rights to view tracker data.'));
 		}
 	}
