@@ -203,7 +203,6 @@ if ( isset( $_REQUEST['lm_preference'] ) ) {
 }
 
 if ( isset( $_REQUEST['lm_criteria'] ) ) {
-//	$smarty->assign('ticket', $check['ticket']);
 	set_time_limit(0);
 	try {
 		$smarty->assign('lm_criteria', $_REQUEST['lm_criteria']);
@@ -517,9 +516,8 @@ $admin_icons = array(
 
 if (isset($_REQUEST['page'])) {
 	$adminPage = $_REQUEST['page'];
-//	$smarty->assign('ticket', !empty($check['ticket']) ? $check['ticket'] : '');
 	// Check if the associated incude_*.php file exists. If not, check to see if it might exist in the Addons.
-	// If it exists, include the associated file and generate the ticket.
+	// If it exists, include the associated file
 	$utilities = new TikiAddons_Utilities();
 	if (file_exists("admin/include_$adminPage.php")) {
 		include_once ("admin/include_$adminPage.php");
