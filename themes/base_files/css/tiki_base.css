@@ -3929,6 +3929,10 @@ table.tablesorter thead tr.tablesorter-filter-row {
 .chosen-container .chosen-results .active-result.highlighted {
   background-color: #337ab7 !important;
 }
+.chosen-container .chosen-results .text-muted.bg-info {
+  color: #fff;
+  background-color: #64a0d3;
+}
 .chosen-container-single .chosen-single {
   background-color: #ffffff;
   -webkit-background-clip: padding-box;
