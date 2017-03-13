@@ -100,6 +100,11 @@
 					});
 				{/jq}
 			{/if}
+			{if $tiki_p_admin_trackers eq "y"}
+				<li>
+					{permission_link mode=text type=tracker id=$trackerId permType=trackers}
+				</li>
+			{/if}
 		</ul>
 		{if $js == 'n'}</li></ul>{/if}
 	</div>
