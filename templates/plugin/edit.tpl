@@ -39,11 +39,13 @@ $("#picker_{{$name|escape}}").parent().click(function () {
 		<div class="col-sm-9">
 			{if (not empty($param.parent.name))}
 				{$groupClass = " group-`$param.parent.name`"}
+				{$dataAttribute = " data-parent_name='`$param.parent.name`' data-parent_value='`$param.parent.value`'"}
 			{else}
 				{$groupClass = ''}
+				{$data = ''}
 			{/if}
 			{if empty($param.options)}
-				<input value="{if isset($pluginArgs[$name])}{$pluginArgs[$name]}{/if}" class="form-control{$groupClass}" id="{$inputId}" type="text" name="params[{$name|escape}]">
+				<input value="{if isset($pluginArgs[$name])}{$pluginArgs[$name]}{/if}" class="form-control{$groupClass}" id="{$inputId}" type="text" name="params[{$name|escape}]"{$dataAttribute}>
 				{if not empty($param.filter)}
 					{if $param.filter eq "pagename"}
 						{jq}$({{$inputId}}).tiki("autocomplete", "pagename");{/jq}
@@ -57,7 +59,7 @@ $("#picker_{{$name|escape}}").parent().click(function () {
 				{/if}
 
 			{else}
-				<select class="form-control{$groupClass}" type="text" name="params[{$name|escape}]" id="{$inputId}">
+				<select class="form-control{$groupClass}" type="text" name="params[{$name|escape}]" id="{$inputId}"{$dataAttribute}>
 					{foreach $param.options as $option}
 						<option value="{$option.value|escape}" {if isset($pluginArgs[$name]) and $pluginArgs[$name] eq $option.value} selected="selected"{/if}>
 							{$option.text|escape}

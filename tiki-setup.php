@@ -689,19 +689,7 @@ annotatorContent.annotator("addPlugin", "Permissions", {
 
 }
 
-
-if (true) {
-	// Before being clever and moving this close to where you think it's needed (again),
-	// consider there are more places that you think.
-	
-	// This is not a very helpful comment...
-	$headerlib->add_jsfile_dynamic('tiki-jsplugin.php?language='.$prefs['language']);
-	if ($prefs['wikiplugin_module'] === 'y' && $prefs['wikiplugininline_module'] === 'n') {
-		$headerlib->add_jsfile_dynamic('tiki-jsmodule.php?language='.$prefs['language']);
-	}
-
-	$headerlib->add_jsfile('lib/jquery_tiki/tiki-pluginedit.js');
-}
+$headerlib->add_jsfile('lib/jquery_tiki/tiki-pluginedit.js');
 
 if ( session_id() ) {
 	if ( $prefs['tiki_cachecontrol_session'] ) {
