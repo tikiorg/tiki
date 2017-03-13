@@ -104,11 +104,27 @@ $("#picker_{{$name|escape}}").parent().click(function () {
 
 			{if $type eq 'module'}
 				{jq}$("#param_module_input").change(function () {
-					var selectMod = $(this).val();
-					$.closeModal();
-					$(document).one("hidden.bs.modal", function () {
-						popupPluginForm("{{$area_id}}","{{$type}}", {{$index}}, "{{$pageName}}", {{$pluginArgsJSON}}, "{{$bodyContent}}", "{{$edit_icon}}", selectMod);
-					});
+
+					$(this).parents(".modal-content").load(
+						$.service("plugin", "edit", {
+							area_id: "{{$area_id}}",
+							type: "{{$type}}",
+							index: {{$index}},
+							page: "{{$pageName}}",
+							pluginArgs: {{$pluginArgsJSON}},
+							bodyContent: "{{$bodyContent}}",
+							edit_icon: "{{$edit_icon}}",
+							selectedMod: $(this).val(),
+							modal: 1
+						}),
+						function () {
+							$(this).tikiModal();
+							if (jqueryTiki.chosen) {
+								$(this).applyChosen();
+							}
+						}
+					).tikiModal(tr("Loading..."));
+
 				});{/jq}
 			{/if}
 
