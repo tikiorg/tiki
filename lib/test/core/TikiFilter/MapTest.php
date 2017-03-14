@@ -23,7 +23,7 @@ class TikiFilter_MapTest extends TikiTestCase
 		$this->assertTrue(TikiFilter::get('groupname') instanceof Zend\Filter\StripTags);
 		$this->assertTrue(TikiFilter::get('topicname') instanceof Zend\Filter\StripTags);
 		$this->assertTrue(TikiFilter::get('xss') instanceof TikiFilter_PreventXss);
-		$this->assertTrue(TikiFilter::get('word') instanceof TikiFilter_Word);
+		$this->assertTrue(TikiFilter::get('word') instanceof Zend\Filter\PregReplace);
 		$this->assertTrue(TikiFilter::get('wikicontent') instanceof TikiFilter_WikiContent);
 	}
 

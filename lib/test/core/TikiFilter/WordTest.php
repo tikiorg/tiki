@@ -14,7 +14,7 @@ class TikiFilter_WordTest extends TikiTestCase
 {
 	function testFilter()
 	{
-		$filter = new TikiFilter_Word();
+		$filter = TikiFilter::get('word');
 
 		$this->assertEquals('123ab_c', $filter->filter('-123 ab_c'));
 	}
