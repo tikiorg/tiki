@@ -133,7 +133,7 @@ foreach ($chans as $chan) {
                     $t = date("H:i", $row['ts']);
                 }
             }
-            $msgtotal = "<span class='minichat_ts'>[$t]</span><span class='minichat_nick'>&lt;" . ($row['nick'] === null ? '' : $row['nick']) . "&gt;</span><span class='minichat_msg'>" . htmlentities($row['msg'], ENT_QUOTES, 'UTF-8') . "</span><br>" . $msgtotal;
+            $msgtotal = "<span class='minichat_ts'>[$t]</span>&nbsp;<span class='minichat_nick'>&lt;" . ($row['nick'] === null ? '' : $row['nick']) . "&gt;</span> <span class='minichat_msg'>" . htmlentities($row['msg'], ENT_QUOTES, 'UTF-8') . "</span><br>" . $msgtotal;
 		}
 		$msgtotal = str_replace(":-D", "<img border='0' src='img/smiles/icon_biggrin.gif' width='15' height='15'>", $msgtotal);
 		$msgtotal = str_replace(":D", "<img border='0' src='img/smiles/icon_biggrin.gif' width='15' height='15'>", $msgtotal);
