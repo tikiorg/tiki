@@ -268,14 +268,12 @@ if ($prefs['feature_warn_on_edit'] == 'y') {
 		$editconflict = 'n';
 	}
 	if ($_REQUEST['parse'] == 'edit' && $editconflict === 'n') {
-		$_SESSION['edit_lock_sheet' . $_REQUEST['sheetId']] = $serviceLib->internal('semaphore', 'set', ['object_id' => $_REQUEST['sheetId'], 'object_type' => 'sheet']);
-	} elseif (isset($_SESSION['edit_lock_sheet' . $_REQUEST['sheetId']])) {
+		$serviceLib->internal('semaphore', 'set', ['object_id' => $_REQUEST['sheetId'], 'object_type' => 'sheet']);
+	} else {
 		$serviceLib->internal('semaphore', 'unset', [
 			'object_id' => $_REQUEST['sheetId'],
 			'object_type' => 'sheet',
-			'lock' => $_SESSION['edit_lock_sheet' . $_REQUEST['sheetId']],
 		]);
-		unset($_SESSION['edit_lock_sheet' . $_REQUEST['sheetId']]);
 	}
 } else {
 		$editconflict = 'n';

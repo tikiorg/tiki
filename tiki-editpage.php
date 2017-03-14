@@ -179,9 +179,6 @@ $smarty->assign('page', $page);
 $info = $tikilib->get_page_info($page);
 $smarty->assign('quickedit', isset($_GET['quickedit']));
 
-// String use to lock the page currently edit.
-$editLockPageId = 'edit_lock_' . (isset($info['page_id']) ? (int) $info['page_id'] : 0);
-
 // 2010-01-26: Keep in active until translation refactoring is done.
  if ($editlib->isNewTranslationMode() || $editlib->isUpdateTranslationMode()) {
  	$editlib->prepareTranslationData();
@@ -273,7 +270,7 @@ function compare_import_versions($a1, $a2)
 
 $serviceLib = TikiLib::lib('service');
 if (isset($_REQUEST['cancel_edit'])) {
-	$serviceLib->internal('semaphore', 'unset', ['object_id' => $page, 'lock' => $_SESSION[$editLockPageId]]);
+	$serviceLib->internal('semaphore', 'unset', ['object_id' => $page]);
 	if (!empty($_REQUEST['returnto'])) {
 		if (isURL($_REQUEST['returnto'])) {
 			$url = $_REQUEST['returnto'];
@@ -350,14 +347,12 @@ if ($prefs['feature_warn_on_edit'] === 'y') {
 
 				$editpageconflict = 'y';
 			} elseif ($tiki_p_edit === 'y') {
-				$_SESSION[$editLockPageId] = $serviceLib->internal('semaphore', 'set', ['object_id' => $page]);
+				$serviceLib->internal('semaphore', 'set', ['object_id' => $page]);
 			}
 			$semUser = $serviceLib->internal('semaphore', 'get_user', ['object_id' => $page]);
 			$beingedited = 'y';
 		} else {
-			if (!empty($_SESSION[$editLockPageId])) {
-				$serviceLib->internal('semaphore', 'unset', ['object_id' => $page, 'lock' => $_SESSION[$editLockPageId]]);
-			}
+			$serviceLib->internal('semaphore', 'unset', ['object_id' => $page]);
 		}
 	}
 	if ($editpageconflict === 'y' && !isset($_REQUEST["conflictoverride"]) ) {
