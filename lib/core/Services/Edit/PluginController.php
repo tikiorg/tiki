@@ -192,7 +192,7 @@ class Services_Edit_PluginController
 				'selectedMod' => $selectedMod,
 
 				'info' => $info,
-				'title' => $type,
+				'title' => $info['name'],
 			];
 		}
 	}
