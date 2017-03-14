@@ -642,7 +642,7 @@ function wikiplugin_img( $data, $params )
 		foreach ($id_list as $i => $value) {
 			$params[$id] = trim($value);
 			$params['fgalId'] = '';
-			$params['type'] = 'fileId';
+			$params['type'] = $id;
 			$repl .= wikiplugin_img($data, $params);
 		}
 		if (strpos($repl, $notice) !== false) {
@@ -681,6 +681,8 @@ function wikiplugin_img( $data, $params )
 			if ($absolute_links) {
 				$src = TikiLib::tikiUrl($src);
 			}
+		} elseif ($prefs['feature_use_fgal_for_wiki_attachments'] === 'y' && ! empty($imgdata['attId'])) {
+			$src = $filegalpath . $imgdata['attId'];
 		} else {					//only attachments left
 			$src = $attachpath . $imgdata['attId'];
 		}
@@ -732,6 +734,10 @@ function wikiplugin_img( $data, $params )
 			} elseif (!isset($dbinfo) && !empty($imgdata['fileId'])) {
 				$filegallib = TikiLib::lib('filegal');
 				$dbinfo = $filegallib->get_file($imgdata['fileId']);
+				$basepath = $prefs['fgal_use_dir'];
+			} elseif ($prefs['feature_use_fgal_for_wiki_attachments'] === 'y' && !isset($dbinfo) && !empty($imgdata['attId'])) {
+				$filegallib = TikiLib::lib('filegal');
+				$dbinfo = $filegallib->get_file($imgdata['attId']);
 				$basepath = $prefs['fgal_use_dir'];
 			} else {					//only attachments left
 				global $atts;
