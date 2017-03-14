@@ -13,14 +13,14 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 function prefs_gal_list()
 {
-	$imagegallib = TikiLib::lib('imagegal');
-	if ($imagegallib->havegd) {
-		$gdlib = tr('GD %0 detected.', $imagegallib->gdversion);
+
+	if ((extension_loaded('gd') && function_exists('gd_info'))) {
+		$gdinfo = gd_info();
+		$gdlib = tr('GD %0 detected.', $gdinfo["GD Version"]);
 	} else {
 		$gdlib = tra('GD not detected.');
 	}
-
-	if ($imagegallib->haveimagick) {
+	if ((extension_loaded('imagick') && function_exists('imagick_rotate'))) {
 		$imagicklib = tr('Imagick %0 detected.', phpversion('imagick'));
 	} else {
 		$imagicklib = tra('Imagick 0 not detected.');
@@ -112,7 +112,7 @@ function prefs_gal_list()
 		],
 		'gal_use_lib' => [
 			'name' => tra('Image processing library'),
-			'type' => 'radio',
+			'type' => 'list',
 			'options' => [
 				'gd' => tra('GD'),
 				'imagick' => tra('Imagick'). ' 0',
