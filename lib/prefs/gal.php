@@ -23,7 +23,7 @@ function prefs_gal_list()
 	if ($imagegallib->haveimagick) {
 		$imagicklib = tr('Imagick %0 detected.', phpversion('imagick'));
 	} else {
-		$imagicklib = tra('Imagick not detected.');
+		$imagicklib = tra('Imagick 0 not detected.');
 	}
 
 	return [
@@ -115,7 +115,7 @@ function prefs_gal_list()
 			'type' => 'radio',
 			'options' => [
 				'gd' => tra('GD'),
-				'imagick' => tra('Imagick'),
+				'imagick' => tra('Imagick'). ' 0',
 			],
 			'default' => 'imagick',
 			'hint' => $gdlib . '  ' . $imagicklib
