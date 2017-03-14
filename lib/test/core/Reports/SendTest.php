@@ -28,7 +28,7 @@ class Reports_SendTest extends TikiTestCase
 	
 	public function testEmailSubject_noChanges()
 	{
-		$this->mail->expects($this->exactly(2))->method('setSubject')->with('Report on test from 2012-03-27 (no changes)');
+		$this->mail->expects($this->exactly(2))->method('setSubject')->with('Report on test from 2012-03-27 (no changes)');
 		
 		$userData = array('login' => 'test', 'email' => 'test@test.com');
 		$reportPreferences = array('type' => 'html');
@@ -39,7 +39,7 @@ class Reports_SendTest extends TikiTestCase
 	
 	public function testEmailSubject_oneChange()
 	{
-		$this->mail->expects($this->exactly(1))->method('setSubject')->with('Report on test from 2012-03-27 (1 change)');
+		$this->mail->expects($this->exactly(1))->method('setSubject')->with('Report on test from 2012-03-27 (1 change)');
 		
 		$userData = array('login' => 'test', 'email' => 'test@test.com');
 		$reportPreferences = array('type' => 'html');
@@ -49,7 +49,7 @@ class Reports_SendTest extends TikiTestCase
 	
 	public function testEmailSubject_multipleChanges()
 	{
-		$this->mail->expects($this->exactly(1))->method('setSubject')->with('Report on test from 2012-03-27 (2 changes)');
+		$this->mail->expects($this->exactly(1))->method('setSubject')->with('Report on test from 2012-03-27 (2 changes)');
 		
 		$userData = array('login' => 'test', 'email' => 'test@test.com');
 		$reportPreferences = array('type' => 'html');
@@ -68,7 +68,7 @@ class Reports_SendTest extends TikiTestCase
 			->with($userData, $reportPreferences, $reportCache)->will($this->returnValue($emailBody));
 		$this->mail->expects($this->once())->method('setUser')->with('test');
 		$this->mail->expects($this->once())->method('setHtml')->with($emailBody);
-		$this->mail->expects($this->once())->method('setSubject')->with('Report on test from 2012-03-27 (no changes)');
+		$this->mail->expects($this->once())->method('setSubject')->with('Report on test from 2012-03-27 (no changes)');
 		$this->mail->expects($this->once())->method('send')->with(array('test@test.com'));
 		
 		$this->obj->sendEmail($userData, $reportPreferences, $reportCache);
