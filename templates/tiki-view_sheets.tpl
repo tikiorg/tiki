@@ -8,13 +8,19 @@
 	{$msg}
 </div>
 
+{if $editconflict eq 'y' and $objectperms->edit_sheet}
+	{remarksbox title='Edit Conflict Warning' type='warning'}
+		{tr _0=$semUser|username}This sheet is already being edited by %0{/tr}
+	{/remarksbox}
+{/if}
+
 {foreach from=$grid_content item=thisGrid}
-	<div class="tiki_sheet"
-		{if !empty($tiki_sheet_div_style)}
-			style="{$tiki_sheet_div_style}"
-		{/if}>{$thisGrid}
+	<div class="tiki_sheet"{if !empty($tiki_sheet_div_style)} style="{$tiki_sheet_div_style}"{/if}>
+		{$thisGrid}
 	</div>
 {/foreach}
+
+
 <div id="feedback" style="height: 1.5em; margin-left: .2em"><span></span></div>
 
 <div class="t_navbar btn-group form-group">
@@ -27,12 +33,6 @@
 	{/if}
 
 	{if $objectperms->edit_sheet}
-		{if $editconflict eq 'y'}
-			{assign var="uWarning" value="&lt;br /&gt;{tr}Already being edited by{/tr} $semUser"}
-		{else}
-			{assign var="uWarning" value=""}
-		{/if}
-
 		{jq notonready=true}var editSheetButtonLabel2="{tr}Cancel{/tr}";{/jq}
 
 		{if $prefs.feature_contribution eq 'y'}
