@@ -97,7 +97,7 @@ class Services_Edit_PluginController
 		$page = $input->page->pagename();
 		$pluginArgs = $input->pluginArgs->array();
 		$bodyContent = $input->bodyContent->wikicontent();
-		$edit_icon = $input->edit_icon->text();
+		$edit_icon = $input->edit_icon->int();
 		$selectedMod = $input->selectedMod->text();
 
 		$tikilib = TikiLib::lib('tiki');
@@ -111,10 +111,17 @@ class Services_Edit_PluginController
 			}
 		}
 
+		Services_Exception_EditConflict::checkSemaphore($page);
+
+		if ($edit_icon) {
+			TikiLib::lib('service')->internal('semaphore', 'set', ['object_id' => $page]);
+		}
 
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 			$this->action_replace($input);
+
+			TikiLib::lib('service')->internal('semaphore', 'unset', ['object_id' => $page]);
 
 			return [
 				'redirect' => TikiLib::lib('wiki')->sefurl($page),
