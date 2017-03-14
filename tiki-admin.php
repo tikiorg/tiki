@@ -619,9 +619,6 @@ $smarty->assign('mysqlSSL', $isSSL);
 
 $smarty->assign('admin_icons', $admin_icons);
 
-if ($check === true) {
-	$smarty->assign('ticket', $_REQUEST['ticket']);
-}
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template

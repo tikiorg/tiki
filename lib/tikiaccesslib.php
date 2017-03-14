@@ -403,6 +403,7 @@ class TikiAccessLib extends TikiLib
 			if (!empty($ticket) && !empty($_SESSION['tickets'][$ticket])) {
 				$time = $_SESSION['tickets'][$ticket];
 				if ($time < time() && $time > (time()-(60*15))) {
+					TikiLib::lib('smarty')->assign('ticket', $ticket);
 					return true;
 				}
 			}
