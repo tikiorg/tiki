@@ -80,7 +80,7 @@ class Services_Edit_Controller
 
 		$page = $autoSaveIdParts[2];	// plugins use global $page for approval
 
-		if (!Perms::get('wiki page', $page)->edit || $user != $tikilib->get_semaphore_user($page)) {
+		if (!Perms::get('wiki page', $page)->edit || $user != TikiLib::lib('service')->internal('semaphore', 'get_user', ['object_id' => $page, 'check' => 1])) {
 			return '';
 		}
 
@@ -229,7 +229,8 @@ $(window).on("load", function(){
             $page = $autoSaveIdParts[2];	// plugins use global $page for approval
         }
 
-        if (!Perms::get('wiki page', $page)->edit || $user != $tikilib->get_semaphore_user($page)) {
+        if (!Perms::get('wiki page', $page)->edit || $user != TikiLib::lib('service')->internal('semaphore', 'get_user', ['object_id' => $page, 'check' => 1])
+		) {
             return false;
         }
 

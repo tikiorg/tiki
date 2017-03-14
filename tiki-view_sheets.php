@@ -256,20 +256,25 @@ $headerlib->add_jq_onready(
 					});'
 );
 
+$serviceLib = TikiLib::lib('service');
 $smarty->assign('semUser', '');
 if ($prefs['feature_warn_on_edit'] == 'y') {
-	if ($tikilib->semaphore_is_set($_REQUEST['sheetId'], $prefs['warn_on_edit_time'] * 60, 'sheet')
-			&& ($semUser = $tikilib->get_semaphore_user($_REQUEST['sheetId'], 'sheet')) != $user
+	if ($serviceLib->internal('semaphore', 'is_set', ['object_id' => $_REQUEST['sheetId'], 'object_type' => 'sheet']) &&
+		($semUser = $serviceLib->internal('semaphore', 'get_user', ['object_id' => $_REQUEST['sheetId'], 'object_type' => 'sheet'])) !== $user
 	) {
 		$editconflict = 'y';
 		$smarty->assign('semUser', $semUser);
 	} else {
 		$editconflict = 'n';
 	}
-	if ($_REQUEST['parse'] == 'edit') {
-		$_SESSION['edit_lock_sheet' . $_REQUEST['sheetId']] = $tikilib->semaphore_set($_REQUEST['sheetId'], 'sheet');
+	if ($_REQUEST['parse'] == 'edit' && $editconflict === 'n') {
+		$_SESSION['edit_lock_sheet' . $_REQUEST['sheetId']] = $serviceLib->internal('semaphore', 'set', ['object_id' => $_REQUEST['sheetId'], 'object_type' => 'sheet']);
 	} elseif (isset($_SESSION['edit_lock_sheet' . $_REQUEST['sheetId']])) {
-		$tikilib->semaphore_unset($_REQUEST['sheetId'], $_SESSION['edit_lock_sheet' . $_REQUEST['sheetId']]);
+		$serviceLib->internal('semaphore', 'unset', [
+			'object_id' => $_REQUEST['sheetId'],
+			'object_type' => 'sheet',
+			'lock' => $_SESSION['edit_lock_sheet' . $_REQUEST['sheetId']],
+		]);
 		unset($_SESSION['edit_lock_sheet' . $_REQUEST['sheetId']]);
 	}
 } else {

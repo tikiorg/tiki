@@ -54,6 +54,7 @@
 		<service id="tiki.controller.search_customsearch" class="Services_Search_CustomSearchController"/>
 		<service id="tiki.controller.search_manifold" class="Services_Search_ManifoldController"/>
 		<service id="tiki.controller.search_stored" class="Services_Search_StoredController"/>
+		<service id="tiki.controller.semaphore" class="Services_Edit_SemaphoreController"/>
 		<service id="tiki.controller.showtikiorg" class="Services_ShowTikiOrg_Controller"/>
 		<service id="tiki.controller.social" class="Services_User_SocialController"/>
 		<service id="tiki.controller.suite" class="Services_Suite_Controller"/>

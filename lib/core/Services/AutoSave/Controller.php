@@ -92,7 +92,8 @@ class Services_AutoSave_Controller
 		if ($referer && count($referer) === 3 && $referer[1] === 'wiki_page') {
 			$page = rawurldecode($referer[2]);	// plugins use global $page for approval
 
-			$isok = Perms::get('wiki page', $page)->edit && $user === TikiLib::lib('tiki')->get_semaphore_user($page);
+			$isok = Perms::get('wiki page', $page)->edit &&
+				$user === TikiLib::lib('service')->internal('semaphore', 'get_user', ['object_id' => $page, 'check' => 1]);
 		}
 
 		return $isok;
