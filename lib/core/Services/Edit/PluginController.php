@@ -117,7 +117,9 @@ class Services_Edit_PluginController
 			TikiLib::lib('service')->internal('semaphore', 'set', ['object_id' => $page]);
 		}
 
-		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		$util = new Services_Utilities();
+		$util->checkTicket();
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && $util->ticketMatch()) {
 
 			$this->action_replace($input);
 
@@ -127,7 +129,7 @@ class Services_Edit_PluginController
 				'redirect' => TikiLib::lib('wiki')->sefurl($page),
 			];
 
-		} else {        // render the form
+		} elseif ($util->ticketSet()) {        // render the form
 
 			$info = $parserlib->plugin_info($type);
 			$info['advancedParams'] = [];
@@ -200,6 +202,7 @@ class Services_Edit_PluginController
 
 				'info' => $info,
 				'title' => $info['name'],
+				'ticket' => $util->check['ticket']
 			];
 		}
 	}
@@ -283,6 +286,7 @@ class Services_Edit_PluginController
 					$user,
 					$tikilib->get_ip_address()
 				);
+				Feedback::success(tr('Plugin %0 on page %1 successfully edited.', $plugin, $page), 'session');
 
 				break;
 			}

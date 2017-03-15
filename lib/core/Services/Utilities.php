@@ -16,7 +16,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class Services_Utilities
 {
-	private $check;
+	public $check;
 	public $items;
 	private $action;
 
