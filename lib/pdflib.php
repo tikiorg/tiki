@@ -272,25 +272,13 @@ class PdfGenerator
 		if (!class_exists('mPDF')){
 	    	include_once($this->location . 'mpdf.php');
 		}
-		//checking preferences
-		$orientation=$prefs['print_pdf_mpdf_orientation']!=''?$prefs['print_pdf_mpdf_orientation']:'P';
+		//checking and getting plugin_pdf parameters if set
+		
+		$pdfSettings=$this->getPDFSettings($html,$pref);
 
-		$pageSize=$prefs['print_pdf_mpdf_size']!=''?$prefs['print_pdf_mpdf_size']:'Letter';
 
-		//custom size needs to be passed for Tabloid
-		if($prefs['print_pdf_mpdf_size']=="Tabloid")
-		  $pageSize=array(279,432);
-		elseif($orientation=='L')
-		  $pageSize=$pageSize.'-'.$orientation;
 
-		$marginLeft=$prefs['print_pdf_mpdf_margin_left']!=''?$prefs['print_pdf_mpdf_margin_left']:'10';
-		$marginRight=$prefs['print_pdf_mpdf_margin_right']!=''?$prefs['print_pdf_mpdf_margin_right']:'10';
-		$marginTop=$prefs['print_pdf_mpdf_margin_top']!=''?$prefs['print_pdf_mpdf_margin_top']:'10';
-		$marginBottom=$prefs['print_pdf_mpdf_margin_bottom']!=''?$prefs['print_pdf_mpdf_margin_bottom']:'10';
-		$marginHeader=$prefs['print_pdf_mpdf_margin_header']!=''?$prefs['print_pdf_mpdf_margin_header']:'5';
-		$marginFooter=$prefs['print_pdf_mpdf_margin_footer']!=''?$prefs['print_pdf_mpdf_margin_footer']:'5';
-
-	  	$mpdf=new mPDF('utf-8',$pageSize,'','',$marginLeft,$marginRight , $marginTop , $marginBottom , $marginHeader , $marginFooter ,$orientation);
+	  	$mpdf=new mPDF('utf-8',$pdfSettings['pageSize'],'','',$pdfSettings['marginLeft'],$pdfSettings['marginRight'] , $pdfSettings['marginTop'] , $pdfSettings['marginBottom'] , $pdfSettings['marginHeader'] , $pdfSettings['marginFooter'] ,$pdfSettings['orientation']);
 
 		//custom fonts add, currently fontawesome support is added, more fonts can be added in future
 		$custom_fontdata = array(
@@ -307,14 +295,14 @@ class PdfGenerator
 		$mpdf->autoLangToFont = true;
 
 		//setting header and footer
-		if($prefs['print_pdf_mpdf_header'])
-	      $mpdf->SetHeader($prefs['print_pdf_mpdf_header']);
-        if($prefs['print_pdf_mpdf_footer'])
-		$mpdf->SetFooter($prefs['print_pdf_mpdf_footer']);
+		if($pdfSettings['header'])
+	      $mpdf->SetHeader($pdfSettings['header']);
+        if($pdfSettings['footer'])
+		$mpdf->SetFooter($pdfSettings['footer']);
 		
 		//password protection
-		if($prefs['print_pdf_mpdf_password'])
-		   $mpdf->SetProtection(array(), 'UserPassword', $prefs['print_pdf_mpdf_password']);
+		if($pdfSettings['print_pdf_mpdf_password'])
+		   $mpdf->SetProtection(array(), 'UserPassword', $pdfSettings['print_pdf_mpdf_password']);
 
 		$mpdf->CSSselectMedia = 'print';				// assuming you used this in the document header
 
@@ -327,7 +315,7 @@ class PdfGenerator
 		$themecss = file_get_contents($themecss); // external css
 
 		//checking if print friendly option is enabled, then attach print css otherwise theme styles will be retained by theme css
-		if($prefs['print_pdf_mpdf_printfriendly']=='y')
+		if($pdfSettings['print_pdf_mpdf_printfriendly']=='y')
 		{
 			 $printcss = file_get_contents('themes/base_files/css/printpdf.css'); // external css
 
@@ -339,7 +327,51 @@ class PdfGenerator
 		}
 		$mpdf->WriteHTML(str_replace(array(".tiki","opacity: 0;"),array("","fill: #fff;opacity:0.3;stroke:black"),'<style>'.$basecss.$themecss.$printcss.$this->bootstrapReplace().'</style>'.$html));
 	    $this->clearTempImg($tempImgArr);
+	//echo str_replace(array(".tiki","opacity: 0;"),array("","fill: #fff;opacity:0.3;stroke:black"),'<style>'.$basecss.$themecss.$printcss.$this->bootstrapReplace().'</style>'.$html);
 	    return $mpdf->Output('', 'S');					// Return as a string
+	}
+	
+	function getPDFSettings($html,$prefs)
+	{
+		$pdfSettings=array();
+		
+		//checking if pdf plugin is set and passed
+		$doc = new DOMDocument();
+			@$doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+
+			$pdf = $doc->getElementsByTagName('pdfsettings')->item(0);
+			$prefs['print_pdf_mpdf_pagesize']=$prefs['print_pdf_mpdf_size'];
+			if($pdf)
+			{ 	if ($pdf->hasAttributes()) {
+					foreach ($pdf->attributes as $attr) {
+					//overridding global settings
+						$prefs['print_pdf_mpdf_'.$attr->nodeName]=$attr->nodeValue;
+					}
+				}
+			}
+		//checking preferences
+		$pdfSettings['orientation']=$prefs['print_pdf_mpdf_orientation']!=''?$prefs['print_pdf_mpdf_orientation']:'P';
+
+		$pdfSettings['pageSize']=$prefs['print_pdf_mpdf_pagesize']!=''?$prefs['print_pdf_mpdf_pagesize']:'Letter';
+
+		//custom size needs to be passed for Tabloid
+		if($prefs['print_pdf_mpdf_size']=="Tabloid")
+		  $pdfSettings['pageSize']=array(279,432);
+		elseif($pdfSettings['orientation']=='L')
+		  $pdfSettings['pageSize']=$pdfSettings['pageSize'].'-'.$pdfSettings['orientation'];
+
+		$pdfSettings['marginLeft']=$prefs['print_pdf_mpdf_margin_left']!=''?$prefs['print_pdf_mpdf_margin_left']:'10';
+		$pdfSettings['marginRight']=$prefs['print_pdf_mpdf_margin_right']!=''?$prefs['print_pdf_mpdf_margin_right']:'10';
+		$pdfSettings['marginTop']=$prefs['print_pdf_mpdf_margin_top']!=''?$prefs['print_pdf_mpdf_margin_top']:'10';
+		$pdfSettings['marginBottom']=$prefs['print_pdf_mpdf_margin_bottom']!=''?$prefs['print_pdf_mpdf_margin_bottom']:'10';
+		$pdfSettings['marginHeader']=$prefs['print_pdf_mpdf_margin_header']!=''?$prefs['print_pdf_mpdf_margin_header']:'5';
+		$pdfSettings['marginFooter']=$prefs['print_pdf_mpdf_margin_footer']!=''?$prefs['print_pdf_mpdf_margin_footer']:'5';
+        $pdfSettings['header']=$prefs['print_pdf_mpdf_header'];
+		$pdfSettings['footer']=$prefs['print_pdf_mpdf_footer'];
+		$pdfSettings['print_pdf_mpdf_password']=$prefs['print_pdf_mpdf_password'];
+		//PDF settings
+		return $pdfSettings;
+	
 	}
 	
 	function _getImages(&$html,&$tempImgArr)
@@ -488,7 +520,7 @@ class PdfGenerator
      }
 
 	 function bootstrapReplace(){
-	    return ".col-xs-12 {width: 90%;}.col-xs-11 {width: 81.66666667%;}.col-xs-10 {width: 72%;}.col-xs-9 {width: 64%;}.col-xs-8 {width: 57%;}.col-xs-7 {width: 49%;}.col-xs-6 {width: 42%;}.col-xs-5 {width: 35%;}.col-xs-4 {width: 28%;}.col-xs-3{width: 20%;}.col-xs-2 {width: 12.2%;}.col-xs-1 {width: 3.92%;}    .table-striped {border:1px solid #ccc;} .table-striped td { padding: 8px; line-height: 1.42857143;vertical-align: center;border-top: 1px solid #ccc;} .table-striped th { padding: 10px; line-height: 1.42857143;vertical-align: center;   } .table-striped .odd {padding:10px;} .trackerfilter form{display:none;} table.pvtTable tr td {border:1px solid}";
+	    return ".col-xs-12 {width: 100%;}.col-xs-11 {width: 81.66666667%;}.col-xs-10 {width: 72%;}.col-xs-9 {width: 64%;}.col-xs-8 {width: 62%;}.col-xs-7 {width: 49%;}.col-xs-6 {width: 45.7%;}.col-xs-5 {width: 35%;}.col-xs-4 {width: 28%;}.col-xs-3{width: 20%;}.col-xs-2 {width: 12.2%;}.col-xs-1 {width: 3.92%;}    .table-striped {border:1px solid #ccc;} .table-striped td { padding: 8px; line-height: 1.42857143;vertical-align: center;border-top: 1px solid #ccc;} .table-striped th { padding: 10px; line-height: 1.42857143;vertical-align: center;   } .table-striped .odd {padding:10px;} .trackerfilter form{display:none;} table.pvtTable tr td {border:1px solid}";
 	}
 	
 	function sortContent(&$table,&$tempValue,&$sortedContent,$tag)
@@ -528,10 +560,9 @@ $(".convert-mailto").removeClass("convert-mailto").each(function () {
 			   unlink("temp/#".$tid."_".session_id().".txt");
 			}
 		}
-
 		
 		
-}
+} //END OF PDF CLASS
 
 
 function cleanContent($content,$tagArr){
