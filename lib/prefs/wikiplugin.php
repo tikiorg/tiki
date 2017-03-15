@@ -142,6 +142,8 @@ function prefs_wikiplugin_list($partial = false)
 			$prefs['wikiplugin_' . $plugin]['tags'] = (array) $info['tags'];
 		}
 	}
+	
+	// The wikiplugin_snarf_cache preference does not toggle some SNARFCACHE plugin, but controls the cache time of the SNARF plugin.
 	$prefs['wikiplugin_snarf_cache'] = array(
 		'name' => tra('Global cache time for the plugin snarf in seconds'),
 		'description' => tra('Default cache time for the plugin snarf') . ', ' . tra('0 for no cache'),
