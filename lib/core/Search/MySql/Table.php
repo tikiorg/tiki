@@ -25,7 +25,11 @@ class Search_MySql_Table extends TikiDb_Table
 
 	function __destruct()
 	{
-		$this->flush();
+		try {
+			$this->flush();
+		} catch( Search_MySql_Exception $e ) {
+			# ignore this to cleanly destruct the object
+		}
 	}
 
 	function drop()
