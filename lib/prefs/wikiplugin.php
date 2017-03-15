@@ -11,7 +11,7 @@ function prefs_wikiplugin_list($partial = false)
 	
 	$parserlib = TikiLib::lib('parser');
 	
-	// Note that most of these will be disabled by an other feature check.
+	// Note that most of the plugins controlled by the following preferences will be disabled by another feature check. For example, PluginCalendar depends not only on wikiplugin_calendar, but also on feature_calendar. 
 	$defaultPlugins = array(
 		'article' => 'y',
 		'articles' => 'y',
