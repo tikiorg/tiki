@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2017 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -1341,7 +1341,12 @@ function wikiplugin_img( $data, $params )
 	if (!empty($imgdata['button']) || !empty($imgdata['desc']) || !empty($imgdata['styledesc']) || !empty($imgdata['metadata'])) {
 		//To set room for enlarge button under image if there is no description
 		$descheightdef = 'height:17px;clear:left;';
-		$repl .= "\r\t" . '<div class="mini" style="width:' . $width . 'px;';
+		if (!empty($imgdata["width"])) {
+			$descwidth = 'max-width: 100%; width:' . $width . 'px;';
+		} else {
+			$descwidth = '';
+		}
+		$repl .= "\r\t" . '<div class="mini" style="' . $descwidth;
 		if ( !empty($imgdata['styledesc']) ) {
 			if (($imgdata['styledesc'] == 'left') || ($imgdata['styledesc'] == 'right')) {
 				$repl .= 'text-align:' . $imgdata['styledesc'] . '">';
@@ -1457,22 +1462,22 @@ function wikiplugin_img( $data, $params )
 				}
 			}
 			if (empty($imgdata['button']) && empty($imgdata['desc']) && empty($styleboxinit) && $boxwidth !== 2) {
-				$styleboxplus = $alignbox . ' width:' . $boxwidth . 'px; height:' . $boxheight . 'px';
+				$styleboxplus = $alignbox . ' max-width: 100%; width:' . $boxwidth . 'px; height:' . $boxheight . 'px';
 			} elseif (!empty($styleboxinit)) {
 				if ((strpos(trim($imgdata['stylebox'], ' '), 'height:') === false)
 					&& (strpos(trim($imgdata['stylebox'], ' '), 'width:') === false)
 				) {
-					$styleboxplus = $styleboxinit . ' width:' . $boxwidth . 'px;';
+					$styleboxplus = $styleboxinit . ' max-width: 100%; width:' . $boxwidth . 'px;';
 				} else {
 					$styleboxplus = $styleboxinit;
 				}
 			} elseif ($boxwidth === 2) {
 				$styleboxplus = $alignbox . ' width: auto;';
 			} else {
-				$styleboxplus = $alignbox . ' width:' . $boxwidth . 'px;';
+				$styleboxplus = $alignbox . ' max-width: 100%; width:' . $boxwidth . 'px;';
 			}
 		} elseif (!empty($imgdata['button']) || !empty($imgdata['desc']) || !empty($imgdata['metadata'])) {
-			$styleboxplus = ' width:' . $boxwidth . 'px;';
+			$styleboxplus = ' max-width: 100%; width:' . $boxwidth . 'px;';
 		} elseif ($boxwidth === 2) {
 			$styleboxplus = ' width: auto;';
 		}
