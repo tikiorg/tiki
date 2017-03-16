@@ -2150,14 +2150,22 @@ function wikiplugin_trackerlist($data, $params)
 						$smarty->assign('item', $item);
 						$smarty->assign('wiki', "wiki:$wiki");
 						$smarty->assign('showpopup', 'n');
-						$items['data'][$i]['over'] = $smarty->fetch('tracker_pretty_item.tpl');
+						try {
+							$items['data'][$i]['over'] = $smarty->fetch('tracker_pretty_item.tpl');
+						} catch( SmartyException $se ) {
+							$items['data'][$i]['over'] = $se->getMessage();
+						}
 					}
 					if (!empty($tplwiki)) {
 						$smarty->assign('fields', $item['field_values']);
 						$smarty->assign('item', $item);
 						$smarty->assign('wiki', "tplwiki:$tplwiki");
 						$smarty->assign('showpopup', 'n');
-						$items['data'][$i]['over'] = $smarty->fetch('tracker_pretty_item.tpl');
+						try {
+							$items['data'][$i]['over'] = $smarty->fetch('tracker_pretty_item.tpl');
+						} catch( SmartyException $se ) {
+							$items['data'][$i]['over'] = $se->getMessage();
+						}
 					}
 					if (empty($items['data'][$i]['over'])) {
 						$items['data'][$i]['over'] = $trklib->get_isMain_value($trackerId, $item['itemId']);
