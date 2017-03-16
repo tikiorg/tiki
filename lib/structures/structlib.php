@@ -772,12 +772,12 @@ class StructLib extends TikiLib
 
 	public function compareByPageName($a, $b)
 	{
-		return strcmp($a['pageName'], $b['pageName']);
+		return strcasecmp($a['pageName'], $b['pageName']);
 	}
 
 	public function compareByPageNameDesc($a, $b)
 	{
-		return strcmp($b['pageName'], $a['pageName']);
+		return strcasecmp($b['pageName'], $a['pageName']);
 	}
 
 	public function fetch_toc($structure_tree,$showdesc,$numbering,$type='plain',$page='',$maxdepth=0,$cur_depth=0,$structurePageName='')
