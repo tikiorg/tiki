@@ -43,7 +43,7 @@ class Tiki_MemoryLimit
 
 	private function getRaw($memory_limit)
 	{
-		$s = trim($memory_limit);
+		$s = (int) trim($memory_limit);
 		$last = strtolower($s{strlen($s)-1});
 		switch ( $last ) {
 			case 'g': $s *= 1024;
