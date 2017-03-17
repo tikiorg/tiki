@@ -61,12 +61,12 @@ class ThemeInstaller extends LibraryInstaller implements EventSubscriberInterfac
 	{
 		parent::update($repo, $initial, $target);
 
-		$this->queue[] = $package;
+		$this->queue[] = $target;
 	}
 
 	public function finalize()
 	{
-		require_once 'vendor/autoload.php';
+		require_once $this->composer->getConfig()->get('vendor-dir') . '/autoload.php';
 		foreach ($this->queue as $package) {
 			$this->finalizePackage($package);
 		}
