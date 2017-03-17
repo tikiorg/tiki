@@ -110,6 +110,37 @@ class Search_Indexer
 		return count($data);
 	}
 
+
+	/**
+	 * Return all supported content types and their fields
+	 *
+	 * @return array
+	 */
+	public function getAvailableFields(): array
+	{
+		$output = [
+			'global' => [],
+			'object_types' => [],
+		];
+		/**
+		 * @var  string $objectType
+		 * @var  Search_ContentSource_Interface $contentSource
+		 */
+		foreach ($this->contentSources as $objectType => $contentSource) {
+			$output['object_types'][$objectType] = $contentSource->getProvidedFields();
+			$output['global'] = array_unique(
+				array_merge(
+					$output['global'],
+					array_keys(
+						array_filter($contentSource->getGlobalFields())
+					)
+				)
+			);
+		}
+
+		return $output;
+	}
+
 	public function getDocuments($objectType, $objectId)
 	{
 		$out = array();
