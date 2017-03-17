@@ -71,7 +71,7 @@
 										<input type="hidden" name="filter~{$key|escape}" value="{$filter|escape}"/>
 									{/foreach}
 									{if $smod_params.show_search_button eq 'y'}
-										<input type = "submit" class="btn btn-default btn-sm tips{if $smod_params.default_button eq 'search'} button_default{/if}{if $smod_params.compact eq "y"} bottom{else} btn-xs{/if}"
+										<input type = "submit" class="btn btn-default btn-sm tips{if $smod_params.default_button eq 'search'} btn-primary button_default{/if}{if $smod_params.compact eq "y"} bottom{else} btn-xs{/if}"
 											   name = "search" value = "{$smod_params.search_submit|escape}"
 											   title="{tr}Search{/tr}|{tr}Search for text throughout the site.{/tr}"
 											   {if $smod_params.compact eq "y"}data-placement="bottom"{/if}
@@ -79,9 +79,9 @@
 										/>
 									{/if}
 									{if $smod_params.show_go_button eq 'y'}
-										<input type = "submit" class="btn btn-default btn-sm tips{if $smod_params.compact eq "y"} bottom{else} btn-xs{/if}{if $smod_params.default_button eq 'go'} button_default{/if}"
+										<input type = "submit" class="btn btn-default btn-sm tips{if $smod_params.compact eq "y"} bottom{else} btn-xs{/if}{if $smod_params.default_button eq 'go'} btn-primary button_default{/if}"
 											   name = "go" value = "{$smod_params.go_submit|escape}"
-											   title="{tr}Search{/tr}|{tr}Go directly to a page, or search in page titles if exact match is not found.{/tr}"
+											   title="{tr}Go{/tr}|{tr}Go directly to a page, or search in page titles if exact match is not found.{/tr}"
 											   {if $smod_params.compact eq "y"}data-placement="bottom"{/if}
 											   onclick = "$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.go_action|escape:javascript}').attr('page_selected','');
 											   {if $smod_params.search_action eq 'tiki-searchindex.php'}
@@ -91,9 +91,9 @@
 										<input type="hidden" name="exact_match" value="" />
 									{/if}
 									{if $smod_params.show_edit_button eq 'y' and $tiki_p_edit eq 'y'}
-										<input type = "submit" class = "btn btn-default btn-sm tips{if $smod_params.compact eq "y"} bottom{else} btn-xs{/if}{if $smod_params.default_button eq 'edit'} button_default{/if}"
+										<input type = "submit" class = "btn btn-default btn-sm tips{if $smod_params.compact eq "y"} bottom{else} btn-xs{/if}{if $smod_params.default_button eq 'edit'} btn-primary button_default{/if}"
 											   name = "edit" value = "{$smod_params.edit_submit|escape}"
-											   title="{tr}Search{/tr}|{tr}Edit existing page or create a new one.{/tr}"
+											   title="{tr}Edit{/tr}|{tr}Edit existing page or create a new one.{/tr}"
 											   {if $smod_params.compact eq "y"}data-placement="bottom"{/if}
 											   onclick = "$('#search-module-form{$search_mod_usage_counter} input[name!={if $smod_params.search_action eq 'tiki-searchindex.php'}\'filter~content\'{else}\'find\'{/if}]').attr('name', '');
 													   $('#search-module-form{$search_mod_usage_counter} input[name={if $smod_params.search_action eq 'tiki-searchindex.php'}\'filter~content\'{else}\'find\'{/if}]').attr('name', 'page');
