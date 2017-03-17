@@ -384,14 +384,18 @@ class UnifiedSearchLib
 
 		if ($prefs['feature_file_galleries'] == 'y') {
 			$types['file'] = tra('file');
+			$types['file gallery'] = tra('file gallery');
 		}
 
 		if ($prefs['feature_forums'] == 'y') {
 			$types['forum post'] = tra('forum post');
+			$types['forum'] = tra('forum');
 		}
 
 		if ($prefs['feature_trackers'] == 'y') {
 			$types['trackeritem'] = tra('tracker item');
+			$types['tracker'] = tra('tracker');
+			$types['trackerfield'] = tra('tracker field');
 		}
 
 		if ($prefs['feature_sheet'] == 'y') {
@@ -405,6 +409,18 @@ class UnifiedSearchLib
 			|| $prefs['feature_trackers'] == 'y'
 		) {
 			$types['comment'] = tra('comment');
+		}
+
+		if ($prefs['feature_categories'] === 'y') {
+			$types['category'] = tra('category');
+		}
+
+		if ($prefs['feature_webservices'] === 'y') {
+			$types['webservice'] = tra('webservice');
+		}
+
+		if ($prefs['activity_basic_events'] === 'y' || $prefs['activity_custom_events'] === 'y') {
+			$types['activity'] = tra('activity');
 		}
 
 		$types['user'] = tra('user');
@@ -492,6 +508,12 @@ class UnifiedSearchLib
 	{
 		$indexer = $this->buildIndexer($this->getIndex());
 		return $indexer->getDocuments($type, $object);
+	}
+
+	public function getAvailableFields()
+	{
+		$indexer = $this->buildIndexer($this->getIndex());
+		return $indexer->getAvailableFields();
 	}
 
     /**
