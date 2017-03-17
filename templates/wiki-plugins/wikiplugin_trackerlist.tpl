@@ -5,7 +5,7 @@
 	{capture assign=tdastyle}style="margin:-10em;padding:10em;display:block"{/capture}
 	{capture assign=txturl}{if isset($showlinks) && $showlinks=='y'}{$url}{/if}{/capture}
 	{capture assign=rowurl}{if isset($showlinks) && $showlinks=='r'}{$url}{/if}{/capture}
-	{capture assign=showlinks}{if isset($showlinks) && $showlinks=='r'}n{/if}{/capture}
+	{capture assign=showlinks}{if isset($showlinks) && $showlinks=='r'}n{else}{$showlinks}{/if}{/capture}
 	{if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 	{if $showdesc eq 'y'}
 		<div class="wikitext">
