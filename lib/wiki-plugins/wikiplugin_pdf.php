@@ -3,21 +3,20 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin-pivottable.php 57956 2016-03-17 19:58:12Z jonnybradley $
 
 function wikiplugin_pdf_info()
 {
 	//including prefs to set global print settings as default value of parameters
 	global $prefs;
 	 return array(
-                'name' => tra('PluginPDF'),
+                'name' => 'PluginPDF',
                 'documentation' => 'PluginPDF',
                 'description' => tra('For customized pdf generation, to override global pdf settings.'),
                 'tags' => array( 'basic' ),
                 'prefs' => array( 'wikiplugin_pdf' ),
 				'format' => 'html',
 				'iconname' => 'pdf',
-				'introduced' => 17.1,
+				'introduced' => 17,
                 'params' => array(
 					'printfriendly' => array(
 						'name' => tra('Print Friendly PDF'),
@@ -129,15 +128,15 @@ function wikiplugin_pdf_info()
 
 function wikiplugin_pdf($data, $params)
 {
-	//included globals for permission check
+	//included globals to check mpdf selection as pdf generation engine
 	global $prefs;
 	
 	//checking if mdpf is default pdf generation engine, since plugin is only set for mpdf. 
 	if($prefs['print_pdf_from_url'] != 'mpdf')
-		return WikiParser_PluginOutput::internalError(tr('For pluginPDF, please select mpdf as default pdf engine from Print Settings.'));
+		return WikiParser_PluginOutput::internalError(tr('For pluginPDF, please select mpdf as default PDF engine from Print Settings.'));
 	$paramList='';
-	//creating string of paramaters
-	foreach($params as $paramName=>$param)
+	//creating string of data paramaters set by user
+ 	foreach($params as $paramName=>$param)
 	{
 		$paramList.=$paramName."='".$param."' ";
 	}

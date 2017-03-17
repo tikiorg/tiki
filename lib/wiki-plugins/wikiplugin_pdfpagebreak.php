@@ -10,11 +10,11 @@ function wikiplugin_pdfpagebreak_info()
 	 return array(
                 'name' => tra('PluginPDF Page Break'),
                 'documentation' => 'PluginPDFPageBreak',
-                'description' => tra('Inserts new page in pdf, no parameters needed.'),
+                'description' => tra('Helpful to format PDF files created, plugin adds page break in PDF file generated.'),
                 'tags' => array( 'basic' ),
 				'iconname' => 'pdf',
                 'prefs' => array( 'wikiplugin_pdf' ),
-				'introduced' => 17.1,
+				'introduced' => 17,
                    
         );
 }
