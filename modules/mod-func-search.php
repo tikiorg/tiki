@@ -71,15 +71,15 @@ function module_search_info()
 				'description' => tra("If set, send the form to the given location (relative to Tiki's root) for processing.") . ' ' . tra('Default:') . tra(' tiki-searchresults.php or tiki-searchindex.php (for Tiki search)'),
 			),
 			'search_submit' => array(
-				'name' => tra('Edit Submit Label'),
+				'name' => tra('Search Submit Label'),
 				'description' => tra('The label on the button to submit the form.') . ' ' . tra('Default:') . ' ' . tra('Search'),
 			),
 			'go_action' => array(
 				'name' => tra('Go Form Action'),
-				'description' => tra("If set, send the form to the given location (relative to Tiki's root) for processing.") . ' ' . tra('Default:') . ' tiki-editpage.php'
+				'description' => tra("If set, send the form to the given location (relative to Tiki's root) for processing.") . ' ' . tra('Default:') . ' tiki-listpages.php'
 			),
 			'go_submit' => array(
-				'name' => tra('Edit Submit Label'),
+				'name' => tra('Go Submit Label'),
 				'description' => tra('The label on the button to submit the form.') . ' ' . tra('Default:') . ' ' . tra('Go')
 			),
 			'edit_action' => array(
@@ -177,7 +177,7 @@ function module_search($mod_reference, $smod_params) 	// modifies $smod_params s
 		'search_action' => $smod_params['tiki_search'] === 'y' ? 'tiki-searchindex.php' : 'tiki-searchresults.php',
 		'search_submit' => tra('Search'),
 		'go_action' => 'tiki-listpages.php',
-		'go_submit' => tra('Titles'),
+		'go_submit' => tra('Go'),
 		'edit_action' => 'tiki-editpage.php',
 		'edit_submit' => tra('Edit'),
 		'search_heading' => '',
