@@ -17,7 +17,7 @@ if (!isset($_REQUEST['known_hosts'])) {
 	$_REQUEST['known_hosts'] = array();
 }
 
-if ($check === true) {
+if ($access->ticketMatch()) {
 	if (isset($_REQUEST['del'])) {
 		//TODO add service for confirm popup
 //		$access->check_authenticity(tra('Are you sure you want to remove this server?'));

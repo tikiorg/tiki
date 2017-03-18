@@ -167,7 +167,7 @@ $temp_filters = isset($_REQUEST['filters']) ? explode(' ', $_REQUEST['filters'])
 $smarty->assign('pref_filters', $prefslib->getFilters($temp_filters));
 
 if ( isset( $_REQUEST['lm_preference'] ) ) {
-	if ($check === true) {
+	if ($access->ticketMatch()) {
 		$changes = $prefslib->applyChanges((array) $_REQUEST['lm_preference'], $_REQUEST);
 		foreach ( $changes as $pref => $val ) {
 			if ($val['type'] == 'reset') {

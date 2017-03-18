@@ -10,7 +10,7 @@
 require_once ('tiki-setup.php');
 $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
-if (isset($_REQUEST["cleanup"]) && $check === true) {
+if (isset($_REQUEST["cleanup"]) && $access->ticketMatch()) {
 	$freetaglib = TikiLib::lib('freetag');
 	$result = $freetaglib->cleanup_tags();
 	if ($result) {

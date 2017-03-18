@@ -13,7 +13,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 $imagegallib = TikiLib::lib('imagegal');
 
-if ($check === true) {
+if ($access->ticketMatch()) {
 	if (isset($_REQUEST['galfeatures'])) {
 		// Check for last character being a / or a \
 		// My next commit is to create a clas to put this code into

@@ -13,7 +13,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 $filegallib = TikiLib::lib('filegal');
 
-if ($check === true) {
+if ($access->ticketMatch()) {
 	if (isset($_REQUEST["filegalfeatures"])) {
 		// Check for last character being a / or a \
 		if (substr($_REQUEST["fgal_use_dir"], -1) != "\\" && substr($_REQUEST["fgal_use_dir"], -1) != "/" && $_REQUEST["fgal_use_dir"] != "") {

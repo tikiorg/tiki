@@ -10,7 +10,7 @@
 require_once ('tiki-setup.php');
 $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
-if (isset($_REQUEST['new_prefs']) && $check === true) {
+if (isset($_REQUEST['new_prefs']) && $access->ticketMatch()) {
 	$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 	$in = array();
 	$out = array();
@@ -47,7 +47,7 @@ if (isset($_REQUEST['new_prefs']) && $check === true) {
 
 $smarty->assign('now', $tikilib->now);
 
-if (!empty($_REQUEST['testMail']) && $check === true) {
+if (!empty($_REQUEST['testMail']) && $access->ticketMatch()) {
 	include_once('lib/webmail/tikimaillib.php');
 	$mail = new TikiMail();
 	$mail->setSubject(tra('Tiki Email Test'));

@@ -25,11 +25,11 @@ class Services_Exception_BadRequest extends Services_Exception
 	public static function checkAccess($message = null)
 	{
 		$access = TikiLib::lib('access');
-		$check = $access->check_authenticity(null, false);
-		if ($check === false) {
+		$access->check_authenticity(null, false);
+		if ($access->check === false) {
 			throw new self($message);
 		} else {
-			return $check;
+			return $access->check;
 		}
 	}
 }

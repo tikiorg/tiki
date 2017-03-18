@@ -11,17 +11,14 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
-if (isset($_REQUEST['import'])) {
-	if ($check === true) {
-		$artlib = TikiLib::lib('art');
-		$fname = $_FILES['csvlist']['tmp_name'];
-		$msgs = array();
-		$result = $artlib->import_csv($fname, $msgs);
-		if ($result) {
-			Feedback::success(tr('File %0 succesfully imported.', $_FILES['csvlist']['name']), 'session');
-		} elseif (!empty($msgs)) {
-			Feedback::error(['mes' => $msgs], 'session');
-		}
+if (isset($_REQUEST['import']) && $access->ticketMatch()) {
+	$artlib = TikiLib::lib('art');
+	$fname = $_FILES['csvlist']['tmp_name'];
+	$msgs = array();
+	$result = $artlib->import_csv($fname, $msgs);
+	if ($result) {
+		Feedback::success(tr('File %0 succesfully imported.', $_FILES['csvlist']['name']), 'session');
+	} elseif (!empty($msgs)) {
+		Feedback::error(['mes' => $msgs], 'session');
 	}
-	$adminRedirect = true;
 }
