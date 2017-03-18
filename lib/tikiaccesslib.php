@@ -23,6 +23,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 class TikiAccessLib extends TikiLib
 {
 	private $noRedirect = false;
+	public $check;
 
 	function preventRedirect($prevent)
 	{
@@ -324,7 +325,10 @@ class TikiAccessLib extends TikiLib
 				} else {
 					//returns true or false and optionally sends a Feedback error message if ticket doesn't match or is
 					//too old
-					return $this->key_check(false, $errorMsg);
+					$keyCheck = $this->key_check(false, $errorMsg);
+					$this->check = $keyCheck;
+					//eventually phase out returning a result in favor of setting the $check property
+					return $keyCheck;
 				}
 			//set ticket
 			} else {
@@ -333,10 +337,23 @@ class TikiAccessLib extends TikiLib
 					$this->key_get($confirmation_text, '', true);
 				} else {
 					//returns the ticket that should be placed in a form with the daconfirm hidden input with other code
-					return $this->key_get(null, null, false);
+					$keyGet = $this->key_get(null, null, false);
+					$this->check = $keyGet;
+					//eventually phase out returning a result in favor of setting the $check property
+					return $keyGet;
 				}
 			}
 		}
+	}
+
+	/**
+	 * CSRF ticket - Check that the ticket has been matched to the previous ticket set
+	 *
+	 * @return bool
+	 */
+	public function ticketMatch()
+	{
+		return $this->check === true;
 	}
 
 	/**
