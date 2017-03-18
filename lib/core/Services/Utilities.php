@@ -222,7 +222,6 @@ class Services_Utilities
 				'items' => $this->items,
 				'extra' => $extra,
 				'ticket' => $this->check['ticket'],
-				'confirm' => 'y',
 			]
 		];
 		return $ret;

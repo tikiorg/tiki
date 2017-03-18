@@ -71,6 +71,7 @@ class Services_Access_Controller
 			'customMsg' => $customMsg,
 			'confirmButton' => $confirmButton,
 			'confirmButtonClass' => $confirmButtonClass,
+			//used in templates/layouts/internal/modal.tpl
 			'confirm' => 'y',
 		];
 	}
