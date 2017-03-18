@@ -106,7 +106,8 @@
 		"zendframework/zend-mail": "~2.4",
 		"zendframework/zendsearch": "~2.0.0@RC",
 		"adodb/adodb-php": "^5.20",
-		"cweagans/composer-patches": "^1.6"
+		"cweagans/composer-patches": "^1.6",
+		"symfony/process": "~2.6"
 	},
 	"require-dev": {
 		"mikey179/vfsStream": "1.1.0",

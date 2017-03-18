@@ -50,6 +50,17 @@ function saveScheduler($isUpdate = false)
 
 	if ($addTask) {
 
+		$className = 'Scheduler_Task_' . $task;
+		if (!class_exists($className)) {
+			Feedback::error(tra('An error occurred, please contact the administrator.'), 'session');
+			$access = TikiLib::lib('access');
+			$access->redirect('tiki-admin_schedulers.php');
+			die;
+		}
+
+		$class = new $className();
+		$params = $class->parseParams();
+
 		if (!$isUpdate) {
 			$schedLib->set_scheduler($name, $description, $task, $params, $runTime, $status, $reRun);
 			$feedback = sprintf(tra('Scheduler %s was created.'), $name);
@@ -98,6 +109,7 @@ if (isset($_POST['new_scheduler'])) {
 		$schedulerinfo['name'] = '';
 		$schedulerinfo['description'] = '';
 		$schedulerinfo['task'] = '';
+		$schedulerinfo['params'] = [];
 		$schedulerinfo['run_time'] = '';
 		$schedulerinfo['status'] = '';
 		$schedulerinfo['re_run'] = '';
@@ -105,6 +117,7 @@ if (isset($_POST['new_scheduler'])) {
 		$_REQUEST['scheduler'] = 0;
 	} else {
 
+		$schedulerinfo['params'] = json_decode($schedulerinfo['params'], true);
 		$schedulerRuns = $schedLib->get_scheduler_runs($_REQUEST['scheduler'], 10);
 
 	}

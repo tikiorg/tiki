@@ -22,6 +22,8 @@ class Scheduler_Item
 
 	static $availableTasks = array(
 		'ConsoleCommandTask' => 'ConsoleCommand',
+		'ShellCommandTask' => 'ShellCommand',
+		'HTTPGetCommandTask' => 'HTTPGetCommand',
 	);
 
 	public function __construct($id, $name, $description, $task, $params, $run_time, $status, $re_run)
@@ -64,7 +66,9 @@ class Scheduler_Item
 			$task = new $class();
 
 			$start_time = $schedlib->start_scheduler_run($this->id);
-			$result = $task->execute($this->params);
+
+			$params = json_decode($this->params, true);
+			$result = $task->execute($params);
 
 			$executionStatus = $result ? 'done' : 'failed';
 			$outputMessage = $task->getOutput();

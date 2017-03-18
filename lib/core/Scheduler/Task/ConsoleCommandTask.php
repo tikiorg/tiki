@@ -9,20 +9,18 @@ use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Tiki\Command\Application;
 
-class Scheduler_Task_ConsoleCommandTask
+class Scheduler_Task_ConsoleCommandTask extends Scheduler_Task_CommandTask
 {
-
-	private $errorMessage = '';
 
 	public function execute($params = null)
 	{
-		if (empty($params)) {
+		if (empty($params['console_command'])) {
 			$this->errorMessage = tra('Missing parameters to run the command.');
 			return false;
 		}
 
-		$params = 'console.php ' . $params;
-		$args = $this->parseParams($params);
+		$consoleParams = 'console.php ' . $params['console_command'];
+		$args = $this->parseConsoleParams($consoleParams);
 
 		$commandName = $args[1];
 
@@ -46,16 +44,20 @@ class Scheduler_Task_ConsoleCommandTask
 		}
 	}
 
-	private function parseParams($params) {
+	private function parseConsoleParams($params) {
 
 		preg_match_all ('/(?<=^|\s)([\'"]?)(.+?)(?<!\\\\)\1(?=$|\s)/', $params, $args);
 
 		return $args[2];
 	}
 
-	public function getOutput()
-	{
-		return $this->errorMessage;
+	public function getParams() {
+		return array(
+			'console_command' => array(
+				'name' => tra('Console command'),
+				'type' => 'text'
+			),
+		);
 	}
 
 }

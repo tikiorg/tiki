@@ -159,13 +159,11 @@
 				</select>
 			</div>
 		</div>
-		<div class="form-group">
-			<label class="col-sm-3 col-md-2 control-label" for="scheduler_params">{tr}Parameters{/tr}</label>
-			<div class="col-sm-7 col-md-6">
-				<input type="text" id='scheduler_params' class="form-control" name='scheduler_params'
-					   value="{$schedulerinfo.params|escape}">
-			</div>
-		</div>
+
+		{foreach from=$schedulerTasks key=commandName item=taskName}
+			{scheduler_params name=$commandName params=$schedulerinfo.params}
+		{/foreach}
+
 		<div class="form-group">
 			<label class="col-sm-3 col-md-2 control-label" for="scheduler_time">{tr}Run Time{/tr}</label>
 			<div class="col-sm-7 col-md-6">
@@ -231,3 +229,14 @@
 		{/tab}
 	{/if}
 {/tabset}
+
+{jq}
+	var selectedSchedulerTask = $('select[name="scheduler_task"]').val();
+	$('div [data-task-name="'+selectedSchedulerTask+'"]').show();
+
+	$('select[name="scheduler_task"]').on('change', function() {
+		var taskName = this.value;
+		$('div [data-task-name]:not([data-task-name="'+taskName+'"])').hide();
+		$('div [data-task-name="'+taskName+'"]').show();
+	});
+{/jq}
