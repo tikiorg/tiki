@@ -377,27 +377,27 @@ class SheetLib extends TikiLib
 		if (!$this->setup_jQuery_sheet_files) {
 			$headerlib
                 //core
-                ->add_cssfile( 'vendor/jquery/jquery-sheet/jquery.sheet.css' )
-                ->add_jsfile( 'vendor/jquery/jquery-sheet/jquery.sheet.js' )
+                ->add_cssfile( 'vendor_bundled/vendor/jquery/jquery-sheet/jquery.sheet.css' )
+                ->add_jsfile( 'vendor_bundled/vendor/jquery/jquery-sheet/jquery.sheet.js' )
 
                 //parsers
-                ->add_jsfile( 'vendor/jquery/jquery-sheet/parser/formula/formula.js' )
-                ->add_jsfile( 'vendor/jquery/jquery-sheet/parser/tsv/tsv.js' )
+                ->add_jsfile( 'vendor_bundled/vendor/jquery/jquery-sheet/parser/formula/formula.js' )
+                ->add_jsfile( 'vendor_bundled/vendor/jquery/jquery-sheet/parser/tsv/tsv.js' )
 
                 //tiki integration
                 ->add_jsfile( 'lib/sheet/grid.js' )
 
 			    // plugins
-                ->add_jsfile( 'vendor/jquery/jquery-sheet/plugins/jquery.sheet.dts.js' )
-                ->add_jsfile( 'vendor/jquery/jquery-sheet/plugins/jquery.sheet.advancedfn.js' )
-                ->add_jsfile( 'vendor/jquery/jquery-sheet/plugins/jquery.sheet.financefn.js' )
+                ->add_jsfile( 'vendor_bundled/vendor/jquery/jquery-sheet/plugins/jquery.sheet.dts.js' )
+                ->add_jsfile( 'vendor_bundled/vendor/jquery/jquery-sheet/plugins/jquery.sheet.advancedfn.js' )
+                ->add_jsfile( 'vendor_bundled/vendor/jquery/jquery-sheet/plugins/jquery.sheet.financefn.js' )
 
-                ->add_jsfile( 'vendor/jquery/jquery-sheet/plugins/globalize.js' )
-                ->add_jsfile( 'vendor/jquery/jquery-sheet/plugins/globalize.cultures.js' )
+                ->add_jsfile( 'vendor_bundled/vendor/jquery/jquery-sheet/plugins/globalize.js' )
+                ->add_jsfile( 'vendor_bundled/vendor/jquery/jquery-sheet/plugins/globalize.cultures.js' )
 
-                ->add_jsfile( 'vendor/jquery/jquery-sheet/plugins/jquery.nearest.min.js', true )
-                ->add_jsfile( 'vendor/jquery/jquery-sheet/plugins/raphael-min.js', true )
-                ->add_jsfile( 'vendor/jquery/jquery-sheet/plugins/g.raphael-min.js', true );
+                ->add_jsfile( 'vendor_bundled/vendor/jquery/jquery-sheet/plugins/jquery.nearest.min.js', true )
+                ->add_jsfile( 'vendor_bundled/vendor/jquery/jquery-sheet/plugins/raphael-min.js', true )
+                ->add_jsfile( 'vendor_bundled/vendor/jquery/jquery-sheet/plugins/g.raphael-min.js', true );
 
 			$this->setup_jQuery_sheet_files = true;
 		}

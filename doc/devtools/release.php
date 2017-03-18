@@ -356,7 +356,7 @@ function get_files_list($dir, &$entries, $regexp_pattern)
 		$entry = $dir . '/' . $e;
 		if (is_dir($entry)) {
 			// do not descend and no CVS/Subversion files
-			if ($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry != './temp/templates_c' && $entry != './vendor') {
+			if ($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry != './temp/templates_c' && $entry != './vendor_bundled/vendor') {
 				if (! get_files_list($entry, $entries, $regexp_pattern)) {
 					return false;
 				}
@@ -409,7 +409,7 @@ function check_smarty_syntax(&$error_msg)
 	$prefs['log_tpl'] = 'y';
 	$prefs['feature_sefurl_filter'] = 'y';
 	$prefs['site_layout'] = 'basic';
-	require_once 'vendor/smarty/smarty/libs/Smarty.class.php';
+	require_once 'vendor_bundled/vendor/smarty/smarty/libs/Smarty.class.php';
 	require_once 'lib/init/smarty.php';
 	// needed in Smarty_Tiki
 	define('TIKI_PATH', getcwd());

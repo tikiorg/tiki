@@ -30,7 +30,7 @@ test = { mode: function () {}, indentation: function() {} }
 		$js .= @file_get_contents("lib/codemirror_tiki/mode/tiki/tiki.js");
  		$css .= @file_get_contents("themes/base_files/feature_css/codemirror_mode_tiki.css");
 
-		foreach (glob('vendor/codemirror/codemirror/mode/*', GLOB_ONLYDIR) as $dir) {
+		foreach (glob('vendor_bundled/vendor/codemirror/codemirror/mode/*', GLOB_ONLYDIR) as $dir) {
 			foreach (glob($dir.'/*.js', GLOB_NOCHECK) as $jsFile) {
 				if(
 					is_file($jsFile) && (
@@ -54,7 +54,7 @@ test = { mode: function () {}, indentation: function() {} }
 		}
 
 		//load themes
-		foreach (glob('vendor/codemirror/codemirror/theme/*.css') as $cssFile) {
+		foreach (glob('vendor_bundled/vendor/codemirror/codemirror/theme/*.css') as $cssFile) {
 			$css .= @file_get_contents($cssFile);
 		}
 

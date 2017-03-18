@@ -3926,10 +3926,10 @@ table.tablesorter thead tr.tablesorter-filter-row {
   bottom: 0;
 }
 .chosen-container .chosen-results-scroll-down span {
-  background: url("../../../vendor/alxlit/bootstrap-chosen/chosen-sprite.png") no-repeat -4px -3px;
+  background: url("../../../vendor_bundled/vendor/alxlit/bootstrap-chosen/chosen-sprite.png") no-repeat -4px -3px;
 }
 .chosen-container .chosen-results-scroll-up span {
-  background: url("../../../vendor/alxlit/bootstrap-chosen/chosen-sprite.png") no-repeat -22px -3px;
+  background: url("../../../vendor_bundled/vendor/alxlit/bootstrap-chosen/chosen-sprite.png") no-repeat -22px -3px;
 }
 .chosen-container .chosen-results .active-result.highlighted {
   background-color: #337ab7 !important;
@@ -3967,7 +3967,7 @@ table.tablesorter thead tr.tablesorter-filter-row {
   white-space: nowrap;
 }
 .chosen-container-single .chosen-single abbr {
-  background: url("../../../vendor/alxlit/bootstrap-chosen/chosen-sprite.png") right top no-repeat;
+  background: url("../../../vendor_bundled/vendor/alxlit/bootstrap-chosen/chosen-sprite.png") right top no-repeat;
   display: block;
   font-size: 1px;
   height: 10px;
@@ -3991,7 +3991,7 @@ table.tablesorter thead tr.tablesorter-filter-row {
   width: 18px;
 }
 .chosen-container-single .chosen-single div b {
-  background: url("../../../vendor/alxlit/bootstrap-chosen/chosen-sprite.png") no-repeat 0 7px;
+  background: url("../../../vendor_bundled/vendor/alxlit/bootstrap-chosen/chosen-sprite.png") no-repeat 0 7px;
   display: block;
   height: 100%;
   width: 100%;
@@ -4007,7 +4007,7 @@ table.tablesorter thead tr.tablesorter-filter-row {
   z-index: 1000;
 }
 .chosen-container-single .chosen-search input[type="text"] {
-  background: url("../../../vendor/alxlit/bootstrap-chosen/chosen-sprite.png") no-repeat 100% -20px, #ffffff;
+  background: url("../../../vendor_bundled/vendor/alxlit/bootstrap-chosen/chosen-sprite.png") no-repeat 100% -20px, #ffffff;
   border: 1px solid #cccccc;
   border-top-right-radius: 4px;
   border-top-left-radius: 4px;
@@ -4089,7 +4089,7 @@ table.tablesorter thead tr.tablesorter-filter-row {
   position: relative;
 }
 .chosen-container-multi .chosen-choices .search-choice .search-choice-close {
-  background: url("../../../vendor/alxlit/bootstrap-chosen/chosen-sprite.png") right top no-repeat;
+  background: url("../../../vendor_bundled/vendor/alxlit/bootstrap-chosen/chosen-sprite.png") right top no-repeat;
   display: block;
   font-size: 1px;
   height: 10px;
@@ -4215,7 +4215,7 @@ table.tablesorter thead tr.tablesorter-filter-row {
   border-right: none;
 }
 .chosen-rtl .chosen-search input[type="text"] {
-  background: url("../../../vendor/alxlit/bootstrap-chosen/chosen-sprite.png") no-repeat -28px -20px, #ffffff;
+  background: url("../../../vendor_bundled/vendor/alxlit/bootstrap-chosen/chosen-sprite.png") no-repeat -28px -20px, #ffffff;
   direction: rtl;
   padding: 4px 5px 4px 20px;
 }
@@ -4239,7 +4239,7 @@ table.tablesorter thead tr.tablesorter-filter-row {
   .chosen-container-multi .chosen-choices .search-choice .search-choice-close,
   .chosen-container .chosen-results-scroll-down span,
   .chosen-container .chosen-results-scroll-up span {
-    background-image: url("../../../vendor/alxlit/bootstrap-chosen/chosen-sprite@2x.png") !important;
+    background-image: url("../../../vendor_bundled/vendor/alxlit/bootstrap-chosen/chosen-sprite@2x.png") !important;
     background-size: 52px 37px !important;
     background-repeat: no-repeat !important;
   }

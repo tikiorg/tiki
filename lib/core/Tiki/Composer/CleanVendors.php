@@ -43,7 +43,7 @@ class CleanVendors
 	public static function clean(Event $event)
 	{
 		$themes = __DIR__ . '/../../../../themes/';
-		$vendors = __DIR__ . '/../../../../vendor/';
+		$vendors = $event->getComposer()->getConfig()->get('vendor-dir');
 
 		$fs = new FileSystem;
 		$fs->ensureDirectoryExists($themes);

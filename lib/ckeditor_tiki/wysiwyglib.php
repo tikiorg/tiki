@@ -47,8 +47,8 @@ class WYSIWYGLib
 
 		$headerlib = TikiLib::lib('header');
 
-		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'vendor/ckeditor/ckeditor/";')
-			->add_jsfile('vendor/ckeditor/ckeditor/ckeditor.js', true)
+		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'vendor_bundled/vendor/ckeditor/ckeditor/";')
+			->add_jsfile('vendor_bundled/vendor/ckeditor/ckeditor/ckeditor.js', true)
 			->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1);
 
 		// Inline editing config
@@ -115,10 +115,10 @@ window.CKEDITOR.config.toolbar = ' .$cktools.';
 		$headerlib = TikiLib::lib('header');
 
 		$headerlib->add_js('window.CKEDITOR.config.extraPlugins = "' . $prefs['wysiwyg_extra_plugins'] . '";');
-		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'vendor/ckeditor/ckeditor/";')
+		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'vendor_bundled/vendor/ckeditor/ckeditor/";')
 			//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
 			//// note, this breaks ajax page load via wikitopline edit icon
-			->add_jsfile('vendor/ckeditor/ckeditor/ckeditor.js', true)
+			->add_jsfile('vendor_bundled/vendor/ckeditor/ckeditor/ckeditor.js', true)
 			->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1);
 
 		$headerlib->add_js(

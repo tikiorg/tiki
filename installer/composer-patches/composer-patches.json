@@ -1,8 +1,8 @@
 {
   "patches": {
     "adodb/adodb-php": {
-      "Remove references to ADOdb Extension": "installer/composer-patches/adodb-php__remove_references_to_adodb_extension.patch",
-      "Remove the check for ADOdb Extension": "installer/composer-patches/adodb-php__remove-the-check-if-the-adodb-php_ext-is-enabled.patch"
+      "Remove references to ADOdb Extension": "../installer/composer-patches/adodb-php__remove_references_to_adodb_extension.patch",
+      "Remove the check for ADOdb Extension": "../installer/composer-patches/adodb-php__remove-the-check-if-the-adodb-php_ext-is-enabled.patch"
     }
   }
 }

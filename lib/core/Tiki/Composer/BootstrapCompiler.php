@@ -15,7 +15,7 @@ class BootstrapCompiler
 	{
 		if (class_exists('lessc')) {	// this can get called before composer has installed all the packages
 
-			$base = __DIR__ . '/../../../../vendor/twitter/bootstrap';
+			$base = $event->getComposer()->getConfig()->get('vendor-dir') . '/twitter/bootstrap';
 			if (! file_exists($base . '/css')) {
 				mkdir($base . '/css');
 

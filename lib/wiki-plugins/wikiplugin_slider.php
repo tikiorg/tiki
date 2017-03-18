@@ -366,16 +366,16 @@ function wikiplugin_slider($data, $params)
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
 
-	$headerlib->add_jsfile('vendor/jquery/plugins/anythingslider/js/swfobject.js');
-	$headerlib->add_jsfile('vendor/jquery/plugins/anythingslider/js/jquery.anythingslider.js');
-	$headerlib->add_jsfile('vendor/jquery/plugins/anythingslider/js/jquery.anythingslider.fx.js');
-	$headerlib->add_jsfile('vendor/jquery/plugins/anythingslider/js/jquery.anythingslider.video.js');
-	$headerlib->add_cssfile('vendor/jquery/plugins/anythingslider/css/anythingslider.css');
-	$headerlib->add_cssfile('vendor/jquery/plugins/anythingslider/css/theme-construction.css');
-	$headerlib->add_cssfile('vendor/jquery/plugins/anythingslider/css/theme-cs-portfolio.css');
-	$headerlib->add_cssfile('vendor/jquery/plugins/anythingslider/css/theme-metallic.css');
-	$headerlib->add_cssfile('vendor/jquery/plugins/anythingslider/css/theme-minimalist-round.css');
-	$headerlib->add_cssfile('vendor/jquery/plugins/anythingslider/css/theme-minimalist-square.css');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/anythingslider/js/swfobject.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/anythingslider/js/jquery.anythingslider.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/anythingslider/js/jquery.anythingslider.fx.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/anythingslider/js/jquery.anythingslider.video.js');
+	$headerlib->add_cssfile('vendor_bundled/vendor/jquery/plugins/anythingslider/css/anythingslider.css');
+	$headerlib->add_cssfile('vendor_bundled/vendor/jquery/plugins/anythingslider/css/theme-construction.css');
+	$headerlib->add_cssfile('vendor_bundled/vendor/jquery/plugins/anythingslider/css/theme-cs-portfolio.css');
+	$headerlib->add_cssfile('vendor_bundled/vendor/jquery/plugins/anythingslider/css/theme-metallic.css');
+	$headerlib->add_cssfile('vendor_bundled/vendor/jquery/plugins/anythingslider/css/theme-minimalist-round.css');
+	$headerlib->add_cssfile('vendor_bundled/vendor/jquery/plugins/anythingslider/css/theme-minimalist-square.css');
 	$headerlib->add_cssfile('vendor_extra/anythingslider-themes/css/theme-default1.css');
 	$headerlib->add_cssfile('vendor_extra/anythingslider-themes/css/theme-default2.css');
 	$headerlib->add_cssfile('vendor_extra/anythingslider-themes/css/theme-mini-dark.css');

@@ -54,7 +54,7 @@ if (isset($_REQUEST['pdf'])) {
 		define("DOMPDF_ENABLE_REMOTE", true);
 		define('DOMPDF_ENABLE_AUTOLOAD', false);
 
-		require_once("vendor/dompdf/dompdf/dompdf_config.inc.php");
+		require_once("vendor_bundled/vendor/dompdf/dompdf/dompdf_config.inc.php");
 
 		// fallback to DOMPDF
 		$dompdf = new DOMPDF();
@@ -150,15 +150,15 @@ $smarty->assign_by_ref('lastUser', $info["user"]);
 
 include_once ('tiki-section_options.php');
 
-$headerlib->add_cssfile('vendor/jquery/jquery-s5/jquery.s5.css');
-$headerlib->add_jsfile('vendor/jquery/jquery-s5/jquery.s5.js');
+$headerlib->add_cssfile('vendor_bundled/vendor/jquery/jquery-s5/jquery.s5.css');
+$headerlib->add_jsfile('vendor_bundled/vendor/jquery/jquery-s5/jquery.s5.js');
 $headerlib->add_jq_onready(
     '
 	$("#toc").remove();
 	
 	window.s5Settings = (window.s5Settings ? window.s5Settings : {});
 	
-	window.s5Settings.basePath = "vendor/jquery/jquery-s5/";
+	window.s5Settings.basePath = "vendor_bundled/vendor/jquery/jquery-s5/";
 
 	$.s5.start($.extend(window.s5Settings, {
 		menu: function() {

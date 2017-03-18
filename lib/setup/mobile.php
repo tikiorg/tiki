@@ -59,11 +59,11 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 
 				if ($prefs['feature_shadowbox'] === 'y') {
 					$headerlib
-						->add_jsfile_external('vendor/jquery/photoswipe/lib/klass.min.js', true)
-						->add_jsfile_external('vendor/jquery/photoswipe/code.photoswipe.jquery-3.0.5.min.js', true)
+						->add_jsfile_external('vendor_bundled/vendor/jquery/photoswipe/lib/klass.min.js', true)
+						->add_jsfile_external('vendor_bundled/vendor/jquery/photoswipe/code.photoswipe.jquery-3.0.5.min.js', true)
 						->add_jq_onready('var $photosToSwipe = $("a[data-box*=\'box\'][data-box*=\'type=img\'], a[data-box*=\'box\'][data-box!=\'type=\']");
 if ($photosToSwipe.length) {$photosToSwipe.photoSwipe();}', 5)
-						->add_cssfile('vendor/jquery/photoswipe/photoswipe.css');
+						->add_cssfile('vendor_bundled/vendor/jquery/photoswipe/photoswipe.css');
 				}
 
 				global $base_url;

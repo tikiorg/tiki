@@ -19,14 +19,14 @@ $paths = array(
 		realpath('../..'),
 		realpath('core'),
 		realpath('../pear'),
-        realpath('../../vendor'),
-        realpath('../../vendor/mikey179/vfsStream/src/main/php'),
+        realpath('../../vendor_bundled/vendor'),
+        realpath('../../vendor_bundled/vendor/mikey179/vfsStream/src/main/php'),
         realpath('../../vendor_extra/pear')
 		);
 
 ini_set('include_path', implode(PATH_SEPARATOR, $paths));
 
-require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor_bundled/vendor/autoload.php';
 
 if (!is_file(dirname(__FILE__) . '/local.php')) {
 	die("\nYou need to setup a new database and create a local.php file for the test suite inside " . dirname(__FILE__) . "\n\n");

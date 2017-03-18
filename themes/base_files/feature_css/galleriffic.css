@@ -40,7 +40,7 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	background-image: url('../../../vendor/jquery/plugins/galleriffic/css/loader.gif');
+	background-image: url('../../../vendor_bundled/vendor/jquery/plugins/galleriffic/css/loader.gif');
 	background-repeat: no-repeat;
 	background-position: center;
 	width: 550px;

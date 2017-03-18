@@ -24,28 +24,28 @@ function smarty_function_filegal_uploader($params, $smarty)
 	$headerlib = TikiLib::lib('header');
 
 //	Image loader and canvas libs
-	$headerlib->add_jsfile('vendor/blueimp/javascript-load-image/js/load-image.all.min.js');
-	$headerlib->add_jsfile('vendor/blueimp/javascript-canvas-to-blob/js/canvas-to-blob.min.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/blueimp/javascript-load-image/js/load-image.all.min.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/blueimp/javascript-canvas-to-blob/js/canvas-to-blob.min.js');
 
 //	The Iframe Transport is required for browsers without support for XHR file uploads
-	$headerlib->add_jsfile('vendor/blueimp/jquery-file-upload/js/jquery.iframe-transport.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/blueimp/jquery-file-upload/js/jquery.iframe-transport.js');
 //	The basic File Upload plugin
-	$headerlib->add_jsfile('vendor/blueimp/jquery-file-upload/js/jquery.fileupload.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/blueimp/jquery-file-upload/js/jquery.fileupload.js');
 //	The File Upload processing plugin
-	$headerlib->add_jsfile('vendor/blueimp/jquery-file-upload/js/jquery.fileupload-process.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/blueimp/jquery-file-upload/js/jquery.fileupload-process.js');
 //	The File Upload image preview & resize plugin
-	$headerlib->add_jsfile('vendor/blueimp/jquery-file-upload/js/jquery.fileupload-image.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/blueimp/jquery-file-upload/js/jquery.fileupload-image.js');
 //	The File Upload audio preview plugin
-	$headerlib->add_jsfile('vendor/blueimp/jquery-file-upload/js/jquery.fileupload-audio.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/blueimp/jquery-file-upload/js/jquery.fileupload-audio.js');
 //	The File Upload video preview plugin
-	$headerlib->add_jsfile('vendor/blueimp/jquery-file-upload/js/jquery.fileupload-video.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/blueimp/jquery-file-upload/js/jquery.fileupload-video.js');
 //	The File Upload validation plugin
-	$headerlib->add_jsfile('vendor/blueimp/jquery-file-upload/js/jquery.fileupload-validate.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/blueimp/jquery-file-upload/js/jquery.fileupload-validate.js');
 //	The File Upload user interface plugin
-	$headerlib->add_jsfile('vendor/blueimp/jquery-file-upload/js/jquery.fileupload-ui.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/blueimp/jquery-file-upload/js/jquery.fileupload-ui.js');
 // CSS
-	$headerlib->add_cssfile('vendor/blueimp/jquery-file-upload/css/jquery.fileupload.css');
-	$headerlib->add_cssfile('vendor/blueimp/jquery-file-upload/css/jquery.fileupload-ui.css');
+	$headerlib->add_cssfile('vendor_bundled/vendor/blueimp/jquery-file-upload/css/jquery.fileupload.css');
+	$headerlib->add_cssfile('vendor_bundled/vendor/blueimp/jquery-file-upload/css/jquery.fileupload-ui.css');
 
 //	Tiki customised application script
 	$headerlib->add_jsfile('lib/jquery_tiki/tiki-jquery_upload.js');

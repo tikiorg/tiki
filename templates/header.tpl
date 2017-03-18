@@ -309,7 +309,7 @@
 	{/if}
 {/if}
 <!--[if lt IE 9]>{* according to http://remysharp.com/2009/01/07/html5-enabling-script/ *}
-	<script src="vendor/afarkas/html5shiv/dist/html5shiv.min.js" type="text/javascript"></script>
+	<script src="vendor_bundled/vendor/afarkas/html5shiv/dist/html5shiv.min.js" type="text/javascript"></script>
 <![endif]-->
 {if $headerlib}		{$headerlib->output_headers()}{/if}
 {if $prefs.feature_custom_html_head_content}

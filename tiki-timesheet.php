@@ -58,9 +58,9 @@ if (isset($projectList)) {
 TikiLib::lib("sheet")->setup_jquery_sheet();
 
 $headerlib = TikiLib::lib("header")
-	->add_cssfile("vendor/jquery/jtrack/css/jtrack.css")
-	->add_jsfile("vendor/jquery/jtrack/js/domcached-0.1-jquery.js")
-	->add_jsfile("vendor/jquery/jtrack/js/jtrack.js")
+	->add_cssfile("vendor_bundled/vendor/jquery/jtrack/css/jtrack.css")
+	->add_jsfile("vendor_bundled/vendor/jquery/jtrack/js/domcached-0.1-jquery.js")
+	->add_jsfile("vendor_bundled/vendor/jquery/jtrack/js/jtrack.js")
 	->add_jq_onready(
 		"jTask.init();
 

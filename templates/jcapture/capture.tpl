@@ -7,7 +7,7 @@
 {block name="content"}
 
 	<applet type="application/x-java-applet"
-			archive="vendor/jcapture-applet/jcapture-applet/lib/jcapture.jar"
+			archive="vendor_bundled/vendor/jcapture-applet/jcapture-applet/lib/jcapture.jar"
 			code = "com.hammurapi.jcapture.JCaptureApplet"
 			id="jCapture" height="387" width="482"
 	>

@@ -563,13 +563,13 @@ JQ
 		$version = $args['version'];
 
 		$headerlib
-			->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-core.js')
-			->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-cssclassapplier.js')
-			->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-selectionsaverestore.js')
+			->add_jsfile('vendor_bundled/vendor/rangy/rangy/uncompressed/rangy-core.js')
+			->add_jsfile('vendor_bundled/vendor/rangy/rangy/uncompressed/rangy-cssclassapplier.js')
+			->add_jsfile('vendor_bundled/vendor/rangy/rangy/uncompressed/rangy-selectionsaverestore.js')
 			->add_jsfile('lib/rangy_tiki/rangy-phraser.js')
-			->add_jsfile('vendor/jquery/jquery-sheet/plugins/ZeroClipboard.min.js')
+			->add_jsfile('vendor_bundled/vendor/jquery/jquery-sheet/plugins/ZeroClipboard.min.js')
 			->add_jsfile('lib/core/JisonParser/Phraser.js')
-			->add_jsfile('vendor/jquery/md5/js/md5.js');
+			->add_jsfile('vendor_bundled/vendor/jquery/md5/js/md5.js');
 
 		$me = new FutureLink_FutureUI($page);
 

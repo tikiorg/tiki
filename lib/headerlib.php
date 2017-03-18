@@ -643,7 +643,7 @@ class HeaderLib
  			$topMsg .= "\n/* list of files for rank:$rank */\n";
 			$topMsg .= '/* ' . print_r($jsfiles[$rank], true) . ' */' . "\n";
 			foreach ($jsfiles[$rank] as $f) {
-				// important - some scripts like vendor/jquery/plugins/async/jquery.async.js do not terminate their last bits with a ';'
+				// important - some scripts like vendor_bundled/vendor/jquery/plugins/async/jquery.async.js do not terminate their last bits with a ';'
 				// this is bad practise and that causes issues when putting them all in one file! 
 				$minified = ';';
 				$msg = '';
@@ -1186,8 +1186,7 @@ window.onload = loadScript;');
 		*/
 
 		if ($prefs['geo_openlayers_version'] === 'ol3') {
-//			$this->add_jsfile_external('vendor/openlayers/ol3/ol.js', true);
-			$this->add_jsfile_external('vendor/openlayers/ol3/ol-debug.js', true);
+			$this->add_jsfile_external('vendor_bundled/vendor/openlayers/ol3/ol-debug.js', true);
 			$this->add_js(
 			    ''
 	        );

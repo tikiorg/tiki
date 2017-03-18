@@ -294,9 +294,9 @@ LIMIT 1;';
 
 	public function genIndexedBlacks($returnFormatted = true){
 
-		$blacklist_options = array_diff(scandir('lib/pass_blacklists'), array('..', '.', 'index.php', '.htaccess', '.svn', '.DS_Store', 'readme.txt'));
+		$blacklist_options = array_diff(scandir(__DIR__ .'/../lib/pass_blacklists'), array('..', '.', 'index.php', '.htaccess', '.svn', '.DS_Store', 'readme.txt'));
 		if (is_dir('storage/pass_blacklists')) {
-			$blacklist_options = array_merge($blacklist_options,array_diff(scandir('storage/pass_blacklists'), array('..', '.', 'index.php', '.htaccess', '.svn', '.DS_Store', 'readme.txt')));
+			$blacklist_options = array_merge($blacklist_options,array_diff(scandir(__DIR__ .'/../../storage/pass_blacklists'), array('..', '.', 'index.php', '.htaccess', '.svn', '.DS_Store', 'readme.txt')));
 		}
 		sort($blacklist_options);
 

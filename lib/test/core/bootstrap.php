@@ -19,7 +19,7 @@ function tra($string)
 	return $string;
 }
 
-require __DIR__ . '/../../../vendor/autoload.php';
+require __DIR__ . '/../../../vendor_bundled/vendor/autoload.php';
 
 $tikidomain = '';
 $api_tiki = null;

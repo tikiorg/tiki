@@ -3,8 +3,8 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>{tr}System error.{/tr}</title>
-	<link rel="stylesheet" href="vendor/twitter/bootstrap/dist/css/bootstrap.css" type="text/css" />
-	<link rel="stylesheet" href="vendor/fortawesome/font-awesome/css/font-awesome.min.css" type="text/css" />
+	<link rel="stylesheet" href="vendor_bundled/vendor/twitter/bootstrap/dist/css/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="vendor_bundled/vendor/fortawesome/font-awesome/css/font-awesome.min.css" type="text/css" />
 
 	<style type="text/css" media="screen">
 		html {ldelim}

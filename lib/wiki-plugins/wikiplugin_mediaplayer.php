@@ -190,13 +190,13 @@ function wikiplugin_mediaplayer($data, $params)
 		'width' => 200,
 		'height' => 20,
 		'player' => 'player_mp3.swf',
-		'where' => 'vendor/player/mp3/template_default/',
+		'where' => 'vendor_bundled/vendor/player/mp3/template_default/',
 	);
 	$defaults_flv = array(
 		'width' => 320,
 		'height' => 240,
 		'player' => 'player_flv.swf',
-		'where' => 'vendor/player/flv/template_default/'
+		'where' => 'vendor_bundled/vendor/player/flv/template_default/'
 	);
 	$defaults_html5 = array(
 		'width' => '',

@@ -186,8 +186,8 @@ function wikiplugin_tour($data, $params)
 	}
 
 	$headerlib = TikiLib::lib('header');
-	$headerlib->add_jsfile('vendor/sorich87/bootstrap-tour/build/js/bootstrap-tour.js')
-			->add_cssfile('vendor/sorich87/bootstrap-tour/build/css/bootstrap-tour.css');
+	$headerlib->add_jsfile('vendor_bundled/vendor/sorich87/bootstrap-tour/build/js/bootstrap-tour.js')
+			->add_cssfile('vendor_bundled/vendor/sorich87/bootstrap-tour/build/css/bootstrap-tour.css');
 
 	// non changing init js in ransk 11 and 13 (the tour definition goes in 12)
 	$headerlib->add_jq_onready('var tour;

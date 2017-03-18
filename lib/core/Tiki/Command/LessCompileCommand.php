@@ -106,7 +106,7 @@ class LessCompileCommand  extends Command
 					}
 
 					foreach ($files as $file) {
-						$command = "php vendor/oyejorge/less.php/bin/lessc {$file['less']} {$file['css']}";
+						$command = "php vendor_bundled/vendor/oyejorge/less.php/bin/lessc {$file['less']} {$file['css']}";
 						$output->writeln($command);
 						$result = shell_exec($command);
 						$result = str_replace(array("\r", "\n"), '', $result);

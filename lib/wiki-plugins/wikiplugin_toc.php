@@ -147,7 +147,7 @@ function wikiplugin_toc( $data, $params )
 	if ($prefs['feature_jquery_ui'] === 'y' && $type === 'admin') {
 		TikiLib::lib('header')
 				->add_jsfile('lib/structures/tiki-edit_structure.js')
-				->add_jsfile('vendor/jquery/plugins/nestedsortable/jquery.ui.nestedSortable.js');
+				->add_jsfile('vendor_bundled/vendor/jquery/plugins/nestedsortable/jquery.ui.nestedSortable.js');
 
 		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_function_button');

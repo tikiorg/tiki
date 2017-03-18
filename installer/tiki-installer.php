@@ -150,7 +150,7 @@ if (!empty($_POST['lang'])) {
 	$language = $prefs['site_language'] = $prefs['language'] = $_POST['lang'];
 	if (Language::isRTL()) {
 		$prefs['feature_bidi'] =  'y';
-		TikiLib::lib('header')->add_cssfile('vendor/morteza/bootstrap-rtl/dist/css/bootstrap-rtl.min.css', 99); // 99 is high rank order as it should load after all other css files
+		TikiLib::lib('header')->add_cssfile('vendor_bundled/vendor/morteza/bootstrap-rtl/dist/css/bootstrap-rtl.min.css', 99); // 99 is high rank order as it should load after all other css files
 	}
 } else {
 	$language = $prefs['site_language'] = $prefs['language'] = 'en';
@@ -1277,11 +1277,11 @@ if ( isset($_POST['general_settings']) && $_POST['general_settings'] == 'y' ) {
 
 $headerlib = TikiLib::lib('header');
 $headerlib->add_js("var tiki_cookie_jar=new Array();");
-$headerlib->add_cssfile('vendor/twitter/bootstrap/dist/css/bootstrap.css');
-$headerlib->add_cssfile('vendor/fortawesome/font-awesome/css/font-awesome.min.css');
+$headerlib->add_cssfile('vendor_bundled/vendor/twitter/bootstrap/dist/css/bootstrap.css');
+$headerlib->add_cssfile('vendor_bundled/vendor/fortawesome/font-awesome/css/font-awesome.min.css');
 $headerlib->add_cssfile('themes/base_files/css/tiki_base.css');
 $headerlib->add_jsfile('lib/tiki-js.js');
-$headerlib->add_jsfile_dependancy("vendor/components/jquery/jquery.min.js");
+$headerlib->add_jsfile_dependancy("vendor_bundled/vendor/components/jquery/jquery.min.js");
 $headerlib->add_jsfile('lib/jquery_tiki/tiki-jquery.js');
 	$js = '
 // JS Object to hold prefs for jq

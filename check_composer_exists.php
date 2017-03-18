@@ -17,7 +17,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 
-if (! file_exists('vendor/autoload.php')) {
+if (! file_exists('vendor_bundled/vendor/autoload.php')) {
 	$title="Tiki Installer missing third party software files";
 	$content="<p>Your Tiki is not completely installed because Composer has not been run to fetch package dependencies.</p>";
 	$content.="<p>You need to run <b>sh setup.sh</b> from the command line.</p>";

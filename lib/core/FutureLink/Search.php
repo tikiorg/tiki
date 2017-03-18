@@ -253,7 +253,7 @@ JQ
 		$smarty = TikiLib::lib('smarty');
 		//TODO - not sure the tablesorter js and css files need to be loaded since they are loaded in tiki-setup
 		$headerlib
-			->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.js')
+			->add_jsfile('vendor_bundled/vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.js')
 			->add_jq_onready(
 <<<JQ
 				$('a.futurelinkA,a.pastlinkA')

@@ -346,17 +346,17 @@ $headerlib->add_jsfile('lib/tiki-js.js');
 if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 	$headerlib->add_jsfile_cdn("$url_scheme://ajax.googleapis.com/ajax/libs/jquery/$headerlib->jquery_version/jquery.min.js");
 	// goggle is not hosting migrate so load from local
-	$headerlib->add_jsfile_dependancy("vendor/components/jquery-migrate/jquery-migrate.min.js", true);
+	$headerlib->add_jsfile_dependancy("vendor_bundled/vendor/components/jquery-migrate/jquery-migrate.min.js", true);
 } else if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
 	$headerlib->add_jsfile_cdn("$url_scheme://code.jquery.com/jquery-$headerlib->jquery_version.min.js");
 	$headerlib->add_jsfile_cdn("$url_scheme://code.jquery.com/jquery-migrate-$headerlib->jquerymigrate_version.min.js");
 } else {
 	if ( isset($prefs['tiki_minify_javascript']) && $prefs['tiki_minify_javascript'] === 'y' ) {
-		$headerlib->add_jsfile_dependancy("vendor/components/jquery/jquery.min.js", true);
-		$headerlib->add_jsfile_dependancy("vendor/components/jquery-migrate/jquery-migrate.min.js", true);
+		$headerlib->add_jsfile_dependancy("vendor_bundled/vendor/components/jquery/jquery.min.js", true);
+		$headerlib->add_jsfile_dependancy("vendor_bundled/vendor/components/jquery-migrate/jquery-migrate.min.js", true);
 	} else {
-		$headerlib->add_jsfile_dependancy("vendor/components/jquery/jquery.js", true);
-		$headerlib->add_jsfile_dependancy("vendor/components/jquery-migrate/jquery-migrate.js", true);
+		$headerlib->add_jsfile_dependancy("vendor_bundled/vendor/components/jquery/jquery.js", true);
+		$headerlib->add_jsfile_dependancy("vendor_bundled/vendor/components/jquery-migrate/jquery-migrate.js", true);
 	}
 }
 
@@ -364,14 +364,14 @@ if ( isset($prefs['fgal_elfinder_feature']) && $prefs['fgal_elfinder_feature'] =
 	$str = $prefs['tiki_minify_javascript'] === 'y' ? 'min' : 'full';
 	// elfinder is sensible to js compression - problem is inside elfinder
 	// see http://stackoverflow.com/questions/11174170/js-invalid-left-hand-side-expression-in-postfix-operation for more general details
-	$headerlib->add_jsfile('vendor/studio-42/elfinder/js/elfinder.' . $str . '.js', true)
-			->add_cssfile('vendor/studio-42/elfinder/css/elfinder.' . $str . '.css')
+	$headerlib->add_jsfile('vendor_bundled/vendor/studio-42/elfinder/js/elfinder.' . $str . '.js', true)
+			->add_cssfile('vendor_bundled/vendor/studio-42/elfinder/css/elfinder.' . $str . '.css')
 			->add_jsfile('lib/jquery_tiki/elfinder/tiki-elfinder.js');
 
 	$elFinderLang = str_replace(array('cn', 'pt-br'), array('zh_CN', 'pt_BR'), $language);
 
-	if (file_exists('vendor/studio-42/elfinder/js/i18n/elfinder.' . $elFinderLang . '.js')) {
-		$headerlib->add_jsfile('vendor/studio-42/elfinder/js/i18n/elfinder.' . $elFinderLang . '.js');
+	if (file_exists('vendor_bundled/vendor/studio-42/elfinder/js/i18n/elfinder.' . $elFinderLang . '.js')) {
+		$headerlib->add_jsfile('vendor_bundled/vendor/studio-42/elfinder/js/i18n/elfinder.' . $elFinderLang . '.js');
 	}
 }
 
@@ -389,10 +389,10 @@ if ($prefs['geo_openlayers_version'] === 'ol3') {
 } else {
 	$headerlib->add_jsfile('lib/jquery_tiki/tiki-maps.js');
 }
-$headerlib->add_jsfile('vendor/jquery/plugins/jquery-json/src/jquery.json.js');
+$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/jquery-json/src/jquery.json.js');
 
 if ($prefs['feature_jquery_zoom'] === 'y') {
-	$headerlib->add_jsfile('vendor/jquery/plugins/zoom/jquery.zoom.js')
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/zoom/jquery.zoom.js')
 		->add_css('
 .img_zoom {
 	display:inline-block;
@@ -405,7 +405,7 @@ if ($prefs['feature_jquery_zoom'] === 'y') {
 	position:absolute;
 	top:0;
 	right:0;
-	background:url(vendor/jquery/plugins/zoom/icon.png);
+	background:url(vendor_bundled/vendor/jquery/plugins/zoom/icon.png);
 }
 .img_zoom img {
 	display:block;
@@ -416,10 +416,10 @@ if ($prefs['feature_jquery_zoom'] === 'y') {
 if ($prefs['feature_syntax_highlighter'] == 'y') {
 	//add codemirror stuff
 	$headerlib
-		->add_cssfile('vendor/codemirror/codemirror/lib/codemirror.css')
-		->add_jsfile_dependancy('vendor/codemirror/codemirror/lib/codemirror.js')
-		->add_jsfile('vendor/codemirror/codemirror/addon/search/searchcursor.js')
-		->add_jsfile('vendor/codemirror/codemirror/addon/mode/overlay.js')
+		->add_cssfile('vendor_bundled/vendor/codemirror/codemirror/lib/codemirror.css')
+		->add_jsfile_dependancy('vendor_bundled/vendor/codemirror/codemirror/lib/codemirror.js')
+		->add_jsfile('vendor_bundled/vendor/codemirror/codemirror/addon/search/searchcursor.js')
+		->add_jsfile('vendor_bundled/vendor/codemirror/codemirror/addon/mode/overlay.js')
 	//add tiki stuff
 		->add_cssfile('themes/base_files/feature_css/codemirror_tiki.css')
 		->add_jsfile('lib/codemirror_tiki/codemirror_tiki.js');
@@ -429,7 +429,7 @@ if ($prefs['feature_syntax_highlighter'] == 'y') {
 }
 
 if ( $prefs['feature_jquery_carousel'] == 'y' ) {
-	$headerlib->add_jsfile('vendor/jquery/plugins/infinitecarousel/jquery.infinitecarousel3.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/infinitecarousel/jquery.infinitecarousel3.js');
 }
 
 if ( $prefs['feature_ajax'] === 'y' ) {
@@ -448,9 +448,9 @@ if ( $prefs['feature_jquery_ui'] == 'y' ) {
 		$headerlib->add_jsfile_cdn("$url_scheme://code.jquery.com/ui/$headerlib->jqueryui_version/jquery-ui.min.js");
 	} else {
 		if ( $prefs['tiki_minify_javascript'] === 'y' ) {
-			$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-ui/jquery-ui.min.js", true);
+			$headerlib->add_jsfile_dependancy("vendor_bundled/vendor/jquery/jquery-ui/jquery-ui.min.js", true);
 		} else {
-			$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-ui/jquery-ui.js");
+			$headerlib->add_jsfile_dependancy("vendor_bundled/vendor/jquery/jquery-ui/jquery-ui.js");
 		}
 	}
 
@@ -467,9 +467,9 @@ if (typeof $.fn.button.noConflict === "function") {
 		// cdn for css not working - this is the only css from a cdn anyway - so use local version 
 		//if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {			
 			// $headerlib->add_cssfile("$url_scheme://code.jquery.com/ui/$headerlib->jqueryui_version/themes/{$prefs['feature_jquery_ui_theme']}/jquery-ui.css");
-			$headerlib->add_cssfile('vendor/jquery/jquery-ui-themes/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css');
+			$headerlib->add_cssfile('vendor_bundled/vendor/jquery/jquery-ui-themes/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css');
 	//	} else {
-	//		$headerlib->add_cssfile('vendor/jquery/jquery-ui-themes/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css');
+	//		$headerlib->add_cssfile('vendor_bundled/vendor/jquery/jquery-ui-themes/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css');
 	//	}
 	}
 
@@ -479,59 +479,59 @@ if (typeof $.fn.button.noConflict === "function") {
 		);
 	}
 	if ( $prefs['jquery_ui_chosen'] == 'y' ) {
-		$headerlib->add_jsfile('vendor/jquery/plugins/chosen/chosen.jquery.js');
-	//	$headerlib->add_cssfile('vendor/jquery/plugins/chosen/chosen.css'); Replaced by github.com/alxlit/bootstrap-chosen
+		$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/chosen/chosen.jquery.js');
+	//	$headerlib->add_cssfile('vendor_bundled/vendor/jquery/plugins/chosen/chosen.css'); Replaced by github.com/alxlit/bootstrap-chosen
 		$headerlib->add_css(
 			'select { font-size: 16px; padding: 4px; border-color:#fff; /* this forces chrome to apply the font-size */ }'
 		);
 	}
-	$headerlib->add_jsfile('vendor/jquery/jquery-timepicker-addon/dist/jquery-ui-timepicker-addon.js');
-	$headerlib->add_cssfile('vendor/jquery/jquery-timepicker-addon/dist/jquery-ui-timepicker-addon.css');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/jquery-timepicker-addon/dist/jquery-ui-timepicker-addon.js');
+	$headerlib->add_cssfile('vendor_bundled/vendor/jquery/jquery-timepicker-addon/dist/jquery-ui-timepicker-addon.css');
 }
 if ( $prefs['jquery_fitvidjs'] == 'y' ) {
-	$headerlib->add_jsfile('vendor/jquery/plugins/fitvidjs/jquery.fitvids.js')
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/fitvidjs/jquery.fitvids.js')
 				->add_jq_onready('$("article").fitVids();');		// apply fitvid to any video in the middle section
 }
 if ( $prefs['feature_jquery_superfish'] == 'y' ) {
-	$headerlib->add_jsfile('vendor/jquery/plugins/superfish/dist/js/superfish.js');
-	$headerlib->add_jsfile('vendor/jquery/plugins/superfish/dist/js/supersubs.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/superfish/dist/js/superfish.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/superfish/dist/js/supersubs.js');
 }
 if ( $prefs['feature_jquery_tooltips'] === 'y' || $prefs['feature_jquery_superfish'] === 'y' ) {
-	$headerlib->add_jsfile('vendor/jquery/plugins/superfish/dist/js/hoverIntent.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/superfish/dist/js/hoverIntent.js');
 }
 if ( $prefs['feature_jquery_reflection'] == 'y' ) {
-	$headerlib->add_jsfile('vendor/jquery/plugins/reflection-jquery/js/reflection.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/reflection-jquery/js/reflection.js');
 }
 if ( $prefs['feature_jquery_media'] == 'y' ) {
-	$headerlib->add_jsfile('vendor/jquery/plugins/media/jquery.media.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/media/jquery.media.js');
 }
 if ( $prefs['feature_jquery_tablesorter'] == 'y' ) {
-	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.combined.js');
-	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-pager.js');
-	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-filter-formatter-jui.js');
-	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-grouping.js');
-	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-columnSelector.js');
-	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/parsers/parser-input-select.js');
-	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-math.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.combined.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/tablesorter/js/widgets/widget-pager.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/tablesorter/js/widgets/widget-filter-formatter-jui.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/tablesorter/js/widgets/widget-grouping.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/tablesorter/js/widgets/widget-columnSelector.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/tablesorter/js/parsers/parser-input-select.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/tablesorter/js/widgets/widget-math.js');
 	$headerlib->add_jsfile('lib/jquery_tiki/tablesorter.js');
 }
 
 if ( $prefs['feature_jquery_tagcanvas'] == 'y' ) {
-	$headerlib->add_jsfile('vendor/jquery/plugins/tagcanvas/jquery.tagcanvas.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/tagcanvas/jquery.tagcanvas.js');
 }
 
 if ( $prefs['feature_shadowbox'] == 'y' ) {
-	$headerlib->add_jsfile('vendor/jquery/plugins/colorbox/jquery.colorbox.js');
-	$headerlib->add_cssfile('vendor/jquery/plugins/colorbox/' . $prefs['jquery_colorbox_theme'] . '/colorbox.css');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/colorbox/jquery.colorbox.js');
+	$headerlib->add_cssfile('vendor_bundled/vendor/jquery/plugins/colorbox/' . $prefs['jquery_colorbox_theme'] . '/colorbox.css');
 }
 
 if ( $prefs['wikiplugin_flash'] == 'y' ) {
 	$headerlib->add_jsfile('lib/swfobject/swfobject.js');
 }
 if ($prefs['jquery_timeago'] === 'y') {
-	$headerlib->add_jsfile('vendor/jquery/plugins/timeago/jquery.timeago.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/timeago/jquery.timeago.js');
 	$language_short = substr($prefs['language'], 0, 2);
-	$timeago_locale = "vendor/jquery/plugins/timeago/locales/jquery.timeago.{$language_short}.js";
+	$timeago_locale = "vendor_bundled/vendor/jquery/plugins/timeago/locales/jquery.timeago.{$language_short}.js";
 	if (is_readable($timeago_locale)) {
 		$headerlib->add_jsfile($timeago_locale);	// TODO handle zh-CN and zh-TW
 	}
@@ -539,19 +539,19 @@ if ($prefs['jquery_timeago'] === 'y') {
 }
 
 if ( $prefs['feature_jquery_validation'] == 'y' ) {
-	$headerlib->add_jsfile('vendor/jquery/plugins/jquery-validation/dist/jquery.validate.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/jquery-validation/dist/jquery.validate.js');
 	$headerlib->add_jsfile('lib/validators/validator_tiki.js');
 }
 
 // note: jquery.async.js load a copy of jquery
-$headerlib->add_jsfile('vendor/jquery/plugins/async/jquery.async.js');
-$headerlib->add_jsfile('vendor/jquery/plugins/treetable/jquery.treetable.js');
-$headerlib->add_cssfile('vendor/jquery/plugins/treetable/css/jquery.treetable.css');
+$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/async/jquery.async.js');
+$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/treetable/jquery.treetable.js');
+$headerlib->add_cssfile('vendor_bundled/vendor/jquery/plugins/treetable/css/jquery.treetable.css');
 
-$headerlib->add_jsfile('vendor/cwspear/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js');
+$headerlib->add_jsfile('vendor_bundled/vendor/cwspear/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js');
 
 if ($prefs['feature_equal_height_rows_js'] == 'y'){
-	$headerlib->add_jsfile("vendor/Sam152/Javascript-Equal-Height-Responsive-Rows/grids.min.js");
+	$headerlib->add_jsfile("vendor_bundled/vendor/Sam152/Javascript-Equal-Height-Responsive-Rows/grids.min.js");
 }
 
 if (empty($user) && $prefs['feature_antibot'] == 'y') {
@@ -600,7 +600,7 @@ if ($prefs['feature_trackers'] == 'y') {
 
 if ($prefs['feature_draw'] == 'y') {
 	//svg-edit/empbedapi.js neededs to be external - why?
-	$headerlib->add_jsfile("vendor/svg-edit/svg-edit/embedapi.js");
+	$headerlib->add_jsfile("vendor_bundled/vendor/svg-edit/svg-edit/embedapi.js");
 	$headerlib->add_jsfile("lib/svg-edit_tiki/draw.js");
 	$headerlib->add_cssfile("themes/base_files/feature_css/svg-edit-draw.css");
 }
@@ -651,8 +651,8 @@ if ($prefs['feature_inline_comments'] === 'y') {
 	$objectIdentifier = urlencode($object['type'] ) . ':' . urlencode($object['object']);	// spoof a URI from type and id
 
 	$headerlib
-		->add_jsfile('vendor/openannotation/annotator/annotator-full.min.js')
-		->add_cssfile('vendor/openannotation/annotator/annotator.min.css')
+		->add_jsfile('vendor_bundled/vendor/openannotation/annotator/annotator-full.min.js')
+		->add_cssfile('vendor_bundled/vendor/openannotation/annotator/annotator.min.css')
 		->add_jq_onready('var annotatorContent = $("#top").annotator({readOnly: ' . ($canPost ? 'false' : 'true') . '});
 annotatorContent.annotator("addPlugin", "Store", {
 	prefix: "tiki-ajax_services.php?controller=annotation&action=",

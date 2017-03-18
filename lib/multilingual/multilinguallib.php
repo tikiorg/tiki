@@ -1240,10 +1240,10 @@ class MultilingualLib extends TikiLib
 			// Some languages need BiDi support. Add their code names here ...
 			if (Language::isRTL()) {
 				$prefs['feature_bidi'] =  'y';
-				TikiLib::lib('header')->add_cssfile('vendor/morteza/bootstrap-rtl/dist/css/bootstrap-rtl.min.css', 99); // 99 is high rank order as it should load after all other css files
+				TikiLib::lib('header')->add_cssfile('vendor_bundled/vendor/morteza/bootstrap-rtl/dist/css/bootstrap-rtl.min.css', 99); // 99 is high rank order as it should load after all other css files
 			} else {
 				$prefs['feature_bidi'] =  'n';
-				TikiLib::lib('header')->drop_cssfile('vendor/morteza/bootstrap-rtl/dist/css/bootstrap-rtl.min.css');
+				TikiLib::lib('header')->drop_cssfile('vendor_bundled/vendor/morteza/bootstrap-rtl/dist/css/bootstrap-rtl.min.css');
 			}
 		}
 	}

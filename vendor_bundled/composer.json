@@ -95,7 +95,6 @@
 		"zendframework/zendservice-twitter": "~2.1",
 		"zendframework/zend-uri": "~2.4",
 		"zendframework/zend-http": "~2.4",
-
 		"zendframework/zendgdata": "~2.0",
 		"zendframework/zend-feed": "~2.4",
 		"zendframework/zend-tag": "~2.4",
@@ -117,68 +116,70 @@
 		"phpunit/dbunit": ">=1.2"
 	},
 	"extra": {
-		"patches-file": "installer/composer-patches/composer-patches.json"
+		"patches-file": "../installer/composer-patches/composer-patches.json"
 	},
 	"config": {
 		"process-timeout": 5000,
-		"bin-dir": "bin"
+		"bin-dir": "../bin"
 	},
 	"autoload": {
 		"psr-0": {
-			"BOMChecker": "lib/core/",
-			"TikiFilter": "lib/core/",
-			"DeclFilter": "lib/core/",
-			"JisonParser": "lib/core/",
-			"JitFilter": "lib/core/",
-			"Search": "lib/core/",
-			"Perms": "lib/core/",
-			"Math": "lib/core/",
-			"Category": "lib/core/",
-			"WikiParser": "lib/core/",
-            "WikiPlugin": "lib/core/",
-			"Multilingual": "lib/core/",
-			"Tracker": "lib/core/",
-			"Services": "lib/core/",
-			"Scheduler": "lib/core/",
-            "Table": "lib/core/",
-			"Tiki": "lib/core/",
-			"TikiDb": "lib/core/",
-            "Type": "lib/core/",
-			"Report": "lib/core/",
-			"Feed": "lib/core/",
-			"FutureLink": "lib/core/",
-			"Yaml": "lib/core/"
+			"BOMChecker": "../lib/core/",
+			"TikiFilter": "../lib/core/",
+			"DeclFilter": "../lib/core/",
+			"JisonParser": "../lib/core/",
+			"JitFilter": "../lib/core/",
+			"Search": "../lib/core/",
+			"Perms": "../lib/core/",
+			"Math": "../lib/core/",
+			"Category": "../lib/core/",
+			"WikiParser": "../lib/core/",
+			"WikiPlugin": "../lib/core/",
+			"Multilingual": "../lib/core/",
+			"Tracker": "../lib/core/",
+			"Services": "../lib/core/",
+			"Scheduler": "../lib/core/",
+			"Table": "../lib/core/",
+			"Tiki": "../lib/core/",
+			"TikiDb": "../lib/core/",
+			"Type": "../lib/core/",
+			"Report": "../lib/core/",
+			"Feed": "../lib/core/",
+			"FutureLink": "../lib/core/",
+			"Yaml": "../lib/core/"
 		},
 		"classmap": [
-			"vendor_extra/pear/",
-			"lib/tikidate.php",
-			"lib/openpgp/",
-			"lib/language/",
-			"lib/TikiWebdav/",
-			"lib/rating/formula/",
-			"lib/core/StandardAnalyzer/",
+			"../vendor_extra/pear/",
+			"../lib/tikidate.php",
+			"../lib/openpgp/",
+			"../lib/language/",
+			"../lib/TikiWebdav/",
+			"../lib/rating/formula/",
+			"../lib/core/StandardAnalyzer/",
 			"vendor/smarty/smarty/libs/sysplugins/smarty_security.php",
 			"vendor/adodb/adodb-php/",
 			"vendor/phpcas/phpcas/",
 			"vendor/onelogin/php-saml/",
-			"installer/",
-			"lib/test",
-			"lib/webmail",
-			"lib/stats"
+			"../installer/",
+			"../lib/test",
+			"../lib/webmail",
+			"../lib/stats"
 		]
 	},
 	"scripts": {
 		"post-install-cmd": [
 			"Tiki\\Composer\\ThemeInstaller::setup",
 			"Tiki\\Composer\\BootstrapCompiler::build",
-			"Tiki\\Composer\\CleanVendors::clean"
+			"Tiki\\Composer\\CleanVendors::clean",
+			"Tiki\\Composer\\CleanVendorAfterVendorBundledMigration::clean"
 		],
 		"pre-update-cmd": [
 			"Tiki\\Composer\\ThemeInstaller::setup"
 		],
 		"post-update-cmd": [
 			"Tiki\\Composer\\BootstrapCompiler::build",
-			"Tiki\\Composer\\CleanVendors::clean"
+			"Tiki\\Composer\\CleanVendors::clean",
+			"Tiki\\Composer\\CleanVendorAfterVendorBundledMigration::clean"
 		]
 	},
 	"repositories": [

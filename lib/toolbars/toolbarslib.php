@@ -674,7 +674,7 @@ class ToolbarCkOnly extends Toolbar
 		global $prefs;
 		$skin = $prefs['wysiwyg_toolbar_skin'];
 		$headerlib = TikiLib::lib('header');
-		$headerlib->add_cssfile('vendor/ckeditor/ckeditor/skins/' . $skin . '/editor.css');
+		$headerlib->add_cssfile('vendor_bundled/vendor/ckeditor/ckeditor/skins/' . $skin . '/editor.css');
 		$cls = strtolower($this->wysiwyg);
 		$headerlib->add_css(
 			'span.cke_skin_' . $skin . ' {border: none;background: none;padding:0;margin:0;}'.

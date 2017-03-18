@@ -382,7 +382,7 @@ function wikiplugin_paypal($data, $params)
 	}
 
 	// just add javascript?
-	$jsfile = 'vendor/jquery/minicart/dist/minicart' . ($prefs['tiki_minify_javascript'] === 'y' ? '.min' : '') . '.js';
+	$jsfile = 'vendor_bundled/vendor/jquery/minicart/dist/minicart' . ($prefs['tiki_minify_javascript'] === 'y' ? '.min' : '') . '.js';
 	if ($params['minicart'] === 'y' && file_exists($jsfile)) {
 		// it appears currently if you set any of these all must be set
 		$miniParams = array('strings' => array());
