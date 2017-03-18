@@ -164,10 +164,6 @@ function get_default_prefs()
 			'freetags_cloud_colors' => '',
 
 
-			// calendar
-			'feature_default_calendars' => 'n',
-			'default_calendars' => array(),
-
 			// feed
 			'max_rss_mapfiles' => 10,
 			'rss_mapfiles' => 'n',

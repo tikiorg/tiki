@@ -1,11 +1,11 @@
 <form class="form-horizontal" action="tiki-admin.php?page=calendar" method="post">
 	{include file='access/include_ticket.tpl'}
 	<div class="t_navbar margin-bottom-md clearfix">
-		<a role="link" class="btn btn-link" href="tiki-admin_calendars.php" title="{tr}List{/tr}">
+		<a role="link" class="btn btn-link tips" href="tiki-admin_calendars.php" title=":{tr}Calendars listing{/tr}">
 			{icon name="list"} {tr}Calendars{/tr}
 		</a>
 		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm" name="calprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			<input type="submit" class="btn btn-primary btn-sm tips" name="calprefs" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}" />
 		</div>
 	</div>
 	<fieldset>
@@ -21,39 +21,9 @@
 	</fieldset>
 	<fieldset>
 		<legend>{tr}General settings{/tr}{help url="Calendar+Admin"}</legend>
-		<div class="adminoptionbox">
-			<div class="adminoptionlabel">
-				<div class="form-group">
-					<label class="col-sm-4 control-label" for="feature_default_calendars">
-						{tr}Default calendars to display{/tr}
-					</label>
-					<div class="col-sm-8">
-						{if $rawcals|@count ge '1'}
-							<div class="adminoptionlabel">
-								<input type="radio" id="feature_default_calendars1" name="feature_default_calendars" value="n" {if $prefs.feature_default_calendars neq 'y'}checked="checked"{/if} onclick="flip('default_calendars');">
-								<label for="feature_default_calendars1">{tr}All calendars{/tr}</label>
-							</div>
-							<div class="adminoptionlabel">
-								<input type="radio" id="feature_default_calendars2" name="feature_default_calendars" value="y" {if $prefs.feature_default_calendars eq 'y'}checked="checked"{/if} onclick="flip('default_calendars');">
-								<label for="feature_default_calendars2">{tr}A subset of available calendars{/tr}</label>
-							</div>
-							<div class="adminoptionboxchild" id="default_calendars" style="display:{if $prefs.feature_default_calendars neq 'y'}none{else}block{/if};">
-								{foreach item=k from=$rawcals}
-									<div class="adminoption form-group">
-										<div class="adminoptionlabel">
-											<label class="control-label" for="{$k.calendarId}"><input type="checkbox" name="default_calendars[]" id="{$k.calendarId}" value="{$k.calendarId}" {if in_array($k.calendarId,$prefs.site_default_calendars)}checked="checked"{/if}>
-												{$k.name|escape}
-											</label>
-										</div>
-									</div>
-								{/foreach}
-							</div>
-						{else}
-							{tr}None{/tr} {button href="tiki-admin_calendars.php?cookietab=2" _text="{tr}Create calendar{/tr}"}
-						{/if}
-					</div>
-				</div>
-			</div>
+		{preference name=feature_default_calendars}
+		<div class="adminoptionboxchild" id="feature_default_calendars_childcontainer">
+			{preference name=default_calendars}
 		</div>
 		{preference name=calendar_view_mode}
 		{preference name=calendar_list_begins_focus}
@@ -64,14 +34,8 @@
 		{preference name=calendar_export_item}
 		{preference name=calendar_addtogooglecal}
 		{preference name=calendar_fullcalendar}
-		<div class="adminoptionbox form-group">
-			<label class="col-sm-4 control-label adminoptionlabel" for="feature_jscalendar">{tr}JS Calendar{/tr}</label>
-			<div class="adminoption col-sm-8">
-				<input type="checkbox" id="feature_jscalendar" name="feature_jscalendar" {if $prefs.feature_jscalendar eq 'y'}checked="checked" {/if}onclick="flip('usejscalendar');" />
-				{help url="Js+Calendar"}
-			</div>
-		</div>
-		<div id="usejscalendar" style="display:{if $prefs.feature_jscalendar eq 'y'}none{else}block{/if}">
+		{preference name=feature_jscalendar mode=invert}
+		<div class="adminoptionboxchild" id="feature_jscalendar_childcontainer">
 			{preference name=calendar_start_year}
 			{preference name=calendar_end_year}
 		</div>
@@ -83,6 +47,6 @@
 		{preference name=calendar_watch_editor}
 	</fieldset>
 	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm" name="calprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+		<input type="submit" class="btn btn-primary btn-sm tips" name="calprefs" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}" />
 	</div>
 </form>

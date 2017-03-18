@@ -2922,5 +2922,10 @@ function prefs_feature_list($partial = false)
 			'tags' => array('basic'),
 			'default' => 'y',
 		),
+		'feature_default_calendars' => [
+			'name' => tra('Display only select calendars by default'),
+			'type' => 'flag',
+			'default' => 'n',
+		],
 	);
 }
