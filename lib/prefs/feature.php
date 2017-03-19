@@ -1629,8 +1629,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_file_galleries_batch' => array(
 			'name' => tra('Batch uploading'),
-			'description' => tra('Direct import of local files into a file gallery. This method can handle large files. The user can upload files via FTP to the target folder'),
-			'hint' => tra('Use batch uploading to transfer large files to file galleries'),
+			'description' => tra('Direct import of local files into a file gallery. This method can handle large files. The user can upload files via FTP to the target folder. It is highly recommended to use a file directory as the file gallery storage when using this feature.'),
 			'type' => 'flag',
 			'help' => 'Batch+Upload',
 			'default' => 'n',
