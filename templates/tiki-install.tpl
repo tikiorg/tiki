@@ -305,7 +305,7 @@
 								<div class="form-group">
 									<label for="name">{tr}Database name:{/tr}</label>
 									<div style="margin-left:1em;">
-										<input type="text" class=form-control id="name" name="name" size="40" value="{if isset($smarty.request.name)}{$smarty.request.name|escape:"html"}{elseif isset($preconfigname)}{$preconfigname|escape:"html"}{/if}" placeholder="{tr}databaseName{/tr}"/>
+										<input type="text" class=form-control id="name" name="name" size="40" value="{if isset($smarty.request.name)}{$smarty.request.name|escape:"html"}{elseif isset($preconfigname)}{$preconfigname|escape:"html"}{/if}" placeholder="{tr}Database name{/tr}"/>
 										<a href="javascript:void(0)" onclick="flip('name_help');" title="{tr}Help{/tr}">
 											{icon name="help"}
 										</a>
@@ -323,7 +323,7 @@
 								<legend>{tr}Database user{/tr}</legend>
 								<p>{tr}Enter a database user with administrator permission for the Database.{/tr}</p>
 								<div style="padding:5px;">
-									<label for="user">{tr}User name:{/tr}</label> <input type="text" class=form-control id="user" name="user" value="{if (isset($smarty.request.user))}{$smarty.request.user|escape:"html"}{elseif isset($preconfiguser)}{$preconfiguser|escape:"html"}{/if}" placeholder="{tr}databaseUsername{/tr}">
+									<label for="user">{tr}User name:{/tr}</label> <input type="text" class=form-control id="user" name="user" value="{if (isset($smarty.request.user))}{$smarty.request.user|escape:"html"}{elseif isset($preconfiguser)}{$preconfiguser|escape:"html"}{/if}" placeholder="{tr}Database username{/tr}">
 								</div>
 
 								<div style="padding:5px;">
