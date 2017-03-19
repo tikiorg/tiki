@@ -108,7 +108,23 @@ function simple_set_value($feature, $pref = '', $isMultiple = false)
 	}
 	if (isset($_REQUEST[$feature]) && $old != $_REQUEST[$feature]) {
 		add_feedback($feature, ($_REQUEST[$feature]) ? tr('%0 set', $feature) : tr('%0 unset', $feature), 2);
-		$logslib->add_action('feature', $feature, 'system', $old .'=>'.isset($_REQUEST['feature'])?$_REQUEST['feature']:'');
+		$msg = '';
+		if (is_array($_REQUEST[$feature]) && is_array($old)) {
+			$newCount = count($_REQUEST[$feature]);
+			$oldCount = count($old);
+			if ($newCount > $oldCount) {
+				$added = $newCount - $oldCount;
+				$item = $added == 1 ? tr('item added') : tr('items added');
+				$msg = $added . ' ' . $item;
+			} else if ($oldCount > $newCount) {
+				$deleted = $oldCount - $newCount;
+				$item = $deleted == 1 ? tr('item deleted') : tr('items deleted');
+				$msg = $deleted . ' ' . $item;
+			}
+		} else {
+			$msg = $old . ' => ' . $_REQUEST[$feature];
+		}
+		$logslib->add_action('feature', $feature, 'system', $msg);
 	}
 	TikiLib::lib('cache')->invalidate('allperms');
 }
