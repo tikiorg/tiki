@@ -194,10 +194,6 @@ jqueryTiki.googleStreetView = '.($prefs['geo_google_streetview'] == 'y' ? 'true'
 jqueryTiki.googleStreetViewOverlay = '.($prefs['geo_google_streetview_overlay'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.structurePageRepeat = '.($prefs['page_n_times_in_a_structure'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.mobile = '.((isset($prefs['mobile_mode']) && $prefs['mobile_mode'] == 'y') ? 'true' : 'false') . ';
-jqueryTiki.jcapture = '.($prefs['feature_jcapture'] == 'y' ? 'true' : 'false') . ';
-//do not fix following line for notices -  appropriately throws off a notice when user has not
-//flushed prefs cache after upgrading - i.e. not running the updater
-jqueryTiki.jcaptureFgal = ' . ((int)$prefs['fgal_for_jcapture']) . ';
 jqueryTiki.no_cookie = false;
 jqueryTiki.language = "' . $prefs['language'] . '";
 jqueryTiki.useInlineComment = '.($prefs['feature_inline_comments'] === 'y' ? 'true' : 'false') . ';

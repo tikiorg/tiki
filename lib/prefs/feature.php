@@ -2789,17 +2789,6 @@ function prefs_feature_list($partial = false)
 			'warning' => tra('Experimental'),
 			'tags' => array('experimental'),
 		),
-		'feature_jcapture' => array(
-			'name' => tra('jCapture Screencast'),
-			'description' => tra('Use jCapture applet to create screencasts and capture screenshots, store them in a file gallery, and show them directly in a wiki page'),
-			'type' => 'flag',
-			'help' => 'jCapture',
-			'default' => 'n',				// include UI lib for more effects
-			'dependencies' => array(
-				'auth_token_access',
-				'feature_file_galleries',
-			),
-		),
 		'feature_community_send_mail_join' => array(
 			'name' => tra('Send an email notification to group leaders when a user joins'),
 			'type' => 'flag',

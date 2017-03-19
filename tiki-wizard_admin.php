@@ -149,10 +149,7 @@ if ($useDefaultPrefs) {
 	require_once('lib/wizard/pages/admin_structures.php'); 
 	$pages[] = new AdminWizardStructures();
 
-	require_once('lib/wizard/pages/admin_jcapture.php'); 
-	$pages[] = new AdminWizardJCapture();
-
-	require_once('lib/wizard/pages/admin_files.php'); 
+	require_once('lib/wizard/pages/admin_files.php');
 	$pages[] = new AdminWizardFiles();
 
 	require_once('lib/wizard/pages/admin_files_storage.php'); 

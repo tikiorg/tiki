@@ -128,13 +128,6 @@
 							</a>
 						</li>
 					{/if}
-					{if $prefs.feature_jcapture eq "y"}
-						<li>
-							<a href="#" onclick="openJCaptureDialog('none', '{$page|default:null}', event);return false;">
-								{icon name="screencapture"} {tr}Screen capture{/tr}
-							</a>
-						</li>
-					{/if}
 				</ul>
 				{if $js == 'n'}</li></ul>{/if}
 			</div>

@@ -558,10 +558,6 @@ if (empty($user) && $prefs['feature_antibot'] == 'y') {
 	$headerlib->add_jsfile_late('lib/captcha/captchalib.js');
 }
 
-if ( $prefs['feature_jcapture'] === 'y' ) {
-	$headerlib->add_jsfile('lib/jcapture_tiki/tiki-jcapture.js');
-}
-
 if ( ! empty( $prefs['header_custom_css'] ) ) {
 	$headerlib->add_css($prefs['header_custom_css']);
 }

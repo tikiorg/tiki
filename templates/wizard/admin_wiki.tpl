@@ -16,7 +16,6 @@
 				<div class="adminoptionboxchild">
 					{tr}See also{/tr} <a href="https://doc.tiki.org/Category" target="_blank">{tr}Category{/tr} @ doc.tiki.org</a>
 				</div>
-				{preference name=feature_jcapture}
 				{preference name=feature_wiki_structure}
 				<div class="adminoptionboxchild">
 					{tr}Look for the <img src="img/icons/camera.png" /> icon in the editor toolbar{/tr}. {tr}Requires Java{/tr}.<br/><a href="https://www.java.com/verify/" target="_blank">{tr}Verify your Java installation{/tr}</a>.<br>

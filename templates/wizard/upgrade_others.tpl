@@ -117,10 +117,6 @@
 					{preference name=conditions_minimum_age}
 				</div>
 				{preference name=feature_docs}
-				{preference name=feature_jcapture}
-				<div class="adminoptionboxchild" id="feature_jcapture_childcontainer">
-					{preference name=fgal_for_jcapture}
-				</div>
 				{preference name=feature_draw}
 				<div class="adminoptionboxchild" id="feature_draw_childcontainer">
 					{preference name=feature_draw_hide_buttons}

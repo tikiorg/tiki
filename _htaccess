@@ -221,7 +221,7 @@ FileETag none
 #AuthUserFile /etc/httpd/passwords
 #Require valid-user
 
-# Option 2: Allows jCapture and other services that POST back to Tiki, but less secure.
+# Option 2: Allows services that POST back to Tiki, but less secure.
 #<Limit GET>
 #	Require valid-user
 #</Limit>

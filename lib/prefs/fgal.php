@@ -270,16 +270,6 @@ function prefs_fgal_list()
 			'size' => 5,
 			'default' => 0,
 		),
-		'fgal_for_jcapture' => array(
-			'name' => tra('File Gallery for jCapture'),
-			'description' => tra('Id of gallery to store files captured by jCapture. Default:0 uses the default "root" gallery.'),
-			'type' => 'text',
-			'filter' => 'int',
-			'size' => 5,
-			'default' => 0,
-			'dependencies' => 'feature_jcapture',
-			'tags' => array('experimental'),
-		),
 		'fgal_elfinder_feature' => array(
 			'name' => tra('Use elFinder UI'),
 			'description' => tra('Alternative file manager with drag and drop capability'),
