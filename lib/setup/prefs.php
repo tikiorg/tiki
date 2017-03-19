@@ -192,17 +192,8 @@ function get_default_prefs()
 			'error_url' => 'tiki-error.php',
 
 			// intertiki
-			'feature_intertiki_server' => 'n',
-			'feature_intertiki_slavemode' => 'n',
 			'interlist' => array(),
-			'feature_intertiki_mymaster' => '',
-			'feature_intertiki_import_preferences' => 'n',
-			'feature_intertiki_import_groups' => 'n',
 			'known_hosts' => array(),
-			'tiki_key' => '',
-			'intertiki_logfile' => '',
-			'intertiki_errfile' => '',
-			'feature_intertiki_sharedcookie' => 'n',
 
 			// categories
 			'category_i18n_unsynced' => array(),

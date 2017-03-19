@@ -24,6 +24,9 @@ function prefs_feature_list($partial = false)
 		}
 	}
 
+	$interlist = array_column($prefs['interlist'], 'name', 'name');
+	$interlist = ['' => tr('None')] + $interlist;
+
 	return array(
 		'feature_blog_mandatory_category' => array(
 			'name' =>  tra('Blog:').' '.tra('Limit categorization to within the subtree of'),
@@ -2924,6 +2927,42 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_default_calendars' => [
 			'name' => tra('Display only select calendars by default'),
+			'type' => 'flag',
+			'default' => 'n',
+		],
+		'feature_intertiki_mymaster' => [
+			'name' => tra('Master Tiki server'),
+			'description' => tra('Master Tiki server that this client will obtain user authorizations from.'),
+			'type' => 'list',
+			'options' => $interlist,
+			'warning' => tra('Overrides manually registered local users'),
+			'default' => '',
+		],
+		'feature_intertiki_import_preferences' => [
+			'name' => tra('Import user preferences'),
+			'type' => 'flag',
+			'default' => 'n',
+		],
+		'feature_intertiki_import_groups' => [
+			'name' => tra('Import user groups'),
+			'type' => 'flag',
+			'default' => 'n',
+		],
+		'feature_intertiki_imported_groups' => [
+			'name' => tra('Limit group import'),
+			'hint' => tra('Comma-separated list of imported groups. Leave empty to avoid limitation.'),
+			'type' => 'text',
+			'filter' => 'text',
+			'default' => '',
+		],
+		'feature_intertiki_sharedcookie' => [
+			'name' => tra('Intertiki shared cookie'),
+			'description' => tra('When enabled a user who logs into or out of either the client or master is automatically logged into or out of all other sites. The remember me login feature must be on.'),
+			'type' => 'flag',
+			'default' => 'n',
+		],
+		'feature_intertiki_server' => [
+			'name' => tra('This site is a master server'),
 			'type' => 'flag',
 			'default' => 'n',
 		],

@@ -153,5 +153,12 @@ function prefs_tiki_list()
 			'default' => 250,
 			'filter' => 'int',
 		),
+		'tiki_key' => [
+			'name' => tr('Client key for this site'),
+			'type' => 'text',
+			'size' => 32,
+			'filter' => 'text',
+			'default' => '',
+		],
 	);
 }
