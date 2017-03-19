@@ -2,16 +2,16 @@
 <form role="form" class="form-horizontal" action="tiki-admin.php?page=blogs" method="post">
 	{include file='access/include_ticket.tpl'}
 	<div class="t_navbar margin-bottom-md clearfix">
-		<a role="button" class="btn btn-link" href="tiki-list_blogs.php" title="{tr}List{/tr}">
+		<a role="button" class="btn btn-link tips" href="tiki-list_blogs.php" title=":{tr}Blogs listing{/tr}">
 			{icon name="list"} {tr}Blogs{/tr}
 		</a>
 		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
 	</div>
 	{tabset name="admin_blogs"}
 		{tab name="{tr}General Settings{/tr}"}
-			<h2>{tr}General Settings{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_blogs visible="always"}
@@ -37,7 +37,6 @@
 				</fieldset>
 			<fieldset>
 				<legend>{tr}Comments{/tr}</legend>
-				<input type="hidden" name="blogcomprefs" />
 				{preference name=feature_blogposts_comments}
 				{preference name=blog_comments_per_page}
 				{preference name=blog_comments_default_ordering}
@@ -53,7 +52,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}Blogs Listings{/tr}"}
-			<h2>{tr}Blogs Listings{/tr}</h2>
+			<br>
 			{preference name=blog_list_order}
 			<fieldset>
 				<legend>{tr}Select which items to display when listing blogs:{/tr}</legend>
@@ -72,6 +71,6 @@
 		{/tab}
 	{/tabset}
 	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 	</div>
 </form>

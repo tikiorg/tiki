@@ -3,10 +3,10 @@
 	{include file='access/include_ticket.tpl'}
 	<div class="row">
 		<div class="form-group col-lg-12">
-			<a role="link" href="tiki-list_comments.php" class="btn btn-link" title="{tr}List{/tr}">{icon name="list"} {tr}Comments{/tr}</a>
-			{permission_link mode=link addclass="btn btn-link" _iconname="key" textFilter=comment showDisabled=y}
+			<a role="link" href="tiki-list_comments.php" class="btn btn-link tips" title=":{tr}Comments listing{/tr}">{icon name="list"} {tr}Comments{/tr}</a>
+			{permission_link mode=link addclass="btn btn-link tips" _iconname="key" textFilter=comment showDisabled=y}
 			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" name="commentssetprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>
@@ -66,7 +66,7 @@
 	<div class="row">
 		<div class="form-group col-lg-12">
 			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" name="commentssetprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>

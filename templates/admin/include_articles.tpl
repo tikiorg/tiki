@@ -3,11 +3,6 @@
 	{tr}Look under "<a href="tiki-admin_rssmodules.php" target="_blank" class="alert-link">External Feeds</a>" on the application menu if you are searching for the <a href="https://doc.tiki.org/Article+generator" target="_blank" class="alert-link">"Article Generator" on RSS feeds</a>{/tr}.
 {/remarksbox}
 {if !empty($msgs)}
-	<div class="alert alert-warning">
-		{foreach from=$msgs item=msg}
-			{$msg}
-		{/foreach}
-	</div>
 {/if}
 <form role="form" class="form-horizontal" method="post" action="tiki-admin.php?page=articles" enctype="multipart/form-data">
 	{include file='access/include_ticket.tpl'}
@@ -27,12 +22,12 @@
 			</a>
 		{/if}
 		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
 	</div>
 	{tabset name="admin_articles"}
 		{tab name="{tr}General Settings{/tr}"}
-			<h2>{tr}General Settings{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_articles visible="always"}
@@ -110,7 +105,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}Articles Listing{/tr}"}
-			<h2>{tr}Articles Listing{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}List Articles{/tr}</legend>
 				{preference name=art_sort_mode}
@@ -143,7 +138,7 @@
 		{/tab}
 	{/tabset}
 	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 	</div>
 </form>
 
