@@ -166,6 +166,7 @@
 				<legend>{tr}Edit plugin icons{/tr}</legend>
 				{preference name=wiki_edit_plugin}
 				{preference name=wiki_edit_icons_toggle}
+				{preference name=wikiplugin_list_gui}
 			</fieldset>
 
 			<fieldset class="margin-bottom-lg" id="plugins">

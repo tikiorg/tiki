@@ -173,9 +173,9 @@ class Services_Edit_PluginController
 						$moduleInfo = $info_func();
 						if (isset($info['params']['max'])) {
 							$max = $info['params']['max'];
-							unset($info['params']['max']);	// move "max" to last
+							unset($info['params']['max']);    // move "max" to last
 						}
-						foreach($moduleInfo['params'] as $key => $value) {
+						foreach ($moduleInfo['params'] as $key => $value) {
 							$info['params'][$key] = $value;
 						}
 						if (! empty($max)) {
@@ -202,7 +202,7 @@ class Services_Edit_PluginController
 
 				'info' => $info,
 				'title' => $info['name'],
-				'ticket' => $util->check['ticket']
+				'ticket' => $util->check['ticket'],
 			];
 		}
 	}
@@ -295,6 +295,63 @@ class Services_Edit_PluginController
 		return [];
 
 	}
+
+	/**
+	 * Create the data for the list plugin GUI
+	 *
+	 * @param JitFilter $input
+	 * @return array
+	 */
+	function action_list_edit($input)
+	{
+
+		$body = $input->body->wikicontent();
+		$current = [];
+		$done = [];	// to keep a track on whcih plugins have already been included
+
+		$this->parsePlugins($body, $current, $done);
+
+
+		$fields = TikiLib::lib('unifiedsearch')->getAvailableFields();
+
+		return [
+			'plugins' => Services_Edit_ListPluginHelper::getDefinition(),
+			'fields' => $fields,
+			'current' => $current,
+		];
+	}
+
+	/**
+	 * Recursively convert plugins to nested array
+	 *
+	 * @param string $body      wiki content to "parse"
+	 * @param array $plugins    resulting nested array of plugins
+	 * @param array $done       flat array to track plugins already added to $plugins
+	 */
+	private function parsePlugins($body, & $plugins, & $done) {
+		$matches = WikiParser_PluginMatcher::match($body);
+		$argumentParser = new WikiParser_PluginArgumentParser;
+
+		/** @var WikiParser_PluginMatcher_Match $match */
+		foreach($matches as $match) {
+
+			$thisPlugin = [
+				'name' => $match->getName(),
+				'args' => $argumentParser->parse($match->getArguments()),
+				'body' => $match->getBody(),
+				'plugins' => []
+			];
+
+			$this->parsePlugins($match->getBody(), $thisPlugin['plugins'], $done);
+
+			if (! in_array($thisPlugin, $done)) {
+				$plugins[] = $thisPlugin;
+				$done[] = $thisPlugin;
+			}
+		}
+
+	}
+
 
 }
 

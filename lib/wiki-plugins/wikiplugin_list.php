@@ -37,6 +37,12 @@ function wikiplugin_list($data, $params)
 	static $i;
 	$i++;
 
+	if ($prefs['wikiplugin_list_gui'] === 'y') {
+		TikiLib::lib('header')
+			->add_jsfile('lib/jquery_tiki/pluginedit_list.js')
+			->add_jsfile('vendor_bundled/vendor/jquery/plugins/nestedsortable/jquery.ui.nestedSortable.js');
+	}
+
 	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 
 	$query = new Search_Query;

@@ -4921,6 +4921,18 @@ div.drillshow {
   background-color: #ffffff;
   overflow: visible;
 }
+.plugin-list-editor > ul {
+  padding: 0;
+}
+.plugin-list-editor li.plugin {
+  list-style: none;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+.plugin-list-editor li.plugin .name {
+  font-weight: bold;
+}
 .multilike .horizontal {
   display: inline-block;
   height: 38px;
