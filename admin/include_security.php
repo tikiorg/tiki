@@ -10,13 +10,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
-if (isset($_REQUEST["security"])) {
-	check_ticket('admin-inc-security');
-}
 
 if (!extension_loaded('mcrypt')) {
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('no_mcrypt', 'y');
 }
-
-ask_ticket('admin-inc-security');

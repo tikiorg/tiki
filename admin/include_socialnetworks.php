@@ -12,12 +12,6 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 }
 
 require_once('lib/socialnetworkslib.php');
-
-if (isset($_REQUEST['socialnetwork'])) {
-	check_ticket('admin-inc-socialnetworks');
-}
-ask_ticket('admin-inc-socialnetworks');
-
 $url = $socialnetworkslib->getURL();
 $url = substr($url, 0, strrpos($url, '/') + 1);
 $smarty->assign('url', $url);

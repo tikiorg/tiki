@@ -11,10 +11,6 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
-if (isset($_REQUEST['userfeatures'])) {
-	check_ticket('admin-inc-user');
-}
-
 $command_parts = [
 	realpath(__DIR__ . '/../console.php'),
 	'notification:digest',
@@ -33,5 +29,3 @@ if ($url_scheme == 'https') {
 }
 $command = implode(' ', $command_parts);
 $smarty->assign('monitor_command', $command);
-
-ask_ticket('admin-inc-user');
