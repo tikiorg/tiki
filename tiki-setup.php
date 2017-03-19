@@ -685,7 +685,7 @@ annotatorContent.annotator("addPlugin", "Permissions", {
 
 }
 
-$headerlib->add_jsfile('lib/jquery_tiki/tiki-pluginedit.js');
+$headerlib->add_jsfile('lib/jquery_tiki/pluginedit.js');
 
 if ( session_id() ) {
 	if ( $prefs['tiki_cachecontrol_session'] ) {
