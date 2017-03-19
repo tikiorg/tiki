@@ -46,8 +46,6 @@ if ($access->ticketMatch()) {
 		$new["{$_REQUEST['new']['name']}"] = $_REQUEST['new'];
 		$_REQUEST['interlist']+= $new;
 		simple_set_value('interlist');
-		//to refresh interlist dropdown - not sure if there's a better way to do this
-		$access->redirect($_SERVER['REQUEST_URI'], '', 200);
 	}
 
 	if (isset($_REQUEST['newhost']) and is_array($_REQUEST['newhost']) and $_REQUEST['newhost']['key']) {

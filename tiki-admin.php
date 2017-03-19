@@ -215,6 +215,8 @@ if ( isset( $_REQUEST['lm_preference'] ) ) {
 				}
 			}
 		}
+		//need to redirect as changes to one pref can affect display of others
+		$access->redirect($_SERVER['REQUEST_URI'], '', 200);
 	}
 }
 
