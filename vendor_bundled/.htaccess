@@ -16,7 +16,6 @@
 	# New vendor libraries can add exemptions if there is a issue, but the
 	#  likley senario is that it will not be needed.
 
-	RewriteRule "^(jcapture-applet/).*/.*\.jar$" "-" [PT,L]
 	RewriteRule "^(player/).*/.*\.swf$" "-" [PT,L]
 
 	# -- Deny Everything Not Matched Above -- #
