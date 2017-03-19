@@ -331,14 +331,6 @@
 			</fieldset>
 
 			<fieldset>
-				<legend>{tr}Capture{/tr}</legend>
-				{preference name=feature_jcapture}
-				<div class="adminoptionboxchild" id="feature_jcapture_childcontainer">
-					{preference name=fgal_for_jcapture}
-				</div>
-			</fieldset>
-
-			<fieldset>
 				<legend>{tr}SCORM{/tr}</legend>
 				{preference name=scorm_enabled}
 				<div class="adminoptionboxchild" id="scorm_enabled_childcontainer">
