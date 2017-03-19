@@ -64,7 +64,7 @@ function prefs_saml_list()
 			'description' => tra('Let the admin to authenticate using the traditional login'), 
 			'type' => 'flag',
 			'perspective' => false,
-			'default' => true,
+			'default' => 'y',
 		),
 		'saml_option_default_group' => array(
 			'name' => tra('Default group'),
