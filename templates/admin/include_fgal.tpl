@@ -12,11 +12,11 @@
 
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			<a role="link" class="btn btn-link" href="tiki-list_file_gallery.php" title="{tr}List{/tr}">
+			<a role="link" class="btn btn-link tips" href="tiki-list_file_gallery.php" title="{tr}File galleries listing{/tr}">
 				{icon name="list"} {tr}File Galleries{/tr}
 			</a>
 			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" name="filegalhandlers" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm tips" name="filegalhandlers" title="{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>
@@ -45,8 +45,6 @@
 			</div>
 
 			{preference name='fgal_podcast_dir'}
-
-			<input type="hidden" name="filegalfeatures">
 
 			<fieldset>
 				<legend>{tr}Features{/tr}{help url="File+Gallery+Config"}</legend>
@@ -145,49 +143,10 @@
 				{tr}Changing these settings will <em>not</em> affect existing file galleries. These changes will apply <em>only</em> to new file galleries{/tr}.
 			{/remarksbox}
 
-			<input type="hidden" name="filegallistprefs" />
-			<div class="adminoptionbox clearfix margin-bottom-md">
-				<label class="col-sm-4 control-label" for="fgal_default_view">
-					{tr}Default View{/tr}
-				</label>
-				<div class="col-sm-8">
-					<select id="fgal_default_view" name="fgal_default_view" class="form-control">
-						<option value="list"{if $prefs.fgal_default_view eq 'list'} selected="selected"{/if}>
-							{tr}List{/tr}
-						</option>
-						<option value="browse"{if $prefs.fgal_default_view eq 'browse'} selected="selected"{/if}>
-							{tr}Browse{/tr}
-						</option>
-						<option value="page"{if $prefs.fgal_default_view eq 'page'} selected="selected"{/if}>
-							{tr}Page{/tr}
-						</option>
-						{if $prefs.fgal_elfinder_feature eq 'y'}
-							<option value="finder"{if $prefs.fgal_default_view eq 'finder'} selected="selected"{/if}>
-								{tr}Finder View{/tr}
-							</option>
-						{/if}
-					</select>
-				</div>
-			</div>
-			<div class="adminoptionbox clearfix">
-				<label for="fgal_sortorder" class="col-sm-4 control-label">{tr}Default sort order{/tr}:</label>
-				<div class="col-sm-8">
-					<select name="fgal_sortorder" id="fgal_sortorder" class="form-control">
-						{foreach from=$options_sortorder key=key item=item}
-							<option value="{$item|escape}" {if $fgal_sortorder == $item} selected="selected"{/if}>{$key}</option>
-						{/foreach}
-					</select>
-					<span class="help-block">
-						<label class="radio-inline" for="fgal_sortdirection1">
-							<input type="radio" id="fgal_sortdirection1" name="fgal_sortdirection" value="desc" {if $fgal_sortdirection == 'desc'}checked="checked"{/if} />
-							{tr}Descending{/tr}
-						</label>
-						<label class="radio-inline" for="fgal_sortdirection2">
-							<input type="radio" id="fgal_sortdirection2" name="fgal_sortdirection" value="asc" {if $fgal_sortdirection == 'asc'}checked="checked"{/if} />
-							{tr}Ascending{/tr}
-						</label>
-					</span>
-				</div>
+			{preference name=fgal_default_view}
+			{preference name=fgal_sortField}
+			<div class="adminoptionboxchild" id="fgal_sortField_childcontainer">
+				{preference name=fgal_sortDirection}
 			</div>
 			{preference name='fgal_quota_show'}
 			{preference name='fgal_search'}
@@ -219,8 +178,6 @@
 
 		{tab name="{tr}Search Indexing{/tr}"}
 			{preference name=fgal_enable_auto_indexing}
-
-			<input name="filegalhandlers" type="hidden" />
 			<div class="adminoptionbox">
 				<fieldset>
 					<legend>{tr}Handlers{/tr}{help url="File+Gallery+Config#File_galleries_search_indexing"}</legend>
@@ -358,7 +315,7 @@
 	 <div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" name="filegalhandlers" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm tips" name="filegalhandlers" title="{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>

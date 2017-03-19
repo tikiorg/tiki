@@ -785,7 +785,7 @@ class FileGalLib extends TikiLib
 			'show_backlinks' => 'n',
 			'show_deleteAfter' => $prefs['fgal_list_deleteAfter'],
 			'show_lastDownload' => 'n',
-			'sort_mode' => $prefs['fgal_sort_mode'],
+			'sort_mode' => $prefs['fgal_sortField'] . '_' . $prefs['fgal_sortDirection'],
 			'maxRows' => intval($prefs['maxRowsGalleries']),
 			'max_desc' => 0,
 			'subgal_conf' => '',
@@ -2449,7 +2449,7 @@ class FileGalLib extends TikiLib
 	{
 		global $prefs;
 		$defaults = array(
-			'sort_mode' => $prefs['fgal_sort_mode'],
+			'sort_mode' => $prefs['fgal_sortField'] . '_' . $prefs['fgal_sortDirection'],
 			'show_backlinks' => 'n',
 			'show_deleteAfter' => $prefs['fgal_list_deleteAfter'],
 			'show_lastDownload' => 'n',

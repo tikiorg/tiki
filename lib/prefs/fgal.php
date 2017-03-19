@@ -7,6 +7,17 @@
 
 function prefs_fgal_list()
 {
+	//set fgal_default_view options
+	$defaultViews = [
+		'list' => tra('List'),
+		'browse' => tra('Browse'),
+		'page' => tra('Page')
+	];
+	global $prefs;
+	if (!empty($prefs['fgal_elfinder_feature']) && $prefs['fgal_elfinder_feature'] === 'y') {
+		$defaultViews = $defaultViews + ['finder' => tra('Finder view')];
+	}
+
 	return array(
 		'fgal_podcast_dir' => array(
 			'name' => tra('Podcast directory'),
@@ -299,5 +310,34 @@ function prefs_fgal_list()
 			'tags' => array('experimental'),
 			'dependencies' => array('fgal_viewerjs_feature'),
 		),
+		'fgal_default_view' => [
+			'name' => tra('Default view'),
+			'type' => 'list',
+			'options' => $defaultViews,
+			'default' => 'list',
+		],
+		'fgal_sortField' => [
+			'name' => tra('Default sort field'),
+			'type' => 'list',
+			'options' => [
+				'created' => tra('Creation Date'),
+				'name' => tra('Name'),
+				'lastModif' => tra('Last modification date'),
+				'hits' => tra('Hits'),
+				'user' => tra('Owner'),
+				'description' => tra('Description'),
+				'id' => tra('ID'),
+			],
+			'default' => 'created',
+		],
+		'fgal_sortDirection' => [
+			'name' => tra('Default sort direction'),
+			'type' => 'radio',
+			'options' => [
+				'desc' => tra('Descending'),
+				'asc' => tra('Ascending'),
+			],
+			'default' => 'desc',
+		],
 	);
 }

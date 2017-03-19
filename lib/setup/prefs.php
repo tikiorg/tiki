@@ -88,7 +88,6 @@ function get_default_prefs()
 
 			'fgal_enable_auto_indexing' => 'n',
 			'fgal_asynchronous_indexing' => 'y',
-			'fgal_sort_mode' => '',
 			'fgal_list_id' => 'o',
 			'fgal_list_type' => 'y',
 			'fgal_list_name' => 'n',
@@ -109,7 +108,6 @@ function get_default_prefs()
 			'fgal_show_path' => 'y',
 			'fgal_show_explorer' => 'y',
 			'fgal_show_slideshow' => 'n',
-			'fgal_default_view' => 'list',
 			'fgal_list_backlinks' => 'n',
 			'fgal_list_id_admin' => 'y',
 			'fgal_list_type_admin' => 'y',
