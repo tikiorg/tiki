@@ -33,8 +33,8 @@ $fgal_listing_conf = array(
 	'lastDownload' => array('name' => tra('Last download')),
 	'lockedby' => array('name' => tra('Locked by'), 'icon' => 'lock'),
 	'backlinks' => array('name' => tra('Backlinks')),
-	'deleteAfter' => array('name'=>tra('Delete After')),
-	'share' => array('name'=>tra('Share with')),
+	'deleteAfter' => array('name'=>tra('Delete after')),
+	'share' => array('name'=>tra('Share')),
 	'source' => array('name' => tra('Source')),
 );
 
@@ -98,10 +98,7 @@ if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') {
 
 		$k_prefs = 'fgal_'.$k_gal;
 
-		if ( isset($_REQUEST['page']) && $_REQUEST['page'] === 'fgal' ) {
-			// We are in the file gallery admin panel
-			$fgal_options[$k_gal]['value'] = isset($prefs[$k_prefs]) ? $prefs[$k_prefs] : null;
-		} elseif ( isset($_REQUEST['edit_mode']) ) {
+		if ( isset($_REQUEST['edit_mode']) ) {
 			// We are in the edit file gallery page
 			$fgal_options[$k_gal]['value'] = isset($gal_info[$k_gal]) ? $gal_info[$k_gal] : null;
 		} else {

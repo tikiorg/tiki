@@ -63,49 +63,6 @@ if ($access->ticketMatch()) {
 		}
 	}
 
-	simple_set_value('fgal_list_id');
-	simple_set_value('fgal_list_type');
-	simple_set_value('fgal_list_name');
-	simple_set_value('fgal_list_description');
-	simple_set_value('fgal_list_size');
-	simple_set_value('fgal_list_created');
-	simple_set_value('fgal_list_lastModif');
-	simple_set_value('fgal_list_creator');
-	simple_set_value('fgal_list_author');
-	simple_set_value('fgal_list_last_user');
-	simple_set_value('fgal_list_comment');
-	simple_set_value('fgal_list_files');
-	simple_set_value('fgal_list_hits');
-	simple_set_value('fgal_list_lastDownload');
-	simple_set_value('fgal_list_deleteAfter');
-	simple_set_value('fgal_show_checked');
-	simple_set_value('fgal_list_share');
-	simple_set_value('fgal_list_lockedby');
-	simple_set_toggle('fgal_show_explorer');
-	simple_set_toggle('fgal_show_path');
-	simple_set_toggle('fgal_show_slideshow');
-	simple_set_toggle('fgal_list_ratio_hits');
-	simple_set_value('fgal_default_view');
-	simple_set_value('fgal_icon_fileId');
-	simple_set_value('fgal_list_backlinks');
-	simple_set_value('fgal_list_id_admin');
-	simple_set_value('fgal_list_type_admin');
-	simple_set_value('fgal_list_name_admin');
-	simple_set_value('fgal_list_description_admin');
-	simple_set_value('fgal_list_size_admin');
-	simple_set_value('fgal_list_created_admin');
-	simple_set_value('fgal_list_lastModif_admin');
-	simple_set_value('fgal_list_creator_admin');
-	simple_set_value('fgal_list_author_admin');
-	simple_set_value('fgal_list_last_user_admin');
-	simple_set_value('fgal_list_comment_admin');
-	simple_set_value('fgal_list_files_admin');
-	simple_set_value('fgal_list_hits_admin');
-	simple_set_value('fgal_list_lastDownload_admin');
-	simple_set_value('fgal_list_lockedby_admin');
-	simple_set_value('fgal_list_backlinks_admin');
-	simple_set_value('fgal_elfinder_feature');
-
 	if (!empty($_REQUEST['mimes'])) {
 		$mimes = $_REQUEST['mimes'];
 		foreach ($mimes as $mime => $cmd) {

@@ -63,19 +63,12 @@
 
 				{preference name='feature_file_galleries_batch'}
 				<div class="adminoptionboxchild" id="feature_file_galleries_batch_childcontainer">
-					{remarksbox title="Note"}
-						{tr}You are highly recommended to use a file directory as the File Gallery storage, when using this feature{/tr}
-					{/remarksbox}
-					<br/>
 					{preference name='fgal_batch_dir'}
 				</div>
 
 				{preference name='feature_file_galleries_author'}
 				{preference name='fgal_delete_after'}
 				<div class="adminoptionboxchild" id="fgal_delete_after_childcontainer">
-					{remarksbox type="warning" title="Cron"}
-						{tr}A cron job must be set up in order to delete the files.{/tr}
-					{/remarksbox}
 					{preference name='fgal_delete_after_email'}
 				</div>
 				{preference name='fgal_keep_fileId'}
@@ -160,9 +153,28 @@
 			{preference name='fgal_display_properties'}
 			{preference name='fgal_display_replace'}
 			{preference name='fgal_checked'}
-			<fieldset>
-				{include file='fgal_listing_conf.tpl'}
-			</fieldset>
+			{preference name='fgal_icon_fileId'}
+			{preference name='fgal_show_explorer'}
+			{preference name='fgal_show_path'}
+			{preference name='fgal_show_slideshow'}
+			{preference name='fgal_list_id'}
+			{preference name='fgal_list_type'}
+			{preference name='fgal_list_name'}
+			{preference name='fgal_list_size'}
+			{preference name='fgal_list_created'}
+			{preference name='fgal_list_lastModif'}
+			{preference name='fgal_list_creator'}
+			{preference name='fgal_list_author'}
+			{preference name='fgal_list_last_user'}
+			{preference name='fgal_list_comment'}
+			{preference name='fgal_list_files'}
+			{preference name='fgal_list_hits'}
+			{preference name='fgal_list_lastDownload'}
+			{preference name='fgal_list_lockedby'}
+			{preference name='fgal_list_backlinks'}
+			{preference name='fgal_list_deleteAfter'}
+			{preference name='fgal_list_share'}
+			{preference name='fgal_list_source'}
 		{/tab}
 
 		{if $section eq 'admin'}
@@ -170,7 +182,24 @@
 				<h2>{tr}Admin Listings{/tr}</h2>
 				<span class="help-block">{tr}Configuration for gallery administration listings{/tr}</span>
 				<fieldset>
-					{include file='fgal_listing_conf.tpl' fgal_options='' fgal_listing_conf=$fgal_listing_conf_admin}
+					{preference name='fgal_list_id_admin'}
+					{preference name='fgal_list_type_admin'}
+					{preference name='fgal_list_name_admin'}
+					{preference name='fgal_list_size_admin'}
+					{preference name='fgal_list_created_admin'}
+					{preference name='fgal_list_lastModif_admin'}
+					{preference name='fgal_list_creator_admin'}
+					{preference name='fgal_list_author_admin'}
+					{preference name='fgal_list_last_user_admin'}
+					{preference name='fgal_list_comment_admin'}
+					{preference name='fgal_list_files_admin'}
+					{preference name='fgal_list_hits_admin'}
+					{preference name='fgal_list_lastDownload_admin'}
+					{preference name='fgal_list_lockedby_admin'}
+					{preference name='fgal_list_backlinks_admin'}
+					{preference name='fgal_list_deleteAfter_admin'}
+					{preference name='fgal_list_share_admin'}
+					{preference name='fgal_list_source_admin'}
 				</fieldset>
 			{/tab}
 		{/if}
@@ -178,6 +207,7 @@
 
 		{tab name="{tr}Search Indexing{/tr}"}
 			{preference name=fgal_enable_auto_indexing}
+			{preference name=fgal_asynchronous_indexing}
 			<div class="adminoptionbox">
 				<fieldset>
 					<legend>{tr}Handlers{/tr}{help url="File+Gallery+Config#File_galleries_search_indexing"}</legend>
