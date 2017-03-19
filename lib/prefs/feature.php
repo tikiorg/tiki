@@ -24,10 +24,11 @@ function prefs_feature_list($partial = false)
 		}
 	}
 
-	$interlist = array_column($prefs['interlist'], 'name', 'name');
-	if ($interlist) {
-		$interlist = ['' => tr('None')] + $interlist;
+	if (isset($prefs['interlist']) && is_array($prefs['interlist'])) {
+		$interlist = array_column($prefs['interlist'], 'name', 'name');
 	}
+	$interlist = !empty($interlist) && is_array($interlist) ? ['' => tr('None')] + $interlist : ['' => tr('None')];
+
 
 	return array(
 		'feature_blog_mandatory_category' => array(
