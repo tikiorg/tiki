@@ -25,7 +25,9 @@ function prefs_feature_list($partial = false)
 	}
 
 	$interlist = array_column($prefs['interlist'], 'name', 'name');
-	$interlist = ['' => tr('None')] + $interlist;
+	if ($interlist) {
+		$interlist = ['' => tr('None')] + $interlist;
+	}
 
 	return array(
 		'feature_blog_mandatory_category' => array(
