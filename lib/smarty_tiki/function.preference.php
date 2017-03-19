@@ -60,8 +60,9 @@ function smarty_function_preference( $params, $smarty )
 
 		$smarty->assign('p', $info);
 
-		if ( isset($params['mode']) && $params['mode'] == 'invert' ) {
-			$smarty->assign('mode', 'invert');
+
+		if ( isset($params['mode']) && in_array($params['mode'], ['invert', 'notempty']) ) {
+			$smarty->assign('mode', $params['mode']);
 		} else {
 			$smarty->assign('mode', 'normal');
 		}
