@@ -1,7 +1,6 @@
 {* $Id$ *}
 <form class="form-horizontal" action="tiki-admin.php?page=general" class="admin" method="post">
 	{include file='access/include_ticket.tpl'}
-	<input type="hidden" name="new_prefs">
 	<div class="t_navbar margin-bottom-md">
 		{button _class="btn btn-link tips" _type="text" href="tiki-install.php" _icon_name="database" _text="{tr}Tiki installer{/tr}" _title=":{tr}Reset or upgrade your database{/tr}"}
 		{button _class="btn btn-link tips" _type="text" href="tiki-admin_menus.php" _icon_name="menu" _text="{tr}Menus{/tr}" _title=":{tr}Create and edit menus{/tr}"}
