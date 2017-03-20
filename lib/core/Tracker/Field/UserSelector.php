@@ -57,6 +57,16 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 						),
 						'legacy_index' => 1,
 					),
+					'notify_template' => array(
+						'name' => tr('Notification Template'),
+						'description' => tr('The notification email template to use in templates/mail directory or in wiki:PAGE format. Default: tracker_changed_notification.tpl. A corresponding subject template must also exist, e.g. tracker_changed_notification_subject.tpl.'),
+						'filter' => 'text',
+						'depends' => array(
+							'field' => 'notify',
+							'value' => '0',
+							'op' => '!=='
+						),
+					),
 					'multiple' => array(
 						'name' => tr('Multiple selection'),
 						'description' => tr('Allow selection of multiple users from the list.'),

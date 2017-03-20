@@ -369,8 +369,14 @@ class TrackerLib extends TikiLib
 			$smarty->assign('mail_item_desc', $desc);
 			foreach ($watchers as $w) {
 				$mail = new TikiMail($w['user']);
-				$mail->setSubject($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification_subject.tpl'));
-				$mail->setText($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification.tpl'));
+
+				if(!isset($w['template'])) {
+					$w['template'] = '';
+				}
+				$content = $this->parse_notification_template($w['template']);
+
+				$mail->setSubject($smarty->fetchLang($w['language'], $content['subject']));
+				$mail->setText($smarty->fetchLang($w['language'], $content['template']));
 				$mail->send(array($w['email']));
 			}
 		}
@@ -2594,8 +2600,14 @@ class TrackerLib extends TikiLib
 				$smarty->assign('server_name', $_SERVER['SERVER_NAME']);
 				foreach ($watchers as $w) {
 					$mail = new TikiMail($w['user']);
-					$mail->setSubject($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification_subject.tpl'));
-					$mail->setText($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification.tpl'));
+
+					if(!isset($w['template'])) {
+						$w['template'] = '';
+					}
+					$content = $this->parse_notification_template($w['template']);
+
+					$mail->setSubject($smarty->fetchLang($w['language'], $content['subject']));
+					$mail->setText($smarty->fetchLang($w['language'], $content['template']));
 					$mail->send(array($w['email']));
 				}
 			}
@@ -3927,7 +3939,8 @@ class TrackerLib extends TikiLib
 						$email = $userlib->get_user_email($fieldUser);
 						if( !empty($fieldUser) && !empty($email) ) {
 							$tikilib->get_user_preferences($fieldUser, array('email', 'user', 'language', 'mailCharset'));
-							$emails[] = array('email'=>$email, 'user'=>$fieldUser, 'language'=>$user_preferences[$fieldUser]['language'], 'mailCharset'=>$user_preferences[$fieldUser]['mailCharset']);
+							$emails[] = array('email'=>$email, 'user'=>$fieldUser, 'language'=>$user_preferences[$fieldUser]['language'],
+								'mailCharset'=>$user_preferences[$fieldUser]['mailCharset'], 'template'=>$f['options_map']['notify_template']);
 						}
 					}
 				}
@@ -4863,7 +4876,12 @@ class TrackerLib extends TikiLib
 
 					$smarty->assign('mail_action', $mail_action);
 
-					$subject = $smarty->fetchLang($watcher['language'], 'mail/tracker_changed_notification_subject.tpl');
+					if(!isset($watcher['template'])) {
+						$watcher['template'] = '';
+					}
+					$content = $this->parse_notification_template($watcher['template']);
+
+					$subject = $smarty->fetchLang($watcher['language'], $content['subject']);
 					list($watcher_data, $watcher_subject) = $this->translate_watch_data($the_data, $subject, $watcher['language']);
 
 					$smarty->assign('mail_data', $watcher_data);
@@ -4871,7 +4889,7 @@ class TrackerLib extends TikiLib
 						$smarty->assign('mail_action', $watcher['action']);
 					}
 					$smarty->assign('mail_to_user', $watcher['user']);
-					$mail_data = $smarty->fetchLang($watcher['language'], 'mail/tracker_changed_notification.tpl');
+					$mail_data = $smarty->fetchLang($watcher['language'], $content['template']);
 					$mail = new TikiMail($watcher['user']);
 					$mail->setSubject($watcher_subject);
 					$mail->setText($mail_data);
@@ -4929,6 +4947,40 @@ class TrackerLib extends TikiLib
 				}
 			}
 		}
+	}
+
+	private function parse_notification_template($template) {
+		$tikilib = TikiLib::lib('tiki');
+		$subject = "";
+		if (!empty($template)) { //tpl
+			if (strpos($template, 'wiki:') !== 0) {
+				if (!preg_match('/\.tpl$/', $template)) {		// template file
+					$template .= '.tpl';
+				}
+				$template = 'mail/' . $template;
+				$subject = str_replace('.tpl', '_subject.tpl', $template);
+			} else {	// wiki template
+				if (! $tikilib->page_exists(substr($template, 5))) {
+					Feedback::error(tr('Missing wiki email template page "%0"', htmlspecialchars($template)), 'session');
+					$template = '';
+				} else {
+					$subject_name = str_replace('tpl', 'subject tpl', $template);
+					if ($tikilib->page_exists(substr($subject_name, 5))) {
+						$subject = $subject_name;
+					}
+				}
+			}
+		}
+		if(empty($template)) {
+			$template = 'mail/tracker_changed_notification.tpl';
+		}
+		if(empty($subject)) {
+			$subject = 'mail/tracker_changed_notification_subject.tpl';
+		}
+		return array(
+			'subject' => $subject,
+			'template' => $template,
+		);
 	}
 
 
