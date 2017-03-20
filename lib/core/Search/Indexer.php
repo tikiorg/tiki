@@ -116,7 +116,7 @@ class Search_Indexer
 	 *
 	 * @return array
 	 */
-	public function getAvailableFields(): array
+	public function getAvailableFields()
 	{
 		$output = [
 			'global' => [],
