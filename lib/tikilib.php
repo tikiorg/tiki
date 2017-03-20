@@ -114,8 +114,8 @@ class TikiLib extends TikiDb_Bridge
 
 	public function generate_unique_sequence($entropy = 100)
 	{
-		require_once 'lib/phpsec/phpsec/phpsec.rand.php';
-		return base64_encode(phpsecRand::bytes($entropy));
+		$random_value = \phpseclib\Crypt\Random::string($entropy);
+		return base64_encode($random_value);
 	}
 
 	// DB param left for interface compatibility, although not considered

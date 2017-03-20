@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b60e86b1655a699abfc284ae29da25af",
+    "content-hash": "1a1ac17b7a50a7a071941d6c88d870af",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -756,48 +756,6 @@
             "time": "2015-10-16T22:11:08+00:00"
         },
         {
-            "name": "jcapture-applet/jcapture-applet",
-            "version": "dev-trunk",
-            "source": {
-                "type": "svn",
-                "url": "http://svn.code.sf.net/p/jcapture-applet/code",
-                "reference": "/trunk/@47"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/jcapture-applet/jcapture-applet/jcapture-applet-jcapture-applet-dev-trunk-56537c.zip",
-                "reference": "/trunk/@47",
-                "shasum": "da3b8e369ed572f00eb56a36f66681340bfa45bb"
-            },
-            "type": "library",
-            "license": [
-                "LGPL"
-            ],
-            "authors": [
-                {
-                    "name": "Pavel Vlasov",
-                    "homepage": "http://www.hammurapi.com/"
-                },
-                {
-                    "name": "Jonny Bradley",
-                    "homepage": "http://tiki.org/UserPageJonnyBradley"
-                },
-                {
-                    "name": "Marc Laporte",
-                    "homepage": "http://marclaporte.com"
-                }
-            ],
-            "description": "jCapture is an applet to capture screenshots or record audio/screen",
-            "homepage": "http://sourceforge.net/p/jcapture-applet/",
-            "keywords": [
-                "applet",
-                "java",
-                "screencapture",
-                "screenshot"
-            ],
-            "time": "2014-01-27T14:02:15+00:00"
-        },
-        {
             "name": "jquery/jquery-s5",
             "version": "1.0.1",
             "dist": {
@@ -1539,51 +1497,43 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "0.3.6",
+            "version": "2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "0ea31d9b65d49a8661e93bec19f44e989bd34c69"
+                "reference": "ab8028c93c03cc8d9c824efa75dc94f1db2369bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/phpseclib/phpseclib/phpseclib-phpseclib-0ea31d9b65d49a8661e93bec19f44e989bd34c69-zip-f0d13e.zip",
-                "reference": "0ea31d9b65d49a8661e93bec19f44e989bd34c69",
-                "shasum": "7017f453e8f54e23cf39331c40feb46fc65d16a5"
+                "url": "https://composer.tiki.org/dist/phpseclib/phpseclib/phpseclib-phpseclib-ab8028c93c03cc8d9c824efa75dc94f1db2369bf-zip-b18840.zip",
+                "reference": "ab8028c93c03cc8d9c824efa75dc94f1db2369bf",
+                "shasum": "884f47523305acdbbce301e68e7e77d82bbbf86d"
             },
             "require": {
-                "php": ">=5.0.0"
+                "php": ">=5.3.3"
             },
             "require-dev": {
-                "squizlabs/php_codesniffer": "1.*"
+                "phing/phing": "~2.7",
+                "phpunit/phpunit": "~4.0",
+                "sami/sami": "~2.0",
+                "squizlabs/php_codesniffer": "~2.0"
             },
             "suggest": {
                 "ext-gmp": "Install the GMP (GNU Multiple Precision) extension in order to speed up arbitrary precision integer arithmetic operations.",
-                "ext-mcrypt": "Install the Mcrypt extension in order to speed up a wide variety of cryptographic operations.",
-                "pear-pear/PHP_Compat": "Install PHP_Compat to get phpseclib working on PHP < 4.3.3."
+                "ext-libsodium": "SSH2/SFTP can make use of some algorithms provided by the libsodium-php extension.",
+                "ext-mcrypt": "Install the Mcrypt extension in order to speed up a few other cryptographic operations.",
+                "ext-openssl": "Install the OpenSSL extension in order to speed up a wide variety of cryptographic operations."
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.3-dev"
+            "autoload": {
+                "files": [
+                    "phpseclib/bootstrap.php"
+                ],
+                "psr-4": {
+                    "phpseclib\\": "phpseclib/"
                 }
             },
-            "autoload": {
-                "psr-0": {
-                    "Crypt": "phpseclib/",
-                    "File": "phpseclib/",
-                    "Math": "phpseclib/",
-                    "Net": "phpseclib/",
-                    "System": "phpseclib/"
-                },
-                "files": [
-                    "phpseclib/Crypt/Random.php"
-                ]
-            },
             "notification-url": "https://packagist.org/downloads/",
-            "include-path": [
-                "phpseclib/"
-            ],
             "license": [
                 "MIT"
             ],
@@ -1606,6 +1556,11 @@
                 {
                     "name": "Hans-Jürgen Petrich",
                     "email": "petrich@tronic-media.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Graham Campbell",
+                    "email": "graham@alt-three.com",
                     "role": "Developer"
                 }
             ],
@@ -1630,7 +1585,7 @@
                 "x.509",
                 "x509"
             ],
-            "time": "2014-02-28T16:05:05+00:00"
+            "time": "2016-10-04T00:57:04+00:00"
         },
         {
             "name": "player/flv",
@@ -5688,7 +5643,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "jcapture-applet/jcapture-applet": 20,
         "zendframework/zendsearch": 5,
         "bafs/testify": 20
     },

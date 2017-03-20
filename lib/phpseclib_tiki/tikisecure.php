@@ -6,6 +6,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+use phpseclib\Crypt\RSA;
 use Tiki\FileGallery;
 
 class TikiSecure
@@ -35,7 +36,7 @@ class TikiSecure
 		$keys = $this->getKeys();
 		
 		$path = get_include_path();
-		$rsa = new Crypt_RSA();
+		$rsa = new RSA();
 		
 		$rsa->loadKey($keys->publickey);
 		
@@ -50,7 +51,7 @@ class TikiSecure
 		
 		$keys = $this->getKeys();
 
-		$rsa = new Crypt_RSA();
+		$rsa = new RSA();
 
 		$rsa->loadKey($keys->publickey);
 		$rsa->loadKey($keys->privatekey);
@@ -91,7 +92,7 @@ class TikiSecure
 		set_time_limit(30000);
 		$path = get_include_path();
 		
-		$rsa = new Crypt_RSA();
+		$rsa = new RSA();
 		$keys = $rsa->createKey($this->bits);
 		
 		set_include_path($path);

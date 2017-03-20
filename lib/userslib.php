@@ -6905,12 +6905,10 @@ class UsersLib extends TikiLib
 	private function generate_provisional_password()
 	{
 		$tikilib = TikiLib::lib('tiki');
-		require_once 'lib/phpsec/phpsec/phpsec.rand.php';
 
 		$site_hash = $tikilib->get_site_hash();
 
-		$random_value = phpsecRand::bytes(40);
-
+		$random_value = \phpseclib\Crypt\Random::string(40);
 		return base64_encode(sha1($random_value . $site_hash, true));
 	}
 
