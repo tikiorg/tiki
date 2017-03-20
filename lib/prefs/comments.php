@@ -62,7 +62,7 @@ function prefs_comments_list()
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('advanced'),
-			'keywords' => array('askimet'),			
+			'keywords' => 'askimet',			
 		),
 		'comments_allow_correction' => array(
 			'name' => tr('Allow comments to be edited by their author'),
