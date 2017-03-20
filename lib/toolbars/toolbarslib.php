@@ -59,8 +59,6 @@ abstract class Toolbar
 			return new ToolbarSwitchEditor;
 		elseif ( $tagName == 'admintoolbar' )
 			return new ToolbarAdmin;
-		elseif ( $tagName == 'screencapture' )
-			return new ToolbarCapture();
 		elseif ( $tagName == '-' )
 			return new ToolbarSeparator;
 
