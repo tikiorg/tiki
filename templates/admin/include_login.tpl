@@ -6,25 +6,19 @@
 		return false
 	});
 {/jq}
-{if !empty($feedback)}
-	{remarksbox title="{tr}Feedback{/tr}" type=note}
-		{$feedback}
-	{/remarksbox}
-{/if}
 <form action="tiki-admin.php?page=login" class="admin form-horizontal" method="post" name="LogForm">
 	{include file='access/include_ticket.tpl'}
-	<input type="hidden" name="loginprefs" />
 	<div class="t_navbar margin-bottom-md">
 		{button href="tiki-admingroups.php" _type="text" _class="btn btn-link tips" _icon_name="group" _text="{tr}Groups{/tr}" _title=":{tr}Group Administration{/tr}"}
 		{button href="tiki-adminusers.php" _type="text" _class="btn btn-link tips" _icon_name="user" _text="{tr}Users{/tr}" _title=":{tr}User Administration{/tr}"}
 		{permission_link mode=text label="{tr}Permissions{/tr}"}
 		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
 	</div>
 	{tabset name="admin_login"}
 		{tab name="{tr}General Preferences{/tr}"}
-			<h2>{tr}General Preferences{/tr}</h2>
+			<br>
 			{preference name=auth_method}
 			{preference name=feature_intertiki}
 			<fieldset>
@@ -62,11 +56,6 @@
 							{preference name=captcha_wordLen}
 							{preference name=captcha_width}
 							{preference name=captcha_noise}
-							{if not empty($captcha_error)}
-								{remarksbox type='error' title='{tr}Captcha Problem{/tr}'}
-									{$captcha_error}
-								{/remarksbox}
-							{/if}
 							{preference name=recaptcha_enabled}
 							<div class="adminoptionboxchild" id="recaptcha_enabled_childcontainer">
 								{preference name=recaptcha_pubkey}
@@ -199,10 +188,17 @@
 				{preference name=min_pass_length}
 				{preference name=pass_due}
 			</fieldset>
-			{button href="?page=login&amp;refresh_email_group=y" _text="{tr}Assign users to group function of email pattern{/tr}"}
+			<fieldset>
+				<div class="form-group">
+					<div class="col-sm-8 col-sm-offset-4">
+						{button href="?page=login&amp;refresh_email_group=y" _text="{tr}Assign users to groups by matching email patterns{/tr}"}
+						<div class="help-block">{tr}An email patterns must be defined in the settings for at least one group for this to produce any results.{/tr}</div>
+					</div>
+				</div>
+			</fieldset>
 		{/tab}
 		{tab name="{tr}Remote Tiki Autologin{/tr}"}
-		  <h2>{tr}Remote Tiki Autologin{/tr}</h2>
+			<br>
 			<fieldset>
 			  {preference name=login_autologin}
 			  {preference name=login_autologin_user}
@@ -216,8 +212,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}LDAP{/tr}"}
-			<h2>{tr}LDAP{/tr}</h2>
-			<input type="hidden" name="auth_ldap" />
+			<br>
 			<fieldset>
 				<legend>LDAP {help url="Login+Authentication+Methods"}</legend>
 				{if $prefs.auth_method ne 'ldap'}
@@ -260,7 +255,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}LDAP external groups{/tr}"}
-			<h2>{tr}LDAP external groups{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}LDAP external groups{/tr}</legend>
 				{preference name=auth_ldap_group_external}
@@ -310,8 +305,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}PAM{/tr}"}
-			<h2>{tr}PAM{/tr}</h2>
-			<input type="hidden" name="auth_pam" />
+			<br>
 			<fieldset>
 				<legend>{tr}PAM{/tr} {help url="AuthPAM" desc="{tr}PAM{/tr}"}</legend>
 				{if $prefs.auth_method ne 'pam'}
@@ -325,10 +319,9 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}Shibboleth{/tr}"}
-			<h2>{tr}Shibboleth{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}Shibboleth{/tr}{help url="AuthShib" desc="{tr}Shibboleth Authentication {/tr}"}</legend>
-				<input type="hidden" name="auth_shib" />
 				{if $prefs.auth_method ne 'shib'}
 					{remarksbox type="warning" title="{tr}Warning{/tr}" close="n"}
 						{tr}You must change the Authentication Method to Shibboleth for these changes to take effect{/tr}
@@ -347,8 +340,6 @@
 		{tab name="{tr}SAML2{/tr}"}
 			<fieldset>
 				<legend>{tr}SAML2{/tr}{help url="AuthSAML" desc="{tr}based on Onelogin's php-saml {/tr}"}</legend>
-				<input type="hidden" name="auth_saml" />
-				<input type="hidden" name="action" value="login" />
 				{if $prefs.auth_method ne 'saml'}
 					{remarksbox type="warning" title="{tr}Warning{/tr}" close="n"}
 						{tr}You must change the Authentication Method to SAML for these changes to take effect{/tr}
@@ -407,8 +398,7 @@
 		{/tab}
 
 		{tab name="{tr}CAS{/tr}"}
-			<h2>{tr}CAS{/tr}</h2>
-			<input type="hidden" name="auth_cas" />
+			<br>
 			<fieldset>
 				<legend>{tr}CAS (Central Authentication Service){/tr}{help url="CAS+Authentication"}</legend>
 				{if $prefs.auth_method ne 'cas'}
@@ -433,10 +423,9 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}phpBB{/tr}"}
-			<h2>{tr}phpBB{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}phpBB{/tr}{help url="phpBB+Authentication" desc="{tr}phpBB User Database Authentication {/tr}"}</legend>
-				<input type="hidden" name="auth_phpbb" />
 				{if $prefs.auth_method ne 'phpbb'}
 					{remarksbox type="warning" title="{tr}Warning{/tr}" close="n"}
 						{tr}You must change the Authentication Method to phpBB for these changes to take effect{/tr}
@@ -462,9 +451,9 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}Web Server{/tr}"}
+			<br>
 			<fieldset>
 				<legend>{tr}Web Server{/tr}{help url="External+Authentication#Web_Server_HTTP_" desc="{tr}Web Server Authentication {/tr}"}</legend>
-				<input type="hidden" name="auth_ws" />
 				{if $prefs.auth_method ne 'ws'}
 					{remarksbox type="warning" title="{tr}Warning{/tr}" close="n"}
 						{tr}You must change the Authentication Method to Web Server for these changes to take effect{/tr}
@@ -474,10 +463,10 @@
 			</fieldset>
 		{/tab}
 
-    <input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+    <input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}" />
 </form>
 {tab name="{tr}Password Blacklist{/tr}"}
-			<h2>{tr}Password Blacklist Tools{/tr}</h2>
+<br>
 			<fieldset>
 				<fieldset>
 					<legend>{tr}Password{/tr}</legend>
@@ -485,11 +474,6 @@
 					{preference name=pass_blacklist_file}
 
 				<legend>{tr}Password Blacklist Tools{/tr}</legend>
-				{if isset($sucess_message)}
-					{remarksbox type="information" title="{tr}Sucess{/tr}" close="n"}
-					{tr}{$sucess_message}{/tr}
-					{/remarksbox}
-				{/if}
 
 				<div class="form-group">
 					<h3>Upload Word List for Processing</h3>
