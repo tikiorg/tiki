@@ -3902,7 +3902,7 @@ class TrackerLib extends TikiLib
 		$typeInfo = $factory->getFieldInfo($typeField);
 		foreach ($ret as &$res) {
 			$options = Tracker_Options::fromSerialized($res['options'], $typeInfo);
-			$res['options_array'] = $options->buildOptionsArray();
+			$res['options_map'] = $options->getAllParameters();
 		}
 		return $ret;
 	}
@@ -3918,8 +3918,8 @@ class TrackerLib extends TikiLib
 		$res = $this->get_item_values_by_type($itemId, 'u');
 		if (is_array($res)) {
 			foreach ($res as $f) {
-				if (isset($f['options_array'][1]) && $f['options_array'][1] != 0 && !empty($f['value'])) {
-					if ($f['options_array'][1] == 2 && array_key_exists($f['value'], $user_preferences)) {
+				if (isset($f['options_map']['notify']) && $f['options_map']['notify'] != 0 && !empty($f['value'])) {
+					if ($f['options_map']['notify'] == 2 && array_key_exists($f['value'], $user_preferences)) {
 						// Don't send email to oneself
 						continue;
 					}
@@ -3938,9 +3938,9 @@ class TrackerLib extends TikiLib
 			$res = $this->get_item_values_by_type($itemId, 'm');
 			if (is_array($res)) {
 				foreach ($res as $f) {
-					if ((isset($f['options_array'][1]) && $f['options_array'][1] == 'o' && $status == 'o')
-						|| (isset($f['options_array'][2]) && $f['options_array'][2] == 'p' && $status == 'p')
-						|| (isset($f['options_array'][3]) && $f['options_array'][3] == 'c' && $status == 'c')) {
+					if ((isset($f['options_map']['watchopen']) && $f['options_map']['watchopen'] == 'o' && $status == 'o')
+						|| (isset($f['options_map']['watchpending']) && $f['options_map']['watchpending'] == 'p' && $status == 'p')
+						|| (isset($f['options_map']['watchclosed']) && $f['options_map']['watchclosed'] == 'c' && $status == 'c')) {
 						$emails[] = array('email'=> $f['value'], 'user'=>'', 'language'=>$prefs['language'], 'mailCharset'=>$prefs['users_prefs_mailCharset'], 'action'=>'status');
 					}
 				}
