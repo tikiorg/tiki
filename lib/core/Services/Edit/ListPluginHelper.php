@@ -25,27 +25,30 @@ class Services_Edit_ListPluginHelper
 					'default' => '',
 					'format' =>
 						[
+							'plain' =>
+								[
+								],
 							'categorylist' =>
 								[
 									'requiredParents' =>
 										[
-											0 => 'categories',
+											'categories',
 										],
 									'excludeParents' =>
 										[
-											0 => 'categories',
+											'categories',
 										],
 									'singleList' =>
 										[
-											0 => 'y',
-											1 => 'n',
+											'y',
+											'n',
 										],
 									'separator' => '',
 									'levelSeparator' => '',
 									'useFullPath' =>
 										[
-											0 => 'y',
-											1 => 'n',
+											'y',
+											'n',
 										],
 								],
 							'date' =>
@@ -63,19 +66,16 @@ class Services_Edit_ListPluginHelper
 									'width' => 0,
 									'smartcrop' =>
 										[
-											0 => 'y',
-											1 => 'n',
+											'y',
+											'n',
 										],
 									'content_type' =>
 										[
-											0 => 'html',
-											1 => 'forumpost',
+											'html',
+											'forumpost',
 										],
 								],
 							'objectlink' =>
-								[
-								],
-							'plain' =>
 								[
 								],
 							'reference' =>
@@ -108,18 +108,18 @@ class Services_Edit_ListPluginHelper
 						],
 					'list_mode' =>
 						[
-							0 => 'y',
-							1 => 'n',
+							'y',
+							'n',
 						],
 					'pagetitle' =>
 						[
-							0 => 'y',
-							1 => 'n',
+							'y',
+							'n',
 						],
 					'editable' =>
 						[
-							0 => 'inline',
-							1 => 'block',
+							'inline',
+							'block',
 						],
 				],
 			'filter' =>
@@ -127,11 +127,10 @@ class Services_Edit_ListPluginHelper
 					'categories' => 'categories',
 					'content' =>
 						[
-							0 => '',
-							1 =>
-								[
-									'field' => 'field',
-								],
+							'',
+							[
+								'field' => 'field',
+							],
 						],
 					'contributors' =>
 						[
@@ -139,25 +138,23 @@ class Services_Edit_ListPluginHelper
 					'deepcategories' => 'categories',
 					'distance' =>
 						[
-							0 => '',
-							1 =>
-								[
-									'lon' => 0.0,
-									'lat' => 0.0,
-								],
+							'',
+							[
+								'lon' => 0.0,
+								'lat' => 0.0,
+							],
 						],
 					'editable' =>
 						[
-							0 => 'y',
-							1 => 'n',
+							'y',
+							'n',
 						],
 					'exact' =>
 						[
-							0 => '',
-							1 =>
-								[
-									'field' => '',
-								],
+							'',
+							[
+								'field' => '',
+							],
 						],
 					'favorite' => 'user',
 					'language' => '',
@@ -236,7 +233,7 @@ class Services_Edit_ListPluginHelper
 											'wrap' => 0,
 											'pause' =>
 												[
-													0 => 'hover',
+													'hover',
 												],
 											'id' => '',
 										],
@@ -245,15 +242,15 @@ class Services_Edit_ListPluginHelper
 								[
 								],
 						],
-					'sort' =>
+				],
+			'sort' =>
+				[
+					'mode' => '',
+				],
+			'group' =>
+				[
+					'boost' =>
 						[
-							'mode' => '',
-						],
-					'group' =>
-						[
-							'boost' =>
-								[
-								],
 						],
 				],
 		];
