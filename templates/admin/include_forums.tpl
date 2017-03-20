@@ -2,16 +2,16 @@
 <form class="form-horizontal" method="post" action="tiki-admin.php?page=forums">
 	{include file='access/include_ticket.tpl'}
 	<div class="t_navbar margin-bottom-md clearfix">
-		<a role="button" class="btn btn-link tips" href="tiki-admin_forums.php" title=":{tr}List{/tr}">
+		<a role="button" class="btn btn-link tips" href="tiki-admin_forums.php" title=":{tr}Forums listing{/tr}">
 			{icon name="list"} {tr}Forums{/tr}
 		</a>
 		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
 	</div>
 	{tabset name="admin_forums"}
 		{tab name="{tr}General Settings{/tr}"}
-			<h2>{tr}General Settings{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_forums visible="always"}
@@ -72,7 +72,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}Forum Listing{/tr}"}
-			<h2>{tr}Forum Listing{/tr}</h2>
+			<br>
 			{preference name=forums_ordering}
 			{preference name=forum_list_topics}
 			{preference name=forum_list_posts}
@@ -90,6 +90,6 @@
 		{/tab}
 	{/tabset}
 	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+		<input type="submit" class="btn btn-primary btn-sm tips" title="{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 	</div>
 </form>

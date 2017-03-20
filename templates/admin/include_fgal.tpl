@@ -16,14 +16,14 @@
 				{icon name="list"} {tr}File Galleries{/tr}
 			</a>
 			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm tips" name="filegalhandlers" title="{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm tips" title="{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>
 	{tabset name="fgal_admin"}
 
 		{tab name="{tr}General Settings{/tr}"}
-			<h2>{tr}General Settings{/tr}</h2>
+			<br>
 
 			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
@@ -114,7 +114,7 @@
 		{/tab}
 
 		{tab name="{tr}Plugins{/tr}"}
-			<h2>{tr}Plugins{/tr}</h2>
+			<br>
 			<fieldset class="table">
 				<legend>{tr}Plugins{/tr}</legend>
 				{preference name=wikiplugin_files}
@@ -130,7 +130,7 @@
 		{/tab}
 
 		{tab name="{tr}Listings{/tr}"}
-			<h2>{tr}Listings{/tr}</h2>
+			<br>
 			<span class="help-block">{tr}Configuration for gallery listings{/tr}</span>
 			{remarksbox title="Note"}
 				{tr}Changing these settings will <em>not</em> affect existing file galleries. These changes will apply <em>only</em> to new file galleries{/tr}.
@@ -179,7 +179,7 @@
 
 		{if $section eq 'admin'}
 			{tab name="{tr}Admin Listings{/tr}"}
-				<h2>{tr}Admin Listings{/tr}</h2>
+				<br>
 				<span class="help-block">{tr}Configuration for gallery administration listings{/tr}</span>
 				<fieldset>
 					{preference name='fgal_list_id_admin'}
@@ -206,6 +206,7 @@
 
 
 		{tab name="{tr}Search Indexing{/tr}"}
+			<br>
 			{preference name=fgal_enable_auto_indexing}
 			{preference name=fgal_asynchronous_indexing}
 			<div class="adminoptionbox">
@@ -287,7 +288,7 @@
 		{/tab}
 
 		{tab name="{tr}Enhancements{/tr}"}
-			<h2>{tr}Enhancements{/tr}</h2>
+			<br>
 
 			<fieldset>
 				<legend>{tr}Access{/tr}</legend>
@@ -345,7 +346,7 @@
 	 <div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm tips" name="filegalhandlers" title="{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm tips" title="{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>

@@ -12,7 +12,7 @@
 	</div>
 	{tabset name="admin_community"}
 		{tab name="{tr}Community features{/tr}"}
-			<h2>{tr}Community features{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}Community{/tr}{help url="Community"}</legend>
 				{preference name=feature_community_gender}
@@ -45,7 +45,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}Social Interaction{/tr}"}
-			<h2>{tr}Social Interaction{/tr}</h2>
+			<br>
 			<fieldset class="table">
 				<legend>{tr}Friendship and Followers{/tr}</legend>
 				{preference name=feature_friends}
@@ -86,7 +86,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}Plugins{/tr}"}
-			<h2>{tr}Plugins{/tr}</h2>
+			<br>
 			{preference name=wikiplugin_author}
 			{preference name=wikiplugin_avatar}
 			{preference name=wikiplugin_favorite}
@@ -110,7 +110,7 @@
 		{/tab}
 
 		{tab name="{tr}BigBlueButton{/tr}"}
-			<h2>{tr}BigBlueButton{/tr}</h2>
+			<br>
 			{preference name=bigbluebutton_feature}
 			<div class="adminoptionboxchild" id="bigbluebutton_feature_childcontainer">
 				{preference name=bigbluebutton_server_location}
@@ -121,7 +121,6 @@
 		{/tab}
 	{/tabset}
 	<div class="t_navbar margin-bottom-md text-center">
-		<input type="hidden" name="userfeatures" />
 		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 	</div>
 </form>

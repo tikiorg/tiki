@@ -3,7 +3,7 @@
 {tabset}
 
 	{tab name="{tr}Tiki Connect{/tr}"}
-		<h2>{tr}Tiki Connect{/tr}</h2>
+		<br>
 		<fieldset>
 			<legend><strong>{tr}Join the community!{/tr}</strong></legend>
 			<p>{tr}Tiki Wiki CMS Groupware is Free and Open Source Software (FOSS). It is a community-driven project which exists and improves thanks to the participation of people just like YOU.{/tr}</p>
@@ -50,7 +50,7 @@
 	{/tab}
 
 	{tab name="{tr}Settings{/tr}"}
-		<h2>{tr}Settings{/tr}</h2>
+		<br>
 		<form class="admin form-horizontal" id="connect" name="connect" action="tiki-admin.php?page=connect" method="post">
 			{include file='access/include_ticket.tpl'}
 			<fieldset>
@@ -122,7 +122,7 @@
 
 	{if $prefs.connect_server_mode eq "y"}
 		{tab name="{tr}Connections received{/tr}"}
-			<h2>{tr}Recent connections{/tr}</h2>
+			<br>
 			<form class="admin form-horizontal" name="cserver_form" action="tiki-admin.php?page=connect" method="post">
 				{include file='access/include_ticket.tpl'}
 				<input name="cserver_search" type="text" value="{$cserver_search_text}" />
@@ -167,6 +167,7 @@
 	{/if}
 
 	{tab name="{tr}Jitsi{/tr}"}
+		<br>
 		<form class="admin form-horizontal" id="connect" name="connect" action="tiki-admin.php?page=connect" method="post">
 			{include file='access/include_ticket.tpl'}
 			<fieldset>

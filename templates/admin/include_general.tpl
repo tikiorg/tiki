@@ -7,12 +7,12 @@
 		{button _class="btn btn-link tips" _type="text" href="tiki-admin.php?page=general&amp;forcecheck=1" _icon_name="search" _text="{tr}Check for updates now{/tr}" _title=":{tr}Check for updates now{/tr}"}
 		{button _class="btn btn-link tips" _type="text" href="tiki-check.php" _icon_name="heartbeat" _text="{tr}Server Fitness{/tr}" _title=":{tr}Check if your server meets the requirements for running Tiki{/tr}"}
 		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
 	</div>
 	{tabset name="admin_general"}
 		{tab name="{tr}General Preferences{/tr}"}
-			<h2>{tr}General Preferences{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}Release Check{/tr}</legend>
 				{remarksbox type="info" title="{tr}Tiki version{/tr}" close="n"}
@@ -101,7 +101,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}General Settings{/tr}"}
-			<h2>{tr}General Settings{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}Server{/tr}</legend>
 				{preference name=tmpDir}
@@ -179,7 +179,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}Navigation{/tr}"}
-			<h2>{tr}Navigation{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}Menus{/tr}</legend>
 				<div class="adminoptionbox">
@@ -283,40 +283,42 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}Date and Time{/tr}"}
-			<h2>{tr}Date and Time{/tr}{help url="Date+and+Time"}</h2>
 			{remarksbox type="info" title="{tr}php.net{/tr}"}
 				<a class="alert-link" href="http://www.php.net/manual/en/function.strftime.php">
 					{tr}Date and Time Format Help{/tr}
 				</a>
 			{/remarksbox}
-			{preference name=server_timezone}
-			{preference name=users_prefs_display_timezone}
-			<div class="clearfix">
-				{preference name=long_date_format}
-				<span class="help-block col-md-8 col-md-push-4">
+			<fieldset>
+				<legend>{tr}Time zone and format{/tr}{help url="Date+and+Time"}</legend>
+				{preference name=server_timezone}
+				{preference name=users_prefs_display_timezone}
+				<div class="clearfix">
+					{preference name=long_date_format}
+					<span class="help-block col-md-8 col-md-push-4">
 					{tr}Sample:{/tr} {$now|tiki_long_date}
 				</span>
-			</div>
-			<div class="clearfix">
-				{preference name=short_date_format}
-				<span class="help-block col-md-8 col-md-push-4">
+				</div>
+				<div class="clearfix">
+					{preference name=short_date_format}
+					<span class="help-block col-md-8 col-md-push-4">
 					{tr}Sample:{/tr} {$now|tiki_short_date}
 				</span>
-			</div>
-			<div class="clearfix">
-				{preference name=long_time_format}
-				<span class="help-block col-md-8 col-md-push-4">
+				</div>
+				<div class="clearfix">
+					{preference name=long_time_format}
+					<span class="help-block col-md-8 col-md-push-4">
 					{tr}Sample:{/tr} {$now|tiki_long_time}
 				</span>
-			</div>
-			<div class="clearfix">
-				{preference name=short_time_format}
-				<span class="help-block col-md-8 col-md-push-4">
+				</div>
+				<div class="clearfix">
+					{preference name=short_time_format}
+					<span class="help-block col-md-8 col-md-push-4">
 					{tr}Sample:{/tr} {$now|tiki_short_time}
 				</span>
-			</div>
-			{preference name=short_date_format_js}
-			{preference name=short_time_format_js}
+				</div>
+				{preference name=short_date_format_js}
+				{preference name=short_time_format_js}
+			</fieldset>
 			<fieldset>
 				<legend>{tr}Date/time selectors{/tr}</legend>
 				{preference name=display_field_order}
@@ -333,6 +335,6 @@
 		{/tab}
 	{/tabset}
 	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 	</div>
 </form>

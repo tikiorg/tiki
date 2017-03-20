@@ -1,11 +1,11 @@
 <form class="form-horizontal" action="tiki-admin.php?page=freetags" method="post">
 	{include file='access/include_ticket.tpl'}
 	<div class="t_navbar margin-bottom-md">
-		<a role="link" class="btn btn-link" href="tiki-browse_freetags.php" title="{tr}List{/tr}">
+		<a role="link" class="btn btn-link tips" href="tiki-browse_freetags.php" title="{tr}Tags listing{/tr}">
 			{icon name="list"} {tr}Browse Tags{/tr}
 		</a>
 		{if $prefs.freetags_multilingual eq 'y'}
-			<a role="button" class="btn btn-link" href="tiki-freetag_translate.php" title="{tr}Translate Tags{/tr}">
+			<a role="button" class="btn btn-link tips" href="tiki-freetag_translate.php" title=":{tr}Translate tags{/tr}">
 				{icon name="language"} {tr}Translate Tags{/tr}
 			</a>
 		{/if}
@@ -13,7 +13,7 @@
 			{icon name="trash"} {tr}Cleanup unused tags{/tr}
 		</button>
 		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
 	</div>
 	<fieldset>
@@ -75,7 +75,7 @@
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>

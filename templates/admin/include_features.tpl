@@ -9,7 +9,7 @@
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" name="features" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>
@@ -22,7 +22,7 @@
 		 *}
 		{* ---------- Main features ------------ *}
 		{tab name="{tr}Global features{/tr}" key=global}
-			<h2>{tr}Global features{/tr}</h2>
+			<br>
 
 			<fieldset>
 				<legend>{tr}Main features{/tr}</legend>
@@ -140,7 +140,7 @@
 		{/tab}
 
 		{tab name="{tr}Interface{/tr}" key=interface}
-			<h2>{tr}Interface{/tr}</h2>
+			<br>
 			<fieldset class="table clearfix featurelist">
 				<legend> {tr}Ajax{/tr} </legend>
 				{preference name=feature_ajax}
@@ -184,7 +184,7 @@
 		{/tab}
 
 		{tab name="{tr}Programmer{/tr}" key=programmer}
-			<h2>{tr}Programmer{/tr}</h2>
+			<br>
 			<div class="admin clearfix featurelist">
 				{preference name=feature_integrator}
 				{preference name=feature_xmlrpc}
@@ -227,7 +227,7 @@
 		{/tab}
 
 		{tab name="{tr}Addons{/tr}" key=addons}
-			<h2>{tr}Tiki Addons{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}Activate Addons{/tr}</legend>
 				{foreach $addonprefs as $addon}
@@ -245,7 +245,7 @@
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" name="features" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>

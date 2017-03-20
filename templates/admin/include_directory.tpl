@@ -2,11 +2,11 @@
 	{include file='access/include_ticket.tpl'}
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			<a role="link" class="btn btn-link" href="tiki-directory_admin.php" title="{tr}List{/tr}">
+			<a role="link" class="btn btn-link tips" href="tiki-directory_admin.php" title=":{tr}Directories listing{/tr}">
 				{icon name="list"} {tr}Directory{/tr}
 			</a>
 			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" name="directory" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>
@@ -30,7 +30,7 @@
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" name="directory" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>

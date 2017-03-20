@@ -2,11 +2,11 @@
 <form role="form" class="form-horizontal" action="tiki-admin.php?page=faqs" method="post">
 	{include file='access/include_ticket.tpl'}
 	<div class="t_navbar margin-bottom-md clearfix">
-		<a role="link" class="btn btn-link" href="tiki-list_faqs.php" title="{tr}List{/tr}">
+		<a role="link" class="btn btn-link tips" href="tiki-list_faqs.php" title=":{tr}FAQ listing{/tr}">
 			{icon name="list"} {tr}FAQs{/tr}
 		</a>
 		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm tips" name="faqcomprefs" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
 	</div>
 	<fieldset>
@@ -24,6 +24,6 @@
 		{preference name=faq_feature_copyrights}
 	</fieldset>
 	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm tips" name="faqcomprefs" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 	</div>
 </form>

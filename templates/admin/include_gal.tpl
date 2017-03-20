@@ -8,12 +8,13 @@
 
 {tabset name="admin_gal"}
 	{tab name="{tr}Features{/tr}"}
+		<br>
 		<form id="galfeatures" class="form-horizontal" action="tiki-admin.php?page=gal" method="post">
 			{include file='access/include_ticket.tpl'}
 			<br>
 			<div class="form-group col-lg-12 clearfix">
 				<div class="pull-right">
-					<input type="submit" class="btn btn-primary btn-sm" form="galfeatures" name="galfeatures" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+					<input type="submit" class="btn btn-primary btn-sm tips" form="galfeatures" name="galfeatures" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 				</div>
 			</div>
 			<fieldset>
@@ -79,6 +80,7 @@
 		</form>
 	{/tab}
 	{tab name="{tr}Manage images{/tr}"}
+		<br>
 		<form id="galremove" class="form-horizontal" action="tiki-admin.php?page=gal" method="post">
 			{include file='access/include_ticket.tpl'}
 			<br>
