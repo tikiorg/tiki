@@ -80,7 +80,7 @@
 						.change(function(){
 							var val = $(this).val();
 							var fg = $("input[name='option~{{$param|escape}}'],textarea[name='option~{{$param|escape}}'],select[name='option~{{$param|escape}}']").closest('.form-group');
-							if( val === {{$def.depends.value|json_encode}} || ( !{{$def.depends.value|json_encode}} && val ) ) {
+							if( val {{if $def.depends.op}}{{$def.depends.op}}{{else}}==={{/if}} {{$def.depends.value|json_encode}} || ( !{{$def.depends.value|json_encode}} && val ) ) {
 								fg.show();
 							} else {
 								fg.hide();
