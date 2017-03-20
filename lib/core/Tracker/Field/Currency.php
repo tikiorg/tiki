@@ -86,7 +86,7 @@ class Tracker_Field_Currency extends Tracker_Field_Abstract implements Tracker_F
 						'name' => tr('First or all'),
 						'description' => tr('Set whether the currency code or symbol will be displayed against all amounts or only the first amount.'),
 						'filter' => 'int',
-						'default' => 0,
+						'default' => 1,
 						'options' => array(
 							0 => tr('First item only'),
 							1 => tr('All'),
