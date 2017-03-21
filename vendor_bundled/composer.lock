@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a1ac17b7a50a7a071941d6c88d870af",
+    "content-hash": "0bf6fbc5eefb3546bbf6c9f3addf128b",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -1395,23 +1395,23 @@
         },
         {
             "name": "oyejorge/less.php",
-            "version": "v1.7.0.10",
+            "version": "v1.7.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oyejorge/less.php.git",
-                "reference": "a1e2d3c20794b37ac4d0baeb24613e579584033b"
+                "reference": "f1bccbee4bc9c7fdb6873e8c246063e01365a9a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/oyejorge/less-php/oyejorge-less-php-a1e2d3c20794b37ac4d0baeb24613e579584033b-zip-8e000d.zip",
-                "reference": "a1e2d3c20794b37ac4d0baeb24613e579584033b",
-                "shasum": "4c3f5a3181989b630bb425a7d00637f9c4f0c2c1"
+                "url": "https://composer.tiki.org/dist/oyejorge/less-php/oyejorge-less-php-f1bccbee4bc9c7fdb6873e8c246063e01365a9a8-zip-d409f7.zip",
+                "reference": "f1bccbee4bc9c7fdb6873e8c246063e01365a9a8",
+                "shasum": "88c7a59dd15ff2f039dc56d80312f4f538d83958"
             },
             "require": {
                 "php": ">=5.3"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.8.18"
+                "phpunit/phpunit": "~4.8.24"
             },
             "bin": [
                 "bin/lessc"
@@ -1441,9 +1441,13 @@
                 {
                     "name": "Josh Schmidt",
                     "homepage": "https://github.com/oyejorge"
+                },
+                {
+                    "name": "Michaël Marinetti",
+                    "homepage": "https://github.com/Asenar"
                 }
             ],
-            "description": "PHP port of the Javascript version of LESS http://lesscss.org",
+            "description": "PHP port of the Javascript version of LESS http://lesscss.org (Originally maintained by Josh Schmidt)",
             "homepage": "http://lessphp.gpeasy.com",
             "keywords": [
                 "css",
@@ -1453,7 +1457,7 @@
                 "php",
                 "stylesheet"
             ],
-            "time": "2015-12-30T05:47:36+00:00"
+            "time": "2017-02-23T14:18:55+00:00"
         },
         {
             "name": "phenx/php-font-lib",
