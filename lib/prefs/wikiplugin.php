@@ -118,6 +118,7 @@ function prefs_wikiplugin_list($partial = false)
 				'default' => isset($defaultPlugins[$plugin]) ? 'y' : 'n',
 			);
 		}
+		$out['wikiplugin_snarf_cache'] = array('default' => 0);
 
 		return $out;
 	}
