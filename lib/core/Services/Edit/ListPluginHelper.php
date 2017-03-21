@@ -21,7 +21,7 @@ class Services_Edit_ListPluginHelper
 		return [
 			'display' =>
 				[
-					'name' => '',
+					'name' => 'field',
 					'default' => '',
 					'format' =>
 						[
@@ -102,7 +102,7 @@ class Services_Edit_ListPluginHelper
 								],
 							'wikiplugin' =>
 								[
-									'name' => '',
+									'name' => 'wikiplugin',
 									'default' => '',
 								],
 						],
@@ -153,7 +153,7 @@ class Services_Edit_ListPluginHelper
 						[
 							'',
 							[
-								'field' => '',
+								'field' => 'field',
 							],
 						],
 					'favorite' => 'user',
@@ -211,6 +211,13 @@ class Services_Edit_ListPluginHelper
 								[
 									'column' =>
 										[
+											'sort' => 'field',
+											'label' => '',
+											'field' => 'field',
+											'mode' => [
+												'',
+												'raw',
+											],
 										],
 									'tablesorter' =>
 										[
