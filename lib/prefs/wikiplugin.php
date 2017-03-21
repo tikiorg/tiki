@@ -63,7 +63,6 @@ function prefs_wikiplugin_list($partial = false)
 		'remarksbox' => 'y',
 		'rss' => 'y',
 		'sheet' => 'y',
-		'snarf_cache' => 0,
 		'sort' => 'y',
 		'split' => 'y',
 		'sub' => 'y',
