@@ -314,11 +314,16 @@ class PreferencesLib
 		return true;
 	}
 
-	function getMatchingPreferences( $criteria, $filters = null )
+	function getMatchingPreferences( $criteria, $filters = null, $maxRecords = 50, $sort = '' )
 	{
 		$index = $this->getIndex();
 
 		$query = new Search_Query($criteria);
+		$query->setCount($maxRecords);
+
+		if ($sort) {
+			$query->setOrder($sort);
+		}
 		if ($filters) {
 			$this->buildPreferenceFilter($query, $filters);
 		}

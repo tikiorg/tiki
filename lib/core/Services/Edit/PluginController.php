@@ -41,10 +41,12 @@ class Services_Edit_PluginController
 
 		if ($filter) {
 			$query = 'wikiplugin_* AND ' . $filter;
+			$sort = '';
 		} else {
 			$query = 'wikiplugin_*';
+			$sort = 'object_id_asc';
 		}
-		$results = TikiLib::lib('prefs')->getMatchingPreferences($query);
+		$results = TikiLib::lib('prefs')->getMatchingPreferences($query, null, 500, $sort);
 
 		foreach ($results as $result) {
 			if (strpos($result, 'wikiplugin_') === 0) {
