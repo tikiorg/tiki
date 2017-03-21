@@ -5938,7 +5938,9 @@ JS;
 	{
 		global $prefs;
 		// if jail is zero, we should allow non-categorized objects to be seen as well, i.e. consider as no jail
-		if ( $prefs['feature_categories'] == 'y' && ! empty( $prefs['category_jail'] ) && $prefs['category_jail'] != array(0 => 0) ) {
+		if (! empty( $prefs['feature_categories'] ) &&  $prefs['feature_categories'] == 'y' &&
+				! empty( $prefs['category_jail'] ) && $prefs['category_jail'] != array(0 => 0) ) {
+
 			$expanded = array();
 			if ($descendants) {
 				$categlib = TikiLib::lib('categ');
