@@ -67,6 +67,21 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 							'op' => '!=='
 						),
 					),
+					'notify_template_format' => array(
+						'name' => tr('Email Format'),
+						'description' => tr('Choose between values text or html, depending on the syntax in the template file that will be used.'),
+						'filter' => 'text',
+						'depends' => array(
+							'field' => 'notify',
+							'value' => '0',
+							'op' => '!=='
+						),
+						'default' => 'text',
+						'options' => array(
+							'text' => tr('text'),
+							'html' => tr('html'),
+						),
+					),
 					'multiple' => array(
 						'name' => tr('Multiple selection'),
 						'description' => tr('Allow selection of multiple users from the list.'),

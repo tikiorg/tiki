@@ -376,7 +376,12 @@ class TrackerLib extends TikiLib
 				$content = $this->parse_notification_template($w['template']);
 
 				$mail->setSubject($smarty->fetchLang($w['language'], $content['subject']));
-				$mail->setText($smarty->fetchLang($w['language'], $content['template']));
+				$mail_data = $smarty->fetchLang($w['language'], $content['template']);
+				if( isset($w['templateFormat']) && $w['templateFormat'] == 'html' ) {
+					$mail->setHtml($mail_data, str_replace('&nbsp;', ' ', strip_tags($mail_data)));
+				} else {
+					$mail->setText(str_replace('&nbsp;', ' ', strip_tags($mail_data)));
+				}
 				$mail->send(array($w['email']));
 			}
 		}
@@ -2607,7 +2612,12 @@ class TrackerLib extends TikiLib
 					$content = $this->parse_notification_template($w['template']);
 
 					$mail->setSubject($smarty->fetchLang($w['language'], $content['subject']));
-					$mail->setText($smarty->fetchLang($w['language'], $content['template']));
+					$mail_data = $smarty->fetchLang($w['language'], $content['template']);
+					if( isset($w['templateFormat']) && $w['templateFormat'] == 'html' ) {
+						$mail->setHtml($mail_data, str_replace('&nbsp;', ' ', strip_tags($mail_data)));
+					} else {
+						$mail->setText(str_replace('&nbsp;', ' ', strip_tags($mail_data)));
+					}
 					$mail->send(array($w['email']));
 				}
 			}
@@ -3940,7 +3950,7 @@ class TrackerLib extends TikiLib
 						if( !empty($fieldUser) && !empty($email) ) {
 							$tikilib->get_user_preferences($fieldUser, array('email', 'user', 'language', 'mailCharset'));
 							$emails[] = array('email'=>$email, 'user'=>$fieldUser, 'language'=>$user_preferences[$fieldUser]['language'],
-								'mailCharset'=>$user_preferences[$fieldUser]['mailCharset'], 'template'=>$f['options_map']['notify_template']);
+								'mailCharset'=>$user_preferences[$fieldUser]['mailCharset'], 'template'=>$f['options_map']['notify_template'], 'templateFormat'=>$f['options_map']['notify_template_format']);
 						}
 					}
 				}
@@ -4892,7 +4902,11 @@ class TrackerLib extends TikiLib
 					$mail_data = $smarty->fetchLang($watcher['language'], $content['template']);
 					$mail = new TikiMail($watcher['user']);
 					$mail->setSubject($watcher_subject);
-					$mail->setText($mail_data);
+					if( isset($watcher['templateFormat']) && $watcher['templateFormat'] == 'html' ) {
+						$mail->setHtml($mail_data, str_replace('&nbsp;', ' ', strip_tags($mail_data)));
+					} else {
+						$mail->setText(str_replace('&nbsp;', ' ', strip_tags($mail_data)));
+					}
 					$mail->send(array($watcher['email']));
 				}
 			} else {
