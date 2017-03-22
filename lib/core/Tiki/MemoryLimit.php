@@ -43,10 +43,13 @@ class Tiki_MemoryLimit
 
 	private function getRaw($memory_limit)
 	{
-		$s = (int) trim($memory_limit);
+		$s = trim($memory_limit);
 		$last = strtolower($s{strlen($s)-1});
+		$s = (int) $s;
 		switch ( $last ) {
+			/** @noinspection PhpMissingBreakStatementInspection */
 			case 'g': $s *= 1024;
+			/** @noinspection PhpMissingBreakStatementInspection */
 			case 'm': $s *= 1024;
 			case 'k': $s *= 1024;
 		}
