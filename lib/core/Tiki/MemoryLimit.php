@@ -13,20 +13,17 @@ class Tiki_MemoryLimit
 	{
 		$this->initialLimit = ini_get('memory_limit');
 		$this->applyMinimalLimit($targetLimit);
-
 	}
 
 	function __destruct()
 	{
+		// Restore initial limit
 		$this->applySafeLimit($this->initialLimit);
 	}
 
 	private function applyMinimalLimit($target)
 	{
-		$rawCurrent = $this->getRaw($this->initialLimit);
-		$rawTarget = $this->getRaw($target);
-
-		if ($rawCurrent < $rawTarget) {
+		if (self::toBytes($this->initialLimit) < self::toBytes($target)) {
 			ini_set('memory_limit', $target);
 		};
 	}
@@ -34,27 +31,23 @@ class Tiki_MemoryLimit
 	private function applySafeLimit($targetMemory)
 	{
 		$usage = memory_get_usage();
-		$target = $this->getRaw($targetMemory);
+		$target = self::toBytes($targetMemory);
 
 		if ($usage < $target) {
 			ini_set('memory_limit', $targetMemory);
 		}
 	}
 
-	private function getRaw($memory_limit)
+	private static function toBytes($limitString)
 	{
-		$s = trim($memory_limit);
-		$last = strtolower($s{strlen($s)-1});
-		$s = (int) $s;
-		switch ( $last ) {
-			/** @noinspection PhpMissingBreakStatementInspection */
-			case 'g': $s *= 1024;
-			/** @noinspection PhpMissingBreakStatementInspection */
-			case 'm': $s *= 1024;
-			case 'k': $s *= 1024;
+		$limitString = trim($limitString);
+		$bytes = (int) $limitString;
+		$lastCharacter = strtolower($limitString{strlen($limitString)-1});
+		$units = array('k' => 1, 'm' => 2, 'g' => 3);
+		if (array_key_exists($lastCharacter, $units)) {
+			$bytes = $bytes * (1024 ** $units[$lastCharacter]);
 		}
-
-		return $s;
+		return $bytes;
 	}
 }
 
