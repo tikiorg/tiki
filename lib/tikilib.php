@@ -1424,9 +1424,10 @@ class TikiLib extends TikiDb_Bridge
 	/**
 	 * @param $user
 	 * @param string $float
+	 * @param bool $absoluteurls
 	 * @return string
 	 */
-	function get_user_avatar($user, $float = "")
+	function get_user_avatar($user, $float = '', $absoluteurls = false)
 	{
 		global $prefs;
 
@@ -1479,6 +1480,10 @@ class TikiLib extends TikiDb_Bridge
 				$path = $userprefslib->get_public_avatar_path($user);
 
 				if ($path) {
+					if ($absoluteurls) {
+						global $base_url;
+						$path = $base_url . $path;
+					}
 					$ret = "<img class='user-profile-picture img-rounded' src='" . htmlspecialchars($path, ENT_NOQUOTES) . "' " . $style . " alt='" . htmlspecialchars($user, ENT_NOQUOTES) . "'>";
 				}
 				break;
