@@ -105,7 +105,7 @@ class Services_User_MonitorController
 			$query->filterRange($from, $to);
 		}
 
-		$query->setRange($input->offset->int());
+		$query->setRange($input->offset->int(), $input->limit->int());
 
 		$result = $query->search($searchlib->getIndex());
 
