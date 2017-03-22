@@ -1,52 +1,52 @@
 {title help="ImportingPagesAdmin"}{tr}Import pages from a Structured Text Dump{/tr}{/title}
 
 <form method="post" action="tiki-import_structuredtext.php" class="form-horizontal">
-    <div class="form-group">
+	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Name of the dump file (it has to be in dump/){/tr}</label>
 		<div class="col-sm-7">
-		    <input type="text" name="path" class="form-control">
-	    </div>
-    </div>
-    <div class="form-group">
+			<input type="text" name="path" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Overwrite existing pages if the name is the same{/tr}</label>
 		<div class="col-sm-1">
 			<div class="radio">
-		        <label>
-		          	<input type="radio" name="crunch" value='y'> {tr}Yes{/tr}
-		        </label>
-	      	</div>
-	    </div>
-	    <div class="col-sm-1">
+				<label>
+					<input type="radio" name="crunch" value='y'> {tr}Yes{/tr}
+				</label>
+			</div>
+		</div>
+		<div class="col-sm-1">
 			<div class="radio">
-		        <label>
-		          	<input checked="checked" type="radio" name="crunch" value='n'> {tr}No{/tr}
-		        </label>
-	      	</div>
-	    </div>
-    </div>
-    <div class="form-group">
+				<label>
+					<input checked="checked" type="radio" name="crunch" value='n'> {tr}No{/tr}
+				</label>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Remove previously existing page versions:{/tr}</label>
 		<div class="col-sm-1">
 			<div class="radio">
-		        <label>
-		          	<input type="radio" name="remo" value='y'> {tr}Yes{/tr}
-		        </label>
-	      	</div>
-	    </div>
-	    <div class="col-sm-1">
+				<label>
+					<input type="radio" name="remo" value='y'> {tr}Yes{/tr}
+				</label>
+			</div>
+		</div>
+		<div class="col-sm-1">
 			<div class="radio">
-		        <label>
-		          	<input checked="checked" type="radio" name="remo" value='n'> {tr}No{/tr}
-		        </label>
-	      	</div>
-	    </div>
-    </div>
-    <div class="form-group">
+				<label>
+					<input checked="checked" type="radio" name="remo" value='n'> {tr}No{/tr}
+				</label>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label"></label>
 		<div class="col-sm-7">
-		    <input type="submit" class="btn btn-default btn-sm" name="import" value="{tr}import{/tr}">
-	    </div>
-    </div>
+			<input type="submit" class="btn btn-default btn-sm" name="import" value="{tr}import{/tr}">
+		</div>
+	</div>
 </form>
 <br><br>
 

@@ -86,11 +86,11 @@
 		{tab name="{tr}Create{/tr}"}
 			<h2>{tr}Create{/tr}</h2>
 			<form method="post" action="tiki-edit_perspective.php" class="form-inline">
-                <div class="form-group">
-				    <label>{tr}Name:{/tr} </label>
-                        <input type="text" name="name" class="form-control">
-                </div>
-                <input type="submit" class="btn btn-default" name="create" value="{tr}Create{/tr}">
+				<div class="form-group">
+					<label>{tr}Name:{/tr} </label>
+						<input type="text" name="name" class="form-control">
+				</div>
+				<input type="submit" class="btn btn-default" name="create" value="{tr}Create{/tr}">
 			</form>
 		{/tab}
 	{/if}
@@ -102,9 +102,9 @@
 				<div class="form-group clearfix">
 					<label for="name" class="col-sm-2 control-label">{tr}Name{/tr}</label>
 					<div class="col-sm-10">
-                        <input type="text" name="name" id="name" value="{$perspective_info.name|escape}" class="form-control">
-                    </div>
-    				<input type="hidden" name="id" value="{$perspective_info.perspectiveId|escape}">
+						<input type="text" name="name" id="name" value="{$perspective_info.name|escape}" class="form-control">
+					</div>
+					<input type="hidden" name="id" value="{$perspective_info.perspectiveId|escape}">
 				</div>
 				<div class="col-sm-offset-2">
 					<fieldset id="preferences" class="panel panel-default dropzone">

@@ -232,11 +232,11 @@
 									{if $canView}
 										<input type="submit" class="btn btn-default btn-sm" name="save_return" value="{tr}Save{/tr} &amp; {tr}Back to Items list{/tr}" onclick="needToConfirm=false">
 										{if $canRemove}
-                                            <a class="btn btn-default btn-sm" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;remove={$itemId}" title="{tr}Delete{/tr}">{icon name='delete' alt="{tr}Delete{/tr}"}</a>
+											<a class="btn btn-default btn-sm" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;remove={$itemId}" title="{tr}Delete{/tr}">{icon name='delete' alt="{tr}Delete{/tr}"}</a>
 										{/if}
 									{/if}
 								{/if}
-                    </div>
+					</div>
 																	{* ------------------- *}
 						{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
 							<div class="form-group">
@@ -291,9 +291,9 @@
 											<input type="checkbox" name="listtoalert[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}
 										{/if}
 									{/section}
-                                </div>
+								</div>
 
-                            </div>
+							</div>
 						{/if}
 
 
@@ -345,12 +345,12 @@
 								{/section}
 								<div class="form-group">
 										<div class="col-sm-6">
-                                            {$cur_field.name|tra}
-                                        </div>
+											{$cur_field.name|tra}
+										</div>
 										<div class="col-sm-6">
-                                            <input type="submit" class="btn btn-default btn-sm" name="trck_act" value="{$cur_field.options_array[0]|escape}" >
-                                        </div>
-                                </div>
+											<input type="submit" class="btn btn-default btn-sm" name="trck_act" value="{$cur_field.options_array[0]|escape}" >
+										</div>
+								</div>
 							</form>
 						{/capture}
 						{assign var=trkact value=$trkact|cat:$smarty.capture.trkaction}
@@ -360,7 +360,7 @@
 					<h2>{tr}Special Operations{/tr}</h2>
 					{$trkact}
 				{/if}
-                        </td></tr></table></div><!--nohighlight-->{*important comment to delimit the zone not to highlight in a search result*}
+			</td></tr></table></div><!--nohighlight-->{*important comment to delimit the zone not to highlight in a search result*}
 		{/tab}
 	{/if}
 

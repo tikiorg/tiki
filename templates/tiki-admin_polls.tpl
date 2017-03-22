@@ -82,12 +82,12 @@
 			<div class="form-group">
 				{include file='categorize.tpl'}
 			</div>
-		    <div class="form-group">
+			<div class="form-group">
 				<label class="col-sm-3 control-label"></label>
 				<div class="col-sm-7 col-sm-offset-1">
-				    <input type="submit" class="btn btn-default btn-sm" name="add" value="{tr}Add{/tr}">
-			    </div>
-		    </div>
+					<input type="submit" class="btn btn-default btn-sm" name="add" value="{tr}Add{/tr}">
+				</div>
+			</div>
 		</form>
 	{/tab}
 
