@@ -23,7 +23,7 @@ function smarty_prefilter_log_tpl($source, $smarty)
 	// Refrain from logging for some templates
 	if (
 			strpos($smarty->template_resource, 'eval:') === 0 || 	// Evaluated templates 
-			preg_match('/^<!DOCTYPE /', $source) || // templates that generate a DOCTYPE, which must be output first
+			preg_match('/^<!DOCTYPE /i', $source) || // templates that generate a DOCTYPE, which must be output first
 			strpos($current_file, '/mail/') !== false // email tpls
 			) {
 		return $source;
