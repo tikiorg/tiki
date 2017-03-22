@@ -46,15 +46,27 @@ $("input[name=add_remove]").change(function () {
 		}
 		$("option", "#select_groups").each(function () {
 			if ($.inArray($(this).val(), userGroups) > -1) {
-				$(this).prop("disabled", mode);
+				$(this).prop("disabled", mode).css("opacity", mode ? .3 : 1);
 			} else {
-				$(this).prop("disabled", ! mode);
+				$(this).prop("disabled", ! mode).css("opacity", ! mode ? .3 : 1);
 			}
 		});
 		$("#select_groups").trigger("chosen:updated");
 	}
 }).change();
 			{/jq}
+		</div>
+		<div class="form-group">
+			<label for="default_group" class="control-label">
+				{tr}Set default group:{/tr}
+			</label>
+			<select name="default_group" size="{$countgrps}" class="form-control" id="default_group">
+				{foreach $all_groups as $group}
+					{if $group != 'Anonymous'}
+						<option value="{$group|escape}">{$group|escape}</option>
+					{/if}
+				{/foreach}
+			</select>
 		</div>
 	</form>
 	{include file='access/include_footer.tpl'}

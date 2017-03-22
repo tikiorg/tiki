@@ -446,7 +446,7 @@ class Services_User_Controller
 	/**
 	 * Admin user "perform with checked" action to assign user to or remove users from groups
 	 *
-	 * @param $input
+	 * @param JitFilter $input
 	 * @return array
 	 * @throws Exception
 	 * @throws Services_Exception
@@ -522,6 +522,10 @@ class Services_User_Controller
 		//after confirm submit - perform action and return success feedback
 		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
 			$extra = json_decode($input['extra'], true);
+
+			// default group?
+			$defaultGroup = $input->default_group->text();
+
 			//selected users added or removed from selected groups
 			if (isset($input['checked_groups'])) {
 				$groups = $input->asArray('checked_groups');
@@ -532,8 +536,11 @@ class Services_User_Controller
 				$groups = json_decode($input['items'], true);
 				$users[] = $extra['user'];
 				$add_remove = $extra['add_remove'];
+			} else if ($defaultGroup) {
+				$users = json_decode($input['items'], true);
+				$groups = [];
 			}
-			if (!empty($users) && !empty($groups)) {
+			if (!empty($users) && (!empty($groups) || $defaultGroup)) {
 				global $user;
 				$logslib = TikiLib::lib('logs');
 				$userGroups = $this->lib->get_user_groups_inclusion($user);
@@ -564,6 +571,11 @@ class Services_User_Controller
 							return Services_Utilities::closeModal($extra['referer']);
 						}
 					}
+
+					if ($defaultGroup) {
+						$this->lib->set_default_group($assign_user, $defaultGroup);
+					}
+
 				}
 				//prepare feedback
 				if (count($users) === 1) {
@@ -573,9 +585,14 @@ class Services_User_Controller
 					$msg = tra('The following users:');
 					$helper = 'Have';
 				}
-				$verb = $add_remove == 'add' ? 'added to' : 'removed from';
-				$grpcnt = count($groups) === 1 ? 'group' : 'groups';
-				$toMsg = tr('%0 been %1 the following %2:', tra($helper), tra($verb), tra($grpcnt));
+				if ($defaultGroup && empty($groups)) {
+					$groups[] = $defaultGroup;
+					$toMsg = tr('%0 had the following group set as default:', tra($helper));
+				} else {
+					$verb = $add_remove == 'add' ? 'added to' : 'removed from';
+					$grpcnt = count($groups) === 1 ? 'group' : 'groups';
+					$toMsg = tr('%0 been %1 the following %2:', tra($helper), tra($verb), tra($grpcnt));
+				}
 				$feedback = [
 					'tpl' => 'action',
 					'mes' => $msg,
@@ -600,7 +617,7 @@ class Services_User_Controller
 	/**
 	 * Admin user "perform with checked" action to assign the default group for a user or users
 	 *
-	 * @param $input
+	 * @param JitFilter $input
 	 * @return array
 	 * @throws Exception
 	 * @throws Services_Exception
