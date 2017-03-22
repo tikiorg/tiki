@@ -23,10 +23,16 @@ function smarty_prefilter_log_tpl($source, $smarty)
 	// Refrain from logging for some templates
 	if (
 			strpos($smarty->template_resource, 'eval:') === 0 || 	// Evaluated templates 
-			preg_match('/^<!DOCTYPE /i', $source) || // templates that generate a DOCTYPE, which must be output first
 			strpos($current_file, '/mail/') !== false // email tpls
 			) {
 		return $source;
 	}
+	
+	// The opening comment cannot be inserted before the DOCTYPE in HTML documents; put it right after.
+	$commentedSource = preg_replace('/^<!DOCTYPE .*>/i', '$0' . '<!-- TPL: ' . $current_file . ' -->', $source, 1, $replacements);
+	if ($replacements) {
+		return $commentedSource . '<!-- /TPL: ' . $current_file . ' -->';
+	}
+	
 	return '<!-- TPL: ' . $current_file . ' -->' . $source . '<!-- /TPL: ' . $current_file . ' -->';
 }
