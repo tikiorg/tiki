@@ -14,12 +14,18 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function smarty_prefilter_log_tpl($source, $smarty)
 {
 	global $prefs;
+	if ($prefs['log_tpl'] != 'y') {
+		return $source;
+	}
 
 	$current_file = $smarty->_current_file;
 
-	if ($prefs['log_tpl'] != 'y' || strpos($smarty->template_resource, 'eval:') === 0 || strpos($source, '<!DOCTYPE ') === 0 || strpos($current_file, '/mail/') !== false) {
-
-		// suppress log comment for templates that generate a DOCTYPE which must be output first, or evaluated templates, or email tpls
+	// Refrain from logging for some templates
+	if (
+			strpos($smarty->template_resource, 'eval:') === 0 || 	// Evaluated templates 
+			strpos($source, '<!DOCTYPE ') === 0 || // templates that generate a DOCTYPE, which must be output first
+			strpos($current_file, '/mail/') !== false // email tpls
+			) {
 		return $source;
 	}
 	return '<!-- TPL: ' . $current_file . ' -->' . $source . '<!-- /TPL: ' . $current_file . ' -->';
