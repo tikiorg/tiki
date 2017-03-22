@@ -27,6 +27,7 @@ The following tags can be used to distinguish changes:
 * [TRA] for translation
 
 When possible, it's also nice to indicate what feature is concerned by the change.
+The tags info is also online: https://dev.tiki.org/Commit+Tags
 
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
