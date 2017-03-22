@@ -10,7 +10,7 @@ function prefs_generate_list()
 	return array(
 		'generate_password' => array(
 			'name' => tra('Generate password'),
-            'description' => tra('Include "Generate password" option in registration form'),
+			'description' => tra('Include "Generate password" option in registration form'),
 			'type' => 'flag',
 			'default' => 'n',
 		),

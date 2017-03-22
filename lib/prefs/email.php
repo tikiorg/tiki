@@ -10,7 +10,7 @@ function prefs_email_list()
 	return array(
 		'email_due' => array(
 			'name' => tra('Re-validate user by email after'),
-            'description' => tra('Number of days to wait before re-validating the user\'s email address'),
+			'description' => tra('Number of days to wait before re-validating the user\'s email address'),
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'int',

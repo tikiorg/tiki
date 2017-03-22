@@ -43,28 +43,28 @@ function prefs_payment_list()
 			'default' => '',
 		),
 
-        'payment_paypal_password' => array(
-            'name' => tra('Paypal Business Password') . ' ' . tr('(*)'),
-            'description' => tra('The PayPal password associated with your PayPal Pro business account') . '. ' . tra('(*) This is NOT needed for Paypal Personal or Paypal Standard Business accounts.'),
-            'hint' => tra('Primary password of your PayPal Pro business account') . ' ' . tr('(*) OPTIONAL'),
-            'type' => 'password',
-            'filter' => 'text',
-            'dependencies' => array( 'payment_feature' ),
-            'size' => 50,
-            'default' => '',
-            ''
-        ),
+		'payment_paypal_password' => array(
+			'name' => tra('Paypal Business Password') . ' ' . tr('(*)'),
+			'description' => tra('The PayPal password associated with your PayPal Pro business account') . '. ' . tra('(*) This is NOT needed for Paypal Personal or Paypal Standard Business accounts.'),
+			'hint' => tra('Primary password of your PayPal Pro business account') . ' ' . tr('(*) OPTIONAL'),
+			'type' => 'password',
+			'filter' => 'text',
+			'dependencies' => array( 'payment_feature' ),
+			'size' => 50,
+			'default' => '',
+			''
+		),
 
-        'payment_paypal_signature' => array(
-            'name' => tra('Paypal Business Signature'). ' ' . tr('(*)'),
-            'description' => tra('Your API signature associated with your PayPal Pro business account') . '. ' . tra('(*) This is NOT needed for Paypal Personal or Paypal Standard Business accounts.'),
-            'hint' => tra('Your API signature associated with your PayPal Pro business account') . ' ' . tr('(*) OPTIONAL'),
-            'type' => 'text',
-            'filter' => 'text',
-            'dependencies' => array( 'payment_feature' ),
-            'size' => 50,
-            'default' => '',
-        ),
+		'payment_paypal_signature' => array(
+			'name' => tra('Paypal Business Signature'). ' ' . tr('(*)'),
+			'description' => tra('Your API signature associated with your PayPal Pro business account') . '. ' . tra('(*) This is NOT needed for Paypal Personal or Paypal Standard Business accounts.'),
+			'hint' => tra('Your API signature associated with your PayPal Pro business account') . ' ' . tr('(*) OPTIONAL'),
+			'type' => 'text',
+			'filter' => 'text',
+			'dependencies' => array( 'payment_feature' ),
+			'size' => 50,
+			'default' => '',
+		),
 		'payment_paypal_environment' => array(
 			'name' => tra('PayPal environment'),
 			'description' => tra('Used to switch between the PayPal sandbox, used for testing and development and the live environment.'),
@@ -94,7 +94,7 @@ function prefs_payment_list()
 		'payment_default_delay' => array(
 			'name' => tra('Default acceptable payment delay'),
 			'description' => tra('Number of days before the payment requests becomes overdue. This can be changed per payment request.'),
-            'shorthint' => tra('days'),
+			'shorthint' => tra('days'),
 			'type' => 'text',
 			'filter' => 'digits',
 			'size' => 3,

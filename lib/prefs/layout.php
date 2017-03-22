@@ -10,7 +10,7 @@ function prefs_layout_list()
 	return array(
 		'layout_fixed_width' => array(
 			'name' => tra('Layout width'),
-            'description' => tra('Constrains the width of the content area of the site (default: 1170px).'),
+			'description' => tra('Constrains the width of the content area of the site (default: 1170px).'),
 			'type' => 'text',
 			'hint' => tra('for example, 960px'),
 			'dependencies' => array(
@@ -20,7 +20,7 @@ function prefs_layout_list()
 		),
 		'layout_tabs_optional' => array(
 			'name' => tra('Tabs optional'),
-            'description' => tra('Users can choose not to have tabs'),
+			'description' => tra('Users can choose not to have tabs'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_tabs',

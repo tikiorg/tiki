@@ -14,7 +14,7 @@ function prefs_goal_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 			'admin' => $partial ?: TikiLib::lib('service')->getUrl(['controller' => 'goal', 'action' => 'admin']),
-            'help' => 'Goals',
+			'help' => 'Goals',
 		),
 		'goal_badge_tracker' => array(
 			'name' => tr('Reward Badge Tracker'),

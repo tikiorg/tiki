@@ -7,26 +7,26 @@
 
 function prefs_recaptcha_list()
 {
-    return array (
+	return array (
 		'recaptcha_enabled' => array(
-            'name' => tra('Use ReCaptcha'),
-            'description' => tra('Use ReCaptcha, a specialized captcha service, instead of default CAPTCHA'),
+			'name' => tra('Use ReCaptcha'),
+			'description' => tra('Use ReCaptcha, a specialized captcha service, instead of default CAPTCHA'),
 			'hint' => tra('You will need to register at [http://www.google.com/recaptcha]'),
 			'help' => 'Spam+protection',
 			'type' => 'flag',
 			'default' => 'n',
-        ),
+		),
 		'recaptcha_pubkey' => array(
 			'name' => tra('Site key'),
-            'type' => 'text',
-            'description' => tra('ReCaptcha public key obtained after registering.'),
-        	'size' => 60,
+			'type' => 'text',
+			'description' => tra('ReCaptcha public key obtained after registering.'),
+			'size' => 60,
 			'default' => '',
 		),
 		'recaptcha_privkey' => array(
 			'name' => tra('Secret key'),
 			'type' => 'text',
-            'description' => tra('ReCaptcha private key obtained after registering.'),
+			'description' => tra('ReCaptcha private key obtained after registering.'),
 			'size' => 60,
 			'default' => '',
 		),

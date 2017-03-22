@@ -20,7 +20,7 @@ function prefs_mail_list()
 		),
 		'mail_template_custom_text' => array(
 			'name' => tra('Text string used to customise mail templates'),
-            'description' => tra('Text string used to customise mail templates and added as a pref reference in the appropriate mail tpl files'),
+			'description' => tra('Text string used to customise mail templates and added as a pref reference in the appropriate mail tpl files'),
 			'type' => 'text',
 			'default' => '',
 		),

@@ -87,7 +87,7 @@ function prefs_category_list()
 		),
 		'category_morelikethis_algorithm' => array(
 			'name' => tra('"More Like This" algorithm for categories'),
-            'description' => tra(''),
+			'description' => tra(''),
 			'type' => 'list',
 			'options' => array(
 							   '' => '',
@@ -98,7 +98,7 @@ function prefs_category_list()
 		),
 		'category_morelikethis_mincommon' => array(
 			'name' => tra('Minimum number of categories in common'),
-            'description' => tra(''),
+			'description' => tra(''),
 			'type' => 'list',
 			'options' => array(
 				'1' => tra('1'),
@@ -116,13 +116,13 @@ function prefs_category_list()
 		),
 		'category_morelikethis_mincommon_orless' => array(
 			'name' => tra('Or look for the maximum less categories in common if no objects with the above number of common categories'),
-            'description' => tra(''),
+			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 		),
 		'category_morelikethis_mincommon_max' => array(
 			'name' => tra('Maximum number of "more like this" objects; otherwise, use the default maximum records'),
-            'description' => tra(''),
+			'description' => tra(''),
 			'type' => 'text',
 			'size' => 3,
 			'filter' => 'int',
@@ -139,7 +139,7 @@ function prefs_category_list()
 		),
 		'category_browse_count_objects' => array(
 			'name' => tra('Show category object count'),
-            'description' => tra('Show object count when browsing categories, complying with search and type filters'),
+			'description' => tra('Show object count when browsing categories, complying with search and type filters'),
 			'hint' => tra('Can slow the loading of the categories page on large sites.'),
 			'type' => 'flag',
 			'default' => 'y',

@@ -10,7 +10,7 @@ function prefs_multidomain_list()
 	return array(
 		'multidomain_active' => array(
 			'name' => tra('Multi-domain'),
-            'description' => tra('Allows domain names to be mapped to perspectives and simulate multiple domains hosted with the same Tiki installation.'),
+			'description' => tra('Allows domain names to be mapped to perspectives and simulate multiple domains hosted with the same Tiki installation.'),
 			'perspective' => false,
 			'help' => 'Multi-Domain',
 			'type' => 'flag',
@@ -22,7 +22,7 @@ function prefs_multidomain_list()
 		'multidomain_config' => array(
 			'name' => tra('Multi-domain Configuration'),
 			'description' => tra('Comma-separated values mapping the domain name to the perspective ID.'),
-            'perspective' => false,
+			'perspective' => false,
 			'type' => 'textarea',
 			'size' => 10,
 			'hint' => tra('One domain per line with a comma separating it from the perspective ID. For example: tiki.org,1'),
@@ -31,8 +31,8 @@ function prefs_multidomain_list()
 		'multidomain_switchdomain' => array(
 			'name' => tra('Switch domain when switching perspective'),
 			'description' => tra('Remember that different domains have different login sessions and even in the case of subdomains you need to have an understanding of session cookies to make it work'),
-            'tags' => array('advanced'),
-            'type' => 'flag',
+			'tags' => array('advanced'),
+			'type' => 'flag',
 			'dependencies' => array(
 				'feature_perspective', 'multidomain_active'
 			),

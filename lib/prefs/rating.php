@@ -66,16 +66,16 @@ function prefs_rating_list()
 			),
 			'default' => ''
 		),
-        'rating_options_reversed' => array(
-            'name' => tr('Reversed Rating Options'),
-            'description' => tr('Displays the ratings options in reverse.'),
-            'type' => 'flag',
-            'options' => array(
-                '' => tr('Disabled'),
-                'y' => tr('Enabled'),
-            ),
-            'default' => ''
-        ),
+		'rating_options_reversed' => array(
+			'name' => tr('Reversed Rating Options'),
+			'description' => tr('Displays the ratings options in reverse.'),
+			'type' => 'flag',
+			'options' => array(
+				'' => tr('Disabled'),
+				'y' => tr('Enabled'),
+			),
+			'default' => ''
+		),
 		'rating_results_detailed_percent' => array(
 			'name' => tr('Include percentages in the detailed rating results'),
 			'description' => tr('Include percentages in the detailed rating results. Otherwise, only count numbers and bars are shown.'),

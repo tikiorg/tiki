@@ -10,7 +10,7 @@ function prefs_display_list()
 	return array(
 		'display_field_order' => array(
 			'name' => tra('Fields display order'),
-            'description' => tra('The order date field inputs should be listed in.'),
+			'description' => tra('The order date field inputs should be listed in.'),
 			'type' => 'list',
 			'options' => array(
 				'DMY' => tra('Day') . ' ' . tra('Month') . ' ' . tra('Year'),
@@ -25,7 +25,7 @@ function prefs_display_list()
 		),
 		'display_start_year' => array(
 			'name' => tra('Start year'),
-            'description' => tra('Year to show first in dropdown lists.') . '<br>' .
+			'description' => tra('Year to show first in dropdown lists.') . '<br>' .
 							tra('For example, use "-2" for the current year minus two, or "2010" for a specific year'),
 			'type' => 'text',
 			'size' => 6,
@@ -33,7 +33,7 @@ function prefs_display_list()
 		),
 		'display_end_year' => array(
 			'name' => tra('End year'),
-            'description' => tra('Year to show last on dropdown lists.') . '<br>' .
+			'description' => tra('Year to show last on dropdown lists.') . '<br>' .
 							tra('For example, use "+2" for the current year plus two, or "2016" for a specific year'),
 			'type' => 'text',
 			'size' => 6,

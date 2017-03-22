@@ -108,7 +108,7 @@ function prefs_tracker_list()
 			'default' => 'n',
 			'dependencies' => ['feature_trackers'],
 			'tags' => ['advanced'],
-            'help' => 'Tracker+Tabular',
+			'help' => 'Tracker+Tabular',
 		),
 		'tracker_always_notify' => array(
 			'name' => tr('Always notify watchers'),

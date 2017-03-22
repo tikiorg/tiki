@@ -71,7 +71,7 @@ function prefs_print_list()
 			'tags' => array('advanced'),
 			'type' => 'list',
 			'options' => array(
-			    'P' => tra('Portrait'),
+				'P' => tra('Portrait'),
 				'L' => tra('Landscape'),
 			),
 			'default' => 'P',
@@ -82,8 +82,8 @@ function prefs_print_list()
 			'tags' => array('advanced'), 
 			'type' => 'list',
 			'options' => array(
-			    'Letter' => tra('Letter'),
-			    'Legal' => tra('Legal'),
+				'Letter' => tra('Letter'),
+				'Legal' => tra('Legal'),
 				'Tabloid'=>tra('Tabloid/Ledger'),
 				'A0' => tra('A0'),
 				'A1' => tra('A1'),
@@ -179,7 +179,7 @@ function prefs_print_list()
 		),
 		'print_wiki_authors' => array(
 			'name' => tra('Print wiki authors'),
-            'description' => tra('Include wiki authors and date in wiki page print outs.'),
+			'description' => tra('Include wiki authors and date in wiki page print outs.'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_wiki',
@@ -188,7 +188,7 @@ function prefs_print_list()
 		),
 		'print_original_url_wiki' => array(
 			'name' => tra('Print original wiki URL'),
-            'description' => tra('Include orginal wiki page URL in print outs.'),
+			'description' => tra('Include orginal wiki page URL in print outs.'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_wiki',
@@ -197,7 +197,7 @@ function prefs_print_list()
 		),
 		'print_original_url_tracker' => array(
 			'name' => tra('Print original tracker item URL'),
-            'description' => tra('Include orginal wiki page URL in print outs.'),
+			'description' => tra('Include orginal wiki page URL in print outs.'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_trackers',
@@ -206,7 +206,7 @@ function prefs_print_list()
 		),
 		'print_original_url_forum' => array(
 			'name' => tra('Print original forum post URL'),
-            'description' => tra('Include orginal forum post URL in print outs.'),
+			'description' => tra('Include orginal forum post URL in print outs.'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_forums',

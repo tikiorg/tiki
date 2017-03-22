@@ -10,17 +10,17 @@ function prefs_footer_list()
 	return array(
 		'footer_shadow_start' => array(
 			'name' => tra('Footer shadow div start'),
-            'description' => tra(''),
+			'description' => tra(''),
 			'type' => 'textarea',
 			'size' => '2',
 			'default' => '',
 		),
 		'footer_shadow_end' => array(
 			'name' => tra('Footer shadow div end'),
-            'description' => tra(''),
+			'description' => tra(''),
 			'type' => 'textarea',
 			'size' => '2',
 			'default' => '',
 		),
-	);	
+	);
 }

@@ -433,7 +433,7 @@ function prefs_global_list($partial = false)
 
 /**
  *  Computes the alternate homes for each feature
- *    (used in admin general template)
+ *   (used in admin general template)
  * 
  * @access public
  * @return array of url's and labels of the alternate homepages

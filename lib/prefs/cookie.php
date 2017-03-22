@@ -10,7 +10,7 @@ function prefs_cookie_list()
 	return array(
 		'cookie_name' => array(
 			'name' => tra('Cookie name'),
-            'description' => tra("Name of the cookie to remember the user's login"),
+			'description' => tra("Name of the cookie to remember the user's login"),
 			'type' => 'text',
 			'size' => 35,
 			'perspective' => false,
@@ -18,7 +18,7 @@ function prefs_cookie_list()
 		),
 		'cookie_domain' => array(
 			'name' => tra('Domain'),
-            'description' => tra('The domain that the cookie is available to.'),
+			'description' => tra('The domain that the cookie is available to.'),
 			'type' => 'text',
 			'size' => 35,
 			'perspective' => false,
@@ -26,7 +26,7 @@ function prefs_cookie_list()
 		),
 		'cookie_path' => array(
 			'name' => tra('Path'),
-            'description' => tra('The path on the server in which the cookie will be available on. Tiki will detect if it is installed in a subdirectory and will use that automatically.'),
+			'description' => tra('The path on the server in which the cookie will be available on. Tiki will detect if it is installed in a subdirectory and will use that automatically.'),
 			'hint' => 'N.B. Needs to start with a / character to work properly in Safari',
 			'type' => 'text',
 			'size' => 35,

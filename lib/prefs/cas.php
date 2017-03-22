@@ -10,42 +10,42 @@ function prefs_cas_list()
 	return array(
 		'cas_create_user_tiki' => array(
 			'name' => tra('Create user if not already a registered user'),
-            'description' => tra(''),
+			'description' => tra(''),
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',
 			),
 		'cas_autologin' => array(
 			'name' => tra('Try automatically to connect SSO'),
-            'description' => tra(''),
+			'description' => tra(''),
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',
 			),
 		'cas_skip_admin' => array(
 			'name' => tra('Use Tiki authentication for Admin login'),
-            'description' => tra(''),
+			'description' => tra(''),
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',
 			),
 		'cas_force_logout' => array(
 			'name' => tra('Force CAS log-out when the user logs out from Tiki.'),
-            'description' => tra(''),
+			'description' => tra(''),
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',
 			),
 		'cas_show_alternate_login' => array(
 			'name' => tra('Show alternate log-in method in header'),
-            'description' => tra(''),
+			'description' => tra(''),
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'y',
 			),
 		'cas_version' => array(
 			'name' => tra('CAS server version'),
-            'description' => tra(''),
+			'description' => tra(''),
 			'type' => 'list',
 			'perspective' => false,
 			'options' => array(
