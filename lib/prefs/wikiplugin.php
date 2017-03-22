@@ -117,6 +117,7 @@ function prefs_wikiplugin_list($partial = false)
 			);
 		}
 		$out['wikiplugin_snarf_cache'] = array('default' => 0);
+		$out['wikiplugin_list_gui'] = array('default' => 'n');
 
 		return $out;
 	}
