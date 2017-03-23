@@ -24,14 +24,11 @@ function smarty_modifier_avatarize($user, $float = '', $default = '', $show_tag=
 	if (! $user) {
 		return '';
 	}
-	$smarty = TikiLib::lib('smarty');
-
-	// activity is assigned to smarty as 'monitor' when sending notif emails in \MonitorMailLib::renderContent
-	$absoluteurls = ! empty($smarty->tpl_vars['monitor']);
-
-	$avatar = TikiLib::lib('tiki')->get_user_avatar($user, $float, $absoluteurls);
+	
+	$avatar = TikiLib::lib('tiki')->get_user_avatar($user, $float);
 
 	if (! $avatar && $default) {
+		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_function_icon');
 		$name = TikiLib::lib('user')->clean_user($user);
 		$avatar = smarty_function_icon(['_id' => $default, 'title' => $name], $smarty);
