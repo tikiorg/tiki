@@ -156,9 +156,9 @@ class Services_Broker
 		}
 
 		if ($layout) {
-			$smarty->display("extends:$layout|$template");
+			return $smarty->fetch("extends:$layout|$template");
 		} else {
-			$smarty->display($template);
+			return $smarty->fetch($template);
 		}
 	}
 }
