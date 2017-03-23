@@ -166,6 +166,7 @@ if (file_exists('profiles/info.ini')) {
 	$console->add(new Tiki\Command\ProfileExport\ArticleTopic);
 	$console->add(new Tiki\Command\ProfileExport\ArticleType);
 	$console->add(new Tiki\Command\ProfileExport\AllModules);
+	$console->add(new Tiki\Command\ProfileExport\Calendar);
 	$console->add(new Tiki\Command\ProfileExport\Category);
 	$console->add(new Tiki\Command\ProfileExport\FileGallery);
 	$console->add(new Tiki\Command\ProfileExport\Forum);

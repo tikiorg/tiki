@@ -68,4 +68,52 @@ class Tiki_Profile_InstallHandler_Calendar extends Tiki_Profile_InstallHandler
 			return $id;
 		}
 	}
+
+	public static function export(Tiki_Profile_Writer $writer, $calendarId)
+	{
+		$calendarlib = TikiLib::lib('calendar');
+		$cal = $calendarlib->get_calendar($calendarId);
+		if (!$cal || empty($cal['calendarId']) ) {
+			return false;
+		}
+
+		$customflags = array_intersect_key($cal, array_flip(self::getCustomFlags()));
+		$options = array_diff_key($cal, array_flip(array_merge(
+			array(
+				'calendarId',
+				'name',
+				'description',
+				'user',
+				'created',
+				'lastmodif',
+				'personal'
+			),
+			self::getCustomFlags()
+		)));
+		
+		$writer->addObject(
+			'calendar',
+			$calendarId,
+			array(
+				'name' => $cal['name'],
+				'description' => $cal['description'],
+				'customflags' => $customflags,
+				'options' => $options
+			)
+		);
+
+		return true;
+	}
+
+	private static function getCustomFlags() {
+		return array(
+			'customlocations',
+			'customcategories',
+			'customlanguages',
+			'custompriorities',
+			'customparticipants',
+			'customsubscription',
+			'customstatus'
+		);
+	}
 }
