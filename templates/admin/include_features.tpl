@@ -26,7 +26,6 @@
 
 			<fieldset>
 				<legend>{tr}Main features{/tr}</legend>
-
 				<div class="admin clearfix form-group featurelist">
 					{preference name=feature_wiki}
 					{preference name=feature_file_galleries}
@@ -34,35 +33,63 @@
 					{preference name=feature_articles}
 					{preference name=feature_forums}
 					{preference name=feature_trackers}
-					{preference name=feature_polls}
-					{preference name=feature_sheet}
 					{preference name=feature_calendar}
-					{preference name=feature_newsletters}
-					{preference name=feature_banners}
-					{preference name=feature_categories}
-					{preference name=feature_freetags}
 					{preference name=feature_search}
 				</div>
+			</fieldset>
 
+			<fieldset>
+				<legend>{tr}Secondary features{/tr}</legend>
+
+				<div class="admin clearfix form-group featurelist">
+					{preference name=feature_categories}
+					{preference name=feature_freetags}
+					{preference name=feature_polls}
+					{preference name=feature_quizzes}
+					{preference name=feature_surveys}
+					{preference name=feature_newsletters}
+					{preference name=feature_shoutbox}
+					{preference name=feature_minichat}
+					{preference name=feature_live_support}
+				</div>
+			</fieldset>
+
+			<fieldset>
+				<legend>{tr}Administrative features{/tr}</legend>
+				<div class="admin clearfix form-group featurelist">
+					<div class="adminoptionboxchild">
+						<fieldset>
+							<legend>{tr}Watches{/tr}</legend>
+							{preference name=feature_user_watches}
+							{preference name=feature_group_watches}
+							{preference name=feature_daily_report_watches}
+							<div class="adminoptionboxchild" id="feature_daily_report_watches_childcontainer">
+								{preference name=dailyreports_enabled_for_new_users}
+							</div>
+							{preference name=feature_user_watches_translations}
+							{preference name=feature_user_watches_languages}
+							{preference name=feature_groupalert}
+						</fieldset>
+					</div>
+					{preference name=feature_actionlog}
+					{preference name=feature_banners}
+					{preference name=feature_contribution}
+					{preference name=feature_copyright}
+					{preference name=feature_comm}
+					{preference name=feature_dynamic_content}
+					{preference name=feature_perspective}
+					{preference name=feature_sefurl}
+					{preference name=feature_html_pages}
+					{preference name=feature_htmlfeed}
+					{preference name=feature_areas}
+				</div>
 			</fieldset>
 
 			<fieldset>
 				<legend>{tr}Additional features{/tr}</legend>
-
 				<div class="admin clearfix form-group featurelist">
-					{preference name=feature_surveys}
+					{preference name=feature_sheet}
 					{preference name=feature_directory}
-					{preference name=feature_quizzes}
-					{preference name=feature_shoutbox}
-					{preference name=feature_minichat}
-					{preference name=feature_live_support}
-					{preference name=feature_tell_a_friend}
-					{preference name=feature_share}
-					{preference name=feature_credits}
-					{preference name=feature_time_sheet}
-					{preference name=feature_invoice}
-					{preference name=feature_accounting}
-					{preference name=payment_feature}
 					{preference name=feature_draw}
 					<div class="adminoptionboxchild" id="feature_draw_childcontainer">
 						{preference name=feature_draw_hide_buttons}
@@ -71,28 +98,32 @@
 							{preference name=feature_draw_in_userfiles}
 						</div>
 					</div>
-
+					<div class="adminoptionboxchild">
+						<fieldset>
+							<legend>{tr}Payment and Accounting{/tr}</legend>
+							{preference name=feature_credits}
+							{preference name=feature_accounting}
+							{preference name=payment_feature}
+							{preference name=feature_invoice}
+						</fieldset>
+					</div>
+					<div class="adminoptionboxchild">
+						<fieldset>
+							<legend>{tr}Mail and Sharing{/tr}</legend>
+							{preference name=feature_socialnetworks}
+							{preference name=feature_tell_a_friend}
+							{preference name=feature_share}
+							{preference name=feature_webmail}
+							{preference name=feature_mailin}
+						</fieldset>
+					</div>
 					{preference name=feature_docs}
 					{preference name=feature_slideshow}
 					{preference name=feature_slideshow_pdfexport}
-					{preference name=feature_dynamic_content}
-					{preference name=feature_perspective}
-					{preference name=feature_areas}
-					{preference name=feature_sefurl}
-					{preference name=feature_webmail}
-					{preference name=feature_actionlog}
-					{preference name=feature_comm}
-					{preference name=feature_contribution}
-					{preference name=feature_copyright}
-					{preference name=feature_mailin}
-
+					{preference name=feature_time_sheet}
 					{preference name=feature_faqs}
 					{preference name=feature_galleries}
-					{preference name=feature_html_pages}
-
-					{preference name=feature_htmlfeed}
 					{preference name=feature_futurelinkprotocol}
-
 					{preference name=feature_reports}
 				</div>
 			</fieldset>
@@ -101,10 +132,7 @@
 				<legend>{tr}Interaction with online services or other software{/tr}</legend>
 				<div class="admin clearfix featurelist">
 					{preference name=connect_feature}
-					{preference name=feature_socialnetworks}
-
 					{preference name=feature_kaltura}
-
 					{preference name=zotero_enabled}
 					<div class="adminoptionboxchild" id="zotero_enabled_childcontainer">
 						{if $prefs.zotero_client_key and $prefs.zotero_client_secret and $prefs.zotero_group_id}
@@ -115,28 +143,9 @@
 						{preference name=zotero_group_id}
 						{preference name=zotero_style}
 					</div>
-
 				</div>
 				{preference name=feature_htmlfeed}
 			</fieldset>
-
-
-			<fieldset>
-				<legend>{tr}Watches{/tr}</legend>
-
-				<div class="admin clearfix featurelist">
-					{preference name=feature_user_watches}
-					{preference name=feature_group_watches}
-					{preference name=feature_daily_report_watches}
-					<div class="adminoptionboxchild" id="feature_daily_report_watches_childcontainer">
-						{preference name=dailyreports_enabled_for_new_users}
-					</div>
-					{preference name=feature_user_watches_translations}
-					{preference name=feature_user_watches_languages}
-					{preference name=feature_groupalert}
-				</div>
-			</fieldset>
-
 		{/tab}
 
 		{tab name="{tr}Interface{/tr}" key=interface}
