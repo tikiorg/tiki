@@ -401,7 +401,6 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 	function getTabularSchema()
 	{
 		$permName = $this->getConfiguration('permName');
-		$baseKey = $this->getBaseKey();
 		$name = $this->getConfiguration('name');
 
 		$schema = new Tracker\Tabular\Schema($this->getTrackerDefinition());
@@ -499,6 +498,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		global $prefs;
 
 		if ($prefs['user_selector_realnames_tracker'] === 'y' && $this->getOption('showRealname')) {
+			$smarty = TikiLib::lib('smarty');
 			$smarty->loadPlugin('smarty_modifier_username');
 			$showRealname = true;
 		} else {
