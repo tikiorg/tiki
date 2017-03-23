@@ -38,6 +38,10 @@ function prefs_category_list()
 			'unserialize' => 'prefs_category_unserialize_defaults',
 			'profile_reference' => 'category',
 			'default' => false,
+			'tags' => array(
+				'experimental', // Assignment fails quietly, cryptic description. Chealer 2017-03-23
+				'advanced'
+			)
 		),
 		'category_i18n_sync' => array(
 			'name' => tra('Synchronize multilingual categories'),
