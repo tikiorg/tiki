@@ -8,7 +8,7 @@
 	{tr}Configure general user & community features and settings related to sharing and social networks{/tr}.
 	</br></br></br>
 	<div class="media-body">
-        {icon name="user" size=3 iclass="pull-right"}
+		{icon name="user" size=3 iclass="pull-right"}
 		<fieldset>
 			<legend>{tr}User Features{/tr}</legend>
 			<div class="row">
@@ -39,9 +39,9 @@
 			</em>
 			<br/><br/>
 			<em>{tr}To set up the <strong>User Watches</strong> and their associated settings, visit the page to {/tr} <a href="tiki-wizard_admin.php?&stepNr=15&url={$homepageUrl}">{tr}Set up Main features{/tr}</a></em>
-            </br></br>
+			</br></br>
 		</fieldset>
-        {icon name="users" size=3 iclass="pull-right"}
+		{icon name="users" size=3 iclass="pull-right"}
 		<fieldset>
 			<legend>{tr}Community General Settings{/tr}</legend>
 			<div class="row">
@@ -76,17 +76,17 @@
 					</div>
 				</div>
 				<br>
-				<em>{tr}See also{/tr} {tr}Community{/tr} <a href="tiki-admin.php?page=community&amp;cookietab=1" target="_blank">{tr}admin panel{/tr}</a> & <a href="https://doc.tiki.org/Community" target="_blank">{tr}in doc.tiki.org{/tr}</a></em>
+				<em>{tr}See also{/tr} {tr}Community{/tr} <a href="tiki-admin.php?page=community&amp;cookietab=1" target="_blank">{tr}admin panel{/tr}</a> &amp; <a href="https://doc.tiki.org/Community" target="_blank">{tr}in doc.tiki.org{/tr}</a></em>
 			</div>
 		</fieldset>
-        {icon name="admin_share" size=3 iclass="pull-right"}
+		{icon name="admin_share" size=3 iclass="pull-right"}
 		<fieldset>
 			<legend>{tr}Sharing & Networking{/tr}</legend>
 			<div class="row">
 				<div class="col-lg-3">
 					{preference name=feature_share}
 					<br>
-					<em>{tr}See also{/tr} {tr}Share{/tr} <a href="tiki-admin.php?page=share" target="_blank">{tr}admin panel{/tr}</a> & <a href="https://doc.tiki.org/Share" target="_blank">{tr}in doc.tiki.org{/tr}</a></em>.
+					<em>{tr}See also{/tr} {tr}Share{/tr} <a href="tiki-admin.php?page=share" target="_blank">{tr}admin panel{/tr}</a> &amp; <a href="https://doc.tiki.org/Share" target="_blank">{tr}in doc.tiki.org{/tr}</a></em>.
 				</div>
 				<div class="col-lg-6">
 					{preference name=feature_friends}
@@ -94,12 +94,12 @@
 						{preference name=social_network_type}
 					</div>
 					<br>
-					<em>{tr}See also{/tr} "{tr}Community{/tr} <a href="tiki-admin.php?page=community&cookietab=2" target="_blank">{tr}admin panel{/tr}</a> > {tr}Social Network{/tr} > {tr}Friendship and Followers{/tr}" & <a href="https://doc.tiki.org/Friendship+Network" target="_blank">{tr}in doc.tiki.org{/tr}</a></em>.
+					<em>{tr}See also{/tr} "{tr}Community{/tr} <a href="tiki-admin.php?page=community&cookietab=2" target="_blank">{tr}admin panel{/tr}</a> > {tr}Social Network{/tr} > {tr}Friendship and Followers{/tr}" &amp; <a href="https://doc.tiki.org/Friendship+Network" target="_blank">{tr}in doc.tiki.org{/tr}</a></em>.
 				</div>
 				<div class="col-lg-3">
 					{preference name=feature_socialnetworks}
 					<br>
-					<em>{tr}See also{/tr} {tr}Social networks{/tr} <a href="tiki-admin.php?page=socialnetworks&amp;cookietab=1" target="_blank">{tr}admin panel{/tr}</a> & <a href="https://doc.tiki.org/Social+Networks" target="_blank">{tr}in doc.tiki.org{/tr}</a></em>
+					<em>{tr}See also{/tr} {tr}Social networks{/tr} <a href="tiki-admin.php?page=socialnetworks&amp;cookietab=1" target="_blank">{tr}admin panel{/tr}</a> &amp; <a href="https://doc.tiki.org/Social+Networks" target="_blank">{tr}in doc.tiki.org{/tr}</a></em>
 				</div>
 			</div>
 		</fieldset>

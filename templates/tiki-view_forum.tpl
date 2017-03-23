@@ -90,7 +90,7 @@
 								{tr}Unlock{/tr}
 							{/self_link}
 						{else}
-							{self_link lock='y' _icon_name='lock'  _menu_text='y' _menu_icon='y'}
+							{self_link lock='y' _icon_name='lock' _menu_text='y' _menu_icon='y'}
 								{tr}Lock{/tr}
 							{/self_link}
 						{/if}
@@ -378,7 +378,7 @@
 		</div> <!-- end forumpost -->
 	{/if}
 	{if $prefs.feature_forum_content_search eq 'y' and $prefs.feature_search eq 'y'}
-        <div class="row margin-bottom-md">
+		<div class="row margin-bottom-md">
 		<div class="col-md-5 col-md-offset-7">
 			<form id="search-form" class="form" role="form" method="get" action="tiki-search{if $prefs.feature_forum_local_tiki_search eq 'y'}index{else}results{/if}.php">
 				<div class="form-group">
@@ -396,7 +396,7 @@
 				</div>
 			</form>
 		</div>
-        </div>
+		</div>
 	{/if}
 {/if}
 {if $tiki_p_admin_forum eq 'y' && ($comments_coms|@count > 0 || $queued > 0 || $reported > 0)}

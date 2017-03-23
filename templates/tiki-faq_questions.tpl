@@ -16,60 +16,60 @@
 	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Question{/tr}</label>
 		<div class="col-sm-7">
-      		<textarea type="text" rows="2" cols="80" name="question" class="form-control" tabindex="1">{$question|escape}</textarea>
-  		</div>
-    </div>
-    <div class="form-group">
+			<textarea type="text" rows="2" cols="80" name="question" class="form-control" tabindex="1">{$question|escape}</textarea>
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Answer{/tr}</label>
 		<div class="col-sm-7">
-      		{toolbars area_id="faqans"}
+			{toolbars area_id="faqans"}
 			<textarea id='faqans' type="text" rows="8" cols="80" name="answer" class="form-control" tabindex="2">{$answer|escape}</textarea>
-  		</div>
-    </div>
-    <div class="form-group">
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label"></label>
 		<div class="col-sm-7">
-      		<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}" tabindex="3">
-  		</div>
-    </div>
+			<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}" tabindex="3">
+		</div>
+	</div>
 </form>
 
 {* This is the area for choosing questions from the db... it really should support choosing options from the answers, but only show if there are existing questions *}
 {if $allq}
-<h2> {tr}Use a question from another FAQ{/tr}</h2>
-<br>
-<form action="tiki-faq_questions.php" method="post" class="form-horizontal">
-	<input type="hidden" name="questionId" value="{$questionId|escape}">
-	<input type="hidden" name="faqId" value="{$faqId|escape}">
-	<div class="form-group">
-		<label class="col-sm-3 control-label">{tr}Filter{/tr}</label>
-		<div class="col-sm-7">
-			<div class="input-group">
-	      		<input type="text" name="filter" id="filter" value="{$filter|escape}" class="form-control input-sm">
-				<div class="input-group-btn">
-					<input type="submit" class="btn btn-default btn-sm" name="filteruseq" value="{tr}Filter{/tr}">
+	<h2> {tr}Use a question from another FAQ{/tr}</h2>
+	<br>
+	<form action="tiki-faq_questions.php" method="post" class="form-horizontal">
+		<input type="hidden" name="questionId" value="{$questionId|escape}">
+		<input type="hidden" name="faqId" value="{$faqId|escape}">
+		<div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Filter{/tr}</label>
+			<div class="col-sm-7">
+				<div class="input-group">
+					<input type="text" name="filter" id="filter" value="{$filter|escape}" class="form-control input-sm">
+					<div class="input-group-btn">
+						<input type="submit" class="btn btn-default btn-sm" name="filteruseq" value="{tr}Filter{/tr}">
+					</div>
 				</div>
 			</div>
-  		</div>
-    </div>
-    <div class="form-group">
-		<label class="col-sm-3 control-label">{tr}Question{/tr}</label>
-		<div class="col-sm-7">
-      		<select name="usequestionId" class="form-control">
-				{section name=ix loop=$allq}
-					{* Ok, here's where you change the truncation field for this field *}
-					<option value="{$allq[ix].questionId|escape|truncate:20:"":true}">{$allq[ix].question|escape|truncate:110:"":true}</option>
-				{/section}
-			</select>
-  		</div>
-    </div>
-    <div class="form-group">
-		<label class="col-sm-3 control-label"></label>
-		<div class="col-sm-7">
-      		<input type="submit" class="btn btn-default btn-sm" name="useq" value="{tr}Use{/tr}">
-  		</div>
-    </div>
-</form>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Question{/tr}</label>
+			<div class="col-sm-7">
+				<select name="usequestionId" class="form-control">
+					{section name=ix loop=$allq}
+						{* Ok, here's where you change the truncation field for this field *}
+						<option value="{$allq[ix].questionId|escape|truncate:20:"":true}">{$allq[ix].question|escape|truncate:110:"":true}</option>
+					{/section}
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label"></label>
+			<div class="col-sm-7">
+				<input type="submit" class="btn btn-default btn-sm" name="useq" value="{tr}Use{/tr}">
+			</div>
+		</div>
+	</form>
 {/if}
 <br>
 

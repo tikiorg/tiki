@@ -5,9 +5,9 @@
 		<i class="fa fa-cubes fa-stack-2x"></i>
 		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
 	</span>
-    {tr}Check out this set of useful configurations that involve using some new technology for your site{/tr}. </br></br></br>
+	{tr}Check out this set of useful configurations that involve using some new technology for your site{/tr}. </br></br></br>
 	<div class="media-body">
-        <fieldset>
+		<fieldset>
 			<legend>{tr}Profiles:{/tr}</legend>
 			<div class="row">
 				<div class="col-md-6">

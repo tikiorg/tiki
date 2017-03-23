@@ -59,7 +59,7 @@
 	{remarksbox type='note' title="{tr}Please Confirm{/tr}"}
 		<b>{tr}This newsletter will be sent to {$subscribers} email addresses.{/tr}</b>
 		<br>
-        {if $prefs.newsletter_throttle eq 'y'}{tr}Sending will be throttled with a batch size of {$prefs.newsletter_batch_size} and a pause period of {$prefs.newsletter_pause_length} seconds.{/tr}<br>{/if}
+		{if $prefs.newsletter_throttle eq 'y'}{tr}Sending will be throttled with a batch size of {$prefs.newsletter_batch_size} and a pause period of {$prefs.newsletter_pause_length} seconds.{/tr}<br>{/if}
 		{tr}Reply to:{/tr} {if empty($replyto) AND empty($sendfrom)}{$prefs.sender_email|escape} ({tr}default{/tr})<br>{elseif !empty($replyto) AND !empty($sendfrom)}{$replyto|escape}<br>{elseif !empty($sendfrom)}{$sendfrom|escape}<br>{else}{$replyto|escape}<br>{/if}
 		{tr}Send from:{/tr} {if empty($sendfrom)}{$prefs.sender_email|escape} ({tr}default{/tr})<br>{else}{$sendfrom|escape}<br>{/if}
 	{/remarksbox}
@@ -140,7 +140,7 @@
 
 	<div id="sendingArea" style="display:none">
 		<h3>{tr}Sending Newsletter{/tr} ...</h3>
-        <h5> ...  {if $prefs.newsletter_throttle eq 'y'}throttled {/if}{tr}sending to {$subscribers} addresses{/tr}</h5>
+		<h5> ... {if $prefs.newsletter_throttle eq 'y'}throttled {/if}{tr}sending to {$subscribers} addresses{/tr}</h5>
 		{if $replyto ne ''}<h5> ... {tr}with the 'Reply To' email set to: {$replyto}{/tr}</h5>{/if}
 		{if $sendfrom ne ''}<h5> ... {tr}with the 'Send From' email set to: {$sendfrom}{/tr}</h5>{/if}
 		<div id="confirmed"></div>
@@ -241,7 +241,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2">{tr}Data HTML:{/tr}</label>
 				</div>
-                <div class="form-group">
+				<div class="form-group">
 					<div class="col-sm-12">
 						{textarea class="form-control" name='data' id='editwiki'}{$info.data}{/textarea}
 					</div>

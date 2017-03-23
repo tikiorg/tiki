@@ -5,7 +5,7 @@
 		<i class="fa fa-arrow-circle-up fa-stack-2x"></i>
 		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
 	</span>
-    {icon name="desktop" size=3 iclass="pull-right"}
+	{icon name="desktop" size=3 iclass="pull-right"}
 	{tr}Some User Interface (UI) improvements which usually come disabled in new Tiki installations{/tr}.
 	<a href="http://doc.tiki.org/Interface" target="tikihelp" class="tikihelp" title="{tr}User Interface:{/tr}
 					{tr}They are proven to be useful enhancements in some production environments{/tr}.

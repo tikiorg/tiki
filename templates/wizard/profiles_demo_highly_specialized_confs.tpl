@@ -5,18 +5,18 @@
 		<i class="fa fa-cubes fa-stack-2x"></i>
 		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
 	</span>
-    {tr}Some profiles are highly customized for very specialized use cases, and they are listed in this special category.{/tr} </br></br>
-    {remarksbox type="warning" title="{tr}Warning{/tr}"}
-        <a target="tikihelp" class="tikihelp" style="float:right" title="{tr}Demo Profiles:{/tr}
-				{tr}They are initially intended for testing environments, so that, after you have played with the feature, you don't have to deal with removing the created objects, nor with restoring the potentially changed settings in your site{/tr}.
-				<br/><br/>
-				{tr}Once you know what they do, you can also apply them in your production site, in order to have working templates of the underlying features, that you can further adapt to your site later on{/tr}."
-                >
-            {icon name="help"}
-        </a>
-    {tr}These configuration profiles <strong>require extra software</strong> to be installed in your server to function as expected{/tr}.
-    {tr}See details in the instructions page shown in your site once each profile is applied{/tr}.
-    {/remarksbox}
+	{tr}Some profiles are highly customized for very specialized use cases, and they are listed in this special category.{/tr} </br></br>
+	{remarksbox type="warning" title="{tr}Warning{/tr}"}
+		<a target="tikihelp" class="tikihelp" style="float:right" title="{tr}Demo Profiles:{/tr}
+			{tr}They are initially intended for testing environments, so that, after you have played with the feature, you don't have to deal with removing the created objects, nor with restoring the potentially changed settings in your site{/tr}.
+			<br/><br/>
+			{tr}Once you know what they do, you can also apply them in your production site, in order to have working templates of the underlying features, that you can further adapt to your site later on{/tr}."
+		>
+			{icon name="help"}
+		</a>
+		{tr}These configuration profiles <strong>require extra software</strong> to be installed in your server to function as expected{/tr}.
+		{tr}See details in the instructions page shown in your site once each profile is applied{/tr}.
+	{/remarksbox}
 	<div class="media-body">
 		<fieldset>
 			<legend>{tr}Profiles:{/tr}</legend>

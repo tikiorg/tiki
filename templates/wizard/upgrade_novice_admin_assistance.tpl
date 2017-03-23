@@ -4,9 +4,9 @@
 		<i class="fa fa-arrow-circle-up fa-stack-2x"></i>
 		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
 	</span>
-    {icon name="user-plus" size=3 iclass="pull-right"}
-    {tr}Improvements that can help novice admins to set up their tiki sites more easily and improve their usability{/tr}.
-    <br/><br/>
+	{icon name="user-plus" size=3 iclass="pull-right"}
+	{tr}Improvements that can help novice admins to set up their tiki sites more easily and improve their usability{/tr}.
+	<br/><br/>
 	<div class="media-body">
 		<fieldset>
 			<legend>{tr}Basic Information about Wizards{/tr}</legend>
@@ -17,12 +17,12 @@
 					<br/><br/>
 					{tr}The User Wizard comes disabled by default, and you have the option to enable it and configure it for your site{/tr}.
 				">
-                    {icon name="help" size=1}
+					{icon name="help" size=1}
 				</a>
 			</p>
 		</fieldset>
 		<fieldset class="table clearfix featurelist">
-            {icon name="magic" size=3 iclass="pull-right"}
+			{icon name="magic" size=3 iclass="pull-right"}
 			<legend> {tr}Wizards settings{/tr} </legend>
 			{preference name=feature_wizard_user}
 			{preference name=userTracker}
@@ -34,8 +34,8 @@
 			</div>
 			{preference name=wizard_admin_hide_on_login}
 		</fieldset>
-        <fieldset class="table clearfix featurelist">
-            {icon name="envelope-o" size=3 iclass="pull-right"}
+		<fieldset class="table clearfix featurelist">
+			{icon name="envelope-o" size=3 iclass="pull-right"}
 			<legend> {tr}Email{/tr} </legend>
 			{preference name=email_footer}
 			{preference name=messu_truncate_internal_message}

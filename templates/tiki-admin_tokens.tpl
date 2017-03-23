@@ -64,36 +64,36 @@
 
 		<form action="tiki-admin_tokens.php" method="post" class="form-horizontal">
 			<input type="hidden" name="action" value="add">
-            <div class="form-group">
-                <label class="col-sm-4 control-label">{tr}Full URL{/tr}</label>
-                <div class="col-sm-7 col-sm-offset-1">
-                    <input type="text" id='entry' name='entry' class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">{tr}Timeout in seconds (-1 for unlimited){/tr}</label>
-                <div class="col-sm-7 col-sm-offset-1">
-                    <input type="text" id='timeout' name='timeout' class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">{tr}Maximum number of hits (-1 for unlimited){/tr}</label>
-                <div class="col-sm-7 col-sm-offset-1">
-                    <input type="text" id='maxhits' name='maxhits' class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">{tr}Groups (separated by comma){/tr}</label>
-                <div class="col-sm-7 col-sm-offset-1">
-                    <input type="text" id='groups' name='groups' class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label"></label>
-                <div class="col-sm-7 col-sm-offset-1">
-                    <input type="submit" class="btn btn-default btn-sm" value="{tr}Add{/tr}">
-                </div>
-            </div>
+			<div class="form-group">
+				<label class="col-sm-4 control-label">{tr}Full URL{/tr}</label>
+				<div class="col-sm-7 col-sm-offset-1">
+					<input type="text" id='entry' name='entry' class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-4 control-label">{tr}Timeout in seconds (-1 for unlimited){/tr}</label>
+				<div class="col-sm-7 col-sm-offset-1">
+					<input type="text" id='timeout' name='timeout' class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-4 control-label">{tr}Maximum number of hits (-1 for unlimited){/tr}</label>
+				<div class="col-sm-7 col-sm-offset-1">
+					<input type="text" id='maxhits' name='maxhits' class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-4 control-label">{tr}Groups (separated by comma){/tr}</label>
+				<div class="col-sm-7 col-sm-offset-1">
+					<input type="text" id='groups' name='groups' class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-4 control-label"></label>
+				<div class="col-sm-7 col-sm-offset-1">
+					<input type="submit" class="btn btn-default btn-sm" value="{tr}Add{/tr}">
+				</div>
+			</div>
 		</form>
 	{/tab}
 {/tabset}

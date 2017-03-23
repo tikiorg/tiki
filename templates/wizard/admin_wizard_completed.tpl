@@ -1,8 +1,8 @@
 {* $Id$ *}
 
 <div class="media">
-    {icon name="check" size=2} {tr}Congratulations{/tr}. {tr}You are done with the admin wizard{/tr}.<br>
-    </br></br>
+	{icon name="check" size=2} {tr}Congratulations{/tr}. {tr}You are done with the admin wizard{/tr}.<br>
+	</br></br>
 	<div class="media-body">
 		<fieldset>
 			<legend>{tr}Next?{/tr}</legend>

@@ -23,27 +23,27 @@
 	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Question{/tr}</label>
 		<div class="col-sm-7">
-      		<textarea name="question" rows="5" cols="80" class="form-control">{$question|escape}</textarea>
-  		</div>
-    </div>
-    <div class="form-group">
+			<textarea name="question" rows="5" cols="80" class="form-control">{$question|escape}</textarea>
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Position{/tr}</label>
 		<div class="col-sm-7">
-      		<select name="position" class="form-control">{html_options values=$positions output=$positions selected=$position}</select>
-  		</div>
-    </div>
-    <div class="form-group">
+			<select name="position" class="form-control">{html_options values=$positions output=$positions selected=$position}</select>
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Question Type{/tr}</label>
 		<div class="col-sm-7">
-      		<select name="questionType" class="form-control">{html_options options=$questionTypes selected=$type}</select>
-  		</div>
-    </div>
-    <div class="form-group">
+			<select name="questionType" class="form-control">{html_options options=$questionTypes selected=$type}</select>
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label"></label>
 		<div class="col-sm-7">
-      		<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-  		</div>
-    </div>
+			<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+		</div>
+	</div>
 </form>
 
 <h2>{tr}Import questions from text{/tr}
@@ -62,15 +62,15 @@
 	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Input{/tr}</label>
 		<div class="col-sm-7">
-      		<textarea class="form-control wikiedit" name="input_data" rows="30" cols="80" id='subheading'></textarea>
-  		</div>
-    </div>
-    <div class="form-group">
+			<textarea class="form-control wikiedit" name="input_data" rows="30" cols="80" id='subheading'></textarea>
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label"></label>
 		<div class="col-sm-7">
-      		<input type="submit" class="wikiaction btn btn-default" name="import" value="Import">
-  		</div>
-    </div>
+			<input type="submit" class="wikiaction btn btn-default" name="import" value="Import">
+		</div>
+	</div>
 </form>
 
 <!-- begin form for searching questions -->

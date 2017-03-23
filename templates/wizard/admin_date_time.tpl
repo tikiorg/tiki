@@ -6,11 +6,11 @@
 </span>
 {tr}Set the site time zone and format for displaying dates and times{/tr}.</br></br>
 <div class="media">
-    {icon name="admin_general" size=3 iclass="adminWizardIconright"}
+	{icon name="admin_general" size=3 iclass="adminWizardIconright"}
 	<div class="media-content">
 		<fieldset>
 			<legend>{tr}Date and Time setup{/tr}</legend>
-            {icon name="clock-o" size=2 iclass="adminWizardIconright"}
+			{icon name="clock-o" size=2 iclass="adminWizardIconright"}
 			<div class="admin clearfix featurelist">
 				{preference name=server_timezone}
 				{preference name=users_prefs_display_12hr_clock}

@@ -4,9 +4,9 @@
 		<i class="fa fa-gear fa-stack-2x"></i>
 		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
 	</span>
-    {tr}Configure the login, registration and validation preferences for the new accounts{/tr}.<br/></br></br>
+	{tr}Configure the login, registration and validation preferences for the new accounts{/tr}.<br/></br></br>
 	<div class="media-body">
-        {icon name="admin_login" size=3 iclass="adminWizardIconright"}
+		{icon name="admin_login" size=3 iclass="adminWizardIconright"}
 		<fieldset>
 			<legend>{tr}Registration & Log in options{/tr}</legend>
 			<div style="position:relative;">

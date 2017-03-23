@@ -118,13 +118,13 @@
 				<div class="help-block">
 					{if $prefs.user_store_file_gallery_picture neq 'y'}{tr}File (only .gif, .jpg and .png images approximately 45px × 45px){/tr}{else}{tr}File (only .gif, .jpg and .png images){/tr}{/if}:
 				</div>
-		    </div>
-	    </div>
-	    <div class="form-group">
+			</div>
+		</div>
+		<div class="form-group">
 			<label class="col-sm-3 control-label"></label>
 			<div class="col-sm-7">
 				<input type="submit" class="btn btn-primary btn-sm" name="upload" value="{tr}Upload{/tr}">
-		    </div>
-	    </div>
+			</div>
+		</div>
 	</form>
 </div>

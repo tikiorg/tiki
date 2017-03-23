@@ -36,25 +36,25 @@
 	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Name{/tr}</label>
 		<div class="col-sm-7">
-	      	<input type="text" name="name" value="{$info.name|escape}" class="form-control">
-	    </div>
-    </div>
-    <div class="form-group">
+			<input type="text" name="name" value="{$info.name|escape}" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Description{/tr}</label>
 		<div class="col-sm-7">
-	      	<textarea rows="5" cols="60" name="description" class="form-control">{$info.description|escape}</textarea>
-	    </div>
-    </div>
-    <div class="form-group">
+			<textarea rows="5" cols="60" name="description" class="form-control">{$info.description|escape}</textarea>
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}URL{/tr}</label>
 		<div class="col-sm-7">
-	      	<input type="text" size="60" name="url" value="{if $info.url ne ""}{$info.url|escape}{else}http://{/if}" class="form-control">
-	    </div>
-    </div>
-    <div class="form-group">
+			<input type="text" size="60" name="url" value="{if $info.url ne ""}{$info.url|escape}{else}http://{/if}" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Directory Categories{/tr}</label>
 		<div class="col-sm-7">
-	      	<select name="siteCats[]" multiple="multiple" size="4" class="form-control">
+			<select name="siteCats[]" multiple="multiple" size="4" class="form-control">
 				{section name=ix loop=$categs}
 					<option value="{$categs[ix].categId|escape}" {if $categs[ix].belongs eq 'y' or $categs[ix].categId eq $addtocat}selected="selected"{/if}>
 						{$categs[ix].path|escape}
@@ -65,32 +65,32 @@
 			{if $categs|@count ge '2'}
 				{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 			{/if}
-	    </div>
-    </div>
-    {if $prefs.directory_country_flag eq 'y'}
-	    <div class="form-group">
+		</div>
+	</div>
+	{if $prefs.directory_country_flag eq 'y'}
+		<div class="form-group">
 			<label class="col-sm-3 control-label">{tr}Country{/tr}</label>
 			<div class="col-sm-7">
-		      	<select id="country" name="country" class="form-control">
+				<select id="country" name="country" class="form-control">
 					{section name=ux loop=$countries}
 						<option value="{$countries[ux]|escape}" {if $info.country eq $countries[ux]}selected="selected"{/if}>{tr}{$countries[ux]}{/tr}</option>
 					{/section}
 				</select>
-		    </div>
-	    </div>
+			</div>
+		</div>
 	{/if}
-    <div class="form-group">
+	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Is valid{/tr}	</label>
 		<div class="col-sm-7">
-	      	<input name="isValid" type="checkbox" {if $info.isValid eq 'y'}checked="checked"{/if}>
-	    </div>
-    </div>
-    <div class="form-group">
+			<input name="isValid" type="checkbox" {if $info.isValid eq 'y'}checked="checked"{/if}>
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label"></label>
 		<div class="col-sm-7">
-	      	<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-	    </div>
-    </div>
+			<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+		</div>
+	</div>
 </form>
 
 <h2>{tr}Sites{/tr}</h2>

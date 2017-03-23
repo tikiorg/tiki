@@ -1,12 +1,12 @@
 {* $Id$ *}
 
 <div class="margin-bottom-md">
-    <em>{tr}Read-only metadata extracted from the file.{/tr}</em>
-    {if isset($metarray.basiconly) and $metarray.basiconly}
-        <span>
-	        {tr}<em>Only basic metadata processed for this file type.</em>{/tr}
-        </span>
-    {/if}
+	<em>{tr}Read-only metadata extracted from the file.{/tr}</em>
+	{if isset($metarray.basiconly) and $metarray.basiconly}
+		<span>
+			{tr}<em>Only basic metadata processed for this file type.</em>{/tr}
+		</span>
+	{/if}
 </div>
 {tabset name="metadata"}
 	{foreach $metarray as $subtypes}

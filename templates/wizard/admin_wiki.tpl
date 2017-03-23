@@ -5,10 +5,10 @@
 		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
 	</span>
 	<div class="media-content">
-        {tr}Set up the Wiki environment{/tr}</br></br></br>
-        {icon name="file-text-o" size=3 iclass="adminWizardIconright"}
+		{tr}Set up the Wiki environment{/tr}</br></br></br>
+		{icon name="file-text-o" size=3 iclass="adminWizardIconright"}
 		<fieldset>
-            <legend>{tr}Wiki environment{/tr}</legend>
+			<legend>{tr}Wiki environment{/tr}</legend>
 
 			<div class="admin clearfix featurelist">
 				{preference name=feature_categories}

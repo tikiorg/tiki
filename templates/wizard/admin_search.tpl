@@ -5,9 +5,9 @@
 		<i class="fa fa-gear fa-stack-2x"></i>
 		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
 	</span>
-    {icon name="admin_search" size=3 iclass="pull-right"}
-    {tr}There are two search systems in Tiki that use different search engines: <strong>Basic Search</strong> and <strong>Advanced Search</strong>{/tr}.
-    {tr}The Advanced Search generally provides better results, but is more demanding on the server (it creates a search index, updated either incrementally or based on a cron job configured elsewhere){/tr}.
+	{icon name="admin_search" size=3 iclass="pull-right"}
+	{tr}There are two search systems in Tiki that use different search engines: <strong>Basic Search</strong> and <strong>Advanced Search</strong>{/tr}.
+	{tr}The Advanced Search generally provides better results, but is more demanding on the server (it creates a search index, updated either incrementally or based on a cron job configured elsewhere){/tr}.
 	<div class="media-body">
 		<br/><br/>
 		<div class="row">

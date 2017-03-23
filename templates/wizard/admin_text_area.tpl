@@ -5,9 +5,9 @@
 		<i class="fa fa-gear fa-stack-2x"></i>
 		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
 	</span>
-    {tr}Set up the text area environment (Editing and Plugins){/tr}.</br></br>
+	{tr}Set up the text area environment (Editing and Plugins){/tr}.</br></br>
 	<div class="media">
-        {icon name="admin_textarea" size=3 iclass="adminWizardIconright"}
+		{icon name="admin_textarea" size=3 iclass="adminWizardIconright"}
 		<fieldset>
 			<legend>{tr}General settings{/tr}</legend>
 			<div class="admin clearfix featurelist">

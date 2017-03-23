@@ -5,12 +5,12 @@
 		<i class="fa fa-arrow-circle-up fa-stack-2x"></i>
 		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
 	</span>
-    {tr}You are reaching the end of the <em>Upgrade Wizard</em>{/tr}.
-    {tr}Since you are upgrading, you probably had a previous installation of Tiki for a while, and you may already have some experience using a few Tiki features, at least{/tr}.
-    <br/><br/>
-    {tr}That's why we would like to <strong>ask you to send us some feedback about your usage of Tiki</strong>, while having the chance to connect in the future with other Tiki Admins near you in the Tiki Community{/tr}.
+	{tr}You are reaching the end of the <em>Upgrade Wizard</em>{/tr}.
+	{tr}Since you are upgrading, you probably had a previous installation of Tiki for a while, and you may already have some experience using a few Tiki features, at least{/tr}.
+	<br/><br/>
+	{tr}That's why we would like to <strong>ask you to send us some feedback about your usage of Tiki</strong>, while having the chance to connect in the future with other Tiki Admins near you in the Tiki Community{/tr}.
 	{capture name=likeicon}{icon name="thumbs-up"}{/capture}
-    <a href="http://doc.tiki.org/Connect" target="tikihelp" class="tikihelp" title="{tr}Send feedback & Connect:{/tr}
+	<a href="http://doc.tiki.org/Connect" target="tikihelp" class="tikihelp" title="{tr}Send feedback & Connect:{/tr}
 			<p>{tr}Tiki Connect is a way to let the Tiki project know how it is being used, and which parts people like or would like fixing (or explaining).{/tr}
 			<br/><br/>
 			{tr}Once '<em>Tiki Connect</em>' is enabled, when you click the '<strong>Send Info</strong>' button below you will be connected with <em>mother.tiki.org</em>, which is where the data will be collected.{/tr}
@@ -19,14 +19,14 @@
 			{tr}Icons will appear next to all the preferences where you can 'like' {$smarty.capture.likeicon|escape}{/tr}
 			<br/><br/>
 			{tr}Click to read more{/tr}
-		">
-        {icon name="help" size=1}
-    </a>
-    <br/><br/>
+	">
+		{icon name="help" size=1}
+	</a>
+	<br/><br/>
 	<div class="media-body">
 		<fieldset>
 			<legend>{tr}Connect{/tr}</legend>
-            {icon name="admin_connect" size=3 iclass="pull-right"}
+			{icon name="admin_connect" size=3 iclass="pull-right"}
 			{preference name="connect_feature"}
 			<div class="adminoptionboxchild" id="connect_feature_childcontainer">
 				<div class="t_navbar btn-group form-group">
