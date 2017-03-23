@@ -427,36 +427,36 @@ function wikiplugin_listpages($data, $params)
 	$smarty->assign_by_ref('showNumberOfPages', $showNumberOfPages);
 	if (!empty($showPageAlias) && $showPageAlias == 'y')
 		$smarty->assign_by_ref('showPageAlias', $showPageAlias);
-	if (isset($showNameOnly) && $showNameOnly == 'y') {
-		$ret = $smarty->fetch('wiki-plugins/wikiplugin_listpagenames.tpl');
-	} else {
-		if (!empty($start) || !empty($end) || $length > 0) {
-			foreach ($listpages['data'] as $i=>$page) {
-				$listpages['data'][$i]['snippet'] = $tikilib->get_snippet($page['data'], $page['outputType'], ! empty($page['is_html']), '', $length, $start, $end);
-			}
-		}
-        $smarty->assign("redirectTo", $_REQUEST["page"]);
 
-        // Count how many pages are left after sorting
-        $smarty->assign("cant", $listpages['cant']);
-        // The following two are for tiki-listpages_content.tpl (pagination)
-        $smarty->assign("pluginlistpages", 'y');
-        $smarty->assign("pagination", $pagination);
-        if ($pagination == 'y'){
-            // Show only x=$MaxRecords number of page entries on this page.
-            for ($x = $offset_pagination ; $x < ($offset_pagination + $GLOBALS['maxRecords']) && $x < count($listpages['data']); $x ++){
-                $listpages_for_use[] = $listpages['data'][$x];
-            }
-            $smarty->assign_by_ref('listpages', $listpages_for_use);
-            $smarty->assign("offset", $offset_pagination);
-            $smarty->assign("offset_arg", $offset_arg);
+    if (!empty($start) || !empty($end) || $length > 0) {
+        foreach ($listpages['data'] as $i=>$page) {
+            $listpages['data'][$i]['snippet'] = $tikilib->get_snippet($page['data'], $page['outputType'], ! empty($page['is_html']), '', $length, $start, $end);
         }
-        else{
-            $smarty->assign_by_ref('listpages', $listpages['data']);
-        }
+    }
+    $smarty->assign("redirectTo", $_REQUEST["page"]);
 
+    // Count how many pages are left after sorting
+    $smarty->assign("cant", $listpages['cant']);
+    // The following two are for tiki-listpages_content.tpl (pagination)
+    $smarty->assign("pluginlistpages", 'y');
+    $smarty->assign("pagination", $pagination);
+    if ($pagination == 'y'){
+        // Show only x=$MaxRecords number of page entries on this page.
+        for ($x = $offset_pagination ; $x < ($offset_pagination + $GLOBALS['maxRecords']) && $x < count($listpages['data']); $x ++){
+            $listpages_for_use[] = $listpages['data'][$x];
+        }
+        $smarty->assign_by_ref('listpages', $listpages_for_use);
+        $smarty->assign("offset", $offset_pagination);
+        $smarty->assign("offset_arg", $offset_arg);
+    }
+    else{
+        $smarty->assign_by_ref('listpages', $listpages['data']);
+    }
+    if (isset($showNameOnly) && $showNameOnly == 'y') {
+        $ret = $smarty->fetch('wiki-plugins/wikiplugin_listpagenames.tpl');
+    } else {
         $ret = $smarty->fetch('tiki-listpages_content.tpl');
-	}
+    }
 
 	return '~np~'.$ret.'~/np~';
 }
