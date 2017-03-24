@@ -105,7 +105,8 @@ class Tiki_Profile_InstallHandler_Calendar extends Tiki_Profile_InstallHandler
 		return true;
 	}
 
-	private static function getCustomFlags() {
+	private static function getCustomFlags()
+	{
 		return array(
 			'customlocations',
 			'customcategories',
