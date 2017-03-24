@@ -5,24 +5,32 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/*
-	 Tikiwiki CSRF protection.
-	 also called Sea-Surfing
-
-	 please report to security@tikiwiki.org
-	 if you find a better way to handle sea surfing nastiness
- */
-
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	header('location: index.php');
 	exit;
 }
 
+/*
+	 Tikiwiki CSRF protection.
+	 also called Sea-Surfing
+
+	 This protection is deprecated. Previous uses in the form...
+	 if (isset($_REQUEST['perform_action']) {
+	 	check_ticket('foo');
+	 	restricted_modification();
+	 }
+	 ask_ticket('foo');
+	 
+	 ...can now simply use...
+	 $access->check_authenticity();
+	 restricted_modification();
+ */
+
 /**
  * @param $area
  * @return bool
- * @deprecated in favor of check_authenticity in tikiaccesslib.php, which uses the key_get function
+ * @deprecated. See above comment
  */
 function ask_ticket($area)
 {
@@ -33,7 +41,7 @@ function ask_ticket($area)
 /**
  * @param $area
  * @return bool
- * @deprecated in favor of check_authenticity in tikiaccesslib.php, which uses the key_check function
+ * @deprecated. See above comment
  */
 function check_ticket($area)
 {
