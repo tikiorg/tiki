@@ -206,7 +206,7 @@ function wikiplugin_pivottable($data, $params)
 	$headerlib = TikiLib::lib('header');
 	$headerlib->add_cssfile('vendor_bundled/vendor/nicolaskruchten/pivottable/dist/pivot.css');
 	$headerlib->add_jsfile('vendor_bundled/vendor/nicolaskruchten/pivottable/dist/pivot.js', true);
-	$headerlib->add_jsfile('vendor_bundled/vendor/plotly/plotly.js/dist/plotly.min.js', true);
+	$headerlib->add_jsfile('vendor_bundled/vendor/plotly/plotly.js/dist/plotly-cartesian.min.js', true);
 	$headerlib->add_jsfile('lib/jquery_tiki/wikiplugin-pivottable.js', true);
 
 	$lang = substr($prefs['site_language'], 0, 2);
