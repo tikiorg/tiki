@@ -340,7 +340,7 @@ class Services_Edit_PluginController
 
 			$thisPlugin = [
 				'name' => $match->getName(),
-				'args' => $argumentParser->parse($match->getArguments()),
+				'params' => $argumentParser->parse($match->getArguments()),
 				'body' => $match->getBody(),
 				'plugins' => []
 			];

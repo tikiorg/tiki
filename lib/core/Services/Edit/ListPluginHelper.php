@@ -19,249 +19,347 @@ class Services_Edit_ListPluginHelper
 	static function getDefinition()
 	{
 		return [
-			'display' =>
-				[
-					'name' => 'field',
-					'default' => '',
-					'format' =>
-						[
-							'plain' =>
-								[
+			'display' => [
+				'params' => [
+					'name' => [
+						'type' => 'field',
+					],
+					'default' => [
+						'type' => 'text',
+					],
+					'format' => [
+						'options' => [
+							'plain' => [],
+							'categorylist' => [
+								'params' => [
+									'requiredParents' => [
+										'type' => 'categories',
+									],
+									'excludeParents' => [
+										'type' => 'categories',
+									],
+									'singleList' => [
+										'type' => 'checkbox',
+									],
+									'separator' => [
+										'type' => 'text',
+									],
+									'levelSeparator' => [
+										'type' => 'text',
+									],
+									'useFullPath' => [
+										'type' => 'checkbox',
+									],
 								],
-							'categorylist' =>
-								[
-									'requiredParents' =>
-										[
-											'categories',
-										],
-									'excludeParents' =>
-										[
-											'categories',
-										],
-									'singleList' =>
-										[
-											'y',
-											'n',
-										],
-									'separator' => '',
-									'levelSeparator' => '',
-									'useFullPath' =>
-										[
-											'y',
-											'n',
-										],
+							],
+							'date' => [
+								'params' => [
+									'dateFormat' => [
+										'type' => 'dateformat',
+									],
 								],
-							'date' =>
-								[
-									'dateFormat' => 'dateformat',
+							],
+							'datetime' => [
+								'params' => [
+									'dateFormat' => [
+										'type' => 'dateformat',
+									],
 								],
-							'datetime' =>
-								[
-									'dateFormat' => 'dateformat',
-								],
-							'imagegrabber' =>
-								[
-									'max' => 0,
-									'height' => 0,
-									'width' => 0,
-									'smartcrop' =>
-										[
-											'y',
-											'n',
-										],
-									'content_type' =>
-										[
+							],
+							'imagegrabber' => [
+								'params' => [
+									'max' => [
+										'type' => 'number',
+									],
+									'height' => [
+										'type' => 'number',
+									],
+									'width' => [
+										'type' => 'number',
+									],
+									'smartcrop' => [
+										'type' => 'checkbox',
+									],
+									'content_type' => [
+										'options' => [
 											'html',
 											'forumpost',
 										],
+									],
 								],
-							'objectlink' =>
-								[
+							],
+							'objectlink' => [],
+							'reference' => [
+								'params' => [
+									'type' => [
+										'type' => 'object_type',
+									],
+									'separator' => [
+										'type' => 'text',
+									],
 								],
-							'reference' =>
-								[
-									'type' => 'object_type',
-									'separator' => '',
+							],
+							'snippet' => [
+								'params' => [
+									'length' => [
+										'type' => 'number',
+									],
+									'suffix' => [
+										'type' => 'text',
+									],
 								],
-							'snippet' =>
-								[
-									'length' => 0,
-									'suffix' => '',
+							],
+							'sorthandle' => [],
+							'timeago' => [],
+							'trackerrender' => [],
+							'urlencode' => [],
+							'wikiplugin' => [
+								'params' => [
+									'name' => [
+										'type' => 'wikiplugin',
+									],
+									'default' => [
+										'type' => 'text',
+									],
+									// TODO some way of adding the plugin's params too
 								],
-							'sorthandle' =>
-								[
-								],
-							'timeago' =>
-								[
-								],
-							'trackerrender' =>
-								[
-								],
-							'urlencode' =>
-								[
-								],
-							'wikiplugin' =>
-								[
-									'name' => 'wikiplugin',
-									'default' => '',
-								],
+							],
 						],
-					'list_mode' =>
-						[
-							'y',
-							'n',
-						],
-					'pagetitle' =>
-						[
-							'y',
-							'n',
-						],
-					'editable' =>
-						[
+					],
+					'list_mode' => [
+						'type' => 'checkbox',
+					],
+					'pagetitle' => [
+						'type' => 'checkbox',
+					],
+					'editable' => [
+						'options' => [
 							'inline',
 							'block',
 						],
+					],
 				],
-			'filter' =>
-				[
-					'categories' => 'categories',
-					'content' =>
-						[
-							'',
-							[
-								'field' => 'field',
+			],
+			'filter' => [
+				'params' => [
+					'categories' => [
+						'type' => 'categories',
+					],
+					'content' => [
+						'type' => 'text',
+						'params' => [
+							'field' => [
+								'type' => 'field',
 							],
 						],
-					'contributors' =>
-						[
-						],
-					'deepcategories' => 'categories',
-					'distance' =>
-						[
-							'',
-							[
-								'lon' => 0.0,
-								'lat' => 0.0,
+					],
+					'contributors' => [],
+					'deepcategories' => [
+						'type' => 'categories',
+					],
+					'distance' => [
+						'type' => 'text',
+						'params' => [
+							'lon' => [
+								'type' => 'number',
+							],
+							'lat' => [
+								'type' => 'number',
 							],
 						],
-					'editable' =>
-						[
-							'y',
-							'n',
-						],
-					'exact' =>
-						[
-							'',
-							[
-								'field' => 'field',
+					],
+					'editable' => [
+						'type' => 'checkbox',
+					],
+					'exact' => [
+						'type' => 'text',
+						'params' => [
+							'field' => [
+								'type' => 'field',
 							],
 						],
-					'favorite' => 'user',
-					'language' => '',
-					'multivalue' =>
-						[
+					],
+					'favorite' => [
+						'type' => 'user',
+					],
+					'language' => [
+						'type' => 'text',
+					],
+					'multivalue' => [
+						'type' => 'text',
+					],
+					'nottype' => [
+						'type' => 'object_type',
+					],
+					'personalize' => [
+						'type' => 'text',    // TODO check
+					],
+					'range' => [
+						'params' => [
+							'from' => [
+								'type' => 'datetime',
+							],
+							'to' => [
+								'type' => 'datetime',
+							],
 						],
-					'nottype' =>
-						[
+					],
+					'relation' => [
+						'params' => [
+							'objecttype' => [
+								'type' => 'object_type',
+							],
+							'qualifier' => [
+								'type' => 'text',
+							],
 						],
-					'personalize' =>
-						[
+					],
+					'textrange' => [
+						'params' => [
+							'from' => [
+								'type' => 'text',
+							],
+							'to' => [
+								'type' => 'text',
+							],
 						],
-					'range' =>
-						[
-							'from' => 'datetime',
-							'to' => 'datetime',
-						],
-					'relation' =>
-						[
-							'objecttype' => 'object_type',
-							'qualifier' => '',
-						],
-					'textrange' =>
-						[
-							'from' => '',
-							'to' => '',
-						],
-					'type' => 'object_type',
+					],
+					'type' => [
+						'type' => 'object_type',
+					],
 				],
-			'format' =>
-				[
-					'name' => '',
+			],
+			'format' => [
+				'params' => [
+					'name' => [
+						'type' => 'text',
+					],
 				],
-			'list' =>
-				[
-					'max' =>
-						[
-						],
+			],
+			'list' => [
+				'params' => [
+					'max' => [
+						'type' => 'number',
+					],
 				],
-			'pagination' =>
-				[
-					'offset_arg' => '',
-					'offset_jsvar' => '',
-					'onclick' => '',
-					'max' => 0,
-					'sort_arg' => '',
+			],
+			'pagination' => [
+				'params' => [
+					'max' => [
+						'type' => 'number',
+					],
+					'offset_arg' => [
+						'type' => 'text',
+					],
+					'offset_jsvar' => [
+						'type' => 'text',
+					],
+					'onclick' => [
+						'type' => 'text',
+					],
+					'sort_arg' => [
+						'type' => 'text',
+					],
 				],
-			'output' =>
-				[
-					'template' =>
-						[
-							'input' => '',
-							'table' =>
-								[
-									'column' =>
-										[
-											'sort' => 'field',
-											'label' => '',
-											'field' => 'field',
+			],
+			'output' => [
+				'params' => [
+					'template' => [
+						'options' => [
+							'input' => [
+								'type' => 'text',
+							],
+							'table' => [
+								'plugins' => [
+									'column' => [
+										'params' => [
+											'sort' => [
+												'type' => 'field',
+											],
+											'label' => [
+												'type' => 'text',
+											],
+											'field' => [
+												'type' => 'field',
+											],
 											'mode' => [
-												'',
-												'raw',
+												'options' => [
+													'',
+													'raw',
+												],
 											],
 										],
-									'tablesorter' =>
-										[
+									],
+									'tablesorter' => [
+										'params' => [
+											// TODO
 										],
+									],
+
 								],
-							'medialist' =>
-								[
-									'icon' =>
-										[
+							],
+							'medialist' => [
+								'plugins' => [
+									'icon' => [
+										'params' => [
+											'field' => [
+												'type' => 'field',
+											],
 										],
-									'body' =>
-										[
+									],
+									'body' => [
+										'params' => [
+											'field' => [
+												'type' => 'field',
+											],
 										],
+									],
 								],
-							'carousel' =>
-								[
-									'carousel' =>
-										[
-											'interval' => 0,
-											'wrap' => 0,
-											'pause' =>
-												[
+							],
+							'carousel' => [
+								'plugins' => [
+									'carousel' => [
+										'params' => [
+											'interval' => [
+												'type' => 'number',
+											],
+											'wrap' => [
+												'type' => 'number',
+											],
+											'pause' => [
+												'options' => [
+													'',
 													'hover',
 												],
-											'id' => '',
+											],
+											'id' => [
+												'type' => 'text',
+											],
 										],
+									],
 								],
-							'count' =>
-								[
-								],
+							],
+							'count' => [
+							],
 						],
+					],
 				],
-			'sort' =>
-				[
-					'mode' => '',
+			],
+			'sort' => [
+				'params' => [
+					'mode' => [
+						'type' => 'text',
+					],
 				],
-			'group' =>
-				[
-					'boost' =>
-						[
-						],
+			],
+			'group' => [    // what is this?
+				'params' => [
+					'boost' => [
+						'type' => 'number',
+					],
 				],
+			],
 		];
-
 	}
 }
 
