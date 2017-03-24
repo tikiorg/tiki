@@ -188,8 +188,16 @@ function wikiplugin_pivottable($data, $params)
 	$headerlib = TikiLib::lib('header');
 	$headerlib->add_cssfile('vendor/nicolaskruchten/pivottable/dist/pivot.css');
 	$headerlib->add_jsfile('vendor/nicolaskruchten/pivottable/dist/pivot.js', true);
-	$headerlib->add_jsfile('vendor/plotly/plotly.js/dist/plotly.min.js', true);
+	$headerlib->add_jsfile('vendor/plotly/plotly.js/dist/plotly-cartesian.min.js', true);
 	$headerlib->add_jsfile('lib/jquery_tiki/wikiplugin-pivottable.js', true);
+
+	$lang = substr($prefs['site_language'], 0, 2);
+	if( file_exists('vendor/nicolaskruchten/pivottable/dist/pivot.'.$lang.'.js') ) {
+		$headerlib->add_jsfile('vendor/nicolaskruchten/pivottable/dist/pivot.'.$lang.'.js', true);
+	}
+
+	$smarty = TikiLib::lib('smarty');
+	$smarty->assign('lang', $lang);
 	
 	//checking data type
 	if( empty($params['data']) || !is_array($params['data']) ) {
@@ -420,7 +428,6 @@ function wikiplugin_pivottable($data, $params)
 		}
 	}
 
-	$smarty = TikiLib::lib('smarty');
 	$smarty->loadPlugin('smarty_function_object_link');
 
 	if (!isset($params['aggregateDetails'])) {
