@@ -1,20 +1,27 @@
 {jq}
 	var pivotData{{$pivottable.index}} = {{$pivottable.data|json_encode}};
 	$('#output_{{$pivottable.id}}').each(function () {
-		var derivers = $.pivotUtilities.derivers;
-		var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers);
+		var pivotLocale = $.pivotUtilities.locales[{{$lang|json_encode}}];
+		var renderers = $.extend(pivotLocale ? pivotLocale.renderers : $.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers);
 		var opts = {
 			renderers: renderers,
 			rendererOptions: {
 				pivotId: {{$pivottable.id|json_encode}},
-				highlight: {{$pivottable.highlight|json_encode}}
+				highlight: {{$pivottable.highlight|json_encode}},
+				localeStrings: {
+					vs: "{tr}vs{/tr}",
+					by: "{tr}by{/tr}",
+					and: "{tr}and{/tr}",
+					all: "{tr}All{/tr}",
+					mine: "{tr}Mine{/tr}",
+				}
 			},
 			derivedAttributes: { {{','|implode:$pivottable.derivedAttributes}} },
 			cols: {{$pivottable.tcolumns|json_encode}}, rows: {{$pivottable.trows|json_encode}},
 			rendererName: {{$pivottable.rendererName|json_encode}},
 			width: {{$pivottable.width|json_encode}},
 			height: {{$pivottable.height|json_encode}},
-			aggregatorName: {{$pivottable.aggregatorName|json_encode}},
+			aggregatorName: pivotLocale && pivotLocale.aggregators[{{$pivottable.aggregatorName|json_encode}}] ? {{$pivottable.aggregatorName|json_encode}} : null,
 			vals: {{$pivottable.vals|json_encode}},
 			inclusions: {{$pivottable.inclusions}},
 
@@ -57,14 +64,14 @@
 			};
 		}
 
-		$("#output_{{$pivottable.id}}").pivotUI(pivotData{{$pivottable.index}}, opts);
+		$("#output_{{$pivottable.id}}").pivotUI(pivotData{{$pivottable.index}}, opts, false, {{$lang|json_encode}});
 
 		$("#pivotEditBtn_{{$pivottable.id}}").on("click", function(){
 			showControls("#output_{{$pivottable.id}}",{{$pivottable.id|json_encode}});
 		});
 
 		$("#restore_{{$pivottable.id}}").on("click", function(){
-			$("#output_{{$pivottable.id}}").pivotUI(pivotData{{$pivottable.index}},JSON.parse(defaultSettings),true);
+			$("#output_{{$pivottable.id}}").pivotUI(pivotData{{$pivottable.index}},JSON.parse(defaultSettings),true,{{$lang|json_encode}});
 			$("#output_{{$pivottable.id}}_opControls").fadeOut();
 		});
 
@@ -90,8 +97,8 @@
 <div id="container_{$pivottable.id}">
 	<div id="output_{$pivottable.id}"></div>
 	<div id="output_{$pivottable.id}_opControls" style="display:none">
-	<input id="save_{$pivottable.id}" type="button" value="Save Changes" class="btn btn-primary ui-button ui-corner-all ui-widget" /><input class="btn btn-primary ui-button ui-corner-all ui-widget" id="restore_{$pivottable.id}" type="button" value="Cancel Edit" /></div>
-	{if $pivottable.showControls}<div id="pivotControls_{$pivottable.id}" style="display:none;position:relative;"><input type="button" id="pivotEditBtn_{$pivottable.id}" value="Edit Pivot Table" class="btn btn-primary ui-button ui-corner-all ui-widget" /></div>{/if}
+	<input id="save_{$pivottable.id}" type="button" value="{tr}Save Changes{/tr}" class="btn btn-primary ui-button ui-corner-all ui-widget" /><input class="btn btn-primary ui-button ui-corner-all ui-widget" id="restore_{$pivottable.id}" type="button" value="{tr}Cancel Edit{/tr}" /></div>
+	{if $pivottable.showControls}<div id="pivotControls_{$pivottable.id}" style="display:none;position:relative;"><input type="button" id="pivotEditBtn_{$pivottable.id}" value="{tr}Edit Pivot Table{/tr}" class="btn btn-primary ui-button ui-corner-all ui-widget" /></div>{/if}
 	<img id="png_container_{$pivottable.id}" style="display:none"></img>
 </div>
 
