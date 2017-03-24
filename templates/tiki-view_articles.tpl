@@ -11,10 +11,10 @@
 	{if $headerLinks eq "y"}
 		<div class="t_navbar margin-bottom-md">
 			{if $tiki_p_edit_article eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
-				{button href="tiki-edit_article.php"  _type="link" class="btn btn-link" _icon_name="create" _text="{tr}New Article{/tr}"}
+				{button href="tiki-edit_article.php" _type="link" class="btn btn-link" _icon_name="create" _text="{tr}New Article{/tr}"}
 			{/if}
 			{if $prefs.feature_submissions == 'y' && $tiki_p_edit_submission == "y" && $tiki_p_edit_article neq 'y' && $tiki_p_admin neq 'y' && $tiki_p_admin_cms neq 'y'}
-				{button href="tiki-edit_submission.php"  _type="link" class="btn btn-link" _icon_name="create" _text="{tr}New Submission{/tr}"}
+				{button href="tiki-edit_submission.php" _type="link" class="btn btn-link" _icon_name="create" _text="{tr}New Submission{/tr}"}
 			{/if}
 			{if $tiki_p_read_article eq 'y' or $tiki_p_articles_read_heading eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
 				{button href="tiki-list_articles.php" _type="link" class="btn btn-link" _icon_name="list" _text="{tr}List Articles{/tr}"}
@@ -22,7 +22,7 @@
 
 			{if $prefs.feature_submissions == 'y' && ($tiki_p_approve_submission == "y"
 			|| $tiki_p_remove_submission == "y" || $tiki_p_edit_submission == "y")}
-				{button href="tiki-list_submissions.php"  _type="link" class="btn btn-link" _icon_name="view" _text="{tr}View Submissions{/tr}"}
+				{button href="tiki-list_submissions.php" _type="link" class="btn btn-link" _icon_name="view" _text="{tr}View Submissions{/tr}"}
 			{/if}
 			{if $prefs.javascript_enabled != 'y'}
 				{$js = 'n'}
@@ -232,7 +232,7 @@
 
 			<div class="articletrailer">
 				{if ($listpages[ix].size > 0) or (($prefs.feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y'))}
-                <ul class="list-inline pull-left">
+				<ul class="list-inline pull-left">
 					{if ($tiki_p_read_article eq 'y' and $listpages[ix].heading_only ne 'y' and (!isset($fullbody) or $fullbody ne "y"))}
 						{if ($listpages[ix].size > 0 and !empty($listpages[ix].body))}
 
@@ -263,7 +263,7 @@
 							</a>
 						</li>
 					{/if}
-                    </ul>
+					</ul>
 				{/if}
 				{if !isset($actions) or $actions eq "y"}
 					<div class="btn-group actions pull-right dropup">

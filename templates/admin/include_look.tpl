@@ -218,7 +218,7 @@
 			<div class="adminoptionboxchild" id="feature_tabs_childcontainer">
 				{preference name=layout_tabs_optional}
 			</div>
-            {preference name=site_favicon_enable}
+			{preference name=site_favicon_enable}
 			{preference name=image_responsive_class}
 			<div class="adminoptionbox">
 				<fieldset class="table">

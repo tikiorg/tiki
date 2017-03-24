@@ -24,7 +24,7 @@
 			{/section}
 		</select>
 	</div>
-   	<div class="form-group">
+	<div class="form-group">
 		<label for="theme">{tr}Theme{/tr}</label>
 		<select name="theme" class="form-control input-sm">
 			{foreach from=$themes key=theme item=theme_name}
@@ -41,38 +41,38 @@
 
 <form action="tiki-theme_control_objects.php" method="post" class="form" role="form">
 	<input type="hidden" name="type" value="{$type|escape}">
-    <div class="table-responsive themeobj-table">
-    <table class="table">
-		<tr>
-			<th><button type="submit" class="btn btn-warning btn-sm" name="delete" title="{tr}Delete selected{/tr}">{icon name="delete"}</button></th>
-			<th>
-				<a href="tiki-theme_control_objects.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">
-					{tr}Type{/tr}
-				</a>
-			</th>
-			<th>
-				<a href="tiki-theme_control_objects.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">
-					{tr}Name{/tr}
-				</a>
-			</th>
-			<th>
-				<a href="tiki-theme_control_objects.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'theme_desc'}theme_asc{else}theme_desc{/if}">
-					{tr}Theme{/tr}</a>
-			</th>
-		</tr>
-
-		{section name=user loop=$channels}
+	<div class="table-responsive themeobj-table">
+		<table class="table">
 			<tr>
-				<td class="checkbox-cell">
-					<input type="checkbox" name="obj[{$channels[user].objId}]">
-				</td>
-				<td class="text">{$channels[user].type}</td>
-				<td class="text">{$channels[user].name}</td>
-				<td class="text">{$channels[user].theme}</td>
+				<th><button type="submit" class="btn btn-warning btn-sm" name="delete" title="{tr}Delete selected{/tr}">{icon name="delete"}</button></th>
+				<th>
+					<a href="tiki-theme_control_objects.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">
+						{tr}Type{/tr}
+					</a>
+				</th>
+				<th>
+					<a href="tiki-theme_control_objects.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">
+						{tr}Name{/tr}
+					</a>
+				</th>
+				<th>
+					<a href="tiki-theme_control_objects.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'theme_desc'}theme_asc{else}theme_desc{/if}">
+						{tr}Theme{/tr}</a>
+				</th>
 			</tr>
-		{/section}
-	</table>
-    </div>
+
+			{section name=user loop=$channels}
+				<tr>
+					<td class="checkbox-cell">
+						<input type="checkbox" name="obj[{$channels[user].objId}]">
+					</td>
+					<td class="text">{$channels[user].type}</td>
+					<td class="text">{$channels[user].name}</td>
+					<td class="text">{$channels[user].theme}</td>
+				</tr>
+			{/section}
+		</table>
+	</div>
 </form>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

@@ -6,7 +6,7 @@
 		<div class='btn-group'>
 			<button class='btn btn-sm btn-default' data-role='prev'>« {tr}Prev{/tr}</button>
 			<button class='btn btn-sm btn-default' data-role='next'>{tr}Next{/tr} »</button>
-		</div>          
+		</div>
 		<button class='btn btn-sm btn-default' data-role='end'>{tr}End tour{/tr}</button>
 	</div>
 </div>

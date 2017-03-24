@@ -20,12 +20,12 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">{tr}Source repository{/tr}</label>
 				<div class="col-sm-6 col-sm-offset-1">
-			      	<select name="srcrep" class="form-control">{html_options options=$reps}</select>
-			    </div>
-			    <div class="col-sm-1">
-			    	<input type="submit" class="btn btn-default btn-sm" name="copy" value="{tr}Copy{/tr}">
-			    </div>
-		    </div>
+					<select name="srcrep" class="form-control">{html_options options=$reps}</select>
+				</div>
+				<div class="col-sm-1">
+					<input type="submit" class="btn btn-default btn-sm" name="copy" value="{tr}Copy{/tr}">
+				</div>
+			</div>
 		</form>
 		<br><br>
 	</div>

@@ -44,28 +44,28 @@
 		</tr>
 	</table>
 	<hr>
-    <div class="form-group">
-        <label class="col-sm-4 control-label" for="galleryId">{tr}Select a File Gallery{/tr}</label>
-        <div class="col-sm-4">
-            <select name="galleryId" id="galleryId" class="form-control">
-                <option value="{$treeRootId}" {if $treeRootId eq $galleryId}selected="selected"{/if} style="font-style:italic; border-bottom:1px dashed #666;">{tr}Root{/tr}</option>
-                {section name=idx loop=$galleries}
+	<div class="form-group">
+		<label class="col-sm-4 control-label" for="galleryId">{tr}Select a File Gallery{/tr}</label>
+		<div class="col-sm-4">
+			<select name="galleryId" id="galleryId" class="form-control">
+				<option value="{$treeRootId}" {if $treeRootId eq $galleryId}selected="selected"{/if} style="font-style:italic; border-bottom:1px dashed #666;">{tr}Root{/tr}</option>
+				{section name=idx loop=$galleries}
 
-                    {if ($galleries[idx].individual eq 'n') or ($galleries[idx].individual_tiki_p_batch_upload_file_dir eq 'y')}
-                        <option value="{$galleries[idx].id}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].parentName}: {$galleries[idx].name}</option>
-                    {/if}
-                {/section}
-            </select>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-4 control-label" for="subdirToSubgal">{tr}Upload into galleries according to sub-directories{/tr}</label>
-        <div class="col-sm-8">
-            <input type="checkbox" name="subdirToSubgal" value="true" id="subdirToSubgal">
+					{if ($galleries[idx].individual eq 'n') or ($galleries[idx].individual_tiki_p_batch_upload_file_dir eq 'y')}
+						<option value="{$galleries[idx].id}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].parentName}: {$galleries[idx].name}</option>
+					{/if}
+				{/section}
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-4 control-label" for="subdirToSubgal">{tr}Upload into galleries according to sub-directories{/tr}</label>
+		<div class="col-sm-8">
+			<input type="checkbox" name="subdirToSubgal" value="true" id="subdirToSubgal">
 			<div class="text-muted description">
 				{tr}eg. for "misc/screenshots/digicam0001.jpg" the file will be uploaded into a gallery called "screenshots" in the called "misc" inside the chosen gallery if it exists{/tr}
 			</div>
-    	</div>
+		</div>
 	</div>
 	<div class="form-group create-subgals" style="display:none;">
 		<label class="col-sm-4 control-label" for="createSubgals">{tr}Create sub-galleries?{/tr}</label>
@@ -107,21 +107,21 @@ $("#batchUploadForm").submit(function () {
 	return $("input[name='files[]']:checked").length > 0;
 });
 
-{/jq}
+		{/jq}
 	</div>
-    <div class="form-group">
-        <label class="col-sm-4 control-label" for="subToDesc">{tr}Use the last sub directory name as description{/tr}</label>
-        <div class="col-sm-8">
-            <input type="checkbox" name="subToDesc" value="true" id="subToDesc">
-            <div class="text-muted description">
-                {tr}eg. from "misc/screenshots/digicam0001.jpg" a description "screenshots" will be created{/tr}r}
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-4 control-label"></label>
-        <div class="col-sm-8">
-            <input type="submit" class="btn btn-default btn-sm" name="batch_upload" value="{tr}Process files{/tr}">
-        </div>
-    </div>
+	<div class="form-group">
+		<label class="col-sm-4 control-label" for="subToDesc">{tr}Use the last sub directory name as description{/tr}</label>
+		<div class="col-sm-8">
+			<input type="checkbox" name="subToDesc" value="true" id="subToDesc">
+			<div class="text-muted description">
+				{tr}eg. from "misc/screenshots/digicam0001.jpg" a description "screenshots" will be created{/tr}r}
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-4 control-label"></label>
+		<div class="col-sm-8">
+			<input type="submit" class="btn btn-default btn-sm" name="batch_upload" value="{tr}Process files{/tr}">
+		</div>
+	</div>
 </form>

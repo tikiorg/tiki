@@ -18,7 +18,7 @@
 
 			<h2>{tr}Request live support{/tr}</h2>
 
-		    <div class="col-sm-6 col-sm-offset-3 col-xs-12">
+			<div class="col-sm-6 col-sm-offset-3 col-xs-12">
 				<div class="table-responsive">
 					<table class="table">
 						{if $user}

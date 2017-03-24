@@ -128,7 +128,7 @@
 				<h2>{tr}Add Pages from Structures:{/tr}</h2>
 				<div class="form-group">
 					<div class="col-sm-12">
-				      	<select name="structureId" size="5" style="width:99%" border="1" class="form-control">
+						<select name="structureId" size="5" style="width:99%" border="1" class="form-control">
 							{section name=ix loop=$structures}
 								{if !in_array($structures[ix].page_ref_id,$printstructures)}
 									<option value="{$structures[ix].page_ref_id|escape}">{$structures[ix].pageName}</option>
@@ -137,13 +137,13 @@
 								<option value="" disabled="disabled">{tr}No structures{/tr}</option>
 							{/section}
 						</select>
-				    </div>
-			    </div>
-			    <div class="form-group">
+					</div>
+				</div>
+				<div class="form-group">
 					<div class="col-sm-12">
-				      	<input type="submit" class="btn btn-default btn-sm" name="addstructurepages" value="{tr}Add Pages from Structures{/tr}">
-				    </div>
-			    </div>
+						<input type="submit" class="btn btn-default btn-sm" name="addstructurepages" value="{tr}Add Pages from Structures{/tr}">
+					</div>
+				</div>
 			</form>
 		{/if}
 	{/tab}

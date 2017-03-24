@@ -72,72 +72,72 @@
 {/if}
 
 {if count($offline_operators) > 0}
-<h2>{tr}Offline operators{/tr}</h2>
-{cycle values='odd,even' print=false}
-<div class="table-responsive">
-<table class="table">
-	<tr>
-		<th style="text-align:center;">
-		{tr}Operator{/tr}
-		</th>
-		<th colspan='2'>
-		{tr}Stats{/tr}
-		</th>
-	</tr>
-{section name=ix loop=$offline_operators}
-	<tr>
-		<td style="text-align:center;">
-			{$offline_operators[ix].user|avatarize}<br>
-			<b>{$offline_operators[ix].user|escape}</b>
-		</td>
-		<td>
-			<table >
+	<h2>{tr}Offline operators{/tr}</h2>
+	{cycle values='odd,even' print=false}
+	<div class="table-responsive">
+		<table class="table">
+			<tr>
+				<th style="text-align:center;">
+				{tr}Operator{/tr}
+				</th>
+				<th colspan='2'>
+				{tr}Stats{/tr}
+				</th>
+			</tr>
+			{section name=ix loop=$offline_operators}
 				<tr>
-					<td>{tr}Accepted requests:{/tr}</td>
-					<td>{$offline_operators[ix].accepted_requests}</td>
+					<td style="text-align:center;">
+						{$offline_operators[ix].user|avatarize}<br>
+						<b>{$offline_operators[ix].user|escape}</b>
+					</td>
+					<td>
+						<table >
+							<tr>
+								<td>{tr}Accepted requests:{/tr}</td>
+								<td>{$offline_operators[ix].accepted_requests}</td>
+							</tr>
+							<tr>
+								<td>{tr}{$offline_operators[ix].status}{/tr} {tr}since:{/tr}</td>
+								<td>{if $offline_operators[ix].status_since ne "0"}{$offline_operators[ix].status_since|tiki_short_datetime}{else}{tr}unknown{/tr}{/if}</td>
+							</tr>
+						</table>
+					</td>
+					<td style="text-align:right;">
+						{if $tiki_p_live_support_admin eq 'y'}
+							<a href='tiki-live_support_admin.php?removeuser={$offline_operators[ix].user|escape}'><img src='img/icons/trash.gif' alt="{tr}Del{/tr}" title="{tr}Del{/tr}"></a>
+						{else}
+							&nbsp;
+						{/if}
+					</td>
 				</tr>
-				<tr>
-					<td>{tr}{$offline_operators[ix].status}{/tr} {tr}since:{/tr}</td>
-					<td>{if $offline_operators[ix].status_since ne "0"}{$offline_operators[ix].status_since|tiki_short_datetime}{else}{tr}unknown{/tr}{/if}</td>
-				</tr>
-			</table>
-		</td>
-		<td style="text-align:right;">
-		{if $tiki_p_live_support_admin eq 'y'}
-			<a href='tiki-live_support_admin.php?removeuser={$offline_operators[ix].user|escape}'><img src='img/icons/trash.gif' alt="{tr}Del{/tr}" title="{tr}Del{/tr}"></a>
-		{else}
-			&nbsp;
-		{/if}
-		</td>
-	</tr>
-{/section}
-</table>
-</div>
+			{/section}
+		</table>
+	</div>
 {/if}
 
 {if $tiki_p_live_support_admin eq 'y'}
-<h2>{tr}Add an operator to the system{/tr}</h2>
-<br>
-<form method="post" action="tiki-live_support_admin.php" class="form-horizontal">
-	<div class="form-group">
-		<label class="col-sm-3 control-label">{tr}User{/tr}</label>
-		<div class="col-sm-7">
-		    <select name="user" class="form-control">
-				{section name=ix loop=$users}
-					<option value="{$users[ix].user|escape}">{$users[ix].user|escape}</option>
-				{/section}
-			</select>
-			<div class="help-block">
-				{tr}Operators must be tiki users{/tr}
+	<h2>{tr}Add an operator to the system{/tr}</h2>
+	<br>
+	<form method="post" action="tiki-live_support_admin.php" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-3 control-label">{tr}User{/tr}</label>
+			<div class="col-sm-7">
+				<select name="user" class="form-control">
+					{section name=ix loop=$users}
+						<option value="{$users[ix].user|escape}">{$users[ix].user|escape}</option>
+					{/section}
+				</select>
+				<div class="help-block">
+					{tr}Operators must be tiki users{/tr}
+				</div>
 			</div>
-	    </div>
-    </div>
-    <div class="form-group">
-		<label class="col-sm-3 control-label"></label>
-		<div class="col-sm-7">
-		    <input type="submit" class="btn btn-default btn-sm" name="adduser" value="{tr}Set as Operator{/tr}">
-	    </div>
-    </div>
-</form>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label"></label>
+			<div class="col-sm-7">
+				<input type="submit" class="btn btn-default btn-sm" name="adduser" value="{tr}Set as Operator{/tr}">
+			</div>
+		</div>
+	</form>
 {/if}
 

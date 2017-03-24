@@ -19,30 +19,30 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">{tr}Name{/tr}</label>
 				<div class="col-sm-7">
-			      	{$info.name}
-			    </div>
-		    </div>
-	        <div class="form-group">
-	    		<label class="col-sm-3 control-label">{tr}Description{/tr}</label>
-	    		<div class="col-sm-7">
-			      	{$info.description}
-	    	    </div>
-	        </div>
-	        <div class="form-group">
-	    		<label class="col-sm-3 control-label">{tr}URL{/tr}</label>
-	    		<div class="col-sm-7">
-			      	{$info.url}
-	    	    </div>
-	        </div>
-	        {if $prefs.directory_country_flag eq 'y'}
-	        <div class="form-group">
-	    		<label class="col-sm-3 control-label">{tr}Country{/tr}</label>
-	    		<div class="col-sm-7">
-			      	{$info.country}
-	    	    </div>
-	        </div>
-	        {/if}
-        </div>
+					{$info.name}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Description{/tr}</label>
+				<div class="col-sm-7">
+					{$info.description}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}URL{/tr}</label>
+				<div class="col-sm-7">
+					{$info.url}
+				</div>
+			</div>
+			{if $prefs.directory_country_flag eq 'y'}
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Country{/tr}</label>
+				<div class="col-sm-7">
+					{$info.country}
+				</div>
+			</div>
+			{/if}
+		</div>
 	{else}
 
 		{* Display a form to add or edit a site *}
@@ -54,25 +54,25 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">{tr}Name{/tr}</label>
 				<div class="col-sm-7">
-			      	<input type="text" id="name" name="name" value="{$info.name|escape}" class="form-control">
-			    </div>
-		    </div>
-		    <div class="form-group">
+					<input type="text" id="name" name="name" value="{$info.name|escape}" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-3 control-label">{tr}Description{/tr}</label>
 				<div class="col-sm-7">
-			      	<textarea rows="5" cols="60" id="description" name="description" class="form-control">{$info.description|escape}</textarea>
-			    </div>
-		    </div>
-		    <div class="form-group">
+					<textarea rows="5" cols="60" id="description" name="description" class="form-control">{$info.description|escape}</textarea>
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-3 control-label">{tr}URL{/tr}</label>
 				<div class="col-sm-7">
-			      	<input type="text" size="60" id="url" name="url" value="{if $info.url ne ""}{$info.url|escape}{else}http://{/if}" class="form-control">
-			    </div>
-		    </div>
-		    <div class="form-group">
+					<input type="text" size="60" id="url" name="url" value="{if $info.url ne ""}{$info.url|escape}{else}http://{/if}" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-3 control-label">{tr}Directory Categories{/tr}</label>
 				<div class="col-sm-7">
-			      	<select id="siteCats" name="siteCats[]" multiple="multiple" size="4" class="form-control">
+					<select id="siteCats" name="siteCats[]" multiple="multiple" size="4" class="form-control">
 						{section name=ix loop=$categs}
 							<option value="{$categs[ix].categId|escape}" {if $categs[ix].belongs eq 'y' or $categs[ix].categId eq $addtocat}selected="selected"{/if}>
 								{$categs[ix].path|escape}
@@ -83,13 +83,13 @@
 						<br>
 						{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 					{/if}
-			    </div>
-		    </div>
-		    {if $prefs.directory_country_flag eq 'y'}
-		    <div class="form-group">
+				</div>
+			</div>
+			{if $prefs.directory_country_flag eq 'y'}
+			<div class="form-group">
 				<label class="col-sm-3 control-label">{tr}Country{/tr}</label>
 				<div class="col-sm-7">
-			      	<select id="country" name="country" class="form-control">
+					<select id="country" name="country" class="form-control">
 						{section name=ux loop=$countries}
 							<option value="{$countries[ux]|escape}" {if $info.country eq $countries[ux]}selected="selected"{/if}>{tr}{$countries[ux]}{/tr}</option>
 						{/section}
@@ -98,21 +98,21 @@
 						<br>
 						{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 					{/if}
-			    </div>
-		    </div>
-		    {else}
+				</div>
+			</div>
+			{else}
 				<input type="hidden" name="country" value="None">
 			{/if}
 			<input name="isValid" type="hidden" value="">
 			{if $prefs.feature_antibot eq 'y' && $user eq ''}
 				{include file='antibot.tpl' td_style="formcolor"}
 			{/if}
-		    <div class="form-group">
+			<div class="form-group">
 				<label class="col-sm-3 control-label"></label>
 				<div class="col-sm-7">
-			      	<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-			    </div>
-		    </div>
+					<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+				</div>
+			</div>
 		</form>
 	{/if}
 {/if}

@@ -18,27 +18,27 @@
 	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}From Points{/tr}</label>
 		<div class="col-sm-7">
-      		<input type="text" name="fromPoints" value="{$fromPoints|escape}" class="form-control">
-  		</div>
-    </div>
-    <div class="form-group">
+			<input type="text" name="fromPoints" value="{$fromPoints|escape}" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}To Points{/tr}</label>
 		<div class="col-sm-7">
-      		<input type="text" name="toPoints" value="{$toPoints|escape}" class="form-control">
-  		</div>
-    </div>
-    <div class="form-group">
+			<input type="text" name="toPoints" value="{$toPoints|escape}" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Answer{/tr}</label>
 		<div class="col-sm-7">
-      		<textarea name="answer" rows="10" cols="40" class="form-control">{$answer|escape}</textarea>
-  		</div>
-    </div>
-    <div class="form-group">
+			<textarea name="answer" rows="10" cols="40" class="form-control">{$answer|escape}</textarea>
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label"></label>
 		<div class="col-sm-7">
-      		<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-  		</div>
-    </div>
+			<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+		</div>
+	</div>
 </form>
 
 <h2>{tr}Results{/tr}</h2>

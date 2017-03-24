@@ -190,7 +190,7 @@
 				{/if}
 
 				<tr>
-				
+
 					{if $checkboxes_on eq 'y'}
 						<td class="checkbox-cell">
 							<input type="checkbox" name="checked[]" value="{$listpages[changes].pageName|escape}">
@@ -207,14 +207,14 @@
 
 					{if $prefs.wiki_list_name eq 'y'}
 						<td class="text">
-							{* 
+							{*
 								The variant of the object link below adds the baseurl as received by the request to the href attribute generated.
 								I.e. "http://192.168.1.10/tiki-listpages.php?page=MyPage" instead of "tiki-listpages.php?page=MyPage"
 								This leads to trouble when using a reverse proxy that takes an external fqdn and maps it to a local address.
 								Other templates do not use this object_link but an simple <a href></a>. See i.e tiki_lastchanges.tpl so we use it here as well.
 								Same for the link generated for the page id (wiki_list_id) above.
 							*}
-							{* 
+							{*
 								{object_link type=wiki id=$listpages[changes].pageName url=$listpages[changes].pageName|sefurl:'wiki':'':$all_langs title=$listpages[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true}
 							*}
 							<a href="{$listpages[changes].pageName|sefurl}" class="link tips" title="{$listpages[changes].pageName|escape}:{tr}View page{/tr}">

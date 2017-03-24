@@ -78,12 +78,12 @@
 			{if not empty($smarty.request.from)}{$from = $smarty.request.from}{else}{$from=''}{/if}
 			<a class="btn btn-default" href="{bootstrap_modal controller=tracker action=update_item trackerId=$trackerId itemId=$itemId redirect=$from}">{icon name="edit"} {tr}Edit{/tr}</a>
 		{/if}
-	
+
 		{* only include actions bar if no custom view template is assigned *}
 		{if !$viewItemPretty.override}
 			{include file="tracker_actions.tpl"}
 		{/if}
-		
+
 		{* show button back only if tpl has been set with vi_tpl or ei_tpl *}
 		{if $viewItemPretty.override and !empty($referer)}
 			<a class="btn btn-default" href="{$referer}" title="{tr}Back{/tr}">{icon name="arrow-circle-left"} {tr}Back{/tr}</a>
@@ -108,9 +108,9 @@
 			{$smarty.server.php_self|default:null}?{query itemId=NULL trackerId=$trackerId}
 		{/pagination_links}
 	{/if}
-	
+
 	{include file='tracker_error.tpl'}
-	
+
 {/if} 
 {* print_page *}
 
@@ -247,7 +247,6 @@
 							</div>
 						{/if}
 
-						
 						{* no template defined in the tracker *}
 						{if empty($editItemPretty.value)}
 

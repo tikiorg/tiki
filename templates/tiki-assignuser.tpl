@@ -23,53 +23,53 @@
 {/if}
 
 <h2>{tr}User Information{/tr}</h2>
-    <form class="form-horizontal">
-        <div class="form-group">
-            <label class="col-sm-3 control-label">{tr}Login{/tr}</label>
-            <div class="col-sm-7">
-                {$user_info.login|escape}
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label">{tr}Email{/tr}</label>
-            <div class="col-sm-7">
-                {$user_info.email}
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label">{tr}Groups{/tr}</label>
-            <div class="col-sm-7">
-                {foreach from=$user_info.groups item=what key=grp name=groups}
-                    {if $what eq 'included'}<i>{/if}{$grp|escape}{if $what eq 'included'}</i>{/if}
-                    {if $grp != "Anonymous" && $grp != "Registered" and $what neq 'included'}
-                        <a class="tips" href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}&amp;action=removegroup&amp;group={$grp|escape:url}" title=":{tr}Remove{/tr}">
-                            {icon name='remove' style="vertical-align:middle"}
-                        </a>
-                    {/if}{if !$smarty.foreach.groups.last},{/if}&nbsp;&nbsp;
-                {/foreach}
-            </div>
-        </div>
-    </form>
-    <form method="post" action="tiki-assignuser.php{if $assign_user}?assign_user={$assign_user|escape:'url'}{/if}" class="form-horizontal">
-        <div class="form-group">
-            <label class="col-sm-3 control-label">{tr}Default Group{/tr}</label>
-            <div class="col-sm-6">
-                <select name="defaultgroup" class="form-control">
-                    <option value=""></option>
-                    {foreach from=$user_info.groups key=name item=included}
-                        <option value="{$name|escape}" {if $name eq $user_info.default_group}selected="selected"{/if}>{$name|escape}</option>
-                    {/foreach}
-                </select>
-                <input type="hidden" value="{$user_info.login|escape}" name="login">
-                <input type="hidden" value="{$prefs.maxRecords}" name="maxRecords">
-                <input type="hidden" value="{$offset}" name="offset">
-                <input type="hidden" value="{$sort_mode}" name="sort_mode">
-            </div>
-            <div class="col-sm-1">
-                <input type="submit" class="btn btn-default btn-sm" value="{tr}Set{/tr}" name="set_default">
-            </div>
-        </div>
-    </form>
+	<form class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Login{/tr}</label>
+			<div class="col-sm-7">
+				{$user_info.login|escape}
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Email{/tr}</label>
+			<div class="col-sm-7">
+				{$user_info.email}
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Groups{/tr}</label>
+			<div class="col-sm-7">
+				{foreach from=$user_info.groups item=what key=grp name=groups}
+					{if $what eq 'included'}<i>{/if}{$grp|escape}{if $what eq 'included'}</i>{/if}
+					{if $grp != "Anonymous" && $grp != "Registered" and $what neq 'included'}
+						<a class="tips" href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}&amp;action=removegroup&amp;group={$grp|escape:url}" title=":{tr}Remove{/tr}">
+							{icon name='remove' style="vertical-align:middle"}
+						</a>
+					{/if}{if !$smarty.foreach.groups.last},{/if}&nbsp;&nbsp;
+				{/foreach}
+			</div>
+		</div>
+	</form>
+	<form method="post" action="tiki-assignuser.php{if $assign_user}?assign_user={$assign_user|escape:'url'}{/if}" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Default Group{/tr}</label>
+			<div class="col-sm-6">
+				<select name="defaultgroup" class="form-control">
+					<option value=""></option>
+					{foreach from=$user_info.groups key=name item=included}
+						<option value="{$name|escape}" {if $name eq $user_info.default_group}selected="selected"{/if}>{$name|escape}</option>
+					{/foreach}
+				</select>
+				<input type="hidden" value="{$user_info.login|escape}" name="login">
+				<input type="hidden" value="{$prefs.maxRecords}" name="maxRecords">
+				<input type="hidden" value="{$offset}" name="offset">
+				<input type="hidden" value="{$sort_mode}" name="sort_mode">
+			</div>
+			<div class="col-sm-1">
+				<input type="submit" class="btn btn-default btn-sm" value="{tr}Set{/tr}" name="set_default">
+			</div>
+		</div>
+	</form>
 <br>
 <div align="left"><h2>{tr _0=$assign_user|escape}Assign User %0 to Groups{/tr}</h2></div>
 

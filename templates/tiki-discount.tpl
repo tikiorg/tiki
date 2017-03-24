@@ -75,43 +75,43 @@
 		<div class="form-group">
 			<label class="col-sm-3 control-label">{tr}Code{/tr}</label>
 			<div class="col-sm-7">
-		      	<input type="text" id="code" name="code" {if !empty($info.code)}value="{$info.code|escape}"{/if} class="form-control">
-		    </div>
-	    </div>
-	    <div class="form-group">
+				<input type="text" id="code" name="code" {if !empty($info.code)}value="{$info.code|escape}"{/if} class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
 			<label class="col-sm-3 control-label">{tr}Value{/tr}</label>
 			<div class="col-sm-7">
-		      	<input type="text" id="code" name="code" {if !empty($info.code)}value="{$info.code|escape}"{/if} class="form-control">
-		      	<div class="help-block">
-		      		{tr}{$prefs.payment_currency|escape}{/tr} {tr} or {/tr}
-		      	</div>
-		      	<input type="text" id="percent" name="percent" {if !empty($info.percent)} value="{$info.percent|escape}"{/if} class="form-control">
-		      	<div class="help-block">
-		      		%
-		      	</div>
-		    </div>
-	    </div>
-	    <div class="form-group">
+				<input type="text" id="code" name="code" {if !empty($info.code)}value="{$info.code|escape}"{/if} class="form-control">
+				<div class="help-block">
+					{tr}{$prefs.payment_currency|escape}{/tr} {tr} or {/tr}
+				</div>
+				<input type="text" id="percent" name="percent" {if !empty($info.percent)} value="{$info.percent|escape}"{/if} class="form-control">
+				<div class="help-block">
+					%
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
 			<label class="col-sm-3 control-label">{tr}Maximum time the discount can be used in the first phase of payment{/tr}</label>
 			<div class="col-sm-7">
-		      	<input type="text" id="max" name="max" {if !empty($info.max)} value="{$info.max|escape}"{/if} class="form-control">
-		      	<div class="help-block">
-		      		{tr}-1 for unlimited{/tr}
-		      	</div>
-		    </div>
-	    </div>
-	    <div class="form-group">
+				<input type="text" id="max" name="max" {if !empty($info.max)} value="{$info.max|escape}"{/if} class="form-control">
+				<div class="help-block">
+					{tr}-1 for unlimited{/tr}
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
 			<label class="col-sm-3 control-label">{tr}Comment{/tr}</label>
 			<div class="col-sm-7">
-		      	<input type="text" id="comment" name="comment" {if !empty($info.comment)} value="{$info.comment|escape}"{/if} class="form-control">
-		    </div>
-	    </div>
-	    <div class="form-group">
+				<input type="text" id="comment" name="comment" {if !empty($info.comment)} value="{$info.comment|escape}"{/if} class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
 			<label class="col-sm-3 control-label"></label>
 			<div class="col-sm-7">
-		      	<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-		    </div>
-	    </div>
+				<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+			</div>
+		</div>
 	</form>
 {/tab}
 

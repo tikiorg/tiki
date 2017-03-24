@@ -57,8 +57,8 @@
 		Version: 
 		<select name="svntag" class="form-control">
 			<option selected="selected">trunk</option>
-            <option>16.x</option>
-            <option>15.x</option>
+			<option>16.x</option>
+			<option>15.x</option>
 			<option>12.x</option>
 		</select>
 		{button href="#showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('create');" _text="{tr}Create show.tiki.org instance{/tr}"}

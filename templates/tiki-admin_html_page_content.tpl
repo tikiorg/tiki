@@ -17,20 +17,20 @@
 		<div class="form-group">
 			<label class="col-sm-3 control-label">{tr}Zone{/tr}</label>
 			<div class="col-sm-7 col-sm-offset-1">
-			    <p>{$zone} Teste</p>
-		    </div>
-	    </div>
-	    <div class="form-group">
+				<p>{$zone} Teste</p>
+			</div>
+		</div>
+		<div class="form-group">
 			<label class="col-sm-3 control-label">{tr}Content:{/tr}</label>
 			<div class="col-sm-7 col-sm-offset-1">
-			    {if $type eq 'ta'}
+				{if $type eq 'ta'}
 					<textarea rows="5" cols="15" name="content" class="form-control">{$content|escape}</textarea>
 				{else}
 					<input type="text" name="content" value="{$content|escape}" class="form-control">
 				{/if}
-		    </div>
-	    </div>
-	    <div class="form-group">
+			</div>
+		</div>
+		<div class="form-group">
 			<div class="col-sm-3"></div>
 			<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
 				<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">

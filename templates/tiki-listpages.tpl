@@ -58,7 +58,7 @@
 							<input class="btn btn-primary" type="submit" name="quickedit" value="{tr}Create Page{/tr}">
 						</div>
 					</div>
-					
+
 				</form>
 			</div>
 		{/tab}

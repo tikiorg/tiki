@@ -197,20 +197,22 @@
 				</div>
 			</fieldset>
 		{/tab}
+
 		{tab name="{tr}Remote Tiki Autologin{/tr}"}
 			<br>
 			<fieldset>
-			  {preference name=login_autologin}
-			  {preference name=login_autologin_user}
-			  {preference name=login_autologin_group}
-			  {preference name=login_autologin_createnew}
-			  {preference name=login_autologin_allowedgroups}
-			  {preference name=login_autologin_syncgroups}
-			  {preference name=login_autologin_logoutremote}
-			  {preference name=login_autologin_redirectlogin}
-			  {preference name=login_autologin_redirectlogin_url}
+				{preference name=login_autologin}
+				{preference name=login_autologin_user}
+				{preference name=login_autologin_group}
+				{preference name=login_autologin_createnew}
+				{preference name=login_autologin_allowedgroups}
+				{preference name=login_autologin_syncgroups}
+				{preference name=login_autologin_logoutremote}
+				{preference name=login_autologin_redirectlogin}
+				{preference name=login_autologin_redirectlogin_url}
 			</fieldset>
 		{/tab}
+
 		{tab name="{tr}LDAP{/tr}"}
 			<br>
 			<fieldset>
@@ -254,6 +256,7 @@
 				{preference name=auth_ldap_adminpass}
 			</fieldset>
 		{/tab}
+
 		{tab name="{tr}LDAP external groups{/tr}"}
 			<br>
 			<fieldset>
@@ -304,6 +307,7 @@
 				{preference name=auth_ldap_group_adminpass}
 			</fieldset>
 		{/tab}
+
 		{tab name="{tr}PAM{/tr}"}
 			<br>
 			<fieldset>
@@ -318,6 +322,7 @@
 				{preference name=pam_service}
 			</fieldset>
 		{/tab}
+
 		{tab name="{tr}Shibboleth{/tr}"}
 			<br>
 			<fieldset>
@@ -422,6 +427,7 @@
 				</fieldset>
 			</fieldset>
 		{/tab}
+
 		{tab name="{tr}phpBB{/tr}"}
 			<br>
 			<fieldset>
@@ -450,6 +456,7 @@
 				{preference name=auth_phpbb_table_prefix}
 			</fieldset>
 		{/tab}
+
 		{tab name="{tr}Web Server{/tr}"}
 			<br>
 			<fieldset>
@@ -463,15 +470,15 @@
 			</fieldset>
 		{/tab}
 
-    <input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}" />
+	<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}" />
 </form>
-{tab name="{tr}Password Blacklist{/tr}"}
-<br>
-			<fieldset>
-				<fieldset>
-					<legend>{tr}Password{/tr}</legend>
 
-					{preference name=pass_blacklist_file}
+		{tab name="{tr}Password Blacklist{/tr}"}
+		<br>
+			<fieldset>
+				<legend>{tr}Password{/tr}</legend>
+
+				{preference name=pass_blacklist_file}
 
 				<legend>{tr}Password Blacklist Tools{/tr}</legend>
 
@@ -486,35 +493,35 @@
 						Tiki's defaut password blacklist files were generated from Missler's top 1 million password file.</p>
 
 					<form action="tiki-admin.php?page=login" class="admin form-horizontal" method="post" name="PassForm" enctype="multipart/form-data">
-                        <input type="hidden" name="password_blacklist" />
+						<input type="hidden" name="password_blacklist" />
 						<input type="file" name="passwordlist" accept="text/plain" />
 						Use 'LOAD DATA INFILE': <input type="checkbox" name="loaddata" /> {help desc="Allows much larger files to be uploaded, but requires MySQL on localhost with extra permissions."}<br>
 						<input type="submit" value="Create or Replace Word Index" name="uploadIndex" class="btn btn-primary btn-sm" />
 						{help desc="Text files with one word per line accepted.
 						The word list will be converted to all lowe case. Duplicate entries will be removed.
 						Typically passwords lists should be arranged with the most commonly used passwords first."}<br>
-	                    <input type="submit" value="Delete Temporary Index" name="deleteIndex" class="btn btn-primary btn-sm" />
+						<input type="submit" value="Delete Temporary Index" name="deleteIndex" class="btn btn-primary btn-sm" />
 						{help desc="It is recomended that you delete indexed passwords from your database after your done generating your password lists.
 						They can take up quite a lot of space and serve no pourpose after processing is complete."}
 
-                    <p>Blaklist Currently Using: {$file_using}</p>
-                    {if $num_indexed}
-						<h3>Generate and Save a Password Blacklist</h3>
-						Assuming your word list was arranged in order of most commonly used, the 'Limit' field will provide you with that many of the most commonly used passwords.
-						The other fields default to the password standards set in tiki. You should not have to change these, unless you plan on changing your password
-						requirements in the future. Saving places a text file with the generated passwords in your password blacklist folder and enables it as an option for use.
-						Number of passwords (limit): <input type="number" name="limit" value="{$limit}" />
-						{help desc="Typical usage ranges between 1,000 & 10,000, although many more could be used. Twitter blacklists 396."}<br>
-						Minmum Password Length: <input type="number" name="length" value="{$length}" />
-						{help desc="The minimum password length for your password. This will filter out any password that has an illegal length."}<br>
-						Require Numbers & Letters: <input type="checkbox" name="charnum" {if $charnum}checked{/if} />
-						{help desc="If checked, will filter out any password that does not have both upper and lower case letters."}<br>
-						Require Special Characters: <input type="checkbox" name="special" {if $special}checked{/if} />
-						{help desc="If checked, will filter out any passwords that do not have special characters."}<br>
-						<input type="submit" value="Save & Set as Default" name="saveblacklist" class="btn btn-primary btn-sm" />
-						<input type="submit" value="View Password List" name="viewblacklist" class="btn btn-primary btn-sm" formtarget="_blank" />
-                    {/if}
-                    </form>
+						<p>Blacklist Currently Using: {$file_using}</p>
+						{if $num_indexed}
+							<h3>Generate and Save a Password Blacklist</h3>
+							Assuming your word list was arranged in order of most commonly used, the 'Limit' field will provide you with that many of the most commonly used passwords.
+							The other fields default to the password standards set in tiki. You should not have to change these, unless you plan on changing your password
+							requirements in the future. Saving places a text file with the generated passwords in your password blacklist folder and enables it as an option for use.
+							Number of passwords (limit): <input type="number" name="limit" value="{$limit}" />
+							{help desc="Typical usage ranges between 1,000 & 10,000, although many more could be used. Twitter blacklists 396."}<br>
+							Minmum Password Length: <input type="number" name="length" value="{$length}" />
+							{help desc="The minimum password length for your password. This will filter out any password that has an illegal length."}<br>
+							Require Numbers &amp; Letters: <input type="checkbox" name="charnum" {if $charnum}checked{/if} />
+							{help desc="If checked, will filter out any password that does not have both upper and lower case letters."}<br>
+							Require Special Characters: <input type="checkbox" name="special" {if $special}checked{/if} />
+							{help desc="If checked, will filter out any passwords that do not have special characters."}<br>
+							<input type="submit" value="Save & Set as Default" name="saveblacklist" class="btn btn-primary btn-sm" />
+							<input type="submit" value="View Password List" name="viewblacklist" class="btn btn-primary btn-sm" formtarget="_blank" />
+						{/if}
+					</form>
 				</div>
 			</fieldset>
 		{/tab}

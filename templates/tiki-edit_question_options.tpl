@@ -13,24 +13,24 @@
 	<input type="hidden" name="optionId" value="{$optionId|escape}">
 	<input type="hidden" name="questionId" value="{$questionId|escape}">
 
-    <div class="form-group">
+	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Option{/tr}</label>
 		<div class="col-sm-7">
-	      	<textarea name="optionText" rows="5" cols="40" class="form-control">{$optionText|escape}</textarea>
-	    </div>
-    </div>
-    <div class="form-group">
+			<textarea name="optionText" rows="5" cols="40" class="form-control">{$optionText|escape}</textarea>
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Points{/tr}</label>
 		<div class="col-sm-7">
-	      	<input type="text" name="points" value="{$points|escape}" class="form-control">
-	    </div>
-    </div>
-    <div class="form-group">
+			<input type="text" name="points" value="{$points|escape}" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label"></label>
 		<div class="col-sm-7">
-	      	<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-	    </div>
-    </div>
+			<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+		</div>
+	</div>
 </form>
 
 <h2>Options</h2>

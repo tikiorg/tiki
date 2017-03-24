@@ -6,7 +6,7 @@
 	</head>
 	<body{html_body_attributes}>
 		{$cookie_consent_html}
-		
+
 		{include file="layout_fullscreen_check.tpl"}
 
 		{if $prefs.feature_ajax eq 'y'}

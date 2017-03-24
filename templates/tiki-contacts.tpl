@@ -15,76 +15,76 @@
 </div>
 
 <form action="tiki-contacts.php" method="post" id="editform" name='editform_contact' class="form-horizontal" style="clear:both;margin:5px;display:{if $contactId}block{else}none{/if};">
-    <input type="hidden" name="locSection" value="contacts">
-    <input type="hidden" name="contactId" value="{$contactId|escape}">
+	<input type="hidden" name="locSection" value="contacts">
+	<input type="hidden" name="contactId" value="{$contactId|escape}">
 
-    <div class="form-group">
-        <label class="col-sm-3 control-label">{tr}First Name{/tr}</label>
-        <div class="col-sm-7">
-            <input type="text" maxlength="80" size="20" name="firstName" value="{$info.firstName|escape}" class="form-control">
-        </div>
-    </div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}First Name{/tr}</label>
+		<div class="col-sm-7">
+			<input type="text" maxlength="80" size="20" name="firstName" value="{$info.firstName|escape}" class="form-control">
+		</div>
+	</div>
 
-    <div class="form-group">
-        <label class="col-sm-3 control-label">{tr}Last Name{/tr}</label>
-        <div class="col-sm-7">
-            <input type="text" maxlength="80" size="20" name="lastName" value="{$info.lastName|escape}" class="form-control">
-        </div>
-    </div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Last Name{/tr}</label>
+		<div class="col-sm-7">
+			<input type="text" maxlength="80" size="20" name="lastName" value="{$info.lastName|escape}" class="form-control">
+		</div>
+	</div>
 
-    <div class="form-group">
-        <label class="col-sm-3 control-label">{tr}Email{/tr}</label>
-        <div class="col-sm-7">
-            <input type="text" maxlength="80" size="20" name="email" value="{$info.email|escape}" class="form-control">
-        </div>
-    </div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Email{/tr}</label>
+		<div class="col-sm-7">
+			<input type="text" maxlength="80" size="20" name="email" value="{$info.email|escape}" class="form-control">
+		</div>
+	</div>
 
-    <div class="form-group">
-        <label class="col-sm-3 control-label">{tr}Nickname{/tr}</label>
-        <div class="col-sm-7">
-            <input type="text" maxlength="80" size="20" name="nickname" value="{$info.nickname|escape}" class="form-control">
-        </div>
-    </div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Nickname{/tr}</label>
+		<div class="col-sm-7">
+			<input type="text" maxlength="80" size="20" name="nickname" value="{$info.nickname|escape}" class="form-control">
+		</div>
+	</div>
 
-    <div class="form-group">
-        <label class="col-sm-3 control-label">{tr}Publish this contact to groups{/tr}</label>
-        <div class="col-sm-7">
-            <select multiple="multiple" name="groups[]" size="6" class="form-control">
-                <option value=""></option>
-                {foreach item=group from=$groups}
-                    <option value="{$group|escape}"{if in_array($group,$info.groups)} selected="selected"{/if}>{$group}</option>
-                {/foreach}
-            </select>
-        </div>
-    </div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Publish this contact to groups{/tr}</label>
+		<div class="col-sm-7">
+			<select multiple="multiple" name="groups[]" size="6" class="form-control">
+				<option value=""></option>
+				{foreach item=group from=$groups}
+					<option value="{$group|escape}"{if in_array($group,$info.groups)} selected="selected"{/if}>{$group}</option>
+				{/foreach}
+			</select>
+		</div>
+	</div>
 
-    <div class="form-group">
-        <label class="col-sm-3 control-label">{tr}Extra Fields{/tr}</label>
-        <div class="col-sm-7">
-            <select id='select_exts' onchange='ext_select();' class="form-control">
-                <option>{tr}More...{/tr}</option>
-            </select>
-        </div>
-    </div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Extra Fields{/tr}</label>
+		<div class="col-sm-7">
+			<select id='select_exts' onchange='ext_select();' class="form-control">
+				<option>{tr}More...{/tr}</option>
+			</select>
+		</div>
+	</div>
 
-    <div id="extra-fields-placeholder">
-        <div class="form-group hidden">
-            <label class="col-sm-3 control-label"></label>
-            <div class="col-sm-7">
-                <input value="" name="" size="20" maxlength="80" class="form-control">
-            </div>
-            <div class="col-sm-1 hidden">
+	<div id="extra-fields-placeholder">
+		<div class="form-group hidden">
+			<label class="col-sm-3 control-label"></label>
+			<div class="col-sm-7">
+				<input value="" name="" size="20" maxlength="80" class="form-control">
+			</div>
+			<div class="col-sm-1 hidden">
 
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 
-    <div class="form-group">
-        <label class="col-sm-3 control-label"></label>
-        <div class="col-sm-7">
-            <input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-        </div>
-    </div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label"></label>
+		<div class="col-sm-7">
+			<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+		</div>
+	</div>
 </form>
 
 {include file='find.tpl'}
@@ -244,72 +244,72 @@
 
 {literal}
 <script type="text/javascript">
-    function createElementOrFill(type, vals) {
-        var elem;
+	function createElementOrFill(type, vals) {
+		var elem;
 
-        if(typeof type === 'object') {
-            elem = type;
-        }else {
-            elem = document.createElement(type);
-        }
+		if(typeof type === 'object') {
+			elem = type;
+		}else {
+			elem = document.createElement(type);
+		}
 
-        for (key in vals) {
-            elem.setAttribute(key, vals[key]);
-        }
+		for (key in vals) {
+			elem.setAttribute(key, vals[key]);
+		}
 
-        return elem;
-    }
+		return elem;
+	}
 
-    function htmlspecialchars(ch) {
-        ch = ch.replace(/&/g,"&amp;");
-        ch = ch.replace(/\"/g,"&quot;");
-        ch = ch.replace(/\'/g,"&#039;");
-        ch = ch.replace(/</g,"&lt;");
-        ch = ch.replace(/>/g,"&gt;");
-        return ch;
-    }
+	function htmlspecialchars(ch) {
+		ch = ch.replace(/&/g,"&amp;");
+		ch = ch.replace(/\"/g,"&quot;");
+		ch = ch.replace(/\'/g,"&#039;");
+		ch = ch.replace(/</g,"&lt;");
+		ch = ch.replace(/>/g,"&gt;");
+		return ch;
+	}
 
-    function ext_add(extid, text, defaultvalue, pub) {
-        var newElement = document.querySelector("#extra-fields-placeholder .form-group.hidden").cloneNode(true); //clones nodes too
-        newElement = createElementOrFill(newElement, { id : 'tr_ext_'+extid });
-        var label = newElement.querySelector('.control-label').innerHTML = text;
-        var input = createElementOrFill(newElement.querySelector('input'), { maxlength : 80, name : 'ext_'+extid, value : defaultvalue});
-        newElement.classList.remove('hidden');
-        document.querySelector('#extra-fields-placeholder').appendChild(newElement);
+	function ext_add(extid, text, defaultvalue, pub) {
+		var newElement = document.querySelector("#extra-fields-placeholder .form-group.hidden").cloneNode(true); //clones nodes too
+		newElement = createElementOrFill(newElement, { id : 'tr_ext_'+extid });
+		var label = newElement.querySelector('.control-label').innerHTML = text;
+		var input = createElementOrFill(newElement.querySelector('input'), { maxlength : 80, name : 'ext_'+extid, value : defaultvalue});
+		newElement.classList.remove('hidden');
+		document.querySelector('#extra-fields-placeholder').appendChild(newElement);
 
-        if (pub != 'y' || {/literal}{if $tiki_p_admin_group_webmail eq 'y'}1{else}0{/if}{literal}) {	// add button only if not public
-            var inputDiv = newElement.querySelector('.col-sm-7');
-            var buttonDiv = newElement.querySelector('.col-sm-1');
-            var removeButton = createElementOrFill('input', {type:'button', name:'ext_'+extid, value:'-', 'onclick':'ext_remove(\''+extid+'\');' });
-            inputDiv.classList.remove('col-sm-7');
-            inputDiv.classList.add('col-sm-6');
-            buttonDiv.classList.remove('hidden');
-            removeButton.classList.add('btn');
-            removeButton.classList.add('btn-default');
-            buttonDiv.appendChild(removeButton);
-        }
-    }
+		if (pub != 'y' || {/literal}{if $tiki_p_admin_group_webmail eq 'y'}1{else}0{/if}{literal}) {	// add button only if not public
+			var inputDiv = newElement.querySelector('.col-sm-7');
+			var buttonDiv = newElement.querySelector('.col-sm-1');
+			var removeButton = createElementOrFill('input', {type:'button', name:'ext_'+extid, value:'-', 'onclick':'ext_remove(\''+extid+'\');' });
+			inputDiv.classList.remove('col-sm-7');
+			inputDiv.classList.add('col-sm-6');
+			buttonDiv.classList.remove('hidden');
+			removeButton.classList.add('btn');
+			removeButton.classList.add('btn-default');
+			buttonDiv.appendChild(removeButton);
+		}
+	}
 
-    function ext_select() {
-        var value = $('#select_exts option:selected').val();
-        var text = $('#select_exts option:selected').html();
-        $('#select_exts option:nth-child(1)').attr('selected', true);
-        ext_add(value, htmlspecialchars(text), '');
-    }
+	function ext_select() {
+		var value = $('#select_exts option:selected').val();
+		var text = $('#select_exts option:selected').html();
+		$('#select_exts option:nth-child(1)').attr('selected', true);
+		ext_add(value, htmlspecialchars(text), '');
+	}
 
-    function ext_remove(extid) {
-        $('#tr_ext_'+extid).remove();
-        $('#ext_option_'+extid).attr('disabled', false);
-    }
+	function ext_remove(extid) {
+		$('#tr_ext_'+extid).remove();
+		$('#ext_option_'+extid).attr('disabled', false);
+	}
 
-    function extmenu_add(extid, text, defaultvalue, pub) {
-        var selectelem=document.getElementById('select_exts');
-        var option=createElementOrFill('option', { 'id':'ext_option_'+extid, 'value':extid });
-        option.innerHTML=text;
-        selectelem.appendChild(option);
-        if (defaultvalue != '')
-            ext_add(extid, text, defaultvalue, pub);
-    }
+	function extmenu_add(extid, text, defaultvalue, pub) {
+		var selectelem=document.getElementById('select_exts');
+		var option=createElementOrFill('option', { 'id':'ext_option_'+extid, 'value':extid });
+		option.innerHTML=text;
+		selectelem.appendChild(option);
+		if (defaultvalue != '')
+			ext_add(extid, text, defaultvalue, pub);
+	}
 {/literal}
 
 {foreach from=$exts item=ext key=k}

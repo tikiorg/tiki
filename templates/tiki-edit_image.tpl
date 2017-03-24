@@ -22,31 +22,31 @@
 		<div class="form-group">
 			<label class="col-sm-3 control-label">{tr}Image Name{/tr}</label>
 			<div class="col-sm-7 margin-bottom-sm">
-		      	<input type="text" name="name" value="{$name|escape}" class="form-control">
-		    </div>
-	    </div>
-	    <div class="form-group">
+				<input type="text" name="name" value="{$name|escape}" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
 			<label class="col-sm-3 control-label">{tr}Image Description{/tr}</label>
 			<div class="col-sm-7 margin-bottom-sm">
-		      	<textarea rows="5" cols="40" name="description" class="form-control">{$description|escape}</textarea>
-		    </div>
-	    </div>
-	    {include file='categorize.tpl'}
-	    <div class="form-group">
+				<textarea rows="5" cols="40" name="description" class="form-control">{$description|escape}</textarea>
+			</div>
+		</div>
+		{include file='categorize.tpl'}
+		<div class="form-group">
 			<label class="col-sm-3 control-label">{tr}Upload from disk to change the image:{/tr}</label>
 			<div class="col-sm-7 margin-bottom-sm">
 				{$filename}
-		      	<input name="userfile" type="file">
-		    </div>
-	    </div>
-    	<div class="form-group">
+				<input name="userfile" type="file">
+			</div>
+		</div>
+		<div class="form-group">
 			<label class="col-sm-3 control-label"></label>
 			<div class="col-sm-7 margin-bottom-sm">
-		      	<input type="submit" class="btn btn-default btn-sm" name="editimage" value="{tr}Save{/tr}">
-		      	<input type="submit" class="btn btn-default btn-sm" name="editimage_andgonext" value="{tr}Save and Go Next{/tr}">
-		      	<a class="link btn btn-default btn-sm" href="tiki-browse_image.php?imageId={$imageId}">{tr}Cancel Edit{/tr}</a>
-		    </div>
-	    </div>
+				<input type="submit" class="btn btn-default btn-sm" name="editimage" value="{tr}Save{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" name="editimage_andgonext" value="{tr}Save and Go Next{/tr}">
+				<a class="link btn btn-default btn-sm" href="tiki-browse_image.php?imageId={$imageId}">{tr}Cancel Edit{/tr}</a>
+			</div>
+		</div>
 	</form>
 
 	<br>

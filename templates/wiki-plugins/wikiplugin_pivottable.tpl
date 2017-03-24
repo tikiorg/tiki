@@ -74,25 +74,25 @@
 
 		createEditBtn({{$pivottable.id|json_encode}});
 	});
-    //adding bind call for pdf creation
-    $('.icon-pdf').parent().click(function(){storeSortTable('#container_{{$pivottable.id}}',$('#container_{{$pivottable.id}}').html())});
+	//adding bind call for pdf creation
+	$('.icon-pdf').parent().click(function(){storeSortTable('#container_{{$pivottable.id}}',$('#container_{{$pivottable.id}}').html())});
 {/jq}
-	
+
 <style type="text/css">
- {literal} 
-	#output_{$pivottable.id} .pvtVals,.pvtAxisContainer, .pvtUnused,.pvtRenderer, .pvtAxisContainer {
+	{literal}
+		#output_{$pivottable.id} .pvtVals,.pvtAxisContainer, .pvtUnused,.pvtRenderer, .pvtAxisContainer {
 			display:none;
 
-		 }
- {/literal}
+		}
+	{/literal}
 </style>
 
 <div id="container_{$pivottable.id}">
 	<div id="output_{$pivottable.id}"></div>
 	<div id="output_{$pivottable.id}_opControls" style="display:none">
 	<input id="save_{$pivottable.id}" type="button" value="Save Changes" class="btn btn-primary ui-button ui-corner-all ui-widget" /><input class="btn btn-primary ui-button ui-corner-all ui-widget" id="restore_{$pivottable.id}" type="button" value="Cancel Edit" /></div>
-	{if $pivottable.showControls}<div id="pivotControls_{$pivottable.id}"  style="display:none;position:relative;"><input type="button" id="pivotEditBtn_{$pivottable.id}" value="Edit Pivot Table"  class="btn btn-primary ui-button ui-corner-all ui-widget" /></div>{/if}
-    <img id="png_container_{$pivottable.id}" style="display:none"></img>
+	{if $pivottable.showControls}<div id="pivotControls_{$pivottable.id}" style="display:none;position:relative;"><input type="button" id="pivotEditBtn_{$pivottable.id}" value="Edit Pivot Table" class="btn btn-primary ui-button ui-corner-all ui-widget" /></div>{/if}
+	<img id="png_container_{$pivottable.id}" style="display:none"></img>
 </div>
 
 <div id="pivotdetails_modal"></div>

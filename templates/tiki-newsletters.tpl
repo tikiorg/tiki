@@ -53,23 +53,23 @@
 		<div class="form-group">
 			<label class="col-sm-3 control-label">{tr}Name{/tr}</label>
 			<div class="col-sm-7">
-		      	<p class="form-control-static">{$nl_info.name|escape}</p>
-		    </div>
-	    </div>
-	    <div class="form-group">
+				<p class="form-control-static">{$nl_info.name|escape}</p>
+			</div>
+		</div>
+		<div class="form-group">
 			<label class="col-sm-3 control-label">{tr}Description{/tr}</label>
 			<div class="col-sm-7">
-		      	<p class="form-control-static">{$nl_info.description|escape|nl2br}</p>
-		    </div>
-	    </div>
-	    {if ($nl_info.allowUserSub eq 'y') or ($tiki_p_admin_newsletters eq 'y')}
+				<p class="form-control-static">{$nl_info.description|escape|nl2br}</p>
+			</div>
+		</div>
+		{if ($nl_info.allowUserSub eq 'y') or ($tiki_p_admin_newsletters eq 'y')}
 			{if $tiki_p_subscribe_email eq 'y' and (($nl_info.allowAnySub eq 'y' and $user) || !$user)}
 				<div class="form-group">
 					<label class="col-sm-3 control-label" for="email">{tr}Email{/tr}</label>
 					<div class="col-sm-7">
-				      	<input type="text" name="email" id="email" value="{$email|escape}" class="form-control">
-				    </div>
-			    </div>
+						<input type="text" name="email" id="email" value="{$email|escape}" class="form-control">
+					</div>
+				</div>
 			{else}
 				<input type="hidden" name="email" value="{$email|escape}">
 			{/if}
@@ -79,9 +79,9 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label"></label>
 				<div class="col-sm-7">
-			      	<input type="submit" class="btn btn-primary btn-sm" name="subscribe" value="{tr}Subscribe to this Newsletter{/tr}">
-			    </div>
-		    </div>
+					<input type="submit" class="btn btn-primary btn-sm" name="subscribe" value="{tr}Subscribe to this Newsletter{/tr}">
+				</div>
+			</div>
 		{/if}
 	</form>
 {/if}

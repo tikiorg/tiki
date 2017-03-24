@@ -165,11 +165,11 @@
 					<label class="control-label col-sm-3">{tr}Debug:{/tr}</label>
 					<div class="col-sm-7">
 						<div class="checkbox">
-				        	<label>
-				         		<input type="checkbox" name="dbg"{if $dbg eq 'on'} checked="checked"{/if}>{tr}Enable{/tr}
-				        	</label>
-				      	</div>
-			      	</div>
+							<label>
+								<input type="checkbox" name="dbg"{if $dbg eq 'on'} checked="checked"{/if}>{tr}Enable{/tr}
+							</label>
+						</div>
+					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-3"></label>
@@ -178,7 +178,7 @@
 					</div>
 				</div>
 			</div>
-					
+
 		</div>
 	</div>
 </form>

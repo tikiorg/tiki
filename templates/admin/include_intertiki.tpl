@@ -111,13 +111,13 @@
 											</td>
 											<td>
 												<input type="text" class="form-control tips" id="known_hosts_key" name="known_hosts[{$k}][key]" value="{$i.key}"
-												       readonly="readonly" title="|{tr}To change the host key you need to remove and add it as a new one{/tr}">
+													readonly="readonly" title="|{tr}To change the host key you need to remove and add it as a new one{/tr}">
 											</td>
 											<td>
 												<input type="text" class="form-control" id="known_hosts_ip" name="known_hosts[{$k}][ip]" value="{$i.ip}">
 											</td>
 											<td>
-												<input type="text" class="form-control" id="known_hosts_contact"  name="known_hosts[{$k}][contact]" value="{$i.contact}">
+												<input type="text" class="form-control" id="known_hosts_contact" name="known_hosts[{$k}][contact]" value="{$i.contact}">
 											</td>
 											<td>
 												<input type="checkbox" class="form-control" id="known_hosts_can_register" name="known_hosts[{$k}][allowusersregister]" {if isset($i.allowusersregister) && $i.allowusersregister eq 'y'}checked="checked"{/if} />

@@ -31,24 +31,25 @@
 					</form>
 				{/if}
 				{if $prefs.feature_forums_search eq 'y' and $prefs.feature_search eq 'y'}
-                    <div class="row margin-bottom-md">
-                    <div class="col-md-5 col-md-offset-7">
-					<form class="form" method="get" role="form" action="{if $prefs.feature_search_fulltext neq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
-						<div class="form-group">
-							<div class="input-group">
-								<span class="input-group-addon">
-									{icon name="search"}
-								</span>
-								<input name="highlight" type="text" class="form-control" placeholder="{tr}Find{/tr}...">
-								<div class="input-group-btn">
-									<input type="hidden" name="where" value="forums">
-									<input type="hidden" name="filter~type" value="forum post">
-									<input type="submit" class="wikiaction btn btn-default" name="search" value="{tr}Search in content{/tr}">
+					<div class="row margin-bottom-md">
+						<div class="col-md-5 col-md-offset-7">
+						<form class="form" method="get" role="form" action="{if $prefs.feature_search_fulltext neq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
+							<div class="form-group">
+								<div class="input-group">
+									<span class="input-group-addon">
+										{icon name="search"}
+									</span>
+									<input name="highlight" type="text" class="form-control" placeholder="{tr}Find{/tr}...">
+									<div class="input-group-btn">
+										<input type="hidden" name="where" value="forums">
+										<input type="hidden" name="filter~type" value="forum post">
+										<input type="submit" class="wikiaction btn btn-default" name="search" value="{tr}Search in content{/tr}">
+									</div>
 								</div>
 							</div>
+						</form>
 						</div>
-					</form>
-                    </div></div>
+					</div>
 				{/if}
 			{/if}
 		{/if}

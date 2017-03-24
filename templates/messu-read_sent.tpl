@@ -4,7 +4,7 @@
 <div class="row"><div class="col-xs-12">{include file='messu-nav.tpl'}</div></div>
 <br>
 {if $legend}
-{$legend}
+	{$legend}
 {else}
 <div class="row" style="padding-bottom:10px;">
 	<div class="col-xs-4 col-sm-5">
@@ -32,42 +32,42 @@
 			</div>
 		</div>
 	</div>
-    <div class="col-xs-3 col-xs-offset-4 col-md-2 col-md-offset-5" style="padding-top: 4px;">
-				<form method="post" action="messu-read_sent.php">
-					<input type="hidden" name="offset" value="{$offset|escape}">
-					<input type="hidden" name="find" value="{$find|escape}">
-					<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
-					<input type="hidden" name="flag" value="{$flag|escape}">
-					<input type="hidden" name="flagval" value="{$flagval|escape}">
-					<input type="hidden" name="priority" value="{$priority|escape}">
-					<input type="hidden" name="msgdel" value="{$msgId|escape}">
-					{if $next}
-						<input type="hidden" name="msgId" value="{$next|escape}">
-					{elseif $prev}
-						<input type="hidden" name="msgId" value="{$prev|escape}">
-					{else}
-						<input type="hidden" name="msgId" value="">
-					{/if}
-					<input type="submit" class="btn btn-default btn-sm pull-right" name="delete" value="{tr}Delete{/tr}">
-				</form>
-    </div>
+	<div class="col-xs-3 col-xs-offset-4 col-md-2 col-md-offset-5" style="padding-top: 4px;">
+		<form method="post" action="messu-read_sent.php">
+			<input type="hidden" name="offset" value="{$offset|escape}">
+			<input type="hidden" name="find" value="{$find|escape}">
+			<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+			<input type="hidden" name="flag" value="{$flag|escape}">
+			<input type="hidden" name="flagval" value="{$flagval|escape}">
+			<input type="hidden" name="priority" value="{$priority|escape}">
+			<input type="hidden" name="msgdel" value="{$msgId|escape}">
+			{if $next}
+				<input type="hidden" name="msgId" value="{$next|escape}">
+			{elseif $prev}
+				<input type="hidden" name="msgId" value="{$prev|escape}">
+			{else}
+				<input type="hidden" name="msgId" value="">
+			{/if}
+			<input type="submit" class="btn btn-default btn-sm pull-right" name="delete" value="{tr}Delete{/tr}">
+		</form>
+	</div>
 </div>
 <div class="row">
-    <div class="col-xs-12">
-        <div class="messureadhead">
-            <table>
-                <tr><td style="font-weight:bold;">{tr}From:{/tr}</td><td>{$msg.user_from|escape}</td></tr>
-                <tr><td style="font-weight:bold;">{tr}To:{/tr}</td><td>{$msg.user_to|escape}</td></tr>
-                <tr><td style="font-weight:bold;">{tr}Cc:{/tr}</td><td>{$msg.user_cc|escape}</td></tr>
-                <tr><td style="font-weight:bold;">{tr}Subject:{/tr}</td><td>{$msg.subject|escape}</td></tr>
-                <tr><td style="font-weight:bold;">{tr}Date:{/tr}</td><td>{$msg.date|tiki_short_datetime}</td></tr><!--date_format:"%a %b %Y [%H:%I]"-->
-            </table>
-        </div>
-    </div>
-    <div class="col-xs-12">
-        <div class="messureadbody">
-            {$msg.parsed}
-        </div>
-    </div>
+	<div class="col-xs-12">
+		<div class="messureadhead">
+			<table>
+				<tr><td style="font-weight:bold;">{tr}From:{/tr}</td><td>{$msg.user_from|escape}</td></tr>
+				<tr><td style="font-weight:bold;">{tr}To:{/tr}</td><td>{$msg.user_to|escape}</td></tr>
+				<tr><td style="font-weight:bold;">{tr}Cc:{/tr}</td><td>{$msg.user_cc|escape}</td></tr>
+				<tr><td style="font-weight:bold;">{tr}Subject:{/tr}</td><td>{$msg.subject|escape}</td></tr>
+				<tr><td style="font-weight:bold;">{tr}Date:{/tr}</td><td>{$msg.date|tiki_short_datetime}</td></tr><!--date_format:"%a %b %Y [%H:%I]"-->
+			</table>
+		</div>
+	</div>
+	<div class="col-xs-12">
+		<div class="messureadbody">
+			{$msg.parsed}
+		</div>
+	</div>
 </div>
 {/if}

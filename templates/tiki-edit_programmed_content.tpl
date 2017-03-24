@@ -24,40 +24,40 @@
 	<input type="hidden" name="contentId" value="{$contentId|escape}">
 	<input type="hidden" name="pId" value="{$pId|escape}">
 
-    <div class="form-group">
+	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Content Type{/tr}</label>
 		<div class="col-sm-7">
-		    <select name="content_type" class="form-control type-selector">
+			<select name="content_type" class="form-control type-selector">
 				<option value="static"{if $info.content_type eq 'static'} selected="selected"{/if}>{tr}Text area{/tr}</option>
 				<option value="page"{if $info.content_type eq 'page'} selected="selected"{/if}>{tr}Wiki Page{/tr}</option>
 			</select>
-	    </div>
-    </div>
-    <div class="form-group type-cond for-page">
+		</div>
+	</div>
+	<div class="form-group type-cond for-page">
 		<label class="col-sm-3 control-label">{tr}Page Name{/tr}</label>
 		<div class="col-sm-7">
-		    <input type="text" name="page_name" value="{$info.page_name|escape}" class="form-control">
-	    </div>
-    </div>
-    <div class="form-group">
+			<input type="text" name="page_name" value="{$info.page_name|escape}" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Content{/tr}</label>
 		<div class="col-sm-7">
-		    <textarea rows="5" cols="40" name="data" class="form-control">{$info.data|escape}</textarea>
-	    </div>
-    </div>
-    <div class="form-group">
+			<textarea rows="5" cols="40" name="data" class="form-control">{$info.data|escape}</textarea>
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Publising Date{/tr}</label>
 		<div class="col-sm-7">
-		    {html_select_date time=$publishDate end_year="+1" field_order=$prefs.display_field_order}
+			{html_select_date time=$publishDate end_year="+1" field_order=$prefs.display_field_order}
 			{tr}at{/tr} {html_select_time time=$publishDate display_seconds=false use_24_hours=$use_24hr_clock}
-	    </div>
-    </div>
-    <div class="form-group">
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label"></label>
 		<div class="col-sm-7">
-		   <input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-	    </div>
-    </div>
+			<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+		</div>
+	</div>
 	{jq}
 		$('.type-selector').change( function( e ) {
 			$('.type-cond').hide();

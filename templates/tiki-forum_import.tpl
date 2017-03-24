@@ -19,28 +19,28 @@
 			<form action="tiki-forum_import.php" method="post" class="form-horizontal">
 				<input type="hidden" name="step1" value="true">
 				<input type="hidden" name="import" value="same">
-			    <div class="form-group">
+				<div class="form-group">
 					<label class="col-sm-3 control-label">{tr}Forum Type{/tr}</label>
 					<div class="col-sm-7">
-			      		<select name="forum" class="form-control">
+						<select name="forum" class="form-control">
 							{section name=ftype loop=$fi_types}
 								<option value="{$fi_types[ftype]}">{$fi_types[ftype]}</option>
 							{/section}
 						</select>
-		      		</div>
-			    </div>
-			    <div class="form-group">
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-sm-3 control-label">{tr}DB Prefix:{/tr}</label>
 					<div class="col-sm-7">
-			      		<input type="text" name="prefix" value="{$fi_prefixes[0]}" class="form-control">
-		      		</div>
-			    </div>
-			    <div class="form-group">
+						<input type="text" name="prefix" value="{$fi_prefixes[0]}" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-sm-3 control-label"></label>
 					<div class="col-sm-7">
-			      		<input type="submit" class="btn btn-default btn-sm" value="{tr}Get Forum List{/tr}">>
-		      		</div>
-			    </div>
+						<input type="submit" class="btn btn-default btn-sm" value="{tr}Get Forum List{/tr}">>
+					</div>
+				</div>
 			</form>
 		</div>
 	</div>
@@ -55,48 +55,48 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label">{tr}Server{/tr}</label>
 					<div class="col-sm-7">
-			      		<select name="forum" class="form-control">
+						<select name="forum" class="form-control">
 							<input type="text" name="server" class="form-control">
 						</select>
-		      		</div>
-			    </div>
-			    <div class="form-group">
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-sm-3 control-label">{tr}DB Name{/tr}</label>
 					<div class="col-sm-7">
-			      		<input type="text" name="dbname" class="form-control">
-		      		</div>
-			    </div>
-			    <div class="form-group">
+						<input type="text" name="dbname" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-sm-3 control-label">{tr}Forum Type{/tr}</label>
 					<div class="col-sm-7">
-			      		<select name="forum">
+						<select name="forum">
 						</select>
-		      		</div>
-			    </div>
-			    <div class="form-group">
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-sm-3 control-label">{tr}DB Prefix{/tr}</label>
 					<div class="col-sm-7">
-			      		<input type="text" name="prefix" class="form-control">
-		      		</div>
-			    </div>
-			    <div class="form-group">
+						<input type="text" name="prefix" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-sm-3 control-label">{tr}Username{/tr}</label>
 					<div class="col-sm-7">
-			      		<input type="text" name="username" class="form-control">
-		      		</div>
-			    </div>
-			    <div class="form-group">
+						<input type="text" name="username" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-sm-3 control-label">{tr}Password{/tr}</label>
 					<div class="col-sm-7">
 						<input type="text" name="password" class="form-control">
-		      		</div>
-			    </div>
-			    <div class="form-group">
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-sm-3 control-label"></label>
 					<div class="col-sm-7">
 						<input type="submit" class="btn btn-default btn-sm" value="Test Connection">
-		      		</div>
-			    </div>
+					</div>
+				</div>
 			</form>
 		</div>
 	</div>
@@ -121,29 +121,29 @@
 								<option value="{$fi_types[ftype]}">{$fi_types[ftype]}</option>
 							{/section}
 						</select>
-		      		</div>
-			    </div>
-			    <div class="form-group">
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-sm-3 control-label">{tr}DB Prefix:{/tr}</label>
 					<div class="col-sm-7">
 						<input type="text" name="prefix" value="{$fi_prefixes[0]}" class="form-control">
-		      		</div>
-			    </div>
-			    <div class="form-group">
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-sm-3 control-label">{tr}Local SQL Filename on Server (path will be stripped):{/tr}</label>
 					<div class="col-sm-7">
 						<input type="text" name="server" class="form-control">
 						<div class="help-block">
 							<i>{tr}Must be in tikiroot/{$tmpdir} or tikiroot/img/wiki_up{/tr}</i>
 						</div>
-		      		</div>
-			    </div>
-			    <div class="form-group">
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-sm-3 control-label"></label>
 					<div class="col-sm-7">
 						<input type="submit" class="btn btn-default btn-sm" value="{tr}Get Forum List{/tr}">
-		      		</div>
-			    </div>
+					</div>
+				</div>
 			</form>
 		</div>
 	</div>

@@ -294,9 +294,9 @@
 							{/if}
 						</div> {* thumbinfos *}
 					{/if}
-                    {if $view neq 'page'}
-                        {$smarty.capture.thumbactions}
-                    {/if}
+					{if $view neq 'page'}
+						{$smarty.capture.thumbactions}
+					{/if}
 				</div> {* thumbnail *}
 				{* property table in page file view *}
 				{if $view eq 'page'}
@@ -310,10 +310,10 @@
 					{if isset($metarray) and $metarray|count gt 0}
 						<br>
 						<div class="text-left">
-                            {remarksbox type="tip" title="{tr}Metadata{/tr}"}
-                                {include file='metadata/meta_view_tabs.tpl'}
-                            {/remarksbox}
-                        </div>
+							{remarksbox type="tip" title="{tr}Metadata{/tr}"}
+								{include file='metadata/meta_view_tabs.tpl'}
+							{/remarksbox}
+						</div>
 					{/if}
 				{/if}
 			</div> {* thumbnailcontener *}

@@ -48,7 +48,7 @@
 							<span class="badge">{$channels[user].hits}</span>
 						</td>
 						<td class="integer">
-							<span class="badge">{$channels[user].questions}</span> /  <span class="badge">{$channels[user].suggested}</span>
+							<span class="badge">{$channels[user].questions}</span> / <span class="badge">{$channels[user].suggested}</span>
 						</td>
 						{if $tiki_p_admin_faqs eq 'y'}
 							<td class="action">
@@ -104,28 +104,28 @@
 			<form action="tiki-list_faqs.php" method="post" class="form-horizontal">
 				<input type="hidden" name="faqId" value="{$faqId|escape}">
 				<div class="form-group">
-                    <label class="control-label col-md-3">
-                        {tr}Title:{/tr}
-                    </label>
-                    <div class="col-md-9">
+					<label class="control-label col-md-3">
+						{tr}Title:{/tr}
+					</label>
+					<div class="col-md-9">
 							<input type="text" class="form-control" name="title" value="{$title|escape}">
-                    </div>
+					</div>
 				</div>
-                <div class="form-group">
-                    <label class="control-label col-md-3">
-                        {tr}Description:{/tr}
-                    </label>
-                    <div class="col-md-9">
-					    <textarea name="description" class="form-control">{$description|escape}</textarea>
+				<div class="form-group">
+					<label class="control-label col-md-3">
+						{tr}Description:{/tr}
+					</label>
+					<div class="col-md-9">
+						<textarea name="description" class="form-control">{$description|escape}</textarea>
 					</div>
 				</div>
 				{include file='categorize.tpl'}
 				<div class="checkbox">
-                    <label class="control-label col-md-offset-3">
-                        <input type="checkbox" name="canSuggest" {if $canSuggest eq 'y'}checked="checked"{/if}>
-                        {tr}Users can suggest questions:{/tr}
-                    </label>
-                </div>
+					<label class="control-label col-md-offset-3">
+						<input type="checkbox" name="canSuggest" {if $canSuggest eq 'y'}checked="checked"{/if}>
+						{tr}Users can suggest questions:{/tr}
+					</label>
+				</div>
 						<td>&nbsp;
 
 						</td>

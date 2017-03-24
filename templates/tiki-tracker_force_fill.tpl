@@ -2,10 +2,10 @@
 	{jq}
 		$.openModal({
 			remote: $.service(
-				'user', 
+				'user',
 				'upload_avatar',
 				{ user: "{{$user}}" }
-			)       
+			)
 		});
 	{/jq}
 {elseif $force_fill_action eq 'new'}

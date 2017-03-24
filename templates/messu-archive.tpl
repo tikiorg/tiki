@@ -45,7 +45,7 @@
 
 
 <form action="messu-archive.php" method="post" name="form_messu_archive">
-    <div class="form-group">
+	<div class="form-group">
 	<input type="hidden" name="offset" value="{$offset|escape}">
 	<input type="hidden" name="find" value="{$find|escape}">
 	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
@@ -54,7 +54,7 @@
 	<input type="hidden" name="priority" value="{$priority|escape}">
 	<input type="submit" class="btn btn-warning btn-sm" name="delete" value="{tr}Delete{/tr}">
 	<input type="submit" class="btn btn-default btn-sm" name="download" value="{tr}Download{/tr}">
-        </div>
+		</div>
 {jq notonready=true}
 var CHECKBOX_LIST = [{{section name=user loop=$items}'msg[{$items[user].msgId}]'{if not $smarty.section.user.last},{/if}{/section}}];
 {/jq}

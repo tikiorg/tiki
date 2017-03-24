@@ -38,23 +38,23 @@
 </div>
 
 {block name=thread_actions}
-<div class="text-right margin-bottom-md">
-	{if empty($thread_info.topic.threadId)}
-		<span>
-			{if ($prev_topic and $prev_topic ne $comments_parentId) or $next_topic}[ {if $prev_topic and $prev_topic ne $comments_parentId}<a href="tiki-view_forum_thread.php?comments_parentId={$prev_topic}&amp;topics_offset={$topics_prev_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}{$comments_per_page_param}{$thread_style_param}{$thread_sort_mode_param}{$comments_threshold_param}" class="link">{tr}prev topic{/tr}</a>{if $next_topic} | {/if}{/if}
-			{if $next_topic}<a href="tiki-view_forum_thread.php?comments_parentId={$next_topic}&amp;topics_offset={$topics_next_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}{$comments_per_page_param}{$thread_style_param}{$thread_sort_mode_param}{$comments_threshold_param}" class="link">{tr}next topic{/tr}</a>{/if} ]{/if}
-		</span>
-	{else}
-		<span>
-			{tr}You are viewing a reply to{/tr} <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$thread_info.topic.threadId}{if $smarty.request.topics_offset}&amp;topics_offset={$smarty.request.topics_offset}{/if}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}">{$thread_info.topic.title}</a>
-		</span>
-	{/if}
-	        &nbsp;
-	{if $prefs.javascript_enabled != 'y'}
-		{$js = 'n'}
-	{else}
-		{$js = 'y'}
-	{/if}
+	<div class="text-right margin-bottom-md">
+		{if empty($thread_info.topic.threadId)}
+			<span>
+				{if ($prev_topic and $prev_topic ne $comments_parentId) or $next_topic}[ {if $prev_topic and $prev_topic ne $comments_parentId}<a href="tiki-view_forum_thread.php?comments_parentId={$prev_topic}&amp;topics_offset={$topics_prev_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}{$comments_per_page_param}{$thread_style_param}{$thread_sort_mode_param}{$comments_threshold_param}" class="link">{tr}prev topic{/tr}</a>{if $next_topic} | {/if}{/if}
+				{if $next_topic}<a href="tiki-view_forum_thread.php?comments_parentId={$next_topic}&amp;topics_offset={$topics_next_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}{$comments_per_page_param}{$thread_style_param}{$thread_sort_mode_param}{$comments_threshold_param}" class="link">{tr}next topic{/tr}</a>{/if} ]{/if}
+			</span>
+		{else}
+			<span>
+				{tr}You are viewing a reply to{/tr} <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$thread_info.topic.threadId}{if $smarty.request.topics_offset}&amp;topics_offset={$smarty.request.topics_offset}{/if}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}">{$thread_info.topic.title}</a>
+			</span>
+		{/if}
+		&nbsp;
+		{if $prefs.javascript_enabled != 'y'}
+			{$js = 'n'}
+		{else}
+			{$js = 'y'}
+		{/if}
 		<div class="btn-group">
 			{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
 			<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
@@ -112,7 +112,7 @@
 			{if $js == 'n'}</li></ul>{/if}
 		</div>
 
-</div>
+	</div>
 {/block}
 
 

@@ -137,7 +137,7 @@
 						{/remarksbox}
 					</div>
 				</div>
-                {preference name=search_index_outdated}
+				{preference name=search_index_outdated}
 			</fieldset>
 
 			<fieldset>

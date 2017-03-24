@@ -7,7 +7,7 @@
 		{button href="tiki-edit_article.php" _type="link" class="btn btn-link" _icon_name="create" _text="{tr}New Article{/tr}"}
 	{/if}
 	{if $prefs.feature_submissions == 'y' && $tiki_p_edit_submission == "y" && $tiki_p_edit_article neq 'y' && $tiki_p_admin neq 'y' && $tiki_p_admin_cms neq 'y'}
-		{button href="tiki-edit_submission.php"  _type="link" class="btn btn-link" _icon_name="create" _text="{tr}New Submission{/tr}"}
+		{button href="tiki-edit_submission.php" _type="link" class="btn btn-link" _icon_name="create" _text="{tr}New Submission{/tr}"}
 	{/if}
 	{if $tiki_p_read_article eq 'y' or $tiki_p_articles_read_heading eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
 		{button href="tiki-view_articles.php" _type="link" class="btn btn-link" _icon_name="articles" _text="{tr}View Articles{/tr}"}
@@ -16,17 +16,17 @@
 		{button href="tiki-list_submissions.php" _type="link" class="btn btn-link" _icon_name="view" _text="{tr}View Submissions{/tr}"}
 	{/if}
 	{if $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
-		{button href="tiki-admin_topics.php"  _type="link" class="btn btn-link" _icon_name="flag" _text="{tr}Article Topics{/tr}"}
-		{button href="tiki-article_types.php"  _type="link" class="btn btn-link" _icon_name="structure" _text="{tr}Article Types{/tr}"}
+		{button href="tiki-admin_topics.php" _type="link" class="btn btn-link" _icon_name="flag" _text="{tr}Article Topics{/tr}"}
+		{button href="tiki-article_types.php" _type="link" class="btn btn-link" _icon_name="structure" _text="{tr}Article Types{/tr}"}
 	{/if}
 </div>
 
 {if $listpages or ($find ne '') or ($types ne '') or ($topics ne '') or ($lang ne '') or ($categId ne '')}
-    <div class="row row-sidemargins-zero">
-        <div class="col-md-6">
-	        {include file='find.tpl' find_show_languages='y' find_show_categories_multi='y' find_show_num_rows='y' find_show_date_range='y'}
-        </div>
-    </div>
+	<div class="row row-sidemargins-zero">
+		<div class="col-md-6">
+			{include file='find.tpl' find_show_languages='y' find_show_categories_multi='y' find_show_num_rows='y' find_show_date_range='y'}
+		</div>
+	</div>
 {/if}
 
 {if $mapview}

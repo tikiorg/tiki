@@ -64,13 +64,13 @@
 			<input type="submit" class="btn btn-primary" value="{tr}Save{/tr}"/>
 		</div>
 	</form>
-    {jq}
-        $("#notification_checkbox").change(function(){
-        if (this.checked){
-        $(".priority-div").removeClass("hidden");
-        }else{
-        $(".priority-div").addClass("hidden");
-        }
-        });
-    {/jq}
+	{jq}
+		$("#notification_checkbox").change(function(){
+		if (this.checked){
+		$(".priority-div").removeClass("hidden");
+		}else{
+		$(".priority-div").addClass("hidden");
+		}
+		});
+	{/jq}
 {/block}

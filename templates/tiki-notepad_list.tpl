@@ -118,14 +118,14 @@
 	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Upload file:{/tr}</label>
 		<div class="col-sm-7">
-	      	<input type="hidden" name="MAX_FILE_SIZE" value="10000000000000">
+			<input type="hidden" name="MAX_FILE_SIZE" value="10000000000000">
 			<input size="16" name="userfile1" type="file">
-	    </div>
-    </div>
-    <div class="form-group">
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label"></label>
 		<div class="col-sm-7">
 			<input type="submit" class="btn btn-primary btn-sm" name="upload" value="{tr}Upload{/tr}">
-	    </div>
-    </div>
+		</div>
+	</div>
 </form>

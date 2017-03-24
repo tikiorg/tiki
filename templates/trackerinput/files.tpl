@@ -114,7 +114,7 @@
 			toggleWarning();
 
 			$self.find('.btn.upload-files').clickModal({
-					
+
 				success: function (data) {
 					$.each(data.files, function (k, file) {
 						addFile(file.fileId, file.type, file.name);

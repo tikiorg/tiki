@@ -46,7 +46,7 @@
 	</ul>
 {/if}
 {if $showbutton eq 'y'}
-    <button class="add-friend btn btn-default"><i class="fa fa-user-plus"></i>&nbsp;{tr}Add Friend{/tr}</button>
+	<button class="add-friend btn btn-default"><i class="fa fa-user-plus"></i>&nbsp;{tr}Add Friend{/tr}</button>
 {/if}
 </div>
 {/block}
