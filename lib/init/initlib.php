@@ -36,12 +36,14 @@ function lazy_autoload_user_managed_vendor_libraries($class){
 	}
 
 	// vendor libraries managed by the user, packaged (if any)
-	foreach (new DirectoryIterator(__DIR__ . '/../../vendor_custom') as $fileInfo) {
-		if (!$fileInfo->isDir() || $fileInfo->isDot()) {
-			continue;
-		}
-		if (file_exists($fileInfo->getPathname() . '/autoload.php')) {
-			require_once $fileInfo->getPathname() . '/autoload.php';
+	if (is_dir(__DIR__ . '/../../vendor_custom')){
+		foreach (new DirectoryIterator(__DIR__ . '/../../vendor_custom') as $fileInfo) {
+			if (!$fileInfo->isDir() || $fileInfo->isDot()) {
+				continue;
+			}
+			if (file_exists($fileInfo->getPathname() . '/autoload.php')) {
+				require_once $fileInfo->getPathname() . '/autoload.php';
+			}
 		}
 	}
 
