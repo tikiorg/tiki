@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0bf6fbc5eefb3546bbf6c9f3addf128b",
+    "content-hash": "a8328f6da8164009432b1d13c4511380",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -4235,7 +4235,7 @@
                 "testing",
                 "unit"
             ],
-            "time": "2016-03-14 11:52:02"
+            "time": "2016-03-14T11:52:02+00:00"
         },
         {
             "name": "doctrine/instantiator",
