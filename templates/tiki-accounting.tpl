@@ -44,8 +44,8 @@
 			{include file="tiki-accounting_account_list.tpl"}
 		</div>
 	{/tab}
-	{tab name="{tr}Bank acounts{/tr}"}
-		<h2>{tr}Bank acounts{/tr}</h2>
+	{tab name="{tr}Bank accounts{/tr}"}
+		<h2>{tr}Bank accounts{/tr}</h2>
 	{/tab}
 	{tab name="{tr}Journal{/tr}"}
 		<h2>{tr}Journal{/tr}</h2>
