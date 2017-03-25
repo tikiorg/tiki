@@ -76,7 +76,7 @@ class CleanVendorAfterVendorBundledMigration
 		if (file_exists($rootFolder.'/composer.json')) {
 			$io->write('');
 			$io->write(
-				'Since the is a composer.json file in the root of the site, we will not try to clean your vendor folder'
+				'Since there is a composer.json file in the root of the site, we will not try to clean your vendor folder'
 			);
 			$io->write('as part of the migration from vendor to vendor_bundled/vendor, you need to review that yourself!');
 			$io->write('');
