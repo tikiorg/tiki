@@ -2197,9 +2197,9 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_ratings' => array(
 			'name' => tra('Rating'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'help' => 'Rating',
+			'hint' => tr('Permissions involved: %0', 'wiki_vote_ratings, wiki_view_ratings, ratings_view_results (tiki)'),
 			'dependencies' => array(
 				'feature_polls'
 			),

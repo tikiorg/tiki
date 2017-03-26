@@ -53,6 +53,7 @@ function prefs_article_list()
 			'name' => tra('User ratings on articles'),
 			'description' => tra('Allows users to rate the articles.'),
 			'type' => 'flag',
+			'hint' => tr('Permissions involved: %0. Also, when configuring articles, "Admin Types > Comment can rate article" needs to be set.', 'rate_article, ratings_view_results'),
 			'default' => 'n',
 		),
 		'article_user_rating_options' => array(

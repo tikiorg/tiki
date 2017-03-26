@@ -10,8 +10,7 @@ function prefs_ip_list()
 	return array(
 		'ip_can_be_checked' => array(
 			'name' => tra('IP can be checked'),
-			'description' => tra(''),
-			'hint' => tra("Check anonymous votes by user's IP"),
+			'description' => tra("Check anonymous votes by user's IP"),
 			'type' => 'flag',
 			'default' => 'n',
 		),

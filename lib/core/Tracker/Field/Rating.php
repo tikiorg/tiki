@@ -12,7 +12,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 		return array(
 			'STARS' => array(
 				'name' => tr('Rating'),
-				'description' => tr('A rating of the tracker item'),
+				'description' => tr('A rating of the tracker item. Permissions involved: %0', 'tracker_vote_ratings, tracker_revote_ratings, tracker_view_ratings'),
 				'readonly' => true,
 				'help' => 'Rating Tracker Field',
 				'prefs' => array('trackerfield_rating'),

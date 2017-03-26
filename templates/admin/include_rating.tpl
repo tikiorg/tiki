@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>
@@ -22,130 +22,47 @@
 
 	<fieldset>
 		<legend>{tr}Wiki{/tr}</legend>
-		<table>
-		<tr>
-		<td style="width:49%">
 		{preference name=feature_wiki_ratings}
 		{preference name=wiki_simple_ratings}
 		<div class="adminoptionboxchild" id="wiki_simple_ratings_childcontainer">
 			{preference name=wiki_simple_ratings_options}
 		</div>
-				</td>
-				<td style="width:2%"><td>
-				<td style="width:49%"><div class="adminoptionboxchild" id="wiki_simple_ratings_perms_childcontainer">
-				{tr}Permissions involved:{/tr}
-				<ul>
-					<li>{tr}wiki{/tr} > wiki_vote_ratings</li>
-					<li>{tr}wiki{/tr} > wiki_view_ratings</li>
-					<li>{tr}tiki{/tr} > ratings_view_results</li>
-				</ul>
-				</div>
-				</td>
-			</tr>
-		</table>
 	</fieldset>
 
 	<fieldset>
 		<legend>{tr}Articles{/tr}</legend>
-		<table>
-			<tr>
-				<td style="width:49%">
-					{preference name=article_user_rating}
-					<div class="adminoptionboxchild" id="article_user_rating_childcontainer">
-						{preference name=article_user_rating_options}
-					</div>
-					<ul>
-						<li>{tr}You also need to set:{/tr} "{tr}Admin Types{/tr} > <strong>{tr}Comment can rate article{/tr}</strong>"</li>
-					</ul>
-				</td>
-				<td style="width:2%"></td>
-				<td style="width:49%">
-					<div class="adminoptionboxchild" id="articles_simple_ratings_perms_childcontainer">
-						{tr}Permissions involved:{/tr}
-						<ul>
-							<li>{tr}articles{/tr} > rate_article</li>
-							<li>{tr}tiki{/tr} > ratings_view_results</li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-		</table>
+		{preference name=article_user_rating}
+		<div class="adminoptionboxchild" id="article_user_rating_childcontainer">
+			{preference name=article_user_rating_options}
+		</div>
 	</fieldset>
 
 	<fieldset>
 		<legend>{tr}Comments{/tr}</legend>
-		<table>
-			<tr>
-				<td style="width:49%">
-					{preference name=comments_vote}
-					{preference name=wiki_comments_simple_ratings}
-					<div class="adminoptionboxchild" id="wiki_comments_simple_ratings_childcontainer">
-						{preference name=wiki_comments_simple_ratings_options}
-						{tr}This preference needs to be disabled:{/tr}{preference name=wiki_comments_form_displayed_default}
-					</div>
-				</td>
-				<td style="width:2%"></td>
-				<td style="width:49%">
-					<div class="adminoptionboxchild" id="wiki_comments_simple_ratings_perms_childcontainer">
-						{tr}Permissions involved:{/tr}
-						<ul>
-							<li>{tr}comments{/tr} > vote_comments</li>
-							<li>{tr}wiki{/tr} > wiki_view_comments</li>
-							<li>{tr}tiki{/tr} > ratings_view_results</li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-		</table>
+		{preference name=comments_vote}
+		{preference name=wiki_comments_simple_ratings}
+		<div class="adminoptionboxchild" id="wiki_comments_simple_ratings_childcontainer">
+			{preference name=wiki_comments_simple_ratings_options}
+			{tr}This preference needs to be disabled:{/tr}{preference name=wiki_comments_form_displayed_default}
+		</div>
 	</fieldset>
 
 	<fieldset>
 		<legend>{tr}Forums{/tr}</legend>
-		<table>
-			<tr>
-				<td style="width:49%">{tr}You need to:{/tr}
-					<ul>
-						<li>{tr}Create or Edit a forum and enable:{/tr} "<strong>{tr}Posts can be rated{/tr}</strong>"</li>
-						<li>{tr}While editing the forum, choose whether to show the "User information display > <strong>Topic Rating</strong>" by each user{/tr}</li>
-						<li>{tr}Set the rating options at{/tr} "{tr}Control Panels{/tr}" > {tr}Ratings{/tr}" > "{tr}Comments{/tr}" > "{tr}Simple wiki comment ratings{/tr}" > "<strong>{tr}Wiki rating options:{/tr}</strong>" ({tr}see above{/tr})</li>
-					</ul>
-				</td>
-				<td style="width:2%"></td>
-				<td style="width:49%">
-					<div class="adminoptionboxchild" id="forums_ratings_perms_childcontainer">
-						{tr}Permissions involved:{/tr}
-						<ul>
-							<li>{tr}forums{/tr} > forum_vote</li>
-							<li>{tr}tiki{/tr} > ratings_view_results</li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-		</table>
+		{remarksbox title="{tr}Enabling ratings for forums{/tr}"}
+			{tr}You need to:{/tr}
+			<ul>
+				<li>{tr}Create or edit a forum and enable:{/tr} "<strong>{tr}Posts can be rated{/tr}</strong>"</li>
+				<li>{tr}While editing the forum, choose whether to show the "User information display > <strong>Topic Rating</strong>" by each user{/tr}</li>
+				<li>{tr}Set the rating options at{/tr} "{tr}Control Panels{/tr}" > {tr}Ratings{/tr}" > "{tr}Comments{/tr}" > "{tr}Simple wiki comment ratings{/tr}" > "<strong>{tr}Wiki rating options:{/tr}</strong>" ({tr}see above{/tr})</li>
+			</ul>
+		{tr}Permissions involved:{/tr} forum_vote ({tr}forums{/tr}), ratings_view_results ({tr}tiki{/tr})
+		{/remarksbox}
 	</fieldset>
 
 	<fieldset>
 		<legend>{tr}Trackers{/tr}</legend>
-		<table style="width:100%">
-			<tr>
-				<td style="width:49%">{tr}You need to enable the settings:{/tr}
-					<div class="adminoptionboxchild" id="rating_trackers_settings_childcontainer">{tr}Tracker Field:{/tr}
-						{preference name=trackerfield_rating}
-					</div>
-				</td>
-				<td style="width:2%"></td>
-				<td style="width:49%">
-					<div class="adminoptionboxchild" id="trackers_ratings_perms_childcontainer">
-						{tr}Permissions involved:{/tr}
-						<ul>
-							<li>{tr}trackers{/tr} > tracker_vote_ratings</li>
-							<li>{tr}trackers{/tr} > tracker_revote_ratings</li>
-							<li>{tr}trackers{/tr} > tracker_view_ratings</li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-		</table>
+		{preference name=trackerfield_rating}
 	</fieldset>
 
 	<fieldset>
@@ -166,7 +83,7 @@
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>
@@ -196,6 +113,7 @@
 		</form>
 	{/foreach}
 	<form method="post" action="">
+		{include file='access/include_ticket.tpl'}
 		<fieldset>
 			<legend>{tr}Create New{/tr}</legend>
 			<label for="rating_config_new">{tr}Name{/tr}</label>
