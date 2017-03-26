@@ -1,7 +1,9 @@
 {* $Id: include_general.tpl 59571 2016-09-01 07:37:31Z yonixxx $ *}
 <form class="form-horizontal" action="tiki-admin.php?page=print" class="admin" method="post">
 	{include file='access/include_ticket.tpl'}
-	<input type="hidden" name="new_prefs" />
+	<div class="pull-right">
+		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
+	</div>
 	<fieldset>
 		<legend>{tr}PDF Settings{/tr}</legend>
 		{preference name=print_pdf_from_url}
@@ -56,6 +58,6 @@
 
 	</fieldset>
 	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 	</div>
 </form>

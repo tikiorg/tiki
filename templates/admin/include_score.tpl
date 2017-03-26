@@ -3,7 +3,7 @@
 <form action="tiki-admin.php?page=score" method="post">
 	{include file='access/include_ticket.tpl'}
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" class="btn btn-default btn-sm" name="scoreevents" value="{tr}Save{/tr}" />
+		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 	</div>
 
 	<fieldset class="table">
@@ -66,16 +66,16 @@
 					{/if}
 					<tr class="condition-row">
 						<td>
-							<input type="text" size="30" name="events[{$event['event']}][{$key}][ruleId]" value="{$score->ruleId}" />
+							<input type="text" size="30" name="events[{$event['event']}][{$key}][ruleId]" value="{$score->ruleId}">
 						</td>
 						<td>
-							<input type="text" size="20" name="events[{$event['event']}][{$key}][recipientType]" value="{$score->recipientType}" />
+							<input type="text" size="20" name="events[{$event['event']}][{$key}][recipientType]" value="{$score->recipientType}">
 						</td>
 						<td>
-							<input type="text" size="30" name="events[{$event['event']}][{$key}][recipient]" value="{$score->recipient}" />
+							<input type="text" size="30" name="events[{$event['event']}][{$key}][recipient]" value="{$score->recipient}">
 						</td>
 						<td>
-							<input type="text" size="10" name="events[{$event['event']}][{$key}][score]" value="{$score->score}" />
+							<input type="text" size="10" name="events[{$event['event']}][{$key}][score]" value="{$score->score}">
 						</td>
 						<td class="text-right">
 							{if $hide_advanced}<a class="advanced" href="#">{icon name='ellipsis-h'}</a>{/if}
@@ -89,7 +89,7 @@
 							</a>
 						</td>
 						<td>
-							<input type="text" size="20" name="events[{$event['event']}][{$key}][validObjectIds]" value="{$score->validObjectIds}" />
+							<input type="text" size="20" name="events[{$event['event']}][{$key}][validObjectIds]" value="{$score->validObjectIds}">
 						</td>
 						<td class="text-right">{tr}Min. Time Between Scoring{/tr}
 							<a href="http://doc.tiki.org/Score" target="_blank" data-toggle="popover" data-trigger="hover" title="{tr}Time between scoring{/tr}" data-content="{tr}This is the amount of time in seconds that a user must wait before again being able to get points for this event{/tr}">
@@ -97,7 +97,7 @@
 							</a>
 						</td>
 						<td>
-							<input type="text" size="10" name="events[{$event['event']}][{$key}][expiration]" value="{$score->expiration}" />
+							<input type="text" size="10" name="events[{$event['event']}][{$key}][expiration]" value="{$score->expiration}">
 						</td>
 					</tr>
 				{/foreach}
@@ -120,7 +120,7 @@
 	</fieldset>
 
 	<div class="heading input_submit_container" style="text-align: center">
-		<input type="submit" class="btn btn-default btn-sm" name="scoreevents" value="{tr}Save{/tr}" />
+		<input type="submit" class="btn btn-primary btn-sm" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 	</div>
 </form>
 

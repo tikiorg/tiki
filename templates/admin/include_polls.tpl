@@ -13,7 +13,7 @@
 				</a>
 			{/if}
 			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>
@@ -21,7 +21,7 @@
 	{tabset name="admin_polls_and_surveys"}
 
 			{tab name="{tr}Polls{/tr}"}
-				<h2>{tr}Polls{/tr}</h2>
+				<br>
 				<fieldset>
 					<legend>{tr}Activate the feature{/tr}</legend>
 					{preference name=feature_polls visible="always"}
@@ -51,7 +51,7 @@
 
 		{if $prefs.feature_surveys eq "y"}
 			{tab name="{tr}Surveys{/tr}"}
-				<h2>{tr}Surveys{/tr}</h2>
+				<br>
 				<fieldset class="table">
 					<legend>{tr}Activate the feature{/tr}</legend>
 					{preference name=feature_surveys visible="always"}
@@ -67,7 +67,7 @@
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>

@@ -383,7 +383,7 @@
 	{/tab}
 
 	{tab name="{tr}Export{/tr}"}
-		<h2>{tr}Export{/tr}</h2>
+		<br>
 		<form class="form-horizontal" action="tiki-admin.php?page=profiles" method="post" role="form">
 			{include file='access/include_ticket.tpl'}
 			<input type="hidden" name="redirect" value=0>
@@ -484,7 +484,7 @@
 	{/tab}
 
 	{tab name="{tr}Advanced{/tr}"}
-		<h2>{tr}Advanced{/tr}</h2>
+		<br>
 		<fieldset>
 			<h4>{tr}Repository Status{/tr} <small>{tr}Status of the registered profile repositories{/tr}</small></h4>
 			<table class="table">
