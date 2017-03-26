@@ -1596,8 +1596,8 @@ function prefs_feature_list($partial = false)
 			'view' => 'tiki-list_comments.php',
 		),
 		'feature_use_fgal_for_user_files' =>array(
-			'name' => tra('Use file galleries for user files'),
-			'description' => tra(''),
+			'name' => tra('Store user files in a file gallery'),
+			'hint' => tra('If selected, use the file gallery admin and the individual file gallery settings to manage file storage preferences.'),
 			'type' => 'flag',
 			'help' => 'File+Gallery+Config',
 			'dependencies' => array(

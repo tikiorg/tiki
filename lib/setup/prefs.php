@@ -104,8 +104,6 @@ function get_default_prefs()
 			// user
 			'userlevels' => function_exists('tra') ? array('1'=>tra('Simple'),'2'=>tra('Advanced')) : array('1'=>'Simple','2'=>'Advanced'),
 			'userbreadCrumb' => 4,
-			'uf_use_db' => 'y',
-			'uf_use_dir' => '',
 			'feature_community_friends_permission' => 'n',
 			'feature_community_friends_permission_dep' => '2',
 			'lowercase_username' => 'n',

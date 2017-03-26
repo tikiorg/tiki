@@ -1,10 +1,14 @@
 {* $Id$ *}
 <form class="form-horizontal" action="tiki-admin.php?page=user" class="admin" method="post">
 	{include file='access/include_ticket.tpl'}
-	<input type="hidden" name="new_prefs" />
+	<div class="form-group col-lg-12 clearfix">
+		<div class="pull-right">
+			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
+		</div>
+	</div>
 	{tabset name="admin_user_setting"}
 		{tab name="{tr}User Settings{/tr}"}
-			<h2>{tr}User Settings{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>
 					{tr}Default user preferences{/tr}
@@ -34,7 +38,7 @@
 				</fieldset>
 		{/tab}
 		{tab name="{tr}User Features{/tr}"}
-			<h2>{tr}User Settings{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}User Account Features{/tr}</legend>
 				<div class="adminoptionbox">
@@ -55,7 +59,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}User info and picture{/tr}"}
-			<h2>{tr}User info and picture{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}User information display{/tr}</legend>
 				<div class="adminoptionbox">
@@ -86,7 +90,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}Messaging and Notifications{/tr}"}
-			<h2>{tr}Messaging and Notifications{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}Messages{/tr}</legend>
 				<div class="adminoptionbox">
@@ -134,12 +138,18 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}User Files{/tr}"}
-			<h2>{tr}User Files{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_userfiles visible="always"}
 				<div class="adminoptionboxchild" id="feature_userfiles_childcontainer">
-					{preference name=feature_use_fgal_for_user_files}
+					{preference name=feature_use_fgal_for_user_files mode=invert}
+					<div class="adminoptionboxchild" id="feature_use_fgal_for_user_files_childcontainer">
+						{preference name='uf_use_db'}
+						<div class="adminoptionboxchild uf_use_db_childcontainer n">
+							{preference name='uf_use_dir'}
+						</div>
+					</div>
 				</div>
 			</fieldset>
 
@@ -148,33 +158,14 @@
 				{preference name=userfiles_quota}
 				{preference name=userfiles_private}
 				{preference name=userfiles_hidden}
-
-				{if $prefs.feature_use_fgal_for_user_files eq 'n'}
-					<table class="table">
-
-						<tr>
-							<td>{tr}Use database to store userfiles:{/tr}</td>
-							<td>
-								<input type="radio" name="uf_use_db" value="y" {if $prefs.uf_use_db eq 'y'}checked="checked"{/if}/>
-							</td>
-						</tr>
-						<tr>
-							<td>{tr}Use a directory to store userfiles:{/tr}</td>
-							<td>
-								<input type="radio" name="uf_use_db" value="n" {if $prefs.uf_use_db eq 'n'}checked="checked"{/if}/> <span class="control-label">{tr}Path:{/tr}</span>
-								<input type="text" name="uf_use_dir" value="{$prefs.uf_use_dir|escape}" size="50" />
-							</td>
-						</tr>
-					</table>
-				{else}
-					{remarksbox type="tip" title="{tr}Tip{/tr}"}
-					{tr}Use <a href="tiki-admin.php?page=fgal&alt=File+Galleries">file gallery admin</a> and <a href="{$prefs.fgal_root_user_id|sefurl:'file gallery'}">the file galleries</a> themselves to manage user files settings.{/tr}
-					{/remarksbox}
-				{/if}
 			</fieldset>
 		{/tab}
 	{/tabset}
-	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+	<div class="row">
+		<div class="form-group col-lg-12 clearfix">
+			<div class="text-center">
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
+			</div>
+		</div>
 	</div>
 </form>
