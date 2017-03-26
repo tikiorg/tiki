@@ -507,11 +507,11 @@
 	{if $groupname}
 		{tab name="{tr _0="<i>{$groupname|escape}</i>"}Group %0 members{/tr}"}
 		{* ----------------------- tab with memberlist --------------------------------------- *}
-		<h2>{tr}Members{/tr} <span class="badge">{$membersCount}</span></h2>
 		{if $membersCount > 0}
 		{if !$ts.ajax}
 				<div class="form-group">
 					<div class="col-sm-5">
+						<h2>{tr}Members{/tr} <span class="badge">{$membersCount}</span></h2>
 						<form id="checkform2" method="post">
 							<input type="hidden" name="group" value="{$group|escape}">
 							<div class="{if $js === 'y'}table-responsive {/if}ts-wrapperdiv">
@@ -585,35 +585,34 @@
 				{if !$ts.enabled}
 					{pagination_links cant=$membersCount step=$prefs.maxRecords offset=$membersOffset offset_arg='membersOffset'}{/pagination_links}
 				{/if}
-			{if ! empty($userslist)}
-				<div class="form-group">
-					<div class="col-sm-7">
-						<div class="col-sm-7">
-							<h2>{tr}Add or ban users{/tr}</h2>
-							<form id="addorban" method="post" action="tiki-admingroups.php">
-								<select name="user[]" multiple="multiple" width="100%" size="20" class="form-control" style="width:100%">
-									{foreach from=$userslist item=iuser}
-										<option>{$iuser|escape}</option>
-									{/foreach}
-								</select>
-						</div><br><br><br><br>
-						<div class="col-sm-1">
-							<input type="submit" class="btn btn-default btn-sm confirm-submit" form="addorban" formaction="{bootstrap_modal controller=group action=add_user}" value="{tr}Add to group{/tr}">
-							<br><br>
-							<input type="submit" class="btn btn-default btn-sm confirm-submit" form="addorban" formaction="{bootstrap_modal controller=group action=ban_user}" value="{tr}Ban from group{/tr}">
-						</div>
-						<input type="hidden" name="group" value="{$groupname|escape}">
-						<input type="hidden" name="anchor" value="#contenttabs_admingroups-3">
-							</form>
-					</div>
-				</div>
-				{/if}
 		{/if}
 			{else}
-				<div class="col-sm-6">
+				<div class="col-sm-5">
+					<h2>{tr}Members{/tr} <span class="badge">{$membersCount}</span></h2>
 					<em>{tr}No members{/tr}</em>
 				</div>
 			{/if}
+			<div class="form-group">
+				<div class="col-sm-7">
+					<div class="col-sm-7">
+						<h2>{tr}Add or ban users{/tr}</h2>
+						<form id="addorban" method="post" action="tiki-admingroups.php">
+							<select name="user[]" multiple="multiple" width="100%" size="20" class="form-control" style="width:100%">
+								{foreach from=$userslist item=iuser}
+									<option>{$iuser|escape}</option>
+								{/foreach}
+							</select>
+					</div><br><br><br><br>
+					<div class="col-sm-1">
+						<input type="submit" class="btn btn-default btn-sm confirm-submit" form="addorban" formaction="{bootstrap_modal controller=group action=add_user}" value="{tr}Add to group{/tr}">
+						<br><br>
+						<input type="submit" class="btn btn-default btn-sm confirm-submit" form="addorban" formaction="{bootstrap_modal controller=group action=ban_user}" value="{tr}Ban from group{/tr}">
+					</div>
+					<input type="hidden" name="group" value="{$groupname|escape}">
+					<input type="hidden" name="anchor" value="#contenttabs_admingroups-3">
+					</form>
+				</div>
+			</div>
 		{/tab}
 		{tab name="{tr _0="<i>{$groupname|escape}</i>"}Users banned from group %0{/tr}"}
 			{* ----------------------- tab with users banned from group --------------------------------------- *}
