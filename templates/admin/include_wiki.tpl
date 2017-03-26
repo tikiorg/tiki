@@ -13,12 +13,12 @@
 			{button _icon_name='structure' _text="{tr}Structures{/tr}"  _type="link" _class='btn btn-link' _script='tiki-admin_structures.php' _title="{tr}List structures{/tr}"}
 		{/if}
 		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm" name="wikisetprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
 	</div>
 	{tabset name="admin_wiki"}
 		{tab name="{tr}General Preferences{/tr}"}
-			<h2>{tr}General Preferences{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_wiki visible="always"}
@@ -110,8 +110,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}Features{/tr}"}
-			<h2>{tr}Features{/tr}</h2>
-			<input type="hidden" name="wikifeatures" />
+			<br>
 			{preference name=feature_sandbox}
 			{preference name=feature_references}
 			{preference name=wiki_pagination}
@@ -203,7 +202,7 @@
 					<div class="adminoptionboxchild" id="feature_wiki_attachments_childcontainer">
 						{preference name=w_displayed_default}
 						{preference name=w_use_db}
-						<div class="adminoptionboxchild">
+						<div class="adminoptionboxchild w_use_db_childcontainer n">
 							{preference name=w_use_dir}
 						</div>
 						{if !empty($prefs.w_use_dir)}
@@ -301,7 +300,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}Flagged Revision{/tr}"}
-			<h2>{tr}Flagged Revision{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}Revision Approval{/tr}</legend>
 				{preference name=flaggedrev_approval}
@@ -311,8 +310,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}Page Listings{/tr}"}
-			<h2>{tr}Page Listings{/tr}</h2>
-			<input type="hidden" name="wikilistprefs" />
+			<br>
 			{preference name=feature_listPages}
 			{preference name=feature_lastChanges}
 			{preference name=feature_listorphanPages}
@@ -359,15 +357,15 @@
 			</div>
 		{/tab}
 		{tab name="{tr}Tools{/tr}"}
-			<h2>{tr}Tools{/tr}</h2>
+			<br>
 
 				<div>
 					<h4>Database Dumps & Restores</h4>
 
 					Create database archives of wiki pages for restoring at a later date.<br>
 					<label for="tagname">{tr}Name for Dump:{/tr}</label>
-					<input maxlength="20" size="20" type="text" name="newtagname" id="newtagname" />
-					<input type="submit" class="btn btn-default btn-sm" name="createtag" value="{tr}Create Database Dump{/tr}" /><br>
+					<input maxlength="20" size="20" type="text" name="newtagname" id="newtagname">
+					<input type="submit" class="btn btn-default btn-sm" name="createtag" value="{tr}Create Database Dump{/tr}"><br>
 
 					<label for="databasetag">{tr}Wiki Database:{/tr}</label>
 					<select name="tagname" {if $tags|@count eq '0'} disabled="disabled"{/if}>
@@ -377,8 +375,8 @@
 							<option value=''>{tr}None{/tr}</option>
 						{/section}
 					</select>
-					<input type="submit" class="btn btn-default btn-sm" name="restoretag" value="{tr}Restore{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if} />
-					<input type="submit" class="btn btn-default btn-sm" name="removetag" value="{tr}Remove{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if} />
+					<input type="submit" class="btn btn-default btn-sm" name="restoretag" value="{tr}Restore{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if}>
+					<input type="submit" class="btn btn-default btn-sm" name="removetag" value="{tr}Remove{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if}>
 					<h4>{tr}Dump Files{/tr}</h4>
 					{tr}Dump files archive wiki pages for various usages such as off-line browsing or distribution on optical disks.{/tr}
 					<h5>{tr}Warnings{/tr}</h5>
@@ -388,9 +386,9 @@
 					</ul>
 					<br><br>
 
-					<input type="submit" class="btn btn-default btn-sm" name="createdump" value="{tr}Create Dump File{/tr}" />
-					<input type="submit" class="btn btn-default btn-sm" name="downloaddump" value="{tr}Download Dump File{/tr}" {if !$isDump} disabled="disabled"{/if} />
-					<input type="submit" class="btn btn-default btn-sm" name="removedump" data-target="_blank" value="{tr}Remove Dump File{/tr}" {if !$isDump} disabled="disabled"{/if} />
+					<input type="submit" class="btn btn-default btn-sm" name="createdump" value="{tr}Create Dump File{/tr}">
+					<input type="submit" class="btn btn-default btn-sm" name="downloaddump" value="{tr}Download Dump File{/tr}" {if !$isDump} disabled="disabled"{/if}>
+					<input type="submit" class="btn btn-default btn-sm" name="removedump" data-target="_blank" value="{tr}Remove Dump File{/tr}" {if !$isDump} disabled="disabled"{/if}>
 				</div>
 			<br>
 			<h4><a href="tiki-search_replace.php">{tr}Mass search and replace{/tr}</a></h4>
@@ -399,6 +397,6 @@
 		{/tab}
 	{/tabset}
 	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm tips" name="wikisetprefs" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 	</div>
 </form>
