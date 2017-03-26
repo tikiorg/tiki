@@ -11,20 +11,17 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
-if (isset($_REQUEST["workspace"])) {
-	check_ticket('admin-inc-workspace');
-}
-ask_ticket('admin-inc-workspace');
-
 if ($prefs['feature_areas'] === 'y') {
 	$areaslib = TikiLib::lib('areas');
 
 	// updating table tiki_areas
-	if (isset($_REQUEST['update_areas'])) {
-		check_ticket('admin-inc-workspace');
+	if (isset($_REQUEST['update_areas']) && $access->ticketMatch()) {
 		$pass = $areaslib->update_areas();
 		if ($pass !== true) {
+			Feedback::error($pass . ' ' . tra('No update was made.'));
 			$smarty->assign_by_ref('error', $pass);
+		} else {
+			Feedback::success(tra('Areas were updated.'));
 		}
 	}
 

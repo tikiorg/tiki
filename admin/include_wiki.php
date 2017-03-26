@@ -8,108 +8,109 @@
 require_once ('tiki-setup.php');
 $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
-if (!empty($_REQUEST['w_use_dir'])) {
-	if (substr($_REQUEST['w_use_dir'], -1) != '\\' && substr($_REQUEST['w_use_dir'], -1) != '/') {
-		$_REQUEST['w_use_dir'] .= '/';
-	}
-	simple_set_value('w_use_dir');
-}
+global $tikidomain;
+$path = $tikidomain ? "storage/$tikidomain/dump_wiki.tar" : 'storage/dump_wiki.tar';
 
-if (isset($_REQUEST['createdump'])) {
-	check_ticket('admin-inc-wiki');
-	include ('lib/tar.class.php');
-	error_reporting(E_ERROR | E_WARNING);
-	$adminlib->dump();
-}
-
-if (!empty($_REQUEST['moveWikiUp'])) {
-	check_ticket('admin-inc-wiki');
-	$filegallib = TikiLib::lib('filegal');
-	$errorsWikiUp = array();
-	$info = $filegallib->get_file_gallery_info($prefs['home_file_gallery']);
-	if (empty($info)) {
-		Feedback::error(tra('You must set a home file gallery'), 'session');
-	} else {
-		$filegallib->moveAllWikiUpToFgal($prefs['home_file_gallery']);
+if ($access->ticketMatch()) {
+	if (!empty($_REQUEST['w_use_dir'])) {
+		if (substr($_REQUEST['w_use_dir'], -1) != '\\' && substr($_REQUEST['w_use_dir'], -1) != '/') {
+			$_REQUEST['w_use_dir'] .= '/';
+		}
+		simple_set_value('w_use_dir');
 	}
-}
+
+	if (isset($_REQUEST['createdump'])) {
+		include ('lib/tar.class.php');
+		error_reporting(E_ERROR | E_WARNING);
+		$adminlib->dump();
+		if (is_file($path)) {
+			Feedback::success(tr('Dump created at %0', '<em>' . $path . '</em>'), 'session');
+		} else {
+			Feedback::error(tra('Dump was not created. Please check permissions for the storage/ directory.'), 'session');
+		}
+	}
+
+	if (!empty($_REQUEST['moveWikiUp'])) {
+		$filegallib = TikiLib::lib('filegal');
+		$errorsWikiUp = array();
+		$info = $filegallib->get_file_gallery_info($prefs['home_file_gallery']);
+		if (empty($info)) {
+			Feedback::error(tr('You must set a home file gallery'), 'session');
+		} else {
+			$filegallib->moveAllWikiUpToFgal($prefs['home_file_gallery']);
+		}
+	}
 
 // Included for the forum dropdown
-if (isset($_REQUEST['createtag'])) {
-	check_ticket('admin-inc-wiki');
-	// Check existance
-	if ($adminlib->tag_exists($_REQUEST['newtagname'])) {
-		$msg = tra('Tag already exists');
-		$access->display_error(basename(__FILE__), $msg);
-	}
-	$adminlib->create_tag($_REQUEST['newtagname']);
-}
-
-if (isset($_REQUEST['removedump'])) {
-	check_ticket('admin-inc-wiki');
-	global $tikidomain;
-	// Check existance
-	if ($tikidomain) {
-		@unlink("storage/$tikidomain/dump_wiki.tar");
-	}else {
-		@unlink("storage/dump_wiki.tar");
-	}
-}
-
-if (isset($_REQUEST['downloaddump'])) {
-	check_ticket('admin-inc-wiki');
-	global $tikidomain;
-	// Check existance
-	if ($tikidomain) {
-		$file = "storage/$tikidomain/dump_wiki.tar";
-	}else {
-		$file = "storage/dump_wiki.tar";
+	if (isset($_REQUEST['createtag'])) {
+		// Check existence
+		if ($adminlib->tag_exists($_REQUEST['newtagname'])) {
+			Feedback::error(tra('Tag already exists'), 'session');
+		}
+		$adminlib->create_tag($_REQUEST['newtagname']);
+		Feedback::success(tr('Tag %0 created.', '<em>' . $_REQUEST['newtagname'] . '</em>'), 'session');
 	}
 
-	if (is_file($file)) {
-		header('Content-Description: File Transfer');
-		header('Content-Type: application/octet-stream');
-		header('Content-Disposition: attachment; filename="'.basename($file).'"');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate');
-		header('Pragma: public');
-		header('Content-Length: ' . filesize($file));
-		readfile($file);
-		exit;
+	if (isset($_REQUEST['removedump'])) {
+		@unlink($path);
+		if (!is_file($path)) {
+			Feedback::success(tr('Dump file %0 removed.', '<em>' . $path . '</em>'), 'session');
+		} else {
+			Feedback::error(tr('Dump file %0 was not removed.', '<em>' . $path . '</em>'), 'session');
+		}
 	}
-}
 
-if (isset($_REQUEST['restoretag'])) {
-	check_ticket('admin-inc-wiki');
-	// Check existance
-	if (!$adminlib->tag_exists($_REQUEST['tagname'])) {
-		$msg = tra('Tag not found');
-		$access->display_error(basename(__FILE__), $msg);
+	if (isset($_REQUEST['downloaddump'])) {
+		global $tikidomain;
+		// Check existence
+		if ($tikidomain) {
+			$file = "storage/$tikidomain/dump_wiki.tar";
+		}else {
+			$file = "storage/dump_wiki.tar";
+		}
+
+		if (is_file($file)) {
+			header('Content-Description: File Transfer');
+			header('Content-Type: application/octet-stream');
+			header('Content-Disposition: attachment; filename="'.basename($file).'"');
+			header('Expires: 0');
+			header('Cache-Control: must-revalidate');
+			header('Pragma: public');
+			header('Content-Length: ' . filesize($file));
+			readfile($file);
+			exit;
+		}
 	}
-	$adminlib->restore_tag($_REQUEST['tagname']);
-}
 
-if (isset($_REQUEST['removetag'])) {
-	check_ticket('admin-inc-wiki');
-	// Check existance
-	$adminlib->remove_tag($_REQUEST['tagname']);
-}
+	if (isset($_REQUEST['restoretag'])) {
+		// Check existance
+		if (!$adminlib->tag_exists($_REQUEST['tagname'])) {
+			Feedback::error(tr('Tag %0 not found', '<em>' . $_REQUEST['tagname'] . '</em>'), 'session');
+		}
+		$result = $adminlib->restore_tag($_REQUEST['tagname']);
+		if ($result) {
+			Feedback::success(tr('Tag %0 restored.', '<em>' . $_REQUEST['tagname'] . '</em>'), 'session');
+		} else {
+			Feedback::error(tr('Tag %0 not restored.', '<em>' . $_REQUEST['tagname'] . '</em>'), 'session');
+		}
+	}
 
-if (isset($_REQUEST['rmvunusedpic'])) {
-	check_ticket('admin-inc-wiki');
-	$adminlib->remove_unused_pictures();
-}
+	if (isset($_REQUEST['removetag'])) {
+		$result = $adminlib->remove_tag($_REQUEST['tagname']);
+		if ($result) {
+			Feedback::success(tr('Tag %0 removed.', '<em>' . $_REQUEST['tagname'] . '</em>'), 'session');
+		} else {
+			Feedback::error(tr('Tag %0 not removed.', '<em>' . $_REQUEST['tagname'] . '</em>'), 'session');
+		}
+	}
 
-if (isset($_REQUEST['wikidiscussprefs'])) {
-	check_ticket('admin-inc-wiki');
-	simple_set_toggle('feature_wiki_discuss');
-	simple_set_value('wiki_forum_id');
-}
+	if (isset($_REQUEST['rmvunusedpic'])) {
+		$adminlib->remove_unused_pictures();
+		Feedback::success(tr('Process to remove pictures has completed.'), 'session');
+	}
 
-if (isset($_REQUEST['wikifeatures'])) {
-	check_ticket('admin-inc-wiki');
 	if ((isset($_REQUEST['feature_backlinks']) && $_REQUEST['feature_backlinks'] == 'on' && $prefs['feature_backlinks'] == 'y')
-			|| (empty($_REQUEST['feature_backlinks']) && $prefs['feature_backlinks'] == 'y')
+		|| (empty($_REQUEST['feature_backlinks']) && $prefs['feature_backlinks'] == 'y')
 	) {
 		$backlinksChange = true;
 	}
@@ -120,8 +121,6 @@ if (isset($_REQUEST['wikifeatures'])) {
 	}
 }
 
-
-$smarty->assign('isDump', is_file('storage/dump_wiki.tar'));
+$smarty->assign('isDump', is_file($path));
 $tags = $adminlib->get_tags();
 $smarty->assign_by_ref('tags', $tags);
-ask_ticket('admin-inc-wiki');
