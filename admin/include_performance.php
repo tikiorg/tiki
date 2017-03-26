@@ -10,12 +10,6 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	header('location: index.php');
 	exit;
 }
-if (isset($_REQUEST['performance'])) {
-	check_ticket('admin-inc-performance');
-}
-
-ask_ticket('admin-inc-performance');
-
 
 $opcode_stats = TikiLib::lib('admin')->getOpcodeCacheStatus();
 $stat_flag = $opcode_stats['stat_flag'];
