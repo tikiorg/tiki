@@ -285,6 +285,7 @@
 								{/foreach}
 							</select>
 						</div>
+						<input type="hidden" name="page" value="profiles">
 						<input type="hidden" name="redirect" value=0>
 								{jq}
 										if ($("#profile-0").length > 0) {
