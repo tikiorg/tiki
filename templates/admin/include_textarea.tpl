@@ -9,14 +9,14 @@
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" name="textareasetup" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm tips" name="textareasetup" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>
 
 	{tabset name="admin_textarea"}
 		{tab name="{tr}General Settings{/tr}"}
-			<h2>{tr}General Settings{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}Features{/tr}{help url="Text+Area"}</legend>
 				{preference name=feature_fullscreen}
@@ -134,7 +134,7 @@
 		{/tab}
 
 		{tab name="{tr}Plugins{/tr}"}
-			<h2>{tr}Plugins{/tr}</h2>
+			<br>
 			{remarksbox type="note" title="{tr}About plugins{/tr}"}{tr}Tiki plugins add functionality to wiki pages, articles, blogs, and so on. You can enable and disable them below.{/tr}
 			{tr}You can approve plugin use at <a href="tiki-plugins.php">tiki-plugins.php</a>.{/tr}
 			{tr}The edit-plugin icon is an easy way for users to edit the parameters of each plugin in wiki pages. It can be disabled for individual plugins below.{/tr}
@@ -207,7 +207,7 @@
 		{/tab}
 
 		{tab name="{tr}Plugin Aliases{/tr}"}
-			<h2>{tr}Plugin Aliases{/tr}</h2>
+			<br>
 			{remarksbox type="note" title="{tr}About plugin aliases{/tr}"}
 				{tr}Tiki plugin aliases allow you to define your own custom configurations of existing plugins.{/tr}<br>
 				{tr}Find out more here:{/tr}{help url="Plugin+Alias"}
@@ -707,7 +707,7 @@
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" name="textareasetup" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm tips" name="textareasetup" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>

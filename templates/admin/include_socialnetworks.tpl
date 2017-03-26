@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" name="socialnetworksset" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>
@@ -15,7 +15,7 @@
 			{preference name=feature_socialnetworks visible="always"}
 		{/tab}
 		{tab name="{tr}Twitter{/tr}"}
-			<h2>{tr}Twitter{/tr}</h2>
+			<br>
 			<div class="adminoptionbox">
 				{preference name=socialnetworks_twitter_site_name}
 				{preference name=socialnetworks_twitter_site_image}
@@ -34,7 +34,7 @@
 			</div>
 		{/tab}
 		{tab name="{tr}Facebook{/tr}"}
-			<h2>{tr}Facebook{/tr}</h2>
+			<br>
 			<div class="adminoptionbox">
 				{preference name=socialnetworks_facebook_site_name}
 				{preference name=socialnetworks_facebook_site_image}
@@ -69,7 +69,7 @@
 			</div>
 		{/tab}
 		{tab name="{tr}bit.ly{/tr}"}
-			<h2>{tr}bit.ly{/tr}</h2>
+			<br>
 			{remarksbox type="note" title="{tr}Note{/tr}"}
 				<p>
 					{tr}There is no need to set up a site-wide bit.ly account; every user can have his or her own, but this allows for site-wide statistics{/tr}<br>
@@ -84,7 +84,7 @@
 			</div>
 		{/tab}
 	{tab name="{tr}LinkedIn{/tr}"}
-		<h2>{tr}LinkedIn{/tr}</h2>
+		<br>
 		{remarksbox type="note" title="{tr}Note{/tr}"}
 		<p>
 			{tr}To use LinkedIn integration, you must register this site as an application at{/tr}
@@ -110,7 +110,7 @@
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" name="socialnetworksset" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>
