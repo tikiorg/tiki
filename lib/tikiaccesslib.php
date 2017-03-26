@@ -23,7 +23,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 class TikiAccessLib extends TikiLib
 {
 	private $noRedirect = false;
-	public $check;
+	private $check;
 
 	function preventRedirect($prevent)
 	{
@@ -284,6 +284,126 @@ class TikiAccessLib extends TikiLib
 	}
 
 	/**
+	 * ***** Note: Intention is to use this to replace the checkAuthenticity function below *******
+	 *
+	 * Use to protect against Cross-Site Request Forgery when submitting a form. Designed to work in two passes:
+	 *
+	 * - First it creates the token which is placed in the $_SESSION variable and assigned the the check property and
+	 *     should be placed with other as hidden input in the form using other code. The form should also include a
+	 *     hidden input named 'daconfirm' with a value of y.
+	 * - Second, upon form submission, if  $_REQUEST['daconfirm'] is set the function compares the ticket value and age
+	 *     in the $_SESSION variable against the ticket value submitted with the form and the timing of the submission.
+	 *     The check property is set to indicate whether the match passed (ticket in form matches ticket in $_SESSION
+	 *     variable and is less than 15 minutes old) or failed. If $_REQUEST['daconfirm'] is not set it will think it's
+	 *     the first pass and will set another ticket.
+	 *
+	 * Other code should be designed to stop the form action if the function returns false. A common way to use the
+	 * function is to set $access->checkAuthenticity() at the beginning of a file. Then only run the relevant form
+	 * actions based on the $_REQUEST variable if $access->ticketMatch() returns true.
+	 *
+	 * @param string $error
+	 * @throws Services_Exception
+	 */
+	function checkAuthenticity($error = 'session')
+	{
+		global $jitRequest;
+		if (!empty($_REQUEST['daconfirm'])) {
+			$daconfirm = $_REQUEST['daconfirm'];
+		} elseif (!empty($jitRequest['daconfirm'])) {
+			$daconfirm = $jitRequest->daconfirm->alpha();
+		}
+		//only check against ticket if $_REQUEST['daconfirm'] is set
+		if (!empty($daconfirm)) {
+			//sets check property according to whether the ticket matches and is not too old. Optionally sends error
+			//message if match fails.
+			if (!empty($_REQUEST['ticket'])) {
+				$ticket = $_REQUEST['ticket'];
+			} elseif (!empty($jitRequest['ticket'])) {
+				$ticket = $jitRequest->ticket->alnum();
+			}
+			if (!empty($ticket) && !empty($_SESSION['tickets'][$ticket])) {
+				$time = $_SESSION['tickets'][$ticket];
+				//successful match
+				if ($time < time() && $time > (time()-(60 * 15))) {
+					TikiLib::lib('smarty')->assign('ticket', $ticket);
+					$this->check = true;
+				//match fails
+				} else {
+					$this->check = false;
+					$msg = tra('Potential cross-site request forgery (CSRF) detected. Operation blocked. The security ticket may have expired - reloading the page may help.');
+					switch ($error) {
+						case 'none':
+							break;
+						case 'services':
+							throw new Services_Exception($msg, 400);
+							break;
+						case 'session':
+						default:
+							Feedback::error($msg, 'session');
+							break;
+					}
+				}
+			}
+		//otherwise set ticket
+		} else {
+			//sets the ticket that should be placed in a form with the daconfirm hidden input with other code
+			$ticket = md5(uniqid(rand()));
+			$_SESSION['tickets'][$ticket] = time();
+			$smarty = TikiLib::lib('smarty');
+			$smarty->assign('ticket', $ticket);
+			$this->check = ['ticket' => $ticket];
+		}
+	}
+
+	/**
+	 * CSRF ticket - Check that the ticket has been created
+	 *
+	 * @return bool
+	 */
+	function ticketSet()
+	{
+		return !empty($this->check['ticket']);
+	}
+
+	/**
+	 * CSRF ticket - Check that the ticket has been matched to the previous ticket set
+	 *
+	 * @return bool
+	 */
+	public function ticketMatch()
+	{
+		return $this->check === true;
+	}
+
+	/**
+	 * CSRF ticket - Check whether the ticket match failed
+	 *
+	 * @return bool
+	 */
+	public function ticketNoMatch()
+	{
+		return $this->check === false;
+	}
+
+
+	/**
+	 * CSRF ticket - Get the ticket
+	 *
+	 * @return bool
+	 */
+	public function getTicket()
+	{
+		if (!empty($this->check['ticket'])) {
+			return $this->check['ticket'];
+		} else {
+			return false;
+		}
+	}
+
+
+	/**
+	 * ***** Note: Being replaced by checkAuthenticity function above *************
+	 *
 	 * Use to protect against Cross-Site Request Forgery when submitting a form. Designed to work in two passes:
 	 *
 	 * - First it creates the token which is placed in the $_SESSION variable and should either be placed with other
@@ -344,16 +464,6 @@ class TikiAccessLib extends TikiLib
 				}
 			}
 		}
-	}
-
-	/**
-	 * CSRF ticket - Check that the ticket has been matched to the previous ticket set
-	 *
-	 * @return bool
-	 */
-	public function ticketMatch()
-	{
-		return $this->check === true;
 	}
 
 	/**
