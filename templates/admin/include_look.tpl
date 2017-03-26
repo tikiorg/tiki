@@ -9,12 +9,12 @@
 			{button _text="{tr}Edit CSS{/tr}" _class="btn-sm" href="tiki-edit_css.php"}
 		{/if}
 		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm" name="looksetup" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			<input type="submit" class="btn btn-primary btn-sm tips" name="looksetup" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
 	</div>
 	{tabset name="admin_look"}
 		{tab name="{tr}Theme{/tr}"}
-			<h2>{tr}Theme{/tr}</h2>
+			<br>
 			<div class="row">
 				<div class="col-md-2 col-md-push-10">
 					<div class="thumbnail">
@@ -43,7 +43,7 @@
 			{preference name=site_layout_per_object}
 			{preference name=theme_iconset}
 			{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}
-				<input type="submit" class="btn btn-default btn-sm" name="changestyle" value="{tr}Go{/tr}" />
+				<input type="submit" class="btn btn-default btn-sm" name="changestyle" value="{tr}Go{/tr}">
 			{/if}
 			<div class="adminoptionbox">
 				{if $prefs.feature_jquery_ui eq 'y'}
@@ -67,7 +67,8 @@
 			</div>
 		{/tab}
 		{tab name="{tr}General Layout{/tr}"}
-			<h2>{tr}General Layout{/tr}</h2>
+			<br>
+			<legend>{tr}Logo and Title{/tr}</legend>
 			{preference name=feature_sitelogo}
 			<div class="adminoptionboxchild" id="feature_sitelogo_childcontainer">
 				<fieldset>
@@ -87,7 +88,7 @@
 			<div class="adminoptionbox">
 				<fieldset>
 					<legend>{tr}Module zone visibility{/tr}</legend>
-					{if !$smarty.get.Zone_options}
+					{if !isset($smarty.get.Zone_options) || !$smarty.get.Zone_options}
 						{remarksbox type="tip" title="{tr}Hint{/tr}"}
 							Some module zone visibility options may not be supported anymore from Tiki 13+, but you can still access them in case you are upgrading from an earlier version. <a href="tiki-admin.php?page=look&Zone_options=y#contentadmin_look-2" class="alert-link">Show all module visibility options</a>
 						{/remarksbox}
@@ -117,7 +118,7 @@
 		{/tab}
 		{if $prefs.site_layout eq 'classic'}
 			{tab name="{tr}Shadow layer{/tr}"}
-				<h2>{tr}Shadow layer{/tr}</h2>
+				<br>
 				{preference name=feature_layoutshadows}
 				<div class="adminoptionboxchild" id="feature_layoutshadows_childcontainer">
 					{preference name=main_shadow_start}
@@ -136,7 +137,7 @@
 			{/tab}
 		{/if}
 		{tab name="{tr}Pagination{/tr}"}
-			<h2>{tr}Pagination{/tr}</h2>
+			<br>
 			{preference name=user_selector_threshold}
 			{preference name=maxRecords}
 			{preference name=tiki_object_selector_threshold}
@@ -152,7 +153,7 @@
 			{preference name=pagination_icons}
 		{/tab}
 		{tab name="{tr}UI Effects{/tr}"}
-			<h2>{tr}UI Effects{/tr}</h2>
+			<br>
 			<div class="adminoptionbox">
 				<fieldset class="table">
 					<legend>{tr}Standard UI effects{/tr}</legend>
@@ -183,7 +184,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}Customization{/tr}"}
-			<h2>{tr}Customization{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}Custom Codes{/tr}</legend>
 				{preference name="header_custom_css" syntax="css"}
@@ -213,7 +214,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}Miscellaneous{/tr}"}
-			<h2>{tr}Miscellaneous{/tr}</h2>
+			<br>
 			{preference name=feature_tabs}
 			<div class="adminoptionboxchild" id="feature_tabs_childcontainer">
 				{preference name=layout_tabs_optional}
@@ -246,6 +247,6 @@
 		{/tab}
 	{/tabset}
 	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm tips" name="looksetup" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 	</div>
 </form>
