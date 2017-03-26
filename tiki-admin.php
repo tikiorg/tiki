@@ -561,8 +561,10 @@ if (isset($_REQUEST['page'])) {
 			$smarty->assign('include', 'addon_inactive');
 		}
 	}
-	//need to redirect as changes to one pref can affect display of others
-	if ($access->ticketMatch()) {
+	//for most admin include page forms, need to redirect as changes to one pref can affect display of others
+	//however other forms that perform actions other than changing preferences should not redirect to avoid infinite loops
+	//for these add a hidden input named redirect with a value of 0
+	if ($access->ticketMatch() && (!isset($_REQUEST['redirect']) || $_REQUEST['redirect'] === 1)) {
 		$access->redirect($_SERVER['REQUEST_URI'], '', 200);
 	}
 

@@ -257,7 +257,7 @@
 					{tr}Some of your Profiles Repositories are not connecting. This may prevent you from applying certain profiles{/tr}
 				{/remarksbox}
 			{/if}
-			<form method="get" action="tiki-admin.php">
+			<form method="get" action="tiki-admin.php?page=profiles">
 				{include file='access/include_ticket.tpl'}
 				<h4>{tr}Find Profiles{/tr} <small>{tr}Search by name, types and repository{/tr}</small></h4>
 				<div class="row">
@@ -285,7 +285,7 @@
 								{/foreach}
 							</select>
 						</div>
-						<input type="hidden" name="page" value="profiles"/>
+						<input type="hidden" name="redirect" value=0>
 								{jq}
 										if ($("#profile-0").length > 0) {
 											$(".quickmode_notes").hide();
@@ -369,7 +369,7 @@
 							<tr><td colspan="3" class="odd">{tr}None{/tr}</td></tr>
 						{/if}
 					</table>
-					{if $show_details_for_profile_num != ""}
+					{if isset($show_details_for_profile_num) && $show_details_for_profile_num != ""}
 						{jq}showDetails('profile-{{$show_details_for_profile_num}}', '{{$show_details_for_domain}}', '{{$show_details_for_fullname}}');{/jq}
 					{/if}
 				</div>
@@ -385,6 +385,7 @@
 		<h2>{tr}Export{/tr}</h2>
 		<form class="form-horizontal" action="tiki-admin.php?page=profiles" method="post" role="form">
 			{include file='access/include_ticket.tpl'}
+			<input type="hidden" name="redirect" value=0>
 			<fieldset id="export_to_yaml">
 				<legend>{tr}Export YAML{/tr}</legend>
 				{if !empty($export_yaml)}
@@ -394,10 +395,10 @@
 					<label class="control-label col-sm-2" for="export_type">{tr}Object Type{/tr}</label>
 					<div class="col-sm-5">
 					<select name="export_type" id="export_type" class="form-control">
-						<option value="prefs"{if $export_type eq "prefs"} selected="selected"{/if}>
+						<option value="prefs"{if !empty($export_type) && $export_type eq "prefs"} selected="selected"{/if}>
 							{tr}Preferences{/tr}
 						</option>
-						<option value="modules"{if $export_type eq "modules"} selected="selected"{/if}>
+						<option value="modules"{if !empty($export_type) && $export_type eq "modules"} selected="selected"{/if}>
 							{tr}Modules{/tr}
 						</option>
 					</select>
@@ -526,6 +527,7 @@
 		<fieldset><legend>{tr}Profile tester{/tr}</legend>
 			<form class="form-horizontal" action="tiki-admin.php?page=profiles" method="post">
 				{include file='access/include_ticket.tpl'}
+				<input type="hidden" name="redirect" value=0>
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
 					{tr}Paste or type wiki markup and YAML (with or without the {literal}{CODE}{/literal} tags) into the text area below{/tr}<br>
 					<em><strong>{tr}This will run the profile and make potentially unrecoverable changes in your database!{/tr}</strong></em>
