@@ -1,5 +1,5 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
-	{tr}See also{/tr} <a class="alert-link" href="tiki-admin.php?page=sefurl">{tr}Search Engine Friendly URLs{/tr}</a>.
+	{tr}See also{/tr} <a class="alert-link" href="tiki-admin.php?page=sefurl">{tr}Search Engine Friendly URLs{/tr}</a>. {tr}Also{/tr} <a target="_blank" href="http://en.wikipedia.org/wiki/Geotagging#HTML_pages">{tr}here{/tr}</a> {tr}for more information on geo tagging.{/tr}
 {/remarksbox}
 
 <form class="form-horizontal" action="tiki-admin.php?page=metatags" method="post">
@@ -8,14 +8,14 @@
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" name="metatags" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>
 
 	{tabset name="admin_metatags"}
 		{tab name="{tr}Meta tags{/tr}"}
-			<h2>{tr}Meta tags{/tr}</h2>
+			<br>
 
 			<div class="adminoptionbox">
 				{preference name=metatag_keywords}
@@ -29,14 +29,14 @@
 		{/tab}
 
 		{tab name="{tr}Geo Metatags{/tr}"}
-			<h2>{tr}Geo Metatags{/tr} {if $prefs.feature_help eq 'y'}<a target="_blank" href="http://en.wikipedia.org/wiki/Geotagging#HTML_pages">{icon name='help'}</a>{/if}</h2>
+			<br>
 
 			{preference name=metatag_geoposition}
 			{preference name=metatag_georegion}
 			{preference name=metatag_geoplacename}
 		{/tab}
 		{tab name="{tr}Robots{/tr}"}
-			<h2>{tr}Robots{/tr}</h2>
+			<br>
 			{* Need to show site_metatag_robots as real metatags are overridden at runtime *}
 
 			{preference name=metatag_robots}
@@ -48,7 +48,7 @@
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" name="metatags" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>

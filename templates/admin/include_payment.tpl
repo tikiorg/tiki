@@ -7,7 +7,7 @@
 				{icon name="list"} {tr}Payments{/tr}
 			</a>
 			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" name="paymentprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>
@@ -20,7 +20,7 @@
 	{/if}
 	{tabset}
 		{tab name="{tr}Payment{/tr}"}
-			<h2>{tr}Payment{/tr}</h2>
+			<br>
 			{remarksbox title="{tr}Choose payment system{/tr}"}
 				{tr}You can use only one payment method: PayPal or Cclite or Tiki User Credits{/tr}<br>
 				{tr}PayPal is working at the moment. See PayPal.com{/tr}<br>
@@ -88,7 +88,7 @@
 			</div>
 		{/tab}
 		{tab name="{tr}Advanced Shopping Cart{/tr}"}
-			<h2>{tr}Advanced Shopping Cart{/tr}</h2>
+			<br>
 			<fieldset>
 				<label>{tr}Cart Settings{/tr}</label>
 				{preference name=payment_cart_heading}
@@ -156,7 +156,7 @@
 		{/tab}
 
 		{tab name="{tr}Plugins{/tr}"}
-			<h2>{tr}Plugins{/tr}</h2>
+			<br>
 
 			<fieldset class="table">
 				<legend>{tr}Plugins{/tr}</legend>
@@ -173,7 +173,7 @@
 		{/tab}
 
 		{tab name="{tr}Shipping{/tr}"}
-			<h2>{tr}Shipping{/tr}</h2>
+			<br>
 			{preference name=shipping_service}
 
 			{preference name=shipping_fedex_enable}
@@ -197,7 +197,7 @@
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" name="paymentprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>
