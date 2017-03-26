@@ -6,7 +6,7 @@
 	{include file='access/include_ticket.tpl'}
 	<div class="t_navbar clearfix">
 		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm" name="save" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
 	</div>
 	<fieldset>
@@ -85,6 +85,6 @@
 		{preference name=url_only_ascii}
 	</fieldset>
 	<div class="text-center">
-		<input type="submit" class="btn btn-primary btn-sm" name="save" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 	</div>
 </form>

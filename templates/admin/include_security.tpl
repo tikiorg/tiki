@@ -21,7 +21,7 @@
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" name="security" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>
@@ -29,7 +29,7 @@
 	{tabset}
 
 		{tab name="{tr}General Security{/tr}"}
-			<h2>{tr}General Security{/tr}</h2>
+			<br>
 			<div class="adminoptionboxchild" id="smarty_security_childcontainer">
 			{if $haveMySQLSSL}
 				{if $mysqlSSL === true}
@@ -101,7 +101,7 @@
 		{/tab}
 
 		{tab name="{tr}Spam protection{/tr}"}
-			<h2>{tr}Spam protection{/tr}</h2>
+			<br>
 			{remarksbox type="tip" title="{tr}Tip{/tr}"}
 				{tr}You can additionally protect from spam enabling the "<a href="http://doc.tiki.org/Forum+Admin#Forum_moderation" target="_blank">moderation queue on forums</a>", or through <strong>banning</strong> multiple ip's from the "<a href="tiki-admin_actionlog.php" target="_blank">Action log</a>", from "<a href="tiki-adminusers.php" target="_blank">Users registration</a>", or from the "<a href="tiki-list_comments.php" target="_blank">Comments moderation queue</a>" itself{/tr}.
 			{/remarksbox}
@@ -146,13 +146,13 @@
 		{/tab}
 
 		{tab name="{tr}Search results{/tr}"}
-			<h2>{tr}Search results{/tr}</h2>
+			<br>
 			{preference name=feature_search_show_forbidden_cat}
 			{preference name=feature_search_show_forbidden_obj}
 		{/tab}
 
 		{tab name="{tr}Site Access{/tr}"}
-			<h2>{tr}Site Access{/tr}</h2>
+			<br>
 			{preference name=site_closed}
 			<div class="adminoptionboxchild" id="site_closed_childcontainer">
 				{preference name=site_closed_msg}
@@ -194,7 +194,7 @@
 		{/tab}
 
 		{tab name="{tr}Tokens{/tr}"}
-			<h2>{tr}Tokens{/tr}</h2>
+			<br>
 			{remarksbox type="tip" title="{tr}Tip{/tr}"}
 				{tr}To manage tokens go to <a href="tiki-admin_tokens.php">Admin Tokens</a> page. Tokens are also used for the Temporary Users feature (see <a href="tiki-adminusers.php">Admin Users</a>).{/tr}
 			{/remarksbox}
@@ -207,7 +207,7 @@
 		{/tab}
 
 		{tab name="{tr}OpenPGP{/tr}"}
-			<h2>{tr}OpenPGP{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}OpenPGP fuctionality for PGP/MIME encrypted email messaging{/tr}</legend>
 				{remarksbox type="tip" title="{tr}Note{/tr}"}
@@ -239,7 +239,7 @@
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" name="security" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>

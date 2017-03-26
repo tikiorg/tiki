@@ -15,7 +15,6 @@
 
 <form class="form-horizontal" action="tiki-admin.php?page=search" method="post">
 	{include file='access/include_ticket.tpl'}
-	<input type="hidden" name="searchprefs">
 
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
@@ -24,13 +23,13 @@
 				<a role="link" href="{bootstrap_modal controller=search action=rebuild}" class="btn btn-default">{icon name="cog"} {tr}Rebuild Index{/tr}</a>
 			{/if}
 			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>
 	{tabset name=admin_search}
 		{tab name="{tr}General Settings{/tr}"}
-			<h2>{tr}General Settings{/tr}</h2>
+			<br>
 
 			<fieldset>
 				<legend>
@@ -172,7 +171,7 @@
 		{/tab}
 
 		{tab name="{tr}Search Results{/tr}"}
-			<h2>{tr}Search Results{/tr}</h2>
+			<br>
 			{preference name=search_use_facets}
 			{preference name=search_facet_default_amount}
 			{preference name=category_custom_facets}
@@ -199,12 +198,12 @@
 		{/tab}
 
 		{tab name="{tr}Stored Search{/tr}"}
-			<h2>{tr}Stored Search{/tr}</h2>
+			<br>
 			{preference name=storedsearch_enabled}
 		{/tab}
 
 		{tab name="{tr}Federated Search{/tr}"}
-			<h2>{tr}Federated Search{/tr}</h2>
+			<br>
 			{preference name=federated_enabled}
 			{preference name=federated_elastic_url}
 
@@ -216,7 +215,7 @@
 		{/tab}
 
 		{tab name="{tr}Tools{/tr}"}
-			<h2>{tr}Tools{/tr}</h2>
+			<br>
 			<a href="tiki-report_string_in_db.php">{tr}Report all occurences of a string in any table{/tr}</a><br>
 		{/tab}
 
@@ -225,7 +224,7 @@
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>

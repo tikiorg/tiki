@@ -3,18 +3,17 @@
 {/remarksbox}
 <form class="form-horizontal" action="tiki-admin.php?page=rss" method="post">
 	{include file='access/include_ticket.tpl'}
-	<input type="hidden" name="rss" />
 	<div class="t_navbar margin-bottom-md clearfix">
 		<a role="button" class="btn btn-link" href="tiki-admin_rssmodules.php" title="{tr}List{/tr}">
 			{icon name="list"} {tr}External Feeds{/tr}
 		</a>
 		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
 	</div>
 	{tabset name="admin_rss"}
 		{tab name="{tr}General Preferences{/tr}"}
-			<h2>{tr}General Preferences{/tr}</h2>
+			<br>
 			{preference name=feed_default_version}
 			<div class="adminoptionboxchild feed_default_version_childcontainer 5">
 				{preference name=feed_atom_author_name}
@@ -31,7 +30,7 @@
 			{preference name=feed_basic_auth}
 		{/tab}
 		{tab name="{tr}Feeds{/tr}"}
-			<h2>{tr}Feeds{/tr}</h2>
+			<br>
 			{preference name=feed_articles}
 			<div class="adminoptionboxchild" id="feed_articles_childcontainer">
 				<div class="form-group clearfix">
@@ -248,7 +247,7 @@
 			</div>
 		{/tab}
 		{tab name="{tr}Incoming Feeds{/tr}"}
-			<h2>{tr}Incoming Feeds{/tr}</h2>
+			<br>
 			{preference name=page_content_fetch}
 			{preference name=page_content_fetch_readability}
 			{preference name=tracker_article_tracker}
@@ -259,6 +258,6 @@
 		{/tab}
 	{/tabset}
 	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 	</div>
 </form>

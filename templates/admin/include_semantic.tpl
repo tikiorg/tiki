@@ -3,7 +3,7 @@
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" name="semantic" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>
@@ -39,9 +39,9 @@
 					{/foreach}
 				</table>
 				<p>
-					<input type="submit" class="btn btn-default btn-sm" name="list" value="{tr}Show Usage{/tr}"/>
-					<input type="submit" class="btn btn-warning btn-sm" name="remove" value="{tr}Delete{/tr}"/>
-					<input type="submit" class="btn btn-warning btn-sm" name="removeclean" value="{tr}Delete &amp; Unreference{/tr}"/>
+					<input type="submit" class="btn btn-default btn-sm" name="list" value="{tr}Show Usage{/tr}">
+					<input type="submit" class="btn btn-warning btn-sm" name="remove" value="{tr}Delete{/tr}">
+					<input type="submit" class="btn btn-warning btn-sm" name="removeclean" value="{tr}Delete &amp; Unreference{/tr}">
 				</p>
 			</form>
 
@@ -51,11 +51,11 @@
 					<div>{$save_message|escape}</div>
 					<div>
 						<label for="token">{tr}Token{/tr} :</label>
-						<input id="token" type="text" name="newName" value="{$selected_token|escape}"/>
+						<input id="token" type="text" name="newName" value="{$selected_token|escape}">
 					</div>
 					<div>
 						<label for="label">{tr}Label{/tr} :</label>
-						<input id="label" type="text" name="label" value="{$selected_detail.label|escape}"/>
+						<input id="label" type="text" name="label" value="{$selected_detail.label|escape}">
 					</div>
 					<div>
 						<label for="invert">{tr}Invert Relation{/tr} :</label>
@@ -67,8 +67,8 @@
 						</select>
 					</div>
 					<div>
-						<input type="hidden" name="token" value="{$selected_token|escape}"/>
-						<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}"/>
+						<input type="hidden" name="token" value="{$selected_token|escape}">
+						<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
 					</div>
 				</form>
 			{/if}
@@ -85,13 +85,14 @@
 						<td>{$token|escape}</td>
 						<td>
 							<form method="post" action="{$smarty.server.REQUEST_URI}">
+								{include file='access/include_ticket.tpl'}
 								<div>
-									<input type="hidden" name="select[]" value="{$token|escape}"/>
-									<input type="hidden" name="token" value="{$token|escape}"/>
-									<input type="submit" name="list" value="{tr}Show Usage{/tr}" class="btn btn-default" />
-									<input type="submit" name="create" value="{tr}Create{/tr}" class="btn btn-default" />
-									<input type="submit" name="rename" value="{tr}Fix{/tr}" class="btn btn-default" />
-									<input type="submit" name="clean" value="{tr}Remove{/tr}" class="btn btn-default" />
+									<input type="hidden" name="select[]" value="{$token|escape}">
+									<input type="hidden" name="token" value="{$token|escape}">
+									<input type="submit" name="list" value="{tr}Show Usage{/tr}" class="btn btn-default">
+									<input type="submit" name="create" value="{tr}Create{/tr}" class="btn btn-default">
+									<input type="submit" name="rename" value="{tr}Fix{/tr}" class="btn btn-default">
+									<input type="submit" name="clean" value="{tr}Remove{/tr}" class="btn btn-default">
 								</div>
 							</form>
 						</td>
@@ -103,11 +104,11 @@
 					{include file='access/include_ticket.tpl'}
 					<div>
 						<label for="token">{tr}Token{/tr} :</label>
-						<input id="token" type="text" name="token" value="{$rename|escape}"/>
+						<input id="token" type="text" name="token" value="{$rename|escape}">
 					</div>
 					<div>
-						<input type="hidden" name="oldName" value="{$rename|escape}"/>
-						<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Fix{/tr}"/>
+						<input type="hidden" name="oldName" value="{$rename|escape}">
+						<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Fix{/tr}">
 					</div>
 				</form>
 			{/if}
