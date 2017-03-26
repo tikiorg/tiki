@@ -17,7 +17,7 @@ $adminlib = TikiLib::lib('admin');
 $auto_query_args = array('page');
 
 $access->check_permission('tiki_p_admin');
-$check = $access->check_authenticity(null, false, true);
+$check = $access->checkAuthenticity();
 $logslib = TikiLib::lib('logs');
 
 /**
