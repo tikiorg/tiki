@@ -7,8 +7,8 @@
 
 require_once ('tiki-setup.php');
 $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
-if (isset($_REQUEST['save'])) {
-	check_ticket('admin-inc-sefurl');
+
+if (isset($_REQUEST['feature_sefurl_paths']) && $access->ticketMatch()) {
 	$_REQUEST['feature_sefurl_paths'] = preg_split('/ *[,\/] */', $_REQUEST['feature_sefurl_paths']);
 	simple_set_value('feature_sefurl_paths');
 }
@@ -74,5 +74,3 @@ if (isset($enabledFileName)) {
 	$smarty->assign('enabledFileName', $enabledFileName);
 	$smarty->assign('configurationFile', $configurationFile);
 }
-
-ask_ticket('admin-inc-sefurl');

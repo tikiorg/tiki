@@ -10,9 +10,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	header('location: index.php');
 	exit;
 }
-if (isset($_REQUEST['searchprefs'])) {
-	check_ticket('admin-inc-search');
-}
+
 /**
  * @return array
  */
@@ -105,46 +103,47 @@ function activated_features()
 }
 global $tiki_p_admin;
 $unifiedsearchlib = TikiLib::lib('unifiedsearch');
-
-if ($tiki_p_admin == 'y' && isset($_REQUEST['rebuild']) && $_REQUEST['rebuild'] == 'now') {
-	$access->redirect(TikiLib::lib('service')->getUrl([
-		'controller' => 'search',
-		'action' => 'rebuild',
-	]));
-}
-
 $smarty->assign('engine_info', $unifiedsearchlib->getEngineInfo());
 
-if ($tiki_p_admin == 'y' && isset($_REQUEST['optimize']) && $_REQUEST['optimize'] == 'now') {
-	@ini_set('max_execution_time', 0);
-	@ini_set('memory_limit', -1);
-	$stat = $unifiedsearchlib->getIndex('data-write')->optimize();
-}
-
-if ($tiki_p_admin == 'y' && !empty($_REQUEST['refresh_index_all_now']) && $_REQUEST['refresh_index_all_now'] == 'y') {
-	require_once ('lib/search/refresh-functions.php');
-	foreach (activated_features() as $feature) {
-		refresh_index($feature);
+if ($tiki_p_admin == 'y' && $access->ticketMatch()) {
+	if (isset($_REQUEST['rebuild']) && $_REQUEST['rebuild'] == 'now') {
+		$access->redirect(TikiLib::lib('service')->getUrl([
+			'controller' => 'search',
+			'action' => 'rebuild',
+		]));
 	}
-	$smarty->assign('refresh_index_all_now', $_REQUEST['refresh_index_all_now']);
-}
 
-if ($tiki_p_admin == 'y' && !empty($_REQUEST['refresh_files_index_now']) && $_REQUEST['refresh_files_index_now'] == 'y') {
-	require_once ('lib/search/refresh-functions.php');
-	refresh_index('files');
-	$smarty->assign('refresh_files_index_now', $_REQUEST['refresh_files_index_now']);
-}
+	if (isset($_REQUEST['optimize']) && $_REQUEST['optimize'] == 'now') {
+		@ini_set('max_execution_time', 0);
+		@ini_set('memory_limit', -1);
+		$stat = $unifiedsearchlib->getIndex('data-write')->optimize();
+	}
 
-if ($tiki_p_admin == 'y' && !empty($_REQUEST['refresh_index_now']) && $_REQUEST['refresh_index_now'] == 'y') {
-	require_once ('lib/search/refresh-functions.php');
-	refresh_index('pages');
-	$smarty->assign('refresh_index_now', $_REQUEST['refresh_index_now']);
-}
+	if (!empty($_REQUEST['refresh_index_all_now']) && $_REQUEST['refresh_index_all_now'] == 'y') {
+		require_once ('lib/search/refresh-functions.php');
+		foreach (activated_features() as $feature) {
+			refresh_index($feature);
+		}
+		$smarty->assign('refresh_index_all_now', $_REQUEST['refresh_index_all_now']);
+	}
 
-if ($tiki_p_admin == 'y' && !empty($_REQUEST['refresh_tracker_index_now']) && $_REQUEST['refresh_tracker_index_now'] == 'y') {
-	require_once ('lib/search/refresh-functions.php');
-	refresh_index('tracker_items');
-	$smarty->assign('refresh_tracker_index_now', $_REQUEST['refresh_tracker_index_now']);
+	if (!empty($_REQUEST['refresh_files_index_now']) && $_REQUEST['refresh_files_index_now'] == 'y') {
+		require_once ('lib/search/refresh-functions.php');
+		refresh_index('files');
+		$smarty->assign('refresh_files_index_now', $_REQUEST['refresh_files_index_now']);
+	}
+
+	if (!empty($_REQUEST['refresh_index_now']) && $_REQUEST['refresh_index_now'] == 'y') {
+		require_once ('lib/search/refresh-functions.php');
+		refresh_index('pages');
+		$smarty->assign('refresh_index_now', $_REQUEST['refresh_index_now']);
+	}
+
+	if (!empty($_REQUEST['refresh_tracker_index_now']) && $_REQUEST['refresh_tracker_index_now'] == 'y') {
+		require_once ('lib/search/refresh-functions.php');
+		refresh_index('tracker_items');
+		$smarty->assign('refresh_tracker_index_now', $_REQUEST['refresh_tracker_index_now']);
+	}
 }
 
 $lastLogItem = $unifiedsearchlib->getLastLogItem();
@@ -164,6 +163,3 @@ if (isMySQLFulltextSearchSupported()) {
 } else {
 	$smarty->assign('no_fulltext_support', true);
 }
-
-$headerlib->add_cssfile('themes/base_files/feature_css/admin.css');
-ask_ticket('admin-inc-search');

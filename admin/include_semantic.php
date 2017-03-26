@@ -11,8 +11,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 $semanticlib = TikiLib::lib('semantic');
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	check_ticket('admin-inc-semantic');
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && $access->ticketMatch()) {
 	if (isset($_POST['save'])) {
 		$result = $semanticlib->replaceToken($_POST['token'], $_POST['newName'], $_POST['label'], $_POST['invert']);
 		if ($result === true) {
@@ -54,25 +54,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 $smarty->assign('tokens', $semanticlib->getTokens());
 $smarty->assign('new_tokens', $semanticlib->getNewTokens());
-if (isset($_POST['select'])) {
-	$smarty->assign('select', $_POST['select']);
-}
-if (isset($_REQUEST['token']) && $semanticlib->isValid($_REQUEST['token']) && (isset($_POST['create']) || false !== $semanticlib->getToken($_REQUEST['token']))) {
-	$smarty->assign('selected_token', $_REQUEST['token']);
-	$smarty->assign('selected_detail', $semanticlib->getToken($_REQUEST['token']));
-}
-if (isset($_REQUEST['rename'])) {
-	$smarty->assign('rename', $_REQUEST['token']);
-}
-if (isset($_POST['list'])) {
-	$lists = array();
-	$list = array();
+
+if ($access->ticketMatch()) {
 	if (isset($_POST['select'])) {
-		$list = (array) $_POST['select'];
+		$smarty->assign('select', $_POST['select']);
 	}
-	foreach ($list as $token) {
-		$lists[$token] = $semanticlib->getLinksUsing($token);
+	if (isset($_REQUEST['token']) && $semanticlib->isValid($_REQUEST['token']) && (isset($_POST['create']) || false !== $semanticlib->getToken($_REQUEST['token']))) {
+		$smarty->assign('selected_token', $_REQUEST['token']);
+		$smarty->assign('selected_detail', $semanticlib->getToken($_REQUEST['token']));
 	}
-	$smarty->assign('link_lists', $lists);
+	if (isset($_REQUEST['rename'])) {
+		$smarty->assign('rename', $_REQUEST['token']);
+	}
+	if (isset($_POST['list'])) {
+		$lists = array();
+		$list = array();
+		if (isset($_POST['select'])) {
+			$list = (array) $_POST['select'];
+		}
+		foreach ($list as $token) {
+			$lists[$token] = $semanticlib->getLinksUsing($token);
+		}
+		$smarty->assign('link_lists', $lists);
+	}
 }
-ask_ticket('admin-inc-semantic');
