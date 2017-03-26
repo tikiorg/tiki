@@ -16,8 +16,9 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class Services_Utilities
 {
-	public $check;
+	public $access;
 	public $items;
+	public $extra;
 	private $action;
 
 	/**
@@ -156,30 +157,13 @@ class Services_Utilities
 
 	/**
 	 * CSRF ticket - Check the ticket to either set it or match to the ticket previously set
-	 */
-	function checkTicket()
-	{
-		$this->check = Services_Exception_BadRequest::checkAccess();
-	}
-
-	/**
-	 * CSRF ticket - Check that the ticket has been created
 	 *
-	 * @return bool
+	 * @param string $error
 	 */
-	function ticketSet()
+	function checkTicket($error = 'services')
 	{
-		return !empty($this->check['ticket']);
-	}
-
-	/**
-	 * CSRF ticket - Check that the ticket has been matched to the previous ticket set
-	 *
-	 * @return bool
-	 */
-	function ticketMatch()
-	{
-		return $this->check === true;
+		$this->access = TikiLib::lib('access');
+		$this->access->checkAuthenticity($error);
 	}
 
 	/**
@@ -188,12 +172,24 @@ class Services_Utilities
 	 * @param JitFilter $input
 	 * @param $offset
 	 */
-	function setItemsAction(JitFilter $input, $offset = false)
+	function setVars(JitFilter $input, $offset = false, $filter = false)
 	{
 		if ($offset) {
-			$this->items = $input->asArray($offset);
+			if ($filter) {
+				$this->items = $input->asArray($offset)->$filter();
+			} else {
+				$this->items = $input->asArray($offset);
+			}
 		}
 		$this->action = $input->action->word();
+		$this->extra = $input->extra;
+	}
+
+
+	function setDecodedVars(JitFilter $input)
+	{
+		$this->items = json_decode($input['items'], true);
+		$this->extra = json_decode($input['extra'], true);
 	}
 
 	/**
@@ -221,7 +217,7 @@ class Services_Utilities
 				'confirmButton' => $button,
 				'items' => $this->items,
 				'extra' => $extra,
-				'ticket' => $this->check['ticket'],
+				'ticket' => $this->access->getTicket(),
 			]
 		];
 		return $ret;

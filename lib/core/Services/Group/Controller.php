@@ -31,8 +31,8 @@ class Services_Group_Controller
 		$util = new Services_Utilities();
 		$util->checkTicket();
 		//first pass - show confirm modal popup
-		if ($util->ticketSet()) {
-			$util->setItemsAction($input, 'checked');
+		if ($util->access->ticketSet()) {
+			$util->setVars($input, 'checked');
 			if (count($util->items) > 0) {
 				if (count($util->items) === 1) {
 					$msg = tra('Delete the following group?');
@@ -44,14 +44,13 @@ class Services_Group_Controller
 				Services_Utilities::modalException(tra('No groups were selected. Please select one or more groups.'));
 			}
 			//after confirm submit - perform action and return success feedback
-		} elseif ($util->ticketMatch() && $_SERVER['REQUEST_METHOD'] === 'POST') {
+		} elseif ($util->access->ticketMatch() && $_SERVER['REQUEST_METHOD'] === 'POST') {
+			$util->setDecodedVars($input);
 			//delete user
-			$items = json_decode($input['items'], true);
-			$extra = json_decode($input['extra'], true);
 			//filter out Admins group so it can't be deleted. Anonymous and Registered are protected from deletion in
 			//in the remove groups function
-			$fitems = array_diff($items, ['Admins']);
-			$notDeleted = array_intersect($items, ['Admins']);
+			$fitems = array_diff($util->items, ['Admins']);
+			$notDeleted = array_intersect($util->items, ['Admins']);
 			$userlib = TikiLib::lib('user');
 			$logslib = TikiLib::lib('logs');
 			$deleted = [];
@@ -92,7 +91,7 @@ class Services_Group_Controller
 				Feedback::success($feedback2, 'session');
 			}
 			//return to page
-			return Services_Utilities::refresh($extra['referer']);
+			return Services_Utilities::refresh($util->extra['referer']);
 		}
 	}
 
@@ -106,10 +105,10 @@ class Services_Group_Controller
 	{
 		Services_Exception_Denied::checkGlobal('admin');
 		$util = new Services_Utilities();
-		$util->checkTicket();
+		$util->checkTicket('none');
 		//first pass - show confirm modal popup
-		if ($util->ticketSet()) {
-			$util->setItemsAction($input);
+		if ($util->access->ticketSet()) {
+			$util->setVars($input);
 			if (!empty($input['name'])) {
 				$newGroupName = trim($input->name->groupname());
 				$userlib = TikiLib::lib('user');
@@ -125,10 +124,10 @@ class Services_Group_Controller
 				Services_Utilities::modalException(tra('Group name cannot be empty'));
 			}
 		//after confirm submit - perform action and return feedback
-		} elseif ($util->ticketMatch() && $_SERVER['REQUEST_METHOD'] === 'POST') {
+		} elseif ($util->access->ticketMatch() && $_SERVER['REQUEST_METHOD'] === 'POST') {
 			//set parameters
-			$extra = json_decode($input['extra'], true);
-			$params = $this->prepareParameters($extra);
+			$util->setDecodedVars($input);
+			$params = $this->prepareParameters($util->extra);
 			$userlib = TikiLib::lib('user');
 			//add group and inclusions
 			$newGroupId = $userlib->add_group(
@@ -149,31 +148,35 @@ class Services_Group_Controller
 				$params['anniversary'],
 				$params['prorateInterval']
 			);
-			if (isset($extra['include_groups'])) {
-				foreach ($extra['include_groups'] as $include) {
-					if ($extra['name'] != $include) {
-						$userlib->group_inclusion($extra['name'], $include);
+			if (isset($util->extra['include_groups'])) {
+				foreach ($util->extra['include_groups'] as $include) {
+					if ($util->extra['name'] != $include) {
+						$userlib->group_inclusion($util->extra['name'], $include);
 					}
 				}
 			}
 			$logslib = TikiLib::lib('logs');
-			$logslib->add_log('admingroups', 'created group ' . $extra['name']);
+			$logslib->add_log('admingroups', 'created group ' . $util->extra['name']);
 			//prepare feedback
 			if ($newGroupId) {
 				$feedback1 = [
 					'tpl' => 'action',
-					'mes' => tr('Group %0 (ID %1) successfully created', $extra['name'], $newGroupId),
+					'mes' => tr('Group %0 (ID %1) successfully created', $util->extra['name'], $newGroupId),
 				];
 				Feedback::success($feedback1, 'session');
 			} else {
 				$feedback2 = [
 					'tpl' => 'action',
-					'mes' => tr('Group %0 not created', $extra['name']),
+					'mes' => tr('Group %0 not created', $util->extra['name']),
 				];
 				Feedback::error($feedback2, 'session');
 			}
-			//return to page
-			return Services_Utilities::refresh($extra['referer']);
+			//return to page - will go back to group listing tab, which is okay
+			return Services_Utilities::refresh($util->extra['referer']);
+		} else {
+			//post CSRF error through js. can't just throw a services exception since the form started as a non-modal
+			//but confirmation is modal and js takes over after the confirmation is submitted
+			return ['error' => 'CSRF'];
 		}
 	}
 
@@ -187,10 +190,10 @@ class Services_Group_Controller
 	{
 		Services_Exception_Denied::checkGlobal('admin');
 		$util = new Services_Utilities();
-		$util->checkTicket();
+		$util->checkTicket('none');
 		//first pass - show confirm modal popup
-		if ($util->ticketSet()) {
-			$util->setItemsAction($input);
+		if ($util->access->ticketSet()) {
+			$util->setVars($input);
 			if (!empty($input['name']) && isset($input['olgroup'])) {
 				$newGroupName = trim($input->name->groupname());
 				$userlib = TikiLib::lib('user');
@@ -206,10 +209,10 @@ class Services_Group_Controller
 				Services_Utilities::modalException(tra('Group name cannot be empty'));
 			}
 			//after confirm submit - perform action and return success feedback
-		} elseif ($util->ticketMatch() && $_SERVER['REQUEST_METHOD'] === 'POST') {
+		} elseif ($util->access->ticketMatch() && $_SERVER['REQUEST_METHOD'] === 'POST') {
 			//set parameters
-			$extra = json_decode($input['extra'], true);
-			$params = $this->prepareParameters($extra);
+			$util->setDecodedVars($input);
+			$params = $this->prepareParameters($util->extra);
 			$userlib = TikiLib::lib('user');
 			$success = $userlib->change_group(
 				$params['olgroup'],
@@ -255,7 +258,11 @@ class Services_Group_Controller
 				Feedback::error($feedback2, 'session');
 			}
 			//return to page
-			return Services_Utilities::refresh($extra['referer']);
+			return Services_Utilities::refresh($util->extra['referer']);
+		} else {
+			//post CSRF error through js. can't just throw a services exception since the form started as a non-modal
+			//but confirmation is modal and js takes over after the confirmation is submitted
+			return ['error' => 'CSRF'];
 		}
 	}
 
@@ -271,8 +278,8 @@ class Services_Group_Controller
 		$util = new Services_Utilities();
 		$util->checkTicket();
 		//first pass - show confirm modal popup
-		if ($util->ticketSet()) {
-			$util->setItemsAction($input, 'user');
+		if ($util->access->ticketSet()) {
+			$util->setVars($input, 'user');
 			if (count($util->items) > 0) {
 				$group = $input->group->groupname();
 				if (count($util->items) === 1) {
@@ -285,26 +292,25 @@ class Services_Group_Controller
 				Services_Utilities::modalException(tra('One or more users must be selected'));
 			}
 			//after confirm submit - perform action and return success feedback
-		} elseif ($util->ticketMatch() && $_SERVER['REQUEST_METHOD'] === 'POST') {
-			$items = json_decode($input['items'], true);
-			$extra = json_decode($input['extra'], true);
+		} elseif ($util->access->ticketMatch() && $_SERVER['REQUEST_METHOD'] === 'POST') {
+			$util->setDecodedVars($input);
 			$userlib = TikiLib::lib('user');
 			$logslib = TikiLib::lib('logs');
-			foreach ($items as $user) {
-				$userlib->assign_user_to_group($user, $extra['group']);
-				$logslib->add_log('admingroups', 'added ' . $user . ' to ' . $extra['group']);
+			foreach ($util->items as $user) {
+				$userlib->assign_user_to_group($user, $util->extra['group']);
+				$logslib->add_log('admingroups', 'added ' . $user . ' to ' . $util->extra['group']);
 			}
 			//prepare and send feedback
-			if (count($items) > 0) {
-				if (count($items) === 1) {
-					$msg = tr('The following user was added to group %0:', $extra['group']);
+			if (count($util->items) > 0) {
+				if (count($util->items) === 1) {
+					$msg = tr('The following user was added to group %0:', $util->extra['group']);
 				} else {
-					$msg = tr('The following users were added to group %0:', $extra['group']);
+					$msg = tr('The following users were added to group %0:', $util->extra['group']);
 				}
 				$feedback = [
 					'tpl' => 'action',
 					'mes' => $msg,
-					'items' => $items,
+					'items' => $util->items,
 				];
 				Feedback::success($feedback, 'session');
 			}
@@ -326,8 +332,8 @@ class Services_Group_Controller
 		$util = new Services_Utilities();
 		$util->checkTicket();
 		//first pass - show confirm modal popup
-		if ($util->ticketSet()) {
-			$util->setItemsAction($input, 'user');
+		if ($util->access->ticketSet()) {
+			$util->setVars($input, 'user');
 			if (count($util->items) > 0) {
 				$group = $input->group->groupname();
 				if (count($util->items) === 1) {
@@ -349,26 +355,25 @@ class Services_Group_Controller
 				Services_Utilities::modalException(tra('One or more users must be selected'));
 			}
 			//after confirm submit - perform action and return success feedback
-		} elseif ($util->ticketMatch() && $_SERVER['REQUEST_METHOD'] === 'POST') {
-			$items = json_decode($input['items'], true);
-			$extra = json_decode($input['extra'], true);
+		} elseif ($util->access->ticketMatch() && $_SERVER['REQUEST_METHOD'] === 'POST') {
+			$util->setDecodedVars($input);
 			$userlib = TikiLib::lib('user');
 			$logslib = TikiLib::lib('logs');
-			foreach ($items as $user) {
-				$userlib->ban_user_from_group($user, $extra['group']);
-				$logslib->add_log('admingroups', 'banned ' . $user . ' from ' . $extra['group']);
+			foreach ($util->items as $user) {
+				$userlib->ban_user_from_group($user, $util->extra['group']);
+				$logslib->add_log('admingroups', 'banned ' . $user . ' from ' . $util->extra['group']);
 			}
 			//prepare and send feedback
-			if (count($items) > 0) {
-				if (count($items) === 1) {
-					$msg = tr('The following user was banned from group %0:', $extra['group']);
+			if (count($util->items) > 0) {
+				if (count($util->items) === 1) {
+					$msg = tr('The following user was banned from group %0:', $util->extra['group']);
 				} else {
-					$msg = tr('The following users were banned from group %0:', $extra['group']);
+					$msg = tr('The following users were banned from group %0:', $util->extra['group']);
 				}
 				$feedback = [
 					'tpl' => 'action',
 					'mes' => $msg,
-					'items' => $items,
+					'items' => $util->items,
 				];
 				Feedback::success($feedback, 'session');
 			}
@@ -389,8 +394,8 @@ class Services_Group_Controller
 		$util = new Services_Utilities();
 		$util->checkTicket();
 		//first pass - show confirm modal popup
-		if ($util->ticketSet()) {
-			$util->setItemsAction($input, 'user');
+		if ($util->access->ticketSet()) {
+			$util->setVars($input, 'user');
 			if (count($util->items) > 0) {
 				$group = $input->group->groupname();
 				if (count($util->items) === 1) {
@@ -412,26 +417,25 @@ class Services_Group_Controller
 				Services_Utilities::modalException(tra('One or more users must be selected'));
 			}
 			//after confirm submit - perform action and return success feedback
-		} elseif ($util->ticketMatch() && $_SERVER['REQUEST_METHOD'] === 'POST') {
-			$items = json_decode($input['items'], true);
-			$extra = json_decode($input['extra'], true);
+		} elseif ($util->access->ticketMatch() && $_SERVER['REQUEST_METHOD'] === 'POST') {
+			$util->setDecodedVars($input);
 			$userlib = TikiLib::lib('user');
 			$logslib = TikiLib::lib('logs');
-			foreach ($items as $user) {
-				$userlib->unban_user_from_group($user, $extra['group']);
-				$logslib->add_log('admingroups', 'unbanned ' . $user . ' from ' . $extra['group']);
+			foreach ($util->items as $user) {
+				$userlib->unban_user_from_group($user, $util->extra['group']);
+				$logslib->add_log('admingroups', 'unbanned ' . $user . ' from ' . $util->extra['group']);
 			}
 			//prepare and send feedback
-			if (count($items) > 0) {
-				if (count($items) === 1) {
-					$msg = tr('The following user was unbanned from group %0:', $extra['group']);
+			if (count($util->items) > 0) {
+				if (count($util->items) === 1) {
+					$msg = tr('The following user was unbanned from group %0:', $util->extra['group']);
 				} else {
-					$msg = tr('The following users were unbanned from group %0:', $extra['group']);
+					$msg = tr('The following users were unbanned from group %0:', $util->extra['group']);
 				}
 				$feedback = [
 					'tpl' => 'action',
 					'mes' => $msg,
-					'items' => $items,
+					'items' => $util->items,
 				];
 				Feedback::success($feedback, 'session');
 			}
