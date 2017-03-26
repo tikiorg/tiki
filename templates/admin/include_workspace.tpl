@@ -8,12 +8,12 @@
 			</a>
 		{/if}
 		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm" name="workspacesetprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
 	</div>
 	{tabset name="admin_workspaces_areas"}
 		{tab name="{tr}Workspaces{/tr}"}
-			<h2>{tr}Workspaces{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=workspace_ui visible="always"}
@@ -48,14 +48,11 @@
 			{/jq}
 		{/tab}
 		{tab name="{tr}Areas{/tr}"}
-			<h2>{tr}Areas{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_areas}
 			</fieldset>
-			{if isset($error)}
-				{remarksbox type="warning" title="{tr}Error{/tr}"}{$error} {tr}Nothing was updated.{/tr}{/remarksbox}
-			{/if}
 			<fieldset>
 				<legend>{tr}Areas{/tr}</legend>
 				<div class="table-responsive">
@@ -100,14 +97,18 @@
 			</fieldset>
 			{remarksbox type="info" title="{tr}Hint{/tr}"}{tr}This tab shows you an overview of categories affected by the areas feature. <br> More help here: <a href="http://doc.tiki.org/Areas" target="tikihelp">doc.tiki.org/Areas</a> {/tr}{/remarksbox}
 			<div class="form-group heading input_submit_container" style="text-align: center">
-				<input type="submit" class="btn btn-primary btn-sm" name="update_areas" value="{tr}Update areas{/tr}" />
+				<input type="submit" class="btn btn-primary btn-sm" name="update_areas" value="{tr}Update areas{/tr}">
 			</div>
 			<div class="adminoptionboxchild" id="feature_areas_childcontainer">
 				{preference name=areas_root}
 			</div>
 		{/tab}
 	{/tabset}
-	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm tips" name="workspacesetprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+	<div class="row">
+		<div class="form-group col-lg-12 clearfix">
+			<div class="text-center">
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
+			</div>
+		</div>
 	</div>
 </form>

@@ -7,7 +7,7 @@
 			{icon name="settings"} {tr}Toolbars{/tr}
 		</a>
 		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm" name="wysiwygfeatures" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
 	</div>
 	{if $prefs.wysiwyg_htmltowiki neq 'y'}
@@ -48,7 +48,7 @@
 	</fieldset>
 	<div class="t_navbar margin-bottom-md">
 		<div class="text-center">
-			<input type="submit" class="btn btn-primary btn-sm" name="wysiwygfeatures" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
 	</div>
 </form>

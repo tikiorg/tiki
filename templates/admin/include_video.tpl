@@ -4,7 +4,7 @@
 	{tabset name="admin_video"}
 
 		{tab name="{tr}Kaltura{/tr}"}
-			<h2>{tr}Kaltura{/tr}</h2>
+			<br>
 			{remarksbox type="info" title="{tr}Kaltura Registration{/tr}"}
 				{tr}To get a Kaltura Partner ID:{/tr} {tr}Setup your own instance of Kaltura Community Edition (CE){/tr} or <a href="http://corp.kaltura.com/about/signup">{tr}get an account via Kaltura.com{/tr}</a>
 			{/remarksbox}
@@ -16,7 +16,7 @@
 			<div class="row">
 				<div class="form-group col-lg-12 clearfix">
 					<div class="pull-right">
-						<input type="submit" class="btn btn-default btn-sm" name="video" value="{tr}Change preferences{/tr}">
+						<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 					</div>
 				</div>
 			</div>
@@ -83,14 +83,14 @@
 		{/tab}
 
 		{tab name="{tr}Interface{/tr}" key=interface}
-			<h2>{tr}Interface{/tr}</h2>
+			<br>
 			<fieldset class="table clearfix featurelist">
 				<legend> {tr}jQuery plugins and add-ons{/tr} </legend>
 				{preference name=jquery_fitvidjs}
 			</fieldset>
 
 			<div align="center" style="padding:1em;">
-				<input type="submit" class="btn btn-primary btn-sm" name="features" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		{/tab}
 
