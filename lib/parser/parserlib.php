@@ -1140,7 +1140,7 @@ if ( \$('#$id') ) {
 		} else {
 			$elem = 'span';
 		}
-		$elem_style = 'position:relative;';
+		$elem_style = 'position:relative;display:inline-block';
 		if (!$enabled) {
 			$elem_style .= 'opacity:0.3;';
 		}
