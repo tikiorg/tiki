@@ -44,13 +44,13 @@ if ($access->ticketMatch()) {
 		}
 	}
 
-	if (!isset($_REQUEST['find'])) {
+	if (isset($_REQUEST['find'])) {
 		$find = $_REQUEST['find'];
 	}
-	if (!isset($_REQUEST['offset'])) {
+	if (isset($_REQUEST['offset'])) {
 		$offset = $_REQUEST['offset'];
 	}
-	if (!isset($_REQUEST['sort_mode'])) {
+	if (isset($_REQUEST['sort_mode'])) {
 		$sort_mode = $_REQUEST['sort_mode'];
 	}
 }
