@@ -121,11 +121,6 @@ window.CKEDITOR.config.toolbar = ' .$cktools.';
 			->add_jsfile('vendor_bundled/vendor/ckeditor/ckeditor/ckeditor.js', true)
 			->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1);
 
-		$headerlib->add_js(
-			'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",divarea" : "divarea" );',
-			5
-		);
-
 		if ($full_page) {
 			$headerlib->add_jsfile('lib/ckeditor_tiki/tikilink_dialog.js');
 			$headerlib->add_js(

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a8328f6da8164009432b1d13c4511380",
+    "content-hash": "d519a565212c9ab3dbc0dd3a97ff864c",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -204,17 +204,17 @@
         },
         {
             "name": "ckeditor/ckeditor",
-            "version": "4.5.11",
+            "version": "4.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ckeditor/ckeditor-releases.git",
-                "reference": "48155a1e1c7e84736b5a166ad3f33acea2a51255"
+                "reference": "268078ab43195b6004d64bc8764c41f2f829640e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ckeditor/ckeditor/ckeditor-ckeditor-48155a1e1c7e84736b5a166ad3f33acea2a51255-zip-b8a8cf.zip",
-                "reference": "48155a1e1c7e84736b5a166ad3f33acea2a51255",
-                "shasum": "b5e7227b1cb49d330a305b62964e51dc51e2abb5"
+                "url": "https://composer.tiki.org/dist/ckeditor/ckeditor/ckeditor-ckeditor-268078ab43195b6004d64bc8764c41f2f829640e-zip-20ff17.zip",
+                "reference": "268078ab43195b6004d64bc8764c41f2f829640e",
+                "shasum": "64d22eb9dcb8c385e3fd181a68a042a3c1713202"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -241,18 +241,7 @@
                 "text",
                 "wysiwyg"
             ],
-            "time": "2016-09-07T13:32:39+00:00"
-        },
-        {
-            "name": "ckeditor/ckeditor/plugins/divarea",
-            "version": "4.5.6",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/ckeditor/ckeditor/plugins/divarea/ckeditor-ckeditor-plugins-divarea-4.5.6.zip",
-                "reference": null,
-                "shasum": "c07f10b47a168be3fcf6c8fb1c373626213a7e81"
-            },
-            "type": "library"
+            "time": "2017-01-12T17:36:48+00:00"
         },
         {
             "name": "ckeditor/ckeditor/skins/bootstrapck",
@@ -262,17 +251,6 @@
                 "url": "https://composer.tiki.org/dist/ckeditor/ckeditor/skins/bootstrapck/ckeditor-ckeditor-skins-bootstrapck-1.0.zip",
                 "reference": null,
                 "shasum": "0e5bd0881972bd1b5e52c882868993586159fe4f"
-            },
-            "type": "library"
-        },
-        {
-            "name": "ckeditor/ckeditor/skins/kama",
-            "version": "4.5.6",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/ckeditor/ckeditor/skins/kama/ckeditor-ckeditor-skins-kama-4.5.6.zip",
-                "reference": null,
-                "shasum": "914b97b60b567de3349b2429d2600c7fd86ecbd3"
             },
             "type": "library"
         },
@@ -4235,7 +4213,7 @@
                 "testing",
                 "unit"
             ],
-            "time": "2016-03-14T11:52:02+00:00"
+            "time": "2016-03-14 11:52:02"
         },
         {
             "name": "doctrine/instantiator",
