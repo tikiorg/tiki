@@ -1,0 +1,20 @@
+--- a/jquery.sheet.js	2017-01-28 04:40:04.000000000 +0000
++++ b/jquery.sheet.js	2017-03-28 00:32:33.000000000 +0100
+@@ -7448,7 +7448,7 @@
+                                     enclosure = enclosures[j];
+                                     enclosure._scrollLeft = enclosure._scrollLeft || enclosure.scrollUI.scrollLeft;
+                                     enclosure._scrollTop = enclosure._scrollTop || enclosure.scrollUI.scrollTop;
+-                                    enclosure.style.display = "none";
++                                    enclosure.style.visibility = "hidden";
+                                 }
+                             } while (j-- > 0);
+                         }
+@@ -7457,7 +7457,7 @@
+ 
+                         enclosure = enclosures[i];
+ 
+-                        enclosure.style.display = "";
++                        enclosure.style.visibility = "";
+ 
+                         jS.themeRoller.tab.setActive();
+ 
