@@ -1425,7 +1425,7 @@ class TikiLib extends TikiDb_Bridge
 	 * @param string $float
 	 * @return string
 	 */
-	function get_user_avatar($user, $float = "")
+	function get_user_avatar($user, $float = '')
 	{
 		global $prefs;
 
@@ -1478,7 +1478,8 @@ class TikiLib extends TikiDb_Bridge
 				$path = $userprefslib->get_public_avatar_path($user);
 
 				if ($path) {
-					$ret = "<img class='user-profile-picture img-rounded' src='" . htmlspecialchars($path, ENT_NOQUOTES) . "' " . $style . " alt='" . htmlspecialchars($user, ENT_NOQUOTES) . "'>";
+					$url = $this->tikiUrlOpt($path);
+					$ret = "<img class='user-profile-picture img-rounded' src='" . htmlspecialchars($url, ENT_NOQUOTES) . "' " . $style . " alt='" . htmlspecialchars($user, ENT_NOQUOTES) . "'>";
 				}
 				break;
 			case 'g':
@@ -4700,7 +4701,7 @@ class TikiLib extends TikiDb_Bridge
 			array(
 				'type' => 'wiki page',
 				'object' => $pageName,
-				'namespace' => $wikilib->get_namespace($pageName), 
+				'namespace' => $wikilib->get_namespace($pageName),
 				'reply_action' => 'comment',
 				'user' => $GLOBALS['user'],
 				'page_id' => $info['page_id'],
@@ -6111,7 +6112,7 @@ JS;
 
 		$delimiter = array_shift($delimiters);
 		$temp = explode($delimiter, $string);
-				
+
 		$array = array();
 		$keep = false;
 
