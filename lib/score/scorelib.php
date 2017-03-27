@@ -202,7 +202,7 @@ class ScoreLib extends TikiLib
 
 	/**
 	 * Bind events from the scoring system
-	 * @param $manager
+	 * @param Tiki_Event_Manager $manager
 	 */
 	function bindEvents($manager)
 	{
@@ -333,9 +333,9 @@ class ScoreLib extends TikiLib
 		return;
 	}
 
-	function table($tableName, $autoIncrement = true)
+	function table($tableName = 'tiki_object_scores', $autoIncrement = true)
 	{
-		return TikiDb::get()->table('tiki_object_scores');
+		return TikiDb::get()->table($tableName);
 	}
 
 	/**
