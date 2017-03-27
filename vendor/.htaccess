@@ -8,15 +8,16 @@
 	# -- Allow Access to files used by Developer Dubugging Tools -- #
 	RewriteRule "\.(map|less|scss)$" "-" [PT,L]
 
-	# -- Default Exception List -- #
-	# These rules may be deleted if the browser does not need to access them.
+	# -- Vendor Exception List -- #
+	# These are file types by vendor file that will bypass the default filtering
 	#
-	# *** Work in progress, add exceptions before release where needed ***
-	#
-	# New vendor libraries can add exemptions if there is a issue, but the
-	#  likley senario is that it will not be needed.
+	# If you are adding a new vendor that needs browser access, adding a file
+	#  type esception will be required.
 
 	RewriteRule "^(player/).*/.*\.swf$" "-" [PT,L]
+	RewriteRule "^(fontawsome/).*/.*\.swf$" "-" [PT,L]
+	RewriteRule "^(jquery/).*/.*\.swf$" "-" [PT,L]
+	RewriteRule "^(studio-42/).*/.*\.wav$" "-" [PT,L]
 
 	# -- Deny Everything Not Matched Above -- #
 	RewriteRule "/*" "-" [F]
