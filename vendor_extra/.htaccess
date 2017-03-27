@@ -1,0 +1,21 @@
+<FilesMatch ".*">
+	<IfModule mod_authz_core.c>
+		Require all denied
+	</IfModule>
+	<IfModule !mod_authz_core.c>
+		order deny,allow
+		deny from all
+	</IfModule>
+</FilesMatch>
+
+<FilesMatch "\.(jpg|png|gif|css|js)$">
+	<IfModule mod_authz_core.c>
+		Require all granted
+	</IfModule>
+	<IfModule !mod_authz_core.c>
+		Allow from all
+	</IfModule>
+</FilesMatch>
+
+# -- Prevent Directory Browsing -- #
+Options -Indexes
