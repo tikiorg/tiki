@@ -122,7 +122,7 @@ class Services_Edit_PluginController
 
 		$util = new Services_Utilities();
 		$util->checkTicket();
-		if ($_SERVER['REQUEST_METHOD'] === 'POST' && $util->ticketMatch()) {
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && $util->access->ticketMatch()) {
 
 			$this->action_replace($input);
 
@@ -132,7 +132,7 @@ class Services_Edit_PluginController
 				'redirect' => TikiLib::lib('wiki')->sefurl($page),
 			];
 
-		} elseif ($util->ticketSet()) {        // render the form
+		} elseif ($util->access->ticketSet()) {        // render the form
 
 			$info = $parserlib->plugin_info($type);
 			$info['advancedParams'] = [];
@@ -205,7 +205,7 @@ class Services_Edit_PluginController
 
 				'info' => $info,
 				'title' => $info['name'],
-				'ticket' => $util->check['ticket'],
+				'ticket' => $util->access->getTicket(),
 			];
 		}
 	}

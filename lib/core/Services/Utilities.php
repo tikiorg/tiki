@@ -16,6 +16,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class Services_Utilities
 {
+	/** @var  \TikiAccessLib */
 	public $access;
 	public $items;
 	public $extra;
