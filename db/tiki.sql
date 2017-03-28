@@ -2358,8 +2358,8 @@ DROP TABLE IF EXISTS `tiki_user_assigned_modules`;
 CREATE TABLE `tiki_user_assigned_modules` (
   `moduleId` int(8) NOT NULL,
   `name` varchar(200) NOT NULL default '',
-  `position` varchar(20) default NULL,
-  `ord` int(4) default NULL,
+  `position` varchar(20) NOT NULL default '',
+  `ord` int(4) NOT NULL default 0,
   `type` char(1) default NULL,
   `user` varchar(200) NOT NULL default '',
   PRIMARY KEY (`name`(30),`user`,`position`, `ord`),
