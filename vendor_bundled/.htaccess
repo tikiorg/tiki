@@ -12,10 +12,10 @@
 	# These are file types by vendor file that will bypass the default filtering
 	#
 	# If you are adding a new vendor that needs browser access, adding a file
-	#  type esception will be required.
+	#  type exception will be required.
 
 	RewriteRule "^(vendor/player/).*/.*\.swf$" "-" [PT,L]
-	RewriteRule "^(vendor/fontawsome/).*/.*\.swf$" "-" [PT,L]
+	RewriteRule "^(vendor/fortawesome/).*/.*\.swf$" "-" [PT,L]
 	RewriteRule "^(vendor/jquery/).*/.*\.swf$" "-" [PT,L]
 	RewriteRule "^(vendor/studio-42/).*/.*\.wav$" "-" [PT,L]
 
