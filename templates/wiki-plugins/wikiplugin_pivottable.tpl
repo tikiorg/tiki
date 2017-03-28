@@ -14,7 +14,10 @@
 					and: "{tr}and{/tr}",
 					all: "{tr}All{/tr}",
 					mine: "{tr}Mine{/tr}",
-				}
+				},
+				xAxisLabel: {{$pivottable.xAxisLabel|json_encode}},
+				yAxisLabel: {{$pivottable.yAxisLabel|json_encode}},
+				chartTitle: {{$pivottable.chartTitle|json_encode}}
 			},
 			derivedAttributes: { {{','|implode:$pivottable.derivedAttributes}} },
 			cols: {{$pivottable.tcolumns|json_encode}}, rows: {{$pivottable.trows|json_encode}},
@@ -46,7 +49,10 @@
 			{{/if}}
 
 			highlightMine: {{$pivottable.highlightMine|json_encode}},
-			highlightGroup: {{$pivottable.highlightGroup|json_encode}}
+			highlightGroup: {{$pivottable.highlightGroup|json_encode}},
+			xAxisLabel: {{$pivottable.xAxisLabel|json_encode}},
+			yAxisLabel: {{$pivottable.yAxisLabel|json_encode}},
+			chartTitle: {{$pivottable.chartTitle|json_encode}}
 		};
 		if( {{$pivottable.menuLimit|json_encode}} ) {
 			opts.menuLimit = {{$pivottable.menuLimit|json_encode}};
