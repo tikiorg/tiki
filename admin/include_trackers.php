@@ -71,10 +71,6 @@ $attachements = $trklib->list_all_attachements($offset, $maxRecords, $sort_mode,
 $smarty->assign_by_ref('cant_pages', $attachements['cant']);
 $headerlib->add_cssfile('themes/base_files/feature_css/admin.css');
 $smarty->assign_by_ref('attachements', $attachements['data']);
-$urlquery['find'] = $find;
-$urlquery['page'] = 'trackers';
-$urlquery['sort_mode'] = $sort_mode;
-$smarty->assign_by_ref('urlquery', $urlquery);
 
 $factory = new Tracker_Field_Factory(false);
 $fieldPreferences = array();
