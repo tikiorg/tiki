@@ -1,6 +1,6 @@
 {* $Id$ *}
 {jq notonready=true}
-	var baseURI = '{$smarty.server.REQUEST_URI}';
+	var baseURI = '{$smarty.server.REQUEST_URI}&ticket={{$ticket|escape}}&daconfirm=y';
 	{literal}
 		function refreshCache( entry ) { // {{{
 			var datespan = document.getElementById( 'profile-date-' + entry );
@@ -17,17 +17,23 @@
 			req.onreadystatechange = function (aEvt) {
 				if (req.readyState == 4) {
 					if(req.status == 200) {
-						var data = eval( "(" + req.responseText + ")" );
-						$.each(['open', 'pending', 'closed'], function (key, value) {
-							if (value == data.status) {
-								$('#profile-status-' + entry + ' > span.icon-status-' + value).show();
-							} else {
-								$('#profile-status-' + entry + ' > span.icon-status-' + value).hide();
-							}
-						});
-						datespan.innerHTML = data.lastupdate;
-					} else
-						alert("Error loading page\n");
+						var char = req.responseText.slice(0,1);
+						if (req.responseText.slice(0,1) !== '<') {
+							var data = eval( "(" + req.responseText + ")" );
+							$.each(['open', 'pending', 'closed'], function (key, value) {
+								if (value == data.status) {
+									$('#profile-status-' + entry + ' > span.icon-status-' + value).show();
+								} else {
+									$('#profile-status-' + entry + ' > span.icon-status-' + value).hide();
+								}
+							});
+							datespan.innerHTML = data.lastupdate;
+						} else {
+							feedback(tr('Error loading page'), 'error');
+						}
+					} else {
+						feedback(tr('Error loading page'), 'error');
+					}
 				}
 			};
 			req.send('');
