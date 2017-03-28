@@ -265,7 +265,7 @@
 			{/if}
 			<form method="get" action="tiki-admin.php?page=profiles">
 				{include file='access/include_ticket.tpl'}
-				<h4>{tr}Find Profiles{/tr} <small>{tr}Search by name, types and repository{/tr}</small></h4>
+				<h4>{tr}Find profiles{/tr} <small>{tr}Search by name, types and repository{/tr}</small></h4>
 				<div class="row">
 					<div class="col-sm-6">
 						<div class="form-group">
@@ -274,7 +274,7 @@
 						</div>
 						{if isset($category_list) and count($category_list) gt 0}
 							<div class="form-group">
-								<label class="control-label" for="categories">{tr}Profile Types{/tr}</label>
+								<label class="control-label" for="categories">{tr}Profile types{/tr}</label>
 									<select multiple="multiple" name="categories[]" id="categories" class="form-control" style="min-height: 8em; max-height: 15em">
 										{foreach item=cat from=$category_list}
 											<option value="{$cat|escape}"{if !empty($categories) and in_array($cat, $categories)} selected="selected"{/if}>{$cat|escape}</option>
@@ -283,7 +283,7 @@
 							</div>
 						{/if}
 						<div class="form-group">
-							<label class="control-label" for="repository">{tr}Profile Repository{/tr}</label>
+							<label class="control-label" for="repository">{tr}Profile repository{/tr}</label>
 							<select name="repository" id="repository" class="form-control">
 								<option value="">{tr}All{/tr}</option>
 								{foreach item=source from=$sources}
@@ -349,11 +349,11 @@
 			</form>
 			<a id="step2"></a>
 			{if isset($result) && $result|@count != '0'}
-				<h4>{tr}Select and apply profile <small>Click on a Configuration Profile Name below to review it and apply it on your site</small>{/tr}</h4>
+				<h4>{tr}Select and apply profile <small>Click on a configuration profile name below to review it and apply it on your site</small>{/tr}</h4>
 				<div class="table-responsive">
 					<table class="table">
 						<tr>
-							<th>{tr}Profile Name{/tr}</th>
+							<th>{tr}Profile name{/tr}</th>
 							<th>{tr}Repository{/tr}</th>
 							<th>{tr}Profile type{/tr}</th>
 						</tr>
@@ -399,7 +399,7 @@
 					<div class="wikitext">{$export_yaml}</div>
 				{/if}
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="export_type">{tr}Object Type{/tr}</label>
+					<label class="control-label col-sm-2" for="export_type">{tr}Object type{/tr}</label>
 					<div class="col-sm-5">
 					<select name="export_type" id="export_type" class="form-control">
 						<option value="prefs"{if !empty($export_type) && $export_type eq "prefs"} selected="selected"{/if}>
@@ -541,7 +541,7 @@
 				{/remarksbox}
 				<div class="adminoptionbox">
 					<div class="adminoptionlabel form-group">
-						<label for="profile_tester_name" class="control-label col-sm-4">{tr}Test Profile Name:{/tr} </label>
+						<label for="profile_tester_name" class="control-label col-sm-4">{tr}Test profile name{/tr} </label>
 						<div class="col-sm-4 margin-bottom-sm">
 						<input class="form-control" type="text" name="profile_tester_name" id="profile_tester_name" value="{if isset($profile_tester_name)}{$profile_tester_name}{else}Test{/if}" />
 						</div>
