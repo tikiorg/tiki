@@ -69,11 +69,5 @@ class Table_Code_Manager extends Table_Code_Abstract
 		if (empty(self::$code['bind'])) {
 			self::$code['main'] .= ';';
 		}
-
-		$parts = '';
-		foreach (self::$code as $section) {
-			$parts .= $section;
-		}
-		self::$code = $parts;
 	}
 }

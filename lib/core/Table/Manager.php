@@ -54,9 +54,13 @@ class Table_Manager
 	{
 		if (!empty(Table_Code_Manager::$code)) {
 			$headerlib = TikiLib::lib('header');
-			$headerlib->add_jq_onready(Table_Code_Manager::$code);
+			$code = '';
+			foreach (Table_Code_Manager::$code as $section) {
+				$code .= $section;
+			}
+			$headerlib->add_jq_onready($code);
 			//need to empty static $code in case there are multiple tables on a page
-			Table_Code_Manager::$code = '';
+			Table_Code_Manager::$code = [];
 		}
 	}
 }

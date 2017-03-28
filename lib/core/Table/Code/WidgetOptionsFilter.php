@@ -43,9 +43,9 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 			}
 			//filter_functions and filter_formatter
 			if (parent::$filtercol) {
-				$ffunc = '';
-				$fsource = '';
-				$fform = '';
+				$ffunc = [];
+				$fsource = [];
+				$fform = [];
 				foreach (parent::$s['columns'] as $col => $info) {
 					$info = !empty($info['filter']) ? $info['filter'] : [];
 					$colpointer =  parent::$usecolselector ? (string) '\'' . $col . '\'' : (int) $col;
