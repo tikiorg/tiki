@@ -14,7 +14,7 @@ function prefs_t_list()
 			'type' => 'list',
 			'options' => [
 				'y' => tra('Database'),
-				'n' => tra('Directory'),
+				'n' => tra('Filesystem'),
 			],
 			'default' => 'y',
 			'tags' => ['basic'],
