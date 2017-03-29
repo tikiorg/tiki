@@ -1,3 +1,4 @@
+{* $Id: *}
 {extends 'layout_view.tpl'}
 {block name="title"}
 	{title admpage="i18n"}{$title|escape}{/title}
@@ -5,7 +6,7 @@
 {block name="navigation"}
 	{if $tiki_p_edit_languages}
 		<div class="t_navbar margin-bottom-md clearfix">
-			<a class="btn btn-link tips" href="{service controller=language action=manage_custom_php_translations}" title="{tr}Customized String Translation{/tr}:{tr}Manage local translations in a custom.php file{/tr}">
+			<a class="btn btn-link tips" href="{service controller=language action=manage_custom_translations}" title="{tr}Customized String Translations{/tr}:{tr}Manage custom translations{/tr}">
 				{icon name="file-code-o"} {tr}Custom Translations{/tr}
 			</a>
 			{if $prefs.lang_use_db eq "y"}
@@ -31,15 +32,18 @@
 		</div>
 		<div class="form-group">
 			<label class="control-label" for="file_type">
-				{tr}File Type{/tr}
+				{tr}Process Type{/tr}
 			</label>
-			<select name="file_type" class="translation_action form-control">
-				{foreach from=$fileTypes key=type_key item=type_name}
+			<select name="process_type" class="translation_action form-control">
+				{foreach from=$process_types key=type_key item=type_name}
 					<option value="{$type_key|escape}">
 						{$type_name}
 					</option>
 				{/foreach}
 			</select>
+			<span class="help-block">
+				{tr}Select how the uploaded translations should be processed{/tr}
+			</span>
 		</div>
 		<div class="form-group">
 			<label class="control-label" for="language_file">
