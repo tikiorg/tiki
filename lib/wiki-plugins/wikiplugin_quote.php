@@ -32,7 +32,7 @@ function wikiplugin_quote_info()
 				'name' => tra('Thread Id for Forum replies'),
 				'description' => tra('The thread Id of the comment being replied to in forums. Overwrites replyto'),
 				'since' => '15',
-				'filter' => '	text',
+				'filter' => 'text',
 				'default' => '',
 			),
 			'source_url' => array(
@@ -51,13 +51,25 @@ function wikiplugin_quote_info()
 				'default' => '',
 				'since' => '16',
 			),
+			'parse' => array(
+				'required' => false,
+				'name' => tra('Parse Quote'),
+				'description' => tra('Parse quote contents'),
+				'options' => array(
+					array('text' => tra('No'), 'value' => '0'),
+					array('text' => tra('Yes'), 'value' => '1'),
+				),
+				'filter' => 'digits',
+				'default' => '1',
+				'since' => '16',
+			)
 		),
 	);
 }
 
 function wikiplugin_quote($data, $params)
 {
-	global $smarty;
+	global $smarty, $tikilib;
 
 	$source_url = '';
 	$date = null;
@@ -75,11 +87,16 @@ function wikiplugin_quote($data, $params)
 	if ($params['date']) {
 		$date = strtotime($params['date']);
 	}
+	if ($params['parse'] === "0") {
+		$data = trim($data);
+	} else {
+		$data = $tikilib->parse_data(trim($data));
+	}
 
 	$smarty->assign('date', $date);
 	$smarty->assign('comment_info', $comment_info);
 	$smarty->assign('replyto', $replyto);
-	$smarty->assign('data', trim($data));
+	$smarty->assign('data', $data);
 	$smarty->assign('source_url', trim($source_url));
 
 	return $smarty->fetch("wiki-plugins/wikiplugin_quote.tpl");
