@@ -58,6 +58,7 @@
 				{preference name=page_bar_position}
 				{preference name=wiki_encourage_contribution}
 				{preference name=wiki_page_hide_title}
+				{preference name=wiki_heading_links}
 			</fieldset>
 			<fieldset>
 				<legend>{tr}Automatic Table of Contents{/tr}</legend>

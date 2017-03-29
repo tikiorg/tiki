@@ -4949,6 +4949,25 @@ div.drillshow {
 .plugin-list-editor li.plugin .params .dropdown-toggle {
   font-size: 9px;
 }
+/* heading anchor links */
+.heading-link {
+  padding-left: .25em;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out 0.1s;
+  -webkit-transition: opacity 0.2s ease-in-out 0.1s;
+  -moz-transition: opacity 0.2s ease-in-out 0.1s;
+  -ms-transition: opacity 0.2s ease-in-out 0.1s;
+}
+.heading-link .icon {
+  font-size: smaller;
+}
+h2:hover .heading-link,
+h3:hover .heading-link,
+h4:hover .heading-link,
+h5:hover .heading-link,
+h6:hover .heading-link {
+  opacity: 1;
+}
 .multilike .horizontal {
   display: inline-block;
   height: 38px;

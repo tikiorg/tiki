@@ -2996,10 +2996,18 @@ if ( \$('#$id') ) {
 
 						$style = $do_center ? ' style="text-align: center;"' : '';
 
-						if ( $prefs['feature_wiki_show_hide_before'] == 'y' ) {
-							$line = $button.'<h'.($hdrlevel).$style.' class="showhide_heading" id="'.$thisid.'">'.$aclose.' '.$title_text.'</h'.($hdrlevel).'>'.$aclose2;
+						if ($prefs['wiki_heading_links'] === 'y') {
+							$smarty = TikiLib::lib('smarty');
+							$smarty->loadPlugin('smarty_function_icon');
+							$headingLink = '<a href="#' . $thisid . '" class="heading-link">' . smarty_function_icon(['name' => 'link'], $smarty) . '</a>';
 						} else {
-							$line = $button.'<h'.($hdrlevel).$style.' class="showhide_heading" id="'.$thisid.'">'.$title_text.'</h'.($hdrlevel).'>'.$aclose.$aclose2;
+							$headingLink = '';
+						}
+
+						if ( $prefs['feature_wiki_show_hide_before'] == 'y' ) {
+							$line = $button.'<h'.($hdrlevel).$style.' class="showhide_heading" id="'.$thisid.'">'.$aclose.' '.$title_text.$headingLink.'</h'.($hdrlevel).'>'.$aclose2;
+						} else {
+							$line = $button.'<h'.($hdrlevel).$style.' class="showhide_heading" id="'.$thisid.'">'.$title_text.$headingLink.'</h'.($hdrlevel).'>'.$aclose.$aclose2;
 						}
 					} elseif (!strcmp($line, $prefs['wiki_page_separator'])) {
 						// Close open paragraph, lists, and div's

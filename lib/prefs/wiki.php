@@ -667,5 +667,12 @@ function prefs_wiki_list($partial = false)
 			'default' => 'y',
 			'dependencies' => array(),
 		),
+		'wiki_heading_links' => [
+			'name' => tr('Anchor links on headings'),
+			'description' => tr('Add links that appear on hover to each heading'),
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => [],
+		],
 	);
 }
