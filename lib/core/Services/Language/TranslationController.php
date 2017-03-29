@@ -25,15 +25,15 @@ class Services_Language_TranslationController
 		}
 	}
 
-    /**
-     * List translations relation of an instance of an object type (eg: translations of a wiki page)
-     *
-     * @param $input
-     *
-     * @return array Array of objects linked together as translations of each other
-     *
-     * @throws Services_Exception
-     */
+	/**
+	 * List translations relation of an instance of an object type (eg: translations of a wiki page)
+	 *
+	 * @param $input
+	 *
+	 * @return array Array of objects linked together as translations of each other
+	 *
+	 * @throws Services_Exception
+	 */
 	function action_manage($input)
 	{
 		$type = $input->type->text();
@@ -60,15 +60,15 @@ class Services_Language_TranslationController
 		);
 	}
 
-    /**
-     * Attach (link) translations for objects (eg: wiki pages)
-     *
-     * @param $input Instances of object types, eg: wiki pages
-     *
-     * @return Forward to utility action to perform the attaching
-     *
-     * @throws Services_Exception
-     */
+	/**
+	 * Attach (link) translations for objects (eg: wiki pages)
+	 *
+	 * @param $input Instances of object types, eg: wiki pages
+	 *
+	 * @return Forward to utility action to perform the attaching
+	 *
+	 * @throws Services_Exception
+	 */
 	function action_attach($input)
 	{
 		$type = $input->type->text();
@@ -106,15 +106,15 @@ class Services_Language_TranslationController
 		);
 	}
 
-    /**
-     * Detach (unlink) translations for objects (eg: wiki pages)
-     *
-     * @param $input Instances of object types, eg: wiki pages
-     *
-     * @return Forward to utility action to perform the deattaching
-     *
-     * @throws Services_Exception
-     */
+	/**
+	 * Detach (unlink) translations for objects (eg: wiki pages)
+	 *
+	 * @param $input Instances of object types, eg: wiki pages
+	 *
+	 * @return Forward to utility action to perform the deattaching
+	 *
+	 * @throws Services_Exception
+	 */
 	function action_detach($input)
 	{
 		$type = $input->type->text();
@@ -156,13 +156,13 @@ class Services_Language_TranslationController
 		);
 	}
 
-    /**
-     * Machine translation of an object (eg: a wiki page)
-     *
-     * @param $input An object, eg: a wiki page
-     *
-     * @return action Forward to utility action to perform the attaching
-     */
+	/**
+	 * Machine translation of an object (eg: a wiki page)
+	 *
+	 * @param $input An object, eg: a wiki page
+	 *
+	 * @return action Forward to utility action to perform the attaching
+	 */
 	function action_translate($input)
 	{
 		Services_Exception_Disabled::check('feature_machine_translation');
@@ -228,14 +228,14 @@ class Services_Language_TranslationController
 		return $filters;
 	}
 
-    /**
-     * Private function to determine if user is allowed to attach (link) translations for objects (eg: wiki pages)
-     *
-     * @param string $type object type, eg: wiki page
-     * @param int $object an instance of object type, eg: a wiki page
-     *
-     * @return
-     */
+	/**
+	 * Private function to determine if user is allowed to attach (link) translations for objects (eg: wiki pages)
+	 *
+	 * @param string $type object type, eg: wiki page
+	 * @param int $object an instance of object type, eg: a wiki page
+	 *
+	 * @return
+	 */
 	private function canAttach($type, $object)
 	{
 		global $prefs, $user;
@@ -263,14 +263,14 @@ class Services_Language_TranslationController
 		return $perms->admin;
 	}
 
-    /**
-     * Private function to determine if user is allowed to detach (unlink) translations for objects (eg: wiki pages)
-     *
-     * @param string $type object type, eg: wiki page
-     * @param int $object an instance of object type, eg: a wiki page
-     *
-     * @return
-     */
+	/**
+	 * Private function to determine if user is allowed to detach (unlink) translations for objects (eg: wiki pages)
+	 *
+	 * @param string $type object type, eg: wiki page
+	 * @param int $object an instance of object type, eg: a wiki page
+	 *
+	 * @return
+	 */
 	private function canDetach($type, $object)
 	{
 		$perms = Perms::get($type, $object);

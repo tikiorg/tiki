@@ -12,7 +12,7 @@ class Services_Language_Controller
 	function __construct()
 	{
 		$this->utilities = new Services_Language_Utilities;
-        $this->transifex = new Services_Language_TransifexController;
+		$this->transifex = new Services_Language_TransifexController;
 	}
 
 	function setUp()
@@ -23,10 +23,10 @@ class Services_Language_Controller
 	
 	/**
 	 * Download database translations into a php file
-     *
+	 *
 	 * @param $input
 	 *
-     * @return language.php file
+	 * @return language.php file
 	 */
 	function action_download_db_translations($input)
 	{
@@ -64,9 +64,9 @@ class Services_Language_Controller
 	/**
 	 * Translations in the database will be merged with the other translations in language.php. Note that after writing translations to language.php they are removed from the database.
 	 *
-     * @param $input
+	 * @param $input
 	 *
-     * @return array
+	 * @return array
 	 */
 	function action_write_to_language_php($input)
 	{
@@ -272,9 +272,9 @@ class Services_Language_Controller
 	/**
 	 * Upload a language file (Tiki language.php, Tiki custom.php or Transifex translation)
 	 *
-     * @param $input
+	 * @param $input
 	 *
-     * @return int
+	 * @return int
 	 */
 	function action_upload($input)
 	{
