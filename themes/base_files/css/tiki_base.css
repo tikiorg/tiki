@@ -1245,6 +1245,13 @@ textarea.wikiedit {
   font-size: 70%;
   margin-left: 1px;
 }
+.side-col-toggle {
+  z-index: 2;
+}
+.tiki .side-col-toggle + #col1 {
+  margin-top: -20px;
+  padding-top: 20px;
+}
 .box-quickadmin li {
   font-size: 0.9em;
 }

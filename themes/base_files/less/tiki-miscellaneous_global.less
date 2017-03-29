@@ -408,3 +408,9 @@ textarea.wikiedit {
 .tiki .wiki.external .icon-link-external {
 	font-size: 70%; margin-left: 1px;
 }
+
+.side-col-toggle { z-index: 2; }
+.tiki .side-col-toggle + #col1 {
+	margin-top: @top-margin-compensation-for-side-col-toggle;
+	padding-top: @line-height-computed;
+}

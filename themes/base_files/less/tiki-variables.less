@@ -46,6 +46,9 @@
 	margin-bottom: ceil(@line-height-computed * 2);
 }
 
+// Enable bringing  center column background back up to topbar when side column toggle icons are used
+@top-margin-compensation-for-side-col-toggle: -@line-height-computed;
+
 // Map Bootstrap variables to Chosen selectors
 @chosen-background: @input-bg;
 @chosen-border: 1px solid @input-border;
