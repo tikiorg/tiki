@@ -23,6 +23,9 @@ function wikiplugin_h5p_info()
 				'since' => '17.0',
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'file',
+				'area' => 'fgal_picker_id',
+				'type' => 'fileId',
 			],
 		],
 	];
