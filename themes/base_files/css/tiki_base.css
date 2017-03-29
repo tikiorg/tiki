@@ -1306,10 +1306,14 @@ li.archivedate {
 .box-search .form-group {
   padding: 0;
 }
+#col2 .box-search .input-group-btn,
+#col3 .box-search .input-group-btn {
+  display: inline-block;
+}
 .box-search .search_mod_magnifier {
   padding: 6px;
 }
-.box-search .panel-body * {
+.tiki .box-search .panel-body * {
   margin-bottom: .3em;
 }
 .box-forums_most_read_topics .hits {
