@@ -93,6 +93,10 @@
 					{icon name='edit' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Edit{/tr}"}
 				</a>
 			{/if}
+		{elseif $prefs.h5p_enabled eq 'y' and $files[$changes].type eq 'application/zip' and preg_match('/\.h5p$/i', $files[$changes].filename)}
+			<a href="{service controller='h5p' action='embed' fileId=$files[$changes].id}">
+				{icon name='view' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
+			</a>
 		{/if}
 
 		{if (isset($files[$changes].p_download_files) and $files[$changes].p_download_files eq 'y')

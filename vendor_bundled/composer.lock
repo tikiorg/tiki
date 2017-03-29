@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d519a565212c9ab3dbc0dd3a97ff864c",
+    "content-hash": "649c579b0220f1cb45098474b74a86e1",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -143,17 +143,17 @@
         },
         {
             "name": "blueimp/jquery-file-upload",
-            "version": "v9.17.0",
+            "version": "v9.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vkhramtsov/jQuery-File-Upload.git",
-                "reference": "1e630dd8e96f517bf33f6fc20d93a2cb930a2c0f"
+                "reference": "a136ef0280c40a53f40c4411c0d4ec0964713a52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/blueimp/jquery-file-upload/blueimp-jquery-file-upload-1e630dd8e96f517bf33f6fc20d93a2cb930a2c0f-zip-4eee56.zip",
-                "reference": "1e630dd8e96f517bf33f6fc20d93a2cb930a2c0f",
-                "shasum": "3f28ea99477abf0ccb5f492b6aa2615edf22ba18"
+                "url": "https://composer.tiki.org/dist/blueimp/jquery-file-upload/blueimp-jquery-file-upload-a136ef0280c40a53f40c4411c0d4ec0964713a52-zip-595587.zip",
+                "reference": "a136ef0280c40a53f40c4411c0d4ec0964713a52",
+                "shasum": "30ca172c9d881c0c535c3a5d219cb54d85d5621d"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -189,7 +189,7 @@
                 "upload",
                 "widget"
             ],
-            "time": "2017-02-20T06:05:50+00:00"
+            "time": "2017-03-29T09:26:17+00:00"
         },
         {
             "name": "chartjs/Chart.js",
@@ -739,6 +739,117 @@
             "time": "2015-10-16T22:11:08+00:00"
         },
         {
+            "name": "h5p/h5p-core",
+            "version": "1.13.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/h5p/h5p-php-library.git",
+                "reference": "bdf60a943d61e08ed6382ecc298d3ba5998e22a9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/h5p/h5p-php-library/zipball/bdf60a943d61e08ed6382ecc298d3ba5998e22a9",
+                "reference": "bdf60a943d61e08ed6382ecc298d3ba5998e22a9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "h5p.classes.php",
+                    "h5p-development.class.php",
+                    "h5p-file-storage.interface.php",
+                    "h5p-default-storage.class.php",
+                    "h5p-event-base.class.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Svein-Tore Griff With",
+                    "email": "with@joubel.com",
+                    "homepage": "http://joubel.com",
+                    "role": "CEO"
+                },
+                {
+                    "name": "Frode Petterson",
+                    "email": "frode.petterson@joubel.com",
+                    "homepage": "http://joubel.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "H5P Core functionality in PHP",
+            "homepage": "https://h5p.org",
+            "keywords": [
+                "content",
+                "h5p",
+                "hvp",
+                "interactive",
+                "quiz"
+            ],
+            "time": "2017-02-23T10:18:59+00:00"
+        },
+        {
+            "name": "h5p/h5p-editor",
+            "version": "1.12.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/h5p/h5p-editor-php-library.git",
+                "reference": "1880ae7eb5b088c607ca1fc298b55be6e230a0c7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/h5p/h5p-editor-php-library/zipball/1880ae7eb5b088c607ca1fc298b55be6e230a0c7",
+                "reference": "1880ae7eb5b088c607ca1fc298b55be6e230a0c7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "h5peditor.class.php",
+                    "h5peditor-file.class.php",
+                    "h5peditor-storage.interface.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Svein-Tore Griff With",
+                    "email": "with@joubel.com",
+                    "homepage": "http://joubel.com",
+                    "role": "CEO"
+                },
+                {
+                    "name": "Frode Petterson",
+                    "email": "frode.petterson@joubel.com",
+                    "homepage": "http://joubel.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "H5P Editor functionality in PHP",
+            "homepage": "https://h5p.org",
+            "keywords": [
+                "content",
+                "editor",
+                "h5p",
+                "hvp",
+                "interactive",
+                "quiz"
+            ],
+            "time": "2017-03-06T09:07:11+00:00"
+        },
+        {
             "name": "jquery/jquery-s5",
             "version": "1.0.1",
             "dist": {
@@ -758,7 +869,12 @@
                 "reference": null,
                 "shasum": "f795b13ceb1e95281cd575e92c7666bd6b15ca90"
             },
-            "type": "library"
+            "type": "library",
+            "extra": {
+                "patches_applied": {
+                    "Fix visibility issues": "../installer/composer-patches/jquery-sheet_fix-visibility-issues.patch"
+                }
+            }
         },
         {
             "name": "jquery/jquery-timepicker-addon",
@@ -1373,17 +1489,17 @@
         },
         {
             "name": "oyejorge/less.php",
-            "version": "v1.7.0.13",
+            "version": "v1.7.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oyejorge/less.php.git",
-                "reference": "f1bccbee4bc9c7fdb6873e8c246063e01365a9a8"
+                "reference": "42925c5a01a07d67ca7e82dfc8fb31814d557bc9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/oyejorge/less-php/oyejorge-less-php-f1bccbee4bc9c7fdb6873e8c246063e01365a9a8-zip-d409f7.zip",
-                "reference": "f1bccbee4bc9c7fdb6873e8c246063e01365a9a8",
-                "shasum": "88c7a59dd15ff2f039dc56d80312f4f538d83958"
+                "url": "https://composer.tiki.org/dist/oyejorge/less-php/oyejorge-less-php-42925c5a01a07d67ca7e82dfc8fb31814d557bc9-zip-b70004.zip",
+                "reference": "42925c5a01a07d67ca7e82dfc8fb31814d557bc9",
+                "shasum": "f33807b01329439a87f7da4e171be80e914e986a"
             },
             "require": {
                 "php": ">=5.3"
@@ -1419,10 +1535,6 @@
                 {
                     "name": "Josh Schmidt",
                     "homepage": "https://github.com/oyejorge"
-                },
-                {
-                    "name": "Michaël Marinetti",
-                    "homepage": "https://github.com/Asenar"
                 }
             ],
             "description": "PHP port of the Javascript version of LESS http://lesscss.org (Originally maintained by Josh Schmidt)",
@@ -1435,7 +1547,7 @@
                 "php",
                 "stylesheet"
             ],
-            "time": "2017-02-23T14:18:55+00:00"
+            "time": "2017-03-28T22:19:25+00:00"
         },
         {
             "name": "phenx/php-font-lib",

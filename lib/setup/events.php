@@ -153,6 +153,12 @@ function tiki_setup_events()
 		$events->bind('tiki.file.update', $defer('scorm', 'handle_file_update'));
 	}
 
+	if ($prefs['h5p_enabled'] == 'y') {
+		$events->bind('tiki.file.create', $defer('h5p', 'handle_fileCreation'));
+		$events->bind('tiki.file.update', $defer('h5p', 'handle_fileUpdate'));
+		$events->bind('tiki.file.delete', $defer('h5p', 'handle_fileDelete'));
+	}
+
 	if ($prefs['feature_futurelinkprotocol'] == 'y') {
 		$events->bind("tiki.wiki.view", $defer('wlte', 'tiki_wiki_view_pastlink'));
 		$events->bind("tiki.wiki.save", $defer('wlte', 'tiki_wiki_save_pastlink'));

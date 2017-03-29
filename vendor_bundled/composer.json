@@ -24,6 +24,8 @@
 		"nicolaskruchten/pivottable":"v2.7.0",
 		"fortawesome/font-awesome": "^4.6.3",
 		"google/apiclient":"1.1.6",
+		"h5p/h5p-core":"1.13.1",
+		"h5p/h5p-editor":"1.12.1",
 		"jquery/jquery-s5": "1.0.1",
 		"jquery/jquery-sheet": "3.1",
 		"jquery/jquery-ui": "1.12.1",
@@ -144,7 +146,8 @@
 			"Report": "../lib/core/",
 			"Feed": "../lib/core/",
 			"FutureLink": "../lib/core/",
-			"Yaml": "../lib/core/"
+			"Yaml": "../lib/core/",
+			"H5P" : "../lib/core/"
 		},
 		"classmap": [
 			"../vendor_extra/pear/",
@@ -161,7 +164,9 @@
 			"../installer/",
 			"../lib/test",
 			"../lib/webmail",
-			"../lib/stats"
+			"../lib/stats",
+			"vendor/h5p/h5p-core",
+			"vendor/h5p/h5p-editor"
 		]
 	},
 	"scripts": {

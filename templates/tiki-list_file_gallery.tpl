@@ -163,6 +163,9 @@
 	{if $edit_mode neq 'y' and $prefs.fgal_show_slideshow eq 'y' and $gal_info.show_slideshow eq 'y'}
 		{button _icon_name="chart" _text="{tr}SlideShow{/tr}" href="#" _onclick="javascript:window.open('tiki-list_file_gallery.php?galleryId=$galleryId&amp;slideshow','','menubar=no,width=600,height=500,resizable=yes');return false;"}
 	{/if}
+	{if $edit_mode neq 'y' and $prefs.h5p_enabled eq 'y' and $tiki_p_upload_files eq 'y'}
+		{button _icon_name="plus" _text="{tr}Create H5P{/tr}" href={service controller="h5p" action="edit"} _type="link"}
+	{/if}
 </div>
 
 {if $edit_mode neq 'y' and $gal_info.description neq ''}

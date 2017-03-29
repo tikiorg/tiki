@@ -30,6 +30,7 @@
 		<service id="tiki.controller.group" class="Services_Group_Controller"/>
 		<service id="tiki.controller.file_finder" class="Services_File_FinderController"/>
 		<service id="tiki.controller.file" class="Services_File_Controller"/>
+		<service id="tiki.controller.h5p" class="Services_H5P_Controller"/>
 		<service id="tiki.controller.kaltura" class="Services_Kaltura_Controller"/>
 		<service id="tiki.controller.language" class="Services_Language_Controller"/>
 		<service id="tiki.controller.mailin" class="Services_MailIn_Controller"/>
