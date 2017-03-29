@@ -850,7 +850,7 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			$label = tra('Heading') . ' ' . $tagName{1};
 			$iconname = $tagName;
 			$wysiwyg = null;
-			$syntax = str_repeat('!', $tagName{1}) . 'text';
+			$syntax = str_repeat('!', $tagName{1}) . ' text';
 			break;
 		case 'titlebar':
 			$label = tra('Title bar');
@@ -907,13 +907,13 @@ class ToolbarLineBased extends ToolbarInline // Will change in the future
 			$label = tra('Bullet List');
 			$iconname = 'list';
 			$wysiwyg =  'BulletedList';
-			$syntax = '*text';
+			$syntax = '* text';
 			break;
 		case 'numlist':
 			$label = tra('Numbered List');
 			$iconname = 'list-numbered';
 			$wysiwyg =  'NumberedList';
-			$syntax = '#text';
+			$syntax = '# text';
 			break;
 		case 'indent':
 			global $prefs;
