@@ -489,7 +489,7 @@ class H5PLib
 		$embedUrl = smarty_function_service([
 			'controller' => 'h5p',
 			'action' => 'embed',
-			'fileId' => $content['fileId'],
+			'fileId' => $content['file_id'],
 		], $smarty);
 
 
@@ -498,7 +498,7 @@ class H5PLib
 			'library' => H5PCore::libraryToString($content['library']),
 			'jsonContent' => $safe_parameters,
 			'fullScreen' => $content['library']['fullscreen'],
-			'exportUrl' => ($prefs['h5p_export'] === 'y' ? 'tiki-download_file.php?fileId=' . $content['fileId'] : ''),
+			'exportUrl' => ($prefs['h5p_export'] === 'y' ? 'tiki-download_file.php?fileId=' . $content['file_id'] : ''),
 			'embedCode' => '<iframe src="' . $embedUrl . '" width=":w" height=":h" frameborder="0" allowfullscreen="allowfullscreen"></iframe>',
 			'resizeCode' => '<script src="vendor_bundled/vendor/h5p/h5p-core/js/h5p-resizer.js" charset="UTF-8"></script>',
 			'url' => $embedUrl,

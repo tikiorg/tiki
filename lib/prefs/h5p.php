@@ -80,6 +80,16 @@ function prefs_h5p_list()
 			'filter' => 'int',
 			'default' => 60,
 		],
+		'h5p_export' => [
+			'name' => tra('Export'),
+			'description' => tra('Allows users to export H5P content'),
+			'dependencies' => [
+				'h5p_enabled',
+			],
+			'type' => 'flag',
+			'filter' => 'alpha',
+			'default' => 'n',
+		],
 	];
 }
 

@@ -317,6 +317,7 @@
 					<div class="adminoptionboxchild" id="h5p_save_content_state_childcontainer">
 						{preference name='h5p_save_content_frequency'}
 					</div>
+					{preference name='h5p_export'}
 				</div>
 			</fieldset>
 

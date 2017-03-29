@@ -47,7 +47,7 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 			// Cron not run in >24h, trigger it
 
 			// Determine full URL
-			$cronUrl = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . "://{$_SERVER[HTTP_HOST]}/" .
+			$cronUrl = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . "://{$_SERVER['HTTP_HOST']}/" .
 					TikiLib::lib('service')->getUrl(['controller' => 'h5p', 'action' => 'cron']);
 
 			// Use token to prevent unauthorized use
