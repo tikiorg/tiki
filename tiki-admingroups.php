@@ -21,6 +21,7 @@ $inputConfiguration = [
 			'home'                      => 'pagename',
 			'defcat'                    => 'int',
 			'theme'                     => 'themename',
+			'color'                     => 'striptags',
 			'maxRecords'                => 'int',
 			'membersMax'                => 'int',
 			'bannedMax'                 => 'int',
@@ -150,6 +151,7 @@ if (!empty($_REQUEST["group"])) {
 	if (isset($re["groupHome"])) $grouphome = $re["groupHome"];
 	if (isset($re["groupDefCat"])) $groupdefcat = $re["groupDefCat"];
 	if (isset($re["groupTheme"])) $grouptheme = $re["groupTheme"];
+	if (isset($re["groupColor"])) $groupcolor = $re["groupColor"];
 	if (isset($re['userChoice'])) $userChoice = $re['userChoice'];
 	if (isset($re['expireAfter'])) $expireAfter = $re['expireAfter'];
 	if (isset($re['anniversary'])) $anniversary = $re['anniversary'];
@@ -370,6 +372,7 @@ $smarty->assign('groupdesc', $groupdesc);
 $smarty->assign('grouphome', $grouphome);
 $smarty->assign('groupdefcat', $groupdefcat);
 $smarty->assign('grouptheme', $grouptheme);
+$smarty->assign('groupcolor', $groupcolor);
 $smarty->assign('groupperms', $groupperms);
 $smarty->assign_by_ref('userChoice', $userChoice);
 $smarty->assign_by_ref('cant_pages', $users["cant"]);

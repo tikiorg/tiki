@@ -2828,6 +2828,13 @@ function prefs_feature_list($partial = false)
 			'help' => "https://github.com/Sam152/Javascript-Equal-Height-Responsive-Rows",
 			'tags' => array('advanced'),
 		),
+		'feature_conditional_formatting' => array(
+			'name' => tra('Conditional formatting'),
+			'description' => tra('Use different coloring for certain system objects. Only groups are supported for now.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('advanced'),
+		),
 		'feature_theme_control_savesession' => array(
 			'name' => tra('Store session variable for current theme'),
 			'description' => tra('Store a session variable for current theme so that it can  be used for auto-selecting a category when categorizing'),

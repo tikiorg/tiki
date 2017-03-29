@@ -19,14 +19,20 @@ class Tiki_Profile_Installer
 		$data = array(
 			'description' => $info['groupDesc'],
 			'home' => $info['groupHome'],
-			'user_tracker' => $writer->getReference('tracker', $info['userTrackerId']),
+			'user_tracker' => $writer->getReference('tracker', $info['usersTrackerId']),
 			'group_tracker' => $writer->getReference('tracker', $info['groupTrackerId']),
-			'user_tracker_field' => $writer->getReference('tracker_field', $info['userTrackerFieldId']),
-			'group_tracker_field' => $writer->getReference('tracker_field', $info['groupTrackerFieldId']),
+			'user_tracker_field' => $writer->getReference('tracker_field', $info['usersFieldId']),
+			'group_tracker_field' => $writer->getReference('tracker_field', $info['groupFieldId']),
 			'registration_fields' => $writer->getReference('tracker_field', array_filter(explode(':', $info['registrationUsersFieldIds']))),
 			'user_signup' => $info['userChoice'],
 			'default_category' => $writer->getReference('category', $info['groupDefCat']),
 			'theme' => $info['groupTheme'],
+			'color' => $info['groupColor'],
+			'is_external' => $info['isExternal'],
+			'expire_after' => $info['expireAfter'],
+			'email_pattern' => $info['emailPattern'],
+			'anniversary' => $info['anniversary'],
+			'prorate_interval' => $info['prorateInterval'],
 			'allow' => [],
 			'objects' => [],
 		);
@@ -506,10 +512,19 @@ class Tiki_Profile_Installer
 	{
 		$userlib = TikiLib::lib('user');
 
+		foreach (['description', 'home', 'user_tracker', 'group_tracker', 'user_signup', 'default_category', 'theme', 'color', 'user_tracker_field', 'group_tracker_field', 'is_external', 'expire_after', 'email_pattern', 'anniversary', 'prorate_interval'] as $field) {
+			if( !isset($info[$field]) ) {
+				$info[$field] = '';
+			}
+		}
+		if( !isset($info['registration_fields']) ) {
+			$info['registration_fields'] = [];
+		}
+
 		if ( ! $userlib->group_exists($groupName) ) {
-			$userlib->add_group($groupName, $info['description'], $info['home'], $info['user_tracker'], $info['group_tracker'], implode(':', $info['registration_fields']), $info['user_signup'], $info['default_category'], $info['theme'], $info['user_tracker_field'], $info['group_tracker_field']);
+			$userlib->add_group($groupName, $info['description'], $info['home'], $info['user_tracker'], $info['group_tracker'], implode(':', $info['registration_fields']), $info['user_signup'], $info['default_category'], $info['theme'], $info['user_tracker_field'], $info['group_tracker_field'], $info['is_external'], $info['expire_after'], $info['email_pattern'], $info['anniversary'], $info['prorate_interval'], $info['color']);
 		} else {
-			$userlib->change_group($groupName, $groupName, $info['description'], $info['home'], $info['user_tracker'], $info['group_tracker'], $info['user_tracker_field'], $info['group_tracker_field'], implode(':', $info['registration_fields']), $info['user_signup'], $info['default_category'], $info['theme']);
+			$userlib->change_group($groupName, $groupName, $info['description'], $info['home'], $info['user_tracker'], $info['group_tracker'], $info['user_tracker_field'], $info['group_tracker_field'], implode(':', $info['registration_fields']), $info['user_signup'], $info['default_category'], $info['theme'], $info['is_external'], $info['expire_after'], $info['email_pattern'], $info['anniversary'], $info['prorate_interval'], $info['color']);
 		}
 
 		if ( count($info['include']) ) {

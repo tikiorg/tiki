@@ -694,7 +694,13 @@ class Tiki_Profile
 				'user_signup' => !empty($groupInfo['userChoice']) ? $groupInfo['userChoice'] : 'n',
 				'default_category' => !empty($groupInfo['groupDefCat']) ? $groupInfo['groupDefCat'] : 0,
 				'theme' => !empty($groupInfo['groupTheme']) ? $groupInfo['groupTheme'] : '',
+				'color' => !empty($groupInfo['groupColor']) ? $groupInfo['groupColor'] : '',
 				'registration_fields' => !empty($groupInfo['registrationUsersFieldIds']) ? explode(':', $groupInfo['registrationUsersFieldIds']) : array(),
+				'is_external' => !empty($groupInfo['isExternal']) ? $groupInfo['isExternal'] : 'n',
+				'expire_after' => !empty($groupInfo['expireAfter']) ? $groupInfo['expireAfter'] : 0,
+				'email_pattern' => !empty($groupInfo['emailPattern']) ? $groupInfo['emailPattern'] : '',
+				'anniversary' => !empty($groupInfo['anniversary']) ? $groupInfo['anniversary'] : '',
+				'prorate_interval' => !empty($groupInfo['prorateInterval']) ? $groupInfo['prorateInterval'] : '',
 				'include' => array(),
 				'autojoin' => 'n',
 			);

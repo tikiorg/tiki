@@ -7028,7 +7028,7 @@ class UsersLib extends TikiLib
 	function add_group($group, $desc = '', $home = '', $utracker = 0,
 		$gtracker = 0, $rufields = '', $userChoice = '', $defcat = 0,
 		$theme = '', $ufield = 0, $gfield = 0,$isexternal = 'n',
-		$expireAfter = 0, $emailPattern = '', $anniversary = '', $prorateInterval = '')
+		$expireAfter = 0, $emailPattern = '', $anniversary = '', $prorateInterval = '', $color = '')
 	{
 		$tikilib = TikiLib::lib('tiki');
 		$group = trim($group);
@@ -7043,6 +7043,7 @@ class UsersLib extends TikiLib
 			'groupHome' => $home,
 			'groupDefCat' => $defcat,
 			'groupTheme' => $theme,
+			'groupColor' => $color,
 			'usersTrackerId' => (int) $utracker,
 			'groupTrackerId' => (int) $gtracker,
 			'registrationUsersFieldIds' => $rufields,
@@ -7073,7 +7074,7 @@ class UsersLib extends TikiLib
 	function change_group($olgroup, $group, $desc, $home, $utracker = 0,
 		 $gtracker = 0, $ufield = 0, $gfield = 0, $rufields = '', $userChoice = '',
 		 $defcat = 0, $theme = '', $isexternal = 'n', $expireAfter = 0,
-		 $emailPattern = '', $anniversary = '', $prorateInterval = '')
+		 $emailPattern = '', $anniversary = '', $prorateInterval = '', $color = '')
 	{
 
 		if ( $olgroup == 'Anonymous' || $olgroup == 'Registered' ) {
@@ -7095,7 +7096,8 @@ class UsersLib extends TikiLib
 				$expireAfter,
 				$emailPattern,
 				$anniversary,
-				$prorateInterval
+				$prorateInterval,
+				$color
 			);
 		}
 
@@ -7109,6 +7111,7 @@ class UsersLib extends TikiLib
 			'groupHome' => $home,
 			'groupDefCat' => $defcat,
 			'groupTheme' => $theme,
+			'groupColor' => $color,
 			'usersTrackerId' => (int) $utracker,
 			'groupTrackerId' => (int) $gtracker,
 			'registrationUsersFieldIds' => $rufields,

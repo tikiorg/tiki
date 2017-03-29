@@ -549,7 +549,7 @@ function wikiplugin_pivottable($data, $params)
 			foreach( $ownerFields as $ownerField ) {
 				$itemUsers = TikiLib::lib('trk')->parse_user_field(@$item[$ownerField['name']]);
 				if( in_array($user, $itemUsers) ) {
-					$highlight[] = $item;
+					$highlight[] = ['item' => $item];
 					break;
 				}
 			}
@@ -566,8 +566,22 @@ function wikiplugin_pivottable($data, $params)
 		if( $groupField ) {
 			$myGroups = TikiLib::lib('tiki')->get_user_groups($user);
 			foreach( $pivotData as $item ) {
-				if( in_array(@$item[$groupField['name']], $myGroups) ) {
-					$highlight[] = $item;
+				$group = @$item[$groupField['name']];
+				if( in_array($group, $myGroups) ) {
+					$highlight[] = ['item' => $item, 'group' => $group];
+				}
+			}
+			if( $prefs['feature_conditional_formatting'] === 'y' ) {
+				$groupsInfo = TikiLib::lib('user')->get_group_info($myGroups);
+				$groupColors = [];
+				foreach( $groupsInfo as $groupInfo ) {
+					$groupColors[$groupInfo['groupName']] = $groupInfo['groupColor'];
+				}
+				foreach( $highlight as &$row ) {
+					$group = $row['group'];
+					if( $group && !empty($groupColors[$group]) ) {
+						$row['color'] = $groupColors[$group];
+					}
 				}
 			}
 		}

@@ -146,7 +146,8 @@ class Services_Group_Controller
 				$params['expireAfter'],
 				$params['emailPattern'],
 				$params['anniversary'],
-				$params['prorateInterval']
+				$params['prorateInterval'],
+				$params['color']
 			);
 			if (isset($util->extra['include_groups'])) {
 				foreach ($util->extra['include_groups'] as $include) {
@@ -231,7 +232,8 @@ class Services_Group_Controller
 				$params['expireAfter'],
 				$params['emailPattern'],
 				$params['anniversary'],
-				$params['prorateInterval']
+				$params['prorateInterval'],
+				$params['color']
 			);
 			$userlib->remove_all_inclusions($params['name']);
 			if (isset($params['include_groups']) and is_array($params['include_groups'])) {
@@ -456,6 +458,7 @@ class Services_Group_Controller
 		$extra = $extra->asArray();
 		$extra['home'] = isset($extra['home']) ? $extra['home'] : '';
 		$extra['theme'] = isset($extra['theme']) ? $extra['theme'] : '';
+		$extra['color'] = isset($extra['color']) ? $extra['color'] : '';
 		$extra['defcat'] = !empty($extra['defcat']) ? $extra['defcat'] : 0;
 		$extra['userChoice'] = isset($extra['userChoice']) && $extra['userChoice'] == 'on' ? 'y' : '';
 		$extra['expireAfter'] = empty($extra['expireAfter']) ? 0 : $extra['expireAfter'];
@@ -518,6 +521,7 @@ class Services_Group_Controller
 				'userChoice'                => 'word',
 				'defcat'                    => 'int',
 				'theme'                     => 'themename',
+				'color'                     => 'striptags',
 				'usersfield'                => 'int',
 				'groupfield'                => 'int',
 				'expireAfter'               => 'int',

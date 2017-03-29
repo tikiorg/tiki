@@ -275,6 +275,17 @@
 					</div>
 				</div>
 			{/if}
+			{if $prefs.feature_conditional_formatting eq 'y'}
+				<div class="form-group">
+					<label for="groups_color" class="control-label col-md-3">{tr}Group color{/tr}</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control" name="color" id="groups_color" value="{$groupcolor|escape}">
+						<div class="help-block">
+							{tr}Default color to use when plotting values for this group in charts. Use HEX notation, e.g. #FF0000 for red color.{/tr}
+						</div>
+					</div>
+				</div>
+			{/if}
 			{if $prefs.groupTracker eq 'y'}
 				<div class="form-group">
 					<label for="groupstracker" class="control-label col-md-3">{tr}Group Information Tracker{/tr}</label>
