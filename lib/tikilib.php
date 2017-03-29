@@ -4031,7 +4031,7 @@ class TikiLib extends TikiDb_Bridge
 
 		$insertData = array(
 			'pageName' => $name,
-			'pageSlug' => TikiLib::lib('slugmanager')->generate($prefs['wiki_url_scheme'] ?: 'urlencode', $name, $prefs['url_only_ascii'] === 'y'),
+			'pageSlug' => TikiLib::lib('slugmanager')->generate($prefs['wiki_url_scheme'] ?: 'dash', $name, $prefs['url_only_ascii'] === 'y'),
 			'hits' => (int) $hits,
 			'data' => $data,
 			'description' => $description,
