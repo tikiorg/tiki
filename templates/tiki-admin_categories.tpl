@@ -51,7 +51,7 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label" for="description">{tr}Description{/tr}</label>
 				<div class="col-sm-9">
-					<textarea rows="2" class="form-control" name="description" id="description">{$description|escape}</textarea>
+					<textarea rows="2" class="form-control" name="description" id="description" maxlength=500>{$description|escape}</textarea>
 				</div>
 			</div>
 			{if $tiki_p_admin_categories == 'y'}
