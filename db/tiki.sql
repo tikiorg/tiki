@@ -462,7 +462,7 @@ DROP TABLE IF EXISTS `tiki_categories`;
 CREATE TABLE `tiki_categories` (
   `categId` int(12) NOT NULL auto_increment,
   `name` varchar(200) default NULL,
-  `description` varchar(250) default NULL,
+  `description` varchar(500) default NULL,
   `parentId` int(12) default NULL,
   `rootId` int NOT NULL DEFAULT 0,
   `hits` int(8) default NULL,
