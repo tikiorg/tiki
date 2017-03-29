@@ -119,7 +119,11 @@ if ( isset($_REQUEST['download']) && $_REQUEST['download'] !== 'n' ) {
 		$filename = $page;
 	}
 	$filename = str_replace(array('?',"'",'"',':','/','\\'), '_', $filename);	// clean some bad chars
-	header("Content-type: text/plain; charset=utf-8");
+	if ( isset($_REQUEST['css']) && $_REQUEST['css'] === 'y' ) {
+		header("Content-type: text/css; charset=utf-8");
+	} else {
+		header("Content-type: text/plain; charset=utf-8");
+	}
 	header("Content-Disposition: attachment; filename=\"$filename\"");
 }
 
