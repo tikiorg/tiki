@@ -17,6 +17,7 @@ function wikiplugin_benchmark_info()
 		//'iconname' => 'copy',
 		'introduced' => 17,
 		'format' => 'html',
+		'tags' => array( 'advanced' ),
 		'params' => array(
 			'times' => array(
 				'required' => false,
