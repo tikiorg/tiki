@@ -7984,7 +7984,8 @@ a.admbox.off:active {
   border: 1px solid #191b1c;
   color: #999999;
 }
-.tiki .ui-widget-content {
+.tiki .ui-widget-content,
+span.plugin-mouseover {
   background: #2e3338;
   color: #c8c8c8;
   border: 1px solid rgba(0, 0, 0, 0.2);
