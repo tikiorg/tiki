@@ -17,7 +17,6 @@
 			req.onreadystatechange = function (aEvt) {
 				if (req.readyState == 4) {
 					if(req.status == 200) {
-						var char = req.responseText.slice(0,1);
 						if (req.responseText.slice(0,1) !== '<') {
 							var data = eval( "(" + req.responseText + ")" );
 							$.each(['open', 'pending', 'closed'], function (key, value) {
