@@ -137,8 +137,9 @@ class Services_Edit_PluginController
 			$info = $parserlib->plugin_info($type);
 			$info['advancedParams'] = [];
 			$validationRules = [];
+			$objectlib = TikiLib::lib('object');
 
-			foreach ($info['params'] as $key => $param) {
+			foreach ($info['params'] as $key => & $param) {
 				if ($prefs['feature_jquery_validation'] === 'y') {
 					// $("#insertItemForm4").validate({rules: { ins_11: { required: true}, ins_13: { remote: { url: "validate-ajax.php", type: "post", data: { validator: "distinct", parameter: "trackerId=4&fieldId=13&itemId=0", message: "", input: function() { return $("#ins_13").val(); } } } }, ins_18: { required: true, remote: { url: "validate-ajax.php", type: "post", data: { validator: "distinct", parameter: "trackerId=4&fieldId=18&itemId=0", message: "this is not distinct!", input: function() { return $("#ins_18").val(); } } } }}, messages: { ins_11: { required: "This field is required" }, ins_18: { required: "this is not distinct!" }},
 					if ($param['required']) {
@@ -156,6 +157,20 @@ class Services_Edit_PluginController
 				if (! empty($param['advanced']) && ! isset($pluginArgs[$key]) && empty($param['parent'])) {
 					$info['advancedParams'][$key] = $param;
 					unset($info['params'][$key]);
+				}
+				// set up object selectors - TODO refactor code with \PreferencesLib::getPreference and \Services_Tracker_Controller::action_edit_field
+				if (isset($param['profile_reference'])) {
+					$param['selector_type'] = $objectlib->getSelectorType($param['profile_reference']);
+					if( isset($param['parent']) ) {
+						if( !preg_match('/[\[\]#\.]/', $param['parent']) )
+							$param['parent'] = "#option-{$param['parent']}";
+					} else {
+						$param['parent'] = null;
+					}
+					$param['parentkey'] = isset($param['parentkey']) ? $param['parentkey'] : null;
+					$param['sort_order'] = isset($param['sort_order']) ? $param['sort_order'] : null;
+				} else {
+					$param['selector_type'] = null;
 				}
 			}
 

@@ -7,7 +7,7 @@
 {block name="content"}
 	{function plugin_edit_row}{* needs to be in the same block it seems? *}
 		{if $param.area}{$inputId=$param.area|escape}{else}{$inputId="param_{$name|escape}_input"}{/if}
-		<div  class="col-sm-3">
+		<div class="col-sm-3">
 			<label for="{$inputId}">{$param.name|escape}</label>
 			{if not empty($param.type)}
 				{$onclick = "openFgalsWindow('{$prefs.home_file_gallery|sefurl:'file gallery':true}filegals_manager={$param.area|escape}&id=1', true);return false;"}
@@ -45,19 +45,27 @@ $("#picker_{{$name|escape}}").parent().click(function () {
 				{$data = ''}
 			{/if}
 			{if empty($param.options)}
-				<input value="{if isset($pluginArgs[$name])}{$pluginArgs[$name]}{/if}" class="form-control{$groupClass}" id="{$inputId}" type="text" name="params[{$name|escape}]"{$dataAttribute}>
-				{if not empty($param.filter)}
-					{if $param.filter eq "pagename"}
-						{jq}$({{$inputId}}).tiki("autocomplete", "pagename");{/jq}
-					{elseif $param.filter eq "groupname"}
-						{jq}$({{$inputId}}).tiki("autocomplete", "groupname", {multiple: true, multipleSeparator: "|"});{/jq}
-					{elseif $param.filter eq "username"}
-						{jq}$({{$inputId}}).tiki("autocomplete", "username", {multiple: true, multipleSeparator: "|"});{/jq}
-					{elseif $param.filter eq "date"}
-						{jq}$({{$inputId}}).tiki("datepicker");{/jq}
+				{if isset($pluginArgs[$name])}{$val = $pluginArgs[$name]}{else}{$val=''}{/if}
+				{if not empty($param.selector_type)}
+					{if empty($param.separator)}
+						{object_selector type=$param.selector_type _simplevalue=$val _simplename=$name|escape _simpleid=$inputId _parent=$param.parent _parentkey=$param.parentkey}
+					{else}
+						{object_selector_multi type=$param.selector_type _simplevalue=$val _simplename=$name|escape _simpleid=$inputId  _separator=$param.separator _parent=$param.parent _parentkey=$param.parentkey _sort=$param.sort_order}
+					{/if}
+				{else}
+					<input value="{$val}" class="form-control{$groupClass}" id="{$inputId}" type="text" name="params[{$name|escape}]"{$dataAttribute}>
+					{if not empty($param.filter)}
+						{if $param.filter eq "pagename"}
+							{jq}$({{$inputId}}).tiki("autocomplete", "pagename");{/jq}
+						{elseif $param.filter eq "groupname"}
+							{jq}$({{$inputId}}).tiki("autocomplete", "groupname", {multiple: true, multipleSeparator: "|"});{/jq}
+						{elseif $param.filter eq "username"}
+							{jq}$({{$inputId}}).tiki("autocomplete", "username", {multiple: true, multipleSeparator: "|"});{/jq}
+						{elseif $param.filter eq "date"}
+							{jq}$({{$inputId}}).tiki("datepicker");{/jq}
+						{/if}
 					{/if}
 				{/if}
-
 			{else}
 				<select class="form-control{$groupClass}" type="text" name="params[{$name|escape}]" id="{$inputId}"{$dataAttribute}>
 					{foreach $param.options as $option}
