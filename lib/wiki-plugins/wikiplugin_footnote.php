@@ -117,11 +117,9 @@ function wikiplugin_footnote($data, $params)
 		$footnote[$listNum]['class'] = implode(' ',$classes);
 
 		$footnotes['nest']++;
-		$footnote[$listNum]['data'] = TikiLib::lib('parser')->parse_data_plugin($data);
+		$footnote[$listNum]['data'] = TikiLib::lib('parser')->parse_data_plugin($data,true);
 		$footnotes['nest']--;
 
-		// this forces paragraphs to display on the first line (beside the footnote number)
-		$footnote[$listNum]['data'] = preg_replace('/^(\s*?)<p>/','$1<p style="display:inline-block">',' '.$footnote[$listNum]['data']);
 
 		$smarty->assign('uniqueId',$footnote[$listNum]['unique']);
 		$smarty->assign('unique',$footnote[$listNum]['unique']);

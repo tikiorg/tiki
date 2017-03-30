@@ -1753,10 +1753,12 @@ if ( \$('#$id') ) {
 	 *
 	 * @param $data string wiki/html to be parsed
 	 * @param $optionsOverride array options to override the current defaults
+     * @param $inlineFirstP boolean If the returned data starts with a <p>, this opoin will force it to display as inline:block
+     *                      useful when the returned ddata is required to display without adding overhead spacing caused by <p>
 	 *
 	 * @return string parsed data
 	 */
-	function parse_data_plugin($data,$optionsOverride= array())
+	function parse_data_plugin($data,$inlineFirstP = false,$optionsOverride= array())
 	{
 		$options['is_html'] = ($GLOBALS['prefs']['feature_wiki_allowhtml'] === 'y' && $GLOBALS['info']['is_html'] == true)?true:false;
 
@@ -1772,6 +1774,9 @@ if ( \$('#$id') ) {
 		$data = $this->parse_data($data,$options);
 		// remove whitespace that was added while parsing (yes it does happen)
 		$data = trim($data);
+
+        if ($inlineFirstP)
+            $data = preg_replace('/^(\s*?)<p>/','$1<p style="display:inline-block">',' '.$data);
 
 		// add original whitespace back to preserve spacing
 		return ($bwhite[0].$data.$ewhite[0]);
