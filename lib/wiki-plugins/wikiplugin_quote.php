@@ -50,18 +50,6 @@ function wikiplugin_quote_info()
 				'filter' => 'date',
 				'default' => '',
 				'since' => '16',
-			),
-			'parse' => array(
-				'required' => false,
-				'name' => tra('Parse Quote'),
-				'description' => tra('Parse quote contents'),
-				'options' => array(
-					array('text' => tra('No'), 'value' => '0'),
-					array('text' => tra('Yes'), 'value' => '1'),
-				),
-				'filter' => 'digits',
-				'default' => '1',
-				'since' => '16',
 			)
 		),
 	);
@@ -69,14 +57,14 @@ function wikiplugin_quote_info()
 
 function wikiplugin_quote($data, $params)
 {
-	global $smarty, $tikilib;
 
 	$source_url = '';
 	$date = null;
+	$replyto = '';
+    $comment_info = '';
 
 	if ($params['thread_id']) {
-		$commentslib = TikiLib::lib('comments');
-		$comment_info = $commentslib->get_comment($params['thread_id']);
+		$comment_info = TikiLib::lib('comments')->get_comment($params['thread_id']);
 		$replyto = $comment_info['userName'];
 	} elseif ($params['replyto']) {
 		$replyto = $params['replyto'];
@@ -87,16 +75,13 @@ function wikiplugin_quote($data, $params)
 	if ($params['date']) {
 		$date = strtotime($params['date']);
 	}
-	if ($params['parse'] === "0") {
-		$data = trim($data);
-	} else {
-		$data = $tikilib->parse_data(trim($data));
-	}
+
+	$smarty = Tikilib::lib('smarty');
 
 	$smarty->assign('date', $date);
 	$smarty->assign('comment_info', $comment_info);
 	$smarty->assign('replyto', $replyto);
-	$smarty->assign('data', $data);
+	$smarty->assign('data', TikiLib::lib('parser')->parse_data_plugin($data));
 	$smarty->assign('source_url', trim($source_url));
 
 	return $smarty->fetch("wiki-plugins/wikiplugin_quote.tpl");
