@@ -22,13 +22,12 @@ class H5PLib
 	const VERSION = '1.0.0';
 
 	private $H5PTiki = null;
-	private $isSaving = false;
 
 	private static $settings = null;
 
 	function __construct()
 	{
-		$this->H5PTiki = new \H5P_H5PTiki();
+		$this->H5PTiki = \H5P_H5PTiki::get_h5p_instance('interface');
 	}
 
 	function __destruct()
@@ -48,7 +47,7 @@ class H5PLib
 	 */
 	function handle_fileCreation($args)
 	{
-		if (!$this->isSaving && $metadata = $this->getRequestMetadata($args)) {
+		if (!$this->H5PTiki->isSaving && $metadata = $this->getRequestMetadata($args)) {
 
 			$validator = H5P_H5PTiki::get_h5p_instance('validator');
 
@@ -81,7 +80,7 @@ class H5PLib
 	 */
 	function handle_fileUpdate($args)
 	{
-		if (!$this->isSaving && isset($args['object']) && $metadata = $this->getRequestMetadata($args)) {
+		if (!$this->H5PTiki->isSaving && isset($args['object']) && $metadata = $this->getRequestMetadata($args)) {
 
 			$content = $this->loadContentFromFileId($args['object']);
 
@@ -89,7 +88,7 @@ class H5PLib
 			$this->H5PTiki->deleteLibraryUsage($content['id']);
 
 			$core = \H5P_H5PTiki::get_h5p_instance('core');
-			$core->savePackage($content);
+			$core->savePackage($content);// TODO: This doesn't exist…
 		}
 	}
 
@@ -655,18 +654,15 @@ class H5PLib
 		// Set disabled features
 		// TODO: Implement
 
-		// Prevent extracting and inserting the file we're creating
-		$this->isSaving = true;
-
 		// create the file gallery file to attach this to
 		global $prefs, $user;
-		$filegallib = TikiLib::lib('filegal');
-		$fileId = $input->fileId->int();
-		$newFile = false;
 
+		$fileId = $input->fileId->int();
 		if (! $fileId) {
 
-			$fileId = $filegallib->insert_file(
+			// Prevent extracting and inserting the file we're creating
+			$this->H5PTiki->isSaving = true;
+			$fileId = TikiLib::lib('filegal')->insert_file(
 				$prefs['h5p_filegal_id'],
 				$content['title'],
 				tr('Created by H5P'),
@@ -677,13 +673,8 @@ class H5PLib
 				$user,
 				''
 			);
-
-			if ($fileId) {
-				$newFile = true;
-			}
+			$this->H5PTiki->isSaving = false;
 		}
-		$info = $filegallib->get_file($fileId);
-		$created = $info['created'];
 
 		// Save new content
 		$content['id'] = $core->saveContent($content, $fileId);
@@ -693,35 +684,9 @@ class H5PLib
 		$editor->processParameters($content['id'], $content['library'], $params, $oldLibrary, $oldParams);
 
 		// export the project into the new file gallery file
+		$content['file_id'] = $fileId;
 		$core->filterParameters($content); // rebuild content
-		$exportedFile = H5P_H5PTiki::$h5p_path . '/exports/' . $content['slug'] . '-' . $content['id'] . '.h5p';
 
-		if (! file_exists($exportedFile)) {
-			Feedback::error(tr('Exporting H5P content %0 failed', $content['id']), 'session');
-		}
-		$result = $filegallib->insert_file(
-			$prefs['h5p_filegal_id'],
-			$content['title'],
-			tr('Created by H5P'),
-			TikiLib::remove_non_word_characters_and_accents($content['title']) . '.h5p',
-			file_get_contents($exportedFile),
-			filesize($exportedFile),
-			'application/zip',
-			$user,
-			$exportedFile,
-			'',
-			$user,
-			$created,
-			null,
-			null,
-			$fileId
-		);
-
-		if (! $result) {
-			Feedback::error(tr('Saving H5P content %0 (fileId %1) failed', $content['id'], $fileId), 'session');
-		}
-
-		$this->isSaving = false;
 		return $fileId;
 	}
 

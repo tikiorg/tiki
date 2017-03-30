@@ -23,6 +23,8 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 	private $tiki_h5p_libraries_languages = null;
 	private $tiki_h5p_results = null;
 
+	public $isSaving = false;
+
 	public static $h5p_path;
 
 	function __construct()
@@ -1349,9 +1351,40 @@ GROUP BY l.`name`, l.`major_version`, l.`minor_version`');
 	/**
 	 * Will trigger after the export file is created.
 	 */
-	public function afterExportCreated()
+	public function afterExportCreated($content, $filename)
 	{
-		// TODO: Implement afterExportCreated() method.
+		global $prefs, $user;
+
+		$exportedFile = H5P_H5PTiki::$h5p_path . '/exports/' . $filename;
+		if (! file_exists($exportedFile)) {
+			Feedback::error(tr('Exporting H5P content %0 failed', $content['id']), 'session');
+		}
+
+		$filegallib = TikiLib::lib('filegal');
+		$info = $filegallib->get_file($content['file_id']);
+		$this->isSaving = true;
+		$result = $filegallib->insert_file(
+			$prefs['h5p_filegal_id'],
+			$content['title'],
+			tr('Created by H5P'),
+			TikiLib::remove_non_word_characters_and_accents($content['title']) . '.h5p',
+			file_get_contents($exportedFile),
+			filesize($exportedFile),
+			'application/zip',
+			$user,
+			$exportedFile,
+			'',
+			$user,
+			$info['created'],
+			null,
+			null,
+			$content['file_id']
+		);
+		$this->isSaving = false;
+
+		if (! $result) {
+			Feedback::error(tr('Saving H5P content %0 (fileId %1) failed', $content['id'], $content['file_id']), 'session');
+		}
 	}
 
 	/**
