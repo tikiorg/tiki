@@ -342,25 +342,33 @@ class Services_Edit_PluginController
 	/**
 	 * Recursively convert plugins to nested array
 	 *
-	 * @param string $body      wiki content to "parse"
-	 * @param array $plugins    resulting nested array of plugins
-	 * @param array $done       flat array to track plugins already added to $plugins
+	 * @param string $body wiki content to "parse"
+	 * @param array $plugins resulting nested array of plugins
+	 * @param array $done flat array to track plugins already added to $plugins
+	 * @param string $parent
 	 */
-	private function parsePlugins($body, & $plugins, & $done) {
+	private function parsePlugins($body, & $plugins, & $done, $parent = '') {
 		$matches = WikiParser_PluginMatcher::match($body);
 		$argumentParser = new WikiParser_PluginArgumentParser;
+		$lastMatchEnd = 0;
 
 		/** @var WikiParser_PluginMatcher_Match $match */
 		foreach($matches as $match) {
 
+			$name = $match->getName();
 			$thisPlugin = [
-				'name' => $match->getName(),
+				'name' => $name,
 				'params' => $argumentParser->parse($match->getArguments()),
 				'body' => $match->getBody(),
 				'plugins' => []
 			];
 
-			$this->parsePlugins($match->getBody(), $thisPlugin['plugins'], $done);
+			$this->parsePlugins($match->getBody(), $thisPlugin['plugins'], $done, $name);
+
+			if (in_array(strtolower($parent), ['output', 'format'])) {
+				$plugins[] = substr($body, $lastMatchEnd, $match->getStart() - $lastMatchEnd);
+				$lastMatchEnd = $match->getEnd();
+			}
 
 			if (! in_array($thisPlugin, $done)) {
 				$plugins[] = $thisPlugin;
@@ -368,6 +376,9 @@ class Services_Edit_PluginController
 			}
 		}
 
+		if (in_array(strtolower($parent), ['output', 'format'])) {
+			$plugins[] = substr($body, $lastMatchEnd);
+		}
 	}
 
 

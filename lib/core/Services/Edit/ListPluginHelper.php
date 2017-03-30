@@ -359,6 +359,7 @@ class Services_Edit_ListPluginHelper
 					],
 				],
 			],
+			'wiki text' => [],	// allow wiki text within output and format plugins
 		];
 	}
 }
