@@ -669,9 +669,10 @@ function prefs_wiki_list($partial = false)
 		),
 		'wiki_heading_links' => [
 			'name' => tr('Anchor links on headings'),
-			'description' => tr('Add links that appear on hover to each heading'),
+			'description' => tr('Add links that appear on hover for each heading, useful for sharing the URL to an exact location on a page'),
+			'keywords' => 'Display hidden anchor on mouseover of headings',
 			'type' => 'flag',
-			'default' => 'n',
+			'default' => 'y',
 			'dependencies' => [],
 		],
 	);

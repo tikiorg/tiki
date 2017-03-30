@@ -2813,13 +2813,6 @@ function prefs_feature_list($partial = false)
 			'help' => 'Inline+comments',
 			'keywords' => 'annotation annotatorjs',
 		),
-		'feature_hidden_links' => array(
-			'name' => tra('Display hidden anchor on mouseover of headings'),
-			'description' => tra('This is useful for sharing the URL to an exact location on a page.'),
-			'type' => 'flag',
-			'default' => 'y',
-			'tags' => array('advanced'),
-		),
 		'feature_equal_height_rows_js' => array(
 			'name' => tra('Enable JavaScript Plugin for Equal-Height Rows'),
 			'description' => tra('This allows responsive rows to be set so that each contained element has the same height '),

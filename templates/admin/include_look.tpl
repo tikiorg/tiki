@@ -178,7 +178,7 @@
 						{preference name=jquery_colorbox_theme}
 					</div>
 					{preference name=feature_jscalendar}
-					{preference name=feature_hidden_links}
+					{preference name=wiki_heading_links}
 					{preference name=feature_equal_height_rows_js}
 					{preference name=feature_conditional_formatting}
 				</div>
