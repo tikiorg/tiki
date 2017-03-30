@@ -82,13 +82,17 @@ class H5PLib
 	{
 		if (!$this->H5PTiki->isSaving && isset($args['object']) && $metadata = $this->getRequestMetadata($args)) {
 
-			$content = $this->loadContentFromFileId($args['object']);
+			$validator = H5P_H5PTiki::get_h5p_instance('validator');
 
-			// Clear content dependency cache
-			$this->H5PTiki->deleteLibraryUsage($content['id']);
+			if ($validator->isValidPackage()) {
 
-			$core = \H5P_H5PTiki::get_h5p_instance('core');
-			$core->savePackage($content);// TODO: This doesn't exist…
+				$content = $this->loadContentFromFileId($args['object']);
+
+				$storage = H5P_H5PTiki::get_h5p_instance('storage');
+				$storage->savePackage($content, $args['object']);
+
+			}
+
 		}
 	}
 
