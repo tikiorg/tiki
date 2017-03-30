@@ -351,5 +351,9 @@ LEFT JOIN `users_users` AS u ON u.`userId` = r.`user_id`');
 
 		// Clean up old temporary files
 		TikiLib::lib('h5p')->removeOldTmpFiles();
+
+		// Check for metadata updates
+		$core = \H5P_H5PTiki::get_h5p_instance('core');
+		$core->fetchLibrariesMetadata();
 	}
 }

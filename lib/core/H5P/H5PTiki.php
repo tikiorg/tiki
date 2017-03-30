@@ -123,7 +123,7 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 		return array(
 			'name' => 'Tiki',
 			'version' => $TWV->version,
-			'h5pVersion' => H5PLib::VERSION,
+			'h5pVersion' => '1.0.0', // TODO: Use variable? (\H5PLib not loaded)
 		);
 	}
 
@@ -166,7 +166,11 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 	 */
 	public function setLibraryTutorialUrl($machineName, $tutorialUrl)
 	{
-		// TODO: Implement setLibraryTutorialUrl() method.
+		$this->tiki_h5p_libraries->update([
+			'tutorial_url' => $tutorialUrl,
+		],
+			['name' => $machineName]
+		);
 	}
 
 	/**
@@ -290,7 +294,7 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 
 		$libraries = [];
 		foreach ($res as $library) {
-			$libraries[$library['name']][] = $library;
+			$libraries[$library['name']][] = (object)$library;
 		}
 
 		return $libraries;
@@ -1234,6 +1238,8 @@ hcl.`drop_css` AS dropCss, hcl.`dependency_type` AS dependencyType
 	 */
 	public function getLibraryStats($type)
 	{
+		return [];
+		/*
 		$count = [];
 
 		$tiki_h5p_counters = TikiDb::get()->table('tiki_h5p_counters');
@@ -1249,6 +1255,7 @@ hcl.`drop_css` AS dropCss, hcl.`dependency_type` AS dependencyType
 		}
 
 		return $count;
+		*/
 	}
 
 	/**
@@ -1342,8 +1349,8 @@ WHERE c.`library_id` = l.`id`
 GROUP BY l.`name`, l.`major_version`, l.`minor_version`');
 
 		// Extract results
-		foreach ($results as $library) {
-			$count[$library->name . ' ' . $library->major_version . '.' . $library->minor_version] = $library->count;
+		foreach ($results->result as $library) {
+			$count[$library['name'] . ' ' . $library['major_version'] . '.' . $library['minor_version']] = $library['count'];
 		}
 		return $count;
 	}
