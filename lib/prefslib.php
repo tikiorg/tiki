@@ -30,6 +30,7 @@ class PreferencesLib
 			'helpurl' => '',
 			'help' => '',
 			'dependencies' => array(),
+			'packages_required' => array(),
 			'extensions' => array(),
 			'dbfeatures' => array(),
 			'options' => array(),
@@ -93,6 +94,10 @@ class PreferencesLib
 
 		if ( $deps && isset( $info['dependencies'] ) ) {
 			$info['dependencies'] = $this->getDependencies($info['dependencies']);
+		}
+
+		if ( $deps && isset( $info['packages_required'] ) && !empty($info['packages_required']) ) {
+			$info['packages_required'] = $this->getPackagesRequired($info['packages_required']);
 		}
 
 		$info['available'] = true;
@@ -500,6 +505,23 @@ class PreferencesLib
 					);
 				}
 			}
+		}
+
+		return $out;
+	}
+
+	private function getPackagesRequired( $packages )
+	{
+		$out = array();
+
+		foreach ((array) $packages as $key => $dep ) {
+			$out[] = array(
+				'name' => $key,
+				'label' => $key,
+				'type' => 'composer',
+				'link' => 'https://packagist.org/packages/' . $key,
+				'met' => class_exists($dep)
+			);
 		}
 
 		return $out;

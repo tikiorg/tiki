@@ -135,6 +135,7 @@ function prefs_wikiplugin_list($partial = false)
 			'type' => 'flag',
 			'help' => 'Plugin' . $plugin,
 			'dependencies' => $dependencies,
+			'packages_required' => (isset($info['packages_required']) && !empty($info['packages_required'])) ? $info['packages_required'] : array(),
 			'default' => in_array($plugin, $defaultPlugins) ? 'y' : 'n',
 		);
 
