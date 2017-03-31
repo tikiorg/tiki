@@ -208,6 +208,9 @@ pre,
 .dropdown-menu {
   font-size: 15px;
 }
+legend {
+  color: #f3fce8;
+}
 a.list-group-item .list-group-item-heading {
   color: #ffffff;
 }
@@ -405,6 +408,26 @@ textarea,
   background: #fbf9ee url('../../../../../vendor_bundled/vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_95_f6ecd5_500x100.png') repeat-x 50% 60%;
   border: 1px solid #fcefa1;
   color: #363636;
+}
+.alert a,
+.jumbotron a,
+textarea a,
+.form-control a,
+.chosen-container-single .chosen-single a,
+.chosen-container-active.chosen-with-drop .chosen-single a,
+.chosen-container .chosen-drop a,
+.chosen-container-multi .chosen-choices .search-choice a {
+  color: #5da10a;
+}
+.alert a:hover,
+.jumbotron a:hover,
+textarea a:hover,
+.form-control a:hover,
+.chosen-container-single .chosen-single a:hover,
+.chosen-container-active.chosen-with-drop .chosen-single a:hover,
+.chosen-container .chosen-drop a:hover,
+.chosen-container-multi .chosen-choices .search-choice a:hover {
+  color: #417107;
 }
 .tabs {
   border: 1px solid #d3d3d3;
