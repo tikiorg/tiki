@@ -29,28 +29,22 @@ if (! file_exists(__DIR__ . '/../../vendor_bundled/vendor/autoload.php')) {
 
 require_once __DIR__ . '/../../vendor_bundled/vendor/autoload.php'; // vendor libs bundled into tiki
 
-function lazy_autoload_user_managed_vendor_libraries($class){
-	// vendor libs managed by the user using composer (if any)
-	if (file_exists(__DIR__ . '/../../vendor/autoload.php')) {
-		require_once __DIR__ . '/../../vendor/autoload.php';
-	}
-
-	// vendor libraries managed by the user, packaged (if any)
-	if (is_dir(__DIR__ . '/../../vendor_custom')){
-		foreach (new DirectoryIterator(__DIR__ . '/../../vendor_custom') as $fileInfo) {
-			if (!$fileInfo->isDir() || $fileInfo->isDot()) {
-				continue;
-			}
-			if (file_exists($fileInfo->getPathname() . '/autoload.php')) {
-				require_once $fileInfo->getPathname() . '/autoload.php';
-			}
-		}
-	}
-
-	spl_autoload_unregister('lazy_autoload_user_managed_vendor_libraries'); // make sure is only called once
+// vendor libs managed by the user using composer (if any)
+if (file_exists(__DIR__ . '/../../vendor/autoload.php')) {
+	require_once __DIR__ . '/../../vendor/autoload.php';
 }
 
-spl_autoload_register('lazy_autoload_user_managed_vendor_libraries');
+// vendor libraries managed by the user, packaged (if any)
+if (is_dir(__DIR__ . '/../../vendor_custom')){
+	foreach (new DirectoryIterator(__DIR__ . '/../../vendor_custom') as $fileInfo) {
+		if (!$fileInfo->isDir() || $fileInfo->isDot()) {
+			continue;
+		}
+		if (file_exists($fileInfo->getPathname() . '/autoload.php')) {
+			require_once $fileInfo->getPathname() . '/autoload.php';
+		}
+	}
+}
 
 /**
  * performs some checks on the underlying system, before initializing Tiki.
