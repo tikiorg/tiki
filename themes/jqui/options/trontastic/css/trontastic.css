@@ -93,7 +93,7 @@ body {
 }
 .layout_basic .container,
 .page-header,
-.header_container {
+.header_container .container {
   background: #c6e99c;
 }
 .page-header a,
