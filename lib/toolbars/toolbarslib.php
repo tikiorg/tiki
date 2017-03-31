@@ -977,7 +977,7 @@ class ToolbarPicker extends Toolbar
             $list = array();
             foreach ( $rawList as $smiley ) {
                 $tra = htmlentities(tra($smiley), ENT_QUOTES, 'UTF-8');
-                $list["(:$smiley:)"] = '<img src="' . $headerlib->convert_cdn('img/smiles/icon_' .$smiley . '.png') . '" alt="' . $tra . '" title="' . $tra . '" width="15" height="15" />';
+                $list["(:$smiley:)"] = '<img src="' . $headerlib->convert_cdn('img/smiles/icon_' .$smiley . '.gif') . '" alt="' . $tra . '" title="' . $tra . '" width="15" height="15" />';
             }
 
 			break;
