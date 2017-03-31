@@ -15,10 +15,12 @@
 
 {if $smarty.session.fullscreen ne 'y'}
 	<div class="header_outer" id="header_outer">
-		<div class="header_container container{if $smarty.session.fullscreen eq 'y'}-fluid{/if}">
-			<header class="header page-header" id="page-header">
-				{modulelist zone=top class='row top_modules'}
-			</header>
+		<div class="header_container">
+			<div class="container{if $smarty.session.fullscreen eq 'y'}-fluid{/if}">
+				<header class="header page-header" id="page-header">
+					{modulelist zone=top class='row top_modules'}
+				</header>
+			</div>
 		</div>
 	</div>
 {/if}
