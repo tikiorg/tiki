@@ -11259,7 +11259,7 @@ $lang = array(
 "Tiki plugins add functionality to wiki pages, articles, blogs, and so on. You can enable and disable them below." => "Les plugiciels Tiki ajoutent des fonctionnalités aux pages wiki, articles, blogues et autres. Vous pouvez les activer ou désactiver ci-dessous.",
 "You can approve plugin use at <a href=\"tiki-plugins.php\">tiki-plugins.php</a>." => "Vous pouvez approuver l'usage des plugiciels sur la page <a href=\"tiki-plugins.php\">tiki-plugins.php</a>.",
 "The edit-plugin icon is an easy way for users to edit the parameters of each plugin in wiki pages. It can be disabled for individual plugins below." => "L'icone d'édition de plugiciel est un accès simple pour les utilisateurs qui veulent éditer les paramètres de chaque plugiciel dans les pages wiki. Ceci peut être désactivé pour certains plugiciels ci-dessous.",
-"Check disabled plugins used in wiki pages" => "Vérification désactivée utilisation des plugiciels dans les pages wiki",
+"Check disabled plugins used in wiki pages" => "Vérifier les plugiciels désactivés utilisés dans les pages wiki",
 "Disabled used plugins" => "Désactivation des plugiciels",
 // "Plugin preferences" => "Plugin preferences",
 "Edit plugin icons" => "Icone d'édition de plugiciel",
