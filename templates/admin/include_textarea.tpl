@@ -94,6 +94,7 @@
 				{preference name=wikiplugin_toc}
 				{preference name=wikiplugin_versions}
 				{preference name=wikiplugin_showpref}
+				{preference name=wikiplugin_casperjs}
 			</fieldset>
 
 			<fieldset>
