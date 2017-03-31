@@ -237,6 +237,10 @@ TikiAddons::refresh();
 // Retrieve all preferences
 require_once ('lib/setup/prefs.php');
 
+if ($prefs['ids_enabled'] == 'y') {
+	require_once 'lib/setup/ids.php';
+}
+
 $access = TikiLib::lib('access');
 
 require_once ('lib/setup/absolute_urls.php');

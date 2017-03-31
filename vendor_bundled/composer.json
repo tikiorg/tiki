@@ -147,6 +147,7 @@
 			"Feed": "../lib/core/",
 			"FutureLink": "../lib/core/",
 			"Yaml": "../lib/core/",
+			"IDS": "../lib/core",
 			"H5P" : "../lib/core/"
 		},
 		"classmap": [

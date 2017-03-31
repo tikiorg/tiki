@@ -164,6 +164,12 @@
 				{preference name=site_busy_msg}
 			</div>
 
+			{preference name=ids_enabled}
+			<div class="adminoptionboxchild" id="ids_enabled_childcontainer">
+				{preference name=ids_log_to_file}
+				{*{preference name=ids_log_to_database}*}
+			</div>
+
 			{preference name=http_header_frame_options}
 			<div class="adminoptionboxchild" id="http_header_frame_options_childcontainer">
 				{preference name=http_header_frame_options_value}
