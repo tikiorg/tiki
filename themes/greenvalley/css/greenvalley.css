@@ -7807,7 +7807,7 @@ body.fullscreen #footer {
 #topbar_modules .form-group {
   margin-bottom: 0;
 }
-.row-middle {
+#row-middle {
   background: url('../images/page_background_ltr.jpg') repeat;
   margin-top: -20px;
   padding-top: 20px;
