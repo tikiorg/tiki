@@ -34,6 +34,7 @@
 					{preference name=users_prefs_userbreadCrumb}
 					{preference name=users_prefs_tasks_maxRecords}
 					{preference name=users_prefs_diff_versions}
+					{preference name=users_prefs_remember_closed_rboxes}
 				</div>
 				</fieldset>
 		{/tab}

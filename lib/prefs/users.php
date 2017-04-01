@@ -242,5 +242,11 @@ function prefs_users_list()
 			),
 			'default' => 'utf-8',
 		),
+		'users_prefs_remember_closed_rboxes' => array(
+			'name' => tra('Keep closed remarksbox hidden'),
+			'description' => tra("Remember which remarksbox (alert box) users have closed and don't show them again."),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }

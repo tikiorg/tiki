@@ -140,6 +140,9 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 			$smarty->assign('show_mouseover_user_info', 'n');
 		}
 	}
+
+	$tikilib->set_user_preference($userwatch, 'remember_closed_rboxes', empty($_REQUEST['remember_closed_rboxes']) ? 'n' : 'y');
+
 	$email_isPublic = isset($_REQUEST['email_isPublic']) ? $_REQUEST['email_isPublic'] : 'n';
 	$tikilib->set_user_preference($userwatch, 'email is public', $email_isPublic);
 	$tikilib->set_user_preference($userwatch, 'mailCharset', $_REQUEST['mailCharset']);

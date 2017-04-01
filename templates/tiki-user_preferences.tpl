@@ -324,7 +324,7 @@
 						{/if}
 					</div>
 				</div>
-				<div class="clearfix">
+				<div class="form-group clearfix">
 					<div class="checkbox col-md-8 col-md-push-4">
 						<label>
 							<input type="checkbox" name="display_12hr_clock" {if $user_prefs.display_12hr_clock eq 'y'}checked="checked"{/if}>{tr}Use 12-hour clock in time selectors{/tr}
@@ -507,11 +507,20 @@
 					</div>
 				{/if}
 				<div class="form-group">
+						<label class="control-label col-md-4" for="remember_closed_rboxes">
+							{tr}Keep closed remarksbox hidden{/tr}
+						</label>
+						<div class="col-md-8">
+							<input type="checkbox" name="remember_closed_rboxes" id="remember_closed_rboxes" {if $user_prefs.remember_closed_rboxes eq 'y'}checked="checked"{/if}>
+							<p class="text-info">
+								{tr}Remember which remarksbox (alert box) you have closed and don't show them again.{/tr}<br>
+							</p>
+						</div>
 					<label class="control-label col-md-4">
 						{tr}Reset remark boxes visibility{/tr}
 					</label>
 					<div class="col-md-8">
-						{button _text="{tr}Reset{/tr}" _onclick="if (confirm('{tr}This will reset the visibility of all the tips, notices and warning remarks boxes you have closed.{/tr}')) {ldelim}deleteCookie('rbox');{rdelim}return false;"}
+						{button _text="{tr}Reset{/tr}" _onclick="if (confirm('{tr}This will reset the visibility of all the tips, notices and warning remarks boxes you have closed.{/tr}')) {ldelim}deleteCookie('rbox');{rdelim}return false;" _class='btn-sm'}
 					</div>
 				</div>
 				<div class="submit text-center">
