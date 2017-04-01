@@ -9,6 +9,7 @@ namespace Tiki\Composer;
 
 use Composer\Script\Event;
 use Composer\Util\FileSystem;
+use Symfony\Component\Finder\Finder;
 
 /**
  * After Migrate the vendors to vendors_bundled, we should clean the vendor folder
@@ -22,6 +23,14 @@ use Composer\Util\FileSystem;
  */
 class CleanVendorAfterVendorBundledMigration
 {
+
+	// To calculate the md5 hash for the old vendor folder, on a linux server, you can use (inside the old vendor folder):
+	//
+	// $ STRING=$(ls -d */* | grep -v "^composer" | sort -f | tr '\n' ':' | sed 's/:$//')
+	// $ echo -n $STRING | md5
+	//
+	const PRE_MIGRATION_OLD_VENDOR_FOLDER_MD5_HASH = '6997e3dc0e3ad453ab8ea9798653a0fa';
+
 	/**
 	 * @param Event $event
 	 */
@@ -31,27 +40,31 @@ class CleanVendorAfterVendorBundledMigration
 		/*
 		 * 0) Make sure old bin links are removed so they can be created by composer
 		 * 1) If a file called do_not_clean.txt exists in the vendor folder stop
-		 * 2) If there is a composer.json file, warn the user that they might need to clean the folder by themselves
-		 * 3) If there is no composer.json in the root, clean all folders and autoload.php in the vendor folder
+		 * 2) If there is a vendor/autoload.php, check the hash of the folder structure, if different from at the time of the vendor_bundle migration, ignore
+		 * 3) If we arrive here, clean all folders and autoload.php in the old (pre migration) vendor folder
 		 */
 
 		$io = $event->getIO();
 		$fs = new FileSystem();
 
-		$rootFolder = realpath(__DIR__.'/../../../../');
-		$oldVendorFolder = realpath($rootFolder.'/vendor');
+		$rootFolder = realpath(__DIR__ . '/../../../../');
+		$oldVendorFolder = realpath($rootFolder . '/vendor');
 
 		// 0) Make sure we can install known bin files (they might be still linked to the old vendor folder
 		$binFiles = ['lessc', 'minifycss', 'minifyjs', 'dbunit', 'phpunit'];
 
 		foreach ($binFiles as $file) {
-			$filePath = $rootFolder.'/bin/'.$file;
+			$filePath = $rootFolder . '/bin/' . $file;
 			if (is_link($filePath)) {
 				$linkDestination = readlink($filePath);
 				$fileRealPath = realpath($filePath);
-				if ( strncmp($linkDestination, '../vendor/', strlen('../vendor/')) === 0 // relative link to vendor folder
+				if (strncmp($linkDestination, '../vendor/', strlen('../vendor/')) === 0 // relative link to vendor folder
 					|| $filePath === false // target don't exists, so link is broken
-					|| strncmp($fileRealPath, $oldVendorFolder, strlen($oldVendorFolder)) === 0 // still pointing to old vendor folder
+					|| strncmp(
+						$fileRealPath,
+						$oldVendorFolder,
+						strlen($oldVendorFolder)
+					) === 0 // still pointing to old vendor folder
 				) {
 					$fs->unlink($filePath);
 				}
@@ -64,7 +77,7 @@ class CleanVendorAfterVendorBundledMigration
 		}
 
 		// 1) If a file called do_not_clean.txt exists in the vendor folder stop
-		if (file_exists($oldVendorFolder.'/do_not_clean.txt')) {
+		if (file_exists($oldVendorFolder . '/do_not_clean.txt')) {
 			$io->write('');
 			$io->write('File vendor/do_not_clean.txt is present, no attempt to clean the vendor folder will be done!');
 			$io->write('');
@@ -72,24 +85,35 @@ class CleanVendorAfterVendorBundledMigration
 			return;
 		}
 
-		// 2) If there is a composer.json file, warn the user that they might need to clean the folder themselves
-		if (file_exists($rootFolder.'/composer.json')) {
-			$io->write('');
-			$io->write(
-				'Since there is a composer.json file in the root of the site, we will not try to clean your vendor folder'
-			);
-			$io->write('as part of the migration from vendor to vendor_bundled/vendor, you need to review that yourself!');
-			$io->write('');
+		// 2) If there is a vendor/autoload.php, check the hash of the folder structure, if different from at the time of the vendor_bundle migration, ignore
+		if (file_exists($oldVendorFolder . '/autoload.php')) {
 
-			return;
+			$finder = new Finder();
+			$finder->in($oldVendorFolder)->exclude(['Composer'])->depth(2);
+
+			$packages = [];
+			foreach ($finder as $file) {
+				$packages[] = $file->getRelativePath();
+			}
+
+			$packages = array_unique($packages);
+			natcasesort($packages);
+			$packagesString = implode(':', array_values($packages));
+
+			$md5checksum = md5($packagesString);
+
+			if ($md5checksum != self::PRE_MIGRATION_OLD_VENDOR_FOLDER_MD5_HASH) {
+				return;
+			}
+
 		}
 
-		// 3) If there is no composer.json in the root, clean all folders and autoload.php in the vendor folder
+		// 3) If we arrive here, clean all folders and autoload.php in the old (pre migration) vendor folder
 
-		$fs->remove($oldVendorFolder.'/autoload.php');
+		$fs->remove($oldVendorFolder . '/autoload.php');
 
 		$vendorDirsCleaned = false;
-		$vendorDirs = glob($oldVendorFolder.'/*', GLOB_ONLYDIR);
+		$vendorDirs = glob($oldVendorFolder . '/*', GLOB_ONLYDIR);
 		foreach ($vendorDirs as $dir) {
 			if (is_dir($dir)) {
 				$fs->remove($dir);
@@ -97,12 +121,15 @@ class CleanVendorAfterVendorBundledMigration
 			}
 		}
 
-		if ($vendorDirsCleaned){
+		if ($vendorDirsCleaned) {
 			// there are some cached templates that will stop tiki to work after the migration
-			$loopDirs = array_merge([$rootFolder . '/temp/templates_c'], glob($rootFolder . '/temp/templates_c/*',GLOB_ONLYDIR));
-			foreach($loopDirs as $dir){
+			$loopDirs = array_merge(
+				[$rootFolder . '/temp/templates_c'],
+				glob($rootFolder . '/temp/templates_c/*', GLOB_ONLYDIR)
+			);
+			foreach ($loopDirs as $dir) {
 				$cachedTemplates = glob($dir . '/*.tpl.php');
-				foreach($cachedTemplates as $template){
+				foreach ($cachedTemplates as $template) {
 					$fs->remove($template);
 				}
 			}
