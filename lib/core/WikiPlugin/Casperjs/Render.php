@@ -9,14 +9,14 @@ class WikiPlugin_Casperjs_Render
 {
 	static public function resultAsHTML($result)
 	{
-		$executionResult  = "<h3>CasperJs Execution Details</h3>";
+		$executionResult = "<h3>CasperJs Execution Details</h3>";
 		$executionResult .= "<strong>CasperJS Script</strong>";
 		$executionResult .= "<pre>";
 		$executionResult .= $result->getCasperJsScript();
 		$executionResult .= "</pre>";
 		$executionResult .= "<strong>Console Output</strong>";
 		$executionResult .= "<pre>";
-		$executionResult .= "$ ".$result->getCommandLine()."\n";
+		$executionResult .= "$ " . $result->getCommandLine() . "\n";
 		if (is_array($result->getScriptOutput()) && count($result->getScriptOutput()) > 0) {
 			foreach ($result->getScriptOutput() as $line) {
 				$executionResult .= $line;
@@ -34,7 +34,7 @@ class WikiPlugin_Casperjs_Render
 				$valueToPrint = substr($valueToPrint, 0, 200);
 				$valueToPrint .= " ...";
 			}
-			$executionResult .= $key." => ".$valueToPrint."\n";
+			$executionResult .= $key . " => " . $valueToPrint . "\n";
 		}
 		$executionResult .= "</pre>";
 	}

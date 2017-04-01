@@ -13,8 +13,8 @@ class WikiPlugin_Casperjs_Runner
 
 	public function __construct()
 	{
-		$this->casperBin = TIKI_PATH.DIRECTORY_SEPARATOR.'bin'.DIRECTORY_SEPARATOR.'casperjs';
-		if (file_exists($this->casperBin)){
+		$this->casperBin = TIKI_PATH . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . 'casperjs';
+		if (file_exists($this->casperBin)) {
 			$this->casperInstalled = true;
 		}
 	}
@@ -24,19 +24,19 @@ class WikiPlugin_Casperjs_Runner
 		$casperScript = tempnam(false, 'casperjs-script-');
 
 		$fullScript =
-			$this->scriptPrefix()."\n"
-			.$script."\n"
-			.$this->scriptPostfix($script, $casperInstance);
+			$this->scriptPrefix() . "\n"
+			. $script . "\n"
+			. $this->scriptPostfix($script, $casperInstance);
 
 		file_put_contents($casperScript, $fullScript);
 
 		$optionsString = "";
 		if (is_array($options)) {
 			foreach ($options as $option => $value) {
-				$optionsString .= ' --'.$option.'='.$value;
+				$optionsString .= ' --' . $option . '=' . $value;
 			}
 		}
-		$commandLine = $this->casperBin.' '.$casperScript.$options;
+		$commandLine = $this->casperBin . ' ' . $casperScript . $optionsString;
 
 		exec($commandLine, $output);
 		unlink($casperScript);
@@ -101,7 +101,7 @@ EOT;
 		if ($casperInstance === null) {
 			$casperInstance = "casper";
 		}
-		if (strpos($script, $casperInstance.'.run') !== false) {
+		if (strpos($script, $casperInstance . '.run') !== false) {
 			return "";
 		}
 
@@ -114,6 +114,7 @@ EOT;
 });
 
 EOT;
+
 		return $postfix;
 	}
 }

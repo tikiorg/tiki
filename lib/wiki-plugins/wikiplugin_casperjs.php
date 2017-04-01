@@ -16,7 +16,7 @@ function wikiplugin_casperjs_info()
 		'body' => tra('text'),
 		'introduced' => 17,
 		'iconname' => 'monitor',
-		'tags' => array('basic'),
+		'tags' => array('advanced'),
 		'validate' => 'arguments',
 		'params' => array(),
 	);

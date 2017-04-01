@@ -20,9 +20,9 @@ class WikiPlugin_Casperjs_Result
 
 		$this->output = array();
 
-		$tagStart = $prefix."_START";
+		$tagStart = $prefix . "_START";
 		$tagStartLen = strlen($tagStart);
-		$tagExport = $prefix."_EXPORT";
+		$tagExport = $prefix . "_EXPORT";
 		$tagExportLen = strlen($tagExport);
 		foreach ($commandOutput as $line) {
 			if (strncmp($tagStart, $line, $tagStartLen) == 0) {
