@@ -68,6 +68,10 @@ $listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 $smarty->assign("listgroups", $listgroups['data']);
 
 global $blackL;
+$blackL->charnum = 0;
+$blackL->special = 0;
+$blackL->length = 0;
+$blackL->limit = 0;
 
 if ($access->ticketMatch()) {
 	if (isset($_POST['uploadIndex'])){
@@ -79,16 +83,24 @@ if ($access->ticketMatch()) {
 			$blackL->loadPassIndex($_FILES['passwordlist']['tmp_name'],$_POST['loaddata']);
 			Feedback::success(tra('Uploaded file has been populated into database and indexed. Ready to generate password lists.'));
 		}
-	}else if (isset($_POST['saveblacklist']) || isset($_POST['viewblacklist'])) {
+	} else if (isset($_POST['saveblacklist']) || isset($_POST['viewblacklist'])) {
 
-		if (isset($_POST['charnum'])) $blackL->charnum = 1;
-		else $blackL->charnum = 0;
-
-		if (isset($_POST['special'])) $blackL->special = 1;
-		else $blackL->special = 0;
+		if (isset($_POST['charnum'])) {
+			$blackL->charnum = 1;
+		}
+		if (isset($_POST['special'])) {
+			$blackL->special = 1;
+		}
+		if (isset($_POST['length'])) {
+			$blackL->length = 0;
+		}
+		if (isset($_POST['limit'])) {
+			$blackL->limit = 0;
+		}
 
 		$blackL->length = $_POST['length'];
 		$blackL->limit = $_POST['limit'];
+
 		if (isset($_POST['viewblacklist'])) {  // if viewing the password list, enter plain text mode, spit out passwords, then exit.
 
 			header('Content-type: text/plain');
