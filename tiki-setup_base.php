@@ -215,7 +215,7 @@ if (isset($_SERVER["REQUEST_URI"])) {
 			} else {
 				$sequence = $tikilib->generate_unique_sequence(16);
 				$_SESSION['extra_validation'] = $sequence;
-				setcookie($extra_cookie_name, $sequence, time() + 365*24*3600, ini_get('session.cookie_path'));
+				setcookie($extra_cookie_name, $sequence, time() + 365*24*3600, ini_get('session.cookie_path'), null, null, true);
 				unset($sequence);
 			}
 		} catch( Zend\Session\Exception\ExceptionInterface $e ) {
