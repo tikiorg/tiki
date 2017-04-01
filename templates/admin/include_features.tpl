@@ -17,9 +17,9 @@
 
 	{tabset name="admin_features"}
 		{*
-		 * The following section is typically for features that act like Tiki
-		 * sections and add a configuration icon to the sections list
-		 *}
+		* The following section is typically for features that act like Tiki
+		* sections and add a configuration icon to the sections list
+		*}
 		{* ---------- Main features ------------ *}
 		{tab name="{tr}Global features{/tr}" key=global}
 			<br>

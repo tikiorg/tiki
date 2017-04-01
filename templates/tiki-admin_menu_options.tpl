@@ -10,12 +10,14 @@
 			{icon name="edit"} {tr}Edit This Menu{/tr}
 		</a>
 		<a class="btn btn-default" href="{bootstrap_modal controller=menu action=export_menu_options menuId=$menuId}"
-		   title="{tr}Export menu options{/tr}">
+			title="{tr}Export menu options{/tr}"
+		>
 			{icon name="export"} {tr}Export{/tr}
 		</a>
 		<a class="btn btn-default no-ajax"
-		   href="{bootstrap_modal controller=menu action=import_menu_options menuId=$menuId}"
-		   title="{tr}Import menu options{/tr}">
+			href="{bootstrap_modal controller=menu action=import_menu_options menuId=$menuId}"
+			title="{tr}Import menu options{/tr}"
+		>
 			{icon name="import"} {tr}Import{/tr}
 		</a>
 	{/if}
@@ -77,35 +79,41 @@
 						<tr>
 							<td class="checkbox-cell">
 								<input type="checkbox" name="checked[]" value="{$channels[user].optionId|escape}"
-									   {if $smarty.request.checked and in_array($channels[user].optionId,$smarty.request.checked)}checked="checked"{/if}>
+									{if $smarty.request.checked and in_array($channels[user].optionId,$smarty.request.checked)}checked="checked"{/if}>
 							</td>
 							<td class="id">{$channels[user].optionId}</td>
 							<td class="id">{$channels[user].position}</td>
 							<td class="text">
 								<a
 									href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}&amp;maxRecords={$maxRecords}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}"
-								   class="tips"
-								   title=":{tr}Edit{/tr}">{$channels[user].name|escape}</a>
-											<span class="help-block">
-												{if $channels[user].url}
-													{tr}URL:{/tr}
-													<a href="{$channels[user].sefurl|escape}"
-													   class="link tips" target="_blank"
-													   title=":{$channels[user].canonic|escape}">{$channels[user].canonic|truncate:40:' ...'|escape}</a>
-												{/if}
-												{if $channels[user].section}
-													<br>
-													{tr}Sections:{/tr} {$channels[user].section}{/if}
-												{if $channels[user].perm}
-													<br>
-													{tr}Permissions:{/tr} {$channels[user].perm}{/if}
-												{if $channels[user].groupname}
-													<br>
-													{tr}Groups:{/tr} {$channels[user].groupname|escape}{/if}
-												{if $channels[user].class}
-													<br>
-													{tr}Class:{/tr} {$channels[user].class|escape}{/if}
-											</span>
+									class="tips" title=":{tr}Edit{/tr}"
+								>
+									{$channels[user].name|escape}
+								</a>
+								<span class="help-block">
+									{if $channels[user].url}
+										{tr}URL:{/tr}
+										<a href="{$channels[user].sefurl|escape}" class="link tips" target="_blank" title=":{$channels[user].canonic|escape}" >
+											{$channels[user].canonic|truncate:40:' ...'|escape}
+										</a>
+									{/if}
+									{if $channels[user].section}
+										<br>
+										{tr}Sections:{/tr} {$channels[user].section}
+									{/if}
+									{if $channels[user].perm}
+										<br>
+										{tr}Permissions:{/tr} {$channels[user].perm}
+									{/if}
+									{if $channels[user].groupname}
+										<br>
+										{tr}Groups:{/tr} {$channels[user].groupname|escape}
+									{/if}
+									{if $channels[user].class}
+										<br>
+										{tr}Class:{/tr} {$channels[user].class|escape}
+									{/if}
+								</span>
 							</td>
 							<td class="text">{$channels[user].type_description}</td>
 
@@ -159,8 +167,7 @@
 			{if $channels}
 				<div align="left">
 					{tr}Perform action with checked:{/tr}
-					<input type="image" name="delsel" src='img/icons/cross.png' alt="{tr}Delete{/tr}"
-						   title="{tr}Delete{/tr}">
+					<input type="image" name="delsel" src='img/icons/cross.png' alt="{tr}Delete{/tr}" title="{tr}Delete{/tr}">
 				</div>
 			{/if}
 		</form>
@@ -185,7 +192,7 @@
 				<a href="#" onclick="flip('weburls');return false;">{tr}Show Quick URLs{/tr}</a>
 			</div>
 			<div id="weburls" style="display:none;position:absolute;right:-10px;top:-50px;z-index:1;"
-				 class="panel panel-default">
+					class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title" id="urltop">{tr}Some useful URLs{/tr}</h3>
 					<div style="text-align: right;">
@@ -380,8 +387,7 @@
 			<input type="hidden" name="optionId" value="{$optionId|escape}">
 			<input type="hidden" name="menuId" value="{$menuId|escape}">
 			<input type="hidden" name="offset" value="{$offset|escape}">
-			{if !empty($nbRecords)}<input type="hidden" name="nbRecords"
-										  value="{$nbRecords|escape}">{/if}
+			{if !empty($nbRecords)}<input type="hidden" name="nbRecords" value="{$nbRecords|escape}">{/if}
 			<div class="form form-horizontal">
 				<div class="form-group">
 					<label class="control-label col-md-3" for="menu_name">{tr}Name:{/tr}</label>
@@ -425,8 +431,7 @@
 					<label class="control-label col-md-3" for="position">{tr}Position:{/tr}</label>
 
 					<div class="col-md-9">
-						<input type="text" name="position" id="position" value="{$position|escape}"
-							   class="form-control">
+						<input type="text" name="position" id="position" value="{$position|escape}" class="form-control">
 					</div>
 				</div>
 				<div class="form-group">
@@ -450,8 +455,7 @@
 					<label class="control-label col-md-3" for="menu_section">{tr}Sections:{/tr}</label>
 
 					<div class="col-md-9">
-						<input id="menu_section" type="text" name="section" value="{$section|escape}"
-							   class="form-control"><br>
+						<input id="menu_section" type="text" name="section" value="{$section|escape}" class="form-control"><br>
 						{autocomplete element="#menu_section" type="array" options="source:prefNames,multiple:true,multipleSeparator:','"}{* note, multiple doesn't work in jquery-ui 1.8 *}
 						<div class="help-block">{tr}Separate multiple feature/preferences with a comma ( , ) for an AND or a vertical bar ( | ) for an OR.{/tr}</div>
 					</div>
@@ -469,8 +473,7 @@
 					<label class="control-label col-md-3" for="menu_class">{tr}Class:{/tr}</label>
 
 					<div class="col-md-9">
-						<input id="menu_class" type="text" name="class" value="{$class|escape}"
-							   class="form-control"><br>
+						<input id="menu_class" type="text" name="class" value="{$class|escape}" class="form-control"><br>
 
 						<div class="help-block">{tr}Input an HTML class value for the menu option. Separate with a space for multiple classes.{/tr}</div>
 					</div>
@@ -519,8 +522,7 @@
 		</div>
 		<div class="checkbox">
 			<label for="preview_css">
-			<input type="checkbox" id="preview_css" name="preview_css"
-			   onchange="this.form.submit()"{if $preview_css eq 'y'} checked="checked"{/if}>
+			<input type="checkbox" id="preview_css" name="preview_css" onchange="this.form.submit()"{if $preview_css eq 'y'} checked="checked"{/if}>
 				CSS</label>
 		</div>
 	</form>

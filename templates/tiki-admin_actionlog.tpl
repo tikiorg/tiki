@@ -168,12 +168,12 @@
 				</fieldset>
 				<input type="hidden" name="max" value="{$maxRecords}">
 				<span class="input_submit_container">
-							<input type="submit" class="btn btn-default btn-sm" name="list" value="{tr}Report{/tr}"></td>
-						</span>
+					<input type="submit" class="btn btn-default btn-sm" name="list" value="{tr}Report{/tr}">
+				</span>
 				{if $tiki_p_admin eq 'y'}
 					<span class="input_submit_container">
-								<input type="submit" class="btn btn-default btn-sm" name="export" value="{tr}Export{/tr}">
-							</span>
+						<input type="submit" class="btn btn-default btn-sm" name="export" value="{tr}Export{/tr}">
+					</span>
 				{/if}
 
 			{/if}
@@ -181,25 +181,25 @@
 
 		{if isset($actionlogs)}
 			<h2 id="List">{tr}List{/tr}</h2>
-				{if $selectedUsers}
-					&nbsp;&mdash;&nbsp;
-					{tr}User:{/tr}
-					{foreach key=ix item=auser from=$users}
-						{if $selectedUsers[$ix] eq 'y'} {$auser|username}{/if}
-					{/foreach}
-				{/if}
+			{if $selectedUsers}
+				&nbsp;&mdash;&nbsp;
+				{tr}User:{/tr}
+				{foreach key=ix item=auser from=$users}
+					{if $selectedUsers[$ix] eq 'y'} {$auser|username}{/if}
+				{/foreach}
+			{/if}
 
-				{if $selectedGroups}
-					&nbsp;&mdash;&nbsp;
-					{tr}Group:{/tr}
-					{foreach key=ix item=group from=$groups}
-						{if $selectedGroups[$group] eq 'y'} {$group|escape}{/if}
-					{/foreach}
-				{/if}
+			{if $selectedGroups}
+				&nbsp;&mdash;&nbsp;
+				{tr}Group:{/tr}
+				{foreach key=ix item=group from=$groups}
+					{if $selectedGroups[$group] eq 'y'} {$group|escape}{/if}
+				{/foreach}
+			{/if}
 
-				{if $reportCategory}
-					&nbsp;&mdash;&nbsp;{tr}Category:{/tr} {$reportCateg}
-				{/if}
+			{if $reportCategory}
+				&nbsp;&mdash;&nbsp;{tr}Category:{/tr} {$reportCateg}
+			{/if}
 			{if $maxRecords gt 0}
 				{if $cant gt $maxRecords}
 					{self_link max=-1}{tr}All{/tr}{/self_link}
@@ -274,8 +274,9 @@
 						{foreach from=$actionlogs item=actionlog}
 							<tr>
 								{if $prefs.feature_banning eq 'y'}
-									<td class="checkbox-cell"><input type="checkbox" name="checked[]"
-																	 value="{$actionlog.actionId}"></td>
+									<td class="checkbox-cell">
+										<input type="checkbox" name="checked[]" value="{$actionlog.actionId}">
+									</td>
 								{/if}
 								<td class="username">{if $actionlog.user}{$actionlog.user|username}{else}{tr}Anonymous{/tr}{/if}</td>
 								<td class="date">{$actionlog.lastModif|tiki_short_datetime}</td>
@@ -817,13 +818,13 @@
 								{if $tiki_p_admin eq 'y'}
 									<td class="checkbox-cell">
 										<input type="checkbox" name="{$actionlog.code}"
-												 {if $actionlog.status eq 'y' or $actionlog.status eq 'v'}checked="checked"{/if}>
+											{if $actionlog.status eq 'y' or $actionlog.status eq 'v'}checked="checked"{/if}>
 									</td>
 								{/if}
 								{if $tiki_p_admin eq 'y' or $actionlog.status eq 'y' or $actionlog.status eq 'v'}
 									<td class="checkbox-cell">
 										<input type="checkbox" name="v_{$actionlog.code}"
-												 {if $actionlog.status eq 'v'}checked="checked"{/if}>
+											{if $actionlog.status eq 'v'}checked="checked"{/if}>
 									</td>
 									<td class="text text-center">{tr}{$actionlog.action}{/tr}</td>
 									<td class="text text-center">{tr}{$actionlog.objectType}{/tr}</td>
@@ -832,8 +833,8 @@
 						{/foreach}
 					</tbody>
 				</table>
+				{*</div>*}
 			</div>
-			{*</div>*}
 			<div class="form-group">
 				<div class="col-sm-1 col-sm-offset-11">
 					<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Set{/tr}">

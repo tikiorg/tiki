@@ -405,7 +405,7 @@
 				{/if}
 			{/if}
 			{if $prefs.userTracker == 'y' || $prefs.useGroupTheme == 'y'}
-				<div id="registerfields" class="form-group"{if empty($userstrackerid) && empty($grouptrackerid) &&  $prefs.javascript_enabled == 'y' && $prefs.jquery_ui_chosen != 'y'} style="display: none;"{/if}>
+				<div id="registerfields" class="form-group"{if empty($userstrackerid) && empty($grouptrackerid) && $prefs.javascript_enabled == 'y' && $prefs.jquery_ui_chosen != 'y'} style="display: none;"{/if}>
 					<label for="registrationUserFieldIds" class="control-label col-md-3">{tr}Group or User Tracker Registration Fields{/tr}</label>
 					<div class="col-md-9">
 						<input type="text" class="form-control" name="registrationUsersFieldIds" value="{$registrationUsersFieldIds|escape}">
@@ -703,7 +703,7 @@
 							<label>
 								<input type="checkbox" name="username" checked="checked"> {tr}Username{/tr}
 							</label>
-					   </div>
+						</div>
 						<div class="checkbox">
 							<label>
 								<input type="checkbox" name="email"> {tr}Email{/tr}

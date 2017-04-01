@@ -213,10 +213,11 @@
 				<label class="control-label col-sm-3">{tr}Link quiz to forum named: {/tr}</label>
 				<div class="col-sm-9">
 					<div class="form-inline">
-						<label><input type="checkbox" name="quiz.forum" id="forum" {if $quiz->forum eq 'y'}checked="checked"{/if}> {tr}Yes{/tr}
+						<label>
+							<input type="checkbox" name="quiz.forum" id="forum" {if $quiz->forum eq 'y'}checked="checked"{/if}> {tr}Yes{/tr}
 						</label>
-					 	<input type="text" name="quiz.forumName" value="{$quiz->nameForum|escape}" size="40" class="form-control">
-				 	</div>
+						<input type="text" name="quiz.forumName" value="{$quiz->nameForum|escape}" size="40" class="form-control">
+					</div>
 				</div>
 			</div>
 		</div>

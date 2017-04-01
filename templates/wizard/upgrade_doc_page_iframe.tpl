@@ -33,7 +33,7 @@
 			<div class="simplebox">
 				<div class='titlebar'>
 					<b>doc.t.o/Tiki12from9</b>: {tr}To see it in full size out of this frame{/tr}, <a class="wiki external" target="_blank" href="https://doc.tiki.org/tiki-index_p.php?page=Tiki12from9" rel="external nofollow">{tr}click here{/tr}</a>
-				 <img src="img/icons/external_link.gif" width="15" height="14" class="icon" />
+					<img src="img/icons/external_link.gif" width="15" height="14" class="icon" />
 				</div>
 				<p><iframe name="Documentation of changes from Tiki 9 to Tiki 12" width="100%" height="300" align="middle" frameborder="1" marginheight="0" marginwidth="0" scrolling="auto" src="https://doc.tiki.org/tiki-index_p.php?page=Tiki12from9"></iframe></p>
 			</div>

@@ -12,7 +12,7 @@
 		{/if}
 		{if (empty($db_languages))}
 			{remarksbox type="note" title="{tr}Information{/tr}" close="n"}
-				 {tr}No translations in the database available to export{/tr}
+				{tr}No translations in the database available to export{/tr}
 			{/remarksbox}
 		{else}
 			{if $tiki_p_admin eq 'y' and $langIsWritable}

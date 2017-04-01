@@ -37,7 +37,7 @@
 						{/foreach}
 					{/foreach}
 				</ul>
-		 {/foreach}
+			{/foreach}
 		{/remarksbox}
 	{else}
 		{remarksbox type='note' title="{tr}No permissions were changed{/tr}"}{/remarksbox}

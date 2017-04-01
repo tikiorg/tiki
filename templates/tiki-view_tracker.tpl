@@ -263,13 +263,13 @@
 														</a>{$liend}
 													{/if}
 													{$libeg}<a href="{bootstrap_modal controller=tracker action=remove_item trackerId=$trackerId itemId=$items[user].itemId}"
-													   onclick="$('[data-toggle=popover]').popover('hide');"
+														onclick="$('[data-toggle=popover]').popover('hide');"
 													>
 														{icon name="delete" _menu_text='y' _menu_icon='y' alt="{tr}Delete{/tr}"}
 													</a>{$liend}
 													{if $tiki_p_admin_trackers eq 'y'}
 														{$libeg}<a href="tiki-tracker_view_history.php?itemId={$items[user].itemId}"
-														   onclick="$('[data-toggle=popover]').popover('hide');"
+															onclick="$('[data-toggle=popover]').popover('hide');"
 														>
 															{icon name="history" _menu_text='y' _menu_icon='y' alt="{tr}History{/tr}"}
 														</a>{$liend}

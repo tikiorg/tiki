@@ -1,5 +1,5 @@
 {* $Id$ *}
-{* this tpl is included in the various layout tpl's to show the  *}
+{* this tpl is included in the various layout tpl's to show the *}
 {* clickable fullscreen icon if the full screen feature has been set *}
 
 {if $prefs.feature_fullscreen eq 'y' and $filegals_manager eq '' and $print_page ne 'y'}

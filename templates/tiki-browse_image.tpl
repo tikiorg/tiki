@@ -36,7 +36,7 @@
 
 {* --- previous scale --- *}
 		{if $scaleinfo.prevscale}
-			<a class="tips" title=":{tr}Smaller{/tr}"  href="{$url_base}{$imageId}&amp;scalesize={$scaleinfo.prevscale}">
+			<a class="tips" title=":{tr}Smaller{/tr}" href="{$url_base}{$imageId}&amp;scalesize={$scaleinfo.prevscale}">
 				{icon name='view'}
 			</a>
 		{/if}

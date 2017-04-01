@@ -102,7 +102,7 @@
 						</a>
 					</li>
 					<li>
-						<a  href="tiki-plugins.php">
+						<a href="tiki-plugins.php">
 							{icon name="plugin"} {tr}Plugin approval{/tr}
 						</a>
 					</li>

@@ -78,7 +78,9 @@
 												href="tiki-calendar_edit_item.php?viewcalitemId={$event.calitemId}"
 											{/if}
 										{/if}
-									   title="{tr}Details{/tr}">{icon name='info'}
+										title="{tr}Details{/tr}"
+									>
+										{icon name='info'}
 									</a>
 								</span>
 								<abbr class="dtstart" title="{if $event.result.allday eq '1'}{tr}All day{/tr}{else}{$event.startTimeStamp|isodate}{/if}" style="{if $event.status eq '2'}text-decoration:line-through;{/if}{if isset($infocals.$cellcalendarId.customfgcolor)}color:#{$infocals.$cellcalendarId.customfgcolor};{/if}">

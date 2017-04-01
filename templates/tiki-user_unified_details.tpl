@@ -123,7 +123,7 @@
 									{elseif $user == $userinfo.object_id}
 										{$prefs.feature_wiki_userpage_prefix}{$userinfo.object_id}
 										<a class="link" href="tiki-editpage.php?page={$prefs.feature_wiki_userpage_prefix|escape:'url'}{$userinfo.object_id|escape:'url'}"
-										   title="{tr}Create Page{/tr}">?</a>
+											title="{tr}Create Page{/tr}">?</a>
 									{else}&nbsp;{/if}
 								</td>
 							</tr>

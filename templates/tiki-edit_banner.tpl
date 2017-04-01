@@ -203,7 +203,7 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">{tr}Movie URL{/tr}</label>
 				<div class="col-sm-7 margin-bottom-sm">
-					 <input type="text" name="movieUrl" value="{$movie.movie|escape}" class="form-control">
+					<input type="text" name="movieUrl" value="{$movie.movie|escape}" class="form-control">
 				</div>
 			</div>
 			<div class="form-group">

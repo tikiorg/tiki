@@ -36,7 +36,7 @@
 						{tr}The path to a podcast player is required.{/tr}
 					{/if}
 				</div>
-	 		</li>
+			</li>
 			{/section}
 		{if $nonums != 'y'}</ol>{else}</ul>{/if}
 

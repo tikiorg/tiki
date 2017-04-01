@@ -56,7 +56,7 @@
 										{icon name='trash' _menu_text='y' _menu_icon='y' alt="{tr}Clear{/tr}"}
 									</a>{$liend}
 									{if $plugin.last_objectType eq 'wiki page'}
-										{$libeg}<a href="{$plugin.last_objectId|sefurl:'wiki page'}#{$plugin.fingerprint}" title="{tr}View this page{/tr}">{icon name='textfile'  _menu_text='y' _menu_icon='y' alt="{tr}View this page{/tr}"}</a>{$liend}
+										{$libeg}<a href="{$plugin.last_objectId|sefurl:'wiki page'}#{$plugin.fingerprint}" title="{tr}View this page{/tr}">{icon name='textfile' _menu_text='y' _menu_icon='y' alt="{tr}View this page{/tr}"}</a>{$liend}
 									{/if}
 								{/strip}
 							{/capture}

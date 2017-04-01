@@ -7,7 +7,7 @@
 	<a href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=edit" class="tablink tips" title=":{tr}Edit{/tr}">
 		{icon name='edit'}
 	</a>&nbsp;
-	<a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_accept=on" class="tablink tips"  title=":{tr}Accept{/tr}">
+	<a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_accept=on" class="tablink tips" title=":{tr}Accept{/tr}">
 		{icon name='ok'}
 	</a>&nbsp;
 	<a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_not_accept=on" class="tablink tips" title=":{tr}Reject{/tr}">

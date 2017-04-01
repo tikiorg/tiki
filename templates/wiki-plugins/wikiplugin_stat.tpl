@@ -12,7 +12,7 @@
 			{elseif $when eq 'year'}{tr}Year{/tr}{/if}
 		{/capture}
 		{tab name=$smarty.capture.tabtitle}
-			 <ul>
+			<ul>
 			{foreach from=$typeStat key=type item=list}
 				{foreach from=$list key=what item=nb}
 					<li>{$what}: {$nb}</li>

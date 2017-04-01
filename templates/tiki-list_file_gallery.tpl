@@ -135,15 +135,15 @@
 		{/if}
 		{if $tiki_p_admin_file_galleries eq 'y' or (not empty($user) and $user eq $gal_info.user and $gal_info.type eq 'user' and $tiki_p_userfiles eq 'y')}
 			{if $edit_mode eq 'y' or $dup_mode eq 'y'}
-				{button _keepall='y'  _icon_name="view" _text="{tr}Browse{/tr}" galleryId=$galleryId}
+				{button _keepall='y' _icon_name="view" _text="{tr}Browse{/tr}" galleryId=$galleryId}
 			{/if}
 		{/if}
 		{if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user or $gal_info.public eq 'y'}
 			{if $tiki_p_upload_files eq 'y'}
-				{button _keepall='y' _icon_name="upload"  _type="link" _text="{tr}Upload{/tr}" href="tiki-upload_file.php" galleryId=$galleryId}
+				{button _keepall='y' _icon_name="upload" _type="link" _text="{tr}Upload{/tr}" href="tiki-upload_file.php" galleryId=$galleryId}
 			{/if}
 			{if $tiki_p_upload_files eq 'y' and $prefs.feature_draw eq 'y'}
-				{button _keepall='y' _icon_name="post"  _type="link" _text="{tr}Draw{/tr}" href="tiki-edit_draw.php" galleryId=$galleryId}
+				{button _keepall='y' _icon_name="post" _type="link" _text="{tr}Draw{/tr}" href="tiki-edit_draw.php" galleryId=$galleryId}
 			{/if}
 			{if $prefs.feature_file_galleries_batch eq "y" and $tiki_p_batch_upload_file_dir eq 'y'}
 				{button _keepall='y' _icon_name="file-archive" _text="{tr}Batch{/tr}" href="tiki-batch_upload_files.php" galleryId=$galleryId}
@@ -284,7 +284,7 @@
 			{if $prefs.fgal_quota_show neq 'text_only'}{if $gal_info.usedSize neq null}
 				<div class="progress" style="display:inline-block;float:right;width: 250px;">
 					<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
-						 aria-valuemin="0" aria-valuemax="100" style="width:{$smarty.capture.left_percent|string_format:'%d'}%">
+						aria-valuemin="0" aria-valuemax="100" style="width:{$smarty.capture.left_percent|string_format:'%d'}%">
 					</div>
 					<div class="progress-bar progress-bar-danger" role="progressbar" style="width:{$smarty.capture.use|string_format:'%d'}%">
 					</div>
@@ -293,7 +293,7 @@
 				{if $gal_info.usedSize eq null}
 					<div class="progress" style="display:inline-block;float:right; width: 250px;">
 						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
-							 aria-valuemin="0" aria-valuemax="100" style="width:100%">
+							aria-valuemin="0" aria-valuemax="100" style="width:100%">
 						</div>
 						<div class="progress-bar progress-bar-danger" role="progressbar" style="width:0%">
 						</div>
@@ -314,11 +314,11 @@
 		{jq}
 
 var elfoptions = initElFinder({
-		defaultGalleryId: {{$galleryId}},
-		deepGallerySearch:1,
-		getFileCallback: function(file,elfinder) { window.handleFinderFile(file,elfinder); },
-		height: 600
-	});
+	defaultGalleryId: {{$galleryId}},
+	deepGallerySearch:1,
+	getFileCallback: function(file,elfinder) { window.handleFinderFile(file,elfinder); },
+	height: 600
+});
 
 var elFinderInstnce = $(".elFinderDialog").elfinder(elfoptions).elfinder('instance');
 // when changing folders update the buttons in the navebar above
@@ -339,16 +339,16 @@ elFinderInstnce.bind("open", function (data) {
 });
 
 window.handleFinderFile = function (file, elfinder) {
-		var hash = "";
-		if (typeof file === "string") {
-			var m = file.match(/target=([^&]*)/);
-			if (!m || m.length < 2) {
-				return false;	// error?
-			}
-			hash = m[1];
-		} else {
-			hash = file.hash;
+	var hash = "";
+	if (typeof file === "string") {
+		var m = file.match(/target=([^&]*)/);
+		if (!m || m.length < 2) {
+			return false;	// error?
 		}
+		hash = m[1];
+	} else {
+		hash = file.hash;
+	}
 	$.ajax({
 		type: 'GET',
 		url: $.service('file_finder', 'finder'),
@@ -399,4 +399,3 @@ window.handleFinderFile = function (file, elfinder) {
 		{/remarksbox}
 	{/if}
 {/if}
-

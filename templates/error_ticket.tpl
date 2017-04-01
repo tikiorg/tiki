@@ -26,7 +26,7 @@
 								<input type="hidden" name="{$k}" value="{$i|escape}">
 							{/foreach}
 							<input type="submit" class="btn btn-success" name="ticket_action_button"
-								   value="{tr}Click here to confirm your action{/tr}">
+								value="{tr}Click here to confirm your action{/tr}">
 						</form>
 						{if $prefs.javascript_enabled eq 'y'}
 							{button href="javascript:history.back()" _text="{tr}Go back{/tr}"}
@@ -48,7 +48,7 @@
 								<input type="hidden" name="{$k}" value="{$i|escape}">
 							{/foreach}
 							<input type="submit" class="btn btn-success" name="ticket_action_button"
-								   value="{tr}Click here to confirm your action{/tr}">
+								value="{tr}Click here to confirm your action{/tr}">
 						</form>
 						{if $prefs.javascript_enabled eq 'y'}
 							{button href="javascript:history.back()" _text="{tr}Go back{/tr}"}
@@ -73,7 +73,7 @@
 								<input type="hidden" name="{$k}" value="{$i|escape}">
 							{/foreach}
 							<input type="submit" class="btn btn-success" name="ticket_action_button"
-								   value="{tr}Click here to confirm your action{/tr}">
+								value="{tr}Click here to confirm your action{/tr}">
 						</form>
 						{if $prefs.javascript_enabled eq 'y'}
 							{button href="javascript:history.back()" _text="{tr}Go back{/tr}"}
@@ -98,7 +98,7 @@
 								<input type="hidden" name="{$k}" value="{$i|escape}">
 							{/foreach}
 							<input type="submit" class="btn btn-success" name="ticket_action_button"
-								   value="{tr}Click here to confirm your action{/tr}">
+								value="{tr}Click here to confirm your action{/tr}">
 						</form>
 						{if $prefs.javascript_enabled eq 'y'}
 							{button href="javascript:history.back()" _text="{tr}Go back{/tr}"}

@@ -9,8 +9,8 @@
 	{/if}
 {/title}
 <div class="t_navbar margin-bottom-md">
-	{button href="tiki-list_articles.php"  _type="link" class="btn btn-link" _icon_name="list" _text="{tr}List Articles{/tr}"}
-	{button href="tiki-view_articles.php"  _type="link" class="btn btn-link" _icon_name="articles" _text="{tr}View Articles{/tr}"}
+	{button href="tiki-list_articles.php" _type="link" class="btn btn-link" _icon_name="list" _text="{tr}List Articles{/tr}"}
+	{button href="tiki-view_articles.php" _type="link" class="btn btn-link" _icon_name="articles" _text="{tr}View Articles{/tr}"}
 </div>
 {if $preview}
 	<h2>{tr}Preview{/tr}</h2>
@@ -31,11 +31,11 @@
 	{tabset}
 		{tab name="{tr}Content{/tr}"}
 			<h2>{tr}Content{/tr}</h2>
-			<div class="form-group  margin-side-0">
+			<div class="form-group margin-side-0">
 				<label for="title">{tr}Title{/tr}</label>
 				<input type="text" name="title" value="{$arttitle|escape}" maxlength="255" class="form-control">
 			</div>
-			<div class="form-group  margin-side-0">
+			<div class="form-group margin-side-0">
 				<label for="heading">{tr}Heading{/tr}</label>
 				{if $types.$type.heading_only eq 'y'}
 					{textarea name="heading" rows="5" class="form-control" id="subheading"}{$heading}{/textarea}
@@ -291,13 +291,13 @@
 				</div>
 			</div>
 			<div class="form-group {if $types.$type.show_subtitle neq 'y'}hidden{/if}">
-				<label for="subtitle"  class="control-label col-md-4">{tr}Subtitle{/tr}</label>
+				<label for="subtitle" class="control-label col-md-4">{tr}Subtitle{/tr}</label>
 				<div class="col-md-8">
 					<input type="text" name="subtitle" value="{$subtitle|escape}" class="form-control">
 				</div>
 			</div>
 			<div class="form-group {if $types.$type.show_linkto neq 'y'}hidden{/if}">
-				<label for="linkto"  class="control-label col-md-4">{tr}Source{/tr}</label>
+				<label for="linkto" class="control-label col-md-4">{tr}Source{/tr}</label>
 				<div class="col-md-8">
 					<input type="url" name="linkto" value="{$linkto|escape}" class="form-control" placeholder="{tr}http://...{/tr}">
 					{if $linkto neq ''}

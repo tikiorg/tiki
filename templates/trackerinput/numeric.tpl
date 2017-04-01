@@ -4,8 +4,9 @@
 {/if}
 
 <input type="number" class="numeric form-control" name="{$field.ins_id|escape}"
-	   {if $field.options_array[1]}size="{$field.options_array[1]|escape}" maxlength="{$field.options_array[1]|escape}"{/if}
-	   value="{$field.value|escape}" id="{$field.ins_id}">
+	{if $field.options_array[1]}size="{$field.options_array[1]|escape}" maxlength="{$field.options_array[1]|escape}"{/if}
+	value="{$field.value|escape}" id="{$field.ins_id}"
+>
 
 {*append*}
 {if $field.options_array[3]}

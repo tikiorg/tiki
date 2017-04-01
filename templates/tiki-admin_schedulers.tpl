@@ -57,8 +57,11 @@
 							<tr>
 								<td class="scheduler_name">
 									<a class="link tips"
-									   href="tiki-admin_schedulers.php?scheduler={$schedulers[scheduler].id}{if $prefs.feature_tabs ne 'y'}#2{/if}"
-									   title="{$scheduler_name}:{tr}Edit scheduler settings{/tr}">{$scheduler_name}</a>
+										href="tiki-admin_schedulers.php?scheduler={$schedulers[scheduler].id}{if $prefs.feature_tabs ne 'y'}#2{/if}"
+										title="{$scheduler_name}:{tr}Edit scheduler settings{/tr}"
+									>
+										{$scheduler_name}
+									</a>
 								</td>
 								<td class="scheduler_description">
 									{$schedulers[scheduler].description|escape}
@@ -135,19 +138,19 @@
 		</div>
 	</div>
 	<form class="form form-horizontal" action="tiki-admin_schedulers.php" method="post"
-		  enctype="multipart/form-data" name="RegForm" autocomplete="off">
+			enctype="multipart/form-data" name="RegForm" autocomplete="off">
 		<div class="form-group">
 			<label class="col-sm-3 col-md-2 control-label" for="scheduler_name">{tr}Name{/tr}</label>
 			<div class="col-sm-7 col-md-6">
 				<input type="text" id='scheduler_name' class="form-control" name='scheduler_name'
-					   value="{$schedulerinfo.name|escape}">
+					value="{$schedulerinfo.name|escape}">
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-3 col-md-2 control-label" for="scheduler_description">{tr}Description{/tr}</label>
 			<div class="col-sm-7 col-md-6">
 				<input type="text" id='scheduler_description' class="form-control" name='scheduler_description'
-					   value="{$schedulerinfo.description|escape}">
+					value="{$schedulerinfo.description|escape}">
 			</div>
 		</div>
 		<div class="form-group">
@@ -168,7 +171,7 @@
 			<label class="col-sm-3 col-md-2 control-label" for="scheduler_time">{tr}Run Time{/tr}</label>
 			<div class="col-sm-7 col-md-6">
 				<input type="text" id='scheduler_time' class="form-control" name='scheduler_time'
-					   value="{$schedulerinfo.run_time|escape}">
+					value="{$schedulerinfo.run_time|escape}">
 			</div>
 		</div>
 		<div class="form-group">
@@ -185,7 +188,7 @@
 			<label class="col-sm-3 col-md-2 control-label" for="scheduler_catch">{tr}Run if missed{/tr}</label>
 			<div class="col-sm-7 col-md-6">
 				<input type="checkbox" id="scheduler_rerun" name="scheduler_rerun"
-					   {if $schedulerinfo.re_run}checked{/if}>
+					{if $schedulerinfo.re_run}checked{/if}>
 			</div>
 		</div>
 		<div class="form-group">

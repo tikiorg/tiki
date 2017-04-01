@@ -17,7 +17,7 @@
 			</div>
 		{/if}
 		<form method="post" action="{service controller=tracker action=insert_item format=$format editItemPretty=$editItemPretty}" id="insertItemForm{$trackerId|escape}" {if ! $trackerId}display="hidden"{/if}>
-			{trackerfields trackerId=$trackerId fields=$fields status=$status format=$format  editItemPretty=$editItemPretty}
+			{trackerfields trackerId=$trackerId fields=$fields status=$status format=$format editItemPretty=$editItemPretty}
 			{if ! $modal}
 				<div class="checkbox">
 					<label>

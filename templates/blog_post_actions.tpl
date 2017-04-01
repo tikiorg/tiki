@@ -53,7 +53,7 @@
 					//Create your sharelet with desired properties and set button element to false
 					var object{/literal}{$postId}{literal} = SHARETHIS.addEntry({}, {button:false});
 					//Output your customized button
-					document.write('<a id="share{/literal}{$postId}{literal}" href="#">{/literal}{icon name="sharethis"}  {tr}ShareThis{/tr}{literal}</a>');
+					document.write('<a id="share{/literal}{$postId}{literal}" href="#">{/literal}{icon name="sharethis"} {tr}ShareThis{/tr}{literal}</a>');
 					//Tie customized button to ShareThis button functionality.
 					var element{/literal}{$postId}{literal} = document.getElementById("share{/literal}{$postId}{literal}");
 					object{/literal}{$postId}{literal}.attachButton(element{/literal}{$postId}{literal});

@@ -34,7 +34,7 @@
 							checked="checked"
 						{/if}
 						{if isset($edit_mode) and $edit_mode eq 'y' and $prefs.$pref_name neq 'y'}
-						 disabled="disabled"
+							disabled="disabled"
 						{/if}
 					>
 					{$item.name}

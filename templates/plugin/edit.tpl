@@ -50,7 +50,7 @@ $("#picker_{{$name|escape}}").parent().click(function () {
 					{if empty($param.separator)}
 						{object_selector type=$param.selector_type _simplevalue=$val _simplename=$name|escape _simpleid=$inputId _parent=$param.parent _parentkey=$param.parentkey}
 					{else}
-						{object_selector_multi type=$param.selector_type _simplevalue=$val _simplename=$name|escape _simpleid=$inputId  _separator=$param.separator _parent=$param.parent _parentkey=$param.parentkey _sort=$param.sort_order}
+						{object_selector_multi type=$param.selector_type _simplevalue=$val _simplename=$name|escape _simpleid=$inputId _separator=$param.separator _parent=$param.parent _parentkey=$param.parentkey _sort=$param.sort_order}
 					{/if}
 				{else}
 					<input value="{$val}" class="form-control{$groupClass}" id="{$inputId}" type="text" name="params[{$name|escape}]"{$dataAttribute}>
@@ -112,29 +112,29 @@ $("#picker_{{$name|escape}}").parent().click(function () {
 			</div>
 
 			{if $type eq 'module'}
-				{jq}$("#param_module_input").change(function () {
-
-					$(this).parents(".modal-content").load(
-						$.service("plugin", "edit", {
-							area_id: "{{$area_id}}",
-							type: "{{$type}}",
-							index: {{$index}},
-							page: "{{$pageName}}",
-							pluginArgs: {{$pluginArgsJSON}},
-							bodyContent: "{{$bodyContent}}",
-							edit_icon: "{{$edit_icon}}",
-							selectedMod: $(this).val(),
-							modal: 1
-						}),
-						function () {
-							$(this).tikiModal();
-							if (jqueryTiki.chosen) {
-								$(this).applyChosen();
+				{jq}
+					$("#param_module_input").change(function () {
+						$(this).parents(".modal-content").load(
+							$.service("plugin", "edit", {
+								area_id: "{{$area_id}}",
+								type: "{{$type}}",
+								index: {{$index}},
+								page: "{{$pageName}}",
+								pluginArgs: {{$pluginArgsJSON}},
+								bodyContent: "{{$bodyContent}}",
+								edit_icon: "{{$edit_icon}}",
+								selectedMod: $(this).val(),
+								modal: 1
+							}),
+							function () {
+								$(this).tikiModal();
+								if (jqueryTiki.chosen) {
+									$(this).applyChosen();
+								}
 							}
-						}
-					).tikiModal(tr("Loading..."));
-
-				});{/jq}
+						).tikiModal(tr("Loading..."));
+					});
+				{/jq}
 			{/if}
 
 		</form>

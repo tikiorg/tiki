@@ -5,10 +5,10 @@
 		<div class="cvsup">{tr}Last update from SVN{/tr} ({$tiki_version}): {$lastup|tiki_long_datetime}
 	{/if}
 	{if !empty($svnrev)}
-		 - REV {$svnrev}
+		- REV {$svnrev}
 	{/if}
 	{if !empty($lastup) or !empty($svnrev)}
-		 </div>
+		</div>
 	{/if}
 {/tikimodule}
 {/strip}

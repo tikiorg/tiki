@@ -23,48 +23,51 @@
 		<form action="tiki-user_reports.php" method="post">
 			<input type="hidden" name="report_preferences" value="true">
 
-			<p><input type="checkbox" name="use_daily_reports" value="true"
-					  {if $report_preferences != false}checked{/if}> {tr}Use reports{/tr}</p>
+			<p>
+				<input type="checkbox" name="use_daily_reports" value="true" {if $report_preferences != false}checked{/if}>
+				{tr}Use reports{/tr}
+			</p>
 
 			<p>
 				{tr}Interval in which you want to get the reports{/tr}
 				<select name="interval">
 					<option value="minute"
-							{if $report_preferences.interval eq "minute"}selected{/if}>{tr}Every minute{/tr}</option>
+						{if $report_preferences.interval eq "minute"}selected{/if}>{tr}Every minute{/tr}</option>
 					<option value="hourly"
-							{if $report_preferences.interval eq "hourly"}selected{/if}>{tr}Hourly{/tr}</option>
+						{if $report_preferences.interval eq "hourly"}selected{/if}>{tr}Hourly{/tr}</option>
 					<option value="daily"
-							{if $report_preferences.interval eq "daily" or !isset($report_preferences.interval)}selected{/if}>{tr}Daily{/tr}</option>
+						{if $report_preferences.interval eq "daily" or !isset($report_preferences.interval)}selected{/if}>{tr}Daily{/tr}</option>
 					<option value="weekly"
-							{if $report_preferences.interval eq "weekly"}selected{/if}>{tr}Weekly{/tr}</option>
+						{if $report_preferences.interval eq "weekly"}selected{/if}>{tr}Weekly{/tr}</option>
 					<option value="monthly"
-							{if $report_preferences.interval eq "monthly"}selected{/if}>{tr}Monthly{/tr}</option>
+						{if $report_preferences.interval eq "monthly"}selected{/if}>{tr}Monthly{/tr}</option>
 				</select>
 			</p>
 
 			<div style="float:left; margin-right: 50px;">
-				<input type="radio" name="view"
-					   value="short"{if $report_preferences.view eq "short"} checked="checked"{/if}> {tr}Short report{/tr}
+				<input type="radio" name="view" value="short"{if $report_preferences.view eq "short"} checked="checked"{/if}>
+				{tr}Short report{/tr}
 				<br>
-				<input type="radio" name="view"
-					   value="detailed"{if $report_preferences.view eq "detailed" OR $report_preferences eq false} checked="checked"{/if} /> {tr}Detailed report{/tr}
+				<input type="radio" name="view" value="detailed"{if $report_preferences.view eq "detailed" OR $report_preferences eq false} checked="checked"{/if}>
+				{tr}Detailed report{/tr}
 				<br>
 			</div>
 			<div style="float:left; margin-right: 50px;">
-				<input type="radio" name="type"
-					   value="html"{if $report_preferences.type eq "html" OR $report_preferences eq false} checked="checked"{/if}> {tr}HTML-Email{/tr}
+				<input type="radio" name="type" value="html"{if $report_preferences.type eq "html" OR $report_preferences eq false} checked="checked"{/if}>
+				{tr}HTML-Email{/tr}
 				<br>
-				<input type="radio" name="type"
-					   value="plain"{if $report_preferences.type eq "plain"} checked="checked"{/if}> {tr}Plain text{/tr}
+				<input type="radio" name="type" value="plain"{if $report_preferences.type eq "plain"} checked="checked"{/if}>
+				{tr}Plain text{/tr}
 				<br>
 			</div>
 			<div>
-				<input type="checkbox" name="always_email"
-					   value="1"{if $report_preferences.always_email eq 1 OR $report_preferences eq false} checked="checked"{/if}> {tr}Send me an email also if nothing happened{/tr}
+				<input type="checkbox" name="always_email" value="1"{if $report_preferences.always_email eq 1 OR $report_preferences eq false} checked="checked"{/if}>
+				{tr}Send me an email also if nothing happened{/tr}
 			</div>
 
-			<p><input type="submit" name="submit" class="btn btn-primary" title="{tr}Apply Changes{/tr}"
-					  value="{tr}Apply{/tr}"></p>
+			<p>
+				<input type="submit" name="submit" class="btn btn-primary" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			</p>
 		</form>
 	{/tab}
 {/if}
@@ -213,8 +216,8 @@
 		</div>
 		{if $watches}
 			<div class="form-group text-center">
-				{tr}Perform action with checked:{/tr} <input type="submit" class="btn btn-warning btn-sm" name="delete"
-															 value="{tr}Delete{/tr}">
+				{tr}Perform action with checked:{/tr}
+				<input type="submit" class="btn btn-warning btn-sm" name="delete" value="{tr}Delete{/tr}">
 			</div>
 		{/if}
 	</form>
@@ -230,58 +233,62 @@
 		{if $prefs.feature_wiki eq 'y'}
 			<div class="checkbox">
 				<label>
-					<input type="checkbox" name="user_wiki_watch_editor" value="true"
-						   {if $user_wiki_watch_editor eq 'y'}checked{/if}> {tr}Wiki{/tr}
+					<input type="checkbox" name="user_wiki_watch_editor" value="true" {if $user_wiki_watch_editor eq 'y'}checked{/if}>
+					{tr}Wiki{/tr}
 				</label>
 			</div>
 		{/if}
 		{if $prefs.feature_articles eq 'y'}
 			<div class="checkbox">
 				<label>
-					<input type="checkbox" name="user_article_watch_editor" value="true"
-						   {if $user_article_watch_editor eq 'y'}checked{/if}> {tr}Article{/tr}
+					<input type="checkbox" name="user_article_watch_editor" value="true" {if $user_article_watch_editor eq 'y'}checked{/if}>
+					{tr}Article{/tr}
 				</label>
 			</div>
 		{/if}
 		{if $prefs.feature_blogs eq 'y'}
 			<div class="checkbox">
 				<label>
-					<input type="checkbox" name="user_blog_watch_editor" value="true"
-						   {if $user_blog_watch_editor eq 'y'}checked{/if}> {tr}Blog{/tr}</label>
+					<input type="checkbox" name="user_blog_watch_editor" value="true" {if $user_blog_watch_editor eq 'y'}checked{/if}>
+					{tr}Blog{/tr}
+				</label>
 			</div>
 		{/if}
 		{if $prefs.feature_trackers eq 'y'}
 			<div class="checkbox">
 				<label>
-					<input type="checkbox" name="user_tracker_watch_editor" value="true"
-						   {if $user_tracker_watch_editor eq 'y'}checked{/if}> {tr}Tracker{/tr}</label>
+					<input type="checkbox" name="user_tracker_watch_editor" value="true" {if $user_tracker_watch_editor eq 'y'}checked{/if}>
+					{tr}Tracker{/tr}
+				</label>
 			</div>
 		{/if}
 		{if $prefs.feature_calendar eq 'y'}
 			<div class="checkbox">
 				<label>
-					<input type="checkbox" name="user_calendar_watch_editor" value="true"
-						   {if $user_calendar_watch_editor eq 'y'}checked{/if}> {tr}Calendar{/tr}</label>
+					<input type="checkbox" name="user_calendar_watch_editor" value="true" {if $user_calendar_watch_editor eq 'y'}checked{/if}>
+					{tr}Calendar{/tr}
+				</label>
 			</div>
 		{/if}
 		<div class="checkbox">
 			<label>
-				<input type="checkbox" name="user_comment_watch_editor" value="true"
-					   {if $user_comment_watch_editor eq 'y'}checked{/if}> {tr}Comment{/tr}</label>
+				<input type="checkbox" name="user_comment_watch_editor" value="true" {if $user_comment_watch_editor eq 'y'}checked{/if}>
+				{tr}Comment{/tr}
+			</label>
 		</div>
 		{if $prefs.feature_categories eq 'y'}
 			<div class="checkbox">
 				<label>
-					<input type="checkbox" name="user_category_watch_editor" value="true"
-						   {if $user_category_watch_editor eq 'y'}checked{/if}> {tr}Category{/tr}
+					<input type="checkbox" name="user_category_watch_editor" value="true" {if $user_category_watch_editor eq 'y'}checked{/if}>
+					{tr}Category{/tr}
 				</label>
 			</div>
 		{/if}
 
 		<div class="checkbox">
 			<label>
-				<input type="submit" class="btn btn-primary btn-sm" name="submit" title="{tr}Apply Changes{/tr}"
-					   value="{tr}Apply{/tr}"></label>
+				<input type="submit" class="btn btn-primary btn-sm" name="submit" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			</label>
 		</div>
 	</form>
 {/tab}

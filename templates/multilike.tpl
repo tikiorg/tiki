@@ -1,6 +1,6 @@
 {if $show_in_popup}
-<a role="button" class="btn btn-default btn-multilike" data-target="#ml{$type}{$object}" data-placement="{$popup_placement}">Like</a>
-<div class="screen hide">{* screen/hide the multilike inline, so that it only shows in the popup *}
+	<a role="button" class="btn btn-default btn-multilike" data-target="#ml{$type}{$object}" data-placement="{$popup_placement}">Like</a>
+	<div class="screen hide">{* screen/hide the multilike inline, so that it only shows in the popup *}
 {/if}
 <div id="ml{$type}{$object}" class="multilike">
 	{if $show_likes}
@@ -30,15 +30,16 @@
 			<div class="title">{$choice_label}</div>
 			{foreach $buttons as $button}
 				<a class="{if $multilike_many eq 'y'}multilike_many{else}multilike_group{/if}"
-				   data-relation="{$button.relation}"
-				   data-relation_prefix="{$relation_prefix}"
-				   data-target_type="{$type}"
-				   data-user="{$user}"
-				   data-target_id="{$object}"
-						{if $uses_values}
-							title="Worth {$button.value} Points"
-						{/if}
-				   href="#"}>
+					data-relation="{$button.relation}"
+					data-relation_prefix="{$relation_prefix}"
+					data-target_type="{$type}"
+					data-user="{$user}"
+					data-target_id="{$object}"
+					{if $uses_values}
+						title="Worth {$button.value} Points"
+					{/if}
+					href="#"}
+				>
 					{if $button.selected eq '0'}
 						<i class="fa fa-thumbs-o-up"></i>
 					{else}
@@ -54,15 +55,15 @@
 	</div>
 </div>
 {if $show_in_popup}
-</div>
-{jq}
-	$('a.btn-multilike').click(function(){
-		$(this).popover({
-			content: $($(this).data('target')),
-			placement: $(this).data('placement'),
-			html: true
+	</div>
+	{jq}
+		$('a.btn-multilike').click(function(){
+			$(this).popover({
+				content: $($(this).data('target')),
+				placement: $(this).data('placement'),
+				html: true
+			});
+			$(this).popover("toggle");
 		});
-		$(this).popover("toggle");
-	});
-{/jq}
+	{/jq}
 {/if}

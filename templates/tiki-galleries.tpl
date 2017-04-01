@@ -37,14 +37,14 @@
 					<label class="col-sm-4 control-label" for="gal-desc">{tr}Description:{/tr}</label>
 					<div class="col-sm-8">
 						<textarea rows="10" class="form-control" name="description"
-								  id="gal-desc">{$description|escape}</textarea>
+							id="gal-desc">{$description|escape}</textarea>
 					</div>
 				</div>
 				{if $tiki_p_admin_galleries eq 'y'}
 					<div class="form-group">
 						<div class="checkbox col-sm-push-4">
-							<input type="checkbox" name="visible"
-								   {if $visible eq 'y'}checked="checked"{/if}> {tr}Gallery is visible to non-admin users?{/tr}
+							<input type="checkbox" name="visible" {if $visible eq 'y'}checked="checked"{/if}>
+							{tr}Gallery is visible to non-admin users?{/tr}
 						</div>
 					</div>
 					{* If a user can create a gallery, but doesn't have tiki_p_admin_galleries the new gallery needs to be visible. *}
@@ -55,8 +55,7 @@
 					<div class="form-group">
 						<label class="col-sm-4 control-label" for="maxRows">{tr}Max Rows per page:{/tr}</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="maxRows"
-								   name="maxRows"{if !empty($maxRows)} value="{$maxRows|escape}"{/if}>
+							<input type="text" class="form-control" id="maxRows" name="maxRows"{if !empty($maxRows)} value="{$maxRows|escape}"{/if}>
 						</div>
 						<div class="col-sm-4 help-block">
 							{tr}Default:{/tr} {if !empty($prefs.maxRowsGalleries)}{$prefs.maxRowsGalleries}{else}10{/if}
@@ -65,8 +64,7 @@
 					<div class="form-group">
 						<label class="col-sm-4 control-label" for="rowImages">{tr}Images per row:{/tr}</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" name="rowImages"
-								   id="rowImages" {if !empty($rowImages)} value="{$rowImages|escape}"{/if}>
+							<input type="text" class="form-control" name="rowImages" id="rowImages" {if !empty($rowImages)} value="{$rowImages|escape}"{/if}>
 						</div>
 						<div class="col-sm-4 help-block">
 							{tr}Default:{/tr} {if !empty($prefs.rowImagesGalleries)}{$prefs.rowImagesGalleries}{else}6{/if}
@@ -75,8 +73,7 @@
 					<div class="form-group">
 						<label class="col-sm-4 control-label" for="thumbSizeX">{tr}Thumbnails size X:{/tr}</label>
 						<div class="col-sm-4">
-							<input type="text" id="thumbSizeX" name="thumbSizeX"
-								   class="form-control" {if !empty($thumbSizeX)} value="{$thumbSizeX|escape}"{/if}>
+							<input type="text" id="thumbSizeX" name="thumbSizeX" class="form-control" {if !empty($thumbSizeX)} value="{$thumbSizeX|escape}"{/if}>
 						</div>
 						<div class="col-sm-4 help-block">
 							{tr}Default:{/tr} {if !empty($prefs.thumbSizeXGalleries)}{$prefs.thumbSizeXGalleries}{else}80{/if}
@@ -85,8 +82,7 @@
 					<div class="form-group">
 						<label class="col-sm-4 control-label" for="thumbSizeY">{tr}Thumbnails size Y:{/tr}</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="thumbSizeY"
-								   name="thumbSizeY" {if !empty($thumbSizeY)} value="{$thumbSizeY|escape}"{/if}>
+							<input type="text" class="form-control" id="thumbSizeY" name="thumbSizeY" {if !empty($thumbSizeY)} value="{$thumbSizeY|escape}"{/if}>
 						</div>
 						<div class="col-sm-4 help-block">
 							{tr}Default:{/tr} {if !empty($prefs.thumbSizeYGalleries)}{$prefs.thumbSizeYGalleries}{else}80{/if}
@@ -102,12 +98,12 @@
 							{/foreach}
 						</select>
 						<div class="radio">
-							<input type="radio" name="sortdirection" value="desc"
-								   {if $sortdirection == 'desc'}checked="checked"{/if}>{tr}descending{/tr}
+							<input type="radio" name="sortdirection" value="desc" {if $sortdirection == 'desc'}checked="checked"{/if}>
+							{tr}descending{/tr}
 						</div>
 						<div class="radio">
-							<input type="radio" name="sortdirection" value="asc"
-								   {if $sortdirection == 'asc'}checked="checked"{/if}>{tr}ascending{/tr}
+							<input type="radio" name="sortdirection" value="asc" {if $sortdirection == 'asc'}checked="checked"{/if}>
+							{tr}ascending{/tr}
 						</div>
 					</div>
 				</div>
@@ -116,44 +112,44 @@
 					<div class="col-sm-4">
 
 						<div class="checkbox">
-							<input type="checkbox" name="showname" value="y"
-								   {if $showname=='y'}checked="checked"{/if}>{tr}Name{/tr}
+							<input type="checkbox" name="showname" value="y" {if $showname=='y'}checked="checked"{/if}>
+							{tr}Name{/tr}
 						</div>
 						<div class="checkbox">
-							<input type="checkbox" name="showimageid" value="y"
-								   {if $showimageid=='y'}checked="checked"{/if}>{tr}Image ID{/tr}
+							<input type="checkbox" name="showimageid" value="y" {if $showimageid=='y'}checked="checked"{/if}>
+							{tr}Image ID{/tr}
 						</div>
 						<div class="checkbox">
-							<input type="checkbox" name="showdescription" value="y"
-								   {if $showdescription=='y'}checked="checked"{/if}>{tr}Description{/tr}
+							<input type="checkbox" name="showdescription" value="y" {if $showdescription=='y'}checked="checked"{/if}>
+							{tr}Description{/tr}
 						</div>
 						<div class="checkbox">
-							<input type="checkbox" name="showcreated" value="y"
-								   {if $showcreated=='y'}checked="checked"{/if}>{tr}Creation Date{/tr}
+							<input type="checkbox" name="showcreated" value="y" {if $showcreated=='y'}checked="checked"{/if}>
+							{tr}Creation Date{/tr}
 						</div>
 						<div class="checkbox">
-							<input type="checkbox" name="showuser" value="y"
-								   {if $showuser=='y'}checked="checked"{/if}>{tr}User{/tr}
+							<input type="checkbox" name="showuser" value="y" {if $showuser=='y'}checked="checked"{/if}>
+							{tr}User{/tr}
 						</div>
 						<div class="checkbox">
-							<input type="checkbox" name="showhits" value="y"
-								   {if $showhits=='y'}checked="checked"{/if}>{tr}Hits{/tr}
+							<input type="checkbox" name="showhits" value="y" {if $showhits=='y'}checked="checked"{/if}>
+							{tr}Hits{/tr}
 						</div>
 						<div class="checkbox">
-							<input type="checkbox" name="showxysize" value="y"
-								   {if $showxysize=='y'}checked="checked"{/if}>{tr}XY-Size{/tr}
+							<input type="checkbox" name="showxysize" value="y" {if $showxysize=='y'}checked="checked"{/if}>
+							{tr}XY-Size{/tr}
 						</div>
 						<div class="checkbox">
-							<input type="checkbox" name="showfilesize" value="y"
-								   {if $showfilesize=='y'}checked="checked"{/if}>{tr}Filesize{/tr}
+							<input type="checkbox" name="showfilesize" value="y" {if $showfilesize=='y'}checked="checked"{/if}>
+							{tr}Filesize{/tr}
 						</div>
 						<div class="checkbox">
-							<input type="checkbox" name="showfilename" value="y"
-								   {if $showfilename=='y'}checked="checked"{/if}>{tr}Filename{/tr}
+							<input type="checkbox" name="showfilename" value="y" {if $showfilename=='y'}checked="checked"{/if}>
+							{tr}Filename{/tr}
 						</div>
 						<div class="checkbox">
-							<input type="checkbox" name="showcategories" value="y"
-								   {if $showcategories=='y'}checked="checked"{/if}>{tr}Categories{/tr}
+							<input type="checkbox" name="showcategories" value="y" {if $showcategories=='y'}checked="checked"{/if}>
+							{tr}Categories{/tr}
 						</div>
 					</div>
 				</div>
@@ -184,19 +180,21 @@
 						<label class="col-sm-4 control-label" for="parentgallery">{tr}Available scales:{/tr}</label>
 						<div class="col-sm-4">
 							<div class="radio">
-								<label><input type="radio" name="defaultscale" value="{$prefs.scaleSizeGalleries}"
-											  {if $defaultscale==$prefs.scaleSizeGalleries}checked="checked"{/if}>{$prefs.scaleSizeGalleries}
-									x{$prefs.scaleSizeGalleries} {tr}Global default{/tr} ({tr}Bounding box{/tr})</label>
+								<label>
+									<input type="radio" name="defaultscale" value="{$prefs.scaleSizeGalleries}" {if $defaultscale==$prefs.scaleSizeGalleries}checked="checked"{/if}>
+									{$prefs.scaleSizeGalleries}x{$prefs.scaleSizeGalleries} {tr}Global default{/tr} ({tr}Bounding box{/tr})
+								</label>
 							</div>
 							<label for="scales">{tr}default scale{/tr}</label>
-							{section  name=scales loop=$scaleinfo}
+							{section name=scales loop=$scaleinfo}
 								{if $scaleinfo[scales].scale ne $prefs.scaleSizeGalleries}
-									{tr}Remove:{/tr}<input type="checkbox"
-														   name="removescale_{$scaleinfo[scales].scale|escape}">
+									{tr}Remove:{/tr}
+									<input type="checkbox" name="removescale_{$scaleinfo[scales].scale|escape}">
 									{$scaleinfo[scales].scale}x{$scaleinfo[scales].scale} ({tr}Bounding box{/tr})
 									<div class="radio">
-									<label><input type="radio" name="defaultscale" value="{$scaleinfo[scales].scale}"
-												  {if $defaultscale==$scaleinfo[scales].scale}checked="checked"{/if}> {tr}Default scale{/tr}
+									<label>
+										<input type="radio" name="defaultscale" value="{$scaleinfo[scales].scale}" {if $defaultscale==$scaleinfo[scales].scale}checked="checked"{/if}>
+										{tr}Default scale{/tr}
 									</label>
 								{/if}
 								</div>
@@ -205,8 +203,8 @@
 							{/section}
 							<div class="radio">
 								<label>
-									<input type="radio" name="defaultscale" value="o"
-										   {if $defaultscale=='o'}checked="checked"{/if}> {tr}Original image is default scale{/tr}
+									<input type="radio" name="defaultscale" value="o" {if $defaultscale=='o'}checked="checked"{/if}>
+									{tr}Original image is default scale{/tr}
 								</label>
 							</div>
 						</div>
@@ -230,8 +228,9 @@
 				</div>
 				<div class="form-group">
 					<div class="checkbox col-sm-push-4">
-						<label><input type="checkbox" name="public"
-									  {if $public eq 'y'}checked="checked"{/if}> {tr}Other users can upload images to this gallery{/tr}
+						<label>
+							<input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}>
+							{tr}Other users can upload images to this gallery{/tr}
 						</label>
 					</div>
 				</div>
@@ -249,15 +248,15 @@
 {if $galleryId > 0}
 	{if $edited eq 'y'}
 		<div class="alert alert-info">
-			{tr}You can access the gallery using the following URL:{/tr} <a class="gallink"
-																			href="{$url}?galleryId={$galleryId}">{$url}
-				?galleryId={$galleryId}</a>
+			{tr}You can access the gallery using the following URL:{/tr}
+			<a class="gallink" href="{$url}?galleryId={$galleryId}">{$url}?galleryId={$galleryId}</a>
 		</div>
 	{/if}
 {/if}
 {if $tiki_p_create_galleries eq 'y' && $galleryId ne 0}
-	<div class="t_navbar"><a href="tiki-galleries.php?edit_mode=1&amp;galleryId=0"
-							 class="btn btn-default">{tr}Create New Gallery{/tr}</a></div>
+	<div class="t_navbar">
+		<a href="tiki-galleries.php?edit_mode=1&amp;galleryId=0" class="btn btn-default">{tr}Create New Gallery{/tr}</a>
+	</div>
 {/if}
 <h2>{tr}Available Galleries{/tr}</h2>
 <div align="center">
@@ -277,7 +276,7 @@
 						{/foreach*}
 					</select>
 					<span class="input-group-btn">
-					<input type="submit" class="btn btn-default" value="{tr}Filter{/tr}">
+						<input type="submit" class="btn btn-default" value="{tr}Filter{/tr}">
 					</span>
 				</div>
 			</form>
@@ -352,15 +351,14 @@
 					{if $galleries[changes].visible eq 'y' or $tiki_p_admin_galleries eq 'y'}
 						<tr>
 							{if $prefs.gal_list_name eq 'y'}
-								<td><a class="galname"
-									   href="{$galleries[changes].galleryId|sefurl:gallery}">{$galleries[changes].name}</a>
+								<td>
+									<a class="galname" href="{$galleries[changes].galleryId|sefurl:gallery}">{$galleries[changes].name}</a>
 								</td>
 							{/if}
 							{if $prefs.gal_list_parent eq 'y'}
 								<td>
 									{if $galleries[changes].parentgallery ne -1}
-										<a class="galname"
-										   href="{$galleries[changes].parentgallery|sefurl:gallery}">{$galleries[changes].parentgalleryName}</a>
+										<a class="galname" href="{$galleries[changes].parentgallery|sefurl:gallery}">{$galleries[changes].parentgalleryName}</a>
 									{/if}
 									{if $galleries[changes].parentgal eq 'y'}<i>{tr}Parent{/tr}</i>{/if}
 								</td>

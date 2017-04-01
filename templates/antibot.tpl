@@ -110,7 +110,7 @@
 		{/jq}
 	{else}
 		{jq}
-			antibotVerification($("#antibotcode"),  {
+			antibotVerification($("#antibotcode"), {
 				required: true,
 				remote: {
 					url: "validate-ajax.php",

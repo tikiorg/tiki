@@ -228,7 +228,7 @@
 														</a>{$liend}
 														{$libeg}
 															<a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Edit group expiry{/tr}">
-																{icon name='time'  _menu_text='y' _menu_icon='y' alt='{tr}Edit group expiry{/tr}'}
+																{icon name='time' _menu_text='y' _menu_icon='y' alt='{tr}Edit group expiry{/tr}'}
 															</a>
 														{$liend}
 														{$libeg}<a href="{query _type='relative' user=$users[user].userId}">
@@ -263,7 +263,7 @@
 															{/if}
 															{if $prefs.email_due > 0 and $users[user].waiting ne 'u' and $users[user].waiting ne 'a'}
 																{$libeg}<a href="tiki-adminusers.php?user={$users[user].user|escape:url}&amp;action=email_due">
-																	{icon name="trash"  _menu_text='y' _menu_icon='y' alt="{tr}Invalidate email{/tr}"}
+																	{icon name="trash" _menu_text='y' _menu_icon='y' alt="{tr}Invalidate email{/tr}"}
 																</a>{$liend}
 															{/if}
 														{/if}
@@ -524,7 +524,8 @@
 							<div class="col-md-10">
 								{if $usersitemid}
 									<a href="{bootstrap_modal controller=tracker action=update_item trackerId=$userstrackerid itemId=$usersitemid}"
-									   onclick="$('[data-toggle=popover]').popover('hide');" class="btn btn-default edit-usertracker">
+										onclick="$('[data-toggle=popover]').popover('hide');" class="btn btn-default edit-usertracker"
+									>
 										{tr}Edit Item{/tr}
 									</a>
 									<a href="{bootstrap_modal controller=tracker action=view id=$usersitemid}" class="btn btn-info">
@@ -532,7 +533,8 @@
 									<a>
 								{else}
 									<a href="{bootstrap_modal controller=tracker action=insert_item trackerId=$userstrackerid forced=$usersTrackerForced}"
-									   onclick="$('[data-toggle=popover]').popover('hide');" class="btn btn-default insert-usertracker">
+										onclick="$('[data-toggle=popover]').popover('hide');" class="btn btn-default insert-usertracker"
+									>
 										{tr}Create Item{/tr}
 									</a>
 								{/if}
@@ -554,39 +556,39 @@
 					{if isset($userinfo.userId) && $userinfo.userId != 0}
 						<table class="table table-striped table-condensed small">
 
-						{if $userinfo.created neq $userinfo.registrationDate}
+							{if $userinfo.created neq $userinfo.registrationDate}
+								<tr>
+									<td>{tr}Created{/tr}</td>
+									<td>{$userinfo.created|tiki_long_datetime}</td>
+								</tr>
+							{/if}
 							<tr>
-								<td>{tr}Created{/tr}</td>
-								<td>{$userinfo.created|tiki_long_datetime}</td>
+								<td>{tr}Registered{/tr}</td><td>{if $userinfo.registrationDate}{$userinfo.registrationDate|tiki_long_datetime}{/if}</td>
 							</tr>
-						{/if}
-						<tr>
-							<td>{tr}Registered{/tr}</td><td>{if $userinfo.registrationDate}{$userinfo.registrationDate|tiki_long_datetime}{/if}</td>
-						</tr>
-						<tr>
-							<td>{tr}Pass confirmed{/tr}</td><td>{if isset($userinfo.pass_confirm) && $userinfo.pass_confirm}{$userinfo.pass_confirm|tiki_long_datetime|default:'Never'}{/if}</td>
-						</tr>
+							<tr>
+								<td>{tr}Pass confirmed{/tr}</td><td>{if isset($userinfo.pass_confirm) && $userinfo.pass_confirm}{$userinfo.pass_confirm|tiki_long_datetime|default:'Never'}{/if}</td>
+							</tr>
 
-						{if $prefs.email_due > 0}
+							{if $prefs.email_due > 0}
+								<tr>
+									<td style="white-space: nowrap;">{tr}Email confirmed{/tr}</td>
+									<td>
+										{if $userinfo.email_confirm}
+											({tr _0=$userinfo.daysSinceEmailConfirm}%0 days ago{/tr})
+										{else}
+											{tr}Never{/tr}
+										{/if}
+									</td>
+								</tr>
+							{/if}
 							<tr>
-								<td style="white-space: nowrap;">{tr}Email confirmed{/tr}</td>
-								<td>
-									{if $userinfo.email_confirm}
-										({tr _0=$userinfo.daysSinceEmailConfirm}%0 days ago{/tr})
-									{else}
-										{tr}Never{/tr}
-									{/if}
-								</td>
+								<td>{tr}Current Login{/tr}</td>
+								<td>{if $userinfo.currentLogin}{$userinfo.currentLogin|tiki_long_datetime|default:'Never'}{/if}</td>
 							</tr>
-						{/if}
-						<tr>
-							<td>{tr}Current Login{/tr}</td>
-							<td>{if $userinfo.currentLogin}{$userinfo.currentLogin|tiki_long_datetime|default:'Never'}{/if}</td>
-						</tr>
-						<tr>
-							<td>{tr}Last Login{/tr}</td>
-							<td>{if $userinfo.lastLogin}{$userinfo.lastLogin|tiki_long_datetime|default:'Never'}{/if}</td>
-						</tr>
+							<tr>
+								<td>{tr}Last Login{/tr}</td>
+								<td>{if $userinfo.lastLogin}{$userinfo.lastLogin|tiki_long_datetime|default:'Never'}{/if}</td>
+							</tr>
 						</table>
 					{/if}
 

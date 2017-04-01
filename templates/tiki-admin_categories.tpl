@@ -495,7 +495,7 @@ $("#add_object_type").change(function () {
 										{/section}
 									</select>
 									<span class="input-group-btn">
-										<input type="submit"  class="btn btn-default" name="addtracker" value="{tr}Add{/tr}">
+										<input type="submit" class="btn btn-default" name="addtracker" value="{tr}Add{/tr}">
 									</span>
 								</div>
 							</div>

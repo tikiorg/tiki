@@ -19,7 +19,7 @@
 			{/if}
 
 			<input type="text" id="{$ling.id|escape}" name="{$field.ins_id}[{$ling.lang}]" value="{$ling.value|escape}" class="form-control"
-				   {if $field.options_map.size}size="{$field.options_map.size}"{/if} {if $field.options_map.max}maxlength="{$field.options_map.max}"{/if}> {*@@ missing value*}
+				{if $field.options_map.size}size="{$field.options_map.size}"{/if} {if $field.options_map.max}maxlength="{$field.options_map.max}"{/if}> {*@@ missing value*}
 
 			{if $field.options_map.append}
 				<span class="formunit">&nbsp;{$field.options_map.append}</span>
@@ -27,7 +27,7 @@
 
 			{if $field.options_map.autocomplete eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}
 				{autocomplete element="#`$ling.id`" type="trackervalue"
-							options="trackerId:`$field.trackerId`,fieldId:`$field.fieldId`"}
+					options="trackerId:`$field.trackerId`,fieldId:`$field.fieldId`"}
 			{/if}
 		</div>
 	{/foreach}
