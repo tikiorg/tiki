@@ -352,3 +352,35 @@
 		</li>
 	{/foreach}
 </ul>
+
+<h2>{tr}TRIM{/tr}</h2>
+{tr}For more detailed information about Tiki Remote Instance Manager please check <a href="https://doc.tiki.org/TRIM">doc.tiki.org</a>{/tr}.
+
+{if trim_capable}
+	<h3>Master server</h3>
+	<div class="table-responsive">
+		<table class="table">
+			<tr>
+				<th>{tr}Requirements{/tr}</th>
+				<th>{tr}Status{/tr}</th>
+			</tr>
+			{foreach from=$trim_requirements key=key item=item}
+				<tr>
+					<td class="text">{$key}</td>
+					<td class="text">
+						{if $item}
+							{icon name='ok' iclass='text-success'}
+						{else}
+							{icon name='remove' iclass='text-danger'}
+						{/if}
+					</td>
+				</tr>
+			{/foreach}
+
+		</table>
+	</div>
+{else}
+	{remarksbox type='error' title='{tr}OS not supported{/tr}' close='n'}
+		<p>{tr}Apparently tiki is running on a Windows based server. This feature is not supported natively.{/tr}</p>
+	{/remarksbox}
+{/if}

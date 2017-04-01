@@ -2158,6 +2158,51 @@ if ($standalone && !$nagios) {
 		$smarty->assign('bom_detected_files', $BOMFiles);
 	}
 
+
+	/**
+	 * TRIM (Tiki Remote Instance Manager) Section
+	 **/
+
+	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+		$trimCapable = false;
+	} else {
+		$trimCapable = true;
+	}
+
+	$smarty->assign('trim_capable', $trimCapable);
+
+	if ($trimCapable) {
+
+		$trimRequirements = [];
+
+		$commands = [
+			'make' => 'make',
+			'php-cli' => 'php',
+			'rsync' => 'rsync',
+			'tar' => 'tar',
+			'ssh' => 'ssh',
+			'ssh-copy-id' => 'ssh-copy-id',
+			'scp' => 'scp',
+			'sqlite' => 'sqlite3'
+		];
+
+		foreach ($commands as $key => $command) {
+			$trimRequirements[$key] = `which $command` ? true : false;
+		}
+
+		$phpExtensions = [
+			'php5-sqlite' => 'sqlite3',
+			'gz' => 'zlib',
+			'bz2' => 'bz2',
+		];
+
+		foreach ($phpExtensions as $key => $extension) {
+			$trimRequirements[$key] = extension_loaded($extension);
+		}
+
+		$smarty->assign('trim_requirements', $trimRequirements);
+	}
+
 	$smarty->assign('sensitive_data_detected_files', $sensitiveDataDetectedFiles);
 
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
