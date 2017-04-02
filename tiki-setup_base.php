@@ -252,7 +252,6 @@ $smarty = TikiLib::lib('smarty');
 $maxRecords = $prefs['maxRecords'];
 $smarty->assignByRef('maxRecords', $maxRecords);
 
-global $userlib;
 $userlib = TikiLib::lib('user');
 require_once ('lib/breadcrumblib.php');
 // ------------------------------------------------------
