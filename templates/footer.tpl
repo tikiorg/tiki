@@ -95,3 +95,14 @@ if (confirm("A problem occurred while detecting JavaScript on this page, click o
 {if $prefs.site_piwik_code}
 	{eval var=$prefs.site_piwik_code}
 {/if}
+{if $prefs.webcron_enabled == 'y' && $prefs.webcron_type != 'url'}
+	<script type="text/javascript">
+		$(window).bind('load', function () {
+			function cron() {
+				$.get("cron.php?token={$prefs.webcron_token|escape:url}");
+			}
+			setTimeout(cron, 500);
+			setInterval(cron, 60000);
+		});
+	</script>
+{/if}

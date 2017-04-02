@@ -25,7 +25,11 @@ class Scheduler_Task_ConsoleCommandTask extends Scheduler_Task_CommandTask
 		$commandName = $args[1];
 
 		try {
-			$console = Application::getInstance();
+			$consoleBuilder = new Tiki\Command\ConsoleApplicationBuilder(
+				isset($_SERVER['TIKI_VIRTUAL']) ? $_SERVER['TIKI_VIRTUAL'] : ''
+			);
+			$console = $consoleBuilder->create(true);
+
 			$command = $console->find($commandName);
 
 			$input = new ArgvInput($args);
@@ -40,22 +44,25 @@ class Scheduler_Task_ConsoleCommandTask extends Scheduler_Task_CommandTask
 			return $statusCode === 0;
 		} catch (Exception $e) {
 			$this->errorMessage = $e->getMessage();
+
 			return false;
 		}
 	}
 
-	private function parseConsoleParams($params) {
+	private function parseConsoleParams($params)
+	{
 
-		preg_match_all ('/(?<=^|\s)([\'"]?)(.+?)(?<!\\\\)\1(?=$|\s)/', $params, $args);
+		preg_match_all('/(?<=^|\s)([\'"]?)(.+?)(?<!\\\\)\1(?=$|\s)/', $params, $args);
 
 		return $args[2];
 	}
 
-	public function getParams() {
+	public function getParams()
+	{
 		return array(
 			'console_command' => array(
 				'name' => tra('Console command'),
-				'type' => 'text'
+				'type' => 'text',
 			),
 		);
 	}

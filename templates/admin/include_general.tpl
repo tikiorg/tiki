@@ -99,6 +99,22 @@
 					{preference name=log_sql_perf_min}
 				</div>
 			</fieldset>
+			<fieldset>
+				<legend>{tr}Web Cron{/tr}</legend>
+				<div class="adminoptionbox">
+					{preference name=webcron_enabled}
+					<div class="adminoptionboxchild" id="webcron_enabled_childcontainer">
+						{preference name=webcron_type}
+						{preference name=webcron_run_interval}
+						{preference name=webcron_token}
+						{if $prefs.webcron_type != 'js'}
+							{remarksbox type="note" title="{tr}Call Web Cron URL{/tr}"}
+							{$base_url}cron.php?token={$prefs.webcron_token|escape:url}
+							{/remarksbox}
+						{/if}
+					</div>
+				</div>
+			</fieldset>
 		{/tab}
 		{tab name="{tr}General Settings{/tr}"}
 			<br>
