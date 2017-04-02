@@ -1541,12 +1541,11 @@ if ( \$('#$id') ) {
 		// Don't bother if there's nothing...
 		if (function_exists('mb_strlen')) {
 			if ( mb_strlen($data) < 1 ) {
-				return;
+				return '';
 			}
 		}
 
-		global $page_regex, $slidemode, $prefs, $ownurl_father, $tiki_p_upload_picture, $page_ref_id, $user, $tikidomain, $tikiroot;
-		$wikilib = TikiLib::lib('wiki');
+		global $prefs;
 
 		$this->setOptions(); //reset options;
 
