@@ -6,7 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 }
 
 function smarty_modifier_forumname($commentid, $retrun_forumid = 'n') {
-	global $tikilib, $cachelib;
+	global $tikilib;
+	$cachelib = TikiLib::lib('cache');
 	require_once 'lib/comments/commentslib.php';
 	$comments = new Comments;
 	
