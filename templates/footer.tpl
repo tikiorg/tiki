@@ -97,7 +97,7 @@ if (confirm("A problem occurred while detecting JavaScript on this page, click o
 {/if}
 {if $prefs.webcron_enabled == 'y' && $prefs.webcron_type != 'url'}
 	<script type="text/javascript">
-		$(window).bind('load', function () {
+		$(window).on('load', function () {
 			function cron() {
 				$.get("cron.php?token={$prefs.webcron_token|escape:url}");
 			}
