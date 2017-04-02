@@ -315,7 +315,7 @@ class Tracker_Field_Wiki extends Tracker_Field_Text
 		if ($this->getOption('wysiwyg') === 'y' && $prefs['wysiwyg_htmltowiki'] != 'y') {
 			$parseOptions['is_html'] = true;
 		}
-		return TikiLib::lib('tiki')->parse_data($text, $parseOptions);
+		return TikiLib::lib('parser')->parse_data($text, $parseOptions);
 	}
 
 }

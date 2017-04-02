@@ -342,7 +342,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 		if ($this->getOption('wysiwyg') === 'y') {
 			$parseOptions['is_html'] = true;
 		}
-		return TikiLib::lib('tiki')->parse_data($text, $parseOptions);
+		return TikiLib::lib('parser')->parse_data($text, $parseOptions);
 	}
 
 	protected function getIndexableType()

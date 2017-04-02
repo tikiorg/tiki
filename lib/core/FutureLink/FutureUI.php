@@ -585,7 +585,7 @@ JQ
 	{
 		global $groupPluginReturnAll;
 		$groupPluginReturnAll = true;
-		$body = TikiLib::lib('tiki')->parse_data($args['data']);
+		$body = TikiLib::lib('parser')->parse_data($args['data']);
 		$groupPluginReturnAll = false;
 
 		$page = $args['object'];

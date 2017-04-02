@@ -542,7 +542,7 @@ class Document
 		$source=$this->removeText($this->_data[$index]['data']);
 		$source=preg_replace(array('/\{AUTHOR\(.+?\)\}/','/{AUTHOR\}/','/\{INCLUDE\(.+?\)\}\{INCLUDE\}/'), ' ~np~$0~/np~', $source);
 		if ($this->_parsed) {
-			$source=$histlib->parse_data($source, array('suppress_icons'=>true));
+			$source=TikiLib::lib('parser')->parse_data($source, array('suppress_icons'=>true));
 		}
 		if ($this->_nohtml) {
 			$source=strip_tags($source);

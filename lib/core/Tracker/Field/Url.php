@@ -77,7 +77,7 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 				$smarty
 			);
 		} elseif ($this->getOption('linkToURL') == 0) { // URL as link
-			$parsedUrl = trim(str_replace('<br />', '', TikiLib::lib('tiki')->parse_data($url)));
+			$parsedUrl = trim(str_replace('<br />', '', TikiLib::lib('parser')->parse_data($url)));
 			if ($parsedUrl != $url) {
 				return $parsedUrl;
 			}
