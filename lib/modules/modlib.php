@@ -1195,7 +1195,7 @@ class ModLib extends TikiLib
 
     function parse($info)
     {
-        global $prefs, $headerlib;
+        global $prefs;
 		$tikilib = TikiLib::lib('tiki');
 
 		if (isset($info['parse']) && $info['parse'] == 'y') {
