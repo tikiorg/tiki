@@ -646,13 +646,16 @@ if ($prefs['feature_inline_comments'] === 'y') {
 		$object = current_object();
 	}
 	$commentController = new Services_Comment_Controller();
-	$canPost = $commentController->canPost($object['type'], $object['object']);
-	$objectIdentifier = urlencode($object['type'] ) . ':' . urlencode($object['object']);	// spoof a URI from type and id
 
-	$headerlib
-		->add_jsfile('vendor_bundled/vendor/openannotation/annotator/annotator-full.min.js')
-		->add_cssfile('vendor_bundled/vendor/openannotation/annotator/annotator.min.css')
-		->add_jq_onready('var annotatorContent = $("#top").annotator({readOnly: ' . ($canPost ? 'false' : 'true') . '});
+	if ($commentController->isEnabled($object['type'], $object['object'])) {
+
+		$canPost = $commentController->canPost($object['type'], $object['object']);
+		$objectIdentifier = urlencode($object['type']) . ':' . urlencode($object['object']);    // spoof a URI from type and id
+
+		$headerlib
+			->add_jsfile('vendor_bundled/vendor/openannotation/annotator/annotator-full.min.js')
+			->add_cssfile('vendor_bundled/vendor/openannotation/annotator/annotator.min.css')
+			->add_jq_onready('var annotatorContent = $("#top").annotator({readOnly: ' . ($canPost ? 'false' : 'true') . '});
 annotatorContent.annotator("addPlugin", "Store", {
 	prefix: "tiki-ajax_services.php?controller=annotation&action=",
 
@@ -685,7 +688,7 @@ annotatorContent.annotator("addPlugin", "Permissions", {
 	}	
 });
 ');
-
+	}
 }
 
 $headerlib->add_jsfile('lib/jquery_tiki/pluginedit.js');
