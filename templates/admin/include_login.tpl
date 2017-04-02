@@ -12,9 +12,7 @@
 		{button href="tiki-admingroups.php" _type="text" _class="btn btn-link tips" _icon_name="group" _text="{tr}Groups{/tr}" _title=":{tr}Group Administration{/tr}"}
 		{button href="tiki-adminusers.php" _type="text" _class="btn btn-link tips" _icon_name="user" _text="{tr}Users{/tr}" _title=":{tr}User Administration{/tr}"}
 		{permission_link mode=text label="{tr}Permissions{/tr}"}
-		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-		</div>
+		{include file='admin/include_apply_top.tpl'}
 	</div>
 	{tabset name="admin_login"}
 		{tab name="{tr}General Preferences{/tr}"}
@@ -68,7 +66,7 @@
 								{preference name=captcha_questions}
 							</div>
 					</fieldset>
-					<legend>{tr}Group and Tracker login setting{/tr}</legend>
+					<legend>{tr}Group and tracker login settings{/tr}</legend>
 					<div class="adminoptionbox form-group">
 						<label for="registration_choices" class="col-sm-4 control-label">{tr}Users can select a group to join at registration:{/tr}</label>
 						<div class="col-sm-8 adminoptionlabel">
@@ -116,7 +114,7 @@
 					{preference name=tracker_force_tracker_fields}
 				</div>	
 				{preference name=groupTracker}
-				<legend>{tr}Other login setting{/tr}</legend>
+				<legend>{tr}Other login settings{/tr}</legend>
 				{preference name=email_due}
 				{preference name=unsuccessful_logins}
 				{preference name=unsuccessful_logins_invalid}
@@ -145,7 +143,7 @@
 					{preference name=cookie_domain}
 					{preference name=cookie_path}
 					<hr>
-					<strong>{tr}Cookie Consent{/tr}</strong>
+					<legend>{tr}Cookie consent{/tr}</legend>
 					{preference name=cookie_consent_feature}
 					<div class="adminoptionboxchild" id="cookie_consent_feature_childcontainer">
 						{preference name=cookie_consent_name}
@@ -192,7 +190,7 @@
 				<div class="form-group">
 					<div class="col-sm-8 col-sm-offset-4">
 						{button href="?page=login&amp;refresh_email_group=y" _text="{tr}Assign users to groups by matching email patterns{/tr}"}
-						<div class="help-block">{tr}An email patterns must be defined in the settings for at least one group for this to produce any results.{/tr}</div>
+						<div class="help-block">{tr}An email pattern must be defined in the settings for at least one group for this to produce any results.{/tr}</div>
 					</div>
 				</div>
 			</fieldset>
@@ -228,7 +226,7 @@
 				{preference name=auth_ldap_permit_tiki_users}
 			</fieldset>
 			<fieldset>
-				<legend>{tr}LDAP Bind settings{/tr}{help url="LDAP+Authentication"}</legend>
+				<legend>{tr}LDAP bind settings{/tr}{help url="LDAP+Authentication"}</legend>
 				{preference name=auth_ldap_host}
 				{preference name=auth_ldap_port}
 				{preference name=auth_ldap_debug}
@@ -240,7 +238,7 @@
 				{preference name=auth_ldap_basedn}
 			</fieldset>
 			<fieldset>
-				<legend>{tr}LDAP User{/tr}</legend>
+				<legend>{tr}LDAP user{/tr}</legend>
 				{preference name=auth_ldap_userdn}
 				{preference name=auth_ldap_userattr}
 				{preference name=auth_ldap_useroc}
@@ -249,7 +247,7 @@
 				{preference name=auth_ldap_emailattr}
 			</fieldset>
 			<fieldset>
-				<legend>{tr}LDAP Admin{/tr}</legend>
+				<legend>{tr}LDAP admin{/tr}</legend>
 				<input type="password" style="display:none" name="auth_ldap_adminuser_autocomplete_off"> {* This is now required so the browser don't store the user's login here *}
 				{preference name=auth_ldap_adminuser}
 				<input type="password" style="display:none" name="auth_ldap_adminpass_autocomplete_off"> {* This is now required so the browser don't store the user's password here *}
@@ -264,7 +262,7 @@
 				{preference name=auth_ldap_group_external}
 			</fieldset>
 			<fieldset>
-				<legend>{tr}LDAP Bind settings{/tr}{help url="LDAP+Authentication"}</legend>
+				<legend>{tr}LDAP bind settings{/tr}{help url="LDAP+Authentication"}</legend>
 				{preference name=auth_ldap_group_host}
 				{preference name=auth_ldap_group_port}
 				{preference name=auth_ldap_group_debug}
@@ -276,7 +274,7 @@
 				{preference name=auth_ldap_group_basedn}
 			</fieldset>
 			<fieldset>
-				<legend>{tr}LDAP User{/tr}</legend>
+				<legend>{tr}LDAP user{/tr}</legend>
 				{preference name=auth_ldap_group_userdn}
 				{preference name=auth_ldap_group_userattr}
 				{preference name=auth_ldap_group_corr_userattr}
@@ -284,7 +282,7 @@
 				{preference name=syncGroupsWithDirectory}
 			</fieldset>
 			<fieldset>
-				<legend>{tr}LDAP Group{/tr}</legend>
+				<legend>{tr}LDAP group{/tr}</legend>
 				{preference name=auth_ldap_groupdn}
 				{preference name=auth_ldap_groupattr}
 				{preference name=auth_ldap_groupdescattr}
@@ -292,17 +290,17 @@
 				{preference name=syncUsersWithDirectory}
 			</fieldset>
 			<fieldset>
-				<legend>{tr}LDAP Group Member - if group membership can be found in group attributes{/tr}</legend>
+				<legend>{tr}LDAP group member - if group membership can be found in group attributes{/tr}</legend>
 				{preference name=auth_ldap_memberattr}
 				{preference name=auth_ldap_memberisdn}
 			</fieldset>
 			<fieldset>
-				<legend>{tr}LDAP User Group - if group membership can be found in user attributes{/tr}</legend>
+				<legend>{tr}LDAP user group - if group membership can be found in user attributes{/tr}</legend>
 				{preference name=auth_ldap_usergroupattr}
 				{preference name=auth_ldap_groupgroupattr}
 			</fieldset>
 			<fieldset>
-				<legend>{tr}LDAP Admin{/tr}</legend>
+				<legend>{tr}LDAP admin{/tr}</legend>
 				{preference name=auth_ldap_group_adminuser}
 				{preference name=auth_ldap_group_adminpass}
 			</fieldset>
@@ -352,14 +350,14 @@
 				{/if}
 
 				<fieldset>
-					<legend>{tr}IDENTITY PROVIDER SETTINGS{/tr}</legend>
+					<legend>{tr}Identity provider settings{/tr}</legend>
 					{preference name=saml_idp_entityid}
 					{preference name=saml_idp_sso}
 					{preference name=saml_idp_slo}
 					{preference name=saml_idp_x509cert}
 				</fieldset>
 				<fieldset>
-					<legend>{tr}OPTIONS{/tr}</legend>
+					<legend>{tr}Options{/tr}</legend>
 						{preference name=saml_options_autocreate}
 						{preference name=saml_options_sync_group}
 						{preference name=saml_options_slo}
@@ -369,18 +367,18 @@
 						{preference name=saml_option_login_link_text}
 				</fieldset>
 				<fieldset>
-					<legend>{tr}ATTRIBUTE MAPPING{/tr}</legend>
+					<legend>{tr}Attribute mapping{/tr}</legend>
 						{preference name=saml_attrmap_username}
 						{preference name=saml_attrmap_mail}
 						{preference name=saml_attrmap_group}
 				</fieldset>
 				<fieldset>
-					<legend>{tr}GROUP MAPPING{/tr}</legend>
+					<legend>{tr}Group mapping{/tr}</legend>
 						{preference name=saml_groupmap_admins}
 						{preference name=saml_groupmap_registered}
 				</fieldset>
 				<fieldset>
-					<legend>{tr}ADVANCED SETTINGS{/tr}</legend>
+					<legend>{tr}Advanced settings{/tr}</legend>
 						{preference name=saml_advanced_debug}
 						{preference name=saml_advanced_strict}
 						{preference name=saml_advanced_sp_entity_id}
@@ -405,7 +403,7 @@
 		{tab name="{tr}CAS{/tr}"}
 			<br>
 			<fieldset>
-				<legend>{tr}CAS (Central Authentication Service){/tr}{help url="CAS+Authentication"}</legend>
+				<legend>{tr}CAS (central authentication service){/tr}{help url="CAS+Authentication"}</legend>
 				{if $prefs.auth_method ne 'cas'}
 					{remarksbox type="warning" title="{tr}Warning{/tr}" close="n"}
 						{tr}You must change the Authentication Method to CAS for these changes to take effect{/tr}
@@ -418,7 +416,7 @@
 				{preference name='cas_force_logout'}
 				{preference name='cas_version'}
 				<fieldset>
-					<legend>{tr}CAS Server{/tr}</legend>
+					<legend>{tr}CAS server{/tr}</legend>
 					{preference name='cas_hostname' label="{tr}CAS Server Name{/tr}"}
 					{preference name='cas_port' label="{tr}CAS Server Port{/tr}"}
 					{preference name='cas_path' label="{tr}CAS Server Path{/tr}"}
@@ -460,7 +458,7 @@
 		{tab name="{tr}Web Server{/tr}"}
 			<br>
 			<fieldset>
-				<legend>{tr}Web Server{/tr}{help url="External+Authentication#Web_Server_HTTP_" desc="{tr}Web Server Authentication {/tr}"}</legend>
+				<legend>{tr}Web server{/tr}{help url="External+Authentication#Web_Server_HTTP_" desc="{tr}Web Server Authentication {/tr}"}</legend>
 				{if $prefs.auth_method ne 'ws'}
 					{remarksbox type="warning" title="{tr}Warning{/tr}" close="n"}
 						{tr}You must change the Authentication Method to Web Server for these changes to take effect{/tr}
@@ -469,8 +467,7 @@
 				{preference name='auth_ws_create_tiki'}
 			</fieldset>
 		{/tab}
-
-	<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}" />
+	{include file='admin/include_apply_bottom.tpl'}
 </form>
 
 		{tab name="{tr}Password Blacklist{/tr}"}
@@ -480,7 +477,7 @@
 
 				{preference name=pass_blacklist_file}
 
-				<legend>{tr}Password Blacklist Tools{/tr}</legend>
+				<legend>{tr}Password blacklist tools{/tr}</legend>
 
 				<div class="form-group">
 					<h3>Upload Word List for Processing</h3>
@@ -496,11 +493,11 @@
 						<input type="hidden" name="password_blacklist" />
 						<input type="file" name="passwordlist" accept="text/plain" />
 						Use 'LOAD DATA INFILE': <input type="checkbox" name="loaddata" /> {help desc="Allows much larger files to be uploaded, but requires MySQL on localhost with extra permissions."}<br>
-						<input type="submit" value="Create or Replace Word Index" name="uploadIndex" class="btn btn-primary btn-sm" />
+						<input type="submit" value="Create or Replace Word Index" name="uploadIndex" class="btn btn-primary btn-sm timeout">
 						{help desc="Text files with one word per line accepted.
 						The word list will be converted to all lowe case. Duplicate entries will be removed.
 						Typically passwords lists should be arranged with the most commonly used passwords first."}<br>
-						<input type="submit" value="Delete Temporary Index" name="deleteIndex" class="btn btn-primary btn-sm" />
+						<input type="submit" value="Delete Temporary Index" name="deleteIndex" class="btn btn-primary btn-sm timeout">
 						{help desc="It is recomended that you delete indexed passwords from your database after your done generating your password lists.
 						They can take up quite a lot of space and serve no pourpose after processing is complete."}
 
@@ -518,8 +515,8 @@
 							{help desc="If checked, will filter out any password that does not have both upper and lower case letters."}<br>
 							Require Special Characters: <input type="checkbox" name="special" {if $special}checked{/if} />
 							{help desc="If checked, will filter out any passwords that do not have special characters."}<br>
-							<input type="submit" value="Save & Set as Default" name="saveblacklist" class="btn btn-primary btn-sm" />
-							<input type="submit" value="View Password List" name="viewblacklist" class="btn btn-primary btn-sm" formtarget="_blank" />
+							<input type="submit" value="Save & Set as Default" name="saveblacklist" class="btn btn-primary btn-sm timeout">
+							<input type="submit" value="View Password List" name="viewblacklist" class="btn btn-primary btn-sm timeout" formtarget="_blank">
 						{/if}
 					</form>
 				</div>
@@ -527,5 +524,3 @@
 		{/tab}
 
 	{/tabset}
-	<div class="t_navbar margin-bottom-md text-center">
-	</div>

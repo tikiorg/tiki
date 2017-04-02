@@ -1,9 +1,7 @@
 {* $Id$ *}
 <form action="tiki-admin.php?page=intertiki" method="post" name="intertiki" class="form-horizontal">
 	{include file='access/include_ticket.tpl'}
-	<div class="pull-right">
-		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-	</div>
+	{include file='admin/include_apply_top.tpl'}
 	{tabset name="admin_interwiki"}
 		{tab name="{tr}Intertiki Client{/tr}"}
 			<em>{tr}Set up this Tiki site as the Intertiki client{/tr}</em><br><br>
@@ -61,7 +59,7 @@
 										<td><input type="text" class="form-control" name="interlist[{$k}][path]" value="{$i.path}"></td>
 										<td><input type="text" class="form-control" name="interlist[{$k}][groups]" value="{foreach item=g from=$i.groups name=f}{$g}{if !$smarty.foreach.f.last},{/if}{/foreach}"></td>
 										<td>
-											<button type="submit" name="del" value="{$k}" class="btn btn-link tips" title="{tr}Delete master server{/tr}:{$k}">{icon name='delete'}</button>
+											<button type="submit" name="del" value="{$k}" class="btn btn-link tips timeout" title="{tr}Delete master server{/tr}:{$k}">{icon name='delete'}</button>
 										</td>
 									</tr>
 								{/foreach}
@@ -104,7 +102,7 @@
 									{foreach key=k item=i from=$prefs.known_hosts}
 										<tr>
 											<td>
-												<button type="submit" name="delk" class="btn btn-link" value="{$k|escape}" class="tips" title=":{tr}Delete{/tr}">{icon name='delete'}</button>
+												<button type="submit" name="delk" class="btn btn-link" value="{$k|escape}" class="tips timeout" title=":{tr}Delete{/tr}">{icon name='delete'}</button>
 											</td>
 											<td>
 												<input type="text" class="form-control" id="known_hosts_name" name="known_hosts[{$k}][name]" value="{$i.name}">
@@ -141,8 +139,6 @@
 			{/tab}
 		{/if}
 	{/tabset}
-	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>
 

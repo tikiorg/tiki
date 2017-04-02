@@ -7,9 +7,7 @@
 		<a role="button" class="btn btn-link" href="tiki-admin_rssmodules.php" title="{tr}List{/tr}">
 			{icon name="list"} {tr}External Feeds{/tr}
 		</a>
-		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-		</div>
+		{include file='admin/include_apply_top.tpl'}
 	</div>
 	{tabset name="admin_rss"}
 		{tab name="{tr}General Preferences{/tr}"}
@@ -257,7 +255,5 @@
 			{preference name=tracker_article_indexing}
 		{/tab}
 	{/tabset}
-	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>

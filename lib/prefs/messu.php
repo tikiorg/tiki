@@ -9,8 +9,8 @@ function prefs_messu_list()
 {
 	return array(
 		'messu_mailbox_size' => array(
-			'name' => tra('Maximum mailbox size (messages, 0=unlimited)'),
-			'description' => tra('Maximum mailbox size (messages, 0=unlimited)'),
+			'name' => tra('Maximum mailbox size'),
+			'description' => tra('Maximum number of messages allowed in the mailbox. Enter 0 for unlimited.'),
 			'type' => 'text',
 			'size' => '10',
 			'filter' => 'digits',
@@ -20,8 +20,8 @@ function prefs_messu_list()
 			'default' => '0',
 		),
 		'messu_archive_size' => array(
-			'name' => tra('Maximum mail archive size (messages, 0=unlimited)'),
-			'description' => tra('Maximum mail archive size (messages, 0=unlimited)'),
+			'name' => tra('Maximum mail archive size'),
+			'description' => tra('Maximum number of archive messages allowed. Enter 0 for unlimited.'),
 			'type' => 'text',
 			'size' => '10',
 			'filter' => 'digits',
@@ -31,8 +31,8 @@ function prefs_messu_list()
 			'default' => '200',
 		),
 		'messu_sent_size' => array(
-			'name' => tra('Maximum sent box size (messages, 0=unlimited)'),
-			'description' => tra('Maximum sent box size (messages, 0=unlimited)'),
+			'name' => tra('Maximum sent box size'),
+			'description' => tra('Maximum number of sent messages allowed in the mailbox. Enter 0 for unlimited.'),
 			'type' => 'text',
 			'size' => '10',
 			'filter' => 'digits',
@@ -42,8 +42,8 @@ function prefs_messu_list()
 			'default' => '200',
 		),
 		'messu_truncate_internal_message' => array(
-			'name' => tra('Truncate internal message notification to number of characters'),
-			'description' => tra('Number of characters to show in the message notification sent through email, with a link to read the full message in the Internal Messaging feature in Tiki'),
+			'name' => tra('Truncate internal message notification'),
+			'description' => tra('Number of characters to show in the message notification sent through email, with a link to read the full internal message.'),
 			'type' => 'text',
 			'size' => '10',
 			'filter' => 'digits',

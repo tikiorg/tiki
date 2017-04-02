@@ -4,9 +4,7 @@
 	{include file='access/include_ticket.tpl'}
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
+			{include file='admin/include_apply_top.tpl'}
 		</div>
 	</div>
 
@@ -79,14 +77,7 @@
 		<legend>{tr}Advanced{/tr}</legend>
 		{preference name=rating_advanced}
 	</fieldset>
-
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
-		</div>
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>
 
 <div id="rating_advanced_childcontainer">
@@ -94,31 +85,60 @@
 		<form class="config" method="post" action="">
 			{include file='access/include_ticket.tpl'}
 			<fieldset>
-				<legend>{$config.name|escape} (ID: {$config.ratingConfigId|escape}, Search Field: <em>adv_rating_{$config.ratingConfigId|escape}</em>)</legend>
-				<input type="hidden" name="config" value="{$config.ratingConfigId|escape}"/>
-				<div>
-					<label for="rating_name_{$config.ratingConfigId|escape}">{tr}Name{/tr}</label>
-					<input type="text" name="name" value="{$config.name|escape}" id="rating_name_{$config.ratingConfigId|escape}"/>
+				<legend>{$config.name|escape} <small>(ID: {$config.ratingConfigId|escape}, Search Field: <em>adv_rating_{$config.ratingConfigId|escape}</em>)</small></legend>
+				<input type="hidden" name="config" value="{$config.ratingConfigId|escape}">
+				<div class="form-group">
+					<label class="control-label col-sm-4" for="rating_name_{$config.ratingConfigId|escape}">
+						{tr}Name{/tr}
+					</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="name" value="{$config.name|escape}" id="rating_name_{$config.ratingConfigId|escape}">
+					</div>
 				</div>
-				<div>
-					<label for="rating_expiry_{$config.ratingConfigId|escape}">{tr}Cache duration{/tr}</label>
-					<input type="text" name="expiry" value="{$config.expiry|escape}" id="rating_expiry_{$config.ratingConfigId|escape}"/>
+				<div class="form-group">
+					<label class="control-label col-sm-4" for="rating_expiry_{$config.ratingConfigId|escape}">
+						{tr}Cache duration{/tr}
+					</label>
+					<div class="col-sm-8">
+						<div class="input-group">
+							<input type="text" class="form-control" name="expiry" value="{$config.expiry|escape}" id="rating_expiry_{$config.ratingConfigId|escape}">
+							<span class="input-group-addon">{tr}seconds{/tr}</span>
+						</div>
+					</div>
 				</div>
-				<div>
-					<textarea name="formula" rows="5" style="width: 100%;">{$config.formula|escape}</textarea>
+				<div class="form-group">
+					<label class="control-label col-sm-4" for="formula">
+						{tr}Formula{/tr}
+					</label>
+					<div class="col-sm-8">
+						<textarea name="formula" class="form-control" rows="5" style="width: 100%;">
+							{$config.formula|escape}
+						</textarea>
+					</div>
 				</div>
-				<div class="alert alert-danger"></div>
-				<input type="submit" class="btn btn-default btn-sm" name="edit" value="{tr}Save{/tr}"/>
+				<div class="form-group text-center">
+					<div class="col-sm-12"><br>
+						<input type="submit" class="btn btn-default btn-sm timeout" name="edit" value="{tr}Save{/tr}">
+					</div>
+				</div>
 			</fieldset>
-		</form>
+		</form><br>
 	{/foreach}
 	<form method="post" action="">
 		{include file='access/include_ticket.tpl'}
 		<fieldset>
-			<legend>{tr}Create New{/tr}</legend>
-			<label for="rating_config_new">{tr}Name{/tr}</label>
-			<input type="text" name="name" id="rating_config_new"/>
-			<input type="submit" class="btn btn-default btn-sm" name="create" value="{tr}Create{/tr}"/>
+			<legend>{tr}Create new{/tr}</legend>
+			<label class="control-label col-sm-4" for="rating_config_new">
+				{tr}Name{/tr}
+			</label>
+			<div class="col-sm-8">
+				<div class="input-group">
+					<input type="text" class="form-control" name="name" id="rating_config_new">
+					<span class="input-group-btn">
+			<input type="submit" class="btn btn-default timeout" name="create" value="{tr}Create{/tr}">
+				</span>
+				</div>
+			</div>
 		</fieldset>
 	</form>
 </div>

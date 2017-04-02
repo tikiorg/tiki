@@ -9,7 +9,7 @@ function prefs_zend_list()
 {
 	return array(
 		'zend_mail_smtp_server' => array(
-			'name' => tra('SMTP Server'),
+			'name' => tra('SMTP server'),
 			'type' => 'text',
 			'size' => '20',
 			'perspective' => false,
@@ -84,7 +84,7 @@ function prefs_zend_list()
 			'default' => 'localhost',
 		),
 		'zend_mail_queue' => array(
-			'name' => tra('Mail Delivery'),
+			'name' => tra('Mail delivery'),
 			'description' => tr('When set to Queue, messages will be stored in the database. Requires using the shell script %0 to be run for actual delivery. Only works with SMTP mail.',
 								'<code>php console.php mail-queue:send</code>'),
 			'type' => 'list',

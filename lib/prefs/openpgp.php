@@ -33,8 +33,8 @@ function prefs_openpgp_list()
 			'default' => '/usr/bin/gpg',
 		),
 		'openpgp_gpg_signer_passphrase_store' => array(
-			'name' => tra('Read signer passphase from prefs or from a file'),
-			'description' => tra('Read GnuPG signer passphase from preferences or from a file (default is \'file\' ). With file option, configure other preference for the full path including the filename of the file containing the GnuPG signer private-key passphrase.'),
+			'name' => tra('Read signer pass phrase from prefs or from a file'),
+			'description' => tra('Read GnuPG signer pass phrase from preferences or from a file (default is \'file\' ). With file option, configure other preference for the full path including the filename of the file containing the GnuPG signer private-key pass phrase.'),
 			'type' => 'list',
 			'options' => array(
 				'preferences' => tra('preferences'),
@@ -43,15 +43,15 @@ function prefs_openpgp_list()
 			'default' => 'preferences',
 		),
 		'openpgp_gpg_signer_passphrase' => array(
-			'name' => tra('Signer passphrase'),
-			'description' => tra('GnuPG signer private-key passphrase (default is empty string). Define passphrase either here or in a signer passphrase file (leave empty if read from file).'),
+			'name' => tra('Signer pass phrase'),
+			'description' => tra('GnuPG signer private-key passphrase (default is empty string). Define pass phrase either here or in a signer pass phrase file (leave empty if read from file).'),
 			'type' => 'text',
 			'size' => 60,
 			'default' => '',
 		),
 		'openpgp_gpg_signer_passfile' => array(
-			'name' => tra('Path to signer passphase filename'),
-			'description' => tra('Full path including the filename of the file containing the GnuPG signer private-key passphrase (default /home/www/.gnupg/signer/signerpass ). The directory and file must have proper permissions for tiki to access/read the signer passphrase file.'),
+			'name' => tra('Path to signer pass phrase filename'),
+			'description' => tra('Full path including the filename of the file containing the GnuPG signer private-key pass phrase (default /home/www/.gnupg/signer/signerpass ). The directory and file must have proper permissions for tiki to access/read the signer pass phrase file.'),
 			'type' => 'text',
 			'size' => 60,
 			'default' => '/home/www/.gnupg/signer/signerpass',

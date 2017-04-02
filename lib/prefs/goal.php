@@ -9,7 +9,7 @@ function prefs_goal_list($partial = false)
 {
 	return array(
 		'goal_enabled' => array(
-			'name' => tr('Goal, Recognition and Rewards'),
+			'name' => tr('Goal, recognition and rewards'),
 			'description' => tr('A tool to set motivational goals to increase engagement on the site.'),
 			'type' => 'flag',
 			'default' => 'n',
@@ -17,7 +17,7 @@ function prefs_goal_list($partial = false)
 			'help' => 'Goals',
 		),
 		'goal_badge_tracker' => array(
-			'name' => tr('Reward Badge Tracker'),
+			'name' => tr('Reward badge tracker'),
 			'description' => tr('Tracker ID containing the list of badges to be awarded on goal completion. Each badge can be awarded only once per user.'),
 			'type' => 'text',
 			'filter' => 'int',

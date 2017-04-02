@@ -15,7 +15,7 @@ function prefs_smarty_list()
 			'default' => 'n',
 		),
 		'smarty_security' => array(
-			'name' => tra('Smarty Security'),
+			'name' => tra('Smarty security'),
 			'description' => tra('Do not allow PHP code in Smarty templates.'),
 			'warning' => tra('You should leave this on unless you know what you are doing.'),
 			'type' => 'flag',
@@ -35,7 +35,7 @@ function prefs_smarty_list()
 			),
 		),
 		'smarty_security_functions' => array(
-			'name' => tr('Extra smarty functions'),
+			'name' => tr('Extra Smarty functions'),
 			'description' => tr('Make additional PHP functions available as smarty functions. May be needed for custom templates.'),
 			'warning' => tr('There may be security implications. Make sure you know what you are doing.'),
 			'type' => 'text',
@@ -47,7 +47,7 @@ function prefs_smarty_list()
 			),
 		),
 		'smarty_security_dirs' => array(
-			'name' => tr('Extra smarty directories'),
+			'name' => tr('Extra Smarty directories'),
 			'description' => tr('Make additional dirs available as smarty dirs. May be needed for custom icons (clear temp/cache after changing).'),
 			'warning' => tr('There may be security implications. Make sure you know what you are doing.'),
 			'type' => 'text',

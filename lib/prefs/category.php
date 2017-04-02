@@ -70,7 +70,7 @@ function prefs_category_list()
 			'default' => 'n',
 		),
 		'category_autogeocode_within' => array(
-			'name' => tra('Automatically geocode items when categorized in'),
+			'name' => tra('Automatically geocode items with this category'),
 			'description' => tra('Automatically geocode items based on category name when categorized in the sub-categories of this category ID'),
 			'type' => 'text',
 			'filter' => 'digits',
@@ -78,7 +78,7 @@ function prefs_category_list()
 			'default' => '',
 		),
 		'category_autogeocode_replace' => array(
-			'name' => tra('Replace existing geocode, if any'),
+			'name' => tra('Replace any existing geocode'),
 			'description' => tra('When automatically geocoding items based on category name, replace existing geocode, if any'),
 			'type' => 'flag',		
 			'default' => 'n',
@@ -119,14 +119,14 @@ function prefs_category_list()
 			'default' => 2, 
 		),
 		'category_morelikethis_mincommon_orless' => array(
-			'name' => tra('Or look for the maximum less categories in common if no objects with the above number of common categories'),
-			'description' => tra(''),
+			'name' => tra('List objects with most categories in common'),
+			'description' => tra('No minimum is applied.'),
 			'type' => 'flag',
 			'default' => 'y',
 		),
 		'category_morelikethis_mincommon_max' => array(
-			'name' => tra('Maximum number of "more like this" objects; otherwise, use the default maximum records'),
-			'description' => tra(''),
+			'name' => tra('Maximum number of "more like this" objects'),
+			'description' => tra('The default maximum records setting for the site is used of this is set to 0.'),
 			'type' => 'text',
 			'size' => 3,
 			'filter' => 'int',

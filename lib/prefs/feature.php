@@ -32,7 +32,7 @@ function prefs_feature_list($partial = false)
 
 	return array(
 		'feature_blog_mandatory_category' => array(
-			'name' =>  tra('Blog:').' '.tra('Limit categorization to within the subtree of'),
+			'name' =>  tra('Limit blog categories to those under this category'),
 			'description' => tra('If you get an error message indicating a mandatory category is required when editing a blog post, this is the option to blame. Set it to None.'),
 			'type' => 'list',
 			'options' => $catree,
@@ -103,7 +103,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		],
 		'feature_galleries' => array(
-			'name' => tra('Image Gallery'),
+			'name' => tra('Image gallery'),
 			'description' => tra('Collections of images for viewing or downloading (photo albums)'),
 			'warning' => tra('File galleries can be used instead.'),
 			'type' => 'flag',
@@ -120,7 +120,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		],
 		'feature_image_gallery_mandatory_category' => [
-			'name' => tra('Limit categorization to this category\'s subtrees'),
+			'name' => tra('Limit image gallery categories to those under this category'),
 			'description' => '',
 			'type' => 'list',
 			'dependencies' => [
@@ -130,7 +130,7 @@ function prefs_feature_list($partial = false)
 			'default' => -1,
 		],
 		'feature_machine_translation' => array(
-			'name' => tra('Machine Translation'),
+			'name' => tra('Machine translation'),
 			'description' => tra('Uses machine translation to translate the content of the site to other languages. Note that this feature relies on external services thay may not be free. Google Translate is a paid service.'),
 			'help' => 'Machine+Translation',
 			'warning' => tra('Experimental'),
@@ -179,7 +179,7 @@ function prefs_feature_list($partial = false)
 			),
 		),
 		'feature_file_galleries' => array(
-			'name' => tra('File Gallery'),
+			'name' => tra('File gallery'),
 			'description' => tra('Storage of files of various formats to display or download, etc. With check-in and check-out (lock) capability'),
 			'help' => 'File+Gallery',
 			'type' => 'flag',
@@ -294,7 +294,7 @@ function prefs_feature_list($partial = false)
 			),
 		),
 		'feature_unified_user_details' => array(
-			'name' => tra('Use Unified User Details '),
+			'name' => tra('Unified user details '),
 			'description' => tra('Use User Details Page using the Unified Index.'),
 			'help' => 'User+Preferences',
 			'type' => 'flag',
@@ -310,17 +310,17 @@ function prefs_feature_list($partial = false)
 			'module' => 'score',
 		),
 		'feature_score_expday' => array(
-			'name' => tra('Cause scores older than a certain number of days to expire'),
-			'description' => tra(''),
+			'name' => tra('Score expiry'),
 			'help' => 'Score',
 			'type' => 'text',
 			'filter' => 'digits',
 			'default' => 0,
 			'admin' => 'score',
+			'units' => tra('days'),
 			'module' => 'score',
 		),
 		'feature_search' => array(
-			'name' => tra('Unified Search Index'),
+			'name' => tra('Unified search index'),
 			'description' => tra('Enables searching for content at the site using a Tiki-managed index.') . '<br>' . tra("It's recommended to set a cron job to periodically rebuild the search index."),
 			'help' => 'Search',
 			'type' => 'flag',
@@ -347,7 +347,7 @@ function prefs_feature_list($partial = false)
 			),
 		),
 		'feature_actionlog' => array(
-			'name' => tra('Action Log'),
+			'name' => tra('Action log'),
 			'description' => tra('Provides the ability to track the actions of users and produce reports on a per-user or per-category basis.'),
 			'help' => 'Action+Log',
 			'type' => 'flag',
@@ -412,7 +412,7 @@ function prefs_feature_list($partial = false)
 			'view' => 'tiki-list_quizzes.php',
 		),
 		'feature_featuredLinks' => array(
-			'name' => tra('Featured Links'),
+			'name' => tra('Featured links'),
 			'description' => tra('A simple menu system to display external web pages in a new browser tab or an iframe within the site, etc.'),
 			'help' => 'Featured+links',
 			'view' => 'tiki-admin_links.php',
@@ -455,7 +455,7 @@ function prefs_feature_list($partial = false)
 			'view' => 'tiki-live_support_admin.php',
 		),
 		'feature_tell_a_friend' => array(
-			'name' => tra('Tell a Friend'),
+			'name' => tra('Tell a friend'),
 			'description' => tra('Add to each page an "Email this page" link'),
 			'help' => 'Tell+a+Friend',
 			'type' => 'flag',
@@ -483,7 +483,7 @@ function prefs_feature_list($partial = false)
 			'view' => 'tiki-admin_html_pages.php',
 		),
 		'feature_contact' => array(
-			'name' => tra('Contact Us'),
+			'name' => tra('Contact us'),
 			'description' => tra('A basic contact form a visitor can use to contact the site admin'),
 			'help' => 'Contact+us',
 			'type' => 'flag',
@@ -506,7 +506,7 @@ function prefs_feature_list($partial = false)
 			'module' => 'chat',
 		),
 		'feature_comments_moderation' => array(
-			'name' => tra('Comments Moderation'),
+			'name' => tra('Comments moderation'),
 			'description' => tra('Enables the admin or other authorized group member to validate comments before they are visible'),
 			'help' => 'Comments',
 			'type' => 'flag',
@@ -514,7 +514,7 @@ function prefs_feature_list($partial = false)
 			'tags' => array('basic'),
 		),
 		'feature_comments_locking' => array(
-			'name' => tra('Comments Locking'),
+			'name' => tra('Comments locking'),
 			'description' => tra('Comments can be closed (no comments, or no new comments)'),
 			'help' => 'Comments',
 			'type' => 'flag',
@@ -562,7 +562,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'y',
 		),
 		'feature_htmlpurifier_output' => array(
-			'name' => tra('Output should be HTML Purified'),
+			'name' => tra('Output should be HTML purified'),
 			'description' => tra('This activates HTML Purifier on wiki content and other outputs, to filter out potential security problems like XSS code. Keep in mind that HTML Purifier is not HTML5 compatible and may rewrite HTML5 syntax, producing unwanted results.'),
 			'help' => 'Purifier',
 			'warning' => tra('Experimental.'),
@@ -579,7 +579,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_cssmenus' => array(
-			'name' => tra('CSS Menus'),
+			'name' => tra('CSS menus'),
 			'description' => tra('CSS (Superfish) Menus.'),
 			'help' => 'Menus',
 			'type' => 'flag',
@@ -593,7 +593,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'y',
 		),
 		'feature_quick_object_perms' => array(
-			'name' => tra('Quick Permission Assignment'),
+			'name' => tra('Quick permission assignment'),
 			'description' => tra('Quickperms are an interface in addition to the normal edit-permissions page, for quick assignment of permissions for a page or other object.'),
 			'help' => 'Quickperms',
 			'type' => 'flag',
@@ -601,7 +601,7 @@ function prefs_feature_list($partial = false)
 			'tags' => array('experimental'),
 		),
 		'feature_user_encryption' => array(
-			'name' => tra('User Encryption'),
+			'name' => tra('User encryption'),
 			'description' => tra('Tiki user encryption enables a personal, secure storage of sensitive data, e.g. password. Only the user can see the data. No decryption passwords are stored.'),
 			'hint' => tra('Enable personal, secure storage of sensitive data such as passwords'),
 			'help' => 'User Encryption',
@@ -611,7 +611,7 @@ function prefs_feature_list($partial = false)
 			'tags' => array('experimental'),
 		),
 		'feature_password_domains' => array(
-			'name' => tra('Password Domains'),
+			'name' => tra('Password domains'),
 			'description' => tra('Securely store extra user passwords and other user specific data for other "domains", or just for yourself'),
 			'type' => 'text',
 			'default' => 'userkey',
@@ -621,7 +621,7 @@ function prefs_feature_list($partial = false)
 			'tags' => array('experimental'),
 		),
 		'feature_purifier' => array(
-			'name' => tra('HTML Purifier'),
+			'name' => tra('HTML purifier'),
 			'description' => tra("HTML Purifier is a standards-compliant HTML filter library written in PHP and integrated in Tiki. HTML Purifier will not only remove all malicious code (better known as XSS) with a thoroughly audited, secure yet permissive whitelist, it will also ensure that your documents are standards-compliant. Keep in mind that HTML Purifier is not HTML5 compatible and may rewrite HTML5 syntax and produce unwanted results."),
 			'hint' => tra('If you use HTML in your wiki page and it gets stripped out or rewritten, make sure your HTML is valid, or de-activate this feature.  Keep in mind that HTML Purifier is not HTML5 compatible and may rewrite HTML5 syntax and produce unwanted results.'),
 			'help' => 'Purifier',
@@ -705,7 +705,7 @@ function prefs_feature_list($partial = false)
 			'tags' => array('basic'),
 		),
 		'feature_slideshow_pdfexport' => array(
-			'name' => tra('Slideshow (jQuery.s5) PDF Export'),
+			'name' => tra('Slideshow (jQuery.s5) PDF export'),
 			'description' => tra('Wiki-page-based slideshow to pdf export'),
 			'help' => 'Slideshow',
 			'type' => 'flag',
@@ -739,7 +739,7 @@ function prefs_feature_list($partial = false)
 			'tags' => array('basic'),
 		),
 		'feature_kaltura' => array(
-			'name' => tra('Kaltura Video Management'),
+			'name' => tra('Kaltura video management'),
 			'description' => tra('Integration with the Kaltura video management platform'),
 			'help' => 'Kaltura',
 			'type' => 'flag',
@@ -748,7 +748,7 @@ function prefs_feature_list($partial = false)
 			'view' => 'tiki-list_kaltura_entries.php?list=media',
 		),
 		'feature_friends' => array(
-			'name' => tra('Friendship Network'),
+			'name' => tra('Friendship network'),
 			'description' => tra('Users can identify other users as their friends'),
 			'dependencies' => array(
 				'feature_search',
@@ -779,8 +779,7 @@ function prefs_feature_list($partial = false)
 			'view' => 'tiki-stats.php',
 		),
 		'feature_action_calendar' => array(
-			'name' => tra('Action Calendar'),
-			'description' => tra('Action Calendar'),
+			'name' => tra('Action calendar'),
 			'help' => 'Action+Calendar',
 			'type' => 'flag',
 			'default' => 'n',
@@ -818,43 +817,39 @@ function prefs_feature_list($partial = false)
 			'tags' => array('basic'),
 		),
 		'feature_minical' => array(
-			'name' => tra('Mini Calendar'),
+			'name' => tra('Mini calendar'),
 			'description' => tra('Mini Calendar'),
 			'help' => 'Calendar',
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_userPreferences' => array(
-			'name' => tra('User Preferences Screen'),
-			'description' => tra('User Preferences Screen'),
+			'name' => tra('User preferences screen'),
 			'help' => 'User+Preferences',
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
 		),
 		'feature_notepad' => array(
-			'name' => tra('User Notepad'),
-			'description' => tra('User Notepad'),
+			'name' => tra('User notepad'),
 			'help' => 'Notepad',
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_user_bookmarks' => array(
-			'name' => tra('My Bookmarks'),
-			'description' => tra('My Bookmarks'),
+			'name' => tra('My bookmarks'),
 			'help' => 'Bookmarks',
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_contacts' => array(
-			'name' => tra('User Contacts'),
-			'description' => tra('User Contacts'),
+			'name' => tra('User contacts'),
 			'help' => 'Contacts',
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_user_watches' => array(
-			'name' => tra('User Watches'),
+			'name' => tra('User watches'),
 			'description' => tra('Receive email notification of changes. Each user can choose to be notified of changes to specific items'),
 			'help' => 'User+Watches',
 			'type' => 'flag',
@@ -863,42 +858,38 @@ function prefs_feature_list($partial = false)
 			'view' => 'tiki-admin_notifications.php',
 		),
 		'feature_group_watches' => array(
-			'name' => tra('Group Watches'),
+			'name' => tra('Group watches'),
 			'description' => tra('All users in a group selected by an admin will receive email notification of changes to specific items. Users cannot choose to stop receiving those notifications while they are members of that group'),
 			'help' => 'Group+Watches',
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_daily_report_watches' => array(
-			'name' => tra('Daily Reports for User Watches'),
-			'description' => tra('Daily Reports for User Watches'),
+			'name' => tra('Daily reports for user watches'),
 			'help' => 'Daily+Reports',
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_user_watches_translations' => array(
-			'name' => tra('User Watches Translations'),
-			'description' => tra('User Watches Translations'),
+			'name' => tra('User watches translations'),
 			'help' => 'User+Watches',
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_user_watches_languages' => array(
-			'name' => tra('User Watches Languages'),
+			'name' => tra('User watches languages'),
 			'description' => tra('Watch language-specific changes within a category.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_usermenu' => array(
-			'name' => tra('User Menu'),
-			'description' => tra('User Menu'),
+			'name' => tra('User menu'),
 			'help' => 'User+Menu',
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_tasks' => array(
-			'name' => tra('User Tasks'),
-			'description' => tra('User Tasks'),
+			'name' => tra('User tasks'),
 			'help' => 'Task',
 			'type' => 'flag',
 			'default' => 'n',
@@ -909,8 +900,7 @@ function prefs_feature_list($partial = false)
 			),
 		),
 		'feature_messages' => array(
-			'name' => tra('User Messages'),
-			'description' => tra('User Messages'),
+			'name' => tra('User messages'),
 			'help' => 'Inter-user+Messages',
 			'type' => 'flag',
 			'default' => 'n',
@@ -923,8 +913,7 @@ function prefs_feature_list($partial = false)
 			),
 		),
 		'feature_userfiles' => array(
-			'name' => tra('User Files'),
-			'description' => tra('User Files'),
+			'name' => tra('User files'),
 			'help' => 'User+Files',
 			'type' => 'flag',
 			'default' => 'n',
@@ -937,15 +926,13 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_groupalert' => array(
-			'name' => tra('Group Alert'),
-			'description' => tra('Group Alert'),
+			'name' => tra('Group alert'),
 			'help' => 'Group+Alert',
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_integrator' => array(
 			'name' => tra('Integrator'),
-			'description' => tra('Integrator'),
 			'help' => 'Integrator',
 			'type' => 'flag',
 			'default' => 'n',
@@ -961,7 +948,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_debug_console' => array(
 			'name' => tra('Debugger console'),
-			'description' => tra('Debugger console'),
 			'help' => 'Debugger+Console',
 			'type' => 'flag',
 			'perspective' => false,
@@ -984,14 +970,12 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_ticketlib' => array(
 			'name' => tra('Require confirmation of an action if a possible CSRF is detected'),
-			'description' => tra('Require confirmation of an action if a possible CSRF is detected'),
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',
 		),
 		'feature_ticketlib2' => array(
 			'name' => tra('Protect against CSRF with a ticket'),
-			'description' => tra('Protect against CSRF with a ticket'),
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'y',
@@ -1063,7 +1047,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_help' => array(
-			'name' => tra('Help System'),
+			'name' => tra('Help system'),
 			'description' => tra('Activates links to Tiki documentation'),
 			'help' => 'Documentation',
 			'type' => 'flag',
@@ -1086,7 +1070,7 @@ function prefs_feature_list($partial = false)
 			'tags' => array('basic'),
 		),
 		'feature_draw' => array(
-			'name' => tra('Draw (SVG Edit)'),
+			'name' => tra('Draw (SVG edit)'),
 			'description' => tra('Draw enables creating and editing SVG images in all wiki text areas'),
 			'help' => 'Draw',
 			'type' => 'flag',
@@ -1096,7 +1080,7 @@ function prefs_feature_list($partial = false)
 			),
 		),
 		'feature_draw_hide_buttons' => array(
-			'name' => tra('Draw (SVG Edit) hide buttons'),
+			'name' => tra('Draw (SVG edit) hide buttons'),
 			'description' => tra('Hide buttons in Draw, HTML id, comma-separated. Example: "tool_select,tool_fhpath,tools_line_show,tools_rect_show,tools_ellipse_show,tool_path,tools_shapelib_show,tool_text,tool_image,tool_zoom,tool_eyedropper"'),
 			'help' => 'Draw',
 			'dependencies' => array(
@@ -1146,7 +1130,7 @@ function prefs_feature_list($partial = false)
 			'tags' => array('experimental'),
 		),
 		'feature_dynamic_content' => array(
-			'name' => tra('Dynamic Content System'),
+			'name' => tra('Dynamic content system'),
 			'description' => tra('Bloc of content which can be reused and programmed (timed)'),
 			'help' => 'Dynamic+Content',
 			'type' => 'flag',
@@ -1154,7 +1138,7 @@ function prefs_feature_list($partial = false)
 			'view' => 'tiki-list_contents.php',
 		),
 		'feature_filegals_manager' => array(
-			'name' => tra('Use File Galleries to store images'),
+			'name' => tra('Use file galleries to store images'),
 			'type' => 'flag',
 			'description' => tra('If not enabled, images will be stored in the file system, in the /img/wiki_up directory, instead.'),
 			'default' => 'y',
@@ -1167,7 +1151,7 @@ function prefs_feature_list($partial = false)
 			'tags' => array('basic'),
 		),
 		'feature_wiki_ext_rel_nofollow' => array(
-			'name' => tra('Add "rel=nofollow" on external links'),
+			'name' => tra('Add "rel=nofollow" to external links'),
 			'description' => tra("nofollow is used to instruct some search engines that the link should not influence the ranking of the link's target in the search engine's index"),
 			'type' => 'flag',
 			'keywords' => 'no follow spam',
@@ -1185,7 +1169,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_webservices' => array(
-			'name' => tra('Web Services'),
+			'name' => tra('Web services'),
 			'description' => tra('Can receive web services via JSON or YAML'),
 			'help' => 'WebServices',
 			'type' => 'flag',
@@ -1222,7 +1206,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'y',
 		),
 		'feature_sitead' => array(
-			'name' => tra('Activate'),
+			'name' => tra('Site ads'),
 			'description' => tra('Enable advertising'),
 			'hint' => tra('Activate will display content for Admin only. Select Publish to display for all users.'),
 			'type' => 'flag',
@@ -1278,8 +1262,7 @@ function prefs_feature_list($partial = false)
 			'admin' => 'sefurl',
 		),
 		'feature_sefurl_filter' => array(
-			'name' => tra('Search engine friendly URL Postfilter'),
-			'description' => tra(''),
+			'name' => tra('Search engine friendly URL postfilter'),
 			'help' => 'Rewrite+Rules',
 			'type' => 'flag',
 			'perspective' => false,
@@ -1287,7 +1270,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_sefurl_title_article' => array(
 			'name' => tra('Display article title in the search engine friendly URL'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'perspective' => false,
 			'dependencies' => array('feature_sefurl'),
@@ -1295,7 +1277,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_sefurl_title_blog' => array(
 			'name' => tra('Display blog title in the search engine friendly URL'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'perspective' => false,
 			'dependencies' => array('feature_sefurl'),
@@ -1393,7 +1374,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_cms_print' => array(
-			'name' => tra('Print Articles'),
+			'name' => tra('Print articles'),
 			'type' => 'flag',
 			'default' => 'y',
 			'tags' => array('basic'),
@@ -1412,7 +1393,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_categorypath' => array(
-			'name' => tra('Category Path'),
+			'name' => tra('Category path'),
 			'description' => tra('Show the category tree above the wiki page'),
 			'type' => 'flag',
 			'default' => 'n',
@@ -1441,7 +1422,7 @@ function prefs_feature_list($partial = false)
 			'tags' => array('basic'),
 		),
 		'feature_lastChanges' => array(
-			'name' => tra('Latest Changes'),
+			'name' => tra('Latest changes'),
 			'description' => tra('Show the list of last-changed items'),
 			'type' => 'flag',
 			'view' => 'tiki-lastchanges.php',
@@ -1587,7 +1568,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_file_galleries_comments' =>array(
-			'name' => tra('File Gallery Comments'),
+			'name' => tra('File gallery comments'),
 			'description' => tra(''),
 			'type' => 'flag',
 			'help' => 'Comments',
@@ -1610,7 +1591,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_use_fgal_for_wiki_attachments' =>array(
 			'name' => tra('Use file galleries for wiki attachments'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'help' => 'File+Gallery+Config',
 			'dependencies' => array(
@@ -1622,7 +1602,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_file_galleries_author' => array(
 			'name' => tra("Require file creator's name for anonymous uploads"),
-			'description' => tra(''),
 			'type' => 'flag',
 			'help' => 'File+Gallery+Config',
 			'default' => 'n',
@@ -1636,32 +1615,27 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_forum_rankings' => array(
 			'name' => tra('Rankings'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_forum_parse' => array(
 			'name' => tra('Accept wiki syntax'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'help' => 'Wiki+Syntax',
 			'default' => 'n',
 		),
 		'feature_forum_topics_archiving' => array(
 			'name' => tra('Topic archiving'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_forum_quickjump' => array(
 			'name' => tra('Quick jumps'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_forum_replyempty' => array(
 			'name' => tra('Replies are empty'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'hint' => tra('If disabled, replies will quote the original post'),
 			'default' => 'y',
@@ -1676,14 +1650,12 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_forums_allow_thread_titles' => array(
 			'name' => tra('First post of a thread can have an empty body'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'hint' => tra('Will be a thread title'),
 			'default' => 'n',
 		),
 		'feature_forums_name_search' => array(
 			'name' => tra('Forum name search'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'hint' => tra('When listing forums'),
 			'default' => 'n',
@@ -1697,7 +1669,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_forum_content_search' => array(
 			'name' => tra('Topic content search'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_search',
@@ -1706,7 +1677,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_forum_local_tiki_search' => array(
 			'name' => tra('Tiki-indexed search.'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 			'dependencies' => array(
@@ -1715,7 +1685,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_forum_local_search' => array(
 			'name' => tra('Use database (full-text) search.'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 			'dependencies' => array(
@@ -1730,7 +1699,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_clear_passwords' => array(
 			'name' => tra('Store password as plain text'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',
@@ -1756,8 +1724,7 @@ function prefs_feature_list($partial = false)
 			'view' => 'tiki-theme_control.php',
 		),
 		'feature_view_tpl' => array(
-			'name' => tra('Tiki Template Viewing'),
-			'description' => tra(''),
+			'name' => tra('Tiki template viewing'),
 			'type' => 'flag',
 			'help' => 'View+Templates',
 			'keywords' => tra('template'),
@@ -1765,8 +1732,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_edit_templates' => array(
-			'name' => tra('Edit Templates'),
-			'description' => tra(''),
+			'name' => tra('Edit templates'),
 			'type' => 'flag',
 			'help' => 'Edit+Templates',
 			'keywords' => tra('template'),
@@ -1779,7 +1745,7 @@ function prefs_feature_list($partial = false)
 			'tags' => array('experimental'),
 		),
 		'feature_custom_html_head_content' => array(
-			'name' => tra('Custom HTML <head> Content'),
+			'name' => tra('Custom HTML <head> content'),
 			'description' => tra('Use to include custom &lt;meta&gt; or &lt;link&gt; tags.'),
 			'hint' => tra('Example:') . " {if \$page eq 'Slideshow'}{literal}<style type=\"text/css\">.slideshow { height: 232px; width: 232px; }</style>{/literal}{/if}",
 			'type' => 'textarea',
@@ -1803,7 +1769,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_left_column' => array(
 			'name' => tra('Left column'),
-			'description' => tra(''),
 			'type' => 'list',
 			'help' => 'Users+Flip+Columns',
 			'hint' => tra('Controls visibility of the left column of modules'),
@@ -1819,7 +1784,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_right_column' => array(
 			'name' => tra('Right column'),
-			'description' => tra(''),
 			'type' => 'list',
 			'help' => 'Users+Flip+Columns',
 			'hint' => tra('Controls visibility of the right column of modules'),
@@ -1835,13 +1799,11 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_siteloclabel' => array(
 			'name' => tra('Prefix breadcrumbs with "Location : "'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 		),
 		'feature_siteloc' => array(
 			'name' => tra('Site location bar'),
-			'description' => tra(''),
 			'type' => 'list',
 			'options' => array(
 				'y' => tra('Use breadcrumbs module'),
@@ -1851,8 +1813,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'y',
 		),
 		'feature_sitetitle' => array(
-			'name' => tra('Larger font for'),
-			'description' => tra(''),
+			'name' => tra('Larger font'),
 			'type' => 'list',
 			'options' => array(
 				'y' => tra('Entire location'),
@@ -1863,7 +1824,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_sitedesc' => array(
 			'name' => tra('Use page description'),
-			'description' => tra(''),
 			'type' => 'list',
 			'options' => array(
 				'y' => tra('Extreme top of page, above the site logo, etc'),
@@ -1877,7 +1837,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_endbody_code' => array(
 			'name' => tra('Custom code just before the closing </body> tag'),
-			'description' => tra(''),
 			'type' => 'textarea',
 			'size' => '6',
 			'filter' => 'rawhtml_unsafe',
@@ -1885,13 +1844,11 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_site_report' => array(
 			'name' => tra('Webmaster report'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_site_report_email' => array(
 			'name' => tra('Webmaster email'),
-			'description' => tra(''),
 			'hint' => tra('Leave blank to use the default sender email'),
 			'type' => 'text',
 			'size' => '20',
@@ -1911,7 +1868,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_layoutshadows' => array(
 			'name' => tra('Shadow layer'),
-			'description' => tra(''),
 			'hint' => tra('Additional div elements for shadows, radiused corners or other decorative styling'),
 			'type' => 'flag',
 			'default' => 'n',
@@ -1996,14 +1952,14 @@ function prefs_feature_list($partial = false)
 			'default' => 'y',		// validation on Trackers etc
 		),
 		'feature_jquery_carousel' => array(
-			'name' => tra('jQuery Infinite Carousel'),
+			'name' => tra('jQuery infinite carousel'),
 			'description' => tra('Creates a slideshow (like an image carousel) for file galleries. Used in Plugin Carousel'),
 			'type' => 'flag',
 			'help' => 'PluginCarousel',
 			'default' => 'n',		// slideshow/carousel for file gals etc
 		),
 		'feature_jquery_tablesorter' => array(
-			'name' => tra('jQuery Sortable Tables'),
+			'name' => tra('jQuery sortable tables'),
 			'description' => tra('Provides an interactive way to sort and filter data in tables produced with Plugin FancyTable and Plugin TrackerList, as well as administrative tables.'),
 			'type' => 'flag',
 			'help' => 'JQuery#TableSorter',
@@ -2011,7 +1967,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',	// sortable tables ([will] override existing)
 		),
 		'feature_jquery_media' => array(
-			'name' => tra('jQuery Media'),
+			'name' => tra('jQuery media'),
 			'description' => tra('Provides a media player via Plugin MediaPlayer that can be used in wiki pages or other wiki text area to play media files including .flv, .mp3, .mp4, .swf, .avi, .wmv, .ram, .mov, .mpeg, and .pdf. A Flash-based open source media player is used.'),
 			'type' => 'flag',
 			'help' => 'PluginMediaPlayer',
@@ -2026,14 +1982,14 @@ function prefs_feature_list($partial = false)
 			'tags' => array('basic'),
 		),
 		'feature_jquery_zoom' => array(
-			'name' => tra('jQuery Zoom'),
+			'name' => tra('jQuery zoom'),
 			'description' => tra('Enables zoom in images on mouseover or click. Used in Plugin Img with the parameter \"thumb=zoombox\"'),
 			'type' => 'flag',
 			'help' => 'PluginImg#Zoombox',
 			'default' => 'n',
 		),
 		'feature_tabs' => array(
-			'name' => tra('Use Tabs'),
+			'name' => tra('Use tabs'),
 			'description' => tra('Separates page content into tabbed panels'),
 			'type' => 'flag',
 			'default' => 'y',
@@ -2207,7 +2163,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_backlinks' => array(
 			'name' => tra('Backlinks'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'help' => 'Backlinks',
 			'default' => 'n',
@@ -2215,13 +2170,11 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_likePages' => array(
 			'name' => tra('Similar pages'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_wiki_rankings' => array(
 			'name' => tra('Rankings'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -2269,7 +2222,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_create_webhelp' => array(
 			'name' => tra('Create webhelp from structure'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -2281,19 +2233,16 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_use_date' => array(
 			'name' => tra('Use date parameter'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_wiki_use_date_links' => array(
 			'name' => tra('Report it in wiki links'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_wiki_import_page' => array(
 			'name' => tra('Import pages'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -2354,7 +2303,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_wiki_mandatory_category' => array(
-			'name' =>  tra('Wiki:').' '.tra('Limit categorization to within the subtree of'),
+			'name' =>  tra('Limit wiki page categories to those under this category'),
 			'description' => tra('If an error message indicates a mandatory category is required when editing a wiki page, set this option to "None".'),
 			'type' => 'list',
 			'options' => $catree,
@@ -2397,19 +2346,16 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_paragraph_formatting_add_br' => array(
 			'name' => tra('...but still create line breaks within paragraphs'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 		),
 		'feature_wiki_monosp' => array(
 			'name' => tra('Automonospaced text'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_wiki_tables' => array(
 			'name' => tra('Tables syntax'),
-			'description' => tra(''),
 			'type' => 'list',
 			'options' => array(
 				'old' => tra('|| for rows'),
@@ -2426,7 +2372,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_hotwords' => array(
 			'name' => tra('Hotwords'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'help' => 'Hotwords',
 			'default' => 'n',
@@ -2434,7 +2379,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_hotwords_nw' => array(
 			'name' => tra('Open hotwords in new window'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_hotwords',
@@ -2443,7 +2387,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_hotwords_sep' => array(
 			'name' => tra('Characters that limit a hotword'),
-			'description' => tra(''),
 			'type' => 'text',
 			'dependencies' => array(
 				'feature_hotwords',
@@ -2452,7 +2395,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_use_quoteplugin' => array(
 			'name' => tra('Use Quote plugin rather than ">" for quoting'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'help' => 'PluginQuote',
 			'dependencies' => array(
@@ -2468,7 +2410,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_simplebox_delim' => array(
 			'name' => tra('String to use to delimit simplebox'),
-			'description' => tra(''),
 			'type' => 'text',
 			'default' => '^',
 		),
@@ -2498,32 +2439,27 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_community_mouseover_gender' => array(
 			'name' => tra('Gender'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 		),
 		'feature_community_mouseover_picture' => array(
 			'name' => tra('Profile picture (avatar)'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 		),
 		'feature_community_mouseover_score' => array(
 			'name' => tra('Score'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'help' => 'Score',
 			'default' => 'y',
 		),
 		'feature_community_mouseover_country' => array(
 			'name' => tra('Country'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 		),
 		'feature_community_mouseover_email' => array(
 			'name' => tra('Email'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 		),
@@ -2535,13 +2471,11 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_community_mouseover_distance' => array(
 			'name' => tra('Distance'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 		),
 		'feature_community_list_name' => array(
 			'name' => tra('Name'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_friends',
@@ -2550,7 +2484,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_community_list_score' => array(
 			'name' => tra('Score'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'help' => 'Score',
 			'dependencies' => array(
@@ -2560,7 +2493,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_community_list_country' => array(
 			'name' => tra('Country'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_friends',
@@ -2569,7 +2501,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_community_list_distance' => array(
 			'name' => tra('Distance'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_friends',
@@ -2578,7 +2509,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_cal_manual_time' => array(
 			'name' => tra('Manual selection of time/date'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -2613,7 +2543,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_group_transition' => array(
-			'name' => tra('Group Transition'),
+			'name' => tra('Group transition'),
 			'description' => tra('Enables transitions for users between different groups. Transitions will create a user approval workflow.'),
 			'type' => 'flag',
 			'help' => 'Group+Transitions',
@@ -2624,7 +2554,7 @@ function prefs_feature_list($partial = false)
 			),
 		),
 		'feature_category_transition' => array(
-			'name' => tra('Category Transition'),
+			'name' => tra('Category transition'),
 			'description' => tra('Enables transitions for objects between different categories. Transitions will create a document workflow.'),
 			'type' => 'flag',
 			'help' => 'Category+Transitions',
@@ -2635,8 +2565,7 @@ function prefs_feature_list($partial = false)
 			),
 		),
 		'feature_credits' => array(
-			'name' => tra('Tiki User Credits'),
-			'description' => tra('Tiki User Credits'),
+			'name' => tra('Tiki user credits'),
 			'type' => 'flag',
 			'help' => 'Tiki+User+Credits',
 			'default' => 'n',
@@ -2760,7 +2689,7 @@ function prefs_feature_list($partial = false)
 			'perspective' => false,
 		),
 		'feature_time_sheet' => array(
-			'name' => tra('Time Sheet'),
+			'name' => tra('Time sheet'),
 			'description' => tra('A project time manager'),
 			'type' => 'flag',
 			'help' => 'TimeSheet',
@@ -2770,7 +2699,7 @@ function prefs_feature_list($partial = false)
 			'tags' => array('experimental'),
 		),
 		'feature_htmlfeed' => array(
-			'name' => tra('HTML Feed'),
+			'name' => tra('HTML feed'),
 			'description' => tra('A way to transfer HTML content from one Tiki site to another'),
 			'type' => 'flag',
 			'help' => 'HtmlFeed',
@@ -2781,7 +2710,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_futurelinkprotocol' => array(
 			'name' => tra('FutureLink-Protocol'),
-			'description' => tra('A Dynamic Compendia'),
+			'description' => tra('A dynamic compendia'),
 			'type' => 'flag',
 			'help' => 'FutureLinkProtocol',
 			'keywords' => 'future link futurelink share feed',
@@ -2802,7 +2731,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_inline_comments' => array(
-			'name' => tra('Inline Comments (annotations)'),
+			'name' => tra('Inline comments (annotations)'),
 			'description' => tra('Enable/disable inline comments using Apache Annotator.'),
 			'dependencies' => array(
 				'feature_wiki_comments',
@@ -2814,7 +2743,7 @@ function prefs_feature_list($partial = false)
 			'keywords' => 'annotation annotatorjs',
 		),
 		'feature_equal_height_rows_js' => array(
-			'name' => tra('Enable JavaScript Plugin for Equal-Height Rows'),
+			'name' => tra('Enable JavaScript plugin for equal-height rows'),
 			'description' => tra('This allows responsive rows to be set so that each contained element has the same height '),
 			'type' => 'flag',
 			'default' => 'n',
@@ -2852,19 +2781,19 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_lang_nonswitchingpages' => array(
-			'name' => tra('List of names of pages that always redirect to the homepage when the language is switched'),
-			'description' => tra('List of names of pages that always redirect to the homepage when the language is switched'),
+			'name' => tra('Certain pages redirect to homepage when language is changed'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_lang_nonswitchingpages_names' => array(
-			'name' => tra('Multiple page names may be entered, separated by commas'),
+			'name' => tra('List of pages that redirect'),
 			'description' => tra('List of names of pages that always redirect to the homepage when the language is switched'),
+			'hint' => tra('Separate page names by commas'),
 			'type' => 'textarea',
 			'default' => 'n',
 		),
 		'feature_wizard_user' => array(
-			'name' => tra('User Wizard'),
+			'name' => tra('User wizard'),
 			'description' => tra('Wizard to help users set up their basic settings and account details'),
 			'help' => 'User+Wizard',
 			'type' => 'flag',

@@ -32,7 +32,7 @@ function prefs_categories_list()
 			'default' => array(''), //empty string needed to keep preference from setting unexpectedly
 		),
 		'categories_cache_refresh_on_object_cat' => array(
-			'name' => tra('Category cache gets cleared when an object is categorized/uncategorized'),
+			'name' => tra('Clear cache upon category change'),
 			'description' => tra('A cache is used to avoid having to fetch all categories from db every time; this clears the cache when an object is categorized to keep count up to date.'),
 			'type' => 'flag',
 			'dependencies' => array(

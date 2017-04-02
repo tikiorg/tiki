@@ -20,9 +20,7 @@
 	{include file='access/include_ticket.tpl'}
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
+			{include file='admin/include_apply_top.tpl'}
 		</div>
 	</div>
 
@@ -91,7 +89,7 @@
 				{preference name=feature_password_domains}
 			</div>
 			<fieldset>
-				<legend>{tr}CSRF Security{/tr}{help url="Security"}</legend>
+				<legend>{tr}CSRF security{/tr}{help url="Security"}</legend>
 				<div class="adminoptionbox">
 					{tr}Use these options to protect against cross-site request forgeries (CSRF){/tr}.
 				</div>
@@ -100,7 +98,7 @@
 			</fieldset>
 		{/tab}
 
-		{tab name="{tr}Spam protection{/tr}"}
+		{tab name="{tr}Spam Protection{/tr}"}
 			<br>
 			{remarksbox type="tip" title="{tr}Tip{/tr}"}
 				{tr}You can additionally protect from spam enabling the "<a href="http://doc.tiki.org/Forum+Admin#Forum_moderation" target="_blank">moderation queue on forums</a>", or through <strong>banning</strong> multiple ip's from the "<a href="tiki-admin_actionlog.php" target="_blank">Action log</a>", from "<a href="tiki-adminusers.php" target="_blank">Users registration</a>", or from the "<a href="tiki-list_comments.php" target="_blank">Comments moderation queue</a>" itself{/tr}.
@@ -215,7 +213,7 @@
 		{tab name="{tr}OpenPGP{/tr}"}
 			<br>
 			<fieldset>
-				<legend>{tr}OpenPGP fuctionality for PGP/MIME encrypted email messaging{/tr}</legend>
+				<legend>{tr}OpenPGP functionality for PGP/MIME encrypted email messaging{/tr}</legend>
 				{remarksbox type="tip" title="{tr}Note{/tr}"}
 					{tr}Experimental OpenPGP fuctionality for PGP/MIME encrypted email messaging.{/tr}<br><br>
 					{tr}All email-messaging/notifications/newsletters are sent as PGP/MIME-encrypted messages, signed with the signer-key, and are completely 100% opaque to outsiders. All user accounts need to be properly configured into gnupg keyring with public-keys related to their tiki-account-related email-addresses.{/tr}
@@ -241,12 +239,5 @@
 		{/tab}
 
 	{/tabset}
-
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
-		</div>
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>

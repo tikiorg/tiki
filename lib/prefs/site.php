@@ -22,25 +22,23 @@ function prefs_site_list()
 			'default' => 'n',
 		),
 		'site_closed_msg' => array(
-			'name' => tra('Message to display'),
-			'description' => tra('Message to display'),
+			'name' => tra('Message'),
 			'type' => 'text',
 			'perspective' => false,
 			'dependencies' => array(
 				'site_closed',
 			),
-			'default' => 'Site is closed for maintenance; please come back later.',
+			'default' => tra('Site is closed for maintenance; please come back later.'),
 			'tags' => array('basic'),
 		),
 		'site_busy_msg' => array(
-			'name' => tra('Message to display'),
-			'description' => tra('Message to display'),
+			'name' => tra('Message'),
 			'type' => 'text',
 			'perspective' => false,
 			'dependencies' => array(
 				'use_load_threshold',
 			),
-			'default' => 'Server is currently too busy; please come back later.',
+			'default' => tra('Server is currently too busy; please come back later.'),
 		),
 		'site_crumb_seper' => array(
 			'name' => tra('Locations (breadcrumbs)'),
@@ -138,8 +136,8 @@ function prefs_site_list()
 			'default' => 'n',
 		),
 		'site_piwik_analytics_server_url' => array(
-			'name' => tr('Piwik server url'),
-			'description' => tr('The url to your Piwik Server') . '<br />'
+			'name' => tr('Piwik server URL'),
+			'description' => tr('The url to your Piwik server') . '<br />'
 					. tr('In your Piwik, your selected site (Site Id) MUST have view permission for anonymous OR you can insert in your Piwik server url a token authentification parameter.'),
 			'type' => 'text',
 			'filter' => 'url',
@@ -158,8 +156,8 @@ function prefs_site_list()
 			),
 		),
 		'site_piwik_code' => array(
-			'name' => tra('Piwik JavaScript Tracking Code'),
-			'description' => tra('Code placed on every page of your website before the </body> tag'),
+			'name' => tra('Piwik JavaScript tracking code'),
+			'description' => tra("Code placed on every page of your website before the </body> tag"),
 			'type' => 'textarea',
 			'size' => '6',
 			'filter' => 'rawhtml_unsafe',
@@ -169,7 +167,7 @@ function prefs_site_list()
 			),
 		),
 		'site_google_credentials' => array(
-			'name' => tra('Google Authentication Credentials File'),
+			'name' => tra('Google authentication credentials file'),
 			'description' => tr('Path to you Google Service Account credentials JSON file.'),
 			'type' => 'text',
 			'size' => 30,

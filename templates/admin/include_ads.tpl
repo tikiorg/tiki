@@ -6,9 +6,7 @@
 			<a role="link" class="btn btn-link tips" href="tiki-list_banners.php" title=":{tr}Banners listing{/tr}">
 				{icon name="list"} {tr}Banners{/tr}
 			</a>
-			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
+			{include file='admin/include_apply_top.tpl'}
 		</div>
 	</div>
 
@@ -23,7 +21,7 @@
 	</fieldset>
 
 	<fieldset>
-		<legend>{tr}Site Ads and Banners{/tr}{help url="Banners"}</legend>
+		<legend>{tr}Site ads and banners{/tr}{help url="Banners"}</legend>
 
 		{preference name=sitead_publish}
 		{preference name=feature_sitead}
@@ -31,13 +29,5 @@
 			{preference name=sitead_publish}
 		</div>
 	</fieldset>
-
-	<br>{* I cheated. *}
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
-		</div>
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>

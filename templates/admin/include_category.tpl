@@ -12,9 +12,7 @@
 			<a role="link" class="btn btn-link tips" href="tiki-edit_categories.php" title=":{tr}Organize objects{/tr}">
 				{icon name="sort"} {tr}Organize Objects{/tr}
 			</a>
-			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
+			{include file='admin/include_apply_top.tpl'}
 		</div>
 	</div>
 
@@ -72,8 +70,10 @@
 			</div>
 		</div>
 		{preference name=category_autogeocode_within}
-		{preference name=category_autogeocode_replace}
-		{preference name=category_autogeocode_fudge}
+		<div class="adminoptionboxchild" id="category_autogeocode_within_childcontainer">
+			{preference name=category_autogeocode_replace}
+			{preference name=category_autogeocode_fudge}
+		</div>
 
 		{preference name=category_i18n_sync}
 		<div class="adminoptionboxchild category_i18n_sync_childcontainer blacklist whitelist required">
@@ -93,13 +93,5 @@
 		{preference name=feature_search_show_forbidden_cat}
 		{preference name=category_browse_count_objects}
 	</fieldset>
-
-	<br>{* I cheated. *}
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
-		</div>
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>

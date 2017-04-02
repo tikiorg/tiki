@@ -132,7 +132,7 @@ function prefs_article_list()
 			),
 		),
 		'article_use_new_list_articles' => array(
-			'name' => tr('Use New Articles'),
+			'name' => tr('Use new articles'),
 			'description' => tr('Uses the new article lists using CustomSearch rather than the DB'),
 			'type' => 'flag',
 			'default' => 'n',

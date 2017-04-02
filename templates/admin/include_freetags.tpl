@@ -9,12 +9,10 @@
 				{icon name="language"} {tr}Translate Tags{/tr}
 			</a>
 		{/if}
-		<button role="button" type="submit" class="btn btn-default" name="cleanup">
+		<button role="button" type="submit" class="btn btn-default timeout" name="cleanup">
 			{icon name="trash"} {tr}Cleanup unused tags{/tr}
 		</button>
-		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-		</div>
+		{include file='admin/include_apply_top.tpl'}
 	</div>
 	<fieldset>
 		<legend>{tr}Activate the feature{/tr}</legend>
@@ -70,13 +68,5 @@
 		{preference name=freetags_preload_random_search}
 		<span class="help-block col-md-8 col-md-push-4">{tr}When arriving on <a href="tiki-browse_freetags.php">tag search page</a>{/tr}.</span>
 	</fieldset>
-
-	<br>{* I cheated. *}
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
-		</div>
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>

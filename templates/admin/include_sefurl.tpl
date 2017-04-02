@@ -5,9 +5,7 @@
 <form class="admin form-horizontal" method="post" action="tiki-admin.php?page=sefurl" role="form" class="form">
 	{include file='access/include_ticket.tpl'}
 	<div class="t_navbar clearfix">
-		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-		</div>
+		{include file='admin/include_apply_top.tpl'}
 	</div>
 	<fieldset>
 		<legend>{tr}Activate the feature{/tr}</legend>
@@ -62,7 +60,7 @@
 		{preference name=feature_sefurl_filter}
 		<div class="adminoptionbox clearfix">
 			<label for="feature_sefurl_paths" class="control-label col-md-4">
-				{tr}URL Parameters{/tr}
+				{tr}URL parameters{/tr}
 			</label>
 			{strip}
 				{capture name=paths}
@@ -84,7 +82,5 @@
 		{preference name=feature_sefurl_tracker_prefixalias}
 		{preference name=url_only_ascii}
 	</fieldset>
-	<div class="text-center">
-		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>

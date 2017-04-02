@@ -1,11 +1,9 @@
 {* $Id: include_general.tpl 59571 2016-09-01 07:37:31Z yonixxx $ *}
 <form class="form-horizontal" action="tiki-admin.php?page=print" class="admin" method="post">
 	{include file='access/include_ticket.tpl'}
-	<div class="pull-right">
-		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-	</div>
+	{include file='admin/include_apply_top.tpl'}
 	<fieldset>
-		<legend>{tr}PDF Settings{/tr}</legend>
+		<legend>{tr}PDF settings{/tr}</legend>
 		{preference name=print_pdf_from_url}
 		<div class="adminoptionboxchild print_pdf_from_url_childcontainer webkit">
 			{preference name=print_pdf_webkit_path}
@@ -36,7 +34,7 @@
 	</fieldset>
 
 	<fieldset>
-		<legend>{tr}Wiki Print Version{/tr}</legend>
+		<legend>{tr}Wiki print version{/tr}</legend>
 		{preference name=print_wiki_authors}
 		{preference name=feature_wiki_print}
 		<div class="adminoptionboxchild" id="feature_wiki_print_childcontainer">
@@ -52,12 +50,10 @@
 	</fieldset>
 
 	<fieldset>
-		<legend>{tr}Miscellaneous Settings{/tr}</legend>
+		<legend>{tr}Other features{/tr}</legend>
 		{preference name=print_original_url_tracker}
 		{preference name=print_original_url_forum}
 
 	</fieldset>
-	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>

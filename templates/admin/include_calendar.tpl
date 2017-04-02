@@ -4,9 +4,7 @@
 		<a role="link" class="btn btn-link tips" href="tiki-admin_calendars.php" title=":{tr}Calendars listing{/tr}">
 			{icon name="list"} {tr}Calendars{/tr}
 		</a>
-		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-		</div>
+		{include file='admin/include_apply_top.tpl'}
 	</div>
 	<fieldset>
 		<legend>{tr}Activate the feature{/tr}</legend>
@@ -46,7 +44,5 @@
 		{preference name=calendar_description_is_html}
 		{preference name=calendar_watch_editor}
 	</fieldset>
-	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>

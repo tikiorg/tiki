@@ -21,7 +21,7 @@ function prefs_art_list()
 
 	return array(
 		'art_sort_mode' => array(
-			'name' => tra('Article ordering'),
+			'name' => tra('Article order'),
 			'description' => tra('Default sort mode for the articles on the list-articles page'),
 			'type' => 'list',
 			'options' => $article_sort_orders,

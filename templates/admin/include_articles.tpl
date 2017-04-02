@@ -21,9 +21,7 @@
 				{icon name="list"} {tr}Submissions{/tr}
 			</a>
 		{/if}
-		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-		</div>
+		{include file='admin/include_apply_top.tpl'}
 	</div>
 	{tabset name="admin_articles"}
 		{tab name="{tr}General Settings{/tr}"}
@@ -104,10 +102,10 @@
 				</div>
 			</fieldset>
 		{/tab}
-		{tab name="{tr}Articles Listing{/tr}"}
+		{tab name="{tr}Articles Listing and View{/tr}"}
 			<br>
 			<fieldset>
-				<legend>{tr}List Articles{/tr}</legend>
+				<legend>{tr}List articles{/tr}</legend>
 				{preference name=art_sort_mode}
 				{preference name=art_list_title}
 				<div class="adminoptionboxchild" id="art_list_title_childcontainer">
@@ -131,14 +129,12 @@
 				{preference name=gmap_article_list}
 			</fieldset>
 			<fieldset>
-				<legend>{tr}Article View{/tr}</legend>
+				<legend>{tr}Article view{/tr}</legend>
 				{preference name=art_trailer_pos}
 				{preference name=art_header_text_pos}
 			</fieldset>
 		{/tab}
 	{/tabset}
-	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>
 

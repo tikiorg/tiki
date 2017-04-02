@@ -9,28 +9,28 @@ function prefs_zotero_list()
 {
 	return array(
 		'zotero_enabled' => array(
-			'name' => tra('Zotero Bibliography'),
+			'name' => tra('Zotero bibliography'),
 			'help' => 'Zotero',
 			'description' => tra('Connect Tiki to the Zotero online bibliography management system.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'zotero_client_key' => array(
-			'name' => tra('Zotero Client Key'),
+			'name' => tra('Zotero client key'),
 			'description' => tra('Required identification key. Registration required.'),
 			'type' => 'text',
 			'size' => 20,
 			'default' => '',
 		),
 		'zotero_client_secret' => array(
-			'name' => tra('Zotero Client Secret'),
+			'name' => tra('Zotero client secret'),
 			'description' => tra('Required identification key. Registration required.'),
 			'type' => 'text',
 			'size' => 20,
 			'default' => '',
 		),
 		'zotero_group_id' => array(
-			'name' => tra('Zotero Group ID'),
+			'name' => tra('Zotero group ID'),
 			'description' => tra('Numeric ID of the group, can be found in the URL.'),
 			'type' => 'text',
 			'filter' => 'digits',
@@ -38,7 +38,7 @@ function prefs_zotero_list()
 			'default' => '',
 		),
 		'zotero_style' => array(
-			'name' => tra('Zotero Reference Style'),
+			'name' => tra('Zotero reference style'),
 			'description' => tra('Use an alternate Zotero reference style when formatting the references. The reference formats must be installed on the Zotero server.'),
 			'type' => 'text',
 			'filter' => 'text',

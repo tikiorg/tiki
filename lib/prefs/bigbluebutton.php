@@ -9,7 +9,7 @@ function prefs_bigbluebutton_list()
 {
 	return array(
 		'bigbluebutton_feature' => array(
-			'name' => tra('BigBlueButton Web Conferencing'),
+			'name' => tra('BigBlueButton web conferencing'),
 			'description' => tra('Integration with the BigBlueButton collaboration server for web conference and screen sharing.'),
 			'type' => 'flag',
 			'keywords' => 'big blue button web conferencing audio video chat screensharing whiteboard',
@@ -53,7 +53,7 @@ function prefs_bigbluebutton_list()
 			'tags' => array('basic'),
 		),
 		'bigbluebutton_dynamic_configuration' => array(
-			'name' => tr('BigBlueButton Dynamic Configuration'),
+			'name' => tr('BigBlueButton dynamic configuration'),
 			'description' => tr('Uses the advanced options of BigBlueButton to configure the XML per room.'),
 			'keywords' => 'big blue button',
 			'type' => 'flag',

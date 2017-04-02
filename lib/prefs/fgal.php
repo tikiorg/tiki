@@ -141,7 +141,7 @@ function prefs_fgal_list()
 			'tags' => array('basic'),
 		),
 		'fgal_search_in_content' => array(
-			'name' => tra('File Gallery - Searchable content'),
+			'name' => tra('Searchable file gallery content'),
 			'description' => tra('Include the search form on the current gallery page just after "Find"'),
 			'type' => 'flag',
 			'default' => 'n',

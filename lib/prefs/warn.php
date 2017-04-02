@@ -10,7 +10,7 @@ function prefs_warn_list()
 	return array(
 		'warn_on_edit_time' => array(
 			'name' => tra('Edit idle timeout'),
-			'shorthint' => tra('minutes'),
+			'units' => tra('minutes'),
 			'type' => 'list',
 			'options' => array(
 				'1' => tra('1'),

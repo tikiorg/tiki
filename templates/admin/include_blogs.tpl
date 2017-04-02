@@ -5,9 +5,7 @@
 		<a role="button" class="btn btn-link tips" href="tiki-list_blogs.php" title=":{tr}Blogs listing{/tr}">
 			{icon name="list"} {tr}Blogs{/tr}
 		</a>
-		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-		</div>
+		{include file='admin/include_apply_top.tpl'}
 	</div>
 	{tabset name="admin_blogs"}
 		{tab name="{tr}General Settings{/tr}"}
@@ -55,7 +53,7 @@
 			<br>
 			{preference name=blog_list_order}
 			<fieldset>
-				<legend>{tr}Select which items to display when listing blogs:{/tr}</legend>
+				<legend>{tr}Items to display{/tr}</legend>
 				{preference name=blog_list_title}
 				<div class="adminoptionboxchild" id="blog_list_title_childcontainer">
 					{preference name=blog_list_title_len}
@@ -70,7 +68,5 @@
 			</fieldset>
 		{/tab}
 	{/tabset}
-	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>

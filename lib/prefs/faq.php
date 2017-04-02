@@ -27,8 +27,8 @@ function prefs_faq_list()
 			'default' => 'points_desc',
 		),
 		'faq_prefix' => array(
-			'name' => tra('Question and Answer prefix on Answers'),
-			'description' => tra('Question and Answer prefix'),
+			'name' => tra('Prefix for answers'),
+			'description' => tra('Question and answer prefix'),
 			'type' => 'list',
 			'options' => array(
 				'none' => tra('None'),

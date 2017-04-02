@@ -8,9 +8,7 @@
 
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm tips" name="textareasetup" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
+			{include file='admin/include_apply_top.tpl'}
 		</div>
 	</div>
 
@@ -141,7 +139,7 @@
 			{tr}The edit-plugin icon is an easy way for users to edit the parameters of each plugin in wiki pages. It can be disabled for individual plugins below.{/tr}
 			{/remarksbox}
 			{if !isset($disabled)}
-				{button href="?page=textarea&disabled=y" _text="{tr}Check disabled plugins used in wiki pages{/tr}"}
+				{button _class="timeout" href="?page=textarea&disabled=y" _text="{tr}Check disabled plugins used in wiki pages{/tr}"}
 				<br><br>
 			{else}
 				{remarksbox type=errors title="{tr}Disabled used plugins{/tr}"}
@@ -284,7 +282,7 @@
 			{if $plugins_alias|@count}
 				<fieldset id="pluginalias_available">
 					<legend>
-						<strong>{tr}Available Alias{/tr}</strong>{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle' istyle='display:none'}{icon name="add" id="pluginalias_add" iclass='stayopen'}
+						<strong>{tr}Available alias{/tr}</strong>{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle' istyle='display:none'}{icon name="add" id="pluginalias_add" iclass='stayopen'}
 					</legend>
 					<div class="input_submit_container">
 						{foreach from=$plugins_alias item=name}
@@ -293,8 +291,8 @@
 							<a href="tiki-admin.php?page=textarea&amp;plugin_alias={$name|escape}">{$name|escape}</a>
 						{/foreach}
 						<div align="center">
-							<input type="submit" class="btn btn-default btn-sm" name="enable" value="{tr}Enable Plugins{/tr}">
-							<input type="submit" class="btn btn-warning btn-sm" name="delete" value="{tr}Delete Plugins{/tr}">
+							<input type="submit" class="btn btn-default btn-sm timeout" name="enable" value="{tr}Enable Plugins{/tr}">
+							<input type="submit" class="btn btn-warning btn-sm timeout" name="delete" value="{tr}Delete Plugins{/tr}">
 						</div>
 						{remarksbox type="tip" title="{tr}Tip{/tr}"}
 							{tr}Click on the plugin name to edit it.{/tr} {tr}Click on the + icon to add a new one.{/tr}
@@ -306,13 +304,13 @@
 
 			<fieldset id="pluginalias_general">
 				<legend>
-					{tr}General Information{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle' istyle='display:none'}
+					{tr}General information{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle' istyle='display:none'}
 				</legend>
 
 				<div class="adminoptionbox form-group">
 					<div class="adminoptionlabel">
 						<label class="control-label col-sm-4" for="plugin_alias">
-							{tr}Plugin Name:{/tr}
+							{tr}Plugin name{/tr}
 						</label>
 						<div class="col-sm-8">
 							{if $plugin_admin}
@@ -327,7 +325,7 @@
 				<div class="adminoptionbox form-group">
 					<div class="adminoptionlabel">
 						<label class="control-label col-sm-4" for="implementation">
-							{tr}Base Plugin:{/tr}
+							{tr}Base plugin{/tr}
 						</label>
 						<div class="col-sm-8">
 							<select class="form-control" name="implementation" id="implementation">
@@ -343,7 +341,7 @@
 				<div class="adminoptionbox form-group">
 					<div class="adminoptionlabel">
 						<label class="control-label col-sm-4" for="plugin_name">
-							{tr}Name:{/tr}
+							{tr}Name{/tr}
 						</label>
 						<div class="col-sm-8">
 							<input class="form-control" type="text" name="name" id="plugin_name" value="{$plugin_admin.description.name|default:''|escape}">
@@ -353,7 +351,7 @@
 				<div class="adminoptionbox form-group">
 					<div class="adminoptionlabel">
 						<label class="control-label col-sm-4" for="plugin_description">
-							{tr}Description:{/tr}
+							{tr}Description{/tr}
 						</label>
 						<div class="col-sm-8">
 							<input class="form-control" type="text" name="description" id="plugin_description" value="{$plugin_admin.description.description|default:''|escape}" class="width_40em">
@@ -363,7 +361,7 @@
 				<div class="adminoptionbox form-group">
 					<div class="adminoptionlabel">
 						<label class="control-label col-sm-4" for="plugin_body">
-							{tr}Body Label:{/tr}
+							{tr}Body label{/tr}
 						</label>
 						<div class="col-sm-8">
 							<input class="form-control" type="text" name="body" id="plugin_body" value="{$plugin_admin.description.body|default:''|escape}">
@@ -373,7 +371,7 @@
 				<div class="adminoptionbox form-group">
 					<div class="adminoptionlabel">
 						<label class="control-label col-sm-4" for="plugin_deps">
-							{tr}Dependencies:{/tr}
+							{tr}Dependencies{/tr}
 						</label>
 						<div class="col-sm-8">
 							<input class="form-control" type="text" name="prefs" id="plugin_deps" value="{if !empty($plugin_admin.description.prefs)}{','|implode:$plugin_admin.description.prefs}{/if}">
@@ -383,7 +381,7 @@
 				<div class="adminoptionbox form-group">
 					<div class="adminoptionlabel">
 						<label class="control-label col-sm-4" for="filter">
-							{tr}Filter:{/tr}
+							{tr}Filter{/tr}
 						</label>
 						<div class="col-sm-8">
 							<input class="form-control" type="text" id="filter" name="filter" value="{$plugin_admin.description.filter|default:'xss'|escape}">
@@ -393,7 +391,7 @@
 				<div class="adminoptionbox form-group">
 					<div class="adminoptionlabel">
 						<label class="control-label col-sm-4" for="validate">
-							{tr}Validation:{/tr}
+							{tr}Validation{/tr}
 						</label>
 						<div class="col-sm-8">
 							<select class="form-control" name="validate" id="validate">
@@ -408,7 +406,7 @@
 				</div><br>
 				<div class="adminoptionbox form-group">
 					<div class="adminoptionlabel">
-						<label class="control-label col-sm-4" for="inline">{tr}Inline (No Plugin Edit UI):{/tr}</label>
+						<label class="control-label col-sm-4" for="inline">{tr}Inline (no plugin edit UI){/tr}</label>
 						<div class="col-sm-8">
 							<input class="form-control" type="checkbox" id="inline" name="inline" value="1" {if !empty($plugin_admin.description.inline)}checked="checked"{/if}>
 						</div>
@@ -418,7 +416,7 @@
 
 			<fieldset id="pluginalias_simple_args">
 				<legend>
-					{tr}Simple Plugin Arguments{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle' istyle='display:none'}{icon name="add" iclass='stayopen' id="pluginalias_simple_add"}
+					{tr}Simple plugin arguments{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle' istyle='display:none'}{icon name="add" iclass='stayopen' id="pluginalias_simple_add"}
 				</legend>
 				{jq}
 					$('#pluginalias_simple_add').click(function() {
@@ -478,7 +476,7 @@
 
 			<fieldset id="pluginalias_doc">
 				<legend>
-					{tr}Plugin Parameter Documentation{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle' istyle='display:none'}{icon name="add" id="pluginalias_doc_add" iclass='stayopen'}
+					{tr}Plugin parameter documentation{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle' istyle='display:none'}{icon name="add" id="pluginalias_doc_add" iclass='stayopen'}
 				</legend>
 				{jq}$('#pluginalias_doc_add').click(function() { $('#pluginalias_doc_new').toggle(); return false; });{/jq}
 
@@ -488,7 +486,7 @@
 							<div class="adminnestedbox form-group">
 								<div class="adminoptionlabel form-group">
 									<label class="control-label col-sm-4" for="input[{$token|escape}][token]">
-										{tr}Parameter:{/tr}
+										{tr}Parameter{/tr}
 									</label>
 									<div class="col-sm-8">
 										<input class="form-control" type="text" name="input[{$token|escape}][token]" value="{if $token neq '__NEW__'}{$token|escape}{/if}">
@@ -496,7 +494,7 @@
 								</div>
 								<div class="adminoptionlabel form-group">
 									<label class="control-label col-sm-4" for="input[{$token|escape}][name]"
-											>{tr}Name:{/tr}
+											>{tr}Name{/tr}
 									</label>
 									<div class="col-sm-8">
 										<input class="form-control" type="text" name="input[{$token|escape}][name]" value="{$detail.name|escape}">
@@ -504,7 +502,7 @@
 								</div>
 								<div class="form-group">
 									<label class="control-label col-sm-4" for="input[{$token|escape}][description]">
-										{tr}Description:{/tr}
+										{tr}Description{/tr}
 									</label>
 									<div class="col-sm-8">
 										<input class="form-control" type="text" name="input[{$token|escape}][description]" value="{$detail.description|escape}" class="width_30em">
@@ -512,7 +510,7 @@
 								</div>
 								<div class="adminoptionlabel form-group">
 									<label class="control-label col-sm-4" for="input[{$token|escape}][required]">
-										{tr}Required:{/tr}
+										{tr}Required{/tr}
 									</label>
 									<div class="col-sm-8">
 										<input class="form-control" type="checkbox" name="input[{$token|escape}][required]" value="y"{if $detail.required} checked="checked"{/if}>
@@ -520,7 +518,7 @@
 								</div>
 								<div class="adminoptionlabel form-group">
 									<label class="control-label col-sm-4" for="input[{$token|escape}][safe]">
-										{tr}Safe:{/tr}
+										{tr}Safe{/tr}
 									</label>
 									<div class="col-sm-8">
 										<input class="form-control" type="checkbox" name="input[{$token|escape}][safe]" value="y"{if $detail.safe} checked="checked"{/if}>
@@ -528,7 +526,7 @@
 								</div>
 								<div class="adminoptionlabel form-group">
 									<label class="control-label col-sm-4" for="input[{$token|escape}][filter]">
-										{tr}Filter:{/tr}
+										{tr}Filter{/tr}
 									</label>
 									<div class="col-sm-8">
 										<input class="form-control" type="text" name="input[{$token|escape}][filter]" value="{$detail.filter|default:xss|escape}">
@@ -544,13 +542,13 @@
 			<div id="pluginalias_body">
 				<fieldset>
 					<legend>
-						{tr}Plugin Body{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle' istyle='display:none'}
+						{tr}Plugin body{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle' istyle='display:none'}
 					</legend>
 
 					<div class="adminoptionbox">
 						<div class="adminoptionlabel form-group">
 							<label class="control-label col-sm-4" for="ignorebody">
-								{tr}Ignore User Input:{/tr}
+								{tr}Ignore user input{/tr}
 							</label>
 							<div class="col-sm-8">
 								<input class="form-control" type="checkbox" name="ignorebody" id="ignorebody" value="y" {if !empty($plugin_admin.body.input) and $plugin_admin.body.input eq 'ignore'}checked="checked"{/if}/>
@@ -559,7 +557,7 @@
 					</div>
 					<div class="adminoptionbox form-group">
 						<div class="adminoptionlabel form-group">
-							<label class="control-label col-sm-4" for="defaultbody">{tr}Default Content:{/tr}</label>
+							<label class="control-label col-sm-4" for="defaultbody">{tr}Default content{/tr}</label>
 							<div class="col-sm-8">
 								<textarea class="form-control" cols="60" rows="12" id="defaultbody" name="defaultbody">{$plugin_admin.body.default|default:''|escape}</textarea>
 							</div>
@@ -575,7 +573,7 @@
 									<div class="clearfix adminoptionbox{if $token eq '__NEW__'} hidefirst" id="pluginalias_body_new{/if}">
 										<div class="adminoptionlabel form-group">
 											<label class="control-label col-sm-6" for="bodyparam[{$token|escape}][token]">
-												{tr}Parameter:{/tr}
+												{tr}Parameter{/tr}
 											</label>
 											<div class="col-sm-6">
 												<input class="form-control" type="text" name="bodyparam[{$token|escape}][token]" value="{if $token neq '__NEW__'}{$token|escape}{/if}">
@@ -583,7 +581,7 @@
 										</div>
 										<div class="adminoptionlabel form-group">
 											<label class="control-label col-sm-6" for="bodyparam[{$token|escape}][encoding]">
-												{tr}Encoding:{/tr}
+												{tr}Encoding{/tr}
 											</label>
 											<div class="col-sm-6">
 												<select class="form-control" name="bodyparam[{$token|escape}][encoding]">
@@ -597,7 +595,7 @@
 										</div>
 										<div class="adminoptionlabel form-group">
 											<label class="control-label col-sm-6" for="bodyparam[{$token|escape}][input]">
-												{tr}Argument Source (if different):{/tr}
+												{tr}Argument source (if different){/tr}
 											</label>
 											<div class="col-sm-6">
 												<input class="form-control" type="text" name="bodyparam[{$token|escape}][input]" value="{$detail.input|escape}">
@@ -605,7 +603,7 @@
 										</div>
 										<div class="adminoptionlabel form-group">
 											<label class="control-label col-sm-6" for="bodyparam[{$token|escape}][default]">
-												{tr}Default Value:{/tr}
+												{tr}Default value{/tr}
 											</label>
 											<div class="col-sm-6">
 												<input class="form-control" type="text" name="bodyparam[{$token|escape}][default]" value="{$detail.default|escape}">
@@ -621,7 +619,7 @@
 
 			<fieldset id="pluginalias_composed_args">
 				<legend>
-					{tr}Composed Plugin Arguments{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle' istyle='display:none'}{icon name="add" id="pluginalias_composed_add" iclass='stayopen'}
+					{tr}Composed plugin arguments{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle' istyle='display:none'}{icon name="add" id="pluginalias_composed_add" iclass='stayopen'}
 				</legend>
 				{jq}$('#pluginalias_composed_add').click(function() { $('#pluginalias_composed_new').toggle("fast"); return false; });{/jq}
 
@@ -632,7 +630,7 @@
 							<div class="clearfix adminoptionbox{if $token eq '__NEW__'} hidefirst" id="pluginalias_composed_new{/if}">
 								<div class="adminoptionlabel form-group">
 									<label class="control-label col-sm-4" for="cparams[{$token|escape}][token]">
-										{tr}Parameter:{/tr}
+										{tr}Parameter{/tr}
 									</label>
 									<div class="col-sm-8">
 										<input class="form-control" type="text" name="cparams[{$token|escape}][token]" value="{if $token neq '__NEW__'}{$token|escape}{/if}">
@@ -640,7 +638,7 @@
 								</div>
 								<div class="adminoptionlabel form-group">
 									<label class="control-label col-sm-4" for="cparams[{$token|escape}][pattern]">
-										{tr}Pattern:{/tr}
+										{tr}Pattern{/tr}
 									</label>
 									<div class="col-sm-8">
 										<input class="form-control" type="text" name="cparams[{$token|escape}][pattern]" value="{$detail.pattern|escape}">
@@ -657,7 +655,7 @@
 												<div class="clearfix adminoptionbox{if $t eq '__NEW__'} hidefirst" id="pluginalias_composed_newparam{/if}">
 													<div class="adminoptionlabel form-group">
 														<label class="control-label col-sm-6" for="cparams[{$token|escape}][params][{$t|escape}][token]">
-															{tr}Parameter:{/tr}
+															{tr}Parameter{/tr}
 														</label>
 														<div class="col-sm-6">
 															<input class="form-control" type="text" name="cparams[{$token|escape}][params][{$t|escape}][token]" value="{if $t neq '__NEW__'}{$t|escape}{/if}">
@@ -665,7 +663,7 @@
 													</div>
 													<div class="adminoptionlabel form-group">
 														<label class="control-label col-sm-6" for="cparams[{$token|escape}][pattern]">
-															{tr}Encoding:{/tr}
+															{tr}Encoding{/tr}
 														</label>
 														<div class="col-sm-6">
 															<select class="form-control" name="cparams[{$token|escape}][params][{$t|escape}][encoding]">
@@ -677,7 +675,7 @@
 													</div>
 													<div class="adminoptionlabel form-group">
 														<label class="control-label col-sm-6" for="cparams[{$token|escape}][params][{$t|escape}][input]">
-															{tr}Argument Source (if different):{/tr}
+															{tr}Argument source (if different):{/tr}
 														</label>
 														<div class="col-sm-6">
 															<input class="form-control" type="text" name="cparams[{$token|escape}][params][{$t|escape}][input]" value="{$d.input|escape}"/>
@@ -685,7 +683,7 @@
 													</div>
 													<div class="adminoptionlabel form-group">
 														<label class="control-label col-sm-6" for="cparams[{$token|escape}][params][{$t|escape}][input]">
-															{tr}Default Value:{/tr}
+															{tr}Default value{/tr}
 														</label>
 														<div class="col-sm-6">
 															<input class="form-control" type="text" name="cparams[{$token|escape}][params][{$t|escape}][default]" value="{$d.default|escape}"/>
@@ -704,14 +702,7 @@
 			</fieldset>
 		{/tab}
 	{/tabset}
-
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm tips" name="textareasetup" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
-		</div>
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>
 
 

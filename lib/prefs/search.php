@@ -11,7 +11,7 @@ function prefs_search_list()
 	return array (
 		'search_parsed_snippet' => array(
 			'name' => tra('Parse the results'),
-			'hint' => tra('May impact performance'),
+			'warning' => tra('May impact performance'),
 			'type' => 'flag',
 			'default' => 'y',
 		),
@@ -26,12 +26,12 @@ function prefs_search_list()
 						'trackers' => tra('Trackers'),
 					) : array(
 						'' => tra('Entire site'),
-						'wiki page' => tra('Wiki Pages'),
-						'blog post' => tra('Blog Posts'),
+						'wiki page' => tra('Wiki pages'),
+						'blog post' => tra('Blog posts'),
 						'article' => tra('Articles'),
 						'file' => tra('Files'),
 						'forum post' => tra('Forums'),
-						'trackeritem' => tra('Tracker Items'),
+						'trackeritem' => tra('Tracker items'),
 						'sheet' => tra('Spreadsheets'),
 					),
 			'default' => array(),
@@ -81,19 +81,21 @@ function prefs_search_list()
 		),
 		'search_facet_default_amount' => array(
 			'name' => tra('Facet result count'),
-			'description' => tra('DDefault number of facet results to obtain.'),
+			'description' => tra('Default number of facet results to obtain.'),
 			'type' => 'text',
 			'size' => 8,
 			'filter' => 'digits',
+			'units' => tra('facet results'),
 			'default' => '10',
 		),
 		'search_index_outdated' => array(
-			'name' => tra('Search Index Outdated'),
+			'name' => tra('Search index outdated'),
 			'description' => tra('Number of days to consider the search index outdated.'),
 			'type' => 'text',
 			'size' => 8,
 			'filter' => 'digits',
 			'default' => '2',
+			'units' => tra('days'),
 			'tags' => array('basic'),
 		),
 		'search_error_missing_field' => array(

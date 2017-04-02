@@ -132,7 +132,7 @@ function prefs_unified_list()
 			'size' => '4',
 			'filter' => 'digits',
 			'description' => tra('Time in minutes a user has a same query cached '),
-			'hint' => tra('In minutes'),
+			'units' => tra('minutes'),
 			'default' => '0',
 			'tags' => array('advanced'),
 		),
@@ -276,7 +276,7 @@ function prefs_unified_list()
 			'hint' => tr('MySQL full-text search has its own list of stop words configured in the server.'),
 		),
 		'unified_trim_sorted_search' => array(
-			'name' => tra('Automatically Trim Elasticsearch results on Date-Sorted Query'),
+			'name' => tra('Automatically trim Elasticsearch results on date-sorted query'),
 			'description' => tra('Automatically trim Elastic Search results in unified search if the query is sorted by modification or creation date.'),
 			'type' => 'flag',
 			'default' => 'n',

@@ -14,7 +14,7 @@
 			<br>
 			<div class="form-group col-lg-12 clearfix">
 				<div class="pull-right">
-					<input type="submit" class="btn btn-primary btn-sm tips" form="galfeatures" name="galfeatures" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
+					<input type="submit" class="btn btn-primary btn-sm tips timeout" form="galfeatures" name="galfeatures" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 				</div>
 			</div>
 			<fieldset>
@@ -75,7 +75,7 @@
 			</fieldset>
 			<br>
 			<div class="form-group col-lg-12 text-center">
-				<input type="submit" class="btn btn-primary btn-sm" form="galfeatures" name="galfeatures" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm tips timeout" form="galfeatures" name="galfeatures" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</form>
 	{/tab}
@@ -88,12 +88,15 @@
 				<legend>{tr}Remove unused images{/tr}</legend>
 				<div class="form-group">
 					<label class="control-label col-sm-4">
-						{tr}Remove images in the system gallery not being used in Wiki pages, articles or blog posts{/tr}
+						{tr}Remove unused images in the system gallery{/tr}
 					</label>
 					<div class="col-sm-8">
-						<button type="submit" class="btn btn-default btn-sm" form="galremove" name="rmvorphimg" value="1">
+						<button type="submit" class="btn btn-default btn-sm timeout" form="galremove" name="rmvorphimg" value="1">
 							{tr}Remove{/tr}
 						</button>
+						<span class="help-block">
+						{tr}Remove images not being used in wiki pages, articles or blog posts{/tr}
+						</span>
 					</div>
 				</div>
 			</fieldset>
@@ -121,7 +124,7 @@
 								<option value="{$galleries[ix].galleryId|escape}">{$galleries[ix].name|truncate:20:"...":true}</option>
 							{/section}
 						</select><br>
-						<button type="submit" class="btn btn-default btn-sm" form="galmove" name="mvimg" value="{$value}">
+						<button type="submit" class="btn btn-default btn-sm timeout" form="galmove" name="mvimg" value="{$value}">
 							{tr}Move{/tr}
 						</button>
 					</div>

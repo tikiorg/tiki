@@ -309,7 +309,7 @@
 									{/jq}
 
 						<div class="form-group text-center">
-							<input type="submit" class="btn btn-primary" name="list" value="{tr}Find{/tr}" />
+							<input type="submit" class="btn btn-primary timeout" name="list" value="{tr}Find{/tr}" />
 						</div>
 					</div>
 					<div class="col-sm-6">
@@ -481,7 +481,7 @@
 						});
 					{/jq}
 					<div class="text-center submit input_submit_container">
-						<input type="submit" class="btn btn-primary" name="export" value="{tr}Export{/tr}" />
+						<input type="submit" class="btn btn-primary timeout" name="export" value="{tr}Export{/tr}" />
 					</div>
 				</fieldset>
 			</fieldset>
@@ -491,7 +491,7 @@
 	{tab name="{tr}Advanced{/tr}"}
 		<br>
 		<fieldset>
-			<h4>{tr}Repository Status{/tr} <small>{tr}Status of the registered profile repositories{/tr}</small></h4>
+			<h4>{tr}Repository status{/tr} <small>{tr}status of the registered profile repositories{/tr}</small></h4>
 			<table class="table">
 				<tr>
 					<th>{tr}Profile repository{/tr}</th>
@@ -526,7 +526,7 @@
 				{preference name=profile_sources}
 				{preference name=profile_channels}
 				<div class="text-center submit">
-					<input type="submit" class="btn btn-primary" name="config" value="{tr}Save{/tr}" />
+					<input type="submit" class="btn btn-primary timeout" name="config" value="{tr}Save{/tr}" />
 				</div>
 			</form>
 		</fieldset>
@@ -560,7 +560,7 @@
 						<textarea data-codemirror="true" data-syntax="yaml" id="profile_tester" name="profile_tester" class="form-control">{if isset($test_source)}{$test_source}{/if}</textarea>
 					</div>
 				</div>
-				<div align="center" style="padding:1em;"><input type="submit" class="btn btn-default" name="test" value="{tr}Test{/tr}" /></div>
+				<div align="center" style="padding:1em;"><input type="submit" class="btn btn-default timeout" name="test" value="{tr}Test{/tr}"></div>
 			</form>
 		</fieldset>
 	{/tab}

@@ -9,7 +9,7 @@ function prefs_mustread_list()
 {
 	return array(
 		'mustread_enabled' => array(
-			'name' => tr('Must Read'),
+			'name' => tr('Must read'),
 			'description' => tr('Allow assignment of mandatory readings and track progress.'),
 			'help' => 'Must+Reads',
 			'type' => 'flag',
@@ -17,7 +17,7 @@ function prefs_mustread_list()
 			'dependencies' => ['feature_search', 'feature_trackers'],
 		),
 		'mustread_tracker' => array(
-			'name' => tr('Must Read Tracker'),
+			'name' => tr('Must read tracker'),
 			'description' => tr('Tracker containing the individual read requests.'),
 			'hint' => tr('Tracker ID'),
 			'type' => 'text',

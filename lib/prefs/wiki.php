@@ -62,7 +62,7 @@ function prefs_wiki_list($partial = false)
 			'default' => 'complete',
 		),
 		'wiki_url_scheme' => array(
-			'name' => tr('Wiki URL Scheme'),
+			'name' => tr('Wiki URL scheme'),
 			'description' => tr('Alter the SEFURL pattern for page names.'),
 			'hint' => tr('Use the "View" action to regenerate your URLs after changing this setting.'),
 			'type' => 'list',
@@ -386,6 +386,7 @@ function prefs_wiki_list($partial = false)
 			'name' => tra('Name length'),
 			'type' => 'text',
 			'size' => '3',
+			'units' => tra('characters'),
 			'filter' => 'digits',
 			'default' => '40',
 		),
@@ -423,6 +424,7 @@ function prefs_wiki_list($partial = false)
 			'name' => tra('Edit comment length'),
 			'type' => 'text',
 			'size' => '3',
+			'units' => tra('characters'),
 			'default' => '200',
 		),
 		'wiki_list_description' => array(
@@ -434,6 +436,7 @@ function prefs_wiki_list($partial = false)
 			'name' => tra('Description length'),
 			'type' => 'text',
 			'size' => '3',
+			'units' => tra('characters'),
 			'filter' => 'digits',
 			'default' => '200',
 		),

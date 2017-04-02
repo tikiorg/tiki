@@ -45,7 +45,7 @@ function prefs_tiki_list()
 			'tags' => array('basic'),
 		),
 		'tiki_minify_late_js_files' => array(
-			'name' => tra('Minify Late JavaScript'),
+			'name' => tra('Minify late JavaScript'),
 			'description' => tra('Compress extra JavaScript files used in the page after tiki-setup into a separate file which may vary from page to page.'),
 			'type' => 'flag',
 			'perspective' => false,
@@ -92,7 +92,7 @@ function prefs_tiki_list()
 			'default' => '',
 		),
 		'tiki_cdn' => array(
-			'name' => tra('Content Delivery Networks'),
+			'name' => tra('Content delivery networks'),
 			'description' => tra('Use alternate domains to serve static files from this Tiki site to avoid sending cookies, improve local caching and generally improve user-experience performance.'),
 			'hint' => tra('List of URI prefixes to include before static files (one per line), for example: http://cdn1.example.com'),
 			'help' => 'Content+Delivery+Network',
@@ -102,7 +102,7 @@ function prefs_tiki_list()
 			'default' => '',
 		),
 		'tiki_cdn_ssl' => array(
-			'name' => tra('Content Delivery Networks (in SSL)'),
+			'name' => tra('Content delivery networks in SSL'),
 			'description' => tra('Use alternate domains to serve static files from this Tiki site to avoid sending cookies, improve local caching and generally improve user-experience performance. Leave empty to disable CDN in SSL mode.'),
 			'hint' => tra('List of URI prefixes to include before static files (one per line), for example: https://sslcdn1.example.com'),
 			'help' => 'Content+Delivery+Network',
@@ -151,6 +151,7 @@ function prefs_tiki_list()
 			'type' => 'text',
 			'size' => 6,
 			'default' => 250,
+			'units' => tra('records'),
 			'filter' => 'int',
 		),
 		'tiki_key' => [

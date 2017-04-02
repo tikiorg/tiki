@@ -9,7 +9,7 @@ function prefs_federated_list()
 {
 	return [
 		'federated_enabled' => [
-			'name' => tr('Federated Search'),
+			'name' => tr('Federated search'),
 			'description' => tr('Search through alternate site indices.'),
 			'type' => 'flag',
 			'default' => 'n',
@@ -17,7 +17,7 @@ function prefs_federated_list()
 			'dependencies' => ['feature_search'],
 		],
 		'federated_elastic_url' => array(
-			'name' => tra('Elasticsearch Tribe Node URL'),
+			'name' => tra('Elasticsearch tribe node URL'),
 			'description' => tra('URL of the tribe client node accessing multiple clusters.'),
 			'type' => 'text',
 			'filter' => 'url',

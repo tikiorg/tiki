@@ -60,6 +60,7 @@ function prefs_poll_list()
 			'type' => 'text',
 			'size' => '2',
 			'filter' => 'digits',
+			'units' => tra('decimal places'),
 			'default' => 2,
 		),
 	);

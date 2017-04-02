@@ -3,9 +3,7 @@
 <form role="form" class="form-horizontal" action="tiki-admin.php?page=copyright" method="post">
 	{include file='access/include_ticket.tpl'}
 	<div class="t_navbar margin-bottom-md clearfix">
-		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-		</div>
+		{include file='admin/include_apply_top.tpl'}
 	</div>
 	<fieldset>
 		<legend>{tr}Activate the feature{/tr}</legend>
@@ -22,7 +20,5 @@
 			{preference name=faq_feature_copyrights}
 		</fieldset>
 	</div>
-	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>

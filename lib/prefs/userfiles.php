@@ -9,9 +9,10 @@ function prefs_userfiles_list()
 {
 	return array(
 		'userfiles_quota' => array(
-			'name' => tra('Quota (MB)'),
+			'name' => tra('Quota'),
 			'type' => 'text',
 			'size' => 5,
+			'units' => tra('megabytes'),
 			'default' => 30,
 			'dependencies' => array(
 				'feature_userfiles',

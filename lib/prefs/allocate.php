@@ -8,16 +8,16 @@
 function prefs_allocate_list()
 {
 	$prefs = array(
-		'unified_rebuild' => array('label' => tr('search index rebuild'), 'memory' => true, 'time' => true),
-		'tracker_export_items' => array('label' => tr('tracker item export'), 'memory' => true, 'time' => true),
-		'tracker_clear_items' => array('label' => tr('tracker clear'), 'memory' => false, 'time' => true),
+		'unified_rebuild' => array('label' => tr('Search index rebuild'), 'memory' => true, 'time' => true),
+		'tracker_export_items' => array('label' => tr('Tracker item export'), 'memory' => true, 'time' => true),
+		'tracker_clear_items' => array('label' => tr('Tracker clear'), 'memory' => false, 'time' => true),
 	);
 
 	$out = array();
 	foreach ($prefs as $name => $info) {
 		if ($info['memory']) {
 			$out['allocate_memory_' . $name] = array(
-				'name' => tr('Memory limit to apply during %0', $info['label']),
+				'name' => tr('%0 memory limit', $info['label']),
 				'description' => tr('Temporarily adjust the memory limit to use during %0. Depending on the volume of data, some large operations require more memory. Increasing it locally, per operation, allows to keep a lower memory limit globally. Keep in mind that memory usage is still limited to what is available on the server.', $info['label']),
 				'help' => 'Memory+Limit',
 				'type' => 'text',
@@ -29,12 +29,12 @@ function prefs_allocate_list()
 
 		if ($info['time']) {
 			$out['allocate_time_' . $name] = array(
-				'name' => tr('Time limit to apply during %0', $info['label']),
+				'name' => tr('%0 time limit', $info['label']),
 				'description' => tr('Temporarily adjust the time limit to use during %0. Depending on the volume of data, some requests may take longer. Increase the time limit locally to resolve the issue. Use reasonable values.', $info['label']),
 				'help' => 'Time+Limit',
 				'type' => 'text',
 				'default' => '',
-				'shorthint' => tr('seconds'),
+				'units' => tr('seconds'),
 				'size' => 8,
 			);
 		}

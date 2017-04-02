@@ -20,11 +20,9 @@
 		<div class="form-group col-lg-12 clearfix">
 			{if $prefs.feature_search eq 'y'}
 				<a role="link" href="tiki-searchindex.php" class="btn btn-link">{icon name="search"} {tr}Search{/tr}</a>
-				<a role="link" href="{bootstrap_modal controller=search action=rebuild}" class="btn btn-default">{icon name="cog"} {tr}Rebuild Index{/tr}</a>
+				<a role="link" href="{bootstrap_modal controller=search action=rebuild}" class="btn btn-default timeout">{icon name="cog"} {tr}Rebuild Index{/tr}</a>
 			{/if}
-			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
+			{include file='admin/include_apply_top.tpl'}
 		</div>
 	</div>
 	{tabset name=admin_search}
@@ -68,7 +66,7 @@
 						{preference name=unified_parse_results}
 
 						<fieldset>
-							<legend>{tr}Search Engine Settings{/tr}</legend>
+							<legend>{tr}Search engine settings{/tr}</legend>
 							{preference name="unified_lucene_location"}
 							{preference name="unified_lucene_max_result"}
 							{preference name="unified_lucene_max_resultset_limit"}
@@ -141,7 +139,7 @@
 
 			<fieldset>
 				<legend>
-					{tr}Legacy Search{/tr} {help url="Search"}
+					{tr}Legacy search{/tr} {help url="Search"}
 				</legend>
 				{preference name=feature_search_fulltext}
 				<div class="adminoptionboxchild" id="feature_search_fulltext_childcontainer">
@@ -177,7 +175,7 @@
 			{preference name=category_custom_facets}
 
 			<fieldset>
-				<legend>{tr}Select the items to display on the search results page:{/tr}</legend>
+				<legend>{tr}Items to display in search results{/tr}</legend>
 				{preference name=search_default_interface_language}
 				{preference name=search_default_where}
 				{preference name=search_show_category_filter}
@@ -187,7 +185,7 @@
 				{preference name=feature_search_show_search_box}
 			</fieldset>
 			<fieldset>
-				<legend>{tr}Select the information to display for each result:{/tr}</legend>
+				<legend>{tr}Information to display for each result{/tr}</legend>
 				{preference name=feature_search_show_visit_count}
 				{preference name=feature_search_show_pertinence}
 				{preference name=feature_search_show_object_type}
@@ -207,7 +205,7 @@
 			{preference name=federated_enabled}
 			{preference name=federated_elastic_url}
 
-			<h3>{tr}Configuration{/tr}</h3>
+			<legend>{tr}Configuration{/tr}</legend>
 			<ul>
 				<li><a href="tiki-admin_external_wikis.php">{tr}External Wiki{/tr}</a></li>
 				<li><a href="{bootstrap_modal controller=search_manifold action=check}">{tr}ManifoldCF Configuration Checker{/tr}</a></li>
@@ -216,16 +214,9 @@
 
 		{tab name="{tr}Tools{/tr}"}
 			<br>
-			<a href="tiki-report_string_in_db.php">{tr}Report all occurences of a string in any table{/tr}</a><br>
+			<a href="tiki-report_string_in_db.php">{tr}Report all occurrences of a string in any table{/tr}</a><br>
 		{/tab}
 
 	{/tabset}
-	<br>{* I cheated. *}
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
-		</div>
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>

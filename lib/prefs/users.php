@@ -93,6 +93,7 @@ function prefs_users_list()
 		'users_prefs_mess_maxRecords' => array(
 			'name' => tra('Messages per page'),
 			'type' => 'list',
+			'units' => tra('messages'),
 			'dependencies' => array(
 				'feature_messages',
 			),
@@ -126,6 +127,7 @@ function prefs_users_list()
 		'users_prefs_minPrio' => array(
 			'name' => tra('Send me an email for messages with priority equal to or greater than'),
 			'type' => 'list',
+			'units' => tra('priority'),
 			'dependencies' => array(
 				'feature_messages',
 			),
@@ -157,7 +159,7 @@ function prefs_users_list()
 				'50' => tra('50'),
 				'60' => tra('60'),
 			),
-			'shorthint' => tra('days'),
+			'units' => tra('days'),
 			'default' => '0',
 		),
 		'users_prefs_mytiki_pages' => array(

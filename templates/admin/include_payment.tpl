@@ -6,9 +6,7 @@
 			<a role="link" class="btn btn-link" href="tiki-payment.php" title="{tr}List{/tr}">
 				{icon name="list"} {tr}Payments{/tr}
 			</a>
-			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
+			{include file='admin/include_apply_top.tpl'}
 		</div>
 	</div>
 
@@ -52,7 +50,7 @@
 							{preference name=payment_invoice_prefix}
 						</div>
 					{/accordion_group}
-					{accordion_group title="{tr}Israel Post Payment Module{/tr}"}
+					{accordion_group title="{tr}Israel Post payment module{/tr}"}
 						<div class="admin payment">
 							{preference name=payment_israelpost_environment}
 							{preference name=payment_israelpost_business_id}
@@ -78,7 +76,7 @@
 							</div>
 						</div>
 					{/accordion_group}
-					{accordion_group title="{tr}Tiki User Credits{/tr}"}
+					{accordion_group title="{tr}Tiki user credits{/tr}"}
 						<div class="admin payment">
 							{preference name=payment_tikicredits_types}
 							{preference name=payment_tikicredits_xcrates}
@@ -90,18 +88,18 @@
 		{tab name="{tr}Advanced Shopping Cart{/tr}"}
 			<br>
 			<fieldset>
-				<label>{tr}Cart Settings{/tr}</label>
+				<label>{tr}Cart settings{/tr}</label>
 				{preference name=payment_cart_heading}
 			</fieldset>
 			<fieldset>
-				<legend>{tr}Advanced Cart Tracker Names Setup{/tr}</legend>
+				<legend>{tr}Advanced cart tracker names setup{/tr}</legend>
 				{preference name=payment_cart_product_tracker_name}
 				{preference name=payment_cart_orders_tracker_name}
 				{preference name=payment_cart_orderitems_tracker_name}
 				{preference name=payment_cart_productclasses_tracker_name}
 			</fieldset>
 			<fieldset>
-				<legend>{tr}Products Tracker Setup{/tr}</legend>
+				<legend>{tr}Products tracker setup{/tr}</legend>
 				{remarksbox title="{tr}Choose payment system{/tr}"}
 					{tr}Depending on which feature you are using, you may need some or all of the following fields to be setup{/tr}
 				{/remarksbox}
@@ -193,12 +191,5 @@
 			{preference name=shipping_custom_provider}
 		{/tab}
 	{/tabset}
-
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
-		</div>
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>

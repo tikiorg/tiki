@@ -68,7 +68,7 @@ function prefs_geo_list()
 			'tags' => array('basic', 'experimental'),
 		),
 		'geo_google_streetview_overlay' => array(
-			'name' => tr('Google Street View Overlay'),
+			'name' => tr('Google Street View overlay'),
 			'description' => tr('Open Google Street View in a new window to see the visible coordinates.'),
 			'dependencies' => array('geo_google_streetview'),
 			'warning' => tr('This is not guaranteed to work.'),
@@ -97,8 +97,7 @@ function prefs_geo_list()
 			'default' => 'street',
 		),
 		'geo_openlayers_version' => array(
-			'name' => tr('OpenLayers Version'),
-			'description' => tr(''),
+			'name' => tr('OpenLayers version'),
 			'type' => 'list',
 			'options' => array(
 					'ol2' => tra('OpenLayers 2.x (for use up to at least 15.x)'),

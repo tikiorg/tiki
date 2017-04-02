@@ -6,9 +6,7 @@
 	{include file='access/include_ticket.tpl'}
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
+			{include file='admin/include_apply_top.tpl'}
 		</div>
 	</div>
 
@@ -42,7 +40,7 @@
 			{preference name=users_serve_avatar_static}
 
 			<fieldset>
-				<legend>{tr}PHP Settings{/tr}</legend>
+				<legend>{tr}PHP settings{/tr}</legend>
 				<p>{tr}Some PHP.INI settings that can increase performance{/tr}</p>
 				<div class="adminoptionboxchild">
 					<p>
@@ -151,7 +149,7 @@
 			{preference name=wikiplugin_snarf_cache}
 		{/tab}
 
-		{tab name="{tr}Major slowdown{/tr}"}
+		{tab name="{tr}Major Slowdown{/tr}"}
 			<br>
 			{remarksbox type="note" title="{tr}Major slowdown{/tr}"}
 				{tr}These are reported to slow down Tiki. If you have a high-volume site, you may want to deactivate them{/tr}
@@ -182,7 +180,7 @@
 			</div>
 		{/tab}
 
-		{tab name="{tr}Time and memory limits{/tr}"}
+		{tab name="{tr}Time and Memory Limits{/tr}"}
 			<br>
 			{preference name=allocate_memory_tracker_export_items}
 			{preference name=allocate_time_tracker_export_items}
@@ -192,12 +190,5 @@
 		{/tab}
 
 	{/tabset}
-
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
-		</div>
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>

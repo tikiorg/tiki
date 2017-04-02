@@ -27,7 +27,7 @@ function prefs_blog_list()
 			'default' => 'commentDate_asc',
 		),
 		'blog_list_order' => array(
-			'name' => tra('Default ordering'),
+			'name' => tra('Default order'),
 			'description' => tra(''),
 			'type' => 'list',
 			'options' => array(

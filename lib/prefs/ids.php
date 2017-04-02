@@ -9,7 +9,7 @@ function prefs_ids_list()
 {
 	return array(
 		'ids_enabled' => array(
-			'name' => tra('Enable Intrusion Detection System'),
+			'name' => tra('Enable intrusion detection system'),
 			'description' => tra('An intrusion detection system (IDS) is a device or software application that monitors a network or systems for malicious activity or policy violations.'),
 			'type' => 'flag',
 			'default' => 'n',

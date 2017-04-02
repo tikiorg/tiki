@@ -97,7 +97,7 @@ function prefs_wysiwyg_list()
 			'warning' => tra('experimental'),
 		),
 		'wysiwyg_extra_plugins' => array(
-			'name' => tra('Extra Plugins'),
+			'name' => tra('Extra plugins'),
 			'hint' => tra('List of plugin names (separated by,)'),
 			'description' => tra('In Tiki, CKEditor uses the "standard" package in which some plugins are disabled by default that are available in the "full" package.<br>See http://ckeditor.com/presets for a comparison of which plugins are enabled as standard.'),
 			'type' => 'textarea',

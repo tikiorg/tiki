@@ -2,9 +2,7 @@
 <form class="form-horizontal" action="tiki-admin.php?page=user" class="admin" method="post">
 	{include file='access/include_ticket.tpl'}
 	<div class="form-group col-lg-12 clearfix">
-		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-		</div>
+		{include file='admin/include_apply_top.tpl'}
 	</div>
 	{tabset name="admin_user_setting"}
 		{tab name="{tr}User Settings{/tr}"}
@@ -59,7 +57,7 @@
 				</div>
 			</fieldset>
 		{/tab}
-		{tab name="{tr}User info and picture{/tr}"}
+		{tab name="{tr}User Info and Picture{/tr}"}
 			<br>
 			<fieldset>
 				<legend>{tr}User information display{/tr}</legend>
@@ -111,7 +109,7 @@
 				</div>
 			</fieldset>
 			<fieldset>
-				<legend>{tr}User Notifications{/tr}</legend>
+				<legend>{tr}User notifications{/tr}</legend>
 				<div class="adminoptionbox">
 					{preference name=monitor_enabled}
 					<div class="adminoptionboxchild" id="monitor_enabled_childcontainer">
@@ -162,11 +160,5 @@
 			</fieldset>
 		{/tab}
 	{/tabset}
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
-		</div>
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>

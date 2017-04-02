@@ -6,9 +6,7 @@
 		<a role="button" class="btn btn-link" href="tiki-admin_toolbars.php" title="{tr}Toolbars{/tr}">
 			{icon name="settings"} {tr}Toolbars{/tr}
 		</a>
-		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-		</div>
+		{include file='admin/include_apply_top.tpl'}
 	</div>
 	{if $prefs.wysiwyg_htmltowiki neq 'y'}
 		{remarksbox type="warning" title="{tr}Page links{/tr}"}{tr}Note that if the SEFURL feature is on, page links created using wysiwyg might not be automatically updated when pages are renamed. This is addressed through the "Use Wiki syntax in WYSIWYG" feature.{/tr}{/remarksbox}
@@ -19,7 +17,7 @@
 		{preference name=wikiplugin_wysiwyg}
 	</fieldset>
 	<fieldset>
-		<legend>{tr}WYSIWYG Editor Features{/tr}</legend>
+		<legend>{tr}WYSIWYG editor features{/tr}</legend>
 		{preference name=wysiwyg_optional}
 		<div class="adminoptionboxchild" id="wysiwyg_optional_childcontainer">
 			{preference name=wysiwyg_default}
@@ -46,9 +44,5 @@
 			{preference name=ajax_autosave}
 		</div>
 	</fieldset>
-	<div class="t_navbar margin-bottom-md">
-		<div class="text-center">
-			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-		</div>
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>

@@ -9,11 +9,12 @@ function prefs_webservice_list()
 {
 	return array(
 		'webservice_consume_defaultcache' => array(
-			'name' => tra('Default Cache'),
+			'name' => tra('Default cache'),
 			'description' => tra('Cache time in seconds to use if the webservice does not supply "max-age" or "no-cache" in the response.'),
 			'dependencies' => array('feature_webservices'),
 			'type' => 'text',
 			'filter' => 'digits',
+			'units' => tra('seconds'),
 			'default' => 300,		// 5 min
 		),
 	);

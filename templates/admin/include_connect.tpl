@@ -53,8 +53,9 @@
 		<br>
 		<form class="admin form-horizontal" id="connect" name="connect" action="tiki-admin.php?page=connect" method="post">
 			{include file='access/include_ticket.tpl'}
+			{include file='admin/include_apply_top.tpl'}
 			<fieldset>
-				<legend>{tr}Tiki Connect{/tr}</legend>
+				<legend>{tr}Tiki connect{/tr}</legend>
 				{remarksbox type="info" title="{tr}New Feature{/tr}" icon="bricks"}
 					<p><em>{tr}Please note: Experimental - work in progress{/tr}</em></p>
 					<p>{tr}Tiki Connect is a way to let the Tiki project know how it is being used, and which parts people like or would like fixing (or explaining).{/tr}<br>
@@ -68,31 +69,30 @@
 				{/remarksbox}
 				{preference name="connect_feature"}
 				<div class="adminoptionboxchild" id="connect_feature_childcontainer">
-					<div class="t_navbar btn-group form-group">
-						{button _script="#" class="btn btn-default" _text="{tr}Send Info{/tr}" _title="{tr}Send the data{/tr}" _id="connect_send_btn"}
-						{button _script="#" class="btn btn-default" _text="{tr}Preview info{/tr}" _title="{tr}See what is going to be sent{/tr}" _id="connect_list_btn"}
-						{if empty($prefs.connect_site_title)}
-							{button _text="{tr}Fill form{/tr}" class="btn btn-default" _title="{tr}Fill this form in based on other preferences{/tr}" _id="connect_defaults_btn" _script="#"}
-						{/if}
+					<div class="form-group">
+						<div class="col-sm-offset-4 col-sm-8">
+							{button _script="#" class="btn btn-default" _text="{tr}Send Info{/tr}" _title="{tr}Send the data{/tr}" _id="connect_send_btn"}
+							{button _script="#" class="btn btn-default" _text="{tr}Preview info{/tr}" _title="{tr}See what is going to be sent{/tr}" _id="connect_list_btn"}
+							{if empty($prefs.connect_site_title)}
+								{button _text="{tr}Fill form{/tr}" class="btn btn-default" _title="{tr}Fill this form in based on other preferences{/tr}" _id="connect_defaults_btn" _script="#"}
+							{/if}
+						</div>
 					</div>
 					{preference name="connect_send_info"}
 					<div class="adminoptionboxchild" id="connect_send_info_childcontainer">
 						{preference name="connect_site_title"}
-						{if $prefs.connect_send_info eq "y" and empty($prefs.connect_site_title)}
-							{remarksbox type="errors" title=""}
-								{tr}Site title is required{/tr}
-							{/remarksbox}
-						{/if}
 						{preference name="connect_site_email"}
 						{preference name="connect_site_url"}
 						{preference name="connect_site_keywords"}
 						{preference name="connect_site_location"}
-						<div class="adminoptionboxchild" style="padding-left:5em;">
-							{$headerlib->add_map()}
-							<div class="adminoptionboxchild map-container" style="height:250px;width:400px;" data-geo-center="{defaultmapcenter}" 
-								data-target-field="connect_site_location"{if $prefs.connect_server_mode eq "y"}
-								data-icon-name="tiki" data-icon-src="img/tiki/tikiicon.png"
-								data-icon-size="[16,16]" data-icon-offset="[-8,-16]" data-marker-filter=".geolocated.connection"{/if}>
+						<div class="form-group">
+							<div class="col-sm-offset-4 col-sm-8">
+								{$headerlib->add_map()}
+								<div class="map-container" style="height:250px;width:400px;" data-geo-center="{defaultmapcenter}"
+								     data-target-field="connect_site_location"{if $prefs.connect_server_mode eq "y"}
+									data-icon-name="tiki" data-icon-src="img/tiki/tikiicon.png"
+									data-icon-size="[16,16]" data-icon-offset="[-8,-16]" data-marker-filter=".geolocated.connection"{/if}>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -109,24 +109,17 @@
 				</div>
 
 			</fieldset>
-
-			<div class="row">
-				<div class="form-group col-lg-12 clearfix">
-					<div class="text-center">
-						<input type="submit" class="btn btn-primary btn-sm" name="connectprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-					</div>
-				</div>
-			</div>
+			{include file='admin/include_apply_bottom.tpl'}
 		</form>
 	{/tab}
 
 	{if $prefs.connect_server_mode eq "y"}
-		{tab name="{tr}Connections received{/tr}"}
+		{tab name="{tr}Connections Received{/tr}"}
 			<br>
 			<form class="admin form-horizontal" name="cserver_form" action="tiki-admin.php?page=connect" method="post">
 				{include file='access/include_ticket.tpl'}
-				<input name="cserver_search" type="text" value="{$cserver_search_text}" />
-				<input name="cserver" type="submit" class="btn btn-default" value="{tr}Search{/tr}" />
+				<input name="cserver_search" type="text" value="{$cserver_search_text}">
+				<input name="cserver" type="submit" class="btn btn-default timeout" value="{tr}Search{/tr}">
 				{button cserver="rebuild" _auto_args="cserver,page" _text="{tr}Rebuild Index{/tr}" _title="{tr}Rebuild received connections index{/tr}"}
 				{if !empty($connect_stats)}
 					<span>{tr _0=$connect_stats.received _1=$connect_stats.guids}<strong>Server stats:</strong> %0 reports received from %1 Tikis{/tr}</span>
@@ -170,6 +163,7 @@
 		<br>
 		<form class="admin form-horizontal" id="connect" name="connect" action="tiki-admin.php?page=connect" method="post">
 			{include file='access/include_ticket.tpl'}
+			{include file='admin/include_apply_top.tpl'}
 			<fieldset>
 				<legend>{tr}Jitsi{/tr}</legend>
 
@@ -184,14 +178,7 @@
 				{preference name=suite_jitsi_provision}
 				{preference name=suite_jitsi_configuration}
 			</fieldset>
-
-			<div class="row">
-				<div class="form-group col-lg-12 clearfix">
-					<div class="text-center">
-						<input type="submit" class="btn btn-primary btn-sm" name="connectprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-					</div>
-				</div>
-			</div>
+			{include file='admin/include_apply_bottom.tpl'}
 		</form>
 	{/tab}
 

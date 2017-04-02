@@ -9,7 +9,7 @@ function prefs_storedsearch_list()
 {
 	return array(
 		'storedsearch_enabled' => array(
-			'name' => tr('Stored Searches'),
+			'name' => tr('Stored searches'),
 			'description' => tr('Allow users to store search queries.'),
 			'type' => 'flag',
 			'default' => 'n',

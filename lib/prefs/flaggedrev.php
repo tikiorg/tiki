@@ -9,7 +9,7 @@ function prefs_flaggedrev_list()
 {
 	return array(
 		'flaggedrev_approval' => array(
-			'name' => tra('Revision Approval'),
+			'name' => tra('Revision approval'),
 			'description' => tra('Uses flagged revisions to hide unapproved wiki page revisions from users without necessary privileges.'),
 			'type' => 'flag',
 			'perspective' => false,
@@ -17,7 +17,7 @@ function prefs_flaggedrev_list()
 			'help' => 'Flagged Revisions',
 		),
 		'flaggedrev_approval_categories' => array(
-			'name' => tra('Revision Approval Categories'),
+			'name' => tra('Revision approval categories'),
 			'description' => tra('List of category IDs for which revision approval is required.'),
 			'type' => 'text',
 			'filter' => 'int',

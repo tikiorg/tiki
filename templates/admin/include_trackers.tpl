@@ -6,16 +6,14 @@
 			<a role="button" class="btn btn-link" href="tiki-list_trackers.php" title="{tr}List{/tr}">
 				{icon name="list"} {tr}Trackers{/tr}
 			</a>
-			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm tips" name="trkset" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
+			{include file='admin/include_apply_top.tpl'}
 		</div>
 	</div>
 
 	{tabset}
 
 		{tab name="{tr}Settings{/tr}"}
-			<h2>{tr}Settings{/tr}</h2>
+			<br>
 			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_trackers visible="always"}
@@ -70,7 +68,7 @@
 				</div>
 			</fieldset>
 			<fieldset class="admin">
-				<legend>{tr}Tracker Force-Fill Feature{/tr}</legend>
+				<legend>{tr}Tracker force-fill feature{/tr}</legend>
 				{preference name=tracker_force_fill}
 				{preference name=tracker_force_tracker_id}
 				{preference name=tracker_force_mandatory_field}
@@ -80,9 +78,8 @@
 		{/tab}
 
 		{tab name="{tr}Plugins{/tr}"}
-			<h2>{tr}Plugins{/tr}</h2>
+			<br>
 			<fieldset class="table">
-				<legend>{tr}Plugins{/tr}</legend>
 				{preference name=wikiplugin_insert}
 				<div class="adminoptionboxchild" id="wikiplugin_insert_childcontainer">
 					{preference name=tracker_insert_allowed}
@@ -107,9 +104,9 @@
 		{/tab}
 
 		{tab name="{tr}Field Types{/tr}"}
-			<h2>{tr}Field Types{/tr}</h2>
+			<br>
 			<fieldset class="table">
-				<legend>{tr}Field Types{/tr}</legend>
+				<legend>{tr}Field types{/tr}</legend>
 				{foreach from=$fieldPreferences item=name}
 					{preference name=$name}
 				{/foreach}
@@ -121,7 +118,7 @@
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm tips" name="trkset" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm tips timeout" name="trkset" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 		</div>
 	</div>
@@ -134,8 +131,8 @@
 		{if $attachements}
 			<form action="tiki-admin.php?page=trackers" method="post">
 				{include file='access/include_ticket.tpl'}
-				<input type="text" name="find" value="{$find|escape}" />
-				<input type="submit" class="btn btn-default btn-sm" name="action" value="{tr}Find{/tr}" />
+				<input type="text" name="find" value="{$find|escape}">
+				<input type="submit" class="btn btn-default btn-sm timeout" name="action" value="{tr}Find{/tr}">
 			</form>
 		{/if}
 
@@ -204,14 +201,14 @@
 					<form action="tiki-admin.php?page=trackers" method="post">
 						{include file='access/include_ticket.tpl'}
 						<input type="hidden" name="all2db" value="1">
-						<input type="submit" class="btn btn-default btn-sm" name="action" value="{tr}Change all to db{/tr}" />
+						<input type="submit" class="btn btn-default btn-sm timeout" name="action" value="{tr}Change all to db{/tr}">
 					</form>
 				</td>
 				<td>
 					<form action="tiki-admin.php?page=trackers" method="post">
 						{include file='access/include_ticket.tpl'}
 						<input type="hidden" name="all2file" value="1">
-						<input type="submit" class="btn btn-default btn-sm" name="action" value="{tr}Change all to file{/tr}" />
+						<input type="submit" class="btn btn-default btn-sm timeout" name="action" value="{tr}Change all to file{/tr}">
 					</form>
 				</td>
 			</tr>

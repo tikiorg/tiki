@@ -47,7 +47,7 @@ function prefs_kaltura_list()
 			'tags' => array('basic'),
 		),
 		'kaltura_kdpUIConf' => array(
-			'name' => tra('Kaltura Video Player ID'),
+			'name' => tra('Kaltura video player ID'),
 			'description' => tra('Kaltura Dynamic Player (KDP) user interface configuration ID'),
 			'type' => empty($players) ? 'text' : 'list',
 			'options' => $players,
@@ -56,7 +56,7 @@ function prefs_kaltura_list()
 			'tags' => array('basic'),
 		),
 		'kaltura_kdpEditUIConf' => array(
-			'name' => tra('Kaltura Video Player ID (in entry edit mode)'),
+			'name' => tra('Kaltura video player ID (in entry edit mode)'),
 			'description' => tra('Kaltura Dynamic Player (KDP) user interface configuration ID for use when editing. You can use a player which also has an option to select a frame as video thumbnail'),
 			'type' => empty($players) ? 'text' : 'list',
 			'options' => $players,
@@ -65,14 +65,14 @@ function prefs_kaltura_list()
 			'tags' => array('basic'),
 		),
 		'kaltura_kcwUIConf' => array(
-			'name' => tra('KCW UI Configuration ID'),
+			'name' => tra('KCW UI configuration ID'),
 			'description' => tra('Kaltura Configuration Wizard (KCW) user interface configuration ID'),
 			'type' => 'text',
 			'size' => 20,
 			'default' => '',
 		),
 		'kaltura_kServiceUrl' => array(
-			'name' => tra('Kaltura Service URL'),
+			'name' => tra('Kaltura service URL'),
 			'description' => tra('for example, https://www.kaltura.com/'),
 			'type' => 'text',
 			'size' => 40,

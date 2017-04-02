@@ -8,9 +8,7 @@
 		{if $prefs.feature_editcss eq 'y' and $tiki_p_create_css eq 'y'}
 			{button _text="{tr}Edit CSS{/tr}" _class="btn-sm" href="tiki-edit_css.php"}
 		{/if}
-		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm tips" name="looksetup" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-		</div>
+		{include file='admin/include_apply_top.tpl'}
 	</div>
 	{tabset name="admin_look"}
 		{tab name="{tr}Theme{/tr}"}
@@ -43,7 +41,7 @@
 			{preference name=site_layout_per_object}
 			{preference name=theme_iconset}
 			{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}
-				<input type="submit" class="btn btn-default btn-sm" name="changestyle" value="{tr}Go{/tr}">
+				<input type="submit" class="btn btn-default btn-sm timeout" name="changestyle" value="{tr}Go{/tr}">
 			{/if}
 			<div class="adminoptionbox">
 				{if $prefs.feature_jquery_ui eq 'y'}
@@ -109,7 +107,7 @@
 			</div>
 			<div class="adminoptionbox">
 				<fieldset>
-					<legend>{tr}Site Report Bar{/tr}</legend>
+					<legend>{tr}Site report bar{/tr}</legend>
 					{preference name=feature_site_report}
 					{preference name=feature_site_report_email}
 					{preference name=feature_site_send_link}
@@ -187,7 +185,7 @@
 		{tab name="{tr}Customization{/tr}"}
 			<br>
 			<fieldset>
-				<legend>{tr}Custom Codes{/tr}</legend>
+				<legend>{tr}Custom codes{/tr}</legend>
 				{preference name="header_custom_css" syntax="css"}
 				{preference name="header_custom_less" syntax="css"}
 				{preference name=feature_custom_html_head_content syntax="htmlmixed"}
@@ -224,7 +222,7 @@
 			{preference name=image_responsive_class}
 			<div class="adminoptionbox">
 				<fieldset class="table">
-					<legend>{tr}Context Menus{/tr} (<small>{tr}Currently used in File Galleries only{/tr}.</small>)</legend>
+					<legend>{tr}Context menus{/tr} (<small>{tr}currently used in file galleries only{/tr}</small>)</legend>
 					{preference name=use_context_menu_icon}
 					{preference name=use_context_menu_text}
 				</fieldset>
@@ -247,7 +245,5 @@
 			{preference name=feature_html_head_base_tag}
 		{/tab}
 	{/tabset}
-	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>

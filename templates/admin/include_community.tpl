@@ -6,12 +6,10 @@
 		{button href="tiki-adminusers.php" _class="btn-link tips" _type="text" _icon_name="user" _text="{tr}Users{/tr}" _title=":{tr}User Administration{/tr}"}
 		{permission_link addclass="btn btn-link" _type="text" mode=text label="{tr}Permissions{/tr}"}
 		<a href="{service controller=managestream action=list}" class="btn btn-link tips">{tr}Activity Rules{/tr}</a>
-		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-		</div>
+		{include file='admin/include_apply_top.tpl'}
 	</div>
 	{tabset name="admin_community"}
-		{tab name="{tr}Community features{/tr}"}
+		{tab name="{tr}Community Features{/tr}"}
 			<br>
 			<fieldset>
 				<legend>{tr}Community{/tr}{help url="Community"}</legend>
@@ -47,7 +45,7 @@
 		{tab name="{tr}Social Interaction{/tr}"}
 			<br>
 			<fieldset class="table">
-				<legend>{tr}Friendship and Followers{/tr}</legend>
+				<legend>{tr}Friendship and followers{/tr}</legend>
 				{preference name=feature_friends}
 				<div class="adminoptionboxchild" id="feature_friends_childcontainer">
 					{preference name=social_network_type}
@@ -62,7 +60,7 @@
 				</div>
 			</fieldset>
 			<fieldset class="table">
-				<legend>{tr}Activity Stream{/tr}</legend>
+				<legend>{tr}Activity stream{/tr}</legend>
 				{preference name=activity_basic_events}
 				<div class="adminoptionboxchild" id="activity_basic_events_childcontainer">
 					{preference name=activity_basic_tracker_create}
@@ -75,7 +73,7 @@
 				{preference name=activity_notifications}
 			</fieldset>
 			<fieldset>
-				<legend>{tr}Goal, Recognition and Rewards{/tr}</legend>
+				<legend>{tr}Goal, recognition and rewards{/tr}</legend>
 				{preference name=goal_enabled}
 				{preference name=goal_badge_tracker}
 				{preference name=goal_group_blacklist}
@@ -102,7 +100,6 @@
 			{preference name=wikiplugin_realnamelist}
 			{preference name=wikiplugin_subscribegroup}
 			{preference name=wikiplugin_subscribegroups}
-			{preference name=wikiplugin_topfriends}
 			{preference name=wikiplugin_usercount}
 			{preference name=wikiplugin_userlink}
 			{preference name=wikiplugin_userlist}
@@ -120,7 +117,5 @@
 			</div>
 		{/tab}
 	{/tabset}
-	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>

@@ -12,9 +12,7 @@
 		{if $prefs.feature_wiki_structure eq "y" and $tiki_p_view eq "y"}
 			{button _icon_name='structure' _text="{tr}Structures{/tr}" _type="link" _class='btn btn-link' _script='tiki-admin_structures.php' _title="{tr}List structures{/tr}"}
 		{/if}
-		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-		</div>
+		{include file='admin/include_apply_top.tpl'}
 	</div>
 	{tabset name="admin_wiki"}
 		{tab name="{tr}General Preferences{/tr}"}
@@ -61,7 +59,7 @@
 				{preference name=wiki_heading_links}
 			</fieldset>
 			<fieldset>
-				<legend>{tr}Automatic Table of Contents{/tr}</legend>
+				<legend>{tr}Automatic table of contents{/tr}</legend>
 				{preference name=wiki_auto_toc}
 				<div class="adminoptionbox clearfix" id="wiki_auto_toc_childcontainer">
 					{preference name=wiki_inline_auto_toc}
@@ -120,9 +118,9 @@
 			</div>
 			{preference name=feature_wiki_export}
 			<div class="adminoptionboxchild col-md-8 col-sm-offset-4" id="feature_wiki_export_childcontainer">
-				{permission_link mode=button permType=wiki textFilter=export showDisabled=y label="{tr}Export permissions{/tr}"}
-				{permission_link mode=button permType=wiki textFilter=picture showDisabled=y label="{tr}Picture permissions{/tr}"}
-				{button href="tiki-export_wiki_pages.php" _text="{tr}Export Wiki Pages{/tr}"}
+				{permission_link addclass="timeout" mode=button permType=wiki textFilter=export showDisabled=y label="{tr}Export permissions{/tr}"}
+				{permission_link addclass="timeout" mode=button permType=wiki textFilter=picture showDisabled=y label="{tr}Picture permissions{/tr}"}
+				{button _class="timeout" href="tiki-export_wiki_pages.php" _text="{tr}Export Wiki Pages{/tr}"}
 			</div>
 			{preference name=feature_wikiwords}
 			<div class="adminoptionboxchild" id="feature_wikiwords_childcontainer">
@@ -132,7 +130,7 @@
 			{preference name=feature_history}
 			<div class="adminoptionboxchild" id="feature_history_childcontainer">
 				<div class="col-sm-offset-4 col-sm-8" style="margin-bottom:10px">
-					{permission_link mode=button permType=wiki textFilter=history showDisabled=y}
+					{permission_link addclass="timeout" mode=button permType=wiki textFilter=history showDisabled=y}
 				</div>
 				{preference name=maxVersions}
 				{preference name=keep_versions}
@@ -145,17 +143,17 @@
 			<div class="adminoptionboxchild" id="feature_wiki_discuss_childcontainer">
 				{preference name=wiki_forum_id}
 				<div class="col-sm-offset-4 col-sm-8" style="margin-bottom:10px">
-					{permission_link mode=button permType=forums}
+					{permission_link addclass="timeout" mode=button permType=forums}
 				</div>
 				{preference name=wiki_discuss_visibility}
 			</div>
 			{preference name=feature_source}
 			<div class="adminoptionboxchild col-md-8 col-sm-offset-4" id="feature_source_childcontainer">
-				{permission_link mode=button permType=wiki textFilter=source showDisabled=y}
+				{permission_link addclass="timeout" mode=button permType=wiki textFilter=source showDisabled=y}
 			</div>
 			{preference name=feature_wiki_ratings}
 			<div class="adminoptionboxchild col-sm-offset-4 col-sm-8" id="feature_wiki_ratings_childcontainer">
-				{permission_link mode=button permType=wiki textFilter=ratings showDisabled=y}
+				{permission_link addclass="timeout" mode=button permType=wiki textFilter=ratings showDisabled=y}
 			</div>
 			{preference name=wiki_simple_ratings}
 			<div class="adminoptionboxchild" id="wiki_simple_ratings_childcontainer">
@@ -165,7 +163,7 @@
 			<div class="adminoptionboxchild" id="feature_backlinks_childcontainer">
 				{preference name=wiki_backlinks_name_len}
 				<div class="col-sm-offset-4 col-md-8">
-					{permission_link mode=button permType=wiki textFilter=backlinks showDisabled=y}
+					{permission_link addclass="timeout" mode=button permType=wiki textFilter=backlinks showDisabled=y}
 				</div>
 			</div>
 			{preference name=feature_semantic}
@@ -191,7 +189,7 @@
 			</div>
 			{preference name=feature_wiki_usrlock}
 			<div class="adminoptionboxchild col-sm-8 col-sm-offset-4" id="feature_wiki_usrlock_childcontainer">
-				{permission_link mode=button permType=wiki textFilter=lock showDisabled=y}
+				{permission_link addclass="timeout" mode=button permType=wiki textFilter=lock showDisabled=y}
 			</div>
 			{preference name=wiki_creator_admin}
 			{preference name=feature_wiki_mindmap}
@@ -208,19 +206,19 @@
 						</div>
 						{if !empty($prefs.w_use_dir)}
 							{tr}If you change storage, it is better to move all the files for easy backup...{/tr}
-							{button href="tiki-admin.php?page=wikiatt&all2db=1" _text="{tr}Change all to db{/tr}"}
-							{button href="tiki-admin.php?page=wikiatt&all2file=1" _text="{tr}Change all to file{/tr}"}
+							{button _class="timeout" href="tiki-admin.php?page=wikiatt&all2db=1" _text="{tr}Change all to db{/tr}"}
+							{button _class="timeout" href="tiki-admin.php?page=wikiatt&all2file=1" _text="{tr}Change all to file{/tr}"}
 						{/if}
 					</div>
 					{preference name=feature_wiki_pictures}
 					<div class="adminoptionboxchild" id="feature_wiki_pictures_childcontainer">
 						<div class="col-sm-offset-4 col-sm-8">
-							{permission_link mode=button permType=wiki textFilter=picture showDisabled=y}
+							{permission_link addclass="timeout" mode=button permType=wiki textFilter=picture showDisabled=y}
 						</div>
 						{preference name=feature_filegals_manager}
 						<div class="col-sm-offset-4 col-sm-8">
-							{button href="tiki-admin.php?page=wiki&amp;rmvunusedpic=1" _text="{tr}Remove unused pictures{/tr}"}
-							{button href="tiki-admin.php?page=wiki&amp;moveWikiUp=1" _text="{tr}Move images from wiki_up to the home file gallery{/tr}"}
+							{button _class="timeout" href="tiki-admin.php?page=wiki&amp;rmvunusedpic=1" _text="{tr}Remove unused pictures{/tr}"}
+							{button _class="timeout" href="tiki-admin.php?page=wiki&amp;moveWikiUp=1" _text="{tr}Move images from wiki_up to the home file gallery{/tr}"}
 							<span class="help-block">
 								{tr}If you use these buttons please make sure to have a backup of the database and the directory wiki_up{/tr}
 							</span>
@@ -303,7 +301,6 @@
 		{tab name="{tr}Flagged Revision{/tr}"}
 			<br>
 			<fieldset>
-				<legend>{tr}Revision Approval{/tr}</legend>
 				{preference name=flaggedrev_approval}
 				<div id="flaggedrev_approval_childcontainer">
 					{preference name=flaggedrev_approval_categories}
@@ -361,14 +358,14 @@
 			<br>
 
 				<div>
-					<h4>Database Dumps & Restores</h4>
+					<h4>Database dumps & restores</h4>
 
 					Create database archives of wiki pages for restoring at a later date.<br>
-					<label for="tagname">{tr}Name for Dump:{/tr}</label>
+					<label for="tagname">{tr}Name for dump{/tr}</label>
 					<input maxlength="20" size="20" type="text" name="newtagname" id="newtagname">
-					<input type="submit" class="btn btn-default btn-sm" name="createtag" value="{tr}Create Database Dump{/tr}"><br>
+					<input type="submit" class="btn btn-default btn-sm timeout" name="createtag" value="{tr}Create Database Dump{/tr}"><br>
 
-					<label for="databasetag">{tr}Wiki Database:{/tr}</label>
+					<label for="databasetag">{tr}Wiki database{/tr}</label>
 					<select name="tagname" {if $tags|@count eq '0'} disabled="disabled"{/if}>
 						{section name=sel loop=$tags}
 							<option value="{$tags[sel]|escape}">{$tags[sel]}</option>
@@ -376,9 +373,9 @@
 							<option value=''>{tr}None{/tr}</option>
 						{/section}
 					</select>
-					<input type="submit" class="btn btn-default btn-sm" name="restoretag" value="{tr}Restore{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if}>
-					<input type="submit" class="btn btn-default btn-sm" name="removetag" value="{tr}Remove{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if}>
-					<h4>{tr}Dump Files{/tr}</h4>
+					<input type="submit" class="btn btn-default btn-sm timeout" name="restoretag" value="{tr}Restore{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if}>
+					<input type="submit" class="btn btn-default btn-sm timeout" name="removetag" value="{tr}Remove{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if}>
+					<h4>{tr}Dump files{/tr}</h4>
 					{tr}Dump files archive wiki pages for various usages such as off-line browsing or distribution on optical disks.{/tr}
 					<h5>{tr}Warnings{/tr}</h5>
 					<ul>
@@ -387,17 +384,15 @@
 					</ul>
 					<br><br>
 
-					<input type="submit" class="btn btn-default btn-sm" name="createdump" value="{tr}Create Dump File{/tr}">
-					<input type="submit" class="btn btn-default btn-sm" name="downloaddump" value="{tr}Download Dump File{/tr}" {if !$isDump} disabled="disabled"{/if}>
-					<input type="submit" class="btn btn-default btn-sm" name="removedump" data-target="_blank" value="{tr}Remove Dump File{/tr}" {if !$isDump} disabled="disabled"{/if}>
+					<input type="submit" class="btn btn-default btn-sm timeout" name="createdump" value="{tr}Create Dump File{/tr}">
+					<input type="submit" class="btn btn-default btn-sm timeout" name="downloaddump" value="{tr}Download Dump File{/tr}" {if !$isDump} disabled="disabled"{/if}>
+					<input type="submit" class="btn btn-default btn-sm timeout" name="removedump" data-target="_blank" value="{tr}Remove Dump File{/tr}" {if !$isDump} disabled="disabled"{/if}>
 				</div>
 			<br>
-			<h4><a href="tiki-search_replace.php">{tr}Mass search and replace{/tr}</a></h4>
+			<h4><a class="timeout" href="tiki-search_replace.php">{tr}Mass search and replace{/tr}</a></h4>
 
-			<h4><a href="tiki-report_direct_object_perms.php">{tr}Report wiki pages with direct object permissions{/tr}</a></h4>
+			<h4><a class="timeout" href="tiki-report_direct_object_perms.php">{tr}Report wiki pages with direct object permissions{/tr}</a></h4>
 		{/tab}
 	{/tabset}
-	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>

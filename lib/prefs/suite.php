@@ -16,7 +16,7 @@ function prefs_suite_list()
 			'default' => 'n',
 		),
 		'suite_jitsi_configuration' => array(
-			'name' => tr('Jitsi Configuration'),
+			'name' => tr('Jitsi configuration'),
 			'description' => tr('Content of a Jitsi-format Java properties file.'),
 			'type' => 'textarea',
 			'size' => 10,

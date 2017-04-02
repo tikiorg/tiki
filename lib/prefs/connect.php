@@ -9,7 +9,7 @@ function prefs_connect_list()
 {
 	return array (
 		'connect_feature' => array(
-			'name' => tra('Tiki Connect'),
+			'name' => tra('Tiki connect'),
 			'description' => tra('Connect your Tiki with the community by sending anonymised statistical data to tiki.org'),
 			'type' => 'flag',
 			'default' => 'n',	// to be enabled by default when working for Tiki 8
@@ -19,7 +19,7 @@ function prefs_connect_list()
 			'help' => 'Connect',
 		),
 		'connect_send_info' => array(
-			'name' => tra('Send Site Information'),
+			'name' => tra('Send site information'),
 			'description' => tra('Additionally send keywords, location, etc. to tiki.org so you can connect with other Tiki sites near you.'),
 			'type' => 'flag',
 			'dependencies' => 'connect_feature',
@@ -29,6 +29,7 @@ function prefs_connect_list()
 		'connect_site_title' => array(
 			'name' => tra('Site title'),
 			'description' => tra('Name of site to be listed on Tiki Connect'),
+			'warning' => tra('Site title is required to send site information.'),
 			'type' => 'text',
 			'dependencies' => 'connect_send_info',
 			'default' => '',
@@ -84,7 +85,7 @@ function prefs_connect_list()
 			'warning' => tra('This feature is experimental and currently not in use. Stay tuned for updated information. Click "Send Info" to connect.'),
 		),
 		'connect_server' => array(
-			'name' => tra('Tiki Connect server URL'),
+			'name' => tra('Tiki connect server URL'),
 			'description' => tra('Where to send the information.').' '.tra('Default:'). 'http://mother.tiki.org',
 			'type' => 'text',
 			'dependencies' => 'connect_feature',

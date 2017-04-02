@@ -30,15 +30,15 @@ function prefs_http_list()
 			'default' => 'y',
 		),
 		'http_header_frame_options' => array(
-			'name' => tra('HTTP Header X-Frame Options'),
-			'description' => tra('The X-Frame-Options HTTP response header can be used to indicate whether or not a browser should be allowed to render a page in a &lt;frame&gt;, &lt;iframe&gt; or &lt;object&gt;'),
+			'name' => tra('HTTP header x-frame options'),
+			'description' => tra('The x-frame-options HTTP response header can be used to indicate whether or not a browser should be allowed to render a page in a &lt;frame&gt;, &lt;iframe&gt; or &lt;object&gt;'),
 			'type' => 'flag',
 			'default' => 'n',
 			'perspective' => false,
 			'tags' => array('basic'),
 		),
 		'http_header_frame_options_value' => array(
-			'name' => tra('Header Value'),
+			'name' => tra('Header value'),
 			'type' => 'list',
 			'options' => array(
 				'DENY' => tra('DENY'),
@@ -52,7 +52,7 @@ function prefs_http_list()
 			),
 		),
 		'http_header_xss_protection' => array(
-			'name' => tra('HTTP Header X-XSS-Protection'),
+			'name' => tra('HTTP header x-xss-protection'),
 			'description' => tra('The x-xss-protection header is designed to enable the cross-site scripting (XSS) filter built into modern web browsers'),
 			'type' => 'flag',
 			'default' => 'n',
@@ -60,7 +60,7 @@ function prefs_http_list()
 			'tags' => array('basic'),
 		),
 		'http_header_xss_protection_value' => array(
-			'name' => tra('Header Value'),
+			'name' => tra('Header value'),
 			'type' => 'list',
 			'options' => array(
 				'0' => tra('0'),
@@ -75,7 +75,7 @@ function prefs_http_list()
 			),
 		),
 		'http_header_content_type_options' => array(
-			'name' => tra('HTTP Header X-Content-Type-Options'),
+			'name' => tra('HTTP header x-content-type-options'),
 			'description' => tra('The x-content-type-options header is a marker used by the server to indicate that the MIME types advertised in the Content-Type headers should not be changed and be followed.'),
 			'type' => 'flag',
 			'default' => 'n',
@@ -83,7 +83,7 @@ function prefs_http_list()
 			'tags' => array('basic'),
 		),
 		'http_header_content_security_policy' => array(
-			'name' => tra('HTTP Header Content-Security-Policy'),
+			'name' => tra('HTTP header content-security-policy'),
 			'description' => tra('The Content-Security-Policy header allows web site administrators to control resources the user agent is allowed to load for a given page.'),
 			'type' => 'flag',
 			'default' => 'n',
@@ -91,7 +91,7 @@ function prefs_http_list()
 			'tags' => array('basic'),
 		),
 		'http_header_content_security_policy_value' => array(
-			'name' => tra('Header Value'),
+			'name' => tra('Header value'),
 			'type' => 'text',
 			'default' => '',
 			'perspective' => false,
@@ -101,7 +101,7 @@ function prefs_http_list()
 			),
 		),
 		'http_header_strict_transport_security' => array(
-			'name' => tra('HTTP Header Strict-Transport-Security'),
+			'name' => tra('HTTP header strict-transport-security'),
 			'description' => tra('The Strict-Transport-Security header (often abbreviated as HSTS) is a security feature that lets a web site tell browsers that it should only be communicated with using HTTPS, instead of using HTTP.'),
 			'type' => 'flag',
 			'default' => 'n',
@@ -109,7 +109,7 @@ function prefs_http_list()
 			'tags' => array('basic'),
 		),
 		'http_header_strict_transport_security_value' => array(
-			'name' => tra('Header Value'),
+			'name' => tra('Header value'),
 			'type' => 'text',
 			'default' => '',
 			'perspective' => false,
@@ -119,15 +119,15 @@ function prefs_http_list()
 			),
 		),
 		'http_header_public_key_pins' => array(
-			'name' => tra('HTTP Header Public-Key-Pins'),
-			'description' => tra('The Public-Key-Pins header associates a specific cryptographic public key with a certain web server to decrease the risk of MITM attacks with forged certificates. If one or several keys are pinned and none of them are used by the server, the browser will not accept the response as legitimate, and will not display it.'),
+			'name' => tra('HTTP header public-key-pins'),
+			'description' => tra('The public-key-pins header associates a specific cryptographic public key with a certain web server to decrease the risk of MITM attacks with forged certificates. If one or several keys are pinned and none of them are used by the server, the browser will not accept the response as legitimate, and will not display it.'),
 			'type' => 'flag',
 			'default' => 'n',
 			'perspective' => false,
 			'tags' => array('basic'),
 		),
 		'http_header_public_key_pins_value' => array(
-			'name' => tra('Header Value'),
+			'name' => tra('Header value'),
 			'type' => 'textarea',
 			'default' => '',
 			'perspective' => false,

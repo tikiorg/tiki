@@ -70,7 +70,7 @@ function prefs_feed_list()
 			'default' => 'img/tiki/Tiki_WCG.png',
 		),
 		'feed_language' => array(
-			'name' => tra('Feed Language'),
+			'name' => tra('Feed language'),
 			'description' => tra('The default language for this feed'),
 			'type' => 'text',
 			'size' => '10',
@@ -78,7 +78,7 @@ function prefs_feed_list()
 			'tags' => array('basic'),
 		),
 		'feed_basic_auth' => array(
-			'name' => tra('RSS basic Authentication'),
+			'name' => tra('RSS basic authentication'),
 			'description' => tra('Propose basic HTTP authentication if the user has no permission to see the feed'),
 			'type' => 'flag',
 			'default' => 'n',
@@ -89,7 +89,7 @@ function prefs_feed_list()
 			'type' => 'text',
 			'size' => '5',
 			'filter' => 'digits',
-			'shorthint' => tra('seconds'),
+			'units' => tra('seconds'),
 			'hint' => tra('Use 0 for no caching'),
 			'default' => '300', // 5 minutes
 			'detail' => tra('Feed caching is done for anonymous users only.'),

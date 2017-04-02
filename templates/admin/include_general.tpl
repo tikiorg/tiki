@@ -6,15 +6,13 @@
 		{button _class="btn btn-link tips" _type="text" href="tiki-admin_menus.php" _icon_name="menu" _text="{tr}Menus{/tr}" _title=":{tr}Create and edit menus{/tr}"}
 		{button _class="btn btn-link tips" _type="text" href="tiki-admin.php?page=general&amp;forcecheck=1" _icon_name="search" _text="{tr}Check for updates now{/tr}" _title=":{tr}Check for updates now{/tr}"}
 		{button _class="btn btn-link tips" _type="text" href="tiki-check.php" _icon_name="heartbeat" _text="{tr}Server Fitness{/tr}" _title=":{tr}Check if your server meets the requirements for running Tiki{/tr}"}
-		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-		</div>
+		{include file='admin/include_apply_top.tpl'}
 	</div>
 	{tabset name="admin_general"}
 		{tab name="{tr}General Preferences{/tr}"}
 			<br>
 			<fieldset>
-				<legend>{tr}Release Check{/tr}</legend>
+				<legend>{tr}Release check{/tr}</legend>
 				{remarksbox type="info" title="{tr}Tiki version{/tr}" close="n"}
 					{if !empty($lastup)}
 						{tr}Last update from SVN{/tr} ({$tiki_version}): {$lastup|tiki_long_datetime}
@@ -35,7 +33,7 @@
 				</div>
 			</fieldset>
 			<fieldset>
-				<legend>{tr}Site Identity{/tr}</legend>
+				<legend>{tr}Site identity{/tr}</legend>
 				{preference name=browsertitle}
 				{preference name=sender_email}
 				{preference name=site_title_location}
@@ -84,7 +82,7 @@
 				{preference name=newsletter_external_client}
 			</fieldset>
 			<fieldset>
-				<legend>{tr}Logging and Reporting{/tr}</legend>
+				<legend>{tr}Logging and reporting{/tr}</legend>
 				<div class="adminoptionbox">
 					{preference name=error_reporting_level}
 					<div class="adminoptionboxchild">
@@ -176,7 +174,7 @@
 				{preference name=count_admin_pvs}
 			</fieldset>
 			<fieldset>
-				<legend>{tr}Terms and Conditions{/tr}</legend>
+				<legend>{tr}Terms and conditions{/tr}</legend>
 				{preference name=conditions_enabled}
 				<div class="adminoptionboxchild" id="conditions_enabled_childcontainer">
 					{preference name=conditions_page_name}
@@ -184,14 +182,11 @@
 				</div>
 			</fieldset>
 			<fieldset>
-				<legend>{tr}Miscellaneous{/tr}</legend>
+				<legend>{tr}Help{/tr}</legend>
 				{preference name=feature_help}
 				<div class="adminoptionboxchild" id="feature_help_childcontainer">
 					{preference name=helpurl}
 				</div>
-				{remarksbox type="info" title="{tr}Change admin password{/tr}"}
-					{tr}Change the <strong>Admin</strong> password:{/tr} <a href="tiki-adminusers.php?find=admin" class="alert-link">{tr}User administration{/tr}</a>
-				{/remarksbox}
 			</fieldset>
 		{/tab}
 		{tab name="{tr}Navigation{/tr}"}
@@ -211,7 +206,7 @@
 				</div>
 			</fieldset>
 			<fieldset>
-				<legend>{tr}Home Page{/tr}</legend>
+				<legend>{tr}Home page{/tr}</legend>
 				<div class="adminoptionbox">
 					{preference name=useGroupHome}
 					<div id="useGroupHome_childcontainer">
@@ -254,7 +249,7 @@
 				{preference name='urlOnUsername'}
 			</fieldset>
 			<fieldset>
-				<legend>{tr}Site Access{/tr}</legend>
+				<legend>{tr}Site access{/tr}</legend>
 				{preference name=site_closed}
 				<div class="adminoptionboxchild" id="site_closed_childcontainer">
 					{preference name=site_closed_msg}
@@ -350,7 +345,5 @@
 			{preference name=wikiplugin_convene}
 		{/tab}
 	{/tabset}
-	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply changes{/tr}" value="{tr}Apply{/tr}">
-	</div>
+	{include file='admin/include_apply_bottom.tpl'}
 </form>
