@@ -1245,7 +1245,7 @@ class StructLib extends TikiLib
 				$res['description']=$res['pageName'];
 			}
 	  		$pageName=$res['pageName'].'|'.$res['description'];
-	  		$dat = $this->parse_data($res['data']);
+	  		$dat = TikiLib::lib('parser')->parse_data($res['data']);
 	  		//Now dump the page
 	  		$dat = preg_replace("/tiki-index.php\?page=([^\'\" ]+)/", "$1.html", $dat);
 	  		$dat = str_replace('?nocache=1', '', $dat);

@@ -87,7 +87,7 @@ if ($showstatistics==1) {
 }
 if ($showpage==1) {
 	$data=$document->get('wiki', $getOptions);
-	$data=$tikilib->parse_data($data);
+	$data=TikiLib::lib('parser')->parse_data($data);
 	if ($escape==1) { // make breaks visible again
 		$data=preg_replace('/[\n]/', "<br />\n", $data);
 	}

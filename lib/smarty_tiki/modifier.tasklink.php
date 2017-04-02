@@ -45,7 +45,7 @@ function smarty_modifier_tasklink($taskId, $class_name="link", $offset="0", $sor
 			$description = $info['description'];
 		}
 
-		$description =str_replace("\"", "\'", str_replace("'", "\\'", str_replace("\n", "", (str_replace("\r\n", "<br />", $tikilib->parse_data($description)))))) . $append;
+		$description =str_replace("\"", "\'", str_replace("'", "\\'", str_replace("\n", "", (str_replace("\r\n", "<br />", TikiLib::lib('parser')->parse_data($description)))))) . $append;
 
 		$fillin = tra("Task") . ' ' . tra("from") . ' <b>' . $info['creator'] . '</b> ' . tra("for") .
 			' <b>' . $info['user'] . '</b>.<br />' . tra("Priority") . ': <b>' . $info['priority'] . '</b>, (<b>' .

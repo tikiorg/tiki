@@ -117,7 +117,7 @@ class WikiParser_PluginOutput
 	{
 		global $tikilib;
 
-		return $tikilib->parse_data($data, $parseOptions);
+		return TikiLib::lib('parser')->parse_data($data, $parseOptions);
 	}
 }
 

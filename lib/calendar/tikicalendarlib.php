@@ -94,7 +94,7 @@ class TikiCalendarLib extends CalendarLib
 
 						switch ( $res['type'] ) {
 							case 'art':
-								$res['description'] = $this->parse_data($res['description']);
+								$res['description'] = TikiLib::lib('parser')->parse_data($res['description']);
 								break;
 
 							case 'blog':

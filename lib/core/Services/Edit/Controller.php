@@ -111,6 +111,7 @@ class Services_Edit_Controller
 
 			$smarty->assign('inPage', $input->inPage->int() ? true : false);
 
+			$parserlib = TikiLib::lib('parser');
 			if ($input->inPage->int()) {
 				$diffstyle = $input->diff_style->text();
 				if (!$diffstyle) {	// use previously set diff_style
@@ -146,8 +147,8 @@ class Services_Edit_Controller
 						$diffnew = $data;
 					}
 					if ($diffstyle === 'htmldiff') {
-						$diffnew = $tikilib->parse_data($diffnew, $options);
-						$diffold = $tikilib->parse_data($diffold, $options);
+						$diffnew = $parserlib->parse_data($diffnew, $options);
+						$diffold = $parserlib->parse_data($diffold, $options);
 					}
 					$data = diff2($diffold, $diffnew, $diffstyle);
 					$smarty->assign_by_ref('diffdata', $data);
@@ -156,7 +157,7 @@ class Services_Edit_Controller
 					$smarty->assign('show_version_info', 'n');	// disables the headings etc
 					$data = $smarty->fetch('pagehistory.tpl');
 				} else {
-					$data = $tikilib->parse_data($data, $options);
+					$data = $parserlib->parse_data($data, $options);
 				}
 				$parsed = $data;
 
@@ -181,7 +182,6 @@ $(window).on("load", function(){
 				$smarty->assign('headtitle', tra('Preview'));
 				$data = '<div class="container"><div class="row row-middle"><div class="col-sm-12"><div class="wikitext">';
 				if (TikiLib::lib('autosave')->has_autosave($input->editor_id->text(), $input->autoSaveId->text())) {
-					$parserlib = TikiLib::lib('parser');
 					$data .= $parserlib->parse_data(
 						$editlib->partialParseWysiwygToWiki(
 							TikiLib::lib('autosave')->get_autosave($input->editor_id->text(), $input->autoSaveId->text())
@@ -205,7 +205,7 @@ $(window).on("load", function(){
 
 				$footnote = $input->footnote->text();
 				if ($footnote) {
-					$footnote = $tikilib->parse_data($footnote);
+					$footnote = $parserlib->parse_data($footnote);
 				} else {
 					$footnote = $wikilib->get_footnote($user, $page);
 				}

@@ -784,13 +784,13 @@ class EditLib
 
 	function parseToWysiwyg( $inData, $fromWiki = false, $isHtml = false, $options = array() )
 	{
-		global $tikilib, $tikiroot, $prefs;
+		global $tikiroot;
 		// Parsing page data for wysiwyg editor
 		$inData = $this->partialParseWysiwygToWiki($inData);	// remove any wysiwyg plugins so they don't get double parsed
 		$parsed = preg_replace('/(!!*)[\+\-]/m', '$1', $inData);		// remove show/hide headings
 		$parsed = preg_replace('/&#039;/', '\'', $parsed);			// catch single quotes at html entities
 
-		$parsed = $tikilib->parse_data(
+		$parsed = TikiLib::lib('parser')->parse_data(
 			$parsed,
 			array_merge( array(
 				'absolute_links'=>true,

@@ -227,7 +227,7 @@ class DirLib extends TikiLib
 
 		while ($res = $result->fetchRow()) {
 			$res["cats"] = $this->dir_get_site_categories($res["siteId"]);
-			$res["description"] = $this->parse_data($res["description"]);
+			$res["description"] = TikiLib::lib('parser')->parse_data($res["description"]);
 			$ret[] = $res;
 		}
 		$retval = array();

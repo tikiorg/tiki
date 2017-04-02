@@ -459,14 +459,14 @@ function wikiplugin_fluidgrid($data, $params, $pos)
         
         // My current understanding is as follows.
         // If you specify 'format' => 'html', then you must call
-        //    $tikilib->parse_data() 
+        //    TikiLib::lib('parser')->parse_data()
         //    to process the wiki syntax in the body text.  
         // If you specify 'format' => 'wiki', then the returned text will 
         //    be parsed as wiki text, but this is potentially dangerous,
         //    because it is a mixture of html and wiki syntax. 
       	$c = trim($c);
         $c = wikiplugin_fluidgrid_rollback($c, $hashes);
-      	$c = $tikilib->parse_data($c);
+      	$c = TikiLib::lib('parser')->parse_data($c);
         $result .= "<div class='col-" . $devicesize . "-" . $w . "'>" . $c . "</div>" ;
         
         // Increment the column number (because we are using while, not for)

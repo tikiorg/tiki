@@ -73,8 +73,7 @@ class Services_User_ConditionsController
 
 		$pdata = new Tiki_Render_Lazy(
 			function () use ($content, $parse_options) {
-				$wikilib = TikiLib::lib('wiki');
-				return $wikilib->parse_data($content, $parse_options);
+				return TikiLib::lib('parser')->parse_data($content, $parse_options);
 			}
 		);
 

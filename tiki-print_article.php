@@ -129,7 +129,6 @@ if ( $prefs['article_paginate'] == 'y' ) {
 	$smarty->assign('last_page', $pages);
 	$smarty->assign('pagenum', $_REQUEST['page']);
 	// Put ~pp~, ~np~ and <pre> back. --rlpowell, 24 May 2004
-	$parserlib = TikiLib::lib('parser');
 	$parserlib->replace_preparse($article_data["body"], $preparsed, $noparsed);
 }
 if ($prefs["article_custom_attributes"] == 'y') {
@@ -164,10 +163,10 @@ if ($prefs['feature_theme_control'] == 'y') {
 	include ('tiki-tc.php');
 }
 
-$smarty->assign('parsed_body', $tikilib->parse_data($body, array('is_html' => $artlib->is_html($article_data))));
+$smarty->assign('parsed_body', $parserlib->parse_data($body, array('is_html' => $artlib->is_html($article_data))));
 $smarty->assign(
 	'parsed_heading',
-	$tikilib->parse_data(
+	$parserlib->parse_data(
 		$heading,
 		array(
 			'min_one_paragraph' => true,

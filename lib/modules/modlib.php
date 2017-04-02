@@ -1199,8 +1199,8 @@ class ModLib extends TikiLib
 		$tikilib = TikiLib::lib('tiki');
 
 		if (isset($info['parse']) && $info['parse'] == 'y') {
-            $info['data'] = $tikilib->parse_data($info['data'], array('is_html' => true, 'suppress_icons' => true));
-            $info['title'] = $tikilib->parse_data($info['title'], array('noparseplugins' => true, 'is_html' => true));
+            $info['data'] = TikiLib::lib('parser')->parse_data($info['data'], array('is_html' => true, 'suppress_icons' => true));
+            $info['title'] = TikiLib::lib('parser')->parse_data($info['title'], array('noparseplugins' => true, 'is_html' => true));
         }
 
         return $info;

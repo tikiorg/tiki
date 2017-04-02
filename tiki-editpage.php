@@ -630,6 +630,7 @@ $smarty->assign('comments_show', 'n');
 $smarty->assign_by_ref('data', $info);
 $smarty->assign('footnote', '');
 $smarty->assign('has_footnote', 'n');
+$parserlib = TikiLib::lib('parser');
 if ($prefs['feature_wiki_footnotes'] === 'y') {
 	if ($user) {
 		$x = $wikilib->get_footnote($user, $page);
@@ -637,10 +638,10 @@ if ($prefs['feature_wiki_footnotes'] === 'y') {
 		$smarty->assign('footnote', $footnote);
 		if ($footnote)
 			$smarty->assign('has_footnote', 'y');
-		$smarty->assign('parsed_footnote', $tikilib->parse_data($footnote));
+		$smarty->assign('parsed_footnote', $parserlib->parse_data($footnote));
 		if (isset($_REQUEST['footnote'])) {
 			check_ticket('edit-page');
-			$smarty->assign('parsed_footnote', $tikilib->parse_data($_REQUEST['footnote']));
+			$smarty->assign('parsed_footnote', $parserlib->parse_data($_REQUEST['footnote']));
 			$smarty->assign('footnote', $_REQUEST['footnote']);
 			$smarty->assign('has_footnote', 'y');
 			if (empty($_REQUEST['footnote'])) {
@@ -930,7 +931,7 @@ if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save'])) {
 				unset($_REQUEST['save']);	// don't save an ajax error
 			}
 		} else {
-		 	$parsed = $tikilib->parse_data(
+		 	$parsed = $parserlib->parse_data(
 				$edit_data,
 				array(
 					'absolute_links'=>true,
@@ -952,14 +953,13 @@ $smarty->assign('pagedata', $parsed);
 
 // apply the optional post edit filters before preview
 if (isset($_REQUEST["preview"])) {
-	$parserlib = TikiLib::lib('parser');
 	$parsed = $parserlib->apply_postedit_handlers($parsed);
 
 	if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y') {
 		$parsed = $editlib->partialParseWysiwygToWiki($parsed);
-		$parsed = $tikilib->parse_data($parsed, array('absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'preview_mode'=>true, 'is_html' => $is_html));
+		$parsed = $parserlib->parse_data($parsed, array('absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'preview_mode'=>true, 'is_html' => $is_html));
 	} else {
-		$parsed = $tikilib->parse_data($parsed, array('is_html' => $is_html, 'preview_mode'=>true));
+		$parsed = $parserlib->parse_data($parsed, array('is_html' => $is_html, 'preview_mode'=>true));
 	}
 	// If we are in preview mode then preview it!
 	$smarty->assign('preview', 1);
@@ -1085,7 +1085,7 @@ if (
 	// Parse $edit and eliminate image references to external URIs (make them internal)
 	$edit = $imagegallib->capture_images($edit);
 	// apply the optional page edit filters before data storage
-	$parserlib = TikiLib::lib('parser');
+	$parserlib = $parserlib;
 	$edit = $parserlib->apply_postedit_handlers($edit);
 
 	// add permisions here otherwise return error!
@@ -1353,7 +1353,7 @@ if (
 	Feedback::success(sprintf(tra('Page %s saved (version %d).'), $_REQUEST["page"], $info['version']), 'session');
 
 	if (!empty($_REQUEST['hdr'])) {
-		$tmp = $tikilib->parse_data($edit);			// fills $anch[] so page refreshes at the section being edited
+		$tmp = $parserlib->parse_data($edit);			// fills $anch[] so page refreshes at the section being edited
 		$url .= "#".$anch[$_REQUEST['hdr']-1]['id'];
 	}
 

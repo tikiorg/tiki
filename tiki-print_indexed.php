@@ -286,7 +286,7 @@ class ObjectRenderer_Wiki extends ObjectRenderer // {{{
 
 		$info = $tikilib->get_page_info($objectId);
 
-		$info['parsed'] = $tikilib->parse_data(
+		$info['parsed'] = TikiLib::lib('parser')->parse_data(
 			$info['data'],
 			array(
 				'is_html' => $info['is_html'],

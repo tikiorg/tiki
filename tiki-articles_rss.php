@@ -117,7 +117,7 @@ if ($output["data"]=="EMPTY") {
 	$tmp = array();
 	include_once('tiki-sefurl.php');
 	foreach ($changes["data"] as $data) {
-		$data["$descId"] = $tikilib->parse_data($data[$descId], array('print'=>true));
+		$data["$descId"] = TikiLib::lib('parser')->parse_data($data[$descId], array('print'=>true));
 		$data["body"] = null;
 		$data['sefurl'] = filter_out_sefurl(sprintf($readrepl, $data['articleId']), 'article', $data['title']);
 		$tmp[] = $data;

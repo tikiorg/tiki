@@ -139,8 +139,6 @@ class Search_Action_EmailAction implements Search_Action_Action
 		}
 
 		require_once ('tiki-setup.php');
-		$tikilib = TikiLib::lib('tiki');
-
 		require_once 'lib/pdflib.php';
 		$generator = new PdfGenerator;
 		if (!empty($generator->error)) {
@@ -150,12 +148,12 @@ class Search_Action_EmailAction implements Search_Action_Action
 			$params = array( 'page' => $pageName );
 
 			// If the page doesn't exist then display an error
-			if (!($info = $tikilib->get_page_info($pageName))) {
+			if (!($info = TikiLib::lib('tiki')->get_page_info($pageName))) {
 				Feedback::error(sprintf(tra('Page %s cannot be found'), $pageName));
 				return false;
 			}
 
-			$pdata = $tikilib->parse_data($info["data"], array(
+			$pdata = TikiLib::lib('parser')->parse_data($info["data"], array(
 				'page' => $pageName,
 				'is_html' => $info["is_html"],
 				'print' => 'y',

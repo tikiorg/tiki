@@ -23,7 +23,7 @@ if ($tiki_p_edit !== 'y' ) {
 
 $editwiki = $_REQUEST['editwiki'];
 $listunparsed = '{LIST()}' . $editwiki . '{LIST}';
-$listparsed = $tikilib->parse_data(
+$listparsed = TikiLib::lib('parser')->parse_data(
 				$listunparsed,
 				array(
 					'absolute_links'=>true,

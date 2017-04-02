@@ -129,19 +129,6 @@ class TikiLib extends TikiDb_Bridge
 
 	/**
 	 * @param $data
-	 * @param array $options
-	 * @return mixed|string
-	 * @deprecated use TikiLib::lib('parser')->parse_data() instead
-	 */
-	function parse_data($data, $options = array())
-	{
-		//to make migration easier
-		$parserlib = TikiLib::lib('parser');
-		return $parserlib->parse_data($data, $options);
-	}
-
-	/**
-	 * @param $data
 	 * @param $withReltype
 	 * @return array
 	 */
@@ -4217,7 +4204,7 @@ class TikiLib extends TikiDb_Bridge
 			return false;
 		} else {
 			$page_info = $result->fetchRow();
-			$page_info['parsed'] = $this->parse_data($page_info['parsed'], array('is_html' => $page_info['is_html'], 'print'=>'y', 'page'=>$pageName));
+			$page_info['parsed'] = TikiLib::lib('parser')->parse_data($page_info['parsed'], array('is_html' => $page_info['is_html'], 'print'=>'y', 'page'=>$pageName));
 			$page_info['h'] = 1;
 		}
 		return $page_info;
@@ -5700,7 +5687,7 @@ class TikiLib extends TikiDb_Bridge
 			$data = preg_replace('/{(:?make)?toc[^}]*}/', '', $data);
 
 			$_REQUEST['redirectpage'] = 'y'; //do not interpret redirect
-			$data = $this->parse_data($data, array('is_html' => $is_html, 'stripplugins' => true, 'parsetoc' => true));
+			$data = TikiLib::lib('parser')->parse_data($data, array('is_html' => $is_html, 'stripplugins' => true, 'parsetoc' => true));
 		}
 
 

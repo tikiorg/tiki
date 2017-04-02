@@ -1143,7 +1143,7 @@ class NlLib extends TikiLib
 			$smarty->assign("nlArticleClipId", $art["articleId"]);
 			$smarty->assign("nlArticleClipTitle", $art["title"]);
 			$smarty->assign("nlArticleClipSubtitle", $art["subtitle"]);
-			$smarty->assign("nlArticleClipParsedheading", $this->parse_data($art["heading"], array('is_html' => $artlib->is_html($art, true))));
+			$smarty->assign("nlArticleClipParsedheading", TikiLib::lib('parser')->parse_data($art["heading"], array('is_html' => $artlib->is_html($art, true))));
 			$smarty->assign("nlArticleClipPublishDate", $art["publishDate"]);
 			$smarty->assign("nlArticleClipAuthorName", $art["authorName"]);
 			$articleClip .= $smarty->fetch("mail/newsletter_articleclip.tpl");
@@ -1252,7 +1252,7 @@ class NlLib extends TikiLib
 				$is_html = !empty($is_html);
 			}
 			if (stristr($info['data'], '<body') === false) {
-				$html = "<html>$beginHtml" . $tikilib->parse_data(
+				$html = "<html>$beginHtml" . TikiLib::lib('parser')->parse_data(
 					$info['data'], array(
 						'absolute_links' => true,
 						'suppress_icons' => true,
@@ -1568,7 +1568,7 @@ class NlLib extends TikiLib
 		global $tikilib;
 
 		if (empty($parsed)) {
-			$txt = $tikilib->parse_data($txt, array('absolute_links' => true, 'suppress_icons' => true));
+			$txt = TikiLib::lib('parser')->parse_data($txt, array('absolute_links' => true, 'suppress_icons' => true));
 		} else {
 			$txt = $parsed;
 		}

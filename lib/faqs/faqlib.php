@@ -324,7 +324,7 @@ class FaqLib extends TikiLib
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$res['parsed'] = $this->parse_data($res['answer']);
+			$res['parsed'] = TikiLib::lib('parser')->parse_data($res['answer']);
 
 			$ret[] = $res;
 		}

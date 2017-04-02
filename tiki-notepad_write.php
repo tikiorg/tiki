@@ -24,7 +24,7 @@ if (isset($_REQUEST["noteId"])) {
 	if ($info['parse_mode'] == 'raw') {
 		$info['parsed'] = nl2br(htmlspecialchars($info['data']));
 		$smarty->assign('wysiwyg', 'n');
-	} else $info['parsed'] = $tikilib->parse_data($info['data'], array('is_html' => $is_html));
+	} else $info['parsed'] = TikiLib::lib('parser')->parse_data($info['data'], array('is_html' => $is_html));
 } else {
 	$info = array();
 	$info['name'] = '';

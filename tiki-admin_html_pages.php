@@ -38,7 +38,7 @@ if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0) {
 $smarty->assign('preview', 'n');
 if (isset($_REQUEST["preview"])) {
 	$smarty->assign('preview', 'y');
-	//$parsed = $tikilib->parse_data($_REQUEST["content"]);
+	//$parsed = TikiLib::lib('parser')->parse_data($_REQUEST["content"]);
 	$parsed = $htmlpageslib->parse_html_page($_REQUEST["pageName"], $_REQUEST["content"]);
 	$smarty->assign('parsed', $parsed);
 	$info["content"] = $_REQUEST["content"];

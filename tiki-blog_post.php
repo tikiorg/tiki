@@ -119,7 +119,7 @@ if ($postId > 0) {
 
 	$smarty->assign('post_info', $data);
 	$smarty->assign('data', $data['data']);
-	$smarty->assign('parsed_data', $tikilib->parse_data($data['data'], array('is_html' => $is_wysiwyg)));
+	$smarty->assign('parsed_data', TikiLib::lib('parser')->parse_data($data['data'], array('is_html' => $is_wysiwyg)));
 	$smarty->assign('blogpriv', $data['priv']);
 
 	check_ticket('blog');
@@ -181,7 +181,7 @@ if (isset($_REQUEST["preview"])) {
 	$post_info = array();
 	$parserlib = TikiLib::lib('parser');
 	$parsed_data = $parserlib->apply_postedit_handlers($edit_data);
-	$parsed_data = $tikilib->parse_data($parsed_data, array('is_html' => $is_wysiwyg));
+	$parsed_data = TikiLib::lib('parser')->parse_data($parsed_data, array('is_html' => $is_wysiwyg));
 	$smarty->assign('data', $edit_data);
 	$post_info['parsed_data'] = $parsed_data;
 
@@ -251,7 +251,7 @@ if (isset($_REQUEST['save']) && !$contribution_needed) {
 
 if ($contribution_needed) {
 	$smarty->assign('title', $_REQUEST["title"]);
-	$smarty->assign('parsed_data', $tikilib->parse_data($_REQUEST['data'], array('is_html' => $is_wysiwyg)));
+	$smarty->assign('parsed_data', TikiLib::lib('parser')->parse_data($_REQUEST['data'], array('is_html' => $is_wysiwyg)));
 	$smarty->assign('data', $_REQUEST['data']);
 	if ($prefs['feature_freetags'] == 'y') {
 		$smarty->assign('taglist', $_REQUEST["freetag_string"]);

@@ -191,7 +191,7 @@ class Services_Search_StoredController
 
 		$wiki = $formatter->format($resultset);
 		$tikilib = TikiLib::lib('tiki');
-		$results = $tikilib->parse_data(
+		$results = TikiLib::lib('parser')->parse_data(
 			$wiki,
 			array(
 				'is_html' => true,

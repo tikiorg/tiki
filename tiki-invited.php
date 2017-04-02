@@ -70,7 +70,7 @@ function tiki_invited()
 		$smarty->display("tiki.tpl");
 		return;
 	} else {
-		$text=$tikilib->parse_data($inviterow['wikicontent']);
+		$text=TikiLib::lib('parser')->parse_data($inviterow['wikicontent']);
 		$text=str_replace('{email}', $invited['email'], $text);
 		$text=str_replace('{firstname}', $invited['firstname'], $text);
 		$text=str_replace('{lastname}', $invited['lastname'], $text);

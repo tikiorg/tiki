@@ -465,7 +465,7 @@ class Messu extends TikiLib
 		$query = 'select * from `messu_' . $dbsource . '` where `user`=? and `msgId`=?';
 		$result = $this->query($query, $bindvars);
 		$res = $result->fetchRow();
-		$res['parsed'] = $this->parse_data($res['body']);
+		$res['parsed'] = TikiLib::lib('parser')->parse_data($res['body']);
 		$res['len'] = strlen($res['parsed']);
 
 		if (empty($res['subject']))
@@ -515,7 +515,7 @@ class Messu extends TikiLib
 		$ret = [];
 
 		while ($res = $result->fetchRow()) {
-			$res['parsed'] = $this->parse_data($res['body']);
+			$res['parsed'] = TikiLib::lib('parser')->parse_data($res['body']);
 			$res['len'] = strlen($res['parsed']);
 			if (empty($res['subject']))
 				$res['subject'] = tra('NONE');

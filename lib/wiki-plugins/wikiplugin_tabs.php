@@ -93,7 +93,7 @@ function wikiplugin_tabs($data, $params)
 		return "''".tra("No tab title specified. At least one must be specified in order for the tabs to appear.")."''";
 	}
 	if (!empty($data)) {
-		$data = $tikilib->parse_data($data, array('suppress_icons' => true, 'inside_pretty' => $inside_pretty));
+		$data = TikiLib::lib('parser')->parse_data($data, array('suppress_icons' => true, 'inside_pretty' => $inside_pretty));
 		$tabData = explode('/////', $data);
 	}
 	$smarty = TikiLib::lib('smarty');

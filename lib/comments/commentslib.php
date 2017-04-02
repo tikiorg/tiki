@@ -2064,7 +2064,7 @@ class Comments extends TikiLib
 		$parserlib = TikiLib::lib('parser');
 
 		if (($prefs['feature_forum_parse'] == 'y' && $section == 'forums') || $prefs['section_comments_parse'] == 'y') {
-			return $this->parse_data($data);
+			return $parserlib->parse_data($data);
 		}
 
 		// Cookies

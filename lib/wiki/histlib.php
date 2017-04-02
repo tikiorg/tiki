@@ -1012,7 +1012,6 @@ class Document
 	 */
 	function mergeDiff($newpage, $newauthor)
 	{
-		$tikilib = TikiLib::lib('tiki');
 		$this->_history=false;
 		$author=$newauthor;
 		$deleted=false;
@@ -1020,7 +1019,7 @@ class Document
 		$newdoc=array();
 		$page=preg_replace(array('/\{AUTHOR\(.+?\)\}/','/{AUTHOR\}/','/\{INCLUDE\(.+?\)\}\{INCLUDE\}/'), ' ~np~$0~/np~', $newpage);
 		if ($this->_parsed) {
-			$page=$tikilib->parse_data($page, array('suppress_icons'=>true));
+			$page=TikiLib::lib('parser')->parse_data($page, array('suppress_icons'=>true));
 			$page=preg_replace(array('/\{AUTHOR\(.+?\)\}/','/{AUTHOR\}/','/\{INCLUDE\(.+?\)\}\{INCLUDE\}/'), ' ~np~$0~/np~', $page);
 		}
 		if ($this->_nohtml) {
@@ -1197,9 +1196,10 @@ function histlib_helper_setup_diff( $page, $oldver, $newver, $diff_style = '' )
 	}
 
 	$smarty->assign('diff_style', $diff_style);
+	$parserlib = TikiLib::lib('parser');
 	if ($diff_style == "sideview") {
-		$old["data"] = $tikilib->parse_data($old["data"], array('preview_mode' => true));
-		$new["data"] = $tikilib->parse_data($new["data"], array('preview_mode' => true));
+		$old["data"] = $parserlib->parse_data($old["data"], array('preview_mode' => true));
+		$new["data"] = $parserlib->parse_data($new["data"], array('preview_mode' => true));
 	} else {
 		require_once('lib/diff/difflib.php');
 		if ($info['is_html'] == 1 and $diff_style != "htmldiff") {
@@ -1213,8 +1213,8 @@ function histlib_helper_setup_diff( $page, $oldver, $newver, $diff_style = '' )
 		if ($diff_style == "htmldiff" && $old['is_html'] != 1) {
 
 			$parse_options = array('is_html' => ($old['is_html'] == 1), 'noheadinc' => true, 'suppress_icons' => true, 'noparseplugins' => true);
-			$old["data"] = $tikilib->parse_data($old["data"], $parse_options);
-			$new["data"] = $tikilib->parse_data($new["data"], $parse_options);
+			$old["data"] = $parserlib->parse_data($old["data"], $parse_options);
+			$new["data"] = $parserlib->parse_data($new["data"], $parse_options);
 
 			$old['data'] = histlib_strip_irrelevant($old['data']);
 			$new['data'] = histlib_strip_irrelevant($new['data']);

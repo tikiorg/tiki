@@ -1184,7 +1184,6 @@ class WikiLib extends TikiLib
 	//
 	public function get_plugin_description($name, &$enabled, $area_id = 'editwiki')
 	{
-		$tikilib = TikiLib::lib('tiki');
 		$parserlib = TikiLib::lib('parser');
 
 		if ( ( ! $info = $parserlib->plugin_info($name) ) && $parserlib->plugin_exists($name, true) ) {
@@ -1196,7 +1195,7 @@ class WikiLib extends TikiLib
 			}
 
 			$ret = $func_name();
-			return $tikilib->parse_data($ret);
+			return $parserlib->parse_data($ret);
 		} else {
 			$smarty = TikiLib::lib('smarty');
 			$enabled = true;
@@ -1921,13 +1920,11 @@ class WikiLibOutput
 
     public function __construct($info, $originalValue, $options = array())
     {
-        $tikilib = TikiLib::lib('tiki');
-
         //TODO: info may have an override, we need to build it in using MYSQL
         $this->info = $info;
         $this->originalValue = $originalValue;
         $this->options = $options;
 
-		$this->parsedValue = $tikilib->parse_data($this->originalValue, $this->options = $options);
+		$this->parsedValue = TikiLib::lib('parser')->parse_data($this->originalValue, $this->options = $options);
     }
 }

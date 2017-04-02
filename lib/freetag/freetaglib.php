@@ -119,7 +119,7 @@ class FreetagLib extends ObjectLib
 	 * @param int (Optional) - The number of results per page to show. Defaults to 100.
 	 * @param int (Optional) - The unique ID of the 'user' who tagged the object.
 	 *
-	 * @return An array of Object ID numbers that reference your original objects.
+	 * @return array|bool of Object ID numbers that reference your original objects.
 	 */
 	function get_objects_with_tag($tag, $type = '', $user = '', $offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '')
 	{
@@ -184,7 +184,7 @@ class FreetagLib extends ObjectLib
 	 * @param string $find
 	 * @param string $broaden
 	 * @access public
-	 * @return An array of Object ID numbers that reference your original objects
+	 * @return array|bool of Object ID numbers that reference your original objects
 	 *
 	 * Notes by nkoth:
 	 * 1. The reason why using two queries here is because we can't get one query to work
@@ -338,7 +338,7 @@ class FreetagLib extends ObjectLib
 			if ($ok) {
 				global $tikilib;
 				if ( ! empty( $row['description'] ) ) {
-					$row['description'] = $tikilib->parse_data($row['description'], array('absolute_links' => true));
+					$row['description'] = TikiLib::lib('parser')->parse_data($row['description'], array('absolute_links' => true));
 				}
 				if ($prefs['feature_sefurl'] == 'y') {
 					include_once('tiki-sefurl.php');

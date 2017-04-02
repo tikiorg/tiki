@@ -176,9 +176,9 @@ $offset = $_REQUEST["offset"];
 $sort_mode = $_REQUEST["sort_mode"];
 $find = $_REQUEST["find"];
 if ($post_info['wysiwyg'] == "y") {
-	$parsed_data = $tikilib->parse_data($post_info["data"], array('is_html' => true));
+	$parsed_data = TikiLib::lib('parser')->parse_data($post_info["data"], array('is_html' => true));
 } else {
-	$parsed_data = $tikilib->parse_data($post_info["data"]);
+	$parsed_data = TikiLib::lib('parser')->parse_data($post_info["data"]);
 }
 if (!isset($_REQUEST['page'])) {
 	$_REQUEST['page'] = 1;

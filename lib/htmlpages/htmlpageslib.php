@@ -121,7 +121,7 @@ class HtmlPagesLib extends TikiLib
 		// match and parse text in <wiki>...</wiki> tags
 		preg_match_all('/<wiki>(.*?)<\/wiki>/si', $data, $wikis); // ? for ungreedy and /s to include \n in .
 		for ($i = 0, $icount_wikis = count($wikis[0]); $i < $icount_wikis; $i++) {
-			$parsed = substr($tikilib->parse_data($wikis[1][$i]), 0, -7); // remove <br /> appended by parser
+			$parsed = substr(TikiLib::lib('parser')->parse_data($wikis[1][$i]), 0, -7); // remove <br /> appended by parser
 			$data = str_replace($wikis[0][$i], $parsed, $data);
 		}
 

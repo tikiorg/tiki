@@ -1896,7 +1896,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 				$data =  $sheet->dataGrid[$beginRow][$beginCol];
 				if ($sheet->parseValues == 'y' && mb_ereg_match('[^A-Za-z0-9\s]', $data)) {	// needs to be multibyte regex here
 					global $tikilib;
-					$data = $tikilib->parse_data($data, array('suppress_icons' => true));
+					$data = TikiLib::lib('parser')->parse_data($data, array('suppress_icons' => true));
 				}
 				$this->output = $data;
 				return true;
@@ -2029,7 +2029,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 					global $tikilib;
 					// only parse if we have non-alphanumeric or space chars
 					if (mb_ereg_match('[^A-Za-z0-9\s]', $data)) {	// needs to be multibyte regex here
-						$data = $tikilib->parse_data($data, array('suppress_icons' => true));
+						$data = TikiLib::lib('parser')->parse_data($data, array('suppress_icons' => true));
 					}
 					if (strpos($data, '<p>') === 0) {	// remove containing <p> tag
 						$data = substr($data, 3);

@@ -25,13 +25,12 @@ function smarty_block_wiki($params, $content, $smarty, &$repeat)
 {
 	if ( $repeat ) return;
 
-	global $tikilib;
 	if ( (isset($params['isHtml'])) and ($params['isHtml'] ) ) {
 	  $isHtml = true;
 	} else {
 	  $isHtml = false;
 	}
-	$ret = $tikilib->parse_data($content, array('is_html' => $isHtml));
+	$ret = TikiLib::lib('parser')->parse_data($content, array('is_html' => $isHtml));
 	if (isset($params['line']) && $params['line'] == 1) {
 		$ret = preg_replace(array('/<br \/>$/', '/[\n\r]*$/'), '', $ret);
 	}

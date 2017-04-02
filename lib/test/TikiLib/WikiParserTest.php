@@ -13,7 +13,7 @@
 class TikiLib_WikiParserTest extends PHPUnit_Framework_TestCase
 {
 	/**
-	 * @covers TikiLib::parse_data
+	 * @covers ParserLib::parse_data
 	 * @dataProvider provider
 	 */
 	public function testWikiParser($input, $output, $options = array())
@@ -22,8 +22,7 @@ class TikiLib_WikiParserTest extends PHPUnit_Framework_TestCase
 		$prefs['feature_page_title'] = 'y';
 		$prefs['feature_wiki_paragraph_formatting'] = 'n';
 		$prefs['pass_chr_special'] = 'n';
-		$o = new TikiLib;
-		$this->assertEquals($output, $o->parse_data($input, $options));
+		$this->assertEquals($output, TikiLib::lib('parser')->parse_data($input, $options));
 	}
 
 	public function provider()
