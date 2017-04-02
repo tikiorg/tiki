@@ -40,7 +40,7 @@ function wikiplugin_footnotearea_info()
 
 function wikiplugin_footnotearea($data, $params)
 {	global $footnotes;
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 
 	if (isset($params['sameasstyle']))
 		$smarty->assign('sameType',$params['sameasstyle']);
@@ -74,7 +74,7 @@ function wikiplugin_footnotearea($data, $params)
 
 function genFootnoteArea ($listName, $list){
 
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	if ($listName === '.def.')
 		$smarty->assign('listName','');                     // if default, dont include a class name
 	else

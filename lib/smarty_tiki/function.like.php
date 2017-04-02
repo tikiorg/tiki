@@ -20,7 +20,9 @@
  */
 function smarty_function_like($params, $smarty)
 {
-	global $prefs, $user, $smarty;
+	global $prefs, $user;
+
+	$smarty = TikiLib::lib('smarty');
 
 	// unregistered user, do nothing
 	if (empty($user) || $prefs['user_likes'] != 'y') {

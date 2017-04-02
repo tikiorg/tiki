@@ -8216,7 +8216,8 @@ class UsersLib extends TikiLib
 	 * @throws Exception
 	 */
 	function invite_tempuser($emails, $groups, $timeout, $prefix = 'guest', $path = 'index.php') {
-		global $smarty, $user, $prefs;
+		global $user, $prefs;
+		$smarty = TikiLib::lib('smarty');
 		include_once ('lib/webmail/tikimaillib.php');
 		$referer = Services_Utilities::noJsPath();
 

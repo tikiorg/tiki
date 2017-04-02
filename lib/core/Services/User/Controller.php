@@ -765,7 +765,8 @@ class Services_User_Controller
 			$foo = parse_url($_SERVER['REQUEST_URI']);
 			$machine = $tikilib->httpPrefix(true) . dirname($foo['path']);
 			$machine = preg_replace('!/$!', '', $machine); // just in case
-			global $smarty, $user;
+			global $user;
+			$smarty = TikiLib::lib('smarty');
 			$smarty->assign_by_ref('mail_machine', $machine);
 
 			$users = json_decode($input['items'], true);
@@ -815,7 +816,7 @@ class Services_User_Controller
 	}
 
 	function action_send_message($input) {
-		global $smarty, $user;
+		global $user;
 		$userlib = TikiLib::lib('user');
 		$referer = Services_Utilities::noJsPath();
 		//ensures a user was selected to send a message to.

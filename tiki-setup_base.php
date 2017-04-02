@@ -245,7 +245,6 @@ $access = TikiLib::lib('access');
 
 require_once ('lib/setup/absolute_urls.php');
 // Smarty needs session since 2.6.25
-global $smarty;
 $smarty = TikiLib::lib('smarty');
 
 // Define the special maxRecords global variable

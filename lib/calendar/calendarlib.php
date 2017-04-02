@@ -756,7 +756,8 @@ class CalendarLib extends TikiLib
      */
     function importCSV($fname, $calendarId)
 	{
-		global $user, $smarty;
+		global $user;
+		$smarty = TikiLib::lib('smarty');
 		$fields = false;
 		if ($fhandle = fopen($fname, 'r')) {
 			$fields = fgetcsv($fhandle, 1000);

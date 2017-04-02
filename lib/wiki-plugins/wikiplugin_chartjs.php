@@ -79,7 +79,6 @@ function wikiplugin_chartjs_info()
 
 function wikiplugin_chartjs($data, $params)
 {
-	global $smarty;
 
 	//set defaults
 	$plugininfo = wikiplugin_chartjs_info();

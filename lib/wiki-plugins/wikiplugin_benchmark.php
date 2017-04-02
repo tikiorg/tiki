@@ -43,7 +43,7 @@ function wikiplugin_benchmark_info()
 
 
 function wikiplugin_benchmark( $data, $params ){
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	$parserlib =TikiLib::lib('parser');
 
 	if (!isset($params['times']))

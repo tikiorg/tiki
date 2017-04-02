@@ -2534,7 +2534,7 @@ class FileGalLib extends TikiLib
 				$syntax = '%fileId%';		// for use in plugin edit popup
 			} else if ($params['filegals_manager'] === 'fgal_picker') {
 				$href = 'tiki-download_file.php?fileId=123&amp;display';	// dummy id as sefurl expects a (/d+) pattern
-				global $smarty; include_once('tiki-sefurl.php');
+				include_once('tiki-sefurl.php');
 				$href = filter_out_sefurl($href);
 				$syntax =  str_replace('123', '%fileId%', $href);
 			}
@@ -3242,7 +3242,7 @@ class FileGalLib extends TikiLib
 				$params['draft'] = false;
 			}
 
-			global $smarty;
+			$smarty = TikiLib::lib('smarty');
 			if ( ! $info = $this->get_file_info($params['fileId']) ) {
 				$smarty->assign('msg', tra('Incorrect param'));
 				$smarty->display('error.tpl');
@@ -3769,7 +3769,9 @@ class FileGalLib extends TikiLib
 
 	function handle_file_upload($fileKey, $file)
 	{
-		global $prefs, $user, $tiki_p_edit_gallery_file, $tiki_p_admin_file_galleries, $smarty;
+		global $prefs, $user, $tiki_p_edit_gallery_file, $tiki_p_admin_file_galleries;
+
+		$smarty = TikiLib::lib('smarty');
 
 		$savedir = $prefs['fgal_use_dir'];
 
