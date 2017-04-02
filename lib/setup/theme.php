@@ -140,6 +140,8 @@ if (!isset($prefs['site_favicon_enable']) || $prefs['site_favicon_enable'] === '
             $headerlib->add_link('icon', $favicon_path.'/favicon-32x32.png', '32x32', 'image/png');
         if (is_file($favicon_path.'/manifest.json'))
             $headerlib->add_link('manifest', $favicon_path.'/manifest.json');
+		if (is_file($favicon_path.'/favicon.ico'))
+			$headerlib->add_link('shortcut icon', $favicon_path.'/favicon.ico');
         if (is_file($favicon_path.'/safari-pinned-tab.svg'))
             $headerlib->add_link('mask-icon', $favicon_path.'/safari-pinned-tab.svg', '', '', '#5bbad5');
         if (is_file($favicon_path.'/browserconfig.xml'))
@@ -149,6 +151,7 @@ if (!isset($prefs['site_favicon_enable']) || $prefs['site_favicon_enable'] === '
         $headerlib->add_link('apple-touch-icon', 'themes/base_files/favicons/apple-touch-icon.png', '180x180');
         $headerlib->add_link('icon', 'themes/base_files/favicons/favicon-32x32.png', '32x32', 'image/png');
         $headerlib->add_link('manifest', 'themes/base_files/favicons/manifest.json');
+		$headerlib->add_link('shortcut icon', 'themes/base_files/favicons/favicon.ico');
         $headerlib->add_link('mask-icon', 'themes/base_files/favicons/safari-pinned-tab.svg', '', '', '#5bbad5');
         $headerlib->add_meta('msapplication-config', 'themes/base_files/favicons/browserconfig.xml');
     }

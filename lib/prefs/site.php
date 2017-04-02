@@ -81,6 +81,7 @@ function prefs_site_list()
 			'description' => tra('You may drop custom favicons into /themes/yourtheme/favicons, or use the default tiki icons.'),
 			'type' => 'flag',
 			'default' => 'y',
+			'help' => 'Favicon',
 		),
 		'site_terminal_active' => array(
 			'name' => tra('Site terminal'),
