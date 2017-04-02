@@ -2690,7 +2690,7 @@ class Comments extends TikiLib
 		} else {
 			$type = $objectType . ' comment'; // comment types are not used in tiki_objects yet but maybe in future
 		}
-		$pages = $this->get_pages($data);
+		$pages = TikiLib::lib('parser')->get_pages($data);
 		$linkhandle = "objectlink:$type:$threadId";
 		$this->clear_links($linkhandle);
 		foreach ($pages as $a_page) {

@@ -1348,7 +1348,7 @@ class WikiLib extends TikiLib
 		if ($listpages['cant']) {
 			foreach ($listpages['data'] as $from) {
 				$info = $tikilib->get_page_info($from['pageName']);
-				$pages = $tikilib->get_pages($info['data'], true);
+				$pages = TikiLib::lib('parser')->get_pages($info['data'], true);
 				foreach ($pages as $to => $types) {
 					$tikilib->replace_link($from['pageName'], $to, $types);
 					//echo '<br />FROM:'.$from['pageName']." TO: $to "; print_r($types);
