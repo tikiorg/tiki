@@ -1044,6 +1044,7 @@ CREATE TABLE `tiki_group_watches` (
 ) ENGINE=MyISAM;
 
 # Keep track of h5p content entities > Pending in Tiki: Add FileId
+DROP TABLE IF EXISTS `tiki_h5p_contents`;
 CREATE TABLE tiki_h5p_contents (
 	id           INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	file_id			 INT UNSIGNED NOT NULL,	# reference to the file gallery object in tiki_files table
@@ -1068,6 +1069,7 @@ CREATE TABLE tiki_h5p_contents (
 )	ENGINE = MyISAM;
 
 # Keep track of content dependencies
+DROP TABLE IF EXISTS `tiki_h5p_contents_libraries`;
 CREATE TABLE tiki_h5p_contents_libraries (
 	content_id      INT UNSIGNED      NOT NULL,
 	library_id      INT UNSIGNED      NOT NULL,
@@ -1078,6 +1080,7 @@ CREATE TABLE tiki_h5p_contents_libraries (
 )	ENGINE = MyISAM;
 
 # Keep track of h5p libraries
+DROP TABLE IF EXISTS `tiki_h5p_libraries`;
 CREATE TABLE tiki_h5p_libraries (
 	id               INT UNSIGNED  NOT NULL AUTO_INCREMENT,
 	created_at       TIMESTAMP     NULL,
@@ -1102,6 +1105,7 @@ CREATE TABLE tiki_h5p_libraries (
 )	ENGINE = MyISAM;
 
 # Keep track of h5p library dependencies
+DROP TABLE IF EXISTS `tiki_h5p_libraries_libraries`;
 CREATE TABLE tiki_h5p_libraries_libraries (
 	library_id          INT UNSIGNED NOT NULL,
 	required_library_id INT UNSIGNED NOT NULL,
@@ -1110,6 +1114,7 @@ CREATE TABLE tiki_h5p_libraries_libraries (
 )	ENGINE = MyISAM;
 
 # Keep track of h5p library translations
+DROP TABLE IF EXISTS `tiki_h5p_libraries_languages`;
 CREATE TABLE tiki_h5p_libraries_languages (
 	library_id    INT UNSIGNED NOT NULL,
 	language_code VARCHAR(31)  NOT NULL,
@@ -1118,6 +1123,7 @@ CREATE TABLE tiki_h5p_libraries_languages (
 )	ENGINE = MyISAM;
 
 # Keep track of temporary files uploaded in editor before saving content
+DROP TABLE IF EXISTS `tiki_h5p_tmpfiles`;
 CREATE TABLE tiki_h5p_tmpfiles (
 	id         INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	path       VARCHAR(255) NOT NULL,
@@ -1128,6 +1134,7 @@ CREATE TABLE tiki_h5p_tmpfiles (
 ) ENGINE = MyISAM;
 
 # Keep track of results (contents >-< users)
+DROP TABLE IF EXISTS `tiki_h5p_results`;
 CREATE TABLE tiki_h5p_results (
 	id         INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	content_id INT UNSIGNED NOT NULL,
@@ -1142,6 +1149,7 @@ CREATE TABLE tiki_h5p_results (
 )	ENGINE = MyISAM;
 
 # Cache table for h5p libraries so we can reuse the existing h5p code for caching
+DROP TABLE IF EXISTS `tiki_h5p_libraries_cachedassets`;
 CREATE TABLE tiki_h5p_libraries_cachedassets (
 	library_id INT UNSIGNED NOT NULL,
 	hash       VARCHAR(64)  NOT NULL,
@@ -3249,7 +3257,6 @@ CREATE TABLE `tiki_webservice_template` (
 ) ENGINE=MyISAM ;
 
 DROP TABLE IF EXISTS `tiki_groupalert`;
-
 CREATE TABLE `tiki_groupalert` (
   `groupName` varchar(255) NOT NULL default '',
   `objectType` varchar( 20 ) NOT NULL default '',
