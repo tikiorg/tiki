@@ -247,10 +247,9 @@ class RatingLib extends TikiDb_Bridge
 
 	function set_override($type, $objectId, $value)
 	{
-		global $attributelib;
 		$options = $this->override_array($type);
 
-		$attributelib->set_attribute($type, $objectId, $type.".rating.override", $options[$value - 1]);
+		TikiLib::lib('attribute')->set_attribute($type, $objectId, $type.".rating.override", $options[$value - 1]);
 	}
 
 	function get_override($type, $objectId)
