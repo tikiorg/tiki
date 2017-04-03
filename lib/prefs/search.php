@@ -81,7 +81,7 @@ function prefs_search_list()
 		),
 		'search_facet_default_amount' => array(
 			'name' => tra('Facet result count'),
-			'description' => tra('DDefault number of facet results to obtain.'),
+			'description' => tra('Default number of facet results to obtain.'),
 			'type' => 'text',
 			'size' => 8,
 			'filter' => 'digits',
