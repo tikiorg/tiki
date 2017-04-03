@@ -109,11 +109,11 @@
 		"symfony/process": "~2.6"
 	},
 	"require-dev": {
-		"mikey179/vfsStream": "1.1.0",
+		"mikey179/vfsStream": "^1",
 		"bafs/testify": "dev-master",
 		"phpunit/phpunit": "^5",
-		"phpunit/phpunit-selenium": ">=1.2",
-		"phpunit/dbunit": ">=1.2"
+		"phpunit/phpunit-selenium": "^3",
+		"phpunit/dbunit": "^2"
 	},
 	"extra": {
 		"patches-file": "../installer/composer-patches/composer-patches.json"
