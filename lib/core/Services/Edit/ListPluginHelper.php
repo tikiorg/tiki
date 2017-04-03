@@ -292,7 +292,36 @@ class Services_Edit_ListPluginHelper
 									],
 									'tablesorter' => [
 										'params' => [
-											// TODO
+											'server' => [
+												'type' => 'checkbox',
+											],
+											'sortable' => [
+												'type' => 'text',
+											],
+											'sortList' => [
+												'type' => 'text',
+											],
+											'tscolselect' => [
+												'type' => 'text',
+											],
+											'tsfilters' => [
+												'type' => 'text',
+											],
+											'tsfilteroptions' => [
+												'type' => 'text',
+											],
+											'tspaginate' => [
+												'type' => 'text',
+											],
+											'tsortcolumns' => [
+												'type' => 'text',
+											],
+											'tstotaloptions' => [
+												'type' => 'text',
+											],
+											'tstotals' => [
+												'type' => 'text',
+											],
 										],
 									],
 
@@ -359,7 +388,7 @@ class Services_Edit_ListPluginHelper
 					],
 				],
 			],
-			'wiki text' => [],	// allow wiki text within output and format plugins
+			'wiki text' => [],    // allow wiki text within output and format plugins
 		];
 	}
 }
