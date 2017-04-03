@@ -3510,7 +3510,7 @@ CREATE TABLE `tiki_discount`(
     KEY `code` (`code`)
 ) ENGINE=MyISAM;
 DROP TABLE IF EXISTS `tiki_translations_in_progress`;
-CREATE TABLE IF NOT EXISTS `tiki_translations_in_progress` (
+CREATE TABLE `tiki_translations_in_progress` (
    `page_id` int(14) NOT NULL,
    `language` char(2) NOT NULL,
    KEY `page_id` (`page_id`),
@@ -3715,7 +3715,7 @@ CREATE TABLE `tiki_acct_bankaccount` (
   `amountType` int(10) unsigned NOT NULL,
   `fieldNameAmountSign` varchar(63) NOT NULL,
   `SignPositive` varchar(7) NOT NULL,
-  `SignNegative` varchar(7) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `SignNegative` varchar(7) NOT NULL,
   PRIMARY KEY (`bankBookId`,`bankAccountId`)
 ) ENGINE=MyISAM;
 
