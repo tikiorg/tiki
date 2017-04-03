@@ -111,7 +111,14 @@
 	{if $comment.title neq '' && $comment.title neq 'Untitled' && (!isset($page) or $comment.title neq $page)}
 	<!-- <div class="title"> -->
 	{if isset($first) and $first eq 'y'}
-		<h2 class=" panel-title">{$comment.title|escape}</h2>
+	<h2 class=" panel-title">
+		<span>{$comment.title|escape}</span>
+		{if ($prefs.feature_sefurl eq 'y') }
+		<a class="heading-link" href="{$comments_parentId|sefurl:'forum post'}{if ($comment.threadId neq $comments_parentId)}#threadId{$comment.threadId}{/if}">{icon name="link"}</a>
+		{else}
+		<a class="heading-link" href="?tiki-view_forum_thread.php?forumId={$forumId}&comments_parentId={$comments_parentId}#threadId{$comment.threadId}">{icon name="link"}</a>
+		{/if}	
+	</h2>
 	{/if}
 
 	<!-- </div> -->
