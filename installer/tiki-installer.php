@@ -900,7 +900,13 @@ if (
 		)
 	) && isset($_POST['dbinfo'])
 ) {
-	if ( ! empty($_POST['name']) ) {
+	if ( ! empty($_POST['user']) && strlen($_POST['user']) > 16 ) {
+		$dbcon = false;
+		Feedback::error(tra('Invalid database user.'));
+	} else if ( empty($_POST['name']) ) {
+		$dbcon = false;
+		Feedback::error(tra('No database name specified'));
+	} else {
 		if ( isset( $_POST['force_utf8'] ) ) {
 			$client_charset = 'utf8';
 		} else {
@@ -940,9 +946,6 @@ if (
 			$installer = new Installer;
 			$installer->setServerType($db_tiki);
 		}
-	} else {
-		$dbcon = false;
-		Feedback::error(tra('No database name specified'));
 	}
 }
 // Mark that InnoDB is to be used, if selected
