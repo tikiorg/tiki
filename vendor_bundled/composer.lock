@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "22db0b44305b04ecda002e82f02bf550",
+    "content-hash": "1df65fc7e4bc65836ac8d8a092ba61c5",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -1309,17 +1309,17 @@
         },
         {
             "name": "michelf/php-smartypants",
-            "version": "1.8.0",
+            "version": "1.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/michelf/php-smartypants.git",
-                "reference": "d1b0848f26ff6e2260da2eb75ea9175d84c53878"
+                "reference": "47d17c90a4dfd0ccf1f87e25c65e6c8012415aad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/michelf/php-smartypants/michelf-php-smartypants-d1b0848f26ff6e2260da2eb75ea9175d84c53878-zip-96e294.zip",
-                "reference": "d1b0848f26ff6e2260da2eb75ea9175d84c53878",
-                "shasum": "3733a189ad7568c7a9622fbac7514789f5ac216b"
+                "url": "https://composer.tiki.org/dist/michelf/php-smartypants/michelf-php-smartypants-47d17c90a4dfd0ccf1f87e25c65e6c8012415aad-zip-502666.zip",
+                "reference": "47d17c90a4dfd0ccf1f87e25c65e6c8012415aad",
+                "shasum": "dcde779bcd9eeb7698bb956de31e59b7cbcd533a"
             },
             "require": {
                 "php": ">=5.3.0"
@@ -1355,7 +1355,7 @@
                 "typographer",
                 "typography"
             ],
-            "time": "2016-11-13T21:14:11+00:00"
+            "time": "2016-12-13T01:01:17+00:00"
         },
         {
             "name": "morteza/bootstrap-rtl",
@@ -2100,6 +2100,59 @@
             "time": "2015-01-25T04:39:26+00:00"
         },
         {
+            "name": "symfony/css-selector",
+            "version": "v3.2.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/css-selector.git",
+                "reference": "a48f13dc83c168f1253a5d2a5a4fb46c36244c4c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/a48f13dc83c168f1253a5d2a5a4fb46c36244c4c",
+                "reference": "a48f13dc83c168f1253a5d2a5a4fb46c36244c4c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\CssSelector\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jean-François Simon",
+                    "email": "jeanfrancois.simon@sensiolabs.com"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony CssSelector Component",
+            "homepage": "https://symfony.com",
+            "time": "2017-02-21T09:12:04+00:00"
+        },
+        {
             "name": "symfony/dependency-injection",
             "version": "v2.6.4",
             "target-dir": "Symfony/Component/DependencyInjection",
@@ -2314,31 +2367,39 @@
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
-            "version": "1.2.1",
-            "target-dir": "TijsVerkoyen/CssToInlineStyles",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tijsverkoyen/CssToInlineStyles.git",
-                "reference": "e53f25f6685d167f80b9d51b91b09aa70ea6c1c9"
+                "reference": "ab03919dfd85a74ae0372f8baf9f3c7d5c03b04b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/tijsverkoyen/css-to-inline-styles/tijsverkoyen-css-to-inline-styles-e53f25f6685d167f80b9d51b91b09aa70ea6c1c9-zip-cd3ab0.zip",
-                "reference": "e53f25f6685d167f80b9d51b91b09aa70ea6c1c9",
-                "shasum": "af9c5c27e4d8a6b123e4c53a555adf11a066b32c"
+                "url": "https://composer.tiki.org/dist/tijsverkoyen/css-to-inline-styles/tijsverkoyen-css-to-inline-styles-ab03919dfd85a74ae0372f8baf9f3c7d5c03b04b-zip-099bcd.zip",
+                "reference": "ab03919dfd85a74ae0372f8baf9f3c7d5c03b04b",
+                "shasum": "403a38bf5c244c5134da249a0d3896c91f7a4ef0"
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": "^5.5 || ^7",
+                "symfony/css-selector": "^2.7|~3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8|5.1.*"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
             "autoload": {
-                "psr-0": {
-                    "TijsVerkoyen\\CssToInlineStyles": ""
+                "psr-4": {
+                    "TijsVerkoyen\\CssToInlineStyles\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD"
+                "BSD-3-Clause"
             ],
             "authors": [
                 {
@@ -2349,7 +2410,7 @@
             ],
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
-            "time": "2013-02-09T17:48:44+00:00"
+            "time": "2016-09-20T12:50:39+00:00"
         },
         {
             "name": "twitter/bootstrap",
