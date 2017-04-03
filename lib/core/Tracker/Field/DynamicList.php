@@ -218,6 +218,9 @@ if( $("input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFi
 		// remote tracker and remote field
 		$trackerIdThere = $this->getOption('trackerId');
 		$definition = Tracker_Definition::get($trackerIdThere);
+		if( empty($definition) ) {
+			return tr('*** ERROR: No remote tracker selected for DynamicList Field %0 ***', $this->getConfiguration('fieldId'));
+		}
 		$listFieldIdThere = $this->getOption('listFieldIdThere');
 		$listFieldThere = $definition->getField($listFieldIdThere);
 		

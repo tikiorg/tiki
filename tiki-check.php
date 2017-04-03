@@ -1912,7 +1912,7 @@ if (!empty($sensitiveDataDetectedFiles)) {
 } else {
 	$tiki_security['Sensitive Data Exposure'] = array(
 		'fitness' => tra('safe'),
-		'message' => tra('Tiki did not detected temporary files in the db folder that may expose credentials or other sensitive information.')
+		'message' => tra('Tiki did not detect temporary files in the db folder that may expose credentials or other sensitive information.')
 	);
 }
 
