@@ -24,7 +24,7 @@ class Services_Edit_PluginController
 	{
 		Services_Exception_Disabled::check('feature_wiki');
 
-		$this->pluginList = TikiLib::lib('wiki')->list_plugins(true);
+		$this->pluginList = TikiLib::lib('wiki')->list_plugins(true, 'editwiki', false);
 	}
 
 	/**
