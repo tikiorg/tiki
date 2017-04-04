@@ -1118,7 +1118,7 @@ class WikiLib extends TikiLib
 		return $parent_pages;
 	}
 
-	public function list_plugins($with_help = false, $area_id = 'editwiki')
+	public function list_plugins($with_help = false, $area_id = 'editwiki', $onlyEnabled = true)
 	{
 		$parserlib = TikiLib::lib('parser');
 
@@ -1132,10 +1132,12 @@ class WikiLib extends TikiLib
 
 				$plugins = array();
 				foreach ($list as $name) {
-					$pinfo['help'] = $this->get_plugin_description($name, $enabled, $commonKey);
-					$pinfo['name'] = TikiLib::strtoupper($name);
+					$pinfo = [
+						'help' => $this->get_plugin_description($name, $enabled, $commonKey),
+						'name' => TikiLib::strtoupper($name),
+					];
 
-					if ( $enabled ) {
+					if (! $onlyEnabled || $enabled) {
 						$info = $parserlib->plugin_info($name);
 						$pinfo['title'] = $info['name'];
 						unset($info['name']);

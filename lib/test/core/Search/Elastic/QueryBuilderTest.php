@@ -80,7 +80,7 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 							),
 						),
 					),
-					"minimum_number_should_match" => 1,
+					"minimum_should_match" => 1,
 				),
 			), $query['query']
 		);
@@ -279,7 +279,7 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 							),
 						),
 					),
-					"minimum_number_should_match" => 1,
+					"minimum_should_match" => 1,
 				),
 			), $query['query']
 		);
@@ -327,7 +327,7 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 										),
 									),
 								),
-								"minimum_number_should_match" => 1,
+								"minimum_should_match" => 1,
 							),
 						),
 						array(
@@ -391,7 +391,7 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 							),
 						),
 					),
-					"minimum_number_should_match" => 1,
+					"minimum_should_match" => 1,
 				),
 			), $query['query']
 		);
@@ -467,7 +467,7 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 			array(
 				'more_like_this' => array(
 					'fields' => array('contents'),
-					'like_text' => 'hello world',
+					'like' => 'hello world',
 					'boost' => 1.0,
 				),
 			),
@@ -500,7 +500,7 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 						array(
 							'more_like_this' => array(
 								'fields' => array('contents'),
-								'like_text' => 'hello world',
+								'like' => 'hello world',
 								'boost' => 1.0,
 							),
 						),
@@ -615,7 +615,7 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 							),
 						),
 					),
-					"minimum_number_should_match" => 1
+					"minimum_should_match" => 1
 				),
 			), $query['query']
 		);

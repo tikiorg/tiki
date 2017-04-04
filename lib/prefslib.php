@@ -632,6 +632,8 @@ class PreferencesLib
 	{
 		$contents = array(
 			$info['preference'],
+			// also index the parts of the pref name individually, e.g. wikiplugin_plugin_name as wikiplugin plugin name
+			str_replace('_', ' ' , $info['preference']),
 			$info['name'],
 			isset($info['description']) ? $info['description'] : '',
 			isset($info['keywords']) ? $info['keywords'] : '',

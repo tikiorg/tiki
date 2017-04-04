@@ -98,12 +98,11 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 					);
 				} elseif ($entry instanceof Search_Type_Whole || $entry instanceof Search_Type_MultivaluePlain) {
 					return array(
-						"type" => "string",
-						"index" => "not_analyzed",
+						"type" => "keyword",
 						"fields" => array(
 							"sort" => array(
-								"type" => "string",
-								"analyzer" => "sortable",
+								"type" => "keyword",
+								"ignore_above" => 200,
 							),
 							"nsort" => array(
 								"type" => "float",
@@ -124,7 +123,6 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 				} elseif ($entry instanceof Search_Type_GeoPoint) {
 					return array(
 						"type" => "geo_point",
-						"index" => "not_analyzed",
 					);
 				} elseif ($entry instanceof Search_Type_DateTime) {
 					return array(
@@ -140,13 +138,13 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 					);
 				} else {
 					return array(
-						"type" => "string",
+						"type" => "text",
 						"term_vector" => "with_positions_offsets",
 						"fields" => array(
 							"sort" => array(
-								"type" => "string",
+								"type" => "text",
 								"analyzer" => "sortable",
-								"ignore_above" => 200,
+								"fielddata" => true,
 							),
 							"nsort" => array(
 								"type" => "float",
@@ -182,7 +180,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 				'analyzer' => [
 					'default' => [
 						'tokenizer' => $this->camelCase ? 'camel' : 'standard',
-						'filter' => ['standard', 'lowercase', 'asciifolding', 'tiki_stop', 'porterStem'],
+						'filter' => ['standard', 'lowercase', 'asciifolding', 'tiki_stop', 'porter_stem'],
 					],
 					'sortable' => [
 						'tokenizer' => 'keyword',
@@ -488,7 +486,9 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 			$mapping = reset($mapping);
 			$mapping = isset($mapping->mappings) ? $mapping->mappings : $mapping; // v2 vs v5
 			$mapping = reset($mapping);
-			return $mapping->$field->mapping->$field;
+			if( isset($mapping->$field->mapping->$field) ) {
+				return $mapping->$field->mapping->$field;
+			}
 		}
 		return new stdClass;
 	}
