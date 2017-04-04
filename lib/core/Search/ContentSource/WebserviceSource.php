@@ -185,7 +185,10 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 			return false;
 		}
 
-		$params = [];	// TODO get the params here somehow?
+		global $jitRequest;
+
+		$params = $jitRequest->params->array();
+
 		$response = $webservice->performRequest($params);
 		$template = $webservice->getTemplate($templateName);
 
