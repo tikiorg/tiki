@@ -87,6 +87,8 @@ class OIntegrate
 				return new OIntegrate_Converter_Indexer;
 			} elseif ( $to == 'html' ) {
 				return new OIntegrate_Converter_Indexer('html');
+			} elseif ( $to == 'tikiwiki' ) {
+				return new OIntegrate_Converter_Indexer('tikiwiki');
 			}
 			break;
 		}
@@ -551,7 +553,7 @@ class OIntegrate_Converter_Indexer implements OIntegrate_Converter
      */
     function convert( $content )
 	{
-		if ($this->format === 'html') {
+		if ($this->format === 'html' || $this->format === 'tikiwiki') {
 
 			if (! empty($_REQUEST['nt_name'])) {	// preview from admin/webservice page
 
@@ -594,14 +596,19 @@ class OIntegrate_Converter_Indexer implements OIntegrate_Converter
 				);
 				$output .= '</pre>';
 
-				$output .= '<h3>' . tr('Mapping') . '</h3>';
-				$output .= '<pre style="max-height: 20em; overflow: auto; white-space: pre-wrap">';
-				$output .= htmlentities(
-					json_encode($content['mapping'], JSON_PRETTY_PRINT),
+				if ($this->format === 'html') {
+					$output .= '<h3>' . tr('Mapping') . '</h3>';
+					$output .= '<pre style="max-height: 20em; overflow: auto; white-space: pre-wrap">';
+					$output .= htmlentities(
+						json_encode($content['mapping'], JSON_PRETTY_PRINT),
 						ENT_QUOTES,
 						'UTF-8'
-				);
-				$output .= '</pre>';
+					);
+					$output .= '</pre>';
+
+				} else {	// wiki mode from plugin
+					$output = "~np~{$output}~/np~";
+				}
 
 			}
 
