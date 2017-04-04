@@ -1,4 +1,4 @@
-* $Id$ *}
+{* $Id$ *}
 
 {title admpage="wiki" url='tiki-pagehistory.php?page='|cat:$page|escape}{tr}History:{/tr} {$page}{/title}
 
