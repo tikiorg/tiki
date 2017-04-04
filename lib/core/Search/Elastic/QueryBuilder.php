@@ -68,7 +68,7 @@ class Search_Elastic_QueryBuilder
 			return array(
 				'bool' => array(
 					'should' => $this->flatten($inner, 'should'),
-					"minimum_number_should_match" => 1,
+					"minimum_should_match" => 1,
 				),
 			);
 		} elseif ($node instanceof AndX) {
@@ -160,7 +160,7 @@ class Search_Elastic_QueryBuilder
 			return array(
 				'more_like_this' => array(
 					'fields' => array($this->getNodeField($node) ?: 'contents'),
-					'like_text' => $content,
+					'like' => $content,
 					'boost' => $node->getWeight(),
 				),
 			);
@@ -181,7 +181,7 @@ class Search_Elastic_QueryBuilder
 
 	private function flatten($list, $type)
 	{
-		// Only merge when alone, should queries contain the 'minimum_number_should_match' attribute
+		// Only merge when alone, should queries contain the 'minimum_should_match' attribute
 		$limit = ($type == 'should') ? 2 : 1;
 
 		$out = array();

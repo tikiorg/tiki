@@ -156,7 +156,6 @@ class Search_Elastic_Connection
 		$type = $this->simplifyType($type);
 		return $this->get("/$index/$type/_percolate", json_encode(array(
 			'doc' => $document,
-			'prefer_local' => false,
 		)));
 	}
 
@@ -309,7 +308,11 @@ class Search_Elastic_Connection
 	private function aliasExists($index)
 	{
 		try {
-			$this->get("/_alias/$index", "");
+			$response = $this->get("/_alias/$index", "");
+			$response = json_decode($response);
+			if( !empty($response->status) && $response->status == 404 ) {
+				return false;
+			}
 		} catch (Search_Elastic_Exception $e) {
 			return false;
 		}
@@ -339,6 +342,7 @@ class Search_Elastic_Connection
 				$client->setRawBody($data);
 			}
 			$client->setMethod(Zend\Http\Request::METHOD_GET);
+			$client->setHeaders(['Content-Type: application/json']);
 			$response = $client->send();
 			return $this->handleResponse($response);
 		} catch (Zend\Http\Exception\ExceptionInterface $e) {
@@ -352,6 +356,7 @@ class Search_Elastic_Connection
 			$client = $this->getClient($path);
 			$client->getRequest()->setMethod(Zend\Http\Request::METHOD_PUT);
 			$client->getRequest()->setContent($data);
+			$client->setHeaders(['Content-Type: application/json']);
 			$response = $client->send();
 
 			return $this->handleResponse($response);
@@ -366,6 +371,7 @@ class Search_Elastic_Connection
 			$client = $this->getClient($path);
 			$client->getRequest()->setMethod(Zend\Http\Request::METHOD_POST);
 			$client->getRequest()->setContent($data);
+			$client->setHeaders(['Content-Type: application/json']);
 			$response = $client->send();
 
 			return $this->handleResponse($response);
@@ -379,6 +385,7 @@ class Search_Elastic_Connection
 		try {
 			$client = $this->getClient($path);
 			$client->getRequest()->setMethod(Zend\Http\Request::METHOD_DELETE);
+			$client->setHeaders(['Content-Type: application/json']);
 			$response = $client->send();
 
 			return $this->handleResponse($response);
