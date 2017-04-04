@@ -116,6 +116,14 @@
 				{preference name=wikiplugin_bigbluebutton}
 			</div>
 		{/tab}
+		{tab name="{tr}XMPP{/tr}"}
+			<h2>{tr}XMPP{/tr}</h2>
+			{preference name=xmpp_feature}
+			<div class="adminoptionboxchild" id="xmpp_feature_childcontainer">
+				{preference name=xmpp_server_host}
+				{preference name=xmpp_server_http_bind}
+			</div>
+		{/tab}
 	{/tabset}
 	{include file='admin/include_apply_bottom.tpl'}
 </form>

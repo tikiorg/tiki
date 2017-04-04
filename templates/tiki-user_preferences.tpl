@@ -430,6 +430,17 @@
 				{/if}
 				<legend>{tr}My Account{/tr}</legend>
 				<div class="clearfix">
+					{if $prefs.xmpp_feature eq 'y'}
+						<div class="form-group">
+							<label class="control-label col-md-4" for="xmpp_password">
+								{tr}XMPP account password{/tr}
+							</label>
+							<div class="col-md-8">
+								<input type="password" name="xmpp_password" id="xmpp_password" value="{$user_prefs.xmpp_password}">
+							</div>
+						</div>
+					{/if}
+
 					{if $prefs.feature_wiki eq 'y'}
 						<div class="checkbox col-md-8 col-md-push-4">
 							<label>

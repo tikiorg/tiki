@@ -67,6 +67,7 @@
 		<service id="tiki.controller.user" class="Services_User_Controller"/>
 		<service id="tiki.controller.user_conditions" class="Services_User_ConditionsController"/>
 		<service id="tiki.controller.vimeo" class="Services_File_VimeoController"/>
+		<service id="tiki.controller.xmpp" class="Services_Xmpp_Controller"/>
 		<service id="tiki.controller.wiki" class="Services_Wiki_Controller"/>
 		<service id="tiki.controller.wiki_structure" class="Services_Wiki_StructureController"/>
 		<service id="tiki.controller.workspace" class="Services_Workspace_Controller"/>

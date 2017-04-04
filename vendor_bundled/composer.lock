@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "42be071905b43a22fd5be60d00572a92",
+    "content-hash": "58f3e1eb0c59f61d6ac9860b4d26d489",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -190,6 +190,56 @@
                 "widget"
             ],
             "time": "2017-03-29T09:26:17+00:00"
+        },
+        {
+            "name": "candy-chat/xmpp-prebind-php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/candy-chat/xmpp-prebind-php.git",
+                "reference": "76f738299eaa26625abe6c2a7ec95465c7d92985"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/candy-chat/xmpp-prebind-php/zipball/76f738299eaa26625abe6c2a7ec95465c7d92985",
+                "reference": "76f738299eaa26625abe6c2a7ec95465c7d92985",
+                "shasum": ""
+            },
+            "require": {
+                "lib-libxml": "*",
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "piotr",
+                    "email": "hello@piotr.cz"
+                },
+                {
+                    "name": "Michael Weibel"
+                },
+                {
+                    "name": "Alex Knol",
+                    "email": "alex@cobrowser.net"
+                }
+            ],
+            "description": "This class is for prebinding a XMPP Session with PHP.",
+            "homepage": "http://jolicode.com",
+            "keywords": [
+                "php",
+                "prebind",
+                "xmpp"
+            ],
+            "time": "2015-02-26 17:32:01"
         },
         {
             "name": "chartjs/Chart.js",
@@ -848,6 +898,35 @@
                 "quiz"
             ],
             "time": "2017-03-06T09:07:11+00:00"
+        },
+        {
+            "name": "jcbrand/converse.js",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jcbrand/converse.js.git",
+                "reference": "06668d8733a463ff621ae82a7c05270fb98d7d2e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jcbrand/converse.js/zipball/06668d8733a463ff621ae82a7c05270fb98d7d2e",
+                "reference": "06668d8733a463ff621ae82a7c05270fb98d7d2e",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MPL-2.0"
+            ],
+            "description": "Browser based XMPP instant messaging client",
+            "homepage": "http://conversejs.org/",
+            "keywords": [
+                "chat",
+                "messaging",
+                "presence",
+                "xmpp"
+            ],
+            "time": "2017-03-05T10:39:15+00:00"
         },
         {
             "name": "jquery/jquery-s5",
@@ -5952,6 +6031,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "candy-chat/xmpp-prebind-php": 20,
         "zendframework/zendsearch": 5,
         "bafs/testify": 20
     },

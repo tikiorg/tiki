@@ -331,6 +331,9 @@
 			<file>%kernel.root_dir%/lib/filegals/vimeolib.php</file>
 			<argument type="service" id="tiki.lib.oauth"/>
 		</service>
+		<service id="tiki.lib.xmpp" class="XMPPLib">
+			<file>%kernel.root_dir%/lib/xmpp/xmpplib.php</file>
+		</service>
 		<service id="tiki.lib.wiki" class="WikiLib">
 			<file>%kernel.root_dir%/lib/wiki/wikilib.php</file>
 		</service>
