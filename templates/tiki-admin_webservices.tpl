@@ -181,18 +181,30 @@
 									<td>
 										<input type="submit" class="btn btn-default btn-sm" name="preview" value="{$template->name|escape}"/>
 									</td>
+									<td>
+										<a class="btn btn-link" role="button" data-toggle="collapse" href="#template_{$template->name|escape}"
+												aria-expanded="false" aria-controls="template_{$template->name|escape}" title="{tr}Toggle template source{/tr}">
+											{icon name='caret-down'}
+										</a>
+									</td>
 								</tr>
 								<tr>
-									<td colspan="4">
-										<pre style="max-height: 30em; overflow: auto; white-space: pre-wrap">{$template->content|escape}</pre>
+									<td colspan="5">
+										<pre style="max-height: 30em; overflow: auto; white-space: pre-wrap" id="template_{$template->name|escape}" class="collapse">
+											{$template->content|escape}</pre>
 									</td>
 								</tr>
 								{if $preview eq $template->name}
 									<tr>
-										<td colspan="4">{$preview_output}</td>
+										<td colspan="5">{$preview_output}</td>
 									</tr>
 								{/if}
 							{/foreach}
+							<tr>
+								<td colspan="5">
+									<hr>
+								</td>
+							</tr>
 							<tr>
 								<td style="padding: 0 .5em">
 									<input type="text" name="nt_name" value="{$nt_name|escape}" class="form-control"/></td>
@@ -207,7 +219,7 @@
 										<option value="index"{if $nt_engine eq 'index'} selected="selected"{/if}>Index</option>
 									</select>
 								</td>
-								<td style="padding: 0 .5em" colspan="2">
+								<td style="padding: 0 .5em">
 									<select id="nt_output" name="nt_output" class="form-control">
 										<option value=""></option>
 										<option value="html" {if $nt_output eq 'html'} selected="selected"{/if}>HTML</option>
@@ -218,6 +230,7 @@
 										</option>
 									</select>
 								</td>
+								<td colspan="2"></td>
 							</tr>
 							<tr>
 								<td colspan="4">
