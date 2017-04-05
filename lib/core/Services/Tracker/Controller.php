@@ -556,13 +556,19 @@ class Services_Tracker_Controller
 		);
 	}
 
+	/**
+	 * @param JitFilter $input
+	 * @return mixed
+	 * @throws Services_Exception_Denied
+	 * @throws Services_Exception_NotFound
+	 */
 	function action_get_item_inputs($input)
 	{
 		$trackerId = $input->trackerId->int();
 		$trackerName = $input->trackerName->text();
 		$itemId = $input->itemId->int();
 		$byName = $input->byName->bool();
-		$defaults = $input->defaults->array();
+		$defaults = $input->asArray('defaults');
 
 		$this->trackerNameAndId($trackerId, $trackerName);
 
@@ -1044,6 +1050,11 @@ class Services_Tracker_Controller
 	 * Links wildcard ItemLink entries to the base tracker by cloning wildcard items
 	 * and removes unselected ItemLink entries that were already linked before.
 	 * Used by ItemLink update table button to refresh list of associated entries.
+	 *
+	 * @param JitFilter $input
+	 * @return array|string
+	 * @throws Services_Exception_Denied
+	 * @throws Services_Exception_NotFound
 	 */
 	function action_link_items($input)
 	{
@@ -1111,11 +1122,11 @@ class Services_Tracker_Controller
 			$this->utilities->removeItemAndReferences($definition, $itemObject, $uncascaded, '');
 		}
 
-		if( $trackerlistParams = $input->trackerlistParams->array() ) {
+		if( $trackerlistParams = $input->asArray('trackerlistParams') ) {
 			include_once 'lib/smarty_tiki/block.wikiplugin.php';
 			$trackerlistParams['_name'] = 'trackerlist';
 			$trackerlistParams['checkbox'] = preg_replace('#/[\d,]*$#', '/'.implode(',', $linkedItemIds), $trackerlistParams['checkbox']);
-			return smarty_block_wikiplugin($trackerlistParams, '').TikiLib::lib('header')->output_js();
+			return smarty_block_wikiplugin($trackerlistParams, '', TikiLib::lib('smarty')).TikiLib::lib('header')->output_js();
 		} else {
 			return array(
 				'status' => 'ok'

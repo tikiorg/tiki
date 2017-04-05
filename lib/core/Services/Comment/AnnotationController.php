@@ -55,7 +55,7 @@ class Services_Comment_AnnotationController
 
 		$text = $params->text->wikicontent();
 		$quote = $params->quote->text();
-		$ranges = $params->ranges->asArray();
+		$ranges = $params->asArray('ranges');
 		$identifier = urldecode($params->uri->url());	// not really the uri but object-type:object-id identifier
 		list($objectType, $objectId) = explode(':', $identifier, 2);
 
@@ -113,7 +113,7 @@ class Services_Comment_AnnotationController
 		$threadId = $input->threadId->int();
 		$params = new jitFilter(json_decode($input->json->none(), true));
 
-		$ranges = $params->ranges->asArray();
+		$ranges = $params->asArray('ranges');
 		$text = $params->text->wikicontent();
 		$quote = $params->quote->text();
 

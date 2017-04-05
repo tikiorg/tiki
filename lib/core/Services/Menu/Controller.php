@@ -100,7 +100,13 @@ class Services_Menu_Controller
 			'optionCount' => $channels["cant"],
 		);
 	}
-	
+
+	/**
+	 * @param JitFilter $input
+	 * @return array
+	 * @throws Services_Exception_Denied
+	 * @throws Services_Exception_MissingValue
+	 */
 	function action_manage_menu_option ($input) //TODO finish, not used yet
 	{
 		//check permissions
@@ -173,7 +179,7 @@ class Services_Menu_Controller
 			$position = $input->position->int();
 			$section = $input->section->text();
 			$perm = $input->perm->text();
-			$groupname = $input->groupname->array();
+			$groupname = $input->asArray('groupname');
 			$groupname = implode(',', $groupname);
 			$level = $input->userlevel->text();
 			$icon = $input->icon->text();

@@ -2325,6 +2325,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'help' => 'Advanced+Wiki+Syntax+usage+examples',
 			'default' => 'n',
+			'keywords' => 'arg var vars',
 		),
 		'feature_show_stay_in_ssl_mode' => array(
 			'name' => tra('Users can choose to stay in SSL mode after an HTTPS login'),

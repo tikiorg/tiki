@@ -33,7 +33,7 @@ class Services_Report_Controller
 	function action_preview($input)
 	{
 		echo Report_Builder::load($input->type->string())
-			->setValuesFromRequest($input->value->array())
+			->setValuesFromRequest($input->value->asArray())
 			->outputSheet();
 		exit;
 	}

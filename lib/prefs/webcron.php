@@ -23,6 +23,7 @@ function prefs_webcron_list()
 				'js' => tra('Adding Javascript that calls Web Cron'),
 				'both' => tra('URL and Javascript'),
 			),
+			'default' => 'both',
 		),
 		'webcron_run_interval' => array(
 			'name' => tra('Run interval (seconds)'),

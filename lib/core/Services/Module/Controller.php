@@ -8,6 +8,10 @@
 class Services_Module_Controller
 {
 
+	/**
+	 * @param JitFilter $input
+	 * @return array
+	 */
 	function action_execute($input)
 	{
 		$modlib = TikiLib::lib('mod');
@@ -15,7 +19,7 @@ class Services_Module_Controller
 
 		$modname = $input->module->text();
 		if ($modname) {
-			$params = $input->isArray('params') ? $input->params->asArray() : array();
+			$params = $input->isArray('params') ? $input->asArray('params') : array();
 
 			$moduleId = $input->moduleId->int();
 
