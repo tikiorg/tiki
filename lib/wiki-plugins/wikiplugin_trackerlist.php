@@ -1786,7 +1786,16 @@ function wikiplugin_trackerlist($data, $params)
 				$filtervalue = array($filtervalue);
 			}
 			$urlquery['filtervalue'] = is_array($filtervalue) ? implode(':', $filtervalue) : $filtervalue;
-			$urlquery['exactvalue'] = is_array($exactvalue) ? implode(':', $exactvalue) : $exactvalue;
+			if( is_array($exactvalue) ) {
+				$urlquery['exactvalue'] = implode(':', array_map(
+					function($ev){
+						return is_array($ev) ?
+							key($ev).reset($ev)
+							: $ev;
+					}, $exactvalue));
+			} else {
+				$urlquery['exactvalue'] = $exactvalue;
+			}
 			$urlquery['trackerId'] = $trackerId;
 			$smarty->assign('urlquery', $urlquery);
 		} else {

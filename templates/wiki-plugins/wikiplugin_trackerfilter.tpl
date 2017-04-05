@@ -73,6 +73,12 @@
 								{/if}
 							{/if}
 							{trackerinput field=$filter.field inForm="y"}
+	{*------range *}
+						{elseif $filter.format eq 'range'}
+							{tr}From:{/tr}&nbsp;
+							{trackerinput field=$filter.opts.from inForm="y"}
+							{tr}To:{/tr}&nbsp;
+							{trackerinput field=$filter.opts.to inForm="y"}
 	{*------text *}
 						{elseif $filter.format eq 't' or $filter.format eq 'T' or $filter.format eq 'i'}
 							{if $filter.format eq 'i'}
