@@ -185,7 +185,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		if (!empty(parent::$s['sorts']['sortlist'])) {
 			$mo[] = 'sortList : [[' . parent::$s['sorts']['sortlist']['col'] . ',' . parent::$s['sorts']['sortlist']['dir']. ']]';
 		} elseif (parent::$sorts && parent::$sortcol) {
-			$sl = '';
+			$sl = [];
 			$i = 0;
 			foreach (parent::$s['columns'] as $col => $info) {
 				$info = !empty($info['sort']) ? $info['sort'] : [];
