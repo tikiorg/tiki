@@ -127,18 +127,6 @@ class TikiLib extends TikiDb_Bridge
 		$this->now = time();
 	}
 
-	/**
-	 * @param $data
-	 * @param $withReltype
-	 * @return array
-	 */
-	function get_pages($data, $withReltype = false)
-	{
-		//to make migration easier
-		$parserlib = TikiLib::lib('parser');
-		return $parserlib->get_pages($data, $withReltype);
-	}
-
 	function allocate_extra($type, $callback)
 	{
 		global $prefs;
@@ -3961,6 +3949,7 @@ class TikiLib extends TikiDb_Bridge
 	function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $hash=null, $wysiwyg=NULL, $wiki_authors_style='', $minor=0, $created='')
 	{
 		global $prefs, $tracer;
+		$parserlib = TikiLib::lib('parser');
 
         $tracer->trace('tikilib.create_page', "** invoked");
 
@@ -3977,7 +3966,7 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 		// Collect pages before modifying data
-		$pointedPages = $this->get_pages($data, true);
+		$pointedPages = $parserlib->get_pages($data, true);
 		$this->check_alias($data, $name);
 		if (!isset($_SERVER["SERVER_NAME"])) {
 			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
@@ -3990,7 +3979,6 @@ class TikiLib extends TikiDb_Bridge
         }
 
         $tracer->trace('tikilib.create_page', "** TikiLib::lib...");
-        $parserlib = TikiLib::lib('parser');
         $tracer->trace('tikilib.create_page', "** invoking process_save_plugins, \$parserlib=".get_class($parserlib));
 		$data = $parserlib->process_save_plugins(
 			$data,
@@ -4405,12 +4393,13 @@ class TikiLib extends TikiDb_Bridge
 	{
 		global $prefs;
 		$histlib = TikiLib::lib('hist');
+		$parserlib = TikiLib::lib('parser');
 
 		if (!$edit_user) $edit_user = 'anonymous';
 
 		$this->invalidate_cache($pageName);
 		// Collect pages before modifying edit_data (see update of links below)
-		$pages = $this->get_pages($edit_data, true);
+		$pages = $parserlib->get_pages($edit_data, true);
 		$this->check_alias($edit_data, $pageName);
 		if (!$this->page_exists($pageName))
 			return false;
@@ -4446,7 +4435,6 @@ class TikiLib extends TikiDb_Bridge
 			$html = 1;
 		}
 
-		$parserlib = TikiLib::lib('parser');
 		$edit_data = $parserlib->process_save_plugins(
 			$edit_data,
 			array(
@@ -6513,7 +6501,8 @@ JS;
 
 	function check_alias($edit, $page) {
 		$smarty = TikiLib::lib('smarty');
-		foreach ($this->get_pages($edit, true) as $pointedPage => $types) {
+		$parserlib = TikiLib::lib('parser');
+		foreach ($parserlib->get_pages($edit, true) as $pointedPage => $types) {
 			if (isset($types[0]) && $types[0] == 'alias') {
 				$alias = $this->table('tiki_object_relations')->fetchColumn('source_itemId', array('target_itemId' => $pointedPage));
 				if(($key = array_search($page, $alias)) !== false) { unset($alias[$key]); }
