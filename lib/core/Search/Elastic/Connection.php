@@ -8,6 +8,7 @@
 class Search_Elastic_Connection
 {
 	private $dsn;
+	private $version;
 	private $dirty = array();
 
 	private $indices = array();
@@ -17,6 +18,7 @@ class Search_Elastic_Connection
 	function __construct($dsn)
 	{
 		$this->dsn = rtrim($dsn, '/');
+		$this->version = null;
 	}
 
 	function __destruct()
@@ -62,9 +64,17 @@ class Search_Elastic_Connection
 	 * @return float
 	 */
 	function getVersion() {
-		$status = $this->getStatus();
-
-		return (float) $status->version->number;
+		if( $this->version === null ) {
+			$status = $this->getStatus();
+			
+			if( !empty($status->version->number) ) {
+				$this->version = (float) $status->version->number;
+			} else {
+				$this->version = 0;
+			}
+		}
+		
+		return $this->version;
 	}
 
 	function getIndexStatus($index = '')

@@ -18,5 +18,19 @@ class Search_Elastic_ProtocolTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(200, $status->status);
 	}
+
+  function testObtainVersion()
+  {
+    $connection = new Search_Elastic_Connection('http://localhost:9200');
+    $status = $connection->getStatus();
+
+    if (! $status->ok) {
+      $this->markTestSkipped('Elasticsearch needs to be available on localhost:9200 for the test to run.');
+    }
+
+    $version = $connection->getVersion();
+
+    $this->assertGreaterThan(0, $version);
+  }
 }
 

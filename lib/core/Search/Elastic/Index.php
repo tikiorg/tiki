@@ -98,11 +98,16 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 					);
 				} elseif ($entry instanceof Search_Type_Whole || $entry instanceof Search_Type_MultivaluePlain) {
 					return array(
-						"type" => "keyword",
+						"type" => $this->connection->getVersion() >= 5 ? "keyword" : "string",
+						"index" => $this->connection->getVersion() >= 5 ? true : "not_analyzed",
 						"fields" => array(
-							"sort" => array(
+							"sort" => $this->connection->getVersion() >= 5 ?
+							array(
 								"type" => "keyword",
 								"ignore_above" => 200,
+							) : array(
+								"type" => "string",
+								"analyzer" => "sortable",
 							),
 							"nsort" => array(
 								"type" => "float",
@@ -123,6 +128,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 				} elseif ($entry instanceof Search_Type_GeoPoint) {
 					return array(
 						"type" => "geo_point",
+						"index" => $this->connection->getVersion() >= 5 ? true : "not_analyzed",
 					);
 				} elseif ($entry instanceof Search_Type_DateTime) {
 					return array(
@@ -138,13 +144,17 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 					);
 				} else {
 					return array(
-						"type" => "text",
+						"type" => $this->connection->getVersion() >= 5 ? "text" : "string",
 						"term_vector" => "with_positions_offsets",
 						"fields" => array(
-							"sort" => array(
+							"sort" => $this->connection->getVersion() >= 5 ?
+							array(
 								"type" => "text",
 								"analyzer" => "sortable",
 								"fielddata" => true,
+							) : array(
+								"type" => "string",
+								"analyzer" => "sortable",
 							),
 							"nsort" => array(
 								"type" => "float",
@@ -180,7 +190,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 				'analyzer' => [
 					'default' => [
 						'tokenizer' => $this->camelCase ? 'camel' : 'standard',
-						'filter' => ['standard', 'lowercase', 'asciifolding', 'tiki_stop', 'porter_stem'],
+						'filter' => ['standard', 'lowercase', 'asciifolding', 'tiki_stop', $this->connection->getVersion() >= 5 ? 'porter_stem' : 'porterStem'],
 					],
 					'sortable' => [
 						'tokenizer' => 'keyword',
