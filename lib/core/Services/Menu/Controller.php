@@ -173,7 +173,7 @@ class Services_Menu_Controller
 			$position = $input->position->int();
 			$section = $input->section->text();
 			$perm = $input->perm->text();
-			$groupname = $input->groupname->array();
+			$groupname = $input->groupname->asArray();
 			$groupname = implode(',', $groupname);
 			$level = $input->userlevel->text();
 			$icon = $input->icon->text();

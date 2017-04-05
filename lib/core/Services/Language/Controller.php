@@ -168,8 +168,8 @@ class Services_Language_Controller
 			$language = $input->language->text();
 
 			//get strings and translations
-			$from = $input->from->array();
-			$to = $input->to->array();
+			$from = $input->from->asArray();
+			$to = $input->to->asArray();
 
 			if(count($from) > 1) {
 				//prepare data

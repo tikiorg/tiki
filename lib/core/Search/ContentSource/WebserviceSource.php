@@ -187,7 +187,7 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 
 		global $jitRequest;
 
-		$params = $jitRequest->params->array();
+		$params = $jitRequest->params->asArray();
 
 		$response = $webservice->performRequest($params);
 		$template = $webservice->getTemplate($templateName);

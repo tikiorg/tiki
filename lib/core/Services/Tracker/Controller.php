@@ -562,7 +562,7 @@ class Services_Tracker_Controller
 		$trackerName = $input->trackerName->text();
 		$itemId = $input->itemId->int();
 		$byName = $input->byName->bool();
-		$defaults = $input->defaults->array();
+		$defaults = $input->defaults->asArray();
 
 		$this->trackerNameAndId($trackerId, $trackerName);
 
@@ -1111,7 +1111,7 @@ class Services_Tracker_Controller
 			$this->utilities->removeItemAndReferences($definition, $itemObject, $uncascaded, '');
 		}
 
-		if( $trackerlistParams = $input->trackerlistParams->array() ) {
+		if( $trackerlistParams = $input->trackerlistParams->asArray() ) {
 			include_once 'lib/smarty_tiki/block.wikiplugin.php';
 			$trackerlistParams['_name'] = 'trackerlist';
 			$trackerlistParams['checkbox'] = preg_replace('#/[\d,]*$#', '/'.implode(',', $linkedItemIds), $trackerlistParams['checkbox']);

@@ -12,8 +12,8 @@ class Services_Rating_Controller
 		$type = $input->type->text();
 		$id = $input->id->id();
 
-		$rating_value = $input->rating_value->array();
-		$rating_prev = $input->rating_prev->array();
+		$rating_value = $input->rating_value->asArray();
+		$rating_prev = $input->rating_prev->asArray();
 
 		$_REQUEST['rating_value'] = $rating_value;
 		$_REQUEST['rating_prev'] = $rating_prev;

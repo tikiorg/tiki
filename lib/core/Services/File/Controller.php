@@ -40,7 +40,7 @@ class Services_File_Controller
 
 	function action_upload($input)
 	{
-		if ($input->files->array()) {
+		if ($input->files->asArray()) {
 			return;
 		}
 
