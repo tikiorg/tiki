@@ -5562,14 +5562,13 @@ class TikiLib extends TikiDb_Bridge
 	function return_bytes( $val )
 	{
 		$val = trim($val);
-		$last = strtolower($val{strlen($val)-1});
-		switch ( $last ) {
-			// The 'G' modifier is available since PHP 5.1.0
-			case 'g': $val *= 1024;
-			case 'm': $val *= 1024;
-			case 'k': $val *= 1024;
+		$bytes = (int) $val;
+		$lastCharacter = strtolower($val{strlen($val)-1});
+		$units = array('k' => 1, 'm' => 2, 'g' => 3);
+		if (array_key_exists($lastCharacter, $units)) {
+			$bytes = $bytes * (1024 ** $units[$lastCharacter]);
 		}
-		return $val;
+		return $bytes;
 	}
 
 	/**
