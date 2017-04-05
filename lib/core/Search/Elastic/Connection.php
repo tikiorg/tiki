@@ -149,12 +149,20 @@ class Search_Elastic_Connection
 
 	function storeQuery($index, $name, $query)
 	{
-		return $this->rawIndex($index, '.percolator', $name, $query);
+		if( $this->getVersion() >= 5 ) {
+			return $this->rawIndex($index, 'percolator', $name, $query);
+		} else {
+			return $this->rawIndex($index, '.percolator', $name, $query);
+		}
 	}
 
 	function unstoreQuery($index, $name)
 	{
-		return $this->delete("/$index/.percolator/$name");
+		if( $this->getVersion() >= 5 ) {
+			return $this->delete("/$index/percolator/$name");
+		} else {
+			return $this->delete("/$index/.percolator/$name");
+		}
 	}
 
 	function percolate($index, $type, $document)
@@ -164,9 +172,27 @@ class Search_Elastic_Connection
 		}
 
 		$type = $this->simplifyType($type);
-		return $this->get("/$index/$type/_percolate", json_encode(array(
-			'doc' => $document,
-		)));
+		if( $this->getVersion() >= 5 ) {
+			$result = $this->search($index, [
+				'query' => [
+					'percolate' => [
+						'field' => 'query',
+						'document_type' => $type,
+						'document' => $document
+					],
+				],
+			]);
+			return array_map(function ($item) {
+				return $item->_id;
+			}, $result->hits->hits);
+		} else {
+			$result = $this->get("/$index/$type/_percolate", json_encode(array(
+				'doc' => $document,
+			)));
+			return array_map(function ($item) {
+				return $item->_id;
+			}, $result->matches);
+		}
 	}
 
 	function index($index, $type, $id, array $data)
@@ -341,6 +367,16 @@ class Search_Elastic_Connection
 			);
 		} catch (Search_Elastic_Exception $e) {
 			// Index already exists: ignore
+		}
+
+		if( $this->getVersion() >= 5 ) {
+			$this->put("/$index/percolator/_mapping", json_encode([
+				'properties' => [
+					'query' => [
+						'type' => 'percolator'
+					],
+				],
+			]));
 		}
 	}
 
