@@ -1433,10 +1433,10 @@ class UsersLib extends TikiLib
 	 */
 	function disable_tiki_auth($user)
 	{
-		global $tiki, $prefs, $logslib;
+		global $tiki, $prefs;
 
 		if ($prefs['auth_ldap_debug'] == 'y') {
-			$logslib->add_log('ldap', 'UserLib::disable_tiki_auth()');
+			TikiLib::lib('logs')->add_log('ldap', 'UserLib::disable_tiki_auth()');
 		}
 		$query = 'update `users_users` set `hash`=? where binary `login` = ?';
 		$result = $this->query($query, array('', $user));
@@ -1534,9 +1534,9 @@ class UsersLib extends TikiLib
 	 */
 	public function ldap_sync_all_groups()
 	{
-		global $prefs, $logslib;
+		global $prefs;
 		if ($prefs['auth_ldap_debug'] == 'y') {
-			$logslib->add_log('ldap', 'UsersLib::ldap_sync_all_groups()');
+			TikiLib::lib('logs')->add_log('ldap', 'UsersLib::ldap_sync_all_groups()');
 		}
 
 		if ($prefs['syncGroupsWithDirectory'] != 'y') {
@@ -1786,10 +1786,9 @@ class UsersLib extends TikiLib
 	function _ldap_sync_user_and_groups($user,$pass)
 	{
 		global $prefs;
-		global $logslib;
 
 		if ($prefs['auth_ldap_debug'] == 'y') {
-			$logslib->add_log('ldap', 'UsersLib::_ldap_sync_user_and_groups()');
+			TikiLib::lib('logs')->add_log('ldap', 'UsersLib::_ldap_sync_user_and_groups()');
 		}
 
 		$ret = true;
@@ -1951,10 +1950,9 @@ class UsersLib extends TikiLib
 	{
 		global $prefs;
 		global $tikilib;
-		global $logslib;
 
 		if ($prefs['auth_ldap_debug'] == 'y') {
-			$logslib->add_log('ldap', 'UsersLib::_ldap_sync_and_update_lastlogin()');
+			TikiLib::lib('logs')->add_log('ldap', 'UsersLib::_ldap_sync_and_update_lastlogin()');
 		}
 
 		$ret = $this->update_lastlogin($user);
