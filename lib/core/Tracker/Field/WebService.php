@@ -187,13 +187,18 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 				$thisField['value'] = json_encode($response->data);
 
 				if ($thisField['value'] != $oldValue) {
-					$itemId = TikiLib::lib('trk')->replace_item(
-						$definition->getConfiguration('trackerId'),
-						empty($this->getItemId()) ? $_REQUEST['itemId'] : $this->getItemId(),
-						['data' => [$thisField]]
-					);
+					if (strlen($thisField['value']) < 65535) {	// Limit to size of TEXT field
+						$itemId = TikiLib::lib('trk')->replace_item(
+							$definition->getConfiguration('trackerId'),
+							empty($this->getItemId()) ? $_REQUEST['itemId'] : $this->getItemId(),
+							['data' => [$thisField]]
+						);
+						$err = '';
+					} else {
+						$err = tr(' (data too long to store)');
+					}
 					if (!$itemId) {
-						Feedback::error(tr('Error updating Webservice field %0', $this->getConfiguration('permName')),
+						Feedback::error(tr('Error updating Webservice field %0' . $err, $this->getConfiguration('permName')),
 							'session');
 						// try and restore previous data
 						$response->data = json_decode($this->getValue());
