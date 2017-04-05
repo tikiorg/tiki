@@ -7,13 +7,17 @@
 
 class Services_Rating_Controller
 {
+	/**
+	 * @param JitFilter $input
+	 * @return array
+	 */
 	function action_vote($input)
 	{
 		$type = $input->type->text();
 		$id = $input->id->id();
 
-		$rating_value = $input->rating_value->asArray();
-		$rating_prev = $input->rating_prev->asArray();
+		$rating_value = $input->asArray('rating_value');
+		$rating_prev = $input->asArray('rating_prev');
 
 		$_REQUEST['rating_value'] = $rating_value;
 		$_REQUEST['rating_prev'] = $rating_prev;

@@ -61,7 +61,7 @@ class Services_User_Controller
 		$name = $input->name->text();
 		$pass = $input->pass->text();
 		$passAgain = $input->passAgain->text();
-		$captcha = $input->captcha->asArray();
+		$captcha = $input->asArray('captcha');
 		$antibotcode = $input->antibotcode->text();
 		$email = $input->email->text();
 

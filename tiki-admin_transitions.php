@@ -36,7 +36,7 @@ switch( $jitRequest->action->alpha() ) {
 
 		if ( $transition_mode == 'category' ) {
 			$jitPost->replaceFilter('cat_categories', 'int');
-			if ( $selection = $jitPost->cat_categories->asArray() ) {
+			if ( $selection = $jitPost->asArray('cat_categories') ) {
 				$available_states = array_combine(
 					$selection,
 					array_map(array( $categlib, 'get_category_name' ), $selection)
@@ -46,7 +46,7 @@ switch( $jitRequest->action->alpha() ) {
 			}
 		} else {
 			$jitPost->replaceFilter('groups', 'groupname');
-			if ( $selection = $jitPost->groups->asArray() ) {
+			if ( $selection = $jitPost->asArray('groups') ) {
 				$available_states = array_combine($selection, $selection);
 			} else {
 				$available_states = array();
@@ -81,7 +81,7 @@ switch( $jitRequest->action->alpha() ) {
 		$transitionlib = new TransitionLib($transition_mode);
 		$selected_transition = $transitionlib->getTransition((int) $_REQUEST['transitionId']);
 
-		if ( $selection = $jitPost->states->asArray() ) {
+		if ( $selection = $jitPost->asArray('states') ) {
 			$selected_transition['guards'][] = array(
 						$_REQUEST['type'],
 						(int) $_REQUEST['count'],

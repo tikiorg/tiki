@@ -115,7 +115,7 @@ class Services_File_Controller
 	/**
 	 * Uploads several files at once, currently from jquery_upload when file_galleries_use_jquery_upload pref is enabled
 	 *
-	 * @param $input
+	 * @param JitFilter $input
 	 * @return array
 	 * @throws Services_Exception
 	 * @throws Services_Exception_NotAvailable
@@ -130,28 +130,28 @@ class Services_File_Controller
 
 			// a few other params that are still arrays but shouldn't be (mostly)
 			if (is_array($input->galleryId->asArray())) {
-				$input->offsetSet('galleryId', $input->galleryId->asArray()[0]);
+				$input->offsetSet('galleryId', $input->asArray('galleryId')[0]);
 			}
 			if (is_array($input->hit_limit->asArray())) {
-				$input->offsetSet('hit_limit', $input->hit_limit->asArray()[0]);
+				$input->offsetSet('hit_limit', $input->asArray('hit_limit')[0]);
 			}
 			if (is_array($input->isbatch->asArray())) {
-				$input->offsetSet('isbatch', $input->isbatch->asArray()[0]);
+				$input->offsetSet('isbatch', $input->asArray('isbatch')[0]);
 			}
 			if (is_array($input->deleteAfter->asArray())) {
-				$input->offsetSet('deleteAfter', $input->deleteAfter->asArray()[0]);
+				$input->offsetSet('deleteAfter', $input->asArray('deleteAfter')[0]);
 			}
 			if (is_array($input->deleteAfter_unit->asArray())) {
-				$input->offsetSet('deleteAfter_unit', $input->deleteAfter_unit->asArray()[0]);
+				$input->offsetSet('deleteAfter_unit', $input->asArray('deleteAfter_unit')[0]);
 			}
 			if (is_array($input->author->asArray())) {
-				$input->offsetSet('author', $input->author->asArray()[0]);
+				$input->offsetSet('author', $input->asArray('author')[0]);
 			}
 			if (is_array($input->user->asArray())) {
-				$input->offsetSet('user', $input->user->asArray()[0]);
+				$input->offsetSet('user', $input->asArray('user')[0]);
 			}
 			if (is_array($input->listtoalert->asArray())) {
-				$input->offsetSet('listtoalert', $input->listtoalert->asArray()[0]);
+				$input->offsetSet('listtoalert', $input->asArray('listtoalert')[0]);
 			}
 
 			for ($i = 0; $i < count($_FILES['files']['tmp_name']); $i++) {

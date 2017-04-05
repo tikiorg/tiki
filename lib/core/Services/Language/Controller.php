@@ -129,7 +129,7 @@ class Services_Language_Controller
 	/**
 	 * Customized String Translation - create and edit custom translations
 	 *
-	 * @param $input
+	 * @param JitFilter $input
 	 *
 	 * @return array
 	 */
@@ -168,8 +168,8 @@ class Services_Language_Controller
 			$language = $input->language->text();
 
 			//get strings and translations
-			$from = $input->from->asArray();
-			$to = $input->to->asArray();
+			$from = $input->asArray('from');
+			$to = $input->asArray('to');
 
 			if(count($from) > 1) {
 				//prepare data

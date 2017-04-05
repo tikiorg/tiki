@@ -17,7 +17,7 @@ class Services_Payment_Controller
 	{
 		$cartlib = TikiLib::lib('cart');
 
-		$params = $input->params->asArray();
+		$params = $input->asArray('params');
 
 		return $cartlib->add_to_cart($params, $input);
 	}
@@ -26,7 +26,7 @@ class Services_Payment_Controller
 	{
 		$cartlib = TikiLib::lib('cart');
 
-		$items = $input->items->asArray();
+		$items = $input->asArray('items');
 		$ret = array();
 
 		foreach ($items as $item) {

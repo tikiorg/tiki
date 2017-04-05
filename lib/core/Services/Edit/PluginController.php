@@ -98,7 +98,7 @@ class Services_Edit_PluginController
 		$type = $input->type->word();
 		$index = $input->index->int();
 		$page = $input->page->pagename();
-		$pluginArgs = $input->pluginArgs->asArray();
+		$pluginArgs = $input->asArray('pluginArgs');
 		$bodyContent = $input->bodyContent->wikicontent();
 		$edit_icon = $input->edit_icon->int();
 		$selectedMod = $input->selectedMod->text();
@@ -247,7 +247,7 @@ class Services_Edit_PluginController
 		$message = $input->message->text();
 		$content = $input->content->wikicontent();
 		$index = $input->index->int();
-		$params = $input->params->asArray();
+		$params = $input->asArray('params');
 
 		$referer = $_SERVER['HTTP_REFERER'];
 
