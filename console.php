@@ -42,7 +42,7 @@ if (false !== $site = $input->getParameterOption(array('--site'))) {
 $local_php = TikiInit::getCredentialsFile();
 
 if (! is_readable($local_php)) {
-	die("Credentials file local.php not found. See http://doc.tiki.org/Installation for more information.\n");
+	die("\033[31mCredentials file local.php not found. See http://doc.tiki.org/Installation for more information.\033[0m\n");
 }
 
 if (is_file($local_php) || TikiInit::getEnvironmentCredentials()) {
