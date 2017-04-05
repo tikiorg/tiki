@@ -207,7 +207,11 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 			$template = $webservice->getTemplate($tpl);
 		}
 
-		$output = $template->render($response, 'html');
+		if (! empty($response)) {
+			$output = $template->render($response, 'html');
+		} else {
+			$output = '';
+		}
 
 		return $output;
 	}
