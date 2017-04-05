@@ -21,7 +21,9 @@
  */
 function smarty_function_lock($params, $smarty)
 {
-	global $user, $smarty;
+	global $user;
+
+	$smarty = TikiLib::lib('smarty');
 
 	static $instance = 0;
 	$instance++;

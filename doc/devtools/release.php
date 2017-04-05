@@ -392,7 +392,7 @@ function zone_is_empty() {
  */
 function check_smarty_syntax(&$error_msg)
 {
-	global $tikidomain, $prefs, $smarty;
+	global $tikidomain, $prefs;
 	$tikidomain = '';
 	// Initialize $prefs with some variables needed by the tra() function and smarty autosave plugin
 	$prefs = array(

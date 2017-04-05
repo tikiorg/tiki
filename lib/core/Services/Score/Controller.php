@@ -13,7 +13,6 @@ class Services_Score_Controller
 	}
 
 	function action_create_score_event($input) {
-		global $smarty;
 
 		$eventType = $input->eventType->text();
 

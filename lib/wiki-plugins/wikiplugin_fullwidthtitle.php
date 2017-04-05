@@ -38,7 +38,7 @@ function wikiplugin_fullwidthtitle_info()
 
 function wikiplugin_fullwidthtitle($data, $params)
 {
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 
 	$smarty->assign('title', $params['title']);
 	if (!empty($params['iconsrc'])) {

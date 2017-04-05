@@ -69,7 +69,8 @@ function wikiplugin_footnote_info()
 
 function wikiplugin_footnote($data, $params)
 {
-	global $footnotes, $smarty;
+	global $footnotes;
+	$smarty = TikiLib::lib('smarty');
 
 	if (! isset($footnotes['lists'])) {   // if this is the first time the script has run, initialise
 		$footnotes['count'] = 0;

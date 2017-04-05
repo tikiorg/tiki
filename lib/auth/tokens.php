@@ -83,7 +83,8 @@ class AuthTokens
 			array( $token )
 		)->fetchRow();
 
-		global $prefs, $full, $smarty, $tikiroot;		// $full defined in route.php
+		global $prefs, $full, $tikiroot;		// $full defined in route.php
+		$smarty = TikiLib::lib('smarty');
 		$sefurl = '';
 
 		if ($prefs['feature_sefurl'] === 'y') {

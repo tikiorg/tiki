@@ -39,8 +39,7 @@ function wikiplugin_addon_info()
 
 function wikiplugin_addon($data, $params)
 {
-	global $smarty;
-	$smarty->loadPlugin('smarty_block_addonview');
+	TikiLib::lib('smarty')->loadPlugin('smarty_block_addonview');
 
 	return "~np~" . smarty_block_addonview($params, $data, $smarty) . "~/np~";
 }
