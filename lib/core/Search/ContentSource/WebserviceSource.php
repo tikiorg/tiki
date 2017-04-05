@@ -29,8 +29,10 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 				$data = $this->getData($row['service'], $row['template']);
 				if ($data) {
 					foreach($data['mapping'] as $topObject => $topValue) {
-						foreach($data['data'][$topObject] as $key => $val) {
-							$out[] = $row['template'] . ':' . $key;
+						if (is_array($data['data'][$topObject])) {
+							foreach ($data['data'][$topObject] as $key => $val) {
+								$out[] = $row['template'] . ':' . $key;
+							}
 						}
 					}
 				}
@@ -112,27 +114,29 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 
 		$rows = [];
 
-		foreach($output['mapping'] as $topObject => $topValue) {
-			$dataObject = $output['data'][$topObject];
-			foreach ($dataObject as $key => $val) {
-				if (is_int($key) && $index !== false) {    		// array of objects
-					$val = $dataObject[$index];
-					if (! empty($val)) {	// we have the index # to get
-						if (! $this->mapValue($val, $output['mapping'][$topObject][0], $typeFactory, $data)) {
-							foreach ($val as $key2 => $val2) {
-								if (! empty($val[$key2]) && ! empty( $output['mapping'][$topObject][0][$key2])) {
-									$this->mapValue($val[$key2], $output['mapping'][$topObject][0][$key2], $typeFactory, $data);
+		if (is_array($output['mapping'])) {
+			foreach ($output['mapping'] as $topObject => $topValue) {
+				$dataObject = $output['data'][$topObject];
+				foreach ($dataObject as $key => $val) {
+					if (is_int($key) && $index !== false) {            // array of objects
+						$val = $dataObject[$index];
+						if (! empty($val) && ! empty($output['mapping'][$topObject][0])) {    // we have the index # to get
+							if (! $this->mapValue($val, $output['mapping'][$topObject][0], $typeFactory, $data)) {
+								foreach ($val as $key2 => $val2) {
+									if (! empty($val[$key2]) && ! empty($output['mapping'][$topObject][0][$key2])) {
+										$this->mapValue($val[$key2], $output['mapping'][$topObject][0][$key2], $typeFactory, $data);
+									}
 								}
 							}
 						}
-					}
-					break;	// we just get this index item
-				} else {
-					if (! empty($dataObject[$key])) {
-						if (! $this->mapValue($dataObject[$key], $output['mapping'][$topObject][$key], $typeFactory, $data)) {
-							foreach ($val as $key2 => $val2) {
-								if (! empty($dataObject[$key][$key2]) && ! empty($output['mapping'][$topObject][$key][$key2])) {
-									$this->mapValue($dataObject[$key][$key2], $output['mapping'][$topObject][$key][$key2], $typeFactory, $data);
+						break;    // we just get this index item
+					} else {
+						if (! empty($dataObject[$key]) && ! empty($output['mapping'][$topObject][$key])) {
+							if (! $this->mapValue($dataObject[$key], $output['mapping'][$topObject][$key], $typeFactory, $data)) {
+								foreach ($val as $key2 => $val2) {
+									if (! empty($dataObject[$key][$key2]) && ! empty($output['mapping'][$topObject][$key][$key2])) {
+										$this->mapValue($dataObject[$key][$key2], $output['mapping'][$topObject][$key][$key2], $typeFactory, $data);
+									}
 								}
 							}
 						}
