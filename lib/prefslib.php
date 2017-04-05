@@ -543,7 +543,9 @@ class PreferencesLib
 					$info = $prefInfo;
 				} else {
 					$info['preference'] = $pref;
-					$info['tags'] = empty($info['tags']) ? [] : $info['tags'];
+					if (empty($info['tags'])) {
+						$info['tags'] = [];
+					}
 				}
 				$doc = $this->indexPreference($typeFactory, $pref, $info);
 				$index->addDocument($doc);
