@@ -122,6 +122,8 @@ class Language_WriteFile
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
+// The original strings (English) are case-sensitive.
+
 /* Note for translators about translation of text ending with punctuation
  *
  * The current list of concerned punctuation can be found in 'lib/init/tra.php'
