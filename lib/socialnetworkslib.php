@@ -218,11 +218,18 @@ class SocialNetworksLib extends LogsLib
 		$ret = preg_split('/(\r\n\r\n|\r\r|\n\n)/', $ret, 2);
 		$ret = $ret[1];
 
-		if (substr($ret, 0, 13) == 'access_token=') {
-			$access_token = substr($ret, 13);
-			if ($endoftoken = strpos($access_token, '&')) {
-				// Returned string may have other var like expiry
-				$access_token = substr($access_token, 0, $endoftoken);
+		$json_decoded_ret = json_decode($ret, true);
+
+		if (isset($json_decoded_ret['access_token']) || substr($ret, 0, 13) == 'access_token=') {
+
+			if (isset($json_decoded_ret['access_token'])) {
+				$access_token = $json_decoded_ret['access_token'];
+			} else {
+				$access_token = substr($ret, 13);
+				if ($endoftoken = strpos($access_token, '&')) {
+					// Returned string may have other var like expiry
+					$access_token = substr($access_token, 0, $endoftoken);
+				}
 			}
 			$fields = array('id', 'name', 'first_name', 'last_name');
 
