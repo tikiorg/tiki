@@ -3,13 +3,12 @@
 	{modules_list list=$modForumsLastPosts nonums=$nonums}
 		{section name=ix loop=$modForumsLastPosts}
 			<li>
-				<a class="linkmodule tips" href="{$modForumsLastPosts[ix].href}"
-					title="{$modForumsLastPosts[ix].name|escape} |
+				<a class="linkmodule tips" href="{$modForumsLastPosts[ix].href}" title="{$modForumsLastPosts[ix].name|escape} |
 							{if $date eq 'n'}
 								{if empty($module_params.time) or $module_params.time eq 'y'}
-									{$modForumsLastPosts[ix].date|tiki_short_datetime}
+									{$modForumsLastPosts[ix].date|tiki_short_datetime:'':'n'}
 								{else}
-									{$modForumsLastPosts[ix].date|tiki_short_date}
+									{$modForumsLastPosts[ix].date|tiki_short_date:'':'n'}
 								{/if}
 							{/if}
 							{if $author eq 'n'}

@@ -538,7 +538,15 @@ class PreferencesLib
 			$data = $this->getFileData($file);
 
 			foreach ( $data as $pref => $info ) {
-				$info = $this->getPreference($pref);
+				$prefInfo = $this->getPreference($pref);
+				if ($prefInfo) {
+					$info = $prefInfo;
+				} else {
+					$info['preference'] = $pref;
+					if (empty($info['tags'])) {
+						$info['tags'] = [];
+					}
+				}
 				$doc = $this->indexPreference($typeFactory, $pref, $info);
 				$index->addDocument($doc);
 			}

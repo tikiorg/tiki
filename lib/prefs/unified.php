@@ -240,6 +240,14 @@ function prefs_unified_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'unified_elastic_field_limit' => array(
+			'name' => tra('Elasticsearch field limit per index'),
+			'type' => 'text',
+			'size' => '5',
+			'filter' => 'digits',
+			'description' => tra('Maximum number of fields per search index in Elasticsearch version 5.x and above.'),
+			'default' => '1000',
+		),
 		'unified_mysql_index_current' => array(
 			'name' => tra('MySQL full-text search current index'),
 			'description' => tra('A new index is created upon rebuild and the old one is then destroyed. This setting allows you to see the currently active one.'),
