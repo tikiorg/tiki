@@ -8,9 +8,9 @@
 			{if $modLastActions[ix].object ne ''}
 				<a class="linkmodule" href="tiki-index.php?page={$modLastActions[ix].object|escape:"url"}" title="
 				{if (strlen($smarty.capture.label) > $maxlen) && ($maxlen > 0)}
-					{$modLastActions[ix].user|username}: {$modLastActions[ix].action} {$modLastActions[ix].objectType} {$modLastActions[ix].object|escape} {tr}at{/tr} {$modLastActions[ix].lastModif|tiki_short_datetime}
+					{$modLastActions[ix].user|username}: {$modLastActions[ix].action} {$modLastActions[ix].objectType} {$modLastActions[ix].object|escape} {tr}at{/tr} {$modLastActions[ix].lastModif|tiki_short_datetime:'':'n'}
 				{else}
-					{if $showdate eq 'n'}{$modLastActions[ix].lastModif|tiki_short_datetime}{/if}{if $showuser eq 'n'}{if $showdate eq 'n'}, {tr}by{/tr} {/if}{$modLastActions[ix].user|username}{/if}
+					{if $showdate eq 'n'}{$modLastActions[ix].lastModif|tiki_short_datetime:'':'n'}{/if}{if $showuser eq 'n'}{if $showdate eq 'n'}, {tr}by{/tr} {/if}{$modLastActions[ix].user|username}{/if}
 				{/if}
 			">
 			{/if}

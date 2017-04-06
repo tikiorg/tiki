@@ -4,7 +4,7 @@
 	{modules_list list=$modLastEvents nonums=$nonums}
 		{section name=ix loop=$modLastEvents}
 			<li>
-				<a class="linkmodule" href="tiki-calendar.php?todate={$modLastEvents[ix].start}" title="{$modLastEvents[ix].lastModif|tiki_short_datetime}, {tr}by{/tr} {if $modLastEvents[ix].user ne ''}{$modLastEvents[ix].user|username}{else}{tr}Anonymous{/tr}{/if}">
+				<a class="linkmodule" href="tiki-calendar.php?todate={$modLastEvents[ix].start}" title="{$modLastEvents[ix].lastModif|tiki_short_datetime:'':'n'}, {tr}by{/tr} {if $modLastEvents[ix].user ne ''}{$modLastEvents[ix].user|username}{else}{tr}Anonymous{/tr}{/if}">
 					{if $maxlen > 0}{* 0 is default value for maxlen eq to 'no truncate' *}
 						{$modLastEvents[ix].name|truncate:$maxlen:"...":true|escape}
 					{else}
