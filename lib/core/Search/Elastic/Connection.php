@@ -357,6 +357,8 @@ class Search_Elastic_Connection
 
 	private function createIndex($index, callable $getIndex)
 	{
+		global $prefs;
+
 		if ($this->aliasExists($index)) {
 			return;
 		}
@@ -376,6 +378,9 @@ class Search_Elastic_Connection
 						'type' => 'percolator'
 					],
 				],
+			]));
+			$this->put("/$index/_settings", json_encode([
+				'index.mapping.total_fields.limit' => $prefs['unified_elastic_field_limit'],
 			]));
 		}
 	}

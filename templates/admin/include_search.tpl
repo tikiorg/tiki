@@ -95,6 +95,7 @@
 						{preference name="unified_elastic_url"}
 						{preference name="unified_elastic_index_prefix"}
 						{preference name="unified_elastic_index_current"}
+						{preference name="unified_elastic_field_limit"}
 						{preference name="unified_relation_object_indexing"}
 					</div>
 
