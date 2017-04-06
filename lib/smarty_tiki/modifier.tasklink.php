@@ -65,7 +65,7 @@ function smarty_modifier_tasklink($taskId, $class_name="link", $offset="0", $sor
 
 		$fillin .= "<hr />" . $description;
 
-		$mouseover = " onmouseover=\"return overlib('<table><tr><td>" . $fillin . "</td></tr></table>',HAUTO,VAUTO,CAPTION,'<div align=\'center\'>&nbsp; " .
+		$mouseover = " onmouseover=\"return overlib('<table><tr><td>" . $fillin . "</td></tr></table>',HAUTO,VAUTO,CAPTION,'<div style=\"text-align: center;\">&nbsp; " .
 			tra("Task") . ":&nbsp;&nbsp;" . htmlspecialchars($info['title']) . "</div>');\" onmouseout=\"nd()\"";
 	}
 	$content = "<a class='" . $class_name . "'" . $mouseover . " href='tiki-user_tasks.php?taskId=" . $taskId . "&amp;tiki_view_mode=view&amp;offset=" .

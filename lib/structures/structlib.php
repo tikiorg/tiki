@@ -1292,7 +1292,7 @@ class StructLib extends TikiLib
 		// write the title page, using:
 		// Browser Title, Logo, Site title, Site subtitle
 		$fw = fopen("$base/content.html", 'w+');
-		$titlepage = "<h1>". $prefs['browsertitle'] . "</h1><p><img src='../../".$prefs['sitelogo_src']."' alt='".$prefs['sitelogo_alt']."' align='center' /></p><h2>". $prefs['sitetitle'] ."</h2><h3>".  $prefs['sitesubtitle']  ."</h3>";
+		$titlepage = "<h1>". $prefs['browsertitle'] . "</h1><p><img src='../../".$prefs['sitelogo_src']."' alt='".$prefs['sitelogo_alt']."' style=\"text-align: center;\" /></p><h2>". $prefs['sitetitle'] ."</h2><h3>".  $prefs['sitesubtitle']  ."</h3>";
 		fwrite($fw, $titlepage);
 		fclose($fw);
 	}

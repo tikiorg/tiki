@@ -21,7 +21,7 @@ if (!empty($_REQUEST['title'])) {
 
 $login = '<form name="loginbox" action="tiki-login.php?page=tikiIndex" method="post"><table><tr><td>' .
 	'User:</td><td><input type="text" name="user"  size="20" /></td></tr><tr><td>' .
-	'Pass:</td><td><input type="password" name="pass" size="20" /></td></tr><tr><td align="center" colspan="2"><input type="submit" name="login" value="login" class="btn btn-default" /></td></tr></table></form>';
+	'Pass:</td><td><input type="password" name="pass" size="20" /></td></tr><tr><td style="text-align: center;" colspan="2"><input type="submit" name="login" value="login" class="btn btn-default" /></td></tr></table></form>';
 
 $back = '<p><a href="javascript:history.back()">Go back</a></p>';
 
