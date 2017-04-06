@@ -167,9 +167,12 @@ class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract implements Trac
 	{
 		$item = $this->getValue();
 		$baseKey = $this->getBaseKey();
+		$prepend = $this->getOption('prepend');
+		$append = $this->getOption('append');
 
 		$out = array(
 			$baseKey => $typeFactory->numeric($item),
+			"{$baseKey}_text" => $typeFactory->sortable($prepend.$item.$append),
 		);
 		return $out;
 	}
