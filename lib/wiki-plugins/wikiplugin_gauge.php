@@ -169,14 +169,14 @@ function wikiplugin_gauge($data, $params)
 	}
 
 	if ($maxexceeded) {
-		$perc_td = '<td align="right" width="55">*******</td>';
+		$perc_td = '<td style="text-align: right;" width="55">*******</td>';
 	} else {	
 		if ($perc) {
 			$perc = number_format($value / $max * 100, 2);
-			$perc_td ='<td align="right" width="55">&nbsp;' . $perc . '%</td>';
+			$perc_td ='<td style="text-align: right;" width="55">&nbsp;' . $perc . '%</td>';
 		} else {
 			$perc = number_format($value, 2);
-			$perc_td ='<td align="right" width="55">&nbsp;' . $perc . '</td>';
+			$perc_td ='<td style="text-align: right;" width="55">&nbsp;' . $perc . '</td>';
 		}
 	}	
 
