@@ -75,14 +75,22 @@ class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract implements Trac
 	protected function renderInnerOutput($context = array())
 	{
 		$value = $this->getValue();
-		$append = $this->getOption('prepend');
-		if (!empty($append)) {
-			$value = "<span class='formunit'>$append</span>" . $value;
+		$prepend = $this->getOption('prepend');
+		if (!empty($prepend)) {
+			if( $context['list_mode'] !== 'csv' ) {
+				$value = "<span class='formunit'>$prepend</span>" . $value;
+			} else {
+				$value = $prepend . $value;
+			}
 		}
 	
-		$prepend = $this->getOption('append');
-		if (!empty($prepend)) {
-			$value .= "<span class='formunit'>$prepend</span>";
+		$append = $this->getOption('append');
+		if (!empty($append)) {
+			if( $context['list_mode'] !== 'csv' ) {
+				$value .= "<span class='formunit'>$append</span>";
+			} else {
+				$value .= $append;
+			}
 		}
 
 		return $value;
