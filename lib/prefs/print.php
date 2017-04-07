@@ -55,7 +55,7 @@ function prefs_print_list()
 			'size' => 50,
 			'help' => 'mPDF',
 			'dependencies' => array('auth_token_access'),
-			'default' => 'vendor_custom/mpdf/',
+			'default' => 'vendor/mpdf/mpdf',
 		),
 		'print_pdf_mpdf_printfriendly' => array(
 			'name' => tra('Print Friendly PDF'),
