@@ -163,7 +163,6 @@ usage: $0 [<switches>] ${POSSIBLE_COMMANDS}
 -p php       alternate PHP command (default: php)
 -n           not prompt for user and group, assume current
 -d off|on    disable|enable debugging mode (override script default)
--a           no prompts, use defaults for all
 -q           quiet (workaround to silence composer, e.g. in cron scripts)
 
 There are some other commands recommended for advanced users only.
@@ -188,9 +187,8 @@ OPT_VIRTUALS=
 OPT_PHPCLI=
 OPT_USE_CURRENT_USER_GROUP=
 OPT_QUIET=
-OPT_AUTO=false
 
-while getopts "hu:g:v:p:nd:q:a" OPTION; do
+while getopts "hu:g:v:p:nd:q" OPTION; do
 	case $OPTION in
 		h) usage ; exit 0 ;;
 		u) OPT_AUSER=$OPTARG ;;
@@ -200,7 +198,6 @@ while getopts "hu:g:v:p:nd:q:a" OPTION; do
 		n) OPT_USE_CURRENT_USER_GROUP=1 ;;
 		d) set_debug ;;
 		q) OPT_QUIET="-q" ;;
-		a) OPT_AUTO=true ;;
 		?) usage ; exit 1 ;;
 	esac
 	if [ -n "$OPT_PHPCLI" ]; then
@@ -654,7 +651,6 @@ command_fix() {
 		fi
 	else
 		if [ -z "$OPT_USE_CURRENT_USER_GROUP" ]; then
-		 if [ "$OPT_AUTO" == false ] ; then
 			echo "You are not root or you are on a shared hosting account. You can now:
 
 1- ctrl-c to break now.
@@ -667,12 +663,11 @@ of your user. This script will now ask you some questions. If you don't know
 what to answer, just press enter to each question (to use default value)"
 
 			read -p "> Press enter to continue: " WAIT
-			fi
 			AUSER=$USER
 		fi
 	fi
 
-	if [ -n "$OPT_AGROUP" ] | [ "$OPT_AUTO" == true ]; then
+	if [ -n "$OPT_AGROUP" ]; then
 		AGROUP=$OPT_AGROUP
 	elif [ -z "$OPT_USE_CURRENT_USER_GROUP" ]; then
 		read -p "> Group [$AGROUP]: " REPLY
@@ -684,7 +679,7 @@ what to answer, just press enter to each question (to use default value)"
 	touch db/virtuals.inc
 	if [ -n "$OPT_VIRTUALS" ]; then
 		VIRTUALS=$OPT_VIRTUALS
-	elif [ -n "$OPT_USE_CURRENT_USER_GROUP" ] | [ "$OPT_AUTO" == true ]; then
+	elif [ -n "$OPT_USE_CURRENT_USER_GROUP" ]; then
 		VIRTUALS=$(cat db/virtuals.inc)
 	else
 		read -p "> Multi [$(cat -s db/virtuals.inc | tr '\n' ' ')]: " VIRTUALS
@@ -1027,11 +1022,9 @@ tiki_setup_default() {
 	WHAT=${DEFAULT_WHAT} # composer is recommended in case of an svn checkout
 	while true
 	do
-		if [ "$OPT_AUTO" == false ] ; then
 		tiki_setup_default_menu
 		echo -n "Your choice [${WHAT}]? "
 		read INPUT
-		fi
 		if [ -z ${INPUT} ] ; then
 			DUMMY=foo
 		else
