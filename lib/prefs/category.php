@@ -140,6 +140,7 @@ function prefs_category_list()
 			'filter' => 'int',
 			'separator' => ',',
 			'default' => '',
+			'profile_reference' => 'category',
 		),
 		'category_browse_count_objects' => array(
 			'name' => tra('Show category object count'),
