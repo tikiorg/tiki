@@ -326,14 +326,15 @@ class Services_Edit_PluginController
 		$body = $input->body->wikicontent();
 		$current = [];
 		$done = [];	// to keep a track on whcih plugins have already been included
+		$plugins = Services_Edit_ListPluginHelper::getDefinition();
 
-		$this->parsePlugins($body, $current, $done);
+		$this->parsePlugins($body, $current, $done, '', array_keys($plugins));
 
 
 		$fields = TikiLib::lib('unifiedsearch')->getAvailableFields();
 
 		return [
-			'plugins' => Services_Edit_ListPluginHelper::getDefinition(),
+			'plugins' => $plugins,
 			'fields' => $fields,
 			'current' => $current,
 		];
@@ -346,8 +347,9 @@ class Services_Edit_PluginController
 	 * @param array $plugins resulting nested array of plugins
 	 * @param array $done flat array to track plugins already added to $plugins
 	 * @param string $parent
+	 * @param array $allowedPlugins names of plugins to include (sub plugins of {list}
 	 */
-	private function parsePlugins($body, & $plugins, & $done, $parent = '') {
+	private function parsePlugins($body, & $plugins, & $done, $parent = '', $allowedPlugins) {
 		$matches = WikiParser_PluginMatcher::match($body);
 		$argumentParser = new WikiParser_PluginArgumentParser;
 		$lastMatchEnd = 0;
@@ -356,23 +358,45 @@ class Services_Edit_PluginController
 		foreach($matches as $match) {
 
 			$name = $match->getName();
-			$thisPlugin = [
-				'name' => $name,
-				'params' => $argumentParser->parse($match->getArguments()),
-				'body' => $match->getBody(),
-				'plugins' => []
-			];
 
-			$this->parsePlugins($match->getBody(), $thisPlugin['plugins'], $done, $name);
+			if (in_array($name, $allowedPlugins)) {
 
-			if (in_array(strtolower($parent), ['output', 'format'])) {
-				$plugins[] = substr($body, $lastMatchEnd, $match->getStart() - $lastMatchEnd);
-				$lastMatchEnd = $match->getEnd();
-			}
+				$thisBody = $match->getBody();
 
-			if (! in_array($thisPlugin, $done)) {
-				$plugins[] = $thisPlugin;
-				$done[] = $thisPlugin;
+				$thisPlugin = [
+					'name' => $name,
+					'params' => $argumentParser->parse($match->getArguments()),
+					'body' => $thisBody,
+					'plugins' => []
+				];
+
+				if ($thisBody) {
+					$this->parsePlugins($thisBody, $thisPlugin['plugins'], $done, $name, $allowedPlugins);
+				}
+
+				if (! in_array($thisPlugin, $done)) {
+					if (in_array(strtolower($parent), ['output', 'format'])) {
+						$plugins[] = substr($body, $lastMatchEnd, $match->getStart() - $lastMatchEnd);
+						$lastMatchEnd = $match->getEnd();
+					}
+
+					$plugins[] = $thisPlugin;
+					$done[] = $thisPlugin;
+				}
+			} else {
+				// other plugins in output or format body blocks, treat as wiki text
+				if (in_array(strtolower($parent), ['output', 'format'])) {
+					$wikiText = substr($body, $lastMatchEnd, $match->getEnd() - $lastMatchEnd);
+
+					// find any nested plugins and mark them as done
+					$newPlugins = [];
+					$newDone = [];
+					$this->parsePlugins($wikiText, $newPlugins, $newDone, '', $allowedPlugins);
+					$done = array_merge($done, $newDone);
+
+					$plugins[] = $wikiText;
+					$lastMatchEnd = $match->getEnd();
+				}
 			}
 		}
 

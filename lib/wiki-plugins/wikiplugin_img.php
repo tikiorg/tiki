@@ -1489,7 +1489,7 @@ function wikiplugin_img( $data, $params )
 		}
 	}
 	if ( !empty($styleboxplus)) {
-		$repl = "\r" . '<div ' . $class . 'style="' . $styleboxplus . '">' . $repl . "\r" . '</div>';
+		$repl = "\r" . '<div ' . $class . 'style="display: inline-block; ' . $styleboxplus . '">' . $repl . "\r" . '</div>';
 	}
 //////////////////////////////////////Place 'clear' block///////////////////////////////////////////////////////////
 	if ( !empty($imgdata['block']) ) {

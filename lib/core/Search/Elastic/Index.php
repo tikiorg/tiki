@@ -230,6 +230,12 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 		}
 	}
 
+	/**
+	 * @param Search_Query $query
+	 * @param int $resultStart
+	 * @param int $resultCount
+	 * @return Search_Elastic_ResultSet
+	 */
 	function find(Search_Query_Interface $query, $resultStart, $resultCount)
 	{
 		global $prefs;
@@ -282,14 +288,18 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 		}, $query->getForeignQueries());
 
 		foreach ($foreign as $indexName => $foreignQuery) {
-			$indices[] = $indexName;
-			$queryPart = ['query' => [
-				'indices' => [
-					'index' => $indexName,
-					'query' => $foreignQuery['query'],
-					'no_match_query' => $queryPart['query'],
-				],
-			]];
+			if ($this->connection->getIndexStatus($indexName)) {
+				$indices[] = $indexName;
+				$queryPart = ['query' => [
+					'indices' => [
+						'index' => $indexName,
+						'query' => $foreignQuery['query'],
+						'no_match_query' => $queryPart['query'],
+					],
+				]];
+			} else {
+				Feedback::error(tr('Federated index %0 not found', $indexName), 'session');
+			}
 		}
 
 		$fullQuery = array_merge(

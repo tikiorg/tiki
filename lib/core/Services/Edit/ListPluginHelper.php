@@ -153,7 +153,9 @@ class Services_Edit_ListPluginHelper
 							],
 						],
 					],
-					'contributors' => [],
+					'contributors' => [
+						'type' => 'text',
+					],
 					'deepcategories' => [
 						'type' => 'categories',
 					],
@@ -168,25 +170,75 @@ class Services_Edit_ListPluginHelper
 							],
 						],
 					],
-					'editable' => [
-						'type' => 'checkbox',
+					'editable' => [	// n.b. tracker fields only
+						'type' => 'text',
+						'params' => [
+							'field' => [
+								'type' => 'field',
+								'required' => true,
+							],
+						],
+						'options' => [
+							// taken from current usages of \Tracker\Filter\Collection::addNew
+							'all-of' => [],
+							'all-of-checkboxes' => [],
+							'any-of' => [],
+							'any-of-checkboxes' => [],
+							'content' => [],
+							'dropdown' => [],
+							'exact' => [],
+							'fulltext' => [],
+							'fulltext-current' => [],
+							'initial' => [],
+							'lookup' => [],
+							'object' => [],
+							'multiselect' => [],
+							'range' => [],
+							'selector' => [],
+							// TODO add filtering by field type?
+							// also fulltext-$lang (for each lang?) and facet-any and facet-all for each facet maybe?
+						],
 					],
 					'exact' => [
 						'type' => 'text',
 						'params' => [
 							'field' => [
 								'type' => 'field',
+								'required' => true,
 							],
 						],
 					],
 					'favorite' => [
 						'type' => 'user',
 					],
+					'field' => [
+						'type' => 'field',
+						'params' => [
+							'content' => [
+								'type' => 'text',
+							],
+							'exact' => [
+								'type' => 'text',
+							],
+							'editable' => [
+								'type' => 'text',
+							],
+							'multivalue' => [
+								'type' => 'text',
+							],
+						],
+					],
 					'language' => [
 						'type' => 'text',
 					],
 					'multivalue' => [
 						'type' => 'text',
+						'params' => [
+							'field' => [
+								'type' => 'field',
+								'required' => true,
+							],
+						],
 					],
 					'nottype' => [
 						'type' => 'object_type',
@@ -195,11 +247,15 @@ class Services_Edit_ListPluginHelper
 						'type' => 'text',    // TODO check
 					],
 					'range' => [
+						'type' => 'field',
 						'params' => [
 							'from' => [
 								'type' => 'datetime',
 							],
 							'to' => [
+								'type' => 'datetime',
+							],
+							'gap' => [
 								'type' => 'datetime',
 							],
 						],
@@ -215,6 +271,7 @@ class Services_Edit_ListPluginHelper
 						],
 					],
 					'textrange' => [
+						'type' => 'field',
 						'params' => [
 							'from' => [
 								'type' => 'text',

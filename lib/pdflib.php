@@ -91,7 +91,7 @@ class PdfGenerator
 		}
 		if ($this->error) {
 			$this->error = tr('PDF generation failed.') . ' ' . $this->error . ' '
-				. tr('This is set by the administrator (search for "pdf" in the settings control panels to locate the setting).');
+				. tr('This is set by the administrator (search for "print" in the settings control panels to locate the setting).');
 		}
 	}
 
@@ -274,7 +274,7 @@ class PdfGenerator
 		}
 		//checking and getting plugin_pdf parameters if set
 		
-		$pdfSettings=$this->getPDFSettings($html,$pref);
+		$pdfSettings=$this->getPDFSettings($html,$prefs);
 
 
 

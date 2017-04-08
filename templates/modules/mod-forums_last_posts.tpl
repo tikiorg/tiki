@@ -8,7 +8,7 @@
 								{if empty($module_params.time) or $module_params.time eq 'y'}
 									{$modForumsLastPosts[ix].date|tiki_short_datetime:'':'n'}
 								{else}
-									{$modForumsLastPosts[ix].date|tiki_short_date:'':'n'}
+									{$modForumsLastPosts[ix].date|tiki_short_date:'n'}
 								{/if}
 							{/if}
 							{if $author eq 'n'}

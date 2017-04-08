@@ -701,7 +701,7 @@ class UsersLib extends TikiLib
 								$vaffils = $vaffils . $vaffil . ", ";
 							}
 							$vaffils = rtrim($vaffils, ", ");
-							$errmsg = '<H1 align=center>User login error</H1>' .
+							$errmsg = '<H1 style="text-align: center;">User login error</H1>' .
 												'<BR/><BR/>You must have one of the following affiliations to get into this wiki.<BR/><BR/>' .
 												'<B>' . $vaffils . '</B><BR><BR/><BR/>' .
 												'For further information on this error goto the <a href="./tiki-index.php?page=ShibReg">Shibreg</a> Page';

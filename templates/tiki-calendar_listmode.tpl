@@ -22,13 +22,13 @@
 		{assign var=calendarId value=$event.calendarId}
 		<tr class="{cycle}{if $event.start <= $smarty.now and $event.end >= $smarty.now} selected{/if} vevent">
 			<td class="date">
-				<abbr class="dtstart" title="{$event.start|tiki_short_date}">
+				<abbr class="dtstart" title="{$event.start|tiki_short_date:'n'}">
 					<a href="{$myurl}?todate={$event.start}" title="{tr}Change Focus{/tr}">{$event.start|tiki_short_date}</a>
 				</abbr><br>
 				{if $event.allday} {tr}All day{/tr} {else} {$event.start|tiki_short_time} {/if}
 			</td>
 			<td class="date">
-				{if $event.start|tiki_short_date ne $event.end|tiki_short_date}<abbr class="dtend" title="{$event.end|tiki_short_date}"><a href="{$myurl}?todate={$event.end}" title="{tr}Change Focus{/tr}">{$event.end|tiki_short_date}</a></abbr> {/if}<br>
+				{if $event.start|tiki_short_date ne $event.end|tiki_short_date}<abbr class="dtend" title="{$event.end|tiki_short_date:'n'}"><a href="{$myurl}?todate={$event.end}" title="{tr}Change Focus{/tr}">{$event.end|tiki_short_date}</a></abbr> {/if}<br>
 {if $event.start ne $event.end and $event.allday ne 1}{$event.end|tiki_short_time}{/if}
 			</td>
 			<td style="word-wrap:break-word; {if $infocals.$calendarId.custombgcolor ne ''}background-color:#{$infocals.$calendarId.custombgcolor};{/if}">

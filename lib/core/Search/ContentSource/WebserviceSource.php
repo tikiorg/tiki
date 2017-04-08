@@ -198,7 +198,11 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 		$response = $webservice->performRequest($params);
 		$template = $webservice->getTemplate($templateName);
 
-		return $template->render($response, 'index');
+		if ($template) {
+			return $template->render($response, 'index');
+		} else {
+			return false;
+		}
 	}
 
 	function getProvidedFields()
