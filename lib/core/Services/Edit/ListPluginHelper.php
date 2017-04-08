@@ -170,13 +170,33 @@ class Services_Edit_ListPluginHelper
 							],
 						],
 					],
-					'editable' => [
+					'editable' => [	// n.b. tracker fields only
 						'type' => 'text',
 						'params' => [
 							'field' => [
 								'type' => 'field',
 								'required' => true,
 							],
+						],
+						'options' => [
+							// taken from current usages of \Tracker\Filter\Collection::addNew
+							'all-of' => [],
+							'all-of-checkboxes' => [],
+							'any-of' => [],
+							'any-of-checkboxes' => [],
+							'content' => [],
+							'dropdown' => [],
+							'exact' => [],
+							'fulltext' => [],
+							'fulltext-current' => [],
+							'initial' => [],
+							'lookup' => [],
+							'object' => [],
+							'multiselect' => [],
+							'range' => [],
+							'selector' => [],
+							// TODO add filtering by field type?
+							// also fulltext-$lang (for each lang?) and facet-any and facet-all for each facet maybe?
 						],
 					],
 					'exact' => [
