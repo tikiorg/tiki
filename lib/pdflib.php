@@ -274,7 +274,7 @@ class PdfGenerator
 		}
 		//checking and getting plugin_pdf parameters if set
 		
-		$pdfSettings=$this->getPDFSettings($html,$pref);
+		$pdfSettings=$this->getPDFSettings($html,$prefs);
 
 
 
