@@ -65,7 +65,7 @@
 				{preference name=feature_sefurl_title_article}
 				{preference name=article_related_articles}
 				{preference name=tracker_article_tracker}
-				<div class="adminoptionboxchild" id="tracker_article_tracker_container">
+				<div class="adminoptionboxchild" id="tracker_article_tracker_childcontainer">
 					{preference name=tracker_article_trackerId}
 				</div>
 				{preference name=article_feature_copyrights}
