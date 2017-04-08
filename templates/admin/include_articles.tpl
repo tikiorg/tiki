@@ -96,7 +96,7 @@
 						<input type="file" name="csvlist" id="csvlist">
 						<span class="help-block">{tr}File format: title,authorName,heading,body,lang,user{/tr}....</span>
 						<div align="center">
-							<input type="submit" class="btn btn-default btn-sm" name="import" value="{tr}Import{/tr}" />
+							<input type="submit" class="btn btn-default btn-sm timeout" name="import" value="{tr}Import{/tr}">
 						</div>
 					</div>
 				</div>
