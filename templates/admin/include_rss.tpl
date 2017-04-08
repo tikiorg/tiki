@@ -33,7 +33,7 @@
 			<div class="adminoptionboxchild" id="feed_articles_childcontainer">
 				<div class="form-group clearfix">
 					<div class="col-md-8 col-md-push-4">
-						<a class="btn btn-default btn-sm tips" href="tiki-articles_rss.php" title=":{tr}Feed for articles{/tr}">
+						<a class="btn btn-default btn-sm tips timeout" href="tiki-articles_rss.php" title=":{tr}Feed for articles{/tr}">
 							{icon name="rss"} {tr}View{/tr}
 						</a>
 					</div>
@@ -48,7 +48,7 @@
 			<div class="adminoptionboxchild" id="feed_blogs_childcontainer">
 				<div class="form-group clearfix">
 					<div class="col-md-8 col-md-push-4">
-						<a class="btn btn-default btn-sm tips" href="tiki-blogs_rss.php" title=":{tr}Feed for blogs{/tr}">
+						<a class="btn btn-default btn-sm tips timeout" href="tiki-blogs_rss.php" title=":{tr}Feed for blogs{/tr}">
 							{icon name="rss"} {tr}View{/tr}
 						</a>
 					</div>
@@ -63,7 +63,7 @@
 			<div class="adminoptionboxchild form-group clearfix" id="feed_blog_childcontainer">
 				<div class="form-group clearfix">
 					<div class="col-md-8 col-md-push-4">
-						<a class="btn btn-default btn-sm tips" href="tiki-list_blogs.php" title=":{tr}Feed for individual blogs{/tr}">
+						<a class="btn btn-default btn-sm tips timeout" href="tiki-list_blogs.php" title=":{tr}Feed for individual blogs{/tr}">
 							{icon name="rss"} {tr}View{/tr}
 						</a>
 					</div>
@@ -78,7 +78,7 @@
 			<div class="adminoptionboxchild" id="feed_image_galleries_childcontainer">
 				<div class="form-group clearfix">
 					<div class="col-md-8 col-md-push-4">
-						<a class="btn btn-default btn-sm tips" href="tiki-image_galleries_rss.php" title=":{tr}Feed for image galleries{/tr}">
+						<a class="btn btn-default btn-sm tips timeout" href="tiki-image_galleries_rss.php" title=":{tr}Feed for image galleries{/tr}">
 							{icon name="rss"} {tr}View{/tr}
 						</a>
 					</div>
@@ -93,7 +93,7 @@
 			<div class="adminoptionboxchild" id="feed_image_gallery_childcontainer">
 				<div class="form-group clearfix">
 					<div class="col-md-8 col-md-push-4">
-						<a class="btn btn-default btn-sm tips" href="tiki-galleries.php" title=":{tr}Feed for individual image galleries{/tr}">
+						<a class="btn btn-default btn-sm tips timeout" href="tiki-galleries.php" title=":{tr}Feed for individual image galleries{/tr}">
 							{icon name="rss"} {tr}View{/tr}
 						</a>
 					</div>
@@ -108,7 +108,7 @@
 			<div class="adminoptionboxchild" id="feed_file_galleries_childcontainer">
 				<div class="form-group clearfix">
 					<div class="col-md-8 col-md-push-4">
-						<a class="btn btn-default btn-sm tips" href="tiki-file_galleries_rss.php" title=":{tr}Feed for file galleries{/tr}">
+						<a class="btn btn-default btn-sm tips timeout" href="tiki-file_galleries_rss.php" title=":{tr}Feed for file galleries{/tr}">
 							{icon name="rss"} {tr}View{/tr}
 						</a>
 					</div>
@@ -123,7 +123,7 @@
 			<div class="adminoptionboxchild" id="feed_file_gallery_childcontainer">
 				<div class="form-group clearfix">
 					<div class="col-md-8 col-md-push-4">
-						<a class="btn btn-default btn-sm tips" href="tiki-list_file_gallery.php" title="{tr}Feed for individual file galleries{/tr}">
+						<a class="btn btn-default btn-sm tips timeout" href="tiki-list_file_gallery.php" title="{tr}Feed for individual file galleries{/tr}">
 							{icon name="rss"} {tr}View{/tr}
 						</a>
 					</div>
@@ -138,10 +138,10 @@
 			<div class="adminoptionboxchild" id="feed_wiki_childcontainer">
 				<div class="form-group clearfix">
 					<div class="col-md-8 col-sm-push-4">
-						<a class="btn btn-default btn-sm tips" href="tiki-wiki_rss.php" title=":{tr}Feed for wiki pages (with diff){/tr}">
+						<a class="btn btn-default btn-sm tips timeout" href="tiki-wiki_rss.php" title=":{tr}Feed for wiki pages (with diff){/tr}">
 							{icon name="rss"} {tr}View{/tr} ({tr}with diff{/tr})
 						</a>
-						<a class="btn btn-default btn-sm tips" href="tiki-wiki_rss_no_diff.php" title=":{tr}Feed for wiki pages (no diff){/tr}">
+						<a class="btn btn-default btn-sm tips timeout" href="tiki-wiki_rss_no_diff.php" title=":{tr}Feed for wiki pages (no diff){/tr}">
 							{icon name="rss"} {tr}View{/tr} ({tr}no diff{/tr})
 						</a>
 					</div>
@@ -156,7 +156,7 @@
 			<div class="adminoptionboxchild" id="feed_forums_childcontainer">
 				<div class="form-group clearfix">
 					<div class="col-md-8 col-md-push-4">
-						<a class="btn btn-default btn-sm tips" href="tiki-forums_rss.php" title=":{tr}Feed for forums{/tr}">
+						<a class="btn btn-default btn-sm tips timeout" href="tiki-forums_rss.php" title=":{tr}Feed for forums{/tr}">
 							{icon name="rss"} {tr}View{/tr}
 						</a>
 					</div>
@@ -171,7 +171,7 @@
 			<div class="adminoptionboxchild" id="feed_forum_childcontainer">
 				<div class="form-group clearfix">
 					<div class="col-md-8 col-md-push-4">
-						<a class="btn btn-default btn-sm tips" href="tiki-forums.php" title=":{tr}Feed for individual forums{/tr}">
+						<a class="btn btn-default btn-sm tips timeout" href="tiki-forums.php" title=":{tr}Feed for individual forums{/tr}">
 							{icon name="rss"} {tr}View{/tr}
 						</a>
 					</div>
@@ -186,7 +186,7 @@
 			<div class="adminoptionboxchild" id="feed_tracker_childcontainer">
 				<div class="form-group clearfix">
 					<div class="col-md-8 col-md-push-4">
-						<a class="btn btn-default btn-sm tips" href="tiki-list_trackers.php" title=":{tr}Feed for trackers{/tr}">
+						<a class="btn btn-default btn-sm tips timeout" href="tiki-list_trackers.php" title=":{tr}Feed for trackers{/tr}">
 							{icon name="rss"} {tr}View{/tr}
 						</a>
 					</div>
@@ -202,7 +202,7 @@
 			<div class="adminoptionboxchild" id="feed_calendar_childcontainer">
 				<div class="form-group clearfix">
 					<div class="col-md-8 col-md-push-4">
-						<a class="btn btn-default btn-sm tips" href="tiki-calendars_rss.php" title=":{tr}Feed for calendars{/tr}">
+						<a class="btn btn-default btn-sm tips timeout" href="tiki-calendars_rss.php" title=":{tr}Feed for calendars{/tr}">
 							{icon name="rss"} {tr}View{/tr}
 						</a>
 					</div>
@@ -217,7 +217,7 @@
 			<div class="adminoptionboxchild" id="feed_directories_childcontainer">
 				<div class="form-group clearfix">
 					<div class="col-md-8 col-md-push-4">
-						<a class="btn btn-default btn-sm tips" href="tiki-directories_rss.php" title=":{tr}Feed for directories{/tr}">
+						<a class="btn btn-default btn-sm tips timeout" href="tiki-directories_rss.php" title=":{tr}Feed for directories{/tr}">
 							{icon name="rss"} {tr}View{/tr}
 						</a>
 					</div>
@@ -232,7 +232,7 @@
 			<div class="adminoptionboxchild" id="feed_shoutbox_childcontainer">
 				<div class="form-group clearfix">
 					<div class="col-md-8 col-md-push-4">
-						<a class="btn btn-default btn-sm tips" href="tiki-shoutbox_rss.php" title=":{tr}Feed for shoutbox{/tr}">
+						<a class="btn btn-default btn-sm tips timeout" href="tiki-shoutbox_rss.php" title=":{tr}Feed for shoutbox{/tr}">
 							{icon name="rss"} {tr}View{/tr}
 						</a>
 					</div>
