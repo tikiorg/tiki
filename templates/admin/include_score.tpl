@@ -77,7 +77,7 @@
 						</td>
 						<td class="text-right">
 							{if $hide_advanced}<a class="advanced" href="#">{icon name='ellipsis-h'}</a>{/if}
-							<a class="delete-row" href="#">{icon name='delete'}</a>
+							<a class="delete-row timeout" href="#">{icon name='delete'}</a>
 						</td>
 					</tr>
 					<tr class="advanced-row {if $hide_advanced eq 1}hide{/if}">
@@ -125,6 +125,10 @@ $('[data-toggle="popover"]').popover();
 
 $('#addEventBtn').click(function(ev) {
 	ev.preventDefault();
+	var timeClicked = new Date();
+	if (timeClicked - now > 1000 * 60 * 15) {
+		return false;
+	}
 	var evType = $('#eventSelect').val();
 
 	//if section already exists
@@ -152,6 +156,10 @@ $('#addEventBtn').click(function(ev) {
 });
 $('.delete-row').click(function(ev) {
 	ev.preventDefault();
+	var timeClicked = new Date();
+	if (timeClicked - now > 1000 * 60 * 15) {
+		return false;
+	}
 	var currentRow = $(this).closest('.condition-row');
 	if ($(currentRow).siblings('.condition-row').length > 0) {
 		$(currentRow).next('.advanced-row').remove();
@@ -162,6 +170,10 @@ $('.delete-row').click(function(ev) {
 });
 $('a.advanced').click(function(ev) {
 	ev.preventDefault();
+	var timeClicked = new Date();
+	if (timeClicked - now > 1000 * 60 * 15) {
+		return false;
+	}
 	$(this).closest('.condition-row').next('.advanced-row').removeClass('hide');
 });
 
