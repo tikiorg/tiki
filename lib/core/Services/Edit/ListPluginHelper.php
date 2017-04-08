@@ -153,7 +153,9 @@ class Services_Edit_ListPluginHelper
 							],
 						],
 					],
-					'contributors' => [],
+					'contributors' => [
+						'type' => 'text',
+					],
 					'deepcategories' => [
 						'type' => 'categories',
 					],
@@ -169,24 +171,54 @@ class Services_Edit_ListPluginHelper
 						],
 					],
 					'editable' => [
-						'type' => 'checkbox',
+						'type' => 'text',
+						'params' => [
+							'field' => [
+								'type' => 'field',
+								'required' => true,
+							],
+						],
 					],
 					'exact' => [
 						'type' => 'text',
 						'params' => [
 							'field' => [
 								'type' => 'field',
+								'required' => true,
 							],
 						],
 					],
 					'favorite' => [
 						'type' => 'user',
 					],
+					'field' => [
+						'type' => 'field',
+						'params' => [
+							'content' => [
+								'type' => 'text',
+							],
+							'exact' => [
+								'type' => 'text',
+							],
+							'editable' => [
+								'type' => 'text',
+							],
+							'multivalue' => [
+								'type' => 'text',
+							],
+						],
+					],
 					'language' => [
 						'type' => 'text',
 					],
 					'multivalue' => [
 						'type' => 'text',
+						'params' => [
+							'field' => [
+								'type' => 'field',
+								'required' => true,
+							],
+						],
 					],
 					'nottype' => [
 						'type' => 'object_type',
@@ -195,11 +227,15 @@ class Services_Edit_ListPluginHelper
 						'type' => 'text',    // TODO check
 					],
 					'range' => [
+						'type' => 'field',
 						'params' => [
 							'from' => [
 								'type' => 'datetime',
 							],
 							'to' => [
+								'type' => 'datetime',
+							],
+							'gap' => [
 								'type' => 'datetime',
 							],
 						],
@@ -215,6 +251,7 @@ class Services_Edit_ListPluginHelper
 						],
 					],
 					'textrange' => [
+						'type' => 'field',
 						'params' => [
 							'from' => [
 								'type' => 'text',
