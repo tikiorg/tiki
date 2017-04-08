@@ -33,7 +33,7 @@ function prefs_article_list()
 		),
 		'article_comments_default_ordering' => array(
 			'name' => tra('Default Ordering'),
-			'description' => tra('sSets the default ordering filter for comments (default = points_desc)'),
+			'description' => tra('Sets the default ordering filter for comments (default = points_desc)'),
 			'type' => 'list',
 			'options' => $comment_sort_orders,
 			'default' => 'points_desc',
