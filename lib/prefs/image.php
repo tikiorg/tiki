@@ -17,6 +17,7 @@ function prefs_image_list()
 		'image_galleries_comments_per_page' => [
 			'name' => tra('Default number of comments per page'),
 			'type' => 'text',
+			'units' => tra('comments'),
 			'default' => 10,
 		],
 		'image_galleries_comments_default_order' => [

@@ -48,6 +48,7 @@ function prefs_forum_list()
 			'type' => 'text',
 			'size' => '5',
 			'filter' => 'digits',
+			'units' => tra('posts'),
 			'default' => 10,
 				),
 		'forum_thread_user_settings_keep' => array(
@@ -62,6 +63,7 @@ function prefs_forum_list()
 			'type' => 'text',
 			'size' => '5',
 			'filter' => 'digits',
+			'units' => tra('comments'),
 			'default' => 20,
 		),
 		'forum_thread_style' => array(
@@ -130,6 +132,7 @@ function prefs_forum_list()
 			'type' => 'text',
 			'size' => '5',
 			'filter' => 'digits',
+			'units' => tra('characters'),
 			'default' => '240',
 		),
 		'forum_reply_notitle' => array(

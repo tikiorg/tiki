@@ -13,6 +13,7 @@ function prefs_file_list()
 			'description' => tra('Number of comments per page'),
 			'type' => 'text',
 			'size' => '5',
+			'units' => tra('comments'),
 			'default' => 10,
 		),
 		'file_galleries_comments_default_ordering' => array(

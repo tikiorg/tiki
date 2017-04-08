@@ -52,6 +52,7 @@ function prefs_share_list()
 			'name' => tra('Maximum number of times accessed'),
 			'description' => tra('Maximum number of times that the shared page can be consulted'),
 			'type' => 'text',
+			'units' => tra('page hits'),
 			'default' => '-1',
 		),
 		

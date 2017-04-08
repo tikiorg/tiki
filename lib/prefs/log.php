@@ -33,6 +33,7 @@ function prefs_log_list()
 			'name' => tra('Log queries using more than (seconds)'),
 			'description' => tra('This may impact performance'),
 			'type' => 'text',
+			'units' => tra('seconds'),
 			'size' => 5,
 			'dependencies' => array(
 				'log_sql',

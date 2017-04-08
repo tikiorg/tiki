@@ -44,6 +44,7 @@ function prefs_rating_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'units' => tra('ratings'),
 			'default' => '100',
 		),
 		'rating_smileys' => array(

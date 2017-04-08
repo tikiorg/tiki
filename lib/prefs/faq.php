@@ -12,6 +12,7 @@ function prefs_faq_list()
 			'name' => tra('Default number of comments per page'),
 			'description' => tra('number of comments to show per page'),
 			'type' => 'text',
+			'units' => tra('comments'),
 			'size' => '5',
 			'default' => 10,
 		),

@@ -104,6 +104,7 @@ function prefs_category_list()
 			'name' => tra('Minimum number of categories in common'),
 			'description' => tra(''),
 			'type' => 'list',
+			'units' => tra('categories'),
 			'options' => array(
 				'1' => tra('1'),
 				'2' => tra('2'),
@@ -130,6 +131,7 @@ function prefs_category_list()
 			'type' => 'text',
 			'size' => 3,
 			'filter' => 'int',
+			'units' => tra('objects'),
 			'default' => 0,
 		),
 		'category_custom_facets' => array(

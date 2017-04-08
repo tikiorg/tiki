@@ -13,6 +13,7 @@ function prefs_blog_list()
 			'description' => tra(''),
 			'type' => 'text',
 			'size' => '3',
+			'units' => tra('comments'),
 			'default' => 0,
 		),
 		'blog_comments_default_ordering' => array(
@@ -51,6 +52,7 @@ function prefs_blog_list()
 			'description' => tra(''),
 			'type' => 'text',
 			'size' => '3',
+			'units' => tra('characters'),
 			'default' => '35',
 		),
 		'blog_list_description' => array(

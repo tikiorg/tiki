@@ -31,6 +31,7 @@ function prefs_webcron_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'units' => tra('seconds'),
 			'default' => 60,
 		),
 		'webcron_token' => array(

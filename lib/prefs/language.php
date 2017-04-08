@@ -35,6 +35,7 @@ function prefs_language_list($partial = false)
 			'help' => 'Internationalization',
 			'type' => 'text',
 			'filter' => 'digits',
+			'units' => tra('languages'),
 			'size' => 2,
 			'dependencies' => array(
 				'available_languages',

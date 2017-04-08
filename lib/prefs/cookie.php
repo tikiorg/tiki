@@ -55,6 +55,7 @@ function prefs_cookie_list()
 			'description' => tra('Expiration date of the cookie to record consent (in days).'),
 			'type' => 'text',
 			'filter' => 'int',
+			'units' => tra('days'),
 			'default' => 365,
 			'tags' => array('experimental'),
 		),

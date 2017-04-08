@@ -78,6 +78,7 @@ function prefs_h5p_list()
 			],
 			'type' => 'text',
 			'filter' => 'int',
+			'units' => tra('seconds'),
 			'default' => 60,
 		],
 		'h5p_export' => [

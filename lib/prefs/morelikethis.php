@@ -24,6 +24,7 @@ function prefs_morelikethis_list()
 			'name' => tra('Minimum number of tags in common'),
 			'description' => tra(''),
 			'type' => 'list',
+			'units' => tra('tags'),
 			'options' => array(
 				'1' => tra('1'),
 				'2' => tra('2'),

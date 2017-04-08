@@ -28,6 +28,7 @@ function prefs_users_list()
 		'users_prefs_userbreadCrumb' => array(
 			'name' => tra('Number of visited pages to remember'),
 			'type' => 'list',
+			'units' => tra('visited pages'),
 			'options' => array(
 				'1' => tra('1'),
 				'2' => tra('2'),
@@ -75,6 +76,7 @@ function prefs_users_list()
 		'users_prefs_tasks_maxRecords' => array(
 			'name' => tra('Tasks per page'),
 			'type' => 'list',
+			'units' => tra('tasks'),
 			'options' => array(
 				'2' => tra('2'),
 				'5' => tra('5'),

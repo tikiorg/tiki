@@ -30,6 +30,7 @@ function prefs_conditions_list()
 			'hint' => tr('0 to ignore age validation'),
 			'type' => 'text',
 			'filter' => 'int',
+			'units' => tra('years'),
 			'default' => 0,
 		),
 	);

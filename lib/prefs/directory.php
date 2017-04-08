@@ -30,6 +30,7 @@ function prefs_directory_list()
 			'name' => tra('Number of columns per page when listing directory categories'),
 			'description' => tra('Number of columns per page when listing directory categories'),
 			'type' => 'list',
+			'units' => tra('columns'),
 			'options' => array(
 				'1' => tra('1'),
 				'2' => tra('2'),
@@ -43,6 +44,7 @@ function prefs_directory_list()
 			'name' => tra('Links per page'),
 			'description' => tra(''),
 			'type' => 'text',
+			'units' => tra('links'),
 			'default' => 20,
 			),
 		'directory_open_links' => array(
