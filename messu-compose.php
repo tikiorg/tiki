@@ -14,6 +14,8 @@ $messulib = TikiLib::lib('message');
 $access->check_user($user);
 $access->check_feature('feature_messages');
 $access->check_permission('tiki_p_messages');
+$access->checkAuthenticity();
+
 if ($prefs['allowmsg_is_optional'] == 'y') {
 	if ($tikilib->get_user_preference($user, 'allowMsgs', 'y') != 'y') {
 		$smarty->assign('msg', tra("You have to be able to receive messages in order to send them. Goto your user preferences and enable 'Allow messages from other users'"));
@@ -57,8 +59,7 @@ $smarty->assign('priority', $_REQUEST['priority']);
 $smarty->assign('replyto_hash', $_REQUEST['replyto_hash']);
 $smarty->assign('mid', 'messu-compose.tpl');
 $smarty->assign('sent', 0);
-if (isset($_REQUEST['send'])) {
-	check_ticket('messu-compose');
+if (isset($_REQUEST['send']) && $access->ticketMatch()) {
 	$smarty->assign('sent', 1);
 	$message = '';
 	// Validation:
@@ -241,6 +242,5 @@ if (isset($_REQUEST['send'])) {
 $allowMsgs = $prefs['allowmsg_is_optional'] != 'y' || $tikilib->get_user_preference($user, 'allowMsgs', 'y');
 $smarty->assign('allowMsgs', $allowMsgs);
 include_once ('tiki-section_options.php');
-ask_ticket('messu-compose');
 include_once ('tiki-mytiki_shared.php');
 $smarty->display("tiki.tpl");
