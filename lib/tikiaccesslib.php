@@ -319,7 +319,7 @@ class TikiAccessLib extends TikiLib
 			if (!empty($_REQUEST['ticket'])) {
 				$ticket = $_REQUEST['ticket'];
 			} elseif (!empty($jitRequest['ticket'])) {
-				$ticket = $jitRequest->ticket->alnum();
+				$ticket = $jitRequest->ticket->striptags();
 			}
 			if (!empty($ticket) && !empty($_SESSION['tickets'][$ticket])) {
 				$time = $_SESSION['tickets'][$ticket];
@@ -347,7 +347,8 @@ class TikiAccessLib extends TikiLib
 		//otherwise set ticket
 		} else {
 			//sets the ticket that should be placed in a form with the daconfirm hidden input with other code
-			$ticket = md5(uniqid(rand()));
+			$tikilib = TikiLib::lib('tiki');
+			$ticket = $tikilib->generate_unique_sequence(32);
 			$_SESSION['tickets'][$ticket] = time();
 			$smarty = TikiLib::lib('smarty');
 			$smarty->assign('ticket', $ticket);

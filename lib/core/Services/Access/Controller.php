@@ -65,7 +65,7 @@ class Services_Access_Controller
 			'extra' => $input->asArray('extra'),
 			'toMsg' => $input->toMsg->xss(),
 			'toList' => $input->asArray('toList'),
-			'ticket' => $input->ticket->alnum(),
+			'ticket' => $input->ticket->striptags(),
 			'title' => $title,
 			'help' => $input->help->xss(),
 			'customMsg' => $customMsg,
