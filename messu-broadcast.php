@@ -13,7 +13,9 @@ require_once ('tiki-setup.php');
 $messulib = TikiLib::lib('message');
 $access->check_user($user);
 $access->check_feature('feature_messages');
+$access->checkAuthenticity();
 $auto_query_args = array('to', 'cc', 'bcc', 'subject', 'body', 'priority', 'replyto_hash', 'groupbr');
+
 if (!isset($_REQUEST['to'])) $_REQUEST['to'] = '';
 if (!isset($_REQUEST['cc'])) $_REQUEST['cc'] = '';
 if (!isset($_REQUEST['bcc'])) $_REQUEST['bcc'] = '';
@@ -46,7 +48,6 @@ else {
 $smarty->assign('groups', $groups);
 
 if (isset($_REQUEST['send']) || isset($_REQUEST['preview'])) {
-	check_ticket('messu-broadcast');
 	$message = '';
 	// Validation:
 	// must have a subject or body non-empty (or both)
@@ -126,7 +127,6 @@ if (isset($_REQUEST['send']) || isset($_REQUEST['preview'])) {
 		$smarty->assign('preview', 1);
 	}
 }
-ask_ticket('messu-broadcast');
 include_once ('tiki-section_options.php');
 include_once ('tiki-mytiki_shared.php');
 $smarty->display("tiki.tpl");

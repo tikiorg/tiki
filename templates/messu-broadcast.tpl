@@ -16,12 +16,13 @@
 		{if $preview eq '1'}
 			<br>
 			<form method="post">
+				{include file='access/include_ticket.tpl'}
 				<input type="hidden" name="groupbr" value="{$groupbr|escape}">
 				<input type="hidden" name="priority" value="{$priority|escape}">
 				<input type="hidden" name="replyto_hash" value="{$replyto_hash|escape}">
 				<input type="hidden" name="subject" value="{$subject|escape}">
 				<input type="hidden" name="body" value="{$body|escape}">
-				<input type="submit" class="btn btn-default btn-sm" name="send" value="{tr}Please Confirm{/tr}">
+				<input type="submit" class="btn btn-default btn-sm timeout" name="send" value="{tr}Please Confirm{/tr}">
 			</form>
 		{/if}
 	</div>
@@ -29,6 +30,7 @@
 
 {if $sent ne '1' and $preview ne '1'}
 	<form class="form-horizontal" role="form" action="messu-broadcast.php" method="post">
+		{include file='access/include_ticket.tpl'}
 		<div class="form-group">
 			<label class="col-sm-2 control-label" for="broadcast-group">{tr}Group{/tr}</label>
 			<div class="col-sm-10">
@@ -70,7 +72,7 @@
 		</div>
 		<div class="form-group">
 			<div class="col-sm-10 col-sm-push-2">
-				<input type="submit" class="btn btn-primary" name="preview" value="{tr}Send{/tr}">
+				<input type="submit" class="btn btn-primary timeout" name="preview" value="{tr}Send{/tr}">
 			</div>
 		</div>
 	</form>
