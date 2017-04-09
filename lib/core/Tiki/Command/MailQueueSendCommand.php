@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: MailInPollCommand.php 50599 2014-03-31 21:22:59Z lphuberdeau $
+// $Id$
 
 namespace Tiki\Command;
 

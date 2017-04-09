@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: Controller.php 55927 2015-07-26 16:48:44Z jonnybradley $
+// $Id$
 
 class Services_Wiki_StructureController
 {

@@ -1,4 +1,4 @@
-{* $Id: $ *}
+{* $Id$ *}
 <span class="blogactions">
 	{if $prefs.javascript_enabled != 'y'}
 		{$js = 'n'}

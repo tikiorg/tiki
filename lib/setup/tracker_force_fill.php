@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: lib/setup/tracker_force_fill.php 57351 2016-02-23 09:03:22Z pat-proulx $
+// $Id$
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) != FALSE) {
 	header('location: index.php');
 	exit;

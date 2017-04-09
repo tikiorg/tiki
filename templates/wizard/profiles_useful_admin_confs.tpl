@@ -1,4 +1,4 @@
-{* $Id: admin_profiles_useful.tpl 50541 2014-03-28 11:17:08Z jonnybradley $ *}
+{* $Id$ *}
 
 <div class="media">
 	<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Configuration Profiles Wizard{/tr}" title="{tr}Configuration Profiles Wizard{/tr}" >

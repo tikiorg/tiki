@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: IndexRebuildCommand.php 59965 2016-10-12 19:21:30Z rjsmelo $
+// $Id$
 
 namespace Tiki\Command;
 

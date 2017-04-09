@@ -1,4 +1,4 @@
-{* $Id: feedback.tpl 56990 2015-12-13 15:42:04Z lindonb $ *}
+{* $Id$ *}
 {if $fb|count > 0}
 	{if $fb|count == 1}
 		{$title = "{tr}The following change has been applied{/tr}"}

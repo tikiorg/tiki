@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: ActivityStreamRule.php 47432 2013-09-12 18:27:41Z lphuberdeau $
+// $Id$
 
 class Tiki_Profile_InstallHandler_Goal extends Tiki_Profile_InstallHandler
 {

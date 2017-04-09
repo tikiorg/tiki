@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: CacheClearCommand.php 50250 2014-03-07 14:39:32Z lphuberdeau $
+// $Id$
 
 namespace Tiki\Command;
 

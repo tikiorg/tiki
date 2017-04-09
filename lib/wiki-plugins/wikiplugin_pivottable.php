@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin-pivottable.php 57956 2016-03-17 19:58:12Z jonnybradley $
+// $Id$
 
 function wikiplugin_pivottable_info()
 {

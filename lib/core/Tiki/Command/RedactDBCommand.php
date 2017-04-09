@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: InstallCommand.php 45724 2013-04-26 17:33:23Z changi67 $
+// $Id$
 
 namespace Tiki\Command;
 

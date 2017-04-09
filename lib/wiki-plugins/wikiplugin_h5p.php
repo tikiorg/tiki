@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin_googleanalytics.php 57962 2016-03-17 20:02:39Z jonnybradley $
+// $Id$
 
 function wikiplugin_h5p_info()
 {
