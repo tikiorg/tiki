@@ -102,6 +102,7 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 		}
 		$cacheSeconds = $this->getOption('cacheSeconds');
 		$lastRefreshed = empty($oldData) ? 0 : strtotime($oldData['tiki_updated']);
+		unset($oldData['tiki_updated']);
 		$itemId = 0;	// itemId once saved after updating data
 
 		if (! $cacheSeconds || TikiLib::lib('tiki')->now > $lastRefreshed + $cacheSeconds) {
@@ -181,25 +182,38 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 
 			} else if (empty($context['search_render']) || $context['search_render'] !== 'y') {
 
-				$response->data['tiki_updated'] = gmdate('c');
-
-				$thisField = $definition->getField($this->getConfiguration('fieldId'));
-				$thisField['value'] = json_encode($response->data);
-
-				if ($thisField['value'] != $oldValue) {
-					if (strlen($thisField['value']) < 65535) {	// Limit to size of TEXT field
-						$itemId = TikiLib::lib('trk')->replace_item(
-							$definition->getConfiguration('trackerId'),
-							empty($this->getItemId()) ? $_REQUEST['itemId'] : $this->getItemId(),
-							['data' => [$thisField]]
-						);
-						$err = '';
-					} else {
-						$err = tr(' (data too long to store)');
+				$newData = $response->data;
+				if (strlen(json_encode($newData)) >= 65535) {	// Limit to size of TEXT field
+					// try and render the json template if it's set to index output type
+					$template = $webservice->getTemplate($tpl);
+					if ($template->output === 'index') {
+						$newData = $template->render($response, 'index');
 					}
+
+					if (strlen(json_encode($newData)) >= 65535) {	// Limit to size of TEXT field
+						$newData = $oldData;
+						Feedback::error(
+							tr('Data too long for Webservice field %0 with %1',
+								$this->getConfiguration('permName'),
+								http_build_query($ws_params)
+							));
+					}
+				}
+
+				if ($newData != $oldData) {
+
+					$thisField = $definition->getField($this->getConfiguration('fieldId'));
+					$thisField['value']['tiki_updated'] = gmdate('c');
+					$thisField['value'] = json_encode($newData);
+
+					$itemId = TikiLib::lib('trk')->replace_item(
+						$definition->getConfiguration('trackerId'),
+						empty($this->getItemId()) ? $_REQUEST['itemId'] : $this->getItemId(),
+						['data' => [$thisField]]
+					);
+
 					if (!$itemId) {
-						Feedback::error(tr('Error updating Webservice field %0' . $err, $this->getConfiguration('permName')),
-							'session');
+						Feedback::error(tr('Error updating Webservice field %0', $this->getConfiguration('permName')),'session');
 						// try and restore previous data
 						$response->data = json_decode($this->getValue());
 					}
