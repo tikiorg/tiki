@@ -14,56 +14,58 @@ $messulib = TikiLib::lib('message');
 $access->check_user($user);
 $access->check_feature('feature_messages');
 $access->check_permission('tiki_p_messages');
+$access->checkAuthenticity();
 $maxRecords = $messulib->get_user_preference($user, 'maxRecords', 20);
-// Delete messages if the delete button was pressed
-if (isset($_REQUEST["delete"]) && isset($_REQUEST["msg"])) {
-	check_ticket('messu-archive');
-	foreach (array_keys($_REQUEST["msg"]) as $msg) {
-		$messulib->delete_message($user, $msg, 'archive');
-	}
-}
-// Download messages if the download button was pressed
-if (isset($_REQUEST["download"])) {
-	check_ticket('messu-archive');
-	// if message ids are handed over, use them:
-	if (isset($_REQUEST["msg"])) {
+
+
+$sort_mode = 'date_desc';
+$offset = 0;
+$find = '';
+
+if ($access->ticketMatch()) {
+	// Delete messages if the delete button was pressed
+	if (isset($_REQUEST["delete"]) && isset($_REQUEST["msg"])) {
 		foreach (array_keys($_REQUEST["msg"]) as $msg) {
-			$tmp = $messulib->get_message($user, $msg, 'archive');
-			$items[] = $tmp;
+			$messulib->delete_message($user, $msg, 'archive');
 		}
-	} else {
-		$items = $messulib->get_messages($user, 'archive', '', '', '');
 	}
-	$smarty->assign_by_ref('items', $items);
-	header("Content-Disposition: attachment; filename=tiki-msg-archive-" . time("U") . ".txt ");
-	$smarty->display('messu-download.tpl', null, null, null, 'application/download');
-	die;
-}
-if (isset($_REQUEST['filter'])) {
-	if ($_REQUEST['flags'] != '') {
-		$parts = explode('_', $_REQUEST['flags']);
-		$_REQUEST['flag'] = $parts[0];
-		$_REQUEST['flagval'] = $parts[1];
+	// Download messages if the download button was pressed
+	if (isset($_REQUEST["download"])) {
+		// if message ids are handed over, use them:
+		if (isset($_REQUEST["msg"])) {
+			foreach (array_keys($_REQUEST["msg"]) as $msg) {
+				$tmp = $messulib->get_message($user, $msg, 'archive');
+				$items[] = $tmp;
+			}
+		} else {
+			$items = $messulib->get_messages($user, 'archive', '', '', '');
+		}
+		$smarty->assign_by_ref('items', $items);
+		header("Content-Disposition: attachment; filename=tiki-msg-archive-" . time("U") . ".txt ");
+		$smarty->display('messu-download.tpl', null, null, null, 'application/download');
+		die;
+	}
+	if (isset($_REQUEST['filter'])) {
+		if ($_REQUEST['flags'] != '') {
+			$parts = explode('_', $_REQUEST['flags']);
+			$_REQUEST['flag'] = $parts[0];
+			$_REQUEST['flagval'] = $parts[1];
+		}
+	}
+	if (isset($_REQUEST["sort_mode"])) {
+		$sort_mode = $_REQUEST["sort_mode"];
+	}
+	if (isset($_REQUEST["offset"])) {
+		$offset = $_REQUEST["offset"];
+	}
+	if (isset($_REQUEST["find"])) {
+		$find = $_REQUEST["find"];
 	}
 }
+
 if (!isset($_REQUEST["priority"])) $_REQUEST["priority"] = '';
 if (!isset($_REQUEST["flag"])) $_REQUEST["flag"] = '';
 if (!isset($_REQUEST["flagval"])) $_REQUEST["flagval"] = '';
-if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'date_desc';
-} else {
-	$sort_mode = $_REQUEST["sort_mode"];
-}
-if (!isset($_REQUEST["offset"])) {
-	$offset = 0;
-} else {
-	$offset = $_REQUEST["offset"];
-}
-if (isset($_REQUEST["find"])) {
-	$find = $_REQUEST["find"];
-} else {
-	$find = '';
-}
 $smarty->assign_by_ref('flag', $_REQUEST['flag']);
 $smarty->assign_by_ref('priority', $_REQUEST['priority']);
 $smarty->assign_by_ref('flagval', $_REQUEST['flagval']);
@@ -90,6 +92,5 @@ $smarty->assign('cellsize', $cellsize);
 $smarty->assign('percentage', $percentage);
 include_once ('tiki-section_options.php');
 include_once ('tiki-mytiki_shared.php');
-ask_ticket('messu-archive');
 $smarty->assign('mid', 'messu-archive.tpl');
 $smarty->display("tiki.tpl");

@@ -15,6 +15,7 @@
 	{/if}
 
 <form action="messu-archive.php" method="get" class="form-inline margin-bottom-md">
+	{include file='access/include_ticket.tpl'}
 	<div class="form-group">
 	<label for="mess-mailmessages">{tr}Messages:{/tr}</label>
 	<select name="flags" id="mess-mailmessages" class="form-control">
@@ -40,11 +41,12 @@
 	<label for="mess-mailcont">{tr}Containing:{/tr}</label>
 	<input type="text" name="find" id="mess-mailcont" value="{$find|escape}" class="form-control">
 		</div>
-	<input type="submit" class="btn btn-default btn-sm" name="filter" value="{tr}Filter{/tr}">
+	<input type="submit" class="btn btn-default btn-sm timeout" name="filter" value="{tr}Filter{/tr}">
 </form>
 
 
 <form action="messu-archive.php" method="post" name="form_messu_archive">
+	{include file='access/include_ticket.tpl'}
 	<div class="form-group">
 	<input type="hidden" name="offset" value="{$offset|escape}">
 	<input type="hidden" name="find" value="{$find|escape}">
@@ -52,8 +54,8 @@
 	<input type="hidden" name="flag" value="{$flag|escape}">
 	<input type="hidden" name="flagval" value="{$flagval|escape}">
 	<input type="hidden" name="priority" value="{$priority|escape}">
-	<input type="submit" class="btn btn-warning btn-sm" name="delete" value="{tr}Delete{/tr}">
-	<input type="submit" class="btn btn-default btn-sm" name="download" value="{tr}Download{/tr}">
+	<input type="submit" class="btn btn-warning btn-sm timeout" name="delete" value="{tr}Delete{/tr}">
+	<input type="submit" class="btn btn-default btn-sm timeout" name="download" value="{tr}Download{/tr}">
 		</div>
 {jq notonready=true}
 var CHECKBOX_LIST = [{{section name=user loop=$items}'msg[{$items[user].msgId}]'{if not $smarty.section.user.last},{/if}{/section}}];
