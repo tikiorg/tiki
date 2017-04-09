@@ -47,7 +47,7 @@ else {
 
 $smarty->assign('groups', $groups);
 
-if (isset($_REQUEST['send']) || isset($_REQUEST['preview'])) {
+if ((isset($_REQUEST['send']) || isset($_REQUEST['preview'])) && $access->ticketMatch()) {
 	$message = '';
 	// Validation:
 	// must have a subject or body non-empty (or both)
