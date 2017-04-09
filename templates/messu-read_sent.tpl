@@ -25,15 +25,16 @@
 			</div>
 			<div class="col-xs-4 col-sm-2">
 				{if $msg.isFlagged eq 'y'}
-					<a class="btn btn-link" href="messu-read_sent.php?offset={$offset}&amp;action=isFlagged&amp;actionval=n&amp;msgId={$msgId}&amp;sort_mode={$sort_mode}&amp;find={$find|escape:"url"}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}">{tr}<i class="fa fa-flag" aria-hidden="true"></i>{/tr}</a>
+					<a class="btn btn-link timeout" href="messu-read_sent.php?offset={$offset}&amp;action=isFlagged&amp;actionval=n&amp;msgId={$msgId}&amp;sort_mode={$sort_mode}&amp;find={$find|escape:"url"}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}">{tr}<i class="fa fa-flag" aria-hidden="true"></i>{/tr}</a>
 				{else}
-					<a class="btn btn-link" href="messu-read_sent.php?offset={$offset}&amp;action=isFlagged&amp;actionval=y&amp;msgId={$msgId}&amp;sort_mode={$sort_mode}&amp;find={$find|escape:"url"}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}">{tr}<i class="fa fa-flag-o" aria-hidden="true"></i>{/tr}</a>
+					<a class="btn btn-link timeout" href="messu-read_sent.php?offset={$offset}&amp;action=isFlagged&amp;actionval=y&amp;msgId={$msgId}&amp;sort_mode={$sort_mode}&amp;find={$find|escape:"url"}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}">{tr}<i class="fa fa-flag-o" aria-hidden="true"></i>{/tr}</a>
 				{/if}
 			</div>
 		</div>
 	</div>
 	<div class="col-xs-3 col-xs-offset-4 col-md-2 col-md-offset-5" style="padding-top: 4px;">
 		<form method="post" action="messu-read_sent.php">
+			{include file='access/include_ticket.tpl'}
 			<input type="hidden" name="offset" value="{$offset|escape}">
 			<input type="hidden" name="find" value="{$find|escape}">
 			<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
