@@ -44,6 +44,7 @@
 
 
 <form class="form-inline" action="messu-mailbox.php" method="post" name="form_messu_mailbox">
+	{include file='access/include_ticket.tpl'}
 	<input type="hidden" name="offset" value="{$offset|escape}">
 	<input type="hidden" name="find" value="{$find|escape}">
 	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
@@ -90,16 +91,16 @@
 		<div class="form-group">
 			{tr}Perform action with checked:{/tr}
 
-		<input type="submit" class="btn btn-warning btn-sm" name="delete" value="{tr}Delete{/tr}">
-		<input type="submit" class="btn btn-default btn-sm" name="archive" value="{tr}Archive{/tr}">
-		<input type="submit" class="btn btn-default btn-sm" name="download" value="{tr}Download{/tr}">
+		<input type="submit" class="btn btn-warning btn-sm timeout" name="delete" value="{tr}Delete{/tr}">
+		<input type="submit" class="btn btn-default btn-sm timeout" name="archive" value="{tr}Archive{/tr}">
+		<input type="submit" class="btn btn-default btn-sm timeout" name="download" value="{tr}Download{/tr}">
 		<select name="action" class="form-control">
 			<option value="isRead_y">{tr}Mark as read{/tr}</option>
 			<option value="isRead_n">{tr}Mark as unread{/tr}</option>
 			<option value="isFlagged_y">{tr}Mark as flagged{/tr}</option>
 			<option value="isFlagged_n">{tr}Mark as unflagged{/tr}</option>
 		</select>
-		<input type="submit" class="btn btn-default btn-sm" name="mark" value="{tr}Mark{/tr}">
+		<input type="submit" class="btn btn-default btn-sm timeout" name="mark" value="{tr}Mark{/tr}">
 		</div>
 	{/if}
 </form>
