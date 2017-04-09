@@ -14,6 +14,7 @@ function prefs_messu_list()
 			'type' => 'text',
 			'size' => '10',
 			'filter' => 'digits',
+			'units' => tra('messages'),
 			'dependencies' => array(
 				'feature_messages',
 			),
@@ -25,6 +26,7 @@ function prefs_messu_list()
 			'type' => 'text',
 			'size' => '10',
 			'filter' => 'digits',
+			'units' => tra('messages'),
 			'dependencies' => array(
 				'feature_messages',
 			),
@@ -36,6 +38,7 @@ function prefs_messu_list()
 			'type' => 'text',
 			'size' => '10',
 			'filter' => 'digits',
+			'units' => tra('messages'),
 			'dependencies' => array(
 				'feature_messages',
 			),
@@ -47,6 +50,7 @@ function prefs_messu_list()
 			'type' => 'text',
 			'size' => '10',
 			'filter' => 'digits',
+			'units' => tra('characters'),
 			'dependencies' => array(
 				'feature_messages',
 			),

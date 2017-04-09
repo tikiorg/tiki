@@ -14,6 +14,7 @@ function prefs_max_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'units' => tra('characters'),
 			'default' => 50,
 		),
 	);	

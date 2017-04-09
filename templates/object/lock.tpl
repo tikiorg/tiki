@@ -1,4 +1,4 @@
-{* $Id: $ *}
+{* $Id$ *}
 {strip}
 <span class="lock_block">
 	<a class="lock_button" id="lock_{$data.instance}" data-type="{$data.type}" data-object="{$data.object}" data-is_locked="{$data.is_locked}"

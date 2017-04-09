@@ -50,6 +50,7 @@ function prefs_memcache_list()
 			'type' => 'text',
 			'size' => 10,
 			'filter' => 'digits',
+			'units' => tra('seconds'),
 			'default' => 3600,
 			'extensions' => array( 'memcache' ),
 		),

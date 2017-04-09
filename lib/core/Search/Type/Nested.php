@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: MultivaluePlain.php 57970 2016-03-17 20:08:22Z jonnybradley $
+// $Id$
 
 class Search_Type_Nested implements Search_Type_Interface
 {

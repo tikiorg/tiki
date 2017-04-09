@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: TranslationOfTest.php 47827 2013-10-01 19:14:28Z alain_desilets $
+// $Id$
 
 require_once('lib/test/TestRunnerWithBaseline.php');
 require_once('lib/debug/Tracer.php');

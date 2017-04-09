@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin_aname.php 56244 2015-09-19 18:30:16Z lindonb $
+// $Id$
 
 function wikiplugin_chartjs_info()
 {

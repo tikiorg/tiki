@@ -26,6 +26,7 @@ function prefs_session_list()
 			'hint' => tra('Expressed as minutes. This is the minimum time logged in. To be the exact time, adjustments must be made in .htaccess session.gc_probability and session.gc_divisor to 1. Be careful - changing the probability may affect server performance.'),
 			'type' => 'text',
 			'filter' => 'digits',
+			'units' => tra('minutes'),
 			'perspective' => false,
 			'size' => '4',
 			'default' => 10080,

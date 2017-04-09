@@ -60,6 +60,7 @@ function prefs_freetags_list()
 			'type' => 'text',
 			'size' => '5',
 			'filter' => 'digits',
+			'units' => tra('tags'),
 			'default' => '100',
 		),
 		'freetags_show_middle' => array(
@@ -80,6 +81,7 @@ function prefs_freetags_list()
 			'type' => 'text',
 			'size' => '4',
 			'filter' => 'digits',
+			'units' => tra('tags'),
 			'default' => '10',
 		),
 		'freetags_normalized_valid_chars' => array(

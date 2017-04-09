@@ -23,6 +23,7 @@ function prefs_newsletter_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'units' => tra('seconds'),
 			'default' => 60,
 		),
 		'newsletter_batch_size' => array(
@@ -31,6 +32,7 @@ function prefs_newsletter_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'units' => tra('emails'),
 			'default' => 5,
 		),
 		'newsletter_external_client' => array(

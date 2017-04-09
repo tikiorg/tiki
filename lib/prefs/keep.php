@@ -13,7 +13,7 @@ function prefs_keep_list()
 			'description' => tra('Never delete versions younger than (? days), default=1'),
 			'type' => 'text',
 			'size' => '5',
-			'shorthint' => tra('days'),
+			'units' => tra('days'),
 			'default' => 1,
 		),
 	);	

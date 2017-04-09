@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: Files.php 50223 2014-03-05 19:11:54Z lphuberdeau $
+// $Id$
 
 class Tracker_Field_Articles extends Tracker_Field_Abstract
 {

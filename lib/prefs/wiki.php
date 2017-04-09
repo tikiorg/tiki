@@ -308,6 +308,7 @@ function prefs_wiki_list($partial = false)
 			'name' => tra('Default number per page'),
 			'type' => 'text',
 			'size' => '5',
+			'units' => tra('comments'),
 			'default' => 10,
 		),
 		'wiki_comments_default_ordering' => array(
@@ -658,6 +659,7 @@ function prefs_wiki_list($partial = false)
 			'description' => tr('Offset for table of contents. Useful when there is a fixed navbar (Default is 10). If used with inline TOC, will behave as a top margin.'),
 			'type' => 'text',
 			'filter' => 'digits',
+			'units' => tra('pixels'),
 			'default' => '10',
 			'dependencies' => array(
 				'wiki_auto_toc',

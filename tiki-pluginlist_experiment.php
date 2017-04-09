@@ -6,7 +6,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: tiki-editpage.php 59608 2016-09-06 16:01:59Z jonnybradley $
+// $Id$
 
 global $prefs;
 

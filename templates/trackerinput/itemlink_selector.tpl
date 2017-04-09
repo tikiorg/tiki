@@ -1,4 +1,4 @@
-{* $Id: itemlink.tpl 51847 2014-07-04 18:08:48Z lphuberdeau $ *}
+{* $Id$ *}
 <div class="item-link">
 	{object_selector _id=$field.ins_id _simplevalue=$field.value _simplename=$field.ins_id _placeholder=$data.placeholder type="trackeritem" tracker_id=$field.options_map.trackerId tracker_status=$data.status _format=$data.format}
 	{if $field.options_map.addItems and $data.createTrackerItems}

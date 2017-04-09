@@ -1,4 +1,4 @@
-{* $Id: tiki-searchindex.tpl 42331 2012-07-10 15:05:01Z jonnybradley $ *}
+{* $Id$ *}
 {extends 'layout_view.tpl'}
 
 {block name=title}

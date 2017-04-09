@@ -28,11 +28,12 @@ function prefs_article_list()
 			'type' => 'text',
 			'size' => '5',
 			'filter' => 'digits',
+			'units' => tra('comments'),
 			'default' => 10,
 		),
 		'article_comments_default_ordering' => array(
 			'name' => tra('Default Ordering'),
-			'description' => tra('sSets the default ordering filter for comments (default = points_desc)'),
+			'description' => tra('Sets the default ordering filter for comments (default = points_desc)'),
 			'type' => 'list',
 			'options' => $comment_sort_orders,
 			'default' => 'points_desc',
@@ -70,7 +71,8 @@ function prefs_article_list()
 			'type' => 'text',
 			'size' => 3,
 			'filter' => 'int',
-			'hint' => tra('Number of pixels, "0" for no maximum'),
+			'units' => tra('pixels'),
+			'hint' => tra('"0" for no maximum'),
 			'default' => '0',
 		),
 		'article_image_size_y' => array(
@@ -79,7 +81,8 @@ function prefs_article_list()
 			'type' => 'text',
 			'size' => 3,
 			'filter' => 'int',
-			'hint' => tra('Number of pixels, "0" for no maximum') ,
+			'units' => tra('pixels'),
+			'hint' => tra('"0" for no maximum') ,
 			'default' => '0',
 		),
 		'article_default_list_image_size_x' => array(
@@ -88,7 +91,8 @@ function prefs_article_list()
 			'type' => 'text',
 			'size' => 3,
 			'filter' => 'int',
-			'hint' => tra('Number of pixels ("0" to default to the view mode maximum)'),
+			'units' => tra('pixels'),
+			'hint' => tra('"0" to default to the view mode maximum'),
 			'default' => '0',
 		),
 		'article_default_list_image_size_y' => array(
@@ -97,7 +101,8 @@ function prefs_article_list()
 			'type' => 'text',
 			'size' => 3,
 			'filter' => 'int',
-			'hint' => tra('Number of pixels ("0" to default to the view mode maximum)'),
+			'units' => tra('pixels'),
+			'hint' => tra('"0" to default to the view mode maximum'),
 			'default' => '0',
 		),
 		'article_image_file_size_max' => array(
@@ -106,6 +111,7 @@ function prefs_article_list()
 			'type' => 'text',
 			'size' => '10',
 			'filter' => 'digits',
+			'units' => tra('kilobytes'),
 			'default' => 500000,
 		),
 		'article_custom_attributes' => array(

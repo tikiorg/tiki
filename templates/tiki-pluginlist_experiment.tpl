@@ -1,4 +1,4 @@
-{* $Id: tiki-listpages.tpl 57976 2016-03-18 11:35:53Z jonnybradley $ *}
+{* $Id$ *}
 {extends 'layout_edit.tpl'}
 {title admpage="wiki" help="Using Wiki Pages#List_Pages"}{tr}Pages{/tr}{/title}
 

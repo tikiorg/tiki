@@ -1,4 +1,4 @@
-{* $Id: $ *}
+{* $Id$ *}
 
 {if $prefs.feature_socialnetworks eq 'y'}
 	{tikimodule error=$module_params.error title=$tpl_module_title name="last_tweets" flip=$module_params.flip rows=$module_params.rows decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}

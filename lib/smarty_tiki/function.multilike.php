@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: function.rating.php 53803 2015-02-06 00:42:50Z jyhem $
+// $Id$
 
 function smarty_function_multilike( $params, $smarty )
 {

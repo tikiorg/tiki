@@ -6,7 +6,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: tiki-socialnetworks.php 53802 2015-02-06 00:11:35Z jyhem $
+// $Id$
 
 $section = 'mytiki';
 require_once ('tiki-setup.php');

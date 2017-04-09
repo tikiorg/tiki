@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: SortException.php 55352 2015-05-06 20:39:40Z nkoth $
+// $Id$
 
 class Search_Elastic_QueryParsingException extends Search_Elastic_Exception
 {

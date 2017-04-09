@@ -232,6 +232,7 @@ function prefs_feed_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'units' => tra('items'),
 			'default' => 10,
 		),
 		'feed_blogs_max' => array(
@@ -240,6 +241,7 @@ function prefs_feed_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'units' => tra('items'),
 			'default' => 10,
 		),
 		'feed_blog_max' => array(
@@ -248,6 +250,7 @@ function prefs_feed_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'units' => tra('items'),
 			'default' => 10,
 		),
 		'feed_image_galleries_max' => array(
@@ -256,6 +259,7 @@ function prefs_feed_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'units' => tra('items'),
 			'default' => 10,
 		),
 		'feed_image_gallery_max' => array(
@@ -264,6 +268,7 @@ function prefs_feed_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'units' => tra('items'),
 			'default' => 10,
 		),
 		'feed_file_galleries_max' => array(
@@ -272,6 +277,7 @@ function prefs_feed_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'units' => tra('items'),
 			'default' => 10,
 		),
 		'feed_file_gallery_max' => array(
@@ -280,6 +286,7 @@ function prefs_feed_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'units' => tra('items'),
 			'default' => 10,
 		),
 		'feed_wiki_max' => array(
@@ -288,6 +295,7 @@ function prefs_feed_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'units' => tra('items'),
 			'default' => 10,
 		),
 		'feed_forums_max' => array(
@@ -296,6 +304,7 @@ function prefs_feed_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'units' => tra('items'),
 			'default' => 10,
 		),
 		'feed_forum_max' => array(
@@ -304,6 +313,7 @@ function prefs_feed_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'units' => tra('items'),
 			'default' => 10,
 		),
 		'feed_tracker_max' => array(
@@ -312,6 +322,7 @@ function prefs_feed_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'units' => tra('items'),
 			'default' => 10,
 		),
 		'feed_calendar_max' => array(
@@ -320,6 +331,7 @@ function prefs_feed_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'units' => tra('items'),
 			'default' => 10,
 		),
 		'feed_directories_max' => array(
@@ -328,6 +340,7 @@ function prefs_feed_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'units' => tra('items'),
 			'default' => 10,
 		),
 		'feed_shoutbox_max' => array(
@@ -336,6 +349,7 @@ function prefs_feed_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'units' => tra('items'),
 			'default' => '',
 		),
 		'feed_articles_showAuthor' => array(

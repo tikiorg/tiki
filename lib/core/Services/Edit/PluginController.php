@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: Controller.php 61553 2017-03-07 16:50:53Z jonnybradley $
+// $Id$
 
 /**
  * Class Services_Edit_PluginController

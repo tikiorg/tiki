@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: Controller.php 59950 2016-10-11 09:18:39Z kroky6 $
+// $Id$
 
 /**
  * Class Services_Annotator_Controller

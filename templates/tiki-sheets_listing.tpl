@@ -1,4 +1,4 @@
-{* $Id: tiki-sheets.tpl 35450 2011-07-17 19:03:36Z changi67 $ *}
+{* $Id$ *}
 {* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
 {if $prefs.javascript_enabled !== 'y'}
 	{$js = 'n'}

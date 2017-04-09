@@ -1,4 +1,4 @@
-{* $Id: include_general.tpl 59571 2016-09-01 07:37:31Z yonixxx $ *}
+{* $Id$ *}
 <form class="form-horizontal" action="tiki-admin.php?page=print" class="admin" method="post">
 	{include file='access/include_ticket.tpl'}
 	{include file='admin/include_apply_top.tpl'}

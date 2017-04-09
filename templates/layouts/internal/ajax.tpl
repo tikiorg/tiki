@@ -1,4 +1,4 @@
-{* $Id: layout_view.tpl 48366 2013-11-08 16:12:24Z lphuberdeau $ *}<!DOCTYPE html>
+{* $Id$ *}<!DOCTYPE html>
 {if ! $plain}
 	{block name=title}{/block}
 {/if}

@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: block.tabset.php 45356 2013-03-29 17:58:39Z lphuberdeau $
+// $Id$
 
 /**
  * Smarty plugin
