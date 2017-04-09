@@ -45,24 +45,24 @@ if ($access->ticketMatch()) {
 		$smarty->display('messu-download.tpl', null, null, null, 'application/download');
 		die;
 	}
-	if (isset($_REQUEST['filter'])) {
-		if ($_REQUEST['flags'] != '') {
-			$parts = explode('_', $_REQUEST['flags']);
-			$_REQUEST['flag'] = $parts[0];
-			$_REQUEST['flagval'] = $parts[1];
-		}
-	}
-	if (isset($_REQUEST["sort_mode"])) {
-		$sort_mode = $_REQUEST["sort_mode"];
-	}
-	if (isset($_REQUEST["offset"])) {
-		$offset = $_REQUEST["offset"];
-	}
-	if (isset($_REQUEST["find"])) {
-		$find = $_REQUEST["find"];
-	}
 }
 
+if (isset($_REQUEST['filter'])) {
+	if ($_REQUEST['flags'] != '') {
+		$parts = explode('_', $_REQUEST['flags']);
+		$_REQUEST['flag'] = $parts[0];
+		$_REQUEST['flagval'] = $parts[1];
+	}
+}
+if (isset($_REQUEST["sort_mode"])) {
+	$sort_mode = $_REQUEST["sort_mode"];
+}
+if (isset($_REQUEST["offset"])) {
+	$offset = $_REQUEST["offset"];
+}
+if (isset($_REQUEST["find"])) {
+	$find = $_REQUEST["find"];
+}
 if (!isset($_REQUEST["priority"])) $_REQUEST["priority"] = '';
 if (!isset($_REQUEST["flag"])) $_REQUEST["flag"] = '';
 if (!isset($_REQUEST["flagval"])) $_REQUEST["flagval"] = '';
