@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: ArrayTemplate.php 60099 2016-11-01 20:09:05Z kroky6 $
+// $Id: wrong.php 60099 2016-11-01 20:09:05Z kroky6 $
 
 class Search_Formatter_Plugin_ArrayTemplate implements Search_Formatter_Plugin_Interface
 {
