@@ -14,11 +14,23 @@ $messulib = TikiLib::lib('message');
 $access->check_user($user);
 $access->check_feature('feature_messages');
 $access->check_permission('tiki_p_messages');
+$access->checkAuthenticity();
 
-if (isset($_REQUEST["delete"])) {
-	check_ticket('messu-read_archive');
-	$messulib->delete_message($user, $_REQUEST['msgdel'], 'archive');
+if (!isset($_REQUEST['msgId']) || $_REQUEST['msgId'] == 0) {
+	$smarty->assign('legend', tra("No more messages"));
+	$smarty->assign('mid', 'messu-read_archive.tpl');
+	$smarty->display("tiki.tpl");
+	die;
 }
+
+if ($access->ticketMatch()) {
+	if (isset($_REQUEST['action'])) {
+		$messulib->flag_message($user, $_REQUEST['msgId'], $_REQUEST['action'], $_REQUEST['actionval'], 'archive');
+	}
+	if (isset($_REQUEST["delete"])) {
+		$messulib->delete_message($user, $_REQUEST['msgdel'], 'archive');
+	}}
+
 $smarty->assign('sort_mode', $_REQUEST['sort_mode']);
 $smarty->assign('find', $_REQUEST['find']);
 $smarty->assign('flag', $_REQUEST['flag']);
@@ -26,15 +38,7 @@ $smarty->assign('offset', $_REQUEST['offset']);
 $smarty->assign('flagval', $_REQUEST['flagval']);
 $smarty->assign('priority', $_REQUEST['priority']);
 $smarty->assign('legend', '');
-if (!isset($_REQUEST['msgId']) || $_REQUEST['msgId'] == 0) {
-	$smarty->assign('legend', tra("No more messages"));
-	$smarty->assign('mid', 'messu-read_archive.tpl');
-	$smarty->display("tiki.tpl");
-	die;
-}
-if (isset($_REQUEST['action'])) {
-	$messulib->flag_message($user, $_REQUEST['msgId'], $_REQUEST['action'], $_REQUEST['actionval'], 'archive');
-}
+
 // Using the sort_mode, flag, flagval and find get the next and prev messages
 $smarty->assign('msgId', $_REQUEST['msgId']);
 $next = $messulib->get_next_message($user, $_REQUEST['msgId'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['flag'], $_REQUEST['flagval'], $_REQUEST['priority'], 'archive');
@@ -46,7 +50,6 @@ $messulib->flag_message($user, $_REQUEST['msgId'], 'isRead', 'y', 'archive');
 // Get the message and assign its data to template vars
 $msg = $messulib->get_message($user, $_REQUEST['msgId'], 'archive');
 $smarty->assign('msg', $msg);
-ask_ticket('messu-read_archive');
 include_once ('tiki-section_options.php');
 include_once ('tiki-mytiki_shared.php');
 $smarty->assign('mid', 'messu-read_archive.tpl');
