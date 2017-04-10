@@ -901,16 +901,16 @@
         },
         {
             "name": "jcbrand/converse.js",
-            "version": "v3.0.0",
+            "version": "v3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jcbrand/converse.js.git",
-                "reference": "06668d8733a463ff621ae82a7c05270fb98d7d2e"
+                "reference": "21bc95a9f37948c18533722323f053ffa7d4225a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jcbrand/converse.js/zipball/06668d8733a463ff621ae82a7c05270fb98d7d2e",
-                "reference": "06668d8733a463ff621ae82a7c05270fb98d7d2e",
+                "url": "https://api.github.com/repos/jcbrand/converse.js/zipball/21bc95a9f37948c18533722323f053ffa7d4225a",
+                "reference": "21bc95a9f37948c18533722323f053ffa7d4225a",
                 "shasum": ""
             },
             "type": "library",
@@ -926,7 +926,7 @@
                 "presence",
                 "xmpp"
             ],
-            "time": "2017-03-05T10:39:15+00:00"
+            "time": "2017-04-04T15:26:06+00:00"
         },
         {
             "name": "jquery/jquery-s5",
@@ -4598,7 +4598,7 @@
                 "testing",
                 "unit"
             ],
-            "time": "2016-03-14T11:52:02+00:00"
+            "time": "2016-03-14 11:52:02"
         },
         {
             "name": "doctrine/instantiator",
