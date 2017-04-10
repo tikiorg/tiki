@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: function.rating_result_avg.php 49896 2014-02-15 15:12:00Z xavidp $
+// $Id$
 
 function smarty_function_rating_result_avg( $params, $smarty )
 {

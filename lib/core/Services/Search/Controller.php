@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: Controller.php 50732 2014-04-10 12:42:56Z lphuberdeau $
+// $Id$
 
 use \Symfony\Component\Console\Helper\FormatterHelper;
 

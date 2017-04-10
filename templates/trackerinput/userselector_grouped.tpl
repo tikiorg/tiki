@@ -1,4 +1,4 @@
-{* $Id: userselector_grouped.tpl 60482 2016-11-30 11:14:10Z kroky6 $ *}
+{* $Id$ *}
 <div class="row">
 	<div class="col-xs-6">
 		{tr}Filter by group:{/tr}

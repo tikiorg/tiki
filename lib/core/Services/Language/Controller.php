@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: Controller.php 53941 2015-02-15 09:52:55Z gezzzan $
+// $Id$
 
 class Services_Language_Controller
 {

@@ -2,7 +2,7 @@
  * Javascript translation definition
  * Example in Spanish
  * 
- * $Id: language.js 27909 2010-07-09 13:33:31Z jonnybradley $
+ * $Id$
  */
 
 lang = {
