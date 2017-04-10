@@ -1104,6 +1104,7 @@ Options:
 	--no-changelog-update	: do not update the '" . CHANGELOG_FILENAME . "' file
 	--no-copyright-update	: do not update the '" . COPYRIGHTS_FILENAME . "' file
 	--no-secdb		: do not update SecDB footprints
+	--only-secdb		: only generate a secdb database
 	--no-packaging		: do not build packages files
 	--no-tagging		: do not tag the release on the remote svn repository
 	--force-yes		: disable the interactive mode (same as replying 'y' to all steps)
