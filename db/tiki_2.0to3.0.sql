@@ -1,4 +1,4 @@
-# $Id: tiki_2.0to3.0.sql 13749 2008-07-19 23:57:28Z m_stef $
+# $Id$
 
 #
 # If you are using Tiki 3.x or later, this script will automatically be run by the installer when it detects that your data is from pre 3.x

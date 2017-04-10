@@ -1,4 +1,4 @@
-{* $Id: include_comments.tpl 44059 2012-11-22 16:13:24Z lphuberdeau $ *}
+{* $Id$ *}
 <form class="form-horizontal" action="tiki-admin.php?page=comments" method="post">
 	{include file='access/include_ticket.tpl'}
 	<div class="row">

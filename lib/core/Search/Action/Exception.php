@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: Exception.php 60872 2017-01-12 12:57:22Z kroky6 $
+// $Id$
 
 class Search_Action_Exception extends Search_Exception
 {

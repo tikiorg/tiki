@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: modifier.replacei.php 0000 2015-09-22 22:42:50Z minger0 $
+// $Id$
 
 /**
  * Smarty plugin

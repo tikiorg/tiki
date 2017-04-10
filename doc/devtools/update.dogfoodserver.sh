@@ -3,7 +3,7 @@
 #
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
 # Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-# $Id: update.dogfoodserver.sh 41172 2012-04-29 15:25:16Z changi67 $
+# $Id$
 
 # TODO: Handle local file gal and wiki_up
 # TODO: update to using new Console commands
