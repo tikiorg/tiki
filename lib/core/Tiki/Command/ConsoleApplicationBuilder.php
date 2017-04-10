@@ -9,6 +9,7 @@ namespace Tiki\Command;
 
 use Installer;
 use TikiInit;
+use TikiLib;
 
 /**
  * Builds a console application
@@ -46,6 +47,12 @@ class ConsoleApplicationBuilder
 				'action' => self::ACTION_NOT_AVAILABLE,
 				'commands' => [
 					new ConfigureCommand,
+				],
+			],
+			'checkIsSVN' => [
+				'action' => self::ACTION_NOT_AVAILABLE,
+				'commands' => [
+					new FixKeysCommand,
 				],
 			],
 			'checkConfigurationIsAvailable' => [
@@ -182,6 +189,18 @@ class ConsoleApplicationBuilder
 
 		return $result;
 	}
+
+	/**
+	 * Check if running in SVN mode
+	 * @return bool
+	 */
+	protected function checkIsSVN()
+	{
+		$result = TikiLib::lib('version')->svn === 'y' ? true : false;
+
+		return $result;
+	}
+
 
 	/**
 	 * Check if app reports as being fully installed, and DB don't require updates
