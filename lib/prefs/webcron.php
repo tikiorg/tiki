@@ -20,8 +20,8 @@ function prefs_webcron_list()
 			'type' => 'list',
 			'options' => array(
 				'url' => tra('Calling the Web Cron URL'),
-				'js' => tra('Adding Javascript that calls Web Cron'),
-				'both' => tra('URL and Javascript'),
+				'js' => tra('Adding JavaScript that calls Web Cron'),
+				'both' => tra('URL and JavaScript'),
 			),
 			'default' => 'both',
 		),
