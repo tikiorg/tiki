@@ -321,6 +321,7 @@ class TikiAccessLib extends TikiLib
 			} elseif (!empty($jitRequest['ticket'])) {
 				$ticket = $jitRequest->ticket->striptags();
 			}
+			$ticket = html_entity_decode($ticket);
 			if (!empty($ticket) && !empty($_SESSION['tickets'][$ticket])) {
 				$time = $_SESSION['tickets'][$ticket];
 				//successful match
