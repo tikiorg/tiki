@@ -9,7 +9,7 @@
 	{$libeg = ''}
 	{$liend = ''}
 {/if}
-{title help="Scheduler Management" admpage="login" url="tiki-admin_schedulers.php"}{tr}Scheduler{/tr}{/title}
+{title help="Scheduler" admpage="general" url="tiki-admin_schedulers.php"}{tr}Scheduler{/tr}{/title}
 <div class="t_navbar margin-bottom-md">
 	{if isset($schedulerinfo.id)}
 		{button href="?add=1" class="btn btn-default" _text="{tr}Add a new Scheduler{/tr}"}
