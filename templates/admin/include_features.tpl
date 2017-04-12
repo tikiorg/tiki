@@ -55,6 +55,8 @@
 			<fieldset>
 				<legend>{tr}Administrative features{/tr}</legend>
 				<div class="admin clearfix form-group featurelist">
+					{preference name=feature_stats}
+					{preference name=feature_actionlog}
 					<div class="adminoptionboxchild">
 						<fieldset>
 							<legend>{tr}Watches{/tr}</legend>
@@ -69,7 +71,6 @@
 							{preference name=feature_groupalert}
 						</fieldset>
 					</div>
-					{preference name=feature_actionlog}
 					{preference name=feature_banners}
 					{preference name=feature_contribution}
 					{preference name=feature_copyright}
