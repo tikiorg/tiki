@@ -43,8 +43,6 @@ class TikiDb_Pdo extends TikiDb
 
 	function qstr( $str ) // {{{
 	{
-		if( is_null($str) )
-			return 'NULL';
 		return $this->db->quote($str);
 	} // }}}
 

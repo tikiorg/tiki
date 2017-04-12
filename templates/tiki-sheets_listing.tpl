@@ -39,7 +39,7 @@
 				</a>{$liend}
 				{if $sheet.tiki_p_edit_sheet eq 'y'}
 					{$libeg}<a class="gallink tips" title=":{tr}Import{/tr}" href="tiki-import_sheet.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheet.sheetId}">
-						{icon name='import' _menu_text='y' _menu_icon='y' alt="{tr}Import{/tr}"}
+						{icon name='import' _menu_text='y' _menu_icon='y' alt="{tr}Imort{/tr}"}
 					</a>{$liend}
 				{/if}
 				{if $tiki_p_admin_sheet eq 'y'}

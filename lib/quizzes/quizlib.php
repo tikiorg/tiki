@@ -1201,7 +1201,7 @@ class HW_QuizQuestionMultipleChoice extends HW_QuizQuestion
     /**
      * @param $lines
      */
-    public function __construct($lines)
+    public function HW_QuizQuestionMultipleChoice($lines)
 	{
 		$this->from_text($lines);
 	}
@@ -1305,7 +1305,7 @@ class HW_QuizQuestionYesNo extends HW_QuizQuestion
     /**
      * @param $lines
      */
-    public function __construct($lines)
+    public function HW_QuizQuestionYesNo($lines)
 	{
 		$this->from_text($lines);
 	}
@@ -1395,7 +1395,7 @@ class Quiz
 	public $sEpilogue;
 	public $dbFields;
 
-	public function __construct()
+	public function Quiz()
 	{
 		global $user;
 		$userlib = TikiLib::lib('user');

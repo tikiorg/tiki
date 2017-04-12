@@ -140,9 +140,6 @@ function wikiplugin_playscorm($data, $params) {
 		$preurl = "$moodle_url/course/modedit.php?add=scorm&course=$moodle_course_id&section=0&return=0";
 		$submiturl = "$moodle_url/course/modedit.php";
 
-		$oldVal = ini_get('arg_separator.output');
-		ini_set('arg_separator.output', '&');
-
 		$client = $tikilib->get_http_client($preurl);	
 
 		$response = $tikilib->http_perform_request($client);
@@ -158,7 +155,7 @@ function wikiplugin_playscorm($data, $params) {
 		}
 
 		$client->setUri( $submiturl );
-		$client->setOptions(array( 'keepalive' => false, 'maxredirects' => 0, 'timeout' => 60 ) );
+		$client->setConfig(array( 'maxredirects' => 0, 'timeout' => 30 ) );
 
 		$moodleform = array( 
 			'sesskey' => $sesskey,
@@ -186,12 +183,9 @@ function wikiplugin_playscorm($data, $params) {
 
 		$client->setParameterPost( $moodleform );
 		$client->setMethod(Zend\Http\Request::METHOD_POST);
-
 		$response = $client->send();
 
 		$body = $response->getBody();
-
-		ini_set('arg_separator.output', $oldVal);
 
 		preg_match('/view\.php\?id=([0-9]+)/', $body, $matches);
 		if (empty($matches[1])) {

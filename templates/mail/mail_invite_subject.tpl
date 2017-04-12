@@ -1,1 +1,1 @@
-{* $Id$ *}{tr}Join me on %s{/tr}
+{tr}Join me on %s{/tr}

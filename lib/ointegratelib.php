@@ -108,12 +108,7 @@ class OIntegrate
 		$response = new OIntegrate_Response;
 		$response->contentType = $contentType;
 		$response->cacheControl = $cacheControl;
-		if ($contentType) {
-			$mediaType = $contentType->getMediaType();
-		} else {
-			$mediaType = '';
-		}
-		$response->data = $this->unserialize($mediaType, $content);
+		$response->data = $this->unserialize($contentType->getMediaType(), $content);
 
 		$filter = new DeclFilter;
 		$filter->addCatchAllFilter('xss');
@@ -126,14 +121,8 @@ class OIntegrate
 		$response->schemaDocumentation = $httpResponse->getHeaders()->get('OIntegrate-SchemaDocumentation');
 
 		global $prefs;
-		if (empty($cacheControl)) {
-			$maxage = 0;
-			$nocache = false;
-		} else {
-			// Respect cache duration and no-cache asked for
-			$maxage = $cacheControl->getDirective('max-age');
-			$nocache = $cacheControl->getDirective('no-cache');
-		}
+		// Respect cache duration asked for
+		$maxage = $cacheControl->getDirective('max-age');
 		if ( $maxage ) {
 			$expiry = time() + $maxage;
 
@@ -142,7 +131,7 @@ class OIntegrate
 				serialize(array('expires' => $expiry, 'data' => $response))
 			);
 		// Unless service specifies not to cache result, apply a default cache
-		} elseif ( $nocache !== null && $prefs['webservice_consume_defaultcache'] > 0 ) {
+		} elseif ( $cacheControl->getDirective('no-cache') !== null && $prefs['webservice_consume_defaultcache'] > 0 ) {
 			$expiry = time() + $prefs['webservice_consume_defaultcache'];
 
 			$cachelib->cacheItem($url, serialize(array('expires' => $expiry, 'data' => $response)));
@@ -220,7 +209,8 @@ class OIntegrate_Response
 	public $contentType = null;
 	public $cacheControl = null;
 	public $data;
-	public $errors = array();
+
+	private $errors = array();
 
     /**
      * @param $data

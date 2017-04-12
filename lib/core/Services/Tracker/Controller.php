@@ -25,11 +25,11 @@ class Services_Tracker_Controller
 		$item = Tracker_Item::fromId($input->id->int());
 			
 		if (! $item) {
-			throw new Services_Exception_NotFound(tr('Item not found'));
+			throw new Services_Exception_NotFound('Item not found');
 		}
 
 		if (! $item->canView()) {
-			throw new Services_Exception_Denied(tr('Permission denied'));
+			throw new Services_Exception_Denied('Permission denied');
 		}
 
 		$definition = $item->getDefinition();
@@ -65,15 +65,6 @@ class Services_Tracker_Controller
 
 		$name = $input->name->text();
 		$permName = $input->permName->word();
-		// Ensure that PermName is no longer than 36 characters, since the maximum allowed by MySQL Full
-		// Text Search as Unified Search Index is 50, and trackers will internally prepend "tracker_field_",
-		// which are another 14 characters (36+14=50). We could allow longer permanent names when other search
-		// index engines are the ones being used, but this will probably only delay the problem until the admin
-		// wants to change the search engine for some reason (some constrains in Lucene or Elastic Search,
-		// as experience demonstrated in some production sites in real use cases over long periods of time).
-		// And to increase chances to avoid conflict when long names only differ in the end of the long string,
-		// where some meaningful info resides, we'll get the first 26 chars, 1 underscore and the last 9 chars.
-		$permName = (strlen($permName) > 36) ? substr($permName,0,26) . '_' . substr($permName,-9): $permName;
 		$type = $input->type->text();
 		$description = $input->description->text();
 		$wikiparse = $input->description_parse->int();
@@ -352,14 +343,8 @@ class Services_Tracker_Controller
 			if (isset($param['profile_reference'])) {
 				$lib = TikiLib::lib('object');
 				$param['selector_type'] = $lib->getSelectorType($param['profile_reference']);
-				if( isset($param['parent']) ) {
-					if( !preg_match('/[\[\]#\.]/', $param['parent']) )
-						$param['parent'] = "#option-{$param['parent']}";
-				} else {
-					$param['parent'] = null;
-				}
+				$param['parent'] = isset($param['parent']) ? "#option-{$param['parent']}" : null;
 				$param['parentkey'] = isset($param['parentkey']) ? $param['parentkey'] : null;
-				$param['sort_order'] = isset($param['sort_order']) ? $param['sort_order'] : null;
 			} else {
 				$param['selector_type'] = null;
 			}
@@ -752,16 +737,7 @@ class Services_Tracker_Controller
 
 			// test if one item per user
 			if ($definition->getConfiguration('oneUserItem', 'n') == 'y') {
-				$perms = Perms::get('tracker', $trackerId);
-
-				if ($perms->admin_trackers) {	// tracker admins can make items for other users
-					$field = $definition->getField($definition->getUserField());
-					$theUser = isset($fields[$field['permName']]) ? $fields[$field['permName']] : null;	// setup error?
-				} else {
-					$theUser = null;
-				}
-
-				$tmp = TikiLib::lib('trk')->get_user_item($trackerId, $definition->getInformation(), $theUser);
+				$tmp = TikiLib::lib('trk')->get_user_item($trackerId, $definition->getInformation());
 				if ($tmp > 0) {
 					throw new Services_Exception(tr('Item could not be created. Only one item per user is allowed.'), 400);
 				}
@@ -793,17 +769,6 @@ class Services_Tracker_Controller
 			}
 		}
 
-		if ($input->format->word()) {
-			$format = $input->format->word();
-		} else {
-			$format = $definition->getConfiguration('sectionFormat');
-		}
-
-		$editItemPretty = '';
-		if ($format === 'config') {
-			$editItemPretty = $definition->getConfiguration('editItemPretty');
-		}
-
 		return array(
 			'title' => tr('Create Item'),
 			'trackerId' => $trackerId,
@@ -814,9 +779,7 @@ class Services_Tracker_Controller
 			'trackerLogo' => $definition->getConfiguration('logo'),
 			'modal' => $input->modal->int(),
 			'status' => $itemObject->getDisplayedStatus(),
-			'format' => $format,
-			'editItemPretty' => $editItemPretty,
-			'next' => $input->next->url(),
+			'format' => $input->format->word(),
 		);
 	}
 
@@ -925,7 +888,7 @@ class Services_Tracker_Controller
 					'action' => 'modal_alert',
 					'ajaxtype' => 'feedback',
 					'ajaxheading' => tra('Success'),
-					'ajaxmsg' => tra('Your item has been updated.'),
+					'ajaxmsg' => 'Your item has been updated.',
 					'ajaxdismissible' => 'n',
 					'ajaxtimer' => 5,
 				)
@@ -971,17 +934,6 @@ class Services_Tracker_Controller
 			$title = $input->title->text();
 		}
 
-		if ($input->format->word()) {
-			$format = $input->format->word();
-		} else {
-			$format = $definition->getConfiguration('sectionFormat');
-		}
-
-		$editItemPretty = '';
-		if ($format === 'config') {
-			$editItemPretty = $definition->getConfiguration('editItemPretty');
-		}
-
 		//Used if skip form is set
 		if (empty($input->skip_form_message->text())) {
 			$skip_form_message = tr('Are you sure you would like to update this item?');
@@ -1010,8 +962,7 @@ class Services_Tracker_Controller
 			'status' => $status,
 			'skip_form' => $input->skip_form->word(),
 			'skip_form_message' => $skip_form_message,
-			'format' => $format,
-			'editItemPretty' => $editItemPretty,
+			'format' => $input->format->word(),
 			'button_label' => $button_label,
 			'redirect' => $input->redirect->none(),
 		);
@@ -1475,8 +1426,6 @@ class Services_Tracker_Controller
 	function action_export($input)
 	{
 		$trackerId = $input->trackerId->int();
-		$filterField = $input->filterfield->string();
-		$filterValue = $input->filtervalue->string();
 
 		$perms = Perms::get('tracker', $trackerId);
 		if (! $perms->export_tracker) {
@@ -1508,8 +1457,6 @@ class Services_Tracker_Controller
 			'trackerId' => $trackerId,
 			'export' => $out,
 			'fields' => $definition->getFields(),
-			'filterfield' => $filterField,
-			'filtervalue' => $filterValue,
 			'recordsMax' => $definition->getConfiguration('items'),
 		);
 	}
@@ -1542,9 +1489,6 @@ class Services_Tracker_Controller
 				if (0 === count($fields)) {
 					$fields = $definition->getFields();
 				}
-
-				$filterField = $input->filterfield->string();
-				$filterValue = $input->filtervalue->string();
 
 				$showItemId = $input->showItemId->int();
 				$showStatus = $input->showStatus->int();
@@ -1608,7 +1552,7 @@ class Services_Tracker_Controller
 				$writeCsv($header);
 
 				/** @noinspection PhpParamsInspection */
-				$items = $trklib->list_items($trackerId, $recordsOffset, $recordsMax, 'itemId_asc', $fields, $filterField, $filterValue);
+				$items = $trklib->list_items($trackerId, $recordsOffset, $recordsMax, 'itemId_asc', $fields);
 
 				$smarty = TikiLib::lib('smarty');
 				$smarty->loadPlugin('smarty_modifier_tiki_short_datetime');
@@ -2027,21 +1971,6 @@ class Services_Tracker_Controller
 		}
 
 		return $jsString;
-	}
-
-	function action_itemslist_output($input) {
-		$trklib = TikiLib::lib('trk');
-		$field = $trklib->get_tracker_field($input->field->int());
-		if( !$field ) {
-			return '';
-		}
-		$fieldHandler = $trklib->get_field_handler($field, array(
-			$input->fieldIdHere->int() => $input->value->text()
-		));
-		if( !$fieldHandler ) {
-			return '';
-		}
-		return $fieldHandler->renderOutput();
-	}
+	}	
 }
 

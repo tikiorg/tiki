@@ -1,1 +1,1 @@
-{* $Id$ *}{$mail_real} ({$mail_user}) {tr}user left{/tr} - {$prefs.mail_template_custom_text}{$mail_group}
+{$mail_real} ({$mail_user}) {tr}user left{/tr} - {$mail_group}

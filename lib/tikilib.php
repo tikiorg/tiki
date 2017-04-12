@@ -171,10 +171,9 @@ class TikiLib extends TikiDb_Bridge
 
 	/**
 	 * @param bool $url
-	 * @param array $options
 	 * @return mixed|Zend\Http\Client
 	 */
-	function get_http_client($url = false, $options = null)
+	function get_http_client($url = false)
 	{
 		global $prefs;
 
@@ -193,22 +192,11 @@ class TikiLib extends TikiDb_Bridge
 				$config["proxy_pass"] = $prefs['proxy_pass'];
 			}
 		}
-
-		if ($prefs['zend_http_sslverifypeer'] == 'y') {
-			$config['sslverifypeer'] = true;
-		} else {
-			$config['sslverifypeer'] = false;
-		}
-
-
-		if(is_array($options)){
-			foreach($options as $key => $value) {
-				$config[$key] = $value;
-			}
+		if (strpos($url, 'https://') === 0) {
+			$config['sslverifypeer'] = false;	// zf2 only
 		}
 
 		$client = new Zend\Http\Client(null, $config);
-		$client->setArgSeparator('&');
 
 		if ($url) {
 			$client = $this->prepare_http_client($client, $url);
@@ -283,6 +271,7 @@ class TikiLib extends TikiDb_Bridge
 	{
 		$url = $arguments['url'];
 
+		$client->setCookieJar();
 		$client->setUri($this->urlencode_accent($url)); // Zend\Http\Client seems to fail with accents in urls
 		$client->setMethod(Zend\Http\Request::METHOD_GET);
 		$response = $client->send();
@@ -301,6 +290,7 @@ class TikiLib extends TikiDb_Bridge
 		$url = $arguments['post_url'];
 		unset($arguments['post_url']);
 
+		$client->setCookieJar();
 		$client->setUri($this->urlencode_accent($url)); // Zend\Http\Client seems to fail with accents in urls
 		$client->setMethod(Zend\Http\Request::METHOD_GET);
 		$response = $client->send();
@@ -327,7 +317,7 @@ class TikiLib extends TikiDb_Bridge
 		$attempts = 0;
 		while ($response->isRedirect() && $attempts < 10) { // prevent redirect loop
 			$client->setUri($client->getUri());
-			$response = $client->send();
+			$response = $client->request();
 			$attempts++;
 		}
 
@@ -2029,16 +2019,15 @@ class TikiLib extends TikiDb_Bridge
 	function user_has_voted($user, $id)
 	{
 		global $prefs;
-
-		$ret = false;
-
-		if (isset($_SESSION['votes'])) {
-			$votes = $_SESSION['votes'];
-			if (is_array($votes) && in_array($id, $votes)) { // has already voted in the session (logged or not)
-				return true;
-			}
+		if (!isset($_SESSION['votes'])) {
+			return false;
 		}
 
+		$ret = false;
+		$votes = $_SESSION['votes'];
+		if (is_array($votes) && in_array($id, $votes)) { // has already voted in the session (logged or not)
+			$ret = true;
+		}
 		if (!$user) {
 			if ($prefs['ip_can_be_checked'] != 'y' && !isset($_COOKIE[ session_name() ])) {// cookie has not been activated too bad for him
 				$ret = true;
@@ -3313,7 +3302,7 @@ class TikiLib extends TikiDb_Bridge
 		global $user;
 		if ($type && $object) {
 			$context = array( 'type' => $type, 'object' => $object );
-			$accessor = Perms::getCombined($context);
+			$accessor = Perms::get($context);
 		} else {
 			$accessor = Perms::get();
 		}
@@ -4383,7 +4372,7 @@ class TikiLib extends TikiDb_Bridge
 			});'
 		);
 		return "<a class=\"convert-mailto\" href=\"mailto:nospam@example.com\" data-encode-name=\"$name\" data-encode-domain=\"$domain\">$name ".tra("at", "", true)." $domain</a>";
-		}
+	}
 
 	//Updates a dynamic variable found in some object
 	/*Shared*/
@@ -5988,23 +5977,17 @@ JS;
 	}
 
 	/**
-	 * @param bool $descendants The default is to get all descendents of the jailed categories, but for unified search
-	 *                          we only need the "root" jailed categories as the search does a deep_categories search on them
 	 * @return array
 	 */
-	function get_jail($descendants = true)
+	function get_jail()
 	{
 		global $prefs;
 		// if jail is zero, we should allow non-categorized objects to be seen as well, i.e. consider as no jail
 		if ( $prefs['feature_categories'] == 'y' && ! empty( $prefs['category_jail'] ) && $prefs['category_jail'] != array(0 => 0) ) {
+			$categlib = TikiLib::lib('categ');
 			$expanded = array();
-			if ($descendants) {
-				$categlib = TikiLib::lib('categ');
-				foreach ($prefs['category_jail'] as $categId) {
-					$expanded = array_merge($expanded, $categlib->get_category_descendants($categId));
-				}
-			} else {
-				$expanded = $prefs['category_jail'];
+			foreach ( $prefs['category_jail'] as $categId ) {
+				$expanded = array_merge($expanded, $categlib->get_category_descendants($categId));
 			}
 			return $expanded;
 		} else {
@@ -6075,7 +6058,6 @@ JS;
 
 		$delimiter = array_shift($delimiters);
 		$temp = explode($delimiter, $string);
-				
 		$array = array();
 		$keep = false;
 
@@ -6083,7 +6065,7 @@ JS;
 
 		foreach ($temp as $v) {
 			$filtered = str_replace($ignore_chars, '', $v);
-			if ($filtered == '' && $v != '') {
+			if ($filtered == '') {
 				if (! $keep) {
 					$array[count($array) - 1] .= $delimiter;
 				}

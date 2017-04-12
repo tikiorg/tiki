@@ -76,7 +76,7 @@ function wikiplugin_mediaplayer_info()
 			'type' => array(
 				'required' => false,
 				'name'=> tra('File type'),
-				'description' => tr('File type for source URL, e.g. %0mp4%1, %0pdf%1, %0odp%1 (through ViewerJS), etc. Specify one of the supported file types when
+				'description' => tr('File type for source URL, e.g. %0mp4%1. Specify one of the supported file types when
 					the URL of the file is missing the file extension. This is the case for File Gallery files which
 					have a URL such as %0tiki-download_file.php?fileId=4&display%1 or %0display4%1 if you have Clean URLs
 					enabled.', '<code>', '</code>'),
@@ -121,7 +121,7 @@ function wikiplugin_mediaplayer_info()
 						'text' => 'Multi', 'value' => 'multi'
 					),
 					array(
-						'text' => 'Native Video (HTML5)', 'value' => 'native'
+						'text' => 'Native (HTML5)', 'value' => 'native'
 					)
 				)
 			),
@@ -206,12 +206,6 @@ function wikiplugin_mediaplayer($data, $params)
 		'width' => 320,
 		'height' => 240,
 	);
-	if (preg_match('/webm/', $params['type']) >0 && $params['type'] != 'video/webm') {
-		$params['type'] = 'video/webm';
-	}
-	if ($params['type'] == 'video/webm'){
-		$params['style'] = 'native';
-	}
 	if (!empty($params['flv'])) {
 		$params = array_merge($defaults_flv, $params);
 	} elseif (!empty($params['mp3'])) {
@@ -245,19 +239,19 @@ function wikiplugin_mediaplayer($data, $params)
 				} 
 			} );";
 
-		// check for support for PDF or ODF as indicated here http://viewerjs.org
+		// check for support for PDF
 
-		if ($params['type'] === 'pdf' || $params['type'] === 'odt' || $params['type'] === 'ods' || $params['type'] === 'odp' || $params['type'] === 'viewerjs' ) {
+		if ($params['type'] === 'pdf') {
 			if ($prefs['fgal_viewerjs_feature'] === 'y') {
 
 				$src = \ZendOpenId\OpenId::absoluteUrl($params['src']);
 				$src = $prefs['fgal_viewerjs_uri'] . '#' . $src;
 
-				$out = "<iframe width=\"{$params['width']}\" height=\"{$params['height']}\" src=\"{$src}\" allowfullscreen webkitallowfullscreen></iframe>";
+				$out = "<iframe width=\"{$params['width']}\" height=\"{$params['height']}\" src=\"{$src}\"></iframe>";
 
 				return $out;
 
-			} elseif ($params['type'] === 'pdf') {
+			} else {
 
 				$js = '
 var found = false;

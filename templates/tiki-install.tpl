@@ -87,7 +87,7 @@
 					<h1 class="pagetitle">{tr}Welcome{/tr}</h1>
 					<p>{tr}Welcome to the Tiki installation and upgrade script.{/tr} {tr}Use this script to install a new Tiki database or upgrade your existing database to release{/tr} <strong>{$tiki_version_name}</strong></p>
 					<ul>
-						<li>{tr}For the latest information about this release, please read the{/tr} <a href="https://doc.tiki.org/Tiki{$tiki_version_short|urlencode}" target="_blank">{tr}Release Notes{/tr}</a>.</li>
+						<li>{tr}For the latest information about this release, please read the{/tr} <a href="https://tiki.org/tiki-index.php?page=ReleaseNotes{$tiki_version_name|urlencode}" target="_blank">{tr}Release Notes{/tr}</a>.</li>
 						<li>{tr}For complete documentation, please visit{/tr} <a href="https://doc.tiki.org" target="_blank">doc.tiki.org</a>.</li>
 						<li>{tr}For more information about Tiki, please visit{/tr} <a href="https://tiki.org" target="_blank">tiki.org</a>.</li>
 					</ul>
@@ -573,14 +573,16 @@
 									</span>
 								</div>
 								<div style="padding:5px; clear:both">
-									<details>
-											<summary><label>{tr}Network Proxy?{/tr}</label> {tr}Toggle section display{/tr}</summary>
+									<div style="padding:5px; clear:both">
+										<label for="network_proxy">{tr}Network Proxy?{/tr}</label> <a href="#" onclick="$('#use_proxy_childcontainer').toggle();return false;">{tr}Toggle section display{/tr}</a>
+										<div id="use_proxy_childcontainer"{if $prefs.use_proxy neq 'y'} style="display:none;"{/if}>
 											<div style="margin-left:1em"><label for="use_proxy">{tr}Use proxy{/tr}</label> <input type="checkbox" name="use_proxy" id="use_proxy"{if $prefs.use_proxy eq 'y'} checked="checked"{/if}><a href="https://doc.tiki.org/General+Settings" target="_blank" title="{tr}Help{/tr}">{icon name="help"}</a></div>
 											<div style="margin-left:1em"><label for="proxy_host">{tr}Proxy host name{/tr}</label><input type="text" class="form-control" size="40" name="proxy_host" id="proxy_host" value="{$prefs.proxy_host|escape}"></div>
 											<div style="margin-left:1em"><label for="proxy_port">{tr}Port{/tr}</label><input type="text" class="form-control" size="40" name="proxy_port" id="proxy_port" value="{$prefs.proxy_port|escape}"></div>
 											<div style="margin-left:1em"><label for="proxy_user">{tr}Proxy username{/tr}</label><input type="text" class="form-control" size="40" name="proxy_user" id="proxy_user" value="{$prefs.proxy_user|escape}"></div>
 											<div style="margin-left:1em"><label for="proxy_pass">{tr}Proxy password{/tr}</label><input type="text" class="form-control" size="40" name="proxy_pass" id="proxy_pass" value="{$prefs.proxy_pass|escape}"></div>
-									</details>
+										</div>
+									</div>
 								</div>
 							</fieldset>
 							<br>

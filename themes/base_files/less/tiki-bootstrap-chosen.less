@@ -6,6 +6,7 @@
 //
 // This is a oopy of vendor/alxlit/bootstrap-chosen/bootstrap-chosen.less except for having the import statement commented out.
 // A separate file, tiki-variables.less, provides values for this file.
+// also commented out .chosen-container .chosen-results { position: relative } as it now makes scrolling go wrong (no fix upstream as yet)
 //
 
 //@import "bootstrap-chosen-variables.less";
@@ -41,7 +42,7 @@
 		margin: 0 4px 4px 0;
 		max-height: 240px;
 		padding: 0 0 0 4px;
-		position: relative;
+		//position: relative; commented out for Tiki 15
 		overflow-x: hidden;
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
@@ -61,7 +62,7 @@
 			&.group-result {
 				display: list-item;
 				cursor: default;
-				color: #999999;
+				color: #999;
 				font-weight: bold;
 			}
 
@@ -72,19 +73,6 @@
 			&.active-result {
 				cursor: pointer;
 				display: list-item;
-				background-position-y: 50% !important;
-				color: @chosen-active-result;
-				&.result-selected {
-					display: list-item;
-					color: inherit; // @text-color;
-					&.highlighted {
-						color: spin(@chosen-background,180);
-					}
-				}
-				&:hover {
-					display: inherit;
-					color: spin(@chosen-background,180);
-				}
 			}
 
 			&.highlighted {
@@ -139,8 +127,6 @@
 		}
 	}
 }
-
-.chosen-container .chosen-results .active-result.highlighted { background-color: @link-color !important; }
 
 .chosen-container-single {
 	.chosen-single {
@@ -282,7 +268,7 @@
 			}
 
 			.default {
-				color: #999999;
+				color: #999;
 			}
 		}
 
@@ -371,7 +357,7 @@
 		.transition(@chosen-focus-transition);
 
 		.search-field input[type="text"] {
-			color: #111111 !important;
+			color: #111 !important;
 		}
 	}
 

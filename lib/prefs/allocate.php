@@ -22,7 +22,7 @@ function prefs_allocate_list()
 				'help' => 'Memory+Limit',
 				'type' => 'text',
 				'default' => '',
-				'shorthint' => tr('for example: 256M'),
+				'shorthint' => tr('for example: 256MB'),
 				'size' => 8,
 			);
 		}

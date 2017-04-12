@@ -35,7 +35,7 @@ class Tiki_Profile_InstallHandler_Sheet extends Tiki_Profile_InstallHandler
 			//here we convert the array to that of what is acceptable to the sheet lib
 			$parentSheetId = 0;
 			$sheets = array();
-			$nbsheets = count($this->data);
+			$nbsheets = count($this->data);	
 			for ($sheetI = 0; $sheetI < $nbsheets; $sheetI++) {
 
 				$sheets[$sheetI] = new stdClass();
@@ -43,20 +43,14 @@ class Tiki_Profile_InstallHandler_Sheet extends Tiki_Profile_InstallHandler
 				$sheets[$sheetI]->metadata = new stdClass();
 				$sheets[$sheetI]->metadata->widths = array();
 
-				$title = (isset($this->data[$sheetI]['title']) && $this->data[$sheetI]['title']) ? $this->data[$sheetI]['title'] : tra("Untitled - From Profile Import");
-
-				$rows = array();
-				if (isset($this->data[$sheetI]['rows'])) {
-					$rows = $this->data[$sheetI]['rows'];
-				} elseif(isset($this->data[$sheetI][0])) {
-					$rows = $this->data[$sheetI];
-					if(isset($rows['title'])){
-						unset($rows['title']);
-					}
+				$title = $this->data[$sheetI]['title'];
+				$title = ($title ? $title : "Untitled - From Profile Import");
+				$nbdatasheetI = count($this->data[$sheetI]);
+				if (in_array('title', array_keys($this->data[$sheetI]))) {
+					$nbdatasheetI--; // do not take the title into account on the number of rows
 				}
-				$nbdatasheetI = count($rows);
 				for ($r = 0; $r < $nbdatasheetI; $r++) {
-					$nbdatasheetIr = count($rows[$r]);
+					$nbdatasheetIr = count($this->data[$sheetI][$r]);
 					$sheets[$sheetI]->rows[$r]->columns = array();
 
 					for ($c = 0; $c < $nbdatasheetIr; $c++) {
@@ -64,7 +58,7 @@ class Tiki_Profile_InstallHandler_Sheet extends Tiki_Profile_InstallHandler
 
 						$value = "";
 						$formula = "";
-						$rawValue = $rows[$r][$c];
+						$rawValue = $this->data[$sheetI][$r][$c];
 						 
 						if (substr($rawValue, 0, 1) == "=") {
 							$formula = $rawValue;
@@ -82,8 +76,7 @@ class Tiki_Profile_InstallHandler_Sheet extends Tiki_Profile_InstallHandler
 
 				$sheets[$sheetI]->metadata->widths[] = $nbdatasheetIr;
 				$sheets[$sheetI]->metadata->rows = $nbdatasheetI;
-				$sheets[$sheetI]->metadata->columns = count($rows[0]);
-
+				$sheets[$sheetI]->metadata->columns = count($this->data[$sheetI][0]);
 				$id = $sheetlib->replace_sheet(0, $title, "", $user, $parentSheetId);
 				$parentSheetId = ($parentSheetId ? $parentSheetId : $id);
 				

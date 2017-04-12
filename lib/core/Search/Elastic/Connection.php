@@ -38,12 +38,7 @@ class Search_Elastic_Connection
 	{
 		try {
 			$result = $this->get('/');
-
-			if (isset($result->version)) {	// elastic v2
-				$result->ok = true;
-				$result->status = 200;
-
-			} else if (! isset($result->ok)) {
+			if (! isset($result->ok)) {
 				$result->ok = $result->status === 200;
 			}
 
@@ -54,17 +49,6 @@ class Search_Elastic_Connection
 				'status' => 0,
 			);
 		}
-	}
-
-	/**
-	 * gets the elasticsearch version string, e.g. 2.2.0
-	 *
-	 * @return float
-	 */
-	function getVersion() {
-		$status = $this->getStatus();
-
-		return (float) $status->version->number;
 	}
 
 	function getIndexStatus($index = '')
@@ -114,22 +98,10 @@ class Search_Elastic_Connection
 			if (! empty($this->dirty[$index])) {
 				$this->refresh($index);
 			}
-			$this->validate($index, $query);
 		}
 
 		$index = implode(',', $indices);
 		return $this->get("/$index/_search?" . http_build_query($args, '', '&'), json_encode($query));
-	}
-
-	function validate($index, array $query) {
-		$result = $this->get("/$index/_validate/query?explain=true", json_encode(['query' => $query['query']]));
-		if( isset($result->valid) && $result->valid === false ) {
-			foreach( $result->explanations as $explanation ) {
-				if( $explanation->valid === false ) {
-					throw new Search_Elastic_QueryParsingException($explanation->error);
-				}
-			}
-		}
 	}
 
 	function scroll($scrollId, array $args = [])

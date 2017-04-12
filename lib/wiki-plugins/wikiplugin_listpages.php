@@ -240,25 +240,7 @@ function wikiplugin_listpages_info()
 					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				)
-			),
-            'offset_arg' => array(
-                'required' => false,
-                'name' => tra('Offset Argument'),
-                'description' => 'Argument, id of the plugin (if more than one on the page), for pagination',
-                'since' => '15.3',
-                'advanced' => true
-            ),
-            'pagination' => array(
-                'required' => false,
-                'name' => tra('Pagination'),
-                'description' => 'Turn on pagination',
-                'since' => '15.3',
-                'options' => array(
-                    array('text' => '', 'value' => ''),
-                    array('text' => tra('Yes'), 'value' => 'y'),
-                    array('text' => tra('No'), 'value' => 'n')
-                )
-            )
+			)
 		)
 	);
 }
@@ -295,7 +277,6 @@ function wikiplugin_listpages($data, $params)
 		'showCheckbox' => 'y',
 		'showNumberOfPages' => 'n',
 		'for_list_pages' => 'y',
-        'pagination' => 'n'
 	);
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
@@ -342,21 +323,6 @@ function wikiplugin_listpages($data, $params)
 	} elseif (is_array($translations)) {
 		$lang = $filter['lang'] = reset($translations);
 	}
-    if (!empty($lang)) {
-        $filter['lang'] = $lang;
-    } elseif (is_array($translations)) {
-        $lang = $filter['lang'] = reset($translations);
-    }
-    if ( $pagination == 'y'){
-        if ( !empty($offset_arg) && !empty($_REQUEST[$offset_arg]) ){
-            $offset_pagination = $_REQUEST[$offset_arg];
-        }
-        else{
-            $offset_pagination = 0;
-        }
-    }
-    if (!empty($_REQUEST['sort_mode'])) $sort = $_REQUEST['sort_mode'];
-
 	$exact_match = ( isset($exact_match) && $exact_match == 'y' );
 	$only_name = ( isset($showNameOnly) && $showNameOnly == 'y' );
 	$only_orphan_pages = ( isset($only_orphan_pages) && $only_orphan_pages == 'y' );
@@ -399,7 +365,7 @@ function wikiplugin_listpages($data, $params)
 			}
 			$i++;
 		}
-        $listpages['data'] = array_merge($listpages['data']);
+		sort($listpages['data']);
 		unset($aIncludetag);
 		unset($aExcludetag);
 	}
@@ -420,9 +386,7 @@ function wikiplugin_listpages($data, $params)
 		$smarty->assign('wplp_used', $used);
 	}
 
-    // Count how many pages are left after tag filtering
-    $listpages['cant'] = count($listpages['data']);
-
+	$smarty->assign_by_ref('listpages', $listpages['data']);
 	$smarty->assign_by_ref('checkboxes_on', $showCheckbox);
 	$smarty->assign_by_ref('showNumberOfPages', $showNumberOfPages);
 	if (!empty($showPageAlias) && $showPageAlias == 'y')
@@ -435,27 +399,7 @@ function wikiplugin_listpages($data, $params)
 				$listpages['data'][$i]['snippet'] = $tikilib->get_snippet($page['data'], $page['outputType'], ! empty($page['is_html']), '', $length, $start, $end);
 			}
 		}
-        $smarty->assign("redirectTo", $_REQUEST["page"]);
-
-        // Count how many pages are left after sorting
-        $smarty->assign("cant", $listpages['cant']);
-        // The following two are for tiki-listpages_content.tpl (pagination)
-        $smarty->assign("pluginlistpages", 'y');
-        $smarty->assign("pagination", $pagination);
-        if ($pagination == 'y'){
-            // Show only x=$MaxRecords number of page entries on this page.
-            for ($x = $offset_pagination ; $x < ($offset_pagination + $GLOBALS['maxRecords']) && $x < count($listpages['data']); $x ++){
-                $listpages_for_use[] = $listpages['data'][$x];
-            }
-            $smarty->assign_by_ref('listpages', $listpages_for_use);
-            $smarty->assign("offset", $offset_pagination);
-            $smarty->assign("offset_arg", $offset_arg);
-        }
-        else{
-            $smarty->assign_by_ref('listpages', $listpages['data']);
-        }
-
-        $ret = $smarty->fetch('tiki-listpages_content.tpl');
+		$ret = $smarty->fetch('tiki-listpages_content.tpl');
 	}
 
 	return '~np~'.$ret.'~/np~';

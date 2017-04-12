@@ -146,21 +146,18 @@ function wikiplugin_tracker_info()
 			'email' => array(
 				'required' => false,
 				'name' => tra('Email'),
-				'description' => tr('To send an email once the tracker item has been created. Format: %0from', '<code>')
-						.'|'.tra('to').'|'.tr('template%0', '</code> ') . tr('For %0from%1 and %0to%1, use an email address
-						(separate multiple addresses with a comma), a username, a fieldId of a field containing either an email address or a username,
-						or "createdBy" or "lastModifBy" for the item creator or modifier.
-						When username is being used, the email will be sent to the email address of the user on file.
-						When sending to several emails using different template, provide the template name for the message body for each email;
-						I.e., the first template will be used for the first to, the second template if exists will be used
-						for the second from (otherwise the last given template will be used). Each template needs two files, one for the subject one for the body. The subject will be named
-						template_subject.tpl. All the templates must be in the %0templates/mail%1 directory. Example:
-						%0webmaster@my.com|a@my.com,b@my.com|templatea.tpl,templateb.tpl%1 (%0templates/mail/tracker_changed_notification.tpl%1
-						is the default from which you can get inspiration). Please note that you need to have an email
-						address in the normal "Copy activity to email" property in the Tracker notifications panel as well',
-						'<code>', '</code>'),
-				'since' => '2.0',
-				'default' => '',
+                                'description' => tr('To send an email once the tracker item has been created. Format: %0from', '<code>')
+                                        .'|'.tra('to').'|'.tr('template%0', '</code> ') . tr('For %0from%1 and %0to%1, use an email address
+                                        (separate multiple addresses with a comma) or a fieldId of a field containing an email address.
+                                        When sending to several emails using different template, provide the template name for the message body for each email;
+                                        I.e., the first template will be used for the first to, the second template if exists will be used
+                                        for the second from (otherwise the last given template will be used). Each template needs two files, one for the subject one for the body. The subject will be named
+                                        template_subject.tpl. All the templates must be in the %0templates/mail%1 directory. Example:
+                                        %0webmaster@my.com|a@my.com,b@my.com|templatea.tpl,templateb.tpl%1 (%0templates/mail/template_tracker_modified.tpl%1
+                                        is the default from which you can get inspiration). Please note that you need to have an email
+                                        address in the normal "Copy activity to email" property in the Tracker notifications panel as well',
+                                        '<code>', '</code>'),
+                                'since' => '2.0',				'default' => '',
 			),
 			'emailformat' => array(
 				'required' => false,
@@ -254,49 +251,13 @@ function wikiplugin_tracker_info()
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Group'), 'value' => 'group'),
 					array('text' => tra('Page'), 'value' => 'page'),
-					array('text' => tra('User'), 'value' => 'user'),
-					array('text' => tra('User&field'), 'value' => 'userandfield')
+					array('text' => tra('User'), 'value' => 'user')
 				)
 			),
-			'userfieldtofilter' => array(
-				'required' => false,
-				'name' => tra('User field to filter'),
-				'description' => tra('User field to filter user tracker items to:').' <code>view="user&field"</code>',
-				'since' => '15.3',
-				'default' => '',
-			),
-			'fieldtofilter' => array(
-				'required' => false,
-				'name' => tra('Field to filter'),
-				'description' => tra('Field to filter user tracker items to:').' <code>view="user&field"</code>',
-				'since' => '15.3',
-				'default' => '',
-			),
-			'fieldtofiltervalue' => array(
-				'required' => false,
-				'name' => tra('Field to filter Value'),
-				'description' => tra('Value to filter user tracker items to:').' <code>view="user&field"</code>',
-				'since' => '15.3',
-				'default' => '',
-			),
-			'fieldtofiltercriteria' => array(
-				'required' => false,
-				'name' => tra('Criteria'),
-				'description' => tra('If more than one item found, will choose under this criteria. Used in combination with:').'<code>view="user&field"</code>',
-				'since' => '15.3',
-				'default' => '',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					//array('text' => tra('lastModif - Ascending'), 'value' => 'lastModifAsc'),//Not working
-					//array('text' => tra('lastModif - Descending'), 'value' => 'lastModifDesc'),//Not working
-					array('text' => tra('creationDate - Ascending'), 'value' => 'creationAsc'),
-					array('text' => tra('creationDate - Descending'), 'value' => 'creationDesc')
-				),
-			),			
 			'status' => array(
 				'required' => false,
 				'name' => tra('Status'),
-				'description' => tra('Status of the item used in combination with:').' <code>view="user"</code>'.tra('or').'<code>view="user&field"</code>',
+				'description' => tra('Status of the item used in combination with:').' <code>view="user"</code>',
 				'since' => '6.0',
 				'default' => '',
 			),
@@ -664,17 +625,6 @@ function wikiplugin_tracker($data, $params)
 			$itemId = $trklib->get_item_id($trackerId, $gtid['groupFieldId'], $group);
 			$grouptracker = true;
 		}
-		} elseif (!empty($view) && $view == 'userandfield' && $userfieldtofilter && $fieldtofilter && $fieldtofiltervalue) {
-		$trackerinfo = Tracker_Query::tracker($trackerId)
-					->filter(array('field'=>$userfieldtofilter, 'value'=>$user))
-					->filter(array('field'=>$fieldtofilter, 'value'=>$fieldtofiltervalue))
-					->status(strlen($status) >= 1 ? $status : 'opc')
-					->lastModif($fieldtofiltercriteria == 'lastModifAsc' || $fieldtofiltercriteria == 'lastModifDesc' ? true : false)//Not Working
-					->created($fieldtofiltercriteria == 'creationAsc' || $fieldtofiltercriteria == 'creationDesc' ? true : false)
-					->desc($fieldtofiltercriteria == 'creationDesc' || $fieldtofiltercriteria == 'creationDesc' ? true : false)
-					->query();
-		$itemIds = array_keys($trackerinfo);
-		$itemId = $itemIds[0];
 	}
 	if (!isset($trackerId)) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
@@ -910,12 +860,7 @@ function wikiplugin_tracker($data, $params)
 		} else {
 			$unfiltered = array('data' => array());
 			foreach ($outf as $fieldId) {
-				$fieldTemp = $definition->getField($fieldId);
-				if ($fieldTemp) {
-					$unfiltered['data'][] = $fieldTemp;
-				} else {
-					TikiLib::lib('errorreport')->report(tr('Tracker: Field #%0 not found in fields parameter or template', $fieldId));
-				}
+				$unfiltered['data'][] = $definition->getField($fieldId);
 			}
 		}
 
@@ -1197,58 +1142,38 @@ function wikiplugin_tracker($data, $params)
 				// send emails if email param is set and tracker_always_notify or something was changed (mail_data is set in \TrackerLib::send_replace_item_notifications)
 				if (!empty($email) && ($prefs['tracker_always_notify'] === 'y' || !empty($smarty->getTemplateVars('mail_data')))) {
 					// expose the pretty tracker fields to the email tpls
-					$item = $trklib->get_tracker_item($rid);	// get the new item values
 					foreach ($flds['data'] as $f) {
 						$prettyout = strip_tags(wikiplugin_tracker_render_value($f, $item));
 						$smarty->assign('f_' . $f['fieldId'], $prettyout);
 						$smarty->assign('f_' . $f['permName'], $prettyout);
 					}
-					// $email param in the form of: "from|to|template"
 					$emailOptions = preg_split("#\|#", $email);
-
-					// from:
-					$emailOptions[0] = wikiplugin_tracker_process_email_recipient($emailOptions[0], $flds['data'], $item, $trackerId, $rid);
-
-					if (empty($emailOptions[0])) { // from is empty
+					if (is_numeric($emailOptions[0])) {
+						$emailOptions[0] = $trklib->get_item_value($trackerId, $rid, $emailOptions[0]);
+					}
+					if (empty($emailOptions[0])) { // from
 						$emailOptions[0] = $prefs['sender_email'];
 					}
-
-					// to:
-					if (empty($emailOptions[1])) { // to is empty?
+					if (empty($emailOptions[1])) { // to
 						$emailOptions[1][0] = $prefs['sender_email'];
 					} else {
-						// multiple recipients can be separated by a comma
-						$emailOptions[1] = explode(',', $emailOptions[1]);
-
-						foreach ($emailOptions[1] as & $recipient) {
-							$recipient = wikiplugin_tracker_process_email_recipient(trim($recipient), $flds['data'], $item, $trackerId, $rid);
+						$emailOptions[1] = preg_split('/ *, */', $emailOptions[1]);
+						foreach ($emailOptions[1] as $key=>$email) {
+							if (is_numeric($email))
+								$emailOptions[1][$key] = $trklib->get_item_value($trackerId, $rid, $email);
 						}
 					}
-
 					include_once('lib/webmail/tikimaillib.php');
 					$mail = new TikiMail();
 					$mail->setFrom($emailOptions[0]);
 
-					// collect the subject templates if they exist
 					if (!empty($emailOptions[2])) { //tpl
 						$emailOptions[2] = preg_split('/ *, */', $emailOptions[2]);
 						foreach ($emailOptions[2] as $ieo=>$eo) {
-							if (strpos($eo, 'wiki:') !== 0) {
-								if (!preg_match('/\.tpl$/', $eo)) {		// template file
-									$emailOptions[2][$ieo] = $eo . '.tpl';
-								}
-								$tplSubject[$ieo] = str_replace('.tpl', '_subject.tpl', $emailOptions[2][$ieo]);
-							} else {	// wiki template
-								if (! $tikilib->page_exists(substr($eo, 5))) {
-									TikiLib::lib('errorreport')->report(tr('Missing wiki email template page "%0"', htmlspecialchars($wiki)));
-									$emailOptions[2][$ieo] = 'tracker_changed_notification.tpl';
-								} else {
-									$subject_name = str_replace('tpl', 'subject tpl', $emailOptions[2][$ieo]);
-									if ($tikilib->page_exists(substr($subject_name, 5))) {
-										$tplSubject[$ieo] = $subject_name;
-									}
-								}
+							if (!preg_match('/\.tpl$/', $eo)) {
+								$emailOptions[2][$ieo] = $eo.'.tpl';
 							}
+							$tplSubject[$ieo] = str_replace('.tpl', '_subject.tpl', $emailOptions[2][$ieo]);
 						}
 					} else {
 						$emailOptions[2] = array('tracker_changed_notification.tpl');
@@ -1256,28 +1181,19 @@ function wikiplugin_tracker($data, $params)
 					if (empty($tplSubject)) {
 						$tplSubject = array('tracker_changed_notification_subject.tpl');
 					}
-					$templateCounter = 0;
-					$subjectCounter = 0;
+					$itpl = 0;
 					$smarty->assign('mail_date', $tikilib->now);
 					$smarty->assign('mail_itemId', $rid);
 					foreach ($emailOptions[1] as $ieo=>$ueo) {
-						$mailDir = strpos($tplSubject[$subjectCounter], 'wiki:') !== 0 ? 'mail/' : '';
-						@$mail_data = $smarty->fetch($mailDir .$tplSubject[$subjectCounter]);
-						if (empty($mail_data)) {
-							$mail_data = tra('Tracker was modified at '). $_SERVER['SERVER_NAME'];
-						} else {
-							$mail_data = trim(str_replace('&nbsp;', ' ', strip_tags($mail_data)));	// tidy
-						}
+						@$mail_data = $smarty->fetch('mail/'.$tplSubject[$itpl]);
+						if (empty($mail_data))
+							$mail_data = tra('Tracker was modified at '). $_SERVER["SERVER_NAME"];
 						$mail->setSubject($mail_data);
-						$mailDir = strpos($emailOptions[2][$templateCounter], 'wiki:') !== 0 ? 'mail/' : '';	// wiki pages dont start with wiki:
-						$mail_data = $smarty->fetch($mailDir .$emailOptions[2][$templateCounter]);
+						$mail_data = $smarty->fetch('mail/'.$emailOptions[2][$itpl]);
 						if ($emailformat == 'html') {
-							$mail->setHtml($mail_data, strip_tags($mail_data));
+						$mail->setHtml($mail_data);
 						} else {
-							if (strpos($emailOptions[2][$templateCounter], 'wiki:') === 0) {
-								$mail_data =  str_replace('&nbsp;', ' ', strip_tags($mail_data));
-							}
-							$mail->setText($mail_data);
+						$mail->setText($mail_data);
 						}
 						try {
 							$mail->send($ueo);
@@ -1294,11 +1210,8 @@ function wikiplugin_tracker($data, $params)
 							$logslib = TikiLib::lib('logs');
 							$logslib->add_log('mail', 'plugin tracker email sent / '.$emailOptions[1][$ieo].' / item'.$rid);
 						}
-						if (isset($emailOptions[2][$templateCounter + 1])) {
-							++$templateCounter;
-						}
-						if (isset($tplSubject[$subjectCounter + 1])) {
-							++$subjectCounter;
+						if (isset($tplSubject[$itpl+1])) {
+							++$itpl;
 						}
 					}
 				}
@@ -1613,7 +1526,7 @@ function wikiplugin_tracker($data, $params)
 			$validationjs = $validatorslib->generateTrackerValidateJS($flds['data'], $fields_prefix, $customvalidation, $customvalidation_m);
 
 			if (!empty($params['_ajax_form_ins_id']) && $params['_ajax_form_ins_id'] === 'group') {
-				$headerlib->add_jq_onready("var ajaxTrackerValidation_group={validation:{" . $validationjs  . '}};');		// return clean rules and messages object for ajax
+				$headerlib->add_jq_onready("var ajaxTrackerValidation_group={validation:{" . $validationjs  . '};');		// return clean rules and messages object for ajax
 			} else {
 				$smarty->assign('validationjs', $validationjs);
 				$back .= $smarty->fetch('tracker_validator.tpl');
@@ -1717,8 +1630,6 @@ function wikiplugin_tracker($data, $params)
 		}
 		$backLength0 = strlen($back);
 
-		$datepicker = false;
-
 		foreach ($flds['data'] as $f) {
 
 			if (!in_array($f['fieldId'], $auto_fieldId) && in_array($f['fieldId'], $hidden_fieldId)) {
@@ -1760,7 +1671,7 @@ function wikiplugin_tracker($data, $params)
 						$smarty->assign('f_'.$f['permName'], $prettyout);
 					}
 				} else {
-					$back.= '<div class="form-group tracker_input_label tracker_field' . $f['fieldId'] . '"'; // <tr><td class="tracker_input_label"
+					$back.= '<div class="form-group tracker_input_label"'; // <tr><td class="tracker_input_label"
 
 					// If type is has a samerow param and samerow is "No", show text on one line and the input field on the next
 					$isTextOnSameRow = true;
@@ -1807,20 +1718,11 @@ function wikiplugin_tracker($data, $params)
 							$back.= '<div class="' . $inputclass . ' tracker_input_value tracker_field' . $f['fieldId'] . '">'; // '</td><td class="tracker_input_value">';
 						}
 
-					if ($f['type'] === 'l') {	// items list fields, show output
-						$back .= wikiplugin_tracker_render_value($f, $item);
-					} else {
-						$back .= wikiplugin_tracker_render_input($f, $item, $dynamicSave);
-					}
-						$back .= '</div>'; // chibaguy added /divs
+						$back .= wikiplugin_tracker_render_input($f, $item, $dynamicSave)."</div>"; // chibaguy added /divs
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y' && $registration == 'y') {
 							$back.= '<div class="col-md-1 col-sm-1"><span class="text-danger tips" title=":'
 								. tra('This field is mandatory') . '">*</span></div>';
 						}
-
-					if ($f['type'] === 'j') {
-						$datepicker = true;
-					}
 
 					if ($isTextOnSameRow) {
 						$back .= '</div>';
@@ -1829,7 +1731,7 @@ function wikiplugin_tracker($data, $params)
 
 				if ($f['type'] != 'S' && empty($tpl) && empty($wiki)) {
 					if ($showfieldsdesc == 'y') {
-						$back .= '<div class="form-group tracker-help-block tracker_field' . $f['fieldId'] . ' "><div class="' . $labelclass
+						$back .= '<div class="form-group tracker-help-block"><div class="' . $labelclass
 							. ' control-label sr-only">Label</div><div class="' . $inputclass
 							. ' trackerplugindesc help-block">';
 
@@ -1844,12 +1746,6 @@ function wikiplugin_tracker($data, $params)
 				}
 			}
 		}
-
-		if ( $datepicker ) {
-			$smarty->loadPlugin('smarty_function_js_insert_icon');
-			$back .= smarty_function_js_insert_icon(array('type'=>"jscalendar"), $smarty);
-		}
-
 		if ( isset($params['fieldsfill']) && !empty($params['fieldsfill']) && empty($itemId) ) {
 			// $back.= '<tr><td><label for="ins_fill">' . tra("Create multiple items (one per line).") . '</label>';
 			$back.= '<div class="form-group"><label class="col-md-3" for="ins_fill">' . tra("Insert one item per line:") // <tr><td><label for="ins_fill">
@@ -2007,52 +1903,6 @@ function wikiplugin_tracker_render_value($f, $item)
 
 	$handler = $trklib->get_field_handler($f, $item);
 	return $handler->renderOutput(array('inTable' => 'n'));
-}
-
-/**
- * Convert an email parameter componenet into a real email address
- *
- * @param string $emailOrField   int for a fieldId, string for a username or email already
- * @param array $fields          tracker fields
- * @param array $item            item field values
- * @param int $trackerId
- * @param int $itemId
- *
- * @return bool|mixed
- */
-function wikiplugin_tracker_process_email_recipient($emailOrField, $fields, $item, $trackerId, $itemId)
-{
-	$output = $emailOrField;
-
-	// numeric so is a fieldId
-	if (is_numeric($emailOrField)) {
-		$f = array();
-		foreach( $fields as $f) {
-			if ($f['fieldId'] == $emailOrField) {
-				break;
-			}
-		}
-		if ($f && $f['type'] === 'l') {
-			$output = wikiplugin_tracker_render_value($f, $item);
-		} else {
-			$output = TikiLib::lib('trk')->get_item_value($trackerId, $itemId, $emailOrField);
-		}
-		$output = trim($output);
-	}
-
-	// string but not an email yet, therefore a username
-	if( !empty($output) && !strstr($output, '@') ) {
-		$email = TikiLib::lib('user')->get_user_email($output);
-		if ( $email ) {
-			$output = $email;
-		} else if ($output === 'createdBy' || $output === 'lastModifBy') {
-			$email = TikiLib::lib('user')->get_user_email($item[$output]);
-			if ($email) {
-				$output = $email;
-			}
-		}
-	}
-	return $output;
 }
 
 function wikiplugin_tracker_save($trackerSavedState)

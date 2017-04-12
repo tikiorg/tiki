@@ -127,7 +127,6 @@ class Search_MySql_Index implements Search_Index_Interface
 
 			return $resultSet;
 		} catch (Search_MySql_QueryException $e) {
-			TikiLib::lib('errorreport')->report($e->getMessage());
 			$resultSet = new Search_ResultSet(array(), 0, $resultStart, $resultCount);
 			return $resultSet;
 		}

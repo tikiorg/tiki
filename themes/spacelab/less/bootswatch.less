@@ -2,6 +2,13 @@
 // Bootswatch
 // -----------------------------------------------------
 
+@web-font-path: "https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700";
+
+.web-font(@path) {
+	@import url("@{path}");
+}
+.web-font(@web-font-path);
+
 .btn-shadow(@color) {
 	#gradient > .vertical-three-colors(lighten(@color, 15%), @color, 50%, darken(@color, 4%));
 	filter: none;
@@ -20,7 +27,7 @@
 		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
 
 		.badge {
-			background-color: #ffffff;
+			background-color: #fff;
 			color: @navbar-inverse-bg;
 		}
 	}
@@ -133,7 +140,7 @@
 
 	&-primary {
 		.panel-title {
-			color: #ffffff;
+			color: #fff;
 		}
 	}
 }

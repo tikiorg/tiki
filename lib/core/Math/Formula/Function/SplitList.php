@@ -9,7 +9,7 @@ class Math_Formula_Function_SplitList extends Math_Formula_Function
 {
 	function evaluate( $element )
 	{
-		$allowed = array('content', 'separator', 'keys', 'key');
+		$allowed = array('content', 'separator', 'keys');
 
 		if ($extra = $element->getExtraValues($allowed)) {
 			$this->error(tr('Unexpected values: %0', implode(', ', $extra)));
@@ -27,37 +27,25 @@ class Math_Formula_Function_SplitList extends Math_Formula_Function
 		}
 		$separator = $separator[0];
 
-		if ( ! $element->keys && ! $element->key ) {
-			$this->error(tra('Field must be provided and contain one or more values: key or keys'));
+		if ( ! $element->keys) {
+			$this->error(tra('Field must be provided and contain a list of values.'));
 		}
-
+		$keys = array();
+		foreach ($element->keys as $key) {
+			$keys[] = $key;
+		}
+		$keyCount = count($keys);
 		$out = array();
 
-		if( $element->key ) {
-			$key = $element->key[0];
-			foreach ($content as $child) {
-				$string = $this->evaluateChild($child);
-				foreach (explode($separator, $string) as $value) {
-					$out[] = array($key => $value);
-				}
-			}
-		} else {
-			$keys = array();
-			foreach ($element->keys as $key) {
-				$keys[] = $key;
-			}
-			$keyCount = count($keys);
+		foreach ($content as $child) {
+			$string = $this->evaluateChild($child);
+			foreach (explode("\n", $string) as $line) {
+				$parts = explode($separator, $line, $keyCount);
 
-			foreach ($content as $child) {
-				$string = $this->evaluateChild($child);
-				foreach (explode("\n", $string) as $line) {
-					$parts = explode($separator, $line, $keyCount);
-
-					// Skip entries with missing values
-					if (count($parts) === $keyCount) {
-						$entry = array_combine($keys, $parts);
-						$out[] = $entry;
-					}
+				// Skip entries with missing values
+				if (count($parts) === $keyCount) {
+					$entry = array_combine($keys, $parts);
+					$out[] = $entry;
 				}
 			}
 		}

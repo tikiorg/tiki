@@ -2,6 +2,13 @@
 // Bootswatch
 // -----------------------------------------------------
 
+@web-font-path: "https://fonts.googleapis.com/css?family=Lato:300,400,700";
+
+.web-font(@path) {
+	@import url("@{path}");
+}
+.web-font(@web-font-path);
+
 // Navbar =====================================================================
 
 .navbar {
@@ -12,7 +19,7 @@
 	&-default {
 
 		.badge {
-			background-color: #ffffff;
+			background-color: #fff;
 			color: @navbar-default-bg;
 		}
 	}
@@ -20,7 +27,7 @@
 	&-inverse {
 
 		.badge {
-			background-color: #ffffff;
+			background-color: #fff;
 			color: @navbar-inverse-bg;
 		}
 	}
@@ -99,7 +106,7 @@ table,
 	font-size: @font-size-small;
 
 	a:not(.btn) {
-		color: #ffffff;
+		color: #fff;
 		text-decoration: underline;
 	}
 
@@ -243,11 +250,11 @@ label,
 // Indicators =================================================================
 
 .alert {
-	color: #ffffff;
+	color: #fff;
 
 	a,
 	.alert-link {
-		color: #ffffff;
+		color: #fff;
 	}
 }
 

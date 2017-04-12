@@ -347,11 +347,7 @@ function initialize_prefs($force = false)
 
 	if ($cachelib->isCached('global_preferences')) {
 		$prefs = $cachelib->getSerialized('global_preferences');
-		// note there is a small chance in high concurrency environments that cache file may be cleared
-		// in the interim leading to blank $prefs
-	}
-
-	if (empty($prefs) || !$cachelib->isCached('global_preferences')) {
+	} else {
 		$defaults = get_default_prefs();
 
 		// Find which preferences need to be serialized/unserialized, based on the default

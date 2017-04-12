@@ -52,7 +52,6 @@ function smarty_function_trackerfields($params, $smarty)
 	$sections = [];
 	$auto = ['input' => [], 'output' => [], 'inline' => []];
 
-	$datepicker = false;
 	foreach ($params['fields'] as $field) {
 		if ($field['type'] == 'h') {
 			$title = tr($field['name']);
@@ -96,10 +95,6 @@ function smarty_function_trackerfields($params, $smarty)
 				], $smarty);
 			});
 		}
-
-		if ($field['type'] == 'j') {
-			$datepicker = true;
-		}
 	}
 
 	$out = array();
@@ -119,8 +114,7 @@ function smarty_function_trackerfields($params, $smarty)
 	// Compatibility attempt with the legacy $f_X format.
 	// Note: Here we set the the closures for the field, NOT the final values!
 	// The final values are set in trackerlib.php using field_render_value()
-	// Using $params['fields'] as $fields is only the last "section" now
-	foreach ($params['fields'] as $field) {
+	foreach ($fields as $field) {
 		$id = $field['fieldId'];
 		$permName = $field['permName'];
 		$smarty->assign('f_' . $id, $auto['default'][$permName]);
@@ -155,9 +149,6 @@ function smarty_function_trackerfields($params, $smarty)
 	$trklib->registerSectionFormat('config', 'view', $viewItemPretty, tr('Configured'));
 	$template = $trklib->getSectionFormatTemplate($sectionFormat, $params['mode']);
 
-	// smarty doesn't use tpl: as a resource prefix any more
-	$template = stripos($template, 'tpl:') === 0 ? substr($template, 4) : $template;
-
 	$trklib->unregisterSectionFormat('config');
 
 	try {
@@ -172,12 +163,6 @@ function smarty_function_trackerfields($params, $smarty)
 		$template = $trklib->getSectionFormatTemplate('flat', $params['mode']);
 		$result = $smarty->fetch($template);
 	}
-
-	if ( $datepicker ) {
-		$smarty->loadPlugin('smarty_function_js_insert_icon');
-		$result .= smarty_function_js_insert_icon(array('type'=>"jscalendar"), $smarty);
-	}
-
 	return $result;
 }
 

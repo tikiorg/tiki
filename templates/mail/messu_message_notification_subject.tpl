@@ -1,1 +1,1 @@
-{* $Id$ *}{tr}New {$prefs.mail_template_custom_text}message arrived from %s{/tr}
+{tr}New message arrived from %s{/tr}

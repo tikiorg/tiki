@@ -1,4 +1,4 @@
-{* $Id$ *}<a href="mailto:{$email_token}">{$email_token}</a> {tr}has consulted your{/tr} {$prefs.mail_template_custom_text}
+<a href="mailto:{$email_token}">{$email_token}</a> {tr}has consulted your{/tr}
 
 {if $filegallery eq 'y'}
 	{tr}file{/tr} : {$filename}

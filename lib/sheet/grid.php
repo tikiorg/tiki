@@ -196,7 +196,7 @@ class TikiSheet
 	/** TikiSheet
 	 * Initializes the data container.
 	 */
-	function __construct() {
+	function TikiSheet() {
 		$this->dataGrid = array();
 		$this->calcGrid = array();
 		$this->cellInfo = array();
@@ -349,7 +349,6 @@ class TikiSheet
 				$handler = new TikiSheetDatabaseHandler($childSheetId, $date );
 				$childSheet = new TikiSheet();
 				$childSheet->import($handler);
-				$childSheet->parseValues = true;
 				$data .= $childSheet->getTableHtml( false );
 			}
 		}
@@ -1080,7 +1079,7 @@ class TikiSheetTrackerHandler extends TikiSheetDataHandler
 
 				$sheet->setValue( $i == 0 ? $key : $field );
 
-				$sheet->setColSpan( 1, 1 );
+				$sheet->setSize( 1, 1 );
 				$j++;
 			}
 			$i++;
@@ -1123,7 +1122,7 @@ class TikiSheetSimpleArrayHandler extends TikiSheetDataHandler
 {
 	public $values = array();
 
-	function __construct( $simpleArray = array() )
+	function TikiSheetSimpleArrayHandler( $simpleArray = array() )
 	{
 		$this->values = $simpleArray['values'];
 		$this->name = $simpleArray['name'];
@@ -1157,7 +1156,7 @@ class TikiSheetSimpleArrayHandler extends TikiSheetDataHandler
 
 				$sheet->setValue( $i == 0 ? $key : $col );
 
-				$sheet->setColSpan( 1, 1 );
+				$sheet->setSize( 1, 1 );
 				$j++;
 			}
 			$i++;
@@ -1232,7 +1231,7 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
 					}
 				}
 
-				$sheet->setColSpan( 1, 1 );
+				$sheet->setSize( 1, 1 );
 			}
 		}
 
@@ -1606,7 +1605,7 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
                                 }
 							}
 						}
-						$sheet->setColSpan( $width, $height );
+						$sheet->setSize( $width, $height );
 					}
 			}
 

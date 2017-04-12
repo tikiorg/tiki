@@ -53,7 +53,7 @@
 						</select>
 					{elseif $def.selector_type}
 						{if $def.separator}
-							{object_selector_multi type=$def.selector_type _separator=$def.separator _simplename="option~`$param`" _simplevalue=$options[$param] _simpleid="option-`$param`" _parent=$def.parent _parentkey=$def.parentkey _sort=$def.sort_order}
+							{object_selector_multi type=$def.selector_type _separator=$def.separator _simplename="option~`$param`" _simplevalue=$options[$param] _simpleid="option-`$param`" _parent=$def.parent _parentkey=$def.parentkey}
 						{else}
 							{object_selector type=$def.selector_type _simplename="option~`$param`" _simplevalue=$options[$param] _simpleid="option-`$param`" _parent=$def.parent _parentkey=$def.parentkey}
 						{/if}
@@ -122,17 +122,11 @@
 			<div class="form-group">
 				<label for="visible_by" class="groupselector control-label">{tr}Visible by{/tr}</label>
 				<input type="text" name="visible_by" value="{foreach from=$field.visibleBy item=group}{$group|escape}, {/foreach}" class="form-control">
-				<div class="help-block">
-					{tr}List of Group names with permission to see this field{/tr}. {tr}Separated by comma (,){/tr}
-				</div>
 			</div>
 
 			<div class="form-group">
 				<label for="editable_by" class="groupselector control-label">{tr}Editable by{/tr}</label>
 				<input type="text" name="editable_by" value="{foreach from=$field.editableBy item=group}{$group|escape}, {/foreach}" class="form-control">
-				<div class="help-block">
-					{tr}List of Group names with permission to edit this field{/tr}. {tr}Separated by comma (,){/tr}
-				</div>
 			</div>
 
 			<div class="form-group">

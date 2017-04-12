@@ -24,23 +24,11 @@ class Math_Formula_Function_Date extends Math_Formula_Function
 			$format = 'U';	// Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT)
 		}
 		$timestamp = intval(array_shift($elements));
-
-		$tikilib = TikiLib::lib('tiki');
-		$tz = $tikilib->get_display_timezone();
-		$old_tz = date_default_timezone_get();
-		if( $tz )
-			date_default_timezone_set($tz);
-
-		$date = null;
 		if (empty($timestamp)) {
-			$date = date($format);
+			return date($format);
 		} else {
-			$date = date($format, $timestamp);
+			return date($format, $timestamp);
 		}
-
-		date_default_timezone_set($old_tz);
-
-		return $date;
 	}
 }
 

@@ -35,10 +35,6 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 
 		$detail = $this->user->get_user_details($objectId, false);
 
-		if (empty($detail['info'])) {
-			return false;
-		}
-
 		$name = $objectId;
 		if (! empty($detail['preferences']['realName'])) {
 			$name = $detail['preferences']['realName'];
@@ -222,10 +218,6 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 			}
 
 			$item = $this->trk->get_tracker_item($row['itemId']);
-			$data = array_merge($data, array(
-				'tracker_item_id' => $typeFactory->identifier($row['itemId']),
-				'tracker_item_status' => $typeFactory->identifier($item['status']),
-			));
 
 			foreach (Search_ContentSource_TrackerItemSource::getIndexableHandlers($definition, $item) as $baseKey => $handler) {
 				$data = array_merge($data, $handler->getDocumentPart($typeFactory));

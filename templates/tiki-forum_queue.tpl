@@ -101,10 +101,10 @@
 				<input type="hidden" name="forumId" value="{$forumId|escape}">
 				<input type="hidden" name="in_reply_to" value="{$msg_info.in_reply_to|escape}">
 				<input type="hidden" name="qId" value="{$smarty.request.qId|escape}">
-				<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false">
-				<input type="submit" class="btn btn-primary btn-sm" name="saveapp" value="{tr}Save and Approve{/tr}" onclick="needToConfirm=false">
-				<input type="submit" class="btn btn-warning btn-sm" name="remove" value="{tr}Remove{/tr}" onclick="needToConfirm=false">
-				<input type="submit" class="btn btn-default btn-sm" name="topicize" value="{tr}Convert to topic{/tr}" onclick="needToConfirm=false">
+				<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm" name="saveapp" value="{tr}Save and Approve{/tr}">
+				<input type="submit" class="btn btn-warning btn-sm" name="remove" value="{tr}Remove{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" name="topicize" value="{tr}Convert to topic{/tr}">
 			</div>
 		</div>
 	</form>
@@ -154,7 +154,7 @@
 						{else}
 							[{tr}New Topic{/tr}]
 						{/if}
-						<b><a class="link" href="tiki-forum_queue.php?forumId={$forumId}&amp;qId={$items[ix].qId}">{if !empty($items[ix].title)}{$items[ix].title|escape}{else}{tr}Untitled{/tr}{/if}</a></b>
+						<b><a class="link" href="tiki-forum_queue.php?forumId={$forumId}&amp;qId={$items[ix].qId}">{$items[ix].title|escape}</a></b>
 						by {$items[ix].user|username} on {$items[ix].timestamp|tiki_short_datetime}
 						<br>
 						{if $items[ix].parentId eq 0 and $forum_info.topic_summary eq 'y'}

@@ -14,7 +14,7 @@ $interactive_collected_strings = array();
 
 /**
  * needs a description
- * @param string $content
+ * @param $content
  * @return mixed|string
  */function tr($content)
 {
@@ -24,7 +24,7 @@ $interactive_collected_strings = array();
 
 /**
  * translate an English string
- * @param string $content English string
+ * @param        $content English string
  * @param string $lg      language - if not specify = global current language
  * @param bool   $unused
  * @param array  $args

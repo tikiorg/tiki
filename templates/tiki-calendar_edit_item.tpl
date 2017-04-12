@@ -76,10 +76,10 @@
 								{if $it.tiki_p_add_events eq 'y'}
 									{$calstyle = ''}
 									{if not empty($it.custombgcolor)}
-										{$calstyle='background-color:#'|cat:$it.custombgcolor|cat:';'}
+										{$calstyle='background-color:#'|cat:$it.custombgcolor}
 									{/if}
 									{if not empty($it.customfgcolor)}
-										{$calstyle=$calstyle|cat:'color:#'|cat:$it.customfgcolor}
+										{$calstyle='color:#'|cat:$it.customfgcolor}
 									{/if}
 									{if $calstyle}
 										{$calstyle = ' style="'|cat:$calstyle|cat:'"'}
@@ -124,15 +124,6 @@
 					{/if}
 				</div>
 			</div>
-            <div class="form-group">
-            	<label class="control-label col-md-3">{tr}Created by{/tr}</label>
-				<div class="col-md-9">
-				  <span class="summary">
-							{$calitem.user|escape}
-				  </span>
-					
-				</div>
-            </div>
 			{if $edit or $recurrence.id gt 0}
 				<div class="form-group">
 					<label class="control-label col-md-3">{tr}Recurrence{/tr}</label>

@@ -230,7 +230,6 @@ EOF;
 			$ret = $grid->getTableHtml(true, null, false);
 
 		} else {
-			$sheet->parseValues = true;
 			$ret = file_get_contents($url);
 		}
 	} else {

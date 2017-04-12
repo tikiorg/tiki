@@ -128,22 +128,16 @@ class PaypalLib extends TikiDb_Bridge
 	{
 		global $prefs;
 
-		$client = TikiLib::lib('tiki')->get_http_client($prefs['payment_paypal_environment']);
+		$client = TikiLib::lib('tiki')->get_http_client();
+		$client->setUri($prefs['payment_paypal_environment']);
 
 		$base = array( 'cmd' => '_notify-validate' );
 
-		// fix the url encoding of ampersand within the post request, as per r58655
-		$oldVal = ini_get('arg_separator.output');
-		ini_set('arg_separator.output', '&');
-
 		$client->setParameterPost(array_merge($base, $ipn_data));
 		$client->setMethod(Zend\Http\Request::METHOD_POST);
-
 		$response = $client->send();
 
 		$body = $response->getBody();
-
-		ini_set('arg_separator.output', $oldVal);
 
 		return 'VERIFIED' === $body;
 	}

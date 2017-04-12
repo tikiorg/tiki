@@ -28,11 +28,9 @@ $.getJSON('group_tracker_ajax.php', {chosenGroup:'{{$theChoiceGroup}}'}, functio
 		{/jq}
 		<tr><td colspan="2"><div id="registerTracker"></div></td></tr>
 	{elseif isset($listgroups)}
-		<div class="form-group">
-			<label class="col-sm-4 control-label">
-				{tr}Group{/tr}{if $prefs.user_must_choose_group eq 'y'} {if $trackerEditFormId}<span class="text-danger tips" title="" data-original-title="">*</span>{/if}{/if}
-			</label>
-			<div class="col-sm-8">
+		<tr>
+			<td>{tr}Group{/tr}{if $prefs.user_must_choose_group eq 'y'} {if $trackerEditFormId}<strong class='mandatory_star'>*</strong>{/if}{/if}</td>
+			<td>
 				{foreach item=gr from=$listgroups}
 					{if $gr.registrationChoice eq 'y'}
 						<div class="registergroup">
@@ -48,9 +46,9 @@ $.getJSON('group_tracker_ajax.php', {chosenGroup:'{{$theChoiceGroup}}'}, functio
 						</div>
 					{/if}
 				{/foreach}
-			</div>
-		</div>
-		<tr><td colspan="2"><div id="registerTracker"><em class='mandatory_note'>{if $trackerEditFormId}<div class="col-sm-9 col-sm-offset-3"><div class="text-center alert alert-danger">{tr}Fields marked with an * are mandatory.{/tr}</div></div>{/if}</em></div></td></tr>
+			</td>
+		</tr>
+		<tr><td colspan="2"><div id="registerTracker"><em class='mandatory_note'>{if $trackerEditFormId}{tr}Fields marked with an * are mandatory.{/tr}{/if}</em></div></td></tr>
 		{jq}
 $("input[name='chosenGroup']").change(function() {
 	$("#registerTracker").tikiModal("{tr}Loading...{/tr}");
@@ -62,6 +60,10 @@ $("input[name='chosenGroup']").change(function() {
 		$("#registerTracker").html(data['res']).tikiModal();
 		$("input[name^=captcha]").parents("tr").show();
 		$("input[name=register]").prop("disabled", false);
+		if (data['validation']) {
+			var $v = $("#registerTracker").parents('form').validate();
+			$.extend( true, $v.settings, data['validation'] );
+		}
 		$("#registerTracker").parents("table:first").css({borderSpacing:"0 !important",borderCollapse:"collapse !important"});
 		$("tr td:first", "#registerTracker").width($("#registerTracker").parents('table:first').find("td:first").width());
 	});

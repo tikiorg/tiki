@@ -88,7 +88,7 @@
 						<a
 							class="tips"
 							title="{$tracker.name|escape}:{tr}View{/tr}"
-							href="{$tracker.trackerId|sefurl:'tracker'}"
+							href="tiki-view_tracker.php?trackerId={$tracker.trackerId}"
 						>
 							{$tracker.name|escape}
 						</a>

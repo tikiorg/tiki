@@ -104,7 +104,7 @@ class Net_LDAP2_Schema extends PEAR
 	*
 	* @access protected
 	*/
-	public function __construct()
+	protected function __construct()
 	{
 		$this->PEAR('Net_LDAP2_Error'); // default error class
 	}

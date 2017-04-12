@@ -7,9 +7,7 @@
 
 {block name="content"}
 	<form action="tiki-wizard_admin.php" method="post">
-	<div class="col-sm-12">
-		{include file="wizard/wizard_bar_admin.tpl"}
-	</div>
+	{include file="wizard/wizard_bar_admin.tpl"}
 	<div id="wizardBody">
 	<div class="row">
 		{if !empty($wizard_toc)}

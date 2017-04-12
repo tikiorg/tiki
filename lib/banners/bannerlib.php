@@ -113,10 +113,16 @@ class BannerLib extends TikiLib
 				break;
 
 			case 'useFixedURL':
-                $raw
-                    = "<div class='banner $class'><a target='$target' href='banner_click.php?id="
-                    . $res["bannerId"] . "&amp;url=" . urlencode($res["url"]). "'>"
-                    . '<img src="'. $res["fixedURLData"] . '" alt="banner" /></a></div>';
+				@$fp = fopen($res["fixedURLData"], "r");
+
+				if ($fp) {
+					$raw = '';
+
+					while (!feof($fp)) {
+						$raw .= fread($fp, 4096);
+					}
+					fclose($fp);
+				}
 
 				break;
 

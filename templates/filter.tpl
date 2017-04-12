@@ -33,7 +33,7 @@
 					<select name="filter~type" id="filter-type" class="form-control">
 						<option value="">{tr}Any{/tr}</option>
 						{foreach from=$filter_types key=k item=t}
-							<option value="{$k|escape}"{if $k eq $filter_type} selected="selected"{/if}>{$t|escape}</option>
+							<option value="{$k|escape}"{if $t eq $filter_type} selected="selected"{/if}>{$t|escape}</option>
 						{/foreach}
 					</select>
 				</div>
@@ -52,10 +52,10 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label" for="filter-categories">{tr}Categories{/tr}</label>
 				<div class="col-sm-4">
-					<a class="category-lookup btn btn-default margin-bottom-sm" href="#">{tr}Lookup{/tr}</a>
+					<a class="category-lookup btn btn-default" href="#">{tr}Lookup{/tr}</a>
 					<input type="text" name="filter~categories" id="filter-categories" class="category-wizard form-control" value="{$filter_categories|escape}">
 				</div>
-				<div class="col-sm-5 checkbox">
+				<div class="col-sm-2 checkbox">
 					<label for="filter-deep">
 						<input type="checkbox" name="filter~deep" id="filter-deep" {if $filter_deep} checked="checked"{/if}> {tr}Deep search{/tr}
 					</label>
@@ -171,7 +171,7 @@
 		});
 
 		var categoryPicker = $('.category-picker', this).dialog({
-			maxHeight: $(window).height()-50,
+			height: $(window).height()-200,
 			width: 'auto',
 			autoOpen: false,
 			modal: true,
@@ -214,7 +214,6 @@
 		var tagPicker = $('.tag-picker', this).dialog({
 			autoOpen: false,
 			modal: true,
-			maxHeight: $window.height() - 50,
 			buttons: {
 				"{tr}Add to filter{/tr}": function () {
 					$('.highlight', this).each(function () {

@@ -174,17 +174,17 @@ function wikiplugin_file( $data, $params )
 				return tra('No such file');
 			}
 		} else {
-			$file_info = $filegallib->get_file_info($fileId, false, false);
-			if (empty($file_info)) {
+			$info = $filegallib->get_file_info($fileId, false, false);
+			if (empty($info)) {
 				return tra('Incorrect parameter').' fileId';
 			}
 		}
 
 		if (empty($data)) { // to avoid problem with parsing
-			$data = empty($file_info['name'])?$file_info['filename']: $file_info['name'];
+			$data = empty($info['name'])?$info['filename']: $info['name'];
 		}
 		if (isset($params['showicon']) && $params['showicon'] == "y") {
-			return "{img src=tiki-download_file.php?fileId=$fileId&amp;thumbnail=y link=tiki-download_file.php?fileId=$fileId styleimage=max-width:32px responsive='n'} [tiki-download_file.php?fileId=$fileId|$data]";
+			return "{img src=tiki-download_file.php?fileId=$fileId&amp;thumbnail=y&amp;x=16 link=tiki-download_file.php?fileId=$fileId responsive='n'} [tiki-download_file.php?fileId=$fileId|$data]";
 		} else {
 			return "[tiki-download_file.php?fileId=$fileId|$data]";
 		}

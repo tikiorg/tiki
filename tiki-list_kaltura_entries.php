@@ -104,7 +104,7 @@ try {
 
 	if ( $_REQUEST['list'] == 'mix' or !isset($_REQUEST['list']) ) {
 		if ($_REQUEST['view'] != 'browse') {
-			$kalturaadminlib = TikiLib::lib('kalturaadmin');
+			$kalturaadminlib = TikiLb::lib('kalturaadmin');
 			$kmixlist = $kalturaadminlib->listMix($sort_mode, $page, $page_size, $find);
 
 			for ($i =0 ; $i < $kmixlist->totalCount; $i++) {

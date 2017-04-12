@@ -2,6 +2,13 @@
 // Bootswatch
 // -----------------------------------------------------
 
+@web-font-path: "https://fonts.googleapis.com/css?family=Roboto:400,500";
+
+.web-font(@path) {
+	@import url("@{path}");
+}
+.web-font(@web-font-path);
+
 // Navbar =====================================================================
 
 .sandstone {
@@ -137,7 +144,7 @@ input,
 
 	a,
 	.alert-link {
-		color: #ffffff;
+		color: #fff;
 	}
 }
 
@@ -175,7 +182,7 @@ input,
 	.panel-heading,
 	.panel-title {
 		.sandstone;
-		color: #ffffff;
+		color: #fff;
 	}
 
 	.panel-footer {

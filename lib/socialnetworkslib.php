@@ -83,8 +83,6 @@ class SocialNetworksLib extends LogsLib
 
 		try {
 			$consumer = new ZendOAuth\Consumer($this->options);
-			$httpClient = TikiLib::lib('tiki')->get_http_client();
-			$consumer->setHttpClient($httpClient);
 			$token = $consumer->getRequestToken();
 			$_SESSION['TWITTER_REQUEST_TOKEN'] = serialize($token);
 			$consumer->redirect();
@@ -117,8 +115,6 @@ class SocialNetworksLib extends LogsLib
 		$this->options['consumerSecret'] = $prefs['socialnetworks_twitter_consumer_secret'];
 
 		$consumer = new ZendOAuth\Consumer($this->options);
-		$httpClient = TikiLib::lib('tiki')->get_http_client();
-		$consumer->setHttpClient($httpClient);
 		$token = $consumer->getAccessToken($_GET, unserialize($_SESSION['TWITTER_REQUEST_TOKEN']));
 		unset($_SESSION['TWITTER_REQUEST_TOKEN']);
 		$this->set_user_preference($user, 'twitter_token', serialize($token));
@@ -218,18 +214,11 @@ class SocialNetworksLib extends LogsLib
 		$ret = preg_split('/(\r\n\r\n|\r\r|\n\n)/', $ret, 2);
 		$ret = $ret[1];
 
-		$json_decoded_ret = json_decode($ret, true);
-
-		if (isset($json_decoded_ret['access_token']) || substr($ret, 0, 13) == 'access_token=') {
-
-			if (isset($json_decoded_ret['access_token'])) {
-				$access_token = $json_decoded_ret['access_token'];
-			} else {
-				$access_token = substr($ret, 13);
-				if ($endoftoken = strpos($access_token, '&')) {
-					// Returned string may have other var like expiry
-					$access_token = substr($access_token, 0, $endoftoken);
-				}
+		if (substr($ret, 0, 13) == 'access_token=') {
+			$access_token = substr($ret, 13);
+			if ($endoftoken = strpos($access_token, '&')) {
+				// Returned string may have other var like expiry
+				$access_token = substr($access_token, 0, $endoftoken);
 			}
 			$fields = array('id', 'name', 'first_name', 'last_name');
 
@@ -553,7 +542,6 @@ class SocialNetworksLib extends LogsLib
 		$this->options['callbackUrl'] = $this->getURL();
 		$this->options['consumerKey'] = $prefs['socialnetworks_twitter_consumer_key'];
 		$this->options['consumerSecret'] = $prefs['socialnetworks_twitter_consumer_secret'];
-		$httpClient = TikiLib::lib('tiki')->get_http_client();
 		$twitter = new ZendService\Twitter\Twitter(
 			array(
 				'oauthOptions' => array(
@@ -561,9 +549,7 @@ class SocialNetworksLib extends LogsLib
 					'consumerSecret' => $prefs['socialnetworks_twitter_consumer_secret'],
 				),
 				'accessToken' => $token
-			),
-			null,
-			$httpClient
+			)
 		);
 
 		try {
@@ -602,7 +588,6 @@ class SocialNetworksLib extends LogsLib
 		$this->options['callbackUrl'] = $this->getURL();
 		$this->options['consumerKey'] = $prefs['socialnetworks_twitter_consumer_key'];
 		$this->options['consumerSecret'] = $prefs['socialnetworks_twitter_consumer_secret'];
-		$httpClient = TikiLib::lib('tiki')->get_http_client();
 		$twitter = new ZendService\Twitter\Twitter(
 			array(
 				'oauthOptions' => array(
@@ -610,9 +595,7 @@ class SocialNetworksLib extends LogsLib
 					'consumerSecret' => $prefs['socialnetworks_twitter_consumer_secret'],
 				),
 				'accessToken' => $token
-			),
-			null,
-			$httpClient
+			)
 		);
 		try {
 			$response = $twitter->statuses->destroy($id);
@@ -842,7 +825,6 @@ class SocialNetworksLib extends LogsLib
 
 		$token = unserialize($token);
 
-		$httpClient = TikiLib::lib('tiki')->get_http_client();
 		$twitter = new ZendService\Twitter\Twitter(
 			array(
 				'oauthOptions' => array(
@@ -850,9 +832,7 @@ class SocialNetworksLib extends LogsLib
 					'consumerSecret' => $prefs['socialnetworks_twitter_consumer_secret'],
 				),
 				'accessToken' => $token
-			),
-			null,
-			$httpClient
+			)
 		);
 
 		if ($timelineType=='friends') {

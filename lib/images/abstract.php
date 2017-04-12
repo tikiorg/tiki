@@ -269,9 +269,7 @@ class ImageAbstract
 			if ( $format != $icon_format ) {
 				$icon->convert($icon_format);
 			}
-			if ($x < $this->_get_width() && $y < $this->_get_height()) {
-				$icon->resize($x, $y);
-			}
+			$icon->resize($x, $y);
 
 			return $icon->display();
 		} else {

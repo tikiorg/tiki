@@ -45,7 +45,7 @@
  * @author    Stephan Schmidt <schst@php.net>
  * @copyright 2002-2008 The PHP Group
  * @license   http://opensource.org/licenses/bsd-license New BSD License
- * @version   CVS: $Id$         //version 1.3.7
+ * @version   CVS: $Id: Parser.php,v 1.29 2008/08/24 21:48:21 ashnazg Exp $
  * @link      http://pear.php.net/package/XML_Parser
  */
 
@@ -187,6 +187,26 @@ class XML_Parser extends PEAR
     var $_validEncodings = array('ISO-8859-1', 'UTF-8', 'US-ASCII');
 
     // }}}
+    // {{{ php4 constructor
+
+    /**
+     * Creates an XML parser.
+     *
+     * This is needed for PHP4 compatibility, it will
+     * call the constructor, when a new instance is created.
+     *
+     * @param string $srcenc source charset encoding, use NULL (default) to use
+     *                       whatever the document specifies
+     * @param string $mode   how this parser object should work, "event" for
+     *                       startelement/endelement-type events, "func"
+     *                       to have it call functions named after elements
+     * @param string $tgtenc a valid target encoding
+     */
+    function XML_Parser($srcenc = null, $mode = 'event', $tgtenc = null)
+    {
+        XML_Parser::__construct($srcenc, $mode, $tgtenc);
+    }
+    // }}}
     // {{{ php5 constructor
 
     /**
@@ -201,7 +221,7 @@ class XML_Parser extends PEAR
      */
     function __construct($srcenc = null, $mode = 'event', $tgtenc = null)
     {
-        parent::__construct('XML_Parser_Error');
+        $this->PEAR('XML_Parser_Error');
 
         $this->mode   = $mode;
         $this->srcenc = $srcenc;
@@ -230,7 +250,7 @@ class XML_Parser extends PEAR
     function setMode($mode)
     {
         if ($mode != 'func' && $mode != 'event') {
-            $this->raiseError('Unsupported mode given',
+            $this->raiseError('Unsupported mode given', 
                 XML_PARSER_ERROR_UNSUPPORTED_MODE);
         }
 
@@ -254,9 +274,9 @@ class XML_Parser extends PEAR
      * @access public
      * @since v1.2.0beta3
      */
-    function setHandlerObj($obj)
+    function setHandlerObj(&$obj)
     {
-        $this->_handlerObj = $obj;
+        $this->_handlerObj = &$obj;
         return true;
     }
 
@@ -273,24 +293,24 @@ class XML_Parser extends PEAR
         }
 
         if (!is_object($this->_handlerObj)) {
-            $this->_handlerObj = $this;
+            $this->_handlerObj = &$this;
         }
         switch ($this->mode) {
 
-            case 'func':
-                xml_set_object($this->parser, $this->_handlerObj);
-                xml_set_element_handler($this->parser,
-                    array($this, 'funcStartHandler'), array($this, 'funcEndHandler'));
-                break;
+        case 'func':
+            xml_set_object($this->parser, $this->_handlerObj);
+            xml_set_element_handler($this->parser, 
+                array(&$this, 'funcStartHandler'), array(&$this, 'funcEndHandler'));
+            break;
 
-            case 'event':
-                xml_set_object($this->parser, $this->_handlerObj);
-                xml_set_element_handler($this->parser, 'startHandler', 'endHandler');
-                break;
-            default:
-                return $this->raiseError('Unsupported mode given',
-                    XML_PARSER_ERROR_UNSUPPORTED_MODE);
-                break;
+        case 'event':
+            xml_set_object($this->parser, $this->_handlerObj);
+            xml_set_element_handler($this->parser, 'startHandler', 'endHandler');
+            break;
+        default:
+            return $this->raiseError('Unsupported mode given', 
+                XML_PARSER_ERROR_UNSUPPORTED_MODE);
+            break;
         }
 
         /**
@@ -330,10 +350,10 @@ class XML_Parser extends PEAR
         }
         if (is_resource($xp)) {
             if ($this->tgtenc !== null) {
-                if (!@xml_parser_set_option($xp, XML_OPTION_TARGET_ENCODING,
+                if (!@xml_parser_set_option($xp, XML_OPTION_TARGET_ENCODING, 
                     $this->tgtenc)
                 ) {
-                    return $this->raiseError('invalid target encoding',
+                    return $this->raiseError('invalid target encoding', 
                         XML_PARSER_ERROR_INVALID_ENCODING);
                 }
             }
@@ -346,10 +366,10 @@ class XML_Parser extends PEAR
             return true;
         }
         if (!in_array(strtoupper($this->srcenc), $this->_validEncodings)) {
-            return $this->raiseError('invalid source encoding',
+            return $this->raiseError('invalid source encoding', 
                 XML_PARSER_ERROR_INVALID_ENCODING);
         }
-        return $this->raiseError('Unable to create XML parser resource.',
+        return $this->raiseError('Unable to create XML parser resource.', 
             XML_PARSER_ERROR_NO_RESOURCE);
     }
 
@@ -392,11 +412,11 @@ class XML_Parser extends PEAR
         /**
          * check, if file is a remote file
          */
-        if (preg_match('/^(http|ftp):\/\//i', substr($file, 0, 10))) {
+        if (eregi('^(http|ftp)://', substr($file, 0, 10))) {
             if (!ini_get('allow_url_fopen')) {
                 return $this->
                 raiseError('Remote files cannot be parsed, as safe mode is enabled.',
-                    XML_PARSER_ERROR_REMOTE);
+                XML_PARSER_ERROR_REMOTE);
             }
         }
 
@@ -405,7 +425,7 @@ class XML_Parser extends PEAR
             $this->fp = $fp;
             return $fp;
         }
-        return $this->raiseError('File could not be opened.',
+        return $this->raiseError('File could not be opened.', 
             XML_PARSER_ERROR_FILE_NOT_READABLE);
     }
 
@@ -449,7 +469,7 @@ class XML_Parser extends PEAR
         if (is_resource($fp)) {
             $this->fp = $fp;
             return true;
-        } elseif (preg_match('/^[a-z]+:\/\//i', substr($fp, 0, 10))) {
+        } elseif (eregi('^[a-z]+://', substr($fp, 0, 10))) {
             // see if it's an absolute URL (has a scheme at the beginning)
             return $this->setInputFile($fp);
         } elseif (file_exists($fp)) {
@@ -461,7 +481,7 @@ class XML_Parser extends PEAR
             return true;
         }
 
-        return $this->raiseError('Illegal input format',
+        return $this->raiseError('Illegal input format', 
             XML_PARSER_ERROR_INVALID_INPUT);
     }
 
@@ -488,7 +508,7 @@ class XML_Parser extends PEAR
 
             while ($data = fread($this->fp, 4096)) {
                 if (!$this->_parseString($data, feof($this->fp))) {
-                    $error = $this->raiseError();
+                    $error = &$this->raiseError();
                     $this->free();
                     return $error;
                 }
@@ -496,7 +516,7 @@ class XML_Parser extends PEAR
         } else {
             // otherwise, $this->fp must be a string
             if (!$this->_parseString($this->fp, true)) {
-                $error = $this->raiseError();
+                $error = &$this->raiseError();
                 $this->free();
                 return $error;
             }
@@ -530,7 +550,7 @@ class XML_Parser extends PEAR
      * Parses a string.
      *
      * @param string  $data XML data
-     * @param boolean $eof  If set and TRUE, data is the last piece
+     * @param boolean $eof  If set and TRUE, data is the last piece 
      *                      of data sent in this parser
      *
      * @return bool|PEAR_Error true on success or a PEAR Error
@@ -544,7 +564,7 @@ class XML_Parser extends PEAR
         }
 
         if (!$this->_parseString($data, $eof)) {
-            $error = $this->raiseError();
+            $error = &$this->raiseError();
             $this->free();
             return $error;
         }
@@ -583,12 +603,12 @@ class XML_Parser extends PEAR
      * @param string  $msg   the error message
      * @param integer $ecode the error message code
      *
-     * @return XML_Parser_Error reference to the error object
+     * @return XML_Parser_Error
      **/
     function raiseError($msg = null, $ecode = 0)
     {
         $msg = !is_null($msg) ? $msg : $this->parser;
-        $err = new XML_Parser_Error($msg, $ecode);
+        $err = &new XML_Parser_Error($msg, $ecode);
         return parent::raiseError($err);
     }
 
@@ -609,9 +629,9 @@ class XML_Parser extends PEAR
         $func = 'xmltag_' . $elem;
         $func = str_replace(array('.', '-', ':'), '_', $func);
         if (method_exists($this->_handlerObj, $func)) {
-            call_user_func(array($this->_handlerObj, $func), $xp, $elem, $attribs);
+            call_user_func(array(&$this->_handlerObj, $func), $xp, $elem, $attribs);
         } elseif (method_exists($this->_handlerObj, 'xmltag')) {
-            call_user_func(array($this->_handlerObj, 'xmltag'),
+            call_user_func(array(&$this->_handlerObj, 'xmltag'), 
                 $xp, $elem, $attribs);
         }
     }
@@ -632,9 +652,9 @@ class XML_Parser extends PEAR
         $func = 'xmltag_' . $elem . '_';
         $func = str_replace(array('.', '-', ':'), '_', $func);
         if (method_exists($this->_handlerObj, $func)) {
-            call_user_func(array($this->_handlerObj, $func), $xp, $elem);
+            call_user_func(array(&$this->_handlerObj, $func), $xp, $elem);
         } elseif (method_exists($this->_handlerObj, 'xmltag_')) {
-            call_user_func(array($this->_handlerObj, 'xmltag_'), $xp, $elem);
+            call_user_func(array(&$this->_handlerObj, 'xmltag_'), $xp, $elem);
         }
     }
 
@@ -704,30 +724,30 @@ class XML_Parser_Error extends PEAR_Error
     // {{{ properties
 
     /**
-     * prefix for all messages
-     *
-     * @var      string
-     */
+    * prefix for all messages
+    *
+    * @var      string
+    */
     var $error_message_prefix = 'XML_Parser: ';
 
     // }}}
     // {{{ constructor()
     /**
-     * construct a new error instance
-     *
-     * You may either pass a message or an xml_parser resource as first
-     * parameter. If a resource has been passed, the last error that
-     * happened will be retrieved and returned.
-     *
-     * @param string|resource $msgorparser message or parser resource
-     * @param integer         $code        error code
-     * @param integer         $mode        error handling
-     * @param integer         $level       error level
-     *
-     * @access   public
-     * @todo PEAR CS - can't meet 85char line limit without arg refactoring
-     */
-    function __construct($msgorparser = 'unknown error', $code = 0, $mode = PEAR_ERROR_RETURN, $level = E_USER_NOTICE)
+    * construct a new error instance
+    *
+    * You may either pass a message or an xml_parser resource as first
+    * parameter. If a resource has been passed, the last error that
+    * happened will be retrieved and returned.
+    *
+    * @param string|resource $msgorparser message or parser resource
+    * @param integer         $code        error code
+    * @param integer         $mode        error handling
+    * @param integer         $level       error level
+    *
+    * @access   public
+    * @todo PEAR CS - can't meet 85char line limit without arg refactoring
+    */
+    function XML_Parser_Error($msgorparser = 'unknown error', $code = 0, $mode = PEAR_ERROR_RETURN, $level = E_USER_NOTICE)
     {
         if (is_resource($msgorparser)) {
             $code        = xml_get_error_code($msgorparser);
@@ -736,20 +756,7 @@ class XML_Parser_Error extends PEAR_Error
                 xml_get_current_line_number($msgorparser),
                 xml_get_current_column_number($msgorparser));
         }
-        parent::__construct($msgorparser, $code, $mode, $level);
+        $this->PEAR_Error($msgorparser, $code, $mode, $level);
     }
     // }}}
-
-    /**
-     * PHP4 constructor for backwards compatibility with older code
-     *
-     * @param string|resource $msgorparser message or parser resource
-     * @param integer         $code        error code
-     * @param integer         $mode        error handling
-     * @param integer         $level       error level
-     */
-    function XML_Parser_Error($msgorparser = 'unknown error', $code = 0, $mode = PEAR_ERROR_RETURN, $level = E_USER_NOTICE)
-    {
-        self::__construct($msgorparser, $code, $mode, $level);
-    }
 }

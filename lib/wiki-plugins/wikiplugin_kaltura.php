@@ -55,18 +55,18 @@ function wikiplugin_kaltura_info()
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
-				'description' => tra('Width of the player in pixels or percent'),
+				'description' => tra('Width of the player in pixels'),
 				'since' => '10.0',
 				'default' => 595,
-				'filter' => 'text',
+				'filter' => 'int',
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
-				'description' => tra('Height of the player in pixels or percent'),
+				'description' => tra('Height of the player in pixels'),
 				'since' => '10.0',
 				'default' => 365,
-				'filter' => 'text',
+				'filter' => 'int',
 			),
 			'align' => array(
 				'required' => false,
@@ -271,13 +271,7 @@ kWidget.embed({
 	}
 });"
 			);
-		if (is_numeric($params['width'])) {
-			$params['width'] .= 'px';
-		}
-		if (is_numeric($params['height'])) {
-			$params['height'] .= 'px';
-		}
-		return "<div id='kaltura_player$instance' style='width:{$params['width']};height:{$params['height']};$style'></div>";
+		return "<div id='kaltura_player$instance' style='width:{$params['width']}px;height:{$params['height']}px;$style'></div>";
 
 	} elseif ($params['type'] === 'kdp') {
 

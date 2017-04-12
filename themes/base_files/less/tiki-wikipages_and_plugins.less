@@ -87,10 +87,6 @@ table.wikiplugin_tracker td {
 	padding-bottom: 1.2em;
 }
 
-table.wikiplugin_trackerlist {
-	position: relative;
-}
-
 // /* wikiplugin edit */
 .wikiplugin_edit textarea {
 	width: 99%;
@@ -250,7 +246,7 @@ table.wikiplugin_trackerlist {
 
 .structuremenu .menuSection .option,
 .structuremenu .menuSection .optionline {
-//	background: transparent url('@{imagePath}h_trenner.gif') center left no-repeat;
+	background: transparent url('@{imagePath}h_trenner.gif') center left no-repeat;
 	padding-left: 21px;
 }
 
@@ -283,11 +279,10 @@ div.tiki_plugin {
 // /* Auto TOC */
 #autotoc {
   position: relative;
-  padding:0;
 }
 
 .autotoc.affix {
-  top: 10px;
+  top: 0;
 }
 
 .autotoc .nav > li {
@@ -802,11 +797,9 @@ body.tiki_wiki #comments {
 
 // /* wikiplugin quote */
 .quoteheader {
+	background: url('@{imagePathToIcons}quoteleft.gif') no-repeat;
+	padding-left: 50px;
 	height: 35px;
-	.fa {
-		font-size: 34px;
-		color: #aaaaaa;
-	}
 }
 
 .quotebody {

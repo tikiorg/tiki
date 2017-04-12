@@ -1,1 +1,1 @@
-{* $Id$ *}{$prefs.mail_template_custom_text}{tr}Structure modified{/tr}
+{tr}Structure modified{/tr}

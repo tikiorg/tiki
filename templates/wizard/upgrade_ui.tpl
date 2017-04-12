@@ -36,8 +36,7 @@
 			{preference name=wiki_auto_toc}
 			<div class="adminoptionboxchild" id="wiki_auto_toc_childcontainer">
 				{preference name=wiki_inline_auto_toc}
-				{preference name=wiki_toc_pos}
-				{preference name=wiki_toc_offset}
+				{preference name=wiki_inline_toc_pos}
 			</div>
 			{preference name=wysiwyg_inline_editing}
 		</fieldset>

@@ -510,12 +510,12 @@ function iconset_default()
 				'style' => 'color:green'
 			),
 			'status-pending' => array(
-				'id' => 'adjust',
+				'id' => 'circle',
 				'style' => 'color:orange'
 			),
 			'status-closed' => array(
-				'id' => 'times-circle-o',
-				'style' => 'color:grey'
+				'id' => 'circle',
+				'style' => 'color:lightgrey'
 			),
 			//stop in defaults
 			'stop-watching' => array(

@@ -169,10 +169,7 @@ class OAuthLib extends TikiDb_Bridge
 	private function get_consumer($provider_key)
 	{
 		if ($configuration = $this->get_configuration($provider_key)) {
-			$consumer = new ZendOAuth\Consumer($configuration);
-			$httpClient = TikiLib::lib('tiki')->get_http_client();
-			$consumer->setHttpClient($httpClient);
-			return $consumer;
+			return new ZendOAuth\Consumer($configuration);
 		}
 	}
 }

@@ -85,6 +85,8 @@ if (isset($_REQUEST['su'])) {
 			$finalusers = $userlib->find_best_user(array($_REQUEST['username']), '', 'login');
 			if (count($finalusers[0]) === 1 && !empty($finalusers[0])) {
 				$_REQUEST['username'] = $finalusers[0];
+			} else {
+				$_REQUEST['username'] = '';
 			}
 		}
 		if ($userlib->user_exists($_REQUEST['username'])) {
@@ -347,11 +349,7 @@ if ($isvalid) {
 				//       ... so we also need to check against : homepage + '?page=' + default wiki pagename
 				//
 				include_once('tiki-sefurl.php');
-				if ($url == '' || preg_match('/(tiki-register|tiki-login_validate|tiki-login_scr)\.php/', $url) || $prefs['limitedGoGroupHome'] == 'n'
-					|| $url == $prefs['site_tikiIndex'] || $url_path == $prefs['site_tikiIndex'] || basename($url_path) == $prefs['site_tikiIndex']
-					|| ($anonymous_homepage != '' && ($url == $anonymous_homepage || $url_path == $anonymous_homepage || basename($url_path) == $anonymous_homepage))
-					|| filter_out_sefurl($anonymous_homepage) == basename($url_path)
-					|| ($tikiIndex_full != '' && ( basename($url_path) == $tikiIndex_full || basename($url_path) == filter_out_sefurl($tikiIndex_full) ))) {
+				if ($url == '' || preg_match('/(tiki-register|tiki-login_validate|tiki-login_scr)\.php/', $url) || $prefs['limitedGoGroupHome'] == 'n' || $url == $prefs['site_tikiIndex'] || $url_path == $prefs['site_tikiIndex'] || basename($url_path) == $prefs['site_tikiIndex'] || ($anonymous_homepage != '' && ($url == $anonymous_homepage || $url_path == $anonymous_homepage || basename($url_path) == $anonymous_homepage)) || filter_out_sefurl($anonymous_homepage) == basename($url_path) || ($tikiIndex_full != '' && basename($url_path) == $tikiIndex_full)) {
 					$groupHome = $userlib->get_user_default_homepage($user);
 					if ($groupHome != '') {
 						$url = (preg_match('/^(\/|https?:)/', $groupHome)) ? $groupHome : filter_out_sefurl('tiki-index.php?page=' . urlencode($groupHome));

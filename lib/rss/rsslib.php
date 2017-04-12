@@ -332,28 +332,23 @@ class RSSLib extends TikiDb_Bridge
 	// --------------------------------------------
 
 	/* get (a part of) the list of existing rss feeds from db */
-	function list_rss_modules($offset = 0, $maxRecords = null, $sort_mode = 'name_asc', $find = '')
+	function list_rss_modules($offset, $maxRecords, $sort_mode, $find)
 	{
-		global $prefs;
-
 		$conditions = array();
-		if ($maxRecords === null) {
-			$maxRecords = $prefs['maxRecords'];
-		}
 		if ($find) {
 			$conditions['search'] = $this->modules->expr('(`name` LIKE ? OR `description` LIKE ?)', array("%$find%", "%$find%"));
 		}
 
-		$ret = $this->modules->fetchAll($this->modules->all(), $conditions, $maxRecords, $offset, $this->modules->sortMode($sort_mode));
+		$ret = $this->modules->fetchAll($this->modules->all(), $conditions, -1, -1, $this->modules->sortMode($sort_mode));
 
 		foreach ($ret as & $res) {
 			$res["minutes"] = $res["refresh"] / 60;
 		}
 
 		return array(
-			'data' => $ret,
-			'cant' =>  $this->modules->fetchCount($conditions),
-		);
+				'data' => $ret,
+				'cant' => count($ret),
+				);
 	}
 
 	/* replace rss feed in db */
@@ -405,19 +400,11 @@ class RSSLib extends TikiDb_Bridge
 		$this->update_feeds(array( $rssId ), true);
 	}
 
-	/**
-	 * @param int $rssId       feed id
-	 * @param int $olderThan   publication date more than than this number of seconds ago
-	 */
-	function clear_rss_cache($rssId, $olderThan = 0)
+	function clear_rss_cache($rssId)
 	{
-		$conditions = array('rssId' => (int)$rssId);
+		$this->items->deleteMultiple(array('rssId' => (int) $rssId));
+		$this->modules->update(array('refresh' => 0), array('rssId' => (int) $rssId,));
 
-		if ($olderThan) {
-			$conditions['publication_date'] = $this->items->lesserThan(time() - $olderThan);
-		}
-
-		$this->items->deleteMultiple($conditions);
 	}
 
 	/* check if an rss feed name already exists */
@@ -525,20 +512,12 @@ class RSSLib extends TikiDb_Bridge
 			$authors = $entry->getAuthors();
 
 			$categories = $entry->getCategories();
-
-			$link = $entry->getLink();
-			if (! $link) {
-				$link = '';
-			}
-			$description = $entry->getDescription();
-			if (! $description) {
-				$description = '';
-			}
+		
 			$data = $filter->filter(
 				array(
 					'title' => $entry->getTitle(),
-					'url' => $link,
-					'description' => $description,
+					'url' => $entry->getLink(),
+					'description' => $entry->getDescription(),
 					'content' => $entry->getContent(),
 					'author' => $authors ? implode(', ', $authors->getValues()) : '',
 					'categories' => $categories ? json_encode($categories->getValues()) : json_encode(array()),

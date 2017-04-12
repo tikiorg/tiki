@@ -126,7 +126,7 @@
 						{/if}
 						{if $listpages[ix].show_pubdate eq 'y'}
 							<span class="pubdate">
-								{tr}Published{/tr} {$listpages[ix].publishDate|tiki_short_datetime}
+								{tr}Published At:{/tr} {$listpages[ix].publishDate|tiki_short_datetime}
 							</span>
 							{if $listpages[ix].show_expdate eq 'y' or $listpages[ix].show_reads eq 'y'}
 								-
@@ -134,7 +134,7 @@
 						{/if}
 						{if $listpages[ix].show_expdate eq 'y'}
 							<span class="expdate">
-								{tr}Expires{/tr} {$listpages[ix].expireDate|tiki_short_datetime}
+								{tr}Expires At:{/tr} {$listpages[ix].expireDate|tiki_short_datetime}
 							</span>
 							{if $listpages[ix].show_reads eq 'y'}
 								-

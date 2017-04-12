@@ -627,7 +627,7 @@ class LogsLib extends TikiLib
 	{
 		if (preg_match('/comments_parentId=([0-9\-+]+)/', $action['comment'], $matches)) {
 			return $matches[1];
-		} elseif (preg_match('/#threadId=?([0-9\-+]+)/', $action['comment'], $matches)) {
+		} elseif (preg_match('/#threadId([0-9\-+]+)/', $action['comment'], $matches)) {
 			return $matches[1];
 		} elseif (preg_match('/sheetId=([0-9]+)/', $action['comment'], $matches)) {
 			return $matches[1];
@@ -1598,7 +1598,7 @@ class LogsLib extends TikiLib
 						$filegallib = TikiLib::lib('filegal');
 						$objects = $filegallib->list_file_galleries(0, -1, 'name_asc', 'admin', '', $prefs['fgal_root_id']);
 						foreach ($objects['data'] as $object) {
-							$fileGalleryNames[$object['id']] = $object['name'];
+							$fileGalleryNames[$object['galleryId']] = $object['name'];
 						}
 					}
 

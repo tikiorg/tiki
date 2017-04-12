@@ -1496,7 +1496,7 @@ class UsersLib extends TikiLib
 
 		$ret = true;
 		$ret &= $this->ldap_sync_user($user, $pass);
-		$ret &= $this->_ldap_sync_groups($user, $pass);
+		$ret &= $this->ldap_sync_groups($user, $pass);
 
 		// Invalidate cache
 		$cachelib = TikiLib::lib('cache');
@@ -2080,7 +2080,6 @@ class UsersLib extends TikiLib
 		$userid = $this->get_user_id($user);
 		$query = 'delete from `users_usergroups` where `userId` = ?';
 		$result = $this->query($query, array($userid));
-		TikiLib::events()->trigger('tiki.user.update', array('type' => 'user', 'object' => $user));
 	}
 
 	function get_groups_userchoice()
@@ -2212,24 +2211,6 @@ class UsersLib extends TikiLib
 		return $list;
 	}
 
-	function list_all_groups_with_permission() {
-		$groups = array_map( function($g) {
-			return array('groupName' => $g);
-		}, $this->list_all_groups() );
-		
-		$filtered = Perms::filter(
-			array( 'type' => 'group' ), 
-			'object',
-			$groups,
-			array( 'object' => 'groupName' ),
-			'group_view'
-		);
-
-		return array_map(function($g) {
-			return $g['groupName'];
-		}, $filtered);
-	}
-
 
 	function remove_user($user)
 	{
@@ -2278,9 +2259,6 @@ class UsersLib extends TikiLib
 		$this->query('delete from `tiki_user_mailin_struct` where `username` = ?', array($user));
 
 		$cachelib->invalidate('userslist');
-
-		TikiLib::events()->trigger('tiki.user.delete', array('type' => 'user', 'object' => $user));
-
 		return true;
 	}
 
@@ -2519,12 +2497,6 @@ class UsersLib extends TikiLib
 		return $this->get_page_name_from_id($bestLangPageId);
 	}
 
-	/**
-	 * Get the user's home page and checks for grouphome pref
-	 *
-	 * @param string $user        User login
-	 * @return string             Home page
-	 */
 	function get_user_default_homepage2($user)
 	{
 		global $prefs;
@@ -6488,12 +6460,9 @@ class UsersLib extends TikiLib
 	function get_user_email($user)
 	{
 		global $prefs;
-
-		if (($prefs['login_is_email'] == 'y' && $user != 'admin')) {
-			return $this->user_exists($user) ? $user : '';
-		} else {
-			return $this->getOne('select `email` from `users_users` where binary `login`=?', array($user));
-		}
+		return ($prefs['login_is_email'] == 'y' && $user != 'admin')
+						? $user
+						: $this->getOne('select `email` from `users_users` where binary `login`=?', array($user));
 	}
 
 	function get_userId_what($userIds, $what = 'email')
@@ -7164,29 +7133,25 @@ class UsersLib extends TikiLib
 					}
 
 					$definition = Tracker_Definition::get($re['usersTrackerId']);
-					if ($definition) {
-						$items = $trklib->list_items(
-							$re['usersTrackerId'],
-							0,
-							1,
-							'',
-							$listfields,
-							$definition->getUserField(),
-							'',
-							'',
-							'',
-							$name,
-							'',
-							null,
-							true,
-							true
-						);
+					$items = $trklib->list_items(
+						$re['usersTrackerId'],
+						0,
+						1,
+						'',
+						$listfields,
+						$definition->getUserField(),
+						'',
+						'',
+						'',
+						$name,
+						'',
+						null,
+						true,
+						true
+					);
 
-						if (isset($items['data'][0]))
-							$smarty->assign_by_ref('item', $items['data'][0]);
-					} else {
-						TikiLib::lib('errorreport')->report(tr('No user tracker found with id #%0', $re['usersTrackerId']));
-					}
+					if (isset($items['data'][0]))
+						$smarty->assign_by_ref('item', $items['data'][0]);
 				}
 			}
 			$mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');

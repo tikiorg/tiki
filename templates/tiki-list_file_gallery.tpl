@@ -6,7 +6,7 @@
 		{if $edit_mode eq 'y'}
 			{tr}Edit Gallery:{/tr}
 		{/if}
-		{tr}{$name}{/tr}
+		{$name}
 	{/if}
 {/title}
 {if $prefs.javascript_enabled != 'y'}
@@ -140,7 +140,7 @@
 		{/if}
 		{if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user or $gal_info.public eq 'y'}
 			{if $tiki_p_upload_files eq 'y'}
-				{button _keepall='y' _icon_name="upload"  _type="link" _text="{tr}Upload{/tr}" href="tiki-upload_file.php" galleryId=$galleryId}
+				{button _keepall='y' _icon_name="export"  _type="link" _text="{tr}Upload{/tr}" href="tiki-upload_file.php" galleryId=$galleryId}
 			{/if}
 			{if $tiki_p_upload_files eq 'y' and $prefs.feature_draw eq 'y'}
 				{button _keepall='y' _icon_name="post"  _type="link" _text="{tr}Draw{/tr}" href="tiki-edit_draw.php" galleryId=$galleryId}
@@ -186,12 +186,12 @@
 			<input type="hidden" name="galleryId" value="{$galleryId|escape}">
 			<input type="hidden" name="fileId" value="{$fileId|escape}">
 			<div class="form-group">
-				<label for="comment">
-					{tr}Comment{/tr} ({tr}optional{/tr}):
+				<label>
+					{tr}Your comment{/tr} ({tr}optional{/tr}):
+					<input type="text" name="comment" size="30" class="form-input">
 				</label>
-					<input type="text" name="comment" id="comment" class="form-control">
-			</div>
 				<button type="submit" class="btn btn-default btn-sm">{icon name='ok'} {tr}Save{/tr}</button>
+			</div>
 		</form>
 	{/remarksbox}
 {/if}
@@ -266,43 +266,17 @@
 		<br>
 	{/if}
 	{if $prefs.fgal_quota_show neq 'n' and $gal_info.quota}
-		<div style="float:right; width: 350px;">
-			{if $gal_info.usedSize neq null}
+		<div style="float:right">
 			{capture name='use'}
-				{math equation="round((100*x)/(1024*1024*y),0)" x=$gal_info.usedSize y=$gal_info.quota}
+				{math equation="round((100*x)/(1024*1024*y),2)" x=$gal_info.usedSize y=$gal_info.quota}
 			{/capture}
-			{capture name='left_percent'}
-				{math equation="round(100-(100*x)/(1024*1024*y),0)" x=$gal_info.usedSize y=$gal_info.quota}
-			{/capture}
-			{capture name='left'}
-				{math equation="round(y - x/(1024*1024),0)" y=$gal_info.quota x=$gal_info.usedSize}
-			{/capture}
-			{/if}
-			{if $prefs.fgal_quota_show neq 'text_only'}{if $gal_info.usedSize neq null}
-				<div class="progress" style="display:inline-block;float:right;width: 250px;">
-					<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
-						 aria-valuemin="0" aria-valuemax="100" style="width:{$smarty.capture.left_percent|string_format:'%d'}%">
-					</div>
-					<div class="progress-bar progress-bar-danger" role="progressbar" style="width:{$smarty.capture.use|string_format:'%d'}%">
-					</div>
-				</div>
-			{/if}
-				{if $gal_info.usedSize eq null}
-					<div class="progress" style="display:inline-block;float:right; width: 250px;">
-						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
-							 aria-valuemin="0" aria-valuemax="100" style="width:100%">
-						</div>
-						<div class="progress-bar progress-bar-danger" role="progressbar" style="width:0%">
-						</div>
-					</div>
-				{/if}
-			{/if}
 			{if $prefs.fgal_quota_show neq 'y'}
-				{if $gal_info.usedSize eq null}
-					<div style="text-align:center;display:inline-block;float:right;padding-right: 10px;"><strong>{$gal_info.quota} MB</strong> left</div>
-				{else}
-					<div style="text-align:center;display:inline-block;float:right;padding-right: 10px;"><strong>{$smarty.capture.left} MB</strong> left</div>
-				{/if}
+				<b>{$smarty.capture.use} %</b> {tr}space use on{/tr} <b>{$gal_info.quota} Mo</b>
+				<br>
+			{/if}
+
+			{if $prefs.fgal_quota_show neq 'text_only'}
+				{quotabar length='100' value=$smarty.capture.use}
 			{/if}
 		</div>
 	{/if}

@@ -1,1 +1,1 @@
-{* $Id$ *}{* -*- coding:utf-8 -*- *}{$prefs.mail_template_custom_text}{tr}User Registration Request{/tr}
+{* -*- coding:utf-8 -*- *}{tr}User Registration Request{/tr}

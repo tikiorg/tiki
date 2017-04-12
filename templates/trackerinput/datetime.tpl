@@ -26,9 +26,8 @@
 {else}
 	{assign var=time value=$field.value}
 {/if}
-{$inForm}
 {if $field.options_array[0] ne 't'}
-	{if ((isset($field.options_array[3]) and ($field.options_array[3] eq 'blank' or $field.options_array[3] eq 'empty'))) or (isset($context.inForm) and $context.inForm eq 'y')}
+	{if ((isset($field.options_array[3]) and ($field.options_array[3] eq 'blank' or $field.options_array[3] eq 'empty'))) or (isset($inExportForm) and $inExportForm eq 'y')}
 		{html_select_date prefix=$field.ins_id time=$time start_year=$start end_year=$end field_order=$prefs.display_field_order all_empty=" "}
 	{else}
 		{html_select_date prefix=$field.ins_id time=$time start_year=$start end_year=$end field_order=$prefs.display_field_order}
@@ -38,7 +37,7 @@
 	{tr}at{/tr}
 {/if}
 {if $field.options_array[0] ne 'd'}
-	{if (isset($field.options_array[3]) and ($field.options_array[3] eq 'blank' or $field.options_array[3] eq 'empty'))or (isset($context.inForm) and $context.inForm eq 'y')}
+	{if (isset($field.options_array[3]) and ($field.options_array[3] eq 'blank' or $field.options_array[3] eq 'empty'))or (isset($inExportForm) and $inExportForm eq 'y')}
 		{html_select_time prefix=$field.ins_id time=$time display_seconds=false all_empty=" " use_24_hours=$use_24hr_clock}
 	{else}
 		{html_select_time prefix=$field.ins_id time=$time display_seconds=false use_24_hours=$use_24hr_clock}

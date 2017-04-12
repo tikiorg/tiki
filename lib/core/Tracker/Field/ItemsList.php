@@ -38,9 +38,6 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 						'filter' => 'int',
 						'legacy_index' => 1,
 						'profile_reference' => 'tracker_field',
-						'parent' => 'trackerId',
-						'parentkey' => 'tracker_id',
-						'sort_order' => 'position_nasc',
 					),
 					'fieldIdHere' => array(
 						'name' => tr('Value Field ID'),
@@ -48,9 +45,6 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 						'filter' => 'int',
 						'legacy_index' => 2,
 						'profile_reference' => 'tracker_field',
-						'parent' => 'input[name=trackerId]',
-						'parentkey' => 'tracker_id',
-						'sort_order' => 'position_nasc',
 					),
 					'displayFieldIdThere' => array(
 						'name' => tr('Fields to display'),
@@ -59,14 +53,6 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 						'separator' => '|',
 						'legacy_index' => 3,
 						'profile_reference' => 'tracker_field',
-						'parent' => 'trackerId',
-						'parentkey' => 'tracker_id',
-						'sort_order' => 'position_nasc',
-					),
-					'displayFieldIdThereFormat' => array(
-						'name' => tr('Format for customising fields to display'),
-						'description' => tr('Uses the translate function to replace %0 etc with the field values. E.g. "%0 any text %1"'),
-						'filter' => 'text',
 					),
 					'linkToItems' => array(
 						'name' => tr('Display'),
@@ -118,35 +104,7 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 
 	function renderInput($context = array())
 	{
-		if( empty($this->getOption('fieldIdHere')) ) {
-			return $this->renderOutput();
-		} else {
-			TikiLib::lib('header')->add_jq_onready(
-				'
-$("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . $this->getOption('fieldIdHere') . ']").change(function(e) {
-	$.getJSON(
-		"tiki-ajax_services.php",
-		{
-			controller: "tracker",
-			action: "itemslist_output",
-			field: "' . $this->getConfiguration('fieldId') . '",
-			fieldIdHere: "' . $this->getOption('fieldIdHere') . '",
-			value: $(this).val()
-		},
-		function(data, status) {
-			$ddl = $("div[name=' . $this->getInsertId() . ']");
-			$ddl.html(data);
-			if (jqueryTiki.chosen) {
-				$ddl.trigger("chosen:updated");
-			}
-			$ddl.trigger("change");
-		}
-	);
-}).trigger("change");
-			'
-			);
-			return '<div name="' . $this->getInsertId() . '"></div>';
-		}
+		return $this->renderOutput($context);
 	}
 
 	function renderOutput( $context = array() )
@@ -299,12 +257,8 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 		}
 
 		if ($technique == 'id') {
-			$itemId = $this->getItemId();
-			if( !$itemId ) {
-				$items = array();
-			} else {
-				$items = $trklib->get_items_list($trackerId, $filterFieldIdThere, $itemId, $status);
-			}
+			$itemId = $this->getItemId(); 
+			$items = $trklib->get_items_list($trackerId, $filterFieldIdThere, $itemId, $status);
 		} else {
 			// when this is an item link or dynamic item list field, localvalue contains the target itemId
 			$localValue = $this->getData($filterFieldIdHere); 
@@ -314,6 +268,7 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 				$itemId = $this->getItemId();
 				$localValue = $trklib->get_item_value($trackerId, $itemId, $filterFieldIdHere);
 			}
+			
 			// r = item link - not sure this is working 
 			if ($filterFieldHere['type'] == 'r' && isset($filterFieldHere['options_array'][0]) && isset($filterFieldHere['options_array'][1])) {
 				$localValue = $trklib->get_item_value($filterFieldHere['options_array'][0], $localValue, $filterFieldHere['options_array'][1]);
@@ -355,16 +310,7 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 		$trklib = TikiLib::lib('trk');
 		foreach ($items as $itemId) {
 			if ($displayFields && $displayFields[0]) {
-				$list[$itemId] = $trklib->concat_item_from_fieldslist(
-					$trackerId,
-					$itemId,
-					$displayFields,
-					$status,
-					' ',
-					$context['list_mode'],
-					$this->getOption('linkToItems'),
-					$this->getOption('displayFieldIdThereFormat')
-				);
+				$list[$itemId] = $trklib->concat_item_from_fieldslist($trackerId, $itemId, $displayFields, $status, ' ', $context['list_mode'], $this->getOption('linkToItems'));
 			} else {
 				$list[$itemId] = $trklib->get_isMain_value($trackerId, $itemId);
 			}

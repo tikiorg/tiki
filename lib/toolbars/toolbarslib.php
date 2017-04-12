@@ -561,11 +561,11 @@ class ToolbarCkOnly extends Toolbar
 		case 'showblocks':
 			return new self( 'ShowBlocks', null, 'box' );
 		case 'left':
-			return new self( 'JustifyLeft', null, 'align-left' );
+			return new self( 'Justify Left', null, 'align-left' );
 		case 'right':
-			return new self( 'JustifyRight', null, 'align-right' );
+			return new self( 'Justify Right', null, 'align-right' );
 		case 'full':
-			return new self( 'JustifyBlock', null, 'align-justify' );
+			return new self( 'Justify Block', null, 'align-justify' );
 		case 'indent':
 			return new self( 'Indent', null, 'indent' );
 		case 'outdent':
@@ -1384,8 +1384,7 @@ class ToolbarDialog extends Toolbar
 				"window.dialogData[$this->index] = " . json_encode($this->list) . ";",
 				1 + $this->index
 			);
-			$syntax = str_replace('\'' . $areaId . '\'', 'editor.name', $this->getSyntax($areaId));
-			$this->setupCKEditorTool($syntax, $this->wysiwyg, $this->label, $this->icon);
+			$this->setupCKEditorTool($this->getSyntax($areaId), $this->wysiwyg, $this->label, $this->icon);
 		}
 		return $this->wysiwyg;
 	} // }}}
@@ -1545,20 +1544,18 @@ class ToolbarFileGallery extends Toolbar
 					);
 				};'
 			);
-			return '
-			var area_id = (typeof editor === \'undefined\' ?  \'' . $areaId . '\' : editor.name);
-			openElFinderDialog(
+			return 'openElFinderDialog(
 				this,
 				{
 					defaultGalleryId: ' . (empty($prefs['home_file_gallery']) ? $prefs['fgal_root_id'] : $prefs['home_file_gallery']) . ',
 					deepGallerySearch: true,
 					getFileCallback: function(file,elfinder) {
-							window.handleFinderInsertAt(file,elfinder,area_id);
+							window.handleFinderInsertAt(file,elfinder,\''.$areaId.'\');
 						},
 					eventOrigin:this,
 					uploadCallback: function (data) {
 							if (data.data.added.length === 1 && confirm(tr(\'Do you want to use this file in your page?\'))) {
-								window.handleFinderInsertAt(data.data.added[0],window.elFinder,area_id);
+								window.handleFinderInsertAt(data.data.added[0],window.elFinder,\''.$areaId.'\');
 							}
 						}
 				}
@@ -1840,7 +1837,7 @@ class ToolbarWikiplugin extends Toolbar
 	function getWysiwygToken( $areaId, $add_js = true ) // {{{
 	{
 		if (!empty($this->wysiwyg) && $add_js) {
-			$js = "popup_plugin_form(editor.name,'{$this->pluginName}');";
+			$js = "popup_plugin_form('{$areaId}','{$this->pluginName}');";
 			//CKEditor needs image icons so get legacy plugin icons for the toolbar
 			if (!$this->icon && !empty($this->iconname)) {
 				$iconsetlib = TikiLib::lib('iconset');

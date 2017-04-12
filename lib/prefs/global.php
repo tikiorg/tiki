@@ -10,7 +10,7 @@ function prefs_global_list($partial = false)
 	return array(
 		'browsertitle' => array(
 			'name' => tra('Browser title'),
-			'description' => tra('Visible label in the browser\'s title bar on all pages. Also appears in search engine results.'),
+			'description' => tra('LVisible label in the browser\'s title bar on all pages. Also appears in search engine results.'),
 			'type' => 'text',
 			'default' => '',
 			'tags' => array('basic'),
@@ -18,7 +18,7 @@ function prefs_global_list($partial = false)
 		),
 		'validateUsers' => array(
 			'name' => tra('Validate new user registrations by email'),
-			'description' => tra('Upon registration, the new user will receive an email containing a new-account validation link.'),
+			'description' => tra('UUpon registration, the new user will receive an email containing a new-account validation link.'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'sender_email',

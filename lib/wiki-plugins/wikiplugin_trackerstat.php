@@ -268,7 +268,7 @@ function wikiplugin_trackerstat($data, $params)
 				$userValues = $trklib->get_filtered_item_values($allFields['data'][$iIp]['fieldId'], $tikilib->get_ip_address(), $allFields['data'][$i]['fieldId']);
 			}
 			
-			$allValues = $trklib->get_all_items($trackerId, $fieldId, $status);
+			$allValues = $trklib->get_all_items($trackerId, $fieldId, $status, $allFields);
 			$j = -1;
 			foreach ($allValues as $value) {
 				$value = trim($value);
@@ -288,7 +288,7 @@ function wikiplugin_trackerstat($data, $params)
 		if (isset($average)) {
 			$total = $trklib->get_nb_items($trackerId);
 			for (; $j >= 0; --$j) {
-				$v[$j]['average'] = 100*$v[$j]['count']/array_sum(array_map(function($v){ return $v['count']; }, $v));
+				$v[$j]['average'] = 100*$v[$j]['count']/$total;
 				if ($tracker_info['showStatus'] == 'y') {
 					$v[$j]['href'] .= "&amp;status=$status";
 				}

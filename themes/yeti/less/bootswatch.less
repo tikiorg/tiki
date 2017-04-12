@@ -2,6 +2,13 @@
 // Bootswatch
 // -----------------------------------------------------
 
+@web-font-path: "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700";
+
+.web-font(@path) {
+	@import url("@{path}");
+}
+.web-font(@web-font-path);
+
 // Navbar =====================================================================
 
 .navbar {
@@ -302,7 +309,7 @@ input[type="checkbox"] {
 	> .active {
 		> a,
 		> span {
-			color: #ffffff;
+			color: #fff;
 		}
 	}
 
@@ -357,7 +364,7 @@ input[type="checkbox"] {
 
 	.alert-link {
 		font-weight: normal;
-		color: #ffffff;
+		color: #fff;
 		text-decoration: underline;
 	}
 }
@@ -384,7 +391,7 @@ input[type="checkbox"] {
 	height: 22px;
 	padding: 2px;
 	background-color: #f6f6f6;
-	border: 1px solid #cccccc;
+	border: 1px solid #ccc;
 	.box-shadow(none);
 }
 
@@ -411,7 +418,7 @@ input[type="checkbox"] {
 }
 
 .popover {
-	color: #ffffff;
+	color: #fff;
 	font-size: 12px;
 	font-weight: 300;
 }
@@ -437,9 +444,3 @@ input[type="checkbox"] {
 }
 
 .navbar-default .navbar-collapse.collapse.in .dropdown-menu li {background: transparent;}
-
-.alert-info input { color: #222222 !important; } // This line and next added r59239
-.navbar-default .dropdown-menu > li > a:hover { color: #ffffff; }
-.navbar-default .dropdown-menu > .active > a { color: #bdbdbd; }
-
-.popover-content .table { color: @text-color; }

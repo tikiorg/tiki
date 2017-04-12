@@ -25,10 +25,6 @@ class Search_ContentSource_ForumSource implements Search_ContentSource_Interface
 		
 		$item = $lib->get_forum($objectId);
 
-		if (! $item) {
-			return false;
-		}
-
 		$data = array(
 			'title' => $typeFactory->sortable($item['name']),
 			'creation_date' => $typeFactory->timestamp($item['created']),

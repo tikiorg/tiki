@@ -16,10 +16,6 @@ use Tiki\FileGallery\FileWrapper\WrapperInterface as FileWrapper;
 
 class FileGalLib extends TikiLib
 {
-
-	private $wikiupMoved = [];
-
-
 	function isPodCastGallery($galleryId, $gal_info=null)
 	{
 		if (empty($gal_info))
@@ -50,14 +46,15 @@ class FileGalLib extends TikiLib
 
 	private function get_file_checksum($galleryId, $path, $data)
 	{
+		global $prefs;
 		$savedir = $this->get_gallery_save_dir($galleryId);
 
 		if (false !== $savedir) {
 			if ( filesize($savedir . $path) > 0 ) {
-				if (empty($data)) {
+				if ($prefs['feature_draw'] === 'n' || empty($data)) {
 					return md5_file($savedir . $path);
 				} else {
-					return md5($savedir . $path . $data);	// for svg images with a background or avatars
+					return md5($savedir . $path . $data);	// for svg images with a background
 				}
 			} else {
 				return md5(time());
@@ -286,7 +283,7 @@ class FileGalLib extends TikiLib
 	}
 
 	function insert_file($galleryId, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='',
-						 $author=null, $created='', $lockedby=NULL, $deleteAfter=NULL, $id=0, $metadata = null,$image_x=NULL,$image_y=NULL)
+						 $author=null, $created='', $lockedby=NULL, $deleteAfter=NULL, $id=0, $metadata = null)
 	{
 		global $prefs, $user;
 
@@ -297,7 +294,7 @@ class FileGalLib extends TikiLib
 
 		$gal_info = $this->get_file_gallery_info((int)$galleryId);
 		if (0 === strpos($type, 'image/')) {
-			$this->transformImage($path, $data, $size, $gal_info, $type, $metadata,$image_x,$image_y);
+			$this->transformImage($path, $data, $size, $gal_info, $type, $metadata);
 		}
 
 		$smarty = TikiLib::lib('smarty');
@@ -681,9 +678,6 @@ class FileGalLib extends TikiLib
 			array('galleryId' => $gallery),
 			array('anyOf' => $files->expr('(`fileId` = ? OR `archiveId` = ?)', array($file, $file)))
 		);
-
-		require_once('lib/search/refresh-functions.php');
-		refresh_index('files', $file);
 
 		return true;
 	}
@@ -1557,17 +1551,13 @@ class FileGalLib extends TikiLib
 	{
 		global $tiki_p_admin_file_galleries, $prefs, $user;
 		$userlib = TikiLib::lib('user');
+		$tikilib = TikiLib::lib('tiki');
 		$list = array();
-		$temp = '/' . md5(\Zend\Math\Rand::getBytes(10)) . '/';
-		if (! mkdir(sys_get_temp_dir() . $temp)) {
-			$temp = sys_get_temp_dir() . $temp;
-		} else if (mkdir('temp' . $temp)) {
-			$temp = 'temp' . $temp;
-		} else {
+		$temp = 'temp/'.md5($tikilib->now).'/';
+		if (!mkdir($temp)) {
 			$error = "Can not create directory $temp";
 			return false;
 		}
-		$fileIds = array_unique($fileIds);
 		foreach ($fileIds as $fileId) {
 			$info = $this->get_file($fileId);
 			if ($tiki_p_admin_file_galleries == 'y' || $userlib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files')) {
@@ -3000,11 +2990,6 @@ class FileGalLib extends TikiLib
 				$cachelib->cacheItem($cacheName, serialize($fgal_perms), 'fgals_perms_'.$galleryId.'_');
 			}
 
-            // If the current user is the file owner, then list the file (fix for the userfiles - wasn't listing even if trying to list own files)
-            if ($my_user == $res['creator']){
-                $res['perms']['tiki_p_view_file_gallery'] = 'y';
-            }
-            
 			// Don't return the current item, if :
 			//  the user has no rights to view the file gallery AND no rights to list all galleries (in case it's a gallery)
 			if ( ( $res['perms']['tiki_p_view_file_gallery'] != 'y' && ! $this->user_has_perm_on_object($user, $res['id'], $object_type, 'tiki_p_view_file_gallery') )
@@ -3499,23 +3484,11 @@ class FileGalLib extends TikiLib
 							}
 						} else {
 							$title = $this->getTitleFromFilename($params["name"][$key]);
-							  if(!$params['imagesize'][$key])
-							  {
-		 						$image_x=$params["image_max_size_x"];
-		   						$image_y=$params["image_max_size_y"];
-								
-		  					  }
-							else{
-								 $image_x=$gal_info["image_max_size_x"];
-		                         $image_y=$gal_info["image_max_size_y"];
-								}							
 							$fileId = $this->insert_file(
 								$params["galleryId"][$key], $title,
 								$params["description"][$key], $name, $data, $size, $type, $params['user'][$key],
-								$fhash . $extension, '', $params['author'][$key], '', '', $deleteAfter, '', $filemeta,$image_x,$image_y
+								$fhash . $extension, '', $params['author'][$key], '', '', $deleteAfter, '', $filemeta
 							);
-
-
 						}
 						if (!$fileId) {
 							$errors[] = tra('The upload was not successful due to duplicate file content') . ': ' . $name;
@@ -3646,7 +3619,7 @@ class FileGalLib extends TikiLib
 		return $title;
 	}
 
-	private function transformImage($path, & $data, & $size, $gal_info, $type, & $metadata,$image_size_x=null,$image_size_y=null)
+	private function transformImage($path, & $data, & $size, $gal_info, $type, & $metadata)
 	{
 		$imageReader = $this->getImageReader($type);
 		$imageWriter = $this->getImageWriter($type);
@@ -3656,7 +3629,7 @@ class FileGalLib extends TikiLib
 		}
 
 		// If it's an image format we can handle and gallery has limits on image sizes
-		if (! ($gal_info["image_max_size_x"] && ! $gal_info["image_max_size_y"]) && ($image_size_x==null && $image_size_y==null)) {
+		if (! $gal_info["image_max_size_x"] && ! $gal_info["image_max_size_y"]) {
 			return;
 		}
 
@@ -3667,23 +3640,17 @@ class FileGalLib extends TikiLib
 			$savedir = $this->get_gallery_save_dir($gal_info['galleryId'], $gal_info);
 			$work_file = $savedir . $path;
 		}
-		if(is_null($image_size_x))
-           $image_size_x=$gal_info["image_max_size_x"];
-		if(is_null($image_size_y))
-           $image_size_y=$gal_info["image_max_size_y"];
-		
-		
+
 		$image_size_info = getimagesize($work_file);
 		$image_x = $image_size_info[0];
 		$image_y = $image_size_info[1];
-		if ($image_size_x) {
-			//$rx=$image_x/$gal_info["image_max_size_x"];
-			$rx=$image_x/ $image_size_x;
+		if ($gal_info["image_max_size_x"]) {
+			$rx=$image_x/$gal_info["image_max_size_x"];
 		} else {
 			$rx=0;
 		}
-		if ( $image_size_y) {
-			$ry=$image_y/ $image_size_y;
+		if ($gal_info["image_max_size_y"]) {
+			$ry=$image_y/$gal_info["image_max_size_y"];
 		} else {
 			$ry=0;
 		}
@@ -3821,7 +3788,7 @@ class FileGalLib extends TikiLib
 		);
 	}
 
-	function upload_single_file($gal_info, $name, $size, $type, $data, $asuser = null,$image_x=null,$image_y=null)
+	function upload_single_file($gal_info, $name, $size, $type, $data, $asuser = null)
 	{
 		global $user;
 		if (empty($asuser) || ! Perms::get()->admin) {
@@ -3832,9 +3799,7 @@ class FileGalLib extends TikiLib
 		}
 
 		$tx = $this->begin();
-		$ret = $this->insert_file($gal_info['galleryId'], $name, '', $name, $data, $size, $type, $asuser, $fhash, '', NULL,'', NULL, NULL, 0, NULL, $image_x, $image_y);
-
-		
+		$ret = $this->insert_file($gal_info['galleryId'], $name, '', $name, $data, $size, $type, $asuser, $fhash, '');
 		$tx->commit();
 
 		return $ret;
@@ -3928,7 +3893,6 @@ class FileGalLib extends TikiLib
 
 			$result = $response->getBody();
 			if ($disposition = $response->getHeaders()->get('Content-Disposition')) {
-				$disposition = method_exists($disposition, 'toString') ? $disposition->toString() : $disposition;
 				if (preg_match('/filename=[\'"]?([^;\'"]+)[\'"]?/i', $disposition, $parts)) {
 					$name = $parts[1];
 				}
@@ -3943,7 +3907,6 @@ class FileGalLib extends TikiLib
 
 			// Check cache-control for max-age, which has priority
 			if ($cacheControl = $response->getHeaders()->get('Cache-Control')) {
-				$cacheControl = method_exists($cacheControl, 'toString') ? $cacheControl->toString() : $cacheControl;
 				if (preg_match('/max-age=(\d+)/', $cacheControl, $parts)) {
 					$expiryDate = time() + $parts[1];
 				}
@@ -3958,10 +3921,6 @@ class FileGalLib extends TikiLib
 				$name = tr('unknown');
 			}
 
-			if( $etag = $response->getHeaders()->get('Etag') ) {
-				$etag = method_exists($etag, 'toString') ? $etag->toString() : $etag;
-			}
-
 			TikiLib::lib('logs')->add_action($action, $url, 'url', 'success=' . $response->getStatusCode());
 			return array(
 				'data' => $result,
@@ -3969,7 +3928,7 @@ class FileGalLib extends TikiLib
 				'type' => $type,
 				'name' => $name,
 				'expires' => $expiryDate,
-				'etag' => $etag,
+				'etag' => $response->getHeaders()->get('Etag'),
 			);
 		} catch (Zend\Http\Exception\ExceptionInterface $e) {
 			TikiLib::lib('logs')->add_action($action, $url, 'url', 'error=' . $e->getMessage());
@@ -4135,7 +4094,6 @@ class FileGalLib extends TikiLib
 				$this->moveWikiUpToFgal($page, $fgalId, $errors, $feedbacks);
 			}
 		}
-		$this->wikiupMoved = [];
 	}
 	function moveWikiUpToFgal($page_info, $fgalId, &$errors, &$feedbacks)
 	{
@@ -4155,30 +4113,20 @@ class FileGalLib extends TikiLib
 				$arguments = $argumentParser->parse($match->getArguments());
 				$newArgs = array();
 				foreach ($arguments as $key=>$val) {
-					if ($key === 'src' && strpos($val, 'img/wiki_up') !== false) {
-						//first time the wiki_up file is found
-						if (!isset($this->wikiupMoved[$val])) {
-							if (false === $data = @file_get_contents($val)) {
-								$errors[] = tra('Cannot open this file:').' '.$val.' '.tra('Page:').' '.$page_info['pageName'];
-								continue;
-							}
-							$name = preg_replace('|.*/([^/]*)|', '$1', $val);
-							$fileId = $this->insert_file($fgalId, $name, 'Used in '.$page_info['pageName'], $name, $data, strlen($data), $mimelib->from_path($name, $val), $user, '', 'wiki_up conversion');
-							if (empty($fileId)) {
-								$errors[] = tra('Cannot upload this file').' '.$val.' '.tra('Page:').' '.$page_info['pageName'];
-								continue;
-							} else {
-								$files[] = $val;
-								$modif = true;
-								$newArgs[] = 'fileId="'.$fileId.'"';
-								//save wiki_up file name and fileId pair in case there are more instances using this file
-								$this->wikiupMoved[$val] = $fileId;
-							}
-						//wiki_up file was already moved to file galleries
+					if ($key == 'src') {
+						if (false === $data = @file_get_contents($val)) {
+							$errors[] = tra('Cannot open this file:').' '.$val.' '.tra('Page:').' '.$page_info['pageName'];
+							continue;
+						}
+						$name = preg_replace('|.*/([^/]*)|', '$1', $val);
+						$fileId = $this->insert_file($fgalId, $name, 'Used in '.$page_info['pageName'], $name, $data, strlen($data), $mimelib->from_path($name, $val), $user, '', 'wiki_up conversion');
+						if (empty($fileId)) {
+							$errors[] = tra('Cannot upload this file').' '.$val.' '.tra('Page:').' '.$page_info['pageName'];
+							continue;
 						} else {
 							$files[] = $val;
 							$modif = true;
-							$newArgs[] = 'fileId="' . $this->wikiupMoved[$val] . '"';
+							$newArgs[] = 'fileId="'.$fileId.'"';
 						}
 					} else
 						$newArgs[] = "$key=\"$val\"";
@@ -4190,11 +4138,8 @@ class FileGalLib extends TikiLib
 		}
 		if (!empty($files)) {
 			$tikilib->update_page($page_info['pageName'], $matches->getText(), 'wiki_up conversion', $user, $tikilib->get_ip_address());
-			$files = array_unique($files);
 			foreach ($files as $file) {
-				if (file_exists($file)) {
-					unlink($file);
-				}
+				unlink($file);
 			}
 			$feedbacks[] = $page_info['pageName'];
 		}

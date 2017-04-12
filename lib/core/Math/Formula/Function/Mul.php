@@ -9,23 +9,13 @@ class Math_Formula_Function_Mul extends Math_Formula_Function
 {
 	function evaluate( $element )
 	{
-		$list = array();
+		$out = 1;
 
-		foreach ($element as $child) {
-			$child = $this->evaluateChild($child);
-
-			if (is_array($child)) {
-				$list = array_merge($list, $child);
-			} else {
-				$list[] = $child;
-			}
+		foreach ( $element as $child ) {
+			$out *= $this->evaluateChild($child);
 		}
 
-		if (empty($list)) {
-			return 1;
-		} else {
-			return array_product($list);
-		}
+		return $out;
 	}
 }
 

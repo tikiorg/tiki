@@ -317,10 +317,6 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 			return true;
 		}
 
-		if ($validation === 'distinct' && empty($param)) {
-			$param = "trackerId={$this->getConfiguration('trackerId')}&fieldId={$this->getConfiguration('fieldId')}&itemId={$this->getItemId()}";
-		}
-
 		$validators = TikiLib::lib('validators');
 		$validators->setInput($value);
 		$ret = $validators->validateInput($validation, $param);

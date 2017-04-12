@@ -6,7 +6,7 @@
 // $Id$ 
 
 
-require_once ('vendor_extra/kaltura/KalturaClient.php');
+require_once ('lib/videogals/KalturaClient.php');
 
 class KalturaLib
 {
@@ -26,6 +26,8 @@ class KalturaLib
 
 	public function getSessionKey()
 	{
+		$tikilib = TikiLib::lib('tiki');
+
 		if ($session = $this->storedKey()) {
 			return $session;
 		}
@@ -33,8 +35,6 @@ class KalturaLib
 		if ($this->getClient()) {
 			return $this->storedKey();
 		}
-
-		return '';
 	}
 
 	private function storedKey($key = null)
@@ -53,8 +53,6 @@ class KalturaLib
 				'expiry' => $tikilib->now + 1800, // Keep for half an hour
 			);
 		}
-
-		return $key;
 	}
 
 	private function getConfig()
@@ -263,7 +261,7 @@ class KalturaLib
 	public function flattenVideo($entryId)
 	{
 		if ($client = $this->getClient()) {
-			return $client->mixing->requestFlattening($entryId, 'flv');	// FIXME this method is no longer supported
+			return $client->mixing->requestFlattening($entryId, 'flv');
 		}
 	}
 
@@ -277,7 +275,7 @@ class KalturaLib
 	public function updateMix($entryId, array $data)
 	{
 		if ($client = $this->getClient()) {
-			$kentry = new KalturaMixEntry();
+			$kentry = new KalturaPlayableEntry();
 			$kentry->name = $data['name'];
 			$kentry->description = $data['description'];
 			$kentry->tags = $data['tags'];
@@ -298,7 +296,7 @@ class KalturaLib
 	public function updateMedia($entryId, array $data)
 	{
 		if ($client = $this->getClient()) {
-			$kentry = new KalturaMediaEntry();
+			$kentry = new KalturaPlayableEntry();
 			$kentry->name = $data['name'];
 			$kentry->description = $data['description'];
 			$kentry->tags = $data['tags'];
@@ -346,7 +344,7 @@ class KalturaLib
 			$kpager->pageIndex = 0;
 			$kpager->pageSize = count($movies);
 
-			$kfilter = new KalturaMediaEntryFilter();
+			$kfilter = new KalturaMixEntryFilter();
 			$kfilter->idIn = implode(',', $movies);
 			
 			$mediaList = array();

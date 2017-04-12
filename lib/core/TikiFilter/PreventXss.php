@@ -91,7 +91,6 @@ class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
 					'onfocusin',
 					'onfocusout',
 					'onhelp',
-					'onhashchange',
 					'oninput',
 					'onkeydown',
 					'onkeypress',
@@ -136,7 +135,7 @@ class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
 					'xmlns'
 			);
 
-			$ra_as_content = array('vbscript', 'expression', 'blink', 'mocha', 'livescript', 'url', 'alert', 'eval');
+			$ra_as_content = array('vbscript', 'expression', 'blink', 'mocha', 'livescript', 'url', 'alert');
 			$ra_javascript = array('javascript');
 	///		$ra_style = array('style'); // Commented as it has been considered as a bit too aggressive
 		}

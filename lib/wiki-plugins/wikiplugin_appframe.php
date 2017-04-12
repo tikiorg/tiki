@@ -120,11 +120,19 @@ function wikiplugin_appframe($data, $params)
 	$headerlib = TikiLib::lib('header');
 
 	if (isset($params['hideleft']) && $params['hideleft'] == 'y') {
-		$headerlib->add_js('$("body").addClass("hide_zone_left");');
+		$headerlib->add_js(
+<<<JS
+hideCol('col2','left', 'col1');
+JS
+);
 	}
 
 	if (isset($params['hideright']) && $params['hideright'] == 'y') {
-		$headerlib->add_js('$("body").addClass("hide_zone_right");');
+		$headerlib->add_js(
+<<<JS
+hideCol('col3','right', 'col1');
+JS
+);
 	}
 
 	$headerlib->add_js(
@@ -143,9 +151,9 @@ $(window).resize(function () {
 	} else {
 		appframe.height(0);
 
-		centerHeader = $('#appframe').position().top - $('#col1').position().top;
+		centerHeader = $('#appframe').position().top - $('#tiki-center').position().top;
 		surplus = $('#show-errors-button').height();
-		footerSize = $('#footer').height() + $('#col1').height() - centerHeader + surplus;
+		footerSize = $('#footer').height() + $('#tiki-center').height() - centerHeader + surplus;
 		target = viewportHeight - appframe.position().top - footerSize;
 
 		var min = $minHeight;
@@ -209,8 +217,8 @@ $('#appframe .anchor').each(function () {
 });
 
 if ($fullPage) {
-	$('#top').append($('#appframe'));
-	$('#top').children().not($('#appframe')).remove();
+	$('#role_main').append($('#appframe'));
+	$('#role_main').children().not($('#appframe')).remove();
 }
 
 if ($fullscreen) {

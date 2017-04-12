@@ -34,9 +34,7 @@
 			{/if}
 			{if $forum_info.ui_level eq 'y' and $comment.user_level}
 			<span class="author_stars">
-				{for $levelstars=1 to $comment.user_level}
-					<span>☆</span>
-				{/for}
+				<img src="img/icons/{$comment.user_level}stars.gif" alt="{$comment.user_level} {tr}stars{/tr}" title="{tr}User Level{/tr}">
 			</span>
 			{/if}
 

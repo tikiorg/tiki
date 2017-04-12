@@ -664,9 +664,9 @@ function update_changelog_file($newVersion)
 
 	$isNewMajorVersion = substr($newVersion, -1) == 0;
 	$majorVersion = substr($newVersion, 0, strpos($newVersion, '.'));
+	$releaseNotesURL = '<http://doc.tiki.org/Tiki' . $majorVersion . '>';
 	$parseLogs = $sameFinalVersion = $skipBuffer = false;
 	$lastReleaseMajorNumber = -1;
-	$lastReleaseNumber = '';
 	$minRevision = $currentParsedRevision = 0;
 	$lastReleaseLogs = array();
 	$versionMatches = array();
@@ -681,8 +681,7 @@ function update_changelog_file($newVersion)
 			}
 
 			if (preg_match('/^Version (\d+)\.(\d+)/', $buffer, $versionMatches)) {
-				$lastReleaseNumber = $versionMatches[1].'.'.$versionMatches[2];
-				if ($lastReleaseNumber == $newVersion) {
+				if ($versionMatches[1].'.'.$versionMatches[2] == $newVersion) {
 					// The changelog file already contains log for the same final version
 					$sameFinalVersion = true;
 					$skipBuffer = true;
@@ -705,12 +704,6 @@ function update_changelog_file($newVersion)
 					}
 				}
 			}
-			if ($lastReleaseMajorNumber != -1 && $lastReleaseMajorNumber < $majorVersion) {
-				$newChangelogEnd .= generate_changelog_version_header($lastReleaseNumber);
-				$newChangelogEnd .= "Changelog for Tiki version ".$lastReleaseNumber.", or older, available at:\n";
-				$newChangelogEnd .= "https://sourceforge.net/p/tikiwiki/code/HEAD/tree/tags/".$lastReleaseNumber."/changelog.txt\n\n";
-				break; // truncate the rest of the file
-			}
 			if (! $skipBuffer) {
 				if ($lastReleaseMajorNumber == -1) {
 					$newChangelog .= $buffer;
@@ -722,7 +715,14 @@ function update_changelog_file($newVersion)
 		fclose($handle);
 	}
 
-	$newChangelog .= generate_changelog_version_header($newVersion);
+	$newChangelog .= <<<EOS
+Version $newVersion
+$releaseNotesURL
+------------------
+
+----------------------------------------------
+
+EOS;
 
 	$return = array('nbCommits' => 0, 'sameFinalVersion' => $sameFinalVersion);
 	$matches = array();
@@ -752,27 +752,6 @@ function update_changelog_file($newVersion)
 	}
 
 	return file_put_contents(CHANGELOG, $newChangelog . $newChangelogEnd) ? $return : false;
-}
-
-/**
- * Generate the header for a given version, used in the changelog
- * @param string $version
- * @return string
- */
-function generate_changelog_version_header($version)
-{
-	$majorVersion = substr($version, 0, strpos($version, '.'));
-	$releaseNotesURL = '<http://doc.tiki.org/Tiki' . $majorVersion . '>';
-
-	$versionHeader = <<<EOS
-Version $version
-$releaseNotesURL
-------------------
-
-----------------------------------------------
-
-EOS;
-	return $versionHeader;
 }
 
 /**

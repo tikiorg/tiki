@@ -97,8 +97,6 @@ class VimeoLib
 
 	private function callMethod($method, array $arguments = array())
 	{
-		$oldVal = ini_get('arg_separator.output');
-		ini_set('arg_separator.output', '&');
 		$response = $this->oauth->do_request(
 			'vimeo',
 			array(
@@ -112,7 +110,7 @@ class VimeoLib
 				),
 			)
 		);
-		ini_set('arg_separator.output', $oldVal);
+
 		return json_decode($response->getBody(), true);
 	}
 }

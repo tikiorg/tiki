@@ -2,9 +2,8 @@
 
 <div class="media">
 	<div class="media-body">
-		<p class="wizardCongrat text-success">
-			{icon name="check" size=1}{tr}Congratulations{/tr}. {tr}You are done with the upgrade wizard{/tr}.
-		</P>
+		{icon name="check" size=2}{tr}Congratulations{/tr}. {tr}You are done with the upgrade wizard{/tr}.
+		</br></br>
 		<fieldset>
 			<legend>{tr}Next?{/tr}</legend>
 			<ul>

@@ -47,14 +47,15 @@ function wikiplugin_list($data, $params)
 
 	$matches = WikiParser_PluginMatcher::match($data);
 
+	$tsret = applyTablesorter($matches, $query);
+
 	$builder = new Search_Query_WikiBuilder($query);
 	$builder->enableAggregate();
-	$builder->apply($matches);
-	$tsret = $builder->applyTablesorter($matches);
 	if (!empty($tsret['max']) || !empty($_GET['numrows'])) {
 		$max = !empty($_GET['numrows']) ? $_GET['numrows'] : $tsret['max'];
 		$builder->wpquery_pagination_max($query, $max);
 	}
+	$builder->apply($matches);
 	$paginationArguments = $builder->getPaginationArguments();
 
 	if (!empty($_REQUEST[$paginationArguments['sort_arg']])) {
@@ -88,4 +89,70 @@ function wikiplugin_list($data, $params)
 	$out = $formatter->format($result);
 
 	return $out;
+}
+
+/**
+ * Apply tablesorter is enabled
+ *
+ * @param WikiParser_PluginMatcher $matches
+ * @param Search_Query $query
+ * @return array
+ */
+function applyTablesorter(WikiParser_PluginMatcher $matches, Search_Query $query)
+{
+	$ret = ['max' => false, 'tsOn' => false];
+	$parser = new WikiParser_PluginArgumentParser;
+	foreach ($matches as $match) {
+		$name = $match->getName();
+		if ($name == 'tablesorter') {
+			$tsargs = $parser->parse($match->getArguments());
+			$ajax = !empty($tsargs['server']) && $tsargs['server'] === 'y';
+			$ret['tsOn'] = Table_Check::isEnabled($ajax);
+			if (!$ret['tsOn']) {
+				TikiLib::lib('errorreport')->report(tra('List plugin: Feature "jQuery Sortable Tables" (tablesorter) is not enabled'));
+				return $ret;
+			}
+			if (isset($tsargs['tsortcolumns'])) {
+				$tsc = Table_Check::parseParam($tsargs['tsortcolumns']);
+			}
+			if (isset($tsargs['tspaginate'])) {
+				$tsp = Table_Check::parseParam($tsargs['tspaginate']);
+				if (isset($tsp[0]['max']) && $ajax) {
+					$ret['max'] = (int) $tsp[0]['max'];
+				}
+			}
+		}
+	}
+
+		foreach ($matches as $match) {
+		$name = $match->getName();
+		if ($name == 'column') {
+			$cols[] = $match;
+			$args[] = $parser->parse($match->getArguments());
+		}
+	}
+
+	if (Table_Check::isSort()) {
+		foreach ($_GET['sort'] as $key => $dir) {
+			$n = '';
+			switch ($tsc[$key]['type']) {
+				case 'digit':
+				case 'currency':
+				case 'percent':
+				case 'time':
+				case strpos($tsc[$key]['type'], 'date') !== false:
+					$n = 'n';
+					break;
+			}
+			$query->setOrder($args[$key]['field'] . '_' . $n . Table_Check::$dir[$dir]);
+		}
+	}
+
+	if (Table_Check::isFilter()) {
+		foreach ($_GET['filter'] as $key => $filter) {
+			$query->filterContent($filter, $args[$key]['field']);
+		}
+	}
+
+	return $ret;
 }

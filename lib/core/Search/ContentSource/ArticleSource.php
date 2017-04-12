@@ -33,10 +33,6 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 		
 		$article = $artlib->get_article($objectId, false);
 
-		if (! $article) {
-			return false;
-		}
-
 		if ($topic = $artlib->get_topic($article['topicId'])) {
 			$topic_name = $topic['name'];
 		} else {
@@ -76,7 +72,6 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 			'article_topline' => $typeFactory->wikitext($article['topline']),
 			'article_subtitle' => $typeFactory->wikitext($article['subtitle']),
 			'article_author' => $typeFactory->plaintext($article['authorName']),
-			'article_linkto' => $typeFactory->plaintext($article['linkto']),
 
 			'view_permission' => ($article['ispublished'] == 'y') ? $typeFactory->identifier('tiki_p_read_article') : $typeFactory->identifier('tiki_p_edit_article'),
 			'parent_object_type' => $typeFactory->identifier('topic'),
@@ -109,7 +104,6 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 			'article_topline',
 			'article_subtitle',
 			'article_author',
-			'article_linkto',
 
 			'view_permission',
 			'parent_view_permission',

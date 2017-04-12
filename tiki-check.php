@@ -21,27 +21,13 @@ isset($_REQUEST['nagios']) ? $nagios = true : $nagios = false;
 file_exists('tiki-check.php.lock') ? $locked = true : $locked = false;
 $font = 'lib/captcha/DejaVuSansMono.ttf';
 
-$inputConfiguration = array(
-	array(
-		'staticKeyFilters' => array(
-			'dbhost' => 'text',
-			'dbuser' => 'text',
-			'dbpass' => 'text',
-			'email_test_to' => 'email',
-		),
-	),
-);
-
-// reflector for SefURL check
-if (isset($_REQUEST['tiki-check-ping'])){
-	die('pong:' . (int)$_REQUEST['tiki-check-ping']);
-}
-
 if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) {
 	$standalone = false;
 	require_once ('tiki-setup.php');
 	// TODO : Proper authentication
-	$access->check_permission('tiki_p_admin');
+	if (!$nagios) {
+		$access->check_permission('tiki_p_admin');
+	}
 } else {
 	$standalone = true;
 	$render = "";
@@ -103,28 +89,6 @@ $php_properties = false;
 // Check error reporting level
 $e = error_reporting();
 $d = ini_get('display_errors');
-$l = ini_get('log_errors');
-if($l) {
-	if (!$d) {
-		$php_properties['Error logging'] = array(
-		'fitness' => tra('info'),
-		'setting' => 'Enabled',
-		'message' => tra('You will get the errors logged, since you have log_errors enabled. You also have display_errors disabled, this a good practice in production, log the errors instead of displaying.')
-		);
-	} else {
-		$php_properties['Error logging'] = array(
-		'fitness' => tra('info'),
-		'setting' => 'Enabled',
-		'message' => tra('You will get the errors logged, since you have log_errors enabled, but you also have display_errors enabled. As a good practice, especially in production, you should log all the errors instead of displaying them.')
-		);
-	}
-} else {
-	$php_properties['Error logging'] = array(
-	'fitness' => tra('info'),
-	'setting' => 'Full',
-	'message' => tra('You will not get your errors logged, since log_errors is not enabled. As a good practice, especially in production, you should log all the errors.')
-	);
-}
 if ( $e == 0 ) {
 	if ($d != 1) {
 		$php_properties['Error reporting'] = array(
@@ -410,13 +374,7 @@ if (version_compare(PHP_VERSION, '5.1.0', '<')) {
 	$php_properties['PHP version'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => phpversion(),
-		'message' => 'You have an old version of PHP. You can run Tiki 6.x LTS, 9.x LTS or 12.x LTS but not later versions.'
-	);
-} elseif (version_compare(PHP_VERSION, '5.6.0', '<')) {
-	$php_properties['PHP version'] = array(
-	'fitness' => tra('ugly'),
-	'setting' => phpversion(),
-	'message' => 'You have a somewhat old version of PHP. You can run Tiki 9.x LTS, 12.x LTS or 15.x LTS but not later versions.'
+		'message' => 'You have a somewhat old version of PHP. You can run Tiki 6.x LTS, 9.x LTS or 12.x LTS but not later versions.'
 	);
 } else {
 	$php_properties['PHP version'] = array(
@@ -972,13 +930,13 @@ if ($s) {
 	$php_properties['libxml'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Loaded',
-		'message' => tra('This extension is needed for the dom extension (see below).')
+		'message' => tra('This extension is needed for WebDAV and the dom extension (see below).')
 	);
 } else {
 	$php_properties['libxml'] = array(
 		'fitness' => tra('bad'),
 		'setting' => 'Not available',
-		'message' => tra('This extension is needed for the dom extension (see below).')
+		'message' => tra('This extension is needed for WebDAV and the dom extension (see below).')
 	);
 }
 
@@ -988,13 +946,15 @@ if ($s) {
 	$php_properties['dom'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Loaded',
-		'message' => tra('This extension is needed by Tiki')
+		'message' => tra('This extension is needed for many features such as:') . '<br>' .
+			tra('bigbluebutton, machine translation, SCORM & meta-data in file galleries, wiki importers, custom search, Kaltura and others.')
 	);
 } else {
 	$php_properties['dom'] = array(
 		'fitness' => tra('bad'),
 		'setting' => 'Not available',
-		'message' => tra('This extension is needed by Tiki')
+		'message' => tra('This extension is needed for many features such as:') . '<br>' .
+			tra('bigbluebutton, machine translation, SCORM & meta-data in file galleries, wiki importers, custom search, Kaltura and others.')
 	);
 }
 
@@ -1430,60 +1390,6 @@ if ( function_exists('apache_get_version')) {
 				'fitness' => tra('info') ,
 				'message' => tra('You haven\'t activated .htaccess. So this check is useless. If you want to use Search Engine Friendly URLs, you will have to activate .htaccess by copying _htaccess into its place (or a symlink if supported by your Operating System). Then come back to have a look at this check again.')
 			);
-		}
-	}
-
-	if ($pos = strpos($_SERVER['REQUEST_URI'], 'tiki-check.php')){
-		$sef_test_protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']) ? 'https://' : 'http://';
-		$sef_test_base_url =  $sef_test_protocol . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, $pos);
-		$sef_test_ping_value = rand();
-		$sef_test_url = $sef_test_base_url . 'tiki-check?tiki-check-ping='.$sef_test_ping_value;
-		$sef_test_folder_created = false;
-		$sef_test_folder_writable = true;
-		if ($standalone){
-			$sef_test_path_current = dirname(__FILE__);
-			$sef_test_dir_name = 'tiki-check-' . $sef_test_ping_value;
-			$sef_test_folder = $sef_test_path_current . DIRECTORY_SEPARATOR . $sef_test_dir_name;
-			if (is_writable($sef_test_path_current)&&!file_exists($sef_test_folder)){
-				if (mkdir($sef_test_folder)){
-					$sef_test_folder_created = true;
-					copy(__FILE__, $sef_test_folder . DIRECTORY_SEPARATOR . 'tiki-check.php');
-					file_put_contents($sef_test_folder . DIRECTORY_SEPARATOR . '.htaccess', "<IfModule mod_rewrite.c>\nRewriteEngine On\nRewriteRule tiki-check$ tiki-check.php [L]\n</IfModule>\n");
-					$sef_test_url = $sef_test_base_url . $sef_test_dir_name .'/tiki-check?tiki-check-ping='.$sef_test_ping_value;
-				}
-			} else {
-				$sef_test_folder_writable = false;
-			}
-		}
-
-		if (!$sef_test_folder_writable){
-			$apache_properties['SefURL Test'] = array(
-			'setting' => tra('Not Working'),
-			'fitness' => tra('info') ,
-			'message' => tra('The automated test could not run, we could not create the required files on the server to run the test. That may only mean that there was no permissions, but you should check your apache configuration. For further information go to Admin->SefURL in your Tiki.')
-			);
-		} else {
-			$pong_value = get_content_from_url($sef_test_url);
-			if ($pong_value != 'fail-no-request-done'){
-				if ('pong:'.$sef_test_ping_value == $pong_value){
-					$apache_properties['SefURL Test'] = array(
-						'setting' => tra('Working'),
-						'fitness' => tra('good') ,
-						'message' => tra('A automated test was done, and looks like your server is configured correctly to handle Search Engine Friendly URLs.')
-					);
-				} else {
-					$apache_properties['SefURL Test'] = array(
-						'setting' => tra('Not Working'),
-						'fitness' => tra('info') ,
-						'message' => tra('A automated test was done, and based on the answer, it seems that your server is not configured correctly to handle Search Engine Friendly URLs. This automated test may fail based on your infrastructure setup, but you should check your apache configuration. For further information go to Admin->SefURL in your Tiki.')
-					);
-				}
-			}
-		}
-		if ($sef_test_folder_created){
-			unlink($sef_test_folder . DIRECTORY_SEPARATOR . 'tiki-check.php');
-			unlink($sef_test_folder . DIRECTORY_SEPARATOR . '.htaccess');
-			rmdir($sef_test_folder);
 		}
 	}
 
@@ -1992,7 +1898,7 @@ if ($standalone && !$nagios) {
 		$message = '';
 
 		foreach ($check_group as $property => $values) {
-			if (!isset($values['ack']) || $values['ack'] != true) {
+			if ($values['ack'] != true) {
 				switch($values['fitness']) {
 					case 'ugly':
 						$state = max($state, 1);
@@ -2121,25 +2027,6 @@ function check_hasIIS_UrlRewriteModule()
 {
 	return isset($_SERVER['IIS_UrlRewriteModule']) == true;
 }
-
-function get_content_from_url($url)
-{
-	if (function_exists('curl_init') && function_exists('curl_exec')) {
-		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, $url);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
-		$content = curl_exec($curl);
-		if (curl_getinfo($curl, CURLINFO_HTTP_CODE) != 200) {
-			$content = false;
-		}
-		curl_close($curl);
-	} else {
-		$content = "fail-no-request-done";
-	}
-	return $content;
-}
-
 function createPage($title, $content)
 {
 	echo <<<END

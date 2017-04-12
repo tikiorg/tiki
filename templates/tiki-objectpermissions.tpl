@@ -224,7 +224,7 @@
 			{foreach item=permgroup from=$quickperms}
 				<th>{$permgroup.name}</th>
 			{/foreach}
-				<th class="tips" title="|{tr}Individual permissions are currently assigned (See tab Assign Permissions){/tr}">Advanced</th>
+				<th class="tips" title="{tr}A couple of userdefined permissions are currently assigned (See tab Assign Permissions){/tr}">Advanced</th>
 			</tr>
 
 			{section name=grp loop=$groups}
@@ -239,7 +239,7 @@
 						</td>
 						{/foreach}
 						<td>
-							<input type="radio" name="perm_{$groups[grp].groupName|escape:url}" value="userdefined" {if $groups[grp].groupSumm eq 'userdefined'}checked{/if} onclick="return false;">
+							<input type="radio" name="perm_{$groups[grp].groupName|escape:url}" value="userdefined" {if $groups[grp].groupSumm eq 'userdefined'}checked{/if} disabled>
 						</td>
 					</tr>
 				{/if}

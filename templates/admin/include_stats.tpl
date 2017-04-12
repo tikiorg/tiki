@@ -35,7 +35,6 @@
 			<fieldset>
 				{preference name=site_piwik_analytics_server_url}
 				{preference name=site_piwik_site_id}
-				{preference name=site_piwik_code syntax="javascript"}
 			</fieldset>
 		{/tab}
 	{/tabset}

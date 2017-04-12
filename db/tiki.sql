@@ -256,8 +256,8 @@ CREATE TABLE `tiki_banning` (
   `ip3` char(3) default NULL,
   `ip4` char(3) default NULL,
   `user` varchar(200) default '',
-  `date_from` timestamp NULL,
-  `date_to` timestamp NULL,
+  `date_from` timestamp NOT NULL,
+  `date_to` timestamp NOT NULL,
   `use_dates` char(1) default NULL,
   `created` int(14) default NULL,
   `message` text,
@@ -687,8 +687,6 @@ CREATE TABLE `tiki_extwiki` (
   `extwikiId` int(12) NOT NULL auto_increment,
   `name` varchar(200) NOT NULL default '',
   `extwiki` varchar(255) default NULL,
-  `indexname` varchar(255) default NULL,
-  `groups` varchar(1024) default NULL,
   PRIMARY KEY (`extwikiId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -1324,8 +1322,6 @@ INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `s
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Tags','tiki-browse_freetags.php',27,'feature_freetags','tiki_p_view_freetags','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Calendar','tiki-calendar.php',35,'feature_calendar','tiki_p_view_calendar','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Tiki Calendar','tiki-action_calendar.php',37,'feature_action_calendar','tiki_p_view_tiki_calendar','',0);
-INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Payments','tiki-payment.php',39,'payment_feature','tiki_p_payment_view','',0);
-INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Payments','tiki-payment.php',39,'payment_feature','tiki_p_payment_request','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','(debug)','javascript:toggle(\'debugconsole\')',40,'feature_debug_console','tiki_p_admin','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','User Wizard','tiki-wizard_user.php',45,'feature_wizard_user','','Registered',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'s','My Account','tiki-my_tiki.php',50,'feature_mytiki','','Registered',0);
@@ -1469,7 +1465,6 @@ INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `s
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Mail Notifications','tiki-admin_notifications.php',1120,'','tiki_p_admin_notifications','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Search Stats','tiki-search_stats.php',1125,'feature_search_stats','tiki_p_admin','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Theme Control','tiki-theme_control.php',1130,'feature_theme_control','tiki_p_admin','',0);
-INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Tokens','tiki-admin_tokens.php',1132,'auth_token_access','tiki_p_admin','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Toolbars','tiki-admin_toolbars.php',1135,'','tiki_p_admin_toolbars','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Transitions','tiki-admin_transitions.php',1140,'','tiki_p_admin','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Categories','tiki-admin_categories.php',1145,'feature_categories','tiki_p_admin_categories','',0);
@@ -2390,7 +2385,7 @@ DROP TABLE IF EXISTS `tiki_user_login_cookies`;
 CREATE TABLE `tiki_user_login_cookies` (
     `userId` INT NOT NULL,
     `secret` CHAR(64) NOT NULL,
-    `expiration` TIMESTAMP NULL,
+    `expiration` TIMESTAMP NOT NULL,
     PRIMARY KEY (`userId`, `secret`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -2975,9 +2970,6 @@ INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Re
 INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Created', 'category', 'y');
 INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Updated', 'category', 'y');
 INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Removed', 'category', 'y');
-INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Created', 'calendar event', 'n');
-INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Updated', 'calendar event', 'n');
-INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Removed', 'calendar event', 'n');
 
 DROP TABLE IF EXISTS `tiki_freetags`;
 CREATE TABLE `tiki_freetags` (
@@ -3365,8 +3357,8 @@ CREATE TABLE `tiki_payment_requests` (
     `amount_paid` DECIMAL(7,2) NOT NULL DEFAULT 0.0,
     `currency` CHAR(3) NOT NULL,
     `request_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `due_date` TIMESTAMP NULL,
-    `authorized_until` TIMESTAMP NULL,
+    `due_date` TIMESTAMP NOT NULL,
+	`authorized_until` TIMESTAMP NULL,
     `cancel_date` TIMESTAMP NULL,
     `description` VARCHAR(100) NOT NULL,
     `actions` TEXT,
@@ -3613,8 +3605,8 @@ CREATE TABLE `tiki_acct_book` (
   `bookId` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `bookName` varchar(255) NOT NULL,
   `bookClosed` enum('y','n') NOT NULL DEFAULT 'n',
-  `bookStartDate` date NULL,
-  `bookEndDate` date NULL,
+  `bookStartDate` date NOT NULL,
+  `bookEndDate` date NOT NULL,
   `bookCurrency` varchar(3) NOT NULL DEFAULT 'EUR',
   `bookCurrencyPos` int(11) NOT NULL,
   `bookDecimals` int(11) NOT NULL DEFAULT '2',
@@ -3643,7 +3635,7 @@ DROP TABLE IF EXISTS `tiki_acct_journal`;
 CREATE TABLE `tiki_acct_journal` (
   `journalBookId` int(10) unsigned NOT NULL,
   `journalId` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `journalDate` date NULL,
+  `journalDate` date NOT NULL DEFAULT '0000-00-00',
   `journalDescription` varchar(255) NOT NULL,
   `journalCancelled` int(1) NOT NULL DEFAULT '0',
   `journalTs` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -3654,7 +3646,7 @@ DROP TABLE IF EXISTS `tiki_acct_stack`;
 CREATE TABLE `tiki_acct_stack` (
   `stackBookId` int(10) unsigned NOT NULL,
   `stackId` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `stackDate` date NULL,
+  `stackDate` date NOT NULL DEFAULT '0000-00-00',
   `stackDescription` varchar(255) NOT NULL,
   `stackTs` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`stackId`)
@@ -3676,8 +3668,8 @@ CREATE TABLE `tiki_acct_statement` (
   `statementBookId` int(10) unsigned NOT NULL,
   `statementAccountId` int(10) unsigned NOT NULL DEFAULT '0',
   `statementId` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `statementBookingDate` date NULL,
-  `statementValueDate` date NULL,
+  `statementBookingDate` date NOT NULL,
+  `statementValueDate` date NOT NULL,
   `statementBookingText` varchar(255) NOT NULL,
   `statementReason` varchar(255) NOT NULL,
   `statementCounterpart` varchar(63) NOT NULL,

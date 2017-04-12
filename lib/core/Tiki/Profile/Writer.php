@@ -158,9 +158,6 @@ class Tiki_Profile_Writer
 	 */
 	function removeUnknown($type, $id, $replacement)
 	{
-		if( !is_array($this->data['unknown_objects']) ) {
-			return;
-		}
 		foreach ($this->data['unknown_objects'] as $key => $entry) {
 			if ($entry['type'] == $type && $entry['id'] == $id) {
 				$token = $entry['token'];
@@ -313,11 +310,9 @@ class Tiki_Profile_Writer
 	private function generateTemporaryReference($type, $id)
 	{
 		// Find existing entry for unknown reference
-		if( is_array($this->data['unknown_objects']) ) {
-			foreach ($this->data['unknown_objects'] as $entry) {
-				if ($entry['type'] == $type && $entry['id'] == $id) {
-					return $entry['token'];
-				}
+		foreach ($this->data['unknown_objects'] as $entry) {
+			if ($entry['type'] == $type && $entry['id'] == $id) {
+				return $entry['token'];
 			}
 		}
 

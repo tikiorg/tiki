@@ -7,18 +7,18 @@
 //
 //## Gray and brand colors for use across Bootstrap.
 
-@gray-base:              #000000;
+@gray-base:              #000;
 @gray-darker:            lighten(@gray-base, 13.5%); // #222
 @gray-dark:              #303030;   // #333
 @gray:                   #464545;
-@gray-light:             #999999;   // #999
-@gray-lighter:           #ebebeb; // #eee
+@gray-light:             #999;   // #999
+@gray-lighter:           #EBEBEB; // #eee
 
 @brand-primary:         #375a7f;
 @brand-success:         #00bc8c;
-@brand-info:            #3498db;
-@brand-warning:         #f39c12;
-@brand-danger:          #e74c3c;
+@brand-info:            #3498DB;
+@brand-warning:         #F39C12;
+@brand-danger:          #E74C3C;
 
 
 //== Scaffolding
@@ -28,7 +28,7 @@
 //** Background color for `<body>`.
 @body-bg:               @gray-darker;
 //** Global text color on `<body>`.
-@text-color:            #ffffff;
+@text-color:            #fff;
 
 //** Global textual link color.
 @link-color:            desaturate(lighten(@brand-success, 10%),10%);
@@ -76,7 +76,7 @@
 //## Specify custom location and filename of the included Glyphicons icon font. Useful for those including Bootstrap via Bower.
 
 //** Load fonts from this directory.
-@icon-font-path:          "../../../vendor/twitter/bootstrap/fonts/";
+@icon-font-path:          "../fonts/";
 //** File name for all font files.
 @icon-font-name:          "glyphicons-halflings-regular";
 //** Element ID within SVG icon file.
@@ -107,7 +107,7 @@
 @border-radius-small:       3px;
 
 //** Global color for active items (e.g., navs or dropdowns).
-@component-active-color:    #ffffff;
+@component-active-color:    #fff;
 //** Global background color for active items (e.g., navs or dropdowns).
 @component-active-bg:       @brand-primary;
 
@@ -148,7 +148,7 @@
 @btn-default-bg:                 @gray;
 @btn-default-border:             @btn-default-bg;
 
-@btn-primary-color:              #ffffff;
+@btn-primary-color:              #fff;
 @btn-primary-bg:                 @brand-primary;
 @btn-primary-border:             @btn-primary-bg;
 
@@ -181,7 +181,7 @@
 //##
 
 //** `<input>` background color
-@input-bg:                       #ffffff;
+@input-bg:                       #fff;
 //** `<input disabled>` background color
 @input-bg-disabled:              @gray-lighter;
 
@@ -200,7 +200,7 @@
 @input-border-radius-small:      @border-radius-small;
 
 //** Border color for inputs on focus
-@input-border-focus:             #ffffff;
+@input-border-focus:             #fff;
 
 //** Placeholder text color
 @input-color-placeholder:        @gray-light;
@@ -236,19 +236,19 @@
 //** Dropdown menu `border-color`.
 @dropdown-border:                rgba(0,0,0,.15);
 //** Dropdown menu `border-color` **for IE8**.
-@dropdown-fallback-border:       #cccccc;
+@dropdown-fallback-border:       #ccc;
 //** Divider color for between dropdown items.
 @dropdown-divider-bg:            @gray;
 
 //** Dropdown link text color.
 @dropdown-link-color:            @gray-lighter;
 //** Hover color for dropdown links.
-@dropdown-link-hover-color:      #ffffff;
+@dropdown-link-hover-color:      #fff;
 //** Hover background for dropdown links.
 @dropdown-link-hover-bg:         @component-active-bg;
 
 //** Active dropdown menu item text color.
-@dropdown-link-active-color:     #ffffff;
+@dropdown-link-active-color:     #fff;
 //** Active dropdown menu item background color.
 @dropdown-link-active-bg:        @component-active-bg;
 
@@ -259,7 +259,7 @@
 @dropdown-header-color:          @gray-light;
 
 //** Deprecated `@dropdown-caret-color` as of v3.1.0
-@dropdown-caret-color:           #000000;
+@dropdown-caret-color:           #000;
 
 
 //-- Z-index master list
@@ -364,17 +364,17 @@
 @navbar-padding-vertical:          ((@navbar-height - @line-height-computed) / 2);
 @navbar-collapse-max-height:       340px;
 
-@navbar-default-color:             #777777;
+@navbar-default-color:             #777;
 @navbar-default-bg:                @brand-primary;
 @navbar-default-border:            transparent;
 
 // Navbar links
-@navbar-default-link-color:                #ffffff;
+@navbar-default-link-color:                #fff;
 @navbar-default-link-hover-color:          @brand-success;
 @navbar-default-link-hover-bg:             transparent;
-@navbar-default-link-active-color:         #ffffff;
+@navbar-default-link-active-color:         #fff;
 @navbar-default-link-active-bg:            darken(@navbar-default-bg, 10%);
-@navbar-default-link-disabled-color:       #cccccc;
+@navbar-default-link-disabled-color:       #ccc;
 @navbar-default-link-disabled-bg:          transparent;
 
 // Navbar brand label
@@ -384,13 +384,13 @@
 
 // Navbar toggle
 @navbar-default-toggle-hover-bg:           darken(@navbar-default-bg, 10%);
-@navbar-default-toggle-icon-bar-bg:        #ffffff;
+@navbar-default-toggle-icon-bar-bg:        #fff;
 @navbar-default-toggle-border-color:       darken(@navbar-default-bg, 10%);
 
 
 //=== Inverted navbar
 // Reset inverted navbar basics
-@navbar-inverse-color:                      #ffffff;
+@navbar-inverse-color:                      #fff;
 @navbar-inverse-bg:                         @brand-success;
 @navbar-inverse-border:                     transparent;
 
@@ -400,7 +400,7 @@
 @navbar-inverse-link-hover-bg:              transparent;
 @navbar-inverse-link-active-color:          @navbar-inverse-color;
 @navbar-inverse-link-active-bg:             darken(@navbar-inverse-bg, 5%);
-@navbar-inverse-link-disabled-color:        #aaaaaa;
+@navbar-inverse-link-disabled-color:        #aaa;
 @navbar-inverse-link-disabled-bg:           transparent;
 
 // Inverted navbar brand label
@@ -410,7 +410,7 @@
 
 // Inverted navbar toggle
 @navbar-inverse-toggle-hover-bg:            darken(@navbar-inverse-bg, 10%);
-@navbar-inverse-toggle-icon-bar-bg:         #ffffff;
+@navbar-inverse-toggle-icon-bar-bg:         #fff;
 @navbar-inverse-toggle-border-color:        darken(@navbar-inverse-bg, 10%);
 
 
@@ -447,19 +447,19 @@
 //
 //##
 
-@pagination-color:                     #ffffff;
+@pagination-color:                     #fff;
 @pagination-bg:                        @brand-success;
 @pagination-border:                    transparent;
 
-@pagination-hover-color:               #ffffff;
+@pagination-hover-color:               #fff;
 @pagination-hover-bg:                  lighten(@brand-success, 6%);
 @pagination-hover-border:              transparent;
 
-@pagination-active-color:              #ffffff;
+@pagination-active-color:              #fff;
 @pagination-active-bg:                 lighten(@brand-success, 6%);
 @pagination-active-border:             transparent;
 
-@pagination-disabled-color:            #ffffff;
+@pagination-disabled-color:            #fff;
 @pagination-disabled-bg:               darken(@brand-success, 15%);
 @pagination-disabled-border:           transparent;
 
@@ -477,7 +477,7 @@
 @pager-active-bg:                      @pagination-active-bg;
 @pager-active-color:                   @pagination-active-color;
 
-@pager-disabled-color:                 #dddddd;
+@pager-disabled-color:                 #ddd;
 
 
 //== Jumbotron
@@ -496,19 +496,19 @@
 //
 //## Define colors for form feedback states and, by default, alerts.
 
-@state-success-text:             #ffffff;
+@state-success-text:             #fff;
 @state-success-bg:               @brand-success;
 @state-success-border:           @brand-success;
 
-@state-info-text:                #ffffff;
+@state-info-text:                #fff;
 @state-info-bg:                  @brand-info;
 @state-info-border:              @brand-info;
 
-@state-warning-text:             #ffffff;
+@state-warning-text:             #fff;
 @state-warning-bg:               @brand-warning;
 @state-warning-border:           @brand-warning;
 
-@state-danger-text:              #ffffff;
+@state-danger-text:              #fff;
 @state-danger-bg:                @brand-danger;
 @state-danger-border:            @brand-danger;
 
@@ -520,9 +520,9 @@
 //** Tooltip max width
 @tooltip-max-width:           200px;
 //** Tooltip text color
-@tooltip-color:               #ffffff;
+@tooltip-color:               #fff;
 //** Tooltip background color
-@tooltip-bg:                  #000000;
+@tooltip-bg:                  #000;
 @tooltip-opacity:             .9;
 
 //** Tooltip arrow width
@@ -542,7 +542,7 @@
 //** Popover border color
 @popover-border-color:                rgba(0,0,0,.2);
 //** Popover fallback border color
-@popover-fallback-border-color:       #999999;
+@popover-fallback-border-color:       #999;
 
 //** Popover title background color
 @popover-title-bg:                    darken(@popover-bg, 3%);
@@ -578,9 +578,9 @@
 @label-danger-bg:             @brand-danger;
 
 //** Default label text color
-@label-color:                 #ffffff;
+@label-color:                 #fff;
 //** Default text color of a linked label
-@label-link-hover-color:      #ffffff;
+@label-link-hover-color:      #fff;
 
 
 //== Modals
@@ -600,10 +600,10 @@
 //** Modal content border color
 @modal-content-border-color:                   rgba(0,0,0,.2);
 //** Modal content border color **for IE8**
-@modal-content-fallback-border-color:          #999999;
+@modal-content-fallback-border-color:          #999;
 
 //** Modal backdrop background color
-@modal-backdrop-bg:           #000000;
+@modal-backdrop-bg:           #000;
 //** Modal backdrop opacity
 @modal-backdrop-opacity:      .7;
 //** Modal header border color
@@ -648,7 +648,7 @@
 //** Background color of the whole progress component
 @progress-bg:                 @gray-lighter;
 //** Progress bar text color
-@progress-bar-color:          #ffffff;
+@progress-bar-color:          #fff;
 //** Variable for setting rounded corners on progress bar.
 @progress-border-radius:      @border-radius-base;
 
@@ -716,7 +716,7 @@
 @panel-default-border:        @gray;
 @panel-default-heading-bg:    @gray-dark;
 
-@panel-primary-text:          #ffffff;
+@panel-primary-text:          #fff;
 @panel-primary-border:        @brand-primary;
 @panel-primary-heading-bg:    @brand-primary;
 
@@ -768,15 +768,15 @@
 //
 //##
 
-@badge-color:                 #ffffff;
+@badge-color:                 #fff;
 //** Linked badge text color on hover
-@badge-link-hover-color:      #ffffff;
+@badge-link-hover-color:      #fff;
 @badge-bg:                    @gray;
 
 //** Badge text color in active nav link
 @badge-active-color:          @brand-primary;
 //** Badge background color in active nav link
-@badge-active-bg:             #ffffff;
+@badge-active-bg:             #fff;
 
 @badge-font-weight:           bold;
 @badge-line-height:           1;
@@ -805,15 +805,15 @@
 
 @carousel-text-shadow:                        0 1px 2px rgba(0,0,0,.6);
 
-@carousel-control-color:                      #ffffff;
+@carousel-control-color:                      #fff;
 @carousel-control-width:                      15%;
 @carousel-control-opacity:                    .5;
 @carousel-control-font-size:                  20px;
 
-@carousel-indicator-active-bg:                #ffffff;
-@carousel-indicator-border-color:             #ffffff;
+@carousel-indicator-active-bg:                #fff;
+@carousel-indicator-border-color:             #fff;
 
-@carousel-caption-color:                      #ffffff;
+@carousel-caption-color:                      #fff;
 
 
 //== Close
@@ -821,7 +821,7 @@
 //##
 
 @close-font-weight:           bold;
-@close-color:                 #ffffff;
+@close-color:                 #fff;
 @close-text-shadow:           none;
 
 
@@ -832,12 +832,12 @@
 @code-color:                  #c7254e;
 @code-bg:                     #f9f2f4;
 
-@kbd-color:                   #ffffff;
-@kbd-bg:                      #333333;
+@kbd-color:                   #fff;
+@kbd-bg:                      #333;
 
 @pre-bg:                      @gray-lighter;
 @pre-color:                   @gray-dark;
-@pre-border-color:            #cccccc;
+@pre-border-color:            #ccc;
 @pre-scrollable-max-height:   340px;
 
 

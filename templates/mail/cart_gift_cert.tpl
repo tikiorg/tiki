@@ -1,4 +1,4 @@
-{* $Id$ *}{$prefs.mail_template_custom_text}{tr}Gift Certificate Information{/tr}
+{tr}Gift Certificate Information{/tr}
 
 {section name=cert loop=$giftcerts}
 {tr}Name:{/tr} {$giftcerts[cert].name|escape}

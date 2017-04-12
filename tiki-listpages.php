@@ -187,15 +187,6 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST['checked'])) {
 			}
 			break;
 	}
-    /*
-        The 6 lines below are currently for the Plugin List Pages (redirects to the page where plugin is located and action was
-        initiated from)
-     */
-    if (isset($_POST["redirectTo"]) && strlen($_POST["redirectTo"]) > 0){
-        $currentPage = $_POST["redirectTo"];
-        $wikilib = TikiLib::lib('wiki');
-        header('Location: ' . $wikilib->sefurl($currentPage, '', $all_langs));
-    }
 }
 
 //add tablesorter sorting and filtering
@@ -357,8 +348,7 @@ if (!empty($multiprint_pages)) {
 	}
 
 	$smarty->assign('initial', $initial);
-	// What a checked checkbox returns is browser dependant. Don't test on the value, just presence
-	if (isset($_REQUEST['exact_match']) ) {
+	if (isset($_REQUEST['exact_match']) && $_REQUEST['exact_match'] == 'y' ) {
 		$exact_match = true;
 		$smarty->assign('exact_match', 'y');
 	} else {

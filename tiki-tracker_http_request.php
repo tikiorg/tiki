@@ -35,12 +35,10 @@ $filterFieldValueHere =  isset($_GET["filterFieldValueHere"]) ? $_GET["filterFie
 $filterFieldIdThere = isset($_GET["filterFieldIdThere"]) ? $_GET["filterFieldIdThere"] : null;
 $listFieldIdThere = isset($_GET["listFieldIdThere"]) ? $_GET["listFieldIdThere"] : null;
 $statusThere = isset($_GET["statusThere"]) ? $_GET["statusThere"] : null;
-$mandatory = isset($_GET["mandatory"]) ? $_GET["mandatory"] == 'y' : false;
 // needed when multiple fields are bound to the same selection i.e $filterFieldValueHere
 $insertId = isset($_GET["insertId"]) ? $_GET["insertId"] : null;
 // needed when the default should be passed back to the frontend
 $originalValue = isset($_GET["originalValue"]) ? $_GET["originalValue"] : null;
-$hideBlank = isset($_GET['hideBlank']) ? $_GET['hideBlank'] : false;
 
 header('Cache-Control: no-cache');
 header('content-type: application/x-javascript');
@@ -54,11 +52,6 @@ $json_return['request'] = array(
 	'originalValue' => $originalValue
 );
 $json_return['response'] = array();
-
-if( !$hideBlank ) {
-	// blank value is the default first option here
-	$json_return['response'][] = array('', ' ');
-}
 
 // if we do not have something to compare with we return empty result
 if (empty($filterFieldValueHere)) {
@@ -86,8 +79,9 @@ switch ($filterFieldHere['type']) {
 	
 	case 'r': // r = itemlink - disallow itemlink/category, allow itemlink/itemlink, itemlink/simplefield types like text
 		switch ($filterFieldThere['type']) {
-			case 'r': // r = itemlink tested
-				break;
+			case 'r': // r = itemlink tested 
+			break;
+			
 			case 't': // textfield tested
 			default:
 				$handler = $trklib->get_field_handler($filterFieldHere);
@@ -143,7 +137,6 @@ foreach ($remoteItemIds as $remoteItemId) {
 				// return each item of that list - requires match in DynamicList.php renderInnerOutput()
 				// note: we save the itemId of the item selected out of the list, not the value. Allows to keep the links consistant on changing values.
 				foreach ( $valueFields['items'] as $valueField => $labelField) {
-					$labelField = preg_replace('/<\!--.*?-->/', '', $labelField);	// remove comments added by log_tpl
 					$json_return['response'][] = array($valueField, $labelField);
 				}
 			}
@@ -153,7 +146,6 @@ foreach ($remoteItemIds as $remoteItemId) {
 		case 'r': // itemlink tested
 			$valueField = $handler->getFieldData();
 			$labelField = $handler->renderOutput($context);
-			$labelField = preg_replace('/<\!--.*?-->/', '', $labelField);	// remove comments added by log_tpl
 			$json_return['response'][] = array($valueField['value'], $labelField);
 		break;
 			
@@ -173,7 +165,6 @@ foreach ($remoteItemIds as $remoteItemId) {
 		case 't': // textfield tested
 		default:		
 			$labelField = $handler->renderOutput($context);
-			$labelField = preg_replace('/<\!--.*?-->/', '', $labelField);	// remove comments added by log_tpl
 			$json_return['response'][] = array($remoteItemId, $labelField);
 		break;
 	} // switch

@@ -256,7 +256,6 @@ function wikiplugin_trackerlist_info()
 				 'since' => '1',
 				 'filter' => 'word',
 				 'default' => '',
-				 'profile_reference' => 'tracker_field_string',
 			 ),
 			 'sortchoice' => array(
 				 'required' => false,
@@ -336,8 +335,7 @@ function wikiplugin_trackerlist_info()
 					. '<code>*value</code> - ' . tra('text that ends in "value"') . '<br>'
 					. '<code>value*</code> - ' . tra('text that begins with "value"') . '<br>'
 					. '<code>#user</code> - ' . tra('the current user\'s login name') . '<br>'
-					. '<code>#group_default</code> - ' . tra('the current user\'s default group') . '.<br>'
-					 . tr('To filter by empty/non-empty values, use parameter %0exactvalue%1 instead', '<code>', '</code>') . '<br>',
+					. '<code>#group_default</code> - ' . tra('the current user\'s default group') . '<br>',
 				 'since' => '1',
 				 'doctype' => 'filter',
 				 'accepted' => tra('any text'),
@@ -355,7 +353,6 @@ function wikiplugin_trackerlist_info()
 					 . '<code>preference(name)</code> - ' . tra('match against the value of a Tiki preference') . '<br>'
 					 . '<code>notpreference(name)</code> - ' . tra('match if value does not equal a Tiki preference value') . '<br>'
 					 . '<code>not(value)</code> - ' . tra('match if the field does not equal "value"') . '<br>'
-					 . '<code>not()</code> - ' . tr('match for non empty values (opposite with %0exactvalue%1="")', '<code>', '</code>') . '<br>'
 					 . '<code>field(x, itemid)</code> - ' . tr('match field with ID x in item with ID itemid.
 						%0field(x)%1 can be used if the %0itemId%1 URL parameter is set', '<code>', '</code>') . '<br>'
 					 . '<code>notfield(x, itemid)</code> - ' . tr('match if not equal to field with ID x in item with ID itemid
@@ -1477,8 +1474,6 @@ function wikiplugin_trackerlist($data, $params)
 				$check['dropdown'] = 'y';				// is this actually used?
 
 			$smarty->assign_by_ref('checkbox', $check);
-		} else {
-			$smarty->clear_assign('checkbox');
 		}
 
 		if (isset($_REQUEST["tr_sort_mode$iTRACKERLIST"])) {
@@ -1677,7 +1672,7 @@ function wikiplugin_trackerlist($data, $params)
 									}
 								}
 								$exactvalue[] = array($conv[$matches[1]]=>$matches[2]);
-							} elseif (preg_match('/not\((.*)\)/', $evs[$i], $matches)) {
+							} elseif (preg_match('/not\((.+)\)/', $evs[$i], $matches)) {
 								$exactvalue[] = array('not' => $matches[1]);
 							} else {
 								$exactvalue[] = $evs[$i];
@@ -1786,16 +1781,7 @@ function wikiplugin_trackerlist($data, $params)
 				$filtervalue = array($filtervalue);
 			}
 			$urlquery['filtervalue'] = is_array($filtervalue) ? implode(':', $filtervalue) : $filtervalue;
-			if( is_array($exactvalue) ) {
-				$urlquery['exactvalue'] = implode(':', array_map(
-					function($ev){
-						return is_array($ev) ?
-							key($ev).reset($ev)
-							: $ev;
-					}, $exactvalue));
-			} else {
-				$urlquery['exactvalue'] = $exactvalue;
-			}
+			$urlquery['exactvalue'] = is_array($exactvalue) ? implode(':', $exactvalue) : $exactvalue;
 			$urlquery['trackerId'] = $trackerId;
 			$smarty->assign('urlquery', $urlquery);
 		} else {
@@ -1814,17 +1800,11 @@ function wikiplugin_trackerlist($data, $params)
 			if (is_array($filterfield)) {
 				foreach ($filterfield as $i=>$fieldId) {
 					$exportParams["f_$fieldId"] = empty($filtervalue[$i]) ? $exactvalue[$i] : $filtervalue[$i];
-					if (!empty($filtervalue[$i])){
-						$exportParams["x_$fieldId"] = 't'; // hint exporter that is not a exact match
-					}
 				}
 			} elseif (!empty($filterfield)) {
 				$exportParams["f_$filterfield"] = empty($filtervalue) ? $exactvalue : $filtervalue;
-				if (!empty($filtervalue)){
-					$exportParams["x_$filterfield"] = 't'; // hint exporter that is not a exact match
-				}
 			}
-			$exportUrl = 'tiki-export_tracker.php?' . http_build_query($exportParams);
+			$exportUrl = smarty_function_service($exportParams, $smarty);
 			$smarty->assign('exportUrl', $exportUrl);
 		}
 
@@ -2101,22 +2081,14 @@ function wikiplugin_trackerlist($data, $params)
 						$smarty->assign('item', $item);
 						$smarty->assign('wiki', "wiki:$wiki");
 						$smarty->assign('showpopup', 'n');
-						try {
-							$items['data'][$i]['over'] = $smarty->fetch('tracker_pretty_item.tpl');
-						} catch( SmartyException $se ) {
-							$items['data'][$i]['over'] = $se->getMessage();
-						}
+						$items['data'][$i]['over'] = $smarty->fetch('tracker_pretty_item.tpl');
 					}
 					if (!empty($tplwiki)) {
 						$smarty->assign('fields', $item['field_values']);
 						$smarty->assign('item', $item);
 						$smarty->assign('wiki', "tplwiki:$tplwiki");
 						$smarty->assign('showpopup', 'n');
-						try {
-							$items['data'][$i]['over'] = $smarty->fetch('tracker_pretty_item.tpl');
-						} catch( SmartyException $se ) {
-							$items['data'][$i]['over'] = $se->getMessage();
-						}
+						$items['data'][$i]['over'] = $smarty->fetch('tracker_pretty_item.tpl');
 					}
 					if (empty($items['data'][$i]['over'])) {
 						$items['data'][$i]['over'] = $trklib->get_isMain_value($trackerId, $item['itemId']);

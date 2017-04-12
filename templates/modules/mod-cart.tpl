@@ -54,13 +54,10 @@
 						</tr>
 					{/foreach}
 			{/foreach}
-			{if $module_params.ajax eq 'n'}<tr>
+			<tr>
 				<td></td>
 				<td colspan="2" align="right"><input type="submit" class="btn btn-default btn-sm" name="update" value="{tr}Update{/tr}"></td>
 			</tr>
-			{else}
-				<input type="hidden" name="update" value="1">
-			{/if}
 		</table>
 		</form>
 	{/if}

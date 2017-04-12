@@ -1,1 +1,1 @@
-{* $Id$ *}{tr}Your account information for %s{/tr}
+{tr}Your account information for %s{/tr}

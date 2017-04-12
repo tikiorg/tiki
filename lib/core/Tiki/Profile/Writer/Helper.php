@@ -78,27 +78,6 @@ class Tiki_Profile_Writer_Helper
 					$body = $writer->getReference($info['profile_reference'], $body);
 				}
 
-				if( $pluginName == 'jq') {
-					// Handle ins_FIELDID|user_selector_FIELDID|trackerinput_FIELDID JQ references
-					$body = preg_replace_callback(
-						'/(ins|user_selector|trackerinput)_(\d+)/',
-						function ($args) use ($writer) {
-							return $args[1] . '_' . $writer->getReference('tracker_field', $args[2]);
-						},
-						$body
-					);
-
-					// handle inline JQ comment references
-					$lines = preg_split("/[\r\n]+/", $body);
-					foreach( $lines as &$line ) {
-						if( preg_match('#//\s*profile_reference=(.*)$#', $line, $m) ) {
-							$reference = $m[1];
-							$line = self::uniform_string($reference, $writer, $line);
-						}
-					}
-					$body = implode("\n", $lines);
-				}
-
 				$match->replaceWithPlugin($pluginName, $params, $body);
 				$justReplaced = true;
 			}
@@ -114,22 +93,6 @@ class Tiki_Profile_Writer_Helper
 			$content
 		);
 
-		// handle [links] plugin_tracker references
-		if( $info = $parserlib->plugin_info('tracker') ) {
-			$info['params']['prefills'] = array('profile_reference' => 'tracker_field');
-			foreach( $info['params'] as $paramName => $paramInfo ) {
-				if( isset($paramInfo['profile_reference']) && in_array($paramInfo['profile_reference'], array('tracker_field', 'tracker')) ) {
-					$content = preg_replace_callback(
-						"/(?<!\[)(\[[^\]]+\b)($paramName=((\d+:?)+))([^\]]+\])/",
-						function ($args) use ($writer, $paramName, $paramInfo) {
-							return $args[1]."$paramName=".self::uniform_string($paramInfo['profile_reference'], $writer, $args[3]).array_pop($args);
-						},
-						$content
-					);
-				}
-			}
-		}
-
 		return $content;
 	}
 
@@ -138,7 +101,7 @@ class Tiki_Profile_Writer_Helper
 		return self::uniform_string('tracker_field', $writer, $value);
 	}
 
-	public static function uniform_string($type, Tiki_Profile_Writer $writer, $value)
+	public function uniform_string($type, Tiki_Profile_Writer $writer, $value)
 	{
 		return preg_replace_callback(
 			'/(\d+)/',
@@ -170,12 +133,6 @@ class Tiki_Profile_Writer_Helper
 			if ($name === 'filter') {
 				$args = $dataSource->replaceFilterReferences($writer, $args);
 				$match->replaceWithPlugin('filter', $args, $match->getBody());
-				$justReplaced = true;
-			}
-
-			if( $name === 'step' ) {
-				$args = $dataSource->replaceStepReferences($writer, $args);
-				$match->replaceWithPlugin('step', $args, $match->getBody());
 				$justReplaced = true;
 			}
 		}

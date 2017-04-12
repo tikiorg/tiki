@@ -60,9 +60,9 @@ function wikiplugin_perm($data, $params)
 	global $user;
 	$userlib = TikiLib::lib('user');
 	if (!empty($params['perms']))
-		$perms = $params['perms'];
+		$perms = explode('|', $params['perms']);
 	if (!empty($params['notperms']))
-		$notperms = $params['notperms'];
+		$notperms = explode('|', $params['notperms']);
 	if (!empty($params['global']) && $params['global'] == '1') {
 		$global = true;
 	} else {

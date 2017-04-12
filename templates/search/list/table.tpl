@@ -1,7 +1,4 @@
 {* $Id$ *}
-{if $actions}
-<form method="post" action="#{$id}">
-{/if}
 <div {if $id}id="{$id}-div" {/if}class="table-responsive ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}>
 	<table {if $id}id="{$id}" {/if}class="table normal table-hover table-striped" data-count="{$count}">
 		<thead>
@@ -15,9 +12,6 @@
 		{if $header}
 			{$fieldcount = 0}
 			<tr>
-				{if $actions}
-					<th><input type="checkbox" name="selectall" value="" class="listexecute-select-all"></th>
-				{/if}
 				{foreach from=$column item=col}
 					{$fieldcount = $fieldcount + 1}
 					<th>
@@ -51,16 +45,6 @@
 		<tbody>
 		{foreach from=$results item=row}
 			<tr>
-				{if $actions}
-					<td>
-						<input type="checkbox" name="objects[]" value="{$row.object_type|escape}:{$row.object_id|escape}">
-						{if $row.report_status eq 'success'}
-							{icon name='ok'}
-						{elseif $row.report_status eq 'error'}
-							{icon name='error'}
-						{/if}
-					</td>
-				{/if}
 				{foreach from=$column item=col}
 					{if isset($col.mode) && $col.mode eq 'raw'}
 						<td>{if !empty($row[$col.field])}{$row[$col.field]}{/if}</td>
@@ -76,21 +60,3 @@
 		{/if}
 	</table>
 </div>
-{if $actions}
-	<select name="list_action">
-		<option></option>
-		{foreach from=$actions item=action}
-			<option value="{$action|escape}">{$action|escape}</option>
-		{/foreach}
-	</select>
-	<input type="submit" class="btn btn-default btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-</form>
-{jq}
-$('.listexecute-select-all').removeClass('listexecute-select-all')
-	.on('click', function (e) {
-		$(this).closest('form').find('tbody :checkbox:not(:disabled)').each(function () {
-			$(this).prop("checked", ! $(this).prop("checked"));
-		});
-	});
-{/jq}
-{/if}

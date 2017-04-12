@@ -30,7 +30,7 @@ class MultiTikiMoveCommand extends Command
 			)
 			->addArgument('to',
 				InputArgument::OPTIONAL,
-				'path to the Tiki instance to move to (defaults to this one if absent or if a site name is given instead of a valid file path then the destination site will be renamed)'
+				'path to the Tiki instance to move to (defaults to this one if absent)'
 			)
 			->addOption(
 				'confirm',
@@ -64,13 +64,7 @@ class MultiTikiMoveCommand extends Command
 			$to = getcwd();
 		}
 		$from = realpath($from);
-		if (realpath($to)) {
-			$to = realpath($to);
-			$destSite = $site;
-		} else {
-			$destSite = $to;
-			$to = getcwd() ;
-		}
+		$to = realpath($to);
 
 		$from = rtrim($from, '/');
 		$to = rtrim($to, '/');
@@ -82,7 +76,7 @@ class MultiTikiMoveCommand extends Command
 
 				$list = $this->getVirtuals($to);
 
-				if (in_array($destSite, $list)) {
+				if (in_array($site, $list)) {
 					$output->writeln("<error>Site $site already exists in destination</error>");
 					return -1;
 				}
@@ -102,7 +96,7 @@ class MultiTikiMoveCommand extends Command
 						$src = $from . '/styles/' . $site;
 					}
 					if (is_dir($src)) {
-						$dest =  $to . '/' . $dir . '/' . $destSite;
+						$dest =  $to . '/' . $dir . '/' . $site;
 						if (is_dir($dest)) {
 							if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
 								$output->writeln("<error>Destination directory already exists: $dest</error>");
@@ -136,7 +130,7 @@ class MultiTikiMoveCommand extends Command
 
 					// add to the destination
 					$list = $this->getVirtuals($to);
-					$list[] = $destSite;
+					$list[] = $site;
 					file_put_contents($to . '/db/virtuals.inc', implode("\n", $list) . "\n");
 
 					if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {

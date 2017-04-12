@@ -1,4 +1,4 @@
-{* $Id$ *}{tr}You are invited by:{/tr} {$prefs.mail_template_custom_text}{$user|username}
+{tr}You are invited by:{/tr} {$user|username}
 {if !empty($groups)}
 	{tr}You join this group:{/tr}
 	{foreach from=$groups item=group}

@@ -501,7 +501,6 @@ function prefs_feature_list($partial = false)
 			'description' => tra('Display the page name at the top of each page as page title. If not enabled, the page content should contain an h1 heading to function as the page title, or the page description can be used as the title.'),
 			'type' => 'flag',
 			'default' => 'y',
-			'tags' => array('basic'),
 		),
 		'feature_wiki_pageid' => array(
 			'name' => tra('Display page ID'),
@@ -1280,6 +1279,8 @@ function prefs_feature_list($partial = false)
 			'description' => tra("If this is a testing site with duplicate content, you may want to put the real site domain here so search engines don't index the testing site. In complex perspective setups using multiple domains, you may want more control on which canonical domain is advertised."),
 			'type' => 'text',
 			'dependencies' => array('feature_canonical_url'),
+			'tags' => array('experimental'),
+			'warning' => tra('experimental'),
 			'default' =>'',
 		),
 		'feature_modulecontrols' => array(
@@ -1497,6 +1498,7 @@ function prefs_feature_list($partial = false)
             'description' => tra('Show the last-modified date'),
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 			'tags' => array('basic'),
 		),
 		'feature_blog_rankings' => array(
@@ -2899,7 +2901,7 @@ function prefs_feature_list($partial = false)
 			'description' => tra('Ask a different set of fields for the User Details section in the User Wizard than the ones shown in the Registration form'),
 			'help' => 'User+Wizard',
 			'type' => 'flag',
-			'default' => 'n',
+			'default' => 'y',
 		),
 		'feature_userWizardUsersFieldIds' => array(
 			'name' => tra('Tracker fields presented in the User Wizard as User Details'),

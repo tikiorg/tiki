@@ -117,10 +117,9 @@ class Table_Check
 						$colon = explode(':', $ret[$key]);
 						unset($ret[$key]);
 						if (trim($colon[1]) == 'nofilter') {
-							$ret[$key][$colon[0]] = false;
-						} else {
-							$ret[$key][$colon[0]] = trim($colon[1]);
+							$colon[1] = false;
 						}
+						$ret[$key][$colon[0]] = trim($colon[1]);
 					}
 				} elseif (is_array($ret[$key])) {
 					foreach ($ret[$key] as $key2 => $subparam) {

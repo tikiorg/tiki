@@ -38,7 +38,6 @@ if ($opcode_cache == 'WinCache') {
 	$txtUsed = tr('Available');
 }
 
-$result = [];
 $result['OPCodeCache'] = $opcode_stats['opcode_cache'];
 $result['OpCodeStats'] = $opcode_stats;
 

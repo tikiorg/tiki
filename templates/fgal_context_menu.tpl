@@ -18,7 +18,7 @@
 			or $files[$changes].public eq 'y' )}
 			<a href="tiki-upload_file.php?galleryId={$files[$changes].id}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}">
 				<div class="iconmenu">
-					{icon name='upload'} {tr}Upload{/tr}
+					{icon name='export'} {tr}Export{/tr}
 				</div>
 			</a>
 		{/if}

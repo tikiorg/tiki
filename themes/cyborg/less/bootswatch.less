@@ -2,6 +2,13 @@
 // Bootswatch
 // -----------------------------------------------------
 
+@web-font-path: "https://fonts.googleapis.com/css?family=Roboto:400,700";
+
+.web-font(@path) {
+	@import url("@{path}");
+}
+.web-font(@web-font-path);
+
 // Navbar =====================================================================
 
 // Buttons ====================================================================
@@ -37,17 +44,17 @@
 .bg-info,
 .bg-warning,
 .bg-danger {
-	color: #ffffff;
+	color: #fff;
 }
 
 // Tables =====================================================================
 
 table,
 .table {
-	color: #ffffff;
+	color: #fff;
 
 	a:not(.btn) {
-		color: #ffffff;
+		color: #fff;
 		text-decoration: underline;
 	}
 
@@ -133,7 +140,7 @@ table,
 }
 
 legend {
-	color: #ffffff;
+	color: #fff;
 }
 
 .input-group-addon {
@@ -148,7 +155,7 @@ legend {
 .pager {
 
 	a {
-		color: #ffffff;
+		color: #fff;
 	}
 }
 
@@ -168,13 +175,13 @@ legend {
 }
 
 .close {
-	color: #ffffff;
+	color: #fff;
 	text-decoration: none;
 	opacity: 0.4;
 
 	&:hover,
 	&:focus {
-		color: #ffffff;
+		color: #fff;
 		opacity: 1;
 	}
 }
@@ -234,6 +241,6 @@ a.list-group-item {
 .jumbotron {
 
 	h1, h2, h3, h4, h5, h6 {
-		color: #ffffff;
+		color: #fff;
 	}
 }

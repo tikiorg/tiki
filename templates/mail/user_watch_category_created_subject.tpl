@@ -1,1 +1,1 @@
-{* $Id$ *}{$prefs.mail_template_custom_text}{tr}Category{/tr} {$categoryName} {tr}created{/tr}
+{tr}Category{/tr} {$categoryName} {tr}created{/tr}

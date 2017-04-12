@@ -600,7 +600,7 @@ class ModLib extends TikiLib
 			}
 		}
 
-		if ( $prefs['cookie_consent_feature'] == 'y' && $prefs['cookie_consent_disable'] !=='y' ) {		// check if consent required to show
+		if ( $prefs['cookie_consent_feature'] == 'y' ) {		// check if consent required to show
 			if (!empty($params['cookie_consent']) && $params['cookie_consent'] === 'y') {
 				global $feature_no_cookie;
 				if ($feature_no_cookie) {
@@ -640,12 +640,7 @@ class ModLib extends TikiLib
 			return true;
 		}
 
-		// Multi-value params of custom modules need transformation into an array
-		if ( is_array($params['category']) ) {
-			$categories = (array) $params['category'];
-		} else {
-			$categories = explode(';',$params['category']);
-		}
+		$categories = (array) $params['category'];
 
 		return ! $this->matches_any_in_category_list($categories, $catIds, ! empty($params['subtree']));
 	}
@@ -671,12 +666,7 @@ class ModLib extends TikiLib
 			return false;
 		}
 
-		// Multi-value params of custom modules need transformation into an array
-		if ( is_array($params['nocategory']) ) {
-			$categories = (array) $params['nocategory'];
-		} else {
-			$categories = explode(';',$params['nocategory']);
-		}
+		$categories = (array) $params['nocategory'];
 
 		return $this->matches_any_in_category_list($categories, $catIds, ! empty($params['subtree']));
 	}
@@ -959,7 +949,7 @@ class ModLib extends TikiLib
 			)
 		);
 
-		if ($prefs['cookie_consent_feature'] === 'y' && $prefs['cookie_consent_disable'] !=='y') {
+		if ($prefs['cookie_consent_feature'] === 'y') {
 			$info['params']['cookie_consent'] = array(
 				'name' => tra('Cookie Consent'),
 				'description' => 'n|y '.tra('Show only if consent to accept cookies has been granted.'),
