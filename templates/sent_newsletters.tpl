@@ -38,9 +38,9 @@
 				<td class="text">{$channels[user].name|escape}</td>
 				<td class="text">
 					{if $view_editions eq 'y'}
-						<a class="link" href="{$url}?{if $nl_info}nlId={$channels[user].nlId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}&amp;resend=1">{$channels[user].subject|escape}</a>
+						<a class="link" href="{$url}?{if $nl_info}nlId={$channels[user].nlId}&amp;{elseif $nlId}nlId={$nlId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}&amp;resend=1">{$channels[user].subject|escape}</a>
 					{else}
-						<a class="link" href="{$url}?{if $nl_info}nlId={$channels[user].nlId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">{$channels[user].subject|escape}</a>
+						<a class="link" href="{$url}?{if $nl_info}nlId={$channels[user].nlId}&amp;{elseif $nlId}nlId={$nlId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">{$channels[user].subject|escape}</a>
 					{/if}
 				</td>
 				{if $view_editions eq 'y'}

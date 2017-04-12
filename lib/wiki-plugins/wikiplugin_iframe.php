@@ -169,6 +169,9 @@ function wikiplugin_iframe($data, $params)
 	} elseif (!empty($data)) {
 		$ret .= " src=\"$data\"";
 	}
+	if (strpos($src, 'ViewerJS') !== false) {
+		$ret .= " allowfullscreen webkitallowfullscreen";
+	}
 	$ret .= ">$data</iframe>";
 	return $ret;
 }

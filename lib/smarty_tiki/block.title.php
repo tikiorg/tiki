@@ -49,6 +49,8 @@ function smarty_block_title($params, $content, $template, &$repeat)
 		$params['url'] = smarty_modifier_sefurl($current['object'], $current['type']);
 	}
 
+	$params['url'] = str_replace('"', '', $params['url']);
+
 	$metadata = '';
 	$coordinates = TikiLib::lib('geo')->get_coordinates($current['type'], $current['object']);
 	if ($coordinates) {

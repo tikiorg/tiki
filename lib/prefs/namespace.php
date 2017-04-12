@@ -40,6 +40,12 @@ function prefs_namespace_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'namespace_indicator_in_page_title' => array(
+			'name' => tra('Hide namespace indicator in page title'),
+			'description' => tra('Hide namespace indicator in page title.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 		'namespace_force_links' => array(
 			'name' => tra('Force all non-namespace page links to the same namespace'),
 			'description' => tra('If the current page is in a namespace, all links without a namespace will have it added automatically'),

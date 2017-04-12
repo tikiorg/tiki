@@ -229,7 +229,7 @@ if ( $prefs['javascript_enabled'] != 'y' or ! $isUpload ) {
 	$smarty->assign('mid', 'tiki-upload_file.tpl');
 	if ( ! empty( $_REQUEST['filegals_manager'] ) ) {
 		$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
-		$smarty->assign('insertion_syntax', isset($_REQUEST['insertion_syntax']) ? $_REQUEST['insertion_syntax'] : '');
+		$smarty->assign('insertion_syntax', $jitRequest->insertion_syntax->word());
 		$smarty->display("tiki_full.tpl");
 	} else {
 		$smarty->display("tiki.tpl");

@@ -373,7 +373,11 @@ function sendWikiEmailNotification(
 			$mail = new TikiMail($not['user']);
 			$mail->setSubject(sprintf($mail_subject, $pageName));
 			$mail->setText($mail_data);
-			$mail->send(array($not['email']));
+			if (! $mail->send(array($not['email'])) && Perms::get()->admin) {
+				foreach ($mail->errors as $err) {
+					TikiLib::lib('errorreport')->report($err);
+				}
+			}
 
 		}
 	}
@@ -566,13 +570,18 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
 		include_once('lib/webmail/tikimaillib.php');
 		$smarty->assign('galleryName', $galleryName);
 		$smarty->assign('galleryId', $galleryId);
+		$smarty->assign('fileId', $fileId);
 		$smarty->assign('fname', $name);
 		$smarty->assign('filename', $filename);
 		$smarty->assign('fdescription', $description);
 		$smarty->assign('mail_date', $tikilib->now);
 		$smarty->assign('author', $user);
-		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$machine = $tikilib->httpPrefix(true) . dirname($foo["path"]);
+		if (php_sapi_name() !== 'cli') {
+			$foo = parse_url($_SERVER['REQUEST_URI']);
+			$machine = $tikilib->httpPrefix(true) . dirname($foo['path']);
+		} else {
+			$machine = '';		// console command
+		}
 		$smarty->assign('mail_machine', $machine);
 
 		foreach ($nots as $not) {
@@ -843,12 +852,13 @@ function sendCommentNotification($type, $id, $title, $content, $commentId=null)
 			$smarty->assign('mail_item_title', $trklib->get_isMain_value($trackerId, $id));
 		}
 
-		// Blog comment mail
+		// General comment mail
 		$smarty->assign('mail_objectid', $id);
 		$smarty->assign('objecttype', $type);
 		$smarty->assign('mail_user', $user);
 		$smarty->assign('mail_title', $title);
 		$smarty->assign('mail_comment', $content);
+		$smarty->assign('comment_id', $commentId);
 
 		sendEmailNotification($watches, null, 'user_watch_comment_subject.tpl', null, 'user_watch_comment.tpl');
 	}

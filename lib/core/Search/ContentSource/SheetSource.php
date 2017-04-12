@@ -25,6 +25,10 @@ class Search_ContentSource_SheetSource implements Search_ContentSource_Interface
 
 		$info = $sheetlib->get_sheet_info($objectId);
 
+		if (! $info) {
+			return false;
+		}
+
 		$values = $this->db->table('tiki_sheet_values');
 		$contributors = $values->fetchColumn(
 			$values->expr('DISTINCT `user`'),

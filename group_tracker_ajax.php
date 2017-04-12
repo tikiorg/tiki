@@ -12,6 +12,9 @@ require_once('tiki-setup.php');
 $access->check_feature(array('feature_trackers', 'feature_ajax', 'wikiplugin_tracker'));
 
 include_once ('lib/wiki-plugins/wikiplugin_tracker.php');
+
+$headerlib->clear_js();								// so store existing js for later and clear
+
 $json_data = array();
 $re = $userlib->get_group_info(isset($_REQUEST['chosenGroup']) ? $_REQUEST['chosenGroup'] : 'Registered');
 if (!empty($re['usersTrackerId']) && !empty($re['registrationUsersFieldIds'])) {
@@ -29,17 +32,20 @@ if (!empty($re['usersTrackerId']) && !empty($re['registrationUsersFieldIds'])) {
 			'_ajax_form_ins_id' => 'group',
 		)
 	);
+
+	$json_data['res'] .= $headerlib->output_js();
+	
 } else {
 	$json_data['res'] = $_REQUEST['chosenGroup'];
 	$json_data['debug'] = $re;
 }
 
-if ($prefs['feature_jquery_validation'] === 'y') {	// dig out the new rules for the js validation
+/*if ($prefs['feature_jquery_validation'] === 'y') {	// dig out the new rules for the js validation
 	foreach ($headerlib->js as $rank) {
 		foreach ($rank as $js) {
 			if (strpos($js, 'ajaxTrackerValidation_group') !== false) {
 				if (preg_match('/validation:\{([\s\S]*?\})\s*\};/s', $js, $m)) {						// get the rules and messages from the js function
-					//$m = preg_replace('/\s(?:ignore|submitHandler).*/', '', $m[1]);				// lose a couple of duplicate options
+					//$m = preg_replace('/\s(?:ignore|submitHandler).* /', '', $m[1]);				// lose a couple of duplicate options
 					$m = preg_replace('/,\s*\}\s*$/m', '}', $m[1]);								// a trailing comma
 					$o = preg_replace_callback('/(\w*):/', 'group_tracker_ajax_quote', $m);		// surround properties with double quotes
 					$json_data['validation']  = json_decode('{' . $o . '}');
@@ -47,7 +53,7 @@ if ($prefs['feature_jquery_validation'] === 'y') {	// dig out the new rules for 
 			}
 		}
 	}
-}
+}*/
 
 /**
  * @param $matches

@@ -14,7 +14,7 @@
 					</li>
 					<li>
 						<a href="{bootstrap_modal controller=managestream action=record}">
-							{tr}Basic Rule{/tr}
+							{tr}Basic Rule (Record Event){/tr}
 						</a>
 					</li>
 					<li>

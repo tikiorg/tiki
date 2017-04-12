@@ -860,7 +860,7 @@ class UnifiedSearchLib
 		$query->setIdentifierFields($prefs['unified_identifier_fields']);
 
 		$categlib = TikiLib::lib('categ');
-		if ($applyJail && $jail = $categlib->get_jail()) {
+		if ($applyJail && $jail = $categlib->get_jail(false)) {
 			$query->filterCategory(implode(' or ', $jail), true);
 		}
 	}
@@ -888,6 +888,10 @@ class UnifiedSearchLib
 		if (! $query) {
 			$query = new Search_Query;
 			$this->initQuery($query);
+		}
+
+		if (!is_array($filter)) {
+			throw new Exception('Invalid filter type provided in query. It must be an array.');
 		}
 
 		if (isset($filter['type']) && $filter['type']) {

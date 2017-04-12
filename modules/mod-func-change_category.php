@@ -18,7 +18,7 @@ function module_change_category_info()
 {
 	return array(
 		'name' => tra('Change Category'),
-		'description' => tra('Enables to categorize an object.') . " " . tra('This module currently only supports Wiki pages. Some combinations of Multiple categories, Detailed, Unassign and Assign may challenge intuition or be simply broken.'),
+		'description' => tra('Enables to categorize an object.') . " " . tra('Some combinations of Multiple categories, Detailed, Unassign and Assign may challenge intuition or be simply broken.'),
 		'prefs' => array('feature_categories', 'feature_wiki'),
 		'documentation' => 'Module change_category',
 		'params' => array(

@@ -66,7 +66,8 @@
 		<b>{tr}This newsletter will be sent to {$subscribers} email addresses.{/tr}</b>
 		<br>
         {if $prefs.newsletter_throttle eq 'y'}{tr}Sending will be throttled with a batch size of {$prefs.newsletter_batch_size} and a pause period of {$prefs.newsletter_pause_length} seconds.{/tr}<br>{/if}
-		{tr}Reply to:{/tr} {if empty($replyto)}{$prefs.sender_email|escape} ({tr}default{/tr}){else}{$replyto|escape}{/if}
+		{tr}Reply to:{/tr} {if empty($replyto) AND empty($sendfrom)}{$prefs.sender_email|escape} ({tr}default{/tr})<br>{elseif !empty($replyto) AND !empty($sendfrom)}{$replyto|escape}<br>{elseif !empty($sendfrom)}{$sendfrom|escape}<br>{else}{$replyto|escape}<br>{/if}
+		{tr}Send from:{/tr} {if empty($sendfrom)}{$prefs.sender_email|escape} ({tr}default{/tr})<br>{else}{$sendfrom|escape}<br>{/if}
 	{/remarksbox}
 	<p>
 		<form method="post" action="tiki-send_newsletters.php" target="resultIframe" id='confirmForm'>
@@ -79,6 +80,7 @@
 			<input type="hidden" name="cookietab" value="3">
 			<input type="hidden" name="datatxt" value="{$info.datatxt|escape}">
 			<input type="hidden" name="replyto" value="{$replyto|escape}">
+			<input type="hidden" name="sendfrom" value="{$sendfrom|escape}">
 			<input type="hidden" name="wysiwyg" value="{$info.wysiwyg|escape}">
 			<input type="hidden" name="is_html" value="{$info.is_html|escape}">
 			<input type="submit" class="btn btn-default btn-sm" name="send" value="{tr}Send{/tr}" onclick="document.getElementById('confirmArea').style.display = 'none'; document.getElementById('sendingArea').style.display = 'block';">
@@ -146,6 +148,7 @@
 		<h3>{tr}Sending Newsletter{/tr} ...</h3>
         <h5> ...  {if $prefs.newsletter_throttle eq 'y'}throttled {/if}{tr}sending to {$subscribers} addresses{/tr}</h5>
 		{if $replyto ne ''}<h5> ... {tr}with the 'Reply To' email set to: {$replyto}{/tr}</h5>{/if}
+		{if $sendfrom ne ''}<h5> ... {tr}with the 'Send From' email set to: {$sendfrom}{/tr}</h5>{/if}
 		<div id="confirmed"></div>
 		<iframe id="resultIframe" name="resultIframe" frameborder="0" style="width: 600px; height: 400px"></iframe>
 		{jq}
@@ -153,7 +156,7 @@
 				var root = this.contentDocument.documentElement, iframe = this;
 				$('#confirmed').append($('.confirmation', root));
 				$('.throttle', root).each(function () {
-					var url = 'tiki-send_newsletters.php?resume=' + $(this).data('edition') + '&replyto=' + $(this).data('replyto');
+					var url = 'tiki-send_newsletters.php?resume=' + $(this).data('edition') + '&replyto=' + $(this).data('replyto') + '&sendfrom=' + $(this).data('sendfrom');
 					setTimeout(function () {
 						$(iframe).attr('src', url);
 					}, parseInt($(this).data('rate'), 10) * 1000);
@@ -301,6 +304,15 @@
 					<label class="control-label col-sm-2">{tr}Reply To Email{/tr}</label>
 					<div class="col-sm-10">
 						<input type="text" name="replyto" id="replyto" value="{$replyto|escape}" class="form-control">
+						<div class="help-block">
+							{tr}if not:{/tr} {$prefs.sender_email|escape|default:"<em>{tr}Sender email not set{/tr}</em>"}
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">{tr}Send From Email{/tr}</label>
+					<div class="col-sm-10">
+						<input type="text" name="sendfrom" id="sendfrom" value="{$sendfrom|escape}" class="form-control">
 						<div class="help-block">
 							{tr}if not:{/tr} {$prefs.sender_email|escape|default:"<em>{tr}Sender email not set{/tr}</em>"}
 						</div>

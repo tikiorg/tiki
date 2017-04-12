@@ -21,7 +21,7 @@
 	{/if}
 {/if}
 <form class="simple no-ajax vimeo_upload" id="form{$ticket.id|escape}" target="vimeo{$ticket.id|escape}"
-			method="post" action="{$ticket.endpoint|escape}" enctype="multipart/form-data"
+			method="post" action="{$ticket.endpoint_secure|escape}" enctype="multipart/form-data"
 			data-verify-action="{service controller=vimeo action=complete}">
 	<label>
 		{tr}Title{/tr}

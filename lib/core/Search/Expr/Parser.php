@@ -161,7 +161,7 @@ class Search_Expr_Parser
 			$tokens[$key] = new Search_Expr_Not($tokens[$key + 1]);
 			$tokens[$key + 1] = null;
 		} else {
-			$tokens[$key] = null;
+			$tokens[$key] = new Search_Expr_Not(new Search_Expr_Token(''));
 		}
 	}
 

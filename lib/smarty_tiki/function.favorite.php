@@ -25,7 +25,7 @@ function smarty_function_favorite($params, $smarty)
 		'object' => $params['object'],
 	));
 
-	$url = smarty_modifier_escape($url, 'url');
+	$url = smarty_modifier_escape($url);
 	$e_user = smarty_modifier_escape($user);
 
 	if (isset($params['label'])){

@@ -36,7 +36,7 @@ class Net_LDAP2_RootDSE extends PEAR
 	*
 	* @param Net_LDAP2_Entry &$entry Net_LDAP2_Entry object of the RootDSE
 	*/
-	protected function __construct(&$entry)
+	public function __construct(&$entry)
 	{
 		$this->_entry = $entry;
 	}

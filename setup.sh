@@ -162,6 +162,7 @@ usage: $0 [<switches>] ${POSSIBLE_COMMANDS}
 -v virtuals  list of virtuals (for multitiki, example: "www1 www2")
 -n           not prompt for user and group, assume current
 -d off|on    disable|enable debugging mode (override script default)
+-q           quiet (workaround to silence composer, e.g. in cron scripts)
 
 There are some other commands recommended for advanced users only.
 More documentation about this: https://doc.tiki.org/Permission+Check
@@ -183,8 +184,9 @@ OPT_AUSER=
 OPT_AGROUP=
 OPT_VIRTUALS=
 OPT_USE_CURRENT_USER_GROUP=
+OPT_QUIET=
 
-while getopts "hu:g:v:nd:" OPTION; do
+while getopts "hu:g:v:nd:q" OPTION; do
 	case $OPTION in
 		h) usage ; exit 0 ;;
 		u) OPT_AUSER=$OPTARG ;;
@@ -192,6 +194,7 @@ while getopts "hu:g:v:nd:" OPTION; do
 		v) OPT_VIRTUALS=$OPTARG ;;
 		n) OPT_USE_CURRENT_USER_GROUP=1 ;;
 		d) set_debug ;;
+		q) OPT_QUIET="-q" ;;
 		?) usage ; exit 1 ;;
 	esac
 	if [ ${DEBUG} = '1' ] ; then
@@ -511,10 +514,10 @@ composer_core()
 	else
 		# todo : if exists php;
 		if [ ${LOGCOMPOSERFLAG} = "0" ] ; then
-			${PHPCLI} temp/composer.phar self-update
+			"${PHPCLI}" temp/composer.phar self-update "$OPT_QUIET"
 		fi
 		if [ ${LOGCOMPOSERFLAG} = "1" ] ; then
-			${PHPCLI} temp/composer.phar self-update > ${TIKI_COMPOSER_SELF_UPDATE_LOG}
+			"${PHPCLI}" temp/composer.phar self-update "$OPT_QUIET" > ${TIKI_COMPOSER_SELF_UPDATE_LOG}
 		fi
 	fi
 
@@ -534,7 +537,7 @@ composer_core()
 	then
 		if [ ${LOGCOMPOSERFLAG} = "0" ] ; then
 			#until php -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev
-			until ${PHPCLI} -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev 2>&1 | sed '/Warning: Ambiguous class resolution/d'
+			until "${PHPCLI}" -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev 2>&1 | sed '/Warning: Ambiguous class resolution/d'
 			# setting memory_limit here prevents suhosin ALERT - script tried to increase memory_limit to 536870912 bytes
 			do
 				if [ $N -eq 7 ];
@@ -549,7 +552,7 @@ composer_core()
 			done
 		fi
 		if [ ${LOGCOMPOSERFLAG} = "1" ] ; then
-			until ${PHPCLI} -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev > ${TIKI_COMPOSER_INSTALL_LOG}
+			until "${PHPCLI}" -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev > ${TIKI_COMPOSER_INSTALL_LOG}
 			# setting memory_limit here prevents suhosin ALERT - script tried to increase memory_limit to 536870912 bytes
 			do
 				if [ $N -eq 7 ];
@@ -566,7 +569,7 @@ composer_core()
 		if [ ${LOGCOMPOSERFLAG} = "2" ] ; then
 			echo "Suppress output lines with 'Warning: Ambiguous class resolution'\n..."
 			#until php -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev | sed '/Warning: Ambiguous class resolution/d'
-			until ${PHPCLI} -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev
+			until "${PHPCLI}" -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev
 			# setting memory_limit here prevents suhosin ALERT - script tried to increase memory_limit to 536870912 bytes
 			do
 				if [ $N -eq 7 ];
@@ -593,7 +596,7 @@ composer()
 	PHP_OPTION="--version"
 	REQUIRED_PHP_VERSION=55 # minimal version PHP 5.5 but no decimal seperator, no floating point data
 	#${PHPCLI} ${PHP_OPTION}
-	LOCAL_PHP_VERSION=`${PHPCLI} ${PHP_OPTION} | ${GREP} ^PHP | ${CUT} -c5,7`
+	LOCAL_PHP_VERSION=`"${PHPCLI}" ${PHP_OPTION} | ${GREP} ^PHP | ${CUT} -c5,7`
 	#echo ${LOCAL_PHP_VERSION}
 	if [ "${LOCAL_PHP_VERSION}" -ge "${REQUIRED_PHP_VERSION}" ] ; then
 		echo "local PHP version ${LOCAL_PHP_VERSION} >= required PHP version ${REQUIRED_PHP_VERSION} - good"

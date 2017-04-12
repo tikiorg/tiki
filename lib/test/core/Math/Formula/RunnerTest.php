@@ -61,6 +61,13 @@ class Math_Formula_RunnerTest extends TikiTestCase
 		$this->assertEquals(3, $this->runner->evaluate());
 	}
 
+	function testSum()
+	{
+		$this->runner->setFormula('(add list)');
+		$this->runner->setVariables(array('list' => array(1,2,3)));
+		$this->assertEquals(6, $this->runner->evaluate());
+	}
+
 	function testMin()
 	{
 		$this->runner->setFormula('(min -10 0 20)');
@@ -84,6 +91,13 @@ class Math_Formula_RunnerTest extends TikiTestCase
 		$this->runner->setFormula('(mul foobar 2)');
 		$this->runner->setVariables(array('foobar' => 2.5,));
 		$this->assertEquals(5, $this->runner->evaluate());
+	}
+
+	function testProductList()
+	{
+		$this->runner->setFormula('(mul list)');
+		$this->runner->setVariables(array('list' => array(2.5,2,4)));
+		$this->assertEquals(20, $this->runner->evaluate());
 	}
 
 	/**
@@ -261,6 +275,22 @@ class Math_Formula_RunnerTest extends TikiTestCase
 			array('object-type' => 'wiki page', 'object-id' => 'HomePage'),
 			array('object-type' => 'trackeritem', 'object-id' => '2'),
 			array('object-type' => 'trackeritem', 'object-id' => '3'),
+		), $this->runner->evaluate());
+	}
+
+	function testSplitWithSingleKey()
+	{
+		$this->runner->setFormula('(split-list (content string) (separator ,) (key id))');
+		$this->runner->setVariables(
+			array(
+				'string' => "214,266,711",
+			)
+		);
+
+		$this->assertEquals(array(
+			array('id' => '214'),
+			array('id' => '266'),
+			array('id' => '711'),
 		), $this->runner->evaluate());
 	}
 

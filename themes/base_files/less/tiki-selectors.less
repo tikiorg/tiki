@@ -171,7 +171,7 @@ a.fc-event:hover {
 //.topbar .sf-arrows .sf-with-ul:after {
 /* order of following 3 rules important for fallbacks to work */
 //  border: 5px solid transparent;
-//  border-top-color: #fff; /* edit this to suit design (no rgba in IE8) */
+//  border-top-color: #ffffff; /* edit this to suit design (no rgba in IE8) */
 //  border-top-color: fade(@topbar_link_color, 50%); //rgba(255,255,255,.5);
 //}
 
@@ -280,6 +280,13 @@ table.treetable.objectperms td.removed {
 	background: darken(@state-danger-bg, 15%);
 }
 
+// Smarty {button} maeks .btn-default but sometimes .btn-link is added by hand. Actually Smarty {button} probably should make just .btn.
+.btn-default.btn-link,
+.btn-default.btn-link:hover {
+	background: transparent;
+	border: none;
+}
+
 // Ajax, jquery. etc.
 // Ajax Loading Overlay
 #ajaxLoadingBG {
@@ -307,12 +314,12 @@ table.treetable.objectperms td.removed {
 // print mode only - to make sure print templates will use and print on seamless white bg color
 html#print,
 body.print * { // wiki page print view
-	background: #fff;
-	color: #000;
+	background: #ffffff;
+	color: #000000;
 }
 
 body.fullscreen {
-	background: #fff;
+	background: #ffffff;
 }
 
 .attention {
@@ -348,7 +355,7 @@ div #metadata fieldset.tabcontent, div #metadata div.tabs {
 }
 
 .openid_url {
-	background: #fff url('@{imagePathToImgDir}icons/login-OpenID-bg.gif') 1px 1px no-repeat;
+	background: #ffffff url('@{imagePathToImgDir}icons/login-OpenID-bg.gif') 1px 1px no-repeat;
 }
 
 // Input fields auto-fill/
@@ -747,7 +754,12 @@ body.wikitext {
 }
 
 .editable-inline.loaded {
-	background: transparent;
+	background: @popover-bg;
+	position: absolute;
+	padding: 6px;
+	border: 1px solid #eee;
+	border-radius: 4px;
+	z-index: 2;
 }
 
 .editable-inline.failure {
@@ -985,6 +997,8 @@ div.drillshow {
 	color: @dropdown-link-hover-color;
 }
 
+.tiki .chosen-container .active-result { color: @chosen-active-result; }
+
 //.tiki .row.top_modules {
 //	margin-left: @topmodules-row-sidemargins;
 //	margin-right: @topmodules-row-sidemargins;
@@ -1008,15 +1022,15 @@ a.admbox {
 	&,
 	&:visited {
 		//		border: 1px solid @admbox-border; //#ccc
-		//		background-color: @admbox-bg; // #ccc;
-		//		color: @admbox-color; // #333;
+		//		background-color: @admbox-bg; // #cccccc;
+		//		color: @admbox-color; // #333333;
 	}
 	&:hover,
 	&:focus,
 	&:active {
-		//		border: 1px solid @admbox-hover-border; // #333;
-		//		background-color: @admbox-hover-bg; // #aaa;
-		//		color: @admbox-hover-color; //#fff;
+		//		border: 1px solid @admbox-hover-border; // #333333;
+		//		background-color: @admbox-hover-bg; // #aaaaaa;
+		//		color: @admbox-hover-color; //#ffffff;
 	}
 	&.off {
 		border: 1px solid @admbox-off-border; // #a9a9a9;
@@ -1025,7 +1039,7 @@ a.admbox {
 		&:focus,
 		&:active {
 			border: 1px solid @admbox-off-hover-border; // #a9a9a9;
-			color: @admbox-off-hover-color; // #666;
+			color: @admbox-off-hover-color; // #666666;
 		}
 	}
 }
@@ -1059,6 +1073,14 @@ a.admbox {
 	color: @btn-default-color;
 }
 
+// Example: tracker field type "icon". Bootstrap modal with jquery-ui contents
+.tiki .modal-content .ui-state-default { color: @modal-link-color; }
+.tiki .modal-content .ui-state-hover:hover
+//.tiki .modal-content .ui-state-focus,
+//.tiki .modal-content .ui-widget-content .ui-state-focus,
+//.tiki .modal-content .ui-widget-content .ui-state-focus:hover
+ { color: @modal-link-hover-color; }
+
 
 // To correct login dropdown color
 .dropdown-menu { color: @dropdown-link-color; }
@@ -1069,6 +1091,17 @@ a.admbox {
 
 //
 
+.codecaption {
+	display: inline-block;
+	color: @code-color;
+	background: @code-bg;
+	border: 1px solid lighten(@code-color, 60%);
+	border-bottom: none;
+	padding: 2px 9.5px;
+	font-size: 0.8em;
+	font-weight: bold;
+}
+
 code,
 pre.codelisting {
 	color: @code-color;
@@ -1076,3 +1109,33 @@ pre.codelisting {
 	border: 1px solid lighten(@code-color, 60%);
 	border-radius: 1px;
 }
+
+// Make hierarchical arrangement of admin options more clear
+.adminoptionboxchild {
+	border-bottom: 1px solid @hr-border;
+	legend {
+		font-size: @secondary-legend-font-size;
+	}
+}
+
+// Admin navbar switch
+
+input[type="checkbox"].preffilter-toggle-round + label {
+	background-color: @gray-light;
+}
+
+input[type="checkbox"].preffilter-toggle-round + label:before {
+	color: @btn-default-color;
+	background-color: @btn-default-bg;
+	border-color: @btn-default-border;
+}
+
+input[type="checkbox"].preffilter-toggle-round + label:after {
+}
+
+input[type="checkbox"].preffilter-toggle-round:checked + label:before {
+	color: @btn-primary-color;
+	background-color: @btn-primary-bg;
+	border-color: @btn-primary-border;
+}
+

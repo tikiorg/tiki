@@ -237,14 +237,6 @@ foreach ($pages as $page) {
 	$stepNr++;
 }
 $toc .= '</ul>';
-	// Hide the left and right sidebars when the admin wizard is run
-	$headerlib = TikiLib::lib('header');
-	$headerlib->add_js(
-<<<JS
-	hideCol('col2','left', 'col1');
-	hideCol('col3','right', 'col1');
-JS
-);
 
 if ($reqStepNr > 0) {
 	$smarty->assign('wizard_toc', $toc);

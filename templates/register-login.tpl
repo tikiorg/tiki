@@ -3,7 +3,7 @@
 	{*do nothing*}
 {elseif $prefs.user_register_prettytracker eq 'y' and $prefs.user_register_prettytracker_tpl and $prefs.socialnetworks_user_firstlogin != 'y'}
 	<input type="text" name="name" id="name" class="form-control" >
-	<span class='text-danger tips' title=":{tr}This field is mandatory{/tr}">*</span>
+	{if $prefs.user_register_prettytracker_hide_mandatory neq 'y'}<span class='text-danger tips' title=":{tr}This field is mandatory{/tr}">*</span>{/if}
 {else}
 		<div class="form-group">
 			<label class="col-sm-4 control-label" for="name">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}Username{/tr}{/if} {if $trackerEditFormId}<span class='text-danger tips' title=":{tr}This field is mandatory{/tr}">*</span>{/if}</label>

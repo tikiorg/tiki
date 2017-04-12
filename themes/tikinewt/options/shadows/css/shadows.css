@@ -3,7 +3,9 @@
 	Tiki Wiki CMS Groupware.
 */
 
-body {
+body,
+body.fullscreen,
+body.fullscreen #col1 {
 	background: #F3F6F9;
 }
 
@@ -36,4 +38,14 @@ article {
 	border-bottom: 2px solid #f7f7f7;
 	background: #fff;
 }
+
+body.fullscreen article,
+body.fullscreen .post {
+    border: none;
+    background: #f3f6f9;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
 

@@ -32,6 +32,10 @@ class Search_ContentSource_BlogPostSource implements Search_ContentSource_Interf
 		
 		$post = $bloglib->get_post($objectId);
 
+		if (! $post) {
+			return false;
+		}
+
 		$data = array(
 			'title' => $typeFactory->sortable($post['title']),
 			'language' => $typeFactory->identifier('unknown'),

@@ -84,6 +84,27 @@ class Tracker_Field_Email extends Tracker_Field_Abstract implements Tracker_Fiel
 		$this->type = $type;
 		parent::__construct($fieldInfo, $itemData, $trackerDefinition);
 	}
+
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
+	{
+		$baseKey = $this->getBaseKey();
+		return array(
+			$baseKey => $typeFactory->sortable($this->getValue()),
+			"{$baseKey}_text" => $typeFactory->identifier($this->getValue()),
+		);
+	}
+
+	function getProvidedFields()
+	{
+		$baseKey = $this->getBaseKey();
+		return array($baseKey, "{$baseKey}_text");
+	}
+
+	function getGlobalFields()
+	{
+		$baseKey = $this->getBaseKey();
+		return array($baseKey => true, "{$baseKey}_text" => true);
+	}
 	
 	function getFieldData(array $requestData = array())
 	{

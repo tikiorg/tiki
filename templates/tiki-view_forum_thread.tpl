@@ -7,14 +7,14 @@
 	{/title}
 {/block}
 
-<div class="t_navbar btn-group margin-bottom-md">
+<div class="t_navbar margin-bottom-md">
 	{if $tiki_p_admin_forum eq "y"}
-		{button href="tiki-admin_forums.php?forumId=$forumId" class="btn btn-default" _text="{tr}Edit Forum{/tr}"}
+		{button href="tiki-admin_forums.php?forumId=$forumId" _class="btn btn-link" _icon_name="wrench" _text="{tr}Edit Forum{/tr}"}
 	{/if}
 	{if $tiki_p_admin_forum eq 'y' or !isset($all_forums) or $all_forums|@count > 1}
-		{button href="tiki-forums.php" class="btn btn-default" _text="{tr}Forum List{/tr}"}
+		{button href="tiki-forums.php" _class="btn btn-link" _icon_name="list" _text="{tr}Forum List{/tr}"}
 	{/if}
-	{button href="tiki-view_forum.php?forumId=$forumId" class="btn btn-default" _text="{tr}Topic List{/tr}"}
+	{button href="tiki-view_forum.php?forumId=$forumId" _class="btn btn-link" _icon_name="list" _text="{tr}Topic List{/tr}"}
 </div>
 {include file="utilities/feedback.tpl"}
 {if $post_reported eq 'y'}

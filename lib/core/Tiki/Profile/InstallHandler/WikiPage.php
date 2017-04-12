@@ -20,7 +20,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 	private $wiki_authors_style;
 	private $geolocation;
 	private $hide_title;
-
+    private $freetags;
 	private $mode = 'create_or_update';
 	private $exists;
 
@@ -33,7 +33,8 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 
 		if ( array_key_exists('message', $data) )
 			$this->message = $data['message'];
-
+        if ( array_key_exists('freetags', $data) )
+            $this->freetags = $data['freetags'];
 		if ( array_key_exists('name', $data) )
 			$this->name = $data['name'];
 		if ( array_key_exists('namespace', $data) )
@@ -237,6 +238,15 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 				$structlib->s_create_page($structure_parent, $page_ref_id, $finalName, '', $structure_id);
 			}
 		}
+
+        if ($this->freetags != "" && $tikilib->page_exists($finalName, false)) {
+            $cat_type = "wiki page";
+            $cat_objid = $finalName;
+            $cat_name = $finalName;
+            $tag_string = $this->freetags;
+            $cat_lang = null;
+            require_once 'freetag_apply.php';
+        }
 
 		return $finalName;
 	}

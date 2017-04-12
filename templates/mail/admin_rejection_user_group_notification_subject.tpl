@@ -1,1 +1,1 @@
-{$mail_group} - {tr}Leader rejected your request{/tr}.
+{* $Id$ *}{$prefs.mail_template_custom_text}{$mail_group} - {tr}Leader rejected your request{/tr}.

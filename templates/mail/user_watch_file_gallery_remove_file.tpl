@@ -1,4 +1,4 @@
-{tr}A file was removed from the file gallery:{/tr} {$galleryName}
+{* $Id$ *}{tr}A file was removed from the {$prefs.mail_template_custom_text}file gallery:{/tr} {$galleryName}
 
 {tr}Removed by:{/tr} {$author|username}
 {tr}Name:{/tr} {$fname}

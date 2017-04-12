@@ -26,7 +26,7 @@ class TikiDb_Initializer_Adodb
 
 		// Set the Client Charset
 		if ($credentials['charset']) {
-			@ $dbTiki->Execute("SET CHARACTER SET $client_charset");
+			@ $dbTiki->Execute("SET CHARACTER SET " . $credentials['charset']);
 		}
 
 		return new TikiDb_Adodb($dbTiki);

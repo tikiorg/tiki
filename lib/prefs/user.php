@@ -155,6 +155,15 @@ function prefs_user_list($partial = false)
 			),
 			'default' => ''
 		),
+		'user_register_prettytracker_hide_mandatory' => array(
+			'name' => tra('Hide Mandatory'),
+			'description' => tra('Hide mandatory fields indication with an asterisk (shown by default).'),
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => array(
+				'user_register_pretty_tracker',
+			),
+		),
 		'user_register_prettytracker_output' => array(
 			'name' => tra('Output the registration results'),
 			'help' => 'User+Tracker',
@@ -211,8 +220,6 @@ function prefs_user_list($partial = false)
 				'user_trackersync_trackers',
 			),
 			'default' => '',
-			'profile_reference' => 'tracker_field',
-			'format' => $fieldFormat,
 		),
 		'user_trackersync_geo' => array(
 			'name' => tra('Synchronize long/lat/zoom to location field'),

@@ -31,7 +31,7 @@
 					{object_selector_multi type='tracker' _separator="," _simplename="remove_items"}
 					<div class="help-block">
 						{tr}Select trackers here to have items in them which are "owned" by these users deleted{/tr}<br>
-						{tr}N.B. "User" and "Group" tracker items are deleted automatically without this option{/tr}
+						{tr}Important: If you set trackers to store user's information, "User" and "Group" tracker items related to this user will be deleted automatically{/tr}
 					</div>
 				</div>
 			</div>

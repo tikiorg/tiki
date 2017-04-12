@@ -15,10 +15,10 @@
 			{if $show_author eq 'y' && ($authorName or $author)}{tr}Author:{/tr} {if $authorName}{$authorName|escape}{else}{$author|username}{/if}
 				{if $show_pubdate eq 'y' || $show_expdate eq 'y' || $show_reads eq 'y'} - {/if}
 			{/if}
-			{if $show_pubdate eq 'y' && $publishDate}{$publishDate|tiki_short_datetime:'Published At:'}
+			{if $show_pubdate eq 'y' && $publishDate}{$publishDate|tiki_short_datetime:'Published'}
 				{if $show_expdate eq 'y' || $show_reads eq 'y'} - {/if}
 			{/if}
-			{if $show_expdate eq 'y' && $expireDate}{tr}Expires At:{/tr} {$expireDate|tiki_short_datetime}
+			{if $show_expdate eq 'y' && $expireDate}{tr}Expires{/tr} {$expireDate|tiki_short_datetime}
 				{if $show_reads eq 'y'} - {/if}
 			{/if}
 			{if $show_reads eq 'y'}({$reads} {tr}Reads{/tr}){/if}

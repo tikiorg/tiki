@@ -1,4 +1,4 @@
-{tr}You are getting this email because you are a group leader{/tr} - {$mail_group}
+{* $Id$ *}{tr}You are getting this email because you are a group leader{/tr} - {$prefs.mail_template_custom_text}{$mail_group}
 <br/>
 {$mail_real} ({$mail_user}) {tr}left{/tr} - {$mail_group}
 <br/>

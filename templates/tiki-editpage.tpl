@@ -206,7 +206,7 @@
 					{if $page|lower neq 'sandbox'}
 						<fieldset class="edit-zone-footer">
 							<label for="comment">{tr}Describe the change you made{/tr} {help url='Editing+Wiki+Pages' desc="{tr}Edit comment: Enter some text to describe the changes you are currently making{/tr}"}</label>
-							<input class="form-control wikiedit" type="text" id="comment" name="comment" value="{$commentdata|escape}">
+							<input class="form-control wikiedit" type="text" id="comment" name="comment" value="{$commentdata|escape}" maxlength="200">
 							{if isset($show_watch) && $show_watch eq 'y'}
 								<label for="watch">{tr}Monitor this page{/tr}</label>
 								<input type="checkbox" id="watch" name="watch" value="1"{if $watch_checked eq 'y'} checked="checked"{/if}>
@@ -575,7 +575,7 @@
 												<input type="hidden" name="translationOf" value="{$translationOf|escape}">
 											{/if}
 										</span>
-									</div
+									</div>
 								</div>
 							</fieldset>
 							{if $trads|@count > 1 and $urgent_allowed}
@@ -606,7 +606,8 @@
 								</div>
 							</div>
 						{/if}
-						{if $prefs.wiki_auto_toc eq 'y' or $prefs.wiki_page_hide_title eq 'y'}
+						{* check if wiki_auto_toc is set - but don't understand why wiki_page_hide_title is checked - also the logic made into an 'and' since the previous 'or' made no sense *}
+						{if $prefs.wiki_auto_toc eq 'y' and $prefs.wiki_page_hide_title eq 'y'}
 							<div class="form-group clearfix">
 								<label for="pageAutoToc" class="col-md-4 control-label">{tr}Automatic table of contents{/tr}</label>
 								<div class="col-md-8">
@@ -618,7 +619,7 @@
 								</div>
 							</div>
 						{/if}
-						{if $prefs.wiki_page_hide_title eq 'y' && ($prefs.wiki_page_name_above eq 'y' or $prefs.feature_page_title eq 'y')}
+						{if $prefs.wiki_page_hide_title eq 'y' && ($prefs.wiki_page_name_above eq 'y' or $prefs.feature_page_title eq 'y' or $prefs.wiki_page_name_inside eq 'y')}
 							<div class="form-group clearfix">
 								<label for="page_hide_title" class="col-md-4 control-label">{tr}Show page title{/tr}</label>
 								<div class="col-md-8">

@@ -49,10 +49,10 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 			//ajax processing - this part grabs the html, usually from the smarty template file
 			//first prepare code to add a row total column using the math widget if set
 			if (!empty(parent::$s['math']['totals']['row'])) {
-				foreach(parent::$s['math']['totals']['row'] as $total) {
-					$filter = !empty($total['filter']) ? '.attr(\'data-tsmath-filter\', \'' . $total['filter'] . '\');'
+				foreach(parent::$s['math']['totals']['row'] as $math) {
+					$filter = !empty($math['filter']) ? '.attr(\'data-tsmath-filter\', \'' . $math['filter'] . '\');'
 						: '';
-					$addcol[] = '$(r.rows).each(function(){$(this).append(\'<td data-tsmath ="row-' . $total['formula']
+					$addcol[] = '$(r.rows).each(function(){$(this).append(\'<td data-tsmath ="row-' . $math['formula']
 							. '"></td >\')' . $filter . '});';
 				}
 				$addcol = implode($this->nt, $addcol);
@@ -95,7 +95,7 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 				}
 				$numrows = !empty(parent::$s['ajax']['numrows']) ? parent::$s['ajax']['numrows'] : 'numrows';
 				$ca = array(
-					'var vars = {}, urlparams, oneparam, size, sort, sorts, sortindex, sortkey, filterindex, filterkey,
+					'var vars = {}, urlparams, oneparam, sort, sorts, sortindex, sortkey, filterindex, filterkey,
 					offset, filtered, colfilters, extfilters, params = [], dir, newurl, p = table.config.pager,
 					requiredparams;',
 					//parse out url parameters
@@ -132,7 +132,7 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 					'	if ($.inArray(value, extfilters) > -1) {',
 					'		params.push(decodeURIComponent(value));',
 					'	} else if (key in colfilters) {',
-					'		colfilters[key][value] ? params.push(colfilters[key][value]) : params.push(colfilters[key]
+					'		colfilters[key] == value ? params.push(colfilters[key][value]) : params.push(colfilters[key]
 								+ \'=\' + value);',
 					'	}',
 					'});',
@@ -147,13 +147,11 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 					'	});',
 					'}',
 					//offset parameter
-					'size = parseInt(p.$size.val());',
-					'filtered = typeof p.ajaxData === \'undefined\' ? 0 : p.ajaxData.filtered;',
-					'offset = ((p.page * size) >= filtered) ? \'\' : offset = \'&'
-						. parent::$s['ajax']['offset'] . '=\' + (p.page * size); ',
+					'offset = ((p.page * p.size) >= p.filteredRows) ? \'\' : offset = \'&'
+						. parent::$s['ajax']['offset'] . '=\' + (p.page * p.size); ',
 					//build url, starting with no parameters
 					'newurl = url.slice(0,url.indexOf(\'?\'));',
-					'newurl = newurl + \'?' . $numrows . '=\' + size + offset + \'&tsAjax=y\';',
+					'newurl = newurl + \'?' . $numrows . '=\' + p.size + offset + \'&tsAjax=y\';',
 					'$.each(params, function(key, value) {',
 					'	newurl = newurl + \'&\' + value;',
 					'});',
@@ -161,16 +159,10 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 				);
 			} else {
 				$ca = array(
-					'var p = table.config.pager, size = parseInt(p.$size.val()), filtered, offset, total;',
-					'if (typeof p.ajaxData === \'undefined\') {',
-					'	filtered = 0;',
-					'} else {',
-					'	filtered = typeof p.ajaxData.filteredRows === \'undefined\' ? 0 : p.ajaxData.filteredRows;',
-					'	total = typeof p.ajaxData.total === \'undefined\' ? 0 : p.ajaxData.total;',
-					'}',
-					'offset = ((p.page * size) >= filtered) ? \'\' : \''
-						. '&' . parent::$s['ajax']['offset'] . '\' + \'=\' + (p.page * size);',
-					'return url + \'&tsAjax=y\' + offset + \'&numrows=\' + size;'
+					'var p = table.config.pager, offset;',
+					'offset = ((p.page * p.size) >= p.filteredRows) ? \'\' : \''
+						. '&' . parent::$s['ajax']['offset'] . '\' + \'=\' + (p.page * p.size);',
+					'return url + \'&tsAjax=y\' + offset + \'&numrows=\' + p.size;'
 				);
 			}
 			if (count($ca) > 0) {

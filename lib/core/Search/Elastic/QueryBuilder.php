@@ -18,13 +18,15 @@ class Search_Elastic_QueryBuilder
 {
 	private $factory;
 	private $documentReader;
+	private $index;
 
-	function __construct()
+	function __construct(Search_Elastic_Index $index = null)
 	{
 		$this->factory = new Search_Elastic_TypeFactory;
 		$this->documentReader = function ($type, $object) {
 			return null;
 		};
+		$this->index = $index;
 	}
 
 	function build(Search_Expr_Interface $expr)
@@ -113,18 +115,26 @@ class Search_Elastic_QueryBuilder
 		} elseif ($node instanceof NotX) {
 			$inner = array_map(
 				function ($expr) use ($callback) {
-					return $expr->traverse($callback);
+				return $expr->traverse($callback);
 				}, $childNodes
 			);
-			return array(
-				'bool' => array(
-					'must_not' => $inner,
-				),
-			);
+			if( count($inner) == 1 && isset($inner[0]['bool']) && isset($inner[0]['bool']['must_not']) ) {
+				return array(
+					'bool' => array(
+						'must' => $inner[0]['bool']['must_not'],
+					),
+				);
+			} else {
+				return array(
+					'bool' => array(
+						'must_not' => $inner,
+					),
+				);
+			}
 		} elseif ($node instanceof Initial) {
 			return array(
 				'match_phrase_prefix' => array(
-					$node->getField() . '.sort' => array(
+					$this->getNodeField($node) . '.sort' => array(
 						"query" => $this->getTerm($node),
 						"boost" => $node->getWeight(),
 					),
@@ -133,7 +143,7 @@ class Search_Elastic_QueryBuilder
 		} elseif ($node instanceof Range) {
 			return array(
 				'range' => array(
-					$node->getField() => array(
+					$this->getNodeField($node) => array(
 						"from" => $this->getTerm($node->getToken('from')),
 						"to" => $this->getTerm($node->getToken('to')),
 						"boost" => $node->getWeight(),
@@ -148,7 +158,7 @@ class Search_Elastic_QueryBuilder
 			$content = $node->getContent() ?: $this->getDocumentContent($type, $object);
 			return array(
 				'more_like_this' => array(
-					'fields' => array($node->getField() ?: 'contents'),
+					'fields' => array($this->getNodeField($node) ?: 'contents'),
 					'like_text' => $content,
 					'boost' => $node->getWeight(),
 				),
@@ -183,25 +193,48 @@ class Search_Elastic_QueryBuilder
 
 	private function handleToken($node)
 	{
+		$value = $node->getValue($this->factory)->getValue();
+		if( $value === '' ) {
+			$mapping = $this->index ? $this->index->getFieldMapping($node->getField()) : new stdClass;
+			if( isset($mapping->type) && $mapping->type === 'date' ) {
+				return array(
+					"bool" => array(
+						"must_not" => array(
+							array(
+								"exists" => array("field" => $this->getNodeField($node))
+							)
+						)
+					)
+				);
+			} else {
+				return array(
+					"bool" => array(
+						"must_not" => array(
+							array(
+								"wildcard" => array($this->getNodeField($node) => "*")
+							)
+						)
+					)
+				);
+			}
+		}
 		if ($node->getType() == 'identifier') {
-			$value = $node->getValue($this->factory)->getValue();
 			return array("match" => array(
-				$node->getField() => array(
+				$this->getNodeField($node) => array(
 					"query" => $value,
 					"operator" => "and",
 				),
 			));
 		} elseif ($node->getType() == 'multivalue') {
-			$value = $node->getValue($this->factory)->getValue();
 			return array("match" => array(
-				$node->getField() => array(
+				$this->getNodeField($node) => array(
 					"query" => reset($value),
 					"operator" => "and",
 				),
 			));
 		} else {
 			return array("match" => array(
-				$node->getField() => array(
+				$this->getNodeField($node) => array(
 					"query" => $this->getTerm($node),
 					"boost" => $node->getWeight(),
 					"operator" => "and",
@@ -220,6 +253,21 @@ class Search_Elastic_QueryBuilder
 		}
 
 		return '';
+	}
+
+	private function getNodeField($node) {
+		global $prefs;
+		$field = $node->getField();
+		$mapping = $this->index ? $this->index->getFieldMapping($field) : new stdClass;
+		if( empty($mapping) && $prefs['search_error_missing_field'] === 'y' ) {
+			if( preg_match('/^tracker_field_/', $field) ) {
+				$msg = tr('Field %0 does not exist in the current index. Please check field permanent name and if you have any items in that tracker.', $field);
+			} else {
+				$msg = tr('Field %0 does not exist in the current index. If this is a tracker field, the proper syntax is tracker_field_%0.', $field, $field);
+			}
+			throw new Search_Elastic_QueryParsingException($msg);
+		}
+		return $field;
 	}
 }
 

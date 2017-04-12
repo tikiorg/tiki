@@ -30,19 +30,17 @@ $smarty->assign('priority', $_REQUEST['priority']);
 $smarty->assign('replyto_hash', $_REQUEST['replyto_hash']);
 $smarty->assign('mid', 'messu-broadcast.tpl');
 $smarty->assign('sent', 0);
-$groups = $userlib->list_all_groups();
-$groups = array_diff($groups, array('Anonymous'));
-$groups = array_filter(
-	$groups,
-	function ($groupName) {
-		$perms = Perms::get('group', $groupName);
-		return $perms->broadcast;
-	}
-);
+perm_broadcast_check($access, $userlib);
+$groups = $userlib->get_user_groups($user);
 
-if (empty($groups)) {
-	$access->display_error('', tra("You do not have permission to use this feature").": ". $permission, '403', false);
-	exit;
+if (in_array('Admins', $groups)){
+    //admins can write to members of all groups
+    $groups = $userlib->list_all_groups();
+    $groups = array_diff($groups, array('Registered', 'Anonymous'));
+}
+else {
+    //registered users can write to members of groups they belong to
+    $groups = array_diff($groups, array('Registered', 'Anonymous'));
 }
 
 $smarty->assign('groups', $groups);
@@ -132,3 +130,21 @@ ask_ticket('messu-broadcast');
 include_once ('tiki-section_options.php');
 include_once ('tiki-mytiki_shared.php');
 $smarty->display("tiki.tpl");
+
+function perm_broadcast_check($access, $userlib){
+//check permissions
+    $groups_perm= $userlib->list_all_groups();
+    $groups_perm = array_diff($groups_perm, array('Anonymous'));
+    $groups_perm = array_filter(
+        $groups_perm,
+        function ($groupName) {
+            $perms = Perms::get('group', $groupName);
+            return $perms->broadcast;
+        }
+    );
+
+    if (empty($groups_perm)) {
+        $access->display_error('', tra("You do not have permission to use this feature").": ". $permission, '403', false);
+        exit;
+    }
+}

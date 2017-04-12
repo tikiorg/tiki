@@ -4,7 +4,7 @@
 		{if $module_params.src}
 			<div {if $module_params.bgcolor ne ''} style="background-color: {$module_params.bgcolor};" {/if} class="pull-left {$module_params.class_image|escape}">
 		        <a href="{$module_params.link}" title="{$module_params.title_attr|escape}">
-					<img src="{$module_params.src}" alt="{$module_params.alt_attr|escape}" style="width: 100%; height: auto">
+					<img src="{$module_params.src}" alt="{$module_params.alt_attr|escape}" style="max-width: 100%; height: auto">
 				</a>
 			</div>
 		{/if}

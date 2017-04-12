@@ -3,7 +3,7 @@
 <div class="catblock clearfix">
 	{if !isset($params.showTitle) or $params.showTitle eq 'y'}
 		<div class="cattitle">
-			<span class="label">{tr}Category:{/tr} </span>
+			<span class="label label-info">{tr}Category:{/tr} </span>
 			{foreach name=for key=id item=cattitle from=$titles}
 				{if $params.categoryshowlink ne 'n'}<a href="tiki-browse_categories.php?parentId={$id}">{/if}
 				{$cattitle|tr_if|escape}

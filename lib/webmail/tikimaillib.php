@@ -17,6 +17,7 @@ class TikiMail
 	 * @var \Zend\Mail\Message
 	 */
 	private $mail;
+	private $charset;
 	public $errors;
 
 	/**
@@ -25,8 +26,11 @@ class TikiMail
 	 */
 	function __construct($user = null, $from=null)
 	{
+		global $user_preferences, $prefs;
+
 		require_once 'lib/mail/maillib.php';
 
+		$tikilib = TikiLib::lib('tiki');
 		$userlib = TikiLib::lib('user');
 
 		$to = '';
@@ -34,6 +38,8 @@ class TikiMail
 		if (!empty($user)) {
 			if ($userlib->user_exists($user)) {
 				$to = $userlib->get_user_email($user);
+				$tikilib->get_user_preferences($user, array('mailCharset'));
+				$this->charset = $user_preferences[$user]['mailCharset'];
 			} else {
 				$str = tra('Mail to: User not found');
 				trigger_error($str);
@@ -56,6 +62,9 @@ class TikiMail
 		if (! empty($to)) {
 			$this->mail->addTo($to);
 		}
+
+		if( empty($this->charset) )
+			$this->charset = $prefs['users_prefs_mailCharset'];
 	}
 
 	function setUser($user)
@@ -89,38 +98,54 @@ class TikiMail
 			$body = new Zend\Mime\Message();
 		}
 
-		$partHtmlFound = false;
-		$partTextFound = false;
+		$partHtml = false;
+		$partText = false;
 
-		$parts = $body->getParts();
-		foreach($parts as $part){
+		$parts = array();
+		foreach($body->getParts() as $part){
 			/* @var $part Zend\Mime\Part */
 			if ($part->getType() == Zend\Mime\Mime::TYPE_HTML){
-				$partHtmlFound = true;
+				$partHtml = $part;
 				$part->setContent($html);
+				if( $this->charset )
+					$part->setCharset($this->charset);
 			}
-			if ($part->getType() == Zend\Mime\Mime::TYPE_TEXT){
-				$partTextFound = true;
+			elseif ($part->getType() == Zend\Mime\Mime::TYPE_TEXT){
+				$partText = $part;
 				if ($text){
 					$part->setContent($text);
+					if( $this->charset )
+						$part->setCharset($this->charset);
 				}
 			}
+			else
+				$parts[] = $part;
 		}
 
-		if (!$partHtmlFound){
-			$htmlPart = new Zend\Mime\Part($html);
-			$htmlPart->setType(Zend\Mime\Mime::TYPE_HTML);
-			$parts[] = $htmlPart;
+		if (!$partText && $text){
+			$partText = new Zend\Mime\Part($text);
+			$partText->setType(Zend\Mime\Mime::TYPE_TEXT);
+			if( $this->charset )
+				$partText->setCharset($this->charset);
+		}
+		if ($partText) {
+			$parts[] = $partText;
 		}
 
-		if (!$partTextFound && $text){
-			$textPart = new Zend\Mime\Part($text);
-			$textPart->setType(Zend\Mime\Mime::TYPE_TEXT);
-			$parts[] = $textPart;
+		if (!$partHtml){
+			$partHtml = new Zend\Mime\Part($html);
+			$partHtml->setType(Zend\Mime\Mime::TYPE_HTML);
+			if( $this->charset )
+				$partHtml->setCharset($this->charset);
+			
 		}
+		$parts[] = $partHtml;
 
 		$body->setParts($parts);
 		$this->mail->setBody($body);
+		// use multipart/alternative for mail clients to display html and fall back to plain text parts
+		if( $text )
+			$this->mail->getHeaders()->get('content-type')->setType('multipart/alternative');
 	}
 
 	function setText($text = '')
@@ -133,6 +158,8 @@ class TikiMail
 				/* @var $part Zend\Mime\Part */
 				if ($part->getType() == Zend\Mime\Mime::TYPE_TEXT){
 					$part->setContent($text);
+					if( $this->charset )
+						$part->setCharset($this->charset);
 					$textPartFound = true;
 					break;
 				}
@@ -140,11 +167,17 @@ class TikiMail
 			if (!$textPartFound){
 				$part = new Zend\Mime\Part($text);
 				$part->setType(Zend\Mime\Mime::TYPE_TEXT);
+				if( $this->charset )
+					$part->setCharset($this->charset);
 				$parts[] = $part;
 			}
 			$body->setParts($parts);
 		} else {
 			$this->mail->setBody($text);
+			if( $this->charset )
+				$this->mail->getHeaders()->addHeaderLine(
+					'Content-type: text/plain; charset=' . $this->charset
+				);
 		}
 	}
 
@@ -178,7 +211,15 @@ class TikiMail
 
 		$this->mail->getHeaders()->removeHeader('to');
 		foreach ((array) $recipients as $to) {
-			$this->mail->addTo($to);
+			try {
+				$this->mail->addTo($to);
+			} catch (Zend\Mail\Exception\InvalidArgumentException $e) {
+				$title = 'mail error';
+				$error = $e->getMessage();
+				$this->errors[] = $error;
+				$error = ' [' . $error . ']';
+				$logslib->add_log($title, $to . '/' . $this->mail->getSubject() . $error);
+			}
 		}
 
         if ($prefs['zend_mail_handler'] == 'smtp' && $prefs['zend_mail_queue'] == 'y') {

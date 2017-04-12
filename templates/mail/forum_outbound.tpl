@@ -1,5 +1,5 @@
 {* $Id$ *}
-{$title}
+{$prefs.mail_template_custom_text}{$title}
 
 {tr}Author:{/tr} {$author|username}
 

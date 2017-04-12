@@ -95,12 +95,18 @@ class Tracker_Field_Math extends Tracker_Field_Abstract implements Tracker_Field
 			$data = [];
 
 			foreach ($runner->inspect() as $fieldName) {
-				$data[$fieldName] = $this->getItemField($fieldName);
+				if( is_string($fieldName) || is_numeric($fieldName) )
+					$data[$fieldName] = $this->getItemField($fieldName);
 			}
 
 			$runner->setVariables($data);
 
 			$value = $runner->evaluate();
+
+			if( $value !== $this->getValue() ) {
+				$trklib = TikiLib::lib('trk');
+				$trklib->modify_field($this->getItemId(), $this->getConfiguration('fieldId'), $value);
+			}
 		}
 
 		$baseKey = $this->getBaseKey();

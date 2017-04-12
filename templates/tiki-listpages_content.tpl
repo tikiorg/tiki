@@ -31,7 +31,7 @@
 
 
 {if isset($checkboxes_on) and $checkboxes_on eq 'y'}
-	<form name="checkboxes_on" method="post">
+	<form name="checkboxes_on" method="post" action="tiki-listpages.php">
 {/if}
 
 {assign var='pagefound' value='n'}
@@ -402,14 +402,15 @@
 					{/if}
 				</tr>
 			{sectionelse}
-				{capture assign='find_htmlescaped'}{$find|escape}{/capture}
-				{capture assign="intro"}{if $exact_match ne 'n'}{tr}No page:{/tr}{else}{tr}No pages found with:{/tr}{/if}{/capture}
+				{$find_htmlescaped = $find|escape}
+				{$initial_htmlescaped = $initial|escape}
+				{if $exact_match ne 'n'}{$intro = '{tr}No page:{/tr}'}{else}{$intro = '{tr}No pages found with:{/tr}'}{/if}
 				{if $find ne '' && $aliases_were_found == 'y'}
 					{norecords _colspan=$cntcol _text="$intro &quot;$find_htmlescaped&quot;. <br/>However, some page aliases fitting the query were found (see Aliases section above)."}
 				{elseif $find ne '' && $initial ne '' && $aliases_were_found == 'y'}
-					{norecords _colspan=$cntcol _text="$intro &quot;$find_htmlescaped&quot;and starting with &quot; $initial &quote;. <br/>However, some page aliases fitting the query were found (see Aliases section above)."}
+					{norecords _colspan=$cntcol _text="$intro &quot;$find_htmlescaped&quot;and starting with &quot; $initial_htmlescaped &quote;. <br/>However, some page aliases fitting the query were found (see Aliases section above)."}
 				{elseif $find ne '' && $initial ne ''}
-					{norecords _colspan=$cntcol _text="$intro &quot;$find_htmlescaped&quot; and starting with &quot; $initial &quot;."}
+					{norecords _colspan=$cntcol _text="$intro &quot;$find_htmlescaped&quot; and starting with &quot; $initial_htmlescaped &quot;."}
 				{elseif $find ne ''}
 					{norecords _colspan=$cntcol _text="$intro &quot;$find_htmlescaped&quot;."}
 				{else}
@@ -420,6 +421,17 @@
 		</tbody>
 	</table>
 </div>
+{if isset($tsOn) }
+	<script>
+		// Otherwise, All pages are displayed, whatever was searched for
+		var myfilter='{$find|escape:javascript}';
+	</script>
+	{jq}
+		(function(window,undefined){
+			window.setTimeout( function(){ $('input[data-column=2]').val(myfilter).trigger('change'); } , 1000 );
+		})(window)
+	{/jq}
+{/if}
 {if !$tsAjax}
 	{if $checkboxes_on eq 'y' && count($listpages) > 0} {* what happens to the checked items? *}
 		<p align="left"> {*on the left to have it close to the checkboxes*}
@@ -471,10 +483,16 @@
 	{/if}
 
 	{if $checkboxes_on eq 'y'}
+		<input type="hidden" name="redirectTo" value="{$redirectTo|escape}">
 		</form>
 	{/if}
 
 	{if !isset($tsOn) or !$tsOn}
-		{pagination_links cant=$cant step=$maxRecords offset=$offset clean=$clean}{/pagination_links}
+		{if $pluginlistpages eq 'y' and $pagination eq 'y'}
+			{pagination_links cant=$cant step=$maxRecords offset=$offset offset_arg=$offset_arg clean=$clean}{/pagination_links}
+		{elseif $pluginlistpages eq 'y' and $pagination neq 'y'}
+		{else}
+			{pagination_links cant=$cant step=$maxRecords offset=$offset clean=$clean}{/pagination_links}
+		{/if}
 	{/if}
 {/if}

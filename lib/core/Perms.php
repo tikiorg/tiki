@@ -22,6 +22,13 @@
  *   }
  *
  * Global permissions may be obtained using Perms::get() without a context.
+ * 
+ * Please note that the Perms will not be correct for checking of access for
+ * objects that depend on their parent, for example, even if a trackeritem has
+ * no object or category perms on itself, the tracker's perms should be considered
+ * in the checking. However, the Perms object with 'type' => 'trackeritem' will 
+ * only get the perms of the object/it's categories itself and not take into
+ * account the parent tracker. To do so, use the new Perms::getCombined instead.
  *
  * The facade also provides a convenient way to filter lists based on
  * permissions. Using the method will also used the underlying::bulk()
@@ -127,6 +134,34 @@ class Perms
 
 			return $accessor;
 		}
+	}
+
+	public static function getCombined( $context = array() ) {
+
+		if (! is_array($context)) {
+			$args = func_get_args();
+			$context = array( 
+				'type' => $args[0],
+				'object' => $args[1],
+			);
+		}
+
+		if ($context['type'] == 'trackeritem') {
+			$perms = Perms::get('trackeritem', $context['object']);
+			$resolver = $perms->getResolver();
+
+			if (method_exists($resolver, 'from') && $resolver->from() != '') {
+				// Item permissions are valid if they are assigned directly to the object or category, otherwise
+				// tracker permissions are better than global ones.
+				return Perms::get($context); 
+                        } else {
+				$context['type'] = 'tracker';
+				$context['object'] = TikiLib::lib('trk')->get_tracker_for_item($context['object']);
+				return Perms::get($context);
+			}
+		}
+
+		return Perms::get($context);
 	}
 
 	public function getAccessor(array $context = array())

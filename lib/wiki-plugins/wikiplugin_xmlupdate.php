@@ -51,7 +51,7 @@ function wikiplugin_xmlupdate_info()
 
 function wikiplugin_xmlupdate( $data, $params )
 {
-	global $tikilib, $prefs, $info;
+	global $tikilib, $prefs, $user, $info;
 	$filegallib = TikiLib::lib('filegal');
 	$smarty = TikiLib::lib('smarty');
 	// check that File Galleries have been set for use
@@ -78,6 +78,8 @@ function wikiplugin_xmlupdate( $data, $params )
 	$fileId = $params['fileId'];
 	$fileinfo = $filegallib->get_file_info($fileId);
 	$fileaddress = $prefs['fgal_use_dir'] . $fileinfo['path'];
+	$filedescription = $fileinfo['description'];
+	$filename = $fileinfo['name'];
 	
 	// load the xml file from the File Gallery into the $filecontent variable which is a SimpleXML Element Object array of strings of the individual xml elements (nodes)
 	$filecontent = simplexml_load_file($fileaddress);
@@ -139,6 +141,9 @@ function wikiplugin_xmlupdate( $data, $params )
 		}
 		
 		$filecontent->asXml($fileaddress); //update file in the File Gallery with revised content
+		
+		// and update the tiki_files table with new lastModif etc		
+		$filegallib->update_file($fileId, $filename, $filedescription, $user);
 		
 		return ("<span>The XML parameters have been updated.<br/><br/>Reload the page to see the current values and to edit again.</span>");
 	}	

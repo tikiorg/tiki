@@ -114,7 +114,7 @@ Note: The show content block must be defined at root level to use the include. A
 				</div>
 			{/if}
 
-			{if $structure eq 'y' and ($prefs.wiki_structure_bar_position ne 'bottom')}
+			{if $structure eq 'y' and (($prefs.wiki_structure_bar_position ne 'bottom') && ($prefs.wiki_structure_bar_position ne 'none'))}
 				{include file='tiki-wiki_structure_bar.tpl'}
 			{/if}
 
@@ -130,6 +130,9 @@ Note: The show content block must be defined at root level to use the include. A
 		{/if}
 
 		<div id="page-data" class="clearfix">
+			{if $prefs.wiki_page_name_inside eq 'y'}
+				<h1 class="pagetitle">{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs machine_translate=$machine_translate_to_lang source_lang=$pageLang target_lang=$machine_translate_to_lang}</h1>
+			{/if}
 			{if isset($pageLang) and ($pageLang eq 'ar' or $pageLang eq 'he')}
 				<div style="direction:RTL; unicode-bidi:embed; text-align: right; {if $pageLang eq 'ar'}font-size: large;{/if}">
 					{$parsed}
@@ -185,7 +188,7 @@ Note: The show content block must be defined at root level to use the include. A
 
 		{include file='show_copyright.tpl' copyright_context="wiki"}
 
-		{if $print_page eq 'y'}
+		{if $print_page eq 'y' and $prefs.print_original_url_wiki eq 'y'}
 			<br>
 			{tr}The original document is available at{/tr} <a href="{$base_url|escape}{$page|sefurl}">{$base_url|escape}{$page|sefurl}</a>
 		{/if}

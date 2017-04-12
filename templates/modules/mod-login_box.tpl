@@ -165,9 +165,7 @@ if (jqueryTiki.no_cookie) {
 			{if !isset($module_logo_instance)}{assign var=module_logo_instance value=' '}{/if}
 			<label for="login-user_{$module_logo_instance}">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username{/tr}{if $prefs.login_allow_email eq 'y'} {tr}or e-mail address{/tr}{/if}:</label>{/if}</label>
 			{if !isset($loginuser) or $loginuser eq ''}
-				<div>
 					<input class="form-control" type="text" name="user" id="login-user_{$module_logo_instance}" {if !empty($error_login)} value="{$error_user|escape}"{elseif !empty($adminuser)} value="{$adminuser|escape}"{/if}/>
-				</div>
 				{jq}if ($('#login-user_{{$module_logo_instance}}:visible').length) {if ($("#login-user_{{$module_logo_instance}}").offset().top < $(window).height()) {$('#login-user_{{$module_logo_instance}}')[0].focus();} }{/jq}
 			{else}
 				<input class="form-control" type="hidden" name="user" id="login-user_{$module_logo_instance}" value="{$loginuser|escape}" /><b>{$loginuser|escape}</b>
@@ -183,11 +181,9 @@ if (jqueryTiki.no_cookie) {
 		{/if}
 		<div class="pass form-group clearfix">
 			<label for="login-pass_{$module_logo_instance}">{tr}Password:{/tr}</label>
-			<div>
-				<input onkeypress="capLock(event, this)" type="password" name="pass" class="form-control" id="login-pass_{$module_logo_instance}">
-				<div class="divCapson" style="display:none;">
-					{icon name='error' istyle="vertical-align:middle"} {tr}CapsLock is on.{/tr}
-				</div>
+			<input onkeypress="capLock(event, this)" type="password" name="pass" class="form-control" id="login-pass_{$module_logo_instance}">
+			<div class="divCapson" style="display:none;">
+				{icon name='error' istyle="vertical-align:middle"} {tr}CapsLock is on.{/tr}
 			</div>
 		</div>
 		{if $prefs.rememberme ne 'disabled' and (empty($module_params.remember) or $module_params.remember neq 'n')}

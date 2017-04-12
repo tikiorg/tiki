@@ -1,8 +1,15 @@
 /* Nineties theme option for the Snow theme for Tiki Wiki CMS Groupware.  */
 .container {
-  background: #B1C1DB url('../../../images/flakesptn.jpg') !important;
-  border: 1px solid #6C7B8C;
+  background: #b1c1db url('../../../images/flakesptn.jpg') !important;
+  border: 1px solid #6c7b8c;
   box-shadow: none !important;
+}
+body.fullscreen {
+  background: #b1c1db url('../../../images/flakesptn.jpg') !important;
+}
+body.fullscreen .container {
+  background: none !important;
+  border: none;
 }
 .panel {
   background: url('../../../images/flakesptn2.jpg');
@@ -45,7 +52,7 @@
 .topbar .cssmenu_horiz > ul,
 .topbar .navbar-default .navbar-nav > li,
 .topbar .nav > li {
-  background: #D7E5F3 url('../../../images/pagetitle-bg.jpg') repeat-x !important;
+  background: #d7e5f3 url('../../../images/pagetitle-bg.jpg') repeat-x !important;
   background-size: 400px 100% !important;
   margin-bottom: 0;
   border: none;
@@ -57,7 +64,7 @@
 .topbar .cssmenu_horiz li.sfHover:hover,
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-  background: #D7E5F3 url('../../../images/pagetitle-bg.jpg') repeat-x;
+  background: #d7e5f3 url('../../../images/pagetitle-bg.jpg') repeat-x;
   color: #555555;
 }
 .dropdown-menu > li > form {

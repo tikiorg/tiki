@@ -77,9 +77,13 @@ foreach ($_REQUEST as $key =>$val) {
 	if (substr($key, 0, 2) == 'f_' && !empty($val) && (!is_array($val) || !empty($val[0]))) {
 		$fieldId = substr($key, 2);
 		$filterFields[] = $fieldId;
-		if (isset($_REQUEST["x_$fieldId"]) && $_REQUEST["x_$fieldId"] == 't' ) {
+		if (isset($_REQUEST["x_$fieldId"]) && ($_REQUEST["x_$fieldId"] == 't' || $_REQUEST["x_$fieldId"] == 'm') ) {
 			$exactValues[] = '';
-			$values[] = urldecode($val);
+			if (is_array($val)){
+				$values[] = $val;
+			} else {
+				$values[] = urldecode($val);
+			}
 		} else {
 			$exactValues[] = urldecode($val);
 			$values[] = '';

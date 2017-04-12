@@ -38,7 +38,7 @@ Class FutureLink_SendToFuture extends Feed_Abstract
 				if (empty($item->futurelink->href) || isset($sent[$item->futurelink->hash])) continue;
 
 				$sent[$item->futurelink->hash] = true;
-				$client = new Zend\Http\Client($item->futurelink->href, array('timeout' => 60));
+				$client = TikiLib::lib('tiki')->get_http_client($item->futurelink->href, array('timeout' => 60));
 
 				if (!empty($feed->feed->entry)) {
 					$client->setParameterPost(

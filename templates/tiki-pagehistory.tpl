@@ -1,15 +1,16 @@
 {* $Id$ *}
 
-{title admpage="wiki"}{tr}History:{/tr} {$page}{/title}
+{title admpage="wiki" url='tiki-pagehistory.php?page='|cat:$page|escape}{tr}History:{/tr} {$page}{/title}
 
 <div class="t_navbar margin-bottom-md">
 	{assign var=thispage value=$page|escape:url}
 	{button href="tiki-index.php?page=$thispage" class="btn btn-default" _text="{tr}View page{/tr}" _icon_name="view"}
+	{button href="tiki-editpage.php?page=$thispage" class="btn btn-default" _text="{tr}Edit page{/tr}" _icon_name="edit"}
 	{if !isset($noHistory)}
 		{if $show_all_versions eq "y"}
-			{button _text="{tr}Collapse Into Edit Sessions{/tr}" show_all_versions="n" href="?clear_versions=1" _auto_args="*" class="btn btn-default" _icon_name="expanded"}
+			{button _text="{tr}Collapse Into Edit Sessions{/tr}" href="?clear_versions=1&show_all_versions=n" _auto_args="*" class="btn btn-default" _icon_name="expanded"}
 		{else}
-			{button _text="{tr}Show All Versions{/tr}" show_all_versions="y" href="?clear_versions=1" _auto_args="*" class="btn btn-default" _icon_name="collapsed"}
+			{button _text="{tr}Show All Versions{/tr}" href="?clear_versions=1&show_all_versions=y" _auto_args="*" class="btn btn-default" _icon_name="collapsed"}
 		{/if}
 	{/if}
 </div>
@@ -28,7 +29,7 @@
 			{if isset($show_all_versions) and $show_all_versions eq "n"}
 				{pagination_links cant=$ver_cant offset=$smarty.request.preview_idx offset_arg="preview_idx" itemname="{tr}Session{/tr}" show_numbers="n"}{/pagination_links}
 			{else}
-				{pagination_links cant=$ver_cant offset=$smarty.request.preview_idx offset_arg="preview_idx" itemname="{tr}Version{/tr}" show_numbers="n" _keepall="n"}{/pagination_links}
+				{pagination_links cant=$ver_cant offset=$smarty.request.preview_idx offset_arg="preview_idx" itemname="{tr}Version{/tr}" show_numbers="n"}{/pagination_links}
 			{/if}
 		{/if}
 	</div>
@@ -82,7 +83,7 @@
 			{if isset($show_all_versions) and $show_all_versions eq "n"}
 				{pagination_links cant=$ver_cant offset=$smarty.request.source_idx offset_arg="source_idx" itemname="{tr}Session{/tr}" show_numbers="n"}{/pagination_links}
 			{else}
-				{pagination_links cant=$ver_cant offset=$smarty.request.source_idx offset_arg="source_idx" itemname="{tr}Version{/tr}" show_numbers="n" _keepall="n"}{/pagination_links}
+				{pagination_links cant=$ver_cant offset=$smarty.request.source_idx offset_arg="source_idx" itemname="{tr}Version{/tr}" show_numbers="n"}{/pagination_links}
 			{/if}
 		{/if}
 	</div>
@@ -112,22 +113,20 @@
 			{tr}History{/tr}
 		</h2>
 	{/if}
-	<form id="pagehistory" class="form-horizontal confirm-form" action="tiki-pagehistory.php?page={$page}" method="post">
+	<form id="pagehistory" class="form-horizontal confirm-form" action="tiki-pagehistory.php?page={$page}">
 		<input type="hidden" name="page" value="{$page|escape}">
 		<input type="hidden" name="history_offset" value="{$history_offset}">
 		<div class="clearfix">
-			{if $paginate}
-				<div class="pull-left col-sm-9" style="margin-bottom: 10px">
-					<input type="checkbox" name="paginate" id="paginate"{if $paginate} checked="checked"{/if}>
-					<label for="paginate">{tr}Enable pagination{/tr}</label>
-					{if $paginate}
-						<input type="text" name="history_pagesize" id="history_pagesize" value="{$history_pagesize}" size="5">
-						<label for="history_pagesize">{tr}per page{/tr}</label>
-					{/if}
-				</div>
-			{/if}
+			<div class="pull-left col-sm-9" style="margin-bottom: 10px">
+				<input type="checkbox" name="paginate" id="paginate"{if $paginate} checked="checked"{/if}>
+				<label for="paginate">{tr}Enable pagination{/tr}</label>
+				{if $paginate}
+					<input type="text" name="history_pagesize" id="history_pagesize" value="{$history_pagesize}" class="form-control" style="width: 5em; display: inline-block">
+					<label for="history_pagesize">{tr}per page{/tr}</label>
+				{/if}
+			</div>
 			{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit eq 'y'}
-				<div class="col-sm-6 pull-left" style="margin-bottom: 10px">
+				<div class="col-sm-6 pull-left margin-bottom-sm">
 					<div class="input-group input-group-sm">
 						<span class="input-group-addon">
 							{icon name='admin_i18n' class='tips' title=":{tr}Translation{/tr}"}
@@ -139,8 +138,6 @@
 						</select>
 						<div class="input-group-btn">
 							<input type="submit" class="btn btn-primary btn-sm" name="update_translation" value="{tr}Update Translation{/tr}"/>
-						</div>
-						<div class="input-group-btn">
 							{if $show_translation_history}
 								<input type="hidden" name="show_translation_history" value="1">
 								{button show_translation_history=0 _text="{tr}Hide translation history{/tr}" _auto_args="*" _class="btn btn-default btn-sm"}
@@ -200,11 +197,10 @@
 					{/if}
 					{if $prefs.javascript_enabled eq "y"}
 						<span class="input-group-btn">
-							{button _text="{tr}Advanced{/tr}" _id="toggle_diffs" _ajax="n"}
+							{button _text="{tr}Advanced{/tr}" _id="toggle_diffs" _ajax="n" _class="btn btn-default btn-sm"}
 						</span>
 						{jq}
 	$("a#toggle_diffs").click(function(e){
-		e.preventDefault();
 		if ($(this).text() == "{tr}Advanced{/tr}") {
 			$(this).text("{tr}Simple{/tr}");
 			if (jqueryTiki.chosen) {
@@ -278,7 +274,7 @@
 							{tr}Version{/tr}
 						</th>
 						<th>
-							{icon name="html" iclass="tips" ititle="{tr}HTML allowed{/tr}:{tr}HTML syntax is allowed either by page setting or use of the WYSIWIG editor{/tr}"}
+							{icon name='html' iclass='tips' ititle='{tr}HTML allowed{/tr}:{tr}HTML syntax is allowed either by page setting or use of the WYSIWIG editor{/tr}'}
 						</th>
 						<th></th>
 						{if $prefs.default_wiki_diff_style != "old" and $history}
@@ -332,7 +328,7 @@
 							</td>
 							<td class="button_container">
 								{if $info.is_html || $info.wysiwyg eq "y"}
-									{icon name='html' iclass='tips' ititle=":{tr}HTML allowed{/tr}"}
+									{icon name='html' iclass='tips' ititle=':{tr}HTML allowed{/tr}'}
 								{/if}
 							</td>
 							<td class="button_container" style="white-space: nowrap">
@@ -428,7 +424,7 @@
 							</td>
 							<td class="button_container">
 								{if $element.is_html eq "1"}
-									{icon name='html' iclass='tips' ititle=":{tr}HTML allowed{/tr}"}
+									{icon name='html' iclass='tips' ititle=':{tr}HTML allowed{/tr}'}
 								{/if}
 							</td>
 							<td class="button_container" style="white-space: nowrap">
@@ -522,19 +518,3 @@
 		</div>
 	</form>
 {/if}
-{jq}
-	$('input[name=compare], input[name=paginate]').click(function(){
-		var values = [];
-		var oldver= $('input[name=oldver]:checked').val();
-		var newver= $('input[name=newver]:checked').val();
-		if ($('#diff_style_all').is(':visible'))
-			var diff_style = $('select[id=diff_style_all]').val();
-		else
-			var diff_style = $('select[id=diff_style_simple]').val();
-		values.push("oldver="+oldver);
-			if(newver!=0){values.push("newver="+newver);}
-			if(diff_style!="sidediff"){values.push("diff_style="+diff_style);}
-			$(this.form).action += '&' + values.join('&');
-			$(this.form).submit();
-	});
-{/jq}

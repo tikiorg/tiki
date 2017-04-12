@@ -1,5 +1,5 @@
 {* $Id$ *}
-{title url="tiki-view_tracker.php?trackerId=$trackerId" adm="trackers"}{$tracker_info.name}{/title}
+{title url=$trackerId|sefurl:'tracker' adm="trackers"}{$tracker_info.name}{/title}
 {if !empty($tracker_info.description)}
 	{if $tracker_info.descriptionIsParsed eq 'y'}
 		<div class="description help-block">{wiki}{$tracker_info.description}{/wiki}</div>
@@ -79,7 +79,7 @@
 			{/if}
 			{if $tiki_p_export_tracker eq "y"}
 				<li>
-					<a class="export dialog" href="{service controller=tracker action=export trackerId=$trackerId}">
+					<a class="export dialog" href="{service controller=tracker action=export trackerId=$trackerId filterfield=$filterfield filtervalue=$filtervalue}">
 						{icon name="export"} {tr}Export{/tr}
 					</a>
 				</li>
@@ -91,7 +91,9 @@
 							data: {
 								controller: 'tracker',
 								action: 'export',
-								trackerId: {{$trackerId}}
+								trackerId: {{$trackerId}},
+								filterfield: '{{$filterfield}}',
+								filtervalue: {{$filtervalue|json_encode}}
 							}
 						});
 						return false;
@@ -248,7 +250,7 @@
 															{icon name="post" _menu_text='y' _menu_icon='y' alt="{tr}View/Edit{/tr}"}
 														</a>{$liend}
 													{/if}
-													{if $tiki_p_create_tracker_items eq 'y'}
+													{if $tiki_p_create_tracker_items eq 'y' and $prefs.tracker_clone_item eq 'y'}
 														{$libeg}<a href="{bootstrap_modal controller=tracker action=clone_item trackerId=$trackerId itemId=$items[user].itemId}"
 															onclick="$('[data-toggle=popover]').popover('hide');"
 														>

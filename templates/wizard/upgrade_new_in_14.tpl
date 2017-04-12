@@ -48,6 +48,7 @@
 		<fieldset class="table clearfix featurelist">
 			<legend>{tr}Look & Feel options{/tr}</legend>
 			{preference name=theme_iconset}
+			{preference name=image_responsive_class}
 		</fieldset>
 		<fieldset class="table clearfix featurelist">
 			<legend>{tr}Other new features{/tr}</legend>

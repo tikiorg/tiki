@@ -109,8 +109,8 @@
 				</td>
 				<td class="text">{tr}{$users[user].groupDesc|escape}{/tr}</td>
 				<td>{if isset($dates[$users[user].groupName]) && !empty($dates[$users[user].groupName]['expire'])}
-					<input type="text" name="new_{$users[user].id}" value="{$dates[$users[user].groupName]['expire']|tiki_short_datetime|escape}" />
-					<input type="hidden" name="old_{$users[user].id}" value="{$dates[$users[user].groupName]['expire']|tiki_short_datetime|escape}" />
+					<input type="text" name="new_{$users[user].id}" value="{$dates[$users[user].groupName]['expire']|tiki_short_datetime:'':'n'|escape}" />
+					<input type="hidden" name="old_{$users[user].id}" value="{$dates[$users[user].groupName]['expire']|tiki_short_datetime:'':'n'|escape}" />
 
 				{/if}</td>
 				<td class="action">

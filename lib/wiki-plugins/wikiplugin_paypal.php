@@ -346,9 +346,9 @@ function wikiplugin_paypal($data, $params)
 				$button_type = 'paynow';
 		}
 		$size = $params['paypal_button'] === 'small_button' ? 'SM' : 'LG';
-		$button_url = "http://www.paypalobjects.com/{$locale}/i/btn/btn_{$button_type}_{$size}.gif";
+		$button_url = "https://www.paypalobjects.com/{$locale}/i/btn/btn_{$button_type}_{$size}.gif";
 	}
-	$pixel_url = "http://www.paypalobjects.com/{$locale}/i/scr/pixel.gif";
+	$pixel_url = "https://www.paypalobjects.com/{$locale}/i/scr/pixel.gif";
 
 	$smarty->assign('wppaypal_button', $button_url);
 	$smarty->assign('wppaypal_pixel', $pixel_url);
@@ -391,6 +391,8 @@ function wikiplugin_paypal($data, $params)
 		$miniParams['strings']['discount']   = tra($params['stringDiscount']);
 		$miniParams['strings']['shipping']   = tra($params['stringShipping']);
 		$miniParams['strings']['processing'] = tra($params['stringProcessing']);
+		// this seems to be the only secure URL for these assets, minicart.com uses github's SSL certificate
+		$miniParams['assetURL'] = 'https://github.com/jeffharrell/minicart/raw/2.6.1/';
 		$miniParamStr = json_encode($miniParams);
 
 		TikiLib::lib('header')->add_js(

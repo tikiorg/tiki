@@ -235,7 +235,7 @@ function prefs_fgal_list()
 			'name' => tra('Allow searching for existing files in the tracker files field'),
 			'description' => tra('Search files using the search index.'),
 			'type' => 'flag',
-			'default' => 'n',
+			'default' => 'y',
 			'dependencies' => array('feature_search'),
 		),
 		'fgal_fix_mime_type' => array(
@@ -287,13 +287,11 @@ function prefs_fgal_list()
 			'filter' => 'alpha',
 			'default' => 'n',
 			'help' => 'elFinder',
-			'warning' => tra('Experimental'),
-			'tags' => array('experimental'),
 			'dependencies' => array('feature_jquery_ui'),
 		),
 		'fgal_viewerjs_feature' => array(
 			'name' => tra('Use Viewer JS'),
-			'description' => tra('Uses ViewerJS from http://viewerjs.org if available (needs a separate install due to licensing restrictions)'),
+			'description' => tra('Uses ViewerJS from http://viewerjs.org if available (needs a separate install due to licensing restrictions), and allows displaying ODF files (odt, ods, odp) as well as pdf in web pages'),
 			'type' => 'flag',
 			'filter' => 'alpha',
 			'default' => 'n',

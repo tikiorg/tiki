@@ -59,6 +59,16 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 			$value = '';
 			TikiLib::lib('errorreport')->report(tr('Date Picker Field: "%0" is not a valid internal date value', $value));
 		}
+
+		// if local browser offset is submitted, convert timestamp to server-based timezone
+		if( isset($requestData['tzoffset']) && $value && isset($requestData[$ins_id]) ) {
+			$browser_offset = 0 - intval($requestData['tzoffset']) * 60;
+
+			$server_offset = $this->tzServerOffset();	
+
+			$value = $value - $server_offset + $browser_offset;
+		}
+
 		return array(
 			'value' => $value,
 		);
@@ -74,7 +84,7 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_function_jscalendar');
 
-		$params = array( 'fieldname' => $this->getInsertId());
+		$params = array( 'fieldname' => $this->getConfiguration('ins_id') ? $this->getConfiguration('ins_id') : $this->getInsertId());
 		$params['showtime'] = $this->getOption('datetime') === 'd' ? 'n' : 'y';
 		if ( empty($context['inForm'])) {
 			$params['date'] = $this->getValue();
@@ -85,10 +95,26 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 				$params['date'] = TikiLib::lib('tiki')->now;
 			}
 		} else {
-			$params['date'] = '';
+			$params['date'] = $this->getValue();
+		}
+
+		if( $params['date'] ) {
+			// convert to UTC to display it properly for browser based timezone
+			$params['date'] += $this->tzServerOffset();
+			$params['isutc'] = true;
 		}
 
 		return smarty_function_jscalendar($params, $smarty);
+	}
+
+	private function tzServerOffset() {
+		$tikilib = TikiLib::lib('tiki');
+		$display_tz = $tikilib->get_display_timezone();
+		if ( $display_tz == '' )
+			$display_tz = 'UTC';
+		$tz = new DateTimeZone($display_tz);
+		$d = new DateTime('now', $tz);
+		return $tz->getOffset($d);
 	}
 }
 

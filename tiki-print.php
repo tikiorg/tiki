@@ -43,6 +43,12 @@ $access->check_permission('tiki_p_view', '', 'wiki page', $page);
 // Now increment page hits since we are visiting this page
 $tikilib->add_hit($page);
 
+if ($prefs['print_wiki_authors'] === 'y') {
+	// Get the authors style for this page
+	$wiki_authors_style = ($prefs['wiki_authors_style_by_page'] == 'y' && $info['wiki_authors_style'] != '') ? $info['wiki_authors_style'] : $prefs['wiki_authors_style'];
+	$smarty->assign('wiki_authors_style', $wiki_authors_style);
+}
+
 if (isset($prefs['wiki_feature_copyrights']) && $prefs['wiki_feature_copyrights'] == 'y' && isset($prefs['wikiLicensePage'])) {
 	// insert license if wiki copyrights enabled
 	$license_info = $tikilib->get_page_info($prefs['wikiLicensePage']);
@@ -101,7 +107,7 @@ if (isset($_REQUEST['display']) && $_REQUEST['display'] == 'pdf') {
 	$generator = new PdfGenerator();
 	$pdf = $generator->getPdf('tiki-print.php', array('page' => $page));
 	if (empty($pdf)) {
-		echo "Unable to generate PDF";
+		$access->display_error($page, "Unable to generate PDF");
 	} else {
 		$length = strlen($pdf);
 		header('Cache-Control: private, must-revalidate');

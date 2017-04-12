@@ -9,7 +9,7 @@
 	{$liend = ''}
 {/if}
 
-<table cellpadding="0" cellspacing="0" border="0" class="table normal table-striped table-hover">
+<table cellpadding="0" cellspacing="0" border="0" class="table normal table-striped table-hover" style="table-layout: fixed">
 	<tr>
 		<th style="width:20%"><a href="{$myurl}?sort_mode={if $sort_mode eq 'start_desc'}start_asc{else}start_desc{/if}">{tr}Start{/tr}</a></th>
 		<th style="width:20%"><a href="{$myurl}?sort_mode={if $sort_mode eq 'end_desc'}end_asc{else}end_desc{/if}">{tr}End{/tr}</a></th>
@@ -31,7 +31,7 @@
 				{if $event.start|tiki_short_date ne $event.end|tiki_short_date}<abbr class="dtend" title="{$event.end|tiki_short_date}"><a href="{$myurl}?todate={$event.end}" title="{tr}Change Focus{/tr}">{$event.end|tiki_short_date}</a></abbr> {/if}<br>
 {if $event.start ne $event.end and $event.allday ne 1}{$event.end|tiki_short_time}{/if}
 			</td>
-			<td style="{if $infocals.$calendarId.custombgcolor ne ''}background-color:#{$infocals.$calendarId.custombgcolor};{/if}">
+			<td style="word-wrap:break-word; {if $infocals.$calendarId.custombgcolor ne ''}background-color:#{$infocals.$calendarId.custombgcolor};{/if}">
 				<a class="link" href="tiki-calendar_edit_item.php?viewcalitemId={$event.calitemId}" title="{tr}View{/tr}">
 				{if $infocals.$calendarId.customfgcolor ne ''}<span style="color:#{$infocals.$calendarId.customfgcolor};">{/if}
 				<span class="summary">{$event.name|escape}</span></a><br>
@@ -59,7 +59,7 @@
 						title="{tr}Actions{/tr}"
 						href="#"
 						{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.calendar_actions|escape:"javascript"|escape:"html"}{/if}
-						style="padding:0; margin:0; border:0"
+						style="padding-left:0; margin:0; border:0; float:right;"
 					>
 						{icon name='wrench'}
 					</a>

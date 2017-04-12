@@ -93,5 +93,15 @@ function prefs_zend_list()
 			),
 			'default' => '',
 		),
+		'zend_http_sslverifypeer' => array(
+			'name' => tra('Verify HTTPS certificates of remote servers'),
+			'description' => tra('When set to enforce, the server will fail to connect over HTTPS to a remote server that do not have a SSL certificate that is valid and can be verified against the local list of Certificate Authority (CA)'),
+			'type' => 'list',
+			'options' => array(
+				'' => tra('Do not enforce verification'),
+				'y' => tra('Enforce verification'),
+			),
+			'default' => '',
+		),
 	);
 }

@@ -86,6 +86,12 @@ function prefs_wiki_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'wiki_page_name_inside' => array(
+			'name' => tra('Display page name inside page'),
+			'description' => tra('Display page name inside page content.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 		'wiki_pagename_strip' => array(
 			'name' => tra('Page name display stripper'),
 			'description' => tra('Character to use as a delimiter in the page name. The portion of the name after this character will not be displayed. If the page name display stripper conflicts with the namespace separator, the namespace is used and the page name display is not stripped'),
@@ -276,7 +282,8 @@ function prefs_wiki_list($partial = false)
 		'wiki_edit_icons_toggle' => array(
 			'name' => tra('Toggle display of section and plugin edit icons'),
 			'type' => 'flag',
-			'default' => 'n',
+			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'wiki_edit_minor' => array(
 			'name' => tra('Allow minor edits of wiki pages'),
@@ -557,6 +564,7 @@ function prefs_wiki_list($partial = false)
 				'top' => tra('Top'),
 				'bottom' => tra('Bottom'),
 				'both' => tra('Both'),
+                'none' => tra('Neither'),
 			),
 			'default' => 'top',
 		),
@@ -614,27 +622,42 @@ function prefs_wiki_list($partial = false)
 		),
 		'wiki_auto_toc' => array(
 			'name' => tr('Wiki auto-toc'),
-			'description' => tr('Automatic table of contents generation for wiki pages. The generated table of contents will display as a fixed-position aside next to the page contents.'),
+			'description' => tr('Automatic table of contents generation for wiki pages. The generated table of contents will display as a fixed-position aside next to the page contents. This setting can be toggled per page, in the page properties.'),
 			'type' => 'flag',
 			'help' => 'Auto TOC',
 			'default' => 'n',
 		),
 		'wiki_inline_auto_toc' => array(
-			'name' => tr('Add inline auto-toc'),
-			'description' => tr('Automatically add an inline table of contents for wiki pages. This setting can be toggled per page, in the page properties'),
+			'name' => tr('Inline auto-toc'),
+			'description' => tr('Change the dispay of the table of contents for wiki pages to inline.'),
 			'type' => 'flag',
-			'default' => 'y',
+			'default' => 'n',
 			'dependencies' => array(
 				'wiki_auto_toc',
 			),
 		),
-		'wiki_inline_toc_pos' => array(
-			'name' => tr('Inline table of contents position'),
-			'description' => tr('Position for inline table of contents. One of top, left, right (right is the default)'),
-			'type' => 'text',
+		'wiki_toc_pos' => array(
+			'name' => tr('Table of contents position'),
+			'description' => tr('Position for table of contents. One of top, left, right (right is the default)'),
+			'type' => 'list',
+			'options' => array(
+				'right' => tra('Right'),
+				'left' => tra('Left'),
+				'top' => tra('Top'),
+			),
 			'default' => 'right',
 			'dependencies' => array(
-				'wiki_inline_auto_toc',
+				'wiki_auto_toc',
+			),
+		),
+		'wiki_toc_offset' => array(
+			'name' => tr('Table of contents offset'),
+			'description' => tr('Offset for table of contents. Useful when there is a fixed navbar (Default is 10). If used with inline TOC, will behave as a top margin.'),
+			'type' => 'text',
+			'filter' => 'digits',
+			'default' => '10',
+			'dependencies' => array(
+				'wiki_auto_toc',
 			),
 		),
 		'wiki_page_hide_title' => array(

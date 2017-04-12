@@ -18,8 +18,8 @@ class Tracker_Field_GeographicFeature extends Tracker_Field_Abstract implements 
 		return array(
 			'GF' => array(
 				'name' => tr('Geographic Feature'),
-				'description' => tr('Stores a geographic feature on a map.'),
-				'help' => 'Location Tracker Field',
+				'description' => tr('Stores a geographic feature on a map, allowing paths (LineString) and boundaries (Polygon) to be drawn on a map and saved.'),
+				'help' => 'Geographic feature Tracker Field',
 				'prefs' => array('trackerfield_geographicfeature'),
 				'tags' => array('advanced'),
 				'default' => 'n',

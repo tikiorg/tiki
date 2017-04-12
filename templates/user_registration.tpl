@@ -22,7 +22,7 @@
 				</form>
 			{/if}
 		</div>
-		<div class="col-sm-9 col-sm-offset-2">
+		<div class="col-sm-9 col-sm-offset-3">
 			{remarksbox type="note" title="{tr}Note{/tr}"}
 				{if $prefs.feature_wiki_protect_email eq 'y'}
 					{assign var=sender_email value=$prefs.sender_email|default:"this domain"|escape:'hexentity'}

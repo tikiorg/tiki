@@ -81,11 +81,17 @@ function prefs_search_list()
 		),
 		'search_facet_default_amount' => array(
 			'name' => tra('Facet result count'),
-			'description' => tra('DDefault number of facet results to obtain.'),
+			'description' => tra('Default number of facet results to obtain.'),
 			'type' => 'text',
 			'size' => 8,
 			'filter' => 'digits',
 			'default' => '10',
+		),
+		'search_error_missing_field' => array(
+			'name' => tra('Show error on missing field'),
+			'description' => tra('When using LIST plugin to specify certain fields, especially tracker fields, this check helps ensure their names were entered correctly.'),
+			'type' => 'flag',
+			'default' => 'y',
 		),
 	);
 }

@@ -49,7 +49,7 @@ function smarty_function_user_selector($params, $smarty)
 			'user_selector_threshold' => $prefs['user_selector_threshold'],
 			'allowNone' => 'n',
 			'realnames' => 'y',
-			'class' => '',
+			'class' => 'form-control',
 	);
 	
 	$params = array_merge($defaults, $params);
@@ -64,8 +64,10 @@ function smarty_function_user_selector($params, $smarty)
 		$ed = '';
 	}
 	
-	if(isset($params['class'])) {
+	if(! empty($params['class'])) {
 		$class = ' class="'. $params['class'] . '"';
+	} else {
+		$class = '';
 	}
 
 	$groupNames = array();
@@ -88,29 +90,14 @@ function smarty_function_user_selector($params, $smarty)
 		}
 	}
 
-	$ucant = 0;
 	$users = array();
-
-	if ($params['group'] == 'all') {
-		$ucant = $tikilib->list_users(0, 0, 'login_asc');
-		$ucant = $ucant['cant'];
-	} else {
-		$groupNames[] = $params['group'];
-	}
-
-	// NOTE: if groupIds are present, the list of users is limited to those groups regardless of group == 'all'
-	if (!empty($groupNames)) {
-		$groupNames = array_unique($groupNames);
-		foreach ($groupNames as $groupName) {
-			$group_users = $userlib->get_group_users($groupName);
-			$users = array_merge($users, $group_users);
-		}
-		$users = array_unique($users);
-		$ucant = count($users);
-	}
-
 	$ret = '';
-	
+	if (! empty($groupNames)) {
+		$ucant = $userlib->count_users_consolidated($groupNames);
+	} else {
+		$ucant = $userlib->count_users('');
+	}
+
 	if ($prefs['feature_jquery_autocomplete'] == 'y' && ($ucant > $prefs['user_selector_threshold'] or $ucant > $params['user_selector_threshold'])) {
 		$ret .= '<input id="' . $params['id'] . '" type="text" name="' . $params['name'] . '" value="' . htmlspecialchars($params['user']) . '"' . $sz . $ed . ' style="'.$params['style'].'"'.$class.' />';
 		if (($params['contact'] == 'true')) {
@@ -122,19 +109,41 @@ function smarty_function_user_selector($params, $smarty)
 		}
 		$headerlib->add_jq_onready('$("#' . $params['id'] . '").tiki("autocomplete", "'. $mode .'", {mustMatch: '.$params['mustmatch'].', multiple: '.$params['multiple'].' });');
 	} else {
+
+		// get the user list
+		if ($params['group'] !== 'all') {
+			$groupNames[] = $params['group'];
+		}
+
+		// NOTE: if groupIds are present, the list of users is limited to those groups regardless of group == 'all'
+		if (!empty($groupNames)) {
+			$groupNames = array_unique($groupNames);
+			$usrs = [];
+			foreach ($groupNames as $groupName) {
+				$group_users = $userlib->get_group_users($groupName);
+				$usrs = array_merge($usrs, $group_users);
+			}
+			$usrs = array_unique($usrs);
+			foreach ($usrs as $usr) {
+				$users["$usr"] = $params['realnames'] === 'y' ? smarty_modifier_username($usr) : $usr;
+			}
+		}
+
 		if ($params['group'] == 'all' && empty($params['groupIds'])) {
 			$usrs = $tikilib->list_users(0, -1, 'login_asc');
 			foreach ($usrs['data'] as $usr) {
-				$users[] = $usr['login'];
+				$users["{$usr['login']}"] = $params['realnames'] === 'y' ? smarty_modifier_username($usr['login']) : $usr['login'];
 			}
 		}
+
+		asort($users, SORT_NATURAL | SORT_FLAG_CASE);
+
 		$ret .= '<select name="' . $params['name'] . '" id="' . $params['id'] . '"' . $sz . $ed . ' style="'.$params['style'].'" class="form-control">';
 		if ($params['allowNone'] === 'y') {
 			$ret .= '<option value=""' . (empty($params['user']) ? ' selected="selected"' : '') . ' >' . tra('None') .'</option>';
 		}
-		foreach ($users as $usr) {
+		foreach ($users as $usr => $usersname) {
 			if ($params['editable'] == 'y' || $usr == $params['user'] || (isset($params['select']) && $params['select'] === $usr)) {
-				$usersname = $params['realnames'] === 'y' ? smarty_modifier_username($usr) : $usr;
 				if (isset($params['select'])) {
 					$ret .= '<option value="' . htmlspecialchars($usr) . '"' . ($usr == $params['select'] ? ' selected="selected"' : '') . ' >' . $usersname .'</option>';
 				} else {

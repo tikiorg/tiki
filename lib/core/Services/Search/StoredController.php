@@ -170,7 +170,7 @@ class Services_Search_StoredController
 		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 		$dataSource = $unifiedsearchlib->getDataSource('formatting');
 
-		$plugin = new Search_Formatter_Plugin_SmartyTemplate(realpath('templates/searchresults-plain.tpl'));
+		$plugin = new Search_Formatter_Plugin_SmartyTemplate('searchresults-plain.tpl');
 		$plugin->setData(
 			array(
 				'prefs' => $prefs,

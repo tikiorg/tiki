@@ -23,45 +23,43 @@
 	<input class="input" type="text" name="{$field.ins_id|escape}" value="{$field.value|escape}">
 	{if $field.canUpload}
 		{if $field.options_map.displayMode eq 'vimeo'}
-			<fieldset>
-				<legend>{tr}Upload file(s){/tr}</legend>
-				{wikiplugin _name='vimeo' fromFieldId=$field.fieldId|escape fromItemId=$item.itemId|escape galleryId=$field.galleryId|escape}{/wikiplugin}
-			</fieldset>
+			{wikiplugin _name='vimeo' fromFieldId=$field.fieldId|escape fromItemId=$item.itemId|escape galleryId=$field.galleryId|escape}{/wikiplugin}
 		{else}
 			{if $field.options_map.uploadInModal neq 'n'}
-			<a href="{service controller=file action=uploader uploadInModal=1 galleryId=$field.galleryId limit=$limit|default:100 type=$field.filter}" class="btn btn-default upload-files">{tr}Upload Files{/tr}</a>
+				<a href="{service controller=file action=uploader uploadInModal=1 galleryId=$field.galleryId limit=$limit|default:100 type=$field.filter image_max_size_x=$field.image_x image_max_size_y=$field.image_y}" class="btn btn-default upload-files">{tr}Upload Files{/tr}</a>
 			{else}
-						<div class="upload-files-inline-form"></div>
-
-			<a href="{service controller=file action=uploader uploadInModal=0 galleryId=$field.galleryId limit=$limit|default:100 type=$field.filter}" class="btn btn-default upload-files-inline">{tr}Upload Files{/tr}</a>
+				<div class="upload-files-inline-form"></div>
+				<a href="{service controller=file action=uploader uploadInModal=0 galleryId=$field.galleryId limit=$limit|default:100 type=$field.filter image_max_size_x=$field.image_x image_max_size_y=$field.image_y}" class="btn btn-default upload-files-inline">{tr}Upload Files{/tr}</a>
 			{/if}
 		{/if}
 	{/if}
-	{if $prefs.fgal_tracker_existing_search eq 'y'}
+	{if $prefs.fgal_tracker_existing_search eq 'y' && $tiki_p_view_file_gallery eq 'y'}
 		{if $prefs.fgal_elfinder_feature eq 'y'}
 			{button href='tiki-list_file_gallery.php' _text="{tr}Browse files{/tr}"
 			_onclick=$context.onclick
 				title="{tr}Browse files{/tr}"}
 		{else}
-			<a href="{service controller=file action=browse galleryId=$galleryId limit=$limit|default:100 type=$field.filter}" class="btn btn-default browse-files">{tr}Browse Files{/tr}</a>
+			<a href="{service controller=file action=browse galleryId=$galleryId limit=$limit|default:100 type=$field.filter image_x=$field.image_x image_y=$field.image_y}" class="btn btn-default browse-files">{tr}Browse Files{/tr}</a>
 		{/if}
 	{/if}
 	{if $prefs.fgal_upload_from_source eq 'y' and $field.canUpload}
 		<fieldset>
 			{if $prefs.vimeo_upload eq 'y' and $field.options_map.displayMode eq 'vimeo'}
-				<legend>{tr}Link to existing Vimeo URL{/tr}</legend>
-				<label>
-					{tr}URL:{/tr} <input class="url vimeourl" name="vimeourl" placeholder="http://vimeo.com/..." data-mode="vimeo">
-					<input type="hidden" class="reference" name="reference" value="1">
+				<label for="vimeourl_{$field.ins_id|escape}" class="small">
+					{tr}Link to existing Vimeo URL{/tr}
 				</label>
+				<input class="url vimeourl form-control" name="vimeourl" id=vimeourl_{$field.ins_id|escape}" placeholder="http://vimeo.com/..." data-mode="vimeo">
+				<input type="hidden" class="reference" name="reference" value="1">
 			{else}
-				<legend>{tr}Upload from URL{/tr}</legend>
-				<label>
-					{tr}URL:{/tr} <input class="url" name="url" placeholder="http://">
-					<input type="hidden" class="reference" name="reference" value="0">
+				<label for="url_{$field.ins_id|escape}" class="small">
+					{tr}Upload from URL{/tr}
 				</label>
+				<input class="url form-control" name="url" id="url_{$field.ins_id|escape}" placeholder="http://">
+				<input type="hidden" class="reference" name="reference" value="0">
 			{/if}
-			{tr}Type or paste the URL and press ENTER{/tr}
+			<p class="description">
+				{tr}Type or paste the URL and press ENTER{/tr}
+			</p>
 		</fieldset>
 	{/if}
 </div>

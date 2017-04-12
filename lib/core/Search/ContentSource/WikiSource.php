@@ -96,6 +96,8 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 						'view_permission' => $typeFactory->identifier('tiki_p_wiki_view_latest'),
 						'wiki_approval_state' => $typeFactory->identifier('pending'),
 						'url' => $typeFactory->identifier(str_replace('&amp;', '&', $wikilib->sefurl($info['pageName'], true)) . 'latest'),
+						'approved_version' => $typeFactory->numeric((int) $versionInfo['version']),
+						'approved_user' => $typeFactory->identifier($versionInfo['user']),
 					)
 				);
 			}

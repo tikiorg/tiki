@@ -26,7 +26,7 @@ function wikiplugin_files_info()
 					for user files (hint: enter %0 for current logged-in user).', '<code>{{user}}</code>')
 					: ''),
 				'since' => '3.0',
-				'default' => '',
+				'default' => NULL,
 				'separator' => ':',
 				'profile_reference' => 'file_gallery',
 			),
@@ -36,7 +36,7 @@ function wikiplugin_files_info()
 				'description' => tra('To restrict files listed to those belonging to one or more categories. Enter a
 					single category or ID or list of them separated by colon'),
 				'since' => '3.0',
-				'default' => '',
+				'default' => NULL,
 				'filter' => 'text',
 				'accepted' => tra('Valid category IDs separated by colons'),
 				'advanced' => true,
@@ -51,7 +51,7 @@ function wikiplugin_files_info()
 				'type' => 'fileId',
 				'area' => 'fgal_picker_id',
 				'accepted' => tra('Valid file IDs separated by colons'),
-				'default' => '',
+				'default' => NULL,
 				'filter' => 'text',
 				'separator' => ':',
 				'profile_reference' => 'file',
@@ -188,7 +188,6 @@ function wikiplugin_files_info()
 				'since' => '3.0',
 				'filter' => 'alpha',
 				'default' => 'y',
-				'advanced' => true,
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
@@ -242,6 +241,19 @@ function wikiplugin_files_info()
 				'description' => tra('Show the date each file was last modified (shown by default)'),
 				'since' => '3.0',
 				'default' => 'y',
+				'filter' => 'alpha',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
+			'showmodtimedate' => array(
+				'required' => false,
+				'name' => tra('Show Last Modification Time as well as Date'),
+				'description' => tra('if showmodified is set to y then this will show both the date and time that each file was last modified (not shown by default)'),
+				'since' => '16.0',
+				'default' => 'n',
 				'filter' => 'alpha',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -310,6 +322,7 @@ function wikiplugin_files_info()
 				'description' => tra('Show the name of the parent gallery'),
 				'since' => '3.0',
 				'filter' => 'alpha',
+				'default' => 'n',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
@@ -424,6 +437,7 @@ function wikiplugin_files_info()
 				'name' => tra('Creator'),
 				'description' => tra('Show only files created by this user'),
 				'since' => '5.0',
+				'default' => '',
 				'advanced' => true,
 			),
 			'showupload' => array(
@@ -488,7 +502,12 @@ function wikiplugin_files($data, $params)
 	$tikilib = TikiLib::lib('tiki');
 	$smarty = TikiLib::lib('smarty');
 
-	$default = array('showfind'=>'n', 'showtitle'=>'y', 'showupload' => 'n', 'showgallery' => 'n', 'max' => -1, 'showthumb' => 'n', 'recursive' => 'n', 'withsubgals'=>'y');
+	// set defaults for all params
+	$plugininfo = wikiplugin_files_info();
+	$default = array();
+	foreach ($plugininfo['params'] as $key => $param) {
+		$default["$key"] = $param['default'];
+	}
 	$params = array_merge($default, $params);
 	$filter = '';
 	extract($params, EXTR_SKIP);
@@ -669,6 +688,7 @@ function wikiplugin_files($data, $params)
 	if (!empty($showmodified)) {
 		$gal_info['show_lastmodif'] = $gal_info['show_modified'] = $showmodified;
 	}
+	if (!empty($showmodtimedate)) $gal_info['show_modtimedate'] = $showmodtimedate;
 	if (!empty($showlockedby)) $gal_info['show_lockedby'] = $showlockedby;
 	if (!empty($showhits)) $gal_info['show_hits'] = $showhits;
 	if (!empty($showfiles)) $gal_info['show_files'] = $showfiles;

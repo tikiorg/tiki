@@ -71,6 +71,18 @@ if (!isset( $_REQUEST['sheetId'] )) {
 // }}}1
 
 $valid_graphs = array( 'PieChartGraphic', 'MultilineGraphic', 'MultibarGraphic', 'BarStackGraphic' );
+$valid_renderers = array( 'PNG', 'JPEG', 'PDF', 'PS' );
+
+if ( ! empty($_REQUEST['graphic']) && ! in_array($_REQUEST['graphic'], $valid_graphs) ) {
+	$smarty->assign('msg', tra('Unknown Graphic.'));
+	$smarty->display('error.tpl');
+	die;
+}
+if ( ! empty($_REQUEST['renderer']) && ! in_array($_REQUEST['renderer'], $valid_renderers) ) {
+	$smarty->assign('msg', tra('Unknown Renderer.'));
+	$smarty->display('error.tpl');
+	die;
+}
 
 $smarty->assign('sheetId', $_REQUEST["sheetId"]);
 
@@ -84,13 +96,9 @@ $smarty->assign('page_mode', 'form');
 $sheetId = $_REQUEST['sheetId'];
 
 if ( isset($_REQUEST['title']) ) {
-	if ( !in_array($_REQUEST['graphic'], $valid_graphs) )
-		die( 'Unknown Graphic.' );
 
 	$cache_file = 'temp/cache/tsge_' . md5($_SERVER['REQUEST_URI']);
 
-	if ( !isset($_REQUEST['renderer']) )
-		$_REQUEST['renderer'] = null;
 	switch( $_REQUEST['renderer'] )
 	{
 		case 'PNG':
@@ -185,7 +193,7 @@ if ( isset($_REQUEST['title']) ) {
 		$smarty->assign('mode', 'param');
 		$smarty->assign('series', $series);
 		$smarty->assign('graph', $graph);
-		$smarty->assign('renderer', $_GET['renderer']);
+		$smarty->assign('renderer', $_REQUEST['renderer']);
 
 		$handler = new TikiSheetDatabaseHandler($sheetId);
 		$grid = new TikiSheet($_REQUEST['sheetId']);

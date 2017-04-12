@@ -63,8 +63,8 @@ class Services_Search_Controller
 
 		try {
 			$lib = TikiLib::lib('unifiedsearch');
-			$query = $lib->buildQuery($input->filter->none());
-			$query->setOrder('title_asc');
+			$query = $lib->buildQuery($input->filter->none() ?: []);
+			$query->setOrder($input->sort_order->text() ?: 'title_asc');
 			$query->setRange($input->offset->int(), $input->maxRecords->int() ?: $prefs['maxRecords']);
 			$result = $query->search($lib->getIndex());
 

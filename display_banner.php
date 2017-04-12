@@ -34,15 +34,7 @@ switch ($data["which"]) {
     	break;
 
 	case 'useFixedURL':
-		$fp = fopen($data["fixedURLData"], "r");
-		if ($fp) {
-			$raw = '';
-			while (!feof($fp)) {
-				$raw .= fread($fp, 8192);
-			}
-		}
-
-		fclose($fp);
+		$raw = '<img src="'.$data["fixedURLData"].'">"';
     	break;
 
 	case 'useText':

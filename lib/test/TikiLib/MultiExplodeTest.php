@@ -25,8 +25,17 @@ class TikiLib_MultiExplodeTest extends PHPUnit_Framework_TestCase
 	{
 		$lib = TikiLib::lib('tiki');
 		$this->assertEquals(array('A', 'B'), $lib->multi_explode(':', 'A:B'));
-		$this->assertEquals(array('A::B'), $lib->multi_explode(':', 'A::B'));
-		$this->assertEquals(array('A:::B'), $lib->multi_explode(':', 'A:::B'));
+		$this->assertEquals(array('A', '', 'B'), $lib->multi_explode(':', 'A::B'));
+		$this->assertEquals(array('A', '', '', 'B'), $lib->multi_explode(':', 'A:::B'));
+	}
+
+	function testEmpty()
+	{
+		$lib = TikiLib::lib('tiki');
+		$this->assertEquals(array(''), $lib->multi_explode(':', ''));
+		$this->assertEquals(array('', ''), $lib->multi_explode(':', ':'));
+		$this->assertEquals(array('', 'B'), $lib->multi_explode(':', ':B'));
+		$this->assertEquals(array('A', ''), $lib->multi_explode(':', 'A:'));
 	}
 
 	function testIgnoreCharactersUsedInNamespace()

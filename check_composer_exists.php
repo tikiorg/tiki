@@ -44,7 +44,7 @@ function createPage($title, $content)
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link type="text/css" rel="stylesheet" href="styles/fivealive.css" />
+		<link type="text/css" rel="stylesheet" href="themes/default/css/default.css" />
 		<title>$title</title>
 	</head>
 	<body class="tiki_wiki fixed_width">

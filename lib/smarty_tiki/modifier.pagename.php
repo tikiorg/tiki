@@ -16,9 +16,16 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function smarty_modifier_pagename($source)
 {
 	global $prefs;
-	if (!empty($prefs['wiki_pagename_strip'])) {
-    	$wiki_strip = '~'. preg_quote($prefs['wiki_pagename_strip']) . '.*$~';
-    	return preg_replace($wiki_strip, '', $source);
+	if (!empty($prefs['wiki_pagename_strip']) || $prefs['namespace_indicator_in_page_title'] == 'y') {
+    	if (!empty($prefs['wiki_pagename_strip'])) {
+	    	$wiki_strip = '~'. preg_quote($prefs['wiki_pagename_strip']) . '.*$~';
+	    	$source = preg_replace($wiki_strip, '', $source);
+	    }
+	    if ($prefs['namespace_indicator_in_page_title'] == 'y') {
+	    	$wiki_namespace = '~.* / ~';
+	    	$source = preg_replace($wiki_namespace, '', $source);
+	    }
+	    return $source;
 	} else {
 		return $source;
 	}

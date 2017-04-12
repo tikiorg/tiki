@@ -50,6 +50,7 @@ class PerspectiveLib
 		foreach ( $this->get_domain_map($prefs) as $domain => $perspective ) {
 			if ( $domain == $currentDomain ) {
 				$_SESSION['current_perspective'] = trim($perspective);
+				$_SESSION['current_perspective_name'] = $this->get_perspective_name($_SESSION['current_perspective']);
 				return $perspective;
 			}
 		}
@@ -187,8 +188,10 @@ class PerspectiveLib
 		}
 		if (empty($perspective)) {
 			unset($_SESSION['current_perspective']);
+			unset($_SESSION['current_perspective_name']);
 		} else {
 			$_SESSION['current_perspective'] = $perspective;
+			$_SESSION['current_perspective_name'] = $this->get_perspective_name($_SESSION['current_perspective']);
 		}
 
 	}
@@ -336,6 +339,17 @@ class PerspectiveLib
 		$db = TikiDb::get();
 
 		return $db->getOne("SELECT perspectiveId FROM tiki_perspectives WHERE name = ?", array ( $name ));
+	}
+
+	/**
+	 * Returns perspective's name from the Id
+	 *
+	 */
+	function get_perspective_name ( $id )
+	{
+		$db = TikiDb::get();
+
+		return $db->getOne("SELECT name FROM tiki_perspectives WHERE perspectiveId = ?", array ( $id ));
 	}
 }
 

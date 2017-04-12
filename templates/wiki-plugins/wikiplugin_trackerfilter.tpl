@@ -14,6 +14,9 @@
 				{jq notonready=true}
 					function tf_export_submit(fm) {
 						$("input[name=export_filter]").attr("disabled", "disabled").css("opacity", 0.5);
+						setTimeout(function(){
+							$("input[name=export_filter]").attr("disabled", false).css("opacity", 1);
+						}, 2000);
 						return true;
 					}
 				{/jq}
@@ -37,6 +40,7 @@
 			<table class="table">
 				{if isset($line) && $line eq 'y'}<tr>{/if}
 
+				{$jscal = 0}
 				{foreach from=$filters item=filter}
 					{if !isset($line) || $line ne 'y'}<tr>{/if}
 					<td class="tracker_filter_label">
@@ -69,6 +73,12 @@
 								{/if}
 							{/if}
 							{trackerinput field=$filter.field inForm="y"}
+	{*------range *}
+						{elseif $filter.format eq 'range'}
+							{tr}From:{/tr}&nbsp;
+							{trackerinput field=$filter.opts.from inForm="y"}
+							{tr}To:{/tr}&nbsp;
+							{trackerinput field=$filter.opts.to inForm="y"}
 	{*------text *}
 						{elseif $filter.format eq 't' or $filter.format eq 'T' or $filter.format eq 'i'}
 							{if $filter.format eq 'i'}
@@ -112,6 +122,7 @@
 						{/if}
 					</td>
 					{if !isset($line) || $line ne 'y'}</tr>{else} {/if}
+					{if $filter.format eq 'j'}{$jscal = 1}{/if}
 				{/foreach}
 				{if (!isset($line) || $line ne 'y') and (!isset($action) || $action neq " ")}<tr>{/if}
 				{if (!isset($action) || $action neq " ") or !empty($export_action)}
@@ -148,3 +159,6 @@
 	</div>
 	{if !empty($dataRes)}<div class="trackerfilter-result">{$dataRes}</div>{/if}
 {/strip}
+{if $jscal}
+	{js_insert_icon type="jscalendar"}
+{/if}

@@ -9,25 +9,25 @@ a:focus {
   color: #7195c1;
 }
 .btn-default {
-  color: #555;
-  background-color: #fff;
-  border-color: #777;
+  color: #555555;
+  background-color: #ffffff;
+  border-color: #777777;
 }
 .btn-default:focus,
 .btn-default.focus {
-  color: #555;
+  color: #555555;
   background-color: #e6e6e6;
   border-color: #373737;
 }
 .btn-default:hover {
-  color: #555;
+  color: #555555;
   background-color: #e6e6e6;
   border-color: #585858;
 }
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
-  color: #555;
+  color: #555555;
   background-color: #e6e6e6;
   border-color: #585858;
 }
@@ -40,7 +40,7 @@ a:focus {
 .btn-default:active.focus,
 .btn-default.active.focus,
 .open > .dropdown-toggle.btn-default.focus {
-  color: #555;
+  color: #555555;
   background-color: #d4d4d4;
   border-color: #373737;
 }
@@ -58,16 +58,16 @@ fieldset[disabled] .btn-default:focus,
 .btn-default.disabled.focus,
 .btn-default[disabled].focus,
 fieldset[disabled] .btn-default.focus {
-  background-color: #fff;
-  border-color: #777;
+  background-color: #ffffff;
+  border-color: #777777;
 }
 .btn-default .badge {
-  color: #fff;
-  background-color: #555;
+  color: #ffffff;
+  background-color: #555555;
 }
 .navbar-default {
-  background-color: #ccc;
-  border-color: #aaa;
+  background-color: #cccccc;
+  border-color: #aaaaaa;
 }
 .navbar-default .navbar-text {
   color: #363636;
@@ -78,7 +78,7 @@ fieldset[disabled] .btn-default.focus {
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
   color: #7195c1;
-  background-color: #ea6;
+  background-color: #eeaa66;
 }
 .navbar-default .navbar-link {
   color: #2a5385;
@@ -105,7 +105,7 @@ a.btn-link:focus {
 #col2 .panel a:visited,
 #col3 .panel a:visited,
 #bottom_modules .panel a:visited {
-  color: #000;
+  color: #000000;
 }
 .btn,
 .btn-default,
@@ -123,7 +123,7 @@ input[type="submit"].btn-link {
 input[type="reset"]:hover,
 input[type="submit"]:hover,
 .button input:hover {
-  background: #ea6;
+  background: #eeaa66;
 }
 .btn-link:hover {
   background: none;
@@ -184,7 +184,7 @@ input[type="submit"]:hover,
 #col2 .cssmenu_vert.sf-arrows li > .sf-with-ul:after,
 #col3 .cssmenu_vert.sf-arrows li > .sf-with-ul:after {
   border-color: transparent;
-  border-left-color: #000;
+  border-left-color: #000000;
   /* edit this to suit design (no rgba in IE8) */
 }
 #col2 .cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
@@ -194,5 +194,5 @@ input[type="submit"]:hover,
 #col2 .cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after,
 #col3 .cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
   border-color: transparent;
-  border-left-color: #888;
+  border-left-color: #888888;
 }

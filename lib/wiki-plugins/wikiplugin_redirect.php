@@ -101,6 +101,7 @@ function wikiplugin_redirect($data, $params)
 		
 				if ( $perspectivelib->perspective_exists($perspective) ) {
 					$_SESSION['current_perspective'] = $perspective;
+					$_SESSION['current_perspective_name'] = $perspectivelib->get_perspective_name($_SESSION['current_perspective']);
 				}
 				if (empty($page) && empty($url)) {
 					$url =  $base_host . $_SERVER['REQUEST_URI'];

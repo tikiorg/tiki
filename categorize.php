@@ -15,8 +15,7 @@ $smarty = TikiLib::lib('smarty');
 
 global $prefs;
 
-$catobjperms = Perms::get(array( 'type' => $cat_type, 'object' => $cat_objid ));
-
+$catobjperms = Perms::getCombined(array( 'type' => $cat_type, 'object' => $cat_objid ));
 if ($prefs['feature_categories'] == 'y' && $catobjperms->modify_object_categories ) {
 	$categlib = TikiLib::lib('categ');
 

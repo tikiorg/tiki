@@ -67,7 +67,7 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract
 		
 		$groupId = $this->getOption('groupId');
 		if (empty($groupId)) {
-			$data['list'] = TikiLib::lib('user')->list_all_groups();
+			$data['list'] = TikiLib::lib('user')->list_all_groups_with_permission();
 		} else {
 			$group_info = TikiLib::lib('user')->get_groupId_info($groupId);
 			$data['list'] =	TikiLib::lib('user')->get_including_groups($group_info['groupName']);

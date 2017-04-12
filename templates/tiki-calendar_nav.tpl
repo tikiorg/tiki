@@ -27,7 +27,7 @@
 			<div>{strip}
 
 	{*previous*}
-				<div style="display:inline">
+				<div style="display:inline-block; padding-right: 6px; position: relative; bottom: 9px;">
 					<a class="tips"  href="{query _type='relative' _ajax=$ajax _class='prev' todate=$focus_prev}" title=":{tr}Previous {$viewmode|escape}{/tr}">
 						{icon name="previous"}
 					</a>
@@ -57,7 +57,7 @@
 				</div>
 
 	{*next*}
-				<div style="display:inline">
+				<div style="display:inline-block; padding-left: 6px; position: relative; bottom: 9px;">
 					<a class="tips" href="{query _type='relative' _ajax=$ajax _class='next' todate=$focus_next}" title=":{tr}Next {$viewmode|escape}{/tr}">
 						{icon name="next"}
 					</a>

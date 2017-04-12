@@ -757,9 +757,10 @@ class TrackerLib extends TikiLib
 		}
 	}
 
-	public function concat_item_from_fieldslist($trackerId,$itemId,$fieldsId,$status='o',$separator=' ',$list_mode='', $strip_tags = false)
+	public function concat_item_from_fieldslist($trackerId, $itemId, $fieldsId, $status='o', $separator=' ', $list_mode='', $strip_tags = false, $format= '', $item = array())
 	{
 		$res='';
+		$values = [];
 		if (is_string($fieldsId)) {
 			$fieldsId = preg_split('/\|/', $fieldsId, -1, PREG_SPLIT_NO_EMPTY);
 		}
@@ -768,11 +769,20 @@ class TrackerLib extends TikiLib
 			$myfield = $definition->getField($field);
 
 			$myfield['value'] = $this->get_item_value($trackerId, $itemId, $field);
+			$value = trim($this->field_render_value(array('field' => $myfield, 'process' => 'y', 'list_mode' => $list_mode, 'item' => $item)));
 
-			if ($k > 0) {
-				$res .= $separator;
+			if ($format) {
+				$values[] = $value;
+			} else {
+				if ($k > 0) {
+					$res .= $separator;
+				}
+				$res .= $value;
 			}
-			$res .= trim($this->field_render_value(array('field' => $myfield, 'process' => 'y', 'list_mode' => $list_mode)));
+		}
+		if ($format) {
+			// use the underlying translation function to replace the %0 etc placeholders (and translate if necessary)
+			$res = tra($format, '', false, $values);
 		}
 		if ($strip_tags) {
 			$res = strip_tags($res);
@@ -791,7 +801,7 @@ class TrackerLib extends TikiLib
 			if ($myfield=$definition->getField($field)) {
 				$is_date=($myfield['type']=='f');
 				$is_trackerlink=($myfield['type']=='r');
-				$tmp=$this->get_all_items($trackerId, $field, $status, false);//deliberatly do not check perm on categs on items
+				$tmp=$this->get_all_items($trackerId, $field, $status);
 				$options = $myfield['options_map'];
 				foreach ($tmp as $key => $value) {
 					if ($is_date) {
@@ -813,16 +823,48 @@ class TrackerLib extends TikiLib
 		return $res;
 	}
 
+	public function get_all_items_from_fieldslist($trackerId, $fieldsId, $status='o')
+	{
+		if (is_string($fieldsId)) {
+			$fieldsId = preg_split('/\|/', $fieldsId, -1, PREG_SPLIT_NO_EMPTY);
+		}
+		$res = array(
+			'fields' => array(),
+			'items' => array()
+		);
+		$definition = Tracker_Definition::get($trackerId);
+		foreach ($fieldsId as $field) {
+			if( $myfield = $definition->getField($field) ) {
+				$res['fields'][] = $myfield['name'];
+				$tmp = $this->get_all_items($trackerId, $field, $status);
+				foreach ($tmp as $key => $value) {
+					if( empty($res['items'][$key]) )
+						$res['items'][$key] = array();
+					$res['items'][$key][$field] = $value;
+				}
+			}
+		}
+		return $res;
+	}
+
 
 	public function valid_status($status)
 	{
 		return in_array($status, array('o', 'c', 'p', 'op', 'oc', 'pc', 'opc'));
 	}
 
-	// allfields == false will not check the perm on categ
-	public function get_all_items($trackerId,$fieldId,$status='o', $allfields='')
+
+	/**
+	 * Gets an array of itemId => rendered value for a certain field for use in ItemLinks (mainly)
+	 *
+	 * @param int $trackerId
+	 * @param int $fieldId
+	 * @param string $status
+	 * @return array
+	 */
+	public function get_all_items($trackerId, $fieldId, $status = 'o')
 	{
-		global $prefs;
+		global $prefs, $user;
 		$cachelib = TikiLib::lib('cache');
 
 		if (!$trackerId) {
@@ -830,40 +872,6 @@ class TrackerLib extends TikiLib
 		}
 		if (!$fieldId) {
 			return array(tr('*** ERROR: Field ID not set ***', $fieldId));
-		}
-		$jail = '';
-		$needToCheckCategPerms = $this->need_to_check_categ_perms($allfields);
-		if ($prefs['feature_categories'] == 'y' && $needToCheckCategPerms) {
-			$categlib = TikiLib::lib('categ');
-			$jail = $categlib->get_jail();
-		}
-
-		$sort_mode = "value_asc";
-		$cache = md5('trackerfield'.$fieldId.$status);
-		if ($this->is_multilingual($fieldId) == 'y') {
-			$multi_languages=$prefs['available_languages'];
-			$cache = md5('trackerfield'.$fieldId.$status.$prefs['language']);
-		} else {
-			unset($multi_languages);
-		}
-		if (!empty($jail)) {
-			$cache .= md5(serialize($jail));
-		}
-
-		if ( ( ! $ret = $cachelib->getSerialized($cache) ) || !$this->valid_status($status)) {
-			$sts = preg_split('//', $status, -1, PREG_SPLIT_NO_EMPTY);
-			$mid = " (".implode('=? or ', array_fill(0, count($sts), 'tti.`status`'))."=?) ";
-			$fieldIdArray = preg_split('/\|/', $fieldId, -1, PREG_SPLIT_NO_EMPTY);
-			$mid.= " and (".implode('=? or ', array_fill(0, count($fieldIdArray), 'ttif.`fieldId`'))."=?) ";
-			$bindvars = array_merge($sts, $fieldIdArray);
-			$join = '';
-			if (!empty($jail)) {
-				$categlib->getSqlJoin($jail, 'trackeritem', 'tti.`itemId`', $join, $mid, $bindvars);
-			}
-			$query = "select ttif.`itemId` , ttif.`value` FROM `tiki_tracker_items` tti,`tiki_tracker_item_fields` ttif $join ";
-			$query.= " WHERE $mid and tti.`itemId` = ttif.`itemId` order by ".$this->convertSortMode($sort_mode);
-			$ret = $this->fetchAll($query, $bindvars);
-			$cachelib->cacheItem($cache, serialize($ret));
 		}
 
 		$definition = Tracker_Definition::get($trackerId);
@@ -877,14 +885,55 @@ class TrackerLib extends TikiLib
 			// could be a deleted field referred to by a list type field
 			return array(tr('*** ERROR: Field %0 not found ***', $fieldId));
 		}
+
+		$jail = '';
+		if ($prefs['feature_categories'] == 'y') {
+			$categlib = TikiLib::lib('categ');
+			$jail = $categlib->get_jail();
+		}
+
+		$sort_mode = "value_asc";
+		$cacheKey = 'trackerfield'.$fieldId.$status.$user;
+		if ($this->is_multilingual($fieldId) == 'y') {
+			$cacheKey .= $prefs['language'];
+		}
+		if (!empty($jail)) {
+			$cacheKey .= serialize($jail);
+		}
+
+		$cacheKey = md5($cacheKey);
+
+		if ( ( ! $ret = $cachelib->getSerialized($cacheKey) ) || !$this->valid_status($status)) {
+			$sts = preg_split('//', $status, -1, PREG_SPLIT_NO_EMPTY);
+			$mid = " (".implode('=? or ', array_fill(0, count($sts), 'tti.`status`'))."=?) ";
+			$fieldIdArray = preg_split('/\|/', $fieldId, -1, PREG_SPLIT_NO_EMPTY);
+			$mid.= " and (".implode('=? or ', array_fill(0, count($fieldIdArray), 'ttif.`fieldId`'))."=?) ";
+			$bindvars = array_merge($sts, $fieldIdArray);
+			$join = '';
+			if (!empty($jail)) {
+				$categlib->getSqlJoin($jail, 'trackeritem', 'tti.`itemId`', $join, $mid, $bindvars);
+			}
+			$query = "select ttif.`itemId` , ttif.`value` FROM `tiki_tracker_items` tti,`tiki_tracker_item_fields` ttif $join ";
+			$query.= " WHERE $mid and tti.`itemId` = ttif.`itemId` order by ".$this->convertSortMode($sort_mode);
+			$ret = $this->fetchAll($query, $bindvars);
+			$cachelib->cacheItem($cacheKey, serialize($ret));
+		}
+
 		$ret2 = array();
 		foreach ($ret as $res) {
-			$k = $res['itemId'];
-			$field['value'] = $res['value'];
+			$itemId = $res['itemId'];
 
-			$rendered = $this->field_render_value(array('field' => $field, 'process' => 'y'));
+			$itemObject = Tracker_Item::fromId($itemId);
 
-			$ret2[$k] = trim(strip_tags($rendered), " \t\n\r\0\x0B\xC2\xA0");
+			if ($itemObject->canView()) {
+
+				$field['value'] = $res['value'];
+
+				$rendered = $this->field_render_value(array('field' => $field, 'process' => 'y'));
+
+				$ret2[$itemId] = trim(strip_tags($rendered), " \t\n\r\0\x0B\xC2\xA0");
+			}
+
 		}
 		return $ret2;
 	}
@@ -1104,8 +1153,8 @@ class TrackerLib extends TikiLib
 					//multiple filter on an exact value or a like value - each value can be simple or an array
 					$ff = (int) $filterfield[$i];
 					$ff_array = $filterfield[$i]; // Need value as array used below
-					$ev = !empty($exactvalue[$i])? $exactvalue[$i]:'';
-					$fv = !empty($filtervalue[$i])?$filtervalue[$i]:'' ;
+					$ev = !empty($exactvalue[$i])? $exactvalue[$i] : null;
+					$fv = !empty($filtervalue[$i])? $filtervalue[$i] : null;
 				}
 				$filter = $this->get_tracker_field($ff);
 
@@ -1267,7 +1316,7 @@ class TrackerLib extends TikiLib
 					}
 					$mid .= ')';
 				} elseif (is_null($ev) && is_null($fv)) { // test null value
-					$mid.= " AND ttif$i.`value`=? OR ttif$i.`value` IS NULL";
+					$mid.= " AND ( ttif$i.`value`=? OR ttif$i.`value` IS NULL )";
 					$bindvars[] = '';
 				}
 			}
@@ -2303,6 +2352,14 @@ class TrackerLib extends TikiLib
 								foreach ($multi_languages as $num => $tmplang) {
 									//Check if trad is empty
 									if (!isset($val['lang']) ||!isset($val['value']) ||(($val['lang']==$tmplang) && strlen($val['value'])==0)) {
+										$mandatory_fields[] = $f;
+									}
+								}
+							}
+                        } elseif (is_array($f['value'])) {
+							foreach ($f['value'] as $key=>$val) {
+								foreach ($multi_languages as $num => $tmplang) {
+									if ( $key == $tmplang && empty($val)) {
 										$mandatory_fields[] = $f;
 									}
 								}
@@ -3670,9 +3727,10 @@ class TrackerLib extends TikiLib
 			$emails3 = preg_split('/,/', $options['outboundEmail']);
 			foreach ($emails3 as $w) {
 				global $user_preferences;
+				$tikilib = TikiLib::lib('tiki');
 				$userlib = TikiLib::lib('user');
 				$u = $userlib->get_user_by_email($w);
-				$this->get_user_preferences($u, array('user', 'language', 'mailCharset'));
+				$tikilib->get_user_preferences($u, array('user', 'language', 'mailCharset'));
 				if (empty($user_preferences[$u]['language'])) {
 					$user_preferences[$u]['language'] = $prefs['site_language'];
 				}
@@ -5069,7 +5127,7 @@ class TrackerLib extends TikiLib
 
 	private function invalidate_field_cache($fieldId)
 	{
-		global $prefs;
+		global $prefs, $user;
 		$multi_languages=$prefs['available_languages'];
 		if (! $multi_languages) {
 			$multi_languages = array();
@@ -5080,13 +5138,13 @@ class TrackerLib extends TikiLib
 		$cachelib = TikiLib::lib('cache');
 
 		foreach ($multi_languages as $lang) {
-			$cachelib->invalidate(md5('trackerfield'.$fieldId.'o'.$lang));
-			$cachelib->invalidate(md5('trackerfield'.$fieldId.'c'.$lang));
-			$cachelib->invalidate(md5('trackerfield'.$fieldId.'p'.$lang));
-			$cachelib->invalidate(md5('trackerfield'.$fieldId.'op'.$lang));
-			$cachelib->invalidate(md5('trackerfield'.$fieldId.'oc'.$lang));
-			$cachelib->invalidate(md5('trackerfield'.$fieldId.'pc'.$lang));
-			$cachelib->invalidate(md5('trackerfield'.$fieldId.'opc'.$lang));
+			$cachelib->invalidate(md5('trackerfield'.$fieldId.'o'.$user.$lang));
+			$cachelib->invalidate(md5('trackerfield'.$fieldId.'c'.$user.$lang));
+			$cachelib->invalidate(md5('trackerfield'.$fieldId.'p'.$user.$lang));
+			$cachelib->invalidate(md5('trackerfield'.$fieldId.'op'.$user.$lang));
+			$cachelib->invalidate(md5('trackerfield'.$fieldId.'oc'.$user.$lang));
+			$cachelib->invalidate(md5('trackerfield'.$fieldId.'pc'.$user.$lang));
+			$cachelib->invalidate(md5('trackerfield'.$fieldId.'opc'.$user.$lang));
 		}
 	}
 
@@ -5336,6 +5394,11 @@ class TrackerLib extends TikiLib
 	public function get_child_items($itemId)
 	{
 		return $this->fetchAll('SELECT permName as field, itemId FROM tiki_tracker_item_fields v INNER JOIN tiki_tracker_fields f ON v.fieldId = f.fieldId WHERE f.type = "r" AND v.value = ?', array($itemId));
+	}
+
+	public function get_field_by_perm_name($permName) {
+		$res = $this->fetchAll('SELECT * FROM tiki_tracker_fields WHERE permName = ?', array($permName));
+		return reset($res);
 	}
 
 	public function refresh_index_on_master_update($args)

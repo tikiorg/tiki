@@ -19,7 +19,7 @@
 	<div class="form-group">
 		<label for="indexname" class="col-sm-3 control-label">{tr}Index{/tr}</label>
 		<div class="col-sm-9">
-			<input type="text" maxlength="20" class="form-control" name="indexname" id="indexname" value="{$info.indexname|escape}">
+			<input type="text" maxlength="255" class="form-control" name="indexname" id="indexname" value="{$info.indexname|escape}">
 			<p class="help-block">{tr}<em>[prefix]</em>main, such as tiki_main{/tr}</p>
 		</div>
 	</div>

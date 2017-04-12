@@ -166,7 +166,7 @@
 			</div> {* thumbactions *}
 			{/if}
 		{/capture}
-			<div id="{$checkname}_{$files[changes].id}" class="clearfix thumbnailcontener{if $is_checked eq 'y'} thumbnailcontenerchecked{/if}{if $files[changes].isgal eq 1} subgallery{/if}" style="{if $view eq 'browse'}float:left;{/if}{if $view neq 'page'}width:{$thumbnailcontener_size}px{/if}">
+			<div id="{$checkname}_{$files[changes].id}" class="{if $view eq 'page'}clearfix thumbnailcontener-heightauto{else}clearfix thumbnailcontener{if $is_checked eq 'y'} thumbnailcontenerchecked{/if}{if $files[changes].isgal eq 1} subgallery{/if}{/if}" style="{if $view eq 'browse'}float:left;{/if}{if $view neq 'page'}width:{$thumbnailcontener_size}px{/if}">
 				<div class="thumbnail" style="float:left; {if $view neq 'page'}width:{$thumbnailcontener_size}px{/if}">
 					<div class="thumbnailframe" style="width:100%;height:{if $view != 'page'}{$thumbnailcontener_size}px{else}100%{/if}{if $show_infos neq 'y'};margin-bottom:4px{/if}">
 						<div class="thumbimage">

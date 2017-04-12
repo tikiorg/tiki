@@ -1,15 +1,16 @@
 {tikimodule error=$module_params.error title=$tpl_module_title name="minichat" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 
-	{if $module_params.nochannelbar && $module_params.nochannelbar != "n"}
-		<div id='minichatchans' class='minichatchans' style="height:0em;visibility:hidden"></div>
-	{else}
-		<div id='minichatchans' class='minichatchans'></div>
-	{/if}
-	<div id='minichat' class='minichat' style='overflow-x: hidden; overflow-y: scroll; width: 100%; height: {$module_rows}em;'></div>
+	
+	<div id='minichatchans' class='btn-group minichatchans margin-bottom-xs'{if $module_params.nochannelbar && $module_params.nochannelbar != "n"} style="height: 0; visibility: hidden"{/if}></div>
+	
+	<div id='minichat' class='minichat well well-sm' style='overflow-x: hidden; overflow-y: auto; height: {$module_rows}em;'></div>
 
-	<div style='width: 100%; overflow: hidden;'>
-		<form name='minichatinputform' action='javascript:minichatpost();'>
-			<input name='minichatinput' id='minichatinput' type='text' style='width: 95%;' autocomplete='off' /><input type='submit' value="{tr}OK{/tr}" style='display: none;' />
+	<div class="minichatinputs">
+		<form class="form-horizontal" name='minichatinputform' action='javascript:minichatpost();'>
+			<div class="input-group input-group-sm">
+				<input class="form-control" name='minichatinput' id='minichatinput' type='text' autocomplete='off'>
+				<span class="input-group-btn"><input class="btn btn-primary" type='submit' value="{tr}OK{/tr}"></span>
+			</div>
 		</form>
 	</div>
 {/tikimodule}
@@ -95,7 +96,7 @@
 				d.style.display="none";
 
 				d=document.getElementById('minichata_'+minichat_selectedchan.id);
-				d.setAttribute('class', 'minichata_unselected');
+				d.setAttribute('class', 'btn btn-default btn-xs minichata_unselected');
 
 				minichat_selectedchan=null;
 			}
@@ -106,7 +107,7 @@
 					d.style.display="";
 
 					d=document.getElementById('minichata_'+c.id);
-					d.setAttribute('class', 'minichata_selected');
+					d.setAttribute('class', 'active btn btn-default btn-xs minichata_selected');
 
 					minichat_selectedchan=c;
 				}
@@ -126,7 +127,7 @@
 			var d=minichat_newelem("div", { 'id' : 'minichatdiv_'+c.id , 'class' : 'minichatdiv' });
 			document.getElementById('minichat').appendChild(d);
 
-			d=minichat_newelem("a", { 'id' : 'minichata_'+c.id, 'class' : 'minichata_unselected', 'href' : "javascript: minichat_selectchannel('"+c.name+"');" });
+			d=minichat_newelem("a", { 'id' : 'minichata_'+c.id, 'class' : 'btn btn-default btn-xs minichata_unselected', 'role' : 'button' , 'href' : "javascript: minichat_selectchannel('"+c.name+"');" });
 			d.innerHTML=c.name;
 			document.getElementById('minichatchans').appendChild(d);
 

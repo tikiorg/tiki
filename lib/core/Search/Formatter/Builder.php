@@ -17,6 +17,7 @@ class Search_Formatter_Builder
 	private $count;
 	private $tsOn;
 	private $tsettings;
+	private $actions;
 
 	function __construct()
 	{
@@ -25,6 +26,7 @@ class Search_Formatter_Builder
 			'offset_arg' => 'offset',
 			'max' => 50,
 		);
+		$this->actions = array();
 	}
 
 	function setPaginationArguments($arguments)
@@ -35,6 +37,10 @@ class Search_Formatter_Builder
 	function setFormatterPlugin(Search_Formatter_Plugin_Interface $plugin)
 	{
 		$this->formatterPlugin = $plugin;
+	}
+
+	function setActions($actions) {
+		$this->actions = $actions;
 	}
 
 	function apply($matches)
@@ -127,6 +133,9 @@ class Search_Formatter_Builder
 			foreach ($this->paginationArguments as $k => $v) {
 				$outputData[$k] = $this->paginationArguments[$k];
 			}
+			if( strstr($arguments['template'], 'table') )
+				$outputData['actions'] = $this->actions;
+
 			$templateData = file_get_contents($arguments['template']);
 
 			$plugin = new Search_Formatter_Plugin_SmartyTemplate($arguments['template']);

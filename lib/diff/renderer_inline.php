@@ -14,7 +14,7 @@
  * @package Text_Diff
  */
 
-require "renderer_sidebyside.php";
+require_once "renderer_sidebyside.php";
 
 class Text_Diff_Renderer_inline extends Text_Diff_Renderer_sidebyside
 {

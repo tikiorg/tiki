@@ -282,6 +282,9 @@ if (isset($_REQUEST["preview"])) {
 	if (!empty($_REQUEST['replyto'])) {
 		$smarty->assign('replyto', $_REQUEST['replyto']);
 	}
+	if (!empty($_REQUEST['sendfrom'])) {
+		$smarty->assign('sendfrom', $_REQUEST['sendfrom']);
+	}
 	$previewdata = $info['dataparsed'];
 	$parsed = $info['dataparsed'];
 	if ($nl_info["allowArticleClip"] == 'y' && $nl_info["autoArticleClip"] == 'y') {
@@ -349,6 +352,9 @@ if (isset($_REQUEST["save"])) {
 	if (!empty($_REQUEST['replyto'])) {
 		$smarty->assign('replyto', $_REQUEST['replyto']);
 	}
+	if (!empty($_REQUEST['sendfrom'])) {
+		$smarty->assign('sendfrom', $_REQUEST['sendfrom']);
+	}
 }
 $smarty->assign('emited', 'n');
 if (!empty($_REQUEST['datatxt'])) { 
@@ -414,11 +420,14 @@ if ( isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) || $resend 
 }
 
 if (isset($_REQUEST['resume'])) {
-	// for this throttle resume case the editionId and replyto address (if used) are added to the tiki-send_newsletter.php URL in the .tpl
+	// for this throttle resume case the editionId, sendfrom and replyto addresses (if used) are added to the tiki-send_newsletter.php URL in the .tpl
 	$edition_info = $nllib->get_edition($_REQUEST['resume']);
-	// if it is set the replyto parameter content is added to edition_info 
+	// if they are set the replyto and sendfrom parameter contents are added to edition_info  
 	if (!empty($_REQUEST['replyto']) &&  $_REQUEST['replyto'] != "undefined") { 
 		$edition_info['replyto'] = $_REQUEST['replyto'];  
+	}
+	if (!empty($_REQUEST['sendfrom']) &&  $_REQUEST['sendfrom'] != "undefined") { 
+		$edition_info['sendfrom'] = $_REQUEST['sendfrom'];  
 	}
 	$nl_info = $nllib->get_newsletter($edition_info['nlId']);
 	$nllib->send($nl_info, $edition_info, true, $sent, $errors, $logFileName);

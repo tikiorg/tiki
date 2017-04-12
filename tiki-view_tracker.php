@@ -146,7 +146,7 @@ if (isset($_REQUEST['status'])) {
 	$_REQUEST['status'] = 'o';
 }
 foreach ($status_raw as $let => $sta) {
-	if ((isset($$sta['perm']) and $$sta['perm'] == 'y') or ($my or $ours)) {
+	if ((isset(${$sta['perm']}) and ${$sta['perm']} == 'y') or ($my or $ours)) {
 		if (in_array($let, $sts)) {
 			$sta['class'] = 'statuson';
 			$sta['statuslink'] = str_replace($let, '', implode('', $sts));
@@ -448,7 +448,11 @@ if ($my and $writerfield) {
 	if (!empty($_REQUEST['filtervalue_other'])) {
 		$filtervalue = $_REQUEST['filtervalue_other'];
 	}
-	$exactvalue = '';
+	$field = $trackerDefinition->getField($filterfield);
+	if( $field && in_array($field['type'], array('d', 'D', 'R')) )
+		$exactvalue = $filtervalue;
+	else
+		$exactvalue = '';
 }
 $smarty->assign('filtervalue', $filtervalue);
 if (is_array($filtervalue)) {

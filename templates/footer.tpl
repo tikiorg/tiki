@@ -89,3 +89,6 @@ if (confirm("A problem occurred while detecting JavaScript on this page, click o
 {if $prefs.feature_endbody_code}
 	{eval var=$prefs.feature_endbody_code}
 {/if}
+{if $prefs.site_piwik_code}
+	{eval var=$prefs.site_piwik_code}
+{/if}

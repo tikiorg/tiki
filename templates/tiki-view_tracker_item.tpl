@@ -368,6 +368,6 @@
 
 <br><br>
 
-{if isset($print_page) && $print_page eq 'y'}
+{if isset($print_page) and $print_page eq 'y' and $prefs.print_original_url_tracker eq 'y'}
 	{tr}The original document is available at{/tr} <a href="{$base_url|escape}{$itemId|sefurl:trackeritem}">{$base_url|escape}{$itemId|sefurl:trackeritem}</a>
 {/if}

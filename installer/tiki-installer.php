@@ -24,7 +24,7 @@ $inputConfiguration = array(
 			'db' => 'alpha',
 			'dbinfo' => 'alpha',
 			'email_test_cc' => 'digits',
-//			'email_test_to' => '',  //validated later
+			'email_test_to' => 'email',
 			'use_proxy' => 'alpha',
 			'proxy_host' => 'striptags',
 			'proxy_port' => 'digits',
@@ -38,7 +38,7 @@ $inputConfiguration = array(
 			'fix_double_encoding' => 'xss',
 			'force_utf8' => 'alpha',
 			'general_settings' => 'alpha',
-//			'host' => '',   //validated later
+			'host' => 'text',
 			'https_login' => 'word',
 			'https_port' => 'digits',
 			'install_step' => 'digits',
@@ -46,15 +46,15 @@ $inputConfiguration = array(
 			'lang' => 'lang',
 			'log_tpl' => 'alpha',
 			'multi' => 'striptags',
-//			'name' => '',   //validated later
-//			'pass' => '',   //validated later
+			'name' => 'text',
+			'pass' => 'text',
 			'perform_mail_test' => 'alpha',
 			'previous_encoding' => 'word',
 			'reset' => 'alpha',
 			'resetdb' => 'alpha',
 			'scratch' => 'word',
 			'sender_email' => 'striptags',
-//			'setdbversion' => '',  //not used as input
+			'setdbversion' => 'text',
 			'smarty_notice_reporting' => 'alpha',
 			'test' => 'alnum',
 			'test2' => 'digits',
@@ -62,7 +62,7 @@ $inputConfiguration = array(
 			'test4' => 'word',
 			'update' => 'word',
 			'useInnoDB' => 'digits',
-//			'user' => '',   //validated later
+			'user' => 'text',
 //			'validPatches' => '',   //paramterized in sql
 		)
 	)
@@ -723,6 +723,7 @@ if ($max_execution_time != 0) {
 include_once ('lib/setup/twversion.class.php');
 $TWV = new TWVersion();
 $smarty->assign('tiki_version_name', preg_replace('/^(\d+\.\d+)([^\d])/', '\1 \2', $TWV->version));
+$smarty->assign('tiki_version_short', preg_replace('/^(\d+)\..*$/', '\1', $TWV->version));
 
 // Available DB Servers
 $dbservers = array();

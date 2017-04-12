@@ -18,6 +18,7 @@
 	<br><br>
 {/if}
 {if $showfrm eq 'y'}
+<div class="row">
 	<form class="form-horizontal col-md-10" action="tiki-remind_password.php" method="post">
 		{if $prefs.login_is_email ne 'y'}
 			<div class="form-group">
@@ -47,4 +48,5 @@
 			</div>
 		</div>
 	</form>
+</div>
 {/if}

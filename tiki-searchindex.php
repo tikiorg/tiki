@@ -108,7 +108,7 @@ if (count($filter) || count($postfilter)) {
 				}, $results->getFacets()
 			);
 
-			$plugin = new Search_Formatter_Plugin_SmartyTemplate(realpath('templates/searchresults-plain.tpl'));
+			$plugin = new Search_Formatter_Plugin_SmartyTemplate('searchresults-plain.tpl');
 			$plugin->setData(
 				array(
 					'prefs' => $prefs,

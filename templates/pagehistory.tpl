@@ -1,5 +1,5 @@
 {if (!empty($diff_style) and $old and $new or $diffdata) && $old.version !== $new.version}
-	{if !isset($translation_mode) or $translation_mode ne 'y'}
+	{if (not isset($translation_mode) or $translation_mode ne 'y') and empty($hide_version_info)}
 		<h2>{tr}Comparing version {$old.version} with version {$new.version}{/tr}</h2>
 	{/if}
 	<div class="table-responsive">

@@ -102,18 +102,20 @@ if (isset($_REQUEST["change"])) {
 		$cryptlib->onChangeUserPassword($_REQUEST["oldpass"], $_REQUEST["pass"]);
 	}
 
+	$homePageUrl = $prefs['tikiIndex'];	// set up in lib/setup/default_homepage.php
+
 	// Check if a wizard should be run.
 	// If a wizard is run, it will return to the $url location when it has completed. Thus no code after $wizardlib->onLogin will be executed
 	$wizardlib = TikiLib::lib('wizard');
 	$force = $_REQUEST["user"] == 'admin';
-	$wizardlib->onLogin($user, $prefs['tikiIndex'], $force);
+	$wizardlib->onLogin($user, $homePageUrl, $force);
 
 	// Go to homepage or url_after_validation
 	$accesslib = TikiLib::lib('access');
 	if (!empty($prefs['url_after_validation']) && !empty($_REQUEST['new_user_validation'])) {
 		$access->redirect($prefs['url_after_validation']);
 	} else {
-		$accesslib->redirect($prefs['tikiIndex']);
+		$accesslib->redirect($homePageUrl);
 	}
 }
 ask_ticket('change-password');

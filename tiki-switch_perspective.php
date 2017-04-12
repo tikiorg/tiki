@@ -14,6 +14,7 @@ $perspectivelib = TikiLib::lib('perspective');
 $access->check_feature('feature_perspective');
 
 unset($_SESSION['current_perspective']);
+unset($_SESSION['current_perspective_name']);
 
 if ( isset($_REQUEST['perspective']) ) {
 	$perspectivelib->set_perspective($_REQUEST['perspective']);

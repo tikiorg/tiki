@@ -16,6 +16,7 @@ class CleanVendors
 		'development',
 		'demo',
 		'demos',
+		'doc',
 		'docs',
 		'documentation',
 		'samples',
@@ -58,6 +59,7 @@ class CleanVendors
 		$fs->remove($vendors . 'codemirror/codemirror/mode/tiki');
 		self::removeMultiple($vendors . 'cwspear/bootstrap-hover-dropdown', ['bootstrap-hover-dropdown.min.js', 'demo.html']);
 		$fs->remove($vendors . 'jcapture-applet/jcapture-applet/src');
+		$fs->remove($vendors . 'jcapture-applet/jcapture-applet/applet.php');
 		$fs->remove($vendors . 'jquery/jquery-s5/lib/dompdf/www');
 		self::removeMultiple($vendors . 'jquery/jquery-sheet', ['jquery-1.10.2.min.js', 'jquery-ui', 'parser.php', 'parser/formula/formula.php']);
 		self::removeMultiple($vendors . 'jquery/jquery-timepicker-addon',
@@ -236,12 +238,23 @@ class CleanVendors
 				'flv/template_maxi',
 				'flv/template_mini',
 				'flv/template_multi',
+				'flv/build.xml',
+				'flv/flv_stream.php',
+				'flv/template_default/compileTemplateDefault.bat',
+				'flv/template_default/compileTemplateDefault.sh',
+				'flv/template_default/rorobong.jpg',
+				'flv/template_default/TemplateDefault.as',
 				'mp3/classes',
 				'mp3/mtasc',
 				'mp3/template_js',
 				'mp3/template_maxi',
 				'mp3/template_mini',
 				'mp3/template_multi',
+				'mp3/build.xml',
+				'mp3/template_default/compileTemplateDefault.bat',
+				'mp3/template_default/compileTemplateDefault.sh',
+				'mp3/template_default/TemplateDefault.as',
+				'mp3/template_default/test.mp3',
 			]
 		);
 		self::removeMultiple($vendors . 'rangy/rangy',
@@ -274,6 +287,50 @@ class CleanVendors
 
 		// and cwspear/bootstrap-hover-dropdown includes bootstrap and jquery without asking
 		$fs->remove($vendors . 'components');
+
+		//Remove extra files to keep the system tidy
+		$fs->remove($vendors . 'codemirror/codemirror/doc');
+		$fs->remove($vendors . 'phpcas/phpcas/CAS-1.3.3/docs');
+		$fs->remove($vendors . 'zendframework/zend-json/doc');
+		$fs->remove($vendors . 'fortawesome/font-awesome/src/_includes/examples');
+		$fs->remove($vendors . 'fortawesome/font-awesome/src/3.2.1/examples');
+		$fs->remove($vendors . 'tijsverkoyen/css-to-inline-styles/TijsVerkoyen/CssToInlineStyles/tests/examples');
+		$fs->remove($vendors . 'phpcas/phpcas/CAS-1.3.3/docs/examples');
+		$fs->remove($vendors . 'fortawesome/font-awesome/src/_includes/tests');
+		$fs->remove($vendors . 'tijsverkoyen/css-to-inline-styles/TijsVerkoyen/CssToInlineStyles/tests');
+		$fs->remove($vendors . 'twitter/bootstrap/js/tests');
+		$fs->remove($vendors . 'symfony/dependency-injection/Symfony/Component/DependencyInjection/Tests');
+		$fs->remove($vendors . 'symfony/console/Symfony/Component/Console/Tests');
+		$fs->remove($vendors . 'symfony/config/Symfony/Component/Config/Tests');
+		$fs->remove($vendors . 'symfony/filesystem/Tests');
+		$fs->remove($vendors . 'blueimp/javascript-load-image/js/demo.js');
+		$fs->remove($vendors . 'blueimp/javascript-load-image/css/demo.css');
+		$fs->remove($vendors . 'blueimp/jquery-file-upload/cors');
+		$fs->remove($vendors . 'blueimp/jquery-file-upload/server');
+		$fs->remove($vendors . 'Sam152/Javascript-Equal-Height-Responsive-Rows/demo.html');
+		$fs->remove($vendors . 'jquery/jtrack/demo.html');
+
+		$fs->remove($vendors . 'phpcas/phpcas/CAS-1.3.3/docs');
+		$fs->remove($vendors . 'jquery/plugins/jquery-json/test');
+
+
+		self::removeMultiple($vendors . 'blueimp/jquery-file-upload/css', ['demo-ie8.css', 'demo.css']);
+		self::removeMultiple($vendors . 'blueimp/jquery-file-upload',
+			[
+				'angularjs.html',
+				'basic.html',
+				'basic-plus.html',
+				'index.html',
+				'jquery-ui.html'
+			]
+		);
+		self::removeMultiple($vendors . 'svg-edit/svg-edit/',
+			[
+				'embedapi.html',
+				'extensions/imagelib/index.html',
+				'browser-not-supported.html',
+			]
+		);
 	}
 
 	private static function addIndexFile($path)
@@ -298,6 +355,7 @@ class CleanVendors
 						$fs->remove($path);
 					}
 				}
+				self:self::removeStandard($dir);
 			}
 		}
 	}

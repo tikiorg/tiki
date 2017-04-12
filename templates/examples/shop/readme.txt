@@ -1,9 +1,9 @@
-Templates used by the TikiKart profile
+Templates used by the Shopping_Cart profile
 
-See http://profiles.tiki.org/TikiKart for more
+See http://profiles.tiki.org/Shopping_Cart for more
 
 Apply the profile then modify these as required if necessary.
 
-Work in progress (March 2013), milage may vary!
+Work in progress (June 2016), milage may vary!
 
 

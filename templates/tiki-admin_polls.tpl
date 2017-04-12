@@ -17,7 +17,7 @@
 	{/if}
 	{tab name=$title}
 		<h2>{$title}</h2>
-		<form action="tiki-admin_polls.php" method="post" class="form-horizontal">
+		<form action="tiki-admin_polls.php?save=1" method="post" class="form-horizontal">
 			<input type="hidden" name="pollId" value="{$pollId|escape}">
 
 			<div class="form-group">

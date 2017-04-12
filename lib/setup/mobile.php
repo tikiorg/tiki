@@ -73,6 +73,7 @@ if ($photosToSwipe.length) {$photosToSwipe.photoSwipe();}', 5)
 					$hp = $prefs['wikiHomePage'];							// get default non mobile homepage
 
 					$_SESSION['current_perspective'] = $persp;
+					$_SESSION['current_perspective_name'] = $perspectivelib->get_perspective_name($_SESSION['current_perspective']);
 
 					if ($prefs['tikiIndex'] === 'tiki-index.php' && isset($_REQUEST['page'])) {
 

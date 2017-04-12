@@ -345,6 +345,10 @@ var customsearch = {
 
 		$(selector).tikiModal(cs.options.searchfadetext);
 
+		var resultsTop = $(cs.options.results).offset().top;
+		if( $(window).scrollTop() > resultsTop )
+			$('html, body').animate({scrollTop: resultsTop + 'px'}, 'fast');
+
 		cs._load(function (data) {
 			$(selector).tikiModal();
 			$(cs.options.results).html(data);
@@ -912,6 +916,9 @@ function cs_design_daterange($id, $fieldname, $fieldid, $arguments, $default, &$
 
 	$script .= "
 $('#{$fieldid_from}_dptxt,#{$fieldid_to}_dptxt').change(function() {
+	updateDateRange_$fieldid();
+});
+function updateDateRange_$fieldid() {
 	var from = $('#$fieldid_from').val();
 	var to = $('#$fieldid_to').val();
 	from = from.substr(0,10);to = to.substr(0,10); // prevent trailing 000 from date picker
@@ -920,7 +927,8 @@ $('#{$fieldid_from}_dptxt,#{$fieldid_to}_dptxt').change(function() {
 		name: 'daterange',
 		value: from + ',' + to
 	});
-});
+}
+updateDateRange_$fieldid();
 ";
 
 	return $picker;

@@ -183,6 +183,9 @@ class AddonUpgradeCommand extends Command
 						}
 					}
 				} else {
+					if (!in_array($profileName, $forgetProfiles)) {
+						$addon_utilities->updateProfile($folder, $addons[$package]->version, $profileName);
+					}
 					$output->writeln("<info>Profile $profileName was already applied. Nothing happened.</info>");
 				}
 			}

@@ -25,6 +25,10 @@ class Search_ContentSource_FileGallerySource implements Search_ContentSource_Int
 		
 		$item = $lib->get_file_gallery_info($objectId);
 
+		if (! $item) {
+			return false;
+		}
+
 		$data = array(
 			'title' => $typeFactory->sortable($item['name']),
 			'creation_date' => $typeFactory->timestamp($item['created']),

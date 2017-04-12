@@ -259,6 +259,11 @@
 														{$libeg}<a href="{bootstrap_modal controller=user action=manage_groups checked=$username all_groups=$all_groups offset=$offset sort_mode=$sort_mode numrows=$numrows}">
 															{icon name="group" _menu_text='y' _menu_icon='y' alt="{tr}Add or remove from a group{/tr}"}
 														</a>{$liend}
+														{$libeg}
+															<a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Edit group expiry{/tr}">
+																{icon name='time'  _menu_text='y' _menu_icon='y' alt='{tr}Edit group expiry{/tr}'}
+															</a>
+														{$liend}
 														{$libeg}<a href="{query _type='relative' user=$users[user].userId}">
 															{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit account settings{/tr}"}
 														</a>{$liend}
@@ -461,7 +466,7 @@
 						<div class="form-group">
 							<label class="col-sm-3 col-md-2 control-label" for="pass1">{tr}New Password{/tr}</label>
 							<div class="col-sm-7 col-md-6">
-								<input type="password" class="form-control" placeholder="New Password" name="pass" id="pass1">
+								<input type="password" class="form-control" placeholder="{tr}New Password{/tr}" name="pass" id="pass1">
 								<div style="margin-left:5px;">
 									<div id="mypassword_text">{icon name='ok' istyle='display:none'}{icon name='error' istyle='display:none' } <span id="mypassword_text_inner"></span></div>
 									<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div>
@@ -474,7 +479,7 @@
 						<div class="form-group">
 							<label class="col-sm-3 col-md-2 control-label" for="pass2">{tr}Repeat Password{/tr}</label>
 							<div class="col-sm-7 col-md-6">
-								<input type="password" class="form-control" name="passAgain" id="pass2" placeholder="Repeat Password">
+								<input type="password" class="form-control" name="passAgain" id="pass2" placeholder="{tr}Repeat Password{/tr}">
 								<div id="mypassword2_text">
 									<div id="match" style="display:none">
 										{icon name='ok' istyle='color:#0ca908'} {tr}Passwords match{/tr}
@@ -485,12 +490,12 @@
 								</div>
 							</div>
 						</div>
-						{if ! ( $prefs.auth_method eq 'ldap' and ( $prefs.ldap_create_user_tiki eq 'n' or $prefs.ldap_skip_admin eq 'y' ) and $prefs.ldap_create_user_ldap eq 'n' )}
+						{if $prefs.generate_password eq 'y' and not ( $prefs.auth_method eq 'ldap' and ( $prefs.ldap_create_user_tiki eq 'n' or $prefs.ldap_skip_admin eq 'y' ) and $prefs.ldap_create_user_ldap eq 'n')}
 							<div class="form-group">
-								<div class="col-sm-3 col-sm-offset-3 col-md-2 col-md-offset-2">
+								<div class="col-sm-3 col-sm-offset-3 col-md-3 col-md-offset-2">
 									<span id="genPass">{button href="#" _text="{tr}Generate a password{/tr}"}</span>
 								</div>
-								<div class="col-sm-3 col-md-2">
+								<div class="col-sm-3 col-md-3">
 									<input id='genepass' class="form-control" name="genepass" type="text" tabindex="0" style="display:none">
 								</div>
 							</div>

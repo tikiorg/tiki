@@ -247,7 +247,11 @@ if ($prefs['feature_wysiwyg'] == 'y') {
 if ($prefs['feature_antibot'] == 'y' && empty($user)) {
 	if ($prefs['recaptcha_enabled'] === 'y') {
 		if ($prefs['recaptcha_version'] == '2') {
-			$headerlib->add_jsfile_cdn("$url_scheme://www.google.com/recaptcha/api.js");
+			if (!empty($prefs['language'])) {
+				$headerlib->add_jsfile_cdn("$url_scheme://www.google.com/recaptcha/api.js?hl=" . $prefs['language']);
+			} else {
+				$headerlib->add_jsfile_cdn("$url_scheme://www.google.com/recaptcha/api.js");
+			}
 		} else {
 			$headerlib->add_jsfile_cdn("$url_scheme://www.google.com/recaptcha/api/js/recaptcha_ajax.js");
 		}
@@ -375,7 +379,7 @@ if (isset($_REQUEST['geo_zoomlevel_to_found_location'])) {
 } else {
 	$zoomToFoundLocation = isset($prefs['geo_zoomlevel_to_found_location']) ? $prefs['geo_zoomlevel_to_found_location'] : 'street';
 }
-$headerlib->add_js('var zoomToFoundLocation = "'.$zoomToFoundLocation.'";');	// Set the zoom option after searching for a location
+$headerlib->add_js('var zoomToFoundLocation = "'. addslashes($zoomToFoundLocation) .'";');	// Set the zoom option after searching for a location
 
 if ($prefs['geo_openlayers_version'] === 'ol3') {
 	$headerlib->add_jsfile('lib/jquery_tiki/tiki-maps-ol3.js');

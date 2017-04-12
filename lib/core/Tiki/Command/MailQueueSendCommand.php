@@ -38,30 +38,32 @@ class MailQueueSendCommand extends Command
 
           $output->writeln('Sending message '.$message['messageId'].'...');
           $mail = unserialize($message['message']);
+		  $error = '';
 
-          if ($mail) {
+          if ($mail && get_class($mail) === 'Zend\Mail\Message') {
             try {
                 tiki_send_email($mail);
                 $title = 'mail';
-            } catch (Zend\Mail\Exception\ExceptionInterface $e) {
+            } catch (\Zend\Mail\Exception\ExceptionInterface $e) {
                 $title = 'mail error';
+				$error = $e->getMessage();
             }
 
-            if ($title == 'mail error' || $prefs['log_mail'] == 'y') {
+            if ($error || $prefs['log_mail'] == 'y') {
                 foreach($mail->getTo() as $destination){
-                    $logslib->add_log($title, $destination->getEmail() . '/' . $mail->getSubject());
+                    $logslib->add_log($title, $error . "\n " . $destination->getEmail() . '/' . $mail->getSubject());
                 }
                 foreach($mail->getCc() as $destination){
-                    $logslib->add_log($title, $destination->getEmail() . '/' . $mail->getSubject());
+                    $logslib->add_log($title, $error . "\n " . $destination->getEmail() . '/' . $mail->getSubject());
                 }
                 foreach($mail->getBcc() as $destination){
-                    $logslib->add_log($title, $destination->getEmail() . '/' . $mail->getSubject());
+                    $logslib->add_log($title, $error . "\n " . $destination->getEmail() . '/' . $mail->getSubject());
                 }
             }
 
-            if ($title == 'mail error') {
+            if ($error) {
             	$query = 'UPDATE tiki_mail_queue SET attempts = attempts + 1 WHERE messageId = ?';
-            	$output->writeln('Failed.');
+            	$output->writeln('Failed sending mail object id: ' . $message['messageId'] . ' (' . $error . ')');
             } else {
             	$query = 'DELETE FROM tiki_mail_queue WHERE messageId = ?';
             	$output->writeln('Sent.');
@@ -69,7 +71,7 @@ class MailQueueSendCommand extends Command
 
             \TikiDb::get()->query($query, array($message['messageId']));
           } else {
-              $output->writeln('ERROR: Unable to unserialize the mailer object.');
+              $output->writeln('ERROR: Unable to unserialize the mail object id:' . $message['messageId']);
           }
       }
       $output->writeln('Mail queue processed...');

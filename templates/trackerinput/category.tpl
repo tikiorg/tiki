@@ -12,7 +12,7 @@
 		{/foreach}
 	</select>
 	{foreach key=ku item=cat from=$field.list}
-		<input id="cat{$cat.categId|escape}_hidden" type="hidden" name="cat_managed[]" value="{$cat.categId|escape}">
+		<input id="cat{$cat.categId|escape}_hidden" type="hidden" name="cat_managed_{$field.ins_id}[]" value="{$cat.categId|escape}">
 	{/foreach}
 {elseif !empty($cat_tree)}
 	{$cat_tree}{* checkboxes with descendents *}
@@ -22,7 +22,7 @@
 			{assign var=fcat value=$iu.categId}
 			<div class="col-md-4">
 				<label for="cat{$iu.categId}" class="{if $field.options_array[1] eq "radio"}radio{else}checkbox{/if}">
-					<input id="cat{$iu.categId|escape}_hidden" type="hidden" name="cat_managed[]" value="{$iu.categId|escape}">
+					<input id="cat{$iu.categId|escape}_hidden" type="hidden" name="cat_managed_{$field.ins_id}[]" value="{$iu.categId|escape}">
 					<input type={if $field.options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="{$field.ins_id}[]" value="{$iu.categId}" id="cat{$iu.categId}" {if in_array($fcat, $field.selected_categories)} checked="checked"{/if}>
 					{if $field.options_array[4] eq 1 && !empty($iu.description)}<a href="{$iu.description|escape}" target="tikihelp" class="tikihelp" title="{$iu.name|escape}:{$iu.description|escape}">{icon name='help'}</a>{/if}
 					{$iu.name|escape}

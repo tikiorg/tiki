@@ -68,11 +68,13 @@
 				{preference name=feature_wiki_description label="{tr}Description{/tr}"}
 				{preference name=feature_page_title label="{tr}Display page name as page title{/tr}"}
 				{preference name=wiki_page_name_above label="{tr}Display page name above page{/tr}"}
+				{preference name=wiki_page_name_inside label="{tr}Display page name inside page content{/tr}"}
 				{preference name=feature_wiki_pageid label="{tr}Page ID{/tr}"}
 				{preference name=wiki_show_version label="{tr}Page version{/tr}"}
 				{preference name=wiki_authors_style label="{tr}List authors{/tr}"}
-				<div class="adminoptionboxchild">
+				<div class="adminoptionbox wiki_authors_style_childcontainer classic business collaborative lastmodif">
 					{preference name=wiki_authors_style_by_page label="{tr}Allow override per page{/tr}"}
+					{preference name=print_wiki_authors}
 				</div>
 				{preference name=feature_wiki_show_hide_before}
 				{preference name=wiki_actions_bar}
@@ -87,7 +89,8 @@
 				{preference name=wiki_auto_toc}
 				<div class="adminoptionbox clearfix" id="wiki_auto_toc_childcontainer">
 					{preference name=wiki_inline_auto_toc}
-					{preference name=wiki_inline_toc_pos}
+					{preference name=wiki_toc_pos}
+					{preference name=wiki_toc_offset}
 				</div>
 			</fieldset>
 			<fieldset>
@@ -109,11 +112,11 @@
 				{preference name=feature_wiki_allowhtml}
 				{preference name=feature_wysiwyg}
 				{preference name=wiki_timeout_warning}
+				{preference name=wiki_edit_icons_toggle}
 				{preference name=wiki_edit_section}
 				<div class="adminoptionboxchild" id="wiki_edit_section_childcontainer">
 					{preference name=wiki_edit_section_level}
 				</div>
-				{preference name=wiki_edit_icons_toggle}
 				{preference name=wiki_edit_minor}
 				{preference name=feature_wiki_mandatory_category}
 				{preference name=feature_actionlog_bytes}
@@ -354,6 +357,7 @@
 					</div>
 					{preference name=namespace_separator}
 					{preference name=namespace_indicator_in_structure}
+					{preference name=namespace_indicator_in_page_title}
 					<div class="col-sm-offset-4 colsm-8">
 						<p><strong>{tr}Settings that may be affected by the namespace separator{/tr}</strong></p>
 						{tr}To use :: as a separator, you should also use ::: as the wiki center tag syntax{/tr}.<br/>

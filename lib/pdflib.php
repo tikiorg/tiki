@@ -26,17 +26,43 @@ class PdfGenerator
 			if (!empty($path) && is_executable($path)) {
 				$this->mode = 'webkit';
 				$this->location = $path;
+			} else {
+				TikiLib::lib('errorreport')->report(tr('PDF webkit path not found: "%0"', $path));
 			}
 		} else if ($prefs['print_pdf_from_url'] == 'weasyprint') {
 			$path = $prefs['print_pdf_weasyprint_path'];
 			if (!empty($path) && is_executable($path)) {
 				$this->mode = 'weasyprint';
 				$this->location = $path;
+			} else {
+				TikiLib::lib('errorreport')->report(tr('PDF WeasyPrint path not found: "%0"', $path));
 			}
 		} elseif ( $prefs['print_pdf_from_url'] == 'webservice' ) {
-			if ( ! empty( $prefs['print_pdf_webservice_url'] ) ) {
+			$path = $prefs['path'];
+			if ( ! empty($path) ) {
 				$this->mode = 'webservice';
-				$this->location = $prefs['print_pdf_webservice_url'];
+				$this->location = $path;
+			} else {
+				TikiLib::lib('errorreport')->report(tr('PDF webservice URL empty'));
+			}
+		} elseif ( $prefs['print_pdf_from_url'] == 'mpdf' ) {
+			$path = $prefs['print_pdf_mpdf_path'];
+			if (substr($path, -1) !== '/') {
+				$path .= '/';
+			}
+			if ( ! empty($path) && is_readable($path) && file_exists($path . 'mpdf.php')) {
+				self::setupMPDFCacheLocation();
+				if (!class_exists('mPDF')){
+					include_once($path . 'mpdf.php');
+				}
+				if (! is_writable(_MPDF_TEMP_PATH) ||! is_writable(_MPDF_TTFONTDATAPATH)) {
+					TikiLib::lib('errorreport')->report(tr('mPDF "%0" and "%1" directories must be writable', 'tmp', 'ttfontdata'));
+				} else {
+					$this->mode = 'mpdf';
+					$this->location = $path;
+				}
+			} else {
+				TikiLib::lib('errorreport')->report(tr('mPDF not found in path: "%0"', $path));
 			}
 		}
 	}
@@ -113,7 +139,7 @@ class PdfGenerator
 		return $pdf;
 	}
 
-   /**
+	/**
      * @param $url
      * @return mixed
      */
@@ -162,6 +188,134 @@ class PdfGenerator
 
 		$target = $this->location . '?' . $url;
 		return $tikilib->httprequest($target);
+	}
+
+	/**
+	 * Setup mPDF Cache locations to a folder (mpdf) inside the filesystem cache
+	 */
+	static public function setupMPDFCacheLocation()
+	{
+		// set cache paths
+		$cache = new CacheLibFileSystem();
+		$mPDFBaseCachePath = $cache->folder . '/mpdf/';
+		if (!is_dir($mPDFBaseCachePath)) {
+			mkdir($mPDFBaseCachePath);
+			chmod($mPDFBaseCachePath, 0777);
+		}
+
+		$constantsAndDirectories = array(
+			'_MPDF_TEMP_PATH'      => 'tmp/',
+			'_MPDF_TTFONTDATAPATH' => 'ttfontdata/',
+		);
+
+		foreach ($constantsAndDirectories as $constant => $directory) {
+			if (!is_dir($mPDFBaseCachePath . $directory)) {
+				mkdir($mPDFBaseCachePath . $directory);
+				chmod($mPDFBaseCachePath . $directory, 0777);
+			}
+			if (!defined($constant)) {
+				define($constant, $mPDFBaseCachePath . $directory);
+			}
+		}
+	}
+
+	/**
+	 * @param $url string - address of the item to print as PDF
+	 * @return string     - contents of the PDF
+	 */
+	private function mpdf($url)
+	{
+		if (!extension_loaded('curl')) {
+			TikiLib::lib('reporterror')->report(tra('mPDF: CURL PHP extension not available'));
+			return '';
+		}
+
+		// To prevent anyone else using your script to create their PDF files - TODO?
+		//if (!preg_match("/^$base_url/", $url)) { die("Access denied"); }
+
+/*		FIXME later, cookie auth not working yet
+		$cookie = [];
+		foreach ($_COOKIE as $key => $value) {
+		    $cookie[] = "{$key}={$value}";
+		};
+		$cookie = implode(';', $cookie);
+
+		$ckfile = tempnam("/tmp", 'curl_cookies_');
+		file_put_contents($ckfile, $cookie);
+
+		$curl_log = fopen('temp/curl_debug.txt', 'w+'); // open file for READ and write
+*/
+
+		$options = array(
+			CURLOPT_RETURNTRANSFER => true,     // return web page
+			CURLOPT_HEADER => false,     		// return headers in addition to content
+			CURLINFO_HEADER_OUT => true,
+			CURLOPT_ENCODING => "",       		// handle all encodings
+			CURLOPT_HTTPHEADER => ['Expect:'],	// remove Expect header to avoid 100 Continue situations?
+
+			CURLOPT_FOLLOWLOCATION => true,     // follow redirects
+			CURLOPT_AUTOREFERER => true,		// set referer on redirect
+			CURLOPT_MAXREDIRS => 10,			// stop after 10 redirects
+			CURLOPT_CONNECTTIMEOUT => 10,		// timeout on connect
+			CURLOPT_TIMEOUT => 30,				// timeout on response
+
+			CURLOPT_SSL_VERIFYPEER => false,	// Disabled SSL Cert checks
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+
+/*			CURLOPT_COOKIE => $cookie,
+			//CURLOPT_COOKIESESSION => true,	// no difference
+			//CURLOPT_COOKIEFILE => $ckfile,
+			CURLOPT_COOKIEJAR => $ckfile,
+
+			CURLOPT_VERBOSE => true,
+			CURLOPT_STDERR => $curl_log,
+*/
+		);
+
+		// For $_POST i.e. forms with fields
+		if (count($_POST) > 0) {
+			$ch = curl_init($url);
+
+			curl_setopt_array( $ch, $options );
+
+			$formvars = [];
+			foreach ($_POST AS $name => $post) {
+				$formvars = [ $name => $post . " \n" ];
+			}
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $formvars);
+			$html = curl_exec($ch);
+			curl_close($ch);
+		} else {
+			$ch = curl_init($url);
+
+			curl_setopt_array($ch, $options );
+
+			$html = curl_exec($ch);
+			curl_close($ch);
+
+			if (!$html) {
+				$err = curl_error($ch);
+				TikiLib::lib('errorreport')->report($err ? $err : tr('mPDF: An error occurred retrieving page %0', $url));
+				return '';
+			}
+		}
+
+		self::setupMPDFCacheLocation();
+		if (!class_exists('mPDF')){
+			include_once($this->location . 'mpdf.php');
+		}
+		$mpdf = new mPDF('');
+		$mpdf->useSubstitutions = true;					// optional - just as an example
+		$mpdf->SetHeader($url . '||Page {PAGENO}');		// optional - just as an example
+		$mpdf->CSSselectMedia = 'print';				// assuming you used this in the document header
+
+		$mpdf->autoScriptToLang = true;
+		$mpdf->autoLangToFont = true;
+
+		$mpdf->setBasePath($url);
+		$mpdf->WriteHTML($html);
+
+		return $mpdf->Output('', 'S');					// Return as a string
 	}
 }
 

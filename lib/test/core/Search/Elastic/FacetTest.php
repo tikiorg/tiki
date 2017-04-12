@@ -46,8 +46,8 @@ class Search_Elastic_FacetTest extends PHPUnit_Framework_TestCase
 				array(
 					array('value' => 1, 'count' => 3),
 					array('value' => 2, 'count' => 2),
-					array('value' => 'orphan', 'count' => 1),
 					array('value' => 3, 'count' => 1),
+					array('value' => 'orphan', 'count' => 1),
 				)
 			),
 			$values

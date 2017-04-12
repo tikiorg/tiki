@@ -41,7 +41,16 @@ function smarty_function_payment( $params, $smarty )
 				$info['state'] == 'past' &&
 				$prefs['payment_user_only_his_own_past'] != 'y'
 			) ||
-			$theguy
+			$theguy ||
+			$objectperms->payment_admin ||
+			(
+				(
+					$info['state'] == 'outstanding' ||
+					$info['state'] == 'overdue'
+				) &&
+				$info['userId'] == '-1' &&
+				$prefs['payment_anonymous_allowed'] == 'y'
+			)
 		)
 	) {
 		if ($prefs['payment_system'] == 'cclite' && isset($_POST['cclite_payment_amount']) && $_POST['cclite_payment_amount'] == $info['amount_remaining']) {
@@ -103,6 +112,17 @@ function smarty_function_payment( $params, $smarty )
 		return $smarty->fetch('tiki-payment-single.tpl', $smarty_cache_id, $smarty_compile_id);
 
 	} else {
-		return tra('This invoice does not exist or access to it is restricted.');
+		$smarty->loadPlugin('smarty_block_remarksbox');
+		$repeat = false;
+
+		return smarty_block_remarksbox(
+			[
+				'type' => 'warning',
+				'title' => tra('Payment error'),
+			],
+			tra('This invoice does not exist or access to it is restricted.'),
+			$smarty,
+			$repeat
+		);
 	}
 }

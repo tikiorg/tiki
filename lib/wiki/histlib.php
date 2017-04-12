@@ -1132,7 +1132,7 @@ class Document
 }
 
 
-function histlib_helper_setup_diff( $page, $oldver, $newver )
+function histlib_helper_setup_diff( $page, $oldver, $newver, $diff_style = '' )
 {
 	global $prefs;
 	$smarty = TikiLib::lib('smarty');
@@ -1192,17 +1192,17 @@ function histlib_helper_setup_diff( $page, $oldver, $newver )
 
 	$smarty->assign('diff_summaries', $diff_summaries);
 	
-	if (!isset($_REQUEST["diff_style"]) || $_REQUEST["diff_style"] == "old") {
-		$_REQUEST["diff_style"] = 'unidiff';
+	if (empty($diff_style) || $diff_style == "old") {
+		$diff_style = $prefs['default_wiki_diff_style'];
 	}
 
-	$smarty->assign('diff_style', $_REQUEST["diff_style"]);
-	if ($_REQUEST["diff_style"] == "sideview") {
+	$smarty->assign('diff_style', $diff_style);
+	if ($diff_style == "sideview") {
 		$old["data"] = $tikilib->parse_data($old["data"], array('preview_mode' => true));
 		$new["data"] = $tikilib->parse_data($new["data"], array('preview_mode' => true));
 	} else {
 		require_once('lib/diff/difflib.php');
-		if ($info['is_html'] == 1 and $_REQUEST["diff_style"] != "htmldiff") {
+		if ($info['is_html'] == 1 and $diff_style != "htmldiff") {
 			$search[] = "~</(table|td|th|div|p)>~";
 			$replace[] = "\n";
 			$search[] = "~<(hr|br) />~";
@@ -1210,7 +1210,7 @@ function histlib_helper_setup_diff( $page, $oldver, $newver )
 			$old['data'] = strip_tags(preg_replace($search, $replace, $old['data']), '<h1><h2><h3><h4><b><i><u><span>');
 			$new['data'] = strip_tags(preg_replace($search, $replace, $new['data']), '<h1><h2><h3><h4><b><i><u><span>');
 		}
-		if ($_REQUEST["diff_style"] == "htmldiff" && $old['is_html'] != 1) {
+		if ($diff_style == "htmldiff" && $old['is_html'] != 1) {
 
 			$parse_options = array('is_html' => ($old['is_html'] == 1), 'noheadinc' => true, 'suppress_icons' => true, 'noparseplugins' => true);
 			$old["data"] = $tikilib->parse_data($old["data"], $parse_options);
@@ -1227,7 +1227,7 @@ function histlib_helper_setup_diff( $page, $oldver, $newver )
 			$new["data"] = preg_replace(';~tc~(.*?)~/tc~;s', '', $new["data"]);
 		}
 
-		$html = diff2($old["data"], $new["data"], $_REQUEST["diff_style"]);
+		$html = diff2($old["data"], $new["data"], $diff_style);
 		$smarty->assign_by_ref('diffdata', $html);
 	}
 }

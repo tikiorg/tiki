@@ -177,7 +177,7 @@ function compileRendererClass($function)
      * actual bugs. So instead, temporarily disable warning reporting, just for the compilation of
      * this file.
      */
-    $old_error_reporting_level;
+    global $old_error_reporting_level;
     if (defined('TIKI_IN_TEST'))
     {
         $old_error_reporting_level = error_reporting(E_ERROR | E_PARSE);

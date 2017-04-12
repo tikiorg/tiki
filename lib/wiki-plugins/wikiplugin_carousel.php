@@ -316,7 +316,7 @@ function carousel_callback(){ };
 	);
 
 	TikiLib::lib('header')->add_jq_onready('setTimeout( function() { $("#' . $unique . '").tiki("carousel", "", '. json_encode($params).'); carousel_callback();}, 1000);');
-
+	$size = '';
 	if (empty($params['displaySize'])) {
 		$size = 'width: 1px; height: 1px;';
 	} else if ($params['displaySize'] > 10) {

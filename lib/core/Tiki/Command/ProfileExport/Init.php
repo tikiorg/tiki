@@ -35,10 +35,26 @@ class Init extends Command
 			mkdir('profiles');
 		}
 
+		$htaccess = <<<HTACCESS
+<FilesMatch ".*">
+    <IfModule mod_authz_core.c>
+       Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        order deny,allow
+        deny from all
+    </IfModule>
+</FilesMatch>
+HTACCESS;
+		file_put_contents("profiles/.htaccess", $htaccess);
+
 		$definition = <<<INI
 profile.name = $profileName
 INI;
 		file_put_contents("profiles/info.ini", $definition);
-		mkdir("profiles/$profileName");
+		
+		if( !file_exists("profiles/$profileName") ) {
+			mkdir("profiles/$profileName");
+		}
 	}
 }

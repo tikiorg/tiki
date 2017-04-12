@@ -160,6 +160,12 @@ invalidHandler: function(event, validator) {
 		if (! $scrollElement.length) {
 			$scrollElement = $firstError;
 		}
+
+		if ($firstError.parents(".tab-content").length > 0) {
+			$tab = $firstError.parents(".tab-pane");
+			$(\'a[href="#\' + $tab.attr("id") + \'"]\').tab("show");
+		}
+
 		$container.animate({
 			scrollTop: containerScrollTop + $scrollElement.offset().top
 		}, 1000, function () {
