@@ -225,9 +225,6 @@ function iconset_default()
 			'chart' => array(
 				'id' => 'area-chart',
 			),
-			'check' => array(
-				'id' => 'check-square-o',
-			),
 			//code in defaults
 			'code_file' => array(
 				'id' => 'file-code-o',
