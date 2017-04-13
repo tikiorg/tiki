@@ -122,6 +122,7 @@
 			<div class="adminoptionboxchild" id="xmpp_feature_childcontainer">
 				{preference name=xmpp_server_host}
 				{preference name=xmpp_server_http_bind}
+				{preference name=xmpp_openfire_use_token}
 			</div>
 		{/tab}
 	{/tabset}
