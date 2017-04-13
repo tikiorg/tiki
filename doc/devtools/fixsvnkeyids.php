@@ -16,31 +16,54 @@ if (PHP_SAPI !== 'cli')
 
 /**
  *
- * This file may be run to fix svn keyword ids for all files within tiki.
+ * This file may be run to fix the Id's of SVN Keyword for all files within tiki.
  *
- * Reads the beginning of each file in tiki, and adds a svn Keyword id if the marker in file is found.
+ * Reads the beginning of each file in tiki, and adds a svn Keyword id if the $Id$ marker is found.
  *
  */
 
-info("Updating SVN keyword Id's. This will take a minute...");
-// apply filter only to these file types
-foreach (glob_recursive('*.{php,tpl,sh,sql,js,less}', GLOB_BRACE, '', 'vendor_') as $fileName) {
-	$handle = fopen( $fileName, "r");
-	$count = 1;
-	do {
-		$buffer = fgets($handle);
+$xml = new DOMDocument;
+$xml->loadXML(shell_exec('svn propget -R svn:keywords --xml'));
 
-		if (preg_match('/(\/\/ |{\* |\# | \* )\$Id.*\$/', $buffer)){ // match several different comment styles
-			shell_exec('svn propset svn:keywords "Id" ' . escapeshellarg($fileName));
-			break;
-		}
-		$count++;
-	} while ($count < 11 && $buffer); // search through up to 11 lines of code (no results expanding that)
-	fclose($handle);
+// find the offset lengh of the base pathname
+$pathLen = strlen(realpath(dirname(__FILE__).'/../..')) +1;
+
+$Ids = array();
+
+foreach($xml->getElementsByTagName('target') as $target) {
+	foreach($target->getElementsByTagName('property') as $isKey){
+		if ($isKey->getAttribute('name') === 'svn:keywords')
+			$Ids[substr($target->getAttribute('path'),$pathLen)] = $isKey->textContent;
+	}
+}
+$matches = 0;
+// apply filter only to these file types, excluding any vendor files.
+foreach (glob_recursive('*{.php,.tpl,.sh,.sql,.js,.less,.css,.yml,htaccess}', GLOB_BRACE, '', 'vendor_') as $fileName) {
+	// if there was no keywords defined in SVN or there is no Id defined in those keywords
+	if (!isset($Ids[$fileName]) || !preg_match('/(^I|\nI)(d$|d\n)/', $Ids[$fileName])) {
+		$handle = fopen($fileName, "r");
+		$count = 1;
+		do {
+			$buffer = fgets($handle);
+			if (preg_match('/(\/\/ |{\* |\# | \* )\$Id.*\$/', $buffer)) { // match several different comment styles
+				$keys = '';
+				if (!empty($Ids[$fileName]))    // if there is preexisting keys, then set them.
+					$keys = $Ids[$fileName]."\n";
+				$keys .= "Id";
+				shell_exec("svn propset svn:keywords \"$keys\" " . escapeshellarg($fileName));
+				$matches++;
+				break;
+			}
+			$count++;
+		} while ($count < 11 && $buffer); // search through up to 11 lines of code (no results increasing that)
+		fclose($handle);
+	}
 }
 
-info("Keywords updated, you may now review and commit.");
-
+if ($matches)
+	info(color("$matches keywords updated, you may now review and commit.",'yellow'));
+else
+	info(color("All keywords were up to date, no changes made.",'yellow'));
 
 
 /**
