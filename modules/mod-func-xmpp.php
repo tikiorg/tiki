@@ -16,7 +16,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function module_xmpp_info()
 {
 	return array(
-		'description' => tra('Hold a chat session using ConverseJS XMPP client.'),
+		'description' => tra('Hold a chat session using XMPP (uses the ConverseJS client).'),
 		'name' => tra('XMPP'),
 		'params' => array(),
 		'prefs' => array('xmpp_feature'),
