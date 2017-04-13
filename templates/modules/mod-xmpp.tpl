@@ -1,3 +1,4 @@
+{* $Id$ *}
 {tikimodule
     title="{tr}ConverseJS XMPP{/tr}"
     name="XMPP" nobox='y'
