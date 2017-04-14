@@ -263,8 +263,8 @@ function iconset_legacy()
 				'id' => 'chart_curve',
 			),
 			'check' => array(
-				'id' => 'select',
-				'append' => '.gif'
+				'id' => 'accept',
+//				'append' => '.gif'
 			),
 			'code' => array(
 				'id' => 'page_white_code',

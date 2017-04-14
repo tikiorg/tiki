@@ -84,7 +84,7 @@ function iconset_glyphicons()
 				'id' => 'object-align-bottom',
 			),
 			'check' => array(
-				'id' => 'ok-circle',
+				'id' => 'ok',
 			),
 			'code' => array(
 				'id' => 'console',
@@ -536,7 +536,7 @@ function iconset_glyphicons()
 			'camera',
 			'cd',
 			'certificate',
-			'check',
+//			'check',
 			'chevron-down',
 			'chevron-left',
 			'chevron-right',

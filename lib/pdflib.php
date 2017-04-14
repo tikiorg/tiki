@@ -328,7 +328,7 @@ class PdfGenerator
 		$mpdf->WriteHTML(str_replace(array(".tiki","opacity: 0;"),array("","fill: #fff;opacity:0.3;stroke:black"),'<style>'.$basecss.$themecss.$printcss.$this->bootstrapReplace().'</style>'.$html));
 	    $this->clearTempImg($tempImgArr);
 	//echo str_replace(array(".tiki","opacity: 0;"),array("","fill: #fff;opacity:0.3;stroke:black"),'<style>'.$basecss.$themecss.$printcss.$this->bootstrapReplace().'</style>'.$html);
-	    return $mpdf->Output('', 'S');					// Return as a string
+		return $mpdf->Output('', 'S');					// Return as a string
 	}
 	
 	function getPDFSettings($html,$prefs)
@@ -463,10 +463,9 @@ class PdfGenerator
 			for($i=0;$i<count($sortedContent);$i++)
 			{
 			    $html=str_replace($tempValue[$i],$sortedContent[$i],$html);
-				$html=cleanContent($html,array(array("input","tablesorter-filter","class"),array("select","tablesorter-filter","class"),array("select","pvtRenderer","class"),array("select","pvtAggregator","class"),array("td","pvtCols","class"),array("td","pvtUnused","class"),array("td","pvtRows","class"),array("div","plot-container","class")));
-
 		    }
-		
+			$html=cleanContent($html,array(array("input","tablesorter-filter","class"),array("select","tablesorter-filter","class"),array("select","pvtRenderer","class"),array("select","pvtAggregator","class"),array("td","pvtCols","class"),array("td","pvtUnused","class"),array("td","pvtRows","class"),array("div","plot-container","class"),array("a","heading-link","class")));
+
 			//making tablesorter and pivottable charts wrapper divs visible
 		$doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
 		$xpath = new DOMXpath($doc);
@@ -505,9 +504,10 @@ class PdfGenerator
 			   {
 				   if($jfo[$class][codeValue])
 				   {
-			           $faCode=$doc->createElement('span',$jfo[$class][codeValue]);
-					   $faCode->setAttribute("style","font-family: FontAwesome;float:left;".$fadiv->getAttribute('style'));
+			           $faCode=$doc->createElement('span'," ".$jfo[$class][codeValue]);
+					   $faCode->setAttribute("style","font-family: FontAwesome;float:left;padding-left:5px".$fadiv->getAttribute('style'));
 					   //span with fontawesome code inserted before fa div
+					   $faCode->setAttribute("class",$fadiv->getAttribute('class'));
 					   $fadiv->parentNode->insertBefore($faCode,$fadiv);
 					   $fadiv->parentNode->removeChild($fadiv);
 				   }
@@ -520,7 +520,7 @@ class PdfGenerator
      }
 
 	 function bootstrapReplace(){
-	    return ".col-xs-12 {width: 100%;}.col-xs-11 {width: 81.66666667%;}.col-xs-10 {width: 72%;}.col-xs-9 {width: 64%;}.col-xs-8 {width: 62%;}.col-xs-7 {width: 49%;}.col-xs-6 {width: 45.7%;}.col-xs-5 {width: 35%;}.col-xs-4 {width: 28%;}.col-xs-3{width: 20%;}.col-xs-2 {width: 12.2%;}.col-xs-1 {width: 3.92%;}    .table-striped {border:1px solid #ccc;} .table-striped td { padding: 8px; line-height: 1.42857143;vertical-align: center;border-top: 1px solid #ccc;} .table-striped th { padding: 10px; line-height: 1.42857143;vertical-align: center;   } .table-striped .odd {padding:10px;} .trackerfilter form{display:none;} table.pvtTable tr td {border:1px solid}";
+	    return ".col-xs-12 {width: 100%;}.col-xs-11 {width: 81.66666667%;}.col-xs-10 {width: 72%;}.col-xs-9 {width: 64%;}.col-xs-8 {width: 62%;}.col-xs-7 {width: 49%;}.col-xs-6 {width: 45.7%;}.col-xs-5 {width: 35%;}.col-xs-4 {width: 28%;}.col-xs-3{width: 20%;}.col-xs-2 {width: 12.2%;}.col-xs-1 {width: 3.92%;}    .table-striped {border:1px solid #ccc;} .table-striped td { padding: 8px; line-height: 1.42857143;vertical-align: center;border-top: 1px solid #ccc;} .table-striped th { padding: 10px; line-height: 1.42857143;vertical-align: center;   } .table-striped .odd {padding:10px;} .trackerfilter form{display:none;} table.pvtTable tr td {border:1px solid}.wp-sign{position:relative;display:block;background-color:#fff;color:#666;font-size:10px} .wp-sign a,.wp-sign a:visited{color:#999} .icon-link-external{margin-left:10px;font-size:10px}";
 	}
 	
 	function sortContent(&$table,&$tempValue,&$sortedContent,$tag)
@@ -569,7 +569,6 @@ function cleanContent($content,$tagArr){
 	$doc = new DOMDocument();
 	$doc->loadHTML($content);
 	$xpath = new DOMXpath($doc);
-       
 	   
 	foreach($tagArr as $tag)
 	{
