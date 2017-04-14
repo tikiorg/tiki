@@ -443,6 +443,8 @@ if (isset($_REQUEST['nohistory'])) {
 	$smarty->assign('noHistory', true);
 }
 
+$smarty->assign('editable', TikiLib::lib('wiki')->is_editable($page, $user, $info));
+
 TikiLib::events()->trigger(
 	'tiki.wiki.view',
 	array_merge(
