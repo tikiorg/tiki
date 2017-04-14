@@ -48,7 +48,8 @@ function list_perms($objectId, $objectType, $objectName, $filterGroup='')
 						   'objectId' => $objectId, 'objectType' => $objectType, 'objectName' => $objectName, 'json' => $json);
 			}
 		}
-	} elseif ($prefs['feature_categories'] == 'y') {
+	}
+	if ($prefs['feature_categories'] == 'y') {
 		$categlib = TikiLib::lib('categ');
 		$categs = $categlib->get_object_categories($objectType, $objectId);
 		if (!empty($categs)) {
@@ -131,7 +132,7 @@ foreach ($types as $type) {
 					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectType' => $type);
 				}
 				if (count($r['category']) > 0) {
-					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category']);
+					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectType' => $type);
 				}
 			}
     		break;
@@ -146,7 +147,7 @@ foreach ($types as $type) {
 					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name'], 'objectType' => $type);
 				}
 				if (count($r['category']) > 0) {
-					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']);
+					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name'], 'objectType' => $type);
 				}
 			}
     		break;
@@ -160,7 +161,7 @@ foreach ($types as $type) {
 					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name'], 'objectType' => $type);
 				}
 				if (count($r['category']) > 0) {
-					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']);
+					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name'], 'objectType' => $type);
 				}
 			}
     		break;
@@ -171,10 +172,10 @@ foreach ($types as $type) {
 			foreach ($objects['data'] as $object) {
 				$r = list_perms($object['forumId'], $type, $object['name'], $filterGroup);
 				if (count($r['special']) > 0) {
-					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name']);
+					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name'], 'objectType' => $type);
 				}
 				if (count($r['category']) > 0) {
-					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']);
+					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name'], 'objectType' => $type);
 				}
 			}
     		break;
@@ -184,10 +185,10 @@ foreach ($types as $type) {
 			foreach ($all_groups as $object) {
 				$r = list_perms($object, $type, '', $filterGroup);
 				if (count($r['special']) > 0) {
-					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special']);
+					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectType' => $type);
 				}
 				if (count($r['category']) > 0) {
-					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category']);
+					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectType' => $type);
 				}
 			}
     		break;
@@ -198,10 +199,10 @@ foreach ($types as $type) {
 			foreach ($objects['data'] as $object) {
 				$r = list_perms($object['calendarId'], $type, $object['name'], $filterGroup);
 				if (count($r['special']) > 0) {
-					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name']);
+					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name'], 'objectType' => $type);
 				}
 				if (count($r['category']) > 0) {
-					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']);
+					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name'], 'objectType' => $type);
 				}
 			}
     		break;
@@ -212,10 +213,10 @@ foreach ($types as $type) {
 			foreach ($objects['data'] as $object) {
 				$r = list_perms($object['articleId'], $type, $object['title'], $filterGroup);
 				if (count($r['special']) > 0) {
-					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['title']);
+					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['title'], 'objectType' => $type);
 				}
 				if (count($r['category']) > 0) {
-					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['title']);
+					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['title'], 'objectType' => $type);
 				}
 			}
     		break;
@@ -228,10 +229,10 @@ foreach ($types as $type) {
 				
 				$r = list_perms($object['blogId'], $type, isset($object['name']) ? $object['name'] : null, $filterGroup);
 				if (count($r['special']) > 0) {
-					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name']);
+					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name'], 'objectType' => $type);
 				}
 				if (count($r['category']) > 0) {
-					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']);
+					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name'], 'objectType' => $type);
 				}
 			}
     		break;
@@ -242,10 +243,10 @@ foreach ($types as $type) {
 			foreach ($objects['data'] as $object) {
 				$r = list_perms($object['sheetId'], $type, isset($object['name']) ? $object['name'] : null, $filterGroup);
 				if (count($r['special']) > 0) {
-					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name']);
+					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name'], 'objectType' => $type);
 				}
 				if (count($r['category']) > 0) {
-					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']);
+					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name'], 'objectType' => $type);
 				}
 			}
     		break;

@@ -122,7 +122,7 @@
 											{foreach from=$object.special item=special}
 												<tr>
 													<td class="checkbox-cell"><input type="checkbox" name="objectPerm[]" value='{$special|json_encode|escape}'></td>
-													<td class="text">{$special.objectName|escape}</td>
+													<td class="text">{object_link type=$special.objectType id=$special.objectId title=$special.objectName}</td>
 													<td class="text">{$special.group|escape}</td>
 													<td class="text">{$special.perm|escape}</td>
 													<td class="text">
@@ -188,7 +188,7 @@
 										{if !empty($object.category)}
 											{foreach from=$object.category item=special}
 												<tr>
-													<td class="text">{if isset($object.objectName)}{$object.objectName|escape}{else}{$object.objectId|escape}{/if}</td>
+													<td class="text">{object_link type=$object.objectType objectId=$object.objectId}</td>
 													<td class="text">{$special.group|escape}</td>
 													<td class="text">{$special.perm|escape}</td>
 													<td class="text">
