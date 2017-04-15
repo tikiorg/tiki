@@ -1248,7 +1248,7 @@ class UsersLib extends TikiLib
 		$users = $this->list_all_users();
 
 		foreach ($users as $user) {
-			$this->ldap_sync_groups($user, null);
+			$this->_ldap_sync_groups($user, null);
 		}
 	}
 
