@@ -244,7 +244,7 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 		$userlib->interSendUserInfo($prefs['interlist'][$prefs['feature_intertiki_mymaster']], $userwatch);
 	}
 	if (isset($_REQUEST['xmpp_password'])) {
-		$tikilib->set_user_preference($userwatch, 'xmpp_password', trim($_REQUEST['xmpp_password']));
+		$tikilib->set_user_preference($userwatch, 'xmpp_password', $_REQUEST['xmpp_password']);
 	}
 
 	TikiLib::events()->trigger(
