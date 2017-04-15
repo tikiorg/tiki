@@ -288,14 +288,13 @@ class TikiAccessLib extends TikiLib
 	 *
 	 * Use to protect against Cross-Site Request Forgery when submitting a form. Designed to work in two passes:
 	 *
-	 * - First it creates the token which is placed in the $_SESSION variable and assigned the the check property and
-	 *     should be placed with other as hidden input in the form using other code. The form should also include a
-	 *     hidden input named 'daconfirm' with a value of y.
-	 * - Second, upon form submission, if  $_REQUEST['daconfirm'] is set the function compares the ticket value and age
-	 *     in the $_SESSION variable against the ticket value submitted with the form and the timing of the submission.
-	 *     The check property is set to indicate whether the match passed (ticket in form matches ticket in $_SESSION
-	 *     variable and is less than 15 minutes old) or failed. If $_REQUEST['daconfirm'] is not set it will think it's
-	 *     the first pass and will set another ticket.
+	 * - First it creates the token which is placed in the $_SESSION variable and assigned to the check property and
+	 *		should be placed as a hidden input in the form using other code. The form should also include a
+	 *		hidden input named 'daconfirm' with a value of y.
+	 * - Second, upon form submission, if $_REQUEST['daconfirm'] is set, the function compares the ticket value and age
+	 *		in the $_SESSION variable against the ticket value submitted with the form and the timing of the submission.
+	 * 		It also matches the base url to the requesting site url. The check property is set to true or false
+	 * 		depending on whether the checks passed or failed.
 	 *
 	 * Other code should be designed to stop the form action if the function returns false. A common way to use the
 	 * function is to set $access->checkAuthenticity() at the beginning of a file. Then only run the relevant form
@@ -312,37 +311,88 @@ class TikiAccessLib extends TikiLib
 		} elseif (!empty($jitRequest['daconfirm'])) {
 			$daconfirm = $jitRequest->daconfirm->alpha();
 		}
-		//only check against ticket if $_REQUEST['daconfirm'] is set
+		//only check ticket and origin if $_REQUEST['daconfirm'] is set
 		if (!empty($daconfirm)) {
-			//sets check property according to whether the ticket matches and is not too old. Optionally sends error
-			//message if match fails.
 			if (!empty($_REQUEST['ticket'])) {
 				$ticket = $_REQUEST['ticket'];
 			} elseif (!empty($jitRequest['ticket'])) {
 				$ticket = $jitRequest->ticket->striptags();
 			}
-			$ticket = html_entity_decode($ticket);
-			if (!empty($ticket) && !empty($_SESSION['tickets'][$ticket])) {
-				$time = $_SESSION['tickets'][$ticket];
-				//successful match
-				if ($time < time() && $time > (time()-(60 * 15))) {
-					TikiLib::lib('smarty')->assign('ticket', $ticket);
-					$this->check = true;
-				//match fails
-				} else {
-					$this->check = false;
-					$msg = tra('Potential cross-site request forgery (CSRF) detected. Operation blocked. The security ticket may have expired - reloading the page may help.');
-					switch ($error) {
-						case 'none':
-							break;
-						case 'services':
-							throw new Services_Exception($msg, 400);
-							break;
-						case 'session':
-						default:
-							Feedback::error($msg, 'session');
-							break;
+			$ticket = !empty($ticket) ? html_entity_decode($ticket) : false;
+			$originMatch = '';
+			$originSource = '';
+			//check that request ticket matches server ticket
+			if ($ticket && !empty($_SESSION['tickets'][$ticket])) {
+				//check that ticket has not expired
+				$ticketTime = $_SESSION['tickets'][$ticket];
+				global $prefs;
+				$timeSetting = $prefs['session_lifetime'] > 0 ? $prefs['session_lifetime'] * 60
+					: ini_get('session.gc_maxlifetime');
+				//TODO - make into a pref once implementation of checkAuthenticity() across Tiki is complete
+				$maxTime = min(4 * 60 * 60, $timeSetting);		//4 hours max
+				if ($ticketTime < time() && $ticketTime > (time() - $maxTime)) {
+					$ticketMatch = true;
+					//check that origin matches server
+					//$base_url is usually host + directory
+					global $base_url;
+					include_once('lib/setup/absolute_urls.php');
+					$origin = '';
+					$originSource = 'empty';
+					if (!empty($_SERVER['HTTP_ORIGIN'])) {
+						//HTTP_ORIGIN is usually host only without trailing slash
+						$origin = $_SERVER['HTTP_ORIGIN'] . '/';
+						$originSource = 'HTTP_ORIGIN';
+					} elseif (!empty($_SERVER['HTTP_REFERER'])) {
+						//HTTP_REFERER is usually the full path (host + directory + file + query)
+						$origin = $_SERVER['HTTP_REFERER'];
+						$originSource = 'HTTP_REFERER';
 					}
+					//$base_url may need to be the needle or the haystack depending on whether it is being compared to
+					//HTTP_REFERER of HTTP_ORIGIN
+					$originMatch = $this->check = strlen($base_url) >= strlen($origin) ? strpos($base_url, $origin) === 0
+						: strpos($origin, $base_url) === 0;
+				} else {
+					//ticket is expired
+					$ticketMatch = $this->check = false;
+				}
+			} else {
+				//ticket doesn't match or is missing
+				$ticketMatch = $this->check = false;
+			}
+			if ($this->check === true) {
+				TikiLib::lib('smarty')->assign('ticket', $ticket);
+			} else {
+				//log the failed CSRF check
+				$logMsg = tr('Request to %0 failed CSRF check.', $_SERVER['SCRIPT_NAME']);
+				if ($ticketMatch === false) {
+					$logMsg .= ' ' . tra('Request and server tokens did not match, were missing, or were expired.');
+				}
+				if ($originMatch === false) {
+					if ($originSource === 'empty') {
+						$logMsg .= ' ' . tr('Requesting site could not be identified because %0 and %1 were empty.',
+								'HTTP_ORIGIN', 'HTTP_REFERER');
+					} else {
+						//take off query portion in case it's long
+						$url = parse_url($origin);
+						$url['port'] = !empty($url['port']) ? ':' . $url['port'] : '';
+						$url = $url['scheme'] . '://' . $url['host'] . $url['port'] . $url['path'];
+						$logMsg = ' ' . tr('The %0 url (%1) does not match this server (%2). This request used a valid CSRF ticket.', $originSource,
+								$url, $base_url);
+					}
+				}
+				TikiLib::lib('logs')->add_log('CSRF', $logMsg);
+				//user feedback
+				$userMsg = tra('Potential cross-site request forgery (CSRF) detected. Operation blocked. The security ticket may have expired - reloading the page may help.');
+				switch ($error) {
+					case 'none':
+						break;
+					case 'services':
+						throw new Services_Exception($userMsg, 400);
+						break;
+					case 'session':
+					default:
+						Feedback::error($userMsg, 'session');
+						break;
 				}
 			}
 		//otherwise set ticket
