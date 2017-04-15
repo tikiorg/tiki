@@ -252,5 +252,12 @@ function prefs_users_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'users_prefs_xmpp_password' => array(
+			'name' => tra('XMPP account password'),
+			'description' => tra('XMPP account password'),
+			'keywords' => 'xmpp converse conversejs chat',
+			'type' => 'text',
+			'default' => '',
+		),
 	);
 }
