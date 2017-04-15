@@ -21,7 +21,7 @@ function prefs_xmpp_list()
 		),
 		'xmpp_server_host' => array(
 			'name' => tra('XMPP server host'),
-			'description' => tra('XMPP server host.'),
+			'description' => tra('XMPP server host'),
 			'type' => 'text',
 			'filter' => 'text',
 			'hint' => tra('xmpp.example.com'),
@@ -31,7 +31,7 @@ function prefs_xmpp_list()
 			'default' => '',
 		),
 		'xmpp_server_http_bind' => array(
-			'name' => tra('XMPP http-bind url'),
+			'name' => tra('XMPP http-bind URL'),
 			'description' => tra('Full URL to the http-bind.'),
 			'keywords' => 'xmpp converse conversejs chat',
 			'type' => 'text',

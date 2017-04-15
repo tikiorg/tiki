@@ -3651,13 +3651,13 @@ class UsersLib extends TikiLib
 				'scope' => 'object',
 			),
 			array(
-				'name' => 'tiki_p_xmpp_join',
-				'description' => tra('Can join a chat'),
+				'name' => 'tiki_p_xmpp_chat',
+				'description' => tra('Can use XMPP chat'),
 				'level' => 'admin',
 				'type' => 'xmpp',
 				'admin' => false,
 				'prefs' => array('xmpp_feature'),
-				'scope' => 'object',
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_blog_admin',

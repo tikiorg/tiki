@@ -7,7 +7,7 @@
         .attr("href", "vendor_bundled/vendor/jcbrand/converse.js/css/converse.css")
         .appendTo("head");
 
-    function tiki_initialiaze_conversejs() {
+    function tiki_initialize_conversejs() {
         converse.initialize({
             bosh_service_url: "{$xmpp.server_http_bind}",
             jid: "{$xmpp.user_jid}",
@@ -17,6 +17,6 @@
     }
 
     jQuery.getScript("vendor_bundled/vendor/jcbrand/converse.js/dist/converse.js")
-        .done(tiki_initialiaze_conversejs);
+        .done(tiki_initialize_conversejs);
 });
 </script>
