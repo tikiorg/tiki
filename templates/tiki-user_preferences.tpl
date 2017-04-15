@@ -436,7 +436,7 @@
 								{tr}XMPP account password{/tr}
 							</label>
 							<div class="col-md-8">
-								<input type="password" name="xmpp_password" id="xmpp_password" value="{$user_prefs.xmpp_password}">
+								<input type="password" name="xmpp_password" id="xmpp_password" value="{$user_prefs.xmpp_password|escape}">
 							</div>
 						</div>
 					{/if}
