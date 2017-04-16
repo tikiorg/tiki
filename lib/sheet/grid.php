@@ -991,7 +991,7 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 					ksort ($row);
 					$values = (array)$row;
 					array_walk($values, function(&$item){
-						if (array_key_exists('value', $item)){
+						if (is_array($item) && array_key_exists('value', $item)){
 							$item = $item['value'];
 						}
 					});
@@ -1261,7 +1261,7 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
         {
             $values = (array)$row;
             array_walk($values, function(&$item){
-              if (array_key_exists('value', $item)){
+              if (is_array($item) && array_key_exists('value', $item)){
                 $item = $item['value'];
               }
             });
