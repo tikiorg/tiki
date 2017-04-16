@@ -33,7 +33,8 @@ class Scheduler_Task_ShellCommandTask extends Scheduler_Task_CommandTask
 		return array(
 			'shell_command' => array(
 				'name' => tra('Shell command'),
-				'type' => 'text'
+				'type' => 'text',
+				'required' => true,
 			),
 		);
 	}

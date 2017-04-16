@@ -63,6 +63,7 @@ class Scheduler_Task_ConsoleCommandTask extends Scheduler_Task_CommandTask
 			'console_command' => array(
 				'name' => tra('Console command'),
 				'type' => 'text',
+				'required' => true,
 			),
 		);
 	}
