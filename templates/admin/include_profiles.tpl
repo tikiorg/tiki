@@ -1,6 +1,6 @@
 {* $Id$ *}
 {jq notonready=true}
-	var baseURI = '{$smarty.server.REQUEST_URI}&ticket={{$ticket|escape}}&daconfirm=y';
+	var baseURI = '{$smarty.server.REQUEST_URI}&ticket={{$ticket|escape:url}}&daconfirm=y';
 	{literal}
 		function refreshCache( entry ) { // {{{
 			var datespan = document.getElementById( 'profile-date-' + entry );

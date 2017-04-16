@@ -318,9 +318,10 @@ class TikiAccessLib extends TikiLib
 			} elseif (!empty($jitRequest['ticket'])) {
 				$ticket = $jitRequest->ticket->striptags();
 			}
-			//replace any spaces with '+' since automatic urldecoding of $_GET and $_POST superglobals by php cause '+'
-			//characters used in the base64 character set to be removed
-			$ticket = !empty($ticket) ? str_replace(' ', '+', $ticket) : false;
+			//$ticket may already decoded and decoding again will strip '+' characters, so only decode if needed
+			if (strpos($ticket, '%') !== false) {
+				$ticket = !empty($ticket) ? urldecode($ticket) : false;
+			}
 			$originMatch = '';
 			$originSource = '';
 			//check that request ticket matches server ticket
