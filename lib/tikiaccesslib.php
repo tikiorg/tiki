@@ -318,7 +318,9 @@ class TikiAccessLib extends TikiLib
 			} elseif (!empty($jitRequest['ticket'])) {
 				$ticket = $jitRequest->ticket->striptags();
 			}
-			$ticket = !empty($ticket) ? html_entity_decode($ticket) : false;
+			//replace any spaces with '+' since automatic urldecoding of $_GET and $_POST superglobals by php cause '+'
+			//characters used in the base64 character set to be removed
+			$ticket = !empty($ticket) ? str_replace(' ', '+', $ticket) : false;
 			$originMatch = '';
 			$originSource = '';
 			//check that request ticket matches server ticket
@@ -473,12 +475,12 @@ class TikiAccessLib extends TikiLib
 	 * only run the relevent form actions if $check = true.
 	 *
 	 *  Warning: this mechanism does not allow passing uploaded files ($_FILES). For that, see check_ticket().
-	 *
 	 * @param string $confirmation_text     Custom text to use if a confirmation page is brought up first
 	 * @param bool $returnHtml              Set to false to not use the standard confirmation page and to not use the
 	 *                                         standard error page. Suitable for popup confirmations when set to false.
 	 * @param bool $errorMsg                Set to true to have the Feedback error message sent automatically
 	 * @return array|bool
+	 * @deprecated. See above comment
 	 */
 	function check_authenticity($confirmation_text = '', $returnHtml = true, $errorMsg = false)
 	{
