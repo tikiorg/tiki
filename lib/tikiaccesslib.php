@@ -397,7 +397,7 @@ class TikiAccessLib extends TikiLib
 				} else {
 					//ticket is expired
 					$this->check = false;
-					return $ticket;
+					return false;
 				}
 			} else {
 				//ticket doesn't match or is missing
@@ -522,125 +522,81 @@ class TikiAccessLib extends TikiLib
 	 */
 	function check_authenticity($confirmation_text = '', $returnHtml = true, $errorMsg = false)
 	{
-		global $prefs, $jitRequest;
-		if (!empty($_REQUEST['daconfirm'])) {
-			$daconfirm = $_REQUEST['daconfirm'];
-		} elseif (!empty($jitRequest['daconfirm'])) {
-			$daconfirm = $jitRequest->daconfirm->alpha();
-		}
-		if ($prefs['feature_ticketlib2'] == 'y' || $returnHtml === false) {
-			//check against ticket if $_REQUEST['daconfirm'] is set
-			if (!empty($daconfirm)) {
-				if ($returnHtml) {
-					//redirects to an error page if ticket doesn't match or is too old
-					$this->key_check(true, $errorMsg);
-				} else {
-					//returns true or false and optionally sends a Feedback error message if ticket doesn't match or is
-					//too old
-					$keyCheck = $this->key_check(false, $errorMsg);
-					$this->check = $keyCheck;
-					//eventually phase out returning a result in favor of setting the $check property
-					return $keyCheck;
-				}
-			//set ticket
-			} else {
-				if ($returnHtml) {
-					//redirect to a confirmation page with the ticket and daconfirm hidden input
-					$this->key_get($confirmation_text, '', true);
-				} else {
-					//returns the ticket that should be placed in a form with the daconfirm hidden input with other code
-					$keyGet = $this->key_get(null, null, false);
-					$this->check = $keyGet;
-					//eventually phase out returning a result in favor of setting the $check property
-					return $keyGet;
-				}
-			}
-		}
-	}
-
-	/**
-	 * Used by check_authenticity function to set the $_SESSION ticket and optionally return or place in a confirmation
-	 * page
-	 *
-	 * @param string $confirmation_text     Text to use if redirecting to a confirmation page
-	 * @param string $confirmaction         Url to go back to when acknowledging the confirmation page
-	 * @param bool $returnHtml              Set to false to not use the standard confirmation page and to not use the
-	 *                                         standard error page. Suitable for popup confirmations when set to false.
-	 * @return array
-	 */
-	private function key_get($confirmation_text, $confirmaction,  $returnHtml)
-	{
 		global $prefs;
 		if ($prefs['feature_ticketlib2'] == 'y' || $returnHtml === false) {
-			$ticket = md5(uniqid(rand()));
-			$_SESSION['tickets'][$ticket] = time();
-			$smarty = TikiLib::lib('smarty');
-			$smarty->assign('ticket', $ticket);
-			if ($returnHtml) {
-				//redirect to a confirmation page
-				if (empty($confirmation_text)) {
-					$confirmation_text = tra('Click here to confirm your action');
-				}
-				if (empty($confirmaction)) {
-					$confirmaction = $_SERVER['PHP_SELF'];
-				}
-				// Display the confirmation in the main tiki.tpl template
-				$smarty->assign('post', $_POST);
-				$smarty->assign('print_page', 'n');
-				$smarty->assign('confirmation_text', $confirmation_text);
-				$smarty->assign('confirmaction', $confirmaction);
-				$smarty->assign('mid', 'confirm.tpl');
-				$smarty->display('tiki.tpl');
-				die();
-			} else {
-				//return ticket to be placed in a form with other code
-				return ['ticket' => $ticket];
-			}
-		}
-	}
-
-	/**
-	 * Used by check_authenticity function to match the ticket value returned with a form to the previously set
-	 * $_SESSION ticket and to check the time of submission against the time when the $_SESSION ticket was set. Returns
-	 * true if the ticket matches and the form submission is less than 15 minutes after the $_SESSION ticket was set.
-	 * Otherwise either returns false and optionally sends a Feedback error message, or redirects to an error page.
-	 *
-	 * @param bool $returnHtml              Set to false to not use the standard confirmation page and to not use the
-	 *                                         standard error page. Suitable for popup confirmations when set to false.
-	 * @param bool $errorMsg                Set to true to have the Feedback error message sent automatically
-	 * @return bool
-	 */
-	private function key_check($returnHtml, $errorMsg)
-	{
-		global $prefs, $jitRequest;
-		if ($prefs['feature_ticketlib2'] == 'y' || $returnHtml === false) {
-			if (!empty($_REQUEST['ticket'])) {
-				$ticket = $_REQUEST['ticket'];
-			} elseif (!empty($jitRequest['ticket'])) {
-				$ticket = $jitRequest->ticket->alnum();
-			}
-			if (!empty($ticket) && !empty($_SESSION['tickets'][$ticket])) {
-				$time = $_SESSION['tickets'][$ticket];
-				if ($time < time() && $time > (time()-(60*15))) {
-					TikiLib::lib('smarty')->assign('ticket', $ticket);
+			//perform checks or set ticket
+			$originMatch = '';
+			$ticketMatch = $this->ticketCheck();
+			if ($this->check === true) {
+				//if ticket matches, check origin
+				$originMatch = $this->originCheck();
+				if ($this->check === true) {
+					//if everything checks, assign ticket in case of redirects (e.g., control panels)
+					TikiLib::lib('smarty')->assign('ticket', $ticketMatch);
 					return true;
 				}
 			}
-			if ($returnHtml) {
-				$smarty = TikiLib::lib('smarty');
-				$smarty->assign('msg', tra('Possible cross-site request forgery (CSRF, or "sea surfing") detected. Operation blocked.'));
-				$smarty->display('error.tpl');
-				exit();
-			} else {
-				if ($errorMsg) {
-					Feedback::error(tr('Bad request - potential cross-site request forgery (CSRF) detected. Operation blocked. The security ticket may have expired - try reloading the page in this case.'),
-						'session');
+			if (!empty($this->check['ticket'])) {
+				if ($returnHtml) {
+					//redirect to a confirmation page
+					if (empty($confirmation_text)) {
+						$confirmation_text = tra('Click here to confirm your action');
+					}
+					if (empty($confirmaction)) {
+						$confirmaction = $_SERVER['PHP_SELF'];
+					}
+					// Display the confirmation in the main tiki.tpl template
+					$smarty = TikiLib::lib('smarty');
+					$smarty->assign('post', $_POST);
+					$smarty->assign('print_page', 'n');
+					$smarty->assign('confirmation_text', $confirmation_text);
+					$smarty->assign('confirmaction', $confirmaction);
+					$smarty->assign('mid', 'confirm.tpl');
+					$smarty->display('tiki.tpl');
+					die();
+				} else {
+					//return ticket to be placed in a form with other code
+					return ['ticket' => $this->check['ticket']];
 				}
-				return false;
+			}
+			//one of the checks failed
+			if ($this->check === false) {
+				//log the failed CSRF check
+				$logMsg = tr('Request to %0 failed CSRF check.', $_SERVER['SCRIPT_NAME']);
+				if ($ticketMatch === false) {
+					$logMsg .= ' ' . tra('Request and server tokens did not match, were missing, or were expired.');
+				}
+				if ($originMatch === false) {
+					if ($this->originSource === 'empty') {
+						$logMsg .= ' ' . tr('Requesting site could not be identified because %0 and %1 were empty.',
+								'HTTP_ORIGIN', 'HTTP_REFERER');
+					} else {
+						//take off query portion in case it's long
+						$url = parse_url($this->origin);
+						$url['port'] = !empty($url['port']) ? ':' . $url['port'] : '';
+						$url = $url['scheme'] . '://' . $url['host'] . $url['port'] . $url['path'];
+						global $base_url;
+						$logMsg = ' ' . tr('The %0 url (%1) does not match this server (%2). This request used a valid CSRF ticket.', $this->originSource,
+								$url, $base_url);
+					}
+				}
+				TikiLib::lib('logs')->add_log('CSRF', $logMsg);
+				//user message
+				if ($returnHtml) {
+					$smarty = TikiLib::lib('smarty');
+					$smarty->assign('msg', tra('Potential cross-site request forgery (CSRF) detected. Operation blocked. The security ticket may have expired - reloading the page may help.'));
+					$smarty->display('error.tpl');
+					exit();
+				} else {
+					if ($errorMsg) {
+						Feedback::error(tra('Potential cross-site request forgery (CSRF) detected. Operation blocked. The security ticket may have expired - reloading the page may help.'),
+							'session');
+					}
+					return false;
+				}
 			}
 		}
 	}
-
 
 	/**
 	 * @return bool
