@@ -112,10 +112,18 @@ class TikiLib extends TikiDb_Bridge
 		return $prefs['internal_site_hash'];
 	}
 
-	public function generate_unique_sequence($entropy = 100)
+	/**
+	 * Generates cryptographically secure pseudo-random sequence of bytes encoded into the base 64 character set
+	 *
+	 * @param int $entropy		Number of bytes to return
+	 * @param bool $urlSafe		Substitutes '-', '_', and '=' for '+', '_', and '~' for a url safe sequence.
+	 * 								Should not be used if the sequence needs to be decoded afterwards.
+	 * @return string
+	 */
+	public function generate_unique_sequence($entropy = 100, $urlSafe = false)
 	{
 		$random_value = \phpseclib\Crypt\Random::string($entropy);
-		return base64_encode($random_value);
+		return $urlSafe ? strtr(base64_encode($random_value), '+/=', '-_~') : base64_encode($random_value);
 	}
 
 	// DB param left for interface compatibility, although not considered
