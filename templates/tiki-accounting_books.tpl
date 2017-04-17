@@ -26,7 +26,7 @@
 						<td>
 							{if $element.bookClosed=='y'}{tr}closed{/tr}{else}{tr}open{/tr}
 								{if $canCreate}
-									<a class="icon" href="tiki-accounting_books.php?action=close&bookId={$element.bookId}">
+									<a class="icon timeout" href="tiki-accounting_books.php?action=close&bookId={$element.bookId}&ticket={$ticket|escape:'url'}&daconfirm=y">
 										{icon name="file-archive" _confirm="{tr}Are you sure, you want to close this book{/tr}" alt="{tr}close book{/tr}"}
 									</a>
 								{/if}
@@ -42,6 +42,7 @@
 			<h2>{tr}Create a book{/tr}</h2>
 			<div id="createbookform">
 				<form action="tiki-accounting_books.php" method="post">
+					{include file='access/include_ticket.tpl'}
 					<input type="hidden" name="action" value="create">
 					<input type="hidden" name="bookClosed" id="bookClosed" value="n">
 					<h1>{tr}Create a book{/tr}</h1>
@@ -127,7 +128,7 @@
 							</div>
 						</div>
 					</fieldset>
-					<input type="submit" class="btn btn-default btn-sm" name="create" value="{tr}Create a new book{/tr}">
+					<input type="submit" class="btn btn-default btn-sm timeout" name="create" value="{tr}Create a new book{/tr}">
 				</form>
 			</div>
 		{/tab}
