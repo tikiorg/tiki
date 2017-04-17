@@ -11,7 +11,7 @@
 $section = 'accounting';
 require_once ('tiki-setup.php');
 require_once ('lib/accounting/accountinglib.php');
-
+$access->checkAuthenticity();
 
 // Feature available?
 if ($prefs['feature_accounting'] !='y') {
@@ -55,8 +55,7 @@ $smarty->assign('book', $book);
 $accounts = $accountinglib->getAccounts($bookId, $all = true);
 $smarty->assign('accounts', $accounts);
 
-if (isset($_REQUEST['action'])) {
-	check_ticket('accounting');
+if (isset($_REQUEST['action']) && $access->ticketMatch()) {
 	if ($_REQUEST['action'] == 'book') {
 		if ($stackId == 0) {
 			// new entry
@@ -164,8 +163,6 @@ if (is_array($result)) {
 		$smarty->assign('creditText', array(''));
 	}
 }
-
-ask_ticket('accounting');
 
 if ($globalperms->acct_book or $objectperms->acct_book) {
 	$smarty->assign('canBook', true);
