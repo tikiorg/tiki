@@ -11,6 +11,7 @@
 $section = 'accounting';
 require_once ('tiki-setup.php');
 require_once ('lib/accounting/accountinglib.php');
+$access->checkAuthenticity();
 
 
 // Feature available?
@@ -58,8 +59,6 @@ if ($globalperms->acct_book_stack or $objectperms->acct_book_stack) {
 } else {
 	$smarty->assign('canStack', false);
 }
-ask_ticket('accounting');
-
 
 $smarty->assign('mid', 'tiki-accounting.tpl');
 $smarty->display("tiki.tpl");

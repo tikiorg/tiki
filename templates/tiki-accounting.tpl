@@ -32,9 +32,9 @@
 		<div class="box">
 			<h3 class="boxtitle">{tr}Tasks{/tr}</h3>
 			<div class="box-data" style="width: 500px">
-				{if $canBook}{button href="tiki-accounting_entry.php?bookId=$bookId" _text="{tr}Book new entries{/tr}"}<br>
-				{button href="tiki-accounting_stack.php?bookId=$bookId&hideform=1" _text="{tr}Confirm stack entries{/tr}"}<br>{/if}
-				{if $canStack}{button href="tiki-accounting_stack.php?bookId=$bookId" _text="{tr}Book into Stack{/tr}"}<br>{/if}
+				{if $canBook}{button href="tiki-accounting_entry.php?bookId=$bookId&ticket={$ticket|escape:"url"}&daconfirm=y" _class="timeout" _text="{tr}Book new entries{/tr}"}<br>
+				{button href="tiki-accounting_stack.php?bookId=$bookId&hideform=1&ticket={$ticket|escape:"url"}&daconfirm=y" _class="timeout" _text="{tr}Confirm stack entries{/tr}"}<br>{/if}
+				{if $canStack}{button href="tiki-accounting_stack.php?bookId=$bookId&ticket={$ticket|escape:"url"}&daconfirm=y" _class="timeout" _text="{tr}Book into Stack{/tr}"}<br>{/if}
 			</div>
 		</div>
 	{/tab}
@@ -51,7 +51,7 @@
 		<h2>{tr}Journal{/tr}</h2>
 		<div style="max-height: 80%; overflow: scroll;">
 			{if $journalLimit!=0}
-				{button href="tiki-accounting.php?bookId=$bookId&cookietab=4&journalLimit=0" text="{tr}Fetch all{/tr}"}
+				{button href="tiki-accounting.php?bookId=$bookId&cookietab=4&journalLimit=0&ticket={$ticket|escape:"url"}&daconfirm=y" text="{tr}Fetch all{/tr}"}
 			{/if}
 			{include file="tiki-accounting_journal.tpl"}
 		</div>
