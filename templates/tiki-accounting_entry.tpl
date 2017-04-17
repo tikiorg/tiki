@@ -53,8 +53,8 @@ var account='';
 				<tr class="{cycle values="odd,even"} tips" {popup caption="{tr}Notes{/tr}" text=$a.accountNotes}>
 					<td class="accompactlist">
 						{if $tiki_p_account_manage=='y'}
-							<a href="tiki-accounting_account.php?bookId={$bookId}&action=edit&accountId={$a.accountId}"><img src="img/icons/edit.gif" alt="edit"></a>
-							<a href="tiki-accounting_account.php?bookId={$bookId}&action=delete&accountId={$a.accountId}"><img src="img/icons/del.gif" alt="delete"></a>
+							<a class="timeout" href="tiki-accounting_account.php?bookId={$bookId}&action=edit&accountId={$a.accountId}&ticket={$ticket|escape:"url"}&daconfirm=y"><img src="img/icons/edit.gif" alt="edit"></a>
+							<a class="timeout" href="tiki-accounting_account.php?bookId={$bookId}&action=delete&accountId={$a.accountId}&ticket={$ticket|escape:"url"}&daconfirm=y"><img src="img/icons/del.gif" alt="delete"></a>
 						{/if}
 						<a href="javascript:setAccount({$a.accountId})">{$a.accountId}</a>
 					</td>
@@ -67,6 +67,7 @@ var account='';
 </div>
 <div id="mask" style="float:left;">
 	<form method="post" action="tiki-accounting_entry.php">
+		{include file='access/include_ticket.tpl'}
 		{if $firstid}<input type="hidden" name="firstid" value="{$firstid}">{/if}
 		{if $statementId}<input type="hidden" name="statementId" value="{$statementId}">{/if}
 		<input type="hidden" name="bookId" value="{$bookId}">
@@ -145,7 +146,7 @@ var account='';
 				</tr>
 			</table>
 		</fieldset>
-		<input type="submit" class="btn btn-default btn-sm" name="book" id="book" value="{tr}Book{/tr}">
+		<input type="submit" class="btn btn-default btn-sm timeout" name="book" id="book" value="{tr}Book{/tr}">
 		{button href="tiki-accounting.php?bookId=$bookId" _text="{tr}Back to book page{/tr}"}
 	</form>
 </div>

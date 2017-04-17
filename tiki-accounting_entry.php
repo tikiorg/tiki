@@ -11,6 +11,7 @@
 $section = 'accounting';
 require_once ('tiki-setup.php');
 require_once ('lib/accounting/accountinglib.php');
+$access->checkAuthenticity();
 
 
 // Feature available?
@@ -43,8 +44,7 @@ $smarty->assign('book', $book);
 $accounts = $accountinglib->getAccounts($bookId, $all = true);
 $smarty->assign('accounts', $accounts);
 
-if (isset($_REQUEST['book'])) {
-	check_ticket('accounting');
+if (isset($_REQUEST['book']) && $access->ticketMatch()) {
 	$result = $accountinglib->book(
 		$bookId,
 		$_REQUEST['journalDate'],
@@ -86,8 +86,6 @@ if (is_array($result)) {
 	$smarty->assign('debitText', array(''));
 	$smarty->assign('creditText', array(''));
 }
-
-ask_ticket('accounting');
 
 $journal = $accountinglib->getJournal($bookId, '%', '`journalId` DESC', 5);
 $smarty->assign('journal', $journal);
