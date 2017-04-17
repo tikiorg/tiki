@@ -9,7 +9,7 @@
 		<form method="get" action="tiki-admin_actionlog.php#List" class="form-horizontal">
 			<h2>{tr}Filter{/tr}</h2>
 			{if empty($nbViewedConfs)}
-				{button _text="{tr}Please select some actions to be reported.{/tr}" href="tiki-admin_actionlog.php?cookietab=2"}
+				{button _text="{tr}Please select some actions to be reported.{/tr}" href="#" _onclick="showTab(2); return true;"}
 			{else}
 				<fieldset>
 					<legend>{tr}Date{/tr}</legend>
