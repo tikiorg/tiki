@@ -8113,3 +8113,8 @@ table.tablesorter thead tr.tablesorter-filter-row {
 body.fullscreen {
   background: #272b30;
 }
+.cke_wysiwyg_frame,
+.cke_wysiwyg_div {
+  background: #272b30 !important;
+  color: #c8c8c8 !important;
+}

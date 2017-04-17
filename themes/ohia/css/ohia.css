@@ -7715,3 +7715,8 @@ body.fullscreen {
 body.fullscreen .container {
   border: none;
 }
+.cke_wysiwyg_frame,
+.cke_wysiwyg_div {
+  background: #242424 !important;
+  color: #eeeeee !important;
+}

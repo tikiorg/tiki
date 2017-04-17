@@ -7637,6 +7637,11 @@ h1::before {
 body.fullscreen {
   background: #538935;
 }
+.cke_wysiwyg_frame,
+.cke_wysiwyg_div {
+  background: #538935 !important;
+  color: #ffffff !important;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

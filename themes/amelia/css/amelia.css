@@ -7772,3 +7772,8 @@ table.tablesorter thead tr.tablesorter-filter-row {
 body.fullscreen {
   background: #108a93;
 }
+.cke_wysiwyg_frame,
+.cke_wysiwyg_div {
+  background: #108a93 !important;
+  color: #ffffff !important;
+}

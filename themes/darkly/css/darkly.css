@@ -7980,3 +7980,8 @@ table.tablesorter thead tr.tablesorter-headerRow,
 table.tablesorter thead tr.tablesorter-filter-row {
   background-color: #222222;
 }
+.cke_wysiwyg_frame,
+.cke_wysiwyg_div {
+  background: #222222 !important;
+  color: #ffffff !important;
+}

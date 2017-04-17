@@ -7843,3 +7843,8 @@ a.list-group-item-danger.active:focus {
 body.fullscreen {
   background: #060606;
 }
+.cke_wysiwyg_frame,
+.cke_wysiwyg_div {
+  background: #060606 !important;
+  color: #888888 !important;
+}

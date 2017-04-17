@@ -460,3 +460,8 @@ td.calheadhighlight a:visited {
 .blog-postbody-title a {
   color: #000000;
 }
+.cke_wysiwyg_frame,
+.cke_wysiwyg_div {
+  background: #9fda58 !important;
+  color: #454545 !important;
+}
