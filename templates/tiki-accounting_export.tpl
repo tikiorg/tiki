@@ -4,6 +4,7 @@
 {/title}
 <div id="export">
 	<form action="tiki-accounting_export.php" method="post">
+		{include file='access/include_ticket.tpl'}
 		<input type="hidden" name="action" value="export">
 		<input type="hidden" name="what" value="{$what}">
 		<input type="hidden" name="bookId" value="{$bookId}">
@@ -20,7 +21,7 @@
 				</select><br>
 				<label>{tr}Quote character for text{/tr}</label>
 				<input type="text" name="quote" id="quote" value="{$book.exportQuote|escape}"><br>
-				<input type="submit" class="btn btn-default btn-sm" name="submit" value="{tr}Export as CSV{/tr}" onclick="this.form.target='_blank';return true;">
+				<input type="submit" class="btn btn-default btn-sm timeout" name="submit" value="{tr}Export as CSV{/tr}" onclick="this.form.target='_blank';return true;">
 				{button href="tiki-accounting.php?bookId=$bookId" _text="Back to book page"}
 		</fieldset>
 	</form>

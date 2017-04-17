@@ -11,6 +11,7 @@
 $section = 'accounting';
 require_once ('tiki-setup.php');
 require_once ('lib/accounting/accountinglib.php');
+$access->checkAuthenticity();
 
 
 // Feature available?
@@ -51,7 +52,7 @@ if (!isset($_REQUEST['action'])) {
 	$_REQUEST['action']='settings';
 }
 
-if ($_REQUEST['action']=='export') {
+if ($_REQUEST['action']=='export' && $access->ticketMatch()) {
 	$prefs['log_tpl']='n'; // Necessary to get a working css
 	$separator=(isset($_REQUEST['separator'])?$_REQUEST['separator']:';');
 	$smarty->assign('separator', $separator);
