@@ -286,6 +286,19 @@ class TikiAccessLib extends TikiLib
 	}
 
 	/**
+	 * Return session lifetime in seconds
+	 * //TODO - make into a pref once implementation of checkAuthenticity() across Tiki is complete
+	 * @return mixed
+	 */
+	public function getTimeout()
+	{
+		global $prefs;
+		$timeSetting = $prefs['session_lifetime'] > 0 ? $prefs['session_lifetime'] * 60
+			: ini_get('session.gc_maxlifetime');
+		return min(4 * 60 * 60, $timeSetting);		//4 hours max
+	}
+
+	/**
 	 * ***** Note: Intention is to use this to replace the check_authenticity function below *******
 	 *
 	 * Use to protect against Cross-Site Request Forgery when submitting a form. Designed to work in two passes:
@@ -386,11 +399,7 @@ class TikiAccessLib extends TikiLib
 			if ($ticket && !empty($_SESSION['tickets'][$ticket])) {
 				//check that ticket has not expired
 				$ticketTime = $_SESSION['tickets'][$ticket];
-				global $prefs;
-				$timeSetting = $prefs['session_lifetime'] > 0 ? $prefs['session_lifetime'] * 60
-					: ini_get('session.gc_maxlifetime');
-				//TODO - make into a pref once implementation of checkAuthenticity() across Tiki is complete
-				$maxTime = min(4 * 60 * 60, $timeSetting);		//4 hours max
+				$maxTime = $this->getTimeout();
 				if ($ticketTime < time() && $ticketTime > (time() - $maxTime)) {
 					$this->check = true;
 					return $ticket;
@@ -494,23 +503,9 @@ class TikiAccessLib extends TikiLib
 
 
 	/**
-	 * ***** Note: Being replaced by checkAuthenticity function above *************
+	 * ***** Note: Being replaced by checkAuthenticity method above *************
 	 *
-	 * Use to protect against Cross-Site Request Forgery when submitting a form. Designed to work in two passes:
-	 *
-	 * - First it creates the token which is placed in the $_SESSION variable and should either be placed with other
-	 *     code as hidden input in the form, or is automatically placed in a confirmation page form. If placing in a
-	 *     form, also include a hidden input named 'daconfirm' with a value of y.
-	 * - Second, upon form or confirmation page submission, if  $_REQUEST['daconfirm'] is set the function compares
-	 *     the ticket value and age in the $_SESSION variable against the ticket value submitted with the form and
-	 *     the timing of the submission. The function optionally returns false and optionally sends a Feedback error
-	 *     message, or redirects to an error page, if the ticket doesn't match or is older than 15 minutes.
-	 *     Otherwise it returns true. If $_REQUEST['daconfirm'] is not set it will think it's th first pass and will
-	 *     set another ticket.
-	 *
-	 * Other code should be designed to stop the form action if the function returns false. A common way to use the
-	 * function is to set $check = $access->check_authenticity(null, false, true) at the beginning of a file. Then
-	 * only run the relevent form actions if $check = true.
+	 * Similar method as checkAuthenticity() except that it optionally redirects to a confirmation page
 	 *
 	 *  Warning: this mechanism does not allow passing uploaded files ($_FILES). For that, see check_ticket().
 	 * @param string $confirmation_text     Custom text to use if a confirmation page is brought up first
