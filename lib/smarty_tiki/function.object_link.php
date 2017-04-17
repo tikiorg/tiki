@@ -211,7 +211,21 @@ function smarty_function_object_link_trackeritem( $smarty, $object, $title = nul
 		), $smarty);
 	}
 
-	return $pre . smarty_function_object_link_default($smarty, $object, $title, $type, $url);
+	if( $item->canView() ) {
+		return $pre . smarty_function_object_link_default($smarty, $object, $title, $type, $url);
+	} else {
+		$smarty->loadPlugin('smarty_modifier_escape');
+		$smarty->loadPlugin('smarty_modifier_addongroupname');
+
+		if (empty($title)) {
+			$title = TikiLib::lib('object')->get_title($type, $object);
+		}
+		
+		// get add on object title if needed
+		$title = smarty_modifier_addongroupname($title);
+		
+		return $pre . smarty_modifier_escape($title);
+	}
 }
 
 function smarty_function_object_link_user( $smarty, $user, $title = null )
