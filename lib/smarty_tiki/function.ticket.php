@@ -11,11 +11,19 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ * Function to return HTML for including a token in a form or in a query string
+ *
+ * @param $params		Set mode=get in order to return HTML for a query, otherwise HTML for a form will be returned
+ * @param $smarty
+ * @return string
+ */
 function smarty_function_ticket($params, $smarty)
 {
-	if (is_null($smarty->getTemplateVars('CSRFTicket'))) {
-		return '';
+	if (!empty($params['mode']) && $params['mode'] === 'get') {
+		return '&ticket=' . htmlspecialchars($smarty->getTemplateVars('ticket')) . '&daconfirm=y';
 	} else {
-		return '<input type="hidden" name="ticket" value="' . $smarty->getTemplateVars('CSRFTicket') .'" />';
+		return '<input type="hidden" name="ticket" value="' . htmlspecialchars($smarty->getTemplateVars('ticket')) . '">'
+			. '<input type="hidden" name="daconfirm" value="y">';
 	}
 }
