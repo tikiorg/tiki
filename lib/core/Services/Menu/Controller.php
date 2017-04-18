@@ -21,7 +21,9 @@ class Services_Menu_Controller
 		if (! $perms->tiki_p_edit_menu) {
 			throw new Services_Exception_Denied(tr("You don't have permission to edit menus (tiki_p_edit_menu)"));
 		}
-		
+		$util = new Services_Utilities();
+		$util->checkTicket();
+
 		//get menu details
 		$menuId = $input->menuId->int();
 		$info = TikiLib::lib('menu')->get_menu($menuId);
@@ -29,7 +31,7 @@ class Services_Menu_Controller
 			
 		//execute menu insert/update
 		$confirm = $input->confirm->int();
-		if ($confirm) {
+		if ($confirm && $util->access->ticketMatch()) {
 			$menuId = $input->menuId->int();
 			$name = $input->name->text();
 			$description = $input->description->text();
