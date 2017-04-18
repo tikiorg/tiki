@@ -5,8 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function saveScheduler($isUpdate = false)
+function saveScheduler()
 {
+	$schedLib = TikiLib::lib('scheduler');
 
 	$addTask = true;
 	$errors = [];
@@ -14,24 +15,49 @@ function saveScheduler($isUpdate = false)
 	$name = $_POST['scheduler_name'];
 	$description = $_POST['scheduler_description'];
 	$task = $_POST['scheduler_task'];
-	$params = $_POST['scheduler_params'];
 	$runTime = $_POST['scheduler_time'];
 	$status = $_POST['scheduler_status'];
 	$reRun = $_POST['scheduler_rerun'] == 'on' ? 1 : 0;
 
 	if (empty($name)) {
-		$errors[] = tra('Scheduler Task name cannot be empty');
+		$errors[] = tra('Name is required');
 		$addTask = false;
 	}
 
-	//@todo improve this validation
 	if (empty($task)) {
-		$errors[] = tra('Scheduler Task task is invalid');
+		$errors[] = tra('Task is required');
 		$addTask = false;
+	} else {
+		$className = 'Scheduler_Task_' . $task;
+		if (!class_exists($className)) {
+			Feedback::error(tra('An error occurred, please contact the administrator.'), 'session');
+			$access = TikiLib::lib('access');
+			$access->redirect('tiki-admin_schedulers.php');
+			die;
+		}
+
+		$class = new $className();
+
+		$taskName = strtolower($class->getTaskName());
+		$taskParams = $class->getParams();
+
+		foreach ($taskParams as $key => $param) {
+			if (empty($param['required'])) {
+				continue;
+			}
+
+			$httpParamName = $taskName . '_' . $key;
+			if (empty($_POST[$httpParamName])) {
+				$errors[] = sprintf(tra('%s is required'), $param['name']);
+				$addTask = false;
+			}
+		}
+
+		$params = $class->parseParams();
 	}
 
 	if (empty($runTime)) {
-		$errors[] = tra('Scheduler Task time cannot be empty');
+		$errors[] = tra('Run Time is required');
 		$addTask = false;
 	}
 
@@ -42,43 +68,42 @@ function saveScheduler($isUpdate = false)
 //	}
 
 	if (empty('status')) {
-		$errors[] = tra('Scheduler Task status cannot be empty');
+		$errors[] = tra('Status cannot be empty');
 		$addTask = false;
 	}
 
-	$schedLib = TikiLib::lib('scheduler');
+	$schedulerinfo = [];
 
 	if ($addTask) {
+		$scheduler = !empty($_POST['scheduler']) ? $_POST['scheduler'] : null;
 
-		$className = 'Scheduler_Task_' . $task;
-		if (!class_exists($className)) {
-			Feedback::error(tra('An error occurred, please contact the administrator.'), 'session');
-			$access = TikiLib::lib('access');
-			$access->redirect('tiki-admin_schedulers.php');
-			die;
-		}
-
-		$class = new $className();
-		$params = $class->parseParams();
-
-		if (!$isUpdate) {
-			$schedLib->set_scheduler($name, $description, $task, $params, $runTime, $status, $reRun);
-			$feedback = sprintf(tra('Scheduler %s was created.'), $name);
-		} else {
-			$schedLib->set_scheduler($name, $description, $task, $params, $runTime, $status, $reRun, $_POST['scheduler']);
+		$schedLib->set_scheduler($name, $description, $task, $params, $runTime, $status, $reRun, $scheduler);
+		if ($scheduler) {
 			$feedback = sprintf(tra('Scheduler %s was updated.'), $name);
+		} else {
+			$feedback = sprintf(tra('Scheduler %s was created.'), $name);
 		}
 
 		Feedback::success($feedback, 'session');
+		$access = TikiLib::lib('access');
+		$access->redirect('tiki-admin_schedulers.php');
+		die;
 
 	} else {
 		if (!empty($errors)) {
 			Feedback::error(['mes' => $errors], 'session');
-			$access = TikiLib::lib('access');
-			$access->redirect('tiki-admin_schedulers.php');
-			die;
 		}
 	}
+
+	$schedulerinfo['name'] = $name;
+	$schedulerinfo['description'] = $description;
+	$schedulerinfo['task'] = $task;
+	$schedulerinfo['run_time'] = $runTime;
+	$schedulerinfo['status'] = $status;
+	$schedulerinfo['re_run'] = $reRun;
+	$schedulerinfo['params'] = json_decode($params, true);
+
+	return $schedulerinfo;
 }
 
 require_once('tiki-setup.php');
@@ -87,19 +112,15 @@ $access = TikiLib::lib('access');
 $access->check_permission(array('tiki_p_admin_schedulers'));
 
 $auto_query_args = array();
+$cookietab = 1;
 
 $schedLib = TikiLib::lib('scheduler');
 
-if (isset($_POST['new_scheduler'])) {
+if (isset($_POST['new_scheduler']) || (isset($_POST['editscheduler']) && isset($_POST['scheduler']))) {
 
-	// Add a new scheduler tasks
-	$addTask = true;
-	saveScheduler(false);
-	$cookietab = 1;
-
-} else if (isset($_POST['editscheduler']) and isset($_POST['scheduler'])) {
-	saveScheduler(true);
-	$cookietab = '1';
+	// If scheduler saved, it redirects to the schedulers page, cleaning the add/edit scheduler form.
+	$schedulerinfo = saveScheduler();
+	$cookietab = 2;
 
 } else if (isset($_REQUEST['scheduler']) and $_REQUEST['scheduler']) {
 

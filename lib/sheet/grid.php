@@ -931,11 +931,22 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 	function __construct( $fileInfo, $inputEncoding = '', $outputEncoding = '', $lineLen = 1024 )
 	{
 		$this->lineLen = $lineLen;
-		$this->data = strip_tags( $fileInfo['data'] );
-		$this->name = $fileInfo['name'];
-        $this->encoding = new Encoding ($inputEncoding, $outputEncoding);
 		$this->type = "file";
-		$this->id = $fileInfo['fileId'];
+
+		if (is_array($fileInfo)) { // When loading from FileGalLib
+			$this->data = strip_tags($fileInfo['data']);
+			$this->name = $fileInfo['name'];
+			$this->id = $fileInfo['fileId'];
+		} else { // when FileInfo is in fact the name of a file
+			$this->file = $fileInfo;
+			if ($this->file === 'php://stdout' || $this->file === 'php://output') {
+				$this->data = '';
+			} else {
+				$this->data = strip_tags(file_get_contents($this->file));
+			}
+		}
+
+		$this->encoding = new Encoding ($inputEncoding, $outputEncoding);
 	}
 
 	// _load
@@ -980,7 +991,7 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 					ksort ($row);
 					$values = (array)$row;
 					array_walk($values, function(&$item){
-						if (array_key_exists('value', $item)){
+						if (is_array($item) && array_key_exists('value', $item)){
 							$item = $item['value'];
 						}
 					});
@@ -992,7 +1003,7 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 
         $total = $this->encoding->convert_encoding ($total);
 
-		if ( $this->file == "php://stdout" )
+		if ($this->file === 'php://stdout' || $this->file === 'php://output')
 		{
 			$this->output = $total;
 			return true;
@@ -1250,7 +1261,7 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
         {
             $values = (array)$row;
             array_walk($values, function(&$item){
-              if (array_key_exists('value', $item)){
+              if (is_array($item) && array_key_exists('value', $item)){
                 $item = $item['value'];
               }
             });

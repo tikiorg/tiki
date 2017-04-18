@@ -140,7 +140,7 @@
 	<form class="form form-horizontal" action="tiki-admin_schedulers.php" method="post"
 			enctype="multipart/form-data" name="RegForm" autocomplete="off">
 		<div class="form-group">
-			<label class="col-sm-3 col-md-2 control-label" for="scheduler_name">{tr}Name{/tr}</label>
+			<label class="col-sm-3 col-md-2 control-label" for="scheduler_name">{tr}Name{/tr} *</label>
 			<div class="col-sm-7 col-md-6">
 				<input type="text" id='scheduler_name' class="form-control" name='scheduler_name'
 					value="{$schedulerinfo.name|escape}">
@@ -154,10 +154,10 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-3 col-md-2 control-label" for="scheduler_task">{tr}Task{/tr}</label>
+			<label class="col-sm-3 col-md-2 control-label" for="scheduler_task">{tr}Task{/tr} *</label>
 			<div class="col-sm-7 col-md-6">
 				<select id="scheduler_task" name="scheduler_task" class="form-control">
-					<option value='null'></option>
+					<option value=''></option>
 					{html_options options=$schedulerTasks selected=$schedulerinfo.task}
 				</select>
 			</div>
@@ -168,7 +168,7 @@
 		{/foreach}
 
 		<div class="form-group">
-			<label class="col-sm-3 col-md-2 control-label" for="scheduler_time">{tr}Run Time{/tr}</label>
+			<label class="col-sm-3 col-md-2 control-label" for="scheduler_time">{tr}Run Time{/tr} *</label>
 			<div class="col-sm-7 col-md-6">
 				<input type="text" id='scheduler_time' class="form-control" name='scheduler_time'
 					value="{$schedulerinfo.run_time|escape}">

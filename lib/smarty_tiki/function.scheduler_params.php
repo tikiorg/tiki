@@ -11,7 +11,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
-/* inserts the content of an rss feed into a module */
 function smarty_function_scheduler_params($params, $smarty)
 {
 	if (empty($params['name'])) {
@@ -51,11 +50,27 @@ function smarty_function_scheduler_params($params, $smarty)
 				break;
 		}
 
+		$required = !empty($param['required']) ? ' *' : '';
+
+		$infoHtml = '';
+		if (!empty($param['description'])) {
+			$description = smarty_modifier_escape($param['description']);
+			$icon = smarty_function_icon(['name' => 'information'], $smarty);
+
+			$infoHtml = <<<HTML
+<a class="tikihelp" title="{$param['name']}: {$description}">
+	{$icon}
+</a>
+HTML;
+
+		}
+
 		$html .= <<<HTML
 <div class="form-group row" data-task-name="{$params['name']}" style="display:none">
-	<label class="col-sm-3 col-md-2 control-label" for="{$inputKey}">{$param['name']}</label>
+	<label class="col-sm-3 col-md-2 control-label" for="{$inputKey}">{$param['name']}{$required}</label>
 	<div class="col-sm-7 col-md-6">
 		{$input}
+		{$infoHtml}
 	</div>
 </div>
 HTML;

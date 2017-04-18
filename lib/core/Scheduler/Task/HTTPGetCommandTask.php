@@ -72,13 +72,17 @@ class Scheduler_Task_HTTPGetCommandTask extends Scheduler_Task_CommandTask
 			'url' => array(
 				'name' => tra('URL'),
 				'type' => 'text',
+				'required' => true,
 			),
 			'output_file' => array(
-				'name' => tra('File path to save the output'),
+				'name' => tra('Output File'),
+				'description' => tra('File path to save the output'),
 				'type' => 'text',
+				'required' => true,
 			),
 			'additional_http_headers' => array(
-				'name' => tra('Additonal HTTP Headers (one per line)'),
+				'name' => tra('Additional HTTP Headers'),
+				'description' => tra('One HTTP Header per line'),
 				'type' => 'textarea',
 			),
 			'basic_auth_username' => array(
