@@ -57,6 +57,7 @@
 		Version: 
 		<select name="svntag" class="form-control">
 			<option selected="selected">trunk</option>
+			<option>17.x</option>
 			<option>16.x</option>
 			<option>15.x</option>
 			<option>12.x</option>
@@ -78,7 +79,7 @@
 			{button href="#showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('destroy');" _text="{tr}Destroy this show.tiki.org instance{/tr}"}
 			{button href="#showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('reset');" _text="{tr}Reset password to 12345{/tr}"}
 		{/if}
-		<span class="buttonupdate{$field.fieldId}_{$item.itemId}" {if $field.version != 'trunk' && $field.version != '16.x' && $field.version != '15.x' && $field.version != '12.x'}style="display: none;"{/if}>
+		<span class="buttonupdate{$field.fieldId}_{$item.itemId}" {if $field.version != 'trunk' && $field.version != '17.x' && $field.version != '16.x' && $field.version != '15.x' && $field.version != '12.x'}style="display: none;"{/if}>
 			{button href="#showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('update');" _text="{tr}SVN update{/tr}"}
 		</span>
 	</div>
@@ -109,7 +110,7 @@
 				var debugoutput = data.debugoutput;
 				//$('#testingstatus').html(data.status);
 				$('.showdebugoutput{{$field.fieldId}}_{{$item.itemId}}').html(data.debugoutput);
-				if (data.version == '12.x' || data.version == '15.x' || data.version == '16.x' || data.version == 'trunk') {
+				if (data.version == '12.x' || data.version == '15.x' || data.version == '16.x' || data.version == '17.x' || data.version == 'trunk') {
 					$('.buttonupdate{{$field.fieldId}}_{{$item.itemId}}').show();
 				}
 				if (data.status == 'DISCO') {
