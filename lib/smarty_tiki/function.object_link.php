@@ -211,7 +211,7 @@ function smarty_function_object_link_trackeritem( $smarty, $object, $title = nul
 		), $smarty);
 	}
 
-	if( $item->canView() ) {
+	if( $item && $item->canView() ) {
 		return $pre . smarty_function_object_link_default($smarty, $object, $title, $type, $url);
 	} else {
 		$smarty->loadPlugin('smarty_modifier_escape');

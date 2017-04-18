@@ -30,7 +30,13 @@ class Services_Tracker_Utilities
 	function resaveItem($itemId)
 	{
 		$tracker = TikiLib::lib('trk')->get_item_info($itemId);
+		if( !$tracker ) {
+			return;
+		}
 		$definition = Tracker_Definition::get($tracker['trackerId']);
+		if( !$definition ) {
+			return;
+		}
 		$this->replaceItem($definition, $itemId, null, array(), [
 			'validate' => false,
 			'skip_categories' => true,
