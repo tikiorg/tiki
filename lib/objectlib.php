@@ -530,7 +530,11 @@ class ObjectLib extends TikiLib
 	{
 		switch ($type) {
 			case 'trackeritem':
-				return TikiLib::lib('trk')->get_isMain_value(null, $id);
+				$title = TikiLib::lib('trk')->get_isMain_value(null, $id);
+				if( empty($title) ) {
+					$title = "$type:$id";
+				}
+				return $title;
 			case 'category':
 				return TikiLib::lib('categ')->get_category_name($id);
 			case 'file':

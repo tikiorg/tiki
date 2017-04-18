@@ -12,6 +12,8 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 	const OPT_READONLY = 'readonly';
 	const OPT_INVERT = 'invert';
 
+	static $refreshedTargets = array();
+
 	public static function getTypes()
 	{
 		return array(
@@ -221,6 +223,11 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 				$utilities = new Services_Tracker_Utilities;
 
 				foreach ($target as $key) {
+					if( in_array($key, self::$refreshedTargets) ) {
+						continue;
+					}
+					self::$refreshedTargets[] = $key;
+
 					list($type, $id) = explode(':', $key, 2);
 
 					if ($type == 'trackeritem') {
@@ -254,7 +261,13 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 			// It should be a forward relation
 			$relation = $args['relation'];
 			$trackerId = TikiLib::lib('trk')->get_tracker_for_item($args['sourceobject']);
+			if( !$trackerId ) {
+				return;
+			}
 			$definition = Tracker_Definition::get($trackerId);
+			if( !$definition ) {
+				return;
+			}
 			if ($fieldId = $definition->getRelationField($relation)) {
 				$itemId = $args['sourceobject'];
 				$value = $old_value = explode("\n", TikiLib::lib('trk')->get_item_value($trackerId, $itemId, $fieldId));
@@ -272,7 +285,13 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 			// It should be an invert relation
 			$relation = $args['relation'] . '.invert';
 			$trackerId = TikiLib::lib('trk')->get_tracker_for_item($args['object']);
+			if( !$trackerId ) {
+				return;
+			}
 			$definition = Tracker_Definition::get($trackerId);
+			if( !$definition ) {
+				return;
+			}
 			if ($fieldId = $definition->getRelationField($relation)) {
 				$itemId = $args['object'];
 				$value = $old_value = explode("\n", TikiLib::lib('trk')->get_item_value($trackerId, $itemId, $fieldId));
@@ -294,7 +313,13 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 			// It should be a forward relation
 			$relation = $args['relation'];
 			$trackerId = TikiLib::lib('trk')->get_tracker_for_item($args['sourceobject']);
+			if( !$trackerId ) {
+				return;
+			}
 			$definition = Tracker_Definition::get($trackerId);
+			if( !$definition ) {
+				return;
+			}
 			if ($fieldId = $definition->getRelationField($relation)) {
 				$itemId = $args['sourceobject'];
 				$value = $old_value =explode("\n", TikiLib::lib('trk')->get_item_value($trackerId, $itemId, $fieldId));
@@ -312,7 +337,13 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 			// It should be an invert relation
 			$relation = $args['relation'] . '.invert';
 			$trackerId = TikiLib::lib('trk')->get_tracker_for_item($args['object']);
+			if( !$trackerId ) {
+				return;
+			}
 			$definition = Tracker_Definition::get($trackerId);
+			if( !$definition ) {
+				return;
+			}
 			if ($fieldId = $definition->getRelationField($relation)) {
 				$itemId = $args['object'];
 				$value = $old_value = explode("\n", TikiLib::lib('trk')->get_item_value($trackerId, $itemId, $fieldId));
