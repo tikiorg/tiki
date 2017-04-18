@@ -22,6 +22,7 @@ if ($user) {
 } else {
 	$access->check_feature('contact_anon');
 }
+$access->checkAuthenticity();
 
 $smarty->assign('sent', 0);
 
@@ -29,7 +30,8 @@ $priority = 3;
 $from = $user ? $user : '';
 $subject = '';
 $body = '';
-if (isset($_REQUEST['send'])) {
+
+if (isset($_REQUEST['send']) && $access->ticketMatch()) {
 	if (isset($_REQUEST['priority'])) {
 		$priority = $_REQUEST['priority'];
 	}
@@ -43,9 +45,7 @@ if (isset($_REQUEST['send'])) {
 	if (isset($_REQUEST['body'])) {
 		$body .=  $_REQUEST['body'];
 	}
-}
-
-if (isset($_REQUEST['send'])) {
+	
 	// Validation:
 	// must have a subject or body non-empty (or both)
 	$hasContent = !empty($_REQUEST['subject']) || !empty($_REQUEST['body']);
@@ -61,7 +61,6 @@ if (isset($_REQUEST['send'])) {
 		}
 		Feedback::error(['mes' => $message, 'title' => tr('Invalid')]);
 	} else {
-		$access->check_ticket();
 		$body = tr("%0 sent you a message:", $from) . "\n" . $body;
 		$messulib->post_message(
 			$prefs['contact_user'],

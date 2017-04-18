@@ -30,6 +30,9 @@ require_once ('tiki-setup.php');
 // synchronous with the cache
 $access = TikiLib::lib('access');
 $access->check_permission(array('tiki_p_admin_users'));
+//so far only used for $_REQUEST['batch']
+$access->checkAuthenticity();
+
 
 if ($tiki_p_admin != 'y') {
 	$userGroups = $userlib->get_user_groups_inclusion($user);
@@ -245,8 +248,7 @@ $auto_query_args = array(
 	'initial',
 	'filterGroup'
 );
-if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name'])) {
-	$access->check_ticket();
+if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']) && $access->ticketMatch()) {
 	batchImportUsers();
 	// Process the form to add a user here
 
