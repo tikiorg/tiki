@@ -23,7 +23,7 @@ function smarty_function_ticket($params, $smarty)
 	if (!empty($params['mode']) && $params['mode'] === 'get') {
 		return '&ticket=' . htmlspecialchars($smarty->getTemplateVars('ticket')) . '&daconfirm=y';
 	} else {
-		return '<input type="hidden" name="ticket" value="' . htmlspecialchars($smarty->getTemplateVars('ticket')) . '">'
+		return '<input type="hidden" name="ticket" value="' . urlencode($smarty->getTemplateVars('ticket')) . '">'
 			. '<input type="hidden" name="daconfirm" value="y">';
 	}
 }
