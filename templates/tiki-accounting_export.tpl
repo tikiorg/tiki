@@ -4,7 +4,7 @@
 {/title}
 <div id="export">
 	<form action="tiki-accounting_export.php" method="post">
-		{include file='access/include_ticket.tpl'}
+		{ticket}
 		<input type="hidden" name="action" value="export">
 		<input type="hidden" name="what" value="{$what}">
 		<input type="hidden" name="bookId" value="{$bookId}">

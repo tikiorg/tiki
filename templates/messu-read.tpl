@@ -34,7 +34,7 @@
 	<div class="col-xs-8 col-sm-7" style="padding-top: 4px;">
 		<div class="col-xs-4 col-sm-3 col-sm-offset-3 col-lg-2 col-lg-offset-6">
 				<form method="post" action="messu-compose.php">
-					{include file='access/include_ticket.tpl'}
+					{ticket}
 					<input type="hidden" name="offset" value="{$offset|escape}">
 					<input type="hidden" name="msgId" value="{$msgId|escape}">
 					<input type="hidden" name="find" value="{$find|escape}">
@@ -51,7 +51,7 @@
 		</div>
 		<div class="col-xs-4 col-sm-3 col-lg-2">
 				<form method="post" action="messu-compose.php">
-					{include file='access/include_ticket.tpl'}
+					{ticket}
 					<input type="hidden" name="offset" value="{$offset|escape}">
 					<input type="hidden" name="find" value="{$find|escape}">
 					<input type="hidden" name="msgId" value="{$msgId|escape}">
@@ -73,7 +73,7 @@
 		</div>
 		<div class="col-xs-4 col-sm-3 col-lg-2">
 			<form method="post" action="messu-read.php">
-				{include file='access/include_ticket.tpl'}
+				{ticket}
 				<input type="hidden" name="offset" value="{$offset|escape}">
 				<input type="hidden" name="find" value="{$find|escape}">
 				<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">

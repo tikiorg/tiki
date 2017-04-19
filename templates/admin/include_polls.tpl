@@ -1,5 +1,5 @@
 <form class="form-horizontal" method="post" action="tiki-admin.php?page=polls">
-	{include file='access/include_ticket.tpl'}
+	{ticket}
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			{if $prefs.feature_polls eq "y" and $tiki_p_admin_polls eq "y"}

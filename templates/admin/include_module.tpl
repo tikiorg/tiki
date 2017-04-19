@@ -4,7 +4,7 @@
 {/remarksbox}
 
 <form class="form-horizontal" action="tiki-admin.php?page=module" method="post">
-	{include file='access/include_ticket.tpl'}
+	{ticket}
 	<input type="hidden" name="modulesetup" />
 
 	<div class="row">

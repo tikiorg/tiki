@@ -3,7 +3,7 @@
 {/remarksbox}
 
 <form class="admin form-horizontal" action="tiki-admin.php?page=stats" method="post">
-	{include file='access/include_ticket.tpl'}
+	{ticket}
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			{include file='admin/include_apply_top.tpl'}

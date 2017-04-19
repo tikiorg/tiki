@@ -44,7 +44,7 @@
 </form>
 
 <form action="messu-sent.php" method="post" name="form_messu_sent">
-	{include file='access/include_ticket.tpl'}
+	{ticket}
 	<div class="form-group">
 	<input type="hidden" name="offset" value="{$offset|escape}">
 	<input type="hidden" name="find" value="{$find|escape}">

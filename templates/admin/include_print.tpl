@@ -1,6 +1,6 @@
 {* $Id$ *}
 <form class="form-horizontal" action="tiki-admin.php?page=print" class="admin" method="post">
-	{include file='access/include_ticket.tpl'}
+	{ticket}
 	{include file='admin/include_apply_top.tpl'}
 	<fieldset>
 		<legend>{tr}PDF settings{/tr}</legend>

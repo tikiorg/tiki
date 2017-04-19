@@ -1,6 +1,6 @@
 {* $Id$ *}
 <form action="tiki-admin.php?page=intertiki" method="post" name="intertiki" class="form-horizontal">
-	{include file='access/include_ticket.tpl'}
+	{ticket}
 	{include file='admin/include_apply_top.tpl'}
 	{tabset name="admin_interwiki"}
 		{tab name="{tr}Intertiki Client{/tr}"}

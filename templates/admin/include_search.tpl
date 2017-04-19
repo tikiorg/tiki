@@ -14,7 +14,7 @@
 
 
 <form class="form-horizontal" action="tiki-admin.php?page=search" method="post">
-	{include file='access/include_ticket.tpl'}
+	{ticket}
 
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">

@@ -1,6 +1,6 @@
 {* $Id$ *}
 <form class="form-horizontal" action="tiki-admin.php?page=user" class="admin" method="post">
-	{include file='access/include_ticket.tpl'}
+	{ticket}
 	<div class="form-group col-lg-12 clearfix">
 		{include file='admin/include_apply_top.tpl'}
 	</div>

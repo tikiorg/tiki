@@ -42,7 +42,7 @@
 			<h2>{tr}Create a book{/tr}</h2>
 			<div id="createbookform">
 				<form action="tiki-accounting_books.php" method="post">
-					{include file='access/include_ticket.tpl'}
+					{ticket}
 					<input type="hidden" name="action" value="create">
 					<input type="hidden" name="bookClosed" id="bookClosed" value="n">
 					<h1>{tr}Create a book{/tr}</h1>

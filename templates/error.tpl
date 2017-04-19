@@ -81,7 +81,7 @@ close();
 					{if !empty($required_preferences)}
 						{remarksbox type='note' title="{tr}Settings{/tr}" close="n"}
 						<form method="post" action="tiki-admin.php" role="form" class="form">
-							{include file='access/include_ticket.tpl'}
+							{ticket}
 							{foreach from=$required_preferences item=pref}
 								{preference name=$pref}
 							{/foreach}

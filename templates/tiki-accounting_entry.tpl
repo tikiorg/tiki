@@ -67,7 +67,7 @@ var account='';
 </div>
 <div id="mask" style="float:left;">
 	<form method="post" action="tiki-accounting_entry.php">
-		{include file='access/include_ticket.tpl'}
+		{ticket}
 		{if $firstid}<input type="hidden" name="firstid" value="{$firstid}">{/if}
 		{if $statementId}<input type="hidden" name="statementId" value="{$statementId}">{/if}
 		<input type="hidden" name="bookId" value="{$bookId}">

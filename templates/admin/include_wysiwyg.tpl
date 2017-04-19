@@ -1,7 +1,7 @@
 {* $Id$ *}
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}WYSIWYG means What You See Is What You Get, and is handled in Tiki by <a class="alert-link" href="http://ckeditor.com/">CKEditor</a>{/tr}.{/remarksbox}
 <form class="form-horizontal" action="tiki-admin.php?page=wysiwyg" method="post">
-	{include file='access/include_ticket.tpl'}
+	{ticket}
 	<div class="t_navbar margin-bottom-md">
 		<a role="button" class="btn btn-link" href="tiki-admin_toolbars.php" title="{tr}Toolbars{/tr}">
 			{icon name="settings"} {tr}Toolbars{/tr}

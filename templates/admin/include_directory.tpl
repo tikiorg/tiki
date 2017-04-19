@@ -1,5 +1,5 @@
 <form class="form-horizontal" action="tiki-admin.php?page=directory" method="post">
-	{include file='access/include_ticket.tpl'}
+	{ticket}
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<a role="link" class="btn btn-link tips" href="tiki-directory_admin.php" title=":{tr}Directories listing{/tr}">

@@ -34,7 +34,7 @@
 	</div>
 	<div class="col-xs-3 col-xs-offset-4 col-md-2 col-md-offset-5" style="padding-top: 4px;">
 		<form method="post" action="messu-read_sent.php">
-			{include file='access/include_ticket.tpl'}
+			{ticket}
 			<input type="hidden" name="offset" value="{$offset|escape}">
 			<input type="hidden" name="find" value="{$find|escape}">
 			<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">

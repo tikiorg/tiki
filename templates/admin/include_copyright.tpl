@@ -1,7 +1,7 @@
 {* $Id$ *}
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Allows a copyright to be determined for various objects{/tr}.{/remarksbox}
 <form role="form" class="form-horizontal" action="tiki-admin.php?page=copyright" method="post">
-	{include file='access/include_ticket.tpl'}
+	{ticket}
 	<div class="t_navbar margin-bottom-md clearfix">
 		{include file='admin/include_apply_top.tpl'}
 	</div>

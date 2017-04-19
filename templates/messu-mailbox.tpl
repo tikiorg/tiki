@@ -44,7 +44,7 @@
 
 
 <form class="form-inline" action="messu-mailbox.php" method="post" name="form_messu_mailbox">
-	{include file='access/include_ticket.tpl'}
+	{ticket}
 	<input type="hidden" name="offset" value="{$offset|escape}">
 	<input type="hidden" name="find" value="{$find|escape}">
 	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">

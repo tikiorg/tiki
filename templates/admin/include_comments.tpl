@@ -1,6 +1,6 @@
 {* $Id$ *}
 <form class="form-horizontal" action="tiki-admin.php?page=comments" method="post">
-	{include file='access/include_ticket.tpl'}
+	{ticket}
 	<div class="row">
 		<div class="form-group col-lg-12">
 			<a role="link" href="tiki-list_comments.php" class="btn btn-link tips" title=":{tr}Comments listing{/tr}">{icon name="list"} {tr}Comments{/tr}</a>

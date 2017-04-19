@@ -1,5 +1,5 @@
 <form class="form-horizontal" action="tiki-admin.php?page=semantic" method="post">
-	{include file='access/include_ticket.tpl'}
+	{ticket}
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			{include file='admin/include_apply_top.tpl'}
@@ -18,7 +18,7 @@
 		<td>
 			<legend>{tr}Known types{/tr}</legend>
 			<form method="post" action="{$smarty.server.REQUEST_URI|escape}">
-				{include file='access/include_ticket.tpl'}
+				{ticket}
 
 				<table class="table">
 					<tr>
@@ -45,7 +45,7 @@
 
 			{if $selected_token}
 				<form method="post" action="{$smarty.server.REQUEST_URI}">
-					{include file='access/include_ticket.tpl'}
+					{ticket}
 					<div>{$save_message|escape}</div>
 					<div>
 						<label for="token">{tr}Token{/tr} :</label>
@@ -83,7 +83,7 @@
 						<td>{$token|escape}</td>
 						<td>
 							<form method="post" action="{$smarty.server.REQUEST_URI}">
-								{include file='access/include_ticket.tpl'}
+								{ticket}
 								<div>
 									<input type="hidden" name="select[]" value="{$token|escape}">
 									<input type="hidden" name="token" value="{$token|escape}">
@@ -99,7 +99,7 @@
 			</table>
 			{if $rename}
 				<form method="post" action="{$smarty.server.REQUEST_URI}">
-					{include file='access/include_ticket.tpl'}
+					{ticket}
 					<div>
 						<label for="token">{tr}Token{/tr} :</label>
 						<input id="token" type="text" name="token" value="{$rename|escape}">

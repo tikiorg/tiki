@@ -1,6 +1,6 @@
 {* $Id$ *}
 <form action="tiki-admin.php?page=look" id="look" name="look" class="form-horizontal labelColumns" class="admin" method="post">
-	{include file='access/include_ticket.tpl'}
+	{ticket}
 	<div class="clearfix margin-bottom-md">
 		{if $prefs.feature_theme_control eq y}
 			{button _text="{tr}Theme Control{/tr}" href="tiki-theme_control.php" _class="btn-sm tikihelp" }

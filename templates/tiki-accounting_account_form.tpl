@@ -15,7 +15,7 @@
 {/if}
 <div id="account_form">
 	<form method="post" action="tiki-accounting_account.php">
-		{include file='access/include_ticket.tpl'}
+		{ticket}
 		<input type="hidden" name="action" value="{$action}">
 		<input type="hidden" name="bookId" value="{$bookId}">
 		<input type="hidden" name="accountId" value="{$account.accountId}">

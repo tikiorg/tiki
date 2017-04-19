@@ -1,5 +1,5 @@
 <form class="form-horizontal" action="tiki-admin.php?page=maps" method="post" role="form">
-	{include file='access/include_ticket.tpl'}
+	{ticket}
 
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">

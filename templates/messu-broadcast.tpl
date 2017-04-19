@@ -16,7 +16,7 @@
 		{if $preview eq '1'}
 			<br>
 			<form method="post">
-				{include file='access/include_ticket.tpl'}
+				{ticket}
 				<input type="hidden" name="groupbr" value="{$groupbr|escape}">
 				<input type="hidden" name="priority" value="{$priority|escape}">
 				<input type="hidden" name="replyto_hash" value="{$replyto_hash|escape}">
@@ -30,7 +30,7 @@
 
 {if $sent ne '1' and $preview ne '1'}
 	<form class="form-horizontal" role="form" action="messu-broadcast.php" method="post">
-		{include file='access/include_ticket.tpl'}
+		{ticket}
 		<div class="form-group">
 			<label class="col-sm-2 control-label" for="broadcast-group">{tr}Group{/tr}</label>
 			<div class="col-sm-10">

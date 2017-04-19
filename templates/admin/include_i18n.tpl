@@ -11,7 +11,7 @@
 	}
 {/jq}
 <form role="form" class="form-horizontal" action="tiki-admin.php?page=i18n" method="post">
-	{include file='access/include_ticket.tpl'}
+	{ticket}
 	<input type="hidden" name="i18nsetup" />
 	<div class="t_navbar margin-bottom-md clearfix">
 		{if $tiki_p_edit_languages eq 'y'}

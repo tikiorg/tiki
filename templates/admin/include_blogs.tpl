@@ -1,6 +1,6 @@
 {* $Id$ *}
 <form role="form" class="form-horizontal" action="tiki-admin.php?page=blogs" method="post">
-	{include file='access/include_ticket.tpl'}
+	{ticket}
 	<div class="t_navbar margin-bottom-md clearfix">
 		<a role="button" class="btn btn-link tips" href="tiki-list_blogs.php" title=":{tr}Blogs listing{/tr}">
 			{icon name="list"} {tr}Blogs{/tr}

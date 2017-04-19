@@ -1,5 +1,5 @@
 <form class="form-horizontal" action="tiki-admin.php?page=video" method="post">
-	{include file='access/include_ticket.tpl'}
+	{ticket}
 
 	{tabset name="admin_video"}
 

@@ -30,7 +30,7 @@
 		{jq}$(".username").tiki("autocomplete", "username", {multiple: true, multipleSeparator: ";"});{/jq}
 	{/if}
 	<form action="messu-compose.php" method="post" class="form-horizontal" role="form">
-		{include file='access/include_ticket.tpl'}
+		{ticket}
 		<div class="form-group">
 			<label class="col-sm-2 control-label" for="mess-composeto">{tr}To{/tr}
 				{help url="Inter-User+Messages#Composing_messages" desc="{tr}To: Multiple addresses can be separated with a semicolon (';') or comma (','){/tr}"}
