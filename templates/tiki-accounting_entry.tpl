@@ -53,8 +53,8 @@ var account='';
 				<tr class="{cycle values="odd,even"} tips" {popup caption="{tr}Notes{/tr}" text=$a.accountNotes}>
 					<td class="accompactlist">
 						{if $tiki_p_account_manage=='y'}
-							<a class="timeout" href="tiki-accounting_account.php?bookId={$bookId}&action=edit&accountId={$a.accountId}&ticket={$ticket|escape:"url"}&daconfirm=y"><img src="img/icons/edit.gif" alt="edit"></a>
-							<a class="timeout" href="tiki-accounting_account.php?bookId={$bookId}&action=delete&accountId={$a.accountId}&ticket={$ticket|escape:"url"}&daconfirm=y"><img src="img/icons/del.gif" alt="delete"></a>
+							<a class="timeout" href="tiki-accounting_account.php?bookId={$bookId}&action=edit&accountId={$a.accountId}{ticket mode=get}"><img src="img/icons/edit.gif" alt="edit"></a>
+							<a class="timeout" href="tiki-accounting_account.php?bookId={$bookId}&action=delete&accountId={$a.accountId}{ticket mode=get}"><img src="img/icons/del.gif" alt="delete"></a>
 						{/if}
 						<a href="javascript:setAccount({$a.accountId})">{$a.accountId}</a>
 					</td>

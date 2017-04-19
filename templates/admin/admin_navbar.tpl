@@ -147,8 +147,7 @@
 				<input class="btn btn-primary" type="submit" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 			<input type="hidden" name="lm_criteria" value="{$lm_criteria|escape}">
-			<input type="hidden" name="daconfirm" value="y">
-			<input type="hidden" name="ticket" value="{$ticket|escape:'url'}">
+			{ticket}
 		</form>
 	</div>
 	{jq}

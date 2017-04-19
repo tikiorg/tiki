@@ -10,7 +10,4 @@
 	{$encodedToList = json_encode($toList)}
 	<input type='hidden' name='toList' value="{$encodedToList|escape}">
 {/if}
-{if !empty($ticket)}
-	<input type="hidden" name="ticket" value="{$ticket|escape:'url'}">
-{/if}
-<input type="hidden" name="daconfirm" value="y">
+{ticket}

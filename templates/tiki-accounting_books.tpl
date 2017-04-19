@@ -26,7 +26,7 @@
 						<td>
 							{if $element.bookClosed=='y'}{tr}closed{/tr}{else}{tr}open{/tr}
 								{if $canCreate}
-									<a class="icon timeout" href="tiki-accounting_books.php?action=close&bookId={$element.bookId}&ticket={$ticket|escape:'url'}&daconfirm=y">
+									<a class="icon timeout" href="tiki-accounting_books.php?action=close&bookId={$element.bookId}{ticket mode=get}">
 										{icon name="file-archive" _confirm="{tr}Are you sure, you want to close this book{/tr}" alt="{tr}close book{/tr}"}
 									</a>
 								{/if}

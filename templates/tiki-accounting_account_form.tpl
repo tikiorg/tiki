@@ -34,7 +34,7 @@
 			<input type="radio" name="accountLocked" id="accountUnlocked" {if $account.accountLocked!=1}checked="checked"{/if} value="0">{tr}No{/tr}<br>
 			<input type="submit" class="btn btn-default btn-sm timeout" name="submit" value="{if $action=='new'}{tr}Create account{/tr}{else}{tr}Modify account{/tr}{/if}">
 			{if $account.changeable==1 && $action=="edit"}
-				{button href="tiki-accounting_account.php?bookId={$bookId}&accountId={$accountId}&action=delete&ticket={$ticket|escape:"url"}&daconfirm=y" _class="timeout" _text="{tr}Delete this account{/tr}"}
+				{button href="tiki-accounting_account.php?bookId={$bookId}&accountId={$accountId}&action=delete{ticket mode=get}" _class="timeout" _text="{tr}Delete this account{/tr}"}
 			{/if}
 			{button href="tiki-accounting.php?bookId=$bookId" _text="{tr}Back to book page{/tr}"}
 		</fieldset>

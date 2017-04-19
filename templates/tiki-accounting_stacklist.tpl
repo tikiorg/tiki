@@ -51,11 +51,11 @@
 				<td class="journal">{if $i<$j.creditcount}{$j.credit[$i].stackItemText|escape}{/if}&nbsp;</td>
 				{if $smarty.section.posts.first}
 					<td rowspan="{$s.maxcount}">
-						<a class="icon timeout" href="tiki-accounting_stack.php?action=delete&bookId={$bookId}&stackId={$s.stackId}&ticket={$ticket|escape:"url"}&daconfirm=y">
+						<a class="icon timeout" href="tiki-accounting_stack.php?action=delete&bookId={$bookId}&stackId={$s.stackId}{ticket mode=get}">
 							{icon name="remove" alt="{tr}delete this transaction from the stack{/tr}" _confirm="{tr}Are you sure you want to delete this transaction from stack?{/tr}"}
 						</a><br>
 						{if $canBook}
-							<a class="icon timeout" href="tiki-accounting_stack.php?action=confirm&bookId={$bookId}&stackId={$s.stackId}&ticket={$ticket|escape:"url"}&daconfirm=y">
+							<a class="icon timeout" href="tiki-accounting_stack.php?action=confirm&bookId={$bookId}&stackId={$s.stackId}{ticket mode=get}">
 								{icon name="help" alt="{tr}confirm this transaction{/tr}" _confirm="{tr}Are you sure you want to confirm this transaction?{/tr}"}
 							</a><br>
 						{/if}

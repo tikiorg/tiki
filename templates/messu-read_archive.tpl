@@ -25,9 +25,9 @@
 			</div>
 			<div class="col-xs-4 col-sm-2">
 				{if $msg.isFlagged eq 'y'}
-					<a class="btn btn-link timeout" href="messu-read_archive.php?offset={$offset}&amp;action=isFlagged&amp;actionval=n&amp;msgId={$msgId}&amp;sort_mode={$sort_mode}&amp;find={$find|escape:"url"}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;ticket={$ticket|escape:'url'}&amp;daconfirm=y">{tr}<i class="fa fa-flag" aria-hidden="true"></i>{/tr}</a>
+					<a class="btn btn-link timeout" href="messu-read_archive.php?offset={$offset}&amp;action=isFlagged&amp;actionval=n&amp;msgId={$msgId}&amp;sort_mode={$sort_mode}&amp;find={$find|escape:"url"}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}{ticket mode=get}">{tr}<i class="fa fa-flag" aria-hidden="true"></i>{/tr}</a>
 				{else}
-					<a class="btn btn-link timeout" href="messu-read_archive.php?offset={$offset}&amp;action=isFlagged&amp;actionval=y&amp;msgId={$msgId}&amp;sort_mode={$sort_mode}&amp;find={$find|escape:"url"}&amp;flag={$flag|escape:"url"}&amp;priority={$priority}&amp;flagval={$flagval}&amp;ticket={$ticket|escape:'url'}&amp;daconfirm=y">{tr}<i class="fa fa-flag-o" aria-hidden="true"></i>{/tr}</a>
+					<a class="btn btn-link timeout" href="messu-read_archive.php?offset={$offset}&amp;action=isFlagged&amp;actionval=y&amp;msgId={$msgId}&amp;sort_mode={$sort_mode}&amp;find={$find|escape:"url"}&amp;flag={$flag|escape:"url"}&amp;priority={$priority}&amp;flagval={$flagval}{ticket mode=get}">{tr}<i class="fa fa-flag-o" aria-hidden="true"></i>{/tr}</a>
 				{/if}
 			</div>
 		</div>

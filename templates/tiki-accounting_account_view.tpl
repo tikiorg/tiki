@@ -35,8 +35,8 @@
 	</div>
 	{button href="tiki-accounting.php?bookId=$bookId" _text="Back to book page"}
 	{if $tiki_p_acct_manage_accounts=='y'}
-		{button href="tiki-accounting_account.php?action=edit&bookId=$bookId&accountId={$account.accountId}&ticket={$ticket|escape:"url"}&daconfirm=y" _class="timeout" _text="{tr}Edit this account{/tr}"}
-		{if $account.changeable==1}{button _class="timeout" href="tiki-accounting_account.php?action=delete&bookId=$bookId&accountId={$account.accountId}&ticket={$ticket|escape:"url"}&daconfirm=y" _text="{tr}Delete this account{/tr}"}{/if}
+		{button href="tiki-accounting_account.php?action=edit&bookId=$bookId&accountId={$account.accountId}{ticket mode=get}" _class="timeout" _text="{tr}Edit this account{/tr}"}
+		{if $account.changeable==1}{button _class="timeout" href="tiki-accounting_account.php?action=delete&bookId=$bookId&accountId={$account.accountId}{ticket mode=get}" _text="{tr}Delete this account{/tr}"}{/if}
 	{/if}
 </div>
 {if isset($journal)}

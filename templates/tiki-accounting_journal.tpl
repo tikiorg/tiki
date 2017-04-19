@@ -40,7 +40,7 @@
 							<td rowspan="{$j.maxcount}">
 								{if $j.journalCancelled==1}&nbsp;
 								{else}
-									<a class="icon timeout" href="tiki-accounting_cancel.php?bookId={$bookId}&journalId={$j.journalId}&ticket={$ticket|escape:"url"}&daconfirm=y">
+									<a class="icon timeout" href="tiki-accounting_cancel.php?bookId={$bookId}&journalId={$j.journalId}{ticket mode=get}">
 										{icon name="remove" alt="{tr}cancel this transaction{/tr}" _confirm="{tr}Are you sure you want to cancel this transaction{/tr}"}
 									</a>
 								{/if}
