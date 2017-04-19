@@ -501,10 +501,15 @@ if ( !preg_match('/^https?\:/i', $url) ) {
 if ($stay_in_ssl_mode != 'y' || !$https_mode) {
 	$url = str_replace('https://', 'http://', $url);
 }
-// Force Redirection to HTTPS mode of original URL if needed
+
+/* 
+ * If user logged in with HTTPS after requesting a non-TLS URL but "stay"ing in TLS mode was requested, redirect to HTTPS equivalent of the original URL requested.
+ * Not sure why we don't just use the initial URI requested. Chealer 2017-04-19
+ */
 if ($stay_in_ssl_mode == 'y' && $https_mode) {
 	$url = str_replace('http://', 'https://', $url);
 }
+
 if (defined('SID') && SID != '')
 $url.= ((strpos($url, '?') === false) ? '?' : '&') . SID;
 
