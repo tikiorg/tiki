@@ -154,13 +154,13 @@
 										$("#wiki_plugin_edit_view").click( function () {
 										var $icon = $("#wiki_plugin_edit_view span");
 										if (! $icon.hasClass("highlight")) {
-										$(".editplugin, .icon_edit_section").show();
-										$icon.addClass("highlight");
-										setCookieBrowser("wiki_plugin_edit_view", true);
+											$(".editplugin, .icon_edit_section").show();
+											$icon.addClass("highlight");
+											setCookieBrowser("wiki_plugin_edit_view", true);
 										} else {
-										$(".editplugin, .icon_edit_section").hide();
-										$icon.removeClass("highlight");
-										deleteCookie("wiki_plugin_edit_view");
+											$(".editplugin, .icon_edit_section").hide();
+											$icon.removeClass("highlight");
+											deleteCookie("wiki_plugin_edit_view");
 										}
 										return false;
 										});
@@ -180,13 +180,13 @@
 										$("#wysiwyg_inline_edit").click( function () {
 										var $icon = $("#wysiwyg_inline_edit span");
 										if (! $icon.hasClass("highlight")) {
-										if (enableWysiwygInlineEditing()) {
-										$icon.addClass("highlight");
-										}
+											if (enableWysiwygInlineEditing()) {
+												$icon.addClass("highlight");
+											}
 										} else {
-										if (disableWyiswygInlineEditing()) {
-										$icon.removeClass("highlight");
-										}
+											if (disableWyiswygInlineEditing()) {
+												$icon.removeClass("highlight");
+											}
 										}
 										return false;
 										});
