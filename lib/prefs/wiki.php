@@ -195,13 +195,6 @@ function prefs_wiki_list($partial = false)
 			),
 			'default' => 'n',
 		),
-		'wiki_edit_plugin' => array(
-			'name' => tra('Enable edit plugin icons'),
-			'description' => tra('Enables editing a plugin, via a popup form, without needing to edit the whole page.'),
-			'type' => 'flag',
-			'hint' => tra('Requires JavaScript'),
-			'default' => 'y',
-		),
 		'wiki_badchar_prevent' => array(
 			'name' => tra('Prevent special characters in page names'),
 			'description' => tra('Some characters may prevent the pages from being easily accessible from the URL or through wiki links. This option prevents from creating pages with such characters.'),
@@ -258,6 +251,13 @@ function prefs_wiki_list($partial = false)
 				'feature_multilingual',
 			),
 			'default' => 'n',
+		),
+		'wiki_edit_plugin' => array(
+			'name' => tra('Enable edit plugin icons'),
+			'description' => tra('Enables editing a plugin, via a popup form, without needing to edit the whole page.'),
+			'type' => 'flag',
+			'hint' => tra('Requires JavaScript'),
+			'default' => 'y',
 		),
 		'wiki_edit_section' => array(
 			'name' => tra('Edit section'),
