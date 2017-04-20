@@ -10,7 +10,7 @@
 	{tab name="{tr}Features{/tr}"}
 		<br>
 		<form id="galfeatures" class="form-horizontal" action="tiki-admin.php?page=gal" method="post">
-			{include file='access/include_ticket.tpl'}
+			{ticket}
 			<br>
 			<div class="form-group col-lg-12 clearfix">
 				<div class="pull-right">
@@ -82,7 +82,7 @@
 	{tab name="{tr}Manage images{/tr}"}
 		<br>
 		<form id="galremove" class="form-horizontal" action="tiki-admin.php?page=gal" method="post">
-			{include file='access/include_ticket.tpl'}
+			{ticket}
 			<br>
 			<fieldset>
 				<legend>{tr}Remove unused images{/tr}</legend>
@@ -110,7 +110,7 @@
 				{$value = 'to_db'}
 			{/if}
 		<form id="galmove" class="form-horizontal" action="tiki-admin.php?page=gal" method="post">
-			{include file='access/include_ticket.tpl'}
+			{ticket}
 			<input type="hidden" name="mvimg" value="{$value}">
 			<fieldset>
 				<legend>{tr}Move images{/tr}</legend>

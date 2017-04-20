@@ -52,7 +52,7 @@
 	{tab name="{tr}Settings{/tr}"}
 		<br>
 		<form class="admin form-horizontal" id="connect" name="connect" action="tiki-admin.php?page=connect" method="post">
-			{include file='access/include_ticket.tpl'}
+			{ticket}
 			{include file='admin/include_apply_top.tpl'}
 			<fieldset>
 				<legend>{tr}Tiki connect{/tr}</legend>
@@ -117,7 +117,7 @@
 		{tab name="{tr}Connections Received{/tr}"}
 			<br>
 			<form class="admin form-horizontal" name="cserver_form" action="tiki-admin.php?page=connect" method="post">
-				{include file='access/include_ticket.tpl'}
+				{ticket}
 				<input name="cserver_search" type="text" value="{$cserver_search_text}">
 				<input name="cserver" type="submit" class="btn btn-default timeout" value="{tr}Search{/tr}">
 				{button cserver="rebuild" _auto_args="cserver,page" _text="{tr}Rebuild Index{/tr}" _title="{tr}Rebuild received connections index{/tr}"}
@@ -162,7 +162,7 @@
 	{tab name="{tr}Jitsi{/tr}"}
 		<br>
 		<form class="admin form-horizontal" id="connect" name="connect" action="tiki-admin.php?page=connect" method="post">
-			{include file='access/include_ticket.tpl'}
+			{ticket}
 			{include file='admin/include_apply_top.tpl'}
 			<fieldset>
 				<legend>{tr}Jitsi{/tr}</legend>

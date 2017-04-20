@@ -1,7 +1,7 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}You can see users rank by score in the module users_rank, for that go to{/tr} "<a class="rbox-link" href="tiki-admin_modules.php">{tr}Admin modules{/tr}</a>".{/remarksbox}
 
 <form action="tiki-admin.php?page=score" method="post">
-	{include file='access/include_ticket.tpl'}
+	{ticket}
 	{include file='admin/include_apply_top.tpl'}
 
 	<fieldset class="table">

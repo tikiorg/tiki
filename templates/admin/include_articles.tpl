@@ -5,7 +5,7 @@
 {if !empty($msgs)}
 {/if}
 <form role="form" class="form-horizontal" method="post" action="tiki-admin.php?page=articles" enctype="multipart/form-data">
-	{include file='access/include_ticket.tpl'}
+	{ticket}
 	<div class="t_navbar margin-bottom-md clearfix">
 		<a role="link" class="btn btn-link tips" href="tiki-list_articles.php" title=":{tr}List of articles{/tr}">
 			{icon name="list"} {tr}Articles{/tr}
