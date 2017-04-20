@@ -43,7 +43,7 @@
 				</span>
 					<input class="form-control" type="text" name="find" id="find" value="{$find|escape}" placeholder="{if empty($whatlabel)}{tr}Find{/tr}...{else}{tr}{$whatlabel}{/tr}{/if}">
 					{if isset($autocomplete)}
-						{jq}$("#find").tiki("autocomplete", "{{$autocomplete}}"){/jq}
+						{jq}$("#find").tiki("autocomplete", "{{$autocomplete}}");{/jq}
 					{/if}
 					{if $prefs.javascript_enabled eq 'y' and (isset($exact_match) or isset($types) or isset($types_tag) or isset($find_topics) or isset($find_show_languages) or isset($find_lang) or isset($find_show_categories) or isset($find_show_categories_multi) or isset($find_categId) or isset($find_show_num_rows) or isset($find_show_date_range) or isset($find_show_orphans) or isset($find_show_sub) or isset($find_show_other))}
 						<div class="input-group-btn btn btn-default btn-sm find-parameters-btn">

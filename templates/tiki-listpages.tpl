@@ -4,7 +4,7 @@
 {tabset name='tabs_wikipages'}
 	{tab name="{tr}List Wiki Pages{/tr}"}
 		<h2>{tr}List Wiki Pages{/tr}</h2>
-		{if !$tsOn}
+		{if !$ts.enabled}
 			<div class="clearfix">
 				{include autocomplete='pagename' file='find.tpl' find_show_languages='y' find_show_languages_excluded='y' find_show_categories_multi='y' find_show_num_rows='y' find_in="<ul><li>{tr}Page name{/tr}</li></ul>" }
 			</div>
