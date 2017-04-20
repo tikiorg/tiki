@@ -119,7 +119,7 @@ class PdfGenerator
 		}
 		$url = $base_url . $file . '?' . http_build_query($params, '', '&');
         $session_params = session_get_cookie_params();
-	return $this->{$this->mode}( $url,$pdata);	}
+	return $this->{$this->mode}( $url,$pdata,$params);	}
 
     /**
      * @param $url
@@ -252,7 +252,7 @@ class PdfGenerator
 	 * @param $url string - address of the item to print as PDF
 	 * @return string     - contents of the PDF
 	 */
-	private function mpdf($url,$parsedData='')
+	private function mpdf($url,$parsedData='',$params=array())
 	{
 		global $prefs;
 		if (!extension_loaded('curl')) {
@@ -265,6 +265,9 @@ class PdfGenerator
 
        //getting n replacing images
 	   $tempImgArr=array();
+		if($prefs['feature_page_title']=='y')
+			$html='<h1>'.$params['page'].'</h1>'.$html;
+
        $this->_getImages($html,$tempImgArr);
        
 	   $this->_parseHTML($html);
@@ -274,9 +277,8 @@ class PdfGenerator
 		}
 		//checking and getting plugin_pdf parameters if set
 		
-		$pdfSettings=$this->getPDFSettings($html,$prefs);
-
-
+		$pdfSettings=$this->getPDFSettings($html,$prefs,$params);
+		
 
 	  	$mpdf=new mPDF('utf-8',$pdfSettings['pageSize'],'','',$pdfSettings['marginLeft'],$pdfSettings['marginRight'] , $pdfSettings['marginTop'] , $pdfSettings['marginBottom'] , $pdfSettings['marginHeader'] , $pdfSettings['marginFooter'] ,$pdfSettings['orientation']);
 
@@ -327,11 +329,11 @@ class PdfGenerator
 		}
 		$mpdf->WriteHTML(str_replace(array(".tiki","opacity: 0;"),array("","fill: #fff;opacity:0.3;stroke:black"),'<style>'.$basecss.$themecss.$printcss.$this->bootstrapReplace().'</style>'.$html));
 	    $this->clearTempImg($tempImgArr);
-	//echo str_replace(array(".tiki","opacity: 0;"),array("","fill: #fff;opacity:0.3;stroke:black"),'<style>'.$basecss.$themecss.$printcss.$this->bootstrapReplace().'</style>'.$html);
+	
 		return $mpdf->Output('', 'S');					// Return as a string
 	}
 	
-	function getPDFSettings($html,$prefs)
+	function getPDFSettings($html,$prefs,$params)
 	{
 		$pdfSettings=array();
 		
@@ -366,8 +368,8 @@ class PdfGenerator
 		$pdfSettings['marginBottom']=$prefs['print_pdf_mpdf_margin_bottom']!=''?$prefs['print_pdf_mpdf_margin_bottom']:'10';
 		$pdfSettings['marginHeader']=$prefs['print_pdf_mpdf_margin_header']!=''?$prefs['print_pdf_mpdf_margin_header']:'5';
 		$pdfSettings['marginFooter']=$prefs['print_pdf_mpdf_margin_footer']!=''?$prefs['print_pdf_mpdf_margin_footer']:'5';
-        $pdfSettings['header']=$prefs['print_pdf_mpdf_header'];
-		$pdfSettings['footer']=$prefs['print_pdf_mpdf_footer'];
+        $pdfSettings['header']=str_ireplace("{PAGETITLE}",$params['page'],$prefs['print_pdf_mpdf_header']);
+		$pdfSettings['footer']=str_ireplace("{PAGETITLE}",$params['page'],$prefs['print_pdf_mpdf_footer']);
 		$pdfSettings['print_pdf_mpdf_password']=$prefs['print_pdf_mpdf_password'];
 		//PDF settings
 		return $pdfSettings;

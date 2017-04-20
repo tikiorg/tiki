@@ -31,11 +31,14 @@
 	<div class="wikiactions_wrapper clearfix">
 		<div class="wikiactions icons btn-group pull-right">
 			<div class="btn-group">
-				{* languages and structures are separate dropdowns*}
-				{if $prefs.feature_multilingual eq 'y' && $prefs.show_available_translations eq 'y' && $machine_translate_to_lang eq ''}
-					<!--span class="btn-i18n" -->
-					{include file='translated-lang.tpl' object_type='wiki page'}
-					<!--/span -->
+				{* Show language dropdown only if there is more than 1 language or user has right to edit *}
+				{if ($tiki_p_admin eq 'y' or $tiki_p_admin_wiki eq 'y' or $tiki_p_edit eq 'y' or $tiki_p_edit eq 'y' or $tiki_p_edit_inline eq 'y') or $translationsCount gt 1}
+					{* languages and structures are separate dropdowns*}
+					{if $prefs.feature_multilingual eq 'y' && $prefs.show_available_translations eq 'y' && $machine_translate_to_lang eq '' }
+						<!--span class="btn-i18n" -->
+						{include file='translated-lang.tpl' object_type='wiki page'}
+						<!--/span -->
+					{/if}
 				{/if}
 
 				{* if we want a ShareThis icon and we want it displayed prominently *}
