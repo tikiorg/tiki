@@ -184,7 +184,7 @@
 												$icon.addClass("highlight");
 											}
 										} else {
-											if (disableWyiswygInlineEditing()) {
+											if (disableWYSIWYGInlineEditing()) {
 												$icon.removeClass("highlight");
 											}
 										}
