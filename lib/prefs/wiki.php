@@ -260,7 +260,8 @@ function prefs_wiki_list($partial = false)
 			'default' => 'y',
 		),
 		'wiki_edit_section' => array(
-			'name' => tra('Edit section'),
+			'name' => tra('Allow section-specific edits'),
+			'description' => tra('Adds an edit icon above each section to accelerate modifications of a single section.'),
 			'type' => 'flag',
 			'default' => 'y',
 			'tags' => array('basic'),
