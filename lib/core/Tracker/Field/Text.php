@@ -23,6 +23,7 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 				'prefs' => array('trackerfield_text'),
 				'tags' => array('basic'),
 				'default' => 'y',
+				'supported_changes' => array('d', 'D', 'R', 'M', 'm', 't', 'a', 'L'),
 				'params' => array(
 					'samerow' => array(
 						'name' => tr('Same Row'),

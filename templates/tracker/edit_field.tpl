@@ -164,7 +164,7 @@
 					{tr}Changing the permanent name may have consequences in integrated systems.{/tr}
 				</div>
 			</div>
-			{if $prefs.tracker_change_field_type eq 'y'}
+			{if $types}
 				<div class="form-group">
 					<label for="type" class="control-label">{tr}Field Type{/tr}</label>
 					<select name="type" data-original="{$field.type}" class="confirm-prompt form-control">
@@ -199,9 +199,11 @@ $('select[name=type]').change(function () {
 	}
 }).change();
 {/jq}
-					<div class="alert alert-danger">
-						{icon name="warning"} {tr}Changing the field type may cause irretrievable data loss - use with caution!{/tr}
-					</div>
+					{if $prefs.tracker_change_field_type eq 'y'}
+						<div class="alert alert-danger">
+							{icon name="warning"} {tr}Changing the field type may cause irretrievable data loss - use with caution!{/tr}
+						</div>
+					{/if}
 				</div>
 			{/if}
 		{/accordion_group}

@@ -23,6 +23,7 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 				'prefs' => array('trackerfield_datetime'),
 				'tags' => array('basic'),
 				'default' => 'y',
+				'supported_changes' => array('f', 'j'),
 				'params' => array(
 					'datetime' => array(
 						'name' => tr('Type'),

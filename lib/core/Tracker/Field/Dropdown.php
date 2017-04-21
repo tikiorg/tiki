@@ -23,6 +23,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 				'prefs' => array('trackerfield_dropdown'),
 				'tags' => array('basic'),
 				'default' => 'y',
+				'supported_changes' => array('d', 'D', 'R', 'M', 'm', 't', 'a', 'L'),
 				'params' => array(
 					'options' => array(
 						'name' => tr('Option'),
@@ -40,6 +41,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 				'prefs' => array('trackerfield_dropdownother'),
 				'tags' => array('basic'),
 				'default' => 'n',
+				'supported_changes' => array('d', 'D', 'R', 'M', 'm', 't', 'a', 'L'),
 				'params' => array(
 					'options' => array(
 						'name' => tr('Option'),
@@ -57,6 +59,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 				'prefs' => array('trackerfield_radio'),
 				'tags' => array('basic'),
 				'default' => 'y',
+				'supported_changes' => array('d', 'D', 'R', 'M', 'm', 't', 'a', 'L'),
 				'params' => array(
 					'options' => array(
 						'name' => tr('Option'),
@@ -74,6 +77,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 				'prefs' => array('trackerfield_multiselect'),
 				'tags' => array('basic'),
 				'default' => 'y',
+				'supported_changes' => array('M', 'm', 't', 'a', 'L'),
 				'params' => array(
 					'options' => array(
 						'name' => tr('Option'),

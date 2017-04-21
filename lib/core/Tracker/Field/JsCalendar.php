@@ -16,6 +16,7 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 				'prefs' => array('trackerfield_jscalendar'),
 				'tags' => array('advanced'),
 				'default' => 'y',
+				'supported_changes' => array('f', 'j'),
 				'params' => array(
 					'datetime' => array(
 						'name' => tr('Type'),

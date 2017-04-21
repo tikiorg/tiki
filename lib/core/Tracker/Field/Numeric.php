@@ -23,6 +23,7 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 				'prefs' => array('trackerfield_numeric'),
 				'tags' => array('basic'),
 				'default' => 'y',
+				'supported_changes' => array('d', 'D', 'R', 'M', 't', 'a', 'n', 'q', 'b'),
 				'params' => array(
 					'samerow' => array(
 						'name' => tr('Same Row'),

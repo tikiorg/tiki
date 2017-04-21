@@ -24,6 +24,7 @@ class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract implements Trac
 				'prefs' => array('trackerfield_autoincrement'),
 				'tags' => array('advanced'),
 				'default' => 'n',
+				'supported_changes' => array('d', 'D', 'R', 'M', 't', 'a', 'n', 'q', 'b'),
 				'params' => array(
 					'start' => array(
 						'name' => tr('Start'),

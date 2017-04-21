@@ -22,6 +22,7 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 				'prefs' => array('trackerfield_url'),
 				'tags' => array('basic'),
 				'default' => 'y',
+				'supported_changes' => array('d', 'D', 'R', 'M', 'm', 't', 'a', 'L'),
 				'params' => array(
 					'linkToURL' => array(
 						'name' => tr('Display'),

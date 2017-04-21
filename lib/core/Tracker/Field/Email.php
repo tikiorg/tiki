@@ -24,6 +24,7 @@ class Tracker_Field_Email extends Tracker_Field_Abstract implements Tracker_Fiel
 				'prefs' => array('trackerfield_email'),
 				'tags' => array('basic'),
 				'default' => 'y',
+				'supported_changes' => array('d', 'D', 'R', 'M', 'm', 't', 'a', 'L'),
 				'params' => array(
 					'link' => array(
 						'name' => tr('Link Type'),

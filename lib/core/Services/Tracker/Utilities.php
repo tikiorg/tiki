@@ -456,10 +456,14 @@ EXPORT;
 		return $list;
 	}
 
-	function getFieldTypes()
+	function getFieldTypes($filter = array())
 	{
 		$factory = new Tracker_Field_Factory(false);
 		$completeList = $factory->getFieldTypes();
+		
+		if( !empty($filter) ) {
+			$completeList = array_intersect_key($completeList, array_flip($filter));
+		}
 
 		$list = array();
 

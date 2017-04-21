@@ -23,6 +23,7 @@ class Tracker_Field_Currency extends Tracker_Field_Abstract implements Tracker_F
 				'prefs' => array('trackerfield_currency'),
 				'tags' => array('basic'),
 				'default' => 'n',
+				'supported_changes' => array('d', 'D', 'R', 'M', 't', 'a', 'n', 'q', 'b'),
 				'params' => array(
 					'samerow' => array(
 						'name' => tr('Same Row'),
