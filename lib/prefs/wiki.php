@@ -253,8 +253,11 @@ function prefs_wiki_list($partial = false)
 			'default' => 'n',
 		),
 		'wiki_edit_plugin' => array(
-			'name' => tra('Enable edit plugin icons'),
-			'description' => tra('Enables editing a plugin, via a popup form, without needing to edit the whole page.'),
+			'name' => tra('Allow plugin-specific edits'),
+			'description' =>
+				tra('Adds an icon next to each plugin usage which enables to edit that plugin call via a popup form, without needing to edit its whole container.')
+				. ' ' . tra('This feature is unavailable outside wiki pages, whether or not this preference is enabled.') // This may be by design, or just because it was faster to implement.
+				,
 			'type' => 'flag',
 			'hint' => tra('Requires JavaScript'),
 			'default' => 'y',
