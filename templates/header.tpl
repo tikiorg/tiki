@@ -95,34 +95,38 @@
 		{assign var="aliasname" value={$structure_path[ix].page_alias}}
 		{/section}
 	{/if}
-	{if !empty($page_description_title)}
-		{$page_description_title}
+	{if $prefs.site_title_location eq 'only'}
+		{$prefs.browsertitle|tr_if|escape}
 	{else}
-		{if !empty($tracker_item_main_value)}
-			{$tracker_item_main_value|truncate:255|escape}
-		{elseif !empty($title) and !is_array($title)}
-			{$title|escape}
-		{elseif !empty($aliasname)}
-			{$aliasname|escape}
-		{elseif !empty($page)}
-			{$page|escape}
-		{elseif !empty($arttitle)}
-			{$arttitle|escape}
-		{elseif !empty($thread_info.title)}
-			{$thread_info.title|escape}
-		{elseif !empty($forum_info.name)}
-			{$forum_info.name|escape}
-		{elseif !empty($categ_info.name)}
-			{$categ_info.name|escape}
-		{elseif !empty($userinfo.login)}
-			{$userinfo.login|username}
-		{elseif !empty($tracker_info.name)}
-			{$tracker_info.name|escape}
-		{elseif !empty($headtitle)}
-			{$headtitle|stringfix:"&nbsp;"|escape}{* use $headtitle last if feature specific title not found *}
-		{elseif !empty($description)}
-			{$description|escape}{* use description if nothing else is found but this is likely to contain tiki markup *}
-			{* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
+		{if !empty($page_description_title)}
+			{$page_description_title}
+		{else}
+			{if !empty($tracker_item_main_value)}
+				{$tracker_item_main_value|truncate:255|escape}
+			{elseif !empty($title) and !is_array($title)}
+				{$title|escape}
+			{elseif !empty($aliasname)}
+				{$aliasname|escape}
+			{elseif !empty($page)}
+				{$page|escape}
+			{elseif !empty($arttitle)}
+				{$arttitle|escape}
+			{elseif !empty($thread_info.title)}
+				{$thread_info.title|escape}
+			{elseif !empty($forum_info.name)}
+				{$forum_info.name|escape}
+			{elseif !empty($categ_info.name)}
+				{$categ_info.name|escape}
+			{elseif !empty($userinfo.login)}
+				{$userinfo.login|username}
+			{elseif !empty($tracker_info.name)}
+				{$tracker_info.name|escape}
+			{elseif !empty($headtitle)}
+				{$headtitle|stringfix:"&nbsp;"|escape}{* use $headtitle last if feature specific title not found *}
+			{elseif !empty($description)}
+				{$description|escape}{* use description if nothing else is found but this is likely to contain tiki markup *}
+				{* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
+			{/if}
 		{/if}
 	{/if}
 	{if $prefs.site_title_location eq 'after'} {$prefs.site_nav_seper} {$prefs.browsertitle|tr_if|escape}{/if}
