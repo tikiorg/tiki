@@ -86,6 +86,7 @@
 				{preference name=feature_wiki_allowhtml}
 				{preference name=feature_wysiwyg}
 				{preference name=wiki_timeout_warning}
+				{preference name=wiki_edit_plugin}
 				{preference name=wiki_edit_icons_toggle}
 				{preference name=wiki_edit_section}
 				<div class="adminoptionboxchild" id="wiki_edit_section_childcontainer">
