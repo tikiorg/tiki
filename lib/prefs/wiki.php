@@ -259,7 +259,6 @@ function prefs_wiki_list($partial = false)
 				. ' ' . tra('This feature is unavailable outside wiki pages, whether or not this preference is enabled.') // This may be by design, or just because it was faster to implement.
 				,
 			'type' => 'flag',
-			'hint' => tra('Requires JavaScript'),
 			'default' => 'y',
 		),
 		'wiki_edit_section' => array(
