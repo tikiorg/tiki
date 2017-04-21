@@ -284,7 +284,8 @@ function prefs_wiki_list($partial = false)
 			'default' => '0',
 		),
 		'wiki_edit_icons_toggle' => array(
-			'name' => tra('Toggle display of section and plugin edit icons'),
+			'name' => tra('Only display focused edit icons (for sections and/or plugins) on request'),
+			'description' => tra('If enabled, focused edit icons will only display after a per-session "Edit icons" preference is enabled. This preference is defined directly from any wiki page.'),			
 			'type' => 'flag',
 			'default' => 'y',
 			'tags' => array('basic'),
