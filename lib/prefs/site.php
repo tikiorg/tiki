@@ -61,6 +61,7 @@ function prefs_site_list()
 				'after' => tra('After current page\'s descriptor'),
 				'before' => tra('Before current page\'s descriptor'),
 				'none' => tra('No browser title, only current page\'s descriptor'),
+				'only' => tra('Only browser title, no current page\'s descriptor'),
 			),
 			'tags' => array('basic'),
 			'default' => 'before',
