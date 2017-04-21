@@ -164,7 +164,9 @@
 			<fieldset class="margin-bottom-lg">
 				<legend>{tr}Edit plugin icons{/tr}</legend>
 				{preference name=wiki_edit_plugin}
-				{preference name=wiki_edit_icons_toggle}
+				<div class="adminoptionboxchild" id="wiki_edit_plugin_childcontainer">
+					{preference name=wiki_edit_icons_toggle}
+				</div>
 				{preference name=wikiplugin_list_gui}
 			</fieldset>
 
