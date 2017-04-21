@@ -544,16 +544,13 @@ if ( \$('#$id') ) {
 "
 );
 
-				$iconDisplayStyle = '';
-				if ($prefs['wiki_edit_icons_toggle'] == 'y' && ($prefs['wiki_edit_plugin'] == 'y' || $prefs['wiki_edit_section'] == 'y')) {
-					if (!isset($_COOKIE['wiki_plugin_edit_view'])) {
-						$iconDisplayStyle = ' style="display:none;"';
-					}
-				}
+				$displayIcon = $prefs['wiki_edit_icons_toggle'] != 'y' || isset($_COOKIE['wiki_plugin_edit_view']);
 
-				$ret .= '~np~<a id="' . $id . '" href="javascript:void(1)" class="editplugin"' . $iconDisplayStyle . '>'
-					. smarty_function_icon(array('name'=>'plugin', 'iclass' => 'tips', 'ititle'=>tra('Edit plugin')
-					. ':' . ucfirst($plugin_name)), $smarty)."</a>~/np~";
+				$ret .= '~np~' .
+						'<a id="' . $id . '" href="javascript:void(1)" class="editplugin"' . ($displayIcon ? '' : ' style="display:none;"') . '>' .
+						smarty_function_icon(array('name'=>'plugin', 'iclass' => 'tips', 'ititle' => tra('Edit plugin') . ':' . ucfirst($plugin_name)), $smarty) .
+						'</a>' .
+						'~/np~';
 			}
 
 			// End plugin handling
