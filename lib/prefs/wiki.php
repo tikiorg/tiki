@@ -261,13 +261,14 @@ function prefs_wiki_list($partial = false)
 		),
 		'wiki_edit_section' => array(
 			'name' => tra('Allow section-specific edits'),
-			'description' => tra('Adds an edit icon above each section to accelerate modifications of a single section.'),
+			'description' => tra('Adds an edit icon above each section (up to a configurable maximum level) to accelerate modifications of a single section.'),
 			'type' => 'flag',
 			'default' => 'y',
 			'tags' => array('basic'),
 		),
 		'wiki_edit_section_level' => array(
-			'name' => tra('Edit section level'),
+			'name' => tra('Section-specific edits maximum level'),
+			'description' => tra('Allows preventing a proliferation of edit icons for small sections. For example, when set to 2, no edit icons will show for third-level sections.'),
 			'type' => 'list',
 			'options' => array(
 				'0' => tra('All'),
