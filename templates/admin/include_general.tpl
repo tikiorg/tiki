@@ -35,7 +35,6 @@
 			<fieldset>
 				<legend>{tr}Site identity{/tr}</legend>
 				{preference name=browsertitle}
-				{preference name=sender_email}
 				{preference name=site_title_location}
 				{preference name=site_title_breadcrumb}
 				{remarksbox type="info" title="{tr}Themes{/tr}"}
@@ -44,6 +43,7 @@
 			</fieldset>
 			<fieldset>
 				<legend>{tr}Mail{/tr}</legend>
+				{preference name=sender_email}
 				{preference name=default_mail_charset}
 				{preference name=mail_crlf}
 				{preference name=zend_mail_handler}
