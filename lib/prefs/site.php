@@ -54,14 +54,15 @@ function prefs_site_list()
 			'default' => '|',
 		),
 		'site_title_location' => array(
-			'name' => tra('Site title location'),
-			'description' => tra('Location of the site title in the browser title bar relative to the current page\'s descriptor.'),
+			'name' => tra('Browser title position'),
+			'description' => tra('Position of the browser title in the full browser bar relative to the current page\'s descriptor.'),
 			'type' => 'list',
 			'options' => array(
-				'after' => tra('After'),
-				'before' => tra('Before'),
-				'none' => tra('None'),
+				'after' => tra('After current page\'s descriptor'),
+				'before' => tra('Before current page\'s descriptor'),
+				'none' => tra('No browser title, only current page\'s descriptor'),
 			),
+			'tags' => array('basic'),
 			'default' => 'before',
 		),
 		'site_title_breadcrumb' => array(
@@ -74,6 +75,7 @@ function prefs_site_list()
 				'pagetitle' => tra('Current only'),
 				'desc' => tra('Description'),
 			),
+			'tags' => array('advanced'),
 			'default' => 'invertfull',
 		),
 		'site_favicon_enable' => array(
