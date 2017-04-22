@@ -8,6 +8,7 @@
 namespace Tiki\Command;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -26,6 +27,9 @@ require_once('tiki-setup.php');
  */
 class ESRescueCommand extends Command
 {
+	private $elasticUri;
+	private $indexName;
+
 	protected function configure()
 	{
 		$this
@@ -63,33 +67,128 @@ class ESRescueCommand extends Command
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$elasticUri = $input->getOption('elasticuri');
-		$indexName = $input->getOption('indexname');
+		$this->elasticUri = $input->getOption('elasticuri');
+		$this->indexName = $input->getOption('indexname');
+
 		$startDate = $input->getOption('startdate');
 		$endDate = $input->getOption('enddate');
 
-		$results = $this->getWikiPageEditEvents($elasticUri, $indexName, $startDate, $endDate);
+		$results = $this->getWikiPageEditEvents($startDate, $endDate);
 
 		$output->writeln(tr('<comment>Found %0 wiki edits</comment>', count($results)));
 
-		// TODO the page edits
+		$this->makeThePageUpdates($results, $output);
 	}
 
 	/**
+	 * @param array $edits
+	 * @param OutputInterface $output
+	 */
+	private function makeThePageUpdates(array $edits, OutputInterface $output)
+	{
+		$tikilib = \TikiLib::lib('tiki');
+		$histlib = \TikiLib::lib('hist');
+		$now = date('c');
+
+		$progress = new ProgressBar($output, count($edits));
+		$progress->start();
+		$transaction = $tikilib->begin();
+
+		foreach ($edits as $edit) {
+
+			$page = $edit['page'];
+			if (! $tikilib->page_exists($page)) {
+				$info = $this->getWikiPage($page);
+
+				$tikilib->create_page(
+					$page,
+					0,
+					$edit['data'],
+					strtotime($info['creation_date']),
+					'Page created by rescue script ' . $now,
+					$edit['user'],
+					'0.0.0.0',
+					$info['description'],
+					$info['language'],
+					null,
+					null,
+					null,
+					'',
+					0,
+					strtotime($info['creation_date'])
+				);
+
+				if ($edit['version'] > 1) {	// missing history
+					$tiki_history = $tikilib->table('tiki_history');
+					$old_version = ! empty($edit['old_version']) ? $edit['old_version'] : $edit['version'] - 1;
+
+					$tiki_history->update([
+						'version' => $old_version,
+					], [
+						'pageName' => $page,
+					]);
+
+					$tiki_history->insert([
+						'pageName' => $page,
+						'version' => $edit['version'],
+						'version_minor' => 0,
+						'lastModif' => strtotime($edit['modification_date']),
+						'user' => $edit['user'],
+						'ip' => '0.0.0.0',
+						'comment' => 'Version created by rescue script ' . $now,
+						'data' => $edit['old_data'],
+						'description' => $info['description'],
+						'is_html' => 0,	// a guess
+					]);
+				}
+			} else {
+				$info = $tikilib->get_page_info($page);
+
+				if (! $histlib->get_version($page, $edit['version'])) {
+					$tikilib->update_page(
+						$page,
+						$edit['data'],
+						'Edit restored by rescue script ' . $now,
+						$edit['user'],
+						'0.0.0.0',
+						null,
+						0,
+						'',
+						null,
+						null,
+						strtotime($edit['modification_date'])
+					);
+				} else {
+					// version alrteady exists, do what?
+				}
+			}
+
+			$progress->advance();
+		}
+		$progress->finish();
+
+		$output->writeln('');
+		$output->writeln(tr('Committing transaction'));
+		$transaction->commit();
+
+		$output->writeln('');
+		$output->writeln(tr('Done'));
+	}
+
+	/**
+	 * Get all activity stream events for wiki pages
 	 *
-	 * @param $elasticUri
-	 * @param $indexName
 	 * @param $startDate
 	 * @param $endDate
 	 * @return array|bool
 	 * @internal param $unifiedsearchlib
 	 * @internal param $this
 	 */
-	private function getWikiPageEditEvents($elasticUri, $indexName, $startDate, $endDate)
+	private function getWikiPageEditEvents($startDate, $endDate)
 	{
 		$unifiedsearchlib = \TikiLib::lib('unifiedsearch');
-		$connection = new \Search_Elastic_Connection($elasticUri);
-		$esIndex = new \Search_Elastic_Index($connection, $indexName);
+		$connection = new \Search_Elastic_Connection($this->elasticUri);
+		$esIndex = new \Search_Elastic_Index($connection, $this->indexName);
 
 		$query = new \Search_Query;
 		$unifiedsearchlib->initQueryBase($query);
@@ -124,7 +223,7 @@ class ESRescueCommand extends Command
 		$data = json_encode($fullQuery);
 
 
-		$full = "{$elasticUri}{$indexName}/_search";
+		$full = "{$this->elasticUri}{$this->indexName}/_search";
 		//$full = "{$elasticUri}{$indexName}/_validate/query?explain=true";
 
 		$client = \TikiLib::lib('tiki')->get_http_client($full);
@@ -136,8 +235,6 @@ class ESRescueCommand extends Command
 			$response = $client->send();
 			$body = $response->getBody();
 			$decoded = json_decode($body);
-
-			//$resultSet = new Search_Elastic_ResultSet($entries, $hits->total, $resultStart, $resultCount);
 
 			$hits = $decoded->hits;
 			$results = [];
@@ -160,6 +257,54 @@ class ESRescueCommand extends Command
 			return null;
 		}
 
+	}
+
+	/**
+	 * Gets a single wiki page definitioopn from the index (for missing pages)
+	 *
+	 * @param string $page page name
+	 * @return array|bool
+	 * @internal param $unifiedsearchlib
+	 * @internal param $this
+	 */
+	private function getWikiPage($page)
+	{
+		$unifiedsearchlib = \TikiLib::lib('unifiedsearch');
+		$connection = new \Search_Elastic_Connection($this->elasticUri);
+		$esIndex = new \Search_Elastic_Index($connection, $this->indexName);
+
+		$query = new \Search_Query;
+		$unifiedsearchlib->initQueryBase($query);
+		//$query = $unifiedsearchlib->buildQuery($filter, $query);	// annoying, can't use type in this as that converts it to object_type, meh
+
+		$query->filterIdentifier($page, 'object_id');
+		$query->filterType('wiki page');
+
+		//  build query for es
+		$builder = new \Search_Elastic_QueryBuilder($esIndex);
+		$queryPart = $builder->build($query->getExpr());
+
+		$data = json_encode($queryPart);
+
+
+		$full = "{$this->elasticUri}{$this->indexName}/_search";
+		//$full = "{$elasticUri}{$indexName}/_validate/query?explain=true";
+
+		$client = \TikiLib::lib('tiki')->get_http_client($full);
+
+		$client->setRawBody($data);
+		$client->setMethod(\Zend\Http\Request::METHOD_GET);
+		$client->setHeaders(['Content-Type: application/json']);
+
+		$response = $client->send();
+		$body = $response->getBody();
+		$decoded = json_decode($body, true);
+
+		if ($decoded && ! empty($decoded['hits']['hits'][0]['_source'])) {
+			return $decoded['hits']['hits'][0]['_source'];
+		} else {
+			return false;
+		}
 	}
 
 }
