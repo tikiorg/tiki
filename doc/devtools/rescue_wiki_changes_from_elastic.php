@@ -112,15 +112,13 @@ class ESRescueCommand extends Command
 			$page = $edit['page'];
 			if (! $tikilib->page_exists($page)) {
 				$info = $this->getWikiPage($page);
-				$comment = 'Page created by rescue script ' . $now;
-
 				if ($confirm) {
 					$tikilib->create_page(
 						$page,
 						0,
 						$edit['data'],
 						strtotime($info['creation_date']),
-						$comment,
+						'Page created by rescue script ' . $now,
 						$edit['user'],
 						'0.0.0.0',
 						$info['description'],
@@ -133,7 +131,7 @@ class ESRescueCommand extends Command
 						strtotime($info['creation_date'])
 					);
 				} else {
-					$output->writeln(tr('<comment>Page: "%1" (version %2) "%0"</comment>', $comment, $page, $edit['version']));
+					$output->writeln(tr('<comment>Page: "%0" (version %1) CREATED</comment>', $page, $edit['version']));
 				}
 
 				if ($edit['version'] > 1 && $confirm) {	// missing history
@@ -163,12 +161,11 @@ class ESRescueCommand extends Command
 				$info = $tikilib->get_page_info($page);
 
 				if (! $histlib->get_version($page, $edit['version'])) {
-					$comment = 'Edit restored by rescue script ' . $now;
 					if ($confirm) {
 						$tikilib->update_page(
 							$page,
 							$edit['data'],
-							$comment,
+							'Edit restored by rescue script ' . $now,
 							$edit['user'],
 							'0.0.0.0',
 							null,
@@ -179,7 +176,7 @@ class ESRescueCommand extends Command
 							strtotime($edit['modification_date'])
 						);
 					} else {
-						$output->writeln(tr('<comment>Page: "%1" (version %2) "%0"</comment>', $comment, $page, $edit['version']));
+						$output->writeln(tr('<info>Page: "%0" (version %1) UPDATED</info>', $page, $edit['version']));
 					}
 				} else {
 					// version alrteady exists, do what?
