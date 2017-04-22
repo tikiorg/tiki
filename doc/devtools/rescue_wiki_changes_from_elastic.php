@@ -62,6 +62,12 @@ class ESRescueCommand extends Command
 				InputOption::VALUE_OPTIONAL,
 				'End Date',
 				'2017-04-05'
+			)
+			->addOption(
+				'confirm',
+				'c',
+				InputOption::VALUE_NONE,
+				'Confirm (add -c or --confirm to perform the actual changes)'
 			);
 	}
 
@@ -77,21 +83,28 @@ class ESRescueCommand extends Command
 
 		$output->writeln(tr('<comment>Found %0 wiki edits</comment>', count($results)));
 
-		$this->makeThePageUpdates($results, $output);
+		$confirm = $input->getOption('confirm');
+		if (! $confirm) {
+			$output->writeln(tr('<info>Dry run mode: add --confirm to run for real</info>', count($results)));
+		}
+
+		$this->makeThePageUpdates($results, $output, $confirm);
 	}
 
 	/**
 	 * @param array $edits
 	 * @param OutputInterface $output
 	 */
-	private function makeThePageUpdates(array $edits, OutputInterface $output)
+	private function makeThePageUpdates(array $edits, OutputInterface $output, $confirm = false)
 	{
 		$tikilib = \TikiLib::lib('tiki');
 		$histlib = \TikiLib::lib('hist');
 		$now = date('c');
 
 		$progress = new ProgressBar($output, count($edits));
-		$progress->start();
+		if ($confirm) {
+			$progress->start();
+		}
 		$transaction = $tikilib->begin();
 
 		foreach ($edits as $edit) {
@@ -99,26 +112,31 @@ class ESRescueCommand extends Command
 			$page = $edit['page'];
 			if (! $tikilib->page_exists($page)) {
 				$info = $this->getWikiPage($page);
+				$comment = 'Page created by rescue script ' . $now;
 
-				$tikilib->create_page(
-					$page,
-					0,
-					$edit['data'],
-					strtotime($info['creation_date']),
-					'Page created by rescue script ' . $now,
-					$edit['user'],
-					'0.0.0.0',
-					$info['description'],
-					$info['language'],
-					null,
-					null,
-					null,
-					'',
-					0,
-					strtotime($info['creation_date'])
-				);
+				if ($confirm) {
+					$tikilib->create_page(
+						$page,
+						0,
+						$edit['data'],
+						strtotime($info['creation_date']),
+						$comment,
+						$edit['user'],
+						'0.0.0.0',
+						$info['description'],
+						$info['language'],
+						null,
+						null,
+						null,
+						'',
+						0,
+						strtotime($info['creation_date'])
+					);
+				} else {
+					$output->writeln(tr('<comment>Page: "%1" (version %2) "%0"</comment>', $comment, $page, $edit['version']));
+				}
 
-				if ($edit['version'] > 1) {	// missing history
+				if ($edit['version'] > 1 && $confirm) {	// missing history
 					$tiki_history = $tikilib->table('tiki_history');
 					$old_version = ! empty($edit['old_version']) ? $edit['old_version'] : $edit['version'] - 1;
 
@@ -145,27 +163,36 @@ class ESRescueCommand extends Command
 				$info = $tikilib->get_page_info($page);
 
 				if (! $histlib->get_version($page, $edit['version'])) {
-					$tikilib->update_page(
-						$page,
-						$edit['data'],
-						'Edit restored by rescue script ' . $now,
-						$edit['user'],
-						'0.0.0.0',
-						null,
-						0,
-						'',
-						null,
-						null,
-						strtotime($edit['modification_date'])
-					);
+					$comment = 'Edit restored by rescue script ' . $now;
+					if ($confirm) {
+						$tikilib->update_page(
+							$page,
+							$edit['data'],
+							$comment,
+							$edit['user'],
+							'0.0.0.0',
+							null,
+							0,
+							'',
+							null,
+							null,
+							strtotime($edit['modification_date'])
+						);
+					} else {
+						$output->writeln(tr('<comment>Page: "%1" (version %2) "%0"</comment>', $comment, $page, $edit['version']));
+					}
 				} else {
 					// version alrteady exists, do what?
 				}
 			}
 
-			$progress->advance();
+			if ($confirm) {
+				$progress->advance();
+			}
 		}
-		$progress->finish();
+		if ($confirm) {
+			$progress->finish();
+		}
 
 		$output->writeln('');
 		$output->writeln(tr('Committing transaction'));
