@@ -543,8 +543,6 @@ if (isset($_SESSION["$user_cookie_site"])) {
 	}
 }
 
-$smarty->assign('CSRFTicket', isset( $_SESSION['ticket'] ) ? $_SESSION['ticket'] : null);
-
 require_once ('lib/setup/perms.php');
 // --------------------------------------------------------------
 // deal with register_globals
