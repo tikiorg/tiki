@@ -11,6 +11,7 @@ function prefs_cookie_list()
 		'cookie_name' => array(
 			'name' => tra('Cookie name'),
 			'description' => tra("Name of the cookie to remember the user's login"),
+			'hint' => 'Changing the cookie name forces an instant logout for all user sessions. Including yours.',
 			'type' => 'text',
 			'size' => 35,
 			'perspective' => false,
