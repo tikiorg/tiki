@@ -4081,7 +4081,7 @@ class TikiLib extends TikiDb_Bridge
 		// Update the log
 		if (strtolower($name) != 'sandbox') {
 			$logslib = TikiLib::lib('logs');
-			$logslib->add_action("Created", $name, 'wiki page', 'add='.strlen($data), $user, '', '', '', $hash['contributions'], $hash2);
+			$logslib->add_action("Created", $name, 'wiki page', 'add='.strlen($data), $user, '', '', $created, $hash['contributions'], $hash2);
 			//get_strings tra("Created");
 
 			//  Deal with mail notifications.
@@ -4573,7 +4573,7 @@ class TikiLib extends TikiDb_Bridge
 			if (strtolower($pageName) != 'sandbox') {
 				$logslib = TikiLib::lib('logs');
 				$bytes = diff2($data, $edit_data, 'bytes');
-				$logslib->add_action('Updated', $pageName, 'wiki page', $bytes, $edit_user, $edit_ip, '', $this->now, $hash['contributions'], $hash2);
+				$logslib->add_action('Updated', $pageName, 'wiki page', $bytes, $edit_user, $edit_ip, '', $saveLastModif, $hash['contributions'], $hash2);
 				if ($prefs['feature_contribution'] == 'y') {
 					$contributionlib = TikiLib::lib('contribution');
 					$contributionlib->assign_contributions($hash['contributions'], $pageName, 'wiki page', $edit_description, $pageName, "tiki-index.php?page=".urlencode($pageName));
