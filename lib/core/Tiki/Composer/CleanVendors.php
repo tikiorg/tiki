@@ -139,7 +139,7 @@ class CleanVendors
 				'dist/js/superfish.min.js'
 			]
 		);
-		self::removeMultiple($vendors . 'jquery/plugins/tablesorter',
+		self::removeMultiple($vendors . 'mottie/tablesorter',
 			[
 				'addons',
 				'beta-testing',

@@ -509,13 +509,13 @@ if ( $prefs['feature_jquery_media'] == 'y' ) {
 	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/media/jquery.media.js');
 }
 if ( $prefs['feature_jquery_tablesorter'] == 'y' ) {
-	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.combined.js');
-	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/tablesorter/js/widgets/widget-pager.js');
-	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/tablesorter/js/widgets/widget-filter-formatter-jui.js');
-	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/tablesorter/js/widgets/widget-grouping.js');
-	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/tablesorter/js/widgets/widget-columnSelector.js');
-	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/tablesorter/js/parsers/parser-input-select.js');
-	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/tablesorter/js/widgets/widget-math.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/mottie/tablesorter/js/jquery.tablesorter.combined.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/mottie/tablesorter/js/widgets/widget-pager.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/mottie/tablesorter/js/widgets/widget-filter-formatter-jui.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/mottie/tablesorter/js/widgets/widget-grouping.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/mottie/tablesorter/js/widgets/widget-columnSelector.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/mottie/tablesorter/js/parsers/parser-input-select.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/mottie/tablesorter/js/widgets/widget-math.js');
 	$headerlib->add_jsfile('lib/jquery_tiki/tablesorter.js');
 }
 

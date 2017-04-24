@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "58f3e1eb0c59f61d6ac9860b4d26d489",
+    "content-hash": "b9e2dd29763d2385e656d5bdf745d1cf",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -239,7 +239,7 @@
                 "prebind",
                 "xmpp"
             ],
-            "time": "2015-02-26T17:32:01+00:00"
+            "time": "2015-02-26 17:32:01"
         },
         {
             "name": "chartjs/Chart.js",
@@ -1187,17 +1187,6 @@
             "type": "library"
         },
         {
-            "name": "jquery/plugins/tablesorter",
-            "version": "2.28.5",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery/plugins/tablesorter/jquery-plugins-tablesorter-2.28.5.zip",
-                "reference": null,
-                "shasum": "75294f1492548a8f23724f2f5dd5d86f5d35b337"
-            },
-            "type": "library"
-        },
-        {
             "name": "jquery/plugins/tagcanvas",
             "version": "2.8",
             "dist": {
@@ -1446,6 +1435,23 @@
                 "shasum": "7666baeeaf2b067c634443a30a5f77a2b88e29dd"
             },
             "type": "library"
+        },
+        {
+            "name": "mottie/tablesorter",
+            "version": "v2.28.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Mottie/tablesorter.git",
+                "reference": "88d3e00c5e6637ff4932bda537e1654a394e6b04"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Mottie/tablesorter/zipball/88d3e00c5e6637ff4932bda537e1654a394e6b04",
+                "reference": "88d3e00c5e6637ff4932bda537e1654a394e6b04",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/"
         },
         {
             "name": "nicolaskruchten/pivottable",
@@ -4598,7 +4604,7 @@
                 "testing",
                 "unit"
             ],
-            "time": "2016-03-14T11:52:02+00:00"
+            "time": "2016-03-14 11:52:02"
         },
         {
             "name": "doctrine/instantiator",
