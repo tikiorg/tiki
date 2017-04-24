@@ -89,7 +89,7 @@ class MonitorMailLib
 
 	private function renderTitle($language, $mail)
 	{
-		return TikiLib::lib('smarty')->fetchLang($language, 'monitor/notification_email_subject.tpl'); 
+		return TikiLib::lib('smarty')->fetchLang($language, 'monitor/notification_email_subject.tpl');
 	}
 
 	/**
@@ -177,9 +177,9 @@ class MonitorMailLib
 	{
 		$css = $this->collectCss();
 
-		$processor = new \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles($html, $css);
+		$processor = new \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles();
 
-		$html = $processor->convert();
+		$html = $processor->convert($html, $css);
 		return $html;
 	}
 }
