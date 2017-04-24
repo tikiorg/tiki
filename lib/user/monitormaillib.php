@@ -89,7 +89,11 @@ class MonitorMailLib
 
 	private function renderTitle($language, $mail)
 	{
-		return TikiLib::lib('smarty')->fetchLang($language, 'monitor/notification_email_subject.tpl');
+		$smarty = TikiLib::lib('smarty');
+		// get last word of the event, e.g. "update" for tiki.wiki.update
+		$mail['verb'] = preg_replace('/^.*\..*\./', '', $mail['event']);
+		$smarty->assign_by_ref('mail', $mail);
+		return $smarty->fetchLang($language, 'monitor/notification_email_subject.tpl');
 	}
 
 	/**
