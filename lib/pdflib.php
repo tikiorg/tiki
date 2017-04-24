@@ -264,9 +264,12 @@ class PdfGenerator
 	      $html=$parsedData;
 
        //getting n replacing images
-	   $tempImgArr=array();
-		if($prefs['feature_page_title']=='y')
+		$tempImgArr=array();
+		$wikilib = TikiLib::lib('wiki');
+		//Add page title with content enabled in prefs and page indiviual settings
+		if($prefs['feature_page_title']=='y' && $wikilib->get_page_hide_title($params['page'])==0){
 			$html='<h1>'.$params['page'].'</h1>'.$html;
+		}
 
        $this->_getImages($html,$tempImgArr);
        
