@@ -454,22 +454,30 @@ class PdfGenerator
 		$xpath = new DOMXpath($doc);
 		
 		//defining array of plugins to be sorted
-		$pluginArr=array(array("class","customsearch_results","div"),array("id","container_pivottable","div"));
+		$pluginArr=array(array("class","customsearch_results","div"),array("id","container_pivottable","div"),array("class","dynavar","a"));
+		$tagsArr=array(array("input","tablesorter-filter","class"),array("select","tablesorter-filter","class"),array("select","pvtRenderer","class"),array("select","pvtAggregator","class"),array("td","pvtCols","class"),array("td","pvtUnused","class"),array("td","pvtRows","class"),array("div","plot-container","class"),array("a","heading-link","class"));
+
 		foreach($pluginArr as $pluginInfo)
 		{
            $customdivs = $xpath->query('//*[contains(@'.$pluginInfo[0].', "'.$pluginInfo[1].'")]');
 	       for ($i = 0; $i < $customdivs->length; $i++) {
-             $customdiv = $customdivs->item($i);
-             $this->sortContent($customdiv,$tempValue,$sortedContent,$pluginInfo[2]);
+			if($pluginInfo[1]=="dynavar") {
+				$dynId=str_replace("display","edit",$customdivs->item($i)->parentNode->getAttribute('id'));
+				$tagsArr[]=array("span",$dynId,"id");
+			}
+			else{
+				$customdiv = $customdivs->item($i);
+				$this->sortContent($customdiv,$tempValue,$sortedContent,$pluginInfo[2]);
+			}
 	       }
 		}
         $html=@$doc->saveHTML();
-	   //replacing temp table with sorted content
+		//replacing temp table with sorted content
 			for($i=0;$i<count($sortedContent);$i++)
 			{
 			    $html=str_replace($tempValue[$i],$sortedContent[$i],$html);
 		    }
-			$html=cleanContent($html,array(array("input","tablesorter-filter","class"),array("select","tablesorter-filter","class"),array("select","pvtRenderer","class"),array("select","pvtAggregator","class"),array("td","pvtCols","class"),array("td","pvtUnused","class"),array("td","pvtRows","class"),array("div","plot-container","class"),array("a","heading-link","class")));
+			$html=cleanContent($html,$tagsArr);
 
 			//making tablesorter and pivottable charts wrapper divs visible
 		$doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));

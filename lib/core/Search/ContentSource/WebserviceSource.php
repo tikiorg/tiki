@@ -178,11 +178,12 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 	}
 
 	/**
-	 * @param $serviceName
-	 * @param $templateName
+	 * @param string $serviceName
+	 * @param string $templateName
+	 * @param array $params
 	 * @return bool|mixed|string
 	 */
-	private function getData($serviceName, $templateName) {
+	function getData($serviceName, $templateName, $params = null) {
 		require_once 'lib/webservicelib.php';
 
 		$webservice = \Tiki_Webservice::getService($serviceName);
@@ -191,9 +192,10 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 			return false;
 		}
 
-		global $jitRequest;
-
-		$params = $jitRequest->asArray('params');
+		if ($params === null) {
+			global $jitRequest;
+			$params = $jitRequest->asArray('params');
+		}
 
 		$response = $webservice->performRequest($params);
 		$template = $webservice->getTemplate($templateName);
