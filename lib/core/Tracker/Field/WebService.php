@@ -182,7 +182,56 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 
 			} else if (empty($context['search_render']) || $context['search_render'] !== 'y') {
 
-				$newData = $response->data;
+				if ($template->engine === 'index') {
+					$source = new Search_ContentSource_WebserviceSource();
+					$indexData = $source->getData($name, $tpl, $ws_params);	// preforms request again but should be cached
+
+					$newData = [];
+
+					if (is_array($indexData['mapping'])) {
+						foreach ($indexData['mapping'] as $topObject => $topValue) {
+							$dataObject = $indexData['data'][$topObject];
+							if (is_array($dataObject)) {
+								foreach ($dataObject as $key => $val) {
+									if (is_int($key) && $template->output === 'mindex') {	// multi-doc data
+										$val = $dataObject[$key];
+
+										if (! empty($val) && is_array($val)) {
+											$newData[$key] = [];
+											foreach ($val as $key2 => $val2) {
+												if (! empty($val2) && ! empty($indexData['mapping'][$topObject][0][$key2])) {
+													if (! is_array($val2)) {
+														$newData[$key][$key2] = $val2;
+													}
+												}
+											}
+										}
+
+									} else {
+
+										if (! empty($val) && ! empty($indexData['mapping'][$topObject][$key])) {
+											if (! is_array($val)) {
+												$newData[$key] = $val;
+											} else {
+												$newData[$key] = [];
+												foreach ($val as $key2 => $val2) {
+													if (! empty($val2) && ! empty($indexData['mapping'][$topObject][$key][$key2])) {
+														if (! is_array($val2)) {
+															$newData[$key][$key2] = $val2;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+
+				} else {
+					$newData = $response->data;
+				}
 				if (strlen(json_encode($newData)) >= 65535) {	// Limit to size of TEXT field
 					// try and render the json template if it's set to index output type
 					$template = $webservice->getTemplate($tpl);
