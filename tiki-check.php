@@ -917,7 +917,7 @@ if ($s) {
 		$php_properties['mbstring'] = array(
 			'fitness' => tra('ugly'),
 			'setting' => 'Badly configured',
-			'message' => tra('mbstring extension is loaded, but mbstring.func_overload = '.' '.$func_overload.'.'.' '.'Tiki only works with mbsring.func_overload = 0. Please check the php.ini file.')
+			'message' => tra('mbstring extension is loaded, but mbstring.func_overload = '.' '.$func_overload.'.'.' '.'Tiki only works with mbstring.func_overload = 0. Please check the php.ini file.')
 		);
 	} else {
 		$php_properties['mbstring'] = array(
@@ -1094,6 +1094,25 @@ if ($s) {
 		'message' => $msg
 	);
 }
+
+
+if (! $standalone) {
+	// check Zend captcha will work which depends on \Zend\Math\Rand
+	$captcha = new Zend\Captcha\Dumb;
+	$math_random = array(
+		'fitness' => tra('good'),
+		'setting' => 'Available',
+		'message' => tra('Ability to generate random numbers, useful for example for CAPTCHA and other security features.'),
+	);
+	try {
+		$captchaId = $captcha->getId();    // simple test for missing random generator
+	} catch (Exception $e) {
+		$math_random['fitness'] = tra('ugly');
+		$math_random['setting'] = 'Not available';
+	}
+	$php_properties['\Zend\Math\Rand'] = $math_random;
+}
+
 
 $s = extension_loaded('iconv');
 $msg = tra('This extension is required and used frequently in validation functions invoked within Zend Framework.');
@@ -1436,7 +1455,7 @@ if ( function_exists('apache_get_version')) {
 	if ($pos = strpos($_SERVER['REQUEST_URI'], 'tiki-check.php')){
 		$sef_test_protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']) ? 'https://' : 'http://';
 		$sef_test_base_url =  $sef_test_protocol . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, $pos);
-		$sef_test_ping_value = rand();
+		$sef_test_ping_value = mt_rand();
 		$sef_test_url = $sef_test_base_url . 'tiki-check?tiki-check-ping='.$sef_test_ping_value;
 		$sef_test_folder_created = false;
 		$sef_test_folder_writable = true;
@@ -1472,11 +1491,20 @@ if ( function_exists('apache_get_version')) {
 						'message' => tra('An automated test was done, and the server appears to be configured correctly to handle Search Engine Friendly URLs.')
 					);
 				} else {
-					$apache_properties['SefURL Test'] = array(
-						'setting' => tra('Not Working'),
-						'fitness' => tra('info') ,
-						'message' => tra('An automated test was done and, based on the results, the server appears to be not configured correctly to handle Search Engine Friendly URLs. This automated test may fail due to the infrastructure setup, but the Apache configuration should be checked. For further information go to Admin->SefURL in your Tiki.')
-					);
+					if (strncmp('fail-http-', $pong_value, 10) == 0){
+						$apache_return_code = substr($pong_value, 10);
+						$apache_properties['SefURL Test'] = array(
+							'setting' => tra('Not Working'),
+							'fitness' => tra('info') ,
+							'message' => sprintf(tra('An automated test was done and, based on the results, the server does not appear to be configured correctly to handle Search Engine Friendly URLs. The server returned an unexpected HTTP code: "%s". This automated test may fail due to the infrastructure setup, but the Apache configuration should be checked. For further information go to Admin->SefURL in your Tiki.'), $apache_return_code)
+						);
+					} else {
+						$apache_properties['SefURL Test'] = array(
+							'setting' => tra('Not Working'),
+							'fitness' => tra('info') ,
+							'message' => tra('An automated test was done and, based on the results, the server does not appear to be configured correctly to handle Search Engine Friendly URLs. This automated test may fail due to the infrastructure setup, but the Apache configuration should be checked. For further information go to Admin->SefURL in your Tiki.')
+						);
+					}
 				}
 			}
 		}
@@ -1872,6 +1900,22 @@ if (!$standalone) {
 	deack_on_state_change($security, 'PHP Security');
 }
 
+$sensitiveDataDetectedFiles = [];
+check_for_remote_readable_files($sensitiveDataDetectedFiles);
+
+if (!empty($sensitiveDataDetectedFiles)) {
+	$files = ' (Files: '. trim(implode(', ', $sensitiveDataDetectedFiles)) .')';
+	$tiki_security['Sensitive Data Exposure'] = array(
+		'fitness' => tra('risky'),
+		'message' => tra('Tiki detected that there are temporary files in the db folder that may expose credentials or other sensitive information.') . $files
+	);
+} else {
+	$tiki_security['Sensitive Data Exposure'] = array(
+		'fitness' => tra('safe'),
+		'message' => tra('Tiki did not detect temporary files in the db folder that may expose credentials or other sensitive information.')
+	);
+}
+
 if ($standalone && !$nagios) {
 	$render .= '<style type="text/css">td, th { border: 1px solid #000000; vertical-align: baseline; padding: .5em; }</style>';
 //	$render .= '<h1>Tiki Server Compatibility</h1>';
@@ -1958,6 +2002,8 @@ if ($standalone && !$nagios) {
 	renderTable($php_properties);
 	$render .= '<h2>PHP security properties</h2>';
 	renderTable($security);
+	$render .= '<h2>Tiki Security</h2>';
+	renderTable($tiki_security);
 	$render .= '<h2>MySQL Variables</h2>';
 	renderTable($mysql_variables);
 
@@ -2035,6 +2081,7 @@ if ($standalone && !$nagios) {
 	}
 	update_overall_status($php_properties, "PHP");
 	update_overall_status($security, "PHP Security");
+	update_overall_status($tiki_security, "Tiki Security");
 	$return = json_encode($monitoring_info);
 	echo $return;
 } else {	// not stand-alone
@@ -2102,9 +2149,128 @@ if ($standalone && !$nagios) {
 		'unknown' => array('icon' => 'help', 'class' => 'muted'),
 	);
 	$smarty->assign('fmap', $fmap);
+
+	if(class_exists('BOMChecker_Scanner')){
+		$BOMScanner = new BOMChecker_Scanner();
+		$BOMFiles = $BOMScanner->scan();
+		$BOMTotalScannedFiles = $BOMScanner->scannedFiles;
+		$smarty->assign('bom_total_files_scanned', $BOMTotalScannedFiles);
+		$smarty->assign('bom_detected_files', $BOMFiles);
+	}
+
+
+	/**
+	 * TRIM (Tiki Remote Instance Manager) Section
+	 **/
+
+	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+		$trimCapable = false;
+	} else {
+		$trimCapable = true;
+	}
+
+	$smarty->assign('trim_capable', $trimCapable);
+
+	if ($trimCapable) {
+
+		$trimRequirements = [];
+
+		$commands = [
+			'make' => 'make',
+			'php-cli' => 'php',
+			'rsync' => 'rsync',
+			'tar' => 'tar',
+			'ssh' => 'ssh',
+			'ssh-copy-id' => 'ssh-copy-id',
+			'scp' => 'scp',
+			'sqlite' => 'sqlite3'
+		];
+
+		foreach ($commands as $key => $command) {
+			$trimRequirements[$key] = `which $command` ? true : false;
+		}
+
+		$phpExtensions = [
+			'php5-sqlite' => 'sqlite3',
+			'gz' => 'zlib',
+			'bz2' => 'bz2',
+		];
+
+		foreach ($phpExtensions as $key => $extension) {
+			$trimRequirements[$key] = extension_loaded($extension);
+		}
+
+		$smarty->assign('trim_requirements', $trimRequirements);
+	}
+
+	$smarty->assign('sensitive_data_detected_files', $sensitiveDataDetectedFiles);
+
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 	$smarty->assign('mid', 'tiki-check.tpl');
 	$smarty->display('tiki.tpl');
+}
+
+/**
+ * Identify files, like backup copies made by editors, or manual copies of the local.php files,
+ * that may be accessed remotely and, because they are not interpreted as PHP, may expose the source,
+ * which might contain credentials or other sensitive information.
+ * Ref: http://feross.org/cmsploit/
+ *
+ * @param array $files Array of filenames. Suspicious files will be added to this array. 
+ * @param string $sourceDir Path of the directory to check
+ */
+function check_for_remote_readable_files(array &$files, $sourceDir = 'db')
+{
+	//fix dir slash
+	$sourceDir = str_replace('\\', '/', $sourceDir);
+	
+	if (substr($sourceDir, -1, 1) != '/') {
+		$sourceDir .= '/';
+	}
+
+	if (!is_dir($sourceDir)) {
+		return;
+	}
+
+	$sourceDirHandler = opendir($sourceDir);
+
+	if ($sourceDirHandler === false) {
+		return;
+	}
+
+	while ($file = readdir($sourceDirHandler)) {
+		// Skip ".", ".."
+		if ($file == '.' || $file == '..') {
+			continue;
+		}
+
+		$sourceFilePath = $sourceDir . $file;
+
+		if (is_dir($sourceFilePath)) {
+			check_for_remote_readable_files($files, $sourceFilePath);
+		}
+
+		if (!is_file($sourceFilePath)) {
+			continue;
+		}
+
+		$pattern = '/(^#.*#|~|.sw[op])$/';
+		preg_match($pattern, $file, $matches);
+
+		if (!empty($matches[1])) {
+			$files[] = $file;
+			continue;
+		}
+
+		// Match "local.php.bak", "local.php.bck", "local.php.save", "local.php." or "local.txt", for example
+		$pattern = '/local(?!.*[.]php$).*$/'; // The negative lookahead prevents local.php and other files which will be interpreted as PHP from matching.
+		preg_match($pattern, $file, $matches);
+
+		if (!empty($matches[0])) {
+			$files[] = $file;
+			continue;
+		}
+	}
 }
 
 function check_isIIS()
@@ -2129,9 +2295,13 @@ function get_content_from_url($url)
 		curl_setopt($curl, CURLOPT_URL, $url);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
+		if (isset($_SERVER) && isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])){
+			curl_setopt($curl, CURLOPT_USERPWD, $_SERVER['PHP_AUTH_USER'] . ":" . $_SERVER['PHP_AUTH_PW']);
+		}
 		$content = curl_exec($curl);
-		if (curl_getinfo($curl, CURLINFO_HTTP_CODE) != 200) {
-			$content = false;
+		$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+		if ($http_code != 200) {
+			$content = "fail-http-".$http_code;
 		}
 		curl_close($curl);
 	} else {
