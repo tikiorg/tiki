@@ -127,11 +127,13 @@ class MonitorMailLib
 			} elseif (substr($file, 0, 4) == 'http') {
 				return TikiLib::lib('tiki')->httprequest($file);
 			} else {
-				return file_get_contents(TIKI_PATH . '/' . $file);
+				if (strpos($file, 'themes/') === 0) {	// only use the tiki base and current theme files
+					return file_get_contents(TIKI_PATH . '/' . $file);
+				}
 			}
 		}, $files);
 
-		$css = implode("\n\n", $contents);
+		$css = implode("\n\n", array_filter($contents));
 		$cachelib->cacheItem('email_css', $css);
 		return $css;
 	}
