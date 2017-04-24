@@ -110,7 +110,7 @@ function sendForumEmailNotification(
 
 	// Users watching this forum or this post
 	if ($prefs['feature_user_watches'] == 'y' || $prefs['feature_group_watches'] == 'y') {
-		$nots_raw = $tikilib->get_event_watches($event, $event == 'forum_post_topic'? $forum_info['forumId']: $threadId, $forum_info);
+		$nots_raw = $tikilib->get_event_watches($event, $event == 'forum_post_topic'? $forum_info['forumId']: $parentId, $forum_info);
 		$nots = array();
 		$users = array();
 		foreach ( $nots_raw as $n ) {
