@@ -74,6 +74,7 @@ class ESRescueCommand extends Command
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		$this->elasticUri = $input->getOption('elasticuri');
+		$this->elasticUri = strrpos($this->elasticUri, '/') !== (strlen($this->elasticUri) - 1) ? $this->elasticUri . '/' : $this->elasticUri;
 		$this->indexName = $input->getOption('indexname');
 
 		$startDate = $input->getOption('startdate');
