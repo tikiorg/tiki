@@ -156,6 +156,37 @@ function wikiplugin_img_info()
 				'filter' => 'text',
 				'default' => '',
 			),
+			'retina' => array(
+				'required' => false,
+				'name' => tra('Serve retina images'),
+				'description' => tr('Serves up retina images to high density screen displays. Width must be set to use this.'),
+				'since' => '18.0',
+				'doctype' => 'size',
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
+				),
+			),
+			'widths' => array(
+				'required' => false,
+				'name' => tra('Responsive Image Widths'),
+				'description' => tr('Comma-separated widths at which we may want the browser to request the image. Requires "sizes".'),
+				'since' => '18.0',
+				'doctype' => 'size',
+				'filter' => 'text',
+				'default' => '',
+			),
+			'sizes' => array(
+				'required' => false,
+				'name' => tra('Sizes'),
+				'description' => tr('Comma separated sizes (in vw, em, px) for the image in xs, sm, md, and lg layouts. Must be 4 parameters.'),
+				'since' => '18.0',
+				'doctype' => 'size',
+				'filter' => 'text',
+				'default' => '',
+			),
 			'max' => array(
 				'required' => false,
 				'name' => tra('Maximum Size'),
@@ -1023,6 +1054,35 @@ function wikiplugin_img( $data, $params )
 			}
 		}
 	}
+	if ($params['retina'] && $params['width']) {
+		$srcset_arr = [];
+		$srcset_format = "tiki-download_file.php?display&fileId=%s&x=%d&y=%d %s";
+		$srcset_arr[] = sprintf($srcset_format, $params['fileId'], $width*2, $height*2, "2x");
+		$srcset_arr[] = sprintf($srcset_format, $params['fileId'], $width, $height, "1x");
+		$srcset = implode(",", $srcset_arr);
+	}
+	if ($params['widths'] && $params['sizes']) {
+		$srcset_arr = [];
+		$widths_arr = array_map('trim', explode(',', $params['widths']));
+		foreach ($widths_arr as $entry) {
+			$srcset_format = "tiki-download_file.php?display&fileId=%s&x=%d %dw";
+			$srcset_arr[] = sprintf($srcset_format, $params['fileId'], $entry, $entry);
+		}
+		$srcset = implode(",", $srcset_arr);
+
+		$size_max_breaks = ['767', '991', '1199' ]; //max sizes for xs, sm, and md
+		$sizes_arr = array_map('trim', explode(",", $params['sizes']));
+
+		if ( count($sizes_arr) === 4 ) {
+			$sizes = "(max-width: " . $size_max_breaks[0] . "px) " . $sizes_arr[0] . ",";
+			$sizes .= "(max-width: " . $size_max_breaks[1] . "px) " . $sizes_arr[1] . ",";
+			$sizes .= "(max-width: " . $size_max_breaks[2] . "px) " . $sizes_arr[2] . ",";
+			$sizes .= $sizes_arr[3];
+		}
+		if ( count($sizes_arr) === 1 ) {
+			$sizes = $sizes_arr[0];
+		}
+	}
 
 	////////////////////////////////////////// Create the HTML img tag //////////////////////////////////////////////
 	//Start tag with src and dimensions
@@ -1050,6 +1110,12 @@ function wikiplugin_img( $data, $params )
 	} else {
 		$tagName = 'img';
 		$replimg = '<img src="' . $src . '" ';
+		if ($srcset) {
+			$replimg .= 'srcset="' . $srcset . '" ';
+		}
+		if ($sizes) {
+			$replimg .= 'sizes="' . $sizes . '" ';
+		}
 		if ($imgdata['responsive'] == 'y') {
 			$imgdata['class'] .= ' regImage img-responsive pluginImg' . $imgdata['fileId'];
 		} else {
