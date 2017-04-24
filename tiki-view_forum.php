@@ -371,13 +371,13 @@ if ($prefs['feature_user_watches'] == 'y') {
 		}
 	}
 
-	if ($user && $watch = $tikilib->user_watches($user, 'forum_post_topic', $_REQUEST['forumId'], 'forum')) {
+	if ($user && $watch = $tikilib->get_user_event_watches($user, 'forum_post_topic', $_REQUEST['forumId'])) {
 		$smarty->assign('user_watching_forum', 'y');
 	} else {
 		$smarty->assign('user_watching_forum', 'n');
 	}
 
-	if ($user && $watch = $tikilib->user_watches($user, 'forum_post_topic_and_thread', $_REQUEST['forumId'], 'forum')) {
+	if ($user && $watch = $tikilib->get_user_event_watches($user, 'forum_post_topic_and_thread', $_REQUEST['forumId'])) {
 		$smarty->assign('user_watching_forum_topic_and_thread', 'y');
 	} else {
 		$smarty->assign('user_watching_forum_topic_and_thread', 'n');
