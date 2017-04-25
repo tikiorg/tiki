@@ -161,11 +161,11 @@ class Services_Edit_PluginController
 				// set up object selectors - TODO refactor code with \PreferencesLib::getPreference and \Services_Tracker_Controller::action_edit_field
 				if (isset($param['profile_reference'])) {
 					$param['selector_type'] = $objectlib->getSelectorType($param['profile_reference']);
-					if( isset($param['parent']) ) {
-						if( !preg_match('/[\[\]#\.]/', $param['parent']) )
-							$param['parent'] = "#option-{$param['parent']}";
+					if (isset($param['parentval'])) {	// NOTE: THis is different from the prefs and fields usages as parent was already in use in prefs
+						if (! preg_match('/[\[\]#\.]/', $param['parentval']))
+							$param['parentval'] = "#option-{$param['parentval']}";
 					} else {
-						$param['parent'] = null;
+						$param['parentval'] = null;
 					}
 					$param['parentkey'] = isset($param['parentkey']) ? $param['parentkey'] : null;
 					$param['sort_order'] = isset($param['sort_order']) ? $param['sort_order'] : null;

@@ -2228,7 +2228,15 @@ function check_for_remote_readable_files(array &$files, $sourceDir = 'db')
 		$sourceDir .= '/';
 	}
 
+	if (!is_dir($sourceDir)) {
+		return;
+	}
+
 	$sourceDirHandler = opendir($sourceDir);
+
+	if ($sourceDirHandler === false) {
+		return;
+	}
 
 	while ($file = readdir($sourceDirHandler)) {
 		// Skip ".", ".."

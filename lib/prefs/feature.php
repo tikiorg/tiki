@@ -902,6 +902,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_messages' => array(
 			'name' => tra('User messages'),
+			'description' => tra('Enables inter-user messages (for new users to make this work the feature requires tiki_p_messages permission assigned to at least the Registered group).'),
 			'help' => 'Inter-user+Messages',
 			'type' => 'flag',
 			'default' => 'n',
