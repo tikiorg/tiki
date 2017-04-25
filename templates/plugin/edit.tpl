@@ -110,7 +110,6 @@ $("#picker_{{$name|escape}}").parent().click(function () {
 				<input type="hidden" name="page" value="{$pageName|escape}">
 				<input type="hidden" name="type" value="{$type}">
 				<input type="hidden" name="index" value="{$index}">
-				<input type="hidden" name="args" value="{$pluginArgsJSON|escape}">{* It does not look like this is still in use after r61664. Chealer *}
 				<input type="submit" class="btn btn-primary" value="{tr}Save{/tr}">
 			</div>
 
