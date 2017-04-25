@@ -56,7 +56,7 @@ $("#picker_{{$name|escape}}").parent().click(function () {
 						{jq notonready=true}$("#{{$inputId}}").attr("data-parent_name", "{{$param.parent.name}}").attr("data-parent_value", "{{$param.parent.value}}");{/jq}
 					{/if}
 				{else}
-					<input value="{$val}" class="form-control{$groupClass}" id="{$inputId}" type="text" name="params[{$name|escape}]"{$dataAttribute}>
+					<input value="{$val|escape}" class="form-control{$groupClass}" id="{$inputId}" type="text" name="params[{$name|escape}]"{$dataAttribute}>
 					{if not empty($param.filter)}
 						{if $param.filter eq "pagename"}
 							{jq}$({{$inputId}}).tiki("autocomplete", "pagename");{/jq}
@@ -107,10 +107,10 @@ $("#picker_{{$name|escape}}").parent().click(function () {
 			</div>
 
 			<div class="submit">
-				<input type="hidden" name="page" value="{$pageName}">
+				<input type="hidden" name="page" value="{$pageName|escape}">
 				<input type="hidden" name="type" value="{$type}">
 				<input type="hidden" name="index" value="{$index}">
-				<input type="hidden" name="args" value="{$pluginArgsJSON}">
+				<input type="hidden" name="args" value="{$pluginArgsJSON|escape}">{* It does not look like this is still in use after r61664. Chealer *}
 				<input type="submit" class="btn btn-primary" value="{tr}Save{/tr}">
 			</div>
 
@@ -122,9 +122,9 @@ $("#picker_{{$name|escape}}").parent().click(function () {
 								area_id: "{{$area_id}}",
 								type: "{{$type}}",
 								index: {{$index}},
-								page: "{{$pageName}}",
+								page: "{{$pageName|escape:javascript}}",
 								pluginArgs: {{$pluginArgsJSON}},
-								bodyContent: "{{$bodyContent}}",
+								bodyContent: "{{$bodyContent|escape:javascript}}",
 								edit_icon: "{{$edit_icon}}",
 								selectedMod: $(this).val(),
 								modal: 1
