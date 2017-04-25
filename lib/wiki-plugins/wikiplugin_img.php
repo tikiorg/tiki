@@ -82,6 +82,7 @@ function wikiplugin_img_info()
 				'advanced' => true,
 				'default' => '',
 				'parent' => array('name' => 'type', 'value' => 'randomGalleryId'),
+				'profile_reference' => 'file_gallery',
 			),
 			'fgalId' => array(
 				'required' => true,
