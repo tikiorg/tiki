@@ -71,5 +71,6 @@
 		<service id="tiki.controller.wiki" class="Services_Wiki_Controller"/>
 		<service id="tiki.controller.wiki_structure" class="Services_Wiki_StructureController"/>
 		<service id="tiki.controller.workspace" class="Services_Workspace_Controller"/>
+		<service id="tiki.controller.ids" class="Services_IDS_Controller"/>
 	</services>
 </container>

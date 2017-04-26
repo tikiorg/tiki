@@ -164,6 +164,14 @@
 
 			{preference name=ids_enabled}
 			<div class="adminoptionboxchild" id="ids_enabled_childcontainer">
+				<div class="form-group adminoptionbox clearfix">
+					<div class="col-sm-offset-4 col-sm-8">
+						<a href="tiki-admin_ids.php">{tr}Admin IDS custom rules{/tr}</a>
+					</div>
+				</div>
+				{preference name=ids_custom_rules_file}
+				{preference name=ids_mode}
+				{preference name=ids_threshold}
 				{preference name=ids_log_to_file}
 				{*{preference name=ids_log_to_database}*}
 			</div>
