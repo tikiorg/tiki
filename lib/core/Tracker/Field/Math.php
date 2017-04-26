@@ -99,6 +99,7 @@ class Tracker_Field_Math extends Tracker_Field_Abstract implements Tracker_Field
 					$data[$fieldName] = $this->getItemField($fieldName);
 			}
 
+			$this->prepareFieldValues($data);
 			$runner->setVariables($data);
 
 			$value = $runner->evaluate();
@@ -129,6 +130,7 @@ class Tracker_Field_Math extends Tracker_Field_Abstract implements Tracker_Field
 	function handleFinalSave(array $data)
 	{
 		try {
+			$this->prepareFieldValues($data);
 			$runner = $this->getFormulaRunner();
 			$runner->setVariables($data);
 
@@ -151,6 +153,33 @@ class Tracker_Field_Math extends Tracker_Field_Abstract implements Tracker_Field
 			;
 
 		return $schema;
+	}
+
+	/**
+	 * Helper method to prepare field values for item fields that do not store their
+	 * info in database - e.g. ItemsList.
+	 * @param array data to be modified
+	 */
+	private function prepareFieldValues(&$data)
+	{
+		$fieldData = array('itemId' => $this->getItemId());
+		foreach( $data as $permName => $value ) {
+			$field = $this->getTrackerDefinition()->getFieldFromPermName($permName);
+			if( $field ) {
+				$fieldData[$field['fieldId']] = $value;
+			}
+		}
+		foreach( $data as $permName => $value ) {
+			if( !empty($value) ) {
+				continue;
+			}
+			$field = $this->getTrackerDefinition()->getFieldFromPermName($permName);
+			if( !$field || $field['type'] != 'l' ) {
+				continue;
+			}
+			$handler = TikiLib::lib('trk')->get_field_handler($field, $fieldData);
+			$data[$permName] = $handler->getItemValues();
+		}
 	}
 
 	private function getFormulaRunner()

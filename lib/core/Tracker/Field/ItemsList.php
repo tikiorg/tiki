@@ -372,5 +372,38 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 
 		return $list;
 	}
+
+	/**
+	 * Get remote items' values in an array as opposed to a string label.
+	 * Useful in Math calculations where individual field values are needed.
+	 * @return array associated array of field names and values
+	 */
+	public function getItemValues()
+	{
+		$displayFields = $this->getOption('displayFieldIdThere');
+		$trackerId = (int) $this->getOption('trackerId');
+
+		$definition = Tracker_Definition::get($trackerId);
+		if (! $definition) {
+			return array();
+		}
+
+		$itemsValues = array();
+
+		$items = $this->getItemIds();
+		foreach( $items as $itemId ) {
+			$item = TikiLib::lib('trk')->get_tracker_item($itemId);
+			$itemValues = array();
+			if( $displayFields ) {
+				foreach( $displayFields as $fieldId ) {
+					$field = $definition->getField($fieldId);
+					$itemValues[$field['permName']] = isset($item[$fieldId]) ? $item[$fieldId] : '';
+				}
+			}
+			$itemsValues[] = $itemValues;
+		}
+
+		return $itemsValues;
+	}
 }
 
