@@ -7,27 +7,28 @@
 
 class Math_Formula_Function_StrToTime extends Math_Formula_Function
 {
-	function evaluate( $element )
+	function evaluate( $args )
 	{
 		$elements = array();
 
-		if (count($element) > 2) {
+		if (count($args) > 2) {
 			$this->error(tr('Too many arguments on strtotime.'));
 		}
 
-		if (count($element) < 1) {
+		if (count($args) < 1) {
 			$this->error(tr('Too few arguments on strtotime.'));
 		}
 
-		foreach ( $element as $child ) {
+		foreach ( $args as $child ) {
 			$elements[] = $this->evaluateChild($child);
 		}
 
 		$tikilib = TikiLib::lib('tiki');
 		$tz = $tikilib->get_display_timezone();
-		$old_tz = date_default_timezone_get();
-		if( $tz )
+		$oldTz = date_default_timezone_get();
+		if( $tz ) {
 			date_default_timezone_set($tz);
+		}
 
 		$time = array_shift($elements);
 		$now = intval(array_shift($elements));
@@ -35,11 +36,10 @@ class Math_Formula_Function_StrToTime extends Math_Formula_Function
 			$now = time();	// Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT)
 		}
 		
-		$new_time = strtotime( $time, $now );
+		$newTime = strtotime( $time, $now );
 
-		date_default_timezone_set($old_tz);
+		date_default_timezone_set($oldTz);
 
-		return $new_time;
+		return $newTime;
 	}
 }
-
