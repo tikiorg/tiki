@@ -48,9 +48,9 @@ $("#picker_{{$name|escape}}").parent().click(function () {
 				{if isset($pluginArgs[$name])}{$val = $pluginArgs[$name]}{else}{$val=''}{/if}
 				{if not empty($param.selector_type)}
 					{if empty($param.separator)}
-						{object_selector type=$param.selector_type _simplevalue=$val _simplename='params['|cat:$name|escape|cat:']' _simpleid=$inputId _parent=$param.parentval _parentkey=$param.parentkey _class=$groupClass}
+						{object_selector type=$param.selector_type _simplevalue=$val _simplename='params['|cat:$name|escape|cat:']' _simpleid=$inputId _parent=$param.parent _parentkey=$param.parentkey}
 					{else}
-						{object_selector_multi type=$param.selector_type _simplevalue=$val _simplename='params['|cat:$name|escape|cat:']' _simpleid=$inputId _separator=$param.separator _parent=$param.parentval _parentkey=$param.parentkey _sort=$param.sort_order _class=$groupClass}
+						{object_selector_multi type=$param.selector_type _simplevalue=$val _simplename='params['|cat:$name|escape|cat:']' _simpleid=$inputId _separator=$param.separator _parent=$param.parent _parentkey=$param.parentkey _sort=$param.sort_order}
 					{/if}
 					{if not empty($param.parent.name)}
 						{jq notonready=true}$("#{{$inputId}}").attr("data-parent_name", "{{$param.parent.name}}").attr("data-parent_value", "{{$param.parent.value}}");{/jq}
