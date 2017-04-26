@@ -37,9 +37,9 @@ $("#picker_{{$name|escape}}").parent().click(function () {
 			{/if}
 		</div>
 		<div class="col-sm-9">
-			{if not empty($param.parent.name)}
-				{$groupClass = " group-`$param.parent.name`"}
-				{$dataAttribute = " data-parent_name='`$param.parent.name`' data-parent_value='`$param.parent.value`'"}
+			{if not empty($param.parentparam.name)}
+				{$groupClass = " group-`$param.parentparam.name`"}
+				{$dataAttribute = " data-parent_name='`$param.parentparam.name`' data-parent_value='`$param.parentparam.value`'"}
 			{else}
 				{$groupClass = ''}
 				{$dataAttribute = ''}
@@ -48,12 +48,12 @@ $("#picker_{{$name|escape}}").parent().click(function () {
 				{if isset($pluginArgs[$name])}{$val = $pluginArgs[$name]}{else}{$val=''}{/if}
 				{if not empty($param.selector_type)}
 					{if empty($param.separator)}
-						{object_selector type=$param.selector_type _simplevalue=$val _simplename='params['|cat:$name|escape|cat:']' _simpleid=$inputId _parent=$param.parent _parentkey=$param.parentkey}
+						{object_selector type=$param.selector_type _simplevalue=$val _simplename='params['|cat:$name|escape|cat:']' _simpleid=$inputId _parent=$param.parent _parentkey=$param.parentkey _class=$groupClass}
 					{else}
-						{object_selector_multi type=$param.selector_type _simplevalue=$val _simplename='params['|cat:$name|escape|cat:']' _simpleid=$inputId _separator=$param.separator _parent=$param.parent _parentkey=$param.parentkey _sort=$param.sort_order}
+						{object_selector_multi type=$param.selector_type _simplevalue=$val _simplename='params['|cat:$name|escape|cat:']' _simpleid=$inputId _separator=$param.separator _parent=$param.parent _parentkey=$param.parentkey _sort=$param.sort_order _class=$groupClass}
 					{/if}
-					{if not empty($param.parent.name)}
-						{jq notonready=true}$("#{{$inputId}}").attr("data-parent_name", "{{$param.parent.name}}").attr("data-parent_value", "{{$param.parent.value}}");{/jq}
+					{if not empty($param.parentparam.name)}
+						{jq notonready=true}$("#{{$inputId}}").attr("data-parent_name", "{{$param.parentparam.name}}").attr("data-parent_value", "{{$param.parentparam.value}}");{/jq}
 					{/if}
 				{else}
 					<input value="{$val|escape}" class="form-control{$groupClass}" id="{$inputId}" type="text" name="params[{$name|escape}]"{$dataAttribute}>

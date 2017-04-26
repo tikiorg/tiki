@@ -73,7 +73,7 @@ function wikiplugin_trackercalendar_info()
 				'since' => '12.4',
 				'filter' => 'url',
 				'default' => '',
-				'parent' => array('name' => 'external', 'value' => 'y'),
+				'parentparam' => array('name' => 'external', 'value' => 'y'),
 			),
 			'trkitemid' => array(
 				'required' => false,
@@ -88,7 +88,7 @@ function wikiplugin_trackercalendar_info()
 					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
-				'parent' => array('name' => 'external', 'value' => 'y'),
+				'parentparam' => array('name' => 'external', 'value' => 'y'),
 			),
 			'addAllFields' => array(
 				'required' => false,
@@ -103,7 +103,7 @@ function wikiplugin_trackercalendar_info()
 					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
-				'parent' => array('name' => 'external', 'value' => 'y'),
+				'parentparam' => array('name' => 'external', 'value' => 'y'),
 			),
 			'useSessionStorage' => array(
 				'required' => false,
@@ -118,7 +118,7 @@ function wikiplugin_trackercalendar_info()
 					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
-				'parent' => array('name' => 'addAllFields', 'value' => 'y'),
+				'parentparam' => array('name' => 'addAllFields', 'value' => 'y'),
 			),
 			'amonth' => array(
 				'required' => false,

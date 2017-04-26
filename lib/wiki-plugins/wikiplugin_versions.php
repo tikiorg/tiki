@@ -39,7 +39,7 @@ function wikiplugin_versions_info()
 				'since' => '1',
 				'default' => 'y',
 				'filter' => 'alpha',
-				'parent' => array('name' => 'nav', 'value' => 'n'),
+				'parentparam' => array('name' => 'nav', 'value' => 'n'),
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 

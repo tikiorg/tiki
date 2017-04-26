@@ -143,18 +143,18 @@ class Services_Edit_PluginController
 				if ($prefs['feature_jquery_validation'] === 'y') {
 					// $("#insertItemForm4").validate({rules: { ins_11: { required: true}, ins_13: { remote: { url: "validate-ajax.php", type: "post", data: { validator: "distinct", parameter: "trackerId=4&fieldId=13&itemId=0", message: "", input: function() { return $("#ins_13").val(); } } } }, ins_18: { required: true, remote: { url: "validate-ajax.php", type: "post", data: { validator: "distinct", parameter: "trackerId=4&fieldId=18&itemId=0", message: "this is not distinct!", input: function() { return $("#ins_18").val(); } } } }}, messages: { ins_11: { required: "This field is required" }, ins_18: { required: "this is not distinct!" }},
 					if ($param['required']) {
-						if (empty($param['parent'])) {
+						if (empty($param['parentparam'])) {
 							$validationRules["params[$key]"] = ['required' => true];
 						} else {
 							$validationRules["params[$key]"] = ['required_in_group' => [
 								1,
-								'.group-' . $param['parent']['name'],
+								'.group-' . $param['parentparam']['name'],
 								'other',
 							]];
 						}
 					}
 				}
-				if (! empty($param['advanced']) && ! isset($pluginArgs[$key]) && empty($param['parent'])) {
+				if (! empty($param['advanced']) && ! isset($pluginArgs[$key]) && empty($param['parentparam'])) {
 					$info['advancedParams'][$key] = $param;
 					unset($info['params'][$key]);
 				}

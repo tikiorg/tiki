@@ -57,7 +57,7 @@ function wikiplugin_bloglist_info()
 				'name' => tra('Character Count'),
 				'description' => tra('Number of characters to display if not a simple list (defaults to all)'),
 				'filter' => 'digits',
-				'parent' => array('name' => 'simpleList', 'value' => 'n'),
+				'parentparam' => array('name' => 'simpleList', 'value' => 'n'),
 				'default' => '',
 				'since' => '12.0',
 			),
@@ -72,7 +72,7 @@ function wikiplugin_bloglist_info()
 					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
-				'parent' => array('name' => 'simpleList', 'value' => 'n'),
+				'parentparam' => array('name' => 'simpleList', 'value' => 'n'),
 			),
 			'ellipsis' => array(
 				'required' => false,
@@ -86,7 +86,7 @@ function wikiplugin_bloglist_info()
 					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
-				'parent' => array('name' => 'simpleList', 'value' => 'n'),
+				'parentparam' => array('name' => 'simpleList', 'value' => 'n'),
 			),
 			'more' => array(
 				'required' => false,
@@ -99,7 +99,7 @@ function wikiplugin_bloglist_info()
 					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
-				'parent' => array('name' => 'simpleList', 'value' => 'n'),
+				'parentparam' => array('name' => 'simpleList', 'value' => 'n'),
 			),
 			'showIcons' => array(
 				'required' => false,
@@ -112,7 +112,7 @@ function wikiplugin_bloglist_info()
 					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
-				'parent' => array('name' => 'simpleList', 'value' => 'n'),
+				'parentparam' => array('name' => 'simpleList', 'value' => 'n'),
 			),
 			'useExcerpt' => array(
 				'required' => false,
@@ -125,7 +125,7 @@ function wikiplugin_bloglist_info()
 					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
-				'parent' => array('name' => 'simpleList', 'value' => 'n'),
+				'parentparam' => array('name' => 'simpleList', 'value' => 'n'),
 			),
 			'dateStart' => array(
 				'required' => false,

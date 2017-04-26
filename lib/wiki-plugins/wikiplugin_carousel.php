@@ -35,7 +35,7 @@ function wikiplugin_carousel_info()
 				'filter' => 'digits',
 				'accepted' => 'ID',
 				'default' => '',
-				'parent' => array('name' => 'type', 'value' => 'fgalId'),
+				'parentparam' => array('name' => 'type', 'value' => 'fgalId'),
 				'profile_reference' => 'file_gallery',
 			),
 			'fileIds' => array(
@@ -44,7 +44,7 @@ function wikiplugin_carousel_info()
 				'description' => tra('List of IDs of images from the File Galleries separated by commas.'),
 				'filter' => 'striptags',
 				'default' => '',
-				'parent' => array('name' => 'type', 'value' => 'fileIds'),
+				'parentparam' => array('name' => 'type', 'value' => 'fileIds'),
 				'profile_reference' => 'file',
 			),
 			'sort_mode' => array(

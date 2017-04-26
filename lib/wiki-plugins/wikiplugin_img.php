@@ -46,7 +46,7 @@ function wikiplugin_img_info()
 				'filter' => 'text',
 				'default' => '',
 				'accepted' => tra('Valid file IDs separated by commas or |'),
-				'parent' => array('name' => 'type', 'value' => 'fileId'),
+				'parentparam' => array('name' => 'type', 'value' => 'fileId'),
 				'profile_reference' => 'file',
 			),
 			'id' => array(
@@ -60,7 +60,7 @@ function wikiplugin_img_info()
 				'advanced' => $prefs['feature_galleries'] !== 'y',
 				'accepted' => tra('Valid image IDs separated by commas or |'),
 				'default' => '',
-				'parent' => array('name' => 'type', 'value' => 'id'),
+				'parentparam' => array('name' => 'type', 'value' => 'id'),
 			),
 			'src' => array(
 				'required' => true,
@@ -70,7 +70,7 @@ function wikiplugin_img_info()
 				'doctype' => 'id',
 				'filter' => 'url',
 				'default' => '',
-				'parent' => array('name' => 'type', 'value' => 'src'),
+				'parentparam' => array('name' => 'type', 'value' => 'src'),
 			),
 			'randomGalleryId' => array(
 				'required' => true,
@@ -81,7 +81,7 @@ function wikiplugin_img_info()
 				'filter' => 'digits',
 				'advanced' => true,
 				'default' => '',
-				'parent' => array('name' => 'type', 'value' => 'randomGalleryId'),
+				'parentparam' => array('name' => 'type', 'value' => 'randomGalleryId'),
 				'profile_reference' => 'file_gallery',
 			),
 			'fgalId' => array(
@@ -93,7 +93,7 @@ function wikiplugin_img_info()
 				'filter' => 'digits',
 				'advanced' => true,
 				'default' => '',
-				'parent' => array('name' => 'type', 'value' => 'fgalId'),
+				'parentparam' => array('name' => 'type', 'value' => 'fgalId'),
 				'profile_reference' => 'file_gallery',
 			),
 			'attId' => array(
@@ -106,7 +106,7 @@ function wikiplugin_img_info()
 				'filter' => 'text',
 				'accepted' => tra('Valid attachment IDs separated by commas or |'),
 				'default' => '',
-				'parent' => array('name' => 'type', 'value' => 'attId'),
+				'parentparam' => array('name' => 'type', 'value' => 'attId'),
 			),
 			'thumb' => array(
 				'required' => false,

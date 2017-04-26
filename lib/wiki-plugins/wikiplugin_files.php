@@ -124,7 +124,7 @@ function wikiplugin_files_info()
 					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
-				'parent' => array('name' => 'showfind', 'value' => 'y'),
+				'parentparam' => array('name' => 'showfind', 'value' => 'y'),
 			),
 			'showtitle' => array(
 				'required' => false,
@@ -380,7 +380,7 @@ function wikiplugin_files_info()
 				'default' => 600,
 				'since' => '9.0',
 				'advanced' => true,
-				'parent' => array('name' => 'slideshow', 'value' => 'y'),
+				'parentparam' => array('name' => 'slideshow', 'value' => 'y'),
 			),
 			'slideheight' => array(
 				'required' => false,
@@ -390,7 +390,7 @@ function wikiplugin_files_info()
 				'default' => 500,
 				'since' => '9.0',
 				'advanced' => true,
-				'parent' => array('name' => 'slideshow', 'value' => 'y'),
+				'parentparam' => array('name' => 'slideshow', 'value' => 'y'),
 			),
 			'showcomment' => array(
 				'required' => false,

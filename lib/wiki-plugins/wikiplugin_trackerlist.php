@@ -560,7 +560,7 @@ function wikiplugin_trackerlist_info()
 				 'since' => tr('2.0, 3.0 for %0itemId%1, 11.0 for %0tr_offset%1, 14.0 for %0sefurl%1 and %0vi_tpl%1',
 					 '<code>', '</code>'),
 				 'doctype' => 'show',
-				 'parent' => array('name' => 'showlinks', 'value' => 'y'),
+				 'parentparam' => array('name' => 'showlinks', 'value' => 'y'),
 				 'filter' => 'url',
 				 'default' => '',
 			 ),

@@ -160,7 +160,7 @@ function wikiplugin_freetagged_info()
 				'description' => tra('Alternate "more" link pointing to specified URL instead of default full list of tagged objects'),
 				'filter' => 'url',
 				'default' => 'tiki-browse_freetags.php',
-				'parent' => array('name' => 'more', 'value' => 'y'),
+				'parentparam' => array('name' => 'more', 'value' => 'y'),
 			),
 			'moretext' => array(
 				'required' => false,
@@ -168,7 +168,7 @@ function wikiplugin_freetagged_info()
 				'description' => tra('Alternate text to display on the "more" link (default is "more")'),
 				'filter' => 'raw',
 				'default' => 'more',
-				'parent' => array('name' => 'more', 'value' => 'y'),
+				'parentparam' => array('name' => 'more', 'value' => 'y'),
 			),
 		)
 	);
