@@ -2,7 +2,16 @@
 {extends 'layout_edit.tpl'}
 {block name=title}
 	{if $translation_mode eq 'n'}
-		{title url="tiki-editpage.php?page=$page"}{if isset($hdr) && $prefs.wiki_edit_section eq 'y'}{tr}Edit Section:{/tr}{else}{tr}Edit:{/tr}{/if} {$page}{if $pageAlias ne ''} ({$pageAlias}){/if}{/title}
+		<h1 class="pagetitle">
+			{capture name="pageDescription"}
+				{$page|escape}{if $pageAlias ne ''} ({$pageAlias|escape}){/if}
+			{/capture}
+			{if isset($hdr) && $prefs.wiki_edit_section eq 'y'}
+				{tr}Edit Section:{/tr} {$smarty.capture.pageDescription}
+			{else}
+				{tr _0='<a style="font-style: italic" href="'|cat:($page|sefurl)|cat:'">'|cat:$smarty.capture.pageDescription|cat:'</a>'}Edit %0{/tr}
+			{/if}
+		</h1>
 	{else}
 		{title}{tr}Update '{$page}'{/tr}{/title}
 	{/if}
