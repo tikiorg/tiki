@@ -87,7 +87,7 @@
 		{if $tiki_p_add_events eq 'y' && (empty($module_params.showaction) || $module_params.showaction ne 'n')}
 			<br>
 			<p>
-				<a href="tiki-calendar_edit_item.php" style="display: block; margin: auto auto; width: 98px;">
+				<a class="btn btn-link" href="tiki-calendar_edit_item.php">
 					{icon name="add"}
 					{tr}Add Event{/tr}
 				</a>

@@ -161,8 +161,8 @@ class Services_Edit_PluginController
 				// set up object selectors - TODO refactor code with \PreferencesLib::getPreference and \Services_Tracker_Controller::action_edit_field
 				if (isset($param['profile_reference'])) {
 					$param['selector_type'] = $objectlib->getSelectorType($param['profile_reference']);
-					if( isset($param['parent']) ) {
-						if( !preg_match('/[\[\]#\.]/', $param['parent']) )
+					if (isset($param['parent'])) {
+						if (! preg_match('/[\[\]#\.]/', $param['parent']))
 							$param['parent'] = "#option-{$param['parent']}";
 					} else {
 						$param['parent'] = null;
@@ -325,13 +325,28 @@ class Services_Edit_PluginController
 
 		$body = $input->body->wikicontent();
 		$current = [];
-		$done = [];	// to keep a track on whcih plugins have already been included
+		$done = [];    // to keep a track on whcih plugins have already been included
 		$plugins = Services_Edit_ListPluginHelper::getDefinition();
 
-		$this->parsePlugins($body, $current, $done, '', array_keys($plugins));
+		$this->parsePlugins($body, $current, $done, null, array_keys($plugins));
 
 
 		$fields = TikiLib::lib('unifiedsearch')->getAvailableFields();
+
+		// generic fields missing from the content sources?
+		$fields['global'] = array_merge([
+			'object_id',
+			'object_type',
+			'title',
+			'language',
+			'creation_date',
+			'modification_date',
+			'contributors',
+			'description',
+			'contents',
+		], $fields['global']);
+
+		sort($fields['global']);
 
 		return [
 			'plugins' => $plugins,
@@ -346,20 +361,38 @@ class Services_Edit_PluginController
 	 * @param string $body wiki content to "parse"
 	 * @param array $plugins resulting nested array of plugins
 	 * @param array $done flat array to track plugins already added to $plugins
-	 * @param string $parent
+	 * @param array $parent
 	 * @param array $allowedPlugins names of plugins to include (sub plugins of {list}
 	 */
-	private function parsePlugins($body, & $plugins, & $done, $parent = '', $allowedPlugins) {
+	private function parsePlugins($body, & $plugins, & $done, $parent = null, $allowedPlugins)
+	{
 		$matches = WikiParser_PluginMatcher::match($body);
 		$argumentParser = new WikiParser_PluginArgumentParser;
 		$lastMatchEnd = 0;
+		$hasParent = $parent && in_array(strtolower($parent['name']), ['output', 'format']);
 
 		/** @var WikiParser_PluginMatcher_Match $match */
-		foreach($matches as $match) {
+		foreach ($matches as $match) {
 
 			$name = $match->getName();
 
-			if (in_array($name, $allowedPlugins)) {
+			$matchArray = [
+				'name' => $match->getName(),
+				'start' => $match->getStart(),
+				'bodystart' => $match->getBodyStart(),
+				'end' => $match->getEnd(),
+				'args' => $match->getArguments(),
+			];
+
+			if ($parent) {    // add in the parent body offset
+				$matchArray['start'] += $parent['bodystart'];
+				$matchArray['end'] += $parent['bodystart'];
+				if ($matchArray['bodystart']) {
+					$matchArray['bodystart'] += $parent['bodystart'];
+				}
+			}
+
+			if (in_array($name, $allowedPlugins) && ! in_array($matchArray, $done)) {
 
 				$thisBody = $match->getBody();
 
@@ -367,45 +400,52 @@ class Services_Edit_PluginController
 					'name' => $name,
 					'params' => $argumentParser->parse($match->getArguments()),
 					'body' => $thisBody,
-					'plugins' => []
+					'plugins' => [],
 				];
 
-				if ($thisBody) {
-					$this->parsePlugins($thisBody, $thisPlugin['plugins'], $done, $name, $allowedPlugins);
+				if ($thisBody && in_array(strtolower($name), ['output', 'format'])) {
+					$this->parsePlugins($thisBody, $thisPlugin['plugins'], $done, $matchArray, $allowedPlugins);
 				}
 
-				if (! in_array($thisPlugin, $done)) {
-					if (in_array(strtolower($parent), ['output', 'format'])) {
+				if (! in_array($matchArray, $done)) {
+					if ($hasParent) {
 						$plugins[] = substr($body, $lastMatchEnd, $match->getStart() - $lastMatchEnd);
 						$lastMatchEnd = $match->getEnd();
 					}
 
 					$plugins[] = $thisPlugin;
-					$done[] = $thisPlugin;
 				}
 			} else {
 				// other plugins in output or format body blocks, treat as wiki text
-				if (in_array(strtolower($parent), ['output', 'format'])) {
-					$wikiText = substr($body, $lastMatchEnd, $match->getEnd() - $lastMatchEnd);
+				if ($hasParent && ! in_array($matchArray, $done)) {
+					$wikiText = $match->getBody();
 
 					// find any nested plugins and mark them as done
-					$newPlugins = [];
-					$newDone = [];
-					$this->parsePlugins($wikiText, $newPlugins, $newDone, '', $allowedPlugins);
-					$done = array_merge($done, $newDone);
+					if ($wikiText) {
+						$newPlugins = [];
+						$this->parsePlugins($wikiText, $newPlugins, $done, $matchArray, $allowedPlugins);
 
-					$plugins[] = $wikiText;
-					$lastMatchEnd = $match->getEnd();
+						$plugins[] = substr($body, $lastMatchEnd, $match->getEnd() - $lastMatchEnd);
+						$lastMatchEnd = $match->getEnd();
+					}
 				}
+			}
+			$done[] = $matchArray;
+		}
+
+		if ($hasParent) {
+			$plugins[] = substr($body, $lastMatchEnd);
+		}
+
+		for ($i = 0; $i < count($plugins); $i++) {	// join wiki text parts together
+			if ($i > 0 && is_string($plugins[$i]) && is_string($plugins[$i - 1])) {
+				$plugins[$i - 1] .= $plugins[$i];
+				$plugins[$i] = false;
 			}
 		}
 
-		if (in_array(strtolower($parent), ['output', 'format'])) {
-			$plugins[] = substr($body, $lastMatchEnd);
-		}
+		$plugins = array_filter($plugins);
 	}
-
-
 }
 
 
