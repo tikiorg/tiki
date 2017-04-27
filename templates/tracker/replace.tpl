@@ -109,7 +109,7 @@
 					{tr}Show status{/tr}
 				</label>
 			</div>
-			<div class="checkbox">
+			<div class="checkbox depends" data-on="showStatus">
 				<label>
 					<input type="checkbox" name="showStatusAdminOnly" value="1"
 						{if $info.showStatusAdminOnly eq 'y'} checked="checked"{/if}>
