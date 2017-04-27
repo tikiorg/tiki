@@ -681,13 +681,12 @@ class AccountingLib extends LogsLib
 
 		if ($book['bookClosed'] == 'y') {
 			$errors[] = tra("This book has been closed. Bookings can no longer be made in it.");
-		} try {
-			$date = new DateTime($journalDate);
-		} catch(Exception $e) {
+		}
+		if (!($journalDate instanceof DateTime)) {
 			return array(tra("Invalid booking date."));
 		}
 
-		$errors = $this->checkBookDates($book, $date);
+		$errors = $this->checkBookDates($book, $journalDate);
 
 		if (is_array($errors)) {
 			return $errors;
@@ -749,7 +748,7 @@ class AccountingLib extends LogsLib
 		$query = "INSERT INTO `tiki_acct_journal` (`journalBookId`, `journalDate`, `journalDescription`,
 			`journalCancelled`, `journalTs`)
 				VALUES (?,?,?,0,NOW())";
-		$res = $this->query($query, array($bookId, $date->toString('Y-M-d'), $journalDescription));
+		$res = $this->query($query, array($bookId, date_format($journalDate, 'Y-m-d'), $journalDescription));
 
 		if ($res === false) {
 			$errors[] = tra('Booking error creating journal entry') . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";

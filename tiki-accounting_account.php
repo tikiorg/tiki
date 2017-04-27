@@ -37,7 +37,7 @@ if (!isset($_REQUEST['action'])) {
 	$_REQUEST['action']='';
 }
 
-if ($_REQUEST['action']!='new' and !isset($_REQUEST['accountId'])) {
+if ($_REQUEST['action'] != 'new' and !isset($_REQUEST['accountId'])) {
 	$smarty->assign('msg', tra("Missing account id"));
 	$smarty->display("error.tpl");
 	die;
@@ -145,6 +145,8 @@ if ($access->ticketMatch()) {
 }
 $account=$accountinglib->getAccount($bookId, $accountId, true);
 $smarty->assign('account', $account);
-$template="tiki-accounting_account_view.tpl";
+if (!$template) {
+	$template="tiki-accounting_account_view.tpl";
+}
 $smarty->assign('mid', $template);
 $smarty->display("tiki.tpl");

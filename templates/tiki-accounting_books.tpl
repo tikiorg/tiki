@@ -41,94 +41,123 @@
 		{tab name="{tr}Create a book{/tr}"}
 			<h2>{tr}Create a book{/tr}</h2>
 			<div id="createbookform">
-				<form action="tiki-accounting_books.php" method="post">
+				<form action="tiki-accounting_books.php" method="post" class="form-horizontal">
 					{ticket}
 					<input type="hidden" name="action" value="create">
 					<input type="hidden" name="bookClosed" id="bookClosed" value="n">
-					<h1>{tr}Create a book{/tr}</h1>
 					<fieldset>
 						<legend>{tr}Book properties{/tr}</legend>
-						<div>
-							<label class="aclabel">{tr}Name of the book{/tr}</label>
-							<input type="text" name="bookName" id="bookName" value="{$bookName}">
+						<div class="form-group">
+							<label class="control-label col-md-4">{tr}Name of the book{/tr}</label>
+							<div class="col-md-8">
+								<input type="text" class=" form-control" name="bookName" id="bookName" value="{$bookName}">
+							</div>
 						</div>
-						<div>
-							<label class="aclabel">{tr}First date in journal{/tr}</label>
-							<input type="text" name="bookStartDate" id="bookStartDate" value="{$bookStartDate}">
+						<div class="form-group">
+							<label class="control-label col-md-4">{tr}First date in journal{/tr}</label>
+							<div class="col-md-8">
+								{*<input type="text" class=" form-control" name="bookStartDate" id="bookStartDate" value="{$bookStartDate}">*}
+								{html_select_date prefix="book_start_" time=$bookStartDate start_year="-10" end_year="+10" field_order=$prefs.display_field_order}
+							</div>
 						</div>
-						<div>
-							<label class="aclabel">{tr}Last date in journal{/tr}</label>
-							<input type="text" name="bookEndDate" id="bookEndDate" value="{$bookEndDate}">
+						<div class="form-group">
+							<label class="control-label col-md-4">{tr}Last date in journal{/tr}</label>
+							<div class="col-md-8">
+								{*<input type="text" class=" form-control" name="bookEndDate" id="bookEndDate" value="{$bookEndDate}">*}
+								{html_select_date prefix="book_end_" time=$bookEndDate start_year="-10" end_year="+10" field_order=$prefs.display_field_order}
+							</div>
 						</div>
 					</fieldset>
 					<fieldset>
 						<legend>{tr}Currency settings{/tr}</legend>
-						<div>
-							<label class="aclabel">{tr}Currency (up to 3 letters) {/tr}</label>
-							<input type="text" name="bookCurrency" id="bookCurrency" value="{$bookCurrency}">
+						<div class="form-group">
+							<label class="control-label col-md-4">{tr}Currency (up to 3 letters) {/tr}</label>
+							<div class="col-md-8">
+								<input type="text" class=" form-control" name="bookCurrency" id="bookCurrency" value="{$bookCurrency}">
+							</div>
 						</div>
-						<div>
-							<label class="aclabel">{tr}Position of the currency {/tr}</label>
-							<select name="bookCurrencyPos" id="bookCurrencyPos">
-								<option value="0"{if $bookCurrencyPos==0} selected="selected"{/if}>{tr}Show no currency{/tr}</option>
-								<option value="-1"{if $bookCurrencyPos==-1} selected="selected"{/if}>{tr}Show currency in front of numbers{/tr}</option>
-								<option value="1"{if $bookCurrencyPos==1} selected="selected"{/if}>{tr}Show currency behind numbers{/tr}</option>
-							</select>
+						<div class="form-group">
+							<label class="control-label col-md-4">{tr}Position of the currency {/tr}</label>
+							<div class="col-md-8">
+								<select class=" form-control" name="bookCurrencyPos" id="bookCurrencyPos">
+									<option value="0"{if $bookCurrencyPos==0} selected="selected"{/if}>{tr}Show no currency{/tr}</option>
+									<option value="-1"{if $bookCurrencyPos==-1} selected="selected"{/if}>{tr}Show currency in front of numbers{/tr}</option>
+									<option value="1"{if $bookCurrencyPos==1} selected="selected"{/if}>{tr}Show currency behind numbers{/tr}</option>
+								</select>
+							</div>
 						</div>
-						<div>
-							<label class="aclabel">{tr}Decimals{/tr}</label>
-							<input type="text" name="bookDecimals" id="bookDecimals" value="{$bookDecimals}">
+						<div class="form-group">
+							<label class="control-label col-md-4">{tr}Decimals{/tr}</label>
+							<div class="col-md-8">
+								<input type="text" class=" form-control" name="bookDecimals" id="bookDecimals" value="{$bookDecimals}">
+							</div>
 						</div>
-						<div>
-							<label class="aclabel">{tr}Decimal point{/tr}</label>
-							<select name="bookDecPoint" id="bookDecPoint">
-								<option value="," {if $bookDecPoint eq ','}selected="selected"{/if}>{tr}Comma{/tr}</option>
-								<option value="." {if empty($bookDecPoint) or $bookDecPoint eq '.'}selected="selected"{/if}>{tr}Decimal{/tr}</option>
-								<option value=" " {if $bookDecPoint eq ' '}selected="selected"{/if}>{tr}Space{/tr}</option>
-							</select>
+						<div class="form-group">
+							<label class="control-label col-md-4">{tr}Decimal point{/tr}</label>
+							<div class="col-md-8">
+								<select class=" form-control" name="bookDecPoint" id="bookDecPoint">
+									<option value="," {if $bookDecPoint eq ','}selected="selected"{/if}>{tr}Comma{/tr}</option>
+									<option value="." {if empty($bookDecPoint) or $bookDecPoint eq '.'}selected="selected"{/if}>{tr}Decimal{/tr}</option>
+									<option value=" " {if $bookDecPoint eq ' '}selected="selected"{/if}>{tr}Space{/tr}</option>
+								</select>
+							</div>
 						</div>
-						{*<input type="text" name="bookDecPoint" id="bookDecPoint" value="{$bookDecPoint}"></div>*}
-						<div>
-							<label class="aclabel">{tr}Thousands separator{/tr}</label>
-							<select name="bookThousand" id="bookThousand" >
-								<option value="," {if empty($bookThousand) or $bookThousand eq ','}selected="selected"{/if}>{tr}Comma{/tr}</option>
-								<option value="." {if $bookThousand eq '.'}selected="selected"{/if}>{tr}Decimal point{/tr}</option>
-								<option value=" " {if $bookThousand eq ' '}selected="selected"{/if}>{tr}Space{/tr}</option>
-							</select>
+						<div class="form-group">
+							<label class="control-label col-md-4">{tr}Thousands separator{/tr}</label>
+							<div class="col-md-8">
+								<select class=" form-control" name="bookThousand" id="bookThousand" >
+									<option value="," {if empty($bookThousand) or $bookThousand eq ','}selected="selected"{/if}>{tr}Comma{/tr}</option>
+									<option value="." {if $bookThousand eq '.'}selected="selected"{/if}>{tr}Decimal point{/tr}</option>
+									<option value=" " {if $bookThousand eq ' '}selected="selected"{/if}>{tr}Space{/tr}</option>
+								</select>
 						</div>
-						{*<input type="text" name="bookThousand" id="bookThousand" value="{$bookThousand}"></div>*}
 					</fieldset>
 					<fieldset>
 						<legend>CSV export settings</legend>
-						<div>
-							<label class="aclabel">{tr}Separator{/tr}</label>
-							<input type="text" name="exportSeparator" id="exportSeparator" value="{$exportSeparator}">
+						<div class="form-group">
+							<label class="control-label col-md-4">{tr}Separator{/tr}</label>
+							<div class="col-md-8">
+								<input type="text" class=" form-control" name="exportSeparator" id="exportSeparator" value="{$exportSeparator}">
+							</div>
 						</div>
-						<div>
-							<label class="aclabel">{tr}Quote strings with{/tr}</label>
-							<input type="text" name="exportQuote" id="exportQuote" value="{$exportQuote}">
+						<div class="form-group">
+							<label class="control-label col-md-4">{tr}Quote strings with{/tr}</label>
+							<div class="col-md-8">
+								<input type="text" class=" form-control" name="exportQuote" id="exportQuote" value="{$exportQuote}">
+							</div>
 						</div>
-						<div>
-							<label class="aclabel">{tr}End of Line{/tr}</label>
-							<select name="exportEOL" id="exportEOL">
-								<option value="CR"{if $exportEOL=='CR'} selected="selected"{/if}>{tr}Carriage return{/tr}</option>
-								<option value="LF"{if $exportEOL=='LF'} selected="selected"{/if}>{tr}Line feed{/tr}</option>
-								<option value="CRLF"{if $exportEOL=='CRLF'} selected="selected"{/if}>{tr}Carriage Return/Line feed{/tr}</option>
-							</select>
+						<div class="form-group">
+							<label class="control-label col-md-4">{tr}End of Line{/tr}</label>
+							<div class="col-md-8">
+								<select class=" form-control" name="exportEOL" id="exportEOL">
+									<option value="CR"{if $exportEOL=='CR'} selected="selected"{/if}>{tr}Carriage return{/tr}</option>
+									<option value="LF"{if $exportEOL=='LF'} selected="selected"{/if}>{tr}Line feed{/tr}</option>
+									<option value="CRLF"{if $exportEOL=='CRLF'} selected="selected"{/if}>{tr}Carriage Return/Line feed{/tr}</option>
+								</select>
+							</div>
 						</div>
 					</fieldset>
 					<fieldset>
 						<legend>{tr}Automatic Tax Calculation{/tr}</legend>
-						<div>
-							<div class="aclabel">
-							<label class="aclabel">{tr}Allow automatic tax calculation{/tr}</label><br>&nbsp;</div>
-							<div>
-								<input type="radio" name="bookAutoTax" id="bookAutoTaxY"{if $bookAutoTax!='n'} checked="checked"{/if} value="y">{tr}Yes{/tr}<br>
-								<input type="radio" name="bookAutoTax" id="bookAutoTaxN"{if $bookAutoTax=='n'} checked="checked"{/if} value="n">{tr}No{/tr}<br>
+						<div class="form-group">
+							<div class="col-md-4">
+								<label class="control-label">{tr}Allow automatic tax calculation{/tr}</label>
+							</div>
+							<div class="col-md-8">
+								<div class="radio">
+									<label>
+										<input type="radio" name="bookAutoTax" id="bookAutoTaxY"{if $bookAutoTax!='n'} checked="checked"{/if} value="y">{tr}Yes{/tr}<br>
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="bookAutoTax" id="bookAutoTaxN"{if $bookAutoTax=='n'} checked="checked"{/if} value="n">{tr}No{/tr}<br>
+									</label>
+								</div>
 							</div>
 						</div>
 					</fieldset>
-					<input type="submit" class="btn btn-default btn-sm timeout" name="create" value="{tr}Create a new book{/tr}">
+					<input type="submit" class="btn btn-default btn-sm timeout col-md-offset-4" name="create" value="{tr}Create a new book{/tr}">
 				</form>
 			</div>
 		{/tab}

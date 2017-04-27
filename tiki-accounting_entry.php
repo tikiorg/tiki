@@ -44,10 +44,19 @@ $smarty->assign('book', $book);
 $accounts = $accountinglib->getAccounts($bookId, $all = true);
 $smarty->assign('accounts', $accounts);
 
+if ($_REQUEST['journal_Year']) {
+	$journalDate = new DateTime();
+	$journalDate->setDate(
+		$_REQUEST['journal_Year'],
+		$_REQUEST['journal_Month'],
+		$_REQUEST['journal_Day']
+	);
+}
+
 if (isset($_REQUEST['book']) && $access->ticketMatch()) {
 	$result = $accountinglib->book(
 		$bookId,
-		$_REQUEST['journalDate'],
+		$journalDate,
 		$_REQUEST['journalDescription'],
 		$_REQUEST['debitAccount'],
 		$_REQUEST['creditAccount'],
@@ -67,7 +76,7 @@ if (isset($_REQUEST['book']) && $access->ticketMatch()) {
 
 if (is_array($result)) {
 	$smarty->assign('errors', $result);
-	$smarty->assign('journalDate', $_REQUEST['journalDate']);
+	$smarty->assign('journalDate', $journalDate);
 	$smarty->assign('journalDescription', $_REQUEST['journalDescription']);
 	$smarty->assign('debitAccount', $_REQUEST['debitAccount']);
 	$smarty->assign('creditAccount', $_REQUEST['creditAccount']);

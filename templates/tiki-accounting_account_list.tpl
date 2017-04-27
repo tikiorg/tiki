@@ -1,5 +1,5 @@
 {* $Id$ *}
-<table>
+<table class="table">
 	<tr>
 		<th>{tr}Account{/tr}</th>
 		<th>{tr}Account name{/tr}</th>

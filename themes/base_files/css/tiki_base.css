@@ -2431,12 +2431,6 @@ ul.tree {
 .plugin-sample .plugin-param {
   padding-left: 15px;
 }
-div.aclabel,
-span.aclabel,
-label.aclabel {
-  float: left;
-  min-width: 150px;
-}
 .viewmode {
   line-height: 1em;
   padding: 1px;

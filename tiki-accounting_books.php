@@ -25,6 +25,22 @@ if (!isset($_REQUEST['action'])) {
 
 $globalperms = Perms::get();
 
+if ($_REQUEST['book_start_Year']) {
+	$bookStartDate = new DateTime();
+	$bookStartDate->setDate(
+		$_REQUEST['book_start_Year'],
+		$_REQUEST['book_start_Month'],
+		$_REQUEST['book_start_Day']
+	);
+}
+if ($_REQUEST['book_end_Year']) {
+	$bookEndDate = new DateTime();
+	$bookEndDate->setDate(
+		$_REQUEST['book_end_Year'],
+		$_REQUEST['book_end_Month'],
+		$_REQUEST['book_end_Day']
+	);
+}
 if ($access->ticketMatch()) {
 	switch ($_REQUEST['action']) {
 		case 'create' :
@@ -35,7 +51,7 @@ if ($access->ticketMatch()) {
 			}
 			$bookId=$accountinglib->createBook(
 				$_REQUEST['bookName'], 'n',
-				$_REQUEST['bookStartDate'], $_REQUEST['bookEndDate'],
+				date_format($bookStartDate, 'Y-m-d H:i:s'), date_format($bookEndDate, 'Y-m-d H:i:s'),
 				$_REQUEST['bookCurrency'], $_REQUEST['bookCurrencyPos'],
 				$_REQUEST['bookDecimals'], $_REQUEST['bookDecPoint'],
 				$_REQUEST['bookThousand'], $_REQUEST['exportSeparator'],
@@ -44,10 +60,10 @@ if ($access->ticketMatch()) {
 			);
 			if (!is_numeric($bookId)) {
 				$errors[]=tra($bookId);
-				Feedback::error($errors);
+				Feedback::error(implode("\n", $errors));
 				$smarty->assign('bookName', $_REQUEST['bookName']);
-				$smarty->assign('bookStartDate', $_REQUEST['bookStartDate']);
-				$smarty->assign('bookEndDate', $_REQUEST['bookEndDate']);
+				$smarty->assign('bookStartDate', $bookStartDate);
+				$smarty->assign('bookEndDate', $bookEndDate);
 				$smarty->assign('bookCurrency', $_REQUEST['bookCurrency']);
 				$smarty->assign('bookCurrencyPos', $_REQUEST['bookCurrencyPos']);
 				$smarty->assign('bookDecimals', $_REQUEST['bookDecimals']);
