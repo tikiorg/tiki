@@ -345,7 +345,6 @@ class Search_Elastic_Connection
 	{
 		try {
 			$response = $this->get("/_alias/$index", "");
-			$response = json_decode($response);
 			if( !empty($response->status) && $response->status == 404 ) {
 				return false;
 			}

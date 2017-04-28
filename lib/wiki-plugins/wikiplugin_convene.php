@@ -274,7 +274,8 @@ FORM;
 	$regexN = '/[\r\n]+/g';
 
 	$headerlib->add_jq_onready(
-<<<JQ
+/** @lang JavaScript */
+		<<<JQ
 
 		var convene$i = $.extend({
 			fromBlank: function(user, date) {
@@ -441,7 +442,7 @@ FORM;
 				dialogOptions.buttons[tr("Add")] = function() {
 					convene$i.addDate(o.find('input:first').val());
 					o.dialog('close');
-				}
+				};
 
 				var o = $('<div><input type="text" style="width: 100%;" /></div>')
 					.dialog(dialogOptions);
@@ -480,7 +481,7 @@ FORM;
 						.removeClass('ui-state-default')
 						.addClass('ui-state-highlight');
 	
-					$(this).find('span.icon-ok');
+					$(this).find('.icon').setIcon("save");
 					var parent = $(this).parent().parent();
 					parent.find('.vote').hide();
 					parent.find('input').each(function() {
@@ -520,7 +521,7 @@ FORM;
 	
 					$('.conveneMain$i').show();
 					$(this).find('span.icon-pencil');
-					var parent = $(this).parent().parent();
+					parent = $(this).parent().parent();
 					parent.find('select').each(function(i) {
 						parent.find('input.conveneUserVote$i').eq(i).val( $(this).val() );
 	
@@ -571,7 +572,7 @@ FORM;
             	if ($('.conveneAddUser$i').val()) {
 	                convene$i.addUser($('.conveneAddUser$i').val());
 				} else {
-					$('.conveneAddUser$i').focus()
+					$('.conveneAddUser$i').val(jqueryTiki.username).focus()
 				}
 				return false;
             });
