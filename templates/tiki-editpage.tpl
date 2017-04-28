@@ -178,7 +178,6 @@
 			{/if}
 			{tabset name='tabs_editpage' cookietab=1}
 				{tab name="{tr}Edit page{/tr}"}
-					<h2>{tr}Edit page{/tr}</h2>
 					{if $translation_mode == 'y'}
 						<div class="translation_message">
 							<h2>{tr}Translate to:{/tr} {$target_page|escape}</h2>
@@ -228,7 +227,6 @@
 				{/tab}
 				{if $prefs.feature_categories eq 'y' and $tiki_p_modify_object_categories eq 'y' and count($categories) gt 0}
 					{tab name="{tr}Categories{/tr}"}
-						<h2>{tr}Categories{/tr}</h2>
 						{if $categIds}
 							{remarksbox type="note" title="{tr}Note:{/tr}"}
 								<strong>{tr}Categorization has been preset for this edit{/tr}</strong>
@@ -250,14 +248,12 @@
 				{if $prefs.wiki_freetags_edit_position eq 'freetagstab'}
 					{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
 						{tab name="{tr}Tags{/tr}"}
-							<h2>{tr}Tags{/tr}</h2>
 							{include file='freetag.tpl'}
 						{/tab}
 					{/if}
 				{/if}
 				{if !empty($showPropertiesTab)}
 					{tab name="{tr}Properties{/tr}"}
-						<h2>{tr}Properties{/tr}</h2>
 						<div class="t_navbar margin-bottom-md clearfix">
 							{if $tiki_p_admin_wiki eq "y"}
 								<a href="tiki-admin.php?page=wiki" class="btn btn-link">
