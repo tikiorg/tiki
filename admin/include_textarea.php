@@ -59,9 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $access->ticketMatch()) {
 		}
 		$pluginsAlias = WikiPlugin_Negotiator_Wiki_Alias::getList();
 	}
-	if (isset($_POST['textareasetup'])
-			&& !in_array($_POST['plugin_alias'], $pluginsReal)
-			&& isset($_REQUEST['plugin_alias'])
+	if (! empty($_REQUEST['plugin_alias']) && ! in_array($_POST['plugin_alias'], $pluginsReal)
 			&& (getCookie('admin_textarea', 'tabs') == '#contentadmin_textarea-3')
 	) {
 		// tab=3 is plugins alias tab (TODO improve)
@@ -167,9 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $access->ticketMatch()) {
 	}
 }
 
-if (isset($_REQUEST['plugin_alias']) && $pluginInfo = WikiPlugin_Negotiator_Wiki_Alias::info($_REQUEST['plugin_alias'])
-		&& $access->ticketMatch())
-{
+if (isset($_REQUEST['plugin_alias']) && $pluginInfo = WikiPlugin_Negotiator_Wiki_Alias::info($_REQUEST['plugin_alias'])) {
 	// Add an extra empty parameter to create new ones
 	$pluginInfo['description']['params']['__NEW__'] = array(
 		'name' => '',
