@@ -1116,9 +1116,16 @@ function wikiplugin_trackerlist($data, $params)
 		}
 		/*** tablesorter ***/
 		//note whether ajax is needed
-		$tsServer = isset($params['server']) && $params['server'] === 'y' ? true : false;
+		$tsServer = isset($params['server']) && $params['server'] === 'y';
 
-		$tsOn	= isset($sortable) && $sortable !== 'n' && Table_Check::isEnabled($tsServer);
+		$tsOn = 
+				/* The sortable parameter is not defined. It enables Tablesorter, which affects more than sorting (at least filtering).
+				 * It is not always necessary for sorting.
+				 * FIXME: find a better name
+				 */
+				isset($sortable) && $sortable !== 'n' 
+						
+				&& Table_Check::isEnabled($tsServer);
 		$smarty->assign('tsOn', $tsOn);
 
 		//note whether this is the initial tablesorter ajax call or a subsequent ajax call
