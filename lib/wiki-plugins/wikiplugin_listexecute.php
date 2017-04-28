@@ -150,6 +150,14 @@ function wikiplugin_listexecute($data, $params)
 
 			$tx->commit();
 
+			// need to reload search results in case action has modified the original contents
+			$result = $query->search($index);
+			$result->setId('wplistexecute-' . $iListExecute);
+			$builder->setCount($result->count());
+			$result->setTsSettings($builder->getTsSettings());
+			$result->setTsOn($tsret['tsOn']);
+			$formatter = $builder->getFormatter();
+
 			$result->applyTransform($reportSource);
 		}
 	}
