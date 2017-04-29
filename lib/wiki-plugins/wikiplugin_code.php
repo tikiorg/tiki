@@ -8,7 +8,9 @@
 function wikiplugin_code_info()
 {
 	global $tikipath;
-	$themes = array();
+	$themes = [
+		['text' => tr('default'), 'value' => 'default',],
+	];
 	$themes_folder = rtrim($tikipath, '/') . '/vendor_bundled/vendor/codemirror/codemirror/theme';
 
 	if ( is_dir($themes_folder) ) {
