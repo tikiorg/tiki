@@ -104,7 +104,7 @@ function wikiplugin_code_info()
 			'theme' => array(
 				'required' => false,
 				'name' => tra('Theme'),
-				'description' => tra('XAny supported theme listed at https://codemirror.net/demo/theme.html'),
+				'description' => tra('Any supported theme listed at https://codemirror.net/demo/theme.html'),
 				'since' => '17',
 				'options' => $themes,
 				'filter' => 'text',
