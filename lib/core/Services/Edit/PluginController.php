@@ -174,6 +174,17 @@ class Services_Edit_PluginController
 				}
 			}
 
+			$extraParams = array_diff_key($pluginArgs, $info['params']);
+
+			foreach ($extraParams as $extraParam => $val) {
+				$info['params'][$extraParam] = [
+					'required' => false,
+					'name' => $extraParam,
+					'description' => tr('Undefined parameter'),
+					'filter' => 'text',
+				];
+			}
+
 			if ($validationRules) {
 				$rules = json_encode(['rules' => $validationRules]);
 				TikiLib::lib('header')->add_jq_onready('$("#plugin_params > form").validate(' . $rules . ');');
