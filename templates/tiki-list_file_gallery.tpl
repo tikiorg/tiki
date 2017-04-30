@@ -146,7 +146,7 @@
 				{button _keepall='y' _icon_name="post" _type="link" _text="{tr}Draw{/tr}" href="tiki-edit_draw.php" galleryId=$galleryId}
 			{/if}
 			{if $prefs.feature_file_galleries_batch eq "y" and $tiki_p_batch_upload_file_dir eq 'y'}
-				{button _keepall='y' _icon_name="file-archive" _text="{tr}Batch{/tr}" href="tiki-batch_upload_files.php" galleryId=$galleryId}
+				{button _keepall='y' _icon_name="file-archive" _type="link" _text="{tr}Batch{/tr}" href="tiki-batch_upload_files.php" galleryId=$galleryId}
 			{/if}
 		{/if}
 	{else}
