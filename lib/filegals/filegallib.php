@@ -3563,7 +3563,7 @@ class FileGalLib extends TikiLib
 							}
 							include_once ('categorize.php');
 							// Print progress
-							if (empty($params['returnUrl']) && $prefs['javascript_enabled'] == 'y') {
+							if (empty($params['returnUrl']) && $prefs['javascript_enabled'] == 'y' && empty($params['fileId'])) {
 								$smarty->assign("name", $aux['name']);
 								$smarty->assign("size", $aux['size']);
 								$smarty->assign("fileId", $aux['fileId']);
@@ -3629,7 +3629,9 @@ class FileGalLib extends TikiLib
 				die;
 			}
 		}
-		Feedback::error(['mes' => $errors]);
+		if ($errors) {
+			Feedback::error(['mes' => $errors]);
+		}
 		$smarty->assign('uploads', $uploads);
 
 		if (!empty($params['returnUrl'])) {

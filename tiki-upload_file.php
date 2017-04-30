@@ -225,7 +225,7 @@ ask_ticket('upload-file');
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
-if ( $prefs['javascript_enabled'] != 'y' or ! $isUpload ) {
+if ( $prefs['javascript_enabled'] != 'y' or ! $isUpload || ! empty($_REQUEST['fileId']) ) {
 	if ($prefs['file_galleries_use_jquery_upload'] !== 'y') {
 		$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/form/jquery.form.js');
 	}
