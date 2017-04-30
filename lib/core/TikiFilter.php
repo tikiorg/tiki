@@ -59,10 +59,15 @@ class TikiFilter
 		case 'rawhtml_unsafe':
 		case 'none':
 			return new TikiFilter_RawUnsafe;
-		case 'lang':
-			return new Zend\Filter\PregReplace('/^.*([a-z]{2})(\-[a-z]{2}).*$/', '$1$2');
-		case 'imgsize':
-			return new Zend\Filter\PregReplace('/^.*(\d+)\s*(%?).*$/', '$1$2');
+			case 'lang':
+				// Allows values for languages (such as 'en') available on the site
+				return new TikiFilter_Lang;
+			case 'imgsize':
+				// Allows digits optionally followed by a space and/or certain size units
+				return new TikiFilter_PregFilter(
+					'/^(\p{N}+)\p{Zs}?(%|cm|em|ex|in|mm|pc|pt|px|vh|vw|vmin)?$/u',
+					'$1$2'
+				);
 		case 'attribute_type':
 			return new TikiFilter_AttributeType;
 		default:
