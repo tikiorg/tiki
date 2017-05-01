@@ -125,9 +125,9 @@
 							</div>
 						</div>
 					{/if}
-					{if $prefs.javascript_enabled neq 'y' || !$editFileId}
+					{if $prefs.file_galleries_use_jquery_upload neq 'y' || $editFileId}
 						<div class="form-group">
-							<label for="userfile" class="col-md-4 control-label">{tr}Upload from disk{/tr}</label>
+							<label for="userfile" class="col-md-4 control-label">{if $editFileId}{tr}Re-upload from disk{/tr}{else}{tr}Upload from disk{/tr}{/if}</label>
 							<div class="col-md-8">
 								{if $editFileId}
 									{$fileInfo.filename|escape}
