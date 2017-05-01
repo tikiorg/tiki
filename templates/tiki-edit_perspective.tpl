@@ -37,7 +37,11 @@
 						</td>
 						<td style="font-size:smaller;">
 							{foreach from=$persp.preferences key=name item=val}
-								{$name}={$val}<br>
+								{if is_array($val)}
+									{$name}={$val|implode:','}<br>
+								{else}
+									{$name}={$val}<br>
+								{/if}
 							{/foreach}
 						</td>
 						<td class="action">
