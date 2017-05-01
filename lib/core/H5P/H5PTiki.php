@@ -591,9 +591,16 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 	{
 		global $user;
 
+		if (empty($content['title'])) {
+			$title = TikiLib::lib('filegal')->get_file_label($contentMainId);
+		} else {
+			$title = $content['title'];
+		}
+
+
 		$data = array(
 			'updated_at' => date("Y-m-d H:i:s", TikiLib::lib('tiki')->now),
-			'title' => isset($content['title']) ? $content['title'] : '',
+			'title' => $title,
 			'parameters' => isset($content['params']) ? $content['params'] : '',
 			'embed_type' => 'div', // TODO: Determine from library?
 			'library_id' => $content['library']['libraryId'],
