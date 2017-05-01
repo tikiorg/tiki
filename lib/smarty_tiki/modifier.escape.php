@@ -40,20 +40,29 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = 'UTF-8'
 				$string = implode(',', $string);
 			}
 			$return = htmlspecialchars($string, ENT_QUOTES, $char_set, $double_encode);
+			
 			// Convert back sanitization tags into real tags to avoid them to be displayed
 			$return = str_replace('&lt;x&gt;', '<x>', $return);
 			// Convert back sanitization tags into real tags for no wrap space
 			$return = str_replace('&amp;nbsp;', '&nbsp;', $return);
+			
+			// Tiki customization. Escape slashes as they help to end HTML entities. Seems unnecessary, but recommended by OWASP's XSS prevention rule #1.
 			$return = str_replace("/", '&#x2F;', $return);
+			
 			return $return;
 
 		case 'htmlall':
 			$return = htmlentities($string, ENT_QUOTES, $char_set);
-			if (!strlen($return) && strlen($string)) // Bug php when there is non utf8 characters in the string(http://bugs.php.net/bug.php?id=43549, http://bugs.php.net/bug.php?id=43294)
+			if (!strlen($return) && strlen($string)) { // Bug php when there is non utf8 characters in the string(http://bugs.php.net/bug.php?id=43549, http://bugs.php.net/bug.php?id=43294)
 				$return = htmlentities($string, ENT_QUOTES);
+			}
+			
 			// Convert back sanitization tags into real tags to avoid them to be displayed
 			$return = str_replace('&lt;x&gt;', '<x>', $return);
+			
+			// Tiki customization. Escape slashes as they help to end HTML entities. Seems unnecessary, but recommended by OWASP's XSS prevention rule #1.
 			$return = str_replace("/", '&#x2F;', $return);
+			
 			return $return;
 
 		case 'url':
