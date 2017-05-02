@@ -12,7 +12,12 @@ class Math_Formula_Function_Concat extends Math_Formula_Function
 		$out = '';
 
 		foreach ( $element as $child ) {
-			$out .= $this->evaluateChild($child);
+      $child = $this->evaluateChild($child);
+      if (is_array($child)) {
+        $out .= implode('', $child);
+      } else {
+        $out .= $child;
+      }
 		}
 
 		return $out;
