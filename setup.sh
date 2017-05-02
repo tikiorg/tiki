@@ -541,6 +541,9 @@ composer_core()
 		if [ ${LOGCOMPOSERFLAG} = "1" ] ; then
 			"${PHPCLI}" temp/composer.phar self-update --working-dir vendor_bundled "$OPT_QUIET" > ${TIKI_COMPOSER_SELF_UPDATE_LOG}
 		fi
+		# remove previous container.php in case of incompatibility
+		rm -f temp/cache/container.php
+
 	fi
 
 	if [ ! -f temp/composer.phar ];
