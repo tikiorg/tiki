@@ -32,6 +32,8 @@ function wikiplugin_trackerlist_info()
 				 'separator' => ':',
 				 'default' => '',
 				 'profile_reference' => 'tracker_field',
+				 'parent' => 'input[name="params[trackerId]"]',
+				 'parentkey' => 'tracker_id',
 			 ),
 			 'sort' => array(
 				 'required' => false,
@@ -341,6 +343,8 @@ function wikiplugin_trackerlist_info()
 				 'separator' => ':',
 				 'default' => '',
 				 'profile_reference' => 'tracker_field',
+				 'parent' => 'input[name="params[trackerId]"]',
+				 'parentkey' => 'tracker_id',
 			 ),
 			 'filtervalue' => array(
 				 'required' => false,
@@ -755,6 +759,8 @@ function wikiplugin_trackerlist_info()
 				 'filter' => 'digits',
 				 'default' => '',
 				 'profile_reference' => 'tracker_field',
+				 'parent' => 'input[name="params[trackerId]"]',
+				 'parentkey' => 'tracker_id',
 			 ),
 			 'calendarviewmode' => array(
 				 'required' => false,
@@ -934,8 +940,10 @@ function wikiplugin_trackerlist_info()
 				 'since' => '11.0',
 				 'filter' => 'digits',
 				 'separator' => ':',
-				 'profile_reference' => 'tracker_field',
 				 'default' => '',
+				 'profile_reference' => 'tracker_field',
+				 'parent' => 'input[name="params[trackerId]"]',
+				 'parentkey' => 'tracker_id',
 			 ),
 			 'editableall' => array(
 				 'required' => false,

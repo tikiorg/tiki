@@ -47,7 +47,7 @@ class ListExecuteCommand extends Command
 		$_POST['list_action'] = $action;
 		$_POST['objects'] = array('ALL');
 
-		TikiLib::lib('parser')->parse_data($pageInfo['data']);
+		\TikiLib::lib('parser')->parse_data($pageInfo['data']);
 
 		$output->writeln("Action $action executed on page $page.");
 	}
