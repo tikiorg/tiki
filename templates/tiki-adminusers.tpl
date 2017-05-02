@@ -161,7 +161,7 @@
 												<a
 													class="link tips"
 													href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if $prefs.feature_tabs ne 'y'}#2{/if}"
-													title="{$username}:{tr}Edit account settings{/tr}">
+													title="{$username}:{tr}Edit account settings{/tr}" {if $users[user].itemId}data-itemid="{$users[user].itemId}"{/if}">
 														{$users[user].user|escape}
 												</a>
 												{if $prefs.user_show_realnames eq 'y' and $smarty.capture.username ne $users[user].user}
@@ -302,6 +302,17 @@
 								{/section}
 							</tbody>
 						</table>
+						{jq}
+							$document.on("show.bs.popover", function ( e ) {
+								var itemId = $(e.target).data("itemid");
+								if (itemId) {
+									$.get($.service("tracker", "view", {id: itemId}), function (data) {
+										data = data.replace(/<h[\s\S]*?<\/h.*?>/mgi, "");	// remove headings
+										$(".popover-content", ".popover.in").empty().append(data);
+									});
+								}
+							});
+						{/jq}
 					{if !$ts.ajax}
 					</div>
 					{if $users}

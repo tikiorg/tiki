@@ -416,6 +416,7 @@ if (isset($_REQUEST['filterEmail'])) {
 $smarty->assign('filterEmail', $filterEmail);
 
 list($username, $usermail, $usersTrackerId, $chlogin) = array('', '', '',	false);
+$trklib = TikiLib::lib('trk');
 
 if (isset($_REQUEST['user']) and $_REQUEST['user']) {
 	if (!is_numeric($_REQUEST['user'])) {
@@ -562,6 +563,14 @@ $users = $userlib->get_users(
 	!empty($_REQUEST['filterNotValidated']),
 	!empty($_REQUEST['filterNeverLoggedIn'])
 );
+if ($prefs['userTracker'] === 'y') {
+	foreach ($users['data'] as & $u) {
+		$userTrackerInfo = $userlib->get_usertracker($u['userId']);
+		if ( $userTrackerInfo && $userTrackerInfo['usersTrackerId'] ) {
+			$u['itemId'] = $trklib->get_item_id($userTrackerInfo['usersTrackerId'], $userTrackerInfo['usersFieldId'], $u['login']);
+		}
+	}
+}
 $smarty->assign_by_ref('users', $users['data']);
 $smarty->assign_by_ref('cant', $users['cant']);
 
