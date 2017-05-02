@@ -34,6 +34,8 @@ function wikiplugin_vote_info()
 				'default' => '',
 				'separator' => ':',
 				'profile_reference' => 'tracker_field',
+				'parent' => 'input[name="params[trackerId]"]',
+				'parentkey' => 'tracker_id',
 			),
 			'show_percent' => array(
 				'required' => false,

@@ -44,6 +44,8 @@ function wikiplugin_trackeritemfield_info()
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'tracker_field',
+				'parent' => 'input[name="params[trackerId]"]',
+				'parentkey' => 'tracker_id',
 			),
 			'fields' => array(
 				'required' => false,
@@ -54,6 +56,8 @@ function wikiplugin_trackeritemfield_info()
 				'filter' => 'text',
 				'separator' => ':',
 				'profile_reference' => 'tracker_field',
+				'parent' => 'input[name="params[trackerId]"]',
+				'parentkey' => 'tracker_id',
 			),
 			'status' => array(
 				'required' => false,
