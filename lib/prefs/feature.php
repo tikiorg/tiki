@@ -1966,7 +1966,8 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'help' => 'JQuery#TableSorter',
 			'warning' => tra('This feature can cause problems with JS minify on some systems.'),
-			'default' => 'n',	// sortable tables ([will] override existing)
+			'default' => 'n',	// sortable tables ([will] override existing) // What does the last comment mean (override existing what)? Why is this disabled by default? Chealer 2017-04-27
+			'keywords' => 'tablesorter',
 		),
 		'feature_jquery_media' => array(
 			'name' => tra('jQuery media'),
