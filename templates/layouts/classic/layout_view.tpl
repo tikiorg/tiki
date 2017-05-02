@@ -37,7 +37,7 @@
 				{modulelist zone=topbar}
 			</div>
 			<div class="row" id="row-middle">
-				{if zone_is_empty('left') and zone_is_empty('right')}
+				{if (zone_is_empty('left') or $prefs.feature_left_column eq 'n') and (zone_is_empty('right') or $prefs.feature_right_column eq 'n')}
 					<div class="col-md-12 col1" id="col1">
 
 						{if $prefs.feature_layoutshadows eq 'y'}
