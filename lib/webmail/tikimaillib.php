@@ -73,11 +73,17 @@ class TikiMail
 
 	function setFrom($email, $name = null)
 	{
+		if (! $name) {
+			$name = null;	// zend now requires "Name must be a string" (or null, not false)
+		}
 		$this->mail->setFrom($email, $name);
 	}
 
 	function setReplyTo($email, $name = null)
 	{
+		if (! $name) {
+			$name = null;	// zend now requires "Name must be a string" (or null, not false)
+		}
 		$this->mail->setReplyTo($email, $name);
 	}
 
