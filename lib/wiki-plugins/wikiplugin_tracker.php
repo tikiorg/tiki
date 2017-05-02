@@ -35,7 +35,7 @@ function wikiplugin_tracker_info()
 				'default' => '',
 				'separator' => ':',
 				'profile_reference' => 'tracker_field',
-				'parent' => 'input[name=trackerId]',
+				'parent' => 'input[name="params[trackerId]"]',
 				'parentkey' => 'tracker_id',
 			),
 			'values' => array(
@@ -342,7 +342,7 @@ function wikiplugin_tracker_info()
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'tracker_item',
-				'parent' => 'input[name=trackerId]',
+				'parent' => 'input[name="params[trackerId]"]',
 				'parentkey' => 'tracker_id',
 			),
 			'ignoreRequestItemId' => array(
@@ -414,7 +414,7 @@ function wikiplugin_tracker_info()
 				'separator' => ':',
 				'default' => '',
 				'profile_reference' => 'tracker_field',
-				'parent' => 'input[name=trackerId]',
+				'parent' => 'input[name="params[trackerId]"]',
 				'parentkey' => 'tracker_id',
 			),
 			'autosavevalues' => array(
@@ -443,7 +443,7 @@ function wikiplugin_tracker_info()
 				'separator' => ':',
 				'default' => '',
 				'profile_reference' => 'tracker_field',
-				'parent' => 'input[name=trackerId]',
+				'parent' => 'input[name="params[trackerId]"]',
 				'parentkey' => 'tracker_id',
 			),
 			'registration' => array(
@@ -491,7 +491,7 @@ function wikiplugin_tracker_info()
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'tracker_field',
-				'parent' => 'input[name=trackerId]',
+				'parent' => 'input[name="params[trackerId]"]',
 				'parentkey' => 'tracker_id',
 			),
 			'discarditem' => array(
@@ -560,7 +560,7 @@ function wikiplugin_tracker_info()
 				'default' => '',
 				'separator' => ':',
 				'profile_reference' => 'tracker_field',
-				'parent' => 'input[name=trackerId]',
+				'parent' => 'input[name="params[trackerId]"]',
 				'parentkey' => 'tracker_id',
 			),
 			'fieldsfillseparator' => array(
