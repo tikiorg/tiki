@@ -30,6 +30,11 @@ class ListExecuteCommand extends Command
 				InputArgument::REQUIRED,
 				'Name of the action to be executed as defined on the target page'
 			)
+			->addArgument(
+				'input',
+				InputArgument::OPTIONAL,
+				'If action takes a variable input parameter, specify it here'
+			)
 			;
 	}
 
@@ -46,6 +51,7 @@ class ListExecuteCommand extends Command
 
 		$_POST['list_action'] = $action;
 		$_POST['objects'] = array('ALL');
+		$_POST['list_input'] = $input->getArgument('input');
 
 		\TikiLib::lib('parser')->parse_data($pageInfo['data']);
 
