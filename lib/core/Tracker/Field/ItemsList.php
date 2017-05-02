@@ -286,8 +286,8 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 
 		// not sure this is working
 		// r = item link
-		if ($tracker && $filterFieldThere && (!$filterFieldIdHere || $filterFieldThere['type'] === 'r')) {
-			if ($filterFieldThere['type'] == 'r') {
+		if ($tracker && $filterFieldThere && (!$filterFieldIdHere || $filterFieldThere['type'] === 'r' || $filterFieldThere['type'] === 'w')) {
+			if ($filterFieldThere['type'] === 'r' || $filterFieldThere['type'] === 'w') {
 				$technique = 'id';
 			}
 		}
