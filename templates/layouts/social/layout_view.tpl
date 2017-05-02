@@ -16,7 +16,7 @@
 		<div class="container{if $smarty.session.fullscreen eq 'y'}-fluid{/if}">
 
 			<div class="row row-middle" id="row-middle">
-				{if zone_is_empty('left') and zone_is_empty('right')}
+				{if (zone_is_empty('left') or $prefs.feature_left_column eq 'n') and (zone_is_empty('right') or $prefs.feature_right_column eq 'n')}
 					<div class="col-md-12 col1" id="col1">
 						{if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
 							{modulelist zone=pagetop}
