@@ -594,7 +594,7 @@ class Comments extends TikiLib
 				include_once('lib/notifications/notificationemaillib.php');
 				sendForumEmailNotification(
 					'forum_post_thread',
-					$info['forum_id'],
+					$info['forumId'],
 					$info,
 					$title,
 					$body,

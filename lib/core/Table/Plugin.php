@@ -519,7 +519,7 @@ class Table_Plugin
 					if ($option === 'ignore') {
 						$s['columns'][$col]['math']['ignore'] = true;
 					//only other option is format
-					} elseif (!empty($option)) {
+					} elseif (!empty($option['format'])) {
 						$s['columns'][$col]['math']['format'] = $option['format'];
 					}
 				}

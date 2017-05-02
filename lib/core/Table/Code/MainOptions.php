@@ -200,7 +200,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 				$i++;
 			}
 			unset($col, $info);
-			if (is_array($sl)) {
+			if (is_array($sl) && ! empty($sl)) {
 				$mo[] = $this->iterate($sl, 'sortList : [', ']', '[', ']', ',');
 			}
 		}
