@@ -1342,10 +1342,10 @@ if ( \$('#$id') ) {
 			$sep = empty($sep)? " \n\t\r\,\;\(\)\.\:\[\]\{\}\!\?\"":"$sep";
 			foreach ($words as $word => $url) {
 				// \b is a word boundary, \s is a space char
-				$pregword = preg_replace("/\//", "\/", $word);
-				$line = preg_replace("/(=(\"|')[^\"']*[$sep'])$pregword([$sep][^\"']*(\"|'))/i", "$1:::::$word,:::::$3", $line);
-				$line = preg_replace("/([$sep']|^)$pregword($|[$sep])/i", "$1<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$2", $line);
-				$line = preg_replace("/:::::$pregword,:::::/i", "$word", $line);
+				$escapedWord = preg_quote($word, '/');
+				$line = preg_replace("/(=(\"|')[^\"']*[$sep'])$escapedWord([$sep][^\"']*(\"|'))/i", "$1:::::$word,:::::$3", $line);
+				$line = preg_replace("/([$sep']|^)$escapedWord($|[$sep])/i", "$1<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$2", $line);
+				$line = preg_replace("/:::::$escapedWord,:::::/i", "$word", $line);
 			}
 		}
 		return $line;
