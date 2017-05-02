@@ -1193,14 +1193,25 @@ class ModLib extends TikiLib
 		}
 	}
 
+	/**
+	 * Parses custom module content if the module requires
+	 *
+	 * @param $info
+	 * @return mixed
+	 */
     function parse($info)
     {
-        global $prefs;
-		$tikilib = TikiLib::lib('tiki');
-
 		if (isset($info['parse']) && $info['parse'] == 'y') {
-            $info['data'] = TikiLib::lib('parser')->parse_data($info['data'], array('is_html' => true, 'suppress_icons' => true));
-            $info['title'] = TikiLib::lib('parser')->parse_data($info['title'], array('noparseplugins' => true, 'is_html' => true));
+			$parserlib = TikiLib::lib('parser');
+			$info['data'] = $parserlib->parse_data($info['data'], [
+				'is_html' => true,
+				'suppress_icons' => true,
+				'typography' => false,	// typography feature breaks quotes and causes smarty compiler errors, so disable it for custom modules
+			]);
+            $info['title'] = $parserlib->parse_data($info['title'], [
+            	'noparseplugins' => true,
+				'is_html' => true,
+			]);
         }
 
         return $info;
