@@ -174,7 +174,7 @@ class Services_Edit_PluginController
 				}
 			}
 
-			$extraParams = array_diff_key($pluginArgs, $info['params']);
+			$extraParams = array_filter(array_diff_key($pluginArgs, $info['params']));
 
 			foreach ($extraParams as $extraParam => $val) {
 				$info['params'][$extraParam] = [
