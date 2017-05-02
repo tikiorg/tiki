@@ -357,9 +357,9 @@ $("#'.$id.'_showSelected").click( function () {
 					$html .= '<tr data-tt-id="subHeader_'.$rowCounter.'" data-tt-parent-id="'.$tt_parent_id.'" class="subHeader' . $childRowClass . '">';
 					if (!empty($_checkbox)) {
 						for ($i = 0, $icount_checkbox = count($_checkbox); $i < $icount_checkbox; $i++) {
-							$html .= '<td class="checkBoxHeader">';
+							$html .= '<td class="checkBoxHeader"><span class="checkBoxLabel">';
 							$html .= empty($_checkboxTitles) ? '' : htmlspecialchars(tra($_checkboxTitles[$i]));
-							$html .= '</td>';
+							$html .= '</span></td>';
 						}
 					}
 					foreach ($_columns as $column => $columnName) {

@@ -105,15 +105,13 @@
 			</div>
 			<h3>{tr}Permissions{/tr}</h3>
 
-			<div class="table-responsive">
-				<div class="permission_table">
+				<div class="permission_table table-responsive">
 					{treetable _data=$perms _checkbox=$permGroups _checkboxTitles=$groupNames
 						_checkboxTooltips=['_checkboxTitles', 'permDesc', 'permName'] _checkboxTooltipFormat='%0: %1 [%2]'
 						_checkboxColumnIndex=$permGroupCols _valueColumnIndex="permName"
 						_columns="\"label\"=\"{tr}Permission{/tr}\"" _groupColumn='type' _openall='y'
 						_showSelected='y' _columnsContainHtml='y' class='table table-striped objectperms'}
 				</div>
-			</div>
 
 			{if ($perms|@count) eq '0'}{remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}You must select at least one feature{/tr}.{/remarksbox}{/if}
 

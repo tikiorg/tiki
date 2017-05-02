@@ -180,3 +180,37 @@ input[type="checkbox"].preffilter-toggle-round:checked + label:after {
 	padding-left: 5px;
 	padding-right: 5px;
 }
+
+table.treetable.objectperms .checkBoxHeader,
+table.objectperms > tbody > tr.subHeader {
+	height: 140px;
+	white-space: nowrap !important;
+}
+table.treetable.objectperms .checkBoxHeader {
+	position: relative;
+	vertical-align: bottom;
+	width: 30px;
+}
+
+tr.subHeader.leaf.collapsed > td:last-of-type,
+tr.odd.leaf.collapsed > td:last-of-type,
+tr.even.leaf.collapsed > td:last-of-type { text-indent: 15px; }
+
+table.treetable .checkBoxHeader > td,
+.table > tbody > tr.subHeader > td { vertical-align: bottom; }
+
+table.treetable .checkBoxHeader > div,
+table.objectperms > tbody .checkBoxLabel {
+	-webkit-transform: /*translate(0px, -10px)*/ rotate(305deg);
+	transform: /*translate(-20px, -70px)*/ rotate(305deg);
+	width: 140px;
+	display: block;
+	position: absolute;
+	left: -15px;
+	bottom: 60px;
+}
+
+table.treetable.objectperms span.indenter,
+.subHeader .checkBoxHeader .indenter { padding-left: 0 !important; }
+
+table.objectperms > tbody .checkBoxCell { width: 30px !important; }
