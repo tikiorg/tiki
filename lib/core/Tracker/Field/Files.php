@@ -65,6 +65,26 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 						'filter' => 'text',
 						'legacy_index' => 5,
 					),
+					'displayOrder' => array(
+						'name' => tr('Display Order'),
+						'description' => tr('Sort order for the files'),
+						'filter' => 'word',
+						'options' => array(
+							'' => tr('Default (order added to tracker item)'),
+							'name_asc' => tr('Name (A - Z)'),
+							'name_desc' => tr('Name (Z - A)'),
+							'filename_asc' => tr('Filename (A - Z)'),
+							'filename_desc' => tr('Filename (Z - A)'),
+							'created_asc' => tr('Created date (old - new)'),
+							'created_desc' => tr('Created date (new - old)'),
+							'lastModif_asc' => tr('Last modified date (old - new)'),
+							'lastModif_desc' => tr('Last modified date (new - old)'),
+							'filesize_asc' => tr('File size (small - large)'),
+							'filesize_desc' => tr('File size (large - small)'),
+							'hits_asc' => tr('Hits (low - high)'),
+							'hits_desc' => tr('Hits (high - low)'),
+						),
+					),
 					'deepGallerySearch' => array(
 						'name' => tr('Include Child Galleries'),
 						'description' => tr('Use files from child galleries as well.'),
@@ -506,6 +526,8 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 		$db = TikiDb::get();
 		$table = $db->table('tiki_files');
 
+		$sortOrder = $this->getOption('displayOrder');
+
 		$data = $table->fetchAll(
 			array(
 				'fileId',
@@ -515,12 +537,23 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			),
 			array(
 				'fileId' => $table->in($ids),
-			)
+			),
+			-1,
+			-1,
+			$table->sortMode($sortOrder)
 		);
 
 		$out = array();
 		foreach ($data as $info) {
 			$out[$info['fileId']] = $info;
+		}
+
+		if (! $sortOrder) {	// re-order result into order they were attached
+			$out2 = [];
+			foreach ($ids as $id) {
+				$out2["$id"] = $out[$id];
+			}
+			$out = $out2;
 		}
 
 		return $out;
