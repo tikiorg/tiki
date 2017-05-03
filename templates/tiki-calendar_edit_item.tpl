@@ -427,7 +427,7 @@ $("#id_recurrent").click(function () {
 				{else}
 					<div class="col-md-9">
 						{if $calitem.allday}
-							<abbr class="dtstart" title="{$calitem.start|tiki_short_date}">
+							<abbr class="dtstart" title="{$calitem.start|tiki_short_date:'n'}">
 								{$calitem.start|tiki_long_date}
 							</abbr>
 						{else}
@@ -464,7 +464,7 @@ $("#id_recurrent").click(function () {
 					<div class="col-md-9">
 						{if $calitem.allday}
 							{if $calitem.end}
-								<abbr class="dtend" title="{$calitem.end|tiki_short_date}">
+								<abbr class="dtend" title="{$calitem.end|tiki_short_date:'n'}">
 							{/if}
 							{$calitem.end|tiki_long_date}
 							{if $calitem.end}

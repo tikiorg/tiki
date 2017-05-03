@@ -11,6 +11,15 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ * @param string $string
+ * @param string $intro
+ * @param string $same if set to 'n' will bypass timeago preferences. Useful when markup is illegal in date
+ *
+ * @return string
+ */
+
+
 function smarty_modifier_tiki_short_datetime($string, $intro='', $same='y')
 {
 	global $prefs;
