@@ -107,6 +107,18 @@ function wikiplugin_addtocart_info()
 				'filter' => 'text',
 				'default' => 'n',
 			),
+			'hidequantity' => array(
+				'required' => false,
+				'name' => tra('Hide Quantity'),
+				'description' => tra('Hide the quantity field so you can create buy now button for a single item, quantity = 1 (not available with the exchange feature)'),
+				'since' => '17.0',
+				'filter' => 'alpha',
+				'options' => array(
+					array('text' => tra('No'), 'value' => 'n'),
+					array('text' => tra('Yes'), 'value' => 'y')
+				),
+				'default' => 'n',
+			),
 			'onbehalf' => array(
 				'required' => false,
 				'name' => tra('Buy on behalf of'),
