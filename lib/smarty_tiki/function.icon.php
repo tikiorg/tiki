@@ -136,6 +136,8 @@ function smarty_function_icon($params, $smarty)
 					
 			if (isset($params['onclick'])) { //add onclick if set
 				$a_onclick = 'onclick="' . $params['onclick'] . '"';
+			} else if ( isset($params['_confirm']) ) {
+				$a_onclick = 'onclick="return confirm(\'' . $params['_confirm'] . '\');"';
 			} else {
 				$a_onclick = '';
 			}
