@@ -76,7 +76,6 @@ var account='';
 			<div class="form-group">
 				<label class="control-label col-md-4">{tr}Booking Date{/tr}</label>
 				<div class="col-md-8">
-					{*<input type="text" class=" form-control" name="bookStartDate" id="bookStartDate" value="{$bookStartDate}">*}
 					{html_select_date prefix="journal_" time=$journalDate start_year="-10" end_year="+10" field_order=$prefs.display_field_order}
 				</div>
 			</div>
@@ -89,7 +88,7 @@ var account='';
 			<div class="form-group">
 				<label class="control-label col-md-4">{tr}Amount{/tr}</label>
 				<div class="col-md-8">
-				<input class="form-control" name="totalAmount" id="totalAmount" value="{$totalAmount}" onchange="javascript:setAmount()">
+				<input class="form-control" type="number" name="totalAmount" id="totalAmount" value="{$totalAmount}" onchange="javascript:setAmount()">
 				</div>
 			</div>
 		</fieldset>

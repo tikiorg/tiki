@@ -2431,6 +2431,9 @@ ul.tree {
 .plugin-sample .plugin-param {
   padding-left: 15px;
 }
+td.journalDeleted {
+  color: #ddd;
+}
 .viewmode {
   line-height: 1em;
   padding: 1px;

@@ -55,13 +55,22 @@ $smarty->assign('book', $book);
 $accounts = $accountinglib->getAccounts($bookId, $all = true);
 $smarty->assign('accounts', $accounts);
 
+if ($_REQUEST['stack_Year']) {
+	$stackDate = new DateTime();
+	$stackDate->setDate(
+		$_REQUEST['stack_Year'],
+		$_REQUEST['stack_Month'],
+		$_REQUEST['stack_Day']
+	);
+}
+
 if (isset($_REQUEST['action']) && $access->ticketMatch()) {
 	if ($_REQUEST['action'] == 'book') {
 		if ($stackId == 0) {
 			// new entry
 			$result = $accountinglib->stackBook(
 				$bookId,
-				$_REQUEST['stackDate'],
+				$stackDate,
 				$_REQUEST['stackDescription'],
 				$_REQUEST['debitAccount'],
 				$_REQUEST['creditAccount'],
@@ -75,7 +84,7 @@ if (isset($_REQUEST['action']) && $access->ticketMatch()) {
 			$result = $accountinglib->stackUpdate(
 				$bookId,
 				$stackId,
-				$_REQUEST['stackDate'],
+				$stackDate,
 				$_REQUEST['stackDescription'],
 				$_REQUEST['debitAccount'],
 				$_REQUEST['creditAccount'],
@@ -108,7 +117,7 @@ if (isset($_REQUEST['action']) && $access->ticketMatch()) {
 if (is_array($result)) {
 	$smarty->assign('errors', $result);
 	$smarty->assign('stackId', $stackId);
-	$smarty->assign('stackDate', $_REQUEST['stackDate']);
+	$smarty->assign('stackDate', $stackDate);
 	$smarty->assign('stackDescription', $_REQUEST['stackDescription']);
 	$smarty->assign('debitAccount', $_REQUEST['debitAccount']);
 	$smarty->assign('creditAccount', $_REQUEST['creditAccount']);

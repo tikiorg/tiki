@@ -12,22 +12,17 @@
 	</div>
 {/if}
 <div id="original">
-	<p>{tr}The following transaction has been cancelled.{/tr}</p>
-	<div>
-		<span class="aclabel">{tr}id{/tr}</span>
-		{$entry.journalId}
+	<div class="alert alert-success">
+		<p>{tr}The following transaction has been cancelled.{/tr}</p>
 	</div>
-	<div>
-		<span class="aclabel">{tr}booking date{/tr}</span>
-		{$entry.journalDate|date_format:"%Y-%m-%d"}
-	</div>
-	<div>
-		<span class="aclabel">{tr}Description{/tr}</span>
-		{$entry.journalDescription}
-	</div>
+	<dl class="dl-horizontal">
+		<dt>{tr}ID{/tr}</dt><dd>{$entry.journalId}</dd>
+		<dt>{tr}Booking Date{/tr}</dt><dd>{$entry.journalDate|date_format:"%Y-%m-%d"}</dd>
+		<dt>{tr}Description{/tr}</dt><dd>{$entry.journalDescription}</dd>
+	</dl>
 	<div id="debit">
-		<table id="tbl_debit">
-			<tr><th colspan="3">{tr}Debit{/tr}</th></tr>
+		<h4>{tr}Debit{/tr}</h4>
+		<table id="tbl_debit" class="table">
 			<tr><th>{tr}Text{/tr}</th><th>{tr}Account{/tr}</th><th>{tr}Amount{/tr}</th></tr>
 			{foreach from=$entry.debit item=d}{cycle values="odd,even" assign="style"}
 				<tr class="{$style}">
@@ -43,8 +38,8 @@
 		</table>
 	</div>
 	<div id="credit">
-		<table id="tbl_credit">
-			<tr><th colspan="3">{tr}Credit{/tr}</th></tr>
+		<h4>{tr}Credit{/tr}</h4>
+		<table id="tbl_credit" class="table">
 			<tr><th>{tr}Text{/tr}</th><th>{tr}Account{/tr}</th><th>{tr}Amount{/tr}</th></tr>
 			{foreach from=$entry.credit item=c}{cycle values="odd,even" assign="style"}
 				<tr>
