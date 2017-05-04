@@ -189,6 +189,16 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 				->setRenderCallback(function ($id) {
 					$lib = TikiLib::lib('object');
 					return $lib->get_title('tracker', $id);
+				}),
+			Search_Query_Facet_Term::fromField('tracker_status')
+				->setLabel(tr('Tracker Status'))
+				->setRenderCallback(function ($status) {
+					$statuses = [
+						'o' => 'Open',
+						'p' => 'Pending',
+						'c' => 'Closed'
+					];
+					return $statuses[$status];
 				})
 		]);
 
