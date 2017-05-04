@@ -31,7 +31,11 @@
 			{/if}
 		</table>
 	{else}
-		{tr}Qty:{/tr} <input type="text" name="quantity" value="1" size="2">
+		{if $params.hidequantity eq 'y'}
+			<input type="hidden" name="quantity" value="1">
+		{else}
+			{tr}Qty:{/tr} <input type="text" name="quantity" value="1" size="2">
+		{/if}
 	{/if}
 	<input type="submit" class="btn btn-primary" value="{tr}{$params.label|escape}{/tr}">
 	{if $params.exchangeorderitemid}
