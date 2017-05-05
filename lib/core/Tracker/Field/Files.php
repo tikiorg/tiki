@@ -322,7 +322,12 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 		if (!isset($context['list_mode'])) {
 			$context['list_mode'] = 'n';
 		}
-		$value = $this->getValue();
+		if (! $this->getOption('displayOrder')) {
+			$value = $this->getValue();
+		} else {
+			$value = $this->getConfiguration('files');
+			$value = implode(',', array_keys($value));
+		}
 
 		if ($context['list_mode'] === 'csv') {
 			return $value;
