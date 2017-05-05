@@ -333,6 +333,7 @@ class Services_Edit_PluginController
 	 */
 	function action_list_edit($input)
 	{
+		global $prefs;
 
 		$body = $input->body->wikicontent();
 		$current = [];
@@ -343,6 +344,23 @@ class Services_Edit_PluginController
 
 
 		$fields = TikiLib::lib('unifiedsearch')->getAvailableFields();
+
+		$trackers = [];
+		if ($prefs['feature_trackers'] === 'y') {
+			$trklib = TikiLib::lib('trk');
+
+			$trackersData = $trklib->list_trackers();
+
+			foreach ($trackersData['data'] as $trackerInfo) {
+				$trackerId = $trackerInfo['trackerId'];
+				$trackers[$trackerId] = [];
+				$definition = Tracker_Definition::get($trackerId);
+
+				foreach ($definition->getFields() as $fieldObject) {
+					$trackers[$trackerId][] = 'tracker_field_' . $fieldObject['permName'];
+				}
+			}
+		}
 
 		// generic fields missing from the content sources?
 		$fields['global'] = array_merge([
@@ -363,6 +381,7 @@ class Services_Edit_PluginController
 			'plugins' => $plugins,
 			'fields' => $fields,
 			'current' => $current,
+			'trackers' => $trackers,
 		];
 	}
 
