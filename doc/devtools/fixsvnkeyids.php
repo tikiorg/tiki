@@ -45,7 +45,7 @@ foreach (glob_recursive('*{.php,.tpl,.sh,.sql,.js,.less,.css,.yml,htaccess}', GL
 		$count = 1;
 		do {
 			$buffer = fgets($handle);
-			if (preg_match('/(\/\/ |{\* |\# | \* )\$Id.*\$/', $buffer)) { // match several different comment styles
+			if (preg_match('/(\/\/ |{\* |\# |\* )\$Id.*\$/', $buffer)) { // match several different comment styles
 				$keys = '';
 				if (!empty($Ids[$fileName]))    // if there is preexisting keys, then set them.
 					$keys = $Ids[$fileName]."\n";
@@ -55,7 +55,7 @@ foreach (glob_recursive('*{.php,.tpl,.sh,.sql,.js,.less,.css,.yml,htaccess}', GL
 				break;
 			}
 			$count++;
-		} while ($count < 11 && $buffer); // search through up to 11 lines of code (no results increasing that)
+		} while ($count < 13 && $buffer); // search through up to 13 lines of code (no results increasing that)
 		fclose($handle);
 	}
 }
