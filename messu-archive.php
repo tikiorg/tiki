@@ -44,13 +44,13 @@ $priority = '';
 
 if ($access->ticketMatch()) {
 	// Delete messages if the delete button was pressed
-	if (isset($_REQUEST["delete"]) && isset($_REQUEST["msg"])) {
+	if (isset($_POST["delete"]) && isset($_REQUEST["msg"])) {
 		foreach (array_keys($_REQUEST["msg"]) as $msg) {
 			$messulib->delete_message($user, $msg, 'archive');
 		}
 	}
 	// Download messages if the download button was pressed
-	if (isset($_REQUEST["download"])) {
+	if (isset($_POST["download"])) {
 		// if message ids are handed over, use them:
 		if (isset($_REQUEST["msg"])) {
 			foreach (array_keys($_REQUEST["msg"]) as $msg) {
@@ -67,13 +67,21 @@ if ($access->ticketMatch()) {
 	}
 }
 
-if (isset($_REQUEST['filter'])) {
+if (isset($_GET['filter'])) {
 	if ($_REQUEST['flags'] != '') {
 		$parts = explode('_', $_REQUEST['flags']);
 		$flag = $parts[0];
 		$flagval = $parts[1];
 	}
+} else {
+	if (isset($_REQUEST["flag"])) {
+		$flag = $_REQUEST["flag"];
+	}
+	if (isset($_REQUEST["flagval"])) {
+		$flagval = $_REQUEST["flagval"];
+	}
 }
+
 if (isset($_REQUEST["sort_mode"])) {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
