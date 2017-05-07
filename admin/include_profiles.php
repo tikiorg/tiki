@@ -149,12 +149,15 @@ if ($access->ticketMatch()) {
 		if (isset($_GET['getinfo'], $_GET['pd'], $_GET['pp'])) {
 			$installer = new Tiki_Profile_Installer;
 			$profile = Tiki_Profile::fromNames($_GET['pd'], $_GET['pp']);
+			$profileData = $profile->getData();
 			$error = '';
 
 			// Check if profile is available.
 			// This will not be the case for a misconfigured profile server
 			if ($profile === false) {
 				$error = "Profile is not available: ".$_GET['pd'].", ". $_GET['pp'];
+			} else if (isset( $profileData['error'])) {
+				$error = $profileData['error'];
 			}
 
 			try {
@@ -178,7 +181,7 @@ if ($access->ticketMatch()) {
 			$url = '';
 			$feedback = '';
 
-			if ($profile !== false) {
+			if ($profile !== false && empty($error)) {
 				foreach ($deps as $d) {
 					$dependencies[] = $d->pageUrl;
 					$userInput = array_merge($userInput, $d->getRequiredInput());
