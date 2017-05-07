@@ -5,5 +5,5 @@
  * It is only done if the url does not start with a protocol (e.g. http://, https://, ...) because web browsers generate a security alert
  * when trying to do this with an iframe content that is not on the website (same domain name) of the page that includes the iframe.
  *}
-{if ! ereg('^[a-z]+:\/\/', $url)} onload="this.height = this.contentWindow.document.body.scrollHeight"{/if}>
+{if ! preg_match('^[a-z]+:\/\/', $url)} onload="this.height = this.contentWindow.document.body.scrollHeight"{/if}>
 </iframe>
