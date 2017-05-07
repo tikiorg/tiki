@@ -239,7 +239,7 @@
                 "prebind",
                 "xmpp"
             ],
-            "time": "2015-02-26 17:32:01"
+            "time": "2015-02-26T17:32:01+00:00"
         },
         {
             "name": "chartjs/Chart.js",
@@ -901,16 +901,16 @@
         },
         {
             "name": "jcbrand/converse.js",
-            "version": "v3.0.1",
+            "version": "v3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jcbrand/converse.js.git",
-                "reference": "21bc95a9f37948c18533722323f053ffa7d4225a"
+                "reference": "e338afadc2b4f64e377ddff361cad01a7af5b32b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jcbrand/converse.js/zipball/21bc95a9f37948c18533722323f053ffa7d4225a",
-                "reference": "21bc95a9f37948c18533722323f053ffa7d4225a",
+                "url": "https://api.github.com/repos/jcbrand/converse.js/zipball/e338afadc2b4f64e377ddff361cad01a7af5b32b",
+                "reference": "e338afadc2b4f64e377ddff361cad01a7af5b32b",
                 "shasum": ""
             },
             "type": "library",
@@ -926,7 +926,7 @@
                 "presence",
                 "xmpp"
             ],
-            "time": "2017-04-04T15:26:06+00:00"
+            "time": "2017-04-23T17:25:19+00:00"
         },
         {
             "name": "jquery/jquery-s5",
@@ -1795,20 +1795,39 @@
         },
         {
             "name": "plotly/plotly.js",
-            "version": "v1.23.1",
+            "version": "v1.23.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/plotly/plotly.js.git",
-                "reference": "233e0436fc99bfad5ed461832c336e83014b52d9"
+                "reference": "2ec71e26d64e390bde4eefd38bed643b2dc57511"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/plotly/plotly-js/plotly-plotly-js-233e0436fc99bfad5ed461832c336e83014b52d9-zip-0d9fe7.zip",
-                "reference": "233e0436fc99bfad5ed461832c336e83014b52d9",
-                "shasum": "b77ee07f0456f33c08b5f0307ebcb747a964960a"
+                "url": "https://composer.tiki.org/dist/plotly/plotly-js/plotly-plotly-js-2ec71e26d64e390bde4eefd38bed643b2dc57511-zip-f9ea67.zip",
+                "reference": "2ec71e26d64e390bde4eefd38bed643b2dc57511",
+                "shasum": "8252eb7ef61f3bd8e0489fe1fb6fb2848b3e5ed3"
             },
             "type": "library",
-            "notification-url": "https://packagist.org/downloads/"
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Plotly, Inc.",
+                    "email": "sales@plot.ly"
+                }
+            ],
+            "description": "The open source javascript graphing library that powers plotly",
+            "homepage": "https://plot.ly/javascript/",
+            "keywords": [
+                "data",
+                "graphing",
+                "plotly",
+                "plotting",
+                "visualization"
+            ],
+            "time": "2017-02-15T18:51:21+00:00"
         },
         {
             "name": "psr/container",
@@ -2081,17 +2100,17 @@
         },
         {
             "name": "symfony/config",
-            "version": "v3.2.7",
+            "version": "v3.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "8444bde28e3c2a33e571e6f180c2d78bfdc4480d"
+                "reference": "e5533fcc0b3dd377626153b2852707878f363728"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/symfony/config/symfony-config-8444bde28e3c2a33e571e6f180c2d78bfdc4480d-zip-d54a3d.zip",
-                "reference": "8444bde28e3c2a33e571e6f180c2d78bfdc4480d",
-                "shasum": "8096224769e6feca264543e025201a1718f863bb"
+                "url": "https://composer.tiki.org/dist/symfony/config/symfony-config-e5533fcc0b3dd377626153b2852707878f363728-zip-b9487f.zip",
+                "reference": "e5533fcc0b3dd377626153b2852707878f363728",
+                "shasum": "e5f600d74c1000dd021e2d698759fdb6ce4c6489"
             },
             "require": {
                 "php": ">=5.5.9",
@@ -2133,21 +2152,21 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2017-04-04T15:30:56+00:00"
+            "time": "2017-04-12T14:13:17+00:00"
         },
         {
             "name": "symfony/console",
-            "version": "v3.2.7",
+            "version": "v3.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "c30243cc51f726812be3551316b109a2f5deaf8d"
+                "reference": "a7a17e0c6c3c4d70a211f80782e4b90ddadeaa38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/symfony/console/symfony-console-c30243cc51f726812be3551316b109a2f5deaf8d-zip-6c3d7a.zip",
-                "reference": "c30243cc51f726812be3551316b109a2f5deaf8d",
-                "shasum": "f55ef27353af183cac91797e496babf38315595e"
+                "url": "https://composer.tiki.org/dist/symfony/console/symfony-console-a7a17e0c6c3c4d70a211f80782e4b90ddadeaa38-zip-fc7339.zip",
+                "reference": "a7a17e0c6c3c4d70a211f80782e4b90ddadeaa38",
+                "shasum": "07f53fca5ed028ff49d509c1879cc5f733011387"
             },
             "require": {
                 "php": ">=5.5.9",
@@ -2196,20 +2215,20 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-04-04T14:33:42+00:00"
+            "time": "2017-04-26T01:39:17+00:00"
         },
         {
             "name": "symfony/css-selector",
-            "version": "v3.2.7",
+            "version": "v3.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
-                "reference": "a48f13dc83c168f1253a5d2a5a4fb46c36244c4c"
+                "reference": "02983c144038e697c959e6b06ef6666de759ccbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/a48f13dc83c168f1253a5d2a5a4fb46c36244c4c",
-                "reference": "a48f13dc83c168f1253a5d2a5a4fb46c36244c4c",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/02983c144038e697c959e6b06ef6666de759ccbc",
+                "reference": "02983c144038e697c959e6b06ef6666de759ccbc",
                 "shasum": ""
             },
             "require": {
@@ -2249,20 +2268,20 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
-            "time": "2017-02-21T09:12:04+00:00"
+            "time": "2017-05-01T14:55:58+00:00"
         },
         {
             "name": "symfony/debug",
-            "version": "v3.2.7",
+            "version": "v3.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "56f613406446a4a0a031475cfd0a01751de22659"
+                "reference": "fd6eeee656a5a7b384d56f1072243fe1c0e81686"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/56f613406446a4a0a031475cfd0a01751de22659",
-                "reference": "56f613406446a4a0a031475cfd0a01751de22659",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/fd6eeee656a5a7b384d56f1072243fe1c0e81686",
+                "reference": "fd6eeee656a5a7b384d56f1072243fe1c0e81686",
                 "shasum": ""
             },
             "require": {
@@ -2306,21 +2325,21 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2017-03-28T21:38:24+00:00"
+            "time": "2017-04-19T20:17:50+00:00"
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v3.2.7",
+            "version": "v3.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "923bb014708b666e4092c9ba39993895c9c8fcd7"
+                "reference": "5e00857475b6d1fa31ff4c76f1fddf1cfa9e8d59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/symfony/dependency-injection/symfony-dependency-injection-923bb014708b666e4092c9ba39993895c9c8fcd7-zip-108870.zip",
-                "reference": "923bb014708b666e4092c9ba39993895c9c8fcd7",
-                "shasum": "932ef047cc729435a22fb68b0e86712fe01aa9a7"
+                "url": "https://composer.tiki.org/dist/symfony/dependency-injection/symfony-dependency-injection-5e00857475b6d1fa31ff4c76f1fddf1cfa9e8d59-zip-88cbfe.zip",
+                "reference": "5e00857475b6d1fa31ff4c76f1fddf1cfa9e8d59",
+                "shasum": "052ff196450e192f3dcc05760a6c7f1e44878c22"
             },
             "require": {
                 "php": ">=5.5.9"
@@ -2369,21 +2388,21 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2017-04-04T07:26:27+00:00"
+            "time": "2017-04-26T01:39:17+00:00"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v3.2.7",
+            "version": "v3.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "64421e6479c4a8e60d790fb666bd520992861b66"
+                "reference": "040651db13cf061827a460cc10f6e36a445c45b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/symfony/filesystem/symfony-filesystem-64421e6479c4a8e60d790fb666bd520992861b66-zip-e21bab.zip",
-                "reference": "64421e6479c4a8e60d790fb666bd520992861b66",
-                "shasum": "c55de9b178b341cd06dce8658981d0ba50f674d6"
+                "url": "https://composer.tiki.org/dist/symfony/filesystem/symfony-filesystem-040651db13cf061827a460cc10f6e36a445c45b4-zip-054dc3.zip",
+                "reference": "040651db13cf061827a460cc10f6e36a445c45b4",
+                "shasum": "6788e855ccc09d091f997f17a22f5767129e09da"
             },
             "require": {
                 "php": ">=5.5.9"
@@ -2418,7 +2437,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2017-03-26T15:47:15+00:00"
+            "time": "2017-04-12T14:13:17+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2481,16 +2500,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v3.2.7",
+            "version": "v3.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "57fdaa55827ae14d617550ebe71a820f0a5e2282"
+                "reference": "999c2cf5061e627e6cd551dc9ebf90dd1d11d9f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/57fdaa55827ae14d617550ebe71a820f0a5e2282",
-                "reference": "57fdaa55827ae14d617550ebe71a820f0a5e2282",
+                "url": "https://api.github.com/repos/symfony/process/zipball/999c2cf5061e627e6cd551dc9ebf90dd1d11d9f0",
+                "reference": "999c2cf5061e627e6cd551dc9ebf90dd1d11d9f0",
                 "shasum": ""
             },
             "require": {
@@ -2526,21 +2545,21 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2017-03-27T18:07:02+00:00"
+            "time": "2017-04-12T14:13:17+00:00"
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.2.7",
+            "version": "v3.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "62b4cdb99d52cb1ff253c465eb1532a80cebb621"
+                "reference": "acec26fcf7f3031e094e910b94b002fa53d4e4d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/symfony/yaml/symfony-yaml-62b4cdb99d52cb1ff253c465eb1532a80cebb621-zip-e39af1.zip",
-                "reference": "62b4cdb99d52cb1ff253c465eb1532a80cebb621",
-                "shasum": "40ae3704cc567bd9821f3bbf0a8d3a5a26938543"
+                "url": "https://composer.tiki.org/dist/symfony/yaml/symfony-yaml-acec26fcf7f3031e094e910b94b002fa53d4e4d6-zip-06b6ad.zip",
+                "reference": "acec26fcf7f3031e094e910b94b002fa53d4e4d6",
+                "shasum": "d7a86725388726eb4708f36f8c945ecb896cc0ce"
             },
             "require": {
                 "php": ">=5.5.9"
@@ -2581,7 +2600,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-03-20T09:45:15+00:00"
+            "time": "2017-05-01T14:55:58+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -4604,7 +4623,7 @@
                 "testing",
                 "unit"
             ],
-            "time": "2016-03-14 11:52:02"
+            "time": "2016-03-14T11:52:02+00:00"
         },
         {
             "name": "doctrine/instantiator",
