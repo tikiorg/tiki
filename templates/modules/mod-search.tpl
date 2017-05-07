@@ -78,6 +78,7 @@
 								/>
 							{/if}
 							{if $smod_params.show_go_button eq 'y'}
+								<input type="hidden" name="exact_match" value="" />
 								<input type = "submit" class="btn btn-default btn-sm tips{if $smod_params.compact eq "y"} bottom{else} btn-xs{/if}{if $smod_params.default_button eq 'go'} btn-primary button_default{/if}"
 									name = "go" value = "{$smod_params.go_submit|escape}"
 									title="{tr}Go{/tr}|{tr}Go directly to a page, or search in page titles if exact match is not found.{/tr}"
@@ -88,7 +89,6 @@
 										{/if}
 									"
 								>
-								<input type="hidden" name="exact_match" value="" />
 							{/if}
 							{if $smod_params.show_edit_button eq 'y' and $tiki_p_edit eq 'y'}
 								<input type = "submit" class = "btn btn-default btn-sm tips{if $smod_params.compact eq "y"} bottom{else} btn-xs{/if}{if $smod_params.default_button eq 'edit'} btn-primary button_default{/if}"
