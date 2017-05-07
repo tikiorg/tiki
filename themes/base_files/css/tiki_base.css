@@ -1329,10 +1329,15 @@ li.archivedate {
 .tiki .box-search .panel-body * {
   margin-bottom: .3em;
 }
-#col2 .box-search .input-group-btn:last-child > .btn,
-#col3 .box-search .input-group-btn:last-child > .btn {
+#col2 .box-search .input-group-btn:last-child > .btn[name="search"],
+#col3 .box-search .input-group-btn:last-child > .btn[name="search"] {
   border-bottom-left-radius: 4px;
   border-top-left-radius: 4px;
+}
+#col2 .box-search .input-group .form-control:first-child[name="find"],
+#col3 .box-search .input-group .form-control:first-child[name="find"] {
+  border-bottom-right-radius: 4px;
+  border-top-right-radius: 4px;
 }
 .box-forums_most_read_topics .hits {
   font-style: italic;
@@ -3727,7 +3732,7 @@ table.tablesorter thead tr.tablesorter-filter-row td .value-popup:after {
   min-width: 14px;
   height: 12px;
   background-color: #444444;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#444444 444), to(#999999 999));
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#444444), to(#999999));
   background-image: -webkit-linear-gradient(top, #444444, #999999);
   background-image: -o-linear-gradient(top, #444444, #999999);
   background-image: linear-gradient(to bottom, #444444, #999999);

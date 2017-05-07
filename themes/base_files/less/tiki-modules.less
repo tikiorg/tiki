@@ -118,10 +118,16 @@ li.archivedate {
 }
 
 // Add border radius to search button when the input group wraps in side columns.
-#col2 .box-search .input-group-btn:last-child > .btn,
-#col3 .box-search .input-group-btn:last-child > .btn {
+#col2 .box-search .input-group-btn:last-child > .btn[name="search"],
+#col3 .box-search .input-group-btn:last-child > .btn[name="search"] {
 	border-bottom-left-radius: @btn-border-radius-base;
 	border-top-left-radius: @btn-border-radius-base;
+}
+
+#col2 .box-search .input-group .form-control:first-child[name="find"],
+#col3 .box-search .input-group .form-control:first-child[name="find"] {
+	border-bottom-right-radius: @btn-border-radius-base;
+	border-top-right-radius: @btn-border-radius-base;
 }
 
 .box-forums_most_read_topics .hits {
