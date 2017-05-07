@@ -9,6 +9,23 @@
 // $Id$
 
 $section = 'user_messages';
+$inputConfiguration =	[[
+	'staticKeyFilters' => [
+		'delete'	=> 'alpha',
+		'download'	=> 'alpha',
+		'filter'	=> 'alpha',
+		'find'		=> 'text',
+		'flags'		=> 'alnumdash',
+		'offset'	=> 'digits',
+		'priority'	=> 'digits',
+		'sort_mode'	=> 'alnumdash'
+	],
+	'staticKeyFiltersForArrays' => [
+		'msg'		=> 'digits',
+	],
+	'catchAllUnset' => null,
+]];
+
 require_once ('tiki-setup.php');
 $messulib = TikiLib::lib('message');
 $access->check_user($user);
