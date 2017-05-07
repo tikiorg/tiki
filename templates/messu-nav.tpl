@@ -11,7 +11,7 @@
 	{button class="btn btn-default" href="messu-sent.php" _class="btn btn-default" _text="{tr}Sent{/tr}"}
 	{button class="btn btn-default" href="messu-archive.php" _class="btn btn-default" _text="{tr}Archive{/tr}"}
 
-	{if $mess_archiveAfter>0}
+	{if isset($mess_archiveAfter) && $mess_archiveAfter>0}
 		({tr}Auto-archive age for read messages:{/tr} {$mess_archiveAfter} {tr}days{/tr})
 	{/if}
 </div>
