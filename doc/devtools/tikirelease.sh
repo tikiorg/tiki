@@ -54,10 +54,10 @@ cd $VER
 echo "Exporting $SVNROOT/$RELTAG $MODULE-$VER"
 svn export $SVNROOT/$RELTAG $MODULE-$VER
 
-if [ -f $MODULE-$VER/composer.json ]; then
+if [ -f $MODULE-$VER/vendor_bundled/composer.json ]; then
 	wget -N http://getcomposer.org/composer.phar
 	cd $MODULE-$VER
-	php ../composer.phar install --prefer-dist --no-dev 2>&1 | sed '/Warning: Ambiguous class resolution/d'
+	php ../composer.phar install -d vendor_bundled --prefer-dist --no-dev 2>&1 | sed '/Warning: Ambiguous class resolution/d'
 	cd ..
 fi
 

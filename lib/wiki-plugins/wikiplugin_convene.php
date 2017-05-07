@@ -490,6 +490,11 @@ FORM;
 							'<option value="-1">' + tr('Not ok') + '</option>' +
 							'<option value="1">' + tr('Ok') + '</option>' +
 						'</select>')
+							.css({
+								position: "absolute",
+								left: 0,
+								bottom: 0
+							})
 							.val($(this).val())
 							.insertAfter(this)
 							.change(function() {
@@ -507,7 +512,8 @@ FORM;
 									.addClass(cl);
 	
 								convene$i.updateUsers = true;
-							});
+							}).
+							parent().css({position: "relative"});
 					});
 				} else {
 					$('.conveneUpdateUser$i').show();
