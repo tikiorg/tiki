@@ -28,14 +28,14 @@ $access->check_feature('feature_messages');
 $access->checkAuthenticity();
 $auto_query_args = array('subject', 'body', 'priority', 'replyto_hash', 'groupbr');
 
-if (!isset($_REQUEST['subject'])) $_REQUEST['subject'] = '';
-if (!isset($_REQUEST['body'])) $_REQUEST['body'] = '';
-if (!isset($_REQUEST['priority'])) $_REQUEST['priority'] = 3;
-if (!isset($_REQUEST['replyto_hash'])) $_REQUEST['replyto_hash'] = '';
-$smarty->assign('subject', $_REQUEST['subject']);
-$smarty->assign('body', $_REQUEST['body']);
-$smarty->assign('priority', $_REQUEST['priority']);
-$smarty->assign('replyto_hash', $_REQUEST['replyto_hash']);
+if (!isset($_POST['subject'])) $_POST['subject'] = '';
+if (!isset($_POST['body'])) $_POST['body'] = '';
+if (!isset($_POST['priority'])) $_POST['priority'] = 3;
+if (!isset($_POST['replyto_hash'])) $_POST['replyto_hash'] = '';
+$smarty->assign('subject', $_POST['subject']);
+$smarty->assign('body', $_POST['body']);
+$smarty->assign('priority', $_POST['priority']);
+$smarty->assign('replyto_hash', $_POST['replyto_hash']);
 $smarty->assign('mid', 'messu-broadcast.tpl');
 $smarty->assign('sent', 0);
 perm_broadcast_check($access, $userlib);
@@ -53,29 +53,29 @@ else {
 
 $smarty->assign('groups', $groups);
 
-if ((isset($_REQUEST['send']) || isset($_REQUEST['preview'])) && $access->ticketMatch()) {
+if ((isset($_POST['send']) || isset($_POST['preview'])) && $access->ticketMatch()) {
 	$message = '';
 	// Validation:
 	// must have a subject or body non-empty (or both)
-	if (empty($_REQUEST['subject']) && empty($_REQUEST['body'])) {
+	if (empty($_POST['subject']) && empty($_POST['body'])) {
 		$smarty->assign('message', tra('ERROR: Either the subject or body must be non-empty'));
 		$smarty->display("tiki.tpl");
 		die;
 	}
 	// Remove invalid users from the to, cc and bcc fields
-	if (isset($_REQUEST['groupbr'])) {
-		if ($_REQUEST['groupbr'] == 'all' && $tiki_p_broadcast_all == 'y') {
+	if (isset($_POST['groupbr'])) {
+		if ($_POST['groupbr'] == 'all' && $tiki_p_broadcast_all == 'y') {
 			$a_all_users = $userlib->get_users(0, -1, 'login_desc', '');
 			$all_users = array();
 			foreach ($a_all_users['data'] as $a_user) {
 				$all_users[] = $a_user['user'];
 			}
-		} elseif (in_array($_REQUEST['groupbr'], $groups)) {
-			$all_users = $userlib->get_group_users($_REQUEST['groupbr']);
+		} elseif (in_array($_POST['groupbr'], $groups)) {
+			$all_users = $userlib->get_group_users($_POST['groupbr']);
 		} else {
 			$access->display_error('', tra("You do not have permission to use this feature").": ". $permission, '403', false);
 		}
-		$smarty->assign('groupbr', $_REQUEST['groupbr']);
+		$smarty->assign('groupbr', $_POST['groupbr']);
 	}
 
 	$users = array();
@@ -100,7 +100,7 @@ if ((isset($_REQUEST['send']) || isset($_REQUEST['preview'])) && $access->ticket
 		$users_formatted = array();
 		foreach ($users as $rawuser)
 			$users_formatted[] = htmlspecialchars($rawuser);
-		if (isset($_REQUEST['send'])) {
+		if (isset($_POST['send'])) {
 			$message .= tra('The message has been sent to:').' ';
 		} else {
 			$message .= tra('The message will be sent to:').' ';
@@ -112,21 +112,21 @@ if ((isset($_REQUEST['send']) || isset($_REQUEST['preview'])) && $access->ticket
 		$smarty->display("tiki.tpl");
 		die;
 	}
-	if (isset($_REQUEST['send'])) {
+	if (isset($_POST['send'])) {
 		$smarty->assign('sent', 1);
 		// Insert the message in the inboxes of each user
 		foreach ($users as $a_user) {
-			$messulib->post_message($a_user, $user, $a_user, '', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
+			$messulib->post_message($a_user, $user, $a_user, '', $_POST['subject'], $_POST['body'], $_POST['priority']);
 			// if this is a reply flag the original messages replied to
-			if ($_REQUEST['replyto_hash'] <> '') {
-				$messulib->mark_replied($a_user, $_REQUEST['replyto_hash']);
+			if ($_POST['replyto_hash'] <> '') {
+				$messulib->mark_replied($a_user, $_POST['replyto_hash']);
 			}
 		}
 		// Insert a copy of the message in the sent box of the sender
-		$messulib->save_sent_message($user, $user, $_REQUEST['groupbr'], null, $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority'], $_REQUEST['replyto_hash']);
+		$messulib->save_sent_message($user, $user, $_POST['groupbr'], null, $_POST['subject'], $_POST['body'], $_POST['priority'], $_POST['replyto_hash']);
 		$smarty->assign('message', $message);
 		if ($prefs['feature_actionlog'] == 'y') {
-			$logslib->add_action('Posted', '', 'message', 'add=' . strlen($_REQUEST['body']));
+			$logslib->add_action('Posted', '', 'message', 'add=' . strlen($_POST['body']));
 		}
 	} else {
 		$smarty->assign('message', $message);
