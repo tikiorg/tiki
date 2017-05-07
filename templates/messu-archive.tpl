@@ -5,7 +5,7 @@
 {if $prefs.messu_archive_size gt '0'}
 
 <div class="progress">
-	<div class="progress-bar" role="progressbar" aria-valuenow="{$cellsize}" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em;">
+	<div class="progress-bar" role="progressbar" aria-valuenow="{$cellsize|escape:"attr"}" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em;">
 		{$percentage}%
 	</div>
 </div>
@@ -38,7 +38,7 @@
 		</div>
 	<div class="form-group">
 	<label for="mess-mailcont">{tr}Containing:{/tr}</label>
-	<input type="text" name="find" id="mess-mailcont" value="{$find|escape}" class="form-control">
+	<input type="text" name="find" id="mess-mailcont" value="{$find|escape:"attr"}" class="form-control">
 		</div>
 	<input type="submit" class="btn btn-default btn-sm" name="filter" value="{tr}Filter{/tr}">
 </form>
@@ -47,12 +47,12 @@
 <form action="messu-archive.php" method="post" name="form_messu_archive">
 	{ticket}
 	<div class="form-group">
-	<input type="hidden" name="offset" value="{$offset|escape}">
-	<input type="hidden" name="find" value="{$find|escape}">
-	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
-	<input type="hidden" name="flag" value="{$flag|escape}">
-	<input type="hidden" name="flagval" value="{$flagval|escape}">
-	<input type="hidden" name="priority" value="{$priority|escape}">
+	<input type="hidden" name="offset" value="{$offset|escape:"attr"}">
+	<input type="hidden" name="find" value="{$find|escape:"attr"}">
+	<input type="hidden" name="sort_mode" value="{$sort_mode|escape:"attr"}">
+	<input type="hidden" name="flag" value="{$flag|escape:"attr"}">
+	<input type="hidden" name="flagval" value="{$flagval|escape:"attr"}">
+	<input type="hidden" name="priority" value="{$priority|escape:"attr"}">
 	<input type="submit" class="btn btn-warning btn-sm timeout" name="delete" value="{tr}Delete{/tr}">
 	<input type="submit" class="btn btn-default btn-sm timeout" name="download" value="{tr}Download{/tr}">
 		</div>
@@ -64,20 +64,20 @@ var CHECKBOX_LIST = [{{section name=user loop=$items}'msg[{$items[user].msgId}]'
 			<tr>
 				<th><input type="checkbox" name="checkall" onclick="checkbox_list_check_all('form_messu_archive',CHECKBOX_LIST,this.checked);"></th>
 				<th style="width:18px">&nbsp;</th>
-				<th><a href="messu-archive.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_from_desc'}user_from_asc{else}user_from_desc{/if}">{tr}Sender{/tr}</a></th>
-				<th><a href="messu-archive.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'subject_desc'}subject_asc{else}subject_desc{/if}">{tr}Subject{/tr}</a></th>
-				<th><a href="messu-archive.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'date_desc'}date_asc{else}date_desc{/if}">{tr}Date{/tr}</a></th>
+				<th><a href="messu-archive.php?flag={$flag|escape:"url"}&amp;priority={$priority|escape:"url"}&amp;flagval={$flagval|escape:"url"}&amp;find={$find|escape:"url"}&amp;offset={$offset|escape:"url"}&amp;sort_mode={if $sort_mode eq 'user_from_desc'}user_from_asc{else}user_from_desc{/if}">{tr}Sender{/tr}</a></th>
+				<th><a href="messu-archive.php?flag={$flag|escape:"url"}&amp;priority={$priority|escape:"url"}&amp;flagval={$flagval|escape:"url"}&amp;find={$find|escape:"url"}&amp;offset={$offset|escape:"url"}&amp;sort_mode={if $sort_mode eq 'subject_desc'}subject_asc{else}subject_desc{/if}">{tr}Subject{/tr}</a></th>
+				<th><a href="messu-archive.php?flag={$flag|escape:"url"}&amp;priority={$priority|escape:"url"}&amp;flagval={$flagval|escape:"url"}&amp;find={$find|escape:"url"}&amp;offset={$offset|escape:"url"}&amp;sort_mode={if $sort_mode eq 'date_desc'}date_asc{else}date_desc{/if}">{tr}Date{/tr}</a></th>
 				<th style="text-align:right">{tr}Size{/tr}</th>
 			</tr>
 
 			{section name=user loop=$items}
 				<tr>
-					<td class="prio{$items[user].priority}"><input type="checkbox" name="msg[{$items[user].msgId}]"></td>
-					<td class="prio{$items[user].priority}">{if $items[user].isFlagged eq 'y'}{icon name='flag' alt="{tr}Flagged{/tr}"}{/if}</td>
-					<td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">{$items[user].user_from|userlink}</td>
-					<td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}"><a class="readlink" href="messu-read_archive.php?offset={$offset}&amp;flag={$flag}&amp;priority={$items[user].priority}&amp;flagval={$flagval}&amp;sort_mode={$sort_mode}&amp;find={$find|escape:"url"}&amp;msgId={$items[user].msgId}">{$items[user].subject|escape}</a></td>
-					<td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">{$items[user].date|tiki_short_datetime}</td><!--date_format:"%d %b %Y [%H:%I]"-->
-					<td style="text-align:right;{if $items[user].isRead eq 'n'}font-weight:bold;{/if}" class="prio{$items[user].priority}">{$items[user].len|kbsize}</td>
+					<td class="prio{$items[user].priority|escape:"attr"}"><input type="checkbox" name="msg[{$items[user].msgId|escape:"attr"}]"></td>
+					<td class="prio{$items[user].priority|escape:"attr"}">{if $items[user].isFlagged eq 'y'}{icon name='flag' alt="{tr}Flagged{/tr}"}{/if}</td>
+					<td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority|escape:"attr"}">{$items[user].user_from|userlink}</td>
+					<td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority|escape:"attr"}"><a class="readlink" href="messu-read_archive.php?offset={$offset|escape:"url"}&amp;flag={$flag|escape:"url"}&amp;priority={$items[user].priority|escape:"url"}&amp;flagval={$flagval|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}&amp;find={$find|escape:"url"}&amp;msgId={$items[user].msgId|escape:"url"}">{$items[user].subject|escape}</a></td>
+					<td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority|escape:"attr"}">{$items[user].date|tiki_short_datetime}</td><!--date_format:"%d %b %Y [%H:%I]"-->
+					<td style="text-align:right;{if $items[user].isRead eq 'n'}font-weight:bold;{/if}" class="prio{$items[user].priority|escape:"attr"}">{$items[user].len|kbsize|escape}</td>
 				</tr>
 			{sectionelse}
 				<tr><td colspan="6">{tr}No messages to display{/tr}<td></tr>
