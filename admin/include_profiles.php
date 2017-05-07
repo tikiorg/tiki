@@ -207,36 +207,36 @@ if ($access->ticketMatch()) {
 
 	}
 
-	if (isset($_GET['list'])) {
-		$params = array_merge(
-			array(
-				'repository' => '',
-				'categories' => '',
-				'profile' => ''
-			),
-			$_GET
-		);
+}
+if (isset($_GET['list'])) {
+	$params = array_merge(
+		array(
+			'repository' => '',
+			'categories' => '',
+			'profile' => ''
+		),
+		$_GET
+	);
 
-		$smarty->assign('categories', $params['categories']);
-		$smarty->assign('profile', $params['profile']);
-		$smarty->assign('repository', $params['repository']);
+	$smarty->assign('categories', $params['categories']);
+	$smarty->assign('profile', $params['profile']);
+	$smarty->assign('repository', $params['repository']);
 
-		if (isset($_GET['preloadlist']) && $params['repository']) {
-			$list->refreshCache($params['repository']);
-		}
-
-		$profiles = $list->getList($params['repository'], $params['categories'], $params['profile']);
-
-		foreach ($profiles as &$profile) {
-			$profile['categoriesString'] = '';
-			foreach ($profile['categories'] as $category) {
-				$profile['categoriesString'] .= (empty($profile['categoriesString']) ? '' : ', ') . $category;
-			}
-		}
-		$smarty->assign('result', $profiles);
-		$category_list = $list->getCategoryList($params['repository']);
-		$smarty->assign('category_list', $category_list);
+	if (isset($_GET['preloadlist']) && $params['repository']) {
+		$list->refreshCache($params['repository']);
 	}
+
+	$profiles = $list->getList($params['repository'], $params['categories'], $params['profile']);
+
+	foreach ($profiles as &$profile) {
+		$profile['categoriesString'] = '';
+		foreach ($profile['categories'] as $category) {
+			$profile['categoriesString'] .= (empty($profile['categoriesString']) ? '' : ', ') . $category;
+		}
+	}
+	$smarty->assign('result', $profiles);
+	$category_list = $list->getCategoryList($params['repository']);
+	$smarty->assign('category_list', $category_list);
 }
 $threshhold = time() - 1800;
 $oldSources = array();
