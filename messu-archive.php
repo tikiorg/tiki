@@ -34,10 +34,13 @@ $access->check_permission('tiki_p_messages');
 $access->checkAuthenticity();
 $maxRecords = $messulib->get_user_preference($user, 'maxRecords', 20);
 
-
+//set defaults
 $sort_mode = 'date_desc';
 $offset = 0;
 $find = '';
+$flag = '';
+$flagval = '';
+$priority = '';
 
 if ($access->ticketMatch()) {
 	// Delete messages if the delete button was pressed
@@ -67,8 +70,8 @@ if ($access->ticketMatch()) {
 if (isset($_REQUEST['filter'])) {
 	if ($_REQUEST['flags'] != '') {
 		$parts = explode('_', $_REQUEST['flags']);
-		$_REQUEST['flag'] = $parts[0];
-		$_REQUEST['flagval'] = $parts[1];
+		$flag = $parts[0];
+		$flagval = $parts[1];
 	}
 }
 if (isset($_REQUEST["sort_mode"])) {
@@ -80,17 +83,19 @@ if (isset($_REQUEST["offset"])) {
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
 }
-if (!isset($_REQUEST["priority"])) $_REQUEST["priority"] = '';
-if (!isset($_REQUEST["flag"])) $_REQUEST["flag"] = '';
-if (!isset($_REQUEST["flagval"])) $_REQUEST["flagval"] = '';
-$smarty->assign_by_ref('flag', $_REQUEST['flag']);
-$smarty->assign_by_ref('priority', $_REQUEST['priority']);
-$smarty->assign_by_ref('flagval', $_REQUEST['flagval']);
+if (isset($_REQUEST["priority"])) {
+	$priority = $_REQUEST["priority"];
+}
+
+$smarty->assign_by_ref('flag', $flag);
+$smarty->assign_by_ref('flagval', $flagval);
+$smarty->assign_by_ref('priority', $priority);
 $smarty->assign_by_ref('offset', $offset);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $smarty->assign('find', $find);
 // What are we paginating: items
-$items = $messulib->list_user_messages($user, $offset, $maxRecords, $sort_mode, $find, $_REQUEST["flag"], $_REQUEST["flagval"], $_REQUEST['priority'], 'archive');
+$items = $messulib->list_user_messages($user, $offset, $maxRecords, $sort_mode, $find, $flag, $flagval, $priority,
+	'archive');
 $smarty->assign_by_ref('cant_pages', $items["cant"]);
 $smarty->assign_by_ref('items', $items["data"]);
 $cellsize = 200;
