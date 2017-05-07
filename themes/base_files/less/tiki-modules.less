@@ -117,6 +117,13 @@ li.archivedate {
 	margin-bottom: .3em;
 }
 
+// Add border radius to search button when the input group wraps in side columns.
+#col2 .box-search .input-group-btn:last-child > .btn,
+#col3 .box-search .input-group-btn:last-child > .btn {
+	border-bottom-left-radius: @btn-border-radius-base;
+	border-top-left-radius: @btn-border-radius-base;
+}
+
 .box-forums_most_read_topics .hits {
 	font-style: italic;
 }
