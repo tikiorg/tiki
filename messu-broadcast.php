@@ -9,23 +9,29 @@
 // $Id$
 
 $section = 'user_messages';
+$inputConfiguration =	[[
+	'staticKeyFilters'	=> [
+		'body'			=> 'text',
+		'groupbr'		=> 'groupname',
+		'priority'		=> 'digits',
+		'replyto_hash'	=> 'alnumdash',
+		'preview'		=> 'alphaspace',
+		'send'			=> 'alphaspace',
+		'subject'		=> 'text',
+	],
+	'catchAllUnset' => null,
+]];
 require_once ('tiki-setup.php');
 $messulib = TikiLib::lib('message');
 $access->check_user($user);
 $access->check_feature('feature_messages');
 $access->checkAuthenticity();
-$auto_query_args = array('to', 'cc', 'bcc', 'subject', 'body', 'priority', 'replyto_hash', 'groupbr');
+$auto_query_args = array('subject', 'body', 'priority', 'replyto_hash', 'groupbr');
 
-if (!isset($_REQUEST['to'])) $_REQUEST['to'] = '';
-if (!isset($_REQUEST['cc'])) $_REQUEST['cc'] = '';
-if (!isset($_REQUEST['bcc'])) $_REQUEST['bcc'] = '';
 if (!isset($_REQUEST['subject'])) $_REQUEST['subject'] = '';
 if (!isset($_REQUEST['body'])) $_REQUEST['body'] = '';
 if (!isset($_REQUEST['priority'])) $_REQUEST['priority'] = 3;
 if (!isset($_REQUEST['replyto_hash'])) $_REQUEST['replyto_hash'] = '';
-$smarty->assign('to', $_REQUEST['to']);
-$smarty->assign('cc', $_REQUEST['cc']);
-$smarty->assign('bcc', $_REQUEST['bcc']);
 $smarty->assign('subject', $_REQUEST['subject']);
 $smarty->assign('body', $_REQUEST['body']);
 $smarty->assign('priority', $_REQUEST['priority']);
@@ -117,7 +123,7 @@ if ((isset($_REQUEST['send']) || isset($_REQUEST['preview'])) && $access->ticket
 			}
 		}
 		// Insert a copy of the message in the sent box of the sender
-		$messulib->save_sent_message($user, $user, $_REQUEST['groupbr'], $_REQUEST['cc'], $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority'], $_REQUEST['replyto_hash']);
+		$messulib->save_sent_message($user, $user, $_REQUEST['groupbr'], null, $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority'], $_REQUEST['replyto_hash']);
 		$smarty->assign('message', $message);
 		if ($prefs['feature_actionlog'] == 'y') {
 			$logslib->add_action('Posted', '', 'message', 'add=' . strlen($_REQUEST['body']));
