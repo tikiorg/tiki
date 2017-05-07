@@ -157,7 +157,8 @@
 						{
 							var p = document.createElement('p');
 							p.style.fontWeight = 'bold';
-							p.innerHTML = "An error occurred during the profile validation. This profile cannot be applied. Message: " + data.error;
+							p.className = 'text-danger';
+							p.innerHTML = tr("An error occurred during the profile validation. This profile cannot be applied.<br>Message: ") + data.error;
 							cell.appendChild(p);
 						}
 						else
