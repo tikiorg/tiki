@@ -2882,7 +2882,11 @@ if ( \$('#$id') ) {
 						$last_hdr = $hdr_structure[$nb_hdrs];
 						$nb_last_hdr = count($last_hdr);
 
-						$current_title_real_num = implode('.', $hdr_structure[$nb_hdrs]).'. ';
+						if (is_array($last_hdr)) {
+							$current_title_real_num = implode('.', $last_hdr) . '. ';
+						} else {
+							$current_title_real_num = $last_hdr . '. ';
+						}
 
 						// Update the current title number to hide all parents levels numbers if the parent has no autonumbering
 						$hideall = false;

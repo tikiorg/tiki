@@ -333,7 +333,14 @@ class Tiki_Profile
 				|| $match->getName() == 'profile' ) {
 				$yaml = $match->getBody();
 
-				$data = Yaml::parse($yaml);
+				try {
+					$data = Yaml::parse($yaml);
+				} catch (Exception $e) {
+					$this->data = [
+						'error' => tr('Could not parse YAML in profile: "%0"', $e->getMessage())
+					];
+					return;
+				}
 
 				foreach ( $data as $key => $value ) {
 					if ( array_key_exists($key, $this->data) )

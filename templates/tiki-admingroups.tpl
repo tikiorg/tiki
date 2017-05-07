@@ -542,8 +542,8 @@
 											<tr>
 												<td class="checkbox-cell"><input type="checkbox" name="checked[]" value="{$member.login}"></td>
 												<td class="username">{$member.login|userlink}</td>
-												<td class="date">{$member.created|tiki_short_datetime}</td>
-												<td class="date">{if !empty($member.expire)}{$member.expire|tiki_short_datetime}{/if}</td>
+												<td class="date">{if not empty($member.created)}{$member.created|tiki_short_datetime}{/if}</td>
+												<td class="date">{if not empty($member.expire)}{$member.expire|tiki_short_datetime}{/if}</td>
 												<td class="action">
 													{capture name=members_actions}
 														{strip}
@@ -605,22 +605,21 @@
 			{/if}
 			<div class="form-group">
 				<div class="col-sm-7">
-					<div class="col-sm-7">
+					<form id="addorban" method="post" action="tiki-admingroups.php">
 						<h2>{tr}Add or ban users{/tr}</h2>
-						<form id="addorban" method="post" action="tiki-admingroups.php">
-							<select name="user[]" multiple="multiple" width="100%" size="20" class="form-control" style="width:100%">
+						<div class="col-sm-6">
+							<select name="user[]" multiple="multiple" class="form-control">
 								{foreach from=$userslist item=iuser}
 									<option>{$iuser|escape}</option>
 								{/foreach}
 							</select>
-					</div><br><br><br><br>
-					<div class="col-sm-1">
-						<input type="submit" class="btn btn-default btn-sm confirm-submit" form="addorban" formaction="{bootstrap_modal controller=group action=add_user}" value="{tr}Add to group{/tr}">
-						<br><br>
-						<input type="submit" class="btn btn-default btn-sm confirm-submit" form="addorban" formaction="{bootstrap_modal controller=group action=ban_user}" value="{tr}Ban from group{/tr}">
-					</div>
-					<input type="hidden" name="group" value="{$groupname|escape}">
-					<input type="hidden" name="anchor" value="#contenttabs_admingroups-3">
+						</div>
+						<div class="col-sm-6 btn-group">
+							<input type="submit" class="btn btn-default btn-sm confirm-submit" form="addorban" formaction="{bootstrap_modal controller=group action=add_user}" value="{tr}Add to group{/tr}">
+							<input type="submit" class="btn btn-danger btn-sm confirm-submit" form="addorban" formaction="{bootstrap_modal controller=group action=ban_user}" value="{tr}Ban from group{/tr}">
+						</div>
+						<input type="hidden" name="group" value="{$groupname|escape}">
+						<input type="hidden" name="anchor" value="#contenttabs_admingroups-3">
 					</form>
 				</div>
 			</div>
