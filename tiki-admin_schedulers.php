@@ -30,7 +30,7 @@ function saveScheduler()
 	} else {
 		$className = 'Scheduler_Task_' . $task;
 		if (!class_exists($className)) {
-			Feedback::error(tra('An error occurred, please contact the administrator.'), 'session');
+			Feedback::error(tra('An error occurred; please contact the administrator.'), 'session');
 			$access = TikiLib::lib('access');
 			$access->redirect('tiki-admin_schedulers.php');
 			die;

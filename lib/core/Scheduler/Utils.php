@@ -26,7 +26,7 @@ class Scheduler_Utils {
 			$values = array();
 
 			/*
-				For patters like 0-23/2
+				For patterns like 0-23/2
 			*/
 			if (strpos($val, '/') !== false) {
 				//Get the range and step
@@ -42,7 +42,7 @@ class Scheduler_Utils {
 					$values[] = $i;
 				}
 			} /*
-			For patters like :
+			For patterns like :
 			2
 			2,5,8
 			2-23
