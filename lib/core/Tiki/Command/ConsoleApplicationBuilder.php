@@ -30,10 +30,10 @@ class ConsoleApplicationBuilder
 	/**
 	 * List of commands registered on the console
 	 *
-	 * When you need to register a new command, just add him to teh right group, or create a new group if
-	 * you need to test a new/different condition to register / not register a command
+	 * When you need to register a new command, just add it to the right group, or create a new group if
+	 * you need to test a new/different condition to register / not register a command.
 	 *
-	 * There are two different behaviors when the check function returns false:
+	 * There are two behaviors when the check function returns false:
 	 * - ACTION_NOT_AVAILABLE: register the command as not being available
 	 * - ACTION_NOT_PUBLISHED: skip the command and do not register the command at all
 	 *
@@ -142,7 +142,7 @@ class ConsoleApplicationBuilder
 
 	/**
 	 * ConsoleApplicationBuilder constructor.
-	 * @param string $site Tiki Virtual site (if available)
+	 * @param string $site Tiki virtual site (if available)
 	 */
 	public function __construct($site = "")
 	{
@@ -151,7 +151,7 @@ class ConsoleApplicationBuilder
 	}
 
 	/**
-	 * Dummy Check that allways return true (for commands that we always want to register)
+	 * Dummy Check that always returns true (for commands that we always want to register)
 	 * @return bool
 	 */
 	protected function checkTrue()
@@ -184,7 +184,7 @@ class ConsoleApplicationBuilder
 	}
 
 	/**
-	 * Check if app reports as being fully installed, and DB don't require updates
+	 * Check if app reports as being fully installed, and db doesn't require updates
 	 * @return bool
 	 */
 	protected function checkIsInstalledAndDoNotRequireUpdate()
@@ -220,7 +220,7 @@ class ConsoleApplicationBuilder
 	/**
 	 * Creates a console application
 	 *
-	 * Iterates over all commands in the list, and register / not register the commands acording with the result
+	 * Iterates over all commands in the list, and registers / doesn't register the commands in accordance with the result
 	 * of the check function and the action configured for the command group
 	 *
 	 * @param boolean $returnLastInstance
