@@ -29,32 +29,21 @@ if (!$https_mode && isset($https_login) && $https_login == 'required') {
 	header('Location: ' . $base_url_https . 'tiki-user_preferences.php');
 	die;
 }
-if (isset($_REQUEST['userId']) || isset($_REQUEST['view_user'])) {
-	if (empty($_REQUEST['view_user'])) $userwatch = $tikilib->get_user_login($_REQUEST['userId']);
-	else $userwatch = $_REQUEST['view_user'];
-	if ($userwatch != $user) {
-		if ($userwatch === false) {
-			$smarty->assign('msg', tra("Unknown user"));
-			$smarty->display("error.tpl");
-			die;
-		} else {
-			$access->check_permission('tiki_p_admin_users');
-		}
-	}
-} elseif (isset($_REQUEST["view_user"])) {
-	if ($_REQUEST["view_user"] != $user) {
-		$access->check_permission('tiki_p_admin_users');
-		$userwatch = $_REQUEST["view_user"];
-		if (!$userlib->user_exists($userwatch)) {
-			$smarty->assign('msg', tra("Unknown user"));
-			$smarty->display("error.tpl");
-			die;
-		}
-	} else {
-		$userwatch = $user;
-	}
+if (! empty($_REQUEST['userId'])) {
+	$userwatch = $tikilib->get_user_login($_REQUEST['userId']);
+} elseif (! empty($_REQUEST["view_user"])) {
+	$userwatch = $_REQUEST["view_user"];
 } else {
 	$userwatch = $user;
+}
+
+if ($userwatch != $user) {
+	$access->check_permission('tiki_p_admin_users');
+	if (empty($userwatch) || empty($userlib->user_exists($userwatch))) {
+		$smarty->assign('msg', tra("Unknown user"));
+		$smarty->display("error.tpl");
+		die;
+	}
 }
 
 // Custom fields
