@@ -297,6 +297,7 @@ function wikiplugin_addtocart( $data, $params )
 				if ( $invoice ) {
 					$paymenturl = 'tiki-payment.php?invoice=' . intval($invoice);
 					$paymenturl = $tikilib->httpPrefix(true) . $tikiroot . $paymenturl;
+					$tokenpaymenturl = '';
 					if (!$user || $params['forceanon'] == 'y' && !Perms::get('payment', $invoice)->manual_payment) {
 						// token access needs to be an optional feature
 						// and needs to depend on auth_token_access pref
@@ -304,7 +305,7 @@ function wikiplugin_addtocart( $data, $params )
 						$tokenlib = AuthTokens::build($prefs);
 						$tokenpaymenturl = $tokenlib->includeToken($paymenturl, array('Temporary Shopper','Anonymous'));
 					}
-					if ($globalperms->payment_admin || Perms::get('payment', $invoice)->manual_payment) {
+					if ($globalperms->payment_admin || Perms::get('payment', $invoice)->manual_payment || empty($tokenpaymenturl)) {
 						// if able to do manual payment it means it is admin and don't need token
 						$access->redirect($paymenturl, tr('The order was recorded and is now awaiting payment. Reference number is %0.', $invoice));
 					} else {
