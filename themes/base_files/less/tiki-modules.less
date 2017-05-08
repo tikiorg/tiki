@@ -102,16 +102,6 @@ li.archivedate {
 #col2 .box-search .input-group-btn,
 #col3 .box-search .input-group-btn { display: inline-block; }
 
-.box-search .search_mod_magnifier {
-    padding: 6px;
-}
-
-.box-search input.form-control {
-    padding-top: 6px;
-    padding-bottom: 6px;
-	height: auto;
-}
-
 // Add vertical space when now-form-inline items wrap
 .tiki .box-search .panel-body * {
 	margin-bottom: .3em;
@@ -309,7 +299,10 @@ div.cvsup {
 }
 
 .topbar .form-control,
-.topbar .btn {
+.topbar .btn,
+.page-header .box-search .search_mod_magnifier,
+.page-header .box-search input.form-control {
+
 	max-height: @navbar-height * .53;
 	margin-top: @navbar-height * .12;
 	margin-bottom: @navbar-height * .10;
