@@ -25,17 +25,28 @@ class Services_H5P_Controller
 		$smarty->loadPlugin('smarty_function_button');
 
 		$fileId = $input->fileId->int();
+		$page = $input->page->pagename();
+		$index = $input->index->int();
 
 		$perms = Perms::get();
 
 		if (empty($fileId)) {
 			if ($perms->h5p_edit) {
 
+				TikiLib::lib('header')->add_jq_onready(
+					'$(".create-h5p-content").click($.clickModal({title: "' . tr('Create H5P Content') . '"}))'
+				);
+
 				return [
 					'html' => smarty_function_button([
-						'href' => TikiLib::lib('service')->getUrl(['controller' => 'h5p', 'action' => 'edit']),
+						'href' => TikiLib::lib('service')->getUrl([
+							'controller' => 'h5p',
+							'action' => 'edit',
+							'page' => $page,
+							'index' => $index,
+						]),
 						'_text' => tra('Create H5P content'),
-						'_onclick' => '$.clickModal',
+						'_class' => 'create-h5p-content',
 					], $smarty),
 				];
 
@@ -67,10 +78,20 @@ class Services_H5P_Controller
 
 		if ($perms->h5p_edit) {
 
+			TikiLib::lib('header')->add_jq_onready(
+				'$(".edit-h5p-content").click($.clickModal({title: "' . tr('Edit H5P Content') . '"}))'
+			);
+
 			$html .= smarty_function_button([
-				'href' => TikiLib::lib('service')->getUrl(['controller' => 'h5p', 'action' => 'edit', 'fileId' => $fileId]),
+				'href' => TikiLib::lib('service')->getUrl([
+					'controller' => 'h5p',
+					'action' => 'edit',
+					'fileId' => $fileId,
+					'page' => $page,
+					'index' => $index,
+				]),
 				'_text' => tra('Edit'),
-//				'_onclick' => '$(this).clickModal({title: \'Edit ' . $content['title'] . '\',success: function () {location = location.href}}); return false;',
+				'_class' => 'edit-h5p-content',
 			], $smarty);
 
 		}
@@ -101,21 +122,50 @@ class Services_H5P_Controller
 			);
 		}
 
+		$page = $input->page->pagename();
+		$index = $input->index->int();
+
+		$util = new Services_Utilities();
+		$util->checkTicket();
+
 		// Handle for submit
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-			switch ($input->op->none()) {
+			switch ($input->op->word()) {
 				case 'Save':
 					// Create new content or update existing
+
+					$created = empty($fileId);
+
 					if ($fileId = TikiLib::lib('h5p')->saveContent($content, $input)) {
 						// Content updated, redirect to view
+						if ($created && $page) {
 
-						return [
-							'FORWARD' => [
+							$result = TikiLib::lib('service')->internal(
+								'plugin',
+								'edit',
+								[
+									'page' => $page,
+									'type' => 'h5p',
+									'index' => $index,
+									'edit_icon' => $index,
+									'params' => ['fileId' => $fileId],
+									'ticket' => $input->ticket->alnum(),
+								]
+							);
+
+							if (! empty($result['redirect'])) {
+								TikiLib::lib('access')->redirect($result['redirect']);
+							}
+
+						} else {
+
+							return ['FORWARD' => [
 								'controller' => 'h5p',
 								'action' => 'embed',
 								'fileId' => $fileId,
 							]];
+						}
 					}
 					break;
 
@@ -125,12 +175,33 @@ class Services_H5P_Controller
 					$fileInfo = $filegallib->get_file_info($fileId);
 					$filegallib->remove_file($fileInfo);
 
-					return [
-						'FORWARD' => [
-							'controller' => 'h5p',
-							'action' => 'edit',
-						]];
-					break;
+					if ($page) {
+
+						$result = TikiLib::lib('service')->internal(
+							'plugin',
+							'edit',
+							[
+								'page' => $page,
+								'type' => 'h5p',
+								'index' => $index,
+								'edit_icon' => $index,
+								'params' => ['fileId' => ''],
+								'ticket' => $input->ticket->alnum(),
+							]
+						);
+
+						if (! empty($result['redirect'])) {
+							TikiLib::lib('access')->redirect($result['redirect']);
+						}
+
+					} else {
+						return [
+							'FORWARD' => [
+								'controller' => 'h5p',
+								'action' => 'edit',
+							]];
+						break;
+					}
 			}
 		}
 
@@ -167,6 +238,8 @@ class Services_H5P_Controller
 			'title' => empty($content['title']) ? '' : $content['title'],
 			'library' => $library,
 			'parameters' => $parameters,
+			'page' => $page,
+			'index' => $index,
 		];
 	}
 

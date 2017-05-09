@@ -5,9 +5,13 @@
 {/block}
 
 {block name="content"}
-	<form class="content-form" enctype="multipart/form-data" action="{service controller='h5p' action='edit' fileId=$fileId}" method="post" accept-charset="UTF-8">
+	<form class="content-form no-ajax" enctype="multipart/form-data" action="{service controller='h5p' action='edit' fileId=$fileId}" method="post" accept-charset="UTF-8">
 		<input type="hidden" name="library" value="{$library|escape}">
 		<input type="hidden" name="parameters" value="{$parameters|escape}">
+		<input type="hidden" name="index" value="{$index|escape}">
+		<input type="hidden" name="page" value="{$page|escape}">
+		<input type="hidden" name="daconfirm" value="y">
+		<input type="hidden" name="ticket" value="{$ticket|escape}">
 		<div>
 			<div class="form-item form-type-textfield form-item-title">
 				<label for="edit-title">Title
