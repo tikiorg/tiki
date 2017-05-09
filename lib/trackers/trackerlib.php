@@ -4429,6 +4429,10 @@ class TrackerLib extends TikiLib
 		return $history;
 	}
 
+	public function item_has_history($itemId) {
+		return $this->table('tiki_tracker_item_fields')->fetchCount([ 'itemId' => $itemId ]);
+	}
+
 	public function move_item($trackerId, $itemId, $newTrackerId)
 	{
 		$newFields = $this->list_tracker_fields($newTrackerId, 0, -1, 'name_asc');
