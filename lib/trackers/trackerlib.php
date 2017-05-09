@@ -1834,7 +1834,7 @@ class TrackerLib extends TikiLib
 			} else {
 				$is_date = in_array($array["type"], array('f', 'j'));
 
-				if ($currentItemId || $array['type'] != 'q') {
+				if ($currentItemId || $array['type'] !== 'q') {	// autoincrement
 					$this->modify_field($currentItemId, $fieldId, $value);
 					if ($old_value != $value) {
 						if ($is_date) {
@@ -1844,7 +1844,7 @@ class TrackerLib extends TikiLib
 						} else {
 							$new_value = $value;
 						}
-						if ($old_value != $new_value && !empty($itemId)) {
+						if ($old_value != $new_value && !empty($itemId) && $array['type'] !== 'W') {	// not for webservices
 							$this->log($version, $itemId, $array['fieldId'], $old_value);
 						}
 					}
