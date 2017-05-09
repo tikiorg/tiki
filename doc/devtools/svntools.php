@@ -27,9 +27,9 @@ function short($full)
 };
 
 /**
- * @param $string
- * @param $color
- * @return string
+ * @param $string string			String to output
+ * @param $color string				The colour of the string
+ * @return string					The formatted string to output to the console
  */
 function color($string, $color)
 {
@@ -164,7 +164,10 @@ function update_working_copy($localPath, $ignore_externals = false)
 }
 
 /**
- * @param $localPath
+ *
+ * Tests if there are versioned files that have been modified in the current revision.
+ *
+ * @param $localPath string path of SVN to test
  * @return bool
  */
 function has_uncommited_changes($localPath)
@@ -179,6 +182,25 @@ function has_uncommited_changes($localPath)
 
 	return $count->length > 0;
 }
+
+/**
+ *
+ * Tests if a working copy and repository at the current version number are identical.
+ *
+ * @param $localPath string path of local checkout to test
+ * @return bool The number of files that differ from the repository
+ */
+function svn_files_identical($localPath)
+{
+	$localPath = escapeshellarg($localPath);
+
+	$dom = new DOMDocument;
+	$dom->loadXML(`svn status --xml $localPath`);
+
+	return $dom->getElementsByTagName('entry')->length;
+
+}
+
 
 /**
  * @param $localPath
