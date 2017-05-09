@@ -261,8 +261,10 @@ class Services_Edit_PluginController
 		$params = $input->asArray('params');
 
 		$referer = $_SERVER['HTTP_REFERER'];
+		$util = new Services_Utilities();
+		$util->checkTicket();
 
-		if (! $page || ! $type || ! $referer || $_SERVER['REQUEST_METHOD'] !== 'POST') {
+		if (! $page || ! $type || ! $referer || $_SERVER['REQUEST_METHOD'] !== 'POST' || ! $util->access->ticketMatch()) {
 			throw new Services_Exception(tr('Missing parameters'));
 		}
 
