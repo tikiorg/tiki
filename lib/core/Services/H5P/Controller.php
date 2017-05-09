@@ -34,7 +34,7 @@ class Services_H5P_Controller
 			if ($perms->h5p_edit) {
 
 				TikiLib::lib('header')->add_jq_onready(
-					'$(".create-h5p-content").click($.clickModal({title: "' . tr('Create H5P Content') . '"}))'
+					'$(".create-h5p-content").click($.clickModal({title: "' . tr('Create H5P Content') . '", size: "modal-lg"}))'
 				);
 
 				return [
@@ -79,7 +79,7 @@ class Services_H5P_Controller
 		if ($perms->h5p_edit) {
 
 			TikiLib::lib('header')->add_jq_onready(
-				'$(".edit-h5p-content").click($.clickModal({title: "' . tr('Edit H5P Content') . '"}))'
+				'$(".edit-h5p-content").click($.clickModal({title: "' . tr('Edit H5P Content') . '", size: "modal-lg"}))'
 			);
 
 			$html .= smarty_function_button([
@@ -160,11 +160,17 @@ class Services_H5P_Controller
 
 						} else {
 
-							return ['FORWARD' => [
-								'controller' => 'h5p',
-								'action' => 'embed',
-								'fileId' => $fileId,
-							]];
+							if ($page) {
+
+								TikiLib::lib('access')->redirect(TikiLib::lib('wiki')->sefurl($page));
+
+							} else {
+								return ['FORWARD' => [
+									'controller' => 'h5p',
+									'action' => 'embed',
+									'fileId' => $fileId,
+								]];
+							}
 						}
 					}
 					break;
