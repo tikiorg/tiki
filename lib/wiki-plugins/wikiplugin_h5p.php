@@ -33,6 +33,10 @@ function wikiplugin_h5p_info()
 
 function wikiplugin_h5p($data, $params)
 {
+	global $page;
+	static $instance = 0;
+	$instance++;
+
 	$smarty = TikiLib::lib('smarty');
 
 	$smarty->loadPlugin('smarty_function_service_inline');
@@ -40,6 +44,20 @@ function wikiplugin_h5p($data, $params)
 	$params['controller'] = 'h5p';
 	$params['action'] = 'embed';
 
+	if (! empty($page)) {	// only wiki pages for now
+		$params['page'] = $page;
+		$params['index'] = $instance;
+	}
+
 	return smarty_function_service_inline($params, $smarty);
+}
+
+function wikiplugin_h5p_rewrite($data, $params, $context)
+{
+	if (! empty($params['fileId'])) {
+		return "{h5p fileId=\"{$params['fileId']}\"}";
+	} else {
+		return "{h5p}";
+	}
 }
 

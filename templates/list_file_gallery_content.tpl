@@ -264,7 +264,7 @@
 				{if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' )
 					and (!isset($gal_info.show_action) or $gal_info.show_action neq 'n') and $prefs.javascript_enabled eq 'y'}
 					<td style="white-space: nowrap">
-						<a class="fgalname tips" title="{tr}Actions{/tr}" href="#" {popup fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">
+						<a class="fgalname tips" title="{tr}Actions{/tr}" href="#" onclick="return false;" {popup fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">
 							{icon name='wrench' alt="{tr}Actions{/tr}"}
 						</a>
 					</td>
@@ -407,7 +407,7 @@
 								{assign var=share_nb value=$files[changes].share.nb}
 								{capture assign=share_capture}
 									{strip}
-										<a class='fgalname tips' title="{tr}Share{/tr}" href='#' {popup fullhtml=1 text=$over_share|escape:'javascript'|escape:'html' left=true} style='cursor:help'>
+										<a class='fgalname tips' title="{tr}Share{/tr}" href='#' onclick="return false;" {popup fullhtml=1 text=$over_share|escape:'javascript'|escape:'html' left=true} style='cursor:help'>
 											{icon name='group' alt=''}
 										</a> ({$share_nb}) {$share_string}
 									{/strip}
@@ -465,7 +465,7 @@
 							{if $over_infos eq ''}
 								{icon name='minus' class='tips' title=":{tr}No information{/tr}"}
 							{else}
-								<a class="fgalname tips left" href="#" title="{tr}Information{/tr}" {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html" left=true} style="cursor:help">
+								<a class="fgalname tips left" href="#" onclick="return false;" title="{tr}Information{/tr}" {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html" left=true} style="cursor:help">
 									{icon name='information' class='' title=''}
 								</a>
 							{/if}

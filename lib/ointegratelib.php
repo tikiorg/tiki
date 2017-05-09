@@ -182,7 +182,7 @@ class OIntegrate
 		} else {
 			// Respect cache duration and no-cache asked for
 			$maxage = $cacheControl->getDirective('max-age');
-			//$nocache = $cacheControl->getDirective('no-cache');
+			$nocache = $cacheControl->getDirective('no-cache');
 		}
 		if ( $maxage ) {
 			$expiry = time() + $maxage;
