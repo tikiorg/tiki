@@ -1890,7 +1890,9 @@ class TrackerLib extends TikiLib
 						} else {
 							$new_value = $value;
 						}
-						if ($old_value != $new_value && !empty($itemId) && $array['type'] !== 'W') {	// not for webservices
+						if ($old_value != $new_value && !empty($itemId) &&
+								$array['type'] !== 'W' // not for webservices
+								) {
 							$this->log($version, $itemId, $array['fieldId'], $old_value);
 						}
 					}
