@@ -171,10 +171,15 @@
 			<fieldset class="margin-bottom-lg" id="plugins">
 				<legend>{tr}Plugins{/tr}</legend>
 				<fieldset class="margin-bottom-lg donthide">
-					<label for="pluginfilter" class="col-sm-4 control-label">{tr}Filter:{/tr}</label>
-					<div class="col-sm-8">
-						<input type="text" id="pluginfilter" class="form-control">
-					</div>
+					{preference name='unified_search_textarea_admin'}
+					{if $prefs.unified_search_textarea_admin eq 'y'}
+						<label for="pluginfilter" class="col-sm-4 control-label">{tr}Filter:{/tr}</label>
+						<div class="col-sm-8">
+							<input type="text" id="pluginfilter" class="form-control">
+						</div>
+					{else}
+						{listfilter selectors='#plugins > fieldset' exclude=".donthide"}
+					{/if}
 				</fieldset>
 				<div id="pluginlist">
 					{remarksbox type='tip' title='{tr}Plugin List{/tr}'}
@@ -182,7 +187,7 @@
 						<a href="{bootstrap_modal controller=search action=help}">{tr}Search Help{/tr} {icon name='help'}</a>
 					{/remarksbox}
 				</div>
-				<noscript>
+				{if $prefs.unified_search_textarea_admin eq 'y'}<noscript>{/if}
 					{foreach from=$plugins key=plugin item=info}
 						<fieldset class="margin-bottom-lg">
 							<legend>
@@ -201,7 +206,7 @@
 							{/if}
 						</fieldset>
 					{/foreach}
-				</noscript>
+					{if $prefs.unified_search_textarea_admin eq 'y'}</noscript>{/if}
 			</fieldset>
 		{/tab}
 

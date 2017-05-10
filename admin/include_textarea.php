@@ -16,7 +16,16 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 $parserlib = TikiLib::lib('parser');
 
-if (isset($_REQUEST['textareasetup']) && (getCookie('admin_textarea', 'tabs') != '#contentadmin_textarea-3')
+if ($prefs['unified_search_textarea_admin'] === 'n' || $prefs['javascript_enabled'] === 'n') {
+	$plugins = array();
+	foreach ($parserlib->plugin_get_list() as $name) {
+		$info = $parserlib->plugin_info($name);
+		if (isset($info['prefs']) && is_array($info['prefs']) && count($info['prefs']) > 0) {
+			$plugins[$name] = $info;
+		}
+	}
+	$smarty->assign('plugins', $plugins);
+}if (isset($_REQUEST['textareasetup']) && (getCookie('admin_textarea', 'tabs') != '#contentadmin_textarea-3')
 	&& $access->ticketMatch())
 {
 	// tab=3 is plugins alias tab (TODO improve)

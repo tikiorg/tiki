@@ -304,6 +304,17 @@ function prefs_unified_list()
 			'default' => 'y',
 			'tags' => array('basic'),
 		),
+		'unified_search_textarea_admin' => array(
+			'name' => tra('Use unified search for plugins'),
+			'description' => tra('Avoids loading all plugins on the textarea control panel, but when using the MySQL engine can have problems with short plugin names due to "ft_min_word_len".'),
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => array(
+				'feature_search',
+			),
+			'tags' => array('experimental'),
+			'warning' => tra('This is an experimental feature - some plugins may not appear.'),
+		),
 	);
 }
 
