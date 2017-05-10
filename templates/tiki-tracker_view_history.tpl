@@ -34,14 +34,22 @@
 			<th>{tr}New{/tr}</th>
 		</tr>
 
+		{$last_version = 0}
 		{foreach from=$history item=hist}
 			{if $hist.value neq $hist.new}
 				{assign var='fieldId' value=$hist.fieldId}
 				{assign var='field_value' value=$field_option[$fieldId]}
 				<tr>
-					<td class="id">{$hist.version|escape}</td>
-					<td class="date">{$hist.lastModif|tiki_short_datetime}</td>
-					<td class="username">{$hist.user|username}</td>
+					{if $last_version neq $hist.version}
+						<td class="id"><strong>{$hist.version|escape}</strong></td>
+						<td class="date"><strong>{$hist.lastModif|tiki_short_datetime}</strong></td>
+						<td class="username"><strong>{$hist.user|username}</strong></td>
+						{$last_version = $hist.version}
+					{else}
+						<td class="id">&nbsp;</td>
+						<td class="date">&nbsp;</td>
+						<td class="username">&nbsp;</td>
+					{/if}
 					<td class="text">
 						{if $fieldId ne -1}{$fieldId}{/if}
 					</td>
@@ -49,8 +57,8 @@
 						{if $fieldId eq -1}_{tr}Status{/tr}_{else}{$field_option[$fieldId].name}{/if}
 					</td>
 					{if $field_value.fieldId}
-						<td class="text">{$field_value.value=$hist.value}{trackeroutput field=$field_value list_mode=n item=$item_info history=y process=y}</td>
-						<td class="text">{$field_value.value=$hist.new}{trackeroutput field=$field_value list_mode=n item=$item_info history=y process=y}</td>
+						<td class="text">{$field_value.value=$hist.value}{trackeroutput field=$field_value list_mode=csv item=$item_info history=y process=y}</td>
+						<td class="text">{$field_value.value=$hist.new}{trackeroutput field=$field_value list_mode=csv item=$item_info history=y process=y}</td>
 					{else}
 						<td class="text">{$hist.value|escape}</td>
 						<td class="text">{$hist.new|escape}</td>
