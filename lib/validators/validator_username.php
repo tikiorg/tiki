@@ -34,6 +34,10 @@ function validator_username($input, $parameter = '', $message = '')
 			$error = tr("Username must be at least %0 characters long", $prefs['min_username_length']);
 			return $error;
 		}
+		if ($prefs['lowercase_username'] === 'y' && preg_match('/[A-Z]/', $input) !== 0) {
+			$error = tr("Username must be all lower case");
+			return $error;
+		}
 	}
 	return true;
 }
