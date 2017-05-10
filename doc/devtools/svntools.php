@@ -164,11 +164,12 @@ function update_working_copy($localPath, $ignore_externals = false)
 }
 
 /**
+ * Indicates whether versioned files have been modified in the specified checkout
  *
- * Tests if there are versioned files that have been modified in the current revision.
- *
- * @param $localPath string path of SVN to test
- * @return bool
+ * @param $localPath string Path of the checkout
+ * @return bool true if at least 1 versioned file has been modified, added or removed, false otherwise
+ * 
+ * @see Similar function svn_files_identical()
  */
 function has_uncommited_changes($localPath)
 {
@@ -184,11 +185,12 @@ function has_uncommited_changes($localPath)
 }
 
 /**
+ * Get the number of changes in the specified checkout
  *
- * Tests if a working copy and repository at the current version number are identical.
- *
- * @param $localPath string path of local checkout to test
- * @return bool The number of files that differ from the repository
+ * @param $localPath string Path of the checkout
+ * @return int The number of files that differ (additions, removals and modifications) from the repository
+ * 
+ * @see Similar function has_uncommited_changes()
  */
 function svn_files_identical($localPath)
 {
@@ -198,7 +200,6 @@ function svn_files_identical($localPath)
 	$dom->loadXML(`svn status --xml $localPath`);
 
 	return $dom->getElementsByTagName('entry')->length;
-
 }
 
 
