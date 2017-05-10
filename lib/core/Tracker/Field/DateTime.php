@@ -112,6 +112,10 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 		$value = $this->getConfiguration('value');
 
 		if ($value) {
+			if ($context['list_mode'] == 'csv') {
+				return $tikilib->get_short_datetime($value);
+			}
+
 			if ($prefs['jquery_timeago'] === 'y' && $this->getOption('useTimeAgo')) {
 				TikiLib::lib('header')->add_jq_onready('$("time.timeago").timeago();');
 				return '<time class="timeago" datetime="' . TikiLib::date_format('c', $value, false, 5, false) .  '">' . $tikilib->get_short_datetime($value) . '</time>';
@@ -120,13 +124,9 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 			if ($this->getOption('datetime') == 'd') {
 				return $date;
 			}
-			
+
 			if ($this->getOption('datetime') == 't') {
 				return $tikilib->get_short_time($value);
-			}
-
-			if ($context['list_mode'] == 'csv') {
-				return $tikilib->get_short_datetime($value);
 			}
 
 			$current = $tikilib->get_short_date($tikilib->now);
