@@ -106,7 +106,10 @@ function wikiplugin_wysiwyg($data, $params)
 		}
 		$namespace = htmlspecialchars($namespace);
 
-		$html = "<div id='$exec_key' class='{$class}'$style data-initial='$namespace' data-html='{$params['use_html']}'>" . $html . '</div>';
+		$access = TikiLib::lib('access');
+		$access->checkAuthenticity();
+
+		$html = "<div id='$exec_key' class='{$class}'$style data-initial='$namespace' data-html='{$params['use_html']}' data-ticket='" . $access->getTicket() . "'>" . $html . '</div>';
 
 		$js = '$("#' . $exec_key . '").wysiwygPlugin("' . $execution . '", "' . $sourcepage . '", ' . $ckoption . ');';
 

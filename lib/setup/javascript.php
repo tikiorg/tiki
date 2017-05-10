@@ -208,6 +208,12 @@ jqueryTiki.autoToc_pos = "' . $prefs['wiki_toc_pos'] . '";
 jqueryTiki.autoToc_offset = ' . (!empty($prefs['wiki_toc_offset']) ? $prefs['wiki_toc_offset'] : 10) . ';
 ';
 
+	if (empty($object)) {
+		$object = current_object();
+	}
+	$js .= "jqueryTiki.current_object = " . json_encode($object) . ";\n";
+
+
 	if ($prefs['feature_calendar'] === 'y') {
 		$calendarlib = TikiLib::lib('calendar');
 		$firstDayofWeek = $calendarlib->firstDayofWeek();
