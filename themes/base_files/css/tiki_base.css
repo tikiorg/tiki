@@ -3341,6 +3341,9 @@ div.form-group label.error {
 .chosen-container-single {
   max-width: 100%;
 }
+.chosen-container-multi .chosen-choices .search-field .default {
+  min-width: 20em;
+}
 .chosen-container + .alert {
   margin-top: 20px;
 }
