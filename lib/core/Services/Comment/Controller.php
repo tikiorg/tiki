@@ -714,7 +714,13 @@ class Services_Comment_Controller
 		switch ($type) {
 		case 'trackeritem':
 			$item = Tracker_Item::fromId($objectId);
-			return $item->getPerms();
+			if ($item) {
+				return $item->getPerms();
+			} else {
+				Feedback::error(tr('Comments getApplicablePermissions: %0 object %1 not found', $type, $objectId));
+				// return global perms
+				return Perms::get();
+			}
 		default:
 			return Perms::get($type, $objectId);
 		}
