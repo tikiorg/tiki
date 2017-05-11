@@ -349,6 +349,9 @@
 		<service id="tiki.lib.blacklist" class="blacklistLib">
 			<file>%kernel.root_dir%/lib/user/blacklistlib.php</file>
 		</service>
+		<service id="tiki.lib.version" class="TWVersion">
+			<file>%kernel.root_dir%/lib/setup/twversion.class.php</file>
+		</service>
 
 		<service id="tiki.wiki.slug.dash" class="Tiki\Wiki\SlugManager\DashGenerator">
 			<tag name="tiki.wiki.slug.generator"/>
