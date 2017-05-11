@@ -22,6 +22,7 @@
 {if $ids_rules|count > 0}
 	{tab name="{tr}IDS Rules{/tr}"}
 		<form class="form-horizontal" name="checkform" id="checkform" method="post">
+			{ticket}
 			<div id="admin_ids-div">
 				<div class="{if $js === 'y'}table-responsive {/if}ts-wrapperdiv">
 					{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
@@ -102,22 +103,23 @@
 	{* ---------------------- tab with form -------------------- *}
 	<a id="tab2"></a>
 {if isset($ruleinfo.id) && $ruleinfo.id && !$ruleinfo.error}
-	{$add_edit_scheduler_tablabel = "{tr}Edit Rule{/tr}"}
-	{$schedulename = "<i>{$ruleinfo.name|escape}</i>"}
+	{$add_edit_rule_tablabel = "{tr}Edit Rule{/tr}"}
+	{$rulename = "<i>{$ruleinfo.name|escape}</i>"}
 {else}
-	{$add_edit_scheduler_tablabel = "{tr}Add a new rule{/tr}"}
-	{$schedulename = ""}
+	{$add_edit_rule_tablabel = "{tr}Add a new rule{/tr}"}
+	{$rulename = ""}
 {/if}
 
-{tab name="{$add_edit_scheduler_tablabel} {$schedulename}"}
+{tab name="{$add_edit_rule_tablabel} {$rulename}"}
 	<br><br>
 	<form class="form form-horizontal" action="tiki-admin_ids.php" method="post"
 			enctype="multipart/form-data" name="RegForm" autocomplete="off">
+		{ticket}
 		<div class="form-group">
 			<label class="col-sm-3 col-md-2 control-label" for="rule_id">{tr}Rule Id{/tr}</label>
 			<div class="col-sm-7 col-md-6">
 				<input type="text" id='rule_id' class="form-control" name='rule_id'
-					value="{$ruleinfo.id|escape}" {if $ruleinfo.id && !$ruleinfo.error}disabled{/if}>
+					value="{$ruleinfo.id|escape}" {if $ruleinfo.id && !$ruleinfo.error}readonly{/if}>
 			</div>
 		</div>
 		<div class="form-group">

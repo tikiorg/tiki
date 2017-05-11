@@ -12,8 +12,9 @@ if ($prefs['ids_enabled'] == 'n') {
 }
 
 $access->check_permission('tiki_p_admin');
+$access->checkAuthenticity();
 
-if (isset($_POST['new_rule'])) {
+if (isset($_POST['new_rule']) && $access->ticketMatch()) {
 
 	$id = $_POST['rule_id'];
 	$rule = new IDS_Rule($id);
@@ -40,7 +41,7 @@ if (isset($_POST['new_rule'])) {
 		];
 	}
 
-} else if (isset($_POST['editrule']) and isset($_POST['rule_id'])) {
+} else if (isset($_POST['editrule']) && isset($_POST['rule_id']) && $access->ticketMatch()) {
 
 	$rule = IDS_Rule::getRule($_POST['rule_id']);
 
@@ -52,7 +53,7 @@ if (isset($_POST['new_rule'])) {
 
 	$cookietab = '1';
 
-} else if (isset($_REQUEST['rule']) and $_REQUEST['rule']) {
+} else if (isset($_REQUEST['rule']) && $_REQUEST['rule']) {
 
 	$rule = IDS_Rule::getRule($_REQUEST['rule']);
 
