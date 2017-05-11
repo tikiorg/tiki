@@ -22,12 +22,13 @@ if (isset($_SERVER['REQUEST_METHOD'])) {
 }
 
 $tikiBase = realpath(dirname(__FILE__). '/../..');
-require_once($tikiBase.'/tiki-setup.php');
+require_once($tikiBase.'/tiki-setup_base.php');
 require_once ($tikiBase.'/doc/devtools/svntools.php');
+require_once ($tikiBase.'/lib/setup/timer.class.php');    // needed for index rebuilding
 
 
 /**
- * Add a singleton command "svnup" using the Symfony concole component just for this script
+ * Add a singleton command "svnup" using the Symfony console component just for this script
  *
  * Class SvnUpCommand
  * @package Tiki\Command
