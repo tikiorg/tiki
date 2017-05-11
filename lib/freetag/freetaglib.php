@@ -1292,7 +1292,7 @@ class FreetagLib extends ObjectLib
 							. " INNER JOIN `tiki_objects` ob ON ob.`objectId` = fb.`$objectColumn` "
 							. $join_tiki_pages
 							. ' WHERE ' . $mid
-							. ' GROUP BY ob.`itemId`'
+							. ' GROUP BY ob.`itemId`, ob.`name`, ob.`href`'
 							. ' HAVING cnt >= ?'
 							. ' ORDER BY cnt DESC, RAND()'
 							;
@@ -1308,7 +1308,7 @@ class FreetagLib extends ObjectLib
 							. " INNER JOIN $table fc ON fb.`$column` = fc.`$column` "
 							. $join_tiki_pages
 							. ' WHERE ' . $mid
-							. ' GROUP BY ob.`itemId`'
+							. ' GROUP BY ob.`itemId`, ob.`name`, ob.`href`'
 							. ' HAVING having_cnt >= ?'
 							. ' ORDER BY sort_cnt DESC, RAND()'
 							;
