@@ -305,15 +305,15 @@ function prefs_unified_list()
 			'tags' => array('basic'),
 		),
 		'unified_search_textarea_admin' => array(
-			'name' => tra('Use unified search for plugins'),
-			'description' => tra('Avoids loading all plugins on the textarea control panel, but when using the MySQL engine can have problems with short plugin names due to "ft_min_word_len".'),
+			'name' => tra('Plugins tab of the textarea control panel loads with an empty list'),
+			'description' => tra('Increase performance of the textarea control panel by avoiding to load all plugins initially'),
 			'type' => 'flag',
 			'default' => 'n',
 			'dependencies' => array(
 				'feature_search',
 			),
-			'tags' => array('experimental'),
-			'warning' => tra('This is an experimental feature - some plugins may not appear.'),
+			'tags' => array('experimental'), // See warning
+			'warning' => tra('Some plugins may not appear. When using the MySQL engine, can have problems with short plugin names (for MyISAM, those under "ft_min_word_len").'), // See ticket #6313
 		),
 	);
 }
