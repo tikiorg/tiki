@@ -97,6 +97,7 @@ class IndexRebuildCommand extends Command
 					$output->writeln("<info>$message</info>");
 				}
 				$output->writeln("\n<error>Search index rebuild failed. Last messages shown above.</error>");
+				\TikiLib::lib('logs')->add_action('rebuild indexes', 'Search index rebuild failed.', 'system');
 			}
 			return(1);
 		}
