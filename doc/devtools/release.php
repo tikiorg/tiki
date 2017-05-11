@@ -257,14 +257,15 @@ function write_secdb($file, $root, $version)
 	fclose($fp);
 
 	$svn = preg_match('/svn$/', $version);
+	$file = escapeshellarg($file); // escape file name for use in command line.
 
 	if ($file_exists) {
-		info(">> Existing SecDB file '$file' has been updated.");
+		info(">> Existing SecDB file $file has been updated.");
 		if (! $svn) {
 			`svn add $file 2> /dev/null`;
 		}
 	} else {
-		info(">> SecDB file '$file' has been created.");
+		info(">> SecDB file $file has been created.");
 		if (! $svn) {
 			`svn add $file`;
 		}
@@ -330,7 +331,7 @@ function build_packages($releaseVersion, $svnRelativePath)
 {
 	global $options;
 
-	$script = TOOLS . '/tikirelease.sh';
+	$script = escapeshellarg(TOOLS . '/tikirelease.sh');
 	if ($options['debug-packaging']) {
 		$debugflag = '-x';
 	} else {

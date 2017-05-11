@@ -37,11 +37,11 @@ RELTAG=$2
 
 # ############################################################
 
-if [ ! -d $WORKDIR ]; then
-    mkdir -p $WORKDIR || die "Can't make $WORKDIR - $!"
+if [ ! -d "$WORKDIR" ]; then
+    mkdir -p "$WORKDIR" || die "Can't make $WORKDIR - $!"
 fi
 
-cd $WORKDIR || die "Can't get into $WORKDIR - $!"
+cd "$WORKDIR" || die "Can't get into $WORKDIR - $!"
 echo "Working in $WORKDIR"
 
 if [ -d $VER ]; then
@@ -55,7 +55,7 @@ echo "Exporting $SVNROOT/$RELTAG $MODULE-$VER"
 svn export $SVNROOT/$RELTAG $MODULE-$VER
 
 if [ -f $MODULE-$VER/vendor_bundled/composer.json ]; then
-	wget -N http://getcomposer.org/composer.phar
+	wget -N http://getcomposer.org/composer.phar >/dev/null 2>&1 || curl -O "http://getcomposer.org/composer.phar"
 	cd $MODULE-$VER
 	php ../composer.phar install -d vendor_bundled --prefer-dist --no-dev 2>&1 | sed '/Warning: Ambiguous class resolution/d'
 	cd ..
@@ -80,9 +80,9 @@ echo "Creating tarballs"
 tar -czf $MODULE-$VER.tar.gz $MODULE-$VER
 tar -cjf $MODULE-$VER.tar.bz2 $MODULE-$VER
 zip -r -q $MODULE-$VER.zip $MODULE-$VER
-7za a $MODULE-$VER.7z $MODULE-$VER
+7za a $MODULE-$VER.7z $MODULE-$VER || 7z a $MODULE-$VER.7z $MODULE-$VER
 
-ls $WORKDIR/$VER
+ls "$WORKDIR"/$VER
 
 echo ""
 echo "To upload the 'tarballs', copy-paste and execute the following line (and change '\$SF_LOGIN' by your SF.net login):"
