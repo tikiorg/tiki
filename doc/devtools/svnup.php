@@ -15,14 +15,14 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Psr\Log\LogLevel;
-
+use Symfony\Component\Console\Input\ArrayInput;
 
 if (isset($_SERVER['REQUEST_METHOD'])) {
 	die('Only available through command-line.');
 }
 
 $tikiBase = realpath(dirname(__FILE__). '/../..');
-require_once($tikiBase.'/tiki-setup_base.php');
+require_once($tikiBase.'/tiki-setup.php');
 require_once ($tikiBase.'/doc/devtools/svntools.php');
 
 
@@ -76,8 +76,27 @@ class SvnUpCommand extends Command{
 
 		}
 	}
-	protected function execute(InputInterface $input, OutputInterface $output){
 
+	protected function rebuildIndex(ConsoleLogger $logger, OutputInterface $output){
+
+		$console = new Application;
+		$console->add(new IndexRebuildCommand);
+		$console->setAutoExit(false);
+		$console->setDefaultCommand('index:rebuild',false);
+
+		$input = null;
+		if ($output->getVerbosity() <= OutputInterface::VERBOSITY_NORMAL) {
+			$input = new ArrayInput(array('-q' => null));
+		}
+		$console->run($input);
+
+		$errors = \Feedback::get();
+		if (is_array($errors)) {
+			$logger->error('Search index rebuild failed.');
+		}
+	}
+
+	protected function execute(InputInterface $input, OutputInterface $output){
 		$tikiBase = realpath(dirname(__FILE__). '/../..');
 		$logslib = \TikiLib::lib('logs');
 
@@ -101,9 +120,9 @@ class SvnUpCommand extends Command{
 		$progress->setFormat('custom');
 
 		# Perform a dry-run to test For SVN Conflicts,  i.e. files modified locally, that have also been modified in the official source
-		$errors = array('Text conflicts');
 		$progress->setMessage('Testing for SVN conflicts');
 		$progress->start();
+		$errors = array('Text conflicts');
 		$this->executeCommand($logger,'svn merge --dry-run -r BASE:HEAD .','Automatic update failed. There are some SVN conflicts you need to fix.',$errors);
 
 		// if there are conflicts, don't continue.
@@ -126,10 +145,9 @@ class SvnUpCommand extends Command{
 		preg_match('/Revision: (\d+)/',shell_exec('svn info'),$endRev);
 		$endRev = $endRev[1];
 
-		$progress->setMessage('Clearing cache');
+		$progress->setMessage('Clearing all caches');
 		$progress->advance();
-		$errors = array('','Invalid cache','Missing parameter');
-		$this->executeCommand($logger,'php console.php cache:clear --all','Problem clearing cache',$errors);
+		\TikiLib::lib('cache')->empty_cache();
 
 		$progress->setMessage('Updating dependencies & setting file permissions');
 		$progress->advance();
@@ -159,9 +177,9 @@ class SvnUpCommand extends Command{
 		if (!$input->getOption('no-reindex')) {
 			$progress->setMessage('Rebuilding search index');
 			$progress->advance();
-			$errors = array('', 'Search index rebuild failed');
-			$this->executeCommand($logger,'php console.php index:rebuild', 'Problem rebuilding index', $errors);
+			$this->rebuildIndex($logger,$output);
 		}
+
 
 		if ($logger->hasErrored()) {
 			$logslib->add_action('svn update', "Automatic update completed with errors, r$startRev -> r$endRev, {tr}Try again or debug.{/tr}", 'system');
@@ -174,13 +192,11 @@ class SvnUpCommand extends Command{
 		echo "\n";
 	}
 }
-// create the application and new console
 
+// create the application and new console
 $console = new Application;
 $console->add(new SvnUpCommand);
 $console->setDefaultCommand('svnup');
-
-// run the command
 $console->run();
 
 
