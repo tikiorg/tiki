@@ -2173,9 +2173,9 @@ if ($standalone && !$nagios) {
 
 	if ($trimCapable) {
 
-		$trimRequirements = [];
+		$trimServerRequirements = [];
 
-		$commands = [
+		$serverCommands = [
 			'make' => 'make',
 			'php-cli' => 'php',
 			'rsync' => 'rsync',
@@ -2186,21 +2186,37 @@ if ($standalone && !$nagios) {
 			'sqlite' => 'sqlite3'
 		];
 
-		foreach ($commands as $key => $command) {
-			$trimRequirements[$key] = `which $command` ? true : false;
+		foreach ($serverCommands as $key => $command) {
+			$trimServerRequirements[$key] = `which $command` ? true : false;
 		}
 
-		$phpExtensions = [
+		$serverPHPExtensions = [
 			'php5-sqlite' => 'sqlite3',
 			'gz' => 'zlib',
 			'bz2' => 'bz2',
 		];
 
-		foreach ($phpExtensions as $key => $extension) {
-			$trimRequirements[$key] = extension_loaded($extension);
+		foreach ($serverPHPExtensions as $key => $extension) {
+			$trimServerRequirements[$key] = extension_loaded($extension);
 		}
 
-		$smarty->assign('trim_requirements', $trimRequirements);
+		$smarty->assign('trim_server_requirements', $trimServerRequirements);
+
+		$trimClientRequirements = [
+			'SSH or FTP server' => '',
+		];
+
+		$clientCommands = [
+			'php-cli' => 'php',
+			'tar' => 'tar',
+			'mysqldump' => 'mysqldump',
+		];
+
+		foreach ($clientCommands as $key => $command) {
+			$trimClientRequirements[$key] = `which $command` ? true : false;
+		}
+
+		$smarty->assign('trim_client_requirements', $trimClientRequirements);
 	}
 
 	$smarty->assign('sensitive_data_detected_files', $sensitiveDataDetectedFiles);

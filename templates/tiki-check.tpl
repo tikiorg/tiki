@@ -357,26 +357,51 @@
 {tr}For more detailed information about Tiki Remote Instance Manager please check <a href="https://doc.tiki.org/TRIM">doc.tiki.org</a>{/tr}.
 
 {if trim_capable}
-	<h3>Master server</h3>
+	<h3>Server Instance</h3>
 	<div class="table-responsive">
 		<table class="table">
 			<tr>
 				<th>{tr}Requirements{/tr}</th>
 				<th>{tr}Status{/tr}</th>
 			</tr>
-			{foreach from=$trim_requirements key=key item=item}
+			{foreach from=$trim_server_requirements key=key item=item}
 				<tr>
 					<td class="text">{$key}</td>
 					<td class="text">
-						{if $item}
+						{if $item === true}
 							{icon name='ok' iclass='text-success'}
-						{else}
+						{elseif $item === false}
 							{icon name='remove' iclass='text-danger'}
+						{else}
+							{$item}
 						{/if}
 					</td>
 				</tr>
 			{/foreach}
+		</table>
+	</div>
 
+	<h3>Client Instance</h3>
+	<div class="table-responsive">
+		<table class="table">
+			<tr>
+				<th>{tr}Requirements{/tr}</th>
+				<th>{tr}Status{/tr}</th>
+			</tr>
+			{foreach from=$trim_client_requirements key=key item=item}
+				<tr>
+					<td class="text">{$key}</td>
+					<td class="text">
+						{if $item === true}
+							{icon name='ok' iclass='text-success'}
+						{elseif $item === false}
+							{icon name='remove' iclass='text-danger'}
+						{else}
+							{$item}
+						{/if}
+					</td>
+				</tr>
+			{/foreach}
 		</table>
 	</div>
 {else}
