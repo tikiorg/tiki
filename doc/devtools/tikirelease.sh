@@ -66,7 +66,6 @@ find $MODULE-$VER -name .cvsignore -type f -exec rm -f {} \;
 find $MODULE-$VER -name .svnignore -type f -exec rm -f {} \;
 find $MODULE-$VER -name .gitignore -type f -exec rm -f {} \;
 find $MODULE-$VER/lang/ -type f -name language.php -exec php $MODULE-$VER/doc/devtools/stripcomments.php  {} \;
-php $MODULE-$VER/doc/devtools/rewritesecdb.php $VER
 
 rm -rf $MODULE-$VER/tests
 rm -rf $MODULE-$VER/db/convertscripts

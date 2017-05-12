@@ -59,15 +59,13 @@ if (! $options['no-check-svn'] && has_uncommited_changes('.')) {
 	error("Uncommited changes exist in the working folder.\n");
 }
 
-if ($options['only-secdb']) {
-	include_once('lib/setup/twversion.class.php');
-	$TWV = new TWVersion();
+include_once('lib/setup/twversion.class.php');
+$TWV = new TWVersion();
 
-	write_secdb(ROOT . "/db/tiki-secdb_{$TWV->version}_mysql.sql", ROOT, $TWV->version);
+if ($options['only-secdb']) {
+	updateSecdb($TWV->version);
 	exit;
 }
-
-
 
 $script = $_SERVER['argv'][0];
 $version = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : '';
@@ -87,9 +85,7 @@ if ($isPre) {
 $splitedversion = explode('.', $version);
 $mainversion = $splitedversion[0];
 
-include_once('lib/setup/twversion.class.php');
 $check_version = $version.$subrelease;
-$TWV = new TWVersion();
 if ($TWV->version != $check_version) {
 	error("The version in the code ".strtolower($TWV->version)." differs from the version provided to the script $check_version.\nThe version should be modified in lib/setup/twversion.class.php to match the released version.");
 }
@@ -186,9 +182,9 @@ if (! $options['no-check-smarty'] && important_step("Check syntax of all Smarty 
 	info('>> Current Smarty code successfully passed the syntax check.');
 }
 
-if (! $options['no-secdb'] && important_step("Generate SecDB file 'db/tiki-secdb_{$version}_mysql.sql'")) {
-	write_secdb(ROOT . "/db/tiki-secdb_{$version}_mysql.sql", ROOT, $secdbVersion);
-	important_step("Commit SecDB file", true, "[REL] SecDB for $secdbVersion");
+if (! $options['no-secdb'] && important_step("Update SecDB file(s) 'db/tiki-secdb_{$version}_mysql.sql'")) {
+	if(updateSecdb($TWV->version))
+		important_step("Commit SecDB file changes", true, "[REL] SecDB for $secdbVersion");
 }
 
 if ($isPre) {
@@ -199,6 +195,7 @@ if ($isPre) {
 		echo color("This was the last step.\n", 'cyan');
 	}
 } else {
+
 
 	if (! $options['no-tagging']) {
 		$fb = full($branch);
@@ -232,17 +229,31 @@ if ($isPre) {
 
 // Helper functions
 
+
 /**
- * @param $file
- * @param $root
- * @param $version
+ *
+ * Will remove old secdb files and generate a new one based on working copy files.
+ *
+ * @param $version string The current tiki version to use eg. 17.0 or 21.0RC1
+ * @return bool true on success
  */
-function write_secdb($file, $root, $version)
+
+function updateSecdb($version)
 {
-	$file_exists = @file_exists($file);
-	$fp = @fopen($file, 'w+') or error('The SecDB file "' . $file . '" is not writable or can\'t be created.');
+	// first unset any preexisting files.
+	$files = glob(ROOT . '/db/tiki-secdb_*_mysql.sql');
+	$removed = count($files);
+	foreach ($files as $file)
+		unlink($file);
+
+	$file = "/db/tiki-secdb_{$version}_mysql.sql";
+
+	if (!$fp = @fopen(ROOT.$file, 'w')){
+		error('The SecDB file "' . ROOT.$file . '" is not writable or can\'t be created.');
+		return false;
+	}
 	$queries = array();
-	md5_check_dir($root, $root, $version, $queries);
+	md5_check_dir(ROOT, $version, $queries);
 
 	if (! empty($queries)) {
 		sort($queries);
@@ -253,32 +264,24 @@ function write_secdb($file, $root, $version)
 		}
 		fwrite($fp, "commit;\n");
 	}
-
 	fclose($fp);
 
 	$svn = preg_match('/svn$/', $version);
-	$file = escapeshellarg($file); // escape file name for use in command line.
 
-	if ($file_exists) {
-		info(">> Existing SecDB file $file has been updated.");
-		if (! $svn) {
-			`svn add $file 2> /dev/null`;
-		}
-	} else {
-		info(">> SecDB file $file has been created.");
-		if (! $svn) {
-			`svn add $file`;
-		}
+	info(">> $removed old SedDB file(s) were removed and replaced with $file");
+	$file = escapeshellarg(ROOT.$file); // escape file name for use in command line.
+	if (!$svn) {
+		`svn add $file 2> /dev/null`;
 	}
+	return true;
 }
 
 /**
- * @param $root
  * @param $dir
  * @param $version
  * @param $queries
  */
-function md5_check_dir($root, $dir, $version, &$queries)
+function md5_check_dir($dir, $version, &$queries)
 {
 	$d = dir($dir);
 	$link = null;
@@ -287,12 +290,12 @@ function md5_check_dir($root, $dir, $version, &$queries)
 		$entry = $dir . '/' . $e;
 		if (is_dir($entry)) {
 			// do not descend and no CVS/Subversion files
-			if ($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry != $root . '/temp/templates_c' && $entry != $root . '/temp' && $entry != $root . '/vendor_custom') {
-				md5_check_dir($root, $entry, $version, $queries);
+			if ($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry != ROOT . '/temp' && $entry != ROOT . '/vendor_custom') {
+				md5_check_dir($entry, $version, $queries);
 			}
 		} else {
 			if (preg_match('/\.(sql|css|tpl|js|php)$/', $e) && realpath($entry) != __FILE__ && $entry != './db/local.php') {
-				$file = '.' . substr($entry, strlen($root));
+				$file = '.' . substr($entry, strlen(ROOT));
 
 				// Escape filename. Since this requires a connection to MySQL (due to the charset), do so conditionally to reduce the risk of connection failure. 
 				if (! preg_match('/^[a-zA-Z0-9\/ _+.-]+$/', $file) ) {
@@ -315,7 +318,7 @@ function md5_check_dir($root, $dir, $version, &$queries)
 
 				if (is_readable($entry)) {
 					$hash = md5_file($entry);
-					$queries[] = "INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('$file', '$hash', '$version', 0);";
+					$queries[] = "INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`) VALUES('$file', '$hash', '$version');";
 				}
 			}
 		}
@@ -476,7 +479,7 @@ function check_smarty_syntax_error_handler($errno, $errstr, $errfile = '', $errl
  * @param int $retry
  * @return bool
  */
-function check_php_syntax(&$dir, &$error_msg, $hide_php_warnings, $retry = 10)
+function check_php_syntax(&$dir, &$error_msg, $hide_php_warnings)
 {
 	global $phpCommand;
 	$checkPhpCommand = $phpCommand . (ERROR_REPORTING_LEVEL > 0 ? ' -d error_reporting=' . (int) ERROR_REPORTING_LEVEL : '');
@@ -631,10 +634,9 @@ function important_step($msg, $increment_step = true, $commit_msg = false)
 
 	if ($commit_msg && $options['no-commit']) {
 		print "Skipping actual commit ('$commit_msg') because no-commit = true\n";
-		return;
+		return false;
 	}
 
-	$do_step = false;
 	if ($options['force-yes']) {
 		important("\n$step) $msg...");
 		$do_step = true;
@@ -683,11 +685,11 @@ function important_step($msg, $increment_step = true, $commit_msg = false)
  */
 function update_changelog_file($newVersion)
 {
+	$handle = false;
 	if (! is_readable(CHANGELOG) || ! is_writable(CHANGELOG) || ! ($handle = @fopen(CHANGELOG, "r"))) {
 		error('The changelog file "' . CHANGELOG . '" is not readable or writable.');
 	}
 
-	$isNewMajorVersion = substr($newVersion, -1) == 0;
 	$majorVersion = substr($newVersion, 0, strpos($newVersion, '.'));
 	$parseLogs = $sameFinalVersion = $skipBuffer = false;
 	$lastReleaseMajorNumber = -1;
@@ -990,9 +992,7 @@ function get_contributors_data($path, &$contributors, $minRevision, $maxRevision
 function get_contributors_sf_data(&$contributors)
 {
 	global $options;
-	$members = '';
 	$matches = array();
-	$userParsedInfo = array();
 
 	if (! function_exists('iconv')) {
 		error("PHP 'iconv' function is not available on this system. Impossible to get SF.net data.");
@@ -1123,8 +1123,9 @@ function display_howto()
    HOWTO release Tiki
 --------------------------
 
-Please see: http://dev.tiki.org/How+to+release
+Please see: https://dev.tiki.org/How+to+release
 
 EOS;
+	shell_exec('open ' . escapeshellarg('https://dev.tiki.org/How+to+release'));
 	exit;
 }

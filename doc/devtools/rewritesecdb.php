@@ -5,6 +5,15 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+
+/**
+ *
+ * Currently not in use. Please use php release.php --only-secdb to generate a secdb file.
+ *
+ */
+
+
+
 $version = $_SERVER['argv'][1];
 
 rewriteSecdb('tiki-' . $version . '/db/tiki-secdb_'.$version.'_mysql.sql', 'tiki-' . $version, $version);
@@ -50,14 +59,14 @@ function md5CheckDir($root, $dir, $version, &$queries)
 		$entry = $dir . '/' . $e;
 		if (is_dir($entry)) {
 			// do not descend and no CVS/Subversion files
-			if ($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry!='./temp/templates_c') {
+			if ($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn') {
 				md5CheckDir($root, $entry, $version, $queries);
 			}
 		} else {
 			if (preg_match('/\.(sql|css|tpl|js|php)$/', $e) && realpath($entry) != __FILE__ && $entry != './db/local.php') {
 				$file = '.' . substr($entry, strlen($root));
 				$hash = md5_file($entry);
-				$queries[] = "INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('$file', '$hash', '$version', 0);";
+				$queries[] = "INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`) VALUES('$file', '$hash', '$version');";
 			}
 		}
 	}
