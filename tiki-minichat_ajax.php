@@ -136,7 +136,7 @@ foreach ($chans as $chan) {
                 }
             }
 	//TODO: improve matching and replace with better smileys + use global lib
-            $msgtotal = "<span class='minichat_ts'>[$t]</span>&nbsp;<span class='minichat_nick'>&lt;" . ($row['nick'] == '' ? "<em>" . tra('Anonymous') . "</em>" : strtr(smarty_modifier_userlink($row['user']), "\"", "'")) . "&gt;</span> <span class='minichat_msg'>" . htmlentities($row['msg'], ENT_QUOTES, 'UTF-8') . "</span><br>" . $msgtotal;
+            $msgtotal = "<span class='minichat_ts'>[$t]</span>&nbsp;<span class='minichat_nick'>&lt;" . ($row['nick'] == '' ? "<em>" . tra('Anonymous') . "</em>" : str_replace('"', '\"', smarty_modifier_userlink($row['user']))) . "&gt;</span> <span class='minichat_msg'>" . htmlentities($row['msg'], ENT_QUOTES, 'UTF-8') . "</span><br>" . $msgtotal;
 		}
 		$msgtotal = str_replace(":-D", "<img src='img/smiles/icon_biggrin.gif' width='15' height='15'>", $msgtotal);
 		$msgtotal = str_replace(":D", "<img src='img/smiles/icon_biggrin.gif' width='15' height='15'>", $msgtotal);
