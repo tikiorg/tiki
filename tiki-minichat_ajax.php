@@ -11,6 +11,7 @@
 require_once ('tiki-setup.php');
 require_once ('lib/smarty_tiki/modifier.username.php');
 $access->check_feature('feature_minichat');
+$access->check_permission('tiki_p_chat');
 header("Pragma: public");
 header("Pragma: no-cache");
 header("Cache-Control: no-cache, must-revalidate, no-store, post-check=0, pre-check=0, max-age=0");
