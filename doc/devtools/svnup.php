@@ -95,9 +95,7 @@ class SvnUpCommand extends Command{
 	 * 													produced, handy as an extra check when output is expected.
 	 * @param bool 	$log				If errors shoud be logged.
 	 */
-	public function executeCommand(ConsoleLogger $logger, $command, $errorMessage = '', $errors=array(),$log = true){
-
-		$return = shell_exec($command);
+	public function OutputErrors(ConsoleLogger &$logger, $return, $errorMessage = '', $errors=array(),$log = true){
 
 		$logger->info($return);
 
@@ -122,15 +120,34 @@ class SvnUpCommand extends Command{
 		$input = null;
 		if ($output->getVerbosity() <= OutputInterface::VERBOSITY_VERBOSE) {
 			$input = new ArrayInput(array('-q' => null));
+		}elseif ($output->getVerbosity() == OutputInterface::VERBOSITY_DEBUG) {
+			$input = new ArrayInput(array('-vvv' => null));
 		}
 		$console->run($input);
-
 
 		$errors = \Feedback::get();
 		if (is_array($errors)) {
 			$logger->error('Search index rebuild failed.');
 		}
 	}
+
+
+	protected function dbUpdate(OutputInterface $output)
+	{
+
+		$console = new Application;
+		$console->add(new UpdateCommand);
+		$console->setAutoExit(false);
+		$console->setDefaultCommand('database:update', false);
+		$input = null;
+		if ($output->getVerbosity() <= OutputInterface::VERBOSITY_VERBOSE) {
+			$input = new ArrayInput(array('-q' => null));
+		}elseif ($output->getVerbosity() == OutputInterface::VERBOSITY_DEBUG) {
+			$input = new ArrayInput(array('-vvv' => null));
+		}
+		$console->run($input);
+	}
+
 
 	protected function execute(InputInterface $input, OutputInterface $output){
 		$tikiBase = realpath(dirname(__FILE__). '/../..');
@@ -149,15 +166,6 @@ class SvnUpCommand extends Command{
 			$logslib = new \LogsLib();
 		}
 
-		$max = 7;
-		if ($input->getOption('no-db')) {
-			$max -= 4;
-		}else{
-			if ($input->getOption('no-secdb'))
-				$max --;
-			if ($input->getOption('no-reindex'))
-				$max --;
-		}
 
 
 		// die gracefully if shell_exec is not enabled;
@@ -167,36 +175,43 @@ class SvnUpCommand extends Command{
 			$logger->critical('Automatic update failed. Could not execute shell_exec()');
 			die();
 		}
+
+
+		$max = 6;
+		if ($input->getOption('no-db')) {
+			$max -= 4;
+		}else{
+			if ($input->getOption('no-secdb'))
+				$max --;
+			if ($input->getOption('no-reindex'))
+				$max --;
+		}
+
 		$progress = new ProgressBar($output, $max);
 		if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE)
 			$progress->setOverwrite(false);
 		$progress->setFormatDefinition('custom', ' %current%/%max% [%bar%] -- %message%');
 		$progress->setFormat('custom');
 
-		# Perform a dry-run to test For SVN Conflicts,  i.e. files modified locally, that have also been modified in the official source
-		$progress->setMessage('Testing for SVN conflicts');
-		$progress->start();
-		$errors = array('Text conflicts');
-		$this->executeCommand($logger,'svn merge --dry-run -r BASE:HEAD .','Automatic update failed. There are some SVN conflicts you need to fix.',$errors,!$input->getOption('no-db'));
 
-		// if there are conflicts, don't continue.
-		if ($logger->hasErrored()) {
-			$progress->finish();
-			echo "\n";
-			die();
-		}
+		$progress->setMessage('Pre-Update Checks');
+		$progress->start();
 
 		// set revision number beginning with.
-		preg_match('/Revision: (\d+)/',shell_exec('svn info'),$startRev);
+		$raw = shell_exec('svn info');
+		$output->writeln($raw,OutputInterface::VERBOSITY_DEBUG);
+		preg_match('/Revision: (\d+)/',$raw,$startRev);
 		$startRev = $startRev[1];
 
-		$progress->setMessage('No conflicts, updating SVN');
+		$progress->setMessage('Updating SVN');
 		$progress->advance();
-		$errors = array('');
-		$this->executeCommand($logger,'svn update','Problem with svn up',$errors,!$input->getOption('no-db'));
+		$errors = array('','Text conflicts');
+		$this->OutputErrors($logger,shell_exec('svn update --accept p'),'Problem with svn up, check for conflicts.',$errors,!$input->getOption('no-db'));
 
 		// set revision number updated to.
-		preg_match('/Revision: (\d+)/',shell_exec('svn info'),$endRev);
+		$raw = shell_exec('svn info');
+		$output->writeln($raw,OutputInterface::VERBOSITY_DEBUG);
+		preg_match('/Revision: (\d+)/',$raw,$endRev);
 		$endRev = $endRev[1];
 
 		if (!$input->getOption('no-db')) {
@@ -209,7 +224,7 @@ class SvnUpCommand extends Command{
 		$progress->setMessage('Updating dependencies & setting file permissions');
 		$progress->advance();
 		$errors = array('', 'Please provide an existing command', 'you are behind a proxy', 'Composer failed', 'Wrong PHP version');
-		$this->executeCommand($logger,'sh setup.sh -n fix 2>&1','Problem running setup.sh',$errors,!$input->getOption('no-db'));   // 2>&1 suppresses all terminal output, but allows full capturing for logs & verbiage
+		$this->OutputErrors($logger,shell_exec('sh setup.sh -n fix 2>&1'),'Problem running setup.sh',$errors,!$input->getOption('no-db'));   // 2>&1 suppresses all terminal output, but allows full capturing for logs & verbiage
 
 		// generate a secbb database so when database:update is run, it also gets updated.
 		if (!$input->getOption('no-secdb') && $input->getOption('no-db')) {
@@ -220,7 +235,7 @@ class SvnUpCommand extends Command{
 				$progress->setMessage('Updating secdb');
 				$progress->advance();
 				$errors = array('is not writable', '');
-				$this->executeCommand($logger, 'php doc/devtools/release.php --only-secdb --no-check-svn', 'Problem updating secdb', $errors);
+				$this->OutputErrors($logger, shell_exec('php doc/devtools/release.php --only-secdb --no-check-svn'), 'Problem updating secdb', $errors);
 			}
 		}
 
@@ -229,8 +244,8 @@ class SvnUpCommand extends Command{
 			// note: running database update also clears the cache
 			$progress->setMessage('Updating database');
 			$progress->advance();
-			$errors = array('', 'Error');
-			$this->executeCommand($logger, 'php console.php database:update', 'Problem updating database', $errors);
+			$this->dbUpdate($output);
+
 
 			// rebuild tiki index. Since this could take a while, make it optional.
 			if (!$input->getOption('no-reindex')) {
@@ -239,7 +254,6 @@ class SvnUpCommand extends Command{
 				$this->rebuildIndex($logger, $output);
 			}
 		}
-
 
 		if ($logger->hasErrored()) {
 			if (!$input->getOption('no-db'))
