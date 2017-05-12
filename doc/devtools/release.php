@@ -491,7 +491,6 @@ function check_smarty_syntax_error_handler($errno, $errstr, $errfile = '', $errl
  * @param $dir
  * @param $error_msg
  * @param $hide_php_warnings
- * @param int $retry
  * @return bool
  */
 function check_php_syntax(&$dir, &$error_msg, $hide_php_warnings)
