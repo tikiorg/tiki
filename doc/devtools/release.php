@@ -203,17 +203,26 @@ if ($isPre) {
 
 		$tagAlreadyExists = isset(get_info($ft)->entry);
 		if ($tagAlreadyExists && important_step("The Tag '$tag' already exists: Delete the existing tag in order to create a new one")) {
-			`svn rm $ft -m "[REL] Deleting tag '$tag' in order to create a new one"`;
-			$tagAlreadyExists = false;
-			info(">> Tag '$tag' deleted.");
+			$commit_msg = "[REL] Deleting tag '$tag' in order to create a new one";
+			if ($options['no-commit']) {
+				print "Skipping actual commit ('$commit_msg') because no-commit = true\n";
+			} else {
+				`svn rm $ft -m "$commit_msg"`;
+				$tagAlreadyExists = false;
+				info(">> Tag '$tag' deleted.");
+			}
 		}
-
 		if (! $tagAlreadyExists) {
 			update_working_copy('.');
 			$revision = (int) get_info(ROOT)->entry->commit['revision'];
 			if (important_step("Tag release using branch '$branch' at revision $revision")) {
-				`svn copy $fb -r$revision $ft -m "[REL] Tagging release"`;
-				info(">> Tag '$tag' created.");
+				$commit_msg = '[REL] Tagging release';
+				if ($options['no-commit']) {
+					print "Skipping actual commit ('$commit_msg') because no-commit = true\n";
+				} else {
+					`svn copy $fb -r$revision $ft -m "$commit_msg"`;
+					info(">> Tag '$tag' created.");
+				}
 			}
 		}
 	}
@@ -470,6 +479,7 @@ function check_smarty_syntax_error_handler($errno, $errstr, $errfile = '', $errl
 	if (strpos($errstr, 'filemtime(): stat failed for') === false) {	// smarty seems to emit these for every file
 		echo "\n" . color($errstr, 'red') . "\n";
 	}
+	return true;
 }
 
 /**
