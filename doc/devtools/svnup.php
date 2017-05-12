@@ -119,14 +119,12 @@ class SvnUpCommand extends Command{
 		$console->add(new IndexRebuildCommand);
 		$console->setAutoExit(false);
 		$console->setDefaultCommand('index:rebuild',false);
-
 		$input = null;
-		if ($output->getVerbosity() <= OutputInterface::VERBOSITY_NORMAL) {
+		if ($output->getVerbosity() <= OutputInterface::VERBOSITY_VERBOSE) {
 			$input = new ArrayInput(array('-q' => null));
 		}
 		$console->run($input);
 
-		$console->setDefaultCommand('svnup',false);
 
 		$errors = \Feedback::get();
 		if (is_array($errors)) {
