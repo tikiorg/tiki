@@ -28,19 +28,20 @@ if (isset($_SERVER['argv'][1]) && $_SERVER['argv'][1] === 'dbtest') {
 	die();
 }
 
-// setup includes based on database mode.
-if (!in_array('--no-db',$_SERVER['argv'])) {
+// setup includes based on database mode. Note: array_slice prevents ill formatted requests from generating unexpected output.
+if (!in_array('--no-db',array_slice($_SERVER['argv'],2))) {
 	$path = escapeshellarg($tikiBase . '/doc/devtools/svnup.php');
 	$error = shell_exec('php ' . $path . ' dbtest');
 
 	if ($error) {
 		echo('Running in no-db mode, Database errors: ' . $error . "\n");
+
+		if (!$_SERVER['argv'][1])
+			$_SERVER['argv'][1] = 'svnup';
 		$_SERVER['argv'][] = '--no-db';
 	}
 }
-
-
-if (in_array('--no-db',$_SERVER['argv'])){
+if (in_array('--no-db',array_slice($_SERVER['argv'],2))){
 	require_once ($tikiBase.'/tiki-filter-base.php');
 
 }else{
@@ -48,7 +49,6 @@ if (in_array('--no-db',$_SERVER['argv'])){
 	require_once ($tikiBase.'/lib/setup/timer.class.php');    // needed for index rebuilding
 	require_once ($tikiBase.'/lib/cache/cachelib.php');
 }
-
 require ($tikiBase.'/doc/devtools/svntools.php');
 
 
@@ -179,7 +179,7 @@ class SvnUpCommand extends Command{
 
 		$max = 6;
 		if ($input->getOption('no-db')) {
-			$max -= 4;
+			$max -= 3;
 		}else{
 			if ($input->getOption('no-secdb'))
 				$max --;
