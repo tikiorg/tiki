@@ -8,6 +8,22 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+
+$inputConfiguration =	[[
+	'staticKeyFilters'	=> [
+		'use-default-prefs'	=> 'alnum', 	// request
+		'use-upgrade-wizard'=> 'alnum', 	// request
+		'url'				=> 'url',		// request
+		'close'				=> 'alnum',		// post
+		'showOnLogin'		=> 'alnum',		// post
+		'wizard_step'		=> 'int',		// post
+		'stepNr'			=> 'int',		// get
+		'back'				=> 'alnum',		// post
+	],
+
+	// catchAllUnset not advised because 'lm_preference' has variable array content.
+]];
+
 require 'tiki-setup.php';
 
 $headerlib = TikiLib::lib('header');
