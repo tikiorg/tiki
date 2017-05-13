@@ -342,6 +342,14 @@ class PreferencesLib
 		return $prefs;
 	}
 
+	/**
+	 * @param      $handled
+	 * @param      $data
+	 * @param null $limitation
+	 *
+	 * @return array
+	 */
+
 	function applyChanges( $handled, $data, $limitation = null )
 	{
 		global $user_overrider_prefs;
