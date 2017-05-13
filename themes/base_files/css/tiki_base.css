@@ -3023,7 +3023,10 @@ table.treetable.objectperms .checkBoxHeader {
   vertical-align: bottom;
   width: 30px;
 }
-tr.subHeader.leaf.collapsed > td:last-of-type,
+table.objectperms th:not(.checkBoxHeader),
+table.objectperms .subHeader td:not(.checkBoxHeader) {
+  text-align: center;
+}
 tr.odd.leaf.collapsed > td:last-of-type,
 tr.even.leaf.collapsed > td:last-of-type {
   text-indent: 15px;
@@ -3032,7 +3035,7 @@ table.treetable .checkBoxHeader > td,
 .table > tbody > tr.subHeader > td {
   vertical-align: bottom;
 }
-table.treetable .checkBoxHeader > div,
+table.objectperms .checkBoxHeader > div,
 table.objectperms > tbody .checkBoxLabel {
   -webkit-transform: /*translate(0px, -10px)*/ rotate(305deg);
   transform: /*translate(-20px, -70px)*/ rotate(305deg);
@@ -3041,6 +3044,8 @@ table.objectperms > tbody .checkBoxLabel {
   position: absolute;
   left: -15px;
   bottom: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 table.treetable.objectperms span.indenter,
 .subHeader .checkBoxHeader .indenter {
