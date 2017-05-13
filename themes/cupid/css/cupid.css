@@ -6749,6 +6749,9 @@ a.fc-event:hover {
 }
 .filter .fancyfilter .token {
   background: #fce0ec;
+  border: 1px solid #f49ac0;
+  font-size: 11px;
+  padding: 3px;
 }
 .note-list .postbody-title {
   background: #ffffff;
@@ -7327,7 +7330,8 @@ h6 a.tiki_anchor:hover {
   border-left: 2px solid #f49ac0;
 }
 .mandatory_star {
-  color: #ebccd1;
+  color: #e1bfda;
+  font-size: 120%;
 }
 .trackerplugindesc {
   color: #f0569f;
