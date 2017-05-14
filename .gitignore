@@ -13,5 +13,6 @@
 /temp/
 # Ignore vendor folders, they are managed by composer
 /vendor/
+/vendor_bundled/vendor/
 # Ignore PhpStorm
 .idea/
