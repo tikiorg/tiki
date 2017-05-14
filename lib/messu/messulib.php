@@ -475,7 +475,7 @@ class Messu extends TikiLib
 		if ($dbsource == '')
 			$dbsource = 'messages';
 
-		$bindvars[] = array($user);
+		$bindvars[] = $user;
 
 		$mid = '';
 
