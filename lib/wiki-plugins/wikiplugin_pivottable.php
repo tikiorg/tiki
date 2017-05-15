@@ -205,6 +205,18 @@ function wikiplugin_pivottable_info()
 				'since' => '16.3',
 				'required' => false,
 				'filter' => 'text',
+			),
+			'chartHoverBar' => array(
+				'name' => tr('Chart hover bar'),
+				'description' => tr('Display the Chart hover bar or not.'),
+				'since' => '16.3',
+				'required' => false,
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			)
 		),
 	);
@@ -629,6 +641,7 @@ function wikiplugin_pivottable($data, $params)
 		'xAxisLabel' => empty($params['xAxisLabel']) ? null : $params['xAxisLabel'],
 		'yAxisLabel' => empty($params['yAxisLabel']) ? null : $params['yAxisLabel'],
 		'chartTitle' => empty($params['chartTitle']) ? null : $params['chartTitle'],
+		'chartHoverBar' => empty($params['chartHoverBar']) ? null : $params['chartHoverBar'],
 		'index'=>$id
 	));
 	
