@@ -6,7 +6,8 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
+// but allow direct access if running in cli
+if ((strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) && isset($_SERVER['REQUEST_METHOD'])) {
 	header('location: index.php');
 	exit;
 }

@@ -22,39 +22,15 @@ if (isset($_SERVER['REQUEST_METHOD'])) {
 }
 $tikiBase = realpath(dirname(__FILE__). '/../..');
 
-// will output db errors if 'php svnup.php dbtest' is called
-if (isset($_SERVER['argv'][1]) && $_SERVER['argv'][1] === 'dbtest') {
-	include($tikiBase . '/db/tiki-db.php');
-	die();
-}
-
-// setup includes based on database mode. Note: array_slice prevents ill formatted requests from generating unexpected output.
-if (!in_array('--no-db',array_slice($_SERVER['argv'],2))) {
-	$path = escapeshellarg($tikiBase . '/doc/devtools/svnup.php');
-	$error = shell_exec('php ' . $path . ' dbtest');
-
-	if ($error) {
-		echo('Running in no-db mode, Database errors: ' . $error . "\n");
-
-		if (!$_SERVER['argv'][1])
-			$_SERVER['argv'][1] = 'svnup';
-		$_SERVER['argv'][] = '--no-db';
-	}
-}
-if (in_array('--no-db',array_slice($_SERVER['argv'],2))){
-	require_once ($tikiBase.'/tiki-filter-base.php');
-
+// if database is unavailable, just autoload. Yo cant call tiki-setup* after autoloading without causing errors.
+if (shell_exec('php '.escapeshellarg($tikiBase.'/db/tiki-db.php'))) {
+	require_once $tikiBase . '/vendor_bundled/vendor/autoload.php';
 }else{
-	require_once ($tikiBase.'/tiki-setup_base.php');
-	require_once ($tikiBase.'/lib/setup/timer.class.php');    // needed for index rebuilding
-	require_once ($tikiBase.'/lib/cache/cachelib.php');
+	require_once $tikiBase . '/tiki-setup_base.php';
 }
-require ($tikiBase.'/doc/devtools/svntools.php');
-
-
 
 /**
- * Add a singleton command "svnup" using the Symfony console component just for this script
+ * Add a singleton command "svnup" using the Symfony console component for this script
  *
  * Class SvnUpCommand
  * @package Tiki\Command
@@ -66,7 +42,7 @@ class SvnUpCommand extends Command{
 	{
 		$this
 			->setName('svnup')
-			->setDescription("Updates SVN repository to latest version and performs necessary tasks in Tiki for a smooth upgrade. Suitable for both development and production.")
+			->setDescription("Updates SVN repository to latest version and performs necessary tasks in Tiki for a smooth update. Suitable for both development and production.")
 			->addOption(
 				'no-secdb',
 				's',
@@ -83,17 +59,21 @@ class SvnUpCommand extends Command{
 				'no-db',
 				'd',
 				InputOption::VALUE_NONE,
-				'Make no changes to the database. (Disables Logging, Database Update, Re-Indexing & Sec-DB'
+				'Make no changes to the database. (SvnUp, dependencies and privilege checks only. Logging disabled.)'
 			);
 	}
 
 
 	/**
-	 * @param string $command			The bash command to be executed
+	 *
+	 * Determines if errors exist and outputs error messages.
+	 *
+	 * @param ConsoleLogger $logger
+	 * @param string $return			Info to print, in a level of elevated verbosity
 	 * @param string $errorMessage		Error message to log-display upon failure
 	 * @param array  $errors			Error messages to check for, sending a '' will produce an error if no output is
 	 * 													produced, handy as an extra check when output is expected.
-	 * @param bool 	$log				If errors shoud be logged.
+	 * @param bool 	$log				If errors should be logged.
 	 */
 	public function OutputErrors(ConsoleLogger &$logger, $return, $errorMessage = '', $errors=array(),$log = true){
 
@@ -111,12 +91,19 @@ class SvnUpCommand extends Command{
 		}
 	}
 
+	/**
+	 * Calls index rebuild command and handles verbiage.
+	 *
+	 * @param ConsoleLogger   $logger
+	 * @param OutputInterface $output
+	 */
+
 	protected function rebuildIndex(ConsoleLogger $logger, OutputInterface $output){
 
 		$console = new Application;
 		$console->add(new IndexRebuildCommand);
 		$console->setAutoExit(false);
-		$console->setDefaultCommand('index:rebuild',false);
+		$console->setDefaultCommand('index:rebuild');
 		$input = null;
 		if ($output->getVerbosity() <= OutputInterface::VERBOSITY_VERBOSE) {
 			$input = new ArrayInput(array('-q' => null));
@@ -131,14 +118,18 @@ class SvnUpCommand extends Command{
 		}
 	}
 
+	/**
+	 * Calls database update command and handles verbiage.
+	 *
+	 * @param OutputInterface $output
+	 */
 
 	protected function dbUpdate(OutputInterface $output)
 	{
-
 		$console = new Application;
 		$console->add(new UpdateCommand);
 		$console->setAutoExit(false);
-		$console->setDefaultCommand('database:update', false);
+		$console->setDefaultCommand('database:update');
 		$input = null;
 		if ($output->getVerbosity() <= OutputInterface::VERBOSITY_VERBOSE) {
 			$input = new ArrayInput(array('-q' => null));
@@ -160,13 +151,20 @@ class SvnUpCommand extends Command{
 		);
 
 		$logger = new ConsoleLogger($output, $verbosityLevelMap);
+		$errors = false;
+		// if were using a db, then configure it.
+		if (!$input->getOption('no-db')) {
+			$errors = shell_exec('php '.escapeshellarg($tikiBase.'/db/tiki-db.php'));
+		}
+		if ($errors) {
+			$logger->notice('Running in no-db mode, Database errors: ' . $errors . "\n");
+			$input->setOption('no-db', true);
+		}
 
 		// if were using a db, then configure it.
 		if (!$input->getOption('no-db')){
 			$logslib = new \LogsLib();
 		}
-
-
 
 		// die gracefully if shell_exec is not enabled;
 		if (!is_callable('shell_exec')){
@@ -175,7 +173,6 @@ class SvnUpCommand extends Command{
 			$logger->critical('Automatic update failed. Could not execute shell_exec()');
 			die();
 		}
-
 
 		$max = 6;
 		if ($input->getOption('no-db')) {
@@ -228,6 +225,7 @@ class SvnUpCommand extends Command{
 
 		// generate a secbb database so when database:update is run, it also gets updated.
 		if (!$input->getOption('no-secdb') && $input->getOption('no-db')) {
+			require_once ($tikiBase.'/doc/devtools/svntools.php');
 			if (svn_files_identical($tikiBase)) {
 				$progress->setMessage('<comment>Working copy differs from repository, skipping SecDb Update.</comment>');
 				$progress->advance();
@@ -251,6 +249,7 @@ class SvnUpCommand extends Command{
 			if (!$input->getOption('no-reindex')) {
 				$progress->setMessage('Rebuilding search index');
 				$progress->advance();
+				require_once ($tikiBase.'/lib/setup/timer.class.php');
 				$this->rebuildIndex($logger, $output);
 			}
 		}
