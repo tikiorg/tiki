@@ -265,7 +265,7 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 			$format = substr($info['filename'], strrpos($info['filename'], '.') + 1);
 	
 			// Fallback to an icon if the format is not supported
-			$tmp = new Image('img/icons/pixel_trans.gif', true, 'gif');	// needed to call non-static Image functions non-statically
+			$tmp = new Image('img/trans.png', true, 'png');	// needed to call non-static Image functions non-statically
 			if ( ! $tmp->is_supported($format) ) {
 				// Is the filename correct? Maybe it doesn't have an extenstion?
 				// Try to determine the format from the filetype too
@@ -301,7 +301,7 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 		
 				if ( ! isset($_GET['icon']) || ( isset($_GET['format']) && $_GET['format'] != $format ) ) {
 					if ( ! empty($info['path']) ) {
-						$image = new Image($prefs['fgal_use_dir'].$info['path'], true);
+						$image = new Image($prefs['fgal_use_dir'].$info['path'], true, $format);
 					} else {
 						$image = new Image($content, false, $format);
 						$content = null; // Explicitely free memory before getting cache
