@@ -17,7 +17,8 @@
 				},
 				xAxisLabel: {{$pivottable.xAxisLabel|json_encode}},
 				yAxisLabel: {{$pivottable.yAxisLabel|json_encode}},
-				chartTitle: {{$pivottable.chartTitle|json_encode}}
+				chartTitle: {{$pivottable.chartTitle|json_encode}},
+				chartHoverBar: {{$pivottable.chartHoverBar|json_encode}}
 			},
 			cols: {{$pivottable.tcolumns|json_encode}}, rows: {{$pivottable.trows|json_encode}},
 			rendererName: {{$pivottable.rendererName|json_encode}},
@@ -37,7 +38,8 @@
 			highlightGroup: {{$pivottable.highlightGroup|json_encode}},
 			xAxisLabel: {{$pivottable.xAxisLabel|json_encode}},
 			yAxisLabel: {{$pivottable.yAxisLabel|json_encode}},
-			chartTitle: {{$pivottable.chartTitle|json_encode}}
+			chartTitle: {{$pivottable.chartTitle|json_encode}},
+			chartHoverBar: {{$pivottable.chartHoverBar|json_encode}}
 		};
 		if( {{$pivottable.menuLimit|json_encode}} ) {
 			opts.menuLimit = {{$pivottable.menuLimit|json_encode}};
