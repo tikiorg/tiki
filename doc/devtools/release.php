@@ -250,16 +250,17 @@ if ($isPre) {
 function updateSecdb($version)
 {
 	// first unset any preexisting files.
-	$files = glob(ROOT . '/db/tiki-secdb_*_mysql.sql');
+	echo (">>");
 	$svn = preg_match('/svn$/', $version);
 
-	$removed = count($files);
+	// if we are not creating a release skip deleting old files.
+	if (!$svn) {
+	$files = glob(ROOT . '/db/tiki-secdb_*_mysql.sql');
 	foreach ($files as $file) {
-		if (!$svn) {
 			$file = escapeshellarg($file);
 			`svn delete $file --force`;
-		}else
-			unlink($file);
+		}
+		echo (' Removed '.count($files).' old secdb files.');
 	}
 
 	$file = "/db/tiki-secdb_{$version}_mysql.sql";
@@ -282,7 +283,7 @@ function updateSecdb($version)
 	}
 	fclose($fp);
 
-	info(">> $removed old SedDB file(s) were removed and replaced with $file");
+	echo (" $file was generated.\n");
 	if (!$svn) {
 		$file = escapeshellarg(ROOT.$file); // escape file name for use in command line.
 		`svn add $file`;

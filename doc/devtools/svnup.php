@@ -174,9 +174,9 @@ class SvnUpCommand extends Command{
 			die();
 		}
 
-		$max = 6;
+		$max = 7;
 		if ($input->getOption('no-db')) {
-			$max -= 3;
+			$max -= 4;
 		}else{
 			if ($input->getOption('no-secdb'))
 				$max --;
@@ -191,7 +191,7 @@ class SvnUpCommand extends Command{
 		$progress->setFormat('custom');
 
 
-		$progress->setMessage('Pre-Update Checks');
+		$progress->setMessage('Pre-update checks');
 		$progress->start();
 
 		// set revision number beginning with.
@@ -223,21 +223,20 @@ class SvnUpCommand extends Command{
 		$errors = array('', 'Please provide an existing command', 'you are behind a proxy', 'Composer failed', 'Wrong PHP version');
 		$this->OutputErrors($logger,shell_exec('sh setup.sh -n fix 2>&1'),'Problem running setup.sh',$errors,!$input->getOption('no-db'));   // 2>&1 suppresses all terminal output, but allows full capturing for logs & verbiage
 
-		// generate a secbb database so when database:update is run, it also gets updated.
-		if (!$input->getOption('no-secdb') && $input->getOption('no-db')) {
-			require_once ($tikiBase.'/doc/devtools/svntools.php');
-			if (svn_files_identical($tikiBase)) {
-				$progress->setMessage('<comment>Working copy differs from repository, skipping SecDb Update.</comment>');
-				$progress->advance();
-			} else {
-				$progress->setMessage('Updating secdb');
-				$progress->advance();
-				$errors = array('is not writable', '');
-				$this->OutputErrors($logger, shell_exec('php doc/devtools/release.php --only-secdb --no-check-svn'), 'Problem updating secdb', $errors);
-			}
-		}
-
 		if (!$input->getOption('no-db')) {
+			// generate a secbb database so when database:update is run, it also gets updated.
+			if (!$input->getOption('no-secdb')) {
+				require_once ($tikiBase.'/doc/devtools/svntools.php');
+				if (svn_files_identical($tikiBase)) {
+					$progress->setMessage('<comment>Working copy differs from repository, skipping SecDb Update.</comment>');
+					$progress->advance();
+				} else {
+					$progress->setMessage('Updating secdb');
+					$progress->advance();
+					$errors = array('is not writable', '');
+					$this->OutputErrors($logger, shell_exec('php doc/devtools/release.php --only-secdb --no-check-svn'), 'Problem updating secdb', $errors);
+				}
+			}
 
 			// note: running database update also clears the cache
 			$progress->setMessage('Updating database');
