@@ -8,9 +8,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-error_log('GET:' . json_encode($_GET));
-error_log('POST:' . json_encode($_POST));
-xdebug_break();
 // Data sent by the IPN must be left unharmed
 if ( isset( $_GET['ipn'] ) ) {
 	$ipn_data = $_POST;
