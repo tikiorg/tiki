@@ -25,5 +25,5 @@
 		{/foreach}
 	{/if}
 	<input type="hidden" name="rating_prev[{$rating_type|escape}][{$rating_id|escape}]" value="{$current_rating|escape}">
-	<input type="submit" class="btn btn-default btn-sm" value="{tr}Rate{/tr}">
+	<input type="submit" class="btn btn-info btn-xs" value="{tr}Rate{/tr}">
 </div>

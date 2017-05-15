@@ -48,6 +48,7 @@ class Services_Comment_Controller
 			'allow_unlock' => $this->canUnlock($type, $objectId),
 			'allow_archive' => $this->canArchive($type, $objectId),
 			'allow_moderate' => $this->canModerate($type, $objectId),
+			'allow_vote' => $this->canVote($type, $objectId),
 		);
 	}
 
@@ -654,6 +655,18 @@ class Services_Comment_Controller
 		return $perms->remove_comments;
 	}
 
+	private function canVote($type, $objectId)
+	{
+		global $prefs;
+
+		if ($prefs['wiki_comments_simple_ratings'] !== 'y') {
+			return false;
+		}
+
+		$perms = $this->getApplicablePermissions($type, $objectId);
+		return $perms->vote_comments || $perms->admin_comments;
+	}
+
 	private function canModerate($type, $objectId)
 	{
 		global $prefs;
@@ -717,7 +730,7 @@ class Services_Comment_Controller
 			if ($item) {
 				return $item->getPerms();
 			} else {
-				Feedback::error(tr('Comments getApplicablePermissions: %0 object %1 not found', $type, $objectId));
+				Feedback::error(tr('Comment permissions: %0 object %1 not found', $type, $objectId));
 				// return global perms
 				return Perms::get();
 			}

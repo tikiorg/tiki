@@ -22,10 +22,11 @@ class Image extends ImageAbstract
 	{
 		if ( $isfile ) {
 			$this->filename = $image;
-			parent::__construct(NULL, false);
+			parent::__construct($image, $isfile);
 		} else {
-			parent::__construct($image, false);
+			parent::__construct($image, $isfile);
 		}
+		$this->format = strtoupper($format);
 	}
 
 	function _load_data()
@@ -36,6 +37,7 @@ class Image extends ImageAbstract
 				try {
 					$this->data->readImage($this->filename);
 					$this->loaded = true;
+					$this->filename = null;
 				}
 				catch (ImagickException $e) {
 					$this->loaded = true;
@@ -51,6 +53,9 @@ class Image extends ImageAbstract
 				catch (ImagickException $e) {
 					$this->data = null;
 				}
+			}
+			if ($this->data) {
+				$this->data->setImageFormat($this->format);
 			}
 		}
 	}
@@ -83,7 +88,7 @@ class Image extends ImageAbstract
 			$this->_load_data();
 		}
 		if ($this->data) {
-			return parent::resizethumb();
+			parent::resizethumb();
 		}
 	}
 

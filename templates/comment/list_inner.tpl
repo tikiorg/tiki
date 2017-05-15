@@ -57,7 +57,7 @@
 								<a href="{service controller=comment action=moderate do=reject threadId=$comment.threadId}" class="btn btn-default btn-sm tips" title="{tr}Reject{/tr}">{icon name="remove"}</a>
 							{/if}
 						{/if}
-						{if $comment.userName ne $user and $comment.approved eq 'y' and $prefs.wiki_comments_simple_ratings eq 'y' and ($tiki_p_vote_comments eq 'y' or $tiki_p_admin_comments eq 'y' )}
+						{if $comment.userName ne $user and $comment.approved eq 'y' and $allow_vote}
 							<form class="commentRatingForm" method="post">
 								{rating type="comment" id=$comment.threadId}
 								<input type="hidden" name="id" value="{$comment.threadId}" />
