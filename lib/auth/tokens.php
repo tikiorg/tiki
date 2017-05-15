@@ -83,26 +83,42 @@ class AuthTokens
 			array( $token )
 		)->fetchRow();
 
-		global $prefs, $full, $tikiroot;		// $full defined in route.php
-		$smarty = TikiLib::lib('smarty');
-		$sefurl = '';
-
+		global $prefs, $tikiroot;		// $full defined in route.php
 		if ($prefs['feature_sefurl'] === 'y') {
-			$sefurl = substr($full, strlen($tikiroot)) . '?' . http_build_query($_GET);
+
 			$sefurlTypeMap = $this->getSefurlTypeMap();
+			$keys = array_keys($_GET);
+			$seftype = '';
 
-			$smarty->loadPlugin('smarty_modifier_sefurl');
-			$sefurl = $tikiroot . smarty_modifier_sefurl($sefurl, $sefurlTypeMap[$_GET[0]]);
-		}
+			for ($i = 1; $i < count($keys); $i++) {
+				$seftype = $sefurlTypeMap[$keys[$i]];
+				if ($seftype) {
+					$key = $keys[$i];
+					// $parameters is compared with the stored $data['parameters'] later
+					// but that doesn't include the 'page' or 'fileId' etc param due to sefurl
+					unset($parameters[$keys[$i]]);
+					break;
+				}
+			}
+			if (empty($key)) {	// missing object type?
+				return null;
+			}
 
-		// add an extra conversion to prevent false positives due to former missmatches
-		// in cases of "/tikiroot/My Page" vs "/tikiroot/My+Page"
-		$entry_no_tikiroot = substr($data['entry'], strlen($tikiroot));
-		$entry_encoded_no_tikiroot = urlencode($entry_no_tikiroot);
-		$full_entry_encoded = $tikiroot . $entry_encoded_no_tikiroot;
-		// entry doesn't match "or" sefurl feature is in use but that also doesn't match
-		if ( $data['entry'] != $entry || ($sefurl && $data['entry']  !== $sefurl && $full_entry_encoded !== $sefurl )) {
-			return null;
+			TikiLib::lib('smarty')->loadPlugin('smarty_modifier_sefurl');
+			$sefurl = $tikiroot . smarty_modifier_sefurl($_GET[$key], $seftype);
+
+			// add an extra conversion to prevent false positives due to url encoding
+			// e.g. in cases of "/tikiroot/My Page" vs "/tikiroot/My+Page"
+			$entry_no_tikiroot = substr($data['entry'], strlen($tikiroot));
+			$entry_encoded_no_tikiroot = urlencode($entry_no_tikiroot);
+			$full_entry_encoded = $tikiroot . $entry_encoded_no_tikiroot;
+
+			if ($data['entry']  !== $sefurl && $full_entry_encoded !== $sefurl ) {
+				return null;	// entry doesn't match
+			}
+
+		} else if ( $data['entry'] != $entry) {
+			return null;	// entry doesn't match
 		}
 
 		$registered = (array) json_decode($data['parameters'], true);
