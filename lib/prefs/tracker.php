@@ -36,8 +36,8 @@ function prefs_tracker_list()
 			'profile_reference' => 'tracker',
 		),
 		'tracker_change_field_type' => array(
-			'name' => tr('Change field types and permanent name'),
-			'description' => tr('Permit unsupported changes of field type and permanent name after creation.'),
+			'name' => tr('Change Field Types'),
+			'description' => tr('Allow field type to be changed after creation.'),
 			'type' => 'flag',
 			'default' => 'n',
 			'warning' => tra('Use with care!'),

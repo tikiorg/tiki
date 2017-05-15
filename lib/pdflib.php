@@ -270,7 +270,16 @@ class PdfGenerator
 		if($prefs['feature_page_title']=='y' && $wikilib->get_page_hide_title($params['page'])==0){
 			$html='<h1>'.$params['page'].'</h1>'.$html;
 		}
-
+		//checking and getting plugin_pdf parameters if set
+		$pdfSettings=$this->getPDFSettings($html,$prefs,$params);
+		
+		if($pdfSettings['toc']=='y'){  	//checking toc
+		   //checking links
+		   if($pdfSettings['toclinks']=='y'){
+		    $links="links=\"1\"";
+		   }
+			$html="<html><tocpagebreak ".$links." />".$html."</html>";
+		}	
        $this->_getImages($html,$tempImgArr);
        
 	   $this->_parseHTML($html);
@@ -278,9 +287,6 @@ class PdfGenerator
 		if (!class_exists('mPDF')){
 	    	include_once($this->location . 'mpdf.php');
 		}
-		//checking and getting plugin_pdf parameters if set
-		
-		$pdfSettings=$this->getPDFSettings($html,$prefs,$params);
 		
 
 	  	$mpdf=new mPDF('utf-8',$pdfSettings['pageSize'],'','',$pdfSettings['marginLeft'],$pdfSettings['marginRight'] , $pdfSettings['marginTop'] , $pdfSettings['marginBottom'] , $pdfSettings['marginHeader'] , $pdfSettings['marginFooter'] ,$pdfSettings['orientation']);
@@ -304,6 +310,11 @@ class PdfGenerator
 	      $mpdf->SetHeader($pdfSettings['header']);
         if($pdfSettings['footer'])
 		$mpdf->SetFooter($pdfSettings['footer']);
+		$mpdf->SetTitle($params['page']);
+		
+		//toc levels
+		$mpdf->h2toc = $pdfSettings['toclevels'];
+		
 		
 		//password protection
 		if($pdfSettings['print_pdf_mpdf_password'])
@@ -332,7 +343,6 @@ class PdfGenerator
 		}
 		$mpdf->WriteHTML(str_replace(array(".tiki","opacity: 0;"),array("","fill: #fff;opacity:0.3;stroke:black"),'<style>'.$basecss.$themecss.$printcss.$this->bootstrapReplace().'</style>'.$html));
 	    $this->clearTempImg($tempImgArr);
-	
 		return $mpdf->Output('', 'S');					// Return as a string
 	}
 	
@@ -374,9 +384,20 @@ class PdfGenerator
         $pdfSettings['header']=str_ireplace("{PAGETITLE}",$params['page'],$prefs['print_pdf_mpdf_header']);
 		$pdfSettings['footer']=str_ireplace("{PAGETITLE}",$params['page'],$prefs['print_pdf_mpdf_footer']);
 		$pdfSettings['print_pdf_mpdf_password']=$prefs['print_pdf_mpdf_password'];
+		$pdfSettings['toc']=$prefs['print_pdf_mpdf_toc']!=''?$prefs['print_pdf_mpdf_toc']:'n';
+		$pdfSettings['toclinks']=$prefs['print_pdf_mpdf_toclinks']!=''?$prefs['print_pdf_mpdf_toclinks']:'n';		
+		if($pdfSettings['toc']=='y'){
+			//toc levels
+			array('H1'=>0, 'H2'=>1, 'H3'=>2);
+			$toclevels=$prefs['print_pdf_mpdf_toclevels']!=''?$prefs['print_pdf_mpdf_toclevels']:'H1|H2|H3';
+			$toclevels=explode("|",$toclevels);
+			$pdfSettings['toclevels']=array();
+			for($toclevel=0;$toclevel<count($toclevels);$toclevel++){
+				$pdfSettings['toclevels'][$toclevels[$toclevel]]=$toclevel;
+			}
+		}
 		//PDF settings
 		return $pdfSettings;
-	
 	}
 	
 	function _getImages(&$html,&$tempImgArr)
