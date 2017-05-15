@@ -19,6 +19,9 @@
 			{preference name=print_pdf_mpdf_printfriendly}
 			{preference name=print_pdf_mpdf_orientation}
 			{preference name=print_pdf_mpdf_size}
+			{preference name=print_pdf_mpdf_toc}
+			{preference name=print_pdf_mpdf_toclinks}
+			{preference name=print_pdf_mpdf_toclevels}
 			{preference name=print_pdf_mpdf_header}
 			{preference name=print_pdf_mpdf_footer}
 			{preference name=print_pdf_mpdf_margin_left}

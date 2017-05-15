@@ -64,7 +64,6 @@ function prefs_print_list()
 			'default' => 'y'
 			
 		),
-		
 		'print_pdf_mpdf_orientation' => array(
 			'name' => tra('PDF Orientation'),
 			'description' => tra('Landscape or Portrait'),
@@ -95,6 +94,31 @@ function prefs_print_list()
 			),
 			'default' => 'A4',
 		),
+			
+		'print_pdf_mpdf_toc' => array(
+			'name' => tra('Table of contents'),
+			'description' => tra('Generate auto table of contents with PDF'),
+			'type' => 'flag',
+			'default' => 'n'
+			
+		),
+		'print_pdf_mpdf_toclinks' => array(
+			'name' => tra('Link TOC with content'),
+			'description' => tra('Link TOC headings with content in PDF'),
+			'type' => 'flag',
+			'default' => 'n'
+			
+		),
+	
+		'print_pdf_mpdf_toclevels' => array(
+			'name' => tra('PDF TOC Levels'),
+			'description' => tra('Will be autopicked from content, default will be heading 1, heading 2 and heading 3.For example:H1|H2|H3'),
+			'tags' => array('advance'),
+			'type' => 'text',
+			'default' => 'H1|H2|H3',
+			'shorthint'=>''
+		),
+	
 		'print_pdf_mpdf_header' => array(
 			'name' => tra('PDF header text'),
 			'description' => tra('Possible values, custom text, {PAGENO},{PAGETITLE},{DATE j-m-Y}'),
