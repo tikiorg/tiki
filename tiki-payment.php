@@ -8,6 +8,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+error_log('GET:' . json_encode($_GET));
+error_log('POST:' . json_encode($_POST));
+xdebug_break();
 // Data sent by the IPN must be left unharmed
 if ( isset( $_GET['ipn'] ) ) {
 	$ipn_data = $_POST;
@@ -92,7 +95,17 @@ if ( isset($ipn_data) ) {
 	$info = $paymentlib->get_payment($invoice);
 
 	// Important to check with paypal first
-	if (isset($info) && $paypallib->is_valid($ipn_data, $info)) {
+	$valid = false;
+	if (isset($info)){
+		try{
+			$valid = $paypallib->is_valid($ipn_data, $info);
+		} catch (\Exception $e){
+			$logslib = TikiLib::lib('logs');
+			$logslib->add_log('Paypal', tra('Error while processing payment: ') . $e->getMessage());
+		}
+	}
+
+	if (isset($info) && $valid) {
 		$amount = $paypallib->get_amount($ipn_data);
 		$paymentlib->enter_payment($invoice, $amount, 'paypal', $ipn_data);
 	} else {
