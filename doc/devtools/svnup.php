@@ -22,8 +22,14 @@ if (isset($_SERVER['REQUEST_METHOD'])) {
 }
 $tikiBase = realpath(dirname(__FILE__). '/../..');
 
+// will output db errors if 'php svnup.php dbcheck' is called
+if (isset($_SERVER['argv'][1]) && $_SERVER['argv'][1] === 'dbcheck') {
+	require($tikiBase . '/db/tiki-db.php');
+	die();
+}
+
 // if database is unavailable, just autoload. Yo cant call tiki-setup* after autoloading without causing errors.
-if (shell_exec('php '.escapeshellarg($tikiBase.'/db/tiki-db.php'))) {
+if (shell_exec('php '.escapeshellarg($tikiBase.'/doc/devtools/svnup.php').' dbcheck')) {
 	require_once $tikiBase . '/vendor_bundled/vendor/autoload.php';
 }else{
 	require_once $tikiBase . '/tiki-setup_base.php';
@@ -94,16 +100,17 @@ class SvnUpCommand extends Command{
 	/**
 	 * Calls index rebuild command and handles verbiage.
 	 *
-	 * @param ConsoleLogger   $logger
-	 * @param OutputInterface $output
+	 * @param ConsoleLogger		$logger
+	 * @param OutputInterface	$output
+	 * @param ProgressBar		$progress
 	 */
 
-	protected function rebuildIndex(ConsoleLogger $logger, OutputInterface $output){
+	protected function rebuildIndex(ConsoleLogger $logger, OutputInterface $output,ProgressBar &$progress){
 
 		$console = new Application;
 		$console->add(new IndexRebuildCommand);
 		$console->setAutoExit(false);
-		$console->setDefaultCommand('index:rebuild');
+		$console->setDefaultCommand('index:rebuild',true);
 		$input = null;
 		if ($output->getVerbosity() <= OutputInterface::VERBOSITY_VERBOSE) {
 			$input = new ArrayInput(array('-q' => null));
@@ -114,7 +121,8 @@ class SvnUpCommand extends Command{
 
 		$errors = \Feedback::get();
 		if (is_array($errors)) {
-			$logger->error('Search index rebuild failed.');
+			$progress->setMessage("<comment>Search index rebuild failed due to errors.</comment>");
+			$logger->error($errors);
 		}
 	}
 
@@ -154,7 +162,7 @@ class SvnUpCommand extends Command{
 		$errors = false;
 		// if were using a db, then configure it.
 		if (!$input->getOption('no-db')) {
-			$errors = shell_exec('php '.escapeshellarg($tikiBase.'/db/tiki-db.php'));
+			$errors = shell_exec('php '.escapeshellarg($tikiBase.'/doc/devtools/svnup.php').' dbcheck');
 		}
 		if ($errors) {
 			$logger->notice('Running in no-db mode, Database errors: ' . $errors . "\n");
@@ -249,7 +257,7 @@ class SvnUpCommand extends Command{
 				$progress->setMessage('Rebuilding search index');
 				$progress->advance();
 				require_once ($tikiBase.'/lib/setup/timer.class.php');
-				$this->rebuildIndex($logger, $output);
+				$this->rebuildIndex($logger, $output,$progress);
 			}
 		}
 
