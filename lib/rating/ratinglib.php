@@ -255,13 +255,13 @@ class RatingLib extends TikiDb_Bridge
 	function get_override($type, $objectId)
 	{
 		$attributelib = TikiLib::lib('attribute');
-		$attrs = $attributelib->get_attributes($type, $objectId);
-		end($attrs);
-		$key = key($attrs);
-		if (empty($attrs) || empty($attrs[$key])) return;
+		$override = $attributelib->get_attribute($type, $objectId, $type.'.rating.override');
+		if (empty($override)) {
+			return [];
+		}
 
-		$attr = explode(',', $attrs[$type . '.rating.override']);
-		return $attr;
+		$override = explode(',', $override);
+		return $override;
 	}
 
 
