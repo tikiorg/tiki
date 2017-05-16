@@ -347,8 +347,8 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 						$image->convert($_GET['format']);
 					} elseif ( isset($_GET['thumbnail']) && $image->format != 'svg') {
 						// Or, if no format is explicitely specified and a thumbnail has to be created, we convert the image to the $thumbnail_format
-						if ($image->format == 'png') {
-							$thumbnail_format = 'png';	// preserves transparency
+						if ($image->format) {
+							$thumbnail_format = $image->format;	// preserves transparency if png or gif
 						}
 						$image->convert($thumbnail_format);
 					}
