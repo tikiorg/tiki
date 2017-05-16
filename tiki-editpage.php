@@ -1351,8 +1351,8 @@ if (
 		}
 	}
 
-	if ($prefs['feature_history'] === 'y' && $tiki_p_wiki_view_history === 'y') {
-		$linktodiff = '<div class="linktodiff">' . tr('To review the changes you have just made %0compare the versions%1 in history of this page.', "<a href=\"tiki-pagehistory.php?page=$page&newver=0&oldver=" . $info['version'] . "\">", '</a>') . '</div>';
+	if ($prefs['feature_history'] === 'y' && $tiki_p_wiki_view_history === 'y' && $info['version'] > 0) {
+		$linktodiff = '<div class="linktodiff">' . tr('To review the changes you have just made %0compare the versions%1 in history of this page.', "<a href=\"tiki-pagehistory.php?page=" . urlencode($page) . "&newver=0&oldver=" . $info['version'] . "\">", '</a>') . '</div>';
 	} else {
 		$linktodiff = '';
 	}
