@@ -29,7 +29,11 @@ if (isset($_SERVER['argv'][1]) && $_SERVER['argv'][1] === 'dbcheck') {
 }
 
 // if database is unavailable, just autoload. Yo cant call tiki-setup* after autoloading without causing errors.
-if (shell_exec('php '.escapeshellarg($tikiBase.'/doc/devtools/svnup.php').' dbcheck')) {
+$error = shell_exec('php '.escapeshellarg($tikiBase.'/doc/devtools/svnup.php').' dbcheck');
+if ($error) {
+	if (strpos($error,'Tiki is not completely installed')) // if tiki didnt install propelry, there could be issues initalizing autoload, so just die.
+		die ($error);
+	echo shell_exec('php '.escapeshellarg($tikiBase.'/doc/devtools/svnup.php').' dbcheck');
 	require_once $tikiBase . '/vendor_bundled/vendor/autoload.php';
 }else{
 	require_once $tikiBase . '/tiki-setup_base.php';
