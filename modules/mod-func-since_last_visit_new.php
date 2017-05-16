@@ -187,7 +187,7 @@ function module_since_last_visit_new($mod_reference, $params = null)
 				$perm = 'tiki_p_view';
 				break;
 
-			default:		// note trackeritme needs more complex perms checking due to status and ownership
+			default:		// note trackeritem needs more complex perms checking due to status and ownership
 				$perm = 'tiki_p_read_comments';
 				break;
 		}
@@ -198,6 +198,15 @@ function module_since_last_visit_new($mod_reference, $params = null)
 		} else if ($res['objectType'] === 'trackeritem') {
 			$item = Tracker_Item::fromId($res['object']);
 			$visible = $item->canView();
+		} else if ($res['objectType'] == 'blog post') {
+			$visible = FALSE;
+			// Only show new comments related to posts the user is allowed to see
+			if ($userlib->user_has_perm_on_object($user, $res['object'], $res['objectType'], 'tiki_p_read_comments')) {
+				// Only show new comments related to posts in blogs the user is allowed to see
+				$query = 'select `blogId` from `tiki_blog_posts` where `postId`=? ';
+				$blogId = $tikilib->getOne($query, (int) $res['object']);
+				$visible = $userlib->user_has_perm_on_object($user, $blogId, 'blog', 'tiki_p_read_blog');
+			}
 		} else {
 			$visible = !isset($perm) || $userlib->user_has_perm_on_object($user, $res['object'], $res['objectType'], $perm);
 		}
@@ -211,6 +220,8 @@ function module_since_last_visit_new($mod_reference, $params = null)
 			}
 
 			$count++;
+		}else{
+			unset($ret['items']['comments']['list'][$count]);
 		}
 	}
 	$ret['items']['comments']['count'] = $count;
