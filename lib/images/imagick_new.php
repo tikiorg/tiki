@@ -26,7 +26,7 @@ class Image extends ImageAbstract
 		} else {
 			parent::__construct($image, $isfile);
 		}
-		$this->format = strtoupper($format);
+		$this->format = $format;
 	}
 
 	function _load_data()
