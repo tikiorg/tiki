@@ -1351,13 +1351,17 @@ if (
 		}
 	}
 
-	if ($prefs['feature_history'] === 'y' && $tiki_p_wiki_view_history === 'y' && $info['version'] > 0) {
-		$linktodiff = '<div class="linktodiff">' . tr('To review the changes you have just made %0compare the versions%1 in history of this page.', "<a href=\"tiki-pagehistory.php?page=" . urlencode($page) . "&newver=0&oldver=" . $info['version'] . "\">", '</a>') . '</div>';
+	if (empty($info['version']) || $info['version'] === 0) {
+		$info['version'] = 1;
+	}
+
+	if ($prefs['feature_history'] === 'y' && $tiki_p_wiki_view_history === 'y' && $info['version'] > 1) {
+		$linktodiff = '<div class="linktodiff">' . tr('To review the changes you have just made %0compare the versions%1 in history of this page.', "<a href=\"tiki-pagehistory.php?page=" . urlencode($page) . "&newver=0&oldver=" . ($info['version'] - 1) . "\">", '</a>') . '</div>';
 	} else {
 		$linktodiff = '';
 	}
 
-	Feedback::success(tr('Page %0 saved (version %1).', $_REQUEST["page"], $info['version']+1) . $linktodiff, 'session');
+	Feedback::success(tr('Page %0 saved (version %1).', $_REQUEST["page"], $info['version']) . $linktodiff, 'session');
 
 	if (!empty($_REQUEST['hdr'])) {
 		$tmp = $parserlib->parse_data($edit);			// fills $anch[] so page refreshes at the section being edited
