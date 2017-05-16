@@ -110,7 +110,7 @@
 						_checkboxTooltips=['_checkboxTitles', 'permDesc', 'permName'] _checkboxTooltipFormat='%0: %1 [%2]'
 						_checkboxColumnIndex=$permGroupCols _valueColumnIndex="permName"
 						_columns="\"label\"=\"{tr}Permission{/tr}\"" _groupColumn='type' _openall='y'
-						_showSelected='y' _columnsContainHtml='y' class='table table-striped objectperms'}
+						_showSelected='y' _columnsContainHtml='y' class='table objectperms'}
 				</div>
 
 			{if ($perms|@count) eq '0'}{remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}You must select at least one feature{/tr}.{/remarksbox}{/if}
