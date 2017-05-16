@@ -414,6 +414,11 @@ div.cvsup {
   background: #f9f9f9;
   color: #333333;
 }
+.objectperms .checkBoxHeader:nth-of-type(odd) > div > label,
+.objectperms td.checkBoxCell:nth-of-type(odd),
+.objectperms .checkBoxHeader:nth-of-type(odd) > .checkBoxLabel {
+  background: #ececec;
+}
 .helptool-admin {
   border-left: medium double #777777;
 }
@@ -3037,8 +3042,8 @@ table.treetable .checkBoxHeader > td,
 }
 table.objectperms .checkBoxHeader > div,
 table.objectperms > tbody .checkBoxLabel {
-  -webkit-transform: /*translate(0px, -10px)*/ rotate(305deg);
-  transform: /*translate(-20px, -70px)*/ rotate(305deg);
+  -webkit-transform: rotate(305deg);
+  transform: rotate(305deg);
   width: 140px;
   display: block;
   position: absolute;
@@ -3046,6 +3051,18 @@ table.objectperms > tbody .checkBoxLabel {
   bottom: 60px;
   overflow: hidden;
   text-overflow: ellipsis;
+  z-index: 2;
+}
+table.objectperms .checkBoxHeader > div,
+table.objectperms > tbody .checkBoxLabel {
+  line-height: 2;
+  text-indent: .6em;
+}
+.objectperms .checkBoxHeader > div > label {
+  width: 140px;
+}
+.objectperms .checkBoxHeader > div > input {
+  transform: rotate(-305deg);
 }
 table.treetable.objectperms span.indenter,
 .subHeader .checkBoxHeader .indenter {

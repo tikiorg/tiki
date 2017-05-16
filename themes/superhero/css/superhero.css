@@ -7449,6 +7449,11 @@ div.cvsup {
   background: #4e5d6c;
   color: #ebebeb;
 }
+.objectperms .checkBoxHeader:nth-of-type(odd) > div > label,
+.objectperms td.checkBoxCell:nth-of-type(odd),
+.objectperms .checkBoxHeader:nth-of-type(odd) > .checkBoxLabel {
+  background: #43505d;
+}
 .helptool-admin {
   border-left: medium double #4e5d6c;
 }

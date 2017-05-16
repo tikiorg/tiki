@@ -564,6 +564,11 @@ div.cvsup {
 	color: @text-color;
 }
 
+// odd checkbox columns
+.objectperms .checkBoxHeader:nth-of-type(odd) > div > label,
+.objectperms td.checkBoxCell:nth-of-type(odd),
+.objectperms .checkBoxHeader:nth-of-type(odd) > .checkBoxLabel { background: @table-column-bg-odd; }
+
 // tiki-toolbars.less
 .helptool-admin {
 	// /* right justified section of toolbars */
