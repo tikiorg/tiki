@@ -106,9 +106,8 @@ function smarty_function_popup($params, $smarty)
 	$options['data-content'] = str_replace('&lt;\/', '&lt;/', $options['data-content']);
 
 	$retval = '';
-
 	foreach ($options as $k => $v) {
-		$retval .= $k . '=' . json_encode($v, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ' ';
+		$retval .= $k . '="' . (new Zend\Escaper\Escaper())->escapeHtmlAttr($v). '" ';
 	}
 
 	//handle delay param here since slashes added by the above break the code

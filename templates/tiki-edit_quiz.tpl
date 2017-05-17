@@ -67,7 +67,7 @@
 							{/capture}
 							<a class="tips"
 								title="{tr}Actions{/tr}"
-								href="#" {popup fullhtml="1" center=true text=$smarty.capture.edit_quiz_actions|escape:"javascript"|escape:"html"}
+								href="#" {popup fullhtml="1" center=true text=$smarty.capture.edit_quiz_actions}
 								style="padding:0; margin:0; border:0"
 									>
 								{icon name='wrench'}

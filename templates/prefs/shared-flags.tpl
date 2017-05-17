@@ -23,7 +23,7 @@
 {/if}
 
 {if !empty($p.popup_html)}
-	<a class="tips" title="{tr}Actions{/tr}" href="#" style="padding:0; margin:0; border:0" {popup fullhtml=1 center="true" text=$p.popup_html|escape:"javascript"|escape:"html"}>
+	<a class="tips" title="{tr}Actions{/tr}" href="#" style="padding:0; margin:0; border:0" {popup fullhtml=1 center="true" text=$p.popup_html}>
 		{icon name="actions"}
 	</a>
 {/if}

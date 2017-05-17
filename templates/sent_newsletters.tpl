@@ -89,7 +89,7 @@
 						class="tips"
 						title="{tr}Actions{/tr}"
 						href="#"
-						{if $js === 'y'}{popup center=true text=$smarty.capture.sent_actions|escape:"javascript"|escape:"html"}{/if}
+						{if $js === 'y'}{popup center=true text=$smarty.capture.sent_actions}{/if}
 						style="padding:0; margin:0; border:0"
 					>
 						{icon name='wrench'}

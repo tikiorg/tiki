@@ -161,11 +161,11 @@
 			<div class="thumbnail text-center">
 
 						{if $prefs.feature_shadowbox eq 'y'}
-							<a href="show_image.php?id={$item.imageId}&amp;scalesize={$defaultscale}" data-box="lightbox[gallery];type=img" title="{if $item.description neq ''}{$item.description}{elseif $item.name neq ''}{$item.name}{else}{$item.filename}{/if}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if} class="linkmenu tips">
+							<a href="show_image.php?id={$item.imageId}&amp;scalesize={$defaultscale}" data-box="lightbox[gallery];type=img" title="{if $item.description neq ''}{$item.description}{elseif $item.name neq ''}{$item.name}{else}{$item.filename}{/if}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key}{/if} class="linkmenu tips">
 								<img class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1">
 							</a>
 						{else}
-							<a href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize={$defaultscale}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if} class="linkmenu tips">
+							<a href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize={$defaultscale}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key}{/if} class="linkmenu tips">
 								<img class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1">
 							</a>
 						{/if}
@@ -198,7 +198,7 @@
 									{$libeg}<a {jspopup href="tiki-browse_image.php?galleryId=$galleryId&amp;sort_mode=$sort_mode&amp;imageId="|cat:$item.imageId|cat:"&amp;scalesize=$defaultscale&amp;popup=1"} class="gallink">
 										{icon name='view' _menu_text='y' _menu_icon='y' alt="{tr}Popup{/tr}"}
 									</a>{$liend}
-									{$libeg}<a class="gallink tips" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize={$defaultscale}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if}>
+									{$libeg}<a class="gallink tips" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize={$defaultscale}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key}{/if}>
 										{icon name='list' _menu_text='y' _menu_icon='y' alt="{tr}Details{/tr}"}
 									</a>{$liend}
 									{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
@@ -226,7 +226,7 @@
 								class="tips"
 								title="{tr}Actions{/tr}"
 								href="#"
-								{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.image_actions|escape:"javascript"|escape:"html"}{/if}
+								{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.image_actions}{/if}
 								style="padding:0; margin:0; border:0"
 							>
 								{icon name='wrench'}

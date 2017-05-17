@@ -61,9 +61,9 @@
 										{if is_array($cell[w][d].items[item])}
 											<td class="Cal{$cell[w][d].items[item].type} calId{$cell[w][d].items[item].calendarId} viewcalitemId_{$cell[w][d].items[item].calitemId} tips" style="padding:0;height:14px;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};opacity:{if $cell[w][d].items[item].status eq '0'}0.8{else}1{/if};filter:Alpha(opacity={if $cell[w][d].items[item].status eq '0'}80{else}100{/if});text-align:left;border-width:1px {if $cell[w][d].items[item].endTimeStamp <= ($cell[w][d].day + 86400)}1{else}0{/if}px 1px {if $cell[w][d].items[item].startTimeStamp >= $cell[w][d].day}1{else}0{/if}px;cursor:pointer"
 												{if $prefs.calendar_sticky_popup eq 'y'}
-													{popup caption="{tr}Event{/tr}" vauto=true hauto=true sticky=true fullhtml="1" trigger="onClick" text=$over|escape:"javascript"|escape:"html"}
+													{popup caption="{tr}Event{/tr}" vauto=true hauto=true sticky=true fullhtml="1" trigger="onClick" text=$over}
 												{else}
-													{popup caption="{tr}Event{/tr}" vauto=true hauto=true sticky=false fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
+													{popup caption="{tr}Event{/tr}" vauto=true hauto=true sticky=false fullhtml="1" text=$over}
 												{/if}>
 
 												{if $myurl eq "tiki-action_calendar.php" or ($cell[w][d].items[item].startTimeStamp >= $cell[w][d].day or $smarty.section.d.index eq '0' or $cell[w][d].firstDay or $infocals[$cell[w][d].items[item].calendarId].nameoneachday eq 'y')}

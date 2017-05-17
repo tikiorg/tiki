@@ -156,7 +156,7 @@
 				{if !isset($gal_info.show_action) or $gal_info.show_action neq 'n'}
 					{if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' )
 					and $prefs.javascript_enabled eq 'y'}
-						<a class="fgalname tips" title="{tr}Actions{/tr}" href="#" {popup fullhtml="1" text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"}>
+						<a class="fgalname tips" title="{tr}Actions{/tr}" href="#" {popup fullhtml="1" text=$smarty.capture.over_actions}>
 							{icon name='wrench' alt="{tr}Actions{/tr}"}
 						</a>
 						{else}
@@ -197,7 +197,7 @@
 											{/if}
 										{/if}
 										{if $over_infos neq ''}
-											{popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html"}
+											{popup fullhtml="1" text=$over_infos}
 										{else}
 											title="{if $files[changes].name neq ''}{$files[changes].name|escape}{/if}{if $files[changes].description neq ''} - {$files[changes].description|escape}{/if}"
 										{/if}>

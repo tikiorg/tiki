@@ -119,7 +119,7 @@
 													class="tips"
 													title="{tr}Actions{/tr}"
 													href="#"
-													{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.group_actions|escape:"javascript"|escape:"html"}{/if}
+													{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.group_actions}{/if}
 													style="padding:0; margin:0; border:0"
 											>
 												{icon name='wrench'}
@@ -561,7 +561,7 @@
 															<a
 																	class="tips"
 																	title="{tr}Actions{/tr}" href="#"
-																	{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.members_actions|escape:"javascript"|escape:"html"}{/if}
+																	{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.members_actions}{/if}
 																	style="padding:0; margin:0; border:0"
 															>
 																{icon name='settings'}

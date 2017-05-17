@@ -97,7 +97,7 @@
 					class="tips"
 					title="{tr}Actions{/tr}"
 					href="#"
-					{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"}{/if}
+					{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.over_actions}{/if}
 					style="padding:0; margin:0; border:0"
 				>
 					{icon name="wrench"}
@@ -108,7 +108,7 @@
 			</td>
 
 			{foreach key=headerKey item=headerName from=$headers}{assign var=val value=$comments[ix].$headerKey}
-				<td {if $headerKey eq 'data'}{popup caption=$comments[ix].title|escape:"javascript"|escape:"html" text=$comments[ix].parsed|escape:"javascript"|escape:"html"}{/if}>
+				<td {if $headerKey eq 'data'}{popup caption=$comments[ix].title|escape:"javascript"|escape:"html" text=$comments[ix].parsed}{/if}>
 					<span> {* span is used for some themes CSS opacity on some cells content *}
 						{if $headerKey eq 'title'}
 							<a href="{$comments[ix].href}" title="{$val|escape}">
@@ -156,7 +156,7 @@
 					class="tips"
 					title="{tr}More information{/tr}"
 					href="#"
-					{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.over_more_info|escape:"javascript"|escape:"html"}{/if}
+					{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.over_more_info}{/if}
 					style="padding:0; margin:0; border:0"
 				>
 					{icon name="information"}
