@@ -15,11 +15,6 @@
 */
 
 /**
-* Includes
-*/
-require_once 'PEAR.php';
-
-/**
 * Getting the rootDSE entry of a LDAP server
 *
 * @category Net

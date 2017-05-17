@@ -15,11 +15,6 @@
 */
 
 /**
-* Includes
-*/
-require_once 'PEAR.php';
-
-/**
 * Utility Class for Net_LDAP2
 *
 * This class servers some functionality to the other classes of Net_LDAP2 but most of

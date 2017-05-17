@@ -16,11 +16,6 @@
 */
 
 /**
-* Includes
-*/
-require_once 'PEAR.php';
-
-/**
 * Result set of an LDAP search
 *
 * @category Net
