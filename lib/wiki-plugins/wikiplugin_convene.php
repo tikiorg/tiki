@@ -366,35 +366,60 @@ FORM;
 			},
 			save: function(reload) {
 				$("#page-data").tikiModal(tr("Loading..."));
-
-				var needReload = reload != undefined;
-				var params = {
-					page: "$page",
-					content: $.trim(this.data),
-					index: $i,
-					type: "convene",
-					params: {
-						title: "$title",
-						calendarid: $calendarid,
-						minvotes: $minvotes
-					}
-				};
-				$.post("tiki-wikiplugin_edit.php", params, function() {
-					$.get($.service("wiki", "get_page", {page: "$page"}), function (data) {
-						if (needReload) {
-							history.go(0);
-						} else {
-							if (data) {
-								var newForm = $("#pluginConvene$i", data);
-								$("#pluginConvene$i", "#page-data").replaceWith(newForm);
-							}
-							initConvene$i();
+				
+				// do semaphore check and set
+				$.getJSON($.service("semaphore", "is_set"), {
+						object_type: jqueryTiki.current_object.type,
+						object_id: jqueryTiki.current_object.object
+					}, function (data) {
+						if (data) {
+							$("#tikifeedback").showError(tr("This page is being edited by another user. Please reload the page and try again later."));
 							$("#page-data").tikiModal();
+						} else {
+							// no one else using it, so carry on...
+
+							$.getJSON($.service("semaphore", "set"), {
+								object_type: jqueryTiki.current_object.type,
+								object_id: jqueryTiki.current_object.object
+							});
+				
+
+							var needReload = reload != undefined;
+							var params = {
+								page: "$page",
+								content: $.trim(this.data),
+								index: $i,
+								type: "convene",
+								params: {
+									title: "$title",
+									calendarid: $calendarid,
+									minvotes: $minvotes
+								}
+							};
+							$.post("tiki-wikiplugin_edit.php", params, function() {
+								$.get($.service("wiki", "get_page", {page: "$page"}), function (data) {
+									// unset semaphore
+									$.getJSON($.service("semaphore", "unset"), {
+										object_type: jqueryTiki.current_object.type,
+										object_id: jqueryTiki.current_object.object
+									});
+									
+									if (needReload) {
+										history.go(0);
+									} else {
+										if (data) {
+											var newForm = $("#pluginConvene$i", data);
+											$("#pluginConvene$i", "#page-data").replaceWith(newForm);
+										}
+										initConvene$i();
+										$("#page-data").tikiModal();
+									}
+								});
+			
+							});
 						}
 					});
-
-				});
-			}
+				}
 		}, $conveneData);
 
 

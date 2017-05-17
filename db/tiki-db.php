@@ -103,8 +103,8 @@ if (isset ($system_configuration_file)) {
 if ( $re === false ) {
 	if (! defined('TIKI_IN_INSTALLER')) {
 		if (!isset($_SERVER['REQUEST_METHOD'])) { // if we are running in cli
-			echo "Cant initiate database. Tiki not installed.\n";
-		}elseif(!empty($dbfail_url)) {
+			echo "Cannot initiate database. Tiki is not installed.\n";
+		} elseif (!empty($dbfail_url)) {
 			header('location: '.$dbfail_url);
 		} else {
 			header('location: tiki-install.php');
