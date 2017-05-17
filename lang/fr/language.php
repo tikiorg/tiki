@@ -2589,7 +2589,7 @@ $lang = array(
 "Default: Anonymous Bind" => "Default: Bind anonyme",
 "Full: userattr=username,UserDN,BaseDN" => "Complet : userattr=nom utilisateur,Utilisateur DN,DN de Base",
 "OpenLDAP: cn=username,BaseDN" => "LDAP ouvert : cn=nom utilisateur,DN de Base",
-"Active Directory (username@domain)" => "Répertoire actif (nom_utilisateur@domaine)",
+"Active Directory (username@domain)" => "Active Directory (nom_utilisateur@domaine)",
 "Plain Username" => "Nom d'utilsateur ordinaire",
 "Search scope" => "Délimiter la recherche",
 "Subtree" => "Sous-arbre",
