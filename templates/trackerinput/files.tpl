@@ -13,7 +13,7 @@
 					{elseif $field.options_map.displayMode eq 'img'}
 						<img src="tiki-download_file.php?fileId={$info.fileId|escape}&display&y=24" height="24">
 					{else}
-						<img src="tiki-download_file.php?fileId={$info.fileId|escape}&icon" width="32" height="32">
+						<img src="tiki-download_file.php?fileId={$info.fileId|escape}&thumbnail" width="32" height="32">
 					{/if}
 					{$info.name|escape} <label class="file-delete-icon">
 						{icon name='delete'}

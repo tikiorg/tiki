@@ -418,6 +418,12 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 				foreach ($this->getConfiguration('files') as $fileId => $file) {
 					$ret .= '<li>';
+					if ($prefs->vimeo_upload == 'y' && $this->getOption('displayMode') == 'vimeo') {
+						$ret .= smarty_function_icon(['name' =>'vimeo'], $smarty);
+					} else {
+						$ret .= '<img src="tiki-download_file.php?fileId=' . $fileId . '&thumbnail" width="32" height="32"> ';
+					}
+
 					$ret .= smarty_function_object_link(array('type' => 'file', 'id' => $fileId, 'title' => $file['name']), $smarty);
 
 					$globalperms = Perms::get(array( 'type' => 'file gallery', 'object' => $galleryId ));
