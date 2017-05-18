@@ -1624,7 +1624,7 @@ class Net_LDAP2 extends PEAR
 	*/
 	public static function checkLDAPExtension()
 	{
-		if (!extension_loaded('ldap') && !@dl('ldap.' . PHP_SHLIB_SUFFIX)) {
+		if (!extension_loaded('ldap') && (! function_exists('dl') || !@dl('ldap.' . PHP_SHLIB_SUFFIX))) { // Line edited for Tiki
 			return new Net_LDAP2_Error("It seems that you do not have the ldap-extension installed. Please install it before using the Net_LDAP2 package.");
 		} else {
 			return true;
