@@ -9,7 +9,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) != FALSE) {
 	exit;
 }
 global $user;
-if (empty($user)) {
+if (empty($user) || empty($prefs['tracker_force_tracker_id']) || $prefs['tracker_force_mandatory_field'] || $prefs['tracker_force_tracker_fields']) {
 	return;
 }
 $tracker_id = $prefs['tracker_force_tracker_id'];
