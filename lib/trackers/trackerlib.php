@@ -2058,6 +2058,58 @@ class TrackerLib extends TikiLib
 			}
 		}
 
+		// mandatory fields check
+		$line = 0;
+		$errors = array();
+		while (($data = fgetcsv($csvHandle, 100000, $csvDelimiter)) !== false) {
+			$line++;
+			if ($encoding == 'ISO-8859-1') {
+				for ($i = 0; $i < $max; $i++) {
+					$data[$i] = utf8_encode($data[$i]);
+				}
+			}
+			$datafields = array();
+			for ($i = 0; $i < $max; ++$i) {
+				if (!preg_match('/ -- $/', $header[$i])) {
+					continue;
+				}
+				$h = preg_replace('/ -- $/', '', $header[$i]);
+				foreach ($fields['data'] as $field) {
+					if ($field['name'] == $h) {
+						$datafields[$field['fieldId']] = $field;
+						$datafields[$field['fieldId']]['value'] = $data[$i];
+					}
+				}
+			}
+			$line_errors = $this->check_field_values(array('data' => $datafields), array(), $trackerId, '');
+			if( count($line_errors['err_mandatory']) > 0 ) {
+				$names = array();
+				foreach ($line_errors['err_mandatory'] as $f) {
+					$names[] = $f['name'];
+				}
+				$errors[] = tr('Line %0: the following mandatory fields are missing: %1', $line, implode(', ', $names));
+			}
+			foreach ($line_errors['err_value'] as $f) {
+				if (! empty($f['errorMsg'])) {
+					$errors[] = tr('Line %0: invalid value in %1: %2', $line, $f['name'], $f['errorMsg']);
+				} else {
+					$errors[] = tr('Line %0: invalid value in %0', $line, $f['name']);
+				}
+			}
+		}
+
+		if( count($errors) > 0 ) {
+			Feedback::error(tr('Import file contains errors. Please review and fix before importing.'));
+			foreach( $errors as $error ) {
+				Feedback::error($error);
+			}
+			return 0;
+		}
+
+		// back to first row excluding header
+		fseek($csvHandle, 0);
+		fgetcsv($csvHandle, 100000, $csvDelimiter);
+
 		while (($data = fgetcsv($csvHandle, 100000, $csvDelimiter)) !== false) {
 			$status = 'o';
 			$itemId = 0;
