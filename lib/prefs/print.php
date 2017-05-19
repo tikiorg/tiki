@@ -109,11 +109,17 @@ function prefs_print_list()
 			'default' => 'n'
 			
 		),
-	
+		'print_pdf_mpdf_tocheading' => array(
+			'name' => tra('TOC heading'),
+			'description' => tra('Text heading to be appeared before table of contents'),
+			'type' => 'text',
+			'default' => 'Table of Contents'
+			
+		),	
 		'print_pdf_mpdf_toclevels' => array(
 			'name' => tra('PDF TOC Levels'),
 			'description' => tra('Will be autopicked from content, default will be heading 1, heading 2 and heading 3.For example:H1|H2|H3'),
-			'tags' => array('advance'),
+			'tags' => array('advanced'),
 			'type' => 'text',
 			'default' => 'H1|H2|H3',
 			'shorthint'=>''
