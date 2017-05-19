@@ -27,11 +27,11 @@ class Search_Formatter_ValueFormatter_Number extends Search_Formatter_ValueForma
 	function render($name, $value, array $entry)
 	{
 		if ($this->dec_point && $this->thousands_sep) {
-			return number_format($value, $this->decimals, $this->dec_point, $this->thousands_sep);
+			return number_format(floatval($value), $this->decimals, $this->dec_point, $this->thousands_sep);
 		} elseif ($this->decimals) {
-			return number_format($value, $this->decimals);
+			return number_format(floatval($value), $this->decimals);
 		} else {
-			return number_format($value);
+			return number_format(floatval($value));
 		}
 	}
 }
