@@ -1329,7 +1329,7 @@ Options:
 	--no-packaging		: do not build packages files
 	--no-tagging		: do not tag the release on the remote svn repository
 	--force-yes		: disable the interactive mode (same as replying 'y' to all steps)
-	--debug-packaging	: run tikirelease.sh with the -x option.
+	--debug-packaging	: display debug output while in packaging step
 Notes:
 	Subreleases begining with 'pre' will not be tagged.
 ";
