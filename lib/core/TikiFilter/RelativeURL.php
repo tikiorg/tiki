@@ -8,13 +8,13 @@
 /**
  * Class TikiFilter_RelativeURL
  *
- * Filters for valid relative url's, and strips any tags.
+ * Filters for valid relative URL's, and strips any tags.
  */
 class TikiFilter_RelativeURL implements Zend\Filter\FilterInterface
 {
 	/**
 	 *
-	 * @param string $input		Absolute or relative url.
+	 * @param string $input		Absolute or relative URL.
 	 * @return string			Absolute URL components stripped out.
 	 */
 
@@ -28,10 +28,13 @@ class TikiFilter_RelativeURL implements Zend\Filter\FilterInterface
 		$url = Zend\Uri\UriFactory::factory($url);
 
 		$query = $url->getQuery();
+		$fragment = $url->getFragment();
 		$url = $url->getPath();
 
 		if ($query)
 			$url .= '?'.$query;
+		if ($fragment)
+			$url .= '#'.$fragment;
 
 		return $url;
 
