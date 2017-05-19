@@ -1740,6 +1740,11 @@ td.numeric {
   text-align: right;
   padding-right: 1px;
 }
+/*	Chrome & safari do not break urls or filenames at all. This causes
+	serous display issues within tables with long urls/filenames.*/
+td.url {
+  word-break: break-all;
+}
 .normal.item th {
   text-align: right;
   padding: .2em .5em;

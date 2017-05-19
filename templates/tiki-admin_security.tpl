@@ -58,7 +58,7 @@
 			</tr>
 			{foreach from=$tikifiles key=key item=item}
 				<tr>
-					<td class="text">{$key}</td>
+					<td class="url">{$key}</td>
 					<td class="text">{$item}</td>
 				</tr>
 			{/foreach}
@@ -111,7 +111,7 @@
 
 			{foreach from=$suid key=key item=item}
 				<tr>
-					<td class="text">{$key}</td>
+					<td class="url">{$key}</td>
 					<td class="text">{$item.t}</td>
 					<td class="text">{$item.u}</td>
 					<td class="text">{$item.g}</td>
@@ -135,7 +135,7 @@
 			</tr>
 			{foreach from=$worldwritable key=key item=item}
 				<tr>
-					<td class="text">{$key}</td>
+					<td class="url">{$key}</td>
 					<td class="text">{$item.t}</td>
 					<td class="text">{$item.u}</td>
 					<td class="text">{$item.g}</td>
@@ -159,7 +159,7 @@
 			</tr>
 			{foreach from=$apachewritable key=key item=item}
 				<tr>
-					<td class="text">{$key}</td>
+					<td class="url">{$key}</td>
 					<td class="text">{$item.t}</td>
 					<td class="text">{$item.u}</td>
 					<td class="text">{$item.g}</td>
@@ -183,7 +183,7 @@
 			</tr>
 			{foreach from=$strangeinode key=key item=item}
 				<tr>
-					<td class="text">{$key}</td>
+					<td class="url">{$key}</td>
 					<td class="text">{$item.t}</td>
 					<td class="text">{$item.u}</td>
 					<td class="text">{$item.g}</td>
@@ -207,7 +207,7 @@
 			</tr>
 			{foreach from=$executable key=key item=item}
 				<tr>
-					<td class="text">{$key}</td>
+					<td class="url">{$key}</td>
 					<td class="text">{$item.t}</td>
 					<td class="text">{$item.u}</td>
 					<td class="text">{$item.g}</td>
