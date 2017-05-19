@@ -81,29 +81,24 @@
 	<div class="table-responsive secperm-table">
 		<table class="table table-striped table-hover">
 			<tr>
-				<th rowspan="2">{tr}Filename{/tr}</th>
-				<th rowspan="2">{tr}type{/tr}</th>
+				<th>{tr}Filename{/tr}</th>
+				<th>{tr}type{/tr}</th>
 				<th colspan="2">{tr}owner{/tr}</th>
 				<th colspan="3">{tr}special{/tr}</th>
-				<th colspan="3">{tr}user{/tr}</th>
-				<th colspan="3">{tr}group{/tr}</th>
-				<th colspan="3">{tr}other{/tr}</th>
+				<th>{tr}user{/tr}</th>
+				<th>{tr}group{/tr}</th>
+				<th>{tr}other{/tr}</th>
 			</tr>
 			<tr>
+				<th colspan="2">&#160;</th>
 				<th>{tr}uid{/tr}</th>
 				<th>{tr}gid{/tr}</th>
 				<th>{tr}suid{/tr}</th>
 				<th>{tr}sgid{/tr}</th>
 				<th>{tr}sticky{/tr}</th>
-				<th>{tr}r{/tr}</th>
-				<th>{tr}w{/tr}</th>
-				<th>{tr}x{/tr}</th>
-				<th>{tr}r{/tr}</th>
-				<th>{tr}w{/tr}</th>
-				<th>{tr}x{/tr}</th>
-				<th>{tr}r{/tr}</th>
-				<th>{tr}w{/tr}</th>
-				<th>{tr}x{/tr}</th>
+				<th>{tr}r{/tr}{tr}w{/tr}{tr}x{/tr}</th>
+				<th>{tr}r{/tr}{tr}w{/tr}{tr}x{/tr}</th>
+				<th>{tr}r{/tr}{tr}w{/tr}{tr}x{/tr}</th>
 			</tr>
 			<tr>
 				<th colspan="16">{tr}Set User ID (suid) files{/tr}</th>
@@ -118,15 +113,9 @@
 					<td class="text">{$item.suid|truex}</td>
 					<td class="text">{$item.sgid|truex}</td>
 					<td class="text">{$item.sticky|truex}</td>
-					<td class="text">{$item.ur|truex}</td>
-					<td class="text">{$item.uw|truex}</td>
-					<td class="text">{$item.ux|truex}</td>
-					<td class="text">{$item.gr|truex}</td>
-					<td class="text">{$item.gw|truex}</td>
-					<td class="text">{$item.gx|truex}</td>
-					<td class="text">{$item.or|truex}</td>
-					<td class="text">{$item.ow|truex}</td>
-					<td class="text">{$item.ox|truex}</td>
+					<td class="text">{$item.ur|truex}{$item.uw|truex}{$item.ux|truex}</td>
+					<td class="text">{$item.gr|truex}{$item.gw|truex}{$item.gx|truex}</td>
+					<td class="text">{$item.or|truex}{$item.ow|truex}{$item.ox|truex}</td>
 				</tr>
 			{/foreach}
 
@@ -142,15 +131,9 @@
 					<td class="text">{$item.suid|truex}</td>
 					<td class="text">{$item.sgid|truex}</td>
 					<td class="text">{$item.sticky|truex}</td>
-					<td class="text">{$item.ur|truex}</td>
-					<td class="text">{$item.uw|truex}</td>
-					<td class="text">{$item.ux|truex}</td>
-					<td class="text">{$item.gr|truex}</td>
-					<td class="text">{$item.gw|truex}</td>
-					<td class="text">{$item.gx|truex}</td>
-					<td class="text">{$item.or|truex}</td>
-					<td class="text">{$item.ow|truex}</td>
-					<td class="text">{$item.ox|truex}</td>
+					<td class="text">{$item.ur|truex}{$item.uw|truex}{$item.ux|truex}</td>
+					<td class="text">{$item.gr|truex}{$item.gw|truex}{$item.gx|truex}</td>
+					<td class="text">{$item.or|truex}{$item.ow|truex}{$item.ox|truex}</td>
 				</tr>
 			{/foreach}
 
@@ -166,15 +149,9 @@
 					<td class="text">{$item.suid|truex}</td>
 					<td class="text">{$item.sgid|truex}</td>
 					<td class="text">{$item.sticky|truex}</td>
-					<td class="text">{$item.ur|truex}</td>
-					<td class="text">{$item.uw|truex}</td>
-					<td class="text">{$item.ux|truex}</td>
-					<td class="text">{$item.gr|truex}</td>
-					<td class="text">{$item.gw|truex}</td>
-					<td class="text">{$item.gx|truex}</td>
-					<td class="text">{$item.or|truex}</td>
-					<td class="text">{$item.ow|truex}</td>
-					<td class="text">{$item.ox|truex}</td>
+					<td class="text">{$item.ur|truex}{$item.uw|truex}{$item.ux|truex}</td>
+					<td class="text">{$item.gr|truex}{$item.gw|truex}{$item.gx|truex}</td>
+					<td class="text">{$item.or|truex}{$item.ow|truex}{$item.ox|truex}</td>
 				</tr>
 			{/foreach}
 
@@ -190,15 +167,9 @@
 					<td class="text">{$item.suid|truex}</td>
 					<td class="text">{$item.sgid|truex}</td>
 					<td class="text">{$item.sticky|truex}</td>
-					<td class="text">{$item.ur|truex}</td>
-					<td class="text">{$item.uw|truex}</td>
-					<td class="text">{$item.ux|truex}</td>
-					<td class="text">{$item.gr|truex}</td>
-					<td class="text">{$item.gw|truex}</td>
-					<td class="text">{$item.gx|truex}</td>
-					<td class="text">{$item.or|truex}</td>
-					<td class="text">{$item.ow|truex}</td>
-					<td class="text">{$item.ox|truex}</td>
+					<td class="text">{$item.ur|truex}{$item.uw|truex}{$item.ux|truex}</td>
+					<td class="text">{$item.gr|truex}{$item.gw|truex}{$item.gx|truex}</td>
+					<td class="text">{$item.or|truex}{$item.ow|truex}{$item.ox|truex}</td>
 				</tr>
 			{/foreach}
 
@@ -214,15 +185,9 @@
 					<td class="text">{$item.suid|truex}</td>
 					<td class="text">{$item.sgid|truex}</td>
 					<td class="text">{$item.sticky|truex}</td>
-					<td class="text">{$item.ur|truex}</td>
-					<td class="text">{$item.uw|truex}</td>
-					<td class="text">{$item.ux|truex}</td>
-					<td class="text">{$item.gr|truex}</td>
-					<td class="text">{$item.gw|truex}</td>
-					<td class="text">{$item.gx|truex}</td>
-					<td class="text">{$item.or|truex}</td>
-					<td class="text">{$item.ow|truex}</td>
-					<td class="text">{$item.ox|truex}</td>
+					<td class="text">{$item.ur|truex}{$item.uw|truex}{$item.ux|truex}</td>
+					<td class="text">{$item.gr|truex}{$item.gw|truex}{$item.gx|truex}</td>
+					<td class="text">{$item.or|truex}{$item.ow|truex}{$item.ox|truex}</td>
 				</tr>
 			{/foreach}
 		</table>
