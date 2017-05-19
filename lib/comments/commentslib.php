@@ -2834,7 +2834,8 @@ class Comments extends TikiLib
 		$title = strip_tags($title);
 
 		if ($anonymous_name) {
-			$userName = $anonymous_name;
+			// The leading tab is for recognizing anonymous entries. Normal usernames don't start with a tab
+			$userName = "\t" . trim($anonymous_name);
 		} elseif (! $userName) {
 			$userName = tra('Anonymous');
 		} elseif ($userName) {
