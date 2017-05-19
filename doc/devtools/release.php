@@ -188,8 +188,8 @@ if (! $options['no-secdb'] && important_step("Update SecDB file(s) 'db/tiki-secd
 }
 
 if ($isPre) {
-	if (! $options['no-packaging'] && important_step("Build packages files (based on the branch)")) {
-		build_packages($packageVersion, $branch);
+	if (! $options['no-packaging'] && important_step("Build packages files")) {
+		build_packages($packageVersion);
 		echo color("\nMake sure these tarballs are tested by at least 3 different people.\n\n", 'cyan');
 	} else {
 		echo color("This was the last step.\n", 'cyan');
@@ -227,8 +227,8 @@ if ($isPre) {
 		}
 	}
 
-	if (! $options['no-packaging'] && important_step("Build packages files (based on the '$tag' tag)")) {
-		build_packages($packageVersion, $tag);
+	if (! $options['no-packaging'] && important_step("Build packages files")) {
+		build_packages($packageVersion);
 		echo color("\nUpload the files on SourceForge.\nInstructions can be found here: http://sourceforge.net/p/forge/documentation/Files/\n", 'cyan');
 		echo color("\nAlternately, do it by hand after replacing SF_LOGIN with your sf.net login\nand after replacing PATH according to https://sourceforge.net/projects/tikiwiki/files/\ncd ~/tikipack/$packageVersion; scp tiki-$packageVersion.* SF_LOGIN@frs.sourceforge.net:/home/frs/project/t/ti/tikiwiki/Tiki_PATH/$packageVersion \n\n", 'cyan');
 	} else {
@@ -342,24 +342,229 @@ function md5_check_dir($dir, $version, &$queries)
 }
 
 /**
- * @param $releaseVersion
- * @param $svnRelativePath
+ *
+ * Deletes a directory and its contents.
+ *
+ * @param string $dir directory to delete.
+ * @return string|bool returns the filename that an error occurred in, false otherwise
  */
-function build_packages($releaseVersion, $svnRelativePath)
+
+function rrmdir($dir) {
+	if (is_dir($dir)) {
+		$objects = scandir($dir);
+		foreach ($objects as $object) {
+			if ($object != "." && $object != "..") {
+				@chmod($dir."/".$object,0777);
+				if (filetype($dir."/".$object) === 'dir'){
+					$error = rrmdir($dir."/".$object);
+					if ($error)
+						return $error;
+				}else
+					if (!@unlink($dir."/".$object))
+						return 'Could not delete '.$dir."/".$object."\n";
+			}
+		}
+		reset($objects);
+		@unlink($dir.'/.DS_store');
+		if (!@rmdir($dir)){
+			return 'Could not delete '.$dir."\n";
+		}
+	}
+	return false;
+}
+
+
+/**
+ *
+ * Recursivley deletes specific files or directories
+ *
+ * @param string $src Directory to search through
+ * @param array $files An array of file names to delete.
+ */
+
+function removeFiles($src,$files) {
+	$dir = opendir($src);
+	while(false !== ( $file = readdir($dir)) ) {
+		if (( $file != '.' ) && ( $file != '..' )) {
+			$full = $src . '/' . $file;
+			if ( is_dir($full) ) {
+				$flag = false;
+
+				foreach ($files as $delfile) {
+					if (basename($full) === $delfile) {
+						rrmdir($full);
+						$flag =true;
+						break;
+					}
+				}
+				if (!$flag)
+					removeFiles($full, $files);
+
+			}else {
+				foreach($files as $delfile) {
+					if (basename($full) === $delfile) {
+						@chmod($full, 0777);
+						unlink($full);
+						break;
+					}
+				}
+			}
+		}
+	}
+	closedir($dir);
+}
+
+
+/**
+ *
+ * Recursively sets permissions. Files get 775 and directories 664.
+ *
+ * @param string $src The directory to set permissions for
+ */
+
+function setPermissions($src) {
+	$dir = opendir($src);
+	while(false !== ( $file = readdir($dir)) ) {
+		if (( $file != '.' ) && ( $file != '..' )) {
+			$full = $src . '/' . $file;
+			if ( is_dir($full) ) {
+				setPermissions($full);
+				chmod($full,0755
+				);
+			}
+			else {
+				chmod($full,0664);
+
+			}
+		}
+	}
+	closedir($dir);
+}
+
+
+/**
+ *
+ * Prepares and generates the release packages.
+ *
+ * @param string $releaseVersion	Version of tiki that is being released.
+ */
+
+function build_packages($releaseVersion)
 {
 	global $options;
 
-	$script = escapeshellarg(TOOLS . '/tikirelease.sh');
-	if ($options['debug-packaging']) {
-		$debugflag = '-x';
-	} else {
-		$debugflag = '';
+	$workDir=$_SERVER['HOME']."/tikipack";
+	$relDir = $workDir. '/tiki-' .$releaseVersion;
+
+	echo  "Seting up ~/tikipack directory\n";
+	if (!is_dir($workDir)) {
+		if (!mkdir($workDir)) {
+			error('Cant make ' . $workDir."\n");
+			die();
+		}
 	}
-	$cmd = "/bin/sh ".$debugflag." ".$script." ".$releaseVersion." ".$svnRelativePath;
-	info("Running $cmd:\n");
-	`$cmd`;
+
+	// remove previous files if they exist.
+	if (is_dir($relDir)) {
+		echo "Removing previous files\n";
+		$shellout = rrmdir($relDir);
+		if ($shellout)
+			die ($shellout."\n");
+	}
+	$removeFiles = glob($relDir.'.*');
+	foreach ($removeFiles as $file){
+		unlink($file);
+	}
+
+	// create a export in tikipack to work with
+	echo "Creating SVN export from working copy\n";
+	$shellout = shell_exec('svn export '.escapeshellarg(ROOT).' '.escapeshellarg($relDir).' 2>&1');
+	if ($options['debug-packaging'])
+		echo $shellout."\n";
+
+
+	if (!is_file($relDir.'/vendor_bundled/composer.json')){
+		echo 'composer.json not found. Aborting.'."\n";
+		die();
+	}
+
+	if (is_file($workDir.'/composer.phar')){
+		if (!unlink($workDir.'/composer.phar')){
+			echo "Can't delete tikipack/composer.phar. Aborting."."\n";
+			die();
+		}
+	}
+
+	echo "Downloading composer.phar"."\n";
+	if (!file_put_contents($workDir.'/composer.phar', file_get_contents('http://getcomposer.org/composer.phar'))){
+		echo "Can't create tikipack/composer.phar. Aborting."."\n";
+		die();
+	}
+
+	echo 'Installing dependencies through composer'."\n";
+	$shellout =  shell_exec('php '.escapeshellarg($workDir.'/composer.phar').' install -d '.escapeshellarg($relDir.'/vendor_bundled').' --prefer-dist --no-dev 2>&1');
+	if ($options['debug-packaging'])
+		echo $shellout."\n";
+
+	if (strpos($shellout,'Fatal error:') || strpos($shellout,'Installation failed,')){
+		echo 'Composer Instillation Failed. Exiting'."\n";
+		die();
+	}
+	if ($options['debug-packaging'])
+		echo $shellout."\n";
+
+	echo "Removing development files\n";
+	$shellout = rrmdir($relDir.'/tests');
+	if ($shellout)
+		die ($shellout."\n");
+
+	$shellout = rrmdir($relDir.'/db/convertscripts');
+	if ($shellout)
+		die ($shellout."\n");
+
+	$shellout = rrmdir($relDir.'/doc/devtools');
+	if ($shellout)
+		die ($shellout."\n");
+
+	removeFiles($relDir,array('.cvsignore','.svnignore','.gitignore','.gitkeep','.eslintignore','.eslintrc','.npmignore','.editorconfig','.hound.yml','.travis.yml','.jshintignore','.github'));
+
+	echo "Removing language file comments\n";
+	foreach (scandir($relDir.'/lang') as $strip) {
+		if (is_file($relDir . '/lang/' .$strip.'/language.php'))
+			$shellout = shell_exec('php '.escapeshellarg(dirname(__FILE__).'/stripcomments.php').' '. escapeshellarg($relDir . '/lang/' .$strip.'/language.php').' 2>&1');
+		if ($shellout)
+			die ($shellout."\n");
+	}
+
+	echo "Setting file permissions\n";
+	setPermissions($relDir);
+
+	echo "Creating tiki-$releaseVersion.tar.gz\n";
+	$shellout =  shell_exec("tar -pczf ".escapeshellarg($relDir.".tar.gz")." --exclude '*.DS_Store' ".escapeshellarg($relDir).' 2>&1');
+	if ($options['debug-packaging'])
+		echo $shellout."\n";
+
+	echo "Creating tiki-$releaseVersion.bz2\n";
+	$shellout =  shell_exec("tar -pcjf ".escapeshellarg($relDir.".tar.bz2")." --exclude '*.DS_Store' ".escapeshellarg($relDir).' 2>&1');
+	if ($options['debug-packaging'])
+		echo $shellout."\n";
+
+	echo "Creating tiki-$releaseVersion.zip\n";
+	$shellout =  shell_exec("zip -r ".escapeshellarg($relDir.".zip").' '.escapeshellarg($relDir).' -x "*.DS_Store" -9 2>&1');
+	if ($options['debug-packaging'])
+		echo $shellout."\n";
+
+	echo "Creating tiki-$releaseVersion.7z\n";
+	$shellout =  shell_exec("7za a -mx9 ".escapeshellarg($relDir.".7z").' '.escapeshellarg($relDir).' -r -x!*.DS_Store 2>&1');
+	if (strpos($shellout, 'command not found'))
+		error("7za not installed. Archive creation failed.\n");
+	if ($options['debug-packaging'])
+		echo $shellout."\n";
+
+	echo "\nTo upload the 'tarballs', copy-paste and execute the following line (and change '\$SF_LOGIN' by your SF.net login):\n";
+echo "cd $relDir; scp tiki-$releaseVersion.tar.gz tiki-$releaseVersion.tar.bz2 tiki-$releaseVersion.zip \$SF_LOGIN@frs.sourceforge.net:uploads\n";
+
 	info(">> Packages files have been built in ~/tikipack/$releaseVersion :\n");
-	passthru("ls ~/tikipack/$releaseVersion");
 }
 
 /**

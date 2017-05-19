@@ -14,6 +14,9 @@
 # IMPORTANT NOTE : This script must NOT be called directly !!!
 #   It is used by the main release script (doc/devtools/release.php)
 #   To get the Tiki release HOWTO, try: php doc/devtools/release.php --howto
+#
+#	UPDATE:		this script is no longer used, a php version is now
+# 				incorporated into release.php
 # ==========================================================================
 #
 
