@@ -3006,7 +3006,9 @@ class UsersLib extends TikiLib
 	 */
 	function distinguish_anonymous_users($username="")
 	{
-		if ( empty($username) ) return "";
+		if ( empty($username) ) {
+			return "";
+		}
 		if ( $username[0] == "\t" ) {
 			$username = $username . ' (' . tra('Anonymous') . ')';
 		}
