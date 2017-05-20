@@ -16,7 +16,7 @@
 			</li>
 			<li class="divider"></li>
 			{if $tiki_p_blog_post eq "y"}
-				{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y" or $public eq "y"}
+				{if $ownsblog eq "y" or $tiki_p_blog_admin eq "y" or $public eq "y"}
 					<li>
 						<a href="tiki-blog_post.php?blogId={$blogId}">
 							{icon name='post'} {tr}Post{/tr}
@@ -24,7 +24,7 @@
 					</li>
 				{/if}
 			{/if}
-			{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y"}
+			{if $ownsblog eq "y" or $tiki_p_blog_admin eq "y"}
 				<li>
 					<a href="tiki-edit_blog.php?blogId={$blogId}">
 						{icon name='edit'} {tr}Edit{/tr}

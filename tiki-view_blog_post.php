@@ -55,7 +55,7 @@ if (!$blog_data) {
 
 $tikilib->get_perm_object($blogId, 'blog');
 
-$access->check_permission('tiki_p_read_blog', '', 'blog post', $postId);
+$access->check_permission('tiki_p_read_blog', '', 'blog', $blogId);
 
 # Check also for local permissions at blog level, to ensure that when tiki_p_read_blog is not allowed at object level,
 # regardless of the global perm set, their posts are not allowed either to be read
@@ -158,6 +158,7 @@ $smarty->assign('ownsblog', $ownsblog);
 $smarty->assign('postId', $postId);
 $smarty->assign('blog_data', $blog_data);
 $smarty->assign('blogId', $blogId);
+$smarty->assign('public', $blog_data['public']);
 $smarty->assign('headtitle', $post_info['title'] . ' : ' . $blog_data['title']);
 $smarty->assign('title', $post_info['title'] . ' : ' . $blog_data['title']);
 if (!isset($_REQUEST['offset'])) {
