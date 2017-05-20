@@ -586,7 +586,6 @@ class ObjectLib extends TikiLib
 			'file gallery' => 'tiki_p_view_file_gallery',
 			'tracker' => 'tiki_p_view_trackers',
 			'blog' => 'tiki_p_read_blog',
-			'blog post' => 'tiki_p_read_blog',
 			'quiz' => 'tiki_p_take_quiz',
 			'template' => 'tiki_p_use_content_templates',
 
@@ -604,6 +603,7 @@ class ObjectLib extends TikiLib
 			//
 			// by now they're not showing, list_category_objects needs support for ignoring permissions
 			// for a type.
+			'blog post' => 'tiki_p_read_blog',
 			'article' => 'tiki_p_read_article',
 			'submission' => 'tiki_p_approve_submission',
 			'image' => 'tiki_p_view_image_gallery',
