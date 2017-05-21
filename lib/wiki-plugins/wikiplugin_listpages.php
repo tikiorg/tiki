@@ -130,7 +130,7 @@ function wikiplugin_listpages_info()
 				'name' => tra('Language'),
 				'description' => tra('Two-letter language code to filter pages listed.'),
 				'since' => '3.0',
-				'filter' => 'alpha',
+				'filter' => 'lang',
 			),
 			'langOrphan' => array(
 				'required' => false,
