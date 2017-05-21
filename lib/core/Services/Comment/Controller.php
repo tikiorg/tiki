@@ -14,7 +14,7 @@ class Services_Comment_Controller
 {
 	function action_list($input)
 	{
-		$type = $input->type->alphaspace();
+		$type = $input->type->text();
 		if ($type === 'wiki page') {
 			$objectId = TikiLib::lib('wiki')->remove_badchars($input->objectId->none());
 		} else {
