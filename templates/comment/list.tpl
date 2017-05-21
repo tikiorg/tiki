@@ -41,6 +41,6 @@
 
 	<script type="text/javascript">
 		var ajax_url = '{$base_url}';
-		var objectId = '{$objectId|escape:"javascript"}';
+		var objectId = '{$objectId|replace:"'":"\\'"}';
 	</script>
 {/block}
