@@ -528,6 +528,11 @@ $admin_icons = array(
 		'description' => tr('Settings and features for print versions and pdf generation'),
 		'help' => 'Print',
 	),
+	"rtc" => array(
+		'title' => tr('RTC'),
+		'description' => tr('Real time collaboration/communication tools'),
+		'help' => 'RTC',
+	),
 );
 
 if (isset($_REQUEST['page'])) {
