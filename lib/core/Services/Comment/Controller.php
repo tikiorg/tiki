@@ -15,7 +15,19 @@ class Services_Comment_Controller
 	function action_list($input)
 	{
 		$type = $input->type->text();
-		$objectId = $input->objectId->pagename();
+		if ($type === 'wiki page') {
+			if (TikiLib::lib('wiki')->contains_badchars($input->objectId->none())) {
+				$objectId = '';
+			} else {
+				$objectId = $input->objectId->pagename();
+			}
+		} else {
+			$objectId = $input->objectId->digits();
+		}
+
+		if ($objectId !== $input->objectId->none()) {
+			throw new Services_Exception(tr('Invalid %0 ID: %1', $type, $input->objectId->none()), 403);
+		}
 
 		if (! $this->isEnabled($type, $objectId)) {
 			throw new Services_Exception(tr('Comments not allowed on this page.'), 403);
