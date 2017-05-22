@@ -37,13 +37,23 @@ class CleanVendors
 		'composer.lock',
 		'Gruntfile.js',
 		'Gruntfile.coffee',
-		'package.json'
+		'package.json',
+		'.npmignore',
+		'.github',
+		'.scrutinizer.yml',
+		'.travis.yml',
+		'.travis.install.sh',
+		'.editorconfig',
 	];
 
 	public static function clean(Event $event)
 	{
 		$themes = __DIR__ . '/../../../../themes/';
 		$vendors = $event->getComposer()->getConfig()->get('vendor-dir');
+
+		if (substr($vendors, -1, 1) !== DIRECTORY_SEPARATOR) {
+			$vendors .= DIRECTORY_SEPARATOR;
+		}
 
 		$fs = new FileSystem;
 		$fs->ensureDirectoryExists($themes);
@@ -367,7 +377,7 @@ class CleanVendors
 						$fs->remove($path);
 					}
 				}
-				self:self::removeStandard($dir);
+				self::removeStandard($dir);
 			}
 		}
 	}
