@@ -352,7 +352,7 @@
 
 					{if $prefs.wiki_list_rating eq 'y'}
 						<td class="integer">
-							{if isset($listpages[changes].rating)}$listpages[changes].rating{/if}
+							{if isset($listpages[changes].rating)}{$listpages[changes].rating}{/if}
 						</td>
 					{/if}
 
