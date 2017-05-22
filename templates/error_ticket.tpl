@@ -28,10 +28,6 @@
 							<input type="submit" class="btn btn-success" name="ticket_action_button"
 								value="{tr}Click here to confirm your action{/tr}">
 						</form>
-						{if $prefs.javascript_enabled eq 'y'}
-							{button href="javascript:history.back()" _text="{tr}Go back{/tr}"}
-						{/if}
-						{button href="$prefs.tikiIndex" _text="{tr}Return to home page{/tr}"}
 					</div>
 				</div>
 			</div>
@@ -50,10 +46,6 @@
 							<input type="submit" class="btn btn-success" name="ticket_action_button"
 								value="{tr}Click here to confirm your action{/tr}">
 						</form>
-						{if $prefs.javascript_enabled eq 'y'}
-							{button href="javascript:history.back()" _text="{tr}Go back{/tr}"}
-						{/if}
-						{button href="$prefs.tikiIndex" _text="{tr}Return to home page{/tr}"}
 					</div>
 				</div>
 			</div>
@@ -75,10 +67,6 @@
 							<input type="submit" class="btn btn-success" name="ticket_action_button"
 								value="{tr}Click here to confirm your action{/tr}">
 						</form>
-						{if $prefs.javascript_enabled eq 'y'}
-							{button href="javascript:history.back()" _text="{tr}Go back{/tr}"}
-						{/if}
-						{button href="$prefs.tikiIndex" _text="{tr}Return to home page{/tr}"}
 					</div>
 				</div>
 			</div>
@@ -100,10 +88,6 @@
 							<input type="submit" class="btn btn-success" name="ticket_action_button"
 								value="{tr}Click here to confirm your action{/tr}">
 						</form>
-						{if $prefs.javascript_enabled eq 'y'}
-							{button href="javascript:history.back()" _text="{tr}Go back{/tr}"}
-						{/if}
-						{button href="$prefs.tikiIndex" _text="{tr}Return to home page{/tr}"}
 					</div>
 				</div>
 			</div>
