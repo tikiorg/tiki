@@ -530,7 +530,7 @@ $admin_icons = array(
 	),
 	"rtc" => array(
 		'title' => tr('RTC'),
-		'description' => tr('Real time collaboration/communication tools'),
+		'description' => tr('Real-time collaboration tools'),
 		'help' => 'RTC',
 	),
 );
