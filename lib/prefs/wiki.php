@@ -518,6 +518,7 @@ function prefs_wiki_list($partial = false)
 				'feature_wiki_ratings',
 			),
 			'default' => 'n',
+			'tags' => array('experimental') // Column content is most unclear. Assumes poll option labels are numbers. Chealer 2017-05-22
 		),
 		'wiki_discuss_visibility' => array(
 			'name' => tra('Visibility of discussion'),
