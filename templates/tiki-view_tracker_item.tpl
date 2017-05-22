@@ -255,7 +255,7 @@
 									<label class="control-label col-sm-3">
 										{$cur_field.name|tra}
 										{if $cur_field.isMandatory eq 'y'}
-											<em class='mandatory_star'>*</em>
+											<strong class='mandatory_star text-danger tips' title=":{tr}This field is mandatory{/tr}">*</strong>
 										{/if}
 									</label>
 									<div class="col-sm-9">

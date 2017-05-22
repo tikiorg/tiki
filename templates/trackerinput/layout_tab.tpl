@@ -14,7 +14,7 @@
 					<label for="trackerinput_{$field.fieldId|escape}" class="control-label">
 						{$field.name|tra|escape}
 						{if $field.isMandatory eq 'y'}
-							<span class="mandatory_star">*</span>
+							<strong class='mandatory_star text-danger tips' title=":{tr}This field is mandatory{/tr}">*</strong>
 						{/if}
 					</label>
 					<div id="trackerinput_{$field.fieldId|escape}">

@@ -17,9 +17,9 @@
 			<div class="questionblock{$blockClass}">
 				{if $questions[ix].type eq 'h'}
 					{$htag = (empty($questions[ix].explode.1)) ? 'h3' : $questions[ix].explode.1}
-					<{$htag}>{$questions[ix].question|escape|nl2br}{if $questions[ix].mandatory eq 'y'} <em class="mandatory_star">*</em>{/if}</{$htag}>
+					<{$htag}>{$questions[ix].question|escape|nl2br}{if $questions[ix].mandatory eq 'y'} <strong class='mandatory_star text-danger tips' title=":{tr}This field is mandatory{/tr}">*</strong>{/if}</{$htag}>
 				{else}
-					<div class="quizquestion">{$questions[ix].question|escape|nl2br}{if $questions[ix].mandatory eq 'y'} <em class="mandatory_star">*</em>{/if}</div>
+					<div class="quizquestion">{$questions[ix].question|escape|nl2br}{if $questions[ix].mandatory eq 'y'} <strong class='mandatory_star text-danger tips' title=":{tr}This field is mandatory{/tr}">*</strong>{/if}</div>
 				{/if}
 				{if $questions[ix].type eq 'c'}
 					<div class="quizoptions">

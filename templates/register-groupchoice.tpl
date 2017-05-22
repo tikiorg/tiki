@@ -30,7 +30,7 @@ $.getJSON('group_tracker_ajax.php', {chosenGroup:'{{$theChoiceGroup}}'}, functio
 	{elseif isset($listgroups)}
 		<div class="form-group">
 			<label class="col-sm-4 control-label">
-				{tr}Group{/tr}{if $prefs.user_must_choose_group eq 'y'} {if $trackerEditFormId}<span class="text-danger tips" title="" data-original-title="">*</span>{/if}{/if}
+				{tr}Group{/tr}{if $prefs.user_must_choose_group eq 'y'} {if $trackerEditFormId}<strong class='mandatory_star text-danger tips' title=":{tr}This field is mandatory{/tr}">*</strong>{/if}{/if}
 			</label>
 			<div class="col-sm-8">
 				{foreach item=gr from=$listgroups}
