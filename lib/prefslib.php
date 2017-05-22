@@ -608,6 +608,8 @@ class PreferencesLib
 
 	private function loadPreferenceLocations()
 	{
+		global $prefs;
+
 		// check for or create array of where each pref is used
 		$file = 'temp/cache/preference-usage-index';
 		if ( !file_exists($file) ) {
@@ -628,6 +630,9 @@ class PreferencesLib
 								$tabs = 0;
 							} else {
 								$tabs++;
+							}
+							if ($prefs['site_layout'] !== 'classic' && $page === 'look' && $tabs > 2) {
+								$tabs--;	// hidden tab #3 for shadow layers
 							}
 							$found[1] = $tabs;	// replace char offset with tab number
 						}
