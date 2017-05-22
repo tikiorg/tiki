@@ -473,7 +473,7 @@ if ($isvalid) {
 			break;
 
 		default:
-			$error = tra('Invalid username or password');
+			$error = tra('Authentication error');
 	}
 	if (isset($extraButton)) $smarty->assign_by_ref('extraButton', $extraButton);
 

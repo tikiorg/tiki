@@ -21,6 +21,7 @@
 			{preference name=print_pdf_mpdf_size}
 			{preference name=print_pdf_mpdf_toc}
 			{preference name=print_pdf_mpdf_toclinks}
+			{preference name=print_pdf_mpdf_tocheading}
 			{preference name=print_pdf_mpdf_toclevels}
 			{preference name=print_pdf_mpdf_header}
 			{preference name=print_pdf_mpdf_footer}

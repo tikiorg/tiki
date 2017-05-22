@@ -11,8 +11,10 @@ class TikiFilter
 	 * Provides a filter instance based on the input. Either a filter
 	 * can be passed or a name.
 	 * 
-	 * @param mixed
-	 * @return \Zend\Filter\FilterInterface
+	 * @param \Zend\Filter\FilterInterface|string $filter		A abreveated name for a filter, or the filter name its self.
+	 * @return \Zend\Filter\FilterInterface 					The filter to apply.
+	 *
+	 * @link https://dev.tiki.org/Filtering+Best+Practices
 	 */
 	public static function get( $filter )
 	{
@@ -80,6 +82,9 @@ class TikiFilter
 			case 'striptags':
 				// Strips XML and HTML tags
 				return new Zend\Filter\StripTags;
+			case 'relativeurl':
+				// If formatted as a absolute url, will return the relative portion, also applies striptags
+				return new TikiFilter_RelativeURL;
 			case 'xss':
 				// Leave everything except for potentially malicious HTML
 				return new TikiFilter_PreventXss;

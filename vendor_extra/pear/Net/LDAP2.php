@@ -810,7 +810,7 @@ class Net_LDAP2 extends PEAR
                 if ((Net_LDAP2::errorMessage($error_code) === 'LDAP_OPERATIONS_ERROR') &&
                     ($this->_config['auto_reconnect'])) {
                     // The server has become disconnected before trying the
-                    // operation.  We should try again, possibly with a 
+                    // operation.  We should try again, possibly with a
                     // different server.
                     $this->_link = false;
                     $this->performReconnect();
@@ -1615,7 +1615,7 @@ class Net_LDAP2 extends PEAR
     */
     public static function checkLDAPExtension()
     {
-        if (!extension_loaded('ldap') && !@dl('ldap.' . PHP_SHLIB_SUFFIX)) {
+        if (!extension_loaded('ldap') && (! function_exists('dl') || !@dl('ldap.' . PHP_SHLIB_SUFFIX))) { // Line edited for Tiki
             return new Net_LDAP2_Error("It seems that you do not have the ldap-extension installed. Please install it before using the Net_LDAP2 package.");
         } else {
             return true;

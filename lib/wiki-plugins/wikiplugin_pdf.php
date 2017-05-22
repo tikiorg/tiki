@@ -72,10 +72,19 @@ function wikiplugin_pdf_info()
 							array('text'=>'No','value'=>'n'),
 						),			
 					),
+					'tocheading' => array(
+						'name' => tra('TOC heading'),
+						'description' => tra('Heading to be appeared before table of content is printed'),
+						'tags' => array('advanced'),
+						'type' => 'text',
+						'default' => $prefs['print_pdf_mpdf_tocheading'],
+						'shorthint'=>'For example:Table of contents'
+					),
+										
 					'toclevels' => array(
 						'name' => tra('TOC levels'),
 						'description' => tra('Will be autopicked from content of document, for example: H1|H2|H3'),
-						'tags' => array('advance'),
+						'tags' => array('advanced'),
 						'type' => 'text',
 						'default' => "H1|H2|H3",
 						'shorthint'=>''
