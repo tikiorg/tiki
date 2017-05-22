@@ -189,7 +189,7 @@ OPT_PHPCLI=
 OPT_USE_CURRENT_USER_GROUP=
 OPT_QUIET=
 
-while getopts "hu:g:v:nkd:q" OPTION; do
+while getopts "hu:g:v:p:nkd:q" OPTION; do
 	case $OPTION in
 		h) usage ; exit 0 ;;
 		u) OPT_AUSER=$OPTARG ;;
