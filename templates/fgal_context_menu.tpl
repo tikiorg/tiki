@@ -154,42 +154,12 @@
 				{if $files[$changes].perms.tiki_p_admin_file_galleries eq 'y' or empty($files[$changes].locked)
 					or (isset($files[$changes].locked) and $files[$changes].locked and $files[$changes].lockedby eq $user)
 					or $gal_info.lockable ne 'y'}
-					{if $prefs.javascript_enabled eq 'y'}
-						{* if javascript is available on client, add a menu item that will directly open a file selector, automatically upload the file after selection and that replace the current file with the uploaded one *}
 
-						{if $menu_text neq 'y'}</div>{/if}
-
-						{if $prefs.fgal_display_replace eq 'y'}
-							<div class="upspan {if $menu_text eq 'y'}upspantext{/if}" style="display: inline; position:relative{if $menu_text eq 'y'}; position:absolute{else}; float:left{/if}; overflow:hidden" title="{$replace_action_title}">
-								<input type="file" style="position:absolute; z-index:1001; right:0; top:0; font-size:600px; opacity:0; -moz-opacity:0; filter:alpha(opacity=0); cursor:pointer; margin: 0; padding: 0" name="upfile{$files[$changes].id}" onchange="this.form.submit(); return false;">
-								<input type="hidden" name="fileId" value="{$files[$changes].fileId}">
-								<a href="#">
-									{icon _menu_text=$menu_text _menu_icon=$menu_icon name='export' alt=$replace_action_title}
-								</a>
-							</div>
-
-							{if $menu_text eq 'y'}
-								{* the line above is used to give enough space to the real 'Upload New Version' button *}
-								<a style="visibility: hidden">
-									{icon _menu_text=$menu_text _menu_icon=$menu_icon name='export' alt=$replace_action_title}
-								</a>
-							{/if}
-						{/if}
-
-					{else}
-						{* for the moment, no-javascript version is simply a link to the edit page where you can also upload *}
-						<a href="tiki-upload_file.php?galleryId={$files[$changes].galleryId}&amp;fileId={$files[$changes].id}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}">
-							{icon _menu_text=$menu_text _menu_icon=$menu_icon name='export' alt="{tr}Upload new version{/tr}"}
-						</a>
-					{/if}
+					<a href="tiki-upload_file.php?galleryId={$files[$changes].galleryId}&amp;fileId={$files[$changes].id}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}">
+						{icon _menu_text=$menu_text _menu_icon=$menu_icon name='export' alt="{$replace_action_title}"}
+					</a>
 
 					{if $prefs.fgal_display_properties eq 'y'}
-						{if $view != 'page'}
-							{$pageoffset = $changes - $subcount + $offset}
-							<a href="tiki-list_file_gallery.php?galleryId={$files[$changes].galleryId}&offset={$pageoffset}&fileId={$files[$changes].id}&view=page">
-								{icon _menu_text=$menu_text _menu_icon=$menu_icon name='textfile' alt="{tr}Page view{/tr}"}
-							</a>
-						{/if}
 						<a href="tiki-upload_file.php?galleryId={$files[$changes].galleryId}&amp;fileId={$files[$changes].id}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}">
 							{icon _menu_text=$menu_text _menu_icon=$menu_icon name='edit' alt="{tr}Edit properties{/tr}"}
 						</a>
@@ -197,6 +167,12 @@
 						<a href="tiki-list_file_gallery.php?galleryId={$files[$changes].galleryId}&fileId={$files[$changes].id}&action=refresh_metadata{if isset($view)}&view={$view}{/if}">
 							{icon _menu_text=$menu_text _menu_icon=$menu_icon name='tag' alt="{tr}Refresh metadata{/tr}"}
 						</a>
+						{if $view != 'page'}
+							{$pageoffset = $changes - $subcount + $offset}
+							<a href="tiki-list_file_gallery.php?galleryId={$files[$changes].galleryId}&offset={$pageoffset}&fileId={$files[$changes].id}&view=page">
+								{icon _menu_text=$menu_text _menu_icon=$menu_icon name='textfile' alt="{tr}Page view{/tr}"}
+							</a>
+						{/if}
 					{/if}
 				{/if}
 

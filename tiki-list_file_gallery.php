@@ -661,67 +661,6 @@ if (!empty($_REQUEST['removegal'])) {
 	$filegallib->remove_file_gallery($_REQUEST['removegal'], $_REQUEST['removegal']);
 }
 
-// Process upload of a file version
-if (!empty($_FILES)) {
-	check_ticket('fgal');
-	if ($tiki_p_upload_files != 'y' && $tiki_p_admin_file_galleries != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra('You have permission to upload files but not to this file gallery'));
-		$smarty->display('error.tpl');
-		die;
-	}
-
-	foreach ($_FILES as $k => $v) {
-		$result = $filegallib->handle_file_upload($k, $v);
-
-		if (isset($result['error'])) {
-			$smarty->assign('msg', $result['error']);
-			$smarty->display('error.tpl');
-			exit;
-		}
-
-		if (empty($fileInfo) && !empty($_REQUEST['fileId'])) {
-			$fileInfo = $filegallib->get_file_info($_REQUEST['fileId']);
-		}
-
-		$fileId = $filegallib->replace_file(
-			$fileInfo['fileId'],
-			$fileInfo['name'],
-			$fileInfo['description'],
-			$result['filename'],
-			$result['data'],
-			$result['size'],
-			$result['type'],
-			$user,
-			$result['fhash'],
-			$fileInfo['comment'],
-			$gal_info,
-			true, //replace file
-			$fileInfo['author'],
-			$fileInfo['lastModif'],
-			$fileInfo['lockedby'],
-			null,
-			$result['metadata']
-		);
-
-		if (!$fileId) {
-			// If insert failed and stored on disk
-			if ($result['fhash']) {
-				@unlink($savedir . $result['fhash']);
-			}
-			$smarty->assign('msg', tra('The upload was not successful due to duplicate file content') . ': ' . $v['name']);
-			$smarty->display('error.tpl');
-			die;
-		}
-		$smarty->assign('metarray', json_decode($result['metadata']));
-		$smarty->assign('fileId', $fileId);
-		$smarty->assign('fileChangedMessage', tra('File update was successful') . ': ' . $v['name']);
-		if (isset($_REQUEST['fast']) && $prefs['fgal_asynchronous_indexing'] == 'y') {
-			$smarty->assign('reindex_file_id', $fileId);
-		}
-	}
-}
-
 // Update a file comment
 if (isset($_REQUEST['comment']) && $_REQUEST['comment'] != '' && isset($_REQUEST['fileId']) && $_REQUEST['fileId'] > 0) {
 	$msg = '';
