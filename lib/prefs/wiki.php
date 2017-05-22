@@ -588,9 +588,10 @@ function prefs_wiki_list($partial = false)
 		),
 		'wiki_simple_ratings' => array(
 			'name' => tra('Simple wiki ratings'),
-			'description' => tra('Enable users to rate articles based on a simple numeric scale.'),
+			'description' => tra('Enable users to rate wiki pages based on a simple numeric scale.'),
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('experimental') // Confusion with "Rating" (non-simple), results display seems broken in 15.x and trunk as of 2017-05-22 (probably the bug reported in ticket #5971). Poor configuration, fails to validate options. No documentation. Chealer
 		),
 		'wiki_simple_ratings_options' => array(
 			'name' => tra('Wiki rating options'),
