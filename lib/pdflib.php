@@ -482,7 +482,7 @@ class PdfGenerator
 		
 		//defining array of plugins to be sorted
 		$pluginArr=array(array("class","customsearch_results","div"),array("id","container_pivottable","div"),array("class","dynavar","a"));
-		$tagsArr=array(array("input","tablesorter-filter","class"),array("select","tablesorter-filter","class"),array("select","pvtRenderer","class"),array("select","pvtAggregator","class"),array("td","pvtCols","class"),array("td","pvtUnused","class"),array("td","pvtRows","class"),array("div","plot-container","class"),array("a","heading-link","class"));
+		$tagsArr=array(array("input","tablesorter-filter","class"),array("select","tablesorter-filter","class"),array("select","pvtRenderer","class"),array("select","pvtAggregator","class"),array("td","pvtCols","class"),array("td","pvtUnused","class"),array("td","pvtRows","class"),array("div","plot-container","class"),array("a","heading-link","class"),array("div","panel-default","class"));
 
 		foreach($pluginArr as $pluginInfo)
 		{
