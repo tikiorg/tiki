@@ -2163,6 +2163,7 @@ function prefs_feature_list($partial = false)
 				'feature_polls'
 			),
 			'default' => 'n',
+			'tags' => array('experimental') // Usage requires consulting documentation, very unclear column in listpages, unclear and/or buggy configuration in tiki-editpage. Seems to ignore quick poll options. Chealer 2017-05-22
 		),
 		'feature_backlinks' => array(
 			'name' => tra('Backlinks'),
