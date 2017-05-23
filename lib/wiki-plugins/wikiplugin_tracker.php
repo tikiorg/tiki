@@ -1737,7 +1737,7 @@ function wikiplugin_tracker($data, $params)
 						$smarty->assign('f_'.$f['fieldId'], $prettyout);
 						$smarty->assign('f_'.$f['permName'], $prettyout);
 					} else {
-						$mand =  ($showmandatory == 'y' and $f['isMandatory'] == 'y')? "&nbsp;<strong class='mandatory_star text-danger tips' title=':" . tra('This field is mandatory') . "'>*</strong>&nbsp;":'';
+						$mand =  ($showmandatory == 'y' and $f['isMandatory'] == 'y')? "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;":'';
 						if (!empty($f['description'])) {
 							$desc = $f['descriptionIsParsed'] == 'y' ? $tikilib->parse_data($f['description']) : tra($f['description']);
 							$desc = '<div class="trackerplugindesc">' . $desc . '</div>';
@@ -1796,8 +1796,7 @@ function wikiplugin_tracker($data, $params)
 						$back .= '><label class="' . $labelclass . ' control-label" for="' . $f['ins_id'] . '">' // ><label for="'
 									. wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors); //
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y'&& $registration != 'y') {
-							$back.= '<strong class="mandatory_star text-danger tips" title=":'
-								. tra('This field is mandatory') . '">*</strong>';
+							$back.= " <strong class='mandatory_star'>*</strong> ";
 						}
                         $back .= '</label>';
 						// If use different lines, add a line break.
@@ -1815,8 +1814,8 @@ function wikiplugin_tracker($data, $params)
 					}
 						$back .= '</div>'; // chibaguy added /divs
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y' && $registration == 'y') {
-							$back.= '<div class="col-md-1 col-sm-1"><strong class="mandatory_star text-danger tips" title=":'
-								. tra('This field is mandatory') . '">*</strong></div>';
+							$back.= '<div class="col-md-1 col-sm-1"><span class="text-danger tips" title=":'
+								. tra('This field is mandatory') . '">*</span></div>';
 						}
 
 					if ($f['type'] === 'j') {
