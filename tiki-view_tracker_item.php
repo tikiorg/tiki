@@ -167,7 +167,7 @@ if (isset($_REQUEST["itemId"])) {
 }
 
 $definition = Tracker_Definition::get($_REQUEST['trackerId']);
-$xfields = array('data' => $definition->getFields());
+$fieldDefinitions = $definition->getFields();
 $smarty->assign('tracker_is_multilingual', $prefs['feature_multilingual'] == 'y' && $definition->getLanguageField());
 
 if (!isset($utid) and !isset($gtid) and (!isset($_REQUEST["itemId"]) or !$_REQUEST["itemId"]) and !isset($_REQUEST["offset"])) {
@@ -249,7 +249,7 @@ if (isset($_REQUEST['reloff'])) {
 	$listfields = array();
 	if (substr($sort_mode, 0, 2) == 'f_') { //look at the field in case the field needs some processing to find the sort
 		list($a, $i, $o) = explode('_', $sort_mode);
-		foreach ($xfields['data'] as $f) {
+		foreach ($fieldDefinitions as $f) {
 			if ($f['fieldId'] == $i) {
 				$listfields = array(
 					$i => $f
@@ -355,7 +355,7 @@ if (empty($tracker_info)) {
 }
 $fieldFactory = $definition->getFieldFactory();
 
-foreach ($xfields["data"] as $i => $current_field) {
+foreach ($fieldDefinitions as $i => $current_field) {
 	$fid = $current_field["fieldId"];
 
 	$ins_id = 'ins_' . $fid;
@@ -363,7 +363,7 @@ foreach ($xfields["data"] as $i => $current_field) {
 
 	$current_field["ins_id"] = $ins_id;
 	$current_field["filter_id"] = $filter_id;
-	$xfields['data'][$i] = $current_field;
+	$fieldDefinitions[$i] = $current_field;
 
 	$current_field_ins = null;
 
@@ -533,7 +533,7 @@ if ($_REQUEST["itemId"]) {
 
 	$fieldFactory = $definition->getFieldFactory();
 
-	foreach ($xfields["data"] as $i => $current_field) {
+	foreach ($fieldDefinitions as $i => $current_field) {
 		$current_field_ins = null;
 		$fid = $current_field['fieldId'];
 
