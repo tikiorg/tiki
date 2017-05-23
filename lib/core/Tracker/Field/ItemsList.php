@@ -307,12 +307,16 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 			}
 		} else {
 			// when this is an item link or dynamic item list field, localvalue contains the target itemId
-			$localValue = $this->getData($filterFieldIdHere); 
+			$localValue = $this->getData($filterFieldIdHere);
 			if (!$localValue) {
 				// in some cases e.g. pretty tracker $this->getData($filterFieldIdHere) is not reliable as the info is not there
 				// Note: this fix only works if the itemId is passed via the template
 				$itemId = $this->getItemId();
 				$localValue = $trklib->get_item_value($trackerId, $itemId, $filterFieldIdHere);
+			}
+			if( !$filterFieldThere && $filterFieldHere && ( $filterFieldHere['type'] === 'r' || $filterFieldHere['type'] === 'w' ) && $localValue ) {
+				// itemlink/dynamic item list field in this tracker pointing directly to an item in the other tracker
+				return array($localValue);
 			}
 			// r = item link - not sure this is working 
 			if ($filterFieldHere['type'] == 'r' && isset($filterFieldHere['options_array'][0]) && isset($filterFieldHere['options_array'][1])) {
