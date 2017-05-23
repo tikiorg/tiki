@@ -1837,7 +1837,7 @@ function wikiplugin_tracker($data, $params)
 					}
 						$back .= '</div>'; // chibaguy added /divs
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y' && $registration == 'y') {
-							$back.= '<div class="col-md-1 col-sm-1"><strong class="text-danger tips" title=":'
+							$back.= '<div class="col-md-1 col-sm-1"><strong class="mandatory_star text-danger tips" title=":'
 								. tra('This field is mandatory') . '">*</strong></div>';
 						}
 
