@@ -389,7 +389,6 @@
 	{/tab}
 
 	{tab name="{tr}Export{/tr}"}
-		<br>
 		<form class="form-horizontal" action="tiki-admin.php?page=profiles" method="post" role="form">
 			{ticket}
 			<input type="hidden" name="redirect" value=0>
@@ -420,7 +419,7 @@
 						<label for="export_show_added">{tr}Show added preferences{/tr}</label>
 						<input type="checkbox" name="export_show_added" id="export_show_added" {if !empty($smarty.request.export_show_added)} checked="checked"{/if} >
 					</div>
-					<ul id="prefs_to_export_list" class="profile_export_list"{if $export_type neq "prefs"} style=display:none;"{/if}>
+					<ul id="prefs_to_export_list" class="profile_export_list"{if not empty($export_type) and $export_type neq "prefs"} style=display:none;"{/if}>
 
 						{foreach from=$modified_list key="name" item="data"}
 							<li class="checkbox">
