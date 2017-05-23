@@ -576,16 +576,10 @@ if (isset($error)) {
 		}
 	}
 }
-// dynamic list process
-$id_fields = array();
-foreach ($xfields['data'] as $sid => $onefield) {
-	$id_fields[$xfields['data'][$sid]['fieldId']] = $sid;
-}
 // Pull realname for user.
 $info["createdByReal"] = $tikilib->get_user_preference($info["createdBy"], 'realName', '');
 $info["lastModifByReal"] = $tikilib->get_user_preference($info["lastModifBy"], 'realName', '');
 
-$smarty->assign('id_fields', $id_fields);
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
 $smarty->assign('tracker_info', $tracker_info);
 $smarty->assign_by_ref('info', $info);
