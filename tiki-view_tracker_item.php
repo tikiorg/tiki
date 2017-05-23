@@ -446,8 +446,6 @@ if ($itemObject->canModify()) {
 			$_REQUEST['show'] = 'view';
 			foreach ($fields["data"] as $i => $array) {
 				if (isset($fields["data"][$i])) {
-					$fid = $fields["data"][$i]["fieldId"];
-					$ins_id = 'ins_' . $fid;
 					$ins_fields["data"][$i]["value"] = '';
 				}
 			}
