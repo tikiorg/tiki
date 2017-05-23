@@ -519,6 +519,7 @@
 		{tab name="{tr _0="<i>{$groupname|escape}</i>"}Group %0 members{/tr}"}
 		{* ----------------------- tab with memberlist --------------------------------------- *}
 		{if $membersCount > 0}
+		<div class="clearfix">
 		{if !$ts.ajax}
 				<div class="form-group">
 					<div class="col-sm-5">
@@ -623,6 +624,7 @@
 					</form>
 				</div>
 			</div>
+		</div>
 		{/tab}
 		{tab name="{tr _0="<i>{$groupname|escape}</i>"}Users banned from group %0{/tr}"}
 			{* ----------------------- tab with users banned from group --------------------------------------- *}
