@@ -355,13 +355,14 @@ if (empty($tracker_info)) {
 }
 $fieldFactory = $definition->getFieldFactory();
 
-// Why do we needs to do define these array elements? Can users not just consult fieldId? Chealer 2017-05-23 
+// Why do we need to define these array elements? Can users not just consult fieldId? Chealer 2017-05-23 
 foreach ($fieldDefinitions as &$fieldDefinition) {
 	$fid = $fieldDefinition["fieldId"];
 
 	$fieldDefinition["ins_id"] = 'ins_' . $fid;
 	$fieldDefinition["filter_id"] = 'filter_' . $fid;
 }
+unset($fieldDefinition);
 
 foreach ($fieldDefinitions as $i => $current_field) {
 	$fid = $current_field["fieldId"];
@@ -405,7 +406,6 @@ if (! $itemObject->canView()) {
 }
 if ($itemObject->canRemove()) {
 	if (isset($_REQUEST["remove"])) {
-		check_ticket('view-trackers-items');
 		$access->check_authenticity(tr('Are you sure you want to permanently delete this item?'));
 		$trklib->remove_tracker_item($_REQUEST["remove"]);
 		$access->redirect(filter_out_sefurl('tiki-view_tracker.php?trackerId=' . $_REQUEST['trackerId']));
