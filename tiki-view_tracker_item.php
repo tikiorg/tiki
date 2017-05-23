@@ -404,12 +404,10 @@ if (! $itemObject->canView()) {
 	$smarty->display("error.tpl");
 	die;
 }
-if ($itemObject->canRemove()) {
-	if (isset($_REQUEST["remove"])) {
-		$access->check_authenticity(tr('Are you sure you want to permanently delete this item?'));
-		$trklib->remove_tracker_item($_REQUEST["remove"]);
-		$access->redirect(filter_out_sefurl('tiki-view_tracker.php?trackerId=' . $_REQUEST['trackerId']));
-	}
+if (isset($_REQUEST["remove"]) && $itemObject->canRemove()) {
+	$access->check_authenticity(tr('Are you sure you want to permanently delete this item?'));
+	$trklib->remove_tracker_item($_REQUEST["remove"]);
+	$access->redirect(filter_out_sefurl('tiki-view_tracker.php?trackerId=' . $_REQUEST['trackerId']));
 }
 $rateFieldId = $definition->getRateField();
 if ($itemObject->canModify()) {
