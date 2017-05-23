@@ -7,7 +7,9 @@
 {if isset($chosenGroup)}
 {tr}Group:{/tr} {$chosenGroup}{/if}
 {/if}
+debug JML 01
 {if isset($item)}
+debug JML 01
 
 {tr}User Tracker{/tr}
 {foreach item=field_value from=$item.field_values}
@@ -18,7 +20,6 @@
 {tr}To validate that {$prefs.mail_template_custom_text}account, please follow the link:{/tr}
 {$validation_url}
 
-{tr}Assign to a group:{/tr} {$assignuser_url}
 {tr}View user's data:{/tr} {$userpref_url}
 
 

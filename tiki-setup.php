@@ -10,6 +10,12 @@
  */
 // $Id$
 
+function jml_debug($debug_txt, $file='jml_toto2') {
+$debug_handle = fopen("/tmp/" . $file,'a+');
+fwrite($debug_handle,$debug_txt,strlen($debug_txt));
+fclose($debug_handle);
+}
+
 // die if called directly.
 /**
  * @global array $prefs
@@ -761,3 +767,6 @@ if ( $prefs['conditions_enabled'] == 'y' ) {
 		exit;
 	}
 }
+
+#ini_set("display_errors",1);
+#error_reporting(E_ALL);

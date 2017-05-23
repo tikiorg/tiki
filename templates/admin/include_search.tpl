@@ -129,6 +129,12 @@
 					{preference name=search_error_missing_field}
 
 					{preference name=unified_stopwords}
+
+					<div class="adminoptionbox preference advanced">{* pretend this remarks box is an advanced pref so it only shows when advanced irefs are enabled *}
+						{remarksbox type=tip title="{tr}Experiment with LIST plugin syntax{/tr}"}
+							<a href="tiki-pluginlist_experiment.php">{tr}After you have found the correct contents, you may copy-paste them in a LIST plugin.{/tr}</a>
+						{/remarksbox}
+					</div>
 				</div>
 			</fieldset>
 
