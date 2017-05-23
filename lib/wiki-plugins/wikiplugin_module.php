@@ -25,7 +25,7 @@ function wikiplugin_module_info()
 	}
 
 	return array(
-		'name' => tra('Insert Module'),
+		'name' => tra('Module'),
 		'documentation' => 'PluginModule',
 		'description' => tra('Display a module'),
 		'prefs' => array( 'wikiplugin_module' ),
