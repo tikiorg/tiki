@@ -355,21 +355,20 @@ if (empty($tracker_info)) {
 }
 $fieldFactory = $definition->getFieldFactory();
 
+// Why do we needs to do define these array elements? Can users not just consult fieldId? Chealer 2017-05-23 
+foreach ($fieldDefinitions as &$fieldDefinition) {
+	$fid = $fieldDefinition["fieldId"];
+
+	$fieldDefinition["ins_id"] = 'ins_' . $fid;
+	$fieldDefinition["filter_id"] = 'filter_' . $fid;
+}
+
 foreach ($fieldDefinitions as $i => $current_field) {
 	$fid = $current_field["fieldId"];
-
-	$ins_id = 'ins_' . $fid;
-	$filter_id = 'filter_' . $fid;
-
-	$current_field["ins_id"] = $ins_id;
-	$current_field["filter_id"] = $filter_id;
-	$fieldDefinitions[$i] = $current_field;
-
-	$current_field_ins = null;
-
 	$fieldIsVisible = $itemObject->canViewField($fid);
 	$fieldIsEditable = $itemObject->canModifyField($fid);
 
+	$current_field_ins = null;
 	if ($fieldIsVisible || $fieldIsEditable) {
 		$current_field_ins = $current_field;
 
