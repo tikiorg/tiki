@@ -143,7 +143,7 @@
 					</div>
 					<div class="form-group">
 						<label for="email" class="control-label col-sm-3">
-							{tr}Your email{/tr}{if empty($email)} <strong class="mandatory_star">*</strong>{/if}
+							{tr}Your email{/tr}{if empty($email)} <strong class='mandatory_star text-danger tips' title=":{tr}This field is mandatory{/tr}">*</strong>{/if}
 						</label>
 						<div class="mandatory_field col-sm-9">
 							<input class="form-control" type="text" name="email" value="{$email}">

@@ -357,7 +357,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">
 										{if $field_value.isMandatory eq 'y'}
-											{$field_value.name|tra}<em class='mandatory_star'>*</em>
+											{$field_value.name|tra} <strong class='mandatory_star text-danger tips' title=":{tr}This field is mandatory{/tr}">*</strong>
 										{else}
 											{$field_value.name|tra}
 										{/if}

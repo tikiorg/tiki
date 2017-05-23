@@ -5,7 +5,7 @@
 {else}
 	{if !isset($openid_associate) || $openid_associate neq 'y'}
 		<div class="form-group">
-			<label class="col-sm-4 control-label" for="pass1">{tr}Password{/tr} {if $trackerEditFormId}<span class='text-danger tips' title=":{tr}This field is mandatory{/tr}">*</span>{/if}</label>
+			<label class="col-sm-4 control-label" for="pass1">{tr}Password{/tr} {if $trackerEditFormId}<strong class='mandatory_star text-danger tips' title=":{tr}This field is mandatory{/tr}">*</strong>{/if}</label>
 			<div class="col-sm-8">
 				<input
 					class="form-control"
