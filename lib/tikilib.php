@@ -6728,13 +6728,34 @@ function detect_browser_language()
 }
 
 /**
- * @param $email
- * @return mixed
+ * Validates an email address, using a domain check if $validate == 'y'
+ *
+ * @param string $email email to validate
+ * @param string $validate n|y|d (d = deep) defaults to pref validateEmail
+ * @return bool
  */
-function validate_email($email)
+function validate_email($email, $validate = null)
 {
-	$validate = new Zend\Validator\EmailAddress(['allow' => Zend\Validator\Hostname::ALLOW_ALL]);
-	return $validate->isValid($email);
+	global $prefs;
+
+	if (empty($validate)) {
+		$validate = $prefs['validateEmail'];
+	}
+
+	$options = ['allow' => Zend\Validator\Hostname::ALLOW_ALL,];
+
+	if ($validate === 'n') {
+		return true;
+	} else {
+		$options['useDomainCheck'] = true;	// both y and d
+	}
+
+	if ($validate === 'd') {				// deep mx check
+		$options['useMxCheck'] = true;
+		$options['useDeepMxCheck'] = true;
+	}
+	$validator = new Zend\Validator\EmailAddress($options);
+	return $validator->isValid($email);
 }
 
 /**

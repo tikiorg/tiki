@@ -236,8 +236,13 @@ function prefs_global_list($partial = false)
 		),
 		'validateEmail' => array(
 			'name' => tra("Validate user's email server"),
-			'description' => tra('Tiki will perform a DNS lookup and attempt to open a SMTP session to validate the email server.'),
-			'type' => 'flag',
+			'description' => tra('Tiki will perform a DNS lookup and attempt to validate the email server.'),
+			'type' => 'list',
+			'options' => array(
+				'n'=> tra('No'),
+				'y'			=> tra('Yes'),
+				'd'	=> tra('Yes, with "deep MX" search'),	// filters out reserved IP addresses and uses checkdnsrr to check for a valid "A" record
+			),
 			'default' => 'n',
 		),
 		'validateRegistration' => array(
