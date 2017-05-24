@@ -306,7 +306,7 @@ function wikiplugin_customsearch($data, $params)
 		'searchfadetext' => tr('Loading...'),
 		'searchfadediv' => $params['searchfadediv'],
 		'results' => empty($params['destdiv']) ? "#customsearch_{$id}_results" : "#{$params['destdiv']}",
-		'autosearchdelay' => isset($params['autosearchdelay']) ? max(1500, (int) $params['autosearchdelay']) : 0,
+		'autosearchdelay' => !empty($params['autosearchdelay']) ? max(1500, (int) $params['autosearchdelay']) : 0,
 		'searchonload' => (int) $params['searchonload'],
 		'requireinput' => (bool) $params['requireinput'],
 		'origrequireinput' => (bool) $params['requireinput'],
