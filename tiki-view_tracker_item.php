@@ -331,7 +331,6 @@ if (!empty($_REQUEST['moveto']) && $tiki_p_admin_trackers == 'y') { // mo to ano
 	}
 }
 if (isset($_REQUEST["removeattach"])) {
-	check_ticket('view-trackers-items');
 	$owner = $trklib->get_item_attachment_owner($_REQUEST["removeattach"]);
 	if (($user && ($owner == $user)) || ($tiki_p_admin_trackers == 'y')) {
 		$access->check_authenticity(tra('Are you sure you want to remove this attachment?'));
