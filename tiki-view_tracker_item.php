@@ -317,6 +317,11 @@ if (isset($tracker_info['adminOnlyViewEditItem']) && $tracker_info['adminOnlyVie
 
 include_once('tiki-sefurl.php');
 
+if (isset($_REQUEST["remove"]) && $itemObject->canRemove()) {
+	$access->check_authenticity(tr('Are you sure you want to permanently delete this item?'));
+	$trklib->remove_tracker_item($_REQUEST["remove"]);
+	$access->redirect(filter_out_sefurl('tiki-view_tracker.php?trackerId=' . $_REQUEST['trackerId']));
+}
 if (!empty($_REQUEST['moveto']) && $tiki_p_admin_trackers == 'y') { // mo to another tracker fields with same name
 	$perms = Perms::get('tracker', $_REQUEST['moveto']);
 	if ($perms->create_tracker_items) {
@@ -396,11 +401,6 @@ foreach ($fieldDefinitions as $i => $current_field) {
 $authorfield = $definition->getAuthorField();
 if ($authorfield) {
 	$tracker_info['authorindiv'] = $trklib->get_item_value($_REQUEST["trackerId"], $_REQUEST["itemId"], $authorfield);
-}
-if (isset($_REQUEST["remove"]) && $itemObject->canRemove()) {
-	$access->check_authenticity(tr('Are you sure you want to permanently delete this item?'));
-	$trklib->remove_tracker_item($_REQUEST["remove"]);
-	$access->redirect(filter_out_sefurl('tiki-view_tracker.php?trackerId=' . $_REQUEST['trackerId']));
 }
 $rateFieldId = $definition->getRateField();
 if ($itemObject->canModify()) {
