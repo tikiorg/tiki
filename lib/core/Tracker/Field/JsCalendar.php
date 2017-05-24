@@ -47,6 +47,26 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 							1 => tr('Yes'),
 						),
 					),
+					'notBefore' => array(
+						'name' => tr('Not before'),
+						'description' => tr('Field ID from this tracker to compare the value against and validate it is not before that timestamp.'),
+						'filter' => 'int',
+						'legacy_index' => 2,
+						'profile_reference' => 'tracker_field',
+						'parent' => 'input[name=trackerId]',
+						'parentkey' => 'tracker_id',
+						'sort_order' => 'position_nasc',
+					),
+					'notAfter' => array(
+						'name' => tr('Not after'),
+						'description' => tr('Field ID from this tracker to compare the value against and validate it is not after that timestamp.'),
+						'filter' => 'int',
+						'legacy_index' => 3,
+						'profile_reference' => 'tracker_field',
+						'parent' => 'input[name=trackerId]',
+						'parentkey' => 'tracker_id',
+						'sort_order' => 'position_nasc',
+					),
 				),
 			),
 		);
@@ -115,6 +135,31 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 		}
 
 		return smarty_function_jscalendar($params, $smarty);
+	}
+
+	function isValid($ins_fields_data)
+	{
+		if( $notBefore = $this->getOption('notBefore') ) {
+			$notBeforeTimestamp = $ins_fields_data[$notBefore]['value'];
+			if( (string)$notBeforeTimestamp !== (string)intval($notBeforeTimestamp) ) {
+				$notBeforeTimestamp = strtotime($notBeforeTimestamp);
+			}
+			if( !$notBeforeTimestamp || $this->getValue() < $notBeforeTimestamp ) {
+				return tr('%0 cannot be before %1', $this->getConfiguration('name'), $ins_fields_data[$notBefore]['name']);
+			}
+		}
+
+		if( $notAfter = $this->getOption('notAfter') ) {
+			$notAfterTimestamp = $ins_fields_data[$notAfter]['value'];
+			if( (string)$notAfterTimestamp !== (string)intval($notAfterTimestamp) ) {
+				$notAfterTimestamp = strtotime($notAfterTimestamp);
+			}
+			if( !$notAfterTimestamp || $this->getValue() > $notAfterTimestamp ) {
+				return tr('%0 cannot be after %1', $this->getConfiguration('name'), $ins_fields_data[$notAfter]['name']);
+			}
+		}
+
+		return true;
 	}
 }
 
