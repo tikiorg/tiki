@@ -322,10 +322,10 @@ if (isset($_REQUEST["remove"]) && $itemObject->canRemove()) {
 	$trklib->remove_tracker_item($_REQUEST["remove"]);
 	$access->redirect(filter_out_sefurl('tiki-view_tracker.php?trackerId=' . $_REQUEST['trackerId']));
 }
-if (!empty($_REQUEST['moveto']) && $tiki_p_admin_trackers == 'y') {
-	// Move item to another tracker. This assumes certain similarities between the 2 trackers.
+if (! empty($_REQUEST['moveto'])) {
 	$perms = Perms::get('tracker', $_REQUEST['moveto']);
-	if ($perms->create_tracker_items) {
+	if ($tiki_p_admin_trackers == 'y' && $perms->create_tracker_items) {
+		// Move item to another tracker. This assumes certain similarities between the 2 trackers.
 		$trklib->move_item($_REQUEST['trackerId'], $_REQUEST['itemId'], $_REQUEST['moveto']);
 		header('Location: '.filter_out_sefurl('tiki-view_tracker_item.php?itemId=' . $_REQUEST['itemId']));
 		exit;
