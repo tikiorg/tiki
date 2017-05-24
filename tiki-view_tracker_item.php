@@ -306,7 +306,7 @@ if (!isset($tracker_info["writerGroupCanModify"]) or (isset($gtid) and ($_REQUES
 }
 $tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker', $tracker_info);
 if (! $itemObject->canView()) {
-	$smarty->assign('errortype', 401);
+	$smarty->assign('errortype', 403);
 	$smarty->assign('msg', tra("Permission denied"));
 	$smarty->display("error.tpl");
 	die;
@@ -324,7 +324,7 @@ if (!empty($_REQUEST['moveto']) && $tiki_p_admin_trackers == 'y') { // mo to ano
 		header('Location: '.filter_out_sefurl('tiki-view_tracker_item.php?itemId=' . $_REQUEST['itemId']));
 		exit;
 	} else {
-		$smarty->assign('errortype', 401);
+		$smarty->assign('errortype', 403);
 		$smarty->assign('msg', tra("Permission denied"));
 		$smarty->display("error.tpl");
 		die;
@@ -513,7 +513,7 @@ if ($_REQUEST["itemId"]) {
 		$info['trackerId'] = $_REQUEST['trackerId'];
 	}
 	if (! $itemObject->canView()) {
-		$smarty->assign('errortype', 401);
+		$smarty->assign('errortype', 403);
 		$smarty->assign('msg', tra('Permission denied'));
 		$smarty->display('error.tpl');
 		die;
