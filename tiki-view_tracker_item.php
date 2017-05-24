@@ -398,12 +398,6 @@ $authorfield = $definition->getAuthorField();
 if ($authorfield) {
 	$tracker_info['authorindiv'] = $trklib->get_item_value($_REQUEST["trackerId"], $_REQUEST["itemId"], $authorfield);
 }
-if (! $itemObject->canView()) {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
 if (isset($_REQUEST["remove"]) && $itemObject->canRemove()) {
 	$access->check_authenticity(tr('Are you sure you want to permanently delete this item?'));
 	$trklib->remove_tracker_item($_REQUEST["remove"]);
