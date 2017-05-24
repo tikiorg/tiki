@@ -112,33 +112,37 @@ if (!isset($_REQUEST['trackerId']) && $prefs['groupTracker'] == 'y') {
 $smarty->assign_by_ref('special', $special);
 //url to a user user tracker tiki-view_tracker_item.php?user=yyyyy&view=+user or tiki-view_tracker_item.php?greoup=yyy&user=yyyyy&view=+user or tiki-view_tracker_item.php?trackerId=xxx&user=yyyyy&view=+user
 if ($prefs['userTracker'] == 'y' && isset($_REQUEST['view']) && $_REQUEST['view'] = ' user' && !empty($_REQUEST['user'])) {
-	if (empty($_REQUEST['trackerId']) && empty($_REQUEST['group'])) {
-		$_REQUEST['group'] = $userlib->get_user_default_group($_REQUEST['user']);
-	}
-	if (empty($_REQUEST['trackerId']) && !empty($_REQUEST['group'])) {
-		$utid = $userlib->get_usertrackerid($_REQUEST['group']);
-		if (!empty($utid['usersTrackerId']) && !empty($utid['usersFieldId'])) {
-			$_REQUEST['trackerId'] = $utid['usersTrackerId'];
-			$fieldId = $utid['usersFieldId'];
+	if (empty($_REQUEST['trackerId'])) {
+		if (empty($_REQUEST['group'])) {
+			$_REQUEST['group'] = $userlib->get_user_default_group($_REQUEST['user']);
+		}
+		if (!empty($_REQUEST['group'])) {
+			$utid = $userlib->get_usertrackerid($_REQUEST['group']);
+			if (!empty($utid['usersTrackerId']) && !empty($utid['usersFieldId'])) {
+				$_REQUEST['trackerId'] = $utid['usersTrackerId'];
+				$fieldId = $utid['usersFieldId'];
+			}
 		}
 	}
-	if (!empty($_REQUEST['trackerId']) && empty($fieldId)) {
-		$definition = Tracker_Definition::get($_REQUEST['trackerId']);
-		if ($definition) {
-			$fieldId = $definition->getUserField();
+	if (! empty($_REQUEST['trackerId'])) {
+		if (empty($fieldId)) {
+			$definition = Tracker_Definition::get($_REQUEST['trackerId']);
+			if ($definition) {
+				$fieldId = $definition->getUserField();
+			}
 		}
-	}
-	if (!empty($_REQUEST['trackerId']) && !empty($fieldId)) {
-		$_REQUEST['itemId'] = $trklib->get_item_id($_REQUEST['trackerId'], $fieldId, $_REQUEST['user']);
-		if (!$_REQUEST['itemId']) {
-			$smarty->assign(
-				'msg',
-				tra("You don't have a personal tracker item yet. Click here to make one:") .
-				'<br /><a href="tiki-view_tracker.php?trackerId=' . $_REQUEST['trackerId'] . '&cookietab=2">' .
-				tra('Create tracker item') . '</a>'
-			);
-			$smarty->display("error.tpl");
-			die;
+		if (! empty($fieldId)) {
+			$_REQUEST['itemId'] = $trklib->get_item_id($_REQUEST['trackerId'], $fieldId, $_REQUEST['user']);
+			if (!$_REQUEST['itemId']) {
+				$smarty->assign(
+					'msg',
+					tra("You don't have a personal tracker item yet. Click here to make one:") .
+					'<br /><a href="tiki-view_tracker.php?trackerId=' . $_REQUEST['trackerId'] . '&cookietab=2">' .
+					tra('Create tracker item') . '</a>'
+				);
+				$smarty->display("error.tpl");
+				die;
+			}
 		}
 	}
 }
