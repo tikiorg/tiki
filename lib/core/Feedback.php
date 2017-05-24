@@ -125,6 +125,10 @@ class Feedback
 			case 'session':
 				if (!isset($_SESSION['tikifeedback'])) {
 					$_SESSION['tikifeedback'] = [];
+				} else {
+					if (in_array($feedback, $_SESSION['tikifeedback'])) {
+						break;
+					}
 				}
 				$_SESSION['tikifeedback'][] = $feedback;
 				break;
