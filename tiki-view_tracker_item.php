@@ -422,8 +422,8 @@ if ($authorfield) {
 	$tracker_info['authorindiv'] = $trklib->get_item_value($trackerId, $itemId, $authorfield);
 }
 
-if ($itemObject->canModify()) {
-	if (isset($_REQUEST["save"]) || isset($_REQUEST["save_return"])) {
+if (isset($_REQUEST["save"]) || isset($_REQUEST["save_return"])) {
+	if ($itemObject->canModify()) {
 		$captchalib = TikiLib::lib('captcha');
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
 			$smarty->assign('msg', $captchalib->getErrors());
