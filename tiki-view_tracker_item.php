@@ -523,8 +523,6 @@ if (! $itemObject->canView()) {
 	$smarty->display('error.tpl');
 	die;
 }
-$last = array();
-$lst = '';
 
 $fieldFactory = $definition->getFieldFactory();
 
