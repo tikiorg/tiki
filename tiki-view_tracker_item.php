@@ -369,6 +369,15 @@ if (empty($tracker_info)) {
 }
 $fieldFactory = $definition->getFieldFactory();
 
+$rateFieldId = $definition->getRateField();
+if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' and $tiki_p_tracker_vote_ratings == 'y') {
+	if ($user and $tiki_p_tracker_vote_ratings == 'y' and isset($rateFieldId) and isset($_REQUEST['ins_' . $rateFieldId])) {
+		$trklib->replace_rating($trackerId, $itemId, $rateFieldId, $user, $_REQUEST['ins_' . $rateFieldId]);
+		header('Location: tiki-view_tracker_item.php?trackerId=' . $trackerId. '&itemId=' . $itemId);
+		die;
+	}
+}
+
 // Why do we need to define these array elements? Can users not just consult fieldId? Chealer 2017-05-23 
 foreach ($fieldDefinitions as &$fieldDefinition) {
 	$fid = $fieldDefinition["fieldId"];
@@ -412,7 +421,7 @@ $authorfield = $definition->getAuthorField();
 if ($authorfield) {
 	$tracker_info['authorindiv'] = $trklib->get_item_value($trackerId, $itemId, $authorfield);
 }
-$rateFieldId = $definition->getRateField();
+
 if ($itemObject->canModify()) {
 	if (isset($_REQUEST["save"]) || isset($_REQUEST["save_return"])) {
 		$captchalib = TikiLib::lib('captcha');
@@ -508,13 +517,6 @@ if (isset($_REQUEST["returntracker"]) || isset($_REQUEST["save_return"])) {
 	die;
 }
 // ********************************************************
-if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' and $tiki_p_tracker_vote_ratings == 'y') {
-	if ($user and $tiki_p_tracker_vote_ratings == 'y' and isset($rateFieldId) and isset($_REQUEST['ins_' . $rateFieldId])) {
-		$trklib->replace_rating($trackerId, $itemId, $rateFieldId, $user, $_REQUEST['ins_' . $rateFieldId]);
-		header('Location: tiki-view_tracker_item.php?trackerId=' . $trackerId. '&itemId=' . $itemId);
-		die;
-	}
-}
 $info = $trklib->get_tracker_item($itemId);
 $itemObject = Tracker_Item::fromInfo($info);
 if (!isset($info['trackerId'])) {
