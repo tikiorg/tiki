@@ -356,6 +356,66 @@ class TikiAccessLib extends TikiLib
 	}
 
 	/**
+	 * Perform origin check to ensure the requesting server matches this server
+	 *
+	 * @return bool
+	 */
+	private function originCheck()
+	{
+		//$base_url is usually host + directory
+		global $base_url;
+		include_once('lib/setup/absolute_urls.php');
+		$this->origin = '';
+		$this->originSource = 'empty';
+		//first check HTTP_ORIGIN
+		if (!empty($_SERVER['HTTP_ORIGIN'])) {
+			//HTTP_ORIGIN is usually host only without trailing slash
+			$this->origin = $_SERVER['HTTP_ORIGIN'] . '/';
+			$this->originSource = 'HTTP_ORIGIN';
+			//then check HTTP_REFERER
+		} elseif (!empty($_SERVER['HTTP_REFERER'])) {
+			//HTTP_REFERER is usually the full path (host + directory + file + query)
+			$this->origin = $_SERVER['HTTP_REFERER'];
+			$this->originSource = 'HTTP_REFERER';
+		}
+		//$base_url may need to be the needle or the haystack depending on whether it is being compared to
+		//HTTP_REFERER of HTTP_ORIGIN
+		$this->check = strlen($base_url) >= strlen($this->origin) ? strpos($base_url, $this->origin) === 0
+			: strpos($this->origin, $base_url) === 0;
+		return $this->check;
+	}
+
+	/**
+	 * Check http origin/referer and provide error feedback if it doesn't match the site domain
+	 * Differs from checkAuthenticity() in that only the origin/referer is checked, not a ticket
+	 *
+	 * @param string $error
+	 * @return bool
+	 * @throws Services_Exception
+	 */
+	public function checkOrigin($error = 'session')
+	{
+		$check = $this->originCheck();
+		if (!$check) {
+			$msg = tra('Potential cross-site request forgery (CSRF) detected. Operation blocked.');
+			switch ($error) {
+				case 'none':
+					break;
+				case 'services':
+					throw new Services_Exception($msg, 400);
+					break;
+				case 'session':
+				default:
+					Feedback::error($msg, 'session');
+					break;
+			}
+			TikiLib::lib('logs')->add_log('CSRF',
+				tr('Request to %0 failed CSRF check.', $_SERVER['SCRIPT_NAME']));
+		}
+		return $check;
+	}
+
+	/**
 	 * CSRF ticket - Check that the ticket has been created
 	 *
 	 * @return bool
