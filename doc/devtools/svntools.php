@@ -181,6 +181,25 @@ function has_uncommited_changes($localPath)
 }
 
 /**
+ * Get the number of changes in the specified checkout
+ *
+ * @param $localPath string Path of the checkout
+ * @return int The number of files that differ (additions, removals and modifications) from the repository
+ *
+ * @see Similar function has_uncommited_changes()
+ */
+function svn_files_identical($localPath)
+{
+	$localPath = escapeshellarg($localPath);
+
+	$dom = new DOMDocument;
+	$dom->loadXML(`svn status --xml $localPath`);
+
+	return $dom->getElementsByTagName('entry')->length;
+}
+
+
+/**
  * @param $localPath
  * @return DOMNodeList
  */
