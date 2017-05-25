@@ -26,6 +26,9 @@ class Search_Formatter_ValueFormatter_Number extends Search_Formatter_ValueForma
 
 	function render($name, $value, array $entry)
 	{
+		if( (string)floatval($value) !== (string)$value ) {
+			return $value;
+		}
 		if ($this->dec_point && $this->thousands_sep) {
 			return number_format(floatval($value), $this->decimals, $this->dec_point, $this->thousands_sep);
 		} elseif ($this->decimals) {
