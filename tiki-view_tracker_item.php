@@ -417,11 +417,6 @@ foreach ($fieldDefinitions as $i => $current_field) {
 	}
 }
 
-$authorfield = $definition->getAuthorField();
-if ($authorfield) {
-	$tracker_info['authorindiv'] = $trklib->get_item_value($trackerId, $itemId, $authorfield);
-}
-
 if (isset($_REQUEST["save"]) || isset($_REQUEST["save_return"])) {
 	if ($itemObject->canModify()) {
 		$captchalib = TikiLib::lib('captcha');
@@ -575,6 +570,12 @@ if (isset($error)) {
 		}
 	}
 }
+
+$authorfield = $definition->getAuthorField();
+if ($authorfield) {
+	$tracker_info['authorindiv'] = $trklib->get_item_value($trackerId, $itemId, $authorfield);
+}
+
 // Pull realname for user.
 $info["createdByReal"] = $tikilib->get_user_preference($info["createdBy"], 'realName', '');
 $info["lastModifByReal"] = $tikilib->get_user_preference($info["lastModifBy"], 'realName', '');
