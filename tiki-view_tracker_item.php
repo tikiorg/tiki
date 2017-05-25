@@ -515,57 +515,56 @@ if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' an
 		die;
 	}
 }
-if ($itemId) {
-	$info = $trklib->get_tracker_item($itemId);
-	$itemObject = Tracker_Item::fromInfo($info);
-	if (!isset($info['trackerId'])) {
-		$info['trackerId'] = $trackerId;
-	}
-	if (! $itemObject->canView()) {
-		$smarty->assign('errortype', 403);
-		$smarty->assign('msg', tra('Permission denied'));
-		$smarty->display('error.tpl');
-		die;
-	}
-	$last = array();
-	$lst = '';
-	$tracker_item_main_value = '';
-
-	$fieldFactory = $definition->getFieldFactory();
-
-	foreach ($fieldDefinitions as $i => $current_field) {
-		$current_field_ins = null;
-		$fid = $current_field['fieldId'];
-
-		$handler = $fieldFactory->getHandler($current_field, $info);
-
-		$fieldIsVisible = $itemObject->canViewField($fid);
-		$fieldIsEditable = $itemObject->canModifyField($fid);
-
-		if ($fieldIsVisible || $fieldIsEditable) {
-			$current_field_ins = $current_field;
-
-			if ($handler) {
-				$insert_values = $handler->getFieldData();
-
-				if ($insert_values) {
-					$current_field_ins = array_merge($current_field_ins, $insert_values);
-				}
-			}
-
-		}
-
-		if (! empty($current_field_ins)) {
-			if ($fieldIsVisible) {
-				$fields['data'][$i] = $current_field_ins;
-			}
-			if ($fieldIsEditable) {
-				$ins_fields['data'][$i] = $current_field_ins;
-			}
-		}
-	}
-	$smarty->assign('tracker_item_main_value', $trklib->get_isMain_value($trackerId, $itemId));
+$info = $trklib->get_tracker_item($itemId);
+$itemObject = Tracker_Item::fromInfo($info);
+if (!isset($info['trackerId'])) {
+	$info['trackerId'] = $trackerId;
 }
+if (! $itemObject->canView()) {
+	$smarty->assign('errortype', 403);
+	$smarty->assign('msg', tra('Permission denied'));
+	$smarty->display('error.tpl');
+	die;
+}
+$last = array();
+$lst = '';
+$tracker_item_main_value = '';
+
+$fieldFactory = $definition->getFieldFactory();
+
+foreach ($fieldDefinitions as $i => $current_field) {
+	$current_field_ins = null;
+	$fid = $current_field['fieldId'];
+
+	$handler = $fieldFactory->getHandler($current_field, $info);
+
+	$fieldIsVisible = $itemObject->canViewField($fid);
+	$fieldIsEditable = $itemObject->canModifyField($fid);
+
+	if ($fieldIsVisible || $fieldIsEditable) {
+		$current_field_ins = $current_field;
+
+		if ($handler) {
+			$insert_values = $handler->getFieldData();
+
+			if ($insert_values) {
+				$current_field_ins = array_merge($current_field_ins, $insert_values);
+			}
+		}
+
+	}
+
+	if (! empty($current_field_ins)) {
+		if ($fieldIsVisible) {
+			$fields['data'][$i] = $current_field_ins;
+		}
+		if ($fieldIsEditable) {
+			$ins_fields['data'][$i] = $current_field_ins;
+		}
+	}
+}
+$smarty->assign('tracker_item_main_value', $trklib->get_isMain_value($trackerId, $itemId));
+
 //restore types values if there is an error
 if (isset($error)) {
 	foreach ($ins_fields["data"] as $i => $current_field) {
