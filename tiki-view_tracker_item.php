@@ -525,7 +525,6 @@ if (! $itemObject->canView()) {
 }
 $last = array();
 $lst = '';
-$tracker_item_main_value = '';
 
 $fieldFactory = $definition->getFieldFactory();
 
