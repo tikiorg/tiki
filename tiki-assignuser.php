@@ -11,6 +11,7 @@
 // This script is used to assign groups to a particular user
 // ASSIGN USER TO GROUPS
 require_once ('tiki-setup.php');
+$check = $access->checkOrigin();
 
 $auto_query_args = array('sort_mode', 'offset', 'find', 'assign_user', 'group', 'maxRecords');
 
@@ -32,7 +33,7 @@ if (!isset($_REQUEST["assign_user"]) || ($tiki_p_admin != 'y' && $tiki_p_admin_u
 
 $assign_user = $_REQUEST["assign_user"];
 
-if (isset($_REQUEST["action"])) {
+if (isset($_REQUEST["action"]) && $check) {
 	check_ticket('admin-assign-user');
 
 	if (!isset($_REQUEST["group"])) {
@@ -66,13 +67,13 @@ if (isset($_REQUEST["action"])) {
 	}
 }
 
-if (isset($_REQUEST['set_default'])) {
+if (isset($_REQUEST['set_default']) && $check) {
 	$userlib->set_default_group($_REQUEST['login'], $_REQUEST['defaultgroup']);
 }
 
 $user_info = $userlib->get_user_info($assign_user, true);
 $smarty->assign_by_ref('user_info', $user_info);
-if (!empty($_REQUEST['save'])) {
+if (!empty($_REQUEST['save']) && $check) {
 	foreach ($_REQUEST as $r => $v) {
 		if (strpos($r, 'new_') === 0) {
 			$g = substr($r, 4);
