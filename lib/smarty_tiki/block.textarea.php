@@ -236,8 +236,18 @@ function editTimerTick() {
 
 	if ( edittimeout && seconds <= 300 ) {
 		if ( ! editTimeoutTipIsDisplayed ) {
-			edittimeout.parents('.alert:first').fadeIn();
-			editTimeoutTipIsDisplayed = true;
+			// ping a lightweight ajax service to keep the session alive
+			$.getJSON(
+				$.service('attribute', 'get'),
+				{attribute: 'tiki.edit.dummy', type: 'dummy', object: 'dummy'},
+				function () {
+					editTimeElapsedSoFar = 0;	// success, reset timer
+				}
+			).fail(function () {
+					// something went wrong, show the warning
+					edittimeout.parents('.alert:first').fadeIn();
+					editTimeoutTipIsDisplayed = true;
+				});
 		}
 		if ( seconds > 0 && seconds % 60 == 0 ) {
 			minutes = seconds / 60;
