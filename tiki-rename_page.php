@@ -12,6 +12,8 @@ $section = 'wiki page';
 $section_class = "tiki_wiki_page manage";	// This will be body class instead of $section
 
 require_once ('tiki-setup.php');
+$check = $access->checkOrigin();
+
 $wikilib = TikiLib::lib('wiki');
 
 $access->check_feature('feature_wiki');
@@ -34,7 +36,7 @@ if (!($info = $tikilib->get_page_info($page))) {
 // Now check permissions to rename this page
 $access->check_permission(array('view', 'rename'), tr('Rename wiki page'), 'wiki page', $page);
 
-if (isset($_REQUEST["rename"]) || isset($_REQUEST["confirm"])) {
+if (isset($_REQUEST["rename"]) || isset($_REQUEST["confirm"]) && $check) {
 	check_ticket('rename-page');
 	// If the new pagename does match userpage prefix then display an error
 	$newName = isset($_REQUEST["confirm"]) ? $_REQUEST['badname'] : $_REQUEST['newpage'];
