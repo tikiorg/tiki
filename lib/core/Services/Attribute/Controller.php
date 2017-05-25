@@ -20,7 +20,7 @@ class Services_Attribute_Controller
 	 *  ->type string           object type
 	 *  ->object mixed          id or name of object
 	 *
-	 * @return string containing the value
+	 * @return array value=>string containing the value
 	 * @throws Exception
 	 * @throws Services_Exception
 	 */
@@ -29,6 +29,7 @@ class Services_Attribute_Controller
 		$attribute = $input->attribute->text();
 		$type = $input->type->text();
 		$object = $input->object->text();
+		$value = '';
 
 		// ensure the target, source, and relation info are passed to the service
 		if (! $type || ! $attribute) {
