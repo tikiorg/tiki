@@ -59,15 +59,13 @@ if (! $options['no-check-svn'] && has_uncommited_changes('.')) {
 	error("Uncommited changes exist in the working folder.\n");
 }
 
-if ($options['only-secdb']) {
-	include_once('lib/setup/twversion.class.php');
-	$TWV = new TWVersion();
+include_once('lib/setup/twversion.class.php');
+$TWV = new TWVersion();
 
-	write_secdb(ROOT . "/db/tiki-secdb_{$TWV->version}_mysql.sql", ROOT, $TWV->version);
+if ($options['only-secdb']) {
+	updateSecdb($TWV->version);
 	exit;
 }
-
-
 
 $script = $_SERVER['argv'][0];
 $version = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : '';
@@ -87,9 +85,7 @@ if ($isPre) {
 $splitedversion = explode('.', $version);
 $mainversion = $splitedversion[0];
 
-include_once('lib/setup/twversion.class.php');
 $check_version = $version.$subrelease;
-$TWV = new TWVersion();
 if ($TWV->version != $check_version) {
 	error("The version in the code ".strtolower($TWV->version)." differs from the version provided to the script $check_version.\nThe version should be modified in lib/setup/twversion.class.php to match the released version.");
 }
@@ -186,19 +182,20 @@ if (! $options['no-check-smarty'] && important_step("Check syntax of all Smarty 
 	info('>> Current Smarty code successfully passed the syntax check.');
 }
 
-if (! $options['no-secdb'] && important_step("Generate SecDB file 'db/tiki-secdb_{$version}_mysql.sql'")) {
-	write_secdb(ROOT . "/db/tiki-secdb_{$version}_mysql.sql", ROOT, $secdbVersion);
-	important_step("Commit SecDB file", true, "[REL] SecDB for $secdbVersion");
+if (! $options['no-secdb'] && important_step("Update SecDB file(s) 'db/tiki-secdb_{$version}_mysql.sql'")) {
+	if(updateSecdb($TWV->version))
+		important_step("Commit SecDB file changes", true, "[REL] SecDB for $secdbVersion");
 }
 
 if ($isPre) {
-	if (! $options['no-packaging'] && important_step("Build packages files (based on the branch)")) {
-		build_packages($packageVersion, $branch);
+	if (! $options['no-packaging'] && important_step("Build packages files")) {
+		build_packages($packageVersion);
 		echo color("\nMake sure these tarballs are tested by at least 3 different people.\n\n", 'cyan');
 	} else {
 		echo color("This was the last step.\n", 'cyan');
 	}
 } else {
+
 
 	if (! $options['no-tagging']) {
 		$fb = full($branch);
@@ -206,23 +203,32 @@ if ($isPre) {
 
 		$tagAlreadyExists = isset(get_info($ft)->entry);
 		if ($tagAlreadyExists && important_step("The Tag '$tag' already exists: Delete the existing tag in order to create a new one")) {
-			`svn rm $ft -m "[REL] Deleting tag '$tag' in order to create a new one"`;
-			$tagAlreadyExists = false;
-			info(">> Tag '$tag' deleted.");
+			$commit_msg = "[REL] Deleting tag '$tag' in order to create a new one";
+			if ($options['no-commit']) {
+				print "Skipping actual commit ('$commit_msg') because no-commit = true\n";
+			} else {
+				`svn rm $ft -m "$commit_msg"`;
+				$tagAlreadyExists = false;
+				info(">> Tag '$tag' deleted.");
+			}
 		}
-
 		if (! $tagAlreadyExists) {
 			update_working_copy('.');
 			$revision = (int) get_info(ROOT)->entry->commit['revision'];
 			if (important_step("Tag release using branch '$branch' at revision $revision")) {
-				`svn copy $fb -r$revision $ft -m "[REL] Tagging release"`;
-				info(">> Tag '$tag' created.");
+				$commit_msg = '[REL] Tagging release';
+				if ($options['no-commit']) {
+					print "Skipping actual commit ('$commit_msg') because no-commit = true\n";
+				} else {
+					`svn copy $fb -r$revision $ft -m "$commit_msg"`;
+					info(">> Tag '$tag' created.");
+				}
 			}
 		}
 	}
 
-	if (! $options['no-packaging'] && important_step("Build packages files (based on the '$tag' tag)")) {
-		build_packages($packageVersion, $tag);
+	if (! $options['no-packaging'] && important_step("Build packages files")) {
+		build_packages($packageVersion);
 		echo color("\nUpload the files on SourceForge.\nInstructions can be found here: http://sourceforge.net/p/forge/documentation/Files/\n", 'cyan');
 		echo color("\nAlternately, do it by hand after replacing SF_LOGIN with your sf.net login\nand after replacing PATH according to https://sourceforge.net/projects/tikiwiki/files/\ncd ~/tikipack/$packageVersion; scp tiki-$packageVersion.* SF_LOGIN@frs.sourceforge.net:/home/frs/project/t/ti/tikiwiki/Tiki_PATH/$packageVersion \n\n", 'cyan');
 	} else {
@@ -232,17 +238,39 @@ if ($isPre) {
 
 // Helper functions
 
+
 /**
- * @param $file
- * @param $root
- * @param $version
+ *
+ * Will remove old secdb files and generate a new one based on working copy files.
+ *
+ * @param $version string The current tiki version to use eg. 17.0 or 21.0RC1
+ * @return bool true on success
  */
-function write_secdb($file, $root, $version)
+
+function updateSecdb($version)
 {
-	$file_exists = @file_exists($file);
-	$fp = @fopen($file, 'w+') or error('The SecDB file "' . $file . '" is not writable or can\'t be created.');
+	// first unset any preexisting files.
+	echo (">>");
+	$svn = preg_match('/svn$/', $version);
+
+	// if we are not creating a release skip deleting old files.
+	if (!$svn) {
+	$files = glob(ROOT . '/db/tiki-secdb_*_mysql.sql');
+	foreach ($files as $file) {
+			$file = escapeshellarg($file);
+			`svn delete $file --force`;
+		}
+		echo (' Removed '.count($files).' old secdb files.');
+	}
+
+	$file = "/db/tiki-secdb_{$version}_mysql.sql";
+
+	if (!$fp = @fopen(ROOT.$file, 'w')){
+		error('The SecDB file "' . ROOT.$file . '" is not writable or can\'t be created.');
+		return false;
+	}
 	$queries = array();
-	md5_check_dir($root, $root, $version, $queries);
+	md5_check_dir(ROOT, $version, $queries);
 
 	if (! empty($queries)) {
 		sort($queries);
@@ -253,31 +281,22 @@ function write_secdb($file, $root, $version)
 		}
 		fwrite($fp, "commit;\n");
 	}
-
 	fclose($fp);
 
-	$svn = preg_match('/svn$/', $version);
-
-	if ($file_exists) {
-		info(">> Existing SecDB file '$file' has been updated.");
-		if (! $svn) {
-			`svn add $file 2> /dev/null`;
-		}
-	} else {
-		info(">> SecDB file '$file' has been created.");
-		if (! $svn) {
-			`svn add $file`;
-		}
+	echo (" $file was generated.\n");
+	if (!$svn) {
+		$file = escapeshellarg(ROOT.$file); // escape file name for use in command line.
+		`svn add $file`;
 	}
+	return true;
 }
 
 /**
- * @param $root
  * @param $dir
  * @param $version
  * @param $queries
  */
-function md5_check_dir($root, $dir, $version, &$queries)
+function md5_check_dir($dir, $version, &$queries)
 {
 	$d = dir($dir);
 	$link = null;
@@ -286,12 +305,12 @@ function md5_check_dir($root, $dir, $version, &$queries)
 		$entry = $dir . '/' . $e;
 		if (is_dir($entry)) {
 			// do not descend and no CVS/Subversion files
-			if ($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry != $root . '/temp/templates_c' && $entry != $root . '/temp' && $entry != $root . '/vendor_custom') {
-				md5_check_dir($root, $entry, $version, $queries);
+			if ($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry != ROOT . '/temp' && $entry != ROOT . '/vendor_custom') {
+				md5_check_dir($entry, $version, $queries);
 			}
 		} else {
 			if (preg_match('/\.(sql|css|tpl|js|php)$/', $e) && realpath($entry) != __FILE__ && $entry != './db/local.php') {
-				$file = '.' . substr($entry, strlen($root));
+				$file = '.' . substr($entry, strlen(ROOT));
 
 				// Escape filename. Since this requires a connection to MySQL (due to the charset), do so conditionally to reduce the risk of connection failure. 
 				if (! preg_match('/^[a-zA-Z0-9\/ _+.-]+$/', $file) ) {
@@ -314,7 +333,7 @@ function md5_check_dir($root, $dir, $version, &$queries)
 
 				if (is_readable($entry)) {
 					$hash = md5_file($entry);
-					$queries[] = "INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('$file', '$hash', '$version', 0);";
+					$queries[] = "INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`) VALUES('$file', '$hash', '$version');";
 				}
 			}
 		}
@@ -323,24 +342,233 @@ function md5_check_dir($root, $dir, $version, &$queries)
 }
 
 /**
- * @param $releaseVersion
- * @param $svnRelativePath
+ *
+ * Deletes a directory and its contents.
+ *
+ * @param string $dir directory to delete.
+ * @return string|bool returns the filename that an error occurred in, false otherwise
  */
-function build_packages($releaseVersion, $svnRelativePath)
+
+function rrmdir($dir) {
+	if (is_dir($dir)) {
+		$objects = scandir($dir);
+		foreach ($objects as $object) {
+			if ($object != "." && $object != "..") {
+				@chmod($dir."/".$object,0777);
+				if (filetype($dir."/".$object) === 'dir'){
+					$error = rrmdir($dir."/".$object);
+					if ($error)
+						return $error;
+				}else
+					if (!@unlink($dir."/".$object))
+						return 'Could not delete '.$dir."/".$object."\n";
+			}
+		}
+		reset($objects);
+		@unlink($dir.'/.DS_store');
+		if (!@rmdir($dir)){
+			return 'Could not delete '.$dir."\n";
+		}
+	}
+	return false;
+}
+
+
+/**
+ *
+ * Recursivley deletes specific files or directories
+ *
+ * @param string $src Directory to search through
+ * @param array $files An array of file names to delete.
+ */
+
+function removeFiles($src,$files) {
+	$dir = opendir($src);
+	while(false !== ( $file = readdir($dir)) ) {
+		if (( $file != '.' ) && ( $file != '..' )) {
+			$full = $src . '/' . $file;
+			if ( is_dir($full) ) {
+				$flag = false;
+
+				foreach ($files as $delfile) {
+					if (basename($full) === $delfile) {
+						rrmdir($full);
+						$flag =true;
+						break;
+					}
+				}
+				if (!$flag)
+					removeFiles($full, $files);
+
+			}else {
+				foreach($files as $delfile) {
+					if (basename($full) === $delfile) {
+						@chmod($full, 0777);
+						unlink($full);
+						break;
+					}
+				}
+			}
+		}
+	}
+	closedir($dir);
+}
+
+
+/**
+ *
+ * Recursively sets permissions. Files get 775 and directories 664.
+ *
+ * @param string $src The directory to set permissions for
+ */
+
+function setPermissions($src) {
+	$dir = opendir($src);
+	while(false !== ( $file = readdir($dir)) ) {
+		if (( $file != '.' ) && ( $file != '..' )) {
+			$full = $src . '/' . $file;
+			if ( is_dir($full) ) {
+				setPermissions($full);
+				chmod($full,0755
+				);
+			}
+			else {
+				chmod($full,0664);
+
+			}
+		}
+	}
+	closedir($dir);
+}
+
+
+/**
+ *
+ * Prepares and generates the release packages.
+ *
+ * @param string $releaseVersion	Version of tiki that is being released.
+ */
+
+function build_packages($releaseVersion)
 {
 	global $options;
 
-	$script = TOOLS . '/tikirelease.sh';
-	if ($options['debug-packaging']) {
-		$debugflag = '-x';
-	} else {
-		$debugflag = '';
+	$workDir=$_SERVER['HOME']."/tikipack";
+	$relDir = $workDir. '/tiki-' .$releaseVersion;
+
+	echo  "Seting up ~/tikipack directory\n";
+	if (!is_dir($workDir)) {
+		if (!mkdir($workDir)) {
+			error('Cant make ' . $workDir."\n");
+			die();
+		}
 	}
-	$cmd = "/bin/sh ".$debugflag." ".$script." ".$releaseVersion." ".$svnRelativePath;
-	info("Running $cmd:\n");
-	`$cmd`;
+
+	// remove previous files if they exist.
+	if (is_dir($relDir)) {
+		echo "Removing previous files\n";
+		$shellout = rrmdir($relDir);
+		if ($shellout)
+			die ($shellout."\n");
+	}
+	$removeFiles = glob($relDir.'.*');
+	foreach ($removeFiles as $file){
+		unlink($file);
+	}
+
+	// create a export in tikipack to work with
+	echo "Creating SVN export from working copy\n";
+	$shellout = shell_exec('svn export '.escapeshellarg(ROOT).' '.escapeshellarg($relDir).' 2>&1');
+	if ($options['debug-packaging'])
+		echo $shellout."\n";
+
+
+	if (!is_file($relDir.'/vendor_bundled/composer.json')){
+		echo 'composer.json not found. Aborting.'."\n";
+		die();
+	}
+
+	if (is_file($workDir.'/composer.phar')){
+		if (!unlink($workDir.'/composer.phar')){
+			echo "Can't delete tikipack/composer.phar. Aborting."."\n";
+			die();
+		}
+	}
+
+	echo "Downloading composer.phar"."\n";
+	if (!file_put_contents($workDir.'/composer.phar', file_get_contents('http://getcomposer.org/composer.phar'))){
+		echo "Can't create tikipack/composer.phar. Aborting."."\n";
+		die();
+	}
+
+	echo 'Installing dependencies through composer'."\n";
+	$shellout =  shell_exec('php '.escapeshellarg($workDir.'/composer.phar').' install -d '.escapeshellarg($relDir.'/vendor_bundled').' --prefer-dist --no-dev 2>&1');
+	if ($options['debug-packaging'])
+		echo $shellout."\n";
+
+	if (strpos($shellout,'Fatal error:') || strpos($shellout,'Installation failed,')){
+		echo 'Composer Instillation Failed. Exiting'."\n";
+		die();
+	}
+	if ($options['debug-packaging'])
+		echo $shellout."\n";
+
+	echo "Removing development files\n";
+	$shellout = rrmdir($relDir.'/tests');
+	if ($shellout)
+		die ($shellout."\n");
+
+	$shellout = rrmdir($relDir.'/db/convertscripts');
+	if ($shellout)
+		die ($shellout."\n");
+
+	$shellout = rrmdir($relDir.'/doc/devtools');
+	if ($shellout)
+		die ($shellout."\n");
+
+	$shellout = rrmdir($relDir.'/bin');
+	if ($shellout)
+		die ($shellout."\n");
+
+	removeFiles($relDir,array('.gitignore'));
+
+	echo "Removing language file comments\n";
+	foreach (scandir($relDir.'/lang') as $strip) {
+		if (is_file($relDir . '/lang/' .$strip.'/language.php'))
+			$shellout = shell_exec('php '.escapeshellarg(dirname(__FILE__).'/stripcomments.php').' '. escapeshellarg($relDir . '/lang/' .$strip.'/language.php').' 2>&1');
+		if ($shellout)
+			die ($shellout."\n");
+	}
+
+	echo "Setting file permissions\n";
+	setPermissions($relDir);
+
+	echo "Creating tiki-$releaseVersion.tar.gz\n";
+	$shellout =  shell_exec("tar -pczf ".escapeshellarg($relDir.".tar.gz")." --exclude '*.DS_Store' ".escapeshellarg($relDir).' 2>&1');
+	if ($options['debug-packaging'])
+		echo $shellout."\n";
+
+	echo "Creating tiki-$releaseVersion.bz2\n";
+	$shellout =  shell_exec("tar -pcjf ".escapeshellarg($relDir.".tar.bz2")." --exclude '*.DS_Store' ".escapeshellarg($relDir).' 2>&1');
+	if ($options['debug-packaging'])
+		echo $shellout."\n";
+
+	echo "Creating tiki-$releaseVersion.zip\n";
+	$shellout =  shell_exec("zip -r ".escapeshellarg($relDir.".zip").' '.escapeshellarg($relDir).' -x "*.DS_Store" -9 2>&1');
+	if ($options['debug-packaging'])
+		echo $shellout."\n";
+
+	echo "Creating tiki-$releaseVersion.7z\n";
+	$shellout =  shell_exec("7za a -mx9 ".escapeshellarg($relDir.".7z").' '.escapeshellarg($relDir).' -r -x!*.DS_Store 2>&1');
+	if (strpos($shellout, 'command not found'))
+		error("7za not installed. Archive creation failed.\n");
+	if ($options['debug-packaging'])
+		echo $shellout."\n";
+
+	echo "\nTo upload the 'tarballs', copy-paste and execute the following line (and change '\$SF_LOGIN' by your SF.net login):\n";
+echo "cd $relDir; scp tiki-$releaseVersion.tar.gz tiki-$releaseVersion.tar.bz2 tiki-$releaseVersion.zip \$SF_LOGIN@frs.sourceforge.net:uploads\n";
+
 	info(">> Packages files have been built in ~/tikipack/$releaseVersion :\n");
-	passthru("ls ~/tikipack/$releaseVersion");
 }
 
 /**
@@ -466,16 +694,16 @@ function check_smarty_syntax_error_handler($errno, $errstr, $errfile = '', $errl
 	if (strpos($errstr, 'filemtime(): stat failed for') === false) {	// smarty seems to emit these for every file
 		echo "\n" . color($errstr, 'red') . "\n";
 	}
+	return true;
 }
 
 /**
  * @param $dir
  * @param $error_msg
  * @param $hide_php_warnings
- * @param int $retry
  * @return bool
  */
-function check_php_syntax(&$dir, &$error_msg, $hide_php_warnings, $retry = 10)
+function check_php_syntax(&$dir, &$error_msg, $hide_php_warnings)
 {
 	global $phpCommand;
 	$checkPhpCommand = $phpCommand . (ERROR_REPORTING_LEVEL > 0 ? ' -d error_reporting=' . (int) ERROR_REPORTING_LEVEL : '');
@@ -630,10 +858,9 @@ function important_step($msg, $increment_step = true, $commit_msg = false)
 
 	if ($commit_msg && $options['no-commit']) {
 		print "Skipping actual commit ('$commit_msg') because no-commit = true\n";
-		return;
+		return false;
 	}
 
-	$do_step = false;
 	if ($options['force-yes']) {
 		important("\n$step) $msg...");
 		$do_step = true;
@@ -682,11 +909,11 @@ function important_step($msg, $increment_step = true, $commit_msg = false)
  */
 function update_changelog_file($newVersion)
 {
+	$handle = false;
 	if (! is_readable(CHANGELOG) || ! is_writable(CHANGELOG) || ! ($handle = @fopen(CHANGELOG, "r"))) {
 		error('The changelog file "' . CHANGELOG . '" is not readable or writable.');
 	}
 
-	$isNewMajorVersion = substr($newVersion, -1) == 0;
 	$majorVersion = substr($newVersion, 0, strpos($newVersion, '.'));
 	$parseLogs = $sameFinalVersion = $skipBuffer = false;
 	$lastReleaseMajorNumber = -1;
@@ -989,9 +1216,7 @@ function get_contributors_data($path, &$contributors, $minRevision, $maxRevision
 function get_contributors_sf_data(&$contributors)
 {
 	global $options;
-	$members = '';
 	$matches = array();
-	$userParsedInfo = array();
 
 	if (! function_exists('iconv')) {
 		error("PHP 'iconv' function is not available on this system. Impossible to get SF.net data.");
@@ -1108,7 +1333,7 @@ Options:
 	--no-packaging		: do not build packages files
 	--no-tagging		: do not tag the release on the remote svn repository
 	--force-yes		: disable the interactive mode (same as replying 'y' to all steps)
-	--debug-packaging	: run tikirelease.sh with the -x option.
+	--debug-packaging	: display debug output while in packaging step
 Notes:
 	Subreleases begining with 'pre' will not be tagged.
 ";
@@ -1122,8 +1347,9 @@ function display_howto()
    HOWTO release Tiki
 --------------------------
 
-Please see: http://dev.tiki.org/How+to+release
+Please see: https://dev.tiki.org/How+to+release
 
 EOS;
+	shell_exec('open ' . escapeshellarg('https://dev.tiki.org/How+to+release'));
 	exit;
 }
