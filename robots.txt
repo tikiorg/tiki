@@ -85,8 +85,6 @@ Disallow: /tiki-view_cache.php
 Disallow: /tiki-index_raw.php
 Disallow: /tiki-remind_password.php
 Disallow: /tiki-translation-manage
-Disallow: /tiki-*.php?*fullscreen=y*
-Disallow: /*&fullscreen=y*
 
 #filer out multiple views
 Disallow: /*sort_mode=*
@@ -98,7 +96,6 @@ Disallow: /*page_ref_id=*
 Disallow: /*topics_offset=-1* # to fix a display error, can be removed when bug5204 is fixed 
 Disallow: /*show_details=*
 Disallow: /*offset=0*
-
-# Disallow mobile
-Disallow: /tiki-*.php?*mode=mobile*
-Disallow: /*&mode=mobile*
+Disallow: /*print=y*
+Disallow: /*fullscreen=y*
+Disallow: /*mode=mobile*
