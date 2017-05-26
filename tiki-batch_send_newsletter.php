@@ -8,6 +8,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+$inputConfiguration = [[
+	'staticKeyFilters'	=> [
+		'editionId'		=> 'int',
+	]],[
+	'catchAllUnset' => null
+	]];
+
 include('tiki-setup.php');
 
 $access->check_feature('feature_newsletters');
@@ -16,7 +23,9 @@ if (php_sapi_name() != 'cli') {
 	$access->check_permission('tiki_p_send_newsletters');
 }
 
-global $nllib; include_once('lib/newsletters/nllib.php');
+global $nllib;
+
+include_once('lib/newsletters/nllib.php');
 
 function display_usage() 
 {
@@ -34,7 +43,7 @@ error_reporting(E_ALL);
 
 $request = new Tiki_Request();
 
-$editionId = $request->getProperty('editionId'); 
+$editionId = $request->getProperty('editionId');
 
 if (empty($editionId)) {
 	display_usage();
