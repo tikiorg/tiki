@@ -244,6 +244,7 @@ class CleanVendors
 		self::removeMultiple($vendors . 'mediumjs/mediumjs', ['src', 'medium.min.js']);
 		$fs->remove($vendors . 'phpcas/phpcas/CAS-1.3.2/docs');
 		$fs->remove($vendors . 'phpseclib/phpseclib/tests');
+		$fs->remove($vendors . 'onelogin/php-saml/demo-old');
 		self::removeMultiple($vendors . 'player',
 			[
 				'flv/base',
@@ -292,6 +293,15 @@ class CleanVendors
 				'elfinder.html',
 			]
 		);
+		self::removeMultiple($vendors . 'jcbrand/converse.js',
+			[
+				'fonticons/demo-files',
+				'fonticons/demo.html',
+				'mockup',
+				'mockup.html'
+			]
+		);
+
 		$fs->remove($vendors . 'twitter/bootstrap/docs');
 		$fs->remove($vendors . 'zetacomponents/base/design');
 		$fs->remove($vendors . 'zetacomponents/webdav/design');
@@ -325,7 +335,8 @@ class CleanVendors
 		$fs->remove($vendors . 'symfony/config/Symfony/Component/Config/Tests');
 		$fs->remove($vendors . 'symfony/filesystem/Tests');
 		$fs->remove($vendors . 'blueimp/javascript-load-image/js/demo.js');
-		$fs->remove($vendors . 'blueimp/javascript-load-image/css/demo.css');
+		$fs->remove($vendors . 'blueimp/javascript-load-image/css');
+		$fs->remove($vendors . 'blueimp/javascript-load-image/index.html');
 		$fs->remove($vendors . 'blueimp/jquery-file-upload/cors');
 		$fs->remove($vendors . 'blueimp/jquery-file-upload/server');
 		$fs->remove($vendors . 'Sam152/Javascript-Equal-Height-Responsive-Rows/demo.html');
@@ -333,7 +344,8 @@ class CleanVendors
 
 		$fs->remove($vendors . 'phpcas/phpcas/CAS-1.3.3/docs');
 		$fs->remove($vendors . 'jquery/plugins/jquery-json/test');
-
+		$fs->remove($vendors . 'alxlit/bootstrap-chosen/example.html');
+		$fs->remove($vendors . 'alxlit/bootstrap-chosen/example.png');
 		$fs->remove($vendors . 'chartjs/Chart.js/samples');
 
 		self::removeMultiple($vendors . 'smarty/smarty',
