@@ -526,7 +526,11 @@ function build_packages($releaseVersion)
 	if ($shellout)
 		die ($shellout."\n");
 
-	removeFiles($relDir,array('.cvsignore','.svnignore','.gitignore','.gitkeep','.eslintignore','.eslintrc','.npmignore','.editorconfig','.hound.yml','.travis.yml','.jshintignore','.github'));
+	$shellout = rrmdir($relDir.'/bin');
+	if ($shellout)
+		die ($shellout."\n");
+
+	removeFiles($relDir,array('.gitignore'));
 
 	echo "Removing language file comments\n";
 	foreach (scandir($relDir.'/lang') as $strip) {
