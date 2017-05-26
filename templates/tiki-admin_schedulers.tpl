@@ -21,97 +21,95 @@
 	{* ---------------------- tab with list -------------------- *}
 {if $schedulers|count > 0}
 	{tab name="{tr}Schedulers{/tr}"}
-		<form class="form-horizontal" name="checkform" id="checkform" method="post">
-			<div id="admin_schedulers-div">
-				<div class="{if $js === 'y'}table-responsive {/if}ts-wrapperdiv">
-					{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
-					<table id="admin_schedulers" class="table normal table-striped table-hover" data-count="{$schedulers|count}">
-						<thead>
+		<div id="admin_schedulers-div">
+			<div class="{if $js === 'y'}table-responsive {/if}ts-wrapperdiv">
+				{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+				<table id="admin_schedulers" class="table normal table-striped table-hover" data-count="{$schedulers|count}">
+					<thead>
+					<tr>
+
+						<th>
+							{tr}Name{/tr}
+						</th>
+						<th>
+							{tr}Description{/tr}
+						</th>
+						<th>
+							{tr}Task{/tr}
+						</th>
+						<th>
+							{tr}Run Time{/tr}
+						</th>
+						<th>
+							{tr}Status{/tr}
+						</th>
+						<th>
+							{tr}Re-Run{/tr}
+						</th>
+						<th id="actions"></th>
+					</tr>
+					</thead>
+
+					<tbody>
+					{section name=scheduler loop=$schedulers}
+						{$scheduler_name = $schedulers[scheduler].name|escape}
 						<tr>
-
-							<th>
-								{tr}Name{/tr}
-							</th>
-							<th>
-								{tr}Description{/tr}
-							</th>
-							<th>
-								{tr}Task{/tr}
-							</th>
-							<th>
-								{tr}Run Time{/tr}
-							</th>
-							<th>
-								{tr}Status{/tr}
-							</th>
-							<th>
-								{tr}Re-Run{/tr}
-							</th>
-							<th id="actions"></th>
+							<td class="scheduler_name">
+								<a class="link tips"
+									href="tiki-admin_schedulers.php?scheduler={$schedulers[scheduler].id}{if $prefs.feature_tabs ne 'y'}#2{/if}"
+									title="{$scheduler_name}:{tr}Edit scheduler settings{/tr}"
+								>
+									{$scheduler_name}
+								</a>
+							</td>
+							<td class="scheduler_description">
+								{$schedulers[scheduler].description|escape}
+							</td>
+							<td class="scheduler_task">
+								{$schedulers[scheduler].task|escape}
+							</td>
+							<td class="scheduler_run_time">
+								{$schedulers[scheduler].run_time|escape}
+							</td>
+							<td class="scheduler_status">
+								{$schedulers[scheduler].status|escape}
+							</td>
+							<td class="scheduler_re_run">
+								<input type="checkbox" {if $schedulers[scheduler].re_run}checked{/if} disabled>
+							</td>
+							<td class="action">
+								{capture name=scheduler_actions}
+									{strip}
+										{$libeg}<a href="{query _type='relative' scheduler=$schedulers[scheduler].id}">
+										{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+										</a>{$liend}
+										{$libeg}<a href="{query _type='relative' scheduler=$schedulers[scheduler].id logs='1'}">
+										{icon name="log" _menu_text='y' _menu_icon='y' alt="{tr}Logs{/tr}"}
+										</a>{$liend}
+										{$libeg}<a href="{bootstrap_modal controller=scheduler action=remove schedulerId=$schedulers[scheduler].id}">
+										{icon name="remove" _menu_text='y' _menu_icon='y' alt="{tr}Delete{/tr}"}
+										</a>{$liend}
+									{/strip}
+								{/capture}
+								{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+										<a
+												class="tips"
+												title="{tr}Actions{/tr}" href="#"
+												{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.scheduler_actions|escape:"javascript"|escape:"html"}{/if}
+												style="padding:0; margin:0; border:0"
+										>
+											{icon name='wrench'}
+										</a>
+										{if $js === 'n'}
+										<ul class="dropdown-menu" role="menu">{$smarty.capture.scheduler_actions}</ul></li></ul>
+								{/if}
+							</td>
 						</tr>
-						</thead>
-
-						<tbody>
-						{section name=scheduler loop=$schedulers}
-							{$scheduler_name = $schedulers[scheduler].name|escape}
-							<tr>
-								<td class="scheduler_name">
-									<a class="link tips"
-										href="tiki-admin_schedulers.php?scheduler={$schedulers[scheduler].id}{if $prefs.feature_tabs ne 'y'}#2{/if}"
-										title="{$scheduler_name}:{tr}Edit scheduler settings{/tr}"
-									>
-										{$scheduler_name}
-									</a>
-								</td>
-								<td class="scheduler_description">
-									{$schedulers[scheduler].description|escape}
-								</td>
-								<td class="scheduler_task">
-									{$schedulers[scheduler].task|escape}
-								</td>
-								<td class="scheduler_run_time">
-									{$schedulers[scheduler].run_time|escape}
-								</td>
-								<td class="scheduler_status">
-									{$schedulers[scheduler].status|escape}
-								</td>
-								<td class="scheduler_re_run">
-									<input type="checkbox" {if $schedulers[scheduler].re_run}checked{/if} disabled>
-								</td>
-								<td class="action">
-									{capture name=scheduler_actions}
-										{strip}
-											{$libeg}<a href="{query _type='relative' scheduler=$schedulers[scheduler].id}">
-											{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-											</a>{$liend}
-											{$libeg}<a href="{query _type='relative' scheduler=$schedulers[scheduler].id logs='1'}">
-											{icon name="log" _menu_text='y' _menu_icon='y' alt="{tr}Logs{/tr}"}
-											</a>{$liend}
-											{$libeg}<a href="{bootstrap_modal controller=scheduler action=remove schedulerId=$schedulers[scheduler].id}">
-											{icon name="remove" _menu_text='y' _menu_icon='y' alt="{tr}Delete{/tr}"}
-											</a>{$liend}
-										{/strip}
-									{/capture}
-									{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
-											<a
-													class="tips"
-													title="{tr}Actions{/tr}" href="#"
-													{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.scheduler_actions|escape:"javascript"|escape:"html"}{/if}
-													style="padding:0; margin:0; border:0"
-											>
-												{icon name='wrench'}
-											</a>
-											{if $js === 'n'}
-											<ul class="dropdown-menu" role="menu">{$smarty.capture.scheduler_actions}</ul></li></ul>
-									{/if}
-								</td>
-							</tr>
-						{/section}
-						</tbody>
-					</table>
-				</div>
+					{/section}
+					</tbody>
+				</table>
 			</div>
-		</form>
+		</div>
 	{/tab}
 {/if}
 	{* ---------------------- tab with form -------------------- *}
@@ -139,6 +137,7 @@
 	</div>
 	<form class="form form-horizontal" action="tiki-admin_schedulers.php" method="post"
 			enctype="multipart/form-data" name="RegForm" autocomplete="off">
+		{ticket}
 		<div class="form-group">
 			<label class="col-sm-3 col-md-2 control-label" for="scheduler_name">{tr}Name{/tr} *</label>
 			<div class="col-sm-7 col-md-6">
@@ -241,5 +240,13 @@
 		var taskName = this.value;
 		$('div [data-task-name]:not([data-task-name="'+taskName+'"])').hide();
 		$('div [data-task-name="'+taskName+'"]').show();
+	});
+
+	$('form[name="RegForm"]').validate({
+		rules: {
+			scheduler_time: {
+				validate_cron_runtime: true
+			}
+		}
 	});
 {/jq}

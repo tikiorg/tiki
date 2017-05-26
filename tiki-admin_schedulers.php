@@ -15,7 +15,7 @@ function saveScheduler()
 	$name = $_POST['scheduler_name'];
 	$description = $_POST['scheduler_description'];
 	$task = $_POST['scheduler_task'];
-	$runTime = $_POST['scheduler_time'];
+	$runTime = trim($_POST['scheduler_time']);
 	$status = $_POST['scheduler_status'];
 	$reRun = $_POST['scheduler_rerun'] == 'on' ? 1 : 0;
 
@@ -61,11 +61,10 @@ function saveScheduler()
 		$addTask = false;
 	}
 
-	//@todo add validation task
-//	if (isValid($runTime)) {
-//		$errors[] = tra('Scheduler Task time is invalid');
-//		$addTask = false;
-//	}
+	if (!Scheduler_Utils::validate_cron_time_format($runTime)) {
+		$errors[] = tra('Run Time format is invalid');
+		$addTask = false;
+	}
 
 	if (empty('status')) {
 		$errors[] = tra('Status cannot be empty');
