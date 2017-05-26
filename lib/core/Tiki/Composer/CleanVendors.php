@@ -15,6 +15,8 @@ class CleanVendors
 		//directories
 		'development',
 		'demo',
+		'demo1',
+		'demo2',
 		'demos',
 		'doc',
 		'docs',
@@ -32,11 +34,13 @@ class CleanVendors
 		'.jshintrc',
 		'bower.json',
 		'changelog.txt',
-		'ChangeLog',
+		'changelog',
+		'changelog.md',
+		'readme.md',
 		'composer.json',
 		'composer.lock',
-		'Gruntfile.js',
-		'Gruntfile.coffee',
+		'gruntfile.js',
+		'gruntfile.coffee',
 		'package.json',
 		'.npmignore',
 		'.github',
@@ -44,6 +48,13 @@ class CleanVendors
 		'.travis.yml',
 		'.travis.install.sh',
 		'.editorconfig',
+		'.jscsrc',
+		'.jshintignore',
+		'.eslintignore',
+		'.eslintrc',
+		'.hound.yml',
+		'contributing.md',
+		'changes.md'
 	];
 
 	public static function clean(Event $event)
@@ -60,15 +71,21 @@ class CleanVendors
 
 		self::addIndexFile($themes);
 		self::addIndexFile($vendors);
-
 		self::removeStandard($vendors);
 		$fs->remove($vendors . 'adodb/adodb/cute_icons_for_site');
 		$fs->remove($vendors . 'aFarkas/html5shiv/build');
 		$fs->remove($vendors . 'bombayworks/zendframework1/library/Zend/Service/WindowsAzure/CommandLine/Scaffolders');
 		$fs->remove($vendors . 'ckeditor/samples');
-		$fs->remove($vendors . 'codemirror/codemirror/mode/tiki');
+		self::removeMultiple($vendors . 'codemirror/codemirror',
+			[
+				'doc',
+				'mode/tiki',
+				'index.html',
+				'bin'
+			]
+		);
+
 		self::removeMultiple($vendors . 'cwspear/bootstrap-hover-dropdown', ['bootstrap-hover-dropdown.min.js', 'demo.html']);
-		$fs->remove($vendors . 'jquery/jquery-s5/lib/dompdf/www');
 		self::removeMultiple($vendors . 'jquery/jquery-sheet', ['jquery-1.10.2.min.js', 'jquery-ui', 'parser.php', 'parser/formula/formula.php']);
 		self::removeMultiple($vendors . 'jquery/jquery-timepicker-addon',
 			[
@@ -133,10 +150,6 @@ class CleanVendors
 			[
 				'dist',
 				'libs',
-				'.jscsrc',
-				'.jshintignore',
-				'.jshintrc',
-				'.travis.yml',
 				'HISTORY.md',
 			]
 		);
@@ -154,14 +167,9 @@ class CleanVendors
 				'addons',
 				'beta-testing',
 				'css',
-				'docs',
 				'dist',
 				'testing',
-				'.gitattributes',
-				'.gitignore',
-				'.jscsrc',
 				'bower.json',
-				'changelog.txt',
 				'CONTRIBUTING.md',
 				'example.json',
 				'Gruntfile.js',
@@ -284,10 +292,10 @@ class CleanVendors
 				'elfinder.html',
 			]
 		);
-		$fs->remove($vendors . 'smarty/smarty/distribution/demo');
 		$fs->remove($vendors . 'twitter/bootstrap/docs');
 		$fs->remove($vendors . 'zetacomponents/base/design');
 		$fs->remove($vendors . 'zetacomponents/webdav/design');
+		$fs->remove($vendors . 'nicolaskruchten/pivottable/images/animation.gif');
 
 		// These are removed to avoid composer warnings caused by classes declared in multiple locations
 		$fs->remove($vendors . 'adodb/adodb/datadict/datadict');
@@ -303,7 +311,6 @@ class CleanVendors
 		$fs->remove($vendors . 'components/bootstrap');
 
 		//Remove extra files to keep the system tidy
-		$fs->remove($vendors . 'codemirror/codemirror/doc');
 		$fs->remove($vendors . 'phpcas/phpcas/CAS-1.3.3/docs');
 		$fs->remove($vendors . 'zendframework/zend-json/doc');
 		$fs->remove($vendors . 'fortawesome/font-awesome/src/_includes/examples');
@@ -329,6 +336,17 @@ class CleanVendors
 
 		$fs->remove($vendors . 'chartjs/Chart.js/samples');
 
+		self::removeMultiple($vendors . 'smarty/smarty',
+			[
+				'distribution/demo',
+				'change_log.txt',
+				'INHERITANCE_RELEASE_NOTES.txt',
+				'SMARTY_2_BC_NOTES.txt',
+				'SMARTY_3.0_BC_NOTES.txt',
+				'SMARTY_3.1_NOTES.txt',
+				'readme'
+			]
+		);
 
 		self::removeMultiple($vendors . 'blueimp/jquery-file-upload/css', ['demo-ie8.css', 'demo.css']);
 		self::removeMultiple($vendors . 'blueimp/jquery-file-upload',
