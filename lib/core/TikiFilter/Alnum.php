@@ -12,11 +12,14 @@ class TikiFilter_Alnum extends Zend\Filter\PregReplace
 	function __construct($space = false)
 	{
 		$space = is_bool($space) ? $space : false;
-		$regexSpace = $space === true ? '\p{Zs}' : '';
+		$whiteSpace = $space === true ? '\s' : '';
 		if (!extension_loaded('intl')) {
 			$this->filter = null;
-			// a stright copy from \Zend\I18n\Filter\Alnum::filter
-			parent::__construct('/[^\p{L}\p{N}' . $regexSpace . ']/u', '');
+			if (!Zend\Stdlib\StringUtils::hasPcreUnicodeSupport()){
+				parent::__construct('/[^a-zA-Z0-9' . $whiteSpace . ']/', ''); // a straight copy from \Zend\I18n\Filter\Alnum::filter
+			} else {
+				parent::__construct('/[^\p{L}\p{N}' . $whiteSpace . ']/u', ''); // a straight copy from \Zend\I18n\Filter\Alnum::filter
+			}
 		} else {
 			$this->filter = new \Zend\I18n\Filter\Alnum($space);
 		}

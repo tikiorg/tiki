@@ -9,9 +9,9 @@ class TikiFilter
 {
 	/**
 	 * Provides a filter instance based on the input. Either a filter
-	 * can be passed or a name.
+	 * can be passed or a shortcut name.
 	 * 
-	 * @param \Zend\Filter\FilterInterface|string $filter		A abreveated name for a filter, or the filter name its self.
+	 * @param \Zend\Filter\FilterInterface|string $filter		A filter shortcut name, or the filter name its self.
 	 * @return \Zend\Filter\FilterInterface 					The filter to apply.
 	 *
 	 * @link https://dev.tiki.org/Filtering+Best+Practices
@@ -25,22 +25,22 @@ class TikiFilter
 		switch( $filter )
 		{
 			case 'alpha':
-				// Removes all but alphabetic characters
+				// Removes all but alphabetic characters. Unicode support.
 				return new TikiFilter_Alpha;
 			case 'alphaspace':
 				// Removes all but alphabetic characters and spaces
 				return new TikiFilter_Alpha(true);
 			case 'word':
-				// A single word of alphabetic characters (im pretty sure) ?I18n?
+				// Strips everything but digit and alpha and underscore characters. Unicode support. eg. "g.4h&#Δ δ🍗_🍘コン" evaluates to "ghΔδ_コン"
 				return new Zend\Filter\PregReplace('/\W+/', '');
 			case 'wordspace':
 				// Words and spaces only (no trimming)
 				return new Zend\Filter\PregReplace('/[^\p{L}\p{M}\p{N}_\p{Zs}]*/u', '');
 			case 'alnum':
-				// Only alphabetic characters and digits. All other characters are suppressed. I18n support
+				// Only alphabetic characters and digits. All other characters are suppressed. Unicode support.
 				return new TikiFilter_Alnum;
 			case 'alnumspace':
-				// Only alphabetic characters, digits and spaces. All other characters are suppressed. I18n support
+				// Only alphabetic characters, digits and spaces. All other characters are suppressed. Unicode support
 				return new TikiFilter_Alnum(true);
 			case 'alnumdash':
 				// Removes everything except alphabetic characters, digits, dashes and underscores. Could be used for

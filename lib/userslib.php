@@ -4212,7 +4212,7 @@ class UsersLib extends TikiLib
 				'type' => 'file galleries',
 				'admin' => false,
 				'prefs' => array('feature_file_galleries'),
-				'scope' => 'global',
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_view_file_gallery',

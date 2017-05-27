@@ -159,6 +159,7 @@
 				<legend>{tr}Plugin preferences{/tr}</legend>
 				{preference name=wikipluginprefs_pending_notification}
 				{preference name=image_responsive_class}
+				{preference name=wikiplugin_maximum_passes}
 			</fieldset>
 
 			<fieldset class="margin-bottom-lg">

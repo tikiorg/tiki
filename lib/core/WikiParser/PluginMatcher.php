@@ -71,13 +71,15 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 
 	function findMatches($start, $end)
 	{
+		global $prefs;
+
 		static $passes;
 
 		if ($this->level === 0) {
 			$passes = 0;
 		}
 
-		if (++$passes > 500) {
+		if (++$passes > $prefs['wikiplugin_maximum_passes']) {
 			return;
 		}
 

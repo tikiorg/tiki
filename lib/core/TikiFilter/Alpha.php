@@ -12,11 +12,14 @@ class TikiFilter_Alpha extends Zend\Filter\PregReplace
 	function __construct($space = false)
 	{
 		$space = is_bool($space) ? $space : false;
-		$regexSpace = $space === true ? '\p{Zs}' : '';
+		$whiteSpace = $space === true ? '\s' : '';
 		if (!extension_loaded('intl')) {
 			$this->filter = null;
-			// a stright copy from \Zend\I18n\Filter\Alpha::filter
-			parent::__construct('/[^\p{L}' . $regexSpace . ']/u', '');
+			if (!Zend\Stdlib\StringUtils::hasPcreUnicodeSupport()){
+				parent::__construct('/[^a-zA-Z' . $whiteSpace . ']/', ''); // a straight copy from \Zend\I18n\Filter\Alpha::filter
+			} else {
+				parent::__construct('/[^\p{L}' . $whiteSpace . ']/u', ''); // a straight copy from \Zend\I18n\Filter\Alpha::filter
+			}
 		} else {
 			$this->filter = new \Zend\I18n\Filter\Alpha($space);
 		}

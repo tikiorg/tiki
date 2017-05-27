@@ -35,8 +35,6 @@ $inputConfiguration = array(
 				'tiki_credit_type' => 'text',
 				'checkout' => 'text',
 				'update' => 'word',
-				'daconfirm' => 'word',				// ticketlib
-				'ticket' => 'word',
 				'returnurl' => 'url',
 				'tsAjax' => 'word',
 				'list_type' => 'word',
@@ -52,6 +50,8 @@ $inputConfiguration = array(
 				'filter_type' => 'text',
 				'filter_login' => 'text',
 				'filter_payer' => 'text',
+				'st' => 'text',
+				'tx' => 'text',
 			),
 			'staticKeyFiltersForArrays' => array('cart' => 'digits',),	// params for cart module
 			'catchAllUnset' => null,
@@ -78,6 +78,31 @@ if ( isset($_POST['tiki_credit_pay'])
 	require_once 'lib/payment/creditspaylib.php';
 	$userpaycredits = new UserPayCredits;
 	$userpaycredits->payAmount($_POST['tiki_credit_type'], $_POST['tiki_credit_amount'], $_POST['invoice']);
+}
+
+if(isset($_GET['tx'])){
+	$tx_token = $_GET['tx'];
+	$access->check_feature('payment_paypal_pdt');
+	require_once 'lib/payment/paypallib.php';
+	$paypal_data = $paypallib->confirm_pdt($tx_token);
+
+	if ($paypal_data !== false){
+		$invoice = $paypallib->get_invoice($paypal_data);
+		if (is_numeric($invoice) && $inputConfiguration >= 1){
+			$info = $paymentlib->get_payment($invoice);
+			if (isset($info) && $paypallib->is_valid_for_payment($paypal_data, $info)) {
+				$amount = $paypallib->get_amount($paypal_data);
+				$paymentlib->enter_payment($invoice, $amount, 'paypal', $paypal_data);
+			}
+			if (isset($info)
+				&& $paypallib->is_valid_for_payment($paypal_data, $info, false)
+				&& isset($prefs['payment_paypal_pdt_redirect'])
+				&& $prefs['payment_paypal_pdt_redirect']
+			) {
+				$access->redirect($prefs['payment_paypal_pdt_redirect'] . '?invoice=' . $invoice);
+			}
+		}
+	}
 }
 
 if ( isset($ipn_data) ) {

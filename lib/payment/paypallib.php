@@ -18,44 +18,66 @@ class PaypalLib extends TikiDb_Bridge
 		return $ipn_data['mc_gross'];
 	}
 
+	/**
+	 * Confirms that a IPN payload is valid
+	 *
+	 * @param $ipn_data
+	 * @param $payment_info
+	 * @return bool
+	 */
 	function is_valid( $ipn_data, $payment_info )
 	{
-		global $prefs;
-
 		// Make sure this is not a fake, must be verified even if discarded, otherwise will be resent
 		if ( ! $this->confirmed_by_paypal($ipn_data) ) {
 			return false;
 		}
+
+		return $this->is_valid_for_payment($ipn_data, $payment_info);
+	}
+
+	/**
+	 * Confirms that a PayPal payload (IPN or PDT) is valid for a given payment
+	 * @param $paypal_data
+	 * @param $payment_info
+	 * @param $skip_duplicates
+	 * @return bool
+	 */
+	function is_valid_for_payment($paypal_data, $payment_info, $skip_duplicates = true)
+	{
+		global $prefs;
 
 		if ( ! is_array($payment_info) ) {
 			return false;
 		}
 
 		// Skip other events
-		if ( $ipn_data['payment_status'] != 'Completed' ) {
+		if ( $paypal_data['payment_status'] != 'Completed' ) {
 			return false;
 		}
 
 		// Make sure it is addressed to the right account
-		if ( $ipn_data['receiver_email'] != $prefs['payment_paypal_business'] ) {
+		if ( $paypal_data['receiver_email'] != $prefs['payment_paypal_business'] ) {
 			return false;
 		}
 
 		// Require same currency
-		if ( $ipn_data['mc_currency'] != $payment_info['currency'] ) {
+		if ( $paypal_data['mc_currency'] != $payment_info['currency'] ) {
 			return false;
 		}
 
 		// Skip duplicate translactions
-		foreach ( $payment_info['payments'] as $payment ) {
-			if ( $payment['type'] == 'paypal' ) {
-				if ( $payment['details']['txn_id'] == $ipn_data['txn_id'] ) {
-					return false;
+		if ($skip_duplicates){
+			foreach ( $payment_info['payments'] as $payment ) {
+				if ( $payment['type'] == 'paypal' ) {
+					if ( $payment['details']['txn_id'] == $paypal_data['txn_id'] ) {
+						return false;
+					}
 				}
 			}
 		}
 
 		return true;
+
 	}
 
 	/**
@@ -148,6 +170,41 @@ class PaypalLib extends TikiDb_Bridge
 		return 'VERIFIED' === $body;
 	}
 
+	/**
+	 * Confirms that a given PDT token is valid, and returns the data linked with the payment
+	 * @param $tx_token
+	 * @return bool | array
+	 */
+	public function confirm_pdt( $tx_token )
+	{
+		global $prefs;
+
+		$client = TikiLib::lib('tiki')->get_http_client($prefs['payment_paypal_environment']);
+
+		$token = (isset($prefs['payment_paypal_pdt_token']) && $prefs['payment_paypal_pdt_token']) ? $prefs['payment_paypal_pdt_token'] : '';
+
+		$post = array( 'cmd' => '_notify-synch', 'tx' => $tx_token, 'at' => $token );
+
+		// fix the url encoding of ampersand within the post request, as per r58655
+		$oldVal = ini_get('arg_separator.output');
+		ini_set('arg_separator.output', '&');
+
+		$client->setParameterPost($post);
+		$client->setMethod(Zend\Http\Request::METHOD_POST);
+
+		$response = $client->send();
+
+		$body = $response->getBody();
+
+		ini_set('arg_separator.output', $oldVal);
+
+		if (strncmp($body, 'SUCCESS', 7) != 0){
+			return false;
+		}
+
+		parse_str(str_replace("\n", '&', substr($body, 8)), $result);
+		return $result;
+	}
 
 
     /**
