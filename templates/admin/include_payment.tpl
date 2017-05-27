@@ -46,6 +46,9 @@
 							<div class="adminoptionboxchild">
 								{preference name=payment_paypal_environment}
 								{preference name=payment_paypal_ipn}
+								{preference name=payment_paypal_pdt}
+								{preference name=payment_paypal_pdt_token}
+								{preference name=payment_paypal_pdt_redirect}
 							</div>
 							{preference name=payment_invoice_prefix}
 						</div>
