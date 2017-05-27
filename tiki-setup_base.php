@@ -601,6 +601,8 @@ array_unshift(
 			'local_tz' => 'text',
 			'preview' => 'text',
 			'rbox' => 'text',
+			'ticket' => 'alnum',
+			'daconfirm' => 'alpha'
 		),
 		'staticKeyFiltersForArrays' => array(
 			'cat_managed' => 'digits',
