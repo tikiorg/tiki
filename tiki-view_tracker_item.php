@@ -387,37 +387,37 @@ foreach ($fieldDefinitions as &$fieldDefinition) {
 }
 unset($fieldDefinition);
 
-foreach ($fieldDefinitions as $i => $current_field) {
-	$fid = $current_field["fieldId"];
-	$fieldIsVisible = $itemObject->canViewField($fid);
-	$fieldIsEditable = $itemObject->canModifyField($fid);
-
-	$current_field_ins = null;
-	if ($fieldIsVisible || $fieldIsEditable) {
-		$current_field_ins = $current_field;
-
-		$handler = $fieldFactory->getHandler($current_field, $item_info);
-
-		if ($handler) {
-			$insert_values = $handler->getFieldData($_REQUEST);
-
-			if ($insert_values) {
-				$current_field_ins = array_merge($current_field_ins, $insert_values);
+if (isset($_REQUEST["save"]) || isset($_REQUEST["save_return"])) {
+	foreach ($fieldDefinitions as $i => $current_field) {
+		$fid = $current_field["fieldId"];
+		$fieldIsVisible = $itemObject->canViewField($fid);
+		$fieldIsEditable = $itemObject->canModifyField($fid);
+	
+		$current_field_ins = null;
+		if ($fieldIsVisible || $fieldIsEditable) {
+			$current_field_ins = $current_field;
+	
+			$handler = $fieldFactory->getHandler($current_field, $item_info);
+	
+			if ($handler) {
+				$insert_values = $handler->getFieldData($_REQUEST);
+	
+				if ($insert_values) {
+					$current_field_ins = array_merge($current_field_ins, $insert_values);
+				}
+			}
+		}
+	
+		if (! empty($current_field_ins)) {
+			if ($fieldIsEditable) {
+				$ins_fields['data'][$i] = $current_field_ins;
+			}
+			if ($fieldIsVisible) {
+				$fields['data'][$i] = $current_field_ins;
 			}
 		}
 	}
 
-	if (! empty($current_field_ins)) {
-		if ($fieldIsEditable) {
-			$ins_fields['data'][$i] = $current_field_ins;
-		}
-		if ($fieldIsVisible) {
-			$fields['data'][$i] = $current_field_ins;
-		}
-	}
-}
-
-if (isset($_REQUEST["save"]) || isset($_REQUEST["save_return"])) {
 	if ($itemObject->canModify()) {
 		$captchalib = TikiLib::lib('captcha');
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
@@ -448,11 +448,14 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["save_return"])) {
 				$trklib->replace_rating($trackerId, $itemId, $rateFieldId, $user, $_REQUEST["ins_$rateFieldId"]);
 			}
 			$_REQUEST['show'] = 'view';
+			
+			// What is this loop for? The value is overriden later for editable fields. Chealer 2017-05-25
 			foreach ($fields["data"] as $i => $array) {
 				if (isset($fields["data"][$i])) {
 					$ins_fields["data"][$i]["value"] = '';
 				}
 			}
+			
 			$item_info = $trklib->get_tracker_item($itemId);
 			$item_info['logs'] = $trklib->get_item_history($item_info, 0, '', 0, 1);
 			$smarty->assign('item_info', $item_info);
