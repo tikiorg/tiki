@@ -37,7 +37,10 @@ function color($string, $color)
 		'red' => 31,
 		'green' => 32,
 		'yellow' => 33,
+		'blue' => 34,
+		'purple' => 35,
 		'cyan' => 36,
+		'gray' => 37,
 	);
 
 	if (!isset($avail[$color]))
@@ -59,7 +62,7 @@ function error($message)
  */
 function info($message)
 {
-	echo $message . "\n";
+	echo color($message, 'blue') . "\n";
 }
 
 /**
