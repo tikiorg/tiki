@@ -229,10 +229,8 @@ if ($isPre) {
 
 	if (! $options['no-packaging'] && important_step("Build packages files")) {
 		build_packages($packageVersion);
-		echo color("\nUpload the files on SourceForge.\nInstructions can be found here: http://sourceforge.net/p/forge/documentation/Files/\n", 'cyan');
-		echo color("\nAlternately, do it by hand after replacing SF_LOGIN with your sf.net login\nand after replacing PATH according to https://sourceforge.net/projects/tikiwiki/files/\ncd ~/tikipack/$packageVersion; scp tiki-$packageVersion.* SF_LOGIN@frs.sourceforge.net:/home/frs/project/t/ti/tikiwiki/Tiki_PATH/$packageVersion \n\n", 'cyan');
 	} else {
-		echo color("This was the last step.\n", 'cyan');
+		info("This was the last step.\n");
 	}
 }
 
@@ -453,10 +451,12 @@ function build_packages($releaseVersion)
 {
 	global $options;
 
-	$workDir=$_SERVER['HOME']."/tikipack";
-	$relDir = $workDir. '/tiki-' .$releaseVersion;
+	$workDir = $_SERVER['HOME']."/tikipack";
+	$fileName = 'tiki-' . $releaseVersion;
+	$relDir = $workDir . '/' . $releaseVersion;	// where the tiki dir and tarballs go
+	$sourceDir = $relDir . '/' . $fileName;		// the svn export
 
-	echo  "Seting up ~/tikipack directory\n";
+	echo  "Seting up $workDir directory\n";
 	if (!is_dir($workDir)) {
 		if (!mkdir($workDir)) {
 			error('Cant make ' . $workDir."\n");
@@ -468,22 +468,23 @@ function build_packages($releaseVersion)
 	if (is_dir($relDir)) {
 		echo "Removing previous files\n";
 		$shellout = rrmdir($relDir);
-		if ($shellout)
-			die ($shellout."\n");
+		if ($shellout) {
+			die ($shellout . "\n");
+		}
 	}
-	$removeFiles = glob($relDir.'.*');
-	foreach ($removeFiles as $file){
-		unlink($file);
+	if (!mkdir($relDir)) {
+		error('Cant make ' . $relDir."\n");
+		die();
 	}
 
 	// create a export in tikipack to work with
 	echo "Creating SVN export from working copy\n";
-	$shellout = shell_exec('svn export '.escapeshellarg(ROOT).' '.escapeshellarg($relDir).' 2>&1');
+	$shellout = shell_exec('svn export '.escapeshellarg(ROOT).' '.escapeshellarg($sourceDir . '/.').' 2>&1');
 	if ($options['debug-packaging'])
 		echo $shellout."\n";
 
 
-	if (!is_file($relDir.'/vendor_bundled/composer.json')){
+	if (!is_file($sourceDir.'/vendor_bundled/composer.json')){
 		echo 'composer.json not found. Aborting.'."\n";
 		die();
 	}
@@ -502,7 +503,7 @@ function build_packages($releaseVersion)
 	}
 
 	echo 'Installing dependencies through composer'."\n";
-	$shellout =  shell_exec('php '.escapeshellarg($workDir.'/composer.phar').' install -d '.escapeshellarg($relDir.'/vendor_bundled').' --prefer-dist --no-dev 2>&1');
+	$shellout =  shell_exec('php '.escapeshellarg($workDir.'/composer.phar').' install -d '.escapeshellarg($sourceDir.'/vendor_bundled').' --prefer-dist --no-dev 2>&1');
 	if ($options['debug-packaging'])
 		echo $shellout."\n";
 
@@ -514,61 +515,61 @@ function build_packages($releaseVersion)
 		echo $shellout."\n";
 
 	echo "Removing development files\n";
-	$shellout = rrmdir($relDir.'/tests');
+	$shellout = rrmdir($sourceDir.'/tests');
 	if ($shellout)
 		die ($shellout."\n");
 
-	$shellout = rrmdir($relDir.'/db/convertscripts');
+	$shellout = rrmdir($sourceDir.'/db/convertscripts');
 	if ($shellout)
 		die ($shellout."\n");
 
-	$shellout = rrmdir($relDir.'/doc/devtools');
+	$shellout = rrmdir($sourceDir.'/doc/devtools');
 	if ($shellout)
 		die ($shellout."\n");
 
-	$shellout = rrmdir($relDir.'/bin');
+	$shellout = rrmdir($sourceDir.'/bin');
 	if ($shellout)
 		die ($shellout."\n");
 
-	removeFiles($relDir,array('.gitignore'));
+	removeFiles($sourceDir,array('.gitignore'));
 
 	echo "Removing language file comments\n";
-	foreach (scandir($relDir.'/lang') as $strip) {
-		if (is_file($relDir . '/lang/' .$strip.'/language.php'))
-			$shellout = shell_exec('php '.escapeshellarg(dirname(__FILE__).'/stripcomments.php').' '. escapeshellarg($relDir . '/lang/' .$strip.'/language.php').' 2>&1');
+	foreach (scandir($sourceDir.'/lang') as $strip) {
+		if (is_file($sourceDir . '/lang/' .$strip.'/language.php'))
+			$shellout = shell_exec('php '.escapeshellarg(dirname(__FILE__).'/stripcomments.php').' '. escapeshellarg($sourceDir . '/lang/' .$strip.'/language.php').' 2>&1');
 		if ($shellout)
 			die ($shellout."\n");
 	}
 
 	echo "Setting file permissions\n";
-	setPermissions($relDir);
+	setPermissions($sourceDir);
 
-	echo "Creating tiki-$releaseVersion.tar.gz\n";
-	$shellout =  shell_exec("tar -pczf ".escapeshellarg($relDir.".tar.gz")." --exclude '*.DS_Store' ".escapeshellarg($relDir).' 2>&1');
+	echo "Creating $fileName.tar.gz\n";
+	$shellout =  shell_exec("cd $relDir; tar -pczf ".escapeshellarg($fileName.".tar.gz")." --exclude '*.DS_Store' ".escapeshellarg($fileName).' 2>&1');
 	if ($options['debug-packaging'])
 		echo $shellout."\n";
 
-	echo "Creating tiki-$releaseVersion.bz2\n";
-	$shellout =  shell_exec("tar -pcjf ".escapeshellarg($relDir.".tar.bz2")." --exclude '*.DS_Store' ".escapeshellarg($relDir).' 2>&1');
+	echo "Creating $fileName.bz2\n";
+	$shellout =  shell_exec("cd $relDir; tar -pcjf ".escapeshellarg($fileName.".tar.bz2")." --exclude '*.DS_Store' ".escapeshellarg($fileName).' 2>&1');
 	if ($options['debug-packaging'])
 		echo $shellout."\n";
 
-	echo "Creating tiki-$releaseVersion.zip\n";
-	$shellout =  shell_exec("zip -r ".escapeshellarg($relDir.".zip").' '.escapeshellarg($relDir).' -x "*.DS_Store" -9 2>&1');
+	echo "Creating $fileName.zip\n";
+	$shellout =  shell_exec("cd $relDir; zip -r ".escapeshellarg($fileName.".zip").' '.escapeshellarg($fileName).' -x "*.DS_Store" -9 2>&1');
 	if ($options['debug-packaging'])
 		echo $shellout."\n";
 
-	echo "Creating tiki-$releaseVersion.7z\n";
-	$shellout =  shell_exec("7za a -mx9 ".escapeshellarg($relDir.".7z").' '.escapeshellarg($relDir).' -r -x!*.DS_Store 2>&1');
+	echo "Creating $fileName.7z\n";
+	$shellout =  shell_exec("cd $relDir; 7za a -mx9 ".escapeshellarg($fileName.".7z").' '.escapeshellarg($fileName).' -r -x!*.DS_Store 2>&1');
 	if (strpos($shellout, 'command not found'))
 		error("7za not installed. Archive creation failed.\n");
 	if ($options['debug-packaging'])
 		echo $shellout."\n";
 
-	echo "\nTo upload the 'tarballs', copy-paste and execute the following line (and change '\$SF_LOGIN' by your SF.net login):\n";
-echo "cd $relDir; scp tiki-$releaseVersion.tar.gz tiki-$releaseVersion.tar.bz2 tiki-$releaseVersion.zip \$SF_LOGIN@frs.sourceforge.net:uploads\n";
+	echo color("\nTo upload the 'tarballs', copy-paste and execute the following line (and change '\$SF_LOGIN' by your SF.net login):\n", 'yellow');
+	echo color("    cd $relDir; scp $fileName.* \$SF_LOGIN@frs.sourceforge.net:uploads\n", 'yellow');
 
-	info(">> Packages files have been built in ~/tikipack/$releaseVersion :\n");
+	info(">> Packages files have been built in ~/tikipack/$releaseVersion\n");
 }
 
 /**
