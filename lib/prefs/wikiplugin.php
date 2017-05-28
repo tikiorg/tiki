@@ -166,8 +166,8 @@ function prefs_wikiplugin_list($partial = false)
 	];
 
 	$prefs['wikiplugin_maximum_passes'] = [
-		'name' => tr('Maximum number or parsing passes'),
-		'description' => tr('Affects the maxumium number of nested wiki plugins processed during parsing. The default of 500 allows seven levels'),
+		'name' => tr('Maximum plugin parsing passes'),
+		'description' => tr('Affects the number of wiki plugins that can be used. The default of 500 allows for 1 plugin nested seven times, or 44 plugins nested once. A value of 1200 is required for 1 eighth level plugin.'),
 		'default' => 500,
 		'dependencies' => ['feature_wiki'],
 		'filter' => 'digits',
