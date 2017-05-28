@@ -954,6 +954,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',
+			'warning' => tr('Not suitable for production use.'),
 		),
 		'feature_tikitests' => array(
 			'name' => tra('TikiTests'),

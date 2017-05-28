@@ -215,7 +215,7 @@ class SvnUpCommand extends Command{
 		$progress->setMessage('Updating SVN');
 		$progress->advance();
 		$errors = array('','Text conflicts');
-		$this->OutputErrors($logger,shell_exec('svn update --accept p'),'Problem with svn up, check for conflicts.',$errors,!$input->getOption('no-db'));
+		$this->OutputErrors($logger,shell_exec('svn update --accept postpone'),'Problem with svn up, check for conflicts.',$errors,!$input->getOption('no-db'));
 
 		// set revision number updated to.
 		$raw = shell_exec('svn info');
