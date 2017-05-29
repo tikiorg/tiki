@@ -82,6 +82,13 @@ class TikiFilter
 			case 'striptags':
 				// Strips XML and HTML tags
 				return new Zend\Filter\StripTags;
+			case 'bool':
+				// False upon:	false, 0, '0', 0.0, '', array(), null, 'false', 'no', 'n' and php casting equivalent to false.
+				// True upon:	Everything else returns true. Case insensitive evaluation.
+			return new Zend\Filter\Boolean([
+					'type'			=> Zend\Filter\Boolean::TYPE_ALL,
+					'translations'	=> ['n' => false, 'N' => false]
+					]);
 			case 'relativeurl':
 				// If formatted as a absolute url, will return the relative portion, also applies striptags
 				return new TikiFilter_RelativeURL;

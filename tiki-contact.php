@@ -9,7 +9,7 @@
 // $Id$
 $inputConfiguration =	[[
 	'staticKeyFilters'	=> [
-		'send'			=> 'word', 		// post
+		'send'			=> 'bool', 		// post
 		'priority'		=> 'int', 		// post
 		'from'			=> 'striptags',	// post
 		'subject'		=> 'striptags',	// post
