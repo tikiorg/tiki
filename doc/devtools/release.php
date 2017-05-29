@@ -544,6 +544,8 @@ function build_packages($releaseVersion)
 	echo "Setting file permissions\n";
 	setPermissions($sourceDir);
 
+	$relDir = escapeshellarg($relDir);
+
 	echo "Creating $fileName.tar.gz\n";
 	$shellout =  shell_exec("cd $relDir; tar -pczf ".escapeshellarg($fileName.".tar.gz")." --exclude '*.DS_Store' ".escapeshellarg($fileName).' 2>&1');
 	if ($options['debug-packaging'])

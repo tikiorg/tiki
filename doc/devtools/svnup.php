@@ -102,35 +102,6 @@ class SvnUpCommand extends Command{
 	}
 
 	/**
-	 * Calls index rebuild command and handles verbiage.
-	 *
-	 * @param ConsoleLogger		$logger
-	 * @param OutputInterface	$output
-	 * @param ProgressBar		$progress
-	 */
-
-	protected function rebuildIndex(ConsoleLogger $logger, OutputInterface $output,ProgressBar &$progress){
-
-		$console = new Application;
-		$console->add(new IndexRebuildCommand);
-		$console->setAutoExit(false);
-		$console->setDefaultCommand('index:rebuild',true);
-		$input = null;
-		if ($output->getVerbosity() <= OutputInterface::VERBOSITY_VERBOSE) {
-			$input = new ArrayInput(array('-q' => null));
-		}elseif ($output->getVerbosity() == OutputInterface::VERBOSITY_DEBUG) {
-			$input = new ArrayInput(array('-vvv' => null));
-		}
-		$console->run($input);
-
-		$errors = \Feedback::get();
-		if (is_array($errors)) {
-			$progress->setMessage("<comment>Search index rebuild failed due to errors.</comment>");
-			$logger->error($errors);
-		}
-	}
-
-	/**
 	 * Calls database update command and handles verbiage.
 	 *
 	 * @param OutputInterface $output
@@ -260,8 +231,13 @@ class SvnUpCommand extends Command{
 			if (!$input->getOption('no-reindex')) {
 				$progress->setMessage('Rebuilding search index');
 				$progress->advance();
-				require_once ($tikiBase.'/lib/setup/timer.class.php');
-				$this->rebuildIndex($logger, $output,$progress);
+				$errors = array('', 'Fatal error');
+				$shellCom = 'php console.php index:rebuild';
+			if ($output->getVerbosity() == OutputInterface::VERBOSITY_DEBUG)
+				$shellCom .= ' -vvv';
+
+			$this->OutputErrors($logger,shell_exec($shellCom.' 2>&1'),'Problem Rebuilding Index',$errors,!$input->getOption('no-db'));   // 2>&1 suppresses all terminal output, but allows full capturing for logs & verbiage
+
 			}
 		}
 
