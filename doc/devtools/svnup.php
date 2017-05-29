@@ -70,6 +70,18 @@ class SvnUpCommand extends Command{
 				'd',
 				InputOption::VALUE_NONE,
 				'Make no changes to the database. (SvnUp, dependencies and privilege checks only. Logging disabled.)'
+			)
+			->addOption(
+				'abort',
+				'a',
+				InputOption::VALUE_NONE,
+				'Test for conflicts and abort if found. Useful for automated updates.'
+			)
+			->addOption(
+				'email',
+				'e',
+				InputOption::VALUE_REQUIRED,
+				'Email address to send a message to if errors are encountered.'
 			);
 	}
 
@@ -178,18 +190,67 @@ class SvnUpCommand extends Command{
 		$progress->start();
 
 		// set revision number beginning with.
-		$raw = shell_exec('svn info');
+		$raw = shell_exec('svn info  2>&1');
 		$output->writeln($raw,OutputInterface::VERBOSITY_DEBUG);
 		preg_match('/Revision: (\d+)/',$raw,$startRev);
 		$startRev = $startRev[1];
 
+		// start svn conflict checks
+		if ($input->getOption('abort')) {
+
+			$raw = shell_exec('svn merge --dry-run -r BASE:HEAD .  2>&1');
+			$output->writeln($raw,OutputInterface::VERBOSITY_DEBUG);
+
+			if (strpos($raw, 'E155035:')) {
+				$progress->setMessage('Working copy currently conflicted. Update Aborted.');
+				if ($input->getOption('email'))
+					mail($input->getOption('email'),'Svn Up Aborted',wordwrap('Working copy currency conflicted. Update Aborted. '.__FILE__,70,"\r\n"));
+				if (!$input->getOption('no-db'))
+					$logslib->add_action('svn update', "Working copy currency conflicted. Update Aborted. r$startRev", 'system');
+				$progress->advance();
+				die("\n");
+			}
+
+			//	Check if working from from mixed revision, this happens when a commit is made and causes merges to fail.
+			if (strpos($raw, 'E195020:')) {
+				$progress->setMessage('Updating mixed revision working copy to single reversion');
+				preg_match('/\[\d*:(\d*)]/', $raw, $mixedRev);
+				$mixedRev = $mixedRev[1];
+
+				// Now that we know the upper revision number, svn up to it.
+				$errors = array('', 'Text conflicts');
+				$this->OutputErrors($logger, shell_exec('svn update --accept postpone --revision ' . $mixedRev .' 2>&1'), 'Problem with svn up, check for conflicts.', $errors, !$input->getOption('no-db'));
+				if ($logger->hasErrored()) {
+					$progress->setMessage('Preexisting local conflicts exist. Update Aborted.');
+					if ($input->getOption('email'))
+						echo mail($input->getOption('email'),'Svn Up Aborted',wordwrap('Preexisting local conflicts exist. Update Aborted. '.__FILE__,70,"\r\n"));
+					if (!$input->getOption('no-db'))
+						$logslib->add_action('svn update', "Preexisting local conflicts exist. Update Aborted. r$startRev", 'system');
+					$progress->advance();
+					die("\n"); // If custom mixed revision merges were made with local changes, this could happen.... (very unlikely)
+				}
+				// now re-check for conflicts
+				$raw = shell_exec('svn merge --dry-run -r BASE:HEAD .  2>&1');
+				$output->writeln($raw,OutputInterface::VERBOSITY_DEBUG);
+			}
+			if (strpos($raw, "\nC    ")!== false) {
+				$progress->setMessage('Conflicts exist between working copy and repository. Update Aborted.');
+				if ($input->getOption('email'))
+					echo mail($input->getOption('email'),'Svn Up Aborted',wordwrap('Conflicts exist between working copy and repository. Update Aborted. '.__FILE__,70,"\r\n"));
+				if (!$input->getOption('no-db'))
+					$logslib->add_action('svn update', "Conflicts exist between working copy and repository. Update Aborted. r$startRev", 'system');
+				$progress->advance();
+				die("\n");
+			}
+		}
+
 		$progress->setMessage('Updating SVN');
 		$progress->advance();
 		$errors = array('','Text conflicts');
-		$this->OutputErrors($logger,shell_exec('svn update --accept postpone'),'Problem with svn up, check for conflicts.',$errors,!$input->getOption('no-db'));
+		$this->OutputErrors($logger,shell_exec('svn update --accept postpone  2>&1'),'Problem with svn up, check for conflicts.',$errors,!$input->getOption('no-db'));
 
 		// set revision number updated to.
-		$raw = shell_exec('svn info');
+		$raw = shell_exec('svn info  2>&1');
 		$output->writeln($raw,OutputInterface::VERBOSITY_DEBUG);
 		preg_match('/Revision: (\d+)/',$raw,$endRev);
 		$endRev = $endRev[1];
@@ -244,6 +305,8 @@ class SvnUpCommand extends Command{
 		if ($logger->hasErrored()) {
 			if (!$input->getOption('no-db'))
 				$logslib->add_action('svn update', "Automatic update completed with errors, r$startRev -> r$endRev, Try again or debug.", 'system');
+			if ($input->getOption('email'))
+				echo mail($input->getOption('email'),'Svn Up Aborted',wordwrap("Automatic update completed with errors, r$startRev -> r$endRev, Try again or debug.".__FILE__,70,"\r\n"));
 			$progress->setMessage("Automatic update completed with errors, r$startRev -> r$endRev, Try again or ensure update functioning.");
 		}elseif ($input->getOption('no-db')){
 			$progress->setMessage("<comment>Automatic update completed in no-db mode, r$startRev -> r$endRev, Database not updated.</comment>");
