@@ -15,7 +15,9 @@ $inputConfiguration =	[[
 		'subject'		=> 'striptags',	// post
 		'body'			=> 'xss',		// post
 		'to'			=> 'email',		// post
-	]]];
+	],
+	'catchAllUnset'		=> null
+]];
 
 require_once ('tiki-setup.php');
 
@@ -38,26 +40,26 @@ $priority = 3;
 $from = $user ? $user : '';
 $subject = '';
 $body = '';
-if (isset($_REQUEST['send'])) {
-	if (isset($_REQUEST['priority'])) {
-		$priority = $_REQUEST['priority'];
+if (isset($_POST['send'])) {
+	if (isset($_POST['priority'])) {
+		$priority = $_POST['priority'];
 	}
-	if (!$user && validate_email($_REQUEST['from'])) {
+	if (!$user && validate_email($_POST['from'])) {
 		$from =  'tiki-contact.php';
-		$body .= tra('From') . " " . $_REQUEST['from'] . ":\n";
+		$body .= tra('From') . " " . $_POST['from'] . ":\n";
 	}
-	if (isset($_REQUEST['subject'])) {
-		$subject =  $_REQUEST['subject'];
+	if (isset($_POST['subject'])) {
+		$subject =  $_POST['subject'];
 	}
-	if (isset($_REQUEST['body'])) {
-		$body .=  $_REQUEST['body'];
+	if (isset($_POST['body'])) {
+		$body .=  $_POST['body'];
 	}
 }
 
-if (isset($_REQUEST['send'])) {
+if (isset($_POST['send'])) {
 	// Validation:
 	// must have a subject or body non-empty (or both)
-	$hasContent = !empty($_REQUEST['subject']) || !empty($_REQUEST['body']);
+	$hasContent = !empty($_POST['subject']) || !empty($_POST['body']);
 
 	$failsCaptcha = !$user && $prefs['feature_antibot'] == 'y' && !$captchalib->validate();
 	if (!$hasContent || empty($from) || $failsCaptcha) {
@@ -75,9 +77,9 @@ if (isset($_REQUEST['send'])) {
 		$messulib->post_message(
 			$prefs['contact_user'],
 			$from,
-			$_REQUEST['to'],
+			$_POST['to'],
 			'',
-			$_REQUEST['subject'],
+			$_POST['subject'],
 			$body,
 			$priority
 		);
