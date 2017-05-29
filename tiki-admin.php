@@ -528,6 +528,11 @@ $admin_icons = array(
 		'description' => tr('Settings and features for print versions and pdf generation'),
 		'help' => 'Print',
 	),
+	"packages" => array(
+		'title' => tr('Packages'),
+		'description' => tr('External packages installation and management'),
+		'help' => 'Packages',
+	),
 	"rtc" => array(
 		'title' => tr('RTC'),
 		'description' => tr('Real-time collaboration tools'),

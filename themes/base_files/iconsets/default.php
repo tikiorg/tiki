@@ -185,6 +185,9 @@ function iconset_default()
 			'admin_print' => array(
 				'id' => 'print',
 			),
+			'admin_packages' => array(
+				'id' => 'gift',
+			),
 			'admin_rtc' => array(
 				'id' => 'bullhorn',
 			),
