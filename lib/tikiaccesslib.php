@@ -24,6 +24,8 @@ class TikiAccessLib extends TikiLib
 {
 	private $noRedirect = false;
 	private $check;
+	private $origin;
+	private $originSource;
 
 	function preventRedirect($prevent)
 	{
