@@ -31,7 +31,7 @@ if (isset($_SERVER['argv'][1]) && $_SERVER['argv'][1] === 'dbcheck') {
 // if database is unavailable, just autoload. Yo cant call tiki-setup* after autoloading without causing errors.
 $error = shell_exec('php '.escapeshellarg($tikiBase.'/doc/devtools/svnup.php').' dbcheck');
 if ($error) {
-	if (strpos($error,'Tiki is not completely installed')) // if tiki didnt install propelry, there could be issues initalizing autoload, so just die.
+	if (strpos($error,'Tiki is not completely installed')) // if tiki didn't install properly, there could be issues initializing autoload, so just die.
 		die ($error);
 	echo shell_exec('php '.escapeshellarg($tikiBase.'/doc/devtools/svnup.php').' dbcheck');
 	require_once $tikiBase . '/vendor_bundled/vendor/autoload.php';
@@ -82,6 +82,12 @@ class SvnUpCommand extends Command{
 				'e',
 				InputOption::VALUE_REQUIRED,
 				'Email address to send a message to if errors are encountered.'
+			)
+			->addOption(
+				'lag',
+				'l',
+				InputOption::VALUE_REQUIRED,
+				'Time delay commits by X number of days. Useful for avoiding newly introduced bugs in automated updates.'
 			);
 	}
 
@@ -147,6 +153,14 @@ class SvnUpCommand extends Command{
 
 		$logger = new ConsoleLogger($output, $verbosityLevelMap);
 		$errors = false;
+		$rev = 'HEAD';
+		if ($input->getOption('lag')) {
+			if ($input->getOption('lag') < 0 || !is_numeric($input->getOption('lag'))) {
+				$output->writeln('Invalid option for --lag, must be a positive integer.');
+			}
+			// current time minus number of days specified through lag
+			$rev = date('{"Y-m-d H:i"}', time() - $input->getOption('lag') * 60 * 60 * 24);
+		}
 		// if were using a db, then configure it.
 		if (!$input->getOption('no-db')) {
 			$errors = shell_exec('php '.escapeshellarg($tikiBase.'/doc/devtools/svnup.php').' dbcheck');
@@ -198,7 +212,7 @@ class SvnUpCommand extends Command{
 		// start svn conflict checks
 		if ($input->getOption('abort')) {
 
-			$raw = shell_exec('svn merge --dry-run -r BASE:HEAD .  2>&1');
+			$raw = shell_exec("svn merge --dry-run -r BASE:$rev .  2>&1");
 			$output->writeln($raw,OutputInterface::VERBOSITY_DEBUG);
 
 			if (strpos($raw, 'E155035:')) {
@@ -230,7 +244,7 @@ class SvnUpCommand extends Command{
 					die("\n"); // If custom mixed revision merges were made with local changes, this could happen.... (very unlikely)
 				}
 				// now re-check for conflicts
-				$raw = shell_exec('svn merge --dry-run -r BASE:HEAD .  2>&1');
+				$raw = shell_exec("svn merge --dry-run -r BASE:$rev .  2>&1");
 				$output->writeln($raw,OutputInterface::VERBOSITY_DEBUG);
 			}
 			if (strpos($raw, "\nC    ")!== false) {
@@ -247,7 +261,7 @@ class SvnUpCommand extends Command{
 		$progress->setMessage('Updating SVN');
 		$progress->advance();
 		$errors = array('','Text conflicts');
-		$this->OutputErrors($logger,shell_exec('svn update --accept postpone  2>&1'),'Problem with svn up, check for conflicts.',$errors,!$input->getOption('no-db'));
+		$this->OutputErrors($logger,shell_exec("svn update --revision $rev --accept postpone 2>&1"),'Problem with svn up, check for conflicts.',$errors,!$input->getOption('no-db'));
 
 		// set revision number updated to.
 		$raw = shell_exec('svn info  2>&1');
@@ -294,10 +308,10 @@ class SvnUpCommand extends Command{
 				$progress->advance();
 				$errors = array('', 'Fatal error');
 				$shellCom = 'php console.php index:rebuild';
-			if ($output->getVerbosity() == OutputInterface::VERBOSITY_DEBUG)
-				$shellCom .= ' -vvv';
+				if ($output->getVerbosity() == OutputInterface::VERBOSITY_DEBUG)
+					$shellCom .= ' -vvv';
 
-			$this->OutputErrors($logger,shell_exec($shellCom.' 2>&1'),'Problem Rebuilding Index',$errors,!$input->getOption('no-db'));   // 2>&1 suppresses all terminal output, but allows full capturing for logs & verbiage
+				$this->OutputErrors($logger,shell_exec($shellCom.' 2>&1'),'Problem Rebuilding Index',$errors,!$input->getOption('no-db'));   // 2>&1 suppresses all terminal output, but allows full capturing for logs & verbiage
 
 			}
 		}
