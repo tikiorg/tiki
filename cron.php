@@ -51,47 +51,6 @@ if ($last_cron_run + $cron_interval >= $start_time) {
 
 $last_cron_run = $tikilib->set_preference('webcron_last_run', $start_time);
 
-// Get all active schedulers
-$schedLib = TikiLib::lib('scheduler');
-$activeSchedulers = $schedLib->get_scheduler(null, 'active');
-
-$runTasks = array();
-$reRunTasks = array();
-
-foreach ($activeSchedulers as $scheduler) {
-	// Check which tasks should run on time
-	if (Scheduler_Utils::is_time_cron($start_time, $scheduler['run_time'])) {
-		$runTasks[] = $scheduler;
-		continue;
-	}
-
-	// Check which tasks should run if they failed previously (last execution)
-	if ($scheduler['re_run']) {
-		$reRunTasks[] = $scheduler;
-		continue;
-	}
-}
-
-foreach ($reRunTasks as $task) {
-
-	$status = $schedLib->get_run_status($task['id']);
-	if ($status == 'failed') {
-		$runTasks[] = $task;
-	}
-}
-
-foreach ($runTasks as $runTask) {
-
-	$schedulerTask = new Scheduler_Item(
-		$runTask['id'],
-		$runTask['name'],
-		$runTask['description'],
-		$runTask['task'],
-		$runTask['params'],
-		$runTask['run_time'],
-		$runTask['status'],
-		$runTask['re_run']
-	);
-
-	$schedulerTask->execute();
-}
+$logger = new Tiki_Log('Webcron', \Psr\Log\LogLevel::ERROR);
+$manager = new Scheduler_Manager($logger);
+$manager->run();

@@ -26,11 +26,15 @@ class Scheduler_Task_HTTPGetCommandTask extends Scheduler_Task_CommandTask
 			$url = $params['url'];
 			$output = $params['output_file'];
 
+			$this->logger->debug(sprintf(tra('URL to invoke: %s'), $url));
+			$this->logger->debug(sprintf(tra('Save output to: %s'), $output));
+
 			$tikilib = TikiLib::lib('tiki');
 			$client = $tikilib->get_http_client($url);
 
 			if (!empty($params['basic_auth_username']) && !empty($params['basic_auth_password'])) {
 				$client->setAuth($params['basic_auth_username'], $params['basic_auth_password']);
+				$this->logger->debug(tra('Using basic authentication'));
 			}
 
 			$additionalHeaders = trim($params['additional_http_headers']);
@@ -38,12 +42,15 @@ class Scheduler_Task_HTTPGetCommandTask extends Scheduler_Task_CommandTask
 			if (!empty($additionalHeaders)) {
 				$additionalHeaders = explode("\n", $additionalHeaders);
 				$additionalHeaders = array_map(function($value){ return trim($value); }, $additionalHeaders);
+				$this->logger->debug(tra('Including additional headers'));
 				$client->setHeaders($additionalHeaders);
 			}
 
+			$this->logger->debug(tra('Sending request'));
 			$response = $client->send();
 
 			if ($response->isSuccess()) {
+				$this->logger->debug(tra('Request was successful'));
 				$fp = fopen($output, "w");
 				if (!$fp) {
 					$this->errorMessage = sprintf(tra('Failed to open file %s to write.'), $output);
@@ -56,6 +63,7 @@ class Scheduler_Task_HTTPGetCommandTask extends Scheduler_Task_CommandTask
 
 				return true;
 			} else {
+				$this->logger->debug(tra('Request failed'));
 				$this->errorMessage = $response->getReasonPhrase();
 
 				return false;

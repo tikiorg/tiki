@@ -2,11 +2,18 @@
 
 class Scheduler_Utils {
 
+	/**
+	 * Checks if a cron should run at a time.
+	 *
+	 * @param $time int Timestamp of the time to run
+	 * @param $cron string A cron time expression (ex.: 0 0 * * *)
+	 * @return bool true if should run, false otherwise.
+	 * @throws \Scheduler\Exception\CrontimeFormatException
+	 */
 	public static function is_time_cron($time, $cron)
 	{
-		$cron_parts = explode(' ', $cron);
-		if (count($cron_parts) != 5) {
-			return false;
+		if (self::validate_cron_time_format($cron)) {
+			throw new Scheduler\Exception\CrontimeFormatException(tra('Invalid cron time format'));
 		}
 
 		list($min, $hour, $day, $mon, $week) = explode(' ', $cron);

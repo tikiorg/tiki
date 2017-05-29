@@ -19,6 +19,8 @@ class Scheduler_Task_ConsoleCommandTask extends Scheduler_Task_CommandTask
 			return false;
 		}
 
+		$this->logger->debug(sprintf(tra('Executing console command: %s'), $params['console_command']));
+
 		$consoleParams = 'console.php ' . $params['console_command'];
 		$args = $this->parseConsoleParams($consoleParams);
 

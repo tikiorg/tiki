@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+use Psr\Log\LoggerInterface;
+
 class Scheduler_Item
 {
 
@@ -16,6 +18,7 @@ class Scheduler_Item
 	public $run_time;
 	public $status;
 	public $re_run;
+	private $logger;
 
 	const STATUS_ACTIVE = 'active';
 	const STATUS_INACTIVE = 'inactive';
@@ -26,7 +29,7 @@ class Scheduler_Item
 		'HTTPGetCommandTask' => 'HTTPGetCommand',
 	);
 
-	public function __construct($id, $name, $description, $task, $params, $run_time, $status, $re_run)
+	public function __construct($id, $name, $description, $task, $params, $run_time, $status, $re_run, LoggerInterface $logger)
 	{
 		$this->id = $id;
 		$this->name = $name;
@@ -36,6 +39,7 @@ class Scheduler_Item
 		$this->run_time = $run_time;
 		$this->status = $status;
 		$this->re_run = $re_run;
+		$this->logger = $logger;
 	}
 
 	public static function getAvailableTasks()
@@ -53,37 +57,50 @@ class Scheduler_Item
 
 		$status = $schedlib->get_run_status($this->id);
 
+		$this->logger->info('Scheduler last run status: ' . $status);
+
 		if ($status == 'running') {
-			// @todo add register to log
 			return array(
 				'status' => 'failed',
 				'message' => tra('Scheduler task already running.')
 			);
 		}
 
+		$this->logger->info('Task: ' . $this->task);
+
 		$class = 'Scheduler_Task_' . $this->task;
-		if (class_exists($class)) {
-			$task = new $class();
-
-			$start_time = $schedlib->start_scheduler_run($this->id);
-
-			$params = json_decode($this->params, true);
-			$result = $task->execute($params);
-
-			$executionStatus = $result ? 'done' : 'failed';
-			$outputMessage = $task->getOutput();
-
-			$schedlib->end_scheduler_run($this->id, $executionStatus, $outputMessage, $start_time);
-
+		if (!class_exists($class)) {
 			return array(
-				'status' => $executionStatus,
-				'message' => $outputMessage,
+				'status' => 'failed',
+				'message' => $class . ' not found.',
 			);
 		}
 
+		$startTime = $schedlib->start_scheduler_run($this->id);
+		$this->logger->debug("Start time: " . $startTime);
+
+		$params = json_decode($this->params, true);
+		$this->logger->debug("Task params: " . $this->params);
+
+		if ($params === null && !empty($this->params)) {
+			return array(
+				'status' => 'failed',
+				'message' => tra('Unable to decode task params.')
+			);
+		}
+
+		$task = new $class($this->logger);
+		$result = $task->execute($params);
+
+		$executionStatus = $result ? 'done' : 'failed';
+		$outputMessage = $task->getOutput();
+
+		$endTime = $schedlib->end_scheduler_run($this->id, $executionStatus, $outputMessage, $startTime);
+		$this->logger->debug("End time: " . $endTime);
+
 		return array(
-			'status' => 'failed',
-			'message' => $class . ' not found.',
+			'status' => $executionStatus,
+			'message' => $outputMessage,
 		);
 	}
 }

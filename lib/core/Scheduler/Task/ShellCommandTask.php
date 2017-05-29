@@ -17,7 +17,10 @@ class Scheduler_Task_ShellCommandTask extends Scheduler_Task_CommandTask
 			return false;
 		}
 
-		$process = new Process($params['shell_command']);
+		$command = $params['shell_command'];
+
+		$this->logger->debug(sprintf(tra('Executing shell command: %s'), $command));
+		$process = new Process($command);
 		$process->run();
 
 		if ($success = $process->isSuccessful()) {

@@ -5,9 +5,17 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+use Psr\Log\LoggerInterface;
+
 abstract class Scheduler_Task_CommandTask
 {
 	protected $errorMessage;
+	protected $logger;
+
+	public function __construct(LoggerInterface $logger)
+	{
+		$this->logger = $logger;
+	}
 
 	abstract protected function execute($params = null);
 
