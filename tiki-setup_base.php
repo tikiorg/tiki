@@ -598,7 +598,7 @@ array_unshift(
 			'local_tz' => 'text',
 			'preview' => 'text',
 			'rbox' => 'text',
-			'ticket' => 'alnum',
+			'ticket' => 'alnumdash',
 			'daconfirm' => 'alpha'
 		),
 		'staticKeyFiltersForArrays' => array(
