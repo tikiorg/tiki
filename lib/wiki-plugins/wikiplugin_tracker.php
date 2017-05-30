@@ -1230,18 +1230,14 @@ function wikiplugin_tracker($data, $params)
 
 					// to:
 					if (empty($emailOptions[1])) { // to is empty?
-						$emailOptions[1][0] = $prefs['sender_email'];
+						$emailOptions[1][0][0] = $prefs['sender_email'];
 					} else {
 						// multiple recipients can be separated by a comma
-						$recipients = explode(',', $emailOptions[1]);
-						$emailOptions[1] = array();
-						foreach ($recipients as $recipient) {
+						$emailOptions[1] = explode(',', $emailOptions[1]);
+						foreach ($emailOptions[1] as $key => $recipient) {
 							$parsed = wikiplugin_tracker_process_email_recipients(trim($recipient), $flds['data'], $item, $trackerId, $rid);
-							foreach ($parsed as $recipient) {
-								$emailOptions[1][] = $recipient;
-							}
+							$emailOptions[1][$key] = array_unique($parsed);
 						}
-						$emailOptions[1] = array_unique($emailOptions[1]);
 					}
 
 					include_once('lib/webmail/tikimaillib.php');
@@ -1279,7 +1275,7 @@ function wikiplugin_tracker($data, $params)
 					$subjectCounter = 0;
 					$smarty->assign('mail_date', $tikilib->now);
 					$smarty->assign('mail_itemId', $rid);
-					foreach ($emailOptions[1] as $ieo=>$ueo) {
+					foreach ($emailOptions[1] as $ieo=>$ueos) {
 						$mailDir = strpos($tplSubject[$subjectCounter], 'wiki:') !== 0 ? 'mail/' : '';
 						@$mail_data = $smarty->fetch($mailDir .$tplSubject[$subjectCounter]);
 						if (empty($mail_data)) {
@@ -1298,20 +1294,22 @@ function wikiplugin_tracker($data, $params)
 							}
 							$mail->setText($mail_data);
 						}
-						try {
-							$mail->send($ueo);
-							$title = 'mail';
-						} catch (Zend\Mail\Exception\ExceptionInterface $e) {
-							$title = 'mail error';
-						}
-						if ($title == 'mail error') {
-							// Log the email error at the tiki syslog
-							$logslib = TikiLib::lib('logs');
-							$logslib->add_log('mail error', 'plugin tracker email error / '.$emailOptions[1][$ieo].' / item'.$rid);
-						} elseif ($title == 'mail' && $prefs['log_mail'] == 'y') {
-							// Log the email at the tiki syslog
-							$logslib = TikiLib::lib('logs');
-							$logslib->add_log('mail', 'plugin tracker email sent / '.$emailOptions[1][$ieo].' / item'.$rid);
+						foreach( $ueos as $ueo ) {
+							try {
+								$mail->send($ueo);
+								$title = 'mail';
+							} catch (Zend\Mail\Exception\ExceptionInterface $e) {
+								$title = 'mail error';
+							}
+							if ($title == 'mail error') {
+								// Log the email error at the tiki syslog
+								$logslib = TikiLib::lib('logs');
+								$logslib->add_log('mail error', 'plugin tracker email error / '.$ueo.' / item'.$rid);
+							} elseif ($title == 'mail' && $prefs['log_mail'] == 'y') {
+								// Log the email at the tiki syslog
+								$logslib = TikiLib::lib('logs');
+								$logslib->add_log('mail', 'plugin tracker email sent / '.$ueo.' / item'.$rid);
+							}
 						}
 						if (isset($emailOptions[2][$templateCounter + 1])) {
 							++$templateCounter;
