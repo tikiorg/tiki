@@ -16,6 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Psr\Log\LogLevel;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Command\HelpCommand;
 
 if (isset($_SERVER['REQUEST_METHOD'])) {
 	die('Only available through command-line.');
@@ -72,10 +73,10 @@ class SvnUpCommand extends Command{
 				'Make no changes to the database. (SvnUp, dependencies and privilege checks only. Logging disabled.)'
 			)
 			->addOption(
-				'abort',
-				'a',
-				InputOption::VALUE_NONE,
-				'Test for conflicts and abort if found. Useful for automated updates.'
+				'conflict',
+				'c',
+				InputOption::VALUE_REQUIRED,
+				'What would you like to do if a svn conflict is found? ',	array('abort', 'postpone', 'mine-conflict', 'theirs-conflict')
 			)
 			->addOption(
 				'email',
@@ -150,13 +151,28 @@ class SvnUpCommand extends Command{
 			LogLevel::NOTICE     => OutputInterface::VERBOSITY_NORMAL,
 			LogLevel::INFO       => OutputInterface::VERBOSITY_VERY_VERBOSE
 		);
-
 		$logger = new ConsoleLogger($output, $verbosityLevelMap);
 		$errors = false;
 		$rev = 'HEAD';
+
+		// check that proper options were given, else die with help options.
+		if ($input->getOption('conflict')) {
+			if (!in_array($input->getOption('conflict'), array('abort', 'postpone', 'mine-conflict', 'theirs-conflict'))) {
+				$help = new HelpCommand();
+				$help->setCommand($this);
+				$help->run($input, $output);
+				return $logger->notice("Invalid option for --conflict, see usage above.");
+			}
+		}
+
+		// check that the --lag option is valid, and complain if its not.
 		if ($input->getOption('lag')) {
 			if ($input->getOption('lag') < 0 || !is_numeric($input->getOption('lag'))) {
-				$output->writeln('Invalid option for --lag, must be a positive integer.');
+				$help = new HelpCommand();
+				$help->setCommand($this);
+				$help->run($input, $output);
+				return $logger->notice('Invalid option for --lag, must be a positive integer.');
+
 			}
 			// current time minus number of days specified through lag
 			$rev = date('{"Y-m-d H:i"}', time() - $input->getOption('lag') * 60 * 60 * 24);
@@ -204,15 +220,17 @@ class SvnUpCommand extends Command{
 		$progress->start();
 
 		// set revision number beginning with.
-		$raw = shell_exec('svn info  2>&1');
+		$raw = shell_exec('svn info 2>&1');
 		$output->writeln($raw,OutputInterface::VERBOSITY_DEBUG);
 		preg_match('/Revision: (\d+)/',$raw,$startRev);
 		$startRev = $startRev[1];
 
+		// Set this before, so if 'abort' is used, it can be chagned to a valid option later
+		$svnConflict = $input->getOption('conflict');
 		// start svn conflict checks
-		if ($input->getOption('abort')) {
+		if ($input->getOption('conflict') === 'abort') {
 
-			$raw = shell_exec("svn merge --dry-run -r BASE:$rev .  2>&1");
+			$raw = shell_exec("svn merge --dry-run -r BASE:$rev . 2>&1");
 			$output->writeln($raw,OutputInterface::VERBOSITY_DEBUG);
 
 			if (strpos($raw, 'E155035:')) {
@@ -256,12 +274,15 @@ class SvnUpCommand extends Command{
 				$progress->advance();
 				die("\n");
 			}
+			// we need a valid option, even though it wil never be used.
+			$svnConflict = 'postpone';
 		}
+
 
 		$progress->setMessage('Updating SVN');
 		$progress->advance();
 		$errors = array('','Text conflicts');
-		$this->OutputErrors($logger,shell_exec("svn update --revision $rev --accept postpone 2>&1"),'Problem with svn up, check for conflicts.',$errors,!$input->getOption('no-db'));
+		$this->OutputErrors($logger,shell_exec("svn update --revision $rev --accept $svnConflict 2>&1"),'Problem with svn up, check for conflicts.',$errors,!$input->getOption('no-db'));
 
 		// set revision number updated to.
 		$raw = shell_exec('svn info  2>&1');
