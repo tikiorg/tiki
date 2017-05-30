@@ -76,7 +76,8 @@ class SvnUpCommand extends Command{
 				'conflict',
 				'c',
 				InputOption::VALUE_REQUIRED,
-				'What would you like to do if a svn conflict is found? ',	array('abort', 'postpone', 'mine-conflict', 'theirs-conflict')
+				'What would you like to do if a svn conflict is found? Options:abort, postpone, mine-conflict, theirs-conflict',
+				'abort'
 			)
 			->addOption(
 				'email',
@@ -156,13 +157,11 @@ class SvnUpCommand extends Command{
 		$rev = 'HEAD';
 
 		// check that proper options were given, else die with help options.
-		if ($input->getOption('conflict')) {
-			if (!in_array($input->getOption('conflict'), array('abort', 'postpone', 'mine-conflict', 'theirs-conflict'))) {
-				$help = new HelpCommand();
-				$help->setCommand($this);
-				$help->run($input, $output);
-				return $logger->notice("Invalid option for --conflict, see usage above.");
-			}
+		if (!in_array($input->getOption('conflict'), array('abort', 'postpone', 'mine-conflict', 'theirs-conflict'))) {
+			$help = new HelpCommand();
+			$help->setCommand($this);
+			$help->run($input, $output);
+			return $logger->notice("Invalid option for --conflict, see usage above.");
 		}
 
 		// check that the --lag option is valid, and complain if its not.
