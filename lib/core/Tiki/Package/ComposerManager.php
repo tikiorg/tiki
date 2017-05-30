@@ -78,7 +78,7 @@ class ComposerManager
 
 	/**
 	 * Get list of packages installed
-	 * @return array
+	 * @return array|boolean
 	 */
 	public function getInstalled()
 	{
@@ -89,11 +89,13 @@ class ComposerManager
 		foreach($packageDefinitions as $package){
 			$keyLookup[$package['name']] = $package['key'];
 		}
-		foreach($installedPackages as &$package){
-			if (isset($keyLookup[$package['name']])){
-				$package['key'] = $keyLookup[$package['name']];
-			} else {
-				$package['key'] = '';
+		if ($installedPackages !== false){
+			foreach($installedPackages as &$package){
+				if (isset($keyLookup[$package['name']])){
+					$package['key'] = $keyLookup[$package['name']];
+				} else {
+					$package['key'] = '';
+				}
 			}
 		}
 
