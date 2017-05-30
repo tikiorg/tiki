@@ -5,11 +5,12 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-global $access;
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
+	die('This script may only be included.');
+}
+
 $headerlib = TikiLib::lib('header');
 $smarty = TikiLib::lib('smarty');
-//this script may only be included - so its better to die if called directly.
-$access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
 if ( isset($_SESSION['tiki_cookie_jar']) ) {
 	$cookielist = array();

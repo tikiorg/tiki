@@ -5,9 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-//this script may only be included - so its better to die if called directly.
-$access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
-
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
+	die('This script may only be included.');
+}
 
 // need to rebuild because they were created in tiki-setup and just removed due to clear cache
 // we need to create upfront in case codemirror is used later on. 
