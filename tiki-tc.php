@@ -8,9 +8,10 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
+	die('This script may only be included.');
+}
 require_once ('tiki-setup.php');
-$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 if ($prefs['feature_theme_control'] == 'y' && empty($_SESSION['try_theme'])) {
 	//we arrive here after lib/setup/theme.php has finished, so $prefs['theme'] and $prefs['theme_active_option'] are already set. Here we want to overwrite them according to the theme control setting
 	// defined: $cat_type and cat_objid

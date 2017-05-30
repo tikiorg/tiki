@@ -8,7 +8,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
+	die('This script may only be included.');
+}
 $feed = tra("Error Message");
 $title = tr("Tiki RSS Feed Error Message: %0", $errmsg);
 $desc = $errmsg;
