@@ -18,6 +18,7 @@ class ComposerCli
 
 	const COMPOSER_PHAR = 'temp/composer.phar';
 	const COMPOSER_CONFIG = 'composer.json';
+	const COMPOSER_HOME = 'temp/composer';
 	const PHP_COMMAND_NAMES = [
 		'php',
 		'php56',
@@ -186,7 +187,7 @@ class ComposerCli
 		$canExecute = false;
 
 		if (file_exists($this->getComposerPharPath())) {
-			list($output) = $this->execComposer(['-no-ansi', '--version']);
+			list($output) = $this->execComposer(['--no-ansi', '--version']);
 			if (strncmp($output, 'Composer', 8) == 0) {
 				$canExecute = true;
 			}
@@ -218,6 +219,10 @@ class ComposerCli
 		}
 
 		$builder->setArguments($args);
+
+		if (!getenv('HOME') && !getenv('COMPOSER_HOME')){
+			$builder->setEnv('COMPOSER_HOME', $this->basePath . self::COMPOSER_HOME);
+		}
 
 		$process = $builder->getProcess();
 
