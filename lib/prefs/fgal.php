@@ -233,6 +233,7 @@ function prefs_fgal_list()
 		'fgal_source_refresh_frequency' => array(
 			'name' => tra('Remote source refresh frequency limit'),
 			'description' => tra('Minimum number of seconds to elapse between remote source checks to prevent flooding the server with requests.'),
+			'hint' => tr('Set to zero to disable refresh'),
 			'type' => 'text',
 			'filter' => 'int',
 			'size' => 5,

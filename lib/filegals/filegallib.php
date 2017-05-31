@@ -3977,6 +3977,9 @@ class FileGalLib extends TikiLib
 		$lastCheck = false;
 		// Make sure not to flood the remote server with update requests
 		if (isset($attributes['tiki.content.lastcheck'])) {
+			if (empty($prefs['fgal_source_refresh_frequency'])) {	// set this to 0 to disable
+				return false;
+			}
 			$lastCheck = $attributes['tiki.content.lastcheck'];
 			if ($lastCheck + $prefs['fgal_source_refresh_frequency'] > time()) {
 				return false;
