@@ -8,11 +8,10 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
-	die('This script may only be included.');
-}
-
 require_once('tiki-setup.php');
+$access = TikiLib::lib('access');
+$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
+
 $userlib = TikiLib::lib('user');
 $smarty = TikiLib::lib('smarty');
 

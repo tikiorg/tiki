@@ -8,6 +8,8 @@
 /**
  * set some default params (mainly utf8 as tiki is utf8) + use the mailCharset pref from a user
  */
+$access = TikiLib::lib('access');
+$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
 class TikiMail
 {

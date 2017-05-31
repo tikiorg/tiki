@@ -193,6 +193,7 @@ function get_default_prefs()
 			'feature_projects' => 'n',
 			'feature_ranking' => 'n',
 			'feature_top_banner' => 'n',
+			'feature_usability' => 'n',
 			'minical_reminders' => 0,
 			'php_docroot' => 'http://php.net/',
 			'shoutbox_autolink' => 'n',
