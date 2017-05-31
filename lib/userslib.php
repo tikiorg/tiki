@@ -3010,7 +3010,7 @@ class UsersLib extends TikiLib
 			return "";
 		}
 		if ( $username[0] == "\t" ) {
-			$username = $username . ' (' . tra('Anonymous') . ')';
+			$username = $username . ' (' . tra('unverified') . ')';
 		}
 		return $username;
 	}
