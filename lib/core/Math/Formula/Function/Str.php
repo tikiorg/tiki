@@ -17,7 +17,7 @@ class Math_Formula_Function_Str extends Math_Formula_Function
 			} elseif ($child instanceof Math_Formula_Element) {
 				$out[] = $this->evaluateChild($child);
 			} else {
-				$out[] = $child;
+				$out[] = str_replace("~nl~", "\n", $child);
 			}
 		}
 
