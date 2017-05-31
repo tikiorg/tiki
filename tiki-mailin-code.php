@@ -10,8 +10,11 @@
 
 use Tiki\MailIn;
 
+if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
+	die('This script may only be included.');
+}
+
 require_once ('tiki-setup.php');
-$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 include_once ("lib/webmail/tikimaillib.php");
 
 $mailinlib = TikiLib::lib('mailin');

@@ -5,8 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-//this script may only be included - so its better to die if called directly.
-$access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
+if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
+	die('This script may only be included.');
+}
 
 // Check to see if admin has closed the site
 if ( $tiki_p_access_closed_site != 'y' and ! isset($bypass_siteclose_check) ) {

@@ -5,9 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-//this script may only be included - so its better to die if called directly.
-$access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
-
+if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
+	die('This script may only be included.');
+}
 
 global $https_mode, $url_scheme, $url_host, $url_port, $url_path, $base_host, $base_url, $base_url_http, $base_url_https, $tikiroot;
 

@@ -8,10 +8,10 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-//this script may only be included - so its better to die if called directly.
+if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
+	die('This script may only be included.');
+}
 require_once('tiki-setup.php');
-$access = TikiLib::lib('access');
-$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
 $modlib = TikiLib::lib('mod');
 $usermoduleslib = TikiLib::lib('usermodules');
