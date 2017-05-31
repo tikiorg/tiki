@@ -361,7 +361,7 @@
 		<div class="col-md-8 col-md-offset-4">
 			{remarksbox type="note" title="{tr}Information{/tr}"}
 				{tr}Maximum file size is around:{/tr}
-				{if $tiki_p_admin eq 'y'}<a title="{$max_upload_size_comment}">{/if}
+				{if $tiki_p_admin eq 'y'}<a title="|{$max_upload_size_comment}" class="btn btn-info tips">{/if}
 					{$max_upload_size|kbsize:true:0}
 				{if $tiki_p_admin eq 'y'}</a>
 					{if $is_iis}<br>{tr}Note: You are running IIS{/tr}. {tr}maxAllowedContentLength also limits upload size{/tr}. {tr}Please check web.config in the Tiki root folder{/tr}{/if}
@@ -406,23 +406,31 @@
 	{/jq}
 {/if}
 {if not $editFileId and $prefs.fgal_upload_from_source eq 'y' and $tiki_p_upload_files eq 'y'}
-	<form class="remote-upload" method="post" action="{service controller=file action=remote}">
+	<form class="remote-upload form-horizontal" method="post" action="{service controller=file action=remote}">
 		<h3>{tr}Upload from URL{/tr}</h3>
-		<p>
+		<div class="form-group">
 			<input type="hidden" name="galleryId" value="{$galleryId|escape}">
-			<label>{tr}URL:{/tr} <input type="url" name="url" placeholder="http://" size="40"></label>
+			<label class="col-md-4 control-label">{tr}URL:{/tr}</label>
+			<div class="col-md-8">
+				<input type="url" name="url" placeholder="http://" class="form-control">
+			</div>
 			{if $prefs.vimeo_upload eq 'y'}
-				<label>{tr}Reference:{/tr}
+				<label class="col-md-8 col-md-offset-4">
 					<input type="checkbox" name="reference" value="1" class="tips" title="{tr}Upload from URL{/tr}|{tr}Keeps a reference to the remote file{/tr}">
+					{tr}Reference{/tr}
 				</label>
 			{/if}
-			<input type="submit" class="btn btn-default btn-sm" value="{tr}Add{/tr}">
-		</p>
-		<div class="result"></div>
+			<div class="col-md-8 col-md-offset-4">
+				<input type="submit" class="btn btn-default btn-sm" value="{tr}Add{/tr}">
+			</div>
+			<div class="result col-md-8 col-md-offset-4"></div>
+		</div>
 	</form>
 	{jq}
 		$('.remote-upload').submit(function () {
 			var form = this;
+			// use the current value of the galleryId selector
+			$('input[name=galleryId]', form).val($('#galleryId').val());
 			$.ajax({
 				method: 'POST',
 				url: $(form).attr('action'),
@@ -446,7 +454,9 @@
 	{if $prefs.vimeo_upload eq 'y'}
 		<fieldset>
 			<h3>{tr}Upload Video{/tr}</h3>
-			{wikiplugin _name='vimeo'}{/wikiplugin}
+			<div class="col-md-8 col-md-offset-4">
+				{wikiplugin _name='vimeo'}{/wikiplugin}
+			</div>
 		</fieldset>
 		{jq}
 			var handleVimeoFile = function (link, data) {
