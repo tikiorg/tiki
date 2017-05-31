@@ -2688,6 +2688,22 @@ class UsersLib extends TikiLib
 	}
 
 	/**
+	 * Helps recognize nicknames which anonymous users have chosen
+	 * A leading tab is for recognizing anonymous entries. Real usernames don't start with a tab
+	 * @param string $username	user nickname or name
+	 * @return string				string which should be displayed
+	 */
+	function distinguish_anonymous_users($username="")
+	{
+		if ( empty($username) ) return "";
+		if ( $username[0] == "\t" ) {
+			$username = $username . ' (' . tra('Anonymous') . ')';
+		}
+		return $username;
+	}
+
+
+	/**
 	 * Creates DOM tag for user info with popup or not depending on prefs etc
 	 * @param string $auser     user to find info for (current user if empty)
 	 * @param string $body      content of the anchor tag (user name if empty)
