@@ -24,8 +24,6 @@ class TikiAccessLib extends TikiLib
 {
 	private $noRedirect = false;
 	private $check;
-	private $origin;
-	private $originSource;
 
 	function preventRedirect($prevent)
 	{
@@ -364,26 +362,26 @@ class TikiAccessLib extends TikiLib
 	 */
 	private function originCheck()
 	{
-		//$base_url is usually host + directory
+		// $base_url is usually host + directory
 		global $base_url;
 		include_once('lib/setup/absolute_urls.php');
-		$this->origin = '';
-		$this->originSource = 'empty';
+		$origin = '';
+
 		//first check HTTP_ORIGIN
-		if (!empty($_SERVER['HTTP_ORIGIN'])) {
+		if (! empty($_SERVER['HTTP_ORIGIN'])) {
 			//HTTP_ORIGIN is usually host only without trailing slash
-			$this->origin = $_SERVER['HTTP_ORIGIN'] . '/';
-			$this->originSource = 'HTTP_ORIGIN';
+			$origin = $_SERVER['HTTP_ORIGIN'];
 			//then check HTTP_REFERER
-		} elseif (!empty($_SERVER['HTTP_REFERER'])) {
+		} elseif (! empty($_SERVER['HTTP_REFERER'])) {
 			//HTTP_REFERER is usually the full path (host + directory + file + query)
-			$this->origin = $_SERVER['HTTP_REFERER'];
-			$this->originSource = 'HTTP_REFERER';
+			$origin = $_SERVER['HTTP_REFERER'];
 		}
-		//$base_url may need to be the needle or the haystack depending on whether it is being compared to
-		//HTTP_REFERER of HTTP_ORIGIN
-		$this->check = strlen($base_url) >= strlen($this->origin) ? strpos($base_url, $this->origin) === 0
-			: strpos($this->origin, $base_url) === 0;
+
+		$base = parse_url($base_url, PHP_URL_HOST);
+		$origin = parse_url($origin, PHP_URL_HOST);
+
+		$this->check = $base === $origin;
+
 		return $this->check;
 	}
 
