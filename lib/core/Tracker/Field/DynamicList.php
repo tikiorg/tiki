@@ -315,45 +315,5 @@ if( $("input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFi
 			$this->getOption('statusThere', 'opc')
 		);
 	}
-
-	function getTabularSchema()
-	{
-		$schema = new Tracker\Tabular\Schema($this->getTrackerDefinition());
-		$permName = $this->getConfiguration('permName');
-		$name = $this->getConfiguration('name');
-
-		$schema->addNew($permName, 'id')
-			->setLabel($name)
-			->setRenderTransform(function ($value) {
-				return $value;
-			})
-			->setParseIntoTransform(function (& $info, $value) use ($permName) {
-				$info['fields'][$permName] = $value;
-			})
-			;
-
-		if ($fieldId = $this->getOption('listFieldIdThere')) {
-			$simpleField = Tracker\Tabular\Schema\CachedLookupHelper::fieldLookup($fieldId);
-			$invertField = Tracker\Tabular\Schema\CachedLookupHelper::fieldInvert($fieldId);
-			$schema->addNew($permName, 'lookup-simple')
-				->setLabel($name)
-				->addIncompatibility($permName, 'id')
-				->addQuerySource('text', "tracker_field_{$permName}_text")
-				->setRenderTransform(function ($value, $extra) use ($simpleField) {
-					if (isset($extra['text'])) {
-						return $extra['text'];
-					} else {
-						return $simpleField->get($value);
-					}
-				})
-				->setParseIntoTransform(function (& $info, $value) use ($permName, $invertField) {
-					if ($id = $invertField->get($value)) {
-						$info['fields'][$permName] = $id;
-					}
-				})
-				;
-		}
-
-		return $schema;
-	}
 }
+
