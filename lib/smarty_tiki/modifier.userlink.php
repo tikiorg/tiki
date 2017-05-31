@@ -39,6 +39,7 @@ function smarty_modifier_userlink($other_user, $class='userlink', $idletime='not
 		if (count($other_user) > 1) {
 			$other_user = array_map(
 				function ($username) use ($class, $idletime, $popup) {
+					$username = TikiLib::lib('user')->distinguish_anonymous_users($username);
 					return smarty_modifier_userlink($username, $class, $idletime, '', 0, $popup);
 				},
 				$other_user
@@ -47,8 +48,10 @@ function smarty_modifier_userlink($other_user, $class='userlink', $idletime='not
 			$last = array_pop($other_user);
 			return tr('%0 and %1', implode(', ', $other_user), $last);
 		} else {
-			$other_user = reset($other_user);
+			$other_user = TikiLib::lib('user')->distinguish_anonymous_users(reset($other_user));
 		}
+	} else {
+		$other_user = TikiLib::lib('user')->distinguish_anonymous_users($other_user);
 	}
 	if (!$fullname) {
 		$fullname = TikiLib::lib('user')->clean_user($other_user);
@@ -60,3 +63,4 @@ function smarty_modifier_userlink($other_user, $class='userlink', $idletime='not
 
 	return TikiLib::lib('user')->build_userinfo_tag($other_user, $fullname, $class, $popup);
 }
+
