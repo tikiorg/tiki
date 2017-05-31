@@ -1,8 +1,8 @@
 <?php
 
-if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
-	die('This script may only be included.');
-}
+$access = TikiLib::lib('access');
+$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
+
 
 /* vim: set expandtab tabstop=4 shiftwidth=4: */
 // +----------------------------------------------------------------------+

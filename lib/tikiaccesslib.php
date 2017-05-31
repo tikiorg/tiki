@@ -263,6 +263,29 @@ class TikiAccessLib extends TikiLib
 	}
 
 	/**
+	 *  Check whether script was called directly or included
+	 *  err and die if called directly
+	 *  Typical usage: $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
+	 *
+	 *  if feature_redirect_on_error is active, then just goto the Tiki HomePage as configured
+	 *  in Admin->General. -- Damian
+	 *
+	 */
+	function check_script($scriptname, $page)
+	{
+		global $prefs;
+		if (basename($scriptname) == $page) {
+			if ( !isset($prefs['feature_usability']) || $prefs['feature_usability'] == 'n' ) {
+				$msg = tra("This script cannot be called directly");
+				$this->display_error($page, $msg);
+			} else {
+				$msg = tr("Page '%0' cannot be found", $page);
+				$this->display_error($page, $msg, "404");
+			}
+		}
+	}
+
+	/**
 	 * ***** Note: Intention is to use this to replace the checkAuthenticity function below *******
 	 *
 	 * Use to protect against Cross-Site Request Forgery when submitting a form. Designed to work in two passes:

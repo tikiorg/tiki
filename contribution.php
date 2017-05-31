@@ -14,11 +14,8 @@
 
 // param: $contributionItemId: id of the comment if in coment/forum
 
-if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
-	die('This script may only be included.');
-}
-
 require_once('tiki-setup.php');
+$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 global $prefs;
 
 if ($prefs['feature_contribution'] == 'y') {

@@ -19,15 +19,14 @@
 // cannot be aliased by normal tiki variables.
 // Traverse each _REQUEST data adn put them in an array
 
-if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
-	die('This script may only be included.');
-}
-
+//this script may only be included - so its better to err & die if called directly.
 //smarty is not there - we need setup
 require_once('tiki-setup.php');
 $access = TikiLib::lib('access');
 $tikilib = TikiLib::lib('tiki');
 $headerlib = TikiLib::lib('header');
+
+$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
 /*
  * Determine the settings used to display the thread
