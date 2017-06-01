@@ -919,7 +919,15 @@ class RSSLib extends TikiDb_Bridge
 			$entry = $writer->createEntry();
 			$entry->setTitle($title ? $title : tra('Unspecified'));
 			$entry->setLink($tikilib->tikiUrl($url));
-			$entry->setDateModified($row[$feed_descriptor['entryModificationKey']]);
+
+
+			if (! empty($row[$feed_descriptor['entryModificationKey']])) {
+				$date = $row[$feed_descriptor['entryModificationKey']];
+				if (! is_int($date)) {
+					$date = strtotime($date);
+				}
+				$entry->setDateModified($date);
+			}
 
 			$writer->addEntry($entry);
 		}

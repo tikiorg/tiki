@@ -183,6 +183,10 @@ FileETag none
     #  crawled by search engines.
     #RewriteRule ^sitemap.txt$          tiki-browse_categories.php?find=&deep=on&type=wiki+page&parentId=2&sort_mode=name_asc&links&maxRecords=1000000 [L]
 
+	# -- RSS Feeds -- #
+	# Example rewrite rule to use the search as a simple rss feed
+	#RewriteRule feed-(.*)\.rss         tiki-searchindex.php?httpaccept=application\%2Frss\%2Bxml&filter~content=$1  [QSA,L]
+
     # -- Tiki URL Rewriting -- #
     # Read more: https://dev.tiki.org/URL+Rewriting+Revamp
     RewriteRule .*                     route.php                                [L]
