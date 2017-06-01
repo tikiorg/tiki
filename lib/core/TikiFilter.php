@@ -47,8 +47,9 @@ class TikiFilter
 				// class names, sortmode values, etc.
 				return new Zend\Filter\PregReplace('/[^\p{L}\p{N}\p{Pc}\p{Pd}]*/', '');
 			case 'digits':
-				// Removes everything except digits eg. '12345 to 67890' returns 1234567890
-				return new Zend\Filter\Digits;
+				// Removes everything except digits eg. ' 12345 to 67890' returns '1234567890', while '-5' returns '5'
+				// return type: (string)
+			return new Zend\Filter\Digits;
 			case 'digitscolons':
 				// Removes everything except digits and colons, e.g., for colon-separated ID numbers.
 				// Only characters matched, not patterns - eg 'x75::xx44:' will return '75::44:'
@@ -62,7 +63,8 @@ class TikiFilter
 				// Only characters matched, not patterns - eg 'x75||xx44|' will return '75||44|'
 				return new Zend\Filter\PregReplace('/[^\p{N}\|]*/', '');
 			case 'int':
-				// Transforms a sclar phrase into an integer. eg. '-4 is less than 0' returns -4
+				// Transforms a sclar phrase into an integer. eg. '-4 is less than 0' returns -4, while '' returns 0
+				// return type: (int)
 				return new Zend\Filter\ToInt;
 			case 'isodate':
 				return new TikiFilter_IsoDate;
