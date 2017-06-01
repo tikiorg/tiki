@@ -525,7 +525,7 @@ class Services_Group_Controller
 				'usersfield'                => 'int',
 				'groupfield'                => 'int',
 				'expireAfter'               => 'int',
-				'anniversary'               => 'int',
+				'anniversary'               => 'digits',	// format MMDD or DD
 				'prorateInterval'           => 'word',
 				'referer'                   => 'striptags'
 			]);
