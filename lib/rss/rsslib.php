@@ -923,7 +923,7 @@ class RSSLib extends TikiDb_Bridge
 
 			if (! empty($row[$feed_descriptor['entryModificationKey']])) {
 				$date = $row[$feed_descriptor['entryModificationKey']];
-				if (! is_int($data)) {
+				if (! is_int($date)) {
 					$date = strtotime($date);
 				}
 				$entry->setDateModified($date);
