@@ -27,7 +27,7 @@
 				{/if}
 			{/remarksbox}
 		{else}
-			{remarksbox type=comment title="{tr}Content waiting for approval{/tr}"}
+			{remarksbox type=comment title="{tr}Content waiting for approval{/tr}"}{* One ministry using flagged revisions has upgraded this message from a comment to a warning, to attract more attention to it. There is no intermediary level between comment and warning. Chealer 2017-06-01 *}
 				<p>
 					{tr}You are currently viewing the approved version of the page.{/tr}
 					{if $revision_approved and $tiki_p_wiki_view_latest eq 'y'}
@@ -36,7 +36,7 @@
 				</p>
 			{/remarksbox}
 		{/if}
-	{elseif $revision_approval and ! $revision_approved and $tiki_p_wiki_view_latest eq 'y'}
+	{elseif ! $revision_approved and $tiki_p_wiki_view_latest eq 'y'}{* How does this case differ from the last? If this one happens when viewing an unapproved version other than the latest, shouldn't this be stated explicitly? Chealer 2017-06-01 *}
 		{remarksbox type=comment title="{tr}Content waiting for approval{/tr}"}
 			<p>
 				{tr}View the {self_link latest=1}latest version{/self_link}.{/tr}
