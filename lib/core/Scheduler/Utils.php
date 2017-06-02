@@ -12,7 +12,7 @@ class Scheduler_Utils {
 	 */
 	public static function is_time_cron($time, $cron)
 	{
-		if (self::validate_cron_time_format($cron)) {
+		if (!self::validate_cron_time_format($cron)) {
 			throw new Scheduler\Exception\CrontimeFormatException(tra('Invalid cron time format'));
 		}
 
