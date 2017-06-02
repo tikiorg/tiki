@@ -68,8 +68,9 @@ class Text_Diff_Renderer_sidebyside extends Tiki_Text_Diff_Renderer
     {
     	if ($type == 'context') {
 	        foreach ($lines as $line) {
-	        	if (!empty($line))
-	            echo "<tr class='diffbody'><td>&nbsp;</td><td>$line</td><td>&nbsp;</td><td>$line</td></tr>\n";
+	        	if (! empty($line)) {
+	            	echo "<tr class='diffbody'><td>&nbsp;</td><td>" . htmlspecialchars($line) . "</td><td>&nbsp;</td><td>" . htmlspecialchars($line) . "</td></tr>\n";
+	        	}
 	        }
     	} elseif ($type == 'added') {
 	        foreach ($lines as $line) {
