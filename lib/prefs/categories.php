@@ -9,8 +9,8 @@ function prefs_categories_list()
 {
 	return array(
 		'categories_used_in_tpl' => array(
-			'name' => tra('Categories used in templates (.tpl files)'),
-			'description' => tra('Enables showing alternate content, depending on the category of the current object'),
+			'name' => tra('Provides the current categories to Smarty templates'),
+			'description' => tra('When enabled, the $objectCategoryIds variable is set to the identifiers of the categories of the object being viewed. This allows showing alternate content depending on the categories of the current object, but reduces performance.'),
 			'type' => 'flag',
 			'perspective' => false,
 			'help' => 'http://themes.tiki.org/Template+Tricks',
