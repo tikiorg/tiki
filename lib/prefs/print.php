@@ -124,7 +124,18 @@ function prefs_print_list()
 			'default' => 'H1|H2|H3',
 			'shorthint'=>''
 		),
-	
+		'print_pdf_mpdf_pagetitle' => array(
+			'name' => tra('Show Page title'),
+			'description' => tra('Print wiki page title with pdf'),
+			'type' => 'list',
+			'options' => array(
+				'' => tra('Default'),
+				'y' => tra('Yes'),
+				'n'=>tra('No'),
+				
+			),
+			'default' => '',
+		),
 		'print_pdf_mpdf_header' => array(
 			'name' => tra('PDF header text'),
 			'description' => tra('Possible values, custom text, {PAGENO},{PAGETITLE},{DATE j-m-Y}'),
@@ -207,6 +218,20 @@ function prefs_print_list()
 			'type' => 'password',
 			'default' => '',
 		),
+		'print_pdf_mpdf_watermark' => array(
+			'name' => tra('Watermark text'),
+			'description' => tra('PDF watermark text, if any'),
+			'tags' => array('advanced'),
+			'type' => 'text',
+			'default' => '',
+		),
+		'print_pdf_mpdf_watermark_image' => array(
+			'name' => tra('Watermark Image URL'),
+			'description' => tra('Watermark image will appear under text,enter complete image url'),
+			'tags' => array('advanced'),
+			'type' => 'text',
+			'default' => '',
+		),		
 		'print_wiki_authors' => array(
 			'name' => tra('Print wiki authors'),
 			'description' => tra('Include wiki authors and date in wiki page print outs.'),

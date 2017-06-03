@@ -23,6 +23,7 @@
 			{preference name=print_pdf_mpdf_toclinks}
 			{preference name=print_pdf_mpdf_tocheading}
 			{preference name=print_pdf_mpdf_toclevels}
+			{preference name=print_pdf_mpdf_pagetitle}
 			{preference name=print_pdf_mpdf_header}
 			{preference name=print_pdf_mpdf_footer}
 			{preference name=print_pdf_mpdf_margin_left}
@@ -34,6 +35,10 @@
 			<input style="display:none">{* This seems to be required for the Chromium browser to prevent autofill the password with some password stored in the user's browser *}
 			<input type="password" style="display:none" name="print_pdf_mpdf_password_autocomplete_off">{* This seems to be required for the Chromium browser to prevent autofill password with some password stored in the user's browser *}
 			{preference name=print_pdf_mpdf_password}
+			{preference name=print_pdf_mpdf_watermark}
+			{preference name=print_pdf_mpdf_watermark_image}
+            
+
 		</div>
 	</fieldset>
 
