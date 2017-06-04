@@ -65,26 +65,6 @@ function smarty_function_menu($params, $smarty)
 	$smarty->assign('menu_channels', $channels['data']);
 	$smarty->assign('menu_info', $menu_info);
 
-	if ($params['css'] !== 'n' && $prefs['feature_cssmenus'] == 'y') {
-		static $idCssmenu = 0;
-		if (empty($params['type'])) {
-			$params['type'] = 'vert';
-		}
-		$headerlib->add_jsfile('lib/menubuilder/menu.js');
-		$tpl = 'tiki-user_cssmenu.tpl';
-		$smarty->assign('menu_type', $params['type']);
-		if (! isset($css_id)) {//adding $css_id parameter to customize menu id and prevent automatic id renaming when a menu is removed
-			$smarty->assign('idCssmenu', $idCssmenu++);
-		} else {
-			$smarty->assign('idCssmenu', $css_id);
-		}
-
-		if (! empty($drilldown) && $drilldown == 'y') {
-			$smarty->assign('drilldownmenu', 'y');
-		}
-	} else {
-		$tpl = 'tiki-user_menu.tpl';
-	}
 	if (isset($params['bootstrap']) && $params['bootstrap'] !== 'n') {
 		$structured = array();
 		$activeSection = null;
@@ -115,17 +95,37 @@ function smarty_function_menu($params, $smarty)
 		}
 		$smarty->assign('list', $structured);
 		switch ($params['bootstrap']) {
-		case 'navbar':
-			return $smarty->fetch('bootstrap_menu_navbar.tpl');
-		case  'y':
-			if(isset($params['type']) && $params['type'] == "horiz"){
+			case 'navbar':
 				return $smarty->fetch('bootstrap_menu_navbar.tpl');
-			}else{
+			case 'y':
+				if (isset($params['type']) && $params['type'] == "horiz"){
+					return $smarty->fetch('bootstrap_menu_navbar.tpl');
+				} else {
+					return $smarty->fetch('bootstrap_menu.tpl');
+				}
+			default:
 				return $smarty->fetch('bootstrap_menu.tpl');
-			}
-		default:
-			return $smarty->fetch('bootstrap_menu.tpl');
 		}
+	}
+	if ($params['css'] !== 'n' && $prefs['feature_cssmenus'] == 'y') {
+		static $idCssmenu = 0;
+		if (empty($params['type'])) {
+			$params['type'] = 'vert';
+		}
+		$headerlib->add_jsfile('lib/menubuilder/menu.js');
+		$tpl = 'tiki-user_cssmenu.tpl';
+		$smarty->assign('menu_type', $params['type']);
+		if (! isset($css_id)) {//adding $css_id parameter to customize menu id and prevent automatic id renaming when a menu is removed
+			$smarty->assign('idCssmenu', $idCssmenu++);
+		} else {
+			$smarty->assign('idCssmenu', $css_id);
+		}
+
+		if (! empty($drilldown) && $drilldown == 'y') {
+			$smarty->assign('drilldownmenu', 'y');
+		}
+	} else {
+		$tpl = 'tiki-user_menu.tpl';
 	}
 
 	$data = $smarty->fetch($tpl);
