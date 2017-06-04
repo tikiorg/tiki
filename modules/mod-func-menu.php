@@ -37,11 +37,19 @@ function module_menu_info()
 				'description' => tra('Direction for menu: horiz or vert (default vert)'),
 				'filter' => 'text',
 			),
+
+			// FIXME: There are 3 types of menus: Bootstrap, CSS or classic (JavaScript). There should be a single option to select between the 3, or 1 should be removed (CSS).
+			'css' => array(
+				'name' => tra('CSS/Superfish'),
+				'description' => tra('Use CSS Superfish menu (if bootstrap = n). y|n (default y)'),
+				'filter' => 'alpha',
+			),
 			'bootstrap' => array(
 				'name' => tra('Use Bootstrap menus'),
 				'description' => tra('').' ( y / n )',
 				'default' => 'y',
 			),
+
 			'navbar_toggle' => array(
 				'name' => tra('Show Navbar Toggle Button'),
 				'description' => tra('Used in Bootstrap navbar menus when viewport is too narrow for menu items').' ( y / n )',
@@ -56,11 +64,6 @@ function module_menu_info()
 				'name' => tra('CSS class for the menu nav element'),
 				'description' => tra(''),
 				'default' => 'navbar navbar-default',
-			),
-			'css' => array(
-				'name' => tra('CSS/Superfish'),
-				'description' => tra('Use CSS Superfish menu (if bootstrap = n). y|n (default y)'),
-				'filter' => 'alpha',
 			),
 			'menu_id' => array(
 				'name' => tra('DOM #id'),
