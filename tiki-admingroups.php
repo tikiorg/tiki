@@ -39,7 +39,6 @@ $inputConfiguration = [
 ];
 
 require_once ('tiki-setup.php');
-$check = $access->checkOrigin();
 $access->check_permission('tiki_p_admin');
 
 $auto_query_args = array('group');
@@ -75,12 +74,12 @@ if (isset($prefs['userTracker']) and $prefs['userTracker'] == 'y') {
 }
 $smarty->assign('trackers', $trackers);
 
-if ($prefs['feature_user_watches'] == 'y' && $check) {
-	if (!empty($user)) {
+if ($prefs['feature_user_watches'] == 'y') {
+	if (!empty($user) && $access->checkOrigin()) {
 		$tikilib = TikiLib::lib('tiki');
-		if ( isset($_REQUEST['watch'] ) ) {
+		if ( isset($_REQUEST['watch'])) {
 			$tikilib->add_user_watch($user, 'user_joins_group', $_REQUEST['watch'], 'group');
-		} else if ( isset($_REQUEST['unwatch'] ) ) {
+		} else if ( isset($_REQUEST['unwatch'])) {
 			$tikilib->remove_user_watch($user, 'user_joins_group', $_REQUEST['unwatch'], 'group');
 		}
 	}
@@ -93,7 +92,7 @@ if (isset($_REQUEST["home"])) $ag_home = $_REQUEST["home"];
 if (!empty($_REQUEST["defcat"])) $ag_defcat = $_REQUEST["defcat"];
 if (isset($_REQUEST["theme"])) $ag_theme = $_REQUEST["theme"];
 
-if (isset($_REQUEST['clean']) && $check) {
+if (isset($_REQUEST['clean']) && $access->checkOrigin()) {
 	$cachelib = TikiLib::lib('cache');
 	check_ticket('admin-groups');
 	$cachelib->invalidate('grouplist');
@@ -291,7 +290,7 @@ if (!empty($_REQUEST["group"])) {
 if (isset($_REQUEST['add'])) {
 	$cookietab = "2";
 }
-if (!empty($_REQUEST['group']) && isset($_REQUEST['export']) && $check) {
+if (!empty($_REQUEST['group']) && isset($_REQUEST['export'])) {
 	$users = $userlib->get_users(0, -1, 'login_asc', '', '', false, $_REQUEST['group']);
 	$smarty->assign_by_ref('users', $users['data']);
 	$listfields = array();
@@ -319,7 +318,7 @@ if (!empty($_REQUEST['group']) && isset($_REQUEST['export']) && $check) {
 	echo $data;
 	die;
 }
-if (!empty($_REQUEST['group']) && isset($_REQUEST['import']) && $check) {
+if (!empty($_REQUEST['group']) && isset($_REQUEST['import']) && $access->checkOrigin()) {
 	$fname = $_FILES['csvlist']['tmp_name'];
 	$fhandle = fopen($fname, 'r');
 	$fields = fgetcsv($fhandle, 1000);

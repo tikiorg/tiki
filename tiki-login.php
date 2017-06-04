@@ -22,7 +22,6 @@ if (empty($_POST['user'])) {
 	unset($_POST['user']);	// $_POST['user'] is not allowed to be empty if set in tiki-setup.php
 }
 require_once ('tiki-setup.php');
-$check = $access->checkOrigin();
 
 $login_url_params = '';
 
@@ -71,7 +70,7 @@ if (!isset($_SESSION['loginfrom']) && isset($_SERVER['HTTP_REFERER']) && !preg_m
 		else $_SESSION['loginfrom'] = $base_url . $_SESSION['loginfrom'];
 	}
 }
-if (isset($_REQUEST['su']) && $check) {
+if (isset($_REQUEST['su']) && $access->checkOrigin()) {
 	$loginlib = TikiLib::lib('login');
 
 	if ($loginlib->isSwitched() && $_REQUEST['su'] == 'revert') {
@@ -111,8 +110,8 @@ if ($prefs['feature_intertiki'] == 'y') {
 		$_REQUEST['intertiki'] = $intertiki_domain;
 	}
 } else unset($_REQUEST['intertiki']);
-// Go through the intertiki process
-if ($check) {
+if ($access->checkOrigin()) {
+	// Go through the intertiki process
 	if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_keys($prefs['interlist']))) {
 		$rpcauth = $userlib->intervalidate($prefs['interlist'][$_REQUEST['intertiki']], $requestedUser, $pass, !empty($prefs['feature_intertiki_mymaster']) ? true : false);
 		if (!$rpcauth) {
@@ -516,7 +515,7 @@ $url.= ((strpos($url, '?') === false) ? '?' : '&') . SID;
 // Check if a wizard should be run.
 // If a wizard is run, it will return to the $url location when it has completed. Thus no code after $wizardlib->onLogin will be executed
 // The user must be actually logged in before onLogin is called. If $isdue is set, then: "Note that the user is not logged in he's just validated to change his password"
-if (!$isdue) {
+if (!$isdue && $access->checkOrigin()) {
 
 	if ($prefs['feature_user_encryption'] === 'y') {
 		// Notify CryptLib about the login
