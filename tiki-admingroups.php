@@ -75,11 +75,11 @@ if (isset($prefs['userTracker']) and $prefs['userTracker'] == 'y') {
 $smarty->assign('trackers', $trackers);
 
 if ($prefs['feature_user_watches'] == 'y') {
-	if (!empty($user) && $access->checkOrigin()) {
+	if (!empty($user)) {
 		$tikilib = TikiLib::lib('tiki');
-		if ( isset($_REQUEST['watch'])) {
+		if ( isset($_REQUEST['watch']) && $access->checkOrigin()) {
 			$tikilib->add_user_watch($user, 'user_joins_group', $_REQUEST['watch'], 'group');
-		} else if ( isset($_REQUEST['unwatch'])) {
+		} else if ( isset($_REQUEST['unwatch']) && $access->checkOrigin()) {
 			$tikilib->remove_user_watch($user, 'user_joins_group', $_REQUEST['unwatch'], 'group');
 		}
 	}
