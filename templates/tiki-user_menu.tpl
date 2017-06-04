@@ -55,8 +55,17 @@
 							</span>
 						{/if}
 					{else}
-						{* this anchor tag needs to be in a single long line to avoid stray underlining upon hover *}
-						<a class='separator' href="#" onclick="icontoggle('menu{$cname}', this); return false;" title="{tr}Toggle options{/tr}" id="sep{$cname}">{if empty($menu_info.icon)}<span class="toggle-open" style="display:{$open}">{icon name="$expanded" alt='Toggle'}</span><span class="toggle-closed" style="display:{$closed}">{icon name="$collapsed" alt='Toggle'}</span>{else}<span class="toggle-open" style="display:{$open}"><img src="{$menu_info.oicon|escape}" alt="{tr}Toggle{/tr}"></span><span class="toggle-closed" style="display:{$closed}"><img src="{$menu_info.icon|escape}" alt="{tr}Toggle{/tr}"></span>{/if}</a>
+						{strip}{* this anchor tag needs to be in a single long line to avoid stray underlining upon hover *}
+						<a class='separator' href="#" onclick="icontoggle('menu{$cname}', this); return false;" title="{tr}Toggle options{/tr}" id="sep{$cname}">
+							{if empty($menu_info.icon)}
+								<span class="toggle-open" style="display:{$open}">{icon name="$expanded" alt='Toggle'}</span>
+								<span class="toggle-closed" style="display:{$closed}">{icon name="$collapsed" alt='Toggle'}</span>
+							{else}
+								<span class="toggle-open" style="display:{$open}"><img src="{$menu_info.oicon|escape}" alt="{tr}Toggle{/tr}"></span>
+								<span class="toggle-closed" style="display:{$closed}"><img src="{$menu_info.icon|escape}" alt="{tr}Toggle{/tr}"></span>
+							{/if}
+						</a>
+						{/strip}
 					{/if}
 				{else}
 					{if empty($menu_info.icon)}
