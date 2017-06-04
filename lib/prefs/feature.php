@@ -1966,7 +1966,6 @@ function prefs_feature_list($partial = false)
 			'description' => tra('Provides an interactive way to sort and filter data in tables produced with Plugin FancyTable and Plugin TrackerList, as well as administrative tables.'),
 			'type' => 'flag',
 			'help' => 'JQuery#TableSorter',
-			'warning' => tra('This feature can cause problems with JS minify on some systems.'),
 			'default' => 'n',	// sortable tables ([will] override existing) // What does the last comment mean (override existing what)? Why is this disabled by default? Chealer 2017-04-27
 			'keywords' => 'tablesorter',
 		),
