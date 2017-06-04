@@ -39,6 +39,7 @@ function smarty_function_menu($params, $smarty)
 	extract($params, EXTR_SKIP);
 
 	if ($prefs['javascript_enabled'] !== 'y') {
+		// cssmenu actually uses JavaScript. cssmenu should surely be removed. 2017-06-04
 		$params['css'] = 'y';
 		$params['bootstrap'] = 'n';
 		$params['type'] = 'horiz';
