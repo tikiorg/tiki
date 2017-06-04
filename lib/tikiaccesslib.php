@@ -423,10 +423,14 @@ class TikiAccessLib extends TikiLib
 			$origin = $_SERVER['HTTP_REFERER'];
 		}
 
-		$base = parse_url($base_url, PHP_URL_HOST);
-		$origin = parse_url($origin, PHP_URL_HOST);
+		$base = parse_url($base_url);
+		$baseHost = isset($base['host']) ? $base['host'] : '';
+		$basePort = isset($base['port']) ? ':' . $base['port'] : '';
+		$origin = parse_url($origin);
+		$originHost = isset($origin['host']) ? $origin['host'] : '';
+		$originPort = isset($origin['port']) ? ':' . $origin['port'] : '';
 
-		$this->check = $base === $origin;
+		$this->check = $baseHost . $basePort === $originHost . $originPort;
 
 		return $this->check;
 	}
@@ -443,6 +447,8 @@ class TikiAccessLib extends TikiLib
 	{
 		$check = $this->originCheck();
 		if (!$check) {
+			TikiLib::lib('logs')->add_log('CSRF',
+				tr('Request to %0 failed CSRF check.', $_SERVER['SCRIPT_NAME']));
 			$msg = tra('Potential cross-site request forgery (CSRF) detected. Operation blocked.');
 			switch ($error) {
 				case 'none':
@@ -455,8 +461,6 @@ class TikiAccessLib extends TikiLib
 					Feedback::error($msg, 'session');
 					break;
 			}
-			TikiLib::lib('logs')->add_log('CSRF',
-				tr('Request to %0 failed CSRF check.', $_SERVER['SCRIPT_NAME']));
 		}
 		return $check;
 	}
