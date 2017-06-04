@@ -296,7 +296,7 @@ class TikiAccessLib extends TikiLib
 	 * function is to set $access->checkAuthenticity() at the beginning of a file. Then only run the relevant form
 	 * actions based on the $_REQUEST variable if $access->ticketMatch() returns true.
 	 *
-	 * @param string $error
+	 * @param string $error			Used in csrfError() method
 	 * @throws Services_Exception
 	 */
 	function checkAuthenticity($error = 'session')
@@ -341,7 +341,7 @@ class TikiAccessLib extends TikiLib
 					return $ticket;
 				} else {
 					//ticket is expired
-					$this->userMsgMsg = ' ' . tra('Reloading the page may help.');
+					$this->userMsg = ' ' . tra('Reloading the page may help.');
 					$this->logMsg = ' ' . tra('Ticket matches but is expired.');
 					$this->check = false;
 					return false;
@@ -409,7 +409,7 @@ class TikiAccessLib extends TikiLib
 	 * Check http origin/referer and provide error feedback if it doesn't match the site domain
 	 * Differs from checkAuthenticity() in that only the origin/referer is checked, not a ticket
 	 *
-	 * @param string $error
+	 * @param string $error			Used in csrfError() method
 	 * @return bool
 	 * @throws Services_Exception
 	 */
@@ -423,7 +423,7 @@ class TikiAccessLib extends TikiLib
 						'HTTP_ORIGIN', 'HTTP_REFERER');
 			} else {
 				$this->userMsg .= ' ' . tra('Request needs to originate from this site.');
-				$this->logMsg .= ' ' . tr('The %0 url (%1) does not match this server (%2).',
+				$this->logMsg .= ' ' . tr('The %0 host (%1) does not match this server (%2).',
 						$this->originSource, $this->origin, $this->base);
 			}
 			$this->csrfError($error);
@@ -434,7 +434,8 @@ class TikiAccessLib extends TikiLib
 	/**
 	 * Generate tiki log entry and user feedback for CSRF errors
 	 *
-	 * @param string $error
+	 * @param string $error			Error type: none, services to throw Services_Exception, page to display error page,
+	 * 									session to use Feedback class
 	 * @throws Services_Exception
 	 */
 	private function csrfError($error = 'session')
