@@ -307,7 +307,7 @@ class TikiAccessLib extends TikiLib
 	 * function is to set $access->checkAuthenticity() at the beginning of a file. Then only run the relevant form
 	 * actions based on the $_REQUEST variable if $access->ticketMatch() returns true.
 	 *
-	 * @param string $error
+	 * @param string $error			Used in csrfError() method
 	 * @throws Services_Exception
 	 */
 	function checkAuthenticity($error = 'session')
@@ -320,7 +320,7 @@ class TikiAccessLib extends TikiLib
 			if (!empty($ticket) && !empty($_SESSION['tickets'][$ticket])) {
 				$time = $_SESSION['tickets'][$ticket];
 				//successful match
-				if ($time < time() && $time > (time()-(2))) {
+				if ($time < time() && $time > (time()-(60 * 15))) {
 					TikiLib::lib('smarty')->assign('ticket', $ticket);
 					$this->check = true;
 				//match fails
@@ -392,7 +392,7 @@ class TikiAccessLib extends TikiLib
 	 * Check http origin/referer and provide error feedback if it doesn't match the site domain
 	 * Differs from checkAuthenticity() in that only the origin/referer is checked, not a ticket
 	 *
-	 * @param string $error
+	 * @param string $error			Used in csrfError() method
 	 * @return bool
 	 * @throws Services_Exception
 	 */
@@ -406,7 +406,7 @@ class TikiAccessLib extends TikiLib
 						'HTTP_ORIGIN', 'HTTP_REFERER');
 			} else {
 				$this->userMsg .= ' ' . tra('Request needs to originate from this site.');
-				$this->logMsg .= ' ' . tr('The %0 url (%1) does not match this server (%2).',
+				$this->logMsg .= ' ' . tr('The %0 host (%1) does not match this server (%2).',
 						$this->originSource, $this->origin, $this->base);
 			}
 			$this->csrfError($error);
@@ -416,7 +416,8 @@ class TikiAccessLib extends TikiLib
 
 	/**
 	 * Generate tiki log entry and user feedback for CSRF errors
-	 * @param string $error
+	 * @param string $error			Error type: none, services to throw Services_Exception, page to display error page,
+	 * 									session to use Feedback class
 	 * @throws Services_Exception
 	 */
 	private function csrfError($error = 'session')
