@@ -15,9 +15,9 @@
  * Type:     function<br>
  * Name:     popup<br>
  * Purpose:  make text pop up in windows via ClueTip
- * @link     not very relevant anymore http://smarty.php.net/manual/en/language.function.popup.php {popup}
- *           (Smarty online manual)
- * @author   Jonny Bradley, replacing Smarty original (by Monte Ohrt <monte at ohrt dot com>)
+ * @link     not very relevant anymore http://www.smarty.net/docsv2/fr/language.function.popup.tpl {popup}
+ *           (Smarty 2 online manual)
+ * @author   Jonny Bradley, replacing Smarty 2's original (by Monte Ohrt <monte at ohrt dot com>)
  * @param    array
  * @param    Smarty
  * @return   string now formatted to use popover natively
