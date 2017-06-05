@@ -3652,6 +3652,9 @@ body.fullscreen.tiki.navbar-padding {
     display: none;
   }
 }
+@-ms-viewport {
+  width: auto !important;
+}
 /* becomes height using padding (so it's divided by 2) */
 /* url(icons/loading.gif); */
 /* Filter widget transition */
