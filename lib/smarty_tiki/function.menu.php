@@ -28,7 +28,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function smarty_function_menu($params, $smarty)
 {
 	global $prefs;
-	$headerlib = TikiLib::lib('header');
 
 	$default = array('css' => 'y');
 	if (isset($params['params'])) {
@@ -37,13 +36,6 @@ function smarty_function_menu($params, $smarty)
 	}
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
-
-	if ($prefs['javascript_enabled'] !== 'y') {
-		// cssmenu actually uses JavaScript. cssmenu should surely be removed. 2017-06-04
-		$params['css'] = 'y';
-		$params['bootstrap'] = 'n';
-		$params['type'] = 'horiz';
-	}
 
 	if (empty($link_on_section) || $link_on_section == 'y') {
 		$smarty->assign('link_on_section', 'y');
@@ -109,21 +101,23 @@ function smarty_function_menu($params, $smarty)
 	}
 	if ($params['css'] !== 'n' && $prefs['feature_cssmenus'] == 'y') {
 		static $idCssmenu = 0;
-		if (empty($params['type'])) {
-			$params['type'] = 'vert';
-		}
-		$headerlib->add_jsfile('lib/menubuilder/menu.js');
-		$tpl = 'tiki-user_cssmenu.tpl';
-		$smarty->assign('menu_type', $params['type']);
 		if (! isset($css_id)) {//adding $css_id parameter to customize menu id and prevent automatic id renaming when a menu is removed
 			$smarty->assign('idCssmenu', $idCssmenu++);
 		} else {
 			$smarty->assign('idCssmenu', $css_id);
 		}
 
+		if (empty($params['type'])) {
+			$params['type'] = 'vert';
+		}
+		$smarty->assign('menu_type', $params['type']);
+
 		if (! empty($drilldown) && $drilldown == 'y') {
 			$smarty->assign('drilldownmenu', 'y');
 		}
+
+		TikiLib::lib('header')->add_jsfile('lib/menubuilder/menu.js');
+		$tpl = 'tiki-user_cssmenu.tpl';
 	} else {
 		$tpl = 'tiki-user_menu.tpl';
 	}
