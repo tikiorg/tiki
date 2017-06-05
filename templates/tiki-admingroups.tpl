@@ -159,7 +159,7 @@
 	{/tab}
 
 	{if $groupname}
-		{assign var=tabaddeditgroup_admgrp value="{tr}Edit group{/tr}"}
+		{assign var=tabaddeditgroup_admgrp value="{tr}Edit{/tr}"}
 		{$gname = "<i>{$groupname|escape}</i>"}
 	{else}
 		{assign var=tabaddeditgroup_admgrp value="{tr}Create group{/tr}"}
@@ -516,13 +516,13 @@
 
 
 	{if $groupname}
-		{tab name="{tr _0="<i>{$groupname|escape}</i>"}Group %0 members{/tr}"}
+		{tab name="{tr _0="<i>{$groupname|escape}</i>"}%0 members{/tr}"}
 		{* ----------------------- tab with memberlist --------------------------------------- *}
 		{if $membersCount > 0}
 		<div class="clearfix">
 		{if !$ts.ajax}
 				<div class="form-group">
-					<div class="col-sm-5">
+					<div class="col-sm-7">
 						<h2>{tr}Members{/tr} <span class="badge">{$membersCount}</span></h2>
 						<form id="checkform2" method="post">
 							<input type="hidden" name="group" value="{$group|escape}">
@@ -587,7 +587,7 @@
 										<option value="manage_groups">{tr}Unassign{/tr}</option>
 									</select>
 									<span class="input-group-btn">
-										<input type="submit" class="btn btn-default btn-sm confirm-submit" form="checkform2" formaction="{bootstrap_modal controller=user groupremove="$groupname" anchor='#contenttabs_admingroups-3'} "value="{tr}OK{/tr}">
+										<input type="submit" class="btn btn-default confirm-submit" form="checkform2" formaction="{bootstrap_modal controller=user groupremove="$groupname" anchor='#contenttabs_admingroups-3'} "value="{tr}OK{/tr}">
 									</span>
 								</div>
 							{/if}
@@ -599,25 +599,25 @@
 				{/if}
 		{/if}
 			{else}
-				<div class="col-sm-5">
+				<div class="col-sm-7">
 					<h2>{tr}Members{/tr} <span class="badge">{$membersCount}</span></h2>
 					<em>{tr}No members{/tr}</em>
 				</div>
 			{/if}
 			<div class="form-group">
-				<div class="col-sm-7">
+				<div class="col-sm-5" style="margin-top: -10px">
 					<form id="addorban" method="post" action="tiki-admingroups.php">
 						<h2>{tr}Add or ban users{/tr}</h2>
-						<div class="col-sm-6">
+						<div class="col-sm-8" style="display:block">
 							<select name="user[]" multiple="multiple" class="form-control">
 								{foreach from=$userslist item=iuser}
 									<option>{$iuser|escape}</option>
 								{/foreach}
 							</select>
 						</div>
-						<div class="col-sm-6 btn-group">
-							<input type="submit" class="btn btn-default btn-sm confirm-submit" form="addorban" formaction="{bootstrap_modal controller=group action=add_user}" value="{tr}Add to group{/tr}">
-							<input type="submit" class="btn btn-danger btn-sm confirm-submit" form="addorban" formaction="{bootstrap_modal controller=group action=ban_user}" value="{tr}Ban from group{/tr}">
+						<div class="col-sm-8">
+							<button type="submit" class="btn btn-link confirm-submit tips" form="addorban" formaction="{bootstrap_modal controller=group action=add_user}" title=":{tr}Add to group{/tr}">{icon name=add size=2}</button>
+							<button type="submit" class="btn btn-link confirm-submit tips" form="addorban" formaction="{bootstrap_modal controller=group action=ban_user}" title=":{tr}Ban from group{/tr}">{icon name=ban iclass="alert-danger" size=2}</button>
 						</div>
 						<input type="hidden" name="group" value="{$groupname|escape}">
 						<input type="hidden" name="anchor" value="#contenttabs_admingroups-3">
@@ -626,7 +626,7 @@
 			</div>
 		</div>
 		{/tab}
-		{tab name="{tr _0="<i>{$groupname|escape}</i>"}Users banned from group %0{/tr}"}
+		{tab name="{tr _0="<i>{$groupname|escape}</i>"}Users banned from %0{/tr}"}
 			{* ----------------------- tab with users banned from group --------------------------------------- *}
 			<h2>{tr}Banned members{/tr} <span class="badge">{$bannedCount}</span></h2>
 			{if $bannedlist|count > 0}
@@ -680,7 +680,7 @@
 	{/if}
 
 	{if $groupname}
-		{tab name="{tr _0="<i>{$groupname|escape}</i>"}Group %0 import/export{/tr}"}
+		{tab name="{tr _0="<i>{$groupname|escape}</i>"}%0 import/export{/tr}"}
 		{if !$ts.ajax}
 			{* ----------------------- tab with import/export --------------------------------------- *}
 			<form method="post" action="tiki-admingroups.php" enctype="multipart/form-data" class="form-horizontal">
