@@ -35,6 +35,7 @@
  */
 function smarty_function_popup($params, $smarty)
 {
+	// Defaults
 	$options = array(
 		'data-toggle' => 'popover',
 		'data-container' => 'body',
