@@ -751,7 +751,7 @@ class MenuLib extends TikiLib
 		return $sorted_channels;
 	}
 
-	function clean_menu_html($data)
+	static function clean_menu_html($data)
 	{
 		$data = preg_replace('/<ul>\s*<\/ul>/', '', $data);
 		$data = preg_replace('/<ol>\s*<\/ol>/', '', $data);

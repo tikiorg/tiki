@@ -123,8 +123,7 @@ function smarty_function_menu($params, $smarty)
 	}
 
 	$data = $smarty->fetch($tpl);
-	$menulib = TikiLib::lib('menu');
-	return $menulib->clean_menu_html($data);
+	return MenuLib::clean_menu_html($data);
 }
 
 function compare_menu_options($a, $b)
