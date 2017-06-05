@@ -116,7 +116,6 @@ function smarty_function_menu($params, $smarty)
 			$smarty->assign('drilldownmenu', 'y');
 		}
 
-		TikiLib::lib('header')->add_jsfile('lib/menubuilder/menu.js');
 		$tpl = 'tiki-user_cssmenu.tpl';
 	} else {
 		$tpl = 'tiki-user_menu.tpl';
