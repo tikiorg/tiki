@@ -578,13 +578,17 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 		),
+
+		// Why would this be disabled? FIXME: Disabling is broken (CSS menus display as classic menus). Chealer 2017-06-04
+		// Enhanced by feature_jquery_superfish. Chealer 2017-06-04
 		'feature_cssmenus' => array(
 			'name' => tra('CSS menus'),
-			'description' => tra('CSS (Superfish) Menus.'),
+			'description' => tra('CSS (Superfish) Menus'),
 			'help' => 'Menus',
 			'type' => 'flag',
 			'default' => 'y',
 		),
+
 		'feature_shadowbox' => array(
 			'name' => tra('Shadowbox / ColorBox'),
 			'description' => tra('Display images in a modal popup box'),
@@ -1892,13 +1896,16 @@ function prefs_feature_list($partial = false)
 			),
 			'default' => 'y',	// autocomplete on pages in QuickEdit (more coming soon)
 		),
+
+		// Why would this be disabled? See feature_cssmenus. Chealer 2017-06-04
 		'feature_jquery_superfish' => array(
-			'name' => tra('Superfish'),
-			'description' => tra('Adds animation effects to CSS "Suckerfish" menus.'),
+			'name' => tra('Superfish menu plugin'),
+			'description' => tra('Enhances CSS Superfish menus, notably adding animation effects'),
 			'type' => 'flag',
 			'help' => 'JQuery#Superfish',
 			'default' => 'y',		// Effects on CSS (Suckerfish) menus
 		),
+
 		'feature_jquery_reflection' => array(
 			'name' => tra('Reflection'),
 			'description' => tra('Creates a reflection under an image. Used in Plugin Img with the parameter "class=reflect"'),
