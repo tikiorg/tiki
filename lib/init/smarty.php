@@ -56,9 +56,6 @@ class Tiki_Security_Policy extends Smarty_Security
 
 		parent::__construct($smarty);
 
-		$functions = array();
-		$modifiers = array();
-		$dirs = array();
 		
 		//With phpunit and command line these don't exist yet for some reason
 		if (isset($tikilib) && method_exists($tikilib, "get_preference")) {
@@ -76,12 +73,14 @@ class Tiki_Security_Policy extends Smarty_Security
 			foreach ($cdn_uri as $uri) {
 				$this->trusted_uri[] = '#' . preg_quote($uri) . '$#';
 			}
+		} else {
+			$functions = array();
+			$modifiers = array();
+			$dirs = array();
 		}
 
-		$functions = (isset($functions) ? $functions : array());
-		$modifiers = (isset($modifiers) ? $modifiers : array());
-
-		$this->php_modifiers = array_merge(array( 'nl2br','escape', 'count', 'addslashes', 'ucfirst', 'ucwords', 'urlencode', 'md5', 'implode', 'explode', 'is_array', 'htmlentities', 'var_dump', 'strip_tags', 'json_encode', 'stristr', 'trim', 'array_reverse', 'tra', 'strpos', 'preg_split'), $modifiers);
+		// Add defaults
+		$this->php_modifiers = array_merge(array('nl2br', 'escape', 'count', 'addslashes', 'ucfirst', 'ucwords', 'urlencode', 'md5', 'implode', 'explode', 'is_array', 'htmlentities', 'var_dump', 'strip_tags', 'json_encode', 'stristr', 'trim', 'array_reverse', 'tra', 'strpos', 'preg_split'), $modifiers);
 		$this->php_functions = array_merge(array('isset', 'empty', 'count', 'sizeof', 'in_array', 'is_array', 'time', 'nl2br', 'tra', 'strlen', 'strstr', 'strtolower', 'basename', 'ereg', 'array_key_exists', 'preg_match', 'preg_match_all', 'json_encode', 'stristr', 'is_numeric', 'array', 'zone_is_empty', 'min', 'max' ), $functions);
 		$this->secure_dir = array_merge($this->secure_dir, $dirs);
 	}
