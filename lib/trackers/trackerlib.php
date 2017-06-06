@@ -1904,7 +1904,11 @@ class TrackerLib extends TikiLib
 		$permNames = array();
 		foreach ($fil as $fieldId => $value) {
 			$field = $tracker_definition->getField($fieldId);
-			$permNames[$fieldId] = $field['permName'];
+			if ($field['type'] !== 'W') {    // not for webservices
+				$permNames[$fieldId] = $field['permName'];
+			} else {
+				unset($fil[$fieldId], $old_values[$fieldId]);	// webservice values are just a cache and not useful for diffs etc
+			}
 		}
 
 		if (count($final)) {
@@ -1929,22 +1933,36 @@ class TrackerLib extends TikiLib
 			$old_values_by_permname[$permNames[$fieldId]] = $value;
 		}
 
+		$arguments = [
+			'type' => 'trackeritem',
+			'object' => $currentItemId,
+			'user' => $GLOBALS['user'],
+			'version' => $version,
+			'trackerId' => $trackerId,
+			'supplied' => $suppliedFields,
+			'values' => $fil,
+			'old_values' => $old_values,
+			'values_by_permname' => $values_by_permname,
+			'old_values_by_permname' => $old_values_by_permname,
+			'bulk_import' => $bulk_import,
+			'aggregate' => sha1("trackeritem/$currentItemId"),
+		];
+
+		$encoded = json_encode($arguments);
+
+		// each field can be 64KB but \ActivityLib::recordEvent tries to store all these args in a BLOB
+		if (strlen($encoded) >= 65535) {
+			unset($arguments['values'], $arguments['old_values']);
+			$encoded = json_encode($arguments);
+		}
+
+		if (strlen($encoded) >= 65535) {
+			unset($arguments['values_by_permname'], $arguments['old_values_by_permname']);	// fields are duplicated sadly
+		}
+
 		TikiLib::events()->trigger(
 			$final_event,
-			array(
-				'type' => 'trackeritem',
-				'object' => $currentItemId,
-				'user' => $GLOBALS['user'],
-				'version' => $version,
-				'trackerId' => $trackerId,
-				'supplied' => $suppliedFields,
-				'values' => $fil,
-				'old_values' => $old_values,
-				'values_by_permname' => $values_by_permname,
-				'old_values_by_permname' => $old_values_by_permname,
-				'bulk_import' => $bulk_import,
-				'aggregate' => sha1("trackeritem/$currentItemId"),
-			)
+			$arguments
 		);
 
 		$transaction->commit();
