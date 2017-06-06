@@ -33,7 +33,6 @@
  *  - icon		    Override default icons. See function.icon.php for more info
  *  - close		    "y|n" default=y (close button)
  *  - width		    e.g. "50%", "200px" default=""
- *  - version       ??
  *  - store_cookie  "y|n" default y, set to n to not store closed state in a cookie
  */
 
@@ -121,7 +120,6 @@ function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 	$smarty->assign('remarksbox_cookie', $params['store_cookie']);
 	$smarty->assign('remarksbox_hidden', $hidden);
 	$smarty->assign('remarksbox_id', $params['id']);
-	$smarty->assign('remarksbox_version', $params['version']);
 	$smarty->assign('remarksbox_title', $params['title']);
 	$smarty->assign('remarksbox_type', $params['type']);
 	$smarty->assign('remarksbox_icon', $icon);
