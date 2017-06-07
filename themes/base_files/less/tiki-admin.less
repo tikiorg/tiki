@@ -216,6 +216,30 @@ table.objectperms > tbody .checkBoxLabel {
 	z-index: 2;
 }
 
+
+// Target Firefox to fix checkbox label text not displaying
+@-moz-document url-prefix() {
+	table.objectperms .checkBoxHeader > div,
+	table.objectperms > tbody .checkBoxLabel {
+		width: auto;
+	}
+}
+
+// Target MS Edge to fix checkbox label text not displaying
+@supports (-ms-ime-align:auto) {
+	table.objectperms .checkBoxHeader > div,
+	table.objectperms > tbody .checkBoxLabel {
+		width: auto;
+	}
+}
+
+// Target MS IE to fix checkbox label text not displaying
+@media all and (-ms-high-contrast:none) {
+	table.objectperms .checkBoxHeader > div,
+	table.objectperms > tbody .checkBoxLabel { width: auto; } /* IE10 */
+	*::-ms-backdrop, table.objectperms .checkBoxHeader > div { width: auto; } /* IE11 */
+}
+
 table.objectperms .checkBoxHeader > div,
 table.objectperms > tbody .checkBoxLabel {
 line-height: 2;
