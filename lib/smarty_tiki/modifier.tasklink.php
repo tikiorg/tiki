@@ -46,25 +46,24 @@ function smarty_modifier_tasklink($taskId, $class_name="link", $offset="0", $sor
 		// FIXME: Truncated Tiki syntax cannot be parsed.
 		$description = TikiLib::lib('parser')->parse_data($description) . $append;
 
-		$fillin = tra("Task") . ' ' . tra("from") . ' <b>' . $info['creator'] . '</b> ' . tra("for") .
+		$tooltipContent = tra("Task") . ' ' . tra("from") . ' <b>' . $info['creator'] . '</b> ' . tra("for") .
 			' <b>' . $info['user'] . '</b>.<br />' . tra("Priority") . ': <b>' . $info['priority'] . '</b>, (<b>' .
 					$info['percentage'] . '%</b>) ' . tra('done') . '.<br />';
 
 		if ($info['start'] != 0 ) {
-			$fillin .= tra("Start date:") . " " . $tikilib->date_format("%H:%M -- %d. %e. %Y", $info['start']) . "<br />";
+			$tooltipContent .= tra("Start date:") . " " . $tikilib->date_format("%H:%M -- %d. %e. %Y", $info['start']) . "<br />";
 		} else {
-			$fillin .= tra("Start date:") . " -<br />";
+			$tooltipContent .= tra("Start date:") . " -<br />";
 		}
 
 		if ($info['end']) {
-			$fillin .= tra("End date:") . " " . $tikilib->date_format("%H:%M -- %d. %e. %Y", $info['end']) . "<br />";
+			$tooltipContent .= tra("End date:") . " " . $tikilib->date_format("%H:%M -- %d. %e. %Y", $info['end']) . "<br />";
 		} else {
-			$fillin .= tra("End date:") . " -<br />";
+			$tooltipContent .= tra("End date:") . " -<br />";
 		}
 
-		$fillin .= "<hr />" . $description;
+		$tooltipContent .= "<hr />" . $description;
 
-		$tooltipContent = '<div>' . $fillin . '</div>';
 		$smarty->loadPlugin('smarty_function_popup');
 		$popupAttributes = smarty_function_popup(array('text' => $tooltipContent, 'fullhtml' => true), $smarty);
 	} else {
