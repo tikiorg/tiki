@@ -511,7 +511,31 @@ exists()
 
 composer_core()
 {
-	if [ ! -f temp/composer.phar ];
+	if [ -f temp/composer.phar ];
+	then
+		# todo : if exists php;
+		if [ ${LOGCOMPOSERFLAG} = "0" ] ; then
+			"${PHPCLI}" temp/composer.phar self-update --working-dir vendor_bundled "$OPT_QUIET"
+			RETURNVAL=$?
+		fi
+		if [ ${LOGCOMPOSERFLAG} = "1" ] ; then
+			"${PHPCLI}" temp/composer.phar self-update --working-dir vendor_bundled "$OPT_QUIET" > ${TIKI_COMPOSER_SELF_UPDATE_LOG}
+			RETURNVAL=$?
+		fi
+		if [ ${RETURNVAL} -eq 0 ];
+		then
+			NEED_NEW_COMPOSER="0"
+		else
+			echo "Composer self-update failed. Reinstalling composer"
+			NEED_NEW_COMPOSER="1"
+		fi
+		# remove previous container.php in case of incompatibility
+		rm -f temp/cache/container.php
+	else
+		NEED_NEW_COMPOSER="1"
+	fi
+
+	if [ ${NEED_NEW_COMPOSER} = "1" ];
 	then
 		if exists curl;
 		then
@@ -522,17 +546,6 @@ composer_core()
 		fi
 		# if PATCHCOMPOSERFLAG then modify temp/composer.phar to avoid the warnings
 		# this hack is not yet possible because of a self signature check in temp/composer.phar
-	else
-		# todo : if exists php;
-		if [ ${LOGCOMPOSERFLAG} = "0" ] ; then
-			"${PHPCLI}" temp/composer.phar self-update --working-dir vendor_bundled "$OPT_QUIET"
-		fi
-		if [ ${LOGCOMPOSERFLAG} = "1" ] ; then
-			"${PHPCLI}" temp/composer.phar self-update --working-dir vendor_bundled "$OPT_QUIET" > ${TIKI_COMPOSER_SELF_UPDATE_LOG}
-		fi
-		# remove previous container.php in case of incompatibility
-		rm -f temp/cache/container.php
-
 	fi
 
 	if [ ! -f temp/composer.phar ];
