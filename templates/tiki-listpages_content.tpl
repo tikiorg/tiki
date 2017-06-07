@@ -256,7 +256,7 @@
 							{/if}
 							{if $prefs.wiki_list_comment eq 'y' && $listpages[changes].comment neq ""}
 								<div>
-									<i>{$listpages[changes].comment|truncate:$prefs.wiki_list_comment_len:"...":true}</i>
+									<i>{$listpages[changes].comment|truncate:$prefs.wiki_list_comment_len:"...":true|escape}</i>
 								</div>
 							{/if}
 						</td>
