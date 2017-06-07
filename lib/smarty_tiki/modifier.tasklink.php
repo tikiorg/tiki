@@ -24,25 +24,26 @@ function smarty_modifier_tasklink($taskId, $class_name="link", $offset="0", $sor
 
 		$my_length = strlen($info['description']);
 		$my_pos=0;
-		$my_count=0;
-		$append = '';
+		$line = 0;
 		if ( $my_length > 0 ) {
 			do {
-				$my_count++;
+				$line++;
 				$my_pos = strpos($info['description'], "\n", ($my_pos+1));
-			} while (($my_count <= 15) && ($my_pos!=''));
+			} while (($line <= 15) && ($my_pos!=''));
 		}
 
-		if (($my_length >= 1300) || ($my_count >= 16)) {
-			if ($my_count < 15) {
+		if (($my_length >= 1300) || ($line >= 16)) {
+			if ($line < 15) {
 				$my_pos = 1300;
 			}
 			$description .= substr($info['description'], 0, min(1300, $my_pos+1));
-			$append .= "<br /><center><span class=\'highlight\'>" . tra("Text cut here") . "</span></center>";
+			$append = "<br /><center><span class=\'highlight\'>" . tra("Text cut here") . "</span></center>";
 		} else {
 			$description = $info['description'];
+			$append = '';
 		}
 
+		// FIXME: Truncated Tiki syntax cannot be parsed.
 		$description =str_replace("\"", "\'", str_replace("'", "\\'", str_replace("\n", "", (str_replace("\r\n", "<br />", TikiLib::lib('parser')->parse_data($description)))))) . $append;
 
 		$fillin = tra("Task") . ' ' . tra("from") . ' <b>' . $info['creator'] . '</b> ' . tra("for") .
