@@ -435,12 +435,9 @@ class OIntegrate_Engine_Smarty implements OIntegrate_Engine // {{{
      */
     function process( $data, $templateFile )
 	{
-		/** @var Smarty $smarty */
-		$smarty = new Smarty;
-		$smarty->security = true;
+		/** @var Smarty_Tiki $smarty */
+		$smarty = new Smarty_Tiki;
 		$smarty->setTemplateDir(dirname($templateFile));
-		$smarty->setCompileDir(TIKI_PATH . "/temp/templates_c");
-		$smarty->setPluginsDir([]);
 
 		if ( $this->changeDelimiters ) {
 			$smarty->left_delimiter = '{{';
