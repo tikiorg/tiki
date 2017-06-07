@@ -11,16 +11,14 @@
 <form action="{$ownurl}" method="post">
 {if $nonums != 'y'}<ol>{else}<ul>{/if}
 {section name=ix loop=$modTasks}
-<li class="prio{$modTasks[ix].priority}">
-{if $modTasks[ix].creator ne $user}
-&gt;&gt;
-{else}
-<input type="checkbox" name="modTasks[{$modTasks[ix].taskId}]" />
-{/if}
-{$modTasks[ix].taskId|tasklink:linkmodule}{if isset($modTasks[ix].percentage)} ({$modTasks[ix].percentage}%){/if}
-</li>
-{sectionelse}
-<div class="module">&nbsp;</div>
+	<li class="prio{$modTasks[ix].priority}">
+	{if $modTasks[ix].creator ne $user}
+		&gt;&gt;
+	{else}
+		<input type="checkbox" name="modTasks[{$modTasks[ix].taskId}]" />
+	{/if}
+	{$modTasks[ix].taskId|tasklink:linkmodule}{if isset($modTasks[ix].percentage)} ({$modTasks[ix].percentage}%){/if}
+	</li>
 {/section}
 {if $nonums != 'y'}</ol>{else}</ul>{/if}
 <input style="font-size: 9px;" type="submit" class="btn btn-default btn-sm" name="modTasksCom" value="{tr}Done{/tr}" />
