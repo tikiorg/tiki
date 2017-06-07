@@ -13,20 +13,19 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 }
 function smarty_modifier_tasklink($taskId, $class_name="link", $offset="0", $sort_mode="priority_desc")
 {
-	global $tasklib, $user, $prefs;
+	global $tasklib, $user, $prefs, $smarty;
 	$userlib = TikiLib::lib('user');
 	$tikilib = TikiLib::lib('tiki');
 
 	include_once('lib/tasks/tasklib.php');
 
 	$info = $tasklib->get_task($user, $taskId);
-	$mouseover = '';
 	if ($prefs['feature_community_mouseover'] == 'y') {
 		$description = "";
 
 		$my_length = strlen($info['description']);
-		$my_pos=0;	
-		$my_count=0;	
+		$my_pos=0;
+		$my_count=0;
 		$append = '';
 		if ( $my_length > 0 ) {
 			do {
@@ -65,10 +64,13 @@ function smarty_modifier_tasklink($taskId, $class_name="link", $offset="0", $sor
 
 		$fillin .= "<hr />" . $description;
 
-		$mouseover = " onmouseover=\"return overlib('<table><tr><td>" . $fillin . "</td></tr></table>',HAUTO,VAUTO,CAPTION,'<div style=\'text-align: center;\'>&nbsp; " .
-			tra("Task") . ":&nbsp;&nbsp;" . htmlspecialchars($info['title']) . "</div>');\" onmouseout=\"nd()\"";
+		$tooltipContent = '<div>' . $fillin . '</div>' . '<div>' . tra("Task:") . "&nbsp;" . htmlspecialchars($info['title']) . '</div>';
+		$smarty->loadPlugin('smarty_function_popup');
+		$popupAttributes = smarty_function_popup(array('text' => $tooltipContent, 'fullhtml' => true), $smarty);
+	} else {
+		$popupAttributes = '';
 	}
-	$content = "<a class='" . $class_name . "'" . $mouseover . " href='tiki-user_tasks.php?taskId=" . $taskId . "&amp;tiki_view_mode=view&amp;offset=" .
+	$content = "<a class='" . $class_name . "' " . $popupAttributes . " href='tiki-user_tasks.php?taskId=" . $taskId . "&amp;tiki_view_mode=view&amp;offset=" .
 		$offset . "&amp;sort_mode=" . $sort_mode . "' ";
 	if ($info['status'] == 'c') {
 		$content .= "style=\"text-decoration:line-through;\"";
