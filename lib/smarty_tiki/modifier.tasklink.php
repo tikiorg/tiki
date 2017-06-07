@@ -44,7 +44,7 @@ function smarty_modifier_tasklink($taskId, $class_name="link", $offset="0", $sor
 		}
 
 		// FIXME: Truncated Tiki syntax cannot be parsed.
-		$description =str_replace("\n", "", (str_replace("\r\n", "<br />", TikiLib::lib('parser')->parse_data($description)))) . $append;
+		$description = TikiLib::lib('parser')->parse_data($description) . $append;
 
 		$fillin = tra("Task") . ' ' . tra("from") . ' <b>' . $info['creator'] . '</b> ' . tra("for") .
 			' <b>' . $info['user'] . '</b>.<br />' . tra("Priority") . ': <b>' . $info['priority'] . '</b>, (<b>' .
