@@ -64,7 +64,7 @@ function smarty_modifier_tasklink($taskId, $class_name="link", $offset="0", $sor
 
 		$fillin .= "<hr />" . $description;
 
-		$tooltipContent = '<div>' . $fillin . '</div>' . '<div>' . tra("Task:") . "&nbsp;" . htmlspecialchars($info['title']) . '</div>';
+		$tooltipContent = '<div>' . $fillin . '</div>';
 		$smarty->loadPlugin('smarty_function_popup');
 		$popupAttributes = smarty_function_popup(array('text' => $tooltipContent, 'fullhtml' => true), $smarty);
 	} else {
