@@ -3057,6 +3057,30 @@ table.objectperms > tbody .checkBoxLabel {
   text-overflow: ellipsis;
   z-index: 2;
 }
+@-moz-document url-prefix() {
+  table.objectperms .checkBoxHeader > div,
+  table.objectperms > tbody .checkBoxLabel {
+    width: auto;
+  }
+}
+@supports (-ms-ime-align:auto) {
+  table.objectperms .checkBoxHeader > div,
+  table.objectperms > tbody .checkBoxLabel {
+    width: auto;
+  }
+}
+@media all and (-ms-high-contrast: none) {
+  table.objectperms .checkBoxHeader > div,
+  table.objectperms > tbody .checkBoxLabel {
+    width: auto;
+  }
+  /* IE10 */
+  *::-ms-backdrop,
+  table.objectperms .checkBoxHeader > div {
+    width: auto;
+  }
+  /* IE11 */
+}
 table.objectperms .checkBoxHeader > div,
 table.objectperms > tbody .checkBoxLabel {
   line-height: 2;
