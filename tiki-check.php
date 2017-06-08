@@ -832,7 +832,7 @@ if ($s) {
 	$php_properties['intl'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => 'Not available',
-		'message' => tra("intl extension is preferred for Tiki 15 and newer.")
+		'message' => tra("intl extension is preferred for Tiki 15 and newer. Because is not available, the filters for text will not be able to detect the language and will use a generic range of characters as letters.")
 	);
 }
 
