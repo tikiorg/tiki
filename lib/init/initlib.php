@@ -467,15 +467,6 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline)
 	$err[E_USER_NOTICE]     = 'E_USER_NOTICE';
 	$err[E_STRICT]          = 'E_STRICT';
 
-	if ( !defined('E_RECOVERABLE_ERROR') ) define('E_RECOVERABLE_ERROR', 4096);
-	$err[E_RECOVERABLE_ERROR] = 'E_RECOVERABLE_ERROR';
-
-	if ( !defined('E_DEPRECATED') ) define('E_DEPRECATED', 8192);
-	$err[E_DEPRECATED] = 'E_DEPRECATED';
-
-	if ( !defined('E_USER_DEPRECATED') ) define('E_USER_DEPRECATED', 16384);
-	$err[E_USER_DEPRECATED] = 'E_USER_DEPRECATED';
-
 	global $tikipath;
 	$errfile = str_replace($tikipath, '', $errfile);
 	switch ($errno) {
