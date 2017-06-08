@@ -4593,7 +4593,7 @@ class TikiLib extends TikiDb_Bridge
 				$old = $histlib->get_version($pageName, $old_version);
 				$foo = parse_url($_SERVER["REQUEST_URI"]);
 				$machine = self::httpPrefix(true). dirname($foo["path"]);
-				$diff = diff2($old["data"], $edit_data, "unidiff");
+				$diff = diff2($old["data"], $edit_data, "unidiff"); // TODO: Only compute if we have at least one notification to send
 				sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $old_version, $edit_data, $machine, $diff, $edit_minor, $hash['contributions'], 0, 0, $lang);
 			}
 		}
