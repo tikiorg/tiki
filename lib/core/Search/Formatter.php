@@ -35,13 +35,29 @@ class Search_Formatter
 
 	function format($list)
 	{
+		global $prefs;
+
 		if (0 == count($list) && $this->alternateOutput) {
 			return $this->renderFilters() . $this->alternateOutput;
 		}
 
-		$list = $this->getPopulatedList($list);
+		$formattedList = null;
+
+		if( $prefs['unified_cache_formatted_result'] === 'y' ) {
+			$cachelib = TikiLib::lib('cache');
+			$cacheKey = json_encode($list->jsonSerialize());
+			$formattedList = $cachelib->getSerialized($cacheKey, 'searchformat');
+		}
+
+		if( !$formattedList ) {
+			$formattedList = $this->getPopulatedList($list);
+			if( $prefs['unified_cache_formatted_result'] === 'y' ) {
+				$cachelib->cacheItem($cacheKey, serialize($formattedList), 'searchformat');
+			}
+		}
+		
 		return $this->renderFilters()
-			. $this->render($this->plugin, $list, Search_Formatter_Plugin_Interface::FORMAT_WIKI);
+			. $this->render($this->plugin, $formattedList, Search_Formatter_Plugin_Interface::FORMAT_WIKI);
 	}
 
 	function getPopulatedList($list, $preload = true)

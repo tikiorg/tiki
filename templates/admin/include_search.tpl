@@ -122,6 +122,7 @@
 					{preference name=unified_cached_formatters}
 
 					{preference name=unified_trackerfield_keys}
+					{preference name=unified_cache_formatted_result}
 					{preference name=unified_add_to_categ_search}
 					{preference name=unified_trim_sorted_search}
 
