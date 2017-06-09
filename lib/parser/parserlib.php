@@ -2658,6 +2658,11 @@ if ( \$('#$id') ) {
 		$in_empty_paragraph = 0;
 
 		foreach ($lines as $line) {
+			// Add newlines between lines 
+			if (isset($current_title_num)) { // Exclude the first line
+				$data .= "\n";
+			}
+			
 			$current_title_num = '';
 			$numbering_remove = 0;
 
@@ -3109,7 +3114,7 @@ if ( \$('#$id') ) {
 					}
 				}
 			}
-			$data .= $line . "\n";
+			$data .= $line;
 		}
 
 		if ($this->option['is_html']) {
