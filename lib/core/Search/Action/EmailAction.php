@@ -27,6 +27,8 @@ class Search_Action_EmailAction implements Search_Action_Action
 
 	function execute(JitFilter $data)
 	{
+		global $prefs;
+
 		require_once 'lib/mail/maillib.php';
 
 		try {
@@ -62,6 +64,9 @@ class Search_Action_EmailAction implements Search_Action_Action
 			$bodyPart = new \Zend\Mime\Message();
 			$bodyMessage = new \Zend\Mime\Part($content);
 			$bodyMessage->type = \Zend\Mime\Mime::TYPE_HTML;
+			if ($prefs['default_mail_charset']) {
+				$bodyMessage->setCharset($prefs['default_mail_charset']);
+			}
 
 			$messageParts = array(
 				$bodyMessage
