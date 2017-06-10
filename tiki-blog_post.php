@@ -99,7 +99,7 @@ if (isset($_REQUEST['cancel'])) {
 // Exit edit mode (with javascript)
 $smarty->assign('referer', !empty($_REQUEST['referer']) ? $_REQUEST['referer'] : (empty($_SERVER['HTTP_REFERER']) ? 'tiki-view_blog.php?blogId=' . $blogId : $_SERVER['HTTP_REFERER']));
 
-if (isset($_REQUEST['remove_image'])) {
+if (isset($_REQUEST['remove_image']) && $access->checkOrigin()) {
 	$access->check_authenticity();
 	$bloglib->remove_post_image($_REQUEST['remove_image']);
 }
@@ -209,7 +209,7 @@ if (isset($_REQUEST['save']) && $prefs['feature_contribution'] == 'y' && $prefs[
 	$contribution_needed = false;
 }
 
-if (isset($_REQUEST['save']) && !$contribution_needed) {
+if (isset($_REQUEST['save']) && !$contribution_needed && $access->checkOrigin()) {
 	$imagegallib = TikiLib::lib('imagegal');
 	$smarty->assign('individual', 'n');
 

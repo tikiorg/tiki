@@ -69,7 +69,7 @@ if (!isset($_SESSION['loginfrom']) && isset($_SERVER['HTTP_REFERER']) && !preg_m
 		else $_SESSION['loginfrom'] = $base_url . $_SESSION['loginfrom'];
 	}
 }
-if (isset($_REQUEST['su'])) {
+if (isset($_REQUEST['su']) && $access->checkOrigin('page')) {
 	$loginlib = TikiLib::lib('login');
 
 	if ($loginlib->isSwitched() && $_REQUEST['su'] == 'revert') {
@@ -110,7 +110,9 @@ if ($prefs['feature_intertiki'] == 'y') {
 	}
 } else unset($_REQUEST['intertiki']);
 // Go through the intertiki process
-if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_keys($prefs['interlist']))) {
+if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_keys($prefs['interlist']))
+	&& $access->checkOrigin('page'))
+{
 	$rpcauth = $userlib->intervalidate($prefs['interlist'][$_REQUEST['intertiki']], $requestedUser, $pass, !empty($prefs['feature_intertiki_mymaster']) ? true : false);
 	if (!$rpcauth) {
 		$logslib->add_log('login', 'intertiki : ' . $requestedUser . '@' . $_REQUEST['intertiki'] . ': Failed');
@@ -209,7 +211,7 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 	// If the password is valid but it is due then force the user to change the password by
 	// sending the user to the new password change screen without letting him use tiki
 	// The user must re-enter the old password so no security risk here
-	if (!$isvalid && $error === ACCOUNT_WAITING_USER) {
+	if (!$isvalid && $error === ACCOUNT_WAITING_USER && $access->checkOrigin('page')) {
 		if ($requestedUser != 'admin') { // admin has not necessarely an email
 
 			if ($userlib->is_email_due($requestedUser, 'email')) {
@@ -230,8 +232,8 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 		$user = $requestedUser;
 	}
 }
-if ($isvalid) {
-        $userlib->set_unsuccessful_logins($requestedUser, 0);
+if ($isvalid && $access->checkOrigin('page')) {
+	$userlib->set_unsuccessful_logins($requestedUser, 0);
 	if ($prefs['feature_invite'] == 'y') {
 		// tiki-invite, this part is just here to add groups to users which just registered after received an
 		// invitation via tiki-invite.php and set the redirect to wiki page if required by the invitation
@@ -389,9 +391,12 @@ if ($isvalid) {
 	$module_params['show_forgot'] = ($prefs['forgotPass'] == 'y' && $prefs['change_password'] == 'y')? 'y': 'n';
 	$module_params['show_register'] = ($prefs['allowRegister'] === 'y')? 'y': 'n';
 	$smarty->assign('module_params', $module_params);
-	if ($error == PASSWORD_INCORRECT && ($prefs['unsuccessful_logins'] >= 0 || $prefs['unsuccessful_logins_invalid'] >= 0)) {
+	if ($error == PASSWORD_INCORRECT
+		&& ($prefs['unsuccessful_logins'] >= 0 || $prefs['unsuccessful_logins_invalid'] >= 0)
+		&& $access->checkOrigin('page'))
+	{
 		$nb_bad_logins = $userlib->unsuccessful_logins($requestedUser);
-		$nb_bad_logins++ ; 
+		$nb_bad_logins++ ;
 		$userlib->set_unsuccessful_logins($requestedUser, $nb_bad_logins);
 		if ($prefs['unsuccessful_logins_invalid'] > 0 && ($nb_bad_logins >= $prefs['unsuccessful_logins_invalid'])) {
 			$info = $userlib->get_user_info($requestedUser);
@@ -455,7 +460,7 @@ if ($isvalid) {
 			$error = tra('You did not validate your account.');
 			$extraButton = array('href'=>'tiki-send_mail.php?user='. urlencode($_REQUEST['user']), 'text'=>tra('Resend'), 'comment'=>tra('You should have received an email. Check your mailbox and your spam box. Otherwise click on the button to resend the email'));
         		break;
- 
+
 		case USER_AMBIGOUS:
 			$error = tra('You must use the right case for your username.');
         		break;
@@ -483,8 +488,7 @@ if ($isvalid) {
 	$smarty->display('tiki.tpl');
 	exit;
 }
-
-if ( isset($user) ) {
+if (isset($user) && $access->checkOrigin('page')) {
 	TikiLib::events()->trigger('tiki.user.login',
 		array(
 			'type' => 'user',
@@ -511,7 +515,7 @@ $url.= ((strpos($url, '?') === false) ? '?' : '&') . SID;
 // Check if a wizard should be run.
 // If a wizard is run, it will return to the $url location when it has completed. Thus no code after $wizardlib->onLogin will be executed
 // The user must be actually logged in before onLogin is called. If $isdue is set, then: "Note that the user is not logged in he's just validated to change his password"
-if (!$isdue) {
+if (!$isdue && $access->checkOrigin('page')) {
 
 	if ($prefs['feature_user_encryption'] === 'y') {
 		// Notify CryptLib about the login
