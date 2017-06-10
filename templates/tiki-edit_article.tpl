@@ -240,14 +240,14 @@
 				<span class="help-block">{tr}Maximum dimensions of custom image in view mode{/tr}</span>
 				<div class="form-group">
 					<label for="image_x" class="control-label col-md-4">{tr}Width{/tr}</label>
-					<div class="input-group col-md-2">
+					<div class="input-group col-sm-3">
 						<input type="text" class="form-control" name="image_x"{if $image_x > 0} value="{$image_x|escape}"{/if}>
 						<span class="input-group-addon">{tr}pixels{/tr}</span>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="image_y" class="control-label col-md-4">{tr}Height{/tr}</label>
-					<div class="input-group col-md-2">
+					<div class="input-group col-sm-3">
 						<input type="text" class="form-control" name="image_y"{if $image_y > 0} value="{$image_y|escape}"{/if}>
 						<span class="input-group-addon">{tr}pixels{/tr}</span>
 					</div>
@@ -257,15 +257,15 @@
 				<legend>{tr}View Articles{/tr}</legend>
 				<span class="help-block">{tr}Maximum dimensions of custom image in list mode{/tr}</span>
 				<div class="form-group">
-					<label for="list_image_x" class="control-label col-md-4">{tr}Width{/tr}</label>
-					<div class="input-group col-md-2">
+					<label for="list_image_x" class="control-label col-sm-4">{tr}Width{/tr}</label>
+					<div class="input-group col-sm-3">
 						<input type="text" class="form-control" name="list_image_x"{if $list_image_x > 0} value="{$list_image_x|escape}"{/if}>
 						<span class="input-group-addon">{tr}pixels{/tr}</span>
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="list_image_y" class="control-label col-md-4">{tr}Height{/tr}</label>
-					<div class="input-group col-md-2">
+					<label for="list_image_y" class="control-label col-sm-4">{tr}Height{/tr}</label>
+					<div class="input-group col-sm-3">
 						<input type="text" class="form-control" name="list_image_y"{if $list_image_y > 0} value="{$list_image_y|escape}"{/if}>
 						<span class="input-group-addon">{tr}pixels{/tr}</span>
 					</div>
