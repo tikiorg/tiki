@@ -37,6 +37,8 @@
 			{preference name=print_pdf_mpdf_password}
 			{preference name=print_pdf_mpdf_watermark}
 			{preference name=print_pdf_mpdf_watermark_image}
+ 			{preference name=print_pdf_mpdf_coverpage_text_settings}
+			{preference name=print_pdf_mpdf_coverpage_image_settings}
             
 
 		</div>

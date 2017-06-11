@@ -231,7 +231,21 @@ function prefs_print_list()
 			'tags' => array('advanced'),
 			'type' => 'text',
 			'default' => '',
-		),		
+		),
+		'print_pdf_mpdf_coverpage_text_settings' => array(
+			'name' => tra('CoverPage text settings'),
+			'description' => tra('Heading|Subheading|Alignment|Background color|Text color|Page border|Border color. Enter settings separated by |,leave blank for default'),
+			'tags' => array('advanced'),
+			'type' => 'text',
+			'default' => '',
+		),
+		'print_pdf_mpdf_coverpage_image_settings' => array(
+			'name' => tra('Coverpage image URL'),
+			'description' => tra('Enter complete URL'),
+			'type' => 'text',
+			'tags' => array('advanced'),
+			'default' => '',
+		),
 		'print_wiki_authors' => array(
 			'name' => tra('Print wiki authors'),
 			'description' => tra('Include wiki authors and date in wiki page print outs.'),

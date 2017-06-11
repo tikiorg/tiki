@@ -64,7 +64,7 @@ function wikiplugin_pdf_info()
 					),
 					'toclinks' => array(
 						'name' => tra('Link TOC with content'),
-						'description' => tra('Link TOC headings with content on pdf document'),
+						'description' => tra('Link TOC headings with content on PDF document'),
 						'type' => 'list',
 						'default'=>'n',
 						'options' => array(
@@ -177,8 +177,20 @@ function wikiplugin_pdf_info()
 						'default' => '',
 					),
 					'watermark_image' => array(
-						'name' => tra('Watermark image, enter full url'),
+						'name' => tra('Watermark image, enter full URL'),
 						'description' => tra(''),
+						'type' => 'text',
+						'default' => '',
+					),
+					'coverpage_text_settings' => array(
+						'name' => tra('CoverPage text settings'),
+						'description' => tra('Heading|Subheading|Alignment|Background color|Text color|Page border|Border color. Enter settings separated by |,leave blank for default'),
+						'type' => 'text',
+						'default' => '',
+					),
+					'coverpage_image_settings' => array(
+						'name' => tra('Coverpage image URL'),
+						'description' => tra('Enter complete URL'),
 						'type' => 'text',
 						'default' => '',
 					),
@@ -192,7 +204,7 @@ function wikiplugin_pdf($data, $params)
 	//included globals to check mpdf selection as pdf generation engine
 	global $prefs;
 	
-	//checking if mdpf is default pdf generation engine, since plugin is only set for mpdf. 
+	//checking if mdpf is default PDF generation engine, since plugin is only set for mpdf. 
 	if($prefs['print_pdf_from_url'] != 'mpdf')
 		return WikiParser_PluginOutput::internalError(tr('For pluginPDF, please select mpdf as default PDF engine from Print Settings.'));
 	$paramList='';

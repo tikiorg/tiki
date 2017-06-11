@@ -337,10 +337,8 @@ class PdfGenerator
 		$themecss = file_get_contents($themecss); // external css
 
 		//checking if print friendly option is enabled, then attach print css otherwise theme styles will be retained by theme css
-		if($pdfSettings['print_pdf_mpdf_printfriendly']=='y')
-		{
+		if($pdfSettings['print_pdf_mpdf_printfriendly']=='y') {
 			 $printcss = file_get_contents('themes/base_files/css/printpdf.css'); // external css
-
 		}
 		else
 		{//preserving theme styles by removing media print styles to print what is shown on screen
@@ -349,6 +347,25 @@ class PdfGenerator
 		}
 		$cssStyles=str_replace(array(".tiki","opacity: 0;"),array("","fill: #fff;opacity:0.3;stroke:black"),'<style>'.$basecss.$themecss.$printcss.$this->bootstrapReplace().'</style>'); //adding css styles with first page content	
 		$pdfPages=$this->getPDFPages($html,$pdfSettings);
+		//cover page checking
+		if($pdfSettings['coverpage_text_settings']!='') {
+			$coverPage=explode("|",$pdfSettings['coverpage_text_settings']);
+			$coverImage=$pdfSettings['coverpage_image_settings']!='off'?$pdfSettings['coverpage_image_settings']:'';
+			$mpdf->SetHeader();		//resetting header footer for cover page	
+			$mpdf->SetFooter();
+			$mpdf->AddPage($pdfPage['orientation'],'','','','',0,0 , 0, 0, 0, 0); //adding new page with 0 margins
+			$coverPage[2]=$coverPage[2]==''?'center':$coverPage[2];
+			//getting border settings
+			if(count($coverPage)>5) { 
+				$borderWidth=$coverPage[5]==''?1:$coverPage[5];
+				$coverPageTextStyles='border:'.$borderWidth.' solid '.$coverPage[6].';';
+			}	
+			$bgColor=$cover[3]==''?'background-color:'.$coverPage[3]:'';
+			$mpdf->WriteHTML('<body style="'.$bgColor.';margin:0px;padding:0px"><div style="height:100%;background-image:url('.$coverImage.');padding:20px"><div style="'.$coverPageTextStyles.'height:95%;">
+<div style="text-align:'.$coverPage[2].';margin-top:30%;color:'.$coverPage[4].'"><div style=margin-bottom:10px;font-size:50px>'.$coverPage[0].'</div>'.$coverPage[1].'</div></div></body>');
+
+		}	
+		//end of coverpage generation			
 		foreach($pdfPages as $pdfPage){
 		 if(strip_tags(trim($pdfPage['pageContent']))!=''){	
 		//checking header and footer
@@ -426,9 +443,11 @@ class PdfGenerator
 		$pdfSettings['toc']=$prefs['print_pdf_mpdf_toc']!=''?$prefs['print_pdf_mpdf_toc']:'n';
 		$pdfSettings['toclinks']=$prefs['print_pdf_mpdf_toclinks']!=''?$prefs['print_pdf_mpdf_toclinks']:'n';
 		$pdfSettings['tocheading']=$prefs['print_pdf_mpdf_tocheading'];
-		$pdfSettings['pagetitle']=$prefs['print_pdf_mpdf_pagetitle']!=''?$prefs['print_pdf_mpdf_pagetitle']:'';
-		$pdfSettings['watermark']=$prefs['print_pdf_mpdf_watermark']!=''?$prefs['print_pdf_mpdf_watermark']:'';
-		$pdfSettings['watermark_image']=$prefs['print_pdf_mpdf_watermark_image']!=''?$prefs['print_pdf_mpdf_watermark_image']:'';
+		$pdfSettings['pagetitle']=$prefs['print_pdf_mpdf_pagetitle'];
+		$pdfSettings['watermark']=$prefs['print_pdf_mpdf_watermark'];
+		$pdfSettings['watermark_image']=$prefs['print_pdf_mpdf_watermark_image'];
+		$pdfSettings['coverpage_text_settings']=str_ireplace("{PAGETITLE}",$params['page'],$prefs['print_pdf_mpdf_coverpage_text_settings']);
+		$pdfSettings['coverpage_image_settings']=str_ireplace("{PAGETITLE}",$params['page'],$prefs['print_pdf_mpdf_coverpage_image_settings']);
 
 		if($pdfSettings['toc']=='y'){
 			//toc levels
