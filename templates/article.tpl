@@ -69,7 +69,7 @@
 				{* display own article image *}
 				<img
 					alt="{$smarty.capture.imgTitle}"
-					{*class=""*}
+					class="article-image custom-image"
 					src="article_image.php?image_type={if isset($preview) and $imageIsChanged eq 'y'}preview&amp;id={$previewId}{elseif isset($preview) and $subId}submission&amp;id={$subId}{else}article&amp;id={$articleId}{if $image_x > 0}&width={$image_x}{/if}{/if}"
 					{$style=''}
 					{if $image_y > 0}{$style=$style|cat:"max-height:"|cat:$image_y|cat:"px;"}{/if} style="max-width: 100%; height: auto; {$style}"
@@ -83,6 +83,7 @@
 				<img
 					{* {if $big_image}class="cboxElement"{/if} *}
 					alt="{tr}{$topicName}{/tr}"
+					class="article-image topic-image"
 					src="article_image.php?image_type=topic&amp;id={$topicId}"
 				>
 				{else}
