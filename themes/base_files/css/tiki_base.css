@@ -1784,23 +1784,6 @@ td.url {
 .articletitle h2 {
   margin: 0 0 .3em;
 }
-img.topicimage,
-img.articleimagenofloat,
-img.articleimage {
-  padding: 2px 0;
-  margin-bottom: 10px;
-}
-img.articleimage,
-img.articleimagefloat {
-  margin-right: 4px;
-  float: left;
-  clear: right;
-  padding: 2px 0;
-  margin-bottom: 10px;
-}
-img.articleimage {
-  clear: right;
-}
 .articletrailer span {
   display: inline-block;
   margin: auto;
