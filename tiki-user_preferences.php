@@ -71,7 +71,7 @@ $foo2 = str_replace("tiki-user_preferences", "tiki-index", $foo["path"]);
 $smarty->assign('url_edit', $tikilib->httpPrefix() . $foo1);
 $smarty->assign('url_visit', $tikilib->httpPrefix() . $foo2);
 $smarty->assign('show_mouseover_user_info', isset($prefs['show_mouseover_user_info']) ? $prefs['show_mouseover_user_info'] : $prefs['feature_community_mouseover']);
-if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
+if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"]) && $access->checkOrigin()) {
 	check_ticket('user-prefs');
 	// setting preferences
 	if ($prefs['change_theme'] == 'y' && empty($group_style)) {
@@ -263,7 +263,7 @@ if ($prefs['auth_method'] == 'ldap' && $user == 'admin' && $prefs['ldap_skip_adm
 	$change_password = 'y';
 	$smarty->assign('change_password', $change_password);
 }
-if (isset($_REQUEST['chgadmin'])) {
+if (isset($_REQUEST['chgadmin']) && $access->checkOrigin()) {
 	check_ticket('user-prefs');
 	if (isset($_REQUEST['pass'])) {
 		$pass = $_REQUEST['pass'];
@@ -313,7 +313,7 @@ if (isset($_REQUEST['chgadmin'])) {
 		$tikifeedback[] = array('num' => 1, 'mes' => sprintf(tra('Password has been changed')));
 	}
 }
-if (isset($_REQUEST['deleteaccount']) && $tiki_p_delete_account == 'y') {
+if (isset($_REQUEST['deleteaccount']) && $tiki_p_delete_account == 'y' && $access->checkOrigin()) {
    check_ticket('user-prefs');
    if (!isset($_REQUEST['deleteaccountconfirm']) || $_REQUEST['deleteaccountconfirm'] != '1') {
       $smarty->assign('msg', tra("If you really want to delete your account, you must check the checkbox"));

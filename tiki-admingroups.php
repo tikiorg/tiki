@@ -48,9 +48,9 @@ $smarty->assign('trackers', $trackers);
 if ($prefs['feature_user_watches'] == 'y') {
 	if (!empty($user)) {
 		$tikilib = TikiLib::lib('tiki');
-		if ( isset($_REQUEST['watch'] ) ) {
+		if ( isset($_REQUEST['watch']) && $access->checkOrigin()) {
 			$tikilib->add_user_watch($user, 'user_joins_group', $_REQUEST['watch'], 'group');
-		} else if ( isset($_REQUEST['unwatch'] ) ) {
+		} else if ( isset($_REQUEST['unwatch']) && $access->checkOrigin()) {
 			$tikilib->remove_user_watch($user, 'user_joins_group', $_REQUEST['unwatch'], 'group');
 		}
 	}
@@ -63,7 +63,7 @@ if (isset($_REQUEST["home"])) $ag_home = $_REQUEST["home"];
 if (!empty($_REQUEST["defcat"])) $ag_defcat = $_REQUEST["defcat"];
 if (isset($_REQUEST["theme"])) $ag_theme = $_REQUEST["theme"];
 // Process the form to add a group
-if (isset($_REQUEST["newgroup"])) {
+if (isset($_REQUEST["newgroup"]) && $access->checkOrigin()) {
 	$access->check_authenticity(tra('Are you sure you want to create a new group?'));
 	if (!empty($_REQUEST['name'])) $_REQUEST['name'] = trim($_REQUEST['name']);
 	if (empty($_REQUEST['name'])) {
@@ -91,7 +91,7 @@ if (isset($_REQUEST["newgroup"])) {
 	$_REQUEST["group"] = $_REQUEST["name"];
 	$logslib->add_log('admingroups', 'created group ' . $_REQUEST["group"]);
 }
-if (isset($_REQUEST['adduser'])) {
+if (isset($_REQUEST['adduser']) && $access->checkOrigin()) {
 	$access->check_authenticity(tra('Are you sure you want to add this user?'));
 	$user = $_REQUEST['user'];
 	$group = $_REQUEST['group'];
@@ -105,7 +105,7 @@ if (isset($_REQUEST['adduser'])) {
 
 // banning
 
-if (isset($_REQUEST['banuser'])) {
+if (isset($_REQUEST['banuser']) && $access->checkOrigin()) {
 	$auser = $_REQUEST['user'];
 	$agroup = $_REQUEST['group'];
 	$access->check_authenticity(tr('Are you sure you want to ban the user "%0" from the group "%1"?', $auser, $agroup));
@@ -114,7 +114,7 @@ if (isset($_REQUEST['banuser'])) {
 	$cookietab = "3";
 }
 
-if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'unbanuser') {
+if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'unbanuser' && $access->checkOrigin()) {
 	$auser = $_REQUEST['user'];
 	$agroup = $_REQUEST['group'];
 	$access->check_authenticity(tr('Are you sure you want to unban the user "%0" from the group "%1"?', $auser, $agroup));
@@ -124,7 +124,7 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'unbanuser') {
 }
 
 // modification
-if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUEST["name"])) {
+if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUEST["name"]) && $access->checkOrigin()) {
 	check_ticket('admin-groups');
 	if ($_REQUEST['olgroup'] != $_REQUEST['name'] && $userlib->group_exists($_REQUEST['name'])) {
 		$smarty->assign('msg', tra('Group already exists'));
@@ -151,7 +151,7 @@ if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUES
 	$cookietab = 1;
 }
 // Process a form to remove a group
-if (isset($_REQUEST["action"])) {
+if (isset($_REQUEST["action"]) && $access->checkOrigin()) {
 	if ($_REQUEST["action"] == 'delete') {
 		$access->check_authenticity(tra('Remove group: ') . $_REQUEST['group']);
 		$userlib->remove_group($_REQUEST["group"]);
@@ -160,13 +160,19 @@ if (isset($_REQUEST["action"])) {
 	}
 }
 // Unassign a list of members
-if (isset($_REQUEST['unassign_members']) && isset($_REQUEST['submit_mult_members']) && $_REQUEST['submit_mult_members'] == 'unassign' && isset($_REQUEST['group']) && !in_array($_REQUEST['group'], array('Registered', 'Anonymous'))) {
+if (isset($_REQUEST['unassign_members'])
+	&& isset($_REQUEST['submit_mult_members'])
+	&& $_REQUEST['submit_mult_members'] == 'unassign'
+	&& isset($_REQUEST['group'])
+	&& !in_array($_REQUEST['group'], array('Registered', 'Anonymous'))
+	&& $access->checkOrigin())
+{
 	$access->check_authenticity(tra('Are you sure you want to unassign these users?'));
 	foreach ($_REQUEST['members'] as $m) {
 		$userlib->remove_user_from_group($userlib->get_user_login($m), $_REQUEST['group']);
 	}
 }
-if (!empty($_REQUEST['submit_mult']) && !empty($_REQUEST['checked'])) {
+if (!empty($_REQUEST['submit_mult']) && !empty($_REQUEST['checked']) && $access->checkOrigin()) {
 	$access->check_authenticity(tra('Are you sure you want to delete these groups?'));
 	foreach ($_REQUEST['checked'] as $delete) {
 		if ($delete != 'Admins' && $delete != 'Anonymous' && $delete != 'Registered') {
@@ -175,7 +181,7 @@ if (!empty($_REQUEST['submit_mult']) && !empty($_REQUEST['checked'])) {
 		}
 	}
 }
-if (isset($_REQUEST['clean'])) {
+if (isset($_REQUEST['clean']) && $access->checkOrigin()) {
 	global $cachelib;
 	require_once ("lib/cache/cachelib.php");
 	check_ticket('admin-groups');
@@ -330,7 +336,7 @@ if (!empty($_REQUEST['group']) && isset($_REQUEST['export'])) {
 	echo $data;
 	die;
 }
-if (!empty($_REQUEST['group']) && isset($_REQUEST['import'])) {
+if (!empty($_REQUEST['group']) && isset($_REQUEST['import']) && $access->checkOrigin()) {
 	$fname = $_FILES['csvlist']['tmp_name'];
 	$fhandle = fopen($fname, 'r');
 	$fields = fgetcsv($fhandle, 1000);
