@@ -1598,16 +1598,45 @@ class UsersLib extends TikiLib
 		}
 		$u = array('login' => $user);
 
-		if (isset($attributes[$prefs['auth_ldap_nameattr']])) {
-			$u['realName'] = $attributes[$prefs['auth_ldap_nameattr']];
-		}
+		$userPreferenceToLdapPreferenceMap = array(
+			'realName' => 'auth_ldap_nameattr',
+			'email' => 'auth_ldap_emailattr',
+			'country' => 'auth_ldap_countryattr',
+		);
 
-		if (isset($attributes[$prefs['auth_ldap_emailattr']])) {
-			$u['email'] = $attributes[$prefs['auth_ldap_emailattr']];
-		}
+		foreach ($userPreferenceToLdapPreferenceMap as $preference => $ldapPreference) {
 
-		if (isset($attributes[$prefs['auth_ldap_countryattr']])) {
-			$u['country'] = $attributes[$prefs['auth_ldap_countryattr']];
+			if ($preference == 'email') {
+				$userPreferenceValue = $this->get_user_email($user);
+			} else {
+				$userPreferenceValue = $this->get_user_preference($user, $preference);
+			}
+			$isSetLdapPreferenceValue = isset($attributes[$prefs[$ldapPreference]]);
+			$ldapPreferenceValue = $isSetLdapPreferenceValue ? $attributes[$prefs[$ldapPreference]] : '';
+
+			if ($userPreferenceValue && empty($ldapPreferenceValue)) {
+				$u[$preference] = '';
+			} else {
+				if ($isSetLdapPreferenceValue) {
+					// Ldap attributes can (by default) have multiple values, check if the current user preference is one of
+					// the values of the attribute, in that case keep the same value
+					if (is_array($ldapPreferenceValue)
+						&& $userPreferenceValue
+						&& in_array($userPreferenceValue, $ldapPreferenceValue)
+					) {
+						$u[$preference] = $userPreferenceValue;
+						continue;
+					}
+					if (is_array($ldapPreferenceValue)) {
+						// Ldap attributes can (by default) have multiple values
+						// so we always take the fist form the list is is a multi value field
+						$ldapPreferenceValue = reset($ldapPreferenceValue);
+					}
+					if ($isSetLdapPreferenceValue) {
+						$u[$preference] = $ldapPreferenceValue;
+					}
+				}
+			}
 		}
 
 		if (count($u) > 1) {
