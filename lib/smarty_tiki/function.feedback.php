@@ -25,6 +25,13 @@ $(document).ajaxComplete(function (e, jqxhr) {
 		}
 		$("#tikifeedback").fadeIn(200, function() {
 			$("#tikifeedback").html(fb);
+			//use decode and escape methods to display UTF8 properly in the title and content from remarksbox.tpl
+			var title = $("#tikifeedback span.rboxtitle").text();
+			title = decodeURIComponent(escape(title.trim()));
+			$("#tikifeedback span.rboxtitle").text(title);
+			var content = $("#tikifeedback div.rboxcontent").text();
+			content = decodeURIComponent(escape(content.trim()));
+			$("#tikifeedback div.rboxcontent").text(content);
 		});
 	}
 	$("#tikifeedback .clear").on("click", function () {
