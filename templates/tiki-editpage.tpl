@@ -9,7 +9,7 @@
 			{if isset($hdr) && $prefs.wiki_edit_section eq 'y'}
 				{tr}Edit Section:{/tr} {$smarty.capture.pageDescription}
 			{else}
-				{tr _0='<a style="font-style: italic" href="'|cat:($page|sefurl)|cat:'">'|cat:$smarty.capture.pageDescription|cat:'</a>'}Edit %0{/tr}
+				{tr _0='<a class="edit_pagetitle" href="'|cat:($page|sefurl)|cat:'">'|cat:$smarty.capture.pageDescription|cat:'</a>'}Edit %0{/tr}
 			{/if}
 		</h1>
 	{else}
