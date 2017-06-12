@@ -241,7 +241,8 @@ if (tour) {
 
 	$wp_tour['steps'][] = array_filter($params);
 
-	$wp_tour['template'] = TikiLib::lib('smarty')->fetch('wiki-plugins/wikiplugin_tour_template.tpl');
+	$template = TikiLib::lib('smarty')->fetch('wiki-plugins/wikiplugin_tour_template.tpl');
+	$wp_tour['template'] = preg_replace('/<\!\-\-.*?\-\->/', '', $template);		// remove html comments
 
 	if ($params['next'] == -1 || $params['path']) {
 		$js = '// Instance the tour
