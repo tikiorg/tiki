@@ -64,7 +64,7 @@ class GeoLib
 
 			$string = "{$coords['lon']},{$coords['lat']}";
 
-			if (! empty($coords['zoom'])) {
+			if (isset($coords['zoom'])) {
 				$string .= ",{$coords['zoom']}";
 			}
 
@@ -106,7 +106,7 @@ class GeoLib
 				'lon' => $parts[1],
 			);
 
-			if (! empty($parts[6])) {
+			if (isset($parts[6])) {
 				$coords['zoom'] = $parts[6];
 			}
 
