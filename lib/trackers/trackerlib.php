@@ -4582,7 +4582,7 @@ class TrackerLib extends TikiLib
 			$last[$hist['fieldId']] = $hist['value'];
 			++$i;
 		}
-		$history['cant'] = $i;
+		$history['cant'] = count($history['data']);
 		return $history;
 	}
 
