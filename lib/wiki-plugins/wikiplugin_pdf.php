@@ -20,9 +20,14 @@ function wikiplugin_pdf_info()
                 'params' => array(
 					'printfriendly' => array(
 						'name' => tra('Print Friendly PDF'),
-						'description' => tra('Value:y/n. Enabling this option will change theme background color to white and text /headings color to black. If set to \'n\', theme colors will be retained in pdf'),
-						'type' => 'flag',
-						'default' => 'y'			
+						'description' => tra('Print friendly option will change theme background color to white and text /headings color to black. If set to \'n\', theme colors will be retained in pdf'),
+						'type' => 'list',
+						'default' => '',
+						'options' => array(
+							array('text'=>'Default','value'=>''),
+							array('text'=>'Yes','value'=>'y'),
+							array('text'=>'No','value'=>'n'),
+						),			
 					),
 					'orientation' => array(
 						'name' => tra('PDF Orientation'),
@@ -30,6 +35,7 @@ function wikiplugin_pdf_info()
 						'type' => 'list',
 						'default'=>$prefs['print_pdf_mpdf_orientation'],
 						'options' => array(
+							array('text'=>'Default','value'=>''),
 							array('text'=>'Portrait','value'=>'P'),
 							array('text'=>'Landscape','value'=>'L'),
 						),
@@ -40,6 +46,7 @@ function wikiplugin_pdf_info()
 					'description' => tra('ISO Standard sizes: A0, A1, A2, A3, A4, A5 or North American paper sizes: Letter, Legal, Tabloid/Ledger (for ledger, select landscape orientation)'),
 					'type' => 'list',
 					'options' => array(
+						array('text'=>'Default','value'=>''),
 						array('text'=>'Letter','value'=>'Letter'),
 						array('text'=>'Legal','value'=>'Legal'),
 						array('text'=>'Tabloid/Ledger','value'=>'Tabloid/Ledger'),
@@ -58,6 +65,7 @@ function wikiplugin_pdf_info()
 						'type' => 'list',
 						'default'=>$prefs['print_pdf_mpdf_toc'],
 						'options' => array(
+							array('text'=>'Default','value'=>''),
 							array('text'=>'On','value'=>'y'),
 							array('text'=>'Off','value'=>'n'),
 						),			
@@ -68,6 +76,7 @@ function wikiplugin_pdf_info()
 						'type' => 'list',
 						'default'=>'n',
 						'options' => array(
+							array('text'=>'Default','value'=>''),
 							array('text'=>'Yes','value'=>'y'),
 							array('text'=>'No','value'=>'n'),
 						),			
