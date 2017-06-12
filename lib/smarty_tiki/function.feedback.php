@@ -9,6 +9,7 @@ function smarty_function_feedback($params, $smarty)
 {
 	$result = Feedback::get();
 
+	// TODO: Move the JavaScript to tiki-js.js so this does not run on each request
 	TikiLib::lib('header')->add_js(
 		'
 $(document).ajaxComplete(function (e, jqxhr) {
@@ -25,7 +26,8 @@ $(document).ajaxComplete(function (e, jqxhr) {
 		}
 		$("#tikifeedback").fadeIn(200, function() {
 			$("#tikifeedback").html(fb);
-			//use decode and escape methods to display UTF8 properly in the title and content from remarksbox.tpl
+
+			//use decode and escape methods to prevent non-ASCII characters in the title and content from remarksbox.tpl from displaying as Mojibake. There must be a better way to do this. 
 			var title = $("#tikifeedback span.rboxtitle").text();
 			title = decodeURIComponent(escape(title.trim()));
 			$("#tikifeedback span.rboxtitle").text(title);
