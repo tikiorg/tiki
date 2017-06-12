@@ -424,17 +424,16 @@ class H5PLib
 	 *
 	 * @param array $settings
 	 */
-	public function printSettings(&$settings, $obj_name = 'H5PIntegration')
+	public function printSettings($settings, $obj_name = 'H5PIntegration')
 	{
-		static $printed;
-		if (! empty($printed[$obj_name])) {
-			return; // Avoid re-printing settings
-		}
 
 		$json_settings = json_encode($settings);
 		if ($json_settings !== false) {
-			$printed[$obj_name] = true;
-			TikiLib::lib('header')->add_js('var ' . $obj_name . ' = ' . $json_settings . ";\n");
+			$headerlib = TikiLib::lib('header');
+			if (! empty($headerlib->js['5h5p'])) {
+				$headerlib->js['5h5p'] = [];    // clear previous plugins js as they are accumulative
+			}
+			$headerlib->add_js('var ' . $obj_name . ' = ' . $json_settings . ";\n", '5h5p');
 		}
 	}
 

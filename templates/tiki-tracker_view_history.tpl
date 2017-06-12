@@ -42,7 +42,7 @@
 				<tr>
 					{if $last_version neq $hist.version}
 						<td class="id"><strong>{$hist.version|escape}</strong></td>
-						<td class="date"><strong>{$hist.lastModif|tiki_short_datetime}</strong></td>
+						<td class="date"><strong>{if not empty($hist.lastModif)}{$hist.lastModif|tiki_short_datetime}{/if}</strong></td>
 						<td class="username"><strong>{$hist.user|username}</strong></td>
 						{$last_version = $hist.version}
 					{else}
