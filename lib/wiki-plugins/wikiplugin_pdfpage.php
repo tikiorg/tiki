@@ -26,6 +26,7 @@ function wikiplugin_pdfpage_info()
 						'type' => 'list',
 						'default'=>$prefs['print_pdf_mpdf_orientation'],
 						'options' => array(
+							array('text'=>'Default','value'=>''),
 							array('text'=>'Portrait','value'=>'P'),
 							array('text'=>'Landscape','value'=>'L'),
 						),
@@ -36,6 +37,7 @@ function wikiplugin_pdfpage_info()
 					'description' => tra('ISO Standard sizes: A0, A1, A2, A3, A4, A5 or North American paper sizes: Letter, Legal, Tabloid/Ledger (for ledger, select landscape orientation)'),
 					'type' => 'list',
 					'options' => array(
+						array('text'=>'Default','value'=>''),
 						array('text'=>'Letter','value'=>'Letter'),
 						array('text'=>'Legal','value'=>'Legal'),
 						array('text'=>'Tabloid/Ledger','value'=>'Tabloid/Ledger'),
@@ -51,7 +53,7 @@ function wikiplugin_pdfpage_info()
 					
 					'header' => array(
 						'name' => tra('PDF header text'),
-						'description' => tra('Format: Left text| Center Text | Right Text. Possible values, custom text, {PAGENO},{PAGETITLE},{DATE j-m-Y}.'),
+						'description' => tra('Format: Left text| Center Text | Right Text. Possible values, custom text, {PAGENO},{PAGETITLE},{DATE j-m-Y}. Set header value as "off", to turn off header from page'),
 						'tags' => array('basic'),
 						'type' => 'text',
 						'default' => $prefs['print_pdf_mpdf_header'],
@@ -59,7 +61,7 @@ function wikiplugin_pdfpage_info()
 					),
 					'footer' => array(
 						'name' => tra('PDF footer text'),
-						'description' => tra('Possible values, custom text, {PAGENO}, {DATE j-m-Y} For example:Document Title|Center Text|{PAGENO}'),
+						'description' => tra('Possible values, custom text, {PAGENO}, {DATE j-m-Y} For example:Document Title|Center Text|{PAGENO}. Set footer value as "off", to turn off footer from page'),
 						'type' => 'text',
 						'default' => $prefs['print_pdf_mpdf_footer'],
 					),
@@ -113,14 +115,14 @@ function wikiplugin_pdfpage_info()
 						'filter' => 'digits',
 					),
 					'watermark' => array(
-						'name' => tra('Watermark text for this page'),
+						'name' => tra('Watermark text for this page. Set value as "off", to turn off watermark of the page'),
 						'description' => tra(''),
 						'type' => 'text',
 						'default' => '',
 					),
 					'watermark_image' => array(
 						'name' => tra('Watermark image, enter full url'),
-						'description' => tra(''),
+						'description' => tra('Set header value as "off", to turn off watermark image of the page'),
 						'type' => 'text',
 						'default' => '',
 					),
