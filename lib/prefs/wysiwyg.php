@@ -102,7 +102,7 @@ function prefs_wysiwyg_list()
 			'description' => tra('In Tiki, CKEditor uses the "standard" package in which some plugins are disabled by default that are available in the "full" package.<br>See http://ckeditor.com/presets for a comparison of which plugins are enabled as standard.'),
 			'type' => 'textarea',
 			'size' => '1',
-			'default' => 'bidi,colorbutton,find,font,justify,pagebreak,showblocks,smiley',
+			'default' => 'bidi,colorbutton,divarea,find,font,justify,pagebreak,showblocks,smiley',
 		),
 	);
 }
