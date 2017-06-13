@@ -348,7 +348,7 @@ class PdfGenerator
 		$cssStyles=str_replace(array(".tiki","opacity: 0;"),array("","fill: #fff;opacity:0.3;stroke:black"),'<style>'.$basecss.$themecss.$printcss.$this->bootstrapReplace().'</style>'); //adding css styles with first page content	
 		$pdfPages=$this->getPDFPages($html,$pdfSettings);
 		//cover page checking
-		if($pdfSettings['coverpage_text_settings']!='') {
+		if($pdfSettings['coverpage_text_settings']!='' || ($pdfSettings['coverpage_image_settings']!='' && $pdfSettings['coverpage_image_settings']!='off')) {
 			$coverPage=explode("|",$pdfSettings['coverpage_text_settings']);
 			$coverImage=$pdfSettings['coverpage_image_settings']!='off'?$pdfSettings['coverpage_image_settings']:'';
 			$mpdf->SetHeader();		//resetting header footer for cover page	
@@ -361,7 +361,7 @@ class PdfGenerator
 				$coverPageTextStyles='border:'.$borderWidth.' solid '.$coverPage[6].';';
 			}	
 			$bgColor=$cover[3]==''?'background-color:'.$coverPage[3]:'';
-			$mpdf->WriteHTML('<body style="'.$bgColor.';margin:0px;padding:0px"><div style="height:100%;background-image:url('.$coverImage.');padding:20px"><div style="'.$coverPageTextStyles.'height:95%;">
+			$mpdf->WriteHTML('<body style="'.$bgColor.';margin:0px;padding:0px"><div style="height:100%;background-image:url('.$coverImage.');padding:20px;background-repeat: no-repeat;background-position: center; "><div style="'.$coverPageTextStyles.'height:95%;">
 <div style="text-align:'.$coverPage[2].';margin-top:30%;color:'.$coverPage[4].'"><div style=margin-bottom:10px;font-size:50px>'.$coverPage[0].'</div>'.$coverPage[1].'</div></div></body>');
 
 		}	
