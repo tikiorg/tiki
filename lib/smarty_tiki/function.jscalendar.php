@@ -33,7 +33,10 @@ function smarty_function_jscalendar($params, $smarty)
 		// if date is provided empty then show a blank date (for filters)
 		$params['date'] = $tikilib->now;
 	}
-	$datepicker_options = '{ altField: "#' . $params['id'] . '"';
+	$datepicker_options = '{ altField: "#' . $params['id'] . '", onClose: function(dateText, inst) {'.
+		'$(inst.settings.altField).removeClass("isDatepicker");'.
+		'$.datepickerAdjustAltField("'.((!isset($params['showtime']) || $params['showtime'] === 'n') ? 'datepicker' : 'datetimepicker').'", inst);'.
+		'}';
 	if (!empty($params['goto'])) {
 		$datepicker_options .= ', onSelect: function(dateText, inst) { window.location="' .
 														$params['goto'] . '".replace("%s",$("#' . $params['id'] . '").val()/1000); }';
@@ -109,12 +112,12 @@ function smarty_function_jscalendar($params, $smarty)
 
 	$datepicker_options .= $datepicker_options_common;
 
-	$html = '<input type="hidden" id="' . $params['id'] . '"' . $name  . ' value="'.$params['date'].'">';
+	$html = '<input type="hidden" id="' . $params['id'] . '"' . $name  . ' value="'.$params['date'].'" class="isDatepicker">';
 	$html .= '<input type="hidden" id="tzoffset" name="tzoffset" value="">';
 	$headerlib->add_jq_onready('$("input[name=tzoffset]").val((new Date()).getTimezoneOffset());');
 	if( isset($params['isutc']) && $params['isutc'] )
 		$headerlib->add_jq_onready('$("#' . $params['id'] . '").val(' . intval($params['date']) . ' + (new Date()).getTimezoneOffset()*60);');
-	$html .= '<input type="text" style="width:225px" class="form-control" id="' . $params['id'] . '_dptxt" value="">';	// text version of datepicker date
+	$html .= '<input type="text" style="width:225px" class="form-control isDatepicker" id="' . $params['id'] . '_dptxt" value="">';	// text version of datepicker date
 	$headerlib->add_jq_onready('$("#' . $params['id'] . '_dptxt").change(function(e){' .
 		'var inst = $.datepicker._getInst(this);'.
 		'$.datepickerAdjustAltField("'.( !isset($params['showtime']) || $params['showtime'] === 'n' ? 'datepicker' : 'datetimepicker' ).'", inst);'.
