@@ -7,7 +7,7 @@
 
 function prefs_auth_list()
 {
-	return array(
+	$list = array(
 		'auth_method' => array(
 			'name' => tra('Authentication method'),
 			'description' => tra('Tiki supports several authentication methods. The default method is to use the internal user database.'),
@@ -521,4 +521,13 @@ function prefs_auth_list()
 			'default' => 'n',
 		),
 	);
+
+	global $prefs;
+
+	// Check if package onelogin/php-saml is installed and enabled
+	if (!class_exists('OneLogin_Saml2_Auth') || $prefs['saml_auth_enabled'] != 'y') {
+		unset($list['auth_method']['options']['saml']);
+	}
+
+	return $list;
 }

@@ -1144,6 +1144,10 @@ class UsersLib extends TikiLib
 	 */
 	function check_saml_authentication($user_cookie_site) {
 		global $prefs, $base_url;
+		
+		if ($prefs['auth_method'] != 'saml'||!class_exists('OneLogin_Saml2_Auth')) {
+			return;
+		}
 
 		$clicked_on_saml_link = false;
 
@@ -1227,6 +1231,10 @@ class UsersLib extends TikiLib
 	 */
 	function get_saml_auth() {
 		$samlSettingsInfo = $this->get_saml_settings();
+
+		if (!class_exists('OneLogin_Saml2_Auth')) {
+			return;
+		}
 
 		try {
 			$auth = new OneLogin_Saml2_Auth($samlSettingsInfo);

@@ -7,6 +7,14 @@
 function prefs_saml_list()
 {
 	return array(
+		'saml_auth_enabled' => array(
+			'name' => tra('Enable SAML Auth'),
+			'description' => tra(''),
+			'type' => 'flag',
+			'perspective' => false,
+			'default' => 'n',
+			'packages_required' => array('onelogin/php-saml'=>'OneLogin_Saml2_Auth'),
+		),
 		'saml_idp_entityid' => array(
 			'name' => tra('IdP Entity Id'),
 			'description' => tra('Identifier of the IdP entity. ("Issuer")'),

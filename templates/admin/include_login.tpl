@@ -343,11 +343,13 @@
 		{tab name="{tr}SAML2{/tr}"}
 			<fieldset>
 				<legend>{tr}SAML2{/tr}{help url="AuthSAML" desc="{tr}based on Onelogin's php-saml {/tr}"}</legend>
-				{if $prefs.auth_method ne 'saml'}
+				{if $prefs.auth_method ne 'saml' && $prefs.saml_auth_enabled eq 'y'}
 					{remarksbox type="warning" title="{tr}Warning{/tr}" close="n"}
 						{tr}You must change the Authentication Method to SAML for these changes to take effect{/tr}
 					{/remarksbox}
 				{/if}
+
+				{preference name=saml_auth_enabled}
 
 				<fieldset>
 					<legend>{tr}Identity provider settings{/tr}</legend>
