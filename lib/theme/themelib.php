@@ -169,7 +169,6 @@ class ThemeLib extends TikiLib
 			$theme_base = $theme . '/';
 		}
 
-		$option_base = '';
 		if (!empty($option)) {
 			$option_base = 'options/' . $option . '/';
 		}
@@ -204,11 +203,11 @@ class ThemeLib extends TikiLib
 
 		// Why does this look in 'themes/' . $dir_base . $subdir and 'themes/' . $subdir if and only if we have a $filename? Chealer 2017-01-16
 		if (empty($filename)) {
-			if (is_dir('themes/' . $dir_base . $theme_base . $option_base . $subdir)) {
+			if (isset($option_base) && is_dir('themes/' . $dir_base . $theme_base . $option_base . $subdir)) {
 				$path = 'themes/' . $dir_base . $theme_base . $option_base . $subdir;
 			} else if (is_dir('themes/' . $dir_base . $theme_base . $subdir)) {
 				$path = 'themes/' . $dir_base . $theme_base . $subdir;                // try "parent" theme dir if no option one
-			} else if (is_dir('themes/' . $theme_base . $option_base . $subdir)) {
+			} else if (isset($option_base) && is_dir('themes/' . $theme_base . $option_base . $subdir)) {
 				$path = 'themes/' . $theme_base . $option_base . $subdir;                // try non-tikidomain theme dirs if no domain one
 			} else if (is_dir('themes/' . $theme_base . $subdir)) {
 				$path = 'themes/' . $theme_base . $subdir;                            // try root theme dir if no domain one
@@ -216,11 +215,11 @@ class ThemeLib extends TikiLib
 				$path = 'themes/' . $theme_base;                                    // fall back to "parent" theme dir with no subdir if not
 			}
 		} else {
-			if (is_file('themes/' . $dir_base . $theme_base . $option_base . $subdir . $filename)) {
+			if (isset($option_base) && is_file('themes/' . $dir_base . $theme_base . $option_base . $subdir . $filename)) {
 				$path = 'themes/' . $dir_base . $theme_base . $option_base . $subdir . $filename;
 			} else if (is_file('themes/' . $dir_base . $theme_base . $subdir . $filename)) {    // try "parent" themes dir if no option one
 				$path = 'themes/' . $dir_base . $theme_base . $subdir . $filename;
-			} else if (is_file('themes/' . $theme_base . $option_base . $subdir . $filename)) {    // try non-tikidomain dirs if not found
+			} else if (isset($option_base) && is_file('themes/' . $theme_base . $option_base . $subdir . $filename)) {    // try non-tikidomain dirs if not found
 				$path = 'themes/' . $theme_base . $option_base . $subdir . $filename;
 			} else if (is_file('themes/' . $theme_base . $subdir . $filename)) {
 				$path = 'themes/' . $theme_base . $subdir . $filename;                        // fall back to "parent" themes dir if no option
