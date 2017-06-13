@@ -35,6 +35,12 @@ class ListExecuteCommand extends Command
 				InputArgument::OPTIONAL,
 				'If action takes a variable input parameter, specify it here'
 			)
+			->addOption(
+				'request',
+				null,
+				InputOption::VALUE_OPTIONAL,
+				'Specify url-encoded string of request variables to be used on the wiki page. E.g. "days=30&alert=2"'
+			)
 			;
 	}
 
@@ -49,9 +55,15 @@ class ListExecuteCommand extends Command
 			return false;
 		}
 
+		if ($request = $input->getOption('request')) {
+			parse_str($request, $_POST);
+		}
+
 		$_POST['list_action'] = $action;
 		$_POST['objects'] = array('ALL');
 		$_POST['list_input'] = $input->getArgument('input');
+
+		$_GET = $_REQUEST = $_POST; // wiki_argvariable needs this
 
 		\TikiLib::lib('parser')->parse_data($pageInfo['data']);
 
