@@ -233,14 +233,7 @@ class ComposerCli
 		$output = $process->getOutput();
 		$errors = $process->getErrorOutput();
 
-		if ($errors) {
-			if (!empty($output)) {
-				$output .= "\n";
-			}
-			$output .= $errors;
-		}
-
-		return [$output, $code];
+		return [$output, $errors, $code];
 	}
 
 	/**
@@ -326,11 +319,11 @@ class ComposerCli
 			return false;
 		}
 
-		list($output) = $this->execComposer(
+		list($output, $errors) = $this->execComposer(
 			['--no-ansi', '--no-dev', '--prefer-dist', 'update', '-d', $this->workingPath, 'nothing']
 		);
 
-		return $output;
+		return $output . "\n" .$errors;
 	}
 
 	/**
@@ -344,9 +337,9 @@ class ComposerCli
 			return false;
 		}
 
-		list($output) = $this->execComposer(['--no-ansi', 'diagnose', '-d', $this->workingPath]);
+		list($output, $errors) = $this->execComposer(['--no-ansi', 'diagnose', '-d', $this->workingPath]);
 
-		return $output;
+		return $output . "\n" .$errors;
 	}
 
 	/**
@@ -391,7 +384,7 @@ class ComposerCli
 			return false;
 		}
 
-		list($commandOutput) = $this->execComposer(
+		list($commandOutput, $errors) = $this->execComposer(
 			['remove', $package->getName(), '--update-no-dev', '-d', $this->workingPath, '--no-ansi', '--no-interaction']
 		);
 
@@ -400,7 +393,7 @@ class ComposerCli
 		return tr('= New composer.json file content') . ":\n\n"
 		. $fileContent . "\n\n"
 		. tr('= Composer execution output') . ":\n\n"
-		. $commandOutput;
+		. $commandOutput . "\n" . $errors;
 	}
 
 
