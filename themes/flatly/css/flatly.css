@@ -7585,6 +7585,11 @@ ul.all_languages > li {
 .cke_editable:hover {
   outline: #95a5a6 dotted 1px;
 }
+.cke_wysiwyg_frame,
+.cke_wysiwyg_div {
+  background: #ffffff !important;
+  color: #2c3e50 !important;
+}
 .tiki_plugin {
   background-color: transparent;
   border: 1px solid #b4bcc2;
