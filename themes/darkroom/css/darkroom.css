@@ -7225,6 +7225,11 @@ ul.all_languages > li {
 .cke_editable:hover {
   outline: #555555 dotted 1px;
 }
+.cke_wysiwyg_frame,
+.cke_wysiwyg_div {
+  background: #474747 !important;
+  color: #d8d8d8 !important;
+}
 .tiki_plugin {
   background-color: transparent;
   border: 1px solid #999999;
@@ -7769,6 +7774,11 @@ body.layout_social > .container {
   border-left: 10px solid #0c0c0c;
   border-right: 10px solid #0c0c0c;
   padding-bottom: 10px;
+}
+.cke_contents > .cke_wysiwyg_frame,
+.cke_contents > .cke_wysiwyg_div {
+  background: #3F3F3F !important;
+  color: #d8d8d8 !important;
 }
 h3.panel-title {
   color: #9d9d9d;
