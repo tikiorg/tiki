@@ -931,12 +931,12 @@ class ModLib extends TikiLib
 				),
 				'style' => array(
 					'name' => tra('Style'),
-					'description' => tra('CSS style for positioning the module, etc.'),
+					'description' => tra('CSS style attribute (for example, to position the module)'),
 					'section' => 'appearance',
 				),
 				'class' => array(
 					'name' => tra('Class'),
-					'description' => tra('Custom CSS class.'),
+					'description' => tra('Extra class (for CSS or JavaScript)'),
 					'section' => 'appearance',
 				),
 				'topclass' => array(
