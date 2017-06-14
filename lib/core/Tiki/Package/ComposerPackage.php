@@ -8,12 +8,13 @@
 namespace Tiki\Package;
 
 /**
- * Abstract class with most of the operations needed for a Composer Package
+ * Class with most of the operations needed for a Composer Package
  */
-abstract class ComposerPackage implements PackageInterface
+class ComposerPackage implements PackageInterface
 {
 	protected $packageType;
 
+	protected $key;
 	protected $name;
 	protected $requiredVersion;
 	protected $licence;
@@ -24,6 +25,7 @@ abstract class ComposerPackage implements PackageInterface
 	/**
 	 * Sets the information related with this package, intended to be used in the constructor of the child class
 	 *
+	 * @param string $key
 	 * @param string $name
 	 * @param string $requiredVersion
 	 * @param string $licence
@@ -31,11 +33,11 @@ abstract class ComposerPackage implements PackageInterface
 	 * @param array $requiredBy
 	 * @param array $scripts
 	 */
-	protected function setPackageInfo($name, $requiredVersion, $licence, $licenceUrl, $requiredBy, $scripts = [])
+	public function __construct($key, $name, $requiredVersion, $licence, $licenceUrl, $requiredBy, $scripts = [])
 	{
-
 		$this->packageType = Type::COMPOSER;
 
+		$this->key = $key;
 		$this->name = $name;
 		$this->requiredVersion = $requiredVersion;
 		$this->licence = $licence;
@@ -68,6 +70,7 @@ abstract class ComposerPackage implements PackageInterface
 			'licence' => $this->licence,
 			'licenceUrl' => $this->licenceUrl,
 			'requiredBy' => $this->requiredBy,
+			'scripts' => $this->scripts,
 		];
 	}
 
@@ -79,13 +82,7 @@ abstract class ComposerPackage implements PackageInterface
 	 */
 	public function getKey()
 	{
-		$className = static::class;
-		$pos = strrpos($className, '\\');
-		if ($pos === false) {
-			return $className;
-		}
-
-		return substr($className, $pos + 1);
+		return $this->key;
 	}
 
 	/**

@@ -1,0 +1,34 @@
+---
+CasperJS:
+  licence: MIT
+  licenceUrl: "https://github.com/jerome-breton/casperjs-installer/blob/master/LICENSE"
+  name: jerome-breton/casperjs-installer
+  requiredBy:
+    - wikiplugin_casperjs
+  requiredVersion: dev-master
+  scripts:
+    post-install-cmd:
+      - "CasperJsInstaller\\Installer::install"
+    post-update-cmd:
+      - "CasperJsInstaller\\Installer::install"
+Expose:
+  licence: MIT
+  licenceUrl: "https://github.com/enygma/expose/blob/master/LICENSE"
+  name: enygma/expose
+  requiredBy:
+    - ids_enabled
+  requiredVersion: ^3.0
+Mpdf:
+  licence: GPL
+  licenceUrl: "https://github.com/mpdf/mpdf/blob/master/LICENSE.txt"
+  name: mpdf/mpdf
+  requiredBy:
+    - "Tiki Print"
+  requiredVersion: ^6.1
+PHPSaml:
+  licence: MIT
+  licenceUrl: "https://github.com/onelogin/php-saml/blob/master/LICENSE"
+  name: onelogin/php-saml
+  requiredBy:
+    - saml_auth_enabled
+  requiredVersion: ^2.10

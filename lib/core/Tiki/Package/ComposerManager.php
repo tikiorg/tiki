@@ -8,6 +8,8 @@
 namespace Tiki\Package;
 
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Exception\ParseException;
 
 /**
  * Allows the management of Composer Packages
@@ -17,15 +19,12 @@ class ComposerManager
 
 	const STATUS_INSTALLED = 'installed';
 	const STATUS_MISSING = 'missing';
+	const CONFIG_PACKAGE_FILE = 'ComposerPackages.yml';
 
 	/**
 	 * @var string the path where the composer file is located
 	 */
 	protected $basePath = '';
-	/**
-	 * @var string the base namespace for the package definition files
-	 */
-	protected $packagesNamespace;
 
 	/**
 	 * @var ComposerCli wrapper for composer phar
@@ -41,9 +40,8 @@ class ComposerManager
 	 */
 	function __construct($basePath, $workingPath = null, $composerWrapper = null)
 	{
-		$this->packagesNamespace = __NAMESPACE__ . '\\External\\';
 		$this->basePath = $basePath;
-		if (is_null($composerWrapper)){
+		if (is_null($composerWrapper)) {
 			$composerWrapper = new ComposerCli($basePath, $workingPath);
 		}
 		$this->composerWrapper = $composerWrapper;
@@ -83,15 +81,15 @@ class ComposerManager
 	public function getInstalled()
 	{
 		$installedPackages = $this->composerWrapper->getListOfPackagesFromConfig();
-
 		$packageDefinitions = $this->getAvailable(false);
+
 		$keyLookup = [];
-		foreach($packageDefinitions as $package){
+		foreach ($packageDefinitions as $package) {
 			$keyLookup[$package['name']] = $package['key'];
 		}
-		if ($installedPackages !== false){
-			foreach($installedPackages as &$package){
-				if (isset($keyLookup[$package['name']])){
+		if ($installedPackages !== false) {
+			foreach ($installedPackages as &$package) {
+				if (isset($keyLookup[$package['name']])) {
 					$package['key'] = $keyLookup[$package['name']];
 				} else {
 					$package['key'] = '';
@@ -119,38 +117,12 @@ class ComposerManager
 	 */
 	public function getAvailable($filterInstalled = true)
 	{
-		$packagesDir = __DIR__ . DIRECTORY_SEPARATOR . 'External';
-		if (!is_dir($packagesDir)) {
-			return [];
-		}
-
 		$installedPackages = [];
-		if ($filterInstalled){
+		if ($filterInstalled) {
 			$installedPackages = $this->getListOfInstalledPackages($filterInstalled);
 		}
 
-		$availablePackages = [];
-		foreach (new \GlobIterator($packagesDir . DIRECTORY_SEPARATOR . '*.php') as $fileInfo) {
-			$class = $fileInfo->getBasename('.php');
-			$fullClassName = $this->packagesNamespace . $class;
-			if (class_exists($fullClassName)) {
-				try {
-					/** @var ComposerPackage $externalPackage */
-					$externalPackage = new $fullClassName;
-					if ($externalPackage->getType() != Type::COMPOSER) {
-						continue;
-					}
-					if ($filterInstalled && array_key_exists($externalPackage->getName(), $installedPackages)) {
-						continue;
-					}
-					$availablePackages[] = $externalPackage->getAsArray();
-				} catch (Exception $e) {
-					//ignore
-				}
-			}
-		}
-
-		return $availablePackages;
+		return $this->manageYaml('list', $installedPackages);
 	}
 
 	/**
@@ -164,8 +136,8 @@ class ComposerManager
 		$installedPackages = [];
 		if ($filterInstalled) {
 			$installed = $this->getInstalled();
-			if ($installed !== false){
-				foreach ( $installed as $pkg) {
+			if ($installed !== false) {
+				foreach ($installed as $pkg) {
 					if ($pkg['status'] == self::STATUS_INSTALLED) {
 						$installedPackages[$pkg['name']] = $pkg['name'];
 					}
@@ -185,6 +157,7 @@ class ComposerManager
 	{
 		return preg_replace("/[^a-zA-Z0-9]+/", "", $packageKey);
 	}
+
 	/**
 	 * Try to install a packages by the package key (corresponding to the class name)
 	 *
@@ -193,18 +166,15 @@ class ComposerManager
 	 */
 	public function installPackage($packageKey)
 	{
-		$packageKey = $this->sanitizePackageKey($packageKey);
-		$packageClass = $this->packagesNamespace . $packageKey;
-		try {
-			if (class_exists($packageClass)) {
-				/** @var ComposerPackage $externalPackage */
-				$externalPackage = new $packageClass;
 
-				return $this->composerWrapper->installPackage($externalPackage);
-			}
-		} catch (Exception $e) {
-			//ignore
+		$externalPackage = $this->manageYaml('search', [], $packageKey);
+
+		if (!$externalPackage) {
+			return null;
 		}
+
+		return $this->composerWrapper->installPackage($externalPackage);
+
 	}
 
 	/**
@@ -215,17 +185,78 @@ class ComposerManager
 	 */
 	public function removePackage($packageKey)
 	{
-		$packageKey = $this->sanitizePackageKey($packageKey);
-		$packageClass = $this->packagesNamespace . $packageKey;
-		try {
-			if (class_exists($packageClass)) {
-				/** @var ComposerPackage $externalPackage */
-				$externalPackage = new $packageClass;
+		$externalPackage = $this->manageYaml('search', [], $packageKey);
 
-				return $this->composerWrapper->removePackage($externalPackage);
-			}
-		} catch (Exception $e) {
-			//ignore
+		if (!$externalPackage) {
+			return null;
 		}
+
+		return $this->composerWrapper->removePackage($externalPackage);
 	}
+
+	/**
+	 * Manage YAML configuration file. Read the file and iterate throuth it, with a specific action
+	 *  If action is 'list' then it will return the complete list of external packages of configuration
+	 *  If action is 'search' then it will search for a specific package and return the object
+	 *
+	 * @param $packageAction
+	 * @param $installedPackages
+	 * @param $packageKey
+	 * @return ExternalPackage|array
+	 */
+	public function manageYaml($packageAction, $installedPackages = [], $packageKey = null)
+	{
+		$packageKey = $this->sanitizePackageKey($packageKey);
+
+		//Open External Packages Config File
+		$packagesConfigFile = __DIR__ . DIRECTORY_SEPARATOR . self::CONFIG_PACKAGE_FILE;
+		if (!file_exists($packagesConfigFile)) {
+			return [];
+		}
+		try {
+			$yamlContent = Yaml::parse(file_get_contents($packagesConfigFile));
+			if (!$yamlContent) {
+				return [];
+			}
+		} catch (ParseException $e) {
+			return [];
+		}
+
+		$availablePackages = [];
+		foreach ($yamlContent as $key => $fileInfo) {
+			try {
+				if ($fileInfo) {
+					$externalPackage = new ComposerPackage(
+						$key,
+						$fileInfo['name'],
+						$fileInfo['requiredVersion'],
+						$fileInfo['licence'],
+						$fileInfo['licenceUrl'],
+						$fileInfo['requiredBy'],
+						$fileInfo['scripts']
+					);
+					if ($packageAction == 'search' && $key == $packageKey) {
+						return $externalPackage;
+					} else {
+						if ($packageAction == 'list') {
+							if ($externalPackage->getType() != Type::COMPOSER) {
+								continue;
+							}
+							if (array_key_exists($externalPackage->getName(), $installedPackages)) {
+								continue;
+							}
+							$availablePackages[] = $externalPackage->getAsArray();
+						}
+					}
+				}
+			} catch (Exception $e) {
+				//ignore
+			}
+		}
+
+		return $availablePackages;
+
+	}
+
+
 }
