@@ -53,7 +53,7 @@ function prefs_tiki_list()
 		),
 		'tiki_minify_css' => array(
 			'name' => tra('Minify CSS'),
-			'description' => tra('Compress CSS files by removing additional spaces and grouping multiple files into one. Changes to CSS files will require cache to be cleared. Uses http://code.google.com/p/minify/'),
+			'description' => tra('Compress CSS files (notably by removing whitespace). Changes to CSS files will require cache to be cleared.') . ' ' . tra('Uses http://code.google.com/p/minify/'),
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',
