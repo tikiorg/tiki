@@ -39,7 +39,7 @@ class ListExecuteCommand extends Command
 				'request',
 				null,
 				InputOption::VALUE_OPTIONAL,
-				'Specify url-encoded string of request variables to be used on the wiki page. E.g. "days=30&alert=2"'
+				'Specify URL-encoded string of request variables to be used on the wiki page. E.g. "days=30&alert=2"'
 			)
 			;
 	}
