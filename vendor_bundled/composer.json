@@ -60,6 +60,7 @@
 		"mediumjs/mediumjs": "1.0.1",
 		"michelf/php-smartypants": "^1.8.1",
 		"morteza/bootstrap-rtl": "3.3.2",
+		"nagarajanchinnasamy/subtotal": "~1.9",
 		"nicolaskruchten/pivottable":"v2.7.0",
 		"openannotation/annotator": ">=1.2.10",
 		"openlayers/ol3": ">=3.6.0",
