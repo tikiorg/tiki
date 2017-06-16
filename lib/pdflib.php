@@ -282,7 +282,7 @@ class PdfGenerator
 		   if($pdfSettings['tocheading']){
 		    $tocpreHTML=htmlspecialchars("<h1>".$pdfSettings['tocheading']."</h1>", ENT_QUOTES);
 		   }
-		    $html="<html><tocpagebreak ".$links." toc-preHTML=\"".$tocpreHTML."\"  toc-margin-top=50 toc-margin-left=".$pdfSettings['margin_left']." toc-margin-right=".$pdfSettings['margin_right']." toc-orientation=\"".$pdfSettings['orientation']."\" toc-sheet-size=\"".$pdfSettings['pagesize']."\" toc-margin-header=".$pdfPage['margin_header']." toc-margin-footer=".$pdfPage['margin_footer']." toc-resetpagenum=\"1\" toc-suppress=\"on\" />".$html."</html>";
+		    $html="<html><tocpagebreak ".$links." toc-preHTML=\"".$tocpreHTML."\" toc-resetpagenum=\"1\" toc-suppress=\"on\" />".$html."</html>";
 		}	
        $this->_getImages($html,$tempImgArr);
        
@@ -313,15 +313,6 @@ class PdfGenerator
 		
 		//toc levels
 		$mpdf->h2toc = $pdfSettings['toclevels'];
-		if($pdfSettings['watermark']!='' && $pdfSettings['watermark']!="off")  {
-				$mpdf->SetWatermarkText($pdfSettings['watermark']);
-				$mpdf->showWatermarkText = true;
-		}
-		if($pdfSettings['watermark_image']!='' && $pdfSettings['watermark_image']!="off")  {
-				$mpdf->SetWatermarkImage($pdfSettings['watermark_image']);
-				$mpdf->showWatermarkImage = true;
-		}
-		
 		//password protection
 		if($pdfSettings['print_pdf_mpdf_password'])
 		   $mpdf->SetProtection(array(), 'UserPassword', $pdfSettings['print_pdf_mpdf_password']);

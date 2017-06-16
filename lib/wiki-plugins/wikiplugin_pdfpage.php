@@ -53,7 +53,7 @@ function wikiplugin_pdfpage_info()
 					
 					'header' => array(
 						'name' => tra('PDF header text'),
-						'description' => tra('Format: Left text| Center Text | Right Text. Possible values, custom text, {PAGENO},{PAGETITLE},{DATE j-m-Y}. Set header value as "off", to turn off header from page'),
+						'description' => tra('Format: <code>Left text| Center Text | Right Text</code>. Possible values: <code>Custom text</code>, <code>{PAGENO}</code>, <code>{DATE j-m-Y}</code>. Set header value as <code>off</code>, to turn off header from page'),
 						'tags' => array('basic'),
 						'type' => 'text',
 						'default' => $prefs['print_pdf_mpdf_header'],
@@ -61,7 +61,7 @@ function wikiplugin_pdfpage_info()
 					),
 					'footer' => array(
 						'name' => tra('PDF footer text'),
-						'description' => tra('Possible values, custom text, {PAGENO}, {DATE j-m-Y} For example:Document Title|Center Text|{PAGENO}. Set footer value as "off", to turn off footer from page'),
+						'description' => tra('Possible values: <code>Custom text</code>, <code>{PAGENO}</code>, <code>{DATE j-m-Y}</code>. For example: <code>{PAGETITLE}|Center Text|{PAGENO}</code>. Set footer value as <code>off</code>, to remove footer from page'),
 						'type' => 'text',
 						'default' => $prefs['print_pdf_mpdf_footer'],
 					),
@@ -116,15 +116,15 @@ function wikiplugin_pdfpage_info()
 					),
 					'watermark' => array(
 						'name' => tra('Watermark text for this page. Set value as "off", to turn off watermark of the page'),
-						'description' => tra(''),
+						'description' => tra('Watermark text value, for example: Confidential, Draft etc.'),
 						'type' => 'text',
 						'default' => '',
 					),
 					'watermark_image' => array(
 						'name' => tra('Watermark image, enter full url'),
-						'description' => tra('Set header value as "off", to turn off watermark image of the page'),
+						'description' => tra('To turn off watermark image on the page, set value as <code>off</code>'),
 						'type' => 'text',
-						'default' => '',
+						'default' => 'Full URL of watermark image',
 					),
 
                 ),

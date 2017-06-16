@@ -92,7 +92,7 @@ function wikiplugin_pdf_info()
 										
 					'toclevels' => array(
 						'name' => tra('TOC levels'),
-						'description' => tra('Will be autopicked from content of document, for example: H1|H2|H3'),
+						'description' => tra('Will be autopicked from content of document, for example:<code>H1|H2|H3</code>'),
 						'tags' => array('advanced'),
 						'type' => 'text',
 						'default' => "H1|H2|H3",
@@ -112,7 +112,7 @@ function wikiplugin_pdf_info()
 					),
 					'header' => array(
 						'name' => tra('PDF header text'),
-						'description' => tra('Format: Left text| Center Text | Right Text. Possible values, custom text, {PAGENO},{PAGETITLE},{DATE j-m-Y}.'),
+						'description' => tra('Format: <code>Left text| Center Text | Right Text</code>. Possible values,<code>custom text</code>, {PAGENO},{PAGETITLE},{DATE j-m-Y}.'),
 						'tags' => array('basic'),
 						'type' => 'text',
 						'default' => $prefs['print_pdf_mpdf_header'],
@@ -120,7 +120,7 @@ function wikiplugin_pdf_info()
 					),
 					'footer' => array(
 						'name' => tra('PDF footer text'),
-						'description' => tra('Possible values, custom text, {PAGENO}, {DATE j-m-Y} For example:Document Title|Center Text|{PAGENO}'),
+						'description' => tra('Possible values, custom text, {PAGENO}, {DATE j-m-Y} For example:<code>{PAGETITLE}|{DATE j-m-Y}|{PAGENO}</code>'),
 						'type' => 'text',
 						'default' => $prefs['print_pdf_mpdf_footer'],
 					),
@@ -181,19 +181,19 @@ function wikiplugin_pdf_info()
 					),
 					'watermark' => array(
 						'name' => tra('Watermark text'),
-						'description' => tra(''),
+						'description' => tra('Watermark text value, for example: Confidential, Draft etc. '),
 						'type' => 'text',
 						'default' => '',
 					),
 					'watermark_image' => array(
 						'name' => tra('Watermark image, enter full URL'),
-						'description' => tra(''),
+						'description' => tra('Full URL of watermark image'),
 						'type' => 'text',
 						'default' => '',
 					),
 					'coverpage_text_settings' => array(
 						'name' => tra('CoverPage text settings'),
-						'description' => tra('Heading|Subheading|Alignment|Background color|Text color|Page border|Border color. Enter settings separated by |,leave blank for default'),
+						'description' => tra('<code>Heading|Subheading|Text Alignment|Background color|Text color|Page border|Border color</code>. Enter settings separated by <code>|</code>,sequence is important,leave blank for default. For example <code>{PAGETITLE}|Tikiwiki|Center|#fff|#000|1|#ccc</code>'),
 						'type' => 'text',
 						'default' => '',
 					),
