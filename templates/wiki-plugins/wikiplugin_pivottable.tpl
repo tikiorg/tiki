@@ -2,7 +2,7 @@
 	var pivotData{{$pivottable.index}} = {{$pivottable.data|json_encode}};
 	$('#output_{{$pivottable.id}}').each(function () {
 		var pivotLocale = $.pivotUtilities.locales[{{$lang|json_encode}}];
-		var renderers = $.extend(pivotLocale ? pivotLocale.renderers : $.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers);
+		var renderers = $.extend(pivotLocale ? pivotLocale.renderers : $.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers, $.pivotUtilities.subtotal_renderers);
 		var opts = {
 			renderers: renderers,
 			rendererOptions: {
@@ -23,6 +23,7 @@
 			derivedAttributes: { {{','|implode:$pivottable.derivedAttributes}} },
 			cols: {{$pivottable.tcolumns|json_encode}}, rows: {{$pivottable.trows|json_encode}},
 			rendererName: {{$pivottable.rendererName|json_encode}},
+			dataClass: $.pivotUtilities.SubtotalPivotData,
 			width: {{$pivottable.width|json_encode}},
 			height: {{$pivottable.height|json_encode}},
 			aggregatorName: pivotLocale && pivotLocale.aggregators[{{$pivottable.aggregatorName|json_encode}}] ? {{$pivottable.aggregatorName|json_encode}} : null,
