@@ -183,14 +183,13 @@ class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
 			$search .= '~`";:?+/={}[]-_|\'\\';
 			for ($i = 0, $istrlen_search = strlen($search); $i < $istrlen_search; $i++) {
 				// ;? matches the ;, which is optional
-				// 0{0,8} matches any padded zeros,
-				// which are optional and go up to 8 chars
+				// 0* matches any padded zeros, which are optional
 				// &#x0040 @ search for the hex values
-				$patterns[] = '/(&#[xX]0{0,8}'.dechex(ord($search[$i])).';?)/i';
+				$patterns[] = '/(&#x0*'.dechex(ord($search[$i])).';?)/i';
 				$replacements[] = $search[$i];
-				// &#00064 @ 0{0,8} matches '0' zero to eight times
+				// &#00064 @ 0* matches padded zeros
 				// with a ;
-				$patterns[] = '/(&#0{0,8}'.ord($search[$i]).';?)/';
+				$patterns[] = '/(&#0*'.ord($search[$i]).';?)/';
 				$replacements[] = $search[$i];
 			}
 		}
