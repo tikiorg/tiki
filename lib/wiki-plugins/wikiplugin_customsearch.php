@@ -658,14 +658,20 @@ function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &
 				$currentlevel = $level;
 			}
 			$li = $document->createElement('li');
+			$li->setAttribute('class', $_style);
 			$ul{$currentlevel}->appendChild($li);
 			$input = $document->createElement('input');
 			$input->setAttribute('type', $_style);
 			cs_design_setbasic($input, $fieldid, $fieldname, $arguments);
 			$input->setAttribute('value', $categId);
-			$li->appendChild($input);
+
+			$labelElement = $document->createElement('label');
 			$label = $document->createTextNode($_categpath ? $c['relativePathString'] : $c['name']);
-			$li->appendChild($label);
+
+			$labelElement->appendChild($input);
+			$labelElement->appendChild($label);
+
+			$li->appendChild($labelElement);
 
 			if ($_style == 'radio') {
 				$radioreset = "$('input[type=radio][name=$fieldname]').each(function() {

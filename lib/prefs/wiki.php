@@ -143,7 +143,7 @@ function prefs_wiki_list($partial = false)
 		),
 		'wiki_topline_position' => array(
 			'name' => tra('Wiki top line location'),
-			'description' => tra('Page description, icons, backlinks....'),
+			'description' => tra('Page description, page actions, icons, backlinks....'),
 			'type' => 'list',
 			'options' => array(
 				'top' => tra('Top'),
