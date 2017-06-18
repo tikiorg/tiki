@@ -98,8 +98,6 @@ class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
                 'onoutofsync',
                 'onover',
                 'onpage',
-				'onpagehide',
-				'onpageshow',
                 'onpaste',
                 'onpause',
                 'onpointer',
