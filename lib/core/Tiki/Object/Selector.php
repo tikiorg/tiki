@@ -16,13 +16,13 @@ class Selector
 		$this->lib = $lib;
 	}
 
-	function read($input)
+	function read($input, $format = null)
 	{
 		$parts = explode(':', trim($input), 2);
 
 		if (count($parts) === 2) {
 			list($type, $object) = $parts;
-			return new SelectorItem($this, $type, $object);
+			return new SelectorItem($this, $type, $object, $format);
 		}
 
 		return null;
@@ -57,9 +57,9 @@ class Selector
 		}, array_values($parts));
 	}
 
-	function getTitle($type, $object)
+	function getTitle($type, $object, $format = null)
 	{
-		return $this->lib->get_title($type, $object);
+		return $this->lib->get_title($type, $object, $format);
 	}
 }
 
