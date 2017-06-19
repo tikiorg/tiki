@@ -16,6 +16,7 @@ function wikiplugin_split_info()
 		'iconname' => 'th-large',
 		'introduced' => 1,
 		'tags' => array( 'basic' ),
+		'body' => tra('Text to display in a table. Use "---" to separate the columns and "@@@" to separate rows.'),
 		'params' => array(
 			'joincols' => array(
 				'required' => false,
