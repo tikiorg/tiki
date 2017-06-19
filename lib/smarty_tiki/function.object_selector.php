@@ -90,7 +90,7 @@ function smarty_function_object_selector( $params, $smarty )
 	}
 
 	$selector = TikiLib::lib('objectselector');
-	$arguments['current_selection'] = $selector->read($arguments['value']);
+	$arguments['current_selection'] = $selector->read($arguments['value'], $arguments['format']);
 
 	$arguments['filter'] = json_encode($arguments['filter']);
 
