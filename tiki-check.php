@@ -501,7 +501,8 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 // memory_limit
 $memory_limit = ini_get('memory_limit');
 $s = trim($memory_limit);
-$last = strtolower($s{strlen($s)-1});
+$last = strtolower(substr($s,-1));
+$s = substr($s,0,-1);
 switch ( $last ) {
 	case 'g': $s *= 1024;
 	case 'm': $s *= 1024;
@@ -754,7 +755,8 @@ if ( $s >= 30 && $s <= 90 ) {
 // upload_max_filesize
 $upload_max_filesize = ini_get('upload_max_filesize');
 $s = trim($upload_max_filesize);
-$last = strtolower($s{strlen($s)-1});
+$last = strtolower(substr($s,-1));
+$s = substr($s,0,-1);
 switch ( $last ) {
 	case 'g': $s *= 1024;
 	case 'm': $s *= 1024;
@@ -783,7 +785,8 @@ if ($s >= 8 * 1024 * 1024) {
 // post_max_size
 $post_max_size = ini_get('post_max_size');
 $s = trim($post_max_size);
-$last = strtolower($s{strlen($s)-1});
+$last = strtolower(substr($s,-1));
+$s = substr($s,0,-1);
 switch ( $last ) {
 	case 'g': $s *= 1024;
 	case 'm': $s *= 1024;

@@ -12,7 +12,7 @@ function wikiplugin_fluidgrid_info()
         'documentation' => 'PluginFluidGrid',
         'description' => tra('Arrange content into rows and columns using the bootstrap fluid grid'),
         'prefs' => array( 'wikiplugin_fluidgrid' ),
-        'body' => tra('Text'),
+        'body' => tra('Text to display in a grid. Use "---" to separate the columns and "@@@" to separate rows.'),
         'filter' => 'wikicontent',
 		'format' => 'html',
         'iconname' => 'table',

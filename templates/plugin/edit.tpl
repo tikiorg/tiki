@@ -1,7 +1,11 @@
 {extends 'layout_view.tpl'}
 
+{block name="subtitle"}
+	{help url=$info.documentation}
+{/block}
+
 {block name="title"}
-	<h3>{$title}</h3>
+	<h3>{$title} {block name=subtitle}{/block}</h3>
 {/block}
 
 {block name="content"}
