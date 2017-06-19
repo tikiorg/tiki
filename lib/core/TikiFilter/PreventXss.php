@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// FIXME: This may quietly alter the value. Do not use
+// FIXME: This may quietly alter the value. Users of this filter should report if the value is modified.
 class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
 {
 	function filter( $value )
@@ -98,7 +98,7 @@ class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
                 'ononline',
                 'onoutofsync',
                 'onover',
-                'onpage',
+                'onpage', // Short for pageshow and pagehide
                 'onpaste',
                 'onpause',
                 'onpointer',
