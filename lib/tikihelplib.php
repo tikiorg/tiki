@@ -36,6 +36,7 @@ function help_doclink($params)
 	extract($params);
 	// Param = zone
 	$ret = '';
+	if (!isset($url)) $url = '';
 	if (empty($url) && empty($desc) && empty($crumb)) {
 		return;
 	}
