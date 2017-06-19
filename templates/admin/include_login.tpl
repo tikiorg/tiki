@@ -6,7 +6,7 @@
 		return false
 	});
 {/jq}
-<form action="tiki-admin.php?page=login" class="admin form-horizontal" method="post" name="LogForm">
+<form action="tiki-admin.php?page=login" class="admin form-horizontal" method="post" name="LogForm" enctype="multipart/form-data">
 	{include file='access/include_ticket.tpl'}
 	<div class="t_navbar margin-bottom-md">
 		{button href="tiki-admingroups.php" _type="text" _class="btn btn-link tips" _icon_name="group" _text="{tr}Groups{/tr}" _title=":{tr}Group Administration{/tr}"}
@@ -467,10 +467,9 @@
 				{preference name='auth_ws_create_tiki'}
 			</fieldset>
 		{/tab}
-	{include file='admin/include_apply_bottom.tpl'}
-</form>
 
-		{tab name="{tr}Password Blacklist{/tr}"}
+
+{tab name="{tr}Password Blacklist{/tr}"}
 		<br>
 			<fieldset>
 				<legend>{tr}Password{/tr}</legend>
@@ -489,8 +488,6 @@
 					<p>Raw password files can be obtained from <a href="https://github.com/danielmiessler/SecLists/tree/master/Passwords" target="_blank">Daniel Miessler's Collection</a>.
 						Tiki's defaut password blacklist files were generated from Missler's top 1 million password file.</p>
 
-					<form action="tiki-admin.php?page=login" class="admin form-horizontal" method="post" name="PassForm" enctype="multipart/form-data">
-						<input type="hidden" name="password_blacklist" />
 						<input type="file" name="passwordlist" accept="text/plain" />
 						Use 'LOAD DATA INFILE': <input type="checkbox" name="loaddata" /> {help desc="Allows much larger files to be uploaded, but requires MySQL on localhost with extra permissions."}<br>
 						<input type="submit" value="Create or Replace Word Index" name="uploadIndex" class="btn btn-primary btn-sm timeout">
@@ -503,12 +500,13 @@
 
 						<p>Blacklist Currently Using: {$file_using}</p>
 						{if $num_indexed}
-							<h3>Generate and Save a Password Blacklist</h3>
-							Assuming your word list was arranged in order of most commonly used, the 'Limit' field will provide you with that many of the most commonly used passwords.
-							The other fields default to the password standards set in tiki. You should not have to change these, unless you plan on changing your password
-							requirements in the future. Saving places a text file with the generated passwords in your password blacklist folder and enables it as an option for use.
+							<h3>Generate and Save a Password Blacklist{help desc="Saving places a text file with the generated passwords in your storage/pass_blacklists folder and enables it
+							as an option for use. Fields default to the password standards set in tiki. You should not have to change these, unless you plan on changing your password
+							requirements in the future."}</h3>
 							Number of passwords (limit): <input type="number" name="limit" value="{$limit}" />
-							{help desc="Typical usage ranges between 1,000 & 10,000, although many more could be used. Twitter blacklists 396."}<br>
+							{help desc="This sets the number of passwords that your blacklist will use. The words from the begining of of the file will be selected over the lower,
+										so if you have a list of words arranged with the most common at the top, it will select only the most common works to blacklist.
+										Typical usage ranges between 1,000 & 10,000, although many more could be used. Twitter blacklists 396."}<br>
 							Minmum Password Length: <input type="number" name="length" value="{$length}" />
 							{help desc="The minimum password length for your password. This will filter out any password that has an illegal length."}<br>
 							Require Numbers &amp; Letters: <input type="checkbox" name="charnum" {if $charnum}checked{/if} />
@@ -518,9 +516,13 @@
 							<input type="submit" value="Save & Set as Default" name="saveblacklist" class="btn btn-primary btn-sm timeout">
 							<input type="submit" value="View Password List" name="viewblacklist" class="btn btn-primary btn-sm timeout" formtarget="_blank">
 						{/if}
-					</form>
 				</div>
 			</fieldset>
 		{/tab}
-
 	{/tabset}
+
+{include file='admin/include_apply_bottom.tpl'}
+</form>
+
+
+

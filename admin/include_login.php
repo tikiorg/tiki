@@ -67,38 +67,41 @@ if ($prefs['feature_antibot'] === 'y' && $prefs['captcha_questions_active'] !== 
 $listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 $smarty->assign("listgroups", $listgroups['data']);
 
-global $blackL;
-$blackL->charnum = 0;
-$blackL->special = 0;
-$blackL->length = 0;
-$blackL->limit = 0;
+$blackL = TikiLib::lib('blacklist');
+
+// set the default prefrence values
+if ($prefs['pass_chr_num'] === 'y') {
+	$charnum = 1;
+}
+if ($prefs['pass_chr_special'] === 'y') {
+	$special = 1;
+}
+$length = $prefs['min_pass_length'];
 
 if ($access->ticketMatch()) {
 	if (isset($_POST['uploadIndex'])){
 		if ($_FILES['passwordlist']['error'] === 4) Feedback::error(tr('You need to select a file to upload.'));
 		else if ($_FILES['passwordlist']['error']) Feedback::error(tr('File Upload Error: ' . $_FILES['passwordlist']['error']));
-		else{  // if file has been uploaded, and there are no errors, then index the file in the databse.
+		else{  // if file has been uploaded, and there are no errors, then index the file in the database.
 			$blackL->deletePassIndex();
 			$blackL->createPassIndex();
 			$blackL->loadPassIndex($_FILES['passwordlist']['tmp_name'],$_POST['loaddata']);
 			Feedback::success(tra('Uploaded file has been populated into database and indexed. Ready to generate password lists.'));
 		}
-	} else if (isset($_POST['saveblacklist']) || isset($_POST['viewblacklist'])) {
+	} elseif (isset($_POST['saveblacklist']) || isset($_POST['viewblacklist'])) {
+
+
+		// if creating a blacklist, use selected values instead of defaults
+		$charnum = 0;
+		$special = 0;
+		$length = $_POST['length'];
 
 		if (isset($_POST['charnum'])) {
-			$blackL->charnum = 1;
+			$charnum = 1;
 		}
 		if (isset($_POST['special'])) {
-			$blackL->special = 1;
+			$special = 1;
 		}
-		if (isset($_POST['length'])) {
-			$blackL->length = 0;
-		}
-		if (isset($_POST['limit'])) {
-			$blackL->limit = 0;
-		}
-
-		$blackL->length = $_POST['length'];
 		$blackL->limit = $_POST['limit'];
 
 		if (isset($_POST['viewblacklist'])) {  // if viewing the password list, enter plain text mode, spit out passwords, then exit.
@@ -110,12 +113,11 @@ if ($access->ticketMatch()) {
 		// else if save blacklist chosen
 		if ($blackL->generatePassList(true)) {
 			$filename = dirname($_SERVER['SCRIPT_FILENAME']).'/'.$blackL->generateBlacklistName();
-			$smarty->assign('sucess_message', 'Passwod Blacklist Saved to Disk');
 			$blackL->set_preference('pass_blacklist_file', $blackL->generateBlacklistName(false));
 			$blackL->loadBlacklist($filename);
 		}else Feedback::error(tr('Unable to Write Password File to Disk'));
 
-	}else if (isset($_POST['deleteIndex'])){
+	}elseif (isset($_POST['deleteIndex'])){
 
 		$blackL->deletePassIndex();
 	}
@@ -123,9 +125,9 @@ if ($access->ticketMatch()) {
 
 
 $smarty->assign('file_using',$blackL->whatFileUsing());
-$smarty->assign('length',$blackL->length);
-$smarty->assign('charnum',$blackL->charnum);
-$smarty->assign('special',$blackL->special);
+$smarty->assign('length',$length);
+$smarty->assign('charnum',$charnum);
+$smarty->assign('special',$special);
 $smarty->assign('limit',$blackL->limit);
 
 $smarty->assign('num_indexed',$blackL->passIndexNum());

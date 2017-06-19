@@ -126,7 +126,7 @@ LIMIT 1;';
 	 *
 	 * Generates a formatted list of passwords, with new lines separating each password
 	 *
-	 * @param $toDisk bool if the file is witten to disk or to screen.
+	 * @param $toDisk bool if the file is written to disk or to screen.
 	 *
 	 * @return bool true on success and false on failure.
 	 */
@@ -141,17 +141,36 @@ LIMIT 1;';
 
 		$result = $this->query($query, array($prefs['min_pass_length']));
 		$this->actual = $result->NumRows();
+		if ($this->actual == 0 ){
+			Feedback::error(tr('There is no passwords that fit your criteria. You will need a more extensive word list to generate a password list.'));
+		}elseif ($this->actual < $this->limit){
+			Feedback::warning("There wasn't enough words to meet your password limit. There was $this->actual passwords blacklisted.");
+		}
 
 		if ($toDisk){
 			$filename = $this->generateBlacklistName();
 			if (!is_dir(dirname($filename)))
-				if (!mkdir(dirname($filename))) return false; // if the directory isnt there create it, return false on failure.
+				if (!mkdir(dirname($filename))){	// if the directory isnt there create it.
+					Feedback::error(tr('Could not create /storage/pass_blacklists directory.'));
+				return false;
+			}
 			if (file_exists($filename))
-				if (!unlink($filename)) return false; // if the file already exists, then delete, return false on failure.
+				if (unlink($filename)){			// if the file already exists, then delete.
+					Feedback::warning(tr('Existing password blacklist file was overwritten.'));
+				}else{
+					Feedback::error(tr('Existing password blacklist file could not be overwritten.'));
+					return false;
+				}
 			$pointer = @fopen($filename,'x');
-			if (!$pointer) return false;
+			if (!$pointer){
+				Feedback::error(tr('File Error. Password file not created.'));
+				return false;
+			};
 			while ($foo = $result->fetchrow()) {
-				if (!fwrite($pointer, $foo['password'] . PHP_EOL)) return false;
+				if (!fwrite($pointer, $foo['password'] . PHP_EOL)){
+					Feedback::error(tr('File Error. Password file generation interrupted.'));
+					return false;
+				}
 			}
 			fclose($pointer);
 		}else{
@@ -159,6 +178,7 @@ LIMIT 1;';
 				echo $foo['password'] . PHP_EOL;
 			}
 		}
+		Feedback::success(tr('Password blacklist file generated.'));
 		return true;
 	}
 
