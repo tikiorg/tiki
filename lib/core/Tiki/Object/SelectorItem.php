@@ -12,17 +12,19 @@ class SelectorItem implements \ArrayAccess
 	private $selector;
 	private $type;
 	private $object;
+	private $format;
 
-	function __construct($selector, $type, $object)
+	function __construct($selector, $type, $object, $format = null)
 	{
 		$this->selector = $selector;
 		$this->type = $type;
 		$this->object = $object;
+		$this->format = $format;
 	}
 
 	function getTitle()
 	{
-		return $this->selector->getTitle($this->type, $this->object);
+		return $this->selector->getTitle($this->type, $this->object, $this->format);
 	}
 
 	function offsetExists($offset)
