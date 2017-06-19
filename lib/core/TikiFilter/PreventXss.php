@@ -5,6 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+// FIXME: This may quietly alter the value. Do not use
 class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
 {
 	function filter( $value )
@@ -126,7 +127,7 @@ class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
                 'ontoggle',
                 'ontouch',
                 'ontrackchange',
-				'onunder',
+				'onunder', // Where is this specified? 2017-06-19 
                 'onundo',
                 'onunload',
                 'onurlflip',
