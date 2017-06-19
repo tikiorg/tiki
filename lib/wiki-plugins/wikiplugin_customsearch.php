@@ -11,7 +11,7 @@ function wikiplugin_customsearch_info()
 		'name' => tra('Custom Search'),
 		'documentation' => 'PluginCustomSearch',
 		'description' => tra('Create a custom search form for searching or listing items on the site'),
-		'prefs' => array('wikiplugin_customsearch', 'wikiplugin_list', 'feature_ajax', 'feature_search'),
+		'prefs' => array('wikiplugin_customsearch', 'wikiplugin_list', 'feature_search'),
 		'body' => tra('LIST plugin configuration information'),
 		'filter' => 'wikicontent',
 		'profile_reference' => 'search_plugin_content',
@@ -177,6 +177,24 @@ function wikiplugin_customsearch_info()
 function wikiplugin_customsearch($data, $params)
 {
 	global $prefs;
+
+	if ($prefs['javascript_enabled'] !== 'y') {
+		require_once('lib/wiki-plugins/wikiplugin_list.php');
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_block_remarksbox');
+		$repeat = false;
+
+		$out = smarty_block_remarksbox(
+			[
+				'type' => 'warning',
+				'title' => tr('JavaScript disabled'),
+			],
+			tr('JavaScript is required for this search feature'),
+			$smarty,
+			$repeat);
+
+		return '~np~' . $out . '~/np~' . wikiplugin_list($data, []);
+	}
 
 	static $instance_id = null;
 
