@@ -524,13 +524,34 @@ class ObjectLib extends TikiLib
 	/**
 	 * @param string $type
 	 * @param $id
+	 * @param string $format - trackeritem format coming from ItemLink field or null by default
 	 * @return void|string
 	 */
-	function get_title($type, $id)
+	function get_title($type, $id, $format = null)
 	{
 		switch ($type) {
 			case 'trackeritem':
-				$title = TikiLib::lib('trk')->get_isMain_value(null, $id);
+				if ($format) {
+					$lib = TikiLib::lib('unifiedsearch');
+					$query = $lib->buildQuery([
+						'object_type' => 'trackeritem',
+						'object_id' => $id
+					]);
+					$result = $query->search($lib->getIndex());
+					$result->applyTransform(function ($item) use ($format) {
+						return preg_replace_callback('/\{(\w+)\}/', function ($matches) use ($item) {
+							$key = $matches[1];
+							if (isset($item[$key])) {
+								return $item[$key];
+							} else {
+								return tr('empty');
+							}
+						}, $format);
+					});
+					$title = array_shift($result->getArrayCopy());
+				} else {
+					$title = TikiLib::lib('trk')->get_isMain_value(null, $id);
+				}
 				if( empty($title) ) {
 					$title = "$type:$id";
 				}
