@@ -35,33 +35,34 @@ class Search_Formatter
 
 	function format($list)
 	{
-		global $prefs;
-
 		if (0 == count($list) && $this->alternateOutput) {
 			return $this->renderFilters() . $this->alternateOutput;
 		}
 
-		$formattedList = null;
-
-		if( $prefs['unified_cache_formatted_result'] === 'y' ) {
-			$cachelib = TikiLib::lib('cache');
-			$cacheKey = json_encode($list->jsonSerialize());
-			$formattedList = $cachelib->getSerialized($cacheKey, 'searchformat');
-		}
-
-		if( !$formattedList ) {
-			$formattedList = $this->getPopulatedList($list);
-			if( $prefs['unified_cache_formatted_result'] === 'y' ) {
-				$cachelib->cacheItem($cacheKey, serialize($formattedList), 'searchformat');
-			}
-		}
-		
+		$list = $this->getPopulatedList($list);
 		return $this->renderFilters()
-			. $this->render($this->plugin, $formattedList, Search_Formatter_Plugin_Interface::FORMAT_WIKI);
+			. $this->render($this->plugin, $list, Search_Formatter_Plugin_Interface::FORMAT_WIKI);
 	}
 
 	function getPopulatedList($list, $preload = true)
 	{
+		global $prefs;
+
+		if ($prefs['unified_cache_formatted_result'] === 'y') {
+			$cachelib = TikiLib::lib('cache');
+			$jsonList = $list->jsonSerialize();
+			usort($jsonList['result'], function($a, $b){
+				if ($a['object_id'] == $b['object_id']) {
+        	return 0;
+    		}
+    		return ($a['object_id'] < $b['object_id']) ? -1 : 1;
+			});
+			$cacheKey = json_encode($jsonList);
+			if ($formattedList = $cachelib->getSerialized($cacheKey, 'searchformat')) {
+				return $formattedList;
+			}
+		}
+
 		$list = Search_ResultSet::create($list);
 		$defaultValues = $this->plugin->getFields();
 
@@ -106,7 +107,13 @@ class Search_Formatter
 			$data[] = $this->plugin->prepareEntry(new Search_Formatter_ValueFormatter($row));
 		}
 
-		return $list->replaceEntries($data);
+		$formattedList = $list->replaceEntries($data);
+
+		if ($prefs['unified_cache_formatted_result'] === 'y') {
+			$cachelib->cacheItem($cacheKey, serialize($formattedList), 'searchformat');
+		}
+
+		return $formattedList;
 	}
 
 	public function renderFilters() {

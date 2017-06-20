@@ -127,7 +127,14 @@ class Tracker_Field_Math extends Tracker_Field_Abstract implements Tracker_Field
 		return array();
 	}
 
-	function handleFinalSave(array $data)
+	/**
+	 * Recalculate formula after saving all other fields in the tracker item
+	 * @param array $data - field values to save - passed by reference as
+	 * prepareFieldValues might add ItemsList field reference values here
+	 * and make them available for other Math fields in the same item, thus
+	 * greatly speeding up the process.
+	 */
+	function handleFinalSave(array &$data)
 	{
 		try {
 			$this->prepareFieldValues($data);
