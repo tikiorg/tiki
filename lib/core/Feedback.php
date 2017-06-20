@@ -231,8 +231,9 @@ class Feedback
 	public static function send_headers()
 	{
 		require_once 'lib/smarty_tiki/function.feedback.php';
-		header('X-Tiki-Feedback: ' . str_replace(array("\n", "\r", "\t"), '', smarty_function_feedback([], 
+		$feedback = rawurlencode(str_replace(array("\n", "\r", "\t"), '', smarty_function_feedback([], // Encode since HTTP headers are ASCII-only. Other characters can go through, but header()'s documentation has no word on their treatment. Chealer 2017-06-20 
 				TikiLib::lib('smarty'))));
+		header('X-Tiki-Feedback: ' . $feedback);
 	}
 
 }
