@@ -989,6 +989,8 @@ class EditLib
 						case "div": // Wiki parsing creates divs for center
 							if (isset($c[$i]['pars'])) {
 								$this->parseParDivTag($isPar, $c[$i]['pars'], $src, $p);
+							} else if ( $p['table']) {
+								$src .= '%%%';
 							} else {	// normal para or div
 								$src .= $this->startNewLine($src);
 								$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "\n\n");
@@ -1061,11 +1063,27 @@ class EditLib
 						case "s"  : $src .= $this->processWikiTag('s', $src, $p, '--', '--', true);
     						break;
 						// Table parser
-						case "table": $src .= $this->startNewLine($src) . '||'; $p['stack'][] = array('tag' => 'table', 'string' => '||'); $p['first_tr'] = true;
+						case "table":
+							$src .= $this->startNewLine($src) . '||';
+							$p['stack'][] = array('tag' => 'table', 'string' => '||');
+							$p['first_tr'] = true;
+							$p['table'] = true;
     						break;
-						case "tr": $src .= $p['first_tr'] ? '' : $this->startNewLine($src); $p['first_tr'] = false; $p['first_td'] = true;
+						case "tr":
+							if (! $p['first_tr']) {
+								$this->startNewLine($src);
+							}
+							$p['first_tr'] = false;
+							$p['first_td'] = true;
+							$p['wiki_lbr']++; // force wiki line break mode
     						break;
-						case "td": $src .= $p['first_td'] ? '' : '|'; $p['first_td'] = false;
+						case "td":
+							if ($p['first_td']) {
+								$src .= '';
+							} else {
+								$src .= '|';
+							}
+							$p['first_td'] = false;
     						break;
 						// Lists parser
 						case "ul": $p['listack'][] = '*';
@@ -1145,6 +1163,9 @@ class EditLib
 								$src .= $e['string'];
 								array_pop($p['stack']);
 							}
+							if ($c[$i]["data"]["name"] === 'table') {
+								$p['table'] = false;
+							}
 							break;
 					}
 
@@ -1163,7 +1184,9 @@ class EditLib
 						case "h3":
 						case "h4":
 						case "h5":
-						case "h6": $p['wiki_lbr']--;
+						case "h6":
+						case "tr":
+							$p['wiki_lbr']--;
 							break;
 					}
 				}
