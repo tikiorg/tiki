@@ -1741,7 +1741,7 @@ if ( \$('#$id') ) {
 		//   but hide '<x>' text inside some words like 'style' that are considered as dangerous by the sanitizer.
 		$data = str_replace(array( '&lt;x&gt;', '~np~', '~/np~' ), array( '<x>', '~np~', '~/np~' ), $data);
 
-		if ($this->option['typography']) {
+		if ($this->option['typography'] && ! $this->option['ck_editor']) {
 			$data = typography($data, $this->option['language']);
 		}
 
@@ -1823,7 +1823,7 @@ if ( \$('#$id') ) {
 		$data = $this->parse_data_wikilinks($data, true);
 		$data = $this->parse_data_externallinks($data, true);
 		$data = $this->parse_data_inline_syntax($data, $words);
-		if ($this->option['typography']) {
+		if ($this->option['typography'] && ! $this->option['ck_editor']) {
 			$data = typography($data, $this->option['language']);
 		}
 
