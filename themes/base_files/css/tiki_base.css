@@ -886,6 +886,9 @@ div.highlight.adminoptionbox {
   width: 2.2rem;
   padding: .2rem;
 }
+input[type="file"] {
+  height: auto;
+}
 address,
 blockquote,
 dd,
