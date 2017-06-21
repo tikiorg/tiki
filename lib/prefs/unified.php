@@ -175,7 +175,7 @@ function prefs_unified_list()
 		),
 		'unified_cache_formatted_result' => array(
 			'name' => tra('Cache formatted results'),
-			'description' => tr('If enabled, formatted search results like the ones used in PluginList will be cached to prevent costly reformatting on each page load.'),
+			'description' => tr('If enabled, formatted search results like the ones used in LIST plugin will be cached to prevent costly reformatting on each page load. Please note that this could quickly build up a large cache directory size. It is recommended to clear tiki caches often (e.g. once per week) via automated job if you use this feature.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
