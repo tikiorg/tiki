@@ -42,6 +42,7 @@ function prefs_wiki_list($partial = false)
 		'commentDate_asc' => tra('Oldest first'),
 		'points_desc' => tra('Points'),
 	);
+	$truncationHint = 'If the text is longer, it will be truncated after that length. Special value "0" disables truncation.';
 
 	foreach ( $advanced_columns as $key => $label ) {
 		$comment_sort_orders[ $key . '_asc' ] = $label . ' ' . tr('ascending');
@@ -389,7 +390,8 @@ function prefs_wiki_list($partial = false)
 			'default' => 'y',
 		),
 		'wiki_list_name_len' => array(
-			'name' => tra('Name length'),
+			'name' => tra('Page name maximum displayed length'),
+			'hint' => tra($truncationHint),
 			'type' => 'text',
 			'size' => '3',
 			'units' => tra('characters'),
@@ -422,12 +424,13 @@ function prefs_wiki_list($partial = false)
 			'default' => 'n',
 		),
 		'wiki_list_comment' => array(
-			'name' => tra('Edit comments'),
+			'name' => tra('Comment of the latest edit'),
 			'type' => 'flag',
 			'default' => 'y',
 		),
 		'wiki_list_comment_len' => array(
-			'name' => tra('Edit comment length'),
+			'name' => tra("Maximum displayed length of the latest edit's comment"),
+			'hint' => tra($truncationHint),
 			'type' => 'text',
 			'size' => '3',
 			'units' => tra('characters'),
@@ -439,7 +442,8 @@ function prefs_wiki_list($partial = false)
 			'default' => 'y',
 		),
 		'wiki_list_description_len' => array(
-			'name' => tra('Description length'),
+			'name' => tra('Description maximum displayed length'),
+			'hint' => tra($truncationHint),
 			'type' => 'text',
 			'size' => '3',
 			'units' => tra('characters'),
@@ -579,13 +583,14 @@ function prefs_wiki_list($partial = false)
 			'default' => 'top',
 		),
 		'wiki_backlinks_name_len' => array(
-			'name' => tra('Name length'),
-			'description' => tra('Maximum length (in characters) to display before truncating backlink page names. Use "0" for no truncating.'),
+			'name' => tra('Backlink page names maximum displayed length'),
+			'hint' => tra($truncationHint),
 			'type' => 'text',
 			'size' => '3',
 			'filter' => 'digits',
 			'dependencies' => array( 'feature_backlinks' ),
 			'default' => 0,
+			'units' => tra('characters'),
 		),
 		'wiki_simple_ratings' => array(
 			'name' => tra('Simple wiki ratings'),
