@@ -57,7 +57,7 @@ class Search_Formatter
     		}
     		return ($a['object_id'] < $b['object_id']) ? -1 : 1;
 			});
-			$cacheKey = json_encode($jsonList);
+			$cacheKey = json_encode($jsonList).serialize($this->plugin);
 			if ($formattedList = $cachelib->getSerialized($cacheKey, 'searchformat')) {
 				return $formattedList;
 			}
