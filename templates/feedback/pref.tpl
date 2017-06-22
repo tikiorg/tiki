@@ -22,7 +22,7 @@
 						{icon name='information'}
 					{/if}
 					{if $item.st ne 3}{tr}Preference{/tr} {/if}<strong>{tr}{$item.mes[0]|stringfix}{/tr}</strong>
-					{if $item.st ne 3}(<small>{tr}Preference name:{/tr} {$item.name})</small>{/if}
+					{if $item.st ne 3}<small>({tr}Preference name:{/tr} {$item.name})</small>{/if}
 				</li>
 			{/foreach}
 		</ul>
