@@ -135,7 +135,7 @@
 										{/if}
 
 										{if $pdf_export eq 'y'}
-											{$libeg}<a href="tiki-print_multi_pages.php?printstructures=a%3A1%3A%7Bi%3A0%3Bs%3A1%3A%22{$channels[ix].page_ref_id}%22%3B%7D&amp;display=pdf">
+											{$libeg}<a href="tiki-print_multi_pages.php?printstructures=%255B%2522{$channels[ix].page_ref_id}%2522%255D&amp;display=pdf&amp;print=pdf">
 												{icon name='pdf' _menu_text='y' _menu_icon='y' alt="{tr}PDF{/tr}"}
 											</a>{$liend}
 										{/if}

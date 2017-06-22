@@ -114,8 +114,17 @@ class PdfGenerator
 				array('timeout' => 120)
 			);
 		}
-		if (is_array($params['printpages'])) {
-			$params['printpages'] = implode('&', $params['printpages']);
+		if (is_array($params['printpages']) || is_array($params['printstructures'])) {
+			if (is_array($params['printpages'])) { 
+				$params['printpages'] = implode('&', $params['printpages']);
+			}
+			else  { 
+				$params['printpages'] = implode('&', $params['printstructures']);
+			}
+			//getting parsed data
+			foreach($params['pages'] as $page) { 
+				$pdata.= $page['parsed'];
+			}
 		}
 		$url = $base_url . $file . '?' . http_build_query($params, '', '&');
         $session_params = session_get_cookie_params();
