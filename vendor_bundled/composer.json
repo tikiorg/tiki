@@ -6,7 +6,7 @@
 	"minimum-stability": "stable",
 	"require": {
 		"adodb/adodb-php": "^5.20",
-		"aFarkas/html5shiv": "3.7.3",
+		"afarkas/html5shiv": "3.7.3",
 		"alxlit/bootstrap-chosen": "1.0.1",
 		"blueimp/javascript-canvas-to-blob": "^2.2.0",
 		"blueimp/javascript-load-image": "^1.14.0",
