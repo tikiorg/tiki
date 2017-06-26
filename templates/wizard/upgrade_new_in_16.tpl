@@ -6,7 +6,7 @@
 		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
 	</span>
 	{tr}Main new and improved features and settings in Tiki 16{/tr}.
-	<a href="http://doc.tiki.org/Tiki15" target="tikihelp" class="tikihelp" title="{tr}Tiki15:{/tr}
+	<a href="http://doc.tiki.org/Tiki16" target="tikihelp" class="tikihelp" title="{tr}Tiki16:{/tr}
 			{tr}Tiki16 is a standard non-LTS version{/tr}.
 			{tr}It will be supported until 17.1 is released{/tr}.
 			{tr}New PHP minimum requirement for Tiki 16 is PHP 5.6{/tr}.
