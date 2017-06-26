@@ -16,7 +16,7 @@
  *
  *
  * @param $smarty
- * @return string|void
+ * @return mixed string|void
  * @throws Exception
  */
 function smarty_function_lock($params, $smarty)
@@ -37,26 +37,28 @@ function smarty_function_lock($params, $smarty)
 		return tra('Type not specified');
 	}
 
-	if (empty($params['lock_perm'])) {
+	$lock_perm = $params['lock_perm'];
+	if (empty($lock_perm)) {
 		switch ($params['type']) {
 			case 'template':
-				$params['lock_perm'] = 'lock_content_templates';
+				$lock_perm = 'lock_content_templates';
 				break;
 			case 'wiki structure':
-				$params['lock_perm'] = 'lock_structures';
+				$lock_perm = 'lock_structures';
 				break;
 			default:
 				return tra('lock perm not found');
 		}
 	}
 
-	if (empty($params['admin_perm'])) {
+	$admin_perm = $params['admin_perm'];
+	if (empty($admin_perm)) {
 		switch ($params['type']) {
 			case 'template':
-				$params['admin_perm'] = 'admin_content_templates';
+				$admin_perm = 'admin_content_templates';
 				break;
 			case 'wiki structure':
-				$params['admin_perm'] = 'admin_structures';
+				$admin_perm = 'admin_structures';
 				break;
 			default:
 				return tra('admin perm not found');
@@ -82,7 +84,7 @@ function smarty_function_lock($params, $smarty)
 
 	if ($value) {
 		$params['is_locked'] = true;
-		if ($value === $user || $perms->$params['admin_perm']) {
+		if ($value === $user || $perms->$admin_perm) {
 			$params['can_change'] = true;
 		} else {
 			$params['can_change'] = false;
@@ -90,7 +92,7 @@ function smarty_function_lock($params, $smarty)
 		$params['lockedby'] = $value;
 	} else {
 		$params['is_locked'] = false;
-		$params['can_change'] = $perms->$params['lock_perm'];
+		$params['can_change'] = $perms->$lock_perm;
 	}
 
 	$smarty->assign('data', $params);
