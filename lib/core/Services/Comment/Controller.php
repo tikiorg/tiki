@@ -16,11 +16,7 @@ class Services_Comment_Controller
 	{
 		$type = $input->type->text();
 		if ($type === 'wiki page') {
-			if (TikiLib::lib('wiki')->contains_badchars($input->objectId->none())) {
-				$objectId = '';
-			} else {
 				$objectId = $input->objectId->pagename();
-			}
 		} else {
 			$objectId = $input->objectId->digits();
 		}
