@@ -57,7 +57,7 @@ function prefs_activity_list()
 		),
 		'activity_custom_events' => array(
 			'name' => tr('Custom activities'),
-			'description' => tr('"Allows the defining of custom behaviors in addition to internal events.'),
+			'description' => tr('Allows the defining of custom behaviors in addition to internal events.'),
 			'help' => 'Activity+Stream',
 			'type' => 'flag',
 			'default' => 'n',
