@@ -875,14 +875,16 @@ class WikiLib extends TikiLib
 					'tiki-index.php?page' . urlencode($res['pageName'])
 				);
 			}
-			$histlib->remove_version($res['pageName'], $res['version']);
+			$ret = $histlib->remove_version($res['pageName'], $res['version']);
 		} else {
-			$this->remove_all_versions($page);
+			$ret = $this->remove_all_versions($page);
 		}
-		$logslib = TikiLib::lib('logs');
-		$logslib->add_action('Removed last version', $page, 'wiki page', $comment);
-		//get_strings tra("Removed last version");
-		return true;
+		if ($ret) {
+			$logslib = TikiLib::lib('logs');
+			$logslib->add_action('Removed last version', $page, 'wiki page', $comment);
+			//get_strings tra("Removed last version");
+		}
+		return $ret;
 	}
 
 	/**

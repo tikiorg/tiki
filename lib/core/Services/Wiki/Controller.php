@@ -149,23 +149,24 @@ class Services_Wiki_Controller
 			$count = count($items);
 			foreach ($items as $page) {
 				$result = false;
+				//get page info before deletion in case this was the page the user was on
+				//used later to redirect to the tiki index page
+				$allinfo = TikiLib::lib('tiki')->get_page_info($page, false, true);
+				$history = false;
 				if ($all || $extra['one']) {
-					//get page info before deletion in case this was the page the user was on
-					//used later to redirect to the tiki index page
-					if (count($items) === 1) {
-						$allinfo = TikiLib::lib('tiki')->get_page_info($page);
-					}
 					$result = TikiLib::lib('tiki')->remove_all_versions($page);
 				} elseif ($last) {
 					$result = TikiLib::lib('wiki')->remove_last_version($page);
 				} elseif (!empty($extra['version']) && is_numeric($extra['version'])) {
 					$result = TikiLib::lib('hist')->remove_version($page, $extra['version']);
+					$history = true;
 				}
 				if (!$result) {
 					$error = true;
+					$versionText = $history ? tr('Version') . ' ' : '';
 					$feedback = [
 						'tpl' => 'action',
-						'mes' => tr('An error occurred. %0 could not be deleted', $page),
+						'mes' => tr('An error occurred. %0%1 could not be deleted.', $versionText, $page),
 					];
 					Feedback::error($feedback, 'session');
 				}
@@ -196,8 +197,9 @@ class Services_Wiki_Controller
 				Feedback::success($feedback, 'session');
 			}
 			//return to page
-			if (isset($allinfo) && strpos($_SERVER['HTTP_REFERER'], $allinfo['pageSlug']) !== false
-			&& TikiLib::lib('tiki')->get_page_info($page, false, true) === false) {
+			if ($count === 1 && ($all || $extra['one'])
+				&& strpos($_SERVER['HTTP_REFERER'], $allinfo['pageName']) !== false)
+			{
 				//go to tiki index if the page the user was on has been deleted - avoids no page found error.
 				global $prefs, $base_url;
 				return Services_Utilities::redirect($base_url . $prefs['tikiIndex']);
@@ -260,7 +262,7 @@ class Services_Wiki_Controller
 					$error = true;
 					$feedback = [
 						'tpl' => 'action',
-						'mes' => tr('An error occurred. %0 could not be deleted', $version),
+						'mes' => tr('An error occurred. Version %0 could not be deleted.', $version),
 					];
 					Feedback::error($feedback, 'session');
 				}
