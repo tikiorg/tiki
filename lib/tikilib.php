@@ -2712,10 +2712,13 @@ class TikiLib extends TikiDb_Bridge
 	 */
 	function remove_all_versions($page, $comment = '')
 	{
+		$page_info = $this->get_page_info($page);
+		if (!$page_info) {
+			return false;
+		}
 		global $user, $prefs;
-		if ($prefs['feature_actionlog'] == 'y') {
-			$info= $this->get_page_info($page);
-			$params = 'del='.strlen($info['data']);
+		if ($prefs['feature_actionlog'] == 'y' && isset($page_info['data'])) {
+			$params = 'del='.strlen($page_info['data']);
 		} else {
 			$params = '';
 		}
@@ -2723,7 +2726,6 @@ class TikiLib extends TikiDb_Bridge
 		include_once('lib/notifications/notificationemaillib.php');
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$machine = self::httpPrefix(true). dirname($foo["path"]);
-		$page_info = $this->get_page_info($page);
 		sendWikiEmailNotification('wiki_page_deleted', $page, $user, $comment, 1, $page_info['data'], $machine);
 
 		//Remove the bibliography references for this page

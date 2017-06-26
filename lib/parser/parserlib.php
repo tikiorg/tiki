@@ -3404,13 +3404,20 @@ if ( \$('#$id') ) {
 		$link->setQualifier($reltype);
 		$link->setDescription($description);
 		$link->setWikiLookup(array( $this, 'parser_helper_wiki_info_getter' ));
-		$link->setWikiLinkBuilder(
-			function ($pageLink)
-			{
-				$wikilib = TikiLib::lib('wiki');
-				return $wikilib->sefurl($pageLink);
-			}
-		);
+		if ($ck_editor) {	// prevent page slug being used in wysiwyg editor, needs the page name
+			$link->setWikiLinkBuilder(
+				function ($pageLink) {
+					return $pageLink;
+				}
+			);
+		} else {
+			$link->setWikiLinkBuilder(
+				function ($pageLink) {
+					$wikilib = TikiLib::lib('wiki');
+					return $wikilib->sefurl($pageLink);
+				}
+			);
+		}
 		$link->setExternals($externals);
 		$link->setHandlePlurals($processPlural);
 		$link->setAnchor($anchor);
