@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d57fa5aabcde18d4d6514929daec5dbe",
+    "content-hash": "d7fafc6c7d420471218a771cdc6bbbe7",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -239,7 +239,7 @@
                 "prebind",
                 "xmpp"
             ],
-            "time": "2015-02-26 17:32:01"
+            "time": "2015-02-26T17:32:01+00:00"
         },
         {
             "name": "chartjs/Chart.js",
@@ -2110,17 +2110,17 @@
         },
         {
             "name": "studio-42/elfinder",
-            "version": "2.1.24",
+            "version": "2.1.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Studio-42/elFinder.git",
-                "reference": "085b4f8b470335f89ca0dce0a8d31243e46e6b7d"
+                "reference": "15fd80e6af9fe51407db2e6baf7a6036de6a11df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/studio-42/elfinder/studio-42-elfinder-085b4f8b470335f89ca0dce0a8d31243e46e6b7d-zip-35bdbf.zip",
-                "reference": "085b4f8b470335f89ca0dce0a8d31243e46e6b7d",
-                "shasum": "ea545783fdec8dae47a686cb69722b0d1c81b7f1"
+                "url": "https://composer.tiki.org/dist/studio-42/elfinder/studio-42-elfinder-15fd80e6af9fe51407db2e6baf7a6036de6a11df-zip-c54613.zip",
+                "reference": "15fd80e6af9fe51407db2e6baf7a6036de6a11df",
+                "shasum": "605db3e19f016550129970615bd10f0db6f8d55a"
             },
             "require": {
                 "php": ">=5.2"
@@ -2164,7 +2164,7 @@
             ],
             "description": "File manager for web",
             "homepage": "http://elfinder.org",
-            "time": "2017-05-19T06:16:48+00:00"
+            "time": "2017-06-23T06:23:08+00:00"
         },
         {
             "name": "svg-edit/svg-edit",
@@ -3842,29 +3842,29 @@
         },
         {
             "name": "zendframework/zend-session",
-            "version": "2.7.3",
+            "version": "2.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-session.git",
-                "reference": "346e9709657b81a5d53d70ce754730a26d1f02f2"
+                "reference": "b1486c382decc241de8b1c7778eaf2f0a884f67d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/zendframework/zend-session/zendframework-zend-session-346e9709657b81a5d53d70ce754730a26d1f02f2-zip-8eddc7.zip",
-                "reference": "346e9709657b81a5d53d70ce754730a26d1f02f2",
-                "shasum": "78d171b9f329b242d73f51ef1062d112a71fbc4e"
+                "url": "https://composer.tiki.org/dist/zendframework/zend-session/zendframework-zend-session-b1486c382decc241de8b1c7778eaf2f0a884f67d-zip-e0fd9b.zip",
+                "reference": "b1486c382decc241de8b1c7778eaf2f0a884f67d",
+                "shasum": "239c89382e6df153b8c55f8b1030f4ce63831892"
             },
             "require": {
-                "php": "^5.5 || ^7.0",
+                "php": "^7.0 || ^5.6",
                 "zendframework/zend-eventmanager": "^2.6.2 || ^3.0",
                 "zendframework/zend-stdlib": "^2.7 || ^3.0"
             },
             "require-dev": {
                 "container-interop/container-interop": "^1.1",
-                "fabpot/php-cs-fixer": "1.7.*",
                 "mongodb/mongodb": "^1.0.1",
-                "phpunit/phpunit": "~4.0",
+                "phpunit/phpunit": "^6.0.8 || ^5.7.15",
                 "zendframework/zend-cache": "^2.6.1",
+                "zendframework/zend-coding-standard": "~1.0.0",
                 "zendframework/zend-db": "^2.7",
                 "zendframework/zend-http": "^2.5.4",
                 "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3",
@@ -3881,8 +3881,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.7-dev",
-                    "dev-develop": "2.8-dev"
+                    "dev-master": "2.8-dev",
+                    "dev-develop": "2.9-dev"
                 },
                 "zf": {
                     "component": "Zend\\Session",
@@ -3904,7 +3904,7 @@
                 "session",
                 "zf2"
             ],
-            "time": "2016-07-05T18:32:50+00:00"
+            "time": "2017-06-19T21:31:39+00:00"
         },
         {
             "name": "zendframework/zend-soap",
@@ -5379,17 +5379,17 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.20",
+            "version": "5.7.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "3cb94a5f8c07a03c8b7527ed7468a2926203f58b"
+                "reference": "3b91adfb64264ddec5a2dee9851f354aa66327db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/phpunit/phpunit/phpunit-phpunit-3cb94a5f8c07a03c8b7527ed7468a2926203f58b-zip-03cb55.zip",
-                "reference": "3cb94a5f8c07a03c8b7527ed7468a2926203f58b",
-                "shasum": "1ce7e90d15f039648605e13a4123c4657422a43d"
+                "url": "https://composer.tiki.org/dist/phpunit/phpunit/phpunit-phpunit-3b91adfb64264ddec5a2dee9851f354aa66327db-zip-82ed9b.zip",
+                "reference": "3b91adfb64264ddec5a2dee9851f354aa66327db",
+                "shasum": "ba16e27932384add4f233a021e00b72b1af4f1e4"
             },
             "require": {
                 "ext-dom": "*",
@@ -5457,7 +5457,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-05-22T07:42:55+00:00"
+            "time": "2017-06-21T08:11:54+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
