@@ -38,6 +38,12 @@ if (isset($_REQUEST['refresh'])) {
 
 	$temp = serialize($headerlib);	// cache headerlib so we can remove all js etc added by plugins
 
+	// disable redirect plugin etc
+	$access->preventRedirect(true);
+	// try to avoid timeouts
+	$old_max_execution_time = ini_get('max_execution_time');
+	$time_limit = new Tiki_TimeLimit(0);
+
 	foreach ($pages['data'] as $apage) {
 		$page = $apage['pageName'];
 		$parserlib->setOptions(
@@ -48,6 +54,9 @@ if (isset($_REQUEST['refresh'])) {
 		);
 		$parserlib->parse_first($apage['data'], $pre, $no);
 	}
+
+	ini_set('max_execution_time', $old_max_execution_time);
+	$access->preventRedirect(false);
 
 	$headerlib = unserialize($temp);
 	unset($temp);
