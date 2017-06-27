@@ -1,17 +1,17 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Note for translators about translation of text ending with punctuation
-// 
+//
 // The concerned punctuation signs can be found in tra_impl() (in 'lib/init/tra.php').
 // As of 2016-12-04, these are: ':', '!', ';', '.', ',', '?'.
 // For clarity, we explain here only for colons (':'), but it is the same for the rest.
-// 
+//
 // Short version: it is not a problem that string "Login:" has no translation. Only "Login" needs to be translated.
-// 
+//
 // Technical justification:
 // If a string ending with colon needs translating (like "{tr}Login:{/tr}")
 // then Tiki tries to translate 'Login' and ':' separately.
@@ -44,7 +44,7 @@ $lang = array(
 "Hebrew" => "Hebreu",
 "Croatian" => "Croata",
 // "Indonesian" => "Indonesian",
-// "Icelandic" => "Icelandic",
+"Icelandic" => "Islandês",
 "Italian" => "Italiano",
 // "Inuktitut" => "Inuktitut",
 // "Inuktitut (Roman)" => "Inuktitut (Roman)",
@@ -52,7 +52,7 @@ $lang = array(
 "Japanese" => "Japonês",
 "Korean" => "Coreano",
 "Hungarian" => "Hungaro",
-// "Lithuanian" => "Lithuanian",
+"Lithuanian" => "Lituano",
 // "Low German" => "Low German",
 "Dutch" => "Dinamarquês",
 "Norwegian" => "Norueguês",
@@ -65,10 +65,10 @@ $lang = array(
 "Pijin Solomon" => "Salomão de Pijin",
 // "Sinhala" => "Sinhala",
 "Slovak" => "Eslovaco",
-// "Albanian" => "Albanian",
+"Albanian" => "Albanês",
 "Serbian Latin" => "Latim Sérvio",
 "Swedish" => "Sueco",
-// "Thai" => "Thai",
+"Thai" => "Tailandês",
 "Tuvaluan" => "Tuvaluano",
 "Turkish" => "Turco",
 "Traditional Chinese" => "Chinês Tradicional",
@@ -80,7 +80,7 @@ $lang = array(
 // "Aland_Islands" => "Aland_Islands",
 "Albania" => "Albania",
 "Algeria" => "Algeria",
-"American Samoa" => "Samoa  Americana",
+"American Samoa" => "Samoa Americana",
 // "American_Samoa" => "American_Samoa",
 // "Andorra" => "Andorra",
 "Angola" => "Angola",
@@ -4147,7 +4147,7 @@ $lang = array(
 // "Bing Translate Client Secret" => "Bing Translate Client Secret",
 // "Display available translations as dropdown" => "Display available translations as dropdown",
 // "Rather than show a simple icon for listing available languages or translation options, show a more visible drop-down" => "Rather than show a simple icon for listing available languages or translation options, show a more visible drop-down",
-// "Default language" => "Default language",
+"Default language" => "Idioma default",
 // "The site language is used when no other language is specified by the user" => "The site language is used when no other language is specified by the user",
 // "Language inclusion threshold" => "Language inclusion threshold",
 // "When the number of languages is restricted on the site, and is below this number, all languages will be added to the preferred language list, even if unspecified by the user. However, priority will be given to the specified languages" => "When the number of languages is restricted on the site, and is below this number, all languages will be added to the preferred language list, even if unspecified by the user. However, priority will be given to the specified languages",
@@ -12214,7 +12214,7 @@ $lang = array(
 // "</em>\"}Object permissions for the %0 %1" => "</em>\"}Object permissions for the %0 %1",
 // "" => "",
 // "No permissions were changed" => "No permissions were changed",
-// "The following change has been applied" => "The following change has been applied",
+"The following change has been applied" => "A seguinte mudança foi aplicada",
 // "The following changes have been applied" => "The following changes have been applied",
 // "{\$item.mes[0]|stringfix}" => "{\$item.mes[0]|stringfix}",
 "Preference name" => "Nome da preferência",
@@ -12223,12 +12223,12 @@ $lang = array(
 // "Edit: " => "Edit: ",
 "Download current version" => "Baixar versão atual",
 "Archives" => "Arquivos",
-// "Upload new version" => "Upload new version",
+"Upload new version" => "Subir nova versão",
 // "Replace draft" => "Replace draft",
 // "Upload draft" => "Upload draft",
 // "Validate your draft" => "Validate your draft",
-// "Delete your draft" => "Delete your draft",
-// "Edit properties" => "Edit properties",
+"Delete your draft" => "Deletar seu rascunho",
+"Edit properties" => "Editar propriedades",
 // "Refresh metadata" => "Refresh metadata",
 // "Page view" => "Page view",
 "Download and lock" => "Baixar e travar",
@@ -12260,11 +12260,11 @@ $lang = array(
 // "Or drop file here from your file manager" => "Or drop file here from your file manager",
 "Start the Slideshow" => "Iniciar o slideshow",
 "Pause the Slideshow" => "Pausar o slideshow",
-// "There are no images to display" => "There are no images to display",
+"There are no images to display" => "Não há imagens para exibir",
 // "Select Files (%0)" => "Select Files (%0)",
 // "Sort By" => "Sort By",
 // "Sort direction" => "Sort direction",
-// "Any" => "Any",
+"Any" => "Qualquer",
 // "Lookup" => "Lookup",
 // "Deep search" => "Deep search",
 "Select Tags" => "Selecionar tags",
@@ -12290,7 +12290,7 @@ $lang = array(
 // "Hide Map" => "Hide Map",
 // "Show Map" => "Show Map",
 // "Module errors" => "Module errors",
-// "The following modules could not be loaded" => "The following modules could not be loaded",
+"The following modules could not be loaded" => "Os seguintes módulos não puderam ser carregados",
 "Show php error messages" => "Mostrar mensagens de erro do PHP",
 "Put tags separated by spaces. For tags with more than one word, use no spaces and put words together or enclose them with double quotes." => "Separe as tags com espaços. Para tags com mais de uma palavra use aspas duplas.",
 // "Untag" => "Untag",
@@ -17887,7 +17887,7 @@ $lang = array(
 // "Text editing settings applicable to many areas. Plugin activation and plugin alias management" => "Text editing settings applicable to many areas. Plugin activation and plugin alias management",
 // "Module appearance settings" => "Module appearance settings",
 "i18n" => "Idioma",
-// "Internationalization and localization - multilingual features" => "Internationalization and localization - multilingual features",
+"Internationalization and localization - multilingual features" => "Internacionalização e localização - recursos multilíngues",
 // "Meta Tags" => "Meta Tags",
 // "Information to include in the header of each page" => "Information to include in the header of each page",
 "Maps" => "Mapas",
