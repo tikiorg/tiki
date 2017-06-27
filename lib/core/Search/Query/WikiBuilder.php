@@ -397,21 +397,30 @@ class Search_Query_WikiBuilder
 				// if fields have been "formatted" then get the original field name to filter on
 				$formatArgs = $parser->parse($match->getArguments());
 
+				// use first display subplugin or first one that ends in _text 
+				$displayArgsToUse = array();
 				$subPlugins = WikiParser_PluginMatcher::match($match->getBody());
 				foreach ($subPlugins as $subPlugin) {
 					if ($subPlugin->getName() === 'display') {
 						$displayArgs = $parser->parse($subPlugin->getArguments());
-						foreach($args as & $arg) {
-							if ($arg['field'] === $formatArgs['name']) {
-								$arg['field'] = $displayArgs['name'];
-								if (isset($displayArgs['format']) && $displayArgs['format'] === 'trackerrender') {
-									// this works for many field types, ItemLink, Drowdown, CountrySelector etc but not all (categories notably)
-									$arg['field'] .= '_text';
-								}
-								break;
-							}
+						if (empty($displayArgsToUse) || substr($displayArgs['name'], -5) === '_text') {
+							$displayArgsToUse = $displayArgs;
 						}
-						break;	// will only work with the first display subplugin
+						if (!empty($displayArgsToUse['name']) && substr($displayArgsToUse['name'], -5) === '_text') {
+							break;
+						}
+					}
+				}
+				if (!empty($displayArgsToUse)) {
+					foreach($args as & $arg) {
+						if ($arg['field'] === $formatArgs['name']) {
+							$arg['field'] = $displayArgsToUse['name'];
+							if (isset($displayArgsToUse['format']) && $displayArgsToUse['format'] === 'trackerrender') {
+								// this works for many field types, ItemLink, Drowdown, CountrySelector etc but not all (categories notably)
+								$arg['field'] .= '_text';
+							}
+							break;
+						}
 					}
 				}
 			}
