@@ -79,7 +79,7 @@
                         <br />
 
                         <h4>{tr}Install packages manually{/tr}</h4>
-                        <p><strong>{tr}Make sure <code>composer</code> is installed{/tr}</strong></p>
+                        <p><strong>{tr}Make sure <code>composer</code> is installed.{/tr}</strong></p>
                         <p>
                             {tr}Composer can be installed manually, in the host machine, by following the instructions at the{/tr}
                             <a href="https://getcomposer.org/">Composer</a> {tr}website.{/tr}
@@ -147,7 +147,7 @@
                         <br>
 
                         <h4>{tr}Install Packages Manually{/tr}</h4>
-                        <p><strong>{tr}Make sure <code>composer</code> is installed{/tr}</strong></p>
+                        <p><strong>{tr}Make sure <code>composer</code> is installed.{/tr}</strong></p>
                         <p>
                             {tr}Composer can be installed manually, in the host machine, by following the instructions from the{/tr}
                             <a href="https://getcomposer.org/">Composer</a> {tr}website.{/tr}
