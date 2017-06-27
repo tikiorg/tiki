@@ -478,7 +478,7 @@ class Search_Query_WikiBuilder
 							$to = substr($filter, 2) / 1000;
 						}
 						if ($from && $to) {
-							$this->query->filterRange($from, $to);
+							$this->query->filterRange($from, $to, $field);
 							break;
 						}	// else fall through to default
 					default:
