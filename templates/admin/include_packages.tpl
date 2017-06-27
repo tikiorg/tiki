@@ -57,7 +57,7 @@
                         <h4>{tr}One or more packages appear to be missing{/tr}</h4>
                         {tr}In the list above, some packages could not be found. They are defined in the composer.json file, but do not seem to be installed.{/tr}
 
-                        <br />
+                        <br><br>
 
                         <h4>{tr}Install packages from the administrator interface{/tr}</h4>
                         {if $composer_available}
@@ -76,7 +76,7 @@
                             {tr}Composer was not detected. Please follow the manual instructions.{/tr}
                         {/if}
 
-                        <br />
+                        <br><br>
 
                         <h4>{tr}Install packages manually{/tr}</h4>
                         <p><strong>{tr}Make sure <code>composer</code> is installed.{/tr}</strong></p>
@@ -90,7 +90,7 @@
                             <code>bash ./setup.sh composer</code>
                         </p>
 
-                        <p><strong>{tr}Install the missing packages{/tr}</strong></p>
+                        <p><strong>{tr}Install the missing packages.{/tr}</strong></p>
                         <p>
                             {tr}After composer is installed, you can install the missing packages by issuing the command{/tr}
                             <code>composer --no-dev --prefer-dist update nothing</code>.
@@ -131,10 +131,10 @@
             {if count($composer_packages_available)}
                 <tr>
                     <td colspan="5">
-                        <h4>{tr}There appear to be some optional packages that can be installed.{/tr}</h4>
-                        {tr}In the list above, there are optional packages that you might want to install if you want to use the Tiki features that require the package.{/tr}
+                        <h4>{tr}There appear to be some optional packages that can be installed{/tr}</h4>
+                        {tr}In the list above, there are optional packages that may be installed in order to use the Tiki features that require the package.{/tr}
 
-                        <br>
+                        <br><br>
 
                         <h4>{tr}Install packages from the administrator interface{/tr}</h4>
                         {if $composer_available}
@@ -144,9 +144,9 @@
                             {tr}Composer was not detected. Please follow the manual instructions.{/tr}
                         {/if}
 
-                        <br>
+                        <br><br>
 
-                        <h4>{tr}Install Packages Manually{/tr}</h4>
+                        <h4>{tr}Install packages manually{/tr}</h4>
                         <p><strong>{tr}Make sure <code>composer</code> is installed.{/tr}</strong></p>
                         <p>
                             {tr}Composer can be installed manually, in the host machine, by following the instructions from the{/tr}
@@ -156,7 +156,7 @@
                             {tr}The script <code>setup.sh</code> that is included in the Tiki distribution can be run to make sure composer is installed. In this case, composer will be installed as <code>temp/composer.phar</code>.{/tr}
                             {tr}Below is an example of how to do this in a Linux-like operating system:{/tr}<br>
                             <code>bash ./setup.sh composer</code>
-                        </p>
+                        </p><br>
 
                         <p><strong>{tr}Make sure there is a <code>composer.json</code> file in the root of the website.{/tr}</strong></p>
                         <p>
@@ -164,9 +164,9 @@
                             {tr}The sample <code>composer.json.dist</code> that comes with Tiki can be used as a starting point.{/tr}
                             {tr}Below is an example of how to do this in a Linux-like operating system:{/tr} <br>
                             <code>cp composer.json.dist composer.json</code>
-                        </p>
+                        </p><br>
 
-                        <p><strong>{tr}Install the package{/tr}</strong></p>
+                        <p><strong>{tr}Install the package.{/tr}</strong></p>
                         <p>
                             {tr}After all the steps above (that only need to be performed once), packages can be installed by issuing a command{/tr}
                             <code>composer require package:version</code> {tr}for each package that is to be installed.{/tr}
