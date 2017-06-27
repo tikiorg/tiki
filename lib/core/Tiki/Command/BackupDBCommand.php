@@ -70,11 +70,23 @@ class BackupDBCommand extends Command
 		if( $host_tiki ) {
 			$args[] = "-h" . escapeshellarg( $host_tiki );
 		}
+
+		// Check out many non-InnoDB tables exist in the table
+		$db = \TikiDb::get();
+		$query = "SELECT count(TABLE_NAME) FROM information_schema.TABLES WHERE TABLE_SCHEMA = '$dbs_tiki' AND engine <> 'InnoDB'";
+		$numTables = $db->getOne($query);
+
+		if ($numTables === '0') {
+			$args[] = "--single-transaction";
+		} else {
+			$args[] = "--lock-tables";
+		}
+
 		$args[] = $dbs_tiki;
 	
 		$args = implode( ' ', $args );
 		$outputFile = $path . '/' . $dbs_tiki . '_' . date($dateFormat) . '.sql.gz';
-		$command = "mysqldump --quick $args | gzip -5 > " . escapeshellarg( $outputFile );
+		$command = "mysqldump --quick --create-options --extended-insert $args | gzip -5 > " . escapeshellarg( $outputFile );
 		exec( $command );
 		$output->writeln('<comment>Database backup completed: '.$outputFile.'</comment>');
 	}
