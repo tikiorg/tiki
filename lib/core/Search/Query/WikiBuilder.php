@@ -51,6 +51,10 @@ class Search_Query_WikiBuilder
 			$this->addQueryArgument($name, $arguments);
 		}
 
+		$this->applyPagination();
+	}
+
+	function applyPagination() {
 		$offsetArg = $this->paginationArguments['offset_arg'];
 		$maxRecords = $this->paginationArguments['max'];
 		if (isset($_REQUEST[$offsetArg])) {

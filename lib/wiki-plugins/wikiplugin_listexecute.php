@@ -57,11 +57,17 @@ function wikiplugin_listexecute($data, $params)
 	if (!empty($tsret['max']) || !empty($_GET['numrows'])) {
 		$max = !empty($_GET['numrows']) ? $_GET['numrows'] : $tsret['max'];
 		$builder->wpquery_pagination_max($query, $max);
+		$builder->applyPagination();
 	}
 	$paginationArguments = $builder->getPaginationArguments();
 
 	if (!empty($_REQUEST[$paginationArguments['sort_arg']])) {
 		$query->setOrder($_REQUEST[$paginationArguments['sort_arg']]);
+	}
+
+	if (is_array($_POST['objects']) && in_array('ALL', $_POST['objects'])) {
+		// unified search needs a hard limit and we want to apply the action to as many items as possible
+		$query->setRange(0, 9999);
 	}
 
 	$customOutput = false;
@@ -116,7 +122,9 @@ function wikiplugin_listexecute($data, $params)
 		$action = $_POST['list_action'];
 		$objects = (array) $_POST['objects'];
 
-		if (isset($actions[$action])) {
+		if ($result->count() > 9999) {
+			Feedback::error(tr("There are too many search result items to apply %0 action to.", $_POST['list_action']));
+		} elseif (isset($actions[$action])) {
 			$reportSource = new Search_Action_ReportingTransform;
 
 			$tx = TikiDb::get()->begin();
@@ -151,6 +159,14 @@ function wikiplugin_listexecute($data, $params)
 			$tx->commit();
 
 			// need to reload search results in case action has modified the original contents
+			// also set pagination arguments back as list processing above was run on the full result set
+			$offsetArg = $paginationArguments['offset_arg'];
+			$maxRecords = $paginationArguments['max'];
+			if (isset($_REQUEST[$offsetArg])) {
+				$query->setRange($_REQUEST[$offsetArg], $maxRecords);
+			} else {
+				$query->setRange(0, $maxRecords);
+			}
 			$result = $query->search($index);
 			$result->setId('wplistexecute-' . $iListExecute);
 			$builder->setCount($result->count());

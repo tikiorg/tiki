@@ -16,7 +16,7 @@
 			{$fieldcount = 0}
 			<tr>
 				{if $actions}
-					<th><input type="checkbox" name="selectall" value="" class="listexecute-select-all"></th>
+					<th><input type="checkbox" name="objects[]" value="ALL" class="listexecute-select-all"></th>
 				{/if}
 				{foreach from=$column item=col}
 					{$fieldcount = $fieldcount + 1}
