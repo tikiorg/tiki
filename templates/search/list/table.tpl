@@ -16,6 +16,7 @@
 			{$fieldcount = 0}
 			<tr>
 				{if $actions}
+					{$fieldcount = 1}
 					<th><input type="checkbox" name="objects[]" value="ALL" class="listexecute-select-all"></th>
 				{/if}
 				{foreach from=$column item=col}
