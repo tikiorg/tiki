@@ -2839,7 +2839,7 @@ function prefs_feature_list($partial = false)
 			'description' => tra('Convert double hyphen \-- to em-dash — and three consecutive dots\... to typographic ellipsis character…'),
 			'type' => 'flag',
 			'tags' => array('basic'),
-			'default' => 'y',
+			'default' => 'n',
 		),
 		'feature_typo_nobreak_spaces' => array(
 			'name' => tra('Smart no-break space'),
