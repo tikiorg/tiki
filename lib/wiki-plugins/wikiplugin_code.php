@@ -153,14 +153,13 @@ function wikiplugin_code($data, $params)
 		}
 	}
 
-	//respect wrap setting when Codemirror is off and set to wrap when Codemirror is on to avoid broken view while
-	//javascript loads
+	// respect wrap parameter when Codemirror is off and line wrap when Codemirror is on to avoid broken view while JavaScript loads.
 	if ((isset($prefs['feature_syntax_highlighter']) && $prefs['feature_syntax_highlighter'] == 'y') || $wrap == 1) {
 		$pre_style = 'white-space:pre-wrap;'
-		.' white-space:-moz-pre-wrap !important;'
-		.' white-space:-pre-wrap;'
-		.' white-space:-o-pre-wrap;'
-		.' word-wrap:break-word;';
+
+			// If needed, break words
+			. ' overflow-wrap: break-word;' // CSS 3 working draft
+			. ' word-wrap: break-word;'; // Original proprietary Microsoft name
 
 		if (!isset($theme) && isset($prefs['feature_syntax_highlighter_theme'])) {
 			$theme = $prefs['feature_syntax_highlighter_theme'];
