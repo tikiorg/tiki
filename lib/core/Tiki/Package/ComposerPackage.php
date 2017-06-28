@@ -10,10 +10,8 @@ namespace Tiki\Package;
 /**
  * Class with most of the operations needed for a Composer Package
  */
-class ComposerPackage implements PackageInterface
+class ComposerPackage
 {
-	protected $packageType;
-
 	protected $key;
 	protected $name;
 	protected $requiredVersion;
@@ -35,8 +33,6 @@ class ComposerPackage implements PackageInterface
 	 */
 	public function __construct($key, $name, $requiredVersion, $licence, $licenceUrl, $requiredBy, $scripts = [])
 	{
-		$this->packageType = Type::COMPOSER;
-
 		$this->key = $key;
 		$this->name = $name;
 		$this->requiredVersion = $requiredVersion;
@@ -44,16 +40,6 @@ class ComposerPackage implements PackageInterface
 		$this->licenceUrl = $licenceUrl;
 		$this->requiredBy = $requiredBy;
 		$this->scripts = $scripts;
-	}
-
-	/**
-	 * Package Type
-	 *
-	 * @return string
-	 */
-	public function getType()
-	{
-		return $this->packageType;
 	}
 
 	/**

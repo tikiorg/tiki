@@ -27,6 +27,8 @@ class ComposerCli
 	];
 	const PHP_MIN_VERSION = '5.6.0';
 
+	const FALLBACK_COMPOSER_JSON = '{"minimum-stability": "stable","config": {"process-timeout": 5000,"bin-dir": "bin"}}';
+
 	/**
 	 * @var string path to the base folder from tiki
 	 */
@@ -49,7 +51,7 @@ class ComposerCli
 	 */
 	public function __construct($basePath, $workingPath = null)
 	{
-		$basePath = realpath($basePath);
+		$basePath = rtrim($basePath, '/');
 		if ($basePath) {
 			$this->basePath = $basePath . '/';
 		}
@@ -57,7 +59,7 @@ class ComposerCli
 		if (is_null($workingPath)) {
 			$this->workingPath = $this->basePath;
 		} else {
-			$workingPath = realpath($workingPath);
+			$workingPath = rtrim($workingPath, '/');
 			if ($workingPath) {
 				$this->workingPath = $workingPath . '/';
 			}
@@ -92,7 +94,7 @@ class ComposerCli
 	 * First try to load the dist version, if not use a hardcoded version with the minimal setup
 	 * @return array|bool
 	 */
-	protected function getComposerConfigOrDefault()
+	public function getComposerConfigOrDefault()
 	{
 		$content = $this->getComposerConfig();
 		if ($content !== false) {
@@ -100,14 +102,14 @@ class ComposerCli
 		}
 
 		$distFile = $this->workingPath . self::COMPOSER_CONFIG . '.dist';
-		if (!file_exists($distFile)) {
+		if (file_exists($distFile)) {
 			$content = json_decode(file_get_contents($distFile), true);
 			if ($content !== false) {
 				return $content;
 			}
 		}
 
-		return json_decode('{"minimum-stability": "stable","config": {"process-timeout": 5000,"bin-dir": "bin"}}', true);
+		return json_decode(self::FALLBACK_COMPOSER_JSON, true);
 	}
 
 	/**
@@ -220,7 +222,7 @@ class ComposerCli
 
 		$builder->setArguments($args);
 
-		if (!getenv('HOME') && !getenv('COMPOSER_HOME')){
+		if (!getenv('HOME') && !getenv('COMPOSER_HOME')) {
 			$builder->setEnv('COMPOSER_HOME', $this->basePath . self::COMPOSER_HOME);
 		}
 
@@ -278,7 +280,7 @@ class ComposerCli
 		$composerShow = $this->execShow();
 
 		$installedPackages = [];
-		if (isset($composerShow['installed']) && is_array($composerShow['installed'])){
+		if (isset($composerShow['installed']) && is_array($composerShow['installed'])) {
 			foreach ($composerShow['installed'] as $package) {
 				$installedPackages[$package['name']] = $package;
 			}
@@ -323,7 +325,7 @@ class ComposerCli
 			['--no-ansi', '--no-dev', '--prefer-dist', 'update', '-d', $this->workingPath, 'nothing']
 		);
 
-		return $output . "\n" .$errors;
+		return $output . "\n" . $errors;
 	}
 
 	/**
@@ -339,7 +341,7 @@ class ComposerCli
 
 		list($output, $errors) = $this->execComposer(['--no-ansi', 'diagnose', '-d', $this->workingPath]);
 
-		return $output . "\n" .$errors;
+		return $output . "\n" . $errors;
 	}
 
 	/**

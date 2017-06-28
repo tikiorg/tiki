@@ -1,0 +1,20 @@
+---
+CasperJS
+  licence: MIT
+  licenceUrl: "https://github.com/jerome-breton/casperjs-installer/blob/master/LICENSE"
+  name: jerome-breton/casperjs-installer
+  requiredBy:
+    - wikiplugin_casperjs
+  requiredVersion: dev-master
+  scripts:
+    post-install-cmd:
+      - "CasperJsInstaller\\Installer::install"
+    post-update-cmd:
+      - "CasperJsInstaller\\Installer::install"
+Expose
+  licence: MIT
+  licenceUrl: "https://github.com/enygma/expose/blob/master/LICENSE"
+  name: enygma/expose
+  requiredBy:
+    - ids_enabled
+  requiredVersion: ^3.0

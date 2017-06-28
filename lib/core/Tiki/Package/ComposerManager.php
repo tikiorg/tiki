@@ -31,20 +31,33 @@ class ComposerManager
 	 */
 	protected $composerWrapper;
 
+
+	/**
+	 * @var string Path to the file with the package definition
+	 */
+	protected $packagesConfigFile;
+
 	/**
 	 * Setups the composer.json location
 	 *
 	 * @param string $basePath
 	 * @param string $workingPath
 	 * @param ComposerCli $composerWrapper composer.phar wrapper, optional in the constructor to allow injection for test
+	 * @param string $packagesConfigFile package config file path, optional in the constructor to allow injection for test
 	 */
-	function __construct($basePath, $workingPath = null, $composerWrapper = null)
+	function __construct($basePath, $workingPath = null, $composerWrapper = null, $packagesConfigFile = null)
 	{
 		$this->basePath = $basePath;
+
 		if (is_null($composerWrapper)) {
 			$composerWrapper = new ComposerCli($basePath, $workingPath);
 		}
 		$this->composerWrapper = $composerWrapper;
+
+		if (is_null($packagesConfigFile)) {
+			$packagesConfigFile = __DIR__ . DIRECTORY_SEPARATOR . self::CONFIG_PACKAGE_FILE;
+		}
+		$this->packagesConfigFile = $packagesConfigFile;
 	}
 
 	/**
@@ -209,12 +222,11 @@ class ComposerManager
 		$packageKey = $this->sanitizePackageKey($packageKey);
 
 		//Open External Packages Config File
-		$packagesConfigFile = __DIR__ . DIRECTORY_SEPARATOR . self::CONFIG_PACKAGE_FILE;
-		if (!file_exists($packagesConfigFile)) {
+		if (!file_exists($this->packagesConfigFile)) {
 			return [];
 		}
 		try {
-			$yamlContent = Yaml::parse(file_get_contents($packagesConfigFile));
+			$yamlContent = Yaml::parse(file_get_contents($this->packagesConfigFile));
 			if (!$yamlContent) {
 				return [];
 			}
@@ -226,6 +238,9 @@ class ComposerManager
 		foreach ($yamlContent as $key => $fileInfo) {
 			try {
 				if ($fileInfo) {
+					if (!isset($fileInfo['scripts'])) {
+						$fileInfo['scripts'] = [];
+					}
 					$externalPackage = new ComposerPackage(
 						$key,
 						$fileInfo['name'],
@@ -239,9 +254,6 @@ class ComposerManager
 						return $externalPackage;
 					} else {
 						if ($packageAction == 'list') {
-							if ($externalPackage->getType() != Type::COMPOSER) {
-								continue;
-							}
 							if (array_key_exists($externalPackage->getName(), $installedPackages)) {
 								continue;
 							}
