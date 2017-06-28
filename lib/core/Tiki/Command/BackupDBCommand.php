@@ -71,7 +71,7 @@ class BackupDBCommand extends Command
 			$args[] = "-h" . escapeshellarg( $host_tiki );
 		}
 
-		// Check out many non-InnoDB tables exist in the table
+		// Find out how many non-InnoDB tables exist in the schema
 		$db = \TikiDb::get();
 		$query = "SELECT count(TABLE_NAME) FROM information_schema.TABLES WHERE TABLE_SCHEMA = '$dbs_tiki' AND engine <> 'InnoDB'";
 		$numTables = $db->getOne($query);
