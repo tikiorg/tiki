@@ -37,6 +37,11 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 						'legacy_index' => 1,
 						'profile_reference' => 'search_urlencoded',
 					),
+					'format' => array(
+						'name' => tr('Format'),
+						'description' => tr('Customize display of search results of object selection. Default is {title} listing the object title. Note that including other fields in the format will make search look up exactly those fields intead of the title field.'),
+						'filter' => 'text',
+					),
 					'readonly' => array(
 						'name' => tr('Read-only'),
 						'description' => tr('Only display the incoming relations instead of manipulating them.'),
@@ -135,6 +140,7 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 			array(
 				'labels' => $labels,
 				'filter' => $filter,
+				'format' => $this->getOption('format')
 			)
 		);
 	}
@@ -154,6 +160,7 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 				$context,
 				array(
 					'display' => $display,
+					'format' => $this->getOption('format')
 				)
 			);
 		}

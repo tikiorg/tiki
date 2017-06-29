@@ -83,13 +83,25 @@ class Services_Search_Controller
 		global $prefs;
 
 		try {
+			$filter = $input->filter->none() ?: [];
+			$format = $input->format->text() ?: '{title}';
+
 			$lib = TikiLib::lib('unifiedsearch');
-			$query = $lib->buildQuery($input->filter->none() ?: []);
+
+			if (!empty($filter['title']) && preg_match_all('/\{(\w+)\}/', $format, $matches)) {
+				// formatted object_selector search results should also search in formatted fields besides the title
+				$titleFilter = $filter['title'];
+				unset($filter['title']);
+				$query = $lib->buildQuery($filter);
+				$query->filterContent($titleFilter, $matches[1]);
+			} else {
+				$query = $lib->buildQuery($filter);
+			}
+			
 			$query->setOrder($input->sort_order->text() ?: 'title_asc');
 			$query->setRange($input->offset->int(), $input->maxRecords->int() ?: $prefs['maxRecords']);
+			
 			$result = $query->search($lib->getIndex());
-
-			$format = $input->format->text() ?: '{title}';
 
 			$result->applyTransform(function ($item) use ($format) {
 				return [

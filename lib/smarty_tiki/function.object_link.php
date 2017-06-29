@@ -96,7 +96,7 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 	$smarty->loadPlugin('smarty_modifier_addongroupname');
 
 	if (empty($title)) {
-		$title = TikiLib::lib('object')->get_title($type, $object);
+		$title = TikiLib::lib('object')->get_title($type, $object, empty($params['format']) ? null : $params['format']);
 	}
 
 	if (empty($title) && ! empty($params['backuptitle'])) {
@@ -188,7 +188,7 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 	return $html;
 }
 
-function smarty_function_object_link_trackeritem( $smarty, $object, $title = null, $type = 'wiki page', $url = null )
+function smarty_function_object_link_trackeritem( $smarty, $object, $title = null, $type = 'wiki page', $url = null, $params = array() )
 {
 	global $prefs;
 	$pre = null;
@@ -212,13 +212,13 @@ function smarty_function_object_link_trackeritem( $smarty, $object, $title = nul
 	}
 
 	if( $item && $item->canView() ) {
-		return $pre . smarty_function_object_link_default($smarty, $object, $title, $type, $url);
+		return $pre . smarty_function_object_link_default($smarty, $object, $title, $type, $url, $params);
 	} else {
 		$smarty->loadPlugin('smarty_modifier_escape');
 		$smarty->loadPlugin('smarty_modifier_addongroupname');
 
 		if (empty($title)) {
-			$title = TikiLib::lib('object')->get_title($type, $object);
+			$title = TikiLib::lib('object')->get_title($type, $object, empty($params['format']) ? null : $params['format']);
 		}
 		
 		// get add on object title if needed

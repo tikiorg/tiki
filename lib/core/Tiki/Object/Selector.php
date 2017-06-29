@@ -28,7 +28,7 @@ class Selector
 		return null;
 	}
 
-	function readMultiple($input)
+	function readMultiple($input, $format = null)
 	{
 		if (! is_array($input)) {
 			$input = explode("\n", $input);
@@ -36,11 +36,13 @@ class Selector
 
 		$raw = array_map('trim', $input);
 		$raw = array_unique($raw);
-		$raw = array_map([$this, 'read'], $raw);
+		$raw = array_map(function($input) use ($format) {
+			return $this->read($input, $format);
+		}, $raw);
 		return array_values(array_filter($raw));
 	}
 
-	function readMultipleSimple($type, $input, $separator)
+	function readMultipleSimple($type, $input, $separator, $format = null)
 	{
 		if (is_string($input)) {
 			$parts = explode($separator, $input);
@@ -52,8 +54,8 @@ class Selector
 		$parts = array_filter($parts);
 		$parts = array_unique($parts);
 
-		return array_map(function ($object) use ($type) {
-			return new SelectorItem($this, $type, $object);
+		return array_map(function ($object) use ($type, $format) {
+			return new SelectorItem($this, $type, $object, $format);
 		}, array_values($parts));
 	}
 

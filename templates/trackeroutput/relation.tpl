@@ -8,10 +8,10 @@
 			{/if}
 			<ul>
 				{foreach from=$field.relations item=identifier}
-					<li>{object_link identifier=$identifier}</li>
+					<li>{object_link identifier=$identifier format=$data.format}</li>
 				{/foreach}
 				{foreach from=$field.inverts item=identifier}
-					<li>{object_link identifier=$identifier}</li>
+					<li>{object_link identifier=$identifier format=$data.format}</li>
 				{/foreach}
 			</ul>
 		</div>

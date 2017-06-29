@@ -88,9 +88,9 @@ function smarty_function_object_selector_multi( $params, $smarty )
 	$selector = TikiLib::lib('objectselector');
 
 	if ($arguments['simplevalue'] && ! empty($arguments['filter']['type']) && $arguments['separator']) {
-		$arguments['current_selection'] = $selector->readMultipleSimple($arguments['filter']['type'], $arguments['simplevalue'], $arguments['separator']);
+		$arguments['current_selection'] = $selector->readMultipleSimple($arguments['filter']['type'], $arguments['simplevalue'], $arguments['separator'], $arguments['format']);
 	} else {
-		$arguments['current_selection'] = $selector->readMultiple($arguments['value']);
+		$arguments['current_selection'] = $selector->readMultiple($arguments['value'], $arguments['format']);
 	}
 
 	if ($arguments['simplename']) {
