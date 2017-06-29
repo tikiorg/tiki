@@ -1788,6 +1788,10 @@ td.url {
 .articletitle h2 {
   margin: 0 0 .3em;
 }
+.articleheading > div:not(.media-left) {
+  max-width: 100%;
+  overflow: hidden;
+}
 .articletrailer span {
   display: inline-block;
   margin: auto;
@@ -2872,6 +2876,10 @@ img.pref_dependency {
 }
 .adminanchors .nav li {
   display: inline-block;
+}
+a.admbox.btn.btn-primary.disabled.disabled-clickable {
+  pointer-events: inherit;
+  cursor: pointer;
 }
 .admbox .icon img {
   margin-top: 18px;
