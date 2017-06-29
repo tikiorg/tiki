@@ -46,8 +46,8 @@ function wikiplugin_code_info()
 			),
 			'wrap' => array(
 				'required' => false,
-				'name' => tra('Word Wrap'),
-				'description' => tra('Enable word wrapping on the code to avoid breaking the layout.'),
+				'name' => tra('Line Wrapping'),
+				'description' => tra('Wrap lines of code which do not fit in the display box\'s width. Enabling avoids overflow or hidden line ends.'),
 				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Yes'), 'value' => '1'),

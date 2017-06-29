@@ -265,7 +265,7 @@ class PdfGenerator
 	{
 		global $prefs;
 		if (!extension_loaded('curl')) {
-			TikiLib::lib('reporterror')->report(tra('mPDF: CURL PHP extension not available'));
+			Feedback::error(tra('mPDF: cURL PHP extension not available'), 'session');
 			return '';
 		}
 
