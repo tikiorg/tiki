@@ -2874,6 +2874,10 @@ img.pref_dependency {
 .adminanchors .nav li {
   display: inline-block;
 }
+a.admbox.btn.btn-primary.disabled.disabled-clickable {
+  pointer-events: inherit;
+  cursor: pointer;
+}
 .admbox .icon img {
   margin-top: 18px;
 }
