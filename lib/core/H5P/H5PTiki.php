@@ -75,6 +75,10 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 		static $interface, $core;
 		global $prefs, $tikiroot, $tikipath;
 
+		if (! function_exists('curl_init')) {
+			throw new Exception(tr('H5P requires the CURL extension to be installed in PHP'));
+		}
+
 		if (is_null($interface)) {
 			// Setup Core and Interface components that are always needed
 			$interface = new \H5P_H5PTiki();
