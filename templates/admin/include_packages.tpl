@@ -81,7 +81,7 @@
                         <h4>{tr}Install packages manually{/tr}</h4>
                         <p><strong>{tr}Make sure <code>composer</code> is installed.{/tr}</strong></p>
                         <p>
-                            {tr}Composer can be installed manually, in the host machine, by following the instructions at the{/tr}
+                            {tr}Composer can be installed manually, on the host machine, by following the instructions at the{/tr}
                             <a href="https://getcomposer.org/">Composer</a> {tr}website.{/tr}
                         </p>
                         <p>
@@ -131,7 +131,7 @@
             {if count($composer_packages_available)}
                 <tr>
                     <td colspan="5">
-                        <h4>{tr}There appear to be some optional packages that can be installed{/tr}</h4>
+                        <h4>{tr}There appears to be some optional packages that can be installed{/tr}</h4>
                         {tr}In the list above, there are optional packages that may be installed in order to use the Tiki features that require the package.{/tr}
 
                         <br><br>
