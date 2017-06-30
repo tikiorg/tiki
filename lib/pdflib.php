@@ -255,10 +255,6 @@ class PdfGenerator
 	private function mpdf($url,$parsedData='',$params=array())
 	{
 		global $prefs;
-		if (!extension_loaded('curl')) {
-			Feedback::error(tra('mPDF: cURL PHP extension not available'), 'session');
-			return '';
-		}
 
       if($parsedData!='')
 	      $html=$parsedData;
