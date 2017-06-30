@@ -131,7 +131,7 @@
             {if count($composer_packages_available)}
                 <tr>
                     <td colspan="5">
-                        <h4>{tr}There appears to be some optional packages that can be installed{/tr}</h4>
+                        <h4>{tr}There appear to be some optional packages that can be installed{/tr}</h4>
                         {tr}In the list above, there are optional packages that may be installed in order to use the Tiki features that require the package.{/tr}
 
                         <br><br>
