@@ -25,7 +25,8 @@ function smarty_function_scheduler_params($params, $smarty)
 
 	$schedulerParams = $params['params'];
 
-	$class = new $className;
+	$logger = new Tiki_Log('Schedulers', \Psr\Log\LogLevel::ERROR);
+	$class = new $className($logger);
 	$inputParams = $class->getParams();
 	$taskName = strtolower($class->getTaskName());
 	$html = '';

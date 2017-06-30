@@ -36,7 +36,8 @@ function saveScheduler()
 			die;
 		}
 
-		$class = new $className();
+		$logger = new Tiki_Log('Schedulers', \Psr\Log\LogLevel::ERROR);
+		$class = new $className($logger);
 
 		$taskName = strtolower($class->getTaskName());
 		$taskParams = $class->getParams();
