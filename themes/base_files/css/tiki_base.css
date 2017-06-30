@@ -1792,6 +1792,10 @@ td.url {
 .articletitle h2 {
   margin: 0 0 .3em;
 }
+.articleheading > div:not(.media-left) {
+  max-width: 100%;
+  overflow: hidden;
+}
 .articletrailer span {
   display: inline-block;
   margin: auto;

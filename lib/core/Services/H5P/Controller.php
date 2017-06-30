@@ -17,6 +17,9 @@ class Services_H5P_Controller
 		if ($prefs['feature_file_galleries'] != 'y') {
 			throw new Services_Exception_Disabled('feature_file_galleries');
 		}
+		if (! function_exists('curl_init')) {
+			throw new Services_Exception_NotAvailable(tr('H5P requires the CURL extension to be installed in PHP'));
+		}
 	}
 
 	function action_embed($input)

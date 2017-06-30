@@ -14,6 +14,7 @@ function prefs_h5p_list()
 			'dependencies' => [
 				'feature_file_galleries',
 			],
+			'extensions' => ['curl'],
 			'type' => 'flag',
 			'default' => 'n',
 			'filter' => 'alpha',
