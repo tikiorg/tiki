@@ -82,7 +82,7 @@
                         <p><strong>{tr}Make sure <code>composer</code> is installed.{/tr}</strong></p>
                         <p>
                             {tr}Composer can be installed manually, on the host machine, by following the instructions at the{/tr}
-                            <a href="https://getcomposer.org/">Composer</a> {tr}website.{/tr}
+                            <a href="https://doc.tiki.org/Composer">Composer</a> {tr}website.{/tr}
                         </p>
                         <p>
                             {tr}The script <code>setup.sh</code> that is included in the Tiki distribution can be run to make sure composer is installed. In this case, composer will be installed as <code>temp/composer.phar</code>.{/tr}
@@ -150,7 +150,7 @@
                         <p><strong>{tr}Make sure <code>composer</code> is installed.{/tr}</strong></p>
                         <p>
                             {tr}Composer can be installed manually, in the host machine, by following the instructions from the{/tr}
-                            <a href="https://getcomposer.org/">Composer</a> {tr}website.{/tr}
+                            <a href="https://doc.tiki.org/Composer">Composer</a> {tr}website.{/tr}
                         </p>
                         <p>
                             {tr}The script <code>setup.sh</code> that is included in the Tiki distribution can be run to make sure composer is installed. In this case, composer will be installed as <code>temp/composer.phar</code>.{/tr}
