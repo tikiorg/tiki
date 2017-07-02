@@ -95,7 +95,7 @@ if (confirm("A problem occurred while detecting JavaScript on this page, click o
 {if $prefs.site_piwik_code}
 	{eval var=$prefs.site_piwik_code}
 {/if}
-{if $prefs.webcron_enabled == 'y' && $prefs.webcron_type != 'url'}
+{if $prefs.feature_scheduler eq "y" && $prefs.webcron_enabled == 'y' && $prefs.webcron_type != 'url'}
 	<script type="text/javascript">
 		$(window).on('load', function () {
 			function cron() {

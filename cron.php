@@ -13,6 +13,13 @@ try {
 	return;
 }
 
+// Check if Feature Scheduler is enabled
+$feature_enabled = $tikilib->get_preference('feature_scheduler');
+
+if ($feature_enabled != 'y') {
+	return;
+}
+
 // Check if Web Cron is enabled
 $webcron_enabled = $tikilib->get_preference('webcron_enabled');
 

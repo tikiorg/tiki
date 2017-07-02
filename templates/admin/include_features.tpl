@@ -57,6 +57,7 @@
 				<div class="admin clearfix form-group featurelist">
 					{preference name=feature_stats}
 					{preference name=feature_actionlog}
+					{preference name=feature_scheduler}
 					<div class="adminoptionboxchild">
 						<fieldset>
 							<legend>{tr}Watches{/tr}</legend>

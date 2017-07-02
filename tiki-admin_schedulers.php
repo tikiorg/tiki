@@ -110,6 +110,7 @@ require_once('tiki-setup.php');
 
 $access = TikiLib::lib('access');
 $access->checkAuthenticity();
+$access->check_feature('feature_scheduler');
 $access->check_permission(array('tiki_p_admin_schedulers'));
 
 $auto_query_args = array();

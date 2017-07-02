@@ -24,6 +24,12 @@ class SchedulerRunCommand extends Command
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
+		global $prefs;
+
+		if ($prefs['feature_scheduler'] != 'y') {
+			$output->writeln("<error>Scheduler feature is not enabled.</error>");
+			exit(1);
+		}
 
 		$verbosityLevelMap = array(
 			LogLevel::ERROR => OutputInterface::OUTPUT_NORMAL,
