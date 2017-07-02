@@ -74,7 +74,6 @@
 			{preference name=tiki_allow_trust_input}
 			{preference name=feature_quick_object_perms}
 			{preference name=feature_user_encryption}
-			{preference name=zend_http_sslverifypeer}
 			<div class="adminoptionboxchild" id="feature_user_encryption_childcontainer">
 				{if isset($no_mcrypt)}
 					{remarksbox type="warning" title="{tr}Mcrypt is not loaded{/tr}"}
@@ -90,6 +89,8 @@
 				The user can add passwords for a registered password domain.
 				{preference name=feature_password_domains}
 			</div>
+			{preference name=zend_http_sslverifypeer}
+			{preference name=feature_debug_console}
 			<fieldset>
 				<legend>{tr}CSRF Security{/tr}{help url="Security"}</legend>
 				<div class="adminoptionbox">
