@@ -21,7 +21,7 @@
 {tabset}
 
 		{tab name="{tr}General Security{/tr}"}
-			
+
 			<div class="adminoptionboxchild" id="smarty_security_childcontainer">
 			{if $haveMySQLSSL}
 				{if $mysqlSSL === true}
@@ -47,7 +47,7 @@
 			{/if}
 			</div>
 			{preference name=smarty_security}
-			<div class="adminoptionboxchild" id="smarty_security_childcontainer">	
+			<div class="adminoptionboxchild" id="smarty_security_childcontainer">
 				{preference name=smarty_security_functions}
 				{preference name=smarty_security_modifiers}
 				{preference name=smarty_security_dirs}
@@ -55,10 +55,10 @@
 			{preference name=feature_purifier}
 			{preference name=feature_htmlpurifier_output}
 			{preference name=menus_item_names_raw_teaser}
-			<div class="adminoptionboxchild" id="menus_item_names_raw_teaser_childcontainer">	
+			<div class="adminoptionboxchild" id="menus_item_names_raw_teaser_childcontainer">
 				{preference name=menus_item_names_raw}
 			</div>
-			
+
 			{preference name=session_protected}
 			{preference name=login_http_basic}
 
@@ -85,6 +85,7 @@
 				The user can add passwords for a registered password domain.
 				{preference name=feature_password_domains}
 			</div>
+			{preference name=feature_debug_console}
 		<fieldset>
 			<legend>{tr}CSRF Security{/tr}{help url="Security"}</legend>
 			<div class="adminoptionbox">
@@ -118,7 +119,7 @@
 			{preference name=feature_wiki_protect_email}
 			{preference name=feature_wiki_ext_rel_nofollow}
 			{preference name=feature_banning}
-			
+
 			{preference name=feature_comments_moderation}
 			{preference name=comments_akismet_filter}
 				<div class="adminoptionboxchild" id="comments_akismet_filter_childcontainer">
@@ -132,7 +133,7 @@
 					{preference name=showRegisterPasscode}
 				</div>
 		{/tab}
-	
+
 		{tab name="{tr}Search results{/tr}"}
 				{preference name=feature_search_show_forbidden_cat}
 				{preference name=feature_search_show_forbidden_obj}
@@ -175,11 +176,11 @@
 					{preference name=openpgp_gpg_path}
 					{preference name=openpgp_gpg_signer_passphrase_store}
 					<div class="adminoptionboxchild openpgp_gpg_signer_passphrase_store_childcontainer preferences">
-						{preference name=openpgp_gpg_signer_passphrase}	
+						{preference name=openpgp_gpg_signer_passphrase}
 						<br><em>{tr}If you use preferences option for the signer passphrase, clear the file option just for security{/tr}</em>
 					</div>
 					<div class="adminoptionboxchild openpgp_gpg_signer_passphrase_store_childcontainer file">
-						{preference name=openpgp_gpg_signer_passfile}	
+						{preference name=openpgp_gpg_signer_passfile}
 						<br><em>{tr}If you use file for the signer passphrase, clear the preferences option just for security{/tr}</em>
 					</div>
 					{remarksbox type="tip" title="{tr}Note{/tr}"}
@@ -189,9 +190,9 @@
 			</fieldset>
 
 		{/tab}
-				
-{/tabset}	
-	
+
+{/tabset}
+
 	<div class="input_submit_container" style="margin-top: 5px; text-align: center">
 		<input type="submit" class="btn btn-default" name="security" value="{tr}Apply{/tr}" />
 	</div>

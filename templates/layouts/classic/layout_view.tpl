@@ -177,6 +177,6 @@
 		{/if}
 	</body>
 </html>
-{if !empty($smarty.request.show_smarty_debug)}
+{if $prefs.feature_debug_console eq 'y' and not empty($smarty.request.show_smarty_debug)}
 	{debug}
 {/if}
