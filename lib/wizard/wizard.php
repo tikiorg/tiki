@@ -71,7 +71,7 @@ abstract class Wizard
 	 */	
 	function onContinue ($homepageUrl) {
 		// Save the user selection for showing the wizard on login or not
-		$showOnLogin = ( isset($_REQUEST['showOnLogin']) && $_REQUEST['showOnLogin'] == 'on' ) ? 'y' : 'n';
+		$showOnLogin = ( isset($_POST['showOnLogin']) && $_POST['showOnLogin'] == 'on' ) ? 'y' : 'n';
 
 		// Mark the login mode for the wizard
 		$wizardlib = TikiLib::lib('wizard');

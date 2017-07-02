@@ -7,6 +7,19 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
+$yo = 1;
+$inputConfiguration =	[[
+	'staticKeyFilters'	=> [
+		'use-default-prefs'	=> 'alnum', 		// request
+		'use-upgrade-wizard'=> 'alnum', 		// request
+		'url'				=> 'relativeurl',	// request
+		'close'				=> 'alnum',			// post
+		'showOnLogin'		=> 'alnum',			// post
+		'wizard_step'		=> 'int',			// post
+		'stepNr'			=> 'int',			// get
+		'back'				=> 'alnum',			// post
+	],
+]];
 
 require 'tiki-setup.php';
 

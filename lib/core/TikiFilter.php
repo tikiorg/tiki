@@ -44,6 +44,9 @@ class TikiFilter
 			// Use striptags
 		case 'striptags':
 			return new Zend_Filter_StripTags;
+		case 'relativeurl':
+			// If formatted as a absolute url, will return the relative portion, also applies striptags
+			return new TikiFilter_RelativeURL;
 		case 'word':
 			return new TikiFilter_Word;
 		case 'xss':

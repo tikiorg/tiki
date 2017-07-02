@@ -121,11 +121,11 @@ class WizardLib extends TikiLib
 
 			// User pressed "Close".
 			//	Save the "Show on login" setting, and no other preferences
-			if (isset($_REQUEST['close'])) {
+			if (isset($_POST['close'])) {
 
 				if ($adminWizard) {
 					// Save "Show on login" setting
-					$showOnLogin = ( isset($_REQUEST['showOnLogin']) && $_REQUEST['showOnLogin'] == 'on' ) ? 'y' : 'n';
+					$showOnLogin = ( isset($_POST['showOnLogin']) && $_POST['showOnLogin'] == 'on' ) ? 'y' : 'n';
 					$this->showOnLogin($showOnLogin);
 				}
 
@@ -134,16 +134,16 @@ class WizardLib extends TikiLib
 				$accesslib->redirect($homepageUrl);
 			}
 
-			$isFirstStep = !isset($_REQUEST['wizard_step']);
-			$isUserStep = isset($_REQUEST['stepNr']);	// User defined step nr
+			$isFirstStep = !isset($_POST['wizard_step']);
+			$isUserStep = isset($_GET['stepNr']);	// User defined step nr
 			if ($isUserStep) {
-				$stepNr = intval($_REQUEST['stepNr']);
+				$stepNr = intval($_GET['stepNr']);
 			} else {
-				$stepNr = isset($_REQUEST['wizard_step']) ? intval($_REQUEST['wizard_step']) : 0;
+				$stepNr = isset($_POST['wizard_step']) ? intval($_POST['wizard_step']) : 0;
 			}
 
 			$stepBack = false;
-			if (isset($_REQUEST['back'])) {
+			if (isset($_POST['back'])) {
 				// Discard changes on page
 				//	Go to previous page
 				$stepNr -= 1;
