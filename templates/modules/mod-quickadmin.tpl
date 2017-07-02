@@ -123,7 +123,7 @@
 						</a>
 					</li>
 					{/if}
-					{if $prefs.feature_debug_console}
+					{if $prefs.feature_debug_console eq 'y'}
 						<li>
 							<a href="{query _type='relative' show_smarty_debug=1}">
 								{icon name="bug"} {tr}Smarty debug window{/tr}

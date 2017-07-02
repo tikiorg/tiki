@@ -454,5 +454,22 @@ class Installer extends TikiDb_Bridge
 			}
 		}
 	} // }}}
-	
+
+	/**
+	 * @param string $prefName
+	 * @param string $oldDefault
+	 */
+	function preservePreferenceDefault($prefName, $oldDefault) {
+
+		if ($this->tableExists('tiki_preferences')) {
+
+			$tiki_preferences = $this->table('tiki_preferences');
+			$hasValue = $tiki_preferences->fetchCount(['name' => $prefName]);
+
+			if (empty($hasValue)) {	// old value not in database so was on default value
+				$tiki_preferences->insert(['name' => $prefName, 'value' => $oldDefault]);
+			}
+		}
+
+	}
 }

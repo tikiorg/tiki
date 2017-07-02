@@ -480,7 +480,7 @@ class Services_Comment_Controller
 		return array();
 	}
 
-	private function canView($type, $objectId)
+	public function canView($type, $objectId)
 	{
 		// Note: $perms provides a magic method __get as an accessor for attributes.
 		// I.e. $perms->wiki_view_comments or $perms->tracker_view_comments are returend by that accessor method
