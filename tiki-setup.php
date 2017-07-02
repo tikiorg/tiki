@@ -647,7 +647,8 @@ if ($prefs['feature_inline_comments'] === 'y') {
 	}
 	$commentController = new Services_Comment_Controller();
 
-	if ($commentController->isEnabled($object['type'], $object['object'])) {
+	if ($commentController->isEnabled($object['type'], $object['object']) &&
+		$commentController->canView($object['type'], $object['object'])) {
 
 		$canPost = $commentController->canPost($object['type'], $object['object']);
 		$objectIdentifier = urlencode($object['type']) . ':' . urlencode($object['object']);    // spoof a URI from type and id
