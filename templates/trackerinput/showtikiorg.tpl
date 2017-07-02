@@ -1,11 +1,7 @@
 <div id="testingstatus" style="display:none">{$field.status|escape}</div>
 <h5 id="showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" class="showactive{$field.fieldId}_{$item.itemId}" {if $field.status neq 'ACTIV'}style="display: none;"{/if}>This bug has been demonstrated on show.tiki.org</h5>
 <h5 class="shownone{$field.fieldId}_{$item.itemId}" {if $field.status neq 'NONE'}style="display: none;"{/if}>Please demonstrate your bug on show.tiki.org</h5>
-{if $field.status == 'NOSSH'}
-	{remarksbox type="error" title="SSH2 extension not installed" close="n"}
-		<p>SSH2 extension for PHP needs to be installed for show.tiki.org feature to work</p>
-	{/remarksbox}
-{elseif !$field.id}
+{if !$field.id}
 	{remarksbox type="info" title="Bug needs to be created first" close="n"}
 		<p>You will be able to demonstrate your bug on a show.tiki.org instance once it has been created.</p>
 	{/remarksbox}
@@ -28,6 +24,11 @@
 	<div class="showdestroy{$field.fieldId}_{$item.itemId}" style="display: none;">
 		{remarksbox type="error" title="Show.tiki.org instance destruction in progress" close="n"}
 			<p>Show.tiki.org instance destruction is in progress... Please wait...</p>
+		{/remarksbox}
+	</div>
+	<div class="showinvalidkeys{$field.fieldId}_{$item.itemId}" {if $field.status neq 'INVKEYS'}style="display: none;"{/if}>
+		{remarksbox type="error" title="Show.tiki.org is not configured properly" close="n"}
+			<p>The public/private keys configured to connect to show.tiki.org were not accepted. Please make sure you are using RSA keys. Thanks.</p>
 		{/remarksbox}
 	</div>
 	<div class="showdisconnected{$field.fieldId}_{$item.itemId}" {if $field.status neq 'DISCO'}style="display: none;"{/if}>
@@ -115,6 +116,15 @@
 				}
 				if (data.status == 'DISCO') {
 					$('.showdisconnected{{$field.fieldId}}_{{$item.itemId}}').show();
+					$('.showinvalidkeys{{$field.fieldId}}_{{$item.itemId}}').hide();
+					$('.showmaint{{$field.fieldId}}_{{$item.itemId}}').hide();
+					$('.showfail{{$field.fieldId}}_{{$item.itemId}}').hide();
+					$('.showsnapshot{{$field.fieldId}}_{{$item.itemId}}').hide();
+					$('.showdestroy{{$field.fieldId}}_{{$item.itemId}}').hide();
+					$.tikiModal();
+				} else if (data.status == 'INVKEYS') {
+					$('.showinvalidkeys{{$field.fieldId}}_{{$item.itemId}}').show();
+					$('.showdisconnected{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showmaint{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showfail{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showsnapshot{{$field.fieldId}}_{{$item.itemId}}').hide();
@@ -123,6 +133,7 @@
 				} else if (data.status == 'MAINT') {
 					$('.showmaint{{$field.fieldId}}_{{$item.itemId}}').show();
 					$('.showdisconnected{{$field.fieldId}}_{{$item.itemId}}').hide();
+					$('.showinvalidkeys{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showfail{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showsnapshot{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showdestroy{{$field.fieldId}}_{{$item.itemId}}').hide();
@@ -131,6 +142,7 @@
 					$('.showfail{{$field.fieldId}}_{{$item.itemId}}').show();
 					$('.showmaint{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showdisconnected{{$field.fieldId}}_{{$item.itemId}}').hide();
+					$('.showinvalidkeys{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showsnapshot{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showdestroy{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$.tikiModal();
@@ -140,6 +152,7 @@
 					$('.showactive{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showfail{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showdisconnected{{$field.fieldId}}_{{$item.itemId}}').hide();
+					$('.showinvalidkeys{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showmaint{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showsnapshot{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showdestroy{{$field.fieldId}}_{{$item.itemId}}').hide();
@@ -151,6 +164,7 @@
 					$('.showbuilding{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showfail{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showdisconnected{{$field.fieldId}}_{{$item.itemId}}').hide();
+					$('.showinvalidkeys{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showmaint{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showsnapshot{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showdestroy{{$field.fieldId}}_{{$item.itemId}}').hide();
@@ -161,6 +175,7 @@
 					$('.shownone{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showfail{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showdisconnected{{$field.fieldId}}_{{$item.itemId}}').hide();
+					$('.showinvalidkeys{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showmaint{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showsnapshot{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showdestroy{{$field.fieldId}}_{{$item.itemId}}').hide();
@@ -174,6 +189,7 @@
 					$('.shownone{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showfail{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showdisconnected{{$field.fieldId}}_{{$item.itemId}}').hide();
+					$('.showinvalidkeys{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showmaint{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showsnapshot{{$field.fieldId}}_{{$item.itemId}}').show();
 					$('.showdestroy{{$field.fieldId}}_{{$item.itemId}}').hide();
@@ -191,6 +207,7 @@
 					$('.shownone{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showfail{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showdisconnected{{$field.fieldId}}_{{$item.itemId}}').hide();
+					$('.showinvalidkeys{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showmaint{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showsnapshot{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showresetnok{{$field.fieldId}}_{{$item.itemId}}').hide();

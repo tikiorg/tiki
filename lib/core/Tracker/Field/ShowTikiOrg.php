@@ -5,6 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+use phpseclib\Crypt\RSA;
+use phpseclib\Net\SSH2;
+
 class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 {
 	public static function getTypes()
@@ -34,13 +37,13 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 					),
 					'publicKey' => array(
 						'name' => tr('Public key file path'),
-						'description' => tr('System path to public key on local server'),
+						'description' => tr('System path to public key on local server. Only RSA keys are supported.'),
 						'filter' => 'text',
 						'legacy_index' => 2,
 					),
 					'privateKey' => array(
 						'name' => tr('Private key file path'),
-						'description' => tr('System path to private key on local server'),
+						'description' => tr('System path to private key on local server. Only RSA keys are supported.'),
 						'filter' => 'text',
 						'legacy_index' => 3,
 					),
@@ -82,11 +85,6 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 			'snapshoturl' => '',
 			'value' => 'none', // this is required to show the field, otherwise it gets hidden if tracker is set to doNotShowEmptyField
 		);
-
-		if (!function_exists('ssh2_connect')) {
-			$ret['status'] = 'NOSSH';
-			return $ret;
-		}
 
 		$id = $this->getItemId();
 		if (!$id) {
@@ -131,13 +129,19 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 			$ret['username'] = 'user';
 		}
 
-		$conn = ssh2_connect($this->getOption('domain'), 22);
-		$conntry = ssh2_auth_pubkey_file(
-			$conn,
-			$this->getOption('remoteShellUser'),
-			$this->getOption('publicKey'),
-			$this->getOption('privateKey')
-		);
+		$conn = new SSH2($this->getOption('domain'));
+
+		$password = new RSA();
+
+		$publicKeyLoaded = $password->loadKey(file_get_contents($this->getOption('publicKey')));
+		$privateKeyLoaded = $password->loadKey(file_get_contents($this->getOption('privateKey')));
+
+		if (!$publicKeyLoaded || !$privateKeyLoaded) {
+			$ret['status'] = 'INVKEYS';
+			return $ret;
+		}
+
+		$conntry = $conn->login($this->getOption('remoteShellUser'), $password);
 
 		if (!$conntry) {
 			$ret['status'] = 'DISCO';
@@ -145,10 +149,7 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 		}
 
 		$infostring = "info -i $id -U $userid";
-		$infostream = ssh2_exec($conn, $infostring);
-
-		stream_set_blocking($infostream, TRUE);
-		$infooutput = stream_get_contents($infostream);
+		$infooutput = $conn->exec($infostring);
 		$ret['debugoutput'] = $infostring . " " . $infooutput;
 
 		if (strpos($infooutput, 'MAINTENANCE: ') !== false) {

@@ -1036,13 +1036,13 @@ if ($s) {
 	$php_properties['SSH2'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Loaded',
-		'message' => tra('This extension is needed for the show.tiki.org tracker field type.')
+		'message' => tra('This extension is needed for the show.tiki.org tracker field type, up to Tiki 17.')
 	);
 } else {
 	$php_properties['SSH2'] = array(
 		'fitness' => tra('info'),
 		'setting' => 'Not available',
-		'message' => tra('This extension is needed for the show.tiki.org tracker field type.')
+		'message' => tra('This extension is needed for the show.tiki.org tracker field type, up to Tiki 17.')
 	);
 }
 

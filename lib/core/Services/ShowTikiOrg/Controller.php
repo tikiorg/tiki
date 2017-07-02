@@ -5,6 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+use phpseclib\Crypt\RSA;
+use phpseclib\Net\SSH2;
+
 class Services_ShowTikiOrg_Controller
 {
 	function setUp()
@@ -41,13 +44,13 @@ class Services_ShowTikiOrg_Controller
 		}
 		$domain = $options->domain;
 
-		$conn = ssh2_connect($domain, 22);
-		$conntry = ssh2_auth_pubkey_file(
-			$conn,
-			$options->remoteShellUser,
-			$options->publicKey,
-			$options->privateKey
-		);
+		$conn = new SSH2($domain);
+
+		$password = new RSA();
+		$password->setPrivateKey(file_get_contents($options->privateKey));
+		$password->setPublicKey(file_get_contents($options->publicKey));
+
+		$conntry = $conn->login($options->remoteShellUser, $password);
 
 		if (!$conntry) {
 			$ret['status'] = 'DISCO';
@@ -55,10 +58,8 @@ class Services_ShowTikiOrg_Controller
 		}
 
 		$infostring = "info -i $id -U $userid";
-		$infostream = ssh2_exec($conn, $infostring);
+		$infooutput = $conn->exec($infostring);
 
-		stream_set_blocking($infostream, TRUE);
-		$infooutput = stream_get_contents($infostream);
 		$ret['debugoutput'] = $infooutput;
 
 		if (strpos($infooutput, 'MAINTENANCE: ') !== false) {
@@ -115,10 +116,7 @@ class Services_ShowTikiOrg_Controller
 				$fullstring = "$command -t $svntag -u $username -i $id -U $userid";
 			}
 
-			$stream = ssh2_exec($conn, $fullstring);
-			stream_set_blocking($stream, TRUE);
-			$output = stream_get_contents($stream);
-			fclose($stream);
+			$output = $conn->exec($fullstring);
 			$ret['debugoutput'] = $fullstring . "\n" . $output;
 
 			if ($command == 'snapshot') {
