@@ -1493,7 +1493,7 @@ class FreetagLib extends ObjectLib
 			$result = $this->query(
 				'SELECT objectId'
 				. ' FROM tiki_freetagged_objects'
-				. ' WHERE tagId IN($equivStr) AND objectId IN(SELECT objectId'
+				. ' WHERE tagId IN(' . $equivStr . ') AND objectId IN(SELECT objectId'
 				. ' FROM tiki_freetagged_objects WHERE tagId = ?)',
 				array($master)
 			);
