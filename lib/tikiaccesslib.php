@@ -898,7 +898,7 @@ class TikiAccessLib extends TikiLib
 	 * @param bool $acceptFeed
 	 * @return array
 	 */
-	function get_accept_types($acceptFeed = false)
+	static function get_accept_types($acceptFeed = false)
 	{
 		$accept = explode(',', $_SERVER['HTTP_ACCEPT']);
 
