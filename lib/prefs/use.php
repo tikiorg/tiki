@@ -22,6 +22,8 @@ function prefs_use_list()
 			'perspective' => false,
 			'default' => 'n',
 		),
+
+		// FIXME: These 2 have misleading names. Actions will use context menus even if (only) one is disabled. Do we really need to have 2 preferences for this? Surely if we have context menus they should have both icons and text. Chealer 2017-07-03
 		'use_context_menu_icon' => array(
 			'name' => tra('Use context menus for actions (icons)'),
 			'type' => 'flag',
