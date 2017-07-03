@@ -2,7 +2,7 @@
 <div class="table-responsive">
 	<table class="caltable table">
 		<tr>
-			<td style="width: 1%:" class="heading weeks"></td>
+			<td style="width: 1%;" class="heading weeks"></td>
 			{section name=dn loop=$daysnames}
 				{if in_array($smarty.section.dn.index,$viewdays)}
 					<td id="top_{$smarty.section.dn.index}" class="heading" style="width:14%;">{$daysnames[dn]}</td>
