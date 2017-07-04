@@ -961,11 +961,13 @@ class Services_User_Controller
 					$page = $prefs['feature_wiki_userpage_prefix'] . $deleteuser;
 					Services_Exception_Denied::checkObject('remove', 'wiki page', $page);
 					$tikilib = TikiLib::lib('tiki');
-					$res = $tikilib->remove_all_versions($page);
-					if ($res !== true) {
-						Feedback::error(tr('An error occurred. User %0 could not be deleted', $deleteuser), 'session');
-						Services_Utilities::closeModal($referer);
-						return false;
+					if ($tikilib->page_exists($page)) {
+						$res = $tikilib->remove_all_versions($page);
+						if ($res !== true) {
+							Feedback::error(tr('An error occurred. User page for %0 could not be deleted', $deleteuser), 'session');
+							Services_Utilities::closeModal($referer);
+							return false;
+						}
 					}
 				}
 
