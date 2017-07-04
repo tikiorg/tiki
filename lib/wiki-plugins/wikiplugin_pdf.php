@@ -173,6 +173,18 @@ function wikiplugin_pdf_info()
 						'size' => '2',
 						'filter' => 'digits',
 					),
+					'hyperlinks' => array(
+						'name' => tra('Hyperlink behaviour in PDF'),
+						'description' => tra(''),
+						'tags' => array('advanced'),
+						'type' => 'list',
+						'default'=>'',
+						'options' => array(
+							array('text'=>'Default','value'=>''),
+							array('text'=>'Off (Links will be removed)','value'=>'off'),
+							array('text'=>'Add as footnote (Links will be listed at end of document)','value'=>'footnote'),
+						)	
+					),
 					'password' => array(
 						'name' => tra('PDF password for viewing'),
 						'description' => tra('Secure confidential PDF with password, leave blank if password protected is not needed'),

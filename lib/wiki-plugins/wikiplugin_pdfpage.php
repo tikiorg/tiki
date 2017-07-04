@@ -114,6 +114,18 @@ function wikiplugin_pdfpage_info()
 						'size' => '2',
 						'filter' => 'digits',
 					),
+					'hyperlinks' => array(
+						'name' => tra('Hyperlink behaviour in PDF'),
+						'description' => tra(''),
+						'tags' => array('advanced'),
+						'type' => 'list',
+						'default'=>'',
+						'options' => array(
+							array('text'=>'Default','value'=>''),
+							array('text'=>'Off (Links will be removed)','value'=>'off'),
+							array('text'=>'Add as footnote (Links will be listed at end of document)','value'=>'footnote'),
+						)	
+					),					
 					'watermark' => array(
 						'name' => tra('Watermark text for this page. Set value as "off", to turn off watermark of the page'),
 						'description' => tra('Watermark text value, for example: Confidential, Draft etc.'),

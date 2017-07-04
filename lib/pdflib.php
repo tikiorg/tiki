@@ -386,6 +386,10 @@ class PdfGenerator
 			$mpdf->showWatermarkText = true;
 			$mpdf->SetWatermarkImage($pdfPage['watermark_image'], 0.15, '');
 			$mpdf->showWatermarkImage = true;
+			//hyperlink check
+			if($pdfPage['hyperlinks']!="") {
+				$pdfPage['pageContent']=$this->processHyperlinks($pdfPage['pageContent'],$pdfPage['hyperlinks'],$pageCounter++);
+			}
 			$mpdf->WriteHTML($cssStyles.$pdfPage['pageContent']);
 			$cssStyles=''; //set to blank after added with first page
 		 }
@@ -444,6 +448,7 @@ class PdfGenerator
 		$pdfSettings['watermark_image']=$prefs['print_pdf_mpdf_watermark_image'];
 		$pdfSettings['coverpage_text_settings']=str_ireplace("{PAGETITLE}",$params['page'],$prefs['print_pdf_mpdf_coverpage_text_settings']);
 		$pdfSettings['coverpage_image_settings']=str_ireplace("{PAGETITLE}",$params['page'],$prefs['print_pdf_mpdf_coverpage_image_settings']);
+		$pdfSettings['hyperlinks']=$prefs['print_pdf_mpdf_hyperlinks'];		
 
 		if($pdfSettings['toc']=='y'){
 			//toc levels
@@ -714,8 +719,50 @@ $(".convert-mailto").removeClass("convert-mailto").each(function () {
 			   unlink("temp/#".$tid."_".session_id().".txt");
 			}
 		}
-		
-		
+
+		function processHyperlinks($content,$hyperlinkSetting,$pageCounter){
+			$doc = new DOMDocument();
+			$doc->loadHTML($content);
+			$anchors = $doc->getElementsByTagName('a');
+			$len = $anchors->length;
+			$href='';
+			$hrefDiv=$doc->createElement('div');
+
+			for($i=0,$linkCnt=1; $i<$len; $i++) {
+    			$anchor = $anchors->item(0);
+    			$link = $doc->createElement('span', $anchor->nodeValue);
+				$link->setAttribute('class', $anchor->getAttribute('class'));
+				
+				//checking if links to be added as footnote
+				if($hyperlinkSetting!="off") {
+					// Check if there is a url in the text
+					$linkSup=$doc->createElement("sup");
+					if(preg_match("/(http|https)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/", $anchor->getAttribute('href'), $url)) {					
+						
+						$linkAn=$doc->createElement("anchor","[".$linkCnt."]");
+						$linkAn->setAttribute("href","#".$pageCounter."lnk".$linkCnt);
+						$linkSup->appendChild($linkAn);
+						$link->appendChild($linkSup);	
+						$hrefData=$doc->createElement("a",$anchor->getAttribute('href'));
+						$hrefData->setAttribute("name",$pageCounter."lnk".$linkCnt);
+						$hrefDiv->setAttribute("style","border-top:1px solid #ccc;line-height:1.2em");
+						$hrefDiv->appendChild($doc->createElement("sup","&nbsp;[".$linkCnt."]&nbsp;"));
+						$hrefDiv->appendChild($hrefData);
+						$hrefDiv->appendChild($doc->createElement("br"));
+						$linkCnt++;
+					}
+				}
+				$anchor->parentNode->replaceChild($link, $anchor);
+				
+				
+			}
+
+			$hrefDiv->setAttribute('class',"footnotearea");
+			$doc->getElementsByTagName('body')->item(0)->appendChild($hrefDiv);
+			$content=$doc->saveHTML();
+			return str_replace("anchor","a",$content);
+			
+		}// End of processHyperlinks
 } //END OF PDF CLASS
 
 
