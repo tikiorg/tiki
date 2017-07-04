@@ -1676,6 +1676,7 @@ function wikiplugin_tracker($data, $params)
 				if (($f['isHidden'] == 'c' || $f['isHidden'] == 'p') && !empty($itemId) && !isset($item['creator'])) {
 					$item['creator'] = $trklib->get_item_creator($trackerId, $itemId);
 				}
+				$item[$f['fieldId']] = $f['value'];
 			}
 		}
 		if (!empty($showstatus) && $showstatus == 'y') {
