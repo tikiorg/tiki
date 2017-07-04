@@ -118,7 +118,8 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 
 	function renderInput($context = array())
 	{
-		if( empty($this->getOption('fieldIdHere')) ) {
+		if (empty($this->getOption('fieldIdHere'))
+			|| (!empty($context['pluginTracker']) && $context['pluginTracker'] === 'y')) {
 			return $this->renderOutput();
 		} else {
 			TikiLib::lib('header')->add_jq_onready(
@@ -165,7 +166,7 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 			$items = array_keys($list);
 		}
 
-		if ($context['list_mode'] === 'csv') {
+		if (isset($context['list_mode']) && $context['list_mode'] === 'csv') {
 			return implode('%%%', $list);
 		} else {
 			return $this->renderTemplate(
@@ -365,7 +366,7 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 					$displayFields,
 					$status,
 					' ',
-					$context['list_mode'],
+					isset($context['list_mode']) ? $context['list_mode'] : '',
 					$this->getOption('linkToItems'),
 					$this->getOption('displayFieldIdThereFormat')
 				);
