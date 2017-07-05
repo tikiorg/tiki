@@ -102,9 +102,6 @@ function smarty_function_popup($params, $smarty)
 
 
 	$options['data-content'] = preg_replace(array('/\\\\r\n/','/\\\\n/','/\\\\r/', '/\\t/'), '', $options['data-content']);
-	$options['data-content'] = str_replace('\&#039;', '&#039;', $options['data-content']);	// unescape previous js escapes
-	$options['data-content'] = str_replace('\&quot;', '&quot;', $options['data-content']);
-	$options['data-content'] = str_replace('&lt;\/', '&lt;/', $options['data-content']);
 
 	$retval = '';
 	foreach ($options as $k => $v) {
