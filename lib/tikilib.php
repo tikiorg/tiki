@@ -4299,7 +4299,7 @@ class TikiLib extends TikiDb_Bridge
 	 * @param $car
 	 * @return int
 	 */
-	function how_many_at_start($str, $car)
+	static function how_many_at_start($str, $car)
 	{
 		$cant = 0;
 		$i = 0;
