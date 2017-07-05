@@ -1637,7 +1637,7 @@ class UsersLib extends TikiLib
 					}
 					if (is_array($ldapPreferenceValue)) {
 						// Ldap attributes can (by default) have multiple values
-						// so we always take the fist form the list is is a multi value field
+						// so we always take the first from the list in case of a multi value field
 						$ldapPreferenceValue = reset($ldapPreferenceValue);
 					}
 					if ($isSetLdapPreferenceValue) {
