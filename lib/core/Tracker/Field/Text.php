@@ -185,8 +185,6 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 			}
 		}
 
-		unset($data['raw']);
-
 		return $data;
 	}
 
