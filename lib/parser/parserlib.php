@@ -2861,11 +2861,11 @@ if ( \$('#$id') ) {
 					// closing a list, there really shouldn't be a
 					// paragraph open anyway.
 					$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 0, 1, 0);
+
 					// Get count of (possible) header signs at start
 					$hdrlevel = $tikilib->how_many_at_start($line, '!');
-					// If 1st char on line is '!' and its count less than 6 (max in HTML)
-					if ($litype == '!' && $hdrlevel > 0 && $hdrlevel <= 6) {
 
+					if ($litype == '!' && $hdrlevel > 0 && $hdrlevel <= 6 /* HTML has h1 to h6, but no h7 or above */) { // If the line starts with 1 to 6 exclamation marks ("!")
 						/*
 						 * Handle headings autonumbering syntax (i.e. !#Text, !!#Text, ...)
 						 * Note :
