@@ -3,7 +3,7 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -69,6 +69,27 @@ if ((isset($_REQUEST["rename"]) || isset($_REQUEST["confirm"])) && $access->chec
 	if ($result) {
 		$perspectivelib = TikiLib::lib('perspective');
 		$perspectivelib->replace_preference('wsHomepage', $page, $newName);
+
+    // If user has checked "semantic_alias" (Use Semantic Alias to redirect the old page to the new one?)
+		// We'll append on the renamed page's content the following string, where $page is the original name
+		// "\r\n~tc~(alias($page))~/tc~"
+		// We use the ~tc~ so that it doesn't make the page look ugly
+		if (isset($_REQUEST["semantic_alias"]) && $_REQUEST["semantic_alias"]=="y") {
+      if (isset($_SERVER['REMOTE_ADDR']) && filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP)) {
+			  $remoteIp = $_SERVER['REMOTE_ADDR'];
+			} else {
+				$remoteIp = '0.0.0.0';
+			}
+
+      // Obtain info on the page being renamed
+      $infoRenamedPage = $tikilib->get_page_info($newName);
+      $edit_data = $infoRenamedPage["data"];
+			$pageHyphensForSpaces = str_replace(" ","-",$page); // Otherwise pages with spaces won't work
+			$edit_data = $edit_data."\r\n~tc~ (alias($pageHyphensForSpaces)) ~/tc~";
+			$edit_comment = tr('Page renamed from %0 to %1. Semantic alias created',$page,$newName);
+			$res = TikiLib::lib('tiki')->update_page($newName, $edit_data, $edit_comment, $infoRenamedPage["user"], $remoteIp);
+		}
+
 		$access->redirect($wikilib->sefurl($newName));
 	}
 }
