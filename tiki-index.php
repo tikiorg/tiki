@@ -105,11 +105,7 @@ if (isset($_REQUEST['page_id'])) {
 }
 
 if ((!isset($_REQUEST['page']) || $_REQUEST['page'] == '') and !isset($_REQUEST['page_ref_id'])) {
-	if ($globalperms->view) {
-		$access->display_error('', tra('You do not have permission to view this page.'), '401');
-	} else {
-		$access->display_error('', tra('No name indicated for wiki page'));
-	}
+	$access->display_error('', tra('No wiki page specified'));
 }
 
 $use_best_language = $multilinguallib->useBestLanguage();
