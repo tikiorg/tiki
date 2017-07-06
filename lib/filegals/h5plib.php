@@ -310,13 +310,13 @@ class H5PLib
 		// Add core stylesheets
 		foreach (H5PCore::$styles as $style) {
 			self::$settings['core']['styles'][] = $lib_url . $style . $cache_buster;
-			TikiLib::lib('header')->add_cssfile($lib_url . $style . $cache_buster);
+			TikiLib::lib('header')->add_cssfile($lib_url . $style);
 		}
 
 		// Add core JavaScript
 		foreach (H5PCore::$scripts as $script) {
 			self::$settings['core']['scripts'][] = $lib_url . $script . $cache_buster;
-			TikiLib::lib('header')->add_jsfile($lib_url . $script . $cache_buster);
+			TikiLib::lib('header')->add_jsfile($lib_url . $script);
 		}
 	}
 
