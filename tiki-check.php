@@ -1046,6 +1046,21 @@ if ($s) {
 	);
 }
 
+$s = extension_loaded('curl');
+if ($s) {
+	$php_properties['curl'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'Loaded',
+		'message' => tra('This extension is required for H5P.')
+	);
+} else {
+	$php_properties['curl'] = array(
+		'fitness' => tra('bad'),
+		'setting' => 'Not available',
+		'message' => tra('This extension is required for H5P.')
+	);
+}
+
 $s = extension_loaded('json');
 if ($s) {
 	$php_properties['json'] = array(
