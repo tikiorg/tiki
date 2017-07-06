@@ -14,7 +14,7 @@ function wikiplugin_h5p_info()
 		'prefs' => ['wikiplugin_h5p', 'h5p_enabled'],
 		'iconname' => 'html',
 		'format' => 'html',
-		'introduced' => 16,
+		'introduced' => 17,
 		'params' => [
 			'fileId' => [
 				'required' => false,
