@@ -76,7 +76,7 @@ if ((isset($_REQUEST["rename"]) || isset($_REQUEST["confirm"])) && $access->chec
 		// We use the ~tc~ so that it doesn't make the page look ugly
 		if (isset($_REQUEST["semantic_alias"]) && $_REQUEST["semantic_alias"]=="y") {
       if (isset($_SERVER['REMOTE_ADDR']) && filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP)) {
-			  $remoteIp = $_SERVER['REMOTE_ADDR'];
+				$remoteIp = $_SERVER['REMOTE_ADDR'];
 			} else {
 				$remoteIp = '0.0.0.0';
 			}
