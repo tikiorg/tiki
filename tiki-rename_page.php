@@ -80,16 +80,14 @@ if ((isset($_REQUEST["rename"]) || isset($_REQUEST["confirm"])) && $access->chec
 			} else {
 				$remoteIp = '0.0.0.0';
 			}
-
       // Obtain info on the page being renamed
       $infoRenamedPage = $tikilib->get_page_info($newName);
       $edit_data = $infoRenamedPage["data"];
 			$pageHyphensForSpaces = str_replace(" ","-",$page); // Otherwise pages with spaces won't work
 			$edit_data = $edit_data."\r\n~tc~ (alias($pageHyphensForSpaces)) ~/tc~";
-			$edit_comment = tr('Page renamed from %0 to %1. Semantic alias created',$page,$newName);
+			$edit_comment = tr('Page renamed from %0 to %1. Semantic alias redirect created',$page,$newName);
 			$res = TikiLib::lib('tiki')->update_page($newName, $edit_data, $edit_comment, $infoRenamedPage["user"], $remoteIp);
 		}
-
 		$access->redirect($wikilib->sefurl($newName));
 	}
 }
