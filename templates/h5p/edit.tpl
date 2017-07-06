@@ -25,7 +25,9 @@
 			<br>
 			<div class="form-actions form-wrapper submit" id="edit-actions">
 				<input type="submit" id="edit-submit" name="op" value="Save" class="btn btn-primary">
-				<input type="submit" id="edit-delete" name="op" value="Delete" class="btn btn-default confrim">
+				{if $fileId}
+					<input type="submit" id="edit-delete" name="op" value="Delete" class="btn btn-default confrim">
+				{/if}
 			</div>
 			<br>
 		</div>
