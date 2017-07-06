@@ -310,13 +310,13 @@ class H5PLib
 		// Add core stylesheets
 		foreach (H5PCore::$styles as $style) {
 			self::$settings['core']['styles'][] = $lib_url . $style . $cache_buster;
-			TikiLib::lib('header')->add_cssfile($lib_url . $style . $cache_buster);
+			TikiLib::lib('header')->add_cssfile($lib_url . $style);
 		}
 
 		// Add core JavaScript
 		foreach (H5PCore::$scripts as $script) {
 			self::$settings['core']['scripts'][] = $lib_url . $script . $cache_buster;
-			TikiLib::lib('header')->add_jsfile($lib_url . $script . $cache_buster);
+			TikiLib::lib('header')->add_jsfile($lib_url . $script);
 		}
 	}
 
@@ -571,15 +571,15 @@ class H5PLib
 		}
 
 		// Add JavaScript with library framework integration (editor part)
-		TikiLib::lib('header')->add_jsfile($url . 'scripts/h5peditor-editor.js');
-		TikiLib::lib('header')->add_jsfile($tikiroot . 'lib/core/H5P/editor.js');
+		TikiLib::lib('header')->add_jsfile($editorpath . 'scripts/h5peditor-editor.js');
+		TikiLib::lib('header')->add_jsfile('lib/core/H5P/editor.js');
 
 		// Add translation
 		$languagescript = $editorpath . 'language/' . substr($prefs['language'], 0, 2) . '.js';
 		if (!file_exists($tikipath . $languagescript)) {
 			$languagescript = $editorpath . 'language/en.js';
 		}
-		TikiLib::lib('header')->add_jsfile($tikiroot . $languagescript);
+		TikiLib::lib('header')->add_jsfile($languagescript);
 
 		// needs to be non-sefurl version so h5p can append the action and params
 		$ajaxPath = 'tiki-ajax_services.php?controller=h5p&action=';

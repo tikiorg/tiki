@@ -318,7 +318,8 @@ class ReconcileExifIptcXmp
 			}
 		}
 		//Prepare stats
-		$stats = '';
+		$stats = [];
+		$finalall = [];
 		if (isset($omni['stats'])) {
 			foreach ($this->statspecs as $key => $array) {
 				if (isset($omni['stats'][$key])) {
