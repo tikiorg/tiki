@@ -137,7 +137,7 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract implements Trac
 		}
 		if ($this->getOption('assign')) {
 			$creators = TikiLib::lib('trk')->get_item_creators($this->getConfiguration('trackerId'), $this->getItemId());
-			if (empty(array_filter($creators))) {
+			if (empty($creators)) {
 				$creators = array($user);
 			}
 			$ginfo = TikiLib::lib('user')->get_group_info($value);
