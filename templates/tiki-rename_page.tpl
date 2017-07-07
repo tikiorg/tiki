@@ -29,7 +29,9 @@
 			<label for="newpage" class="col-sm-2 control-label">{tr}New name{/tr}</label>
 			<div class="col-sm-10">
 				<input type='text' id='newpage' name='newpage' class="form-control" value='{$newname|escape}'>
-				<input type='checkbox' id='semantic_alias' name='semantic_alias' value='y'> {tr}Automatic redirect from old page name to new page name (ex.: for search engines or users that may have bookmarked the page){/tr}
+				{if $prefs.feature_semantic eq 'y' and $prefs.feature_wiki_1like_redirection eq 'y' and $prefs.feature_wiki_pagealias eq 'y'}
+					<input type='checkbox' id='semantic_alias' name='semantic_alias' value='y'> {tr}Automatic redirect from old page name to new page name (ex.: for search engines or users that may have bookmarked the page){/tr}
+				{/if}
 			</div>
 		</div>
 		<div class="col-sm-2">
