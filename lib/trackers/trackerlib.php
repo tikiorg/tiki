@@ -5842,10 +5842,18 @@ class TrackerLib extends TikiLib
 		}
 	}
 
+	/**
+	 * Called when accessing contents of a Tracker UserSelector field.
+	 * Purpose is to parse the csv string of usernames stored inside and format an array.
+	 * @param $value csv-formatted string
+	 * @return array of resulting usernames
+	 */
 	public function parse_user_field($value) {
-		return array_map(function($user) {
-			return trim($user);
-		}, str_getcsv($value));
+		return array_filter(
+			array_map(function($user) {
+				return trim($user);
+			}, str_getcsv($value))
+		);
 	}
 }
 
