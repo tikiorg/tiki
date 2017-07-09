@@ -124,6 +124,9 @@ if ($useDefaultPrefs) {
 	require_once('lib/wizard/pages/upgrade_new_in_17.php');
 	$pages[] = new UpgradeWizardNewIn17();
 
+	require_once('lib/wizard/pages/upgrade_new_in_18.php');
+	$pages[] = new UpgradeWizardNewIn18();
+
 	require_once('lib/wizard/pages/upgrade_doc_page_iframe.php');
     $pages[] = new UpgradeWizardDocPageIframe();
 
