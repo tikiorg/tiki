@@ -76,5 +76,7 @@ if ($access->ticketMatch()) {
 			$lists[$token] = $semanticlib->getLinksUsing($token);
 		}
 		$smarty->assign('link_lists', $lists);
+
+		$_REQUEST['redirect'] = 0;
 	}
 }
