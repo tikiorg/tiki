@@ -82,6 +82,6 @@ function genFootnoteArea ($listName, $list){
 	$smarty->assign('footnotes',$list['entry']);
 	$smarty->assign('listType',$list['listType']);
 
-	return $smarty->fetch('lib/wiki-plugins/wikiplugin_footnotearea.tpl');
+	return $smarty->fetch('templates/wiki-plugins/wikiplugin_footnotearea.tpl');
 
 }

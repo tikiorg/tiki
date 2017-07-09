@@ -127,7 +127,7 @@ function wikiplugin_footnote($data, $params)
 		$smarty->assign('listNum',$listNum);
 		$smarty->assign('class',$footnote[$listNum]['class']);
 		$smarty->assign('listType',$footnotes['lists'][$list]['listType']);
-		return $smarty->fetch('lib/wiki-plugins/wikiplugin_footnote.tpl');
+		return $smarty->fetch('templates/wiki-plugins/wikiplugin_footnote.tpl');
 	} else {                             // if there is no data
 		if (isset($params['sameastag']))
 			$sameas = $params['sameastag'];
@@ -161,7 +161,7 @@ function wikiplugin_footnote($data, $params)
 				// The tag does not exist (yet) !!!!
 				return '<sup>' . tra('Error: Tag not found in any previous footnote') . '</sup>';
 			}
-			return $smarty->fetch('lib/wiki-plugins/wikiplugin_footnote.tpl');
+			return $smarty->fetch('templates/wiki-plugins/wikiplugin_footnote.tpl');
 		}
 	}
 
