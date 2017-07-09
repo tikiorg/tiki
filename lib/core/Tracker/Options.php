@@ -157,8 +157,10 @@ class Tracker_Options
 	{
 		$out = array();
 
-		foreach (array_keys($this->info['params']) as $key) {
-			$out[$key] = $this->getParam($key);
+		if (is_array($this->info['params'])) {
+			foreach (array_keys($this->info['params']) as $key) {
+				$out[$key] = $this->getParam($key);
+			}
 		}
 
 		return $out;
