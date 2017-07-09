@@ -6,11 +6,11 @@
 // $Id$
 
 /**
- * Class TikiFilter_RelativeURL
+ * Class TikiFilter_RelativeUrl
  *
  * Filters for valid relative URL's, and strips any tags.
  */
-class TikiFilter_RelativeURL implements Zend\Filter\FilterInterface
+class TikiFilter_RelativeUrl implements Zend\Filter\FilterInterface
 {
 	/**
 	 *
