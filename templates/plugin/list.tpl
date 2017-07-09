@@ -8,10 +8,10 @@
 	{foreach from=$plugins key=plugin item=info}
 		<fieldset class="margin-bottom-lg">
 			<legend>
-				{if $info.iconname}{icon name=$info.iconname}{else}{icon name='plugin'}{/if} {$info.name|lower|escape}
+				{if $info.iconname}{icon name=$info.iconname}{else}{icon name='plugin'}{/if} {tr}{$info.title|escape}{/tr}
 			</legend>
 			<div class="adminoptionbox">
-				<strong>{$plugin|escape}</strong>: {$info.description|default:''|escape}
+				<strong>{$plugin|escape}</strong>: {tr}{$info.description|default:''|escape}{/tr}
 				{help url="Plugin$plugin"}
 			</div>
 			{preference name='wikiplugin_'|cat:$plugin label="{tr}Enable{/tr}"}
