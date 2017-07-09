@@ -24,9 +24,13 @@
 			{if $aliases}
 				<div class="aliases">
 					<strong>{tr}Page aliases found:{/tr}</strong>
+					<ul>
 					{foreach from=$aliases item=alias}
-						<a href="{$alias.toPage|sefurl}" title="{$alias.fromPage|escape}" class="alias">{$alias.toPage|escape};</a>
+						<li>
+							<a href="{$alias.toPage|sefurl}" title="{$alias.fromPage|escape}" class="alias">{$alias.toPage|escape}</a>
+						</li>
 					{/foreach}
+					</ul>
 				</div>
 			{/if}
 			{include file='tiki-listpages_content.tpl' clean='n'}

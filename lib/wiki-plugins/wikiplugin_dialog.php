@@ -157,6 +157,14 @@ function wikiplugin_dialog($data, $params)
 		$options['hide'] = $params['hideAnim'];
 	}
 
+	if (empty($params['actions'])) {
+		$params['actions'] = [];
+	}
+
+	if (empty($params['buttons'])) {
+		$params['buttons'] = [];
+	}
+
 	$buttons = '';	// buttons need functions attached and json_encode cannot deal with them ;(
 
 	$nbuts = count($params['buttons']);

@@ -70,7 +70,7 @@ function wikiplugin_benchmark( $data, $params ){
 		$smarty->assign('time',round(($end - $begin)/60,4));
 		$smarty->assign('memory',$memEnd - $memBegin);
 		$smarty->assign('memoryReal',$memEndReal - $memBeginReal);
-		return $smarty->fetch('lib/wiki-plugins/wikiplugin_benchmark.tpl').$parserlib->parse_data_plugin($data);
+		return $smarty->fetch('templates/wiki-plugins/wikiplugin_benchmark.tpl').$parserlib->parse_data_plugin($data);
 	}
 
 	// Complete iterations benchmark
@@ -105,7 +105,7 @@ function wikiplugin_benchmark( $data, $params ){
 	$smarty->assign('timeAMicro',round(array_sum($iterations['time']) / $params['times'],4));
 	$smarty->assign('memoryA',round(array_sum($iterations['mem']) / $params['times'],0));
 	$smarty->assign('memoryRealA',array_sum($iterations['memR']) / $params['times']);
-	return $smarty->fetch('lib/wiki-plugins/wikiplugin_benchmark.tpl').$parserlib->parse_data_plugin($data);
+	return $smarty->fetch('templates/wiki-plugins/wikiplugin_benchmark.tpl').$parserlib->parse_data_plugin($data);
 
 
 }
