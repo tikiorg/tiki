@@ -14,12 +14,8 @@
 				<strong>{$plugin|escape}</strong>: {$info.description|default:''|escape}
 				{help url="Plugin$plugin"}
 			</div>
-			{assign var=pref value="wikiplugin_$plugin"}
-			{if in_array( $pref, $info.prefs)}
-				{assign var=pref_inline value="wikiplugininline_$plugin"}
-				{preference name=$pref label="{tr}Enable{/tr}"}
-				{preference name=$pref_inline label="{tr}Disable edit plugin icon (make plugin inline){/tr}"}
-			{/if}
+			{preference name='wikiplugin_'|cat:$plugin label="{tr}Enable{/tr}"}
+			{preference name='wikiplugininline_'|cat:$plugin label="{tr}Disable edit plugin icon (make plugin inline){/tr}"}
 		</fieldset>
 	{/foreach}
 {/block}
