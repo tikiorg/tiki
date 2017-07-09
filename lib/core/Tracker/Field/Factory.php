@@ -106,6 +106,8 @@ class Tracker_Field_Factory
 	{
 		if (isset($this->infoMap[$type])) {
 			return $this->infoMap[$type];
+		} else {
+			return [];
 		}
 	}
 	
