@@ -333,6 +333,20 @@ function wikiplugin_trackerlist_info()
 					 array('text' => tra('No'), 'value' => 'n')
 				 )
 			 ),
+			 'allowtableexpansion' => array(
+				 'required' => false,
+				 'name' => tra('Show button for expanding long tables'),
+				 'description' => tra('Show a toggle button to let long tables break out of the site display to the right with no horizontal scrollbar for better usability (not by default).'),
+				 'since' => '18.0',
+				 'doctype' => 'show',
+				 'filter' => 'alpha',
+				 'default' => 'n',
+				 'options' => array(
+					 array('text' => '', 'value' => ''),
+					 array('text' => tra('Yes'), 'value' => 'y'),
+					 array('text' => tra('No'), 'value' => 'n')
+				 )
+			 ),
 			 'filterfield' => array(
 				 'required' => false,
 				 'name' => tra('Filter Field'),
@@ -1429,6 +1443,10 @@ function wikiplugin_trackerlist($data, $params)
 			$showpagination = 'y';
 		}
 		$smarty->assign_by_ref('showpagination', $showpagination);
+		if (!isset($allowtableexpansion)) {
+			$allowtableexpansion = 'n';
+		}
+		$smarty->assign_by_ref('allowtableexpansion', $allowtableexpansion);
 		if (!isset($showcomments)) {
 			$showcomments = 'y';
 		}
