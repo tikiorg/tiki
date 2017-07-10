@@ -133,6 +133,9 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 		}
 
 		$filter = $this->buildFilter();
+		if (!isset($filter['object_id']) && $this->getItemId()) {
+			$filter['object_id'] = 'NOT '.$this->getItemId();
+		}
 
 		return $this->renderTemplate(
 			'trackerinput/relation.tpl',
