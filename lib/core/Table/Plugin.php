@@ -143,7 +143,8 @@ class Table_Plugin
 					'<code>y</code>', '<code>n</code>', '<code>|</code>'
 				)
 					. '<br> <b>Text - </b><code>type:text;placeholder:xxxx</code><br>' .
-					tra('(For PluginTrackerlist this will be an exact search, for other plugins partial values will work.)') . '<br>
+					tra('(For PluginTrackerlist this will be an exact search, for other plugins partial values will work.)') . '<br>' .
+					tra('From Tiki 18, you can add initial:t option to allow prefix search for text filter. E.g. <code>type:text;initial:t</code>') . '<br>
 					<b>Dropdown - </b><code>type:dropdown;placeholder:****;empty:****;option:****;option:****;option:****</code> <br>' .
 					tr('Options generated automatically if not set and the %0server%1 parameter is not %0y%1.', '<code>', '</code>') . '<br>' .
 					tr('Use %0value=Display label%1 to have the option value be different than the displayed label in
