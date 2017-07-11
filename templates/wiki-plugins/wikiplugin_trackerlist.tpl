@@ -20,27 +20,25 @@
 		{remarksbox type='errors' title="{tr}Field error{/tr}"}{$nonPublicFieldsWarning}{/remarksbox}
 	{/if}
 	{if $allowtableexpansion eq 'y'}
-		<button title="Expand table" class="btn btn-default btn-sm table-expand-toggle" type="button" ><span class="icon fa fa-caret-square-o-right fa-fw "></span></button>
+		<button title="{tr}Expand table{/tr}" class="btn btn-default btn-sm table-expand-toggle" type="button" ><span class="icon fa fa-caret-square-o-right fa-fw "></span></button>
 		{jq}
 			$(".table-expand-toggle").click(function(){
 				var $this = $(this);
 				if ( $this.data('expandStatus') != 'expanded' ) {
 					$this.data('expandStatus','expanded');
-					//alert('expand! ' + $this.data('expand-status') );
 					var $parentdiv = $(this).parent('div');
 					$parentdiv.find('div.table-responsive').each(function () {
 						$(this).removeClass('table-responsive').addClass('table');
 					}); // end each
-					$this.attr('title','Restore layout');
+					$this.attr('title','{tr}Restore layout{/tr}');
 					$this.children('span').removeClass('fa-caret-square-o-right').addClass('fa-caret-square-o-left');
 				}else{
-					//alert('restore! ' + $this.data('expand-status') );
 					$this.data('expandStatus','responsive');
 					var $parentdiv = $(this).parent('div');
 					$parentdiv.find('div.table').each(function () {
 						$(this).addClass('table-responsive').removeClass('table');
 					}); // end each
-					$this.attr('title','Expand table');
+					$this.attr('title','{tr}Expand table{/tr}');
 					$this.children('span').removeClass('fa-caret-square-o-left').addClass('fa-caret-square-o-right');
 				}
 			});

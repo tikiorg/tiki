@@ -335,8 +335,8 @@ function wikiplugin_trackerlist_info()
 			 ),
 			 'allowtableexpansion' => array(
 				 'required' => false,
-				 'name' => tra('Show button for expanding long tables'),
-				 'description' => tra('Show a toggle button to let long tables break out of the site display to the right with no horizontal scrollbar for better usability (not by default).'),
+				 'name' => tra('Show button to make entire width of tables visible'),
+				 'description' => tra('Show a toggle button to allow wide tables to overflow to the right of the content area rather than be scrollable in a limited-width area (not by default).'),
 				 'since' => '18.0',
 				 'doctype' => 'show',
 				 'filter' => 'alpha',
