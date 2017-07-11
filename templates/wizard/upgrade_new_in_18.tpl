@@ -24,6 +24,7 @@
 		<fieldset class="table clearfix featurelist">
 			<legend>{tr}Improved Plugins{/tr}</legend>
 			{preference name=wikiplugin_img}
+			{preference name=wikiplugin_pivottable}
 		</fieldset>
 		<fieldset class="table clearfix featurelist">
 			<legend>{tr}Other new or Extended Features{/tr}</legend>
