@@ -34,6 +34,7 @@
 		</fieldset>
 		<fieldset class="table clearfix featurelist">
 			<legend>{tr}New Wiki Plugins{/tr}</legend>
+			{preference name=wikiplugin_benchmark}
 			{preference name=wikiplugin_casperjs}
 			{preference name=wikiplugin_fluidgrid}
 			{preference name=wikiplugin_h5p}
