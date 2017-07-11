@@ -93,8 +93,20 @@
 				{*{preference name=ids_log_to_database}*}
 			</div>
 		</fieldset>
+		<fieldset>
+			<legend>{tr}Web Cron{/tr}</legend>
+			<div class="adminoptionbox">
+				{preference name=webcron_enabled}
+				<div class="adminoptionboxchild" id="webcron_enabled_childcontainer">
+					{preference name=webcron_type}
+					{preference name=webcron_run_interval}
+					{preference name=webcron_token}
+				</div>
+			</div>
+		</fieldset>
 		<fieldset class="table clearfix featurelist">
 			<legend>{tr}Other new or Extended Features{/tr}</legend>
+			{*preference name=feature_scheduler*}
 			{preference name=xmpp_feature}
 			<div class="adminoptionboxchild" id="xmpp_feature_childcontainer">
 				{preference name=xmpp_server_host}
