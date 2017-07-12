@@ -95,7 +95,7 @@ class Services_Wiki_Controller
 		//first pass - show confirm modal popup
 		if (!empty($check['ticket'])) {
 			$items = $input->asArray('checked');
-			$fitems = Perms::simpleFilter(['type' => 'wiki page'], 'pageName', 'remove', $items);
+			$fitems = Perms::simpleFilter('wiki page', 'pageName', 'remove', $items);
 			if (count($fitems) > 0) {
 				$v = $input->version->text();
 				if (count($fitems) == 1) {
@@ -299,7 +299,7 @@ class Services_Wiki_Controller
 		//first pass - show confirm modal popup
 		if (!empty($check['ticket'])) {
 			$items = $input->asArray('checked');
-			$fitems = Perms::simpleFilter(['type' => 'wiki page'], 'pageName', 'view', $items);
+			$fitems = Perms::simpleFilter('wiki page', 'pageName', 'view', $items);
 			if (count($fitems) > 0) {
 				if (count($fitems) === 1) {
 					$msg = tr('Print the following page?');
@@ -345,7 +345,7 @@ class Services_Wiki_Controller
 		//first pass - show confirm modal popup
 		if (!empty($check['ticket'])) {
 			$items = $input->asArray('checked');
-			$fitems = Perms::simpleFilter(['type' => 'wiki page'], 'pageName', 'view', $items);
+			$fitems = Perms::simpleFilter('wiki page', 'pageName', 'view', $items);
 			if (count($fitems) > 0) {
 				include_once 'lib/pdflib.php';
 				$pdf = new PdfGenerator();
@@ -409,7 +409,7 @@ class Services_Wiki_Controller
 		//first pass - show confirm modal popup
 		if (!empty($check['ticket'])) {
 			$items = $input->asArray('checked');
-			$fitems = Perms::simpleFilter(['type' => 'wiki page'], 'pageName', 'lock', $items);
+			$fitems = Perms::simpleFilter('wiki page', 'pageName', 'lock', $items);
 			foreach ($fitems as $key => $page) {
 				if (TikiLib::lib('wiki')->is_locked($page)) {
 					unset($fitems[$key]);
