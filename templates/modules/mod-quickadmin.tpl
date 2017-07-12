@@ -116,7 +116,7 @@
 							{icon name="module"} {tr}Modules{/tr}
 						</a>
 					</li>
-					{if $prefs.feature_schedulers eq "y"}
+					{if $prefs.feature_scheduler eq "y"}
 					<li>
 						<a href="tiki-admin_schedulers.php">
 							{icon name="calendar"} {tr}Scheduler{/tr}
