@@ -10,7 +10,8 @@ function prefs_webcron_list()
 	return array(
 		'webcron_enabled' => array(
 			'name' => tra('Enabled'),
-			'description' => tra(''),
+			'description' => tra('Cron jobs can be triggered from a URL or JavaScript. A token is required to run the cron manually'),
+			'help' => 'Cron#Web_Cron',
 			'type' => 'flag',
 			'default' => 'n',
 		),

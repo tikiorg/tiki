@@ -117,8 +117,8 @@
 						</div>
 						<div class="form-group">
 							<label for="description" class="col-md-4 control-label">{tr}File description{/tr}</label>
-							<div class="col-md-4">
-								<textarea class="form-control" rows="2" cols="40" id="description" name="description[]">{if isset($fileInfo.description)}{$fileInfo.description|escape}{/if}</textarea>
+							<div class="col-md-8">
+								<textarea class="form-control" id="description" name="description[]">{if isset($fileInfo.description)}{$fileInfo.description|escape}{/if}</textarea>
 								{if isset($gal_info.type) and ($gal_info.type eq "podcast" or $gal_info.type eq "vidcast")}
 									<br><em>{tr}Required for podcasts{/tr}.</em>
 								{/if}

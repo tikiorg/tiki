@@ -34,6 +34,7 @@
 		</fieldset>
 		<fieldset class="table clearfix featurelist">
 			<legend>{tr}New Wiki Plugins{/tr}</legend>
+			{preference name=wikiplugin_benchmark}
 			{preference name=wikiplugin_casperjs}
 			{preference name=wikiplugin_fluidgrid}
 			{preference name=wikiplugin_h5p}
@@ -92,8 +93,20 @@
 				{*{preference name=ids_log_to_database}*}
 			</div>
 		</fieldset>
+		<fieldset>
+			<legend>{tr}Web Cron{/tr}</legend>
+			<div class="adminoptionbox">
+				{preference name=webcron_enabled}
+				<div class="adminoptionboxchild" id="webcron_enabled_childcontainer">
+					{preference name=webcron_type}
+					{preference name=webcron_run_interval}
+					{preference name=webcron_token}
+				</div>
+			</div>
+		</fieldset>
 		<fieldset class="table clearfix featurelist">
 			<legend>{tr}Other new or Extended Features{/tr}</legend>
+			{*preference name=feature_scheduler*}
 			{preference name=xmpp_feature}
 			<div class="adminoptionboxchild" id="xmpp_feature_childcontainer">
 				{preference name=xmpp_server_host}
@@ -103,9 +116,20 @@
 			{preference name=feature_inline_comments}
 			{preference name=site_favicon_enable}
 			{preference name=pass_blacklist}
-			<br/><b>{tr}Console{/tr}</b>:
-			{tr}Preferences can be set{/tr}.
-			<a href="https://doc.tiki.org/Console">{tr}More Information{/tr}...</a><br/>
+			<div class="col-sm-2">
+				<b>{tr}Console{/tr}</b>:
+			</div>
+			<div class="col-sm-10">
+				{tr}Preferences can be set{/tr}.
+				<a href="https://doc.tiki.org/Console">{tr}More Information{/tr}...</a><br/>
+			</div>
+			<div class="col-sm-2">
+				<b>{tr}Scheduler{/tr}</b>:
+			</div>
+			<div class="col-sm-10">
+				{tr}One system cron job can trigger all required actions at their specific scheduled times{/tr}.
+				<a href="https://doc.tiki.org/Scheduler">{tr}More Information{/tr}...</a><br/>
+			</div>
 		</fieldset>
 		<i>{tr}See the full list of changes{/tr}.</i>
 		<a href="https://doc.tiki.org/Tiki17" target="tikihelp" class="tikihelp" title="{tr}Tiki17:{/tr}
