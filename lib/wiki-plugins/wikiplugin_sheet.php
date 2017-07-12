@@ -151,6 +151,9 @@ function wikiplugin_sheet($data, $params)
 				$page = htmlentities($page);
 				$content = htmlentities($data);
 				$formId = "form$index";
+                $accesslib = TikiLib::lib('access');
+                $accesslib->checkAuthenticity();
+                $ticket = $accesslib->getTicket();
 				return <<<EOF
 				~np~
 				<form id="$formId" method="post" action="tiki-wikiplugin_edit.php">
@@ -160,6 +163,8 @@ function wikiplugin_sheet($data, $params)
 					<input type="hidden" name="index" value="$index"/>
 					<input type="hidden" name="type" value="sheet"/>
 					<input type="hidden" name="params[id]" value="$sheetId"/>
+                    <input type="hidden" name="ticket" value="$ticket"/>
+                    <input type="hidden" name="daconfirm" value="y"/>
 				</div>
 				</form>
 				<script type="text/javascript">
