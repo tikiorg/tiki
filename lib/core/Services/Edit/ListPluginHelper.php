@@ -19,139 +19,11 @@ class Services_Edit_ListPluginHelper
 	static function getDefinition()
 	{
 		return [
-			'display' => [
-				'params' => [
-					'name' => [
-						'type' => 'field',
-					],
-					'default' => [
-						'type' => 'text',
-					],
-					'format' => [
-						'options' => [
-							'plain' => [],
-							'categorylist' => [
-								'params' => [
-									'requiredParents' => [
-										'type' => 'categories',
-									],
-									'excludeParents' => [
-										'type' => 'categories',
-									],
-									'singleList' => [
-										'type' => 'checkbox',
-									],
-									'separator' => [
-										'type' => 'text',
-									],
-									'levelSeparator' => [
-										'type' => 'text',
-									],
-									'useFullPath' => [
-										'type' => 'checkbox',
-									],
-								],
-							],
-							'date' => [
-								'params' => [
-									'dateFormat' => [
-										'type' => 'dateformat',
-									],
-								],
-							],
-							'datetime' => [
-								'params' => [
-									'dateFormat' => [
-										'type' => 'dateformat',
-									],
-								],
-							],
-							'imagegrabber' => [
-								'params' => [
-									'max' => [
-										'type' => 'number',
-									],
-									'height' => [
-										'type' => 'number',
-									],
-									'width' => [
-										'type' => 'number',
-									],
-									'smartcrop' => [
-										'type' => 'checkbox',
-									],
-									'content_type' => [
-										'options' => [
-											'html',
-											'forumpost',
-										],
-									],
-								],
-							],
-							'objectlink' => [],
-							'reference' => [
-								'params' => [
-									'type' => [
-										'type' => 'object_type',
-									],
-									'separator' => [
-										'type' => 'text',
-									],
-								],
-							],
-							'snippet' => [
-								'params' => [
-									'length' => [
-										'type' => 'number',
-									],
-									'suffix' => [
-										'type' => 'text',
-									],
-								],
-							],
-							'sorthandle' => [],
-							'timeago' => [],
-							'trackerrender' => [],
-							'urlencode' => [],
-							'wikiplugin' => [
-								'params' => [
-									'name' => [
-										'type' => 'wikiplugin',
-									],
-									'default' => [
-										'type' => 'text',
-									],
-									// TODO some way of adding the plugin's params too
-								],
-							],
-						],
-					],
-					'list_mode' => [
-						'type' => 'checkbox',
-					],
-					'pagetitle' => [
-						'type' => 'checkbox',
-					],
-					'editable' => [
-						'options' => [
-							'inline',
-							'block',
-						],
-					],
-				],
-			],
 			'filter' => [
+				'icon' => 'listgui_filter',
 				'params' => [
 					'categories' => [
 						'type' => 'categories',
-					],
-					'content' => [
-						'type' => 'text',
-						'params' => [
-							'field' => [
-								'type' => 'field',
-							],
-						],
 					],
 					'contributors' => [
 						'type' => 'text',
@@ -170,44 +42,6 @@ class Services_Edit_ListPluginHelper
 							],
 						],
 					],
-					'editable' => [	// n.b. tracker fields only
-						'type' => 'text',
-						'params' => [
-							'field' => [
-								'type' => 'field',
-								'required' => true,
-							],
-						],
-						'options' => [
-							// taken from current usages of \Tracker\Filter\Collection::addNew
-							'all-of' => [],
-							'all-of-checkboxes' => [],
-							'any-of' => [],
-							'any-of-checkboxes' => [],
-							'content' => [],
-							'dropdown' => [],
-							'exact' => [],
-							'fulltext' => [],
-							'fulltext-current' => [],
-							'initial' => [],
-							'lookup' => [],
-							'object' => [],
-							'multiselect' => [],
-							'range' => [],
-							'selector' => [],
-							// TODO add filtering by field type?
-							// also fulltext-$lang (for each lang?) and facet-any and facet-all for each facet maybe?
-						],
-					],
-					'exact' => [
-						'type' => 'text',
-						'params' => [
-							'field' => [
-								'type' => 'field',
-								'required' => true,
-							],
-						],
-					],
 					'favorite' => [
 						'type' => 'user',
 					],
@@ -220,8 +54,28 @@ class Services_Edit_ListPluginHelper
 							'exact' => [
 								'type' => 'text',
 							],
-							'editable' => [
+							'editable' => [	// n.b. tracker fields only
 								'type' => 'text',
+								'options' => [
+									// taken from current usages of \Tracker\Filter\Collection::addNew
+									'all-of' => [],
+									'all-of-checkboxes' => [],
+									'any-of' => [],
+									'any-of-checkboxes' => [],
+									'content' => [],
+									'dropdown' => [],
+									'exact' => [],
+									'fulltext' => [],
+									'fulltext-current' => [],
+									'initial' => [],
+									'lookup' => [],
+									'object' => [],
+									'multiselect' => [],
+									'range' => [],
+									'selector' => [],
+									// TODO add filtering by field type?
+									// also fulltext-$lang (for each lang?) and facet-any and facet-all for each facet maybe?
+								],
 							],
 							'multivalue' => [
 								'type' => 'text',
@@ -286,21 +140,16 @@ class Services_Edit_ListPluginHelper
 					],
 				],
 			],
-			'format' => [
+			'sort' => [
+				'icon' => 'listgui_sort',
 				'params' => [
-					'name' => [
+					'mode' => [
 						'type' => 'text',
 					],
 				],
 			],
-			'list' => [
-				'params' => [
-					'max' => [
-						'type' => 'number',
-					],
-				],
-			],
 			'pagination' => [
+				'icon' => 'listgui_pagination',
 				'params' => [
 					'max' => [
 						'type' => 'number',
@@ -320,7 +169,9 @@ class Services_Edit_ListPluginHelper
 				],
 			],
 			'output' => [
+				'icon' => 'listgui_output',
 				'params' => [
+					'empty' => [],
 					'template' => [
 						'options' => [
 							'input' => [
@@ -329,6 +180,7 @@ class Services_Edit_ListPluginHelper
 							'table' => [
 								'plugins' => [
 									'column' => [
+										'icon' => 'listgui_column',
 										'params' => [
 											'sort' => [
 												'type' => 'field',
@@ -348,6 +200,7 @@ class Services_Edit_ListPluginHelper
 										],
 									],
 									'tablesorter' => [
+										'icon' => 'listgui_tablesorter',
 										'params' => [
 											'server' => [
 												'type' => 'checkbox',
@@ -387,6 +240,7 @@ class Services_Edit_ListPluginHelper
 							'medialist' => [
 								'plugins' => [
 									'icon' => [
+										'icon' => 'listgui_icon',
 										'params' => [
 											'field' => [
 												'type' => 'field',
@@ -394,6 +248,7 @@ class Services_Edit_ListPluginHelper
 										],
 									],
 									'body' => [
+										'icon' => 'listgui_body',
 										'params' => [
 											'field' => [
 												'type' => 'field',
@@ -405,6 +260,7 @@ class Services_Edit_ListPluginHelper
 							'carousel' => [
 								'plugins' => [
 									'carousel' => [
+										'icon' => 'listgui_carousel',
 										'params' => [
 											'interval' => [
 												'type' => 'number',
@@ -434,11 +290,150 @@ class Services_Edit_ListPluginHelper
 					],
 				],
 			],
-			'sort' => [
+			'format' => [
+				'icon' => 'listgui_format',
 				'params' => [
-					'mode' => [
+					'name' => [
 						'type' => 'text',
 					],
+				],
+			],
+			'display' => [
+				'icon' => 'listgui_display',
+				'parents' => [
+					'output',
+					'format',
+				],
+				'params' => [
+					'name' => [
+						'type' => 'field',
+						'params' => [
+							'default' => [
+								'type' => 'text',
+							],
+							'format' => [
+								'options' => [
+									'plain' => [],
+									'categorylist' => [
+										'params' => [
+											'requiredParents' => [
+												'type' => 'categories',
+											],
+											'excludeParents' => [
+												'type' => 'categories',
+											],
+											'singleList' => [
+												'type' => 'checkbox',
+											],
+											'separator' => [
+												'type' => 'text',
+											],
+											'levelSeparator' => [
+												'type' => 'text',
+											],
+											'useFullPath' => [
+												'type' => 'checkbox',
+											],
+										],
+									],
+									'date' => [
+										'params' => [
+											'dateFormat' => [
+												'type' => 'dateformat',
+											],
+										],
+									],
+									'datetime' => [
+										'params' => [
+											'dateFormat' => [
+												'type' => 'dateformat',
+											],
+										],
+									],
+									'imagegrabber' => [
+										'params' => [
+											'max' => [
+												'type' => 'number',
+											],
+											'height' => [
+												'type' => 'number',
+											],
+											'width' => [
+												'type' => 'number',
+											],
+											'smartcrop' => [
+												'type' => 'checkbox',
+											],
+											'content_type' => [
+												'options' => [
+													'html',
+													'forumpost',
+												],
+											],
+										],
+									],
+									'objectlink' => [],
+									'reference' => [
+										'params' => [
+											'type' => [
+												'type' => 'object_type',
+											],
+											'separator' => [
+												'type' => 'text',
+											],
+										],
+									],
+									'snippet' => [
+										'params' => [
+											'length' => [
+												'type' => 'number',
+											],
+											'suffix' => [
+												'type' => 'text',
+											],
+										],
+									],
+									'sorthandle' => [],
+									'timeago' => [],
+									'trackerrender' => [],
+									'urlencode' => [],
+									'wikiplugin' => [
+										'params' => [
+											'name' => [
+												'type' => 'wikiplugin',
+											],
+											'default' => [
+												'type' => 'text',
+											],
+											// TODO some way of adding the plugin's params too
+										],
+									],
+								],
+							],
+							'list_mode' => [
+								'type' => 'checkbox',
+							],
+							'pagetitle' => [
+								'type' => 'checkbox',
+							],
+							'editable' => [
+								'options' => [
+									'inline',
+									'block',
+								],
+							],
+						],
+					],
+				],
+			],
+			'wiki text' => [	// allow wiki text within output and format plugins
+				'icon' => 'listgui_wikitext',
+				'parents' => [
+					'output',
+					'format',
+				],
+				'params' => [
+					'empty' => [],
 				],
 			],
 			'group' => [    // what is this?
@@ -448,7 +443,13 @@ class Services_Edit_ListPluginHelper
 					],
 				],
 			],
-			'wiki text' => [],    // allow wiki text within output and format plugins
+			'list' => [
+				'params' => [
+					'max' => [
+						'type' => 'number',
+					],
+				],
+			],
 		];
 	}
 }

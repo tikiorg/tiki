@@ -372,6 +372,43 @@ function iconset_default()
 			'list-numbered' => array(
 				'id' => 'list-ol',
 			),
+			// special icons for list gui toolbars
+			'listgui_display' => [
+				'id' => 'desktop',
+			],
+			'listgui_filter' => [
+				'id' => 'filter',
+			],
+			'listgui_format' => [
+				'id' => 'indent',
+			],
+			'listgui_pagination' => [
+				'id' => 'book',
+			],
+			'listgui_output' => [
+				'id' => 'eye',
+			],
+			'listgui_column' => [
+				'id' => 'columns',
+			],
+			'listgui_tablesorter' => [
+				'id' => 'table',
+			],
+			'listgui_icon' => [
+				'id' => 'profile',
+			],
+			'listgui_body' => [
+				'id' => 'text',
+			],
+			'listgui_carousel' => [
+				'id' => 'slideshare',
+			],
+			'listgui_sort' => [
+				'id' => 'sort-alpha-desc',
+			],
+			'listgui_wikitext' => [
+				'id' => 'file-text-o',
+			],
 			//lock in defaults
 			//same fa icon used for admin_security, but not the same in other icon sets
 			'log' => array(
