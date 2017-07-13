@@ -19,6 +19,7 @@ class Search_Formatter_Builder
 	private $tsOn;
 	private $tsettings;
 	private $actions;
+	private $isDownload;
 
 	function __construct()
 	{
@@ -28,6 +29,7 @@ class Search_Formatter_Builder
 			'max' => 50,
 		);
 		$this->actions = array();
+		$this->isDownload = false;
 	}
 
 	function setPaginationArguments($arguments)
@@ -42,6 +44,10 @@ class Search_Formatter_Builder
 
 	function setActions($actions) {
 		$this->actions = $actions;
+	}
+
+	function setDownload($isDownload) {
+		$this->isDownload = $isDownload;
 	}
 
 	function apply($matches)
@@ -128,7 +134,7 @@ class Search_Formatter_Builder
 
 	private function handleOutput($output)
 	{
-        $smarty = TikiLib::lib('smarty');
+		$smarty = TikiLib::lib('smarty');
 		$arguments = $this->parser->parse($output->getArguments());
 
 		if (isset($arguments['template'])) {
@@ -154,8 +160,16 @@ class Search_Formatter_Builder
 			foreach ($this->paginationArguments as $k => $v) {
 				$outputData[$k] = $this->paginationArguments[$k];
 			}
-			if( strstr($arguments['template'], 'table') )
+			if (strstr($arguments['template'], 'table')) {
 				$outputData['actions'] = $this->actions;
+				if (isset($arguments['downloadable'])) {
+					$outputData['downloadable'] = true;
+				}
+				if ($this->isDownload) {
+					$this->formatterPlugin = new Search_Formatter_Plugin_CsvTemplate($output->getBody());
+					return;
+				}
+			}
 
 			$templateData = file_get_contents($arguments['template']);
 

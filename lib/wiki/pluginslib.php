@@ -333,4 +333,33 @@ class PluginsLibUtil
 		$sOutput .= '</td></tr></table>';
 		return $sOutput;
 	}
+
+	static function handleDownload($query, $index, $matches) {
+		if (empty($_REQUEST['download'])) {
+			return;
+		}
+
+		$builder = new Search_Formatter_Builder;
+		$builder->setDownload(true);
+		$builder->apply($matches);
+		$formatter = $builder->getFormatter();
+
+		$offset = 0;
+		$output = '';
+		do {
+			$query->setRange($offset, 100);
+			$result = $query->search($index);
+			$chunk = $formatter->format($result);
+			if ($offset > 0) {
+				$chunk = substr($chunk, strpos($chunk, "\n")+1);
+			}
+			$output .= $chunk;
+			$offset += 100;
+		} while ($offset < $result->count());
+		
+		header('Content-Type: text/csv; charset=utf8');
+		header("Content-Disposition: attachment; filename=report.csv");
+		echo $output;
+		exit();
+	}
 }

@@ -103,3 +103,12 @@ $('#listexecute-{{$iListExecute}}').find('select[name=list_action]').on('change'
 });
 {/jq}
 {/if}
+{if $downloadable}
+	{if $actions}
+	<br>
+	{/if}
+	<form method="post">
+		<input type="hidden" name="download" value="1">
+		<input type="submit" name="submit" value="{tr}Download{/tr}" class="btn btn-default">
+	</form>
+{/if}

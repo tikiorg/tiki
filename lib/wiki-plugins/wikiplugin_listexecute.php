@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+require_once 'lib/wiki/pluginslib.php';
+
 function wikiplugin_listexecute_info()
 {
 	return array(
@@ -88,6 +90,8 @@ function wikiplugin_listexecute($data, $params)
 	}
 
 	$index = $unifiedsearchlib->getIndex();
+
+	PluginsLibUtil::handleDownload($query, $index, $matches);
 
 	$result = $query->search($index);
 	$result->setId('wplistexecute-' . $iListExecute);

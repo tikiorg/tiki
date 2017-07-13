@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+require_once 'lib/wiki/pluginslib.php';
+
 function wikiplugin_list_info()
 {
 	return array(
@@ -70,6 +72,8 @@ function wikiplugin_list($data, $params)
 	if (! $index = $unifiedsearchlib->getIndex()) {
 		return '';
 	}
+
+	PluginsLibUtil::handleDownload($query, $index, $matches);
 
 	$result = $query->search($index);
 	$result->setId('wplist-' . $i);

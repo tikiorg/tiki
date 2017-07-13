@@ -160,12 +160,14 @@ class Search_Formatter
 		$pluginFormat = $plugin->getFormat();
 		$rawOutput = $plugin->renderEntries($resultSet);
 
-		if ($target == $pluginFormat) {
+		if ($target == $pluginFormat || $pluginFormat == Search_Formatter_Plugin_Interface::FORMAT_CSV) {
 			$out = $rawOutput;
 		} elseif ($target == Search_Formatter_Plugin_Interface::FORMAT_WIKI && $pluginFormat == Search_Formatter_Plugin_Interface::FORMAT_HTML) {
 			$out = "~np~$rawOutput~/np~";
 		} elseif ($target == Search_Formatter_Plugin_Interface::FORMAT_HTML && $pluginFormat == Search_Formatter_Plugin_Interface::FORMAT_WIKI) {
 			$out = "~/np~$rawOutput~np~";
+		} elseif ($target == Search_Formatter_Plugin_Interface::FORMAT_CSV) {
+			$out = strip_tags(Tikilib::lib('parser')->parse_data($rawOutput, array('is_html' => true)));
 		}
 
 		$out = str_replace(array('~np~~/np~', '~/np~~np~'), '', $out);

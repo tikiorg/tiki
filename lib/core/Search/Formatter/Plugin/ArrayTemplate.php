@@ -5,59 +5,21 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_Formatter_Plugin_ArrayTemplate implements Search_Formatter_Plugin_Interface
+class Search_Formatter_Plugin_ArrayTemplate extends Search_Formatter_Plugin_AbstractTableTemplate
 {
-	private $fields;
-	private $format;
 	private $fieldPermNames;
 	private $nonTrackerFields;
 
 	function __construct($template)
 	{
-		$this->format = self::FORMAT_ARRAY;
 		$this->fieldPermNames = array();
 		$this->nonTrackerFields = array('object_id', 'object_type', 'creation_date', 'modification_date', 'tracker_status');
-		$this->parseTemplate($template);
-	}
-
-	function parseTemplate($template)
-	{
-		$parser = new WikiParser_PluginArgumentParser;
-
-		$matches = WikiParser_PluginMatcher::match($template);		
-		foreach( $matches as $match ) {
-			$name = $match->getName();
-			
-			if ($name === 'display') {
-				$arguments = $parser->parse($match->getArguments());
-				
-				if (isset($arguments['name']) && ! isset($this->fields[$arguments['name']])) {
-					$this->fields[$arguments['name']] = $arguments;
-				}
-			}
-			
-			if ($name === 'column' ) {
-				$arguments = $parser->parse($match->getArguments());
-
-				if (isset($arguments['field']) && ! isset($this->fields[$arguments['field']])) {
-					$this->fields[$arguments['field']] = $arguments;
-				}
-			}
-		}
+		parent::__construct($template);
 	}
 
 	function getFormat()
 	{
-		return $this->format;
-	}
-
-	function getFields()
-	{
-		$fields = array();
-		foreach( $this->fields as $field => $arguments ) {
-			$fields[$field] = isset($arguments['default']) ? $arguments['default'] : null;
-		}
-		return $fields;
+		return self::FORMAT_ARRAY;
 	}
 
 	function setFieldPermNames($fields) {
@@ -113,4 +75,3 @@ class Search_Formatter_Plugin_ArrayTemplate implements Search_Formatter_Plugin_I
 		return in_array($field, $this->fieldPermNames);
 	}
 }
-
