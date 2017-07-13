@@ -342,6 +342,12 @@ class PluginsLibUtil
 		$builder = new Search_Formatter_Builder;
 		$builder->setDownload(true);
 		$builder->apply($matches);
+		
+		$filename = $builder->getDownloadName();
+		if (!$filename) {
+			$filename = 'report.csv';
+		}
+
 		$formatter = $builder->getFormatter();
 
 		$offset = 0;
@@ -358,7 +364,7 @@ class PluginsLibUtil
 		} while ($offset < $result->count());
 		
 		header('Content-Type: text/csv; charset=utf8');
-		header("Content-Disposition: attachment; filename=report.csv");
+		header("Content-Disposition: attachment; filename=$filename");
 		echo $output;
 		exit();
 	}

@@ -20,6 +20,7 @@ class Search_Formatter_Builder
 	private $tsettings;
 	private $actions;
 	private $isDownload;
+	private $downloadName;
 
 	function __construct()
 	{
@@ -164,6 +165,7 @@ class Search_Formatter_Builder
 				$outputData['actions'] = $this->actions;
 				if (isset($arguments['downloadable'])) {
 					$outputData['downloadable'] = true;
+					$this->downloadName = $arguments['downloadable'];
 				}
 				if ($this->isDownload) {
 					$this->formatterPlugin = new Search_Formatter_Plugin_CsvTemplate($output->getBody());
@@ -270,6 +272,10 @@ class Search_Formatter_Builder
 	public function getTsSettings()
 	{
 		return $this->tsettings;
+	}
+
+	public function getDownloadName() {
+		return $this->downloadName;
 	}
 }
 
