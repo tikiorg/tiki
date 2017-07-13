@@ -7,45 +7,45 @@
 
 abstract class Search_Formatter_Plugin_AbstractTableTemplate implements Search_Formatter_Plugin_Interface
 {
-  protected $fields;
+	protected $fields;
 
-  function __construct($template)
-  {
-    $this->parseTemplate($template);
-  }
+	function __construct($template)
+	{
+		$this->parseTemplate($template);
+	}
 
-  function parseTemplate($template)
-  {
-    $parser = new WikiParser_PluginArgumentParser;
+	function parseTemplate($template)
+	{
+		$parser = new WikiParser_PluginArgumentParser;
 
-    $matches = WikiParser_PluginMatcher::match($template);    
-    foreach( $matches as $match ) {
-      $name = $match->getName();
-      
-      if ($name === 'display') {
-        $arguments = $parser->parse($match->getArguments());
-        
-        if (isset($arguments['name']) && ! isset($this->fields[$arguments['name']])) {
-          $this->fields[$arguments['name']] = $arguments;
-        }
-      }
-      
-      if ($name === 'column' ) {
-        $arguments = $parser->parse($match->getArguments());
+		$matches = WikiParser_PluginMatcher::match($template);    
+		foreach( $matches as $match ) {
+			$name = $match->getName();
+			
+			if ($name === 'display') {
+				$arguments = $parser->parse($match->getArguments());
+				
+				if (isset($arguments['name']) && ! isset($this->fields[$arguments['name']])) {
+					$this->fields[$arguments['name']] = $arguments;
+				}
+			}
+			
+			if ($name === 'column' ) {
+				$arguments = $parser->parse($match->getArguments());
 
-        if (isset($arguments['field']) && ! isset($this->fields[$arguments['field']])) {
-          $this->fields[$arguments['field']] = $arguments;
-        }
-      }
-    }
-  }
+				if (isset($arguments['field']) && ! isset($this->fields[$arguments['field']])) {
+					$this->fields[$arguments['field']] = $arguments;
+				}
+			}
+		}
+	}
 
-  function getFields()
-  {
-    $fields = array();
-    foreach( $this->fields as $field => $arguments ) {
-      $fields[$field] = isset($arguments['default']) ? $arguments['default'] : null;
-    }
-    return $fields;
-  }
+	function getFields()
+	{
+		$fields = array();
+		foreach( $this->fields as $field => $arguments ) {
+			$fields[$field] = isset($arguments['default']) ? $arguments['default'] : null;
+		}
+		return $fields;
+	}
 }
