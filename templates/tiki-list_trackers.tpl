@@ -116,6 +116,19 @@
 					<td class="action">
 						{capture name=tracker_actions}
 							{strip}
+								{if $tracker.permissions->admin_trackers}
+									{$libeg}<a href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}">
+									{icon name='th-list' _menu_text='y' _menu_icon='y' alt="{tr}Fields{/tr}"}
+									</a>{$liend}
+									{$libeg}<a href="{service controller=tracker action=replace trackerId=$tracker.trackerId modal=true}"
+											   data-toggle="modal"
+											   data-backdrop="static"
+											   data-target="#bootstrap-modal"
+											   onclick="$('[data-toggle=popover]').popover('hide');"
+									>
+									{icon name='settings' _menu_text='y' _menu_icon='y' alt="{tr}Properties{/tr}"}
+									</a>{$liend}
+								{/if}
 								{if $tracker.permissions->export_tracker}
 									{$libeg}<a onclick="$('[data-toggle=popover]').popover('hide');"
 										data-toggle="modal"
@@ -175,17 +188,6 @@
 								{/if}
 
 								{if $tracker.permissions->admin_trackers}
-									{$libeg}<a href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}">
-									{icon name='th-list' _menu_text='y' _menu_icon='y' alt="{tr}Fields{/tr}"}
-									</a>{$liend}
-									{$libeg}<a href="{service controller=tracker action=replace trackerId=$tracker.trackerId modal=true}"
-										data-toggle="modal"
-										data-backdrop="static"
-										data-target="#bootstrap-modal"
-										onclick="$('[data-toggle=popover]').popover('hide');"
-									>
-										{icon name='settings' _menu_text='y' _menu_icon='y' alt="{tr}Properties{/tr}"}
-									</a>{$liend}
 									{$libeg}{permission_link mode=text type=tracker permType=trackers id=$tracker.trackerId}{$liend}
 									{if $tracker.items > 0}
 										{$libeg}<a href="{service controller=tracker action=clear trackerId=$tracker.trackerId}" class="clear confirm-prompt">
