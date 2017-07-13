@@ -181,56 +181,66 @@ class Services_Edit_ListPluginHelper
 								'plugins' => [
 									'column' => [
 										'icon' => 'listgui_column',
+										'parents' => [
+											'output',
+										],
 										'params' => [
-											'sort' => [
-												'type' => 'field',
-											],
-											'label' => [
-												'type' => 'text',
-											],
 											'field' => [
 												'type' => 'field',
-											],
-											'mode' => [
-												'options' => [
-													'',
-													'raw',
+												'params' => [
+													'sort' => [
+														'type' => 'field',
+													],
+													'label' => [
+														'type' => 'text',
+													],
+													'mode' => [
+														'options' => [
+															'',
+															'raw',
+														],
+													],
 												],
 											],
 										],
 									],
 									'tablesorter' => [
 										'icon' => 'listgui_tablesorter',
+										'parents' => [
+											'output',
+										],
 										'params' => [
-											'server' => [
-												'type' => 'checkbox',
-											],
 											'sortable' => [
 												'type' => 'text',
-											],
-											'sortList' => [
-												'type' => 'text',
-											],
-											'tscolselect' => [
-												'type' => 'text',
-											],
-											'tsfilters' => [
-												'type' => 'text',
-											],
-											'tsfilteroptions' => [
-												'type' => 'text',
-											],
-											'tspaginate' => [
-												'type' => 'text',
-											],
-											'tsortcolumns' => [
-												'type' => 'text',
-											],
-											'tstotaloptions' => [
-												'type' => 'text',
-											],
-											'tstotals' => [
-												'type' => 'text',
+												'params' => [
+													'server' => [
+														'type' => 'checkbox',
+													],
+													'sortList' => [
+														'type' => 'text',
+													],
+													'tscolselect' => [
+														'type' => 'text',
+													],
+													'tsfilters' => [
+														'type' => 'text',
+													],
+													'tsfilteroptions' => [
+														'type' => 'text',
+													],
+													'tspaginate' => [
+														'type' => 'text',
+													],
+													'tsortcolumns' => [
+														'type' => 'text',
+													],
+													'tstotaloptions' => [
+														'type' => 'text',
+													],
+													'tstotals' => [
+														'type' => 'text',
+													],
+												],
 											],
 										],
 									],
@@ -241,6 +251,9 @@ class Services_Edit_ListPluginHelper
 								'plugins' => [
 									'icon' => [
 										'icon' => 'listgui_icon',
+										'parents' => [
+											'output',
+										],
 										'params' => [
 											'field' => [
 												'type' => 'field',
@@ -249,6 +262,9 @@ class Services_Edit_ListPluginHelper
 									],
 									'body' => [
 										'icon' => 'listgui_body',
+										'parents' => [
+											'output',
+										],
 										'params' => [
 											'field' => [
 												'type' => 'field',
@@ -261,21 +277,26 @@ class Services_Edit_ListPluginHelper
 								'plugins' => [
 									'carousel' => [
 										'icon' => 'listgui_carousel',
+										'parents' => [
+											'output',
+										],
 										'params' => [
-											'interval' => [
-												'type' => 'number',
-											],
-											'wrap' => [
-												'type' => 'number',
-											],
-											'pause' => [
-												'options' => [
-													'',
-													'hover',
-												],
-											],
 											'id' => [
 												'type' => 'text',
+											],
+											'params' => [
+												'interval' => [
+													'type' => 'number',
+												],
+												'wrap' => [
+													'type' => 'number',
+												],
+												'pause' => [
+													'options' => [
+														'',
+														'hover',
+													],
+												],
 											],
 										],
 									],
