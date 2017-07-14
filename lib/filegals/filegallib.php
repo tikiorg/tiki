@@ -2135,7 +2135,8 @@ class FileGalLib extends TikiLib
 		foreach ($objects as $object) {
 			$pobjects[$object['type']][] = $object;
 		}
-
+		
+		TikiLib::lib('object');
 		$map = ObjectLib::map_object_type_to_permission();
 		foreach ($pobjects as $type=>$list) {
 			if ($type == 'blog post') {
@@ -2190,6 +2191,15 @@ class FileGalLib extends TikiLib
 			foreach ($matches as $match) {
 				if (isset($match[2]) && $fileId = $this->getLinkFileId($match[2])) {
 					$fileIds[] = $fileId;
+				}
+			}
+		}
+		if ($context['type'] == 'trackeritem') {
+			$relationlib = TikiLib::lib('relation');
+			$relations = $relationlib->get_relations_from('trackeritem', $context['object'], 'tiki.file.attach');
+			foreach ($relations as $relation) {
+				if ($relation['type'] === 'file') {
+					$fileIds[] = $relation['itemId'];
 				}
 			}
 		}

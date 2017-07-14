@@ -474,7 +474,9 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 		}
 
 		foreach ($new as $fileId) {
-			$relationlib->add_relation('tiki.file.attach', 'trackeritem', $itemId, 'file', $fileId);
+			if (!empty($fileId)) {
+				$relationlib->add_relation('tiki.file.attach', 'trackeritem', $itemId, 'file', $fileId);
+			}
 		}
 
 		return array(
