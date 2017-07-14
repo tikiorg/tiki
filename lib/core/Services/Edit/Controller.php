@@ -239,6 +239,8 @@ $(window).on("load", function(){
 
 	public function action_help($input)
 	{
+		global $prefs;
+
 		$smarty = TikiLib::lib('smarty');
 
 		$help_sections = [];
@@ -270,6 +272,13 @@ $(window).on("load", function(){
 				'title' => tr('Plugin Help'),
 				'content' => $smarty->fetch('tiki-edit_help_plugins.tpl'),
 			];
+
+			if ($prefs['wikiplugin_list_gui'] === 'y') {
+				TikiLib::lib('header')
+					->add_jsfile('lib/jquery_tiki/pluginedit_list.js')
+					->add_jsfile('vendor_bundled/vendor/jquery/plugins/nestedsortable/jquery.ui.nestedSortable.js');
+			}
+
 		}
 
 		if ($input->sheet->int()) {
