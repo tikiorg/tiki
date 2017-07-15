@@ -53,14 +53,11 @@ class Scheduler_Manager
 		}
 
 		foreach ($reRunTasks as $task) {
-
 			$status = $schedLib->get_run_status($task['id']);
 			if ($status == 'failed') {
 				$this->logger->info(sprintf("Re-run scheduler %s - Last run has failed", $scheduler['name']));
 				$runTasks[] = $task;
 			}
-
-			$this->logger->info(sprintf("Skip scheduler %s - Last run failed but not marked to re-run", $scheduler['name']));
 		}
 
 		if (empty($runTasks)) {
