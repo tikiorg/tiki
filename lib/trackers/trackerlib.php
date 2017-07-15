@@ -1705,6 +1705,10 @@ class TrackerLib extends TikiLib
 		$itemFields = $this->itemFields();
 		$fields = $this->fields();
 
+		if (! empty($itemId)) {	// check the item really exists
+			$itemId = (int) $this->items()->fetchOne('itemId', [ 'itemId' => $itemId]);
+		}
+
 		$fil = array();
 		if (!empty($itemId)) {
 			$fil = $itemFields->fetchMap('fieldId', 'value', array('itemId' => $itemId));
