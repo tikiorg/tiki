@@ -119,26 +119,26 @@ class Image extends ImageAbstract
 		if ($this->data) {
 			//@ob_end_flush();	// ignore E_NOTICE if no buffer
 			ob_start();
-			switch ( strtolower($this->format) ) {
+			switch (strtolower($this->format)) {
 				case 'jpeg':
 				case 'jpg':
 					imagejpeg($this->data);
-    				break;
+					break;
 				case 'gif':
 					imagegif($this->data);
-    				break;
+					break;
 				case 'png':
 					imagepng($this->data);
-    				break;
+					break;
 				case 'wbmp':
 					imagewbmp($this->data);
-    				break;
+					break;
 				case 'svg':
 					echo $this->data;
-    				break;
+					break;
 				default:
 					ob_end_clean();
-					return NULL;
+					return null;
 			}
 			$image = ob_get_contents();
 			ob_end_clean();
@@ -303,6 +303,66 @@ class Image extends ImageAbstract
 		if ($this->data) {
 			return @imagesx($this->data);
 		}
+	}
+
+
+	/**
+	 * Allow adding text as overlay to a image
+	 * @param $text
+	 * @return string || boolean
+	 */
+	function addTextToImage($text)
+	{
+		if (!$this->loaded) {
+			$this->_load_data();
+		}
+
+		if (!$this->data) {
+			return false;
+		}
+
+		$fontFile = '/lib/captcha/DejaVuSansMono.ttf';
+		$padLeft = 20;
+		$padBottom = $this->get_height() - 20;
+		$fontSize = 12;
+		$textAngle = 0;
+		$fontColor = imagecolorallocate($this->data, 255, 255, 0);
+		$fontStroke = imagecolorallocate($this->data, 0, 0, 0);
+		$fontStrokeWidth = 2;
+
+		putenv('GDFONTPATH=' . realpath('.'));
+		$result = $this->imageTtfStrokeText($this->data, $fontSize, $textAngle, $padLeft, $padBottom, $fontColor, $fontStroke, $fontFile, $text, $fontStrokeWidth);
+		if (!$result) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Adds text to the image, with a "shadow", to improve readability
+	 *
+	 * @param $image The current image (will be changed)
+	 * @param $size
+	 * @param $angle
+	 * @param $x
+	 * @param $y
+	 * @param $textcolor
+	 * @param $strokecolor
+	 * @param $fontfile
+	 * @param $text
+	 * @param $px
+	 * @return array
+	 */
+	protected function imageTtfStrokeText(&$image, $size, $angle, $x, $y, $textcolor, $strokecolor, $fontfile, $text, $px)
+	{
+		for($c1 = ($x-abs($px)); $c1 <= ($x+abs($px)); $c1++){
+			for($c2 = ($y-abs($px)); $c2 <= ($y+abs($px)); $c2++){
+				imagettftext($image, $size, $angle, $c1, $c2, $strokecolor, $fontfile, $text);
+			}
+		}
+
+		return imagettftext($image, $size, $angle, $x, $y, $textcolor, $fontfile, $text);
 	}
 
 }

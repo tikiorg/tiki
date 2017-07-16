@@ -343,4 +343,13 @@ class ImageAbstract
 		}
 		return $this->metadata;
 	}
+
+	/**
+	 * Allow adding text as overlay to a image
+	 * @param $text
+	 * @return string || boolean
+	 */
+	function addTextToImage($text)
+	{
+	}
 }

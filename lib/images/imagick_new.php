@@ -176,4 +176,45 @@ class Image extends ImageAbstract
 		if ($this->data)
 			return $this->data->getImageWidth();
 	}
+
+	/**
+	 * Allow adding text as overlay to a image
+	 * @param $text
+	 * @return string
+	 */
+	function addTextToImage($text)
+	{
+		$this->_load_data();
+
+		if (! $this->data) {
+			return false;
+		}
+
+		$font = dirname(dirname(__DIR__)) . '/lib/captcha/DejaVuSansMono.ttf';
+
+		$padLeft = 20;
+		$padBottom = 20;
+
+		$image = new Imagick();
+		$image->readImageBlob($this->data);
+		$height = $image->getimageheight();
+
+		$draw = new ImagickDraw();
+		$draw->setFillColor('#000000');
+		$draw->setStrokeColor(new ImagickPixel('#000000'));
+		$draw->setStrokeWidth(3);
+		$draw->setFont($font);
+		$draw->setFontSize(12);
+		$image->annotateImage($draw, $padLeft, $height - $padBottom, 0, $text);
+
+		$draw = new ImagickDraw();
+		$draw->setFillColor('#ffff00');
+		$draw->setFont($font);
+		$draw->setFontSize(12);
+		$image->annotateImage($draw, $padLeft, $height - $padBottom, 0, $text);
+
+		$this->data = $image;
+		return $image->getImageBlob();
+	}
+	
 }

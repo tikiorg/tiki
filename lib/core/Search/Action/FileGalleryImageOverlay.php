@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+require_once('lib/images/images.php');
+
 class Search_Action_FileGalleryImageOverlay implements Search_Action_Action
 {
 
@@ -76,11 +78,6 @@ class Search_Action_FileGalleryImageOverlay implements Search_Action_Action
 
         if (empty($value)) {
             throw new Search_Action_Exception(tr('filegal_image_overlay action missing value parameter.'));
-        }
-
-        //At the moment there is only support for ImageMagik, so check if is available
-        if (!class_exists('Imagick') || !class_exists('ImagickDraw')) {
-            throw new Search_Action_Exception(tr('filegal_image_overlay action requires Imagick, please review your server setup.'));
         }
 
         return true;
@@ -243,32 +240,13 @@ class Search_Action_FileGalleryImageOverlay implements Search_Action_Action
      * @param $text
      * @return string
      */
-    protected function addTextToImage($imageString, $text)
+    public function addTextToImage($imageString, $text)
     {
-        $font = dirname(dirname(dirname(__DIR__))).'/captcha/DejaVuSansMono.ttf';
+        $image = new Image($imageString);
 
-        $padLeft = 20;
-        $padBottom = 20;
+        $image->addTextToImage($text);
 
-        $image = new Imagick();
-        $image->readImageBlob($imageString);
-        $height = $image->getimageheight();
-
-        $draw = new ImagickDraw();
-        $draw->setFillColor('#000000');
-        $draw->setStrokeColor(new ImagickPixel('#000000'));
-        $draw->setStrokeWidth(3);
-        $draw->setFont($font);
-        $draw->setFontSize(12);
-        $image->annotateImage($draw, $padLeft, $height - $padBottom, 0, $text);
-
-        $draw = new ImagickDraw();
-        $draw->setFillColor('#ffff00');
-        $draw->setFont($font);
-        $draw->setFontSize(12);
-        $image->annotateImage($draw, $padLeft, $height - $padBottom, 0, $text);
-
-        return $image->getImageBlob();
+        return $image->display();
     }
 
     /**
