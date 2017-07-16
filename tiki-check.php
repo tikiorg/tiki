@@ -109,20 +109,20 @@ if($l) {
 		$php_properties['Error logging'] = array(
 		'fitness' => tra('info'),
 		'setting' => 'Enabled',
-		'message' => tra('Errors will be logged, since log_errors is enabled. Also, display_errors is disabled. This is good practice for a production site, to log the errors instead of displaying them.')
+		'message' => tra('Errors will be logged, since log_errors is enabled. Also, display_errors is disabled. This is good practice for a production site, to log the errors instead of displaying them.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 		);
 	} else {
 		$php_properties['Error logging'] = array(
 		'fitness' => tra('info'),
 		'setting' => 'Enabled',
-		'message' => tra('Errors will be logged, since log_errors is enabled, but display_errors is also enabled. Good practice, especially for a production site, is to log all errors instead of displaying them.')
+		'message' => tra('Errors will be logged, since log_errors is enabled, but display_errors is also enabled. Good practice, especially for a production site, is to log all errors instead of displaying them.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 		);
 	}
 } else {
 	$php_properties['Error logging'] = array(
 	'fitness' => tra('info'),
 	'setting' => 'Full',
-	'message' => tra('Errors will not be logged, since log_errors is not enabled. Good practice, especially for a production site, is to log all errors.')
+	'message' => tra('Errors will not be logged, since log_errors is not enabled. Good practice, especially for a production site, is to log all errors.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 }
 if ( $e == 0 ) {
@@ -130,13 +130,13 @@ if ( $e == 0 ) {
 		$php_properties['Error reporting'] = array(
 			'fitness' => tra('info'),
 			'setting' => 'Disabled',
-			'message' => tra('Errors will not be reported, because error_reporting and display_errors are both turned off. This may be appropriate for a production site but, if any problems occur, enable these in php.ini to get more information.')
+			'message' => tra('Errors will not be reported, because error_reporting and display_errors are both turned off. This may be appropriate for a production site but, if any problems occur, enable these in php.ini to get more information.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 		);
 	} else {
 		$php_properties['Error reporting'] = array(
 			'fitness' => tra('info'),
 			'setting' => 'Disabled',
-			'message' => tra('No errors will be reported, although display_errors is On, because the error_reporting level is set to 0. This may be appropriate for a production site but, in if any problems occur, raise the value in php.ini to get more information.')
+			'message' => tra('No errors will be reported, although display_errors is On, because the error_reporting level is set to 0. This may be appropriate for a production site but, in if any problems occur, raise the value in php.ini to get more information.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 		);
 	}
 } elseif ( $e > 0 && $e < 32767) {
@@ -144,13 +144,13 @@ if ( $e == 0 ) {
 		$php_properties['Error reporting'] = array(
 			'fitness' => tra('info'),
 			'setting' => 'Disabled',
-			'message' => tra('No errors will be reported, because display_errors is turned off. This may be appropriate for a production site but, in any problems occur, enable it in php.ini to get more information. The error_reporting level is reasonable at '.$e.'.')
+			'message' => tra('No errors will be reported, because display_errors is turned off. This may be appropriate for a production site but, in any problems occur, enable it in php.ini to get more information. The error_reporting level is reasonable at '.$e.'.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 		);
 	} else {
 		$php_properties['Error reporting'] = array(
 			'fitness' => tra('info'),
 			'setting' => 'Partly',
-			'message' => tra('Not all errors will be reported as the error_reporting level is at '.$e.'. '.'This is not necessarily a bad thing (and it may be appropriate for a production site) as critical errors will be reported, but sometimes it may be useful to get more information. Check the error_reporting level in php.ini if any problems are occurring.')
+			'message' => tra('Not all errors will be reported as the error_reporting level is at '.$e.'. '.'This is not necessarily a bad thing (and it may be appropriate for a production site) as critical errors will be reported, but sometimes it may be useful to get more information. Check the error_reporting level in php.ini if any problems are occurring.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 		);
 	}
 } else {
@@ -158,13 +158,13 @@ if ( $e == 0 ) {
 		$php_properties['Error reporting'] = array(
 			'fitness' => tra('info'),
 			'setting' => 'Disabled',
-			'message' => tra('No errors will be reported although the error_reporting level is all the way up at '.$e.', because display_errors is off. This may be appropriate for a production site but, in case of problems, enable it in php.ini to get more information.')
+			'message' => tra('No errors will be reported although the error_reporting level is all the way up at '.$e.', because display_errors is off. This may be appropriate for a production site but, in case of problems, enable it in php.ini to get more information.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 		);
 	} else {
 		$php_properties['Error reporting'] = array(
 			'fitness' => tra('info'),
 			'setting' => 'Full',
-			'message' => tra('All errors will be reported as the error_reporting level is all the way up at '.$e.' and display_errors is on. This is good because, in case of problems, the error reports usually contain useful information.')
+			'message' => tra('All errors will be reported as the error_reporting level is all the way up at '.$e.' and display_errors is on. This is good because, in case of problems, the error reports usually contain useful information.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 		);
 	}
 }
@@ -178,7 +178,7 @@ if (function_exists('ini_set')) {
 	$php_properties['ini_set'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Enabled',
-		'message' => tra('ini_set is used in some places to accommodate special needs of some Tiki features.')
+		'message' => tra('ini_set is used in some places to accommodate special needs of some Tiki features.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 	// As ini_set is available, use it for PDO error reporting
 	ini_set('display_errors', '1');
@@ -186,7 +186,7 @@ if (function_exists('ini_set')) {
 	$php_properties['ini_set'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => 'Disabled',
-		'message' => tra('ini_set is used in some places to accommodate special needs of some Tiki features. Check disable_functions in your php.ini.')
+		'message' => tra('ini_set is used in some places to accommodate special needs of some Tiki features. Check disable_functions in your php.ini.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 }
 
@@ -434,13 +434,30 @@ if (substr($s, 0, 3) == 'cgi') {
 		'setting' => $s,
 		'message' => tra('PHP is being run as CGI. Feel free to use a threaded Apache MPM to increase performance.')
 	);
+
+	$php_sapi_info = array(
+		'message' => tra('Looks like you are running PHP as FPM/CGI/FastCGI, you may be able to override some of your PHP configurations by add them to .user.ini files, see:'),
+		'link' => 'http://php.net/manual/en/configuration.file.per-user.php'
+	);
 } elseif (substr($s, 0, 3) == 'fpm') {
 	$php_properties['PHP Server API'] = array(
 		'fitness' => tra('info'),
 		'setting' => $s,
 		'message' => tra('PHP is being run using FPM (Fastcgi Process Manager). Feel free to use a threaded Apache MPM to increase performance.')
 	);
+
+	$php_sapi_info = array(
+		'message' => tra('Looks like you are running PHP as FPM/CGI/FastCGI, you may be able to override some of your PHP configurations by add them to .user.ini files, see:'),
+		'link' => 'http://php.net/manual/en/configuration.file.per-user.php'
+	);
 } else {
+	if (substr($s, 0, 6) == 'apache') {
+		$php_sapi_info = array(
+			'message' => tra('Looks like you are running PHP as a module in Apache, you may be able to override some of your PHP configurations by add them to .htaccess files, see:'),
+			'link' => 'http://php.net/manual/en/configuration.changes.php#configuration.changes.apache'
+		);
+	}
+
 	$php_properties['PHP Server API'] = array(
 		'fitness' => tra('info'),
 		'setting' => $s,
@@ -512,25 +529,25 @@ if ($s >= 160 * 1024 * 1024) {
 	$php_properties['memory_limit'] = array(
 		'fitness' => tra('good'),
 		'setting' => $memory_limit,
-		'message' => tra('The memory_limit is at').' '.$memory_limit.'. '.tra('This is known to support smooth functioning even for bigger sites.')
+		'message' => tra('The memory_limit is at').' '.$memory_limit.'. '.tra('This is known to support smooth functioning even for bigger sites.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } elseif ( $s < 160 * 1024 * 1024 && $s > 127 * 1024 * 1024 ) {
 	$php_properties['memory_limit'] = array(
 		'fitness' => tra('ugly') ,
 		'setting' => $memory_limit,
-		'message' => tra('The memory_limit is at').' '.$memory_limit.'. '.tra('This will normally work, but the site might run into problems when it grows.')
+		'message' => tra('The memory_limit is at').' '.$memory_limit.'. '.tra('This will normally work, but the site might run into problems when it grows.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } elseif ( $s == -1 ) {
 	$php_properties['memory_limit'] = array(
 		'fitness' => tra('ugly') ,
 		'setting' => $memory_limit,
-		'message' => tra("The memory_limit is unlimited. This is not necessarily bad, but it's a good idea to limit this on productions servers in order to eliminate unexpectedly greedy scripts.")
+		'message' => tra("The memory_limit is unlimited. This is not necessarily bad, but it's a good idea to limit this on productions servers in order to eliminate unexpectedly greedy scripts.") . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } else {
 	$php_properties['memory_limit'] = array(
 		'fitness' => tra('bad'),
 		'setting' => $memory_limit,
-		'message' => tra('Your memory_limit is at').' '.$memory_limit.'. '.tra('This is known to cause issues! Ther memory_limit should be increased to at least 128M, which is the PHP default.')
+		'message' => tra('Your memory_limit is at').' '.$memory_limit.'. '.tra('This is known to cause issues! Ther memory_limit should be increased to at least 128M, which is the PHP default.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 }
 
@@ -540,13 +557,13 @@ if ($s != 'files') {
 	$php_properties['session.save_handler'] = array(
 		'fitness' => tra('bad'),
 		'setting' => $s,
-		'message' => tra('The session.save_handler must be set to \'files\'.')
+		'message' => tra('The session.save_handler must be set to \'files\'.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } else {
 	$php_properties['session.save_handler'] = array(
 		'fitness' => tra('good'),
 		'setting' => $s,
-		'message' => tra('Correctly set! The default setting of \'files\' is needed for Tiki.')
+		'message' => tra('Correctly set! The default setting of \'files\' is needed for Tiki.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 }
 
@@ -556,13 +573,13 @@ if (empty($s) || ! is_writable($s)) {
 	$php_properties['session.save_path'] = array(
 		'fitness' => tra('bad'),
 		'setting' => $s,
-		'message' => tra('The session.save_path must writable.')
+		'message' => tra('The session.save_path must writable.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } else {
 	$php_properties['session.save_path'] = array(
 		'fitness' => tra('good'),
 		'setting' => $s,
-		'message' => tra('The session.save_path is writable.')
+		'message' => tra('The session.save_path is writable.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 }
 
@@ -590,13 +607,13 @@ if ($s) {
 	$php_properties['zlib.output_compression'] = array(
 		'fitness' => tra('info'),
 		'setting' => 'On',
-		'message' => tra('zlib output compression is turned on. This saves bandwidth. On the other hand, turning it off would reduce CPU usage. The appropriate choice can be made for this Tiki.')
+		'message' => tra('zlib output compression is turned on. This saves bandwidth. On the other hand, turning it off would reduce CPU usage. The appropriate choice can be made for this Tiki.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } else {
 	$php_properties['zlib.output_compression'] = array(
 		'fitness' => tra('info'),
 		'setting' => 'Off',
-		'message' => tra('zlib output compression is turned off. This reduces CPU usage. On the other hand, turning it on would save bandwidth. The appropriate choice can be made for this Tiki.')
+		'message' => tra('zlib output compression is turned off. This reduces CPU usage. On the other hand, turning it on would save bandwidth. The appropriate choice can be made for this Tiki.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 }
 
@@ -638,13 +655,13 @@ if ($s) {
 	$php_properties['magic_quotes_gpc'] = array(
 		'fitness' => tra('bad'),
 		'setting' => 'On',
-		'message' => tra('Some features like assigning permissions to a group whose name contains a quote will not work with this turned on. magic_quotes_gpc is also deprecated and should be off by default. See the PHP manual for details. Having this turned on may cause Tiki to show strange behavior.')
+		'message' => tra('Some features like assigning permissions to a group whose name contains a quote will not work with this turned on. magic_quotes_gpc is also deprecated and should be off by default. See the PHP manual for details. Having this turned on may cause Tiki to show strange behavior.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } else {
 	$php_properties['magic_quotes_gpc'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Off',
-		'message' => tra('Correctly set! Some features like assigning permissions to a group whose name contains a quote will not work with this turned on. And this is also future proof as magic_quotes_gpc is deprecated.')
+		'message' => tra('Correctly set! Some features like assigning permissions to a group whose name contains a quote will not work with this turned on. And this is also future proof as magic_quotes_gpc is deprecated.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 }
 
@@ -654,13 +671,13 @@ if ( strtolower($s) == 'utf-8' ) {
 	$php_properties['default_charset'] = array(
 		'fitness' => tra('good'),
 		'setting' => $s,
-		'message' => tra('Correctly set! Tiki is fully UTF-8 and so should be this installation.')
+		'message' => tra('Correctly set! Tiki is fully UTF-8 and so should be this installation.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } else {
 	$php_properties['default_charset'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => $s,
-		'message' => tra('default_charset should be UTF-8 as Tiki is fully UTF-8. Please check the php.ini file.')
+		'message' => tra('default_charset should be UTF-8 as Tiki is fully UTF-8. Please check the php.ini file.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 }
 
@@ -670,13 +687,13 @@ if ( empty($s) ) {
 	$php_properties['date.timezone'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => $s,
-		'message' => tra('No time zone is set! While there are a number of fallbacks in PHP to determine the time zone, the only reliable solution is to set it explicitly in php.ini! Please check the value of date.timezone in php.ini.')
+		'message' => tra('No time zone is set! While there are a number of fallbacks in PHP to determine the time zone, the only reliable solution is to set it explicitly in php.ini! Please check the value of date.timezone in php.ini.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } else {
 	$php_properties['date.timezone'] = array(
 		'fitness' => tra('good'),
 		'setting' => $s,
-		'message' => tra('Well done! Having a time zone set protects the site from related errors.')
+		'message' => tra('Well done! Having a time zone set protects the site from related errors.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 }
 
@@ -702,25 +719,25 @@ if ( $s >= 30 && $s <= 90 ) {
 	$php_properties['max_execution_time'] = array(
 		'fitness' => tra('good'),
 		'setting' => $s.'s',
-		'message' => tra('The max_execution_time is at').' '.$s.'. '.tra('This is a good value for production sites. If timeouts are experienced (such as when performing admin functions) this may need to be increased nevertheless.')
+		'message' => tra('The max_execution_time is at').' '.$s.'. '.tra('This is a good value for production sites. If timeouts are experienced (such as when performing admin functions) this may need to be increased nevertheless.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } elseif ( $s == -1 || $s == 0 ) {
 	$php_properties['max_execution_time'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => $s.'s',
-		'message' => tra('The max_execution_time is unlimited.').' '.tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.')
+		'message' => tra('The max_execution_time is unlimited.').' '.tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } elseif ( $s > 90 ) {
 	$php_properties['max_execution_time'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => $s.'s',
-		'message' => tra('The max_execution_time is at').' '.$s.'. '.tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.')
+		'message' => tra('The max_execution_time is at').' '.$s.'. '.tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } else {
 	$php_properties['max_execution_time'] = array(
 		'fitness' => tra('bad'),
 		'setting' => $s.'s',
-		'message' => tra('The max_execution_time is at').' '.$s.'. '.tra('It is likely that some scripts, such as admin functions, will not finish in this time! The max_execution_time should be incresed to at least 30s.')
+		'message' => tra('The max_execution_time is at').' '.$s.'. '.tra('It is likely that some scripts, such as admin functions, will not finish in this time! The max_execution_time should be incresed to at least 30s.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 }
 
@@ -730,25 +747,25 @@ if ( $s >= 30 && $s <= 90 ) {
 	$php_properties['max_input_time'] = array(
 		'fitness' => tra('good'),
 		'setting' => $s.'s',
-		'message' => tra('The max_input_time is at').' '.$s.'. '.tra('This is a good value for production sites. If timeouts are experienced (such as when performing admin functions) this may need to be increased nevertheless.')
+		'message' => tra('The max_input_time is at').' '.$s.'. '.tra('This is a good value for production sites. If timeouts are experienced (such as when performing admin functions) this may need to be increased nevertheless.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } elseif ( $s == -1 || $s == 0 ) {
 	$php_properties['max_input_time'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => $s.'s',
-		'message' => tra('The max_input_time is unlimited.').' '.tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.')
+		'message' => tra('The max_input_time is unlimited.').' '.tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } elseif ( $s > 90 ) {
 	$php_properties['max_input_time'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => $s.'s',
-		'message' => tra('The max_input_time is at').' '.$s.'. '.tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.')
+		'message' => tra('The max_input_time is at').' '.$s.'. '.tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } else {
 	$php_properties['max_input_time'] = array(
 		'fitness' => tra('bad'),
 		'setting' => $s.'s',
-		'message' => tra('The max_input_time is at').' '.$s.'. '.tra('It is likely that some scripts, such as admin functions, will not finish in this time! The max_input_time should be increased to at least 30 seconds.')
+		'message' => tra('The max_input_time is at').' '.$s.'. '.tra('It is likely that some scripts, such as admin functions, will not finish in this time! The max_input_time should be increased to at least 30 seconds.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 }
 
@@ -766,19 +783,19 @@ if ($s >= 8 * 1024 * 1024) {
 	$php_properties['upload_max_filesize'] = array(
 		'fitness' => tra('good'),
 		'setting' => $upload_max_filesize,
-		'message' => tra('The upload_max_filesize is at').' '.$upload_max_filesize.'. '.tra('Quite large files can be uploaded, but keep in mind to set the script timeouts accordingly.')
+		'message' => tra('The upload_max_filesize is at').' '.$upload_max_filesize.'. '.tra('Quite large files can be uploaded, but keep in mind to set the script timeouts accordingly.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } else if ($s == 0) {
 	$php_properties['upload_max_filesize'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => $upload_max_filesize,
-		'message' => tra('The upload_max_filesize is at').' '.$upload_max_filesize.'. '.tra('Upload size is unlimited and this not advised. A user could mistakenly upload a very large file which could fill up the disk. This value should be set to accommodate the realistic needs of the site.')
+		'message' => tra('The upload_max_filesize is at').' '.$upload_max_filesize.'. '.tra('Upload size is unlimited and this not advised. A user could mistakenly upload a very large file which could fill up the disk. This value should be set to accommodate the realistic needs of the site.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } else {
 	$php_properties['upload_max_filesize'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => $upload_max_filesize,
-		'message' => tra('The upload_max_filesize is at').' '.$upload_max_filesize.'. '.tra('This is not a bad amount, but be sure the level is high enough to accommodate the needs of the site.')
+		'message' => tra('The upload_max_filesize is at').' '.$upload_max_filesize.'. '.tra('This is not a bad amount, but be sure the level is high enough to accommodate the needs of the site.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 }
 
@@ -796,13 +813,13 @@ if ($s >= 8 * 1024 * 1024) {
 	$php_properties['post_max_size'] = array(
 		'fitness' => tra('good'),
 		'setting' => $post_max_size,
-		'message' => tra('The post_max_size is at').' '.$post_max_size.'. '.tra('Quite large files can be uploaded, but keep in mind to set the script timeouts accordingly.')
+		'message' => tra('The post_max_size is at').' '.$post_max_size.'. '.tra('Quite large files can be uploaded, but keep in mind to set the script timeouts accordingly.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } else {
 	$php_properties['post_max_size'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => $post_max_size,
-		'message' => tra('The post_max_size is at').' '.$post_max_size.'. '.tra('This is not a bad amount, but be sure the level is high enough to accommodate the needs of the site.')
+		'message' => tra('The post_max_size is at').' '.$post_max_size.'. '.tra('This is not a bad amount, but be sure the level is high enough to accommodate the needs of the site.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 }
 
@@ -1652,14 +1669,14 @@ $s = ini_get('register_globals');
 if ($s) {
 	$security['register_globals'] = array(
 		'setting' => 'On',
-		'fitness' => tra('unsafe') ,
-		'message' => tra('register_globals should be off by default. See the PHP manual for details.')
+		'fitness' => tra('unsafe'),
+		'message' => tra('register_globals should be off by default. See the PHP manual for details.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } else {
 	$security['register_globals'] = array(
 		'setting' => 'Off',
-		'fitness' => tra('safe') ,
-		'message' => tra('register_globals should be off by default. See the PHP manual for details.')
+		'fitness' => tra('safe'),
+		'message' => tra('register_globals should be off by default. See the PHP manual for details.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 }
 
@@ -1748,13 +1765,13 @@ if ($s) {
 	$security['session.use_trans_sid'] = array(
 		'setting' => 'Enabled',
 		'fitness' => tra('unsafe'),
-		'message' => tra('session.use_trans_sid should be off by default. See the PHP manual for details.')
+		'message' => tra('session.use_trans_sid should be off by default. See the PHP manual for details.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } else {
 	$security['session.use_trans_sid'] = array(
 		'setting' => 'Disabled',
 		'fitness' => tra('safe'),
-		'message' => tra('session.use_trans_sid should be off by default. See the PHP manual for details.')
+		'message' => tra('session.use_trans_sid should be off by default. See the PHP manual for details.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 }
 
@@ -1763,13 +1780,13 @@ if ($s == 1) {
 	$security['xbithack'] = array(
 		'setting' => 'Enabled',
 		'fitness' => tra('unsafe'),
-		'message' => tra('Setting the xbithack option is unsafe. Depending on the file handling of the webserver and the Tiki settings, an attacker may be able to upload scripts to file gallery and execute them.')
+		'message' => tra('Setting the xbithack option is unsafe. Depending on the file handling of the webserver and the Tiki settings, an attacker may be able to upload scripts to file gallery and execute them.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } else {
 	$security['xbithack'] = array(
 		'setting' => 'Disabled',
 		'fitness' => tra('safe'),
-		'message' => tra('setting the xbithack option is unsafe. Depending on the file handling of the webserver and the Tiki settings,  an attacker may be able to upload scripts to file gallery and execute them.')
+		'message' => tra('setting the xbithack option is unsafe. Depending on the file handling of the webserver and the Tiki settings,  an attacker may be able to upload scripts to file gallery and execute them.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 }
 
@@ -2018,6 +2035,19 @@ if ($standalone && !$nagios) {
 	}
 	$render .= '<h2>PHP scripting language properties</h2>';
 	renderTable($php_properties);
+
+	$render_sapi_info= '';
+	if (!empty($php_sapi_info)) {
+		if (!empty($php_sapi_info['message'])) {
+			$render_sapi_info .= $php_sapi_info['message'];
+		}
+		if (!empty($php_sapi_info['link'])) {
+			$render_sapi_info .= '<a href="' . $php_sapi_info['link'] . '"> ' . $php_sapi_info['link'] . '</a>';
+		}
+		$render_sapi_info = '<p>' . $render_sapi_info . '</p>';
+	}
+
+	$render .= '<p><a name="php_conf_info"></a>Change PHP configuration values:'.$render_sapi_info.' You can check the full documentation on how to change the configurations values in <a href="http://www.php.net/manual/en/configuration.php">http://www.php.net/manual/en/configuration.php</a></p>';
 	$render .= '<h2>PHP security properties</h2>';
 	renderTable($security);
 	$render .= '<h2>Tiki Security</h2>';
@@ -2138,6 +2168,7 @@ if ($standalone && !$nagios) {
 	$smarty->assign_by_ref('server_properties', $server_properties);
 	$smarty->assign_by_ref('mysql_properties', $mysql_properties);
 	$smarty->assign_by_ref('php_properties', $php_properties);
+	$smarty->assign_by_ref('php_sapi_info', $php_sapi_info);
 	if ($apache_properties) {
 		$smarty->assign_by_ref('apache_properties', $apache_properties);
 	} else {
