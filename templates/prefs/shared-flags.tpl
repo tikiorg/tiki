@@ -1,10 +1,12 @@
 {if $p.helpurl}
-	<a href="{$p.helpurl|escape}" target="tikihelp" class="tikihelp" title="{$p.name|escape}: {$p.description|escape} {if $p.separator && $p.type neq 'multiselector'}{tr}Separator is {/tr}<b>{$p.separator|simplewiki}</b>{/if}">
-		{icon name="help"}
-	</a>
-{elseif $p.description}
-	<a class="tikihelp" title="{$p.name|escape}: {$p.description|escape} {if $p.separator && $p.type neq 'multiselector'}{tr}Separator is {/tr}<b>{$p.separator|simplewiki}</b>{/if}">
-		{icon name="information"}
+	{$icon = "help"}
+{else}
+	{$icon = "information"}
+{/if}
+{if isset($icon)}
+	<a {if $p.helpurl} href="{$p.helpurl|escape}" target="tikihelp"{/if}
+	 	class="tikihelp" title="{$p.name|escape}: {$p.description|escape} {if $p.separator && $p.type neq 'multiselector'}{tr}Separator is {/tr}<b>{$p.separator|simplewiki}</b>{/if}">
+		{icon name=$icon}
 	</a>
 {/if}
 
