@@ -146,10 +146,10 @@
 									<th>{tr}Rank{/tr}</th>
 								{/if}
 								{foreach key=jx item=ix from=$fields}
-									{$fieldcount = $fieldcount + 1}
 									{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $ix.isHidden eq 'a' or $perms.tiki_p_admin_trackers eq 'y')
 										and $ix.type ne 'x' and $ix.type ne 'h' and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password')
 										and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) or $perms.tiki_p_admin_trackers eq 'y')}
+										{$fieldcount = $fieldcount + 1}
 										{if $ix.type eq 'l'}
 											<th class="auto field{$ix.fieldId}">{$ix.name|default:"&nbsp;"}</th>
 										{elseif $ix.type eq 's' and $ix.name eq "Rating"}
@@ -235,7 +235,7 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 									{if $showcreated eq 'y'}<td></td>{/if}
 									{if $showlastmodif eq 'y'}<td></td>{/if}
 									{if $showlastmodifby eq 'y'}<td></td>{/if}
-									{if $showcomments ne 'n' and $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y' and $perms.tiki_p_tracker_view_comments ne 'n'}<td></td>{/if}
+									{if $showcomments ne 'n' and $tracker_info.useComments eq 'y' and ($tracker_info.showComments eq 'y' || $tracker_info.showLastComment eq 'y') and $perms.tiki_p_tracker_view_comments ne 'n'}<td></td>{/if}
 									{if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}<td></td>{/if}
 									{if ($showdelete eq 'y' || $showpenditem eq 'y' || $showopenitem eq 'y' || $showcloseitem eq 'y') && ($perms.tiki_p_admin_trackers eq 'y' or $perms.tiki_p_remove_tracker_items eq 'y' or $perms.tiki_p_remove_tracker_items_pending eq 'y' or $perms.tiki_p_remove_tracker_items_closed eq 'y')}
 										<td></td>

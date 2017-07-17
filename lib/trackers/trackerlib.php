@@ -1092,6 +1092,13 @@ class TrackerLib extends TikiLib
 
 		if (!empty($filter)) {
 			$mid2 = array();
+			if (!empty($filter['comment'])) {
+				$cat_table .= ' LEFT JOIN `tiki_comments` tc ON tc.`object` = tti.`itemId` AND tc.`objectType` = "trackeritem"';
+				$mid2[] = '(tc.`title` LIKE ? OR tc.`data` LIKE ?)';
+				$bindvars[] = '%'.$filter['comment'].'%';
+				$bindvars[] = '%'.$filter['comment'].'%';
+				unset($filter['comment']);
+			}
 			$this->parse_filter($filter, $mid2, $bindvars);
 			if (!empty($mid2)) {
 				$mid .= ' AND '.implode(' AND ', $mid2);
@@ -1117,7 +1124,6 @@ class TrackerLib extends TikiLib
 		}
 
 		if ( substr($sort_mode, 0, 2) == 'f_' or !empty($filterfield) ) {
-			$cat_table = '';
 			if ( substr($sort_mode, 0, 2) == 'f_' ) {
 				$csort_mode = 'sttif.`value` ';
 				$sort_tables = ' LEFT JOIN (`tiki_tracker_item_fields` sttif)'

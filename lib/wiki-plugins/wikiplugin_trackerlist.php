@@ -1102,6 +1102,8 @@ function wikiplugin_trackerlist($data, $params)
 			$limit = array();
 		}
 
+		$filter = array();
+
 		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $trklib->flaten($limit));
 		if (!empty($fields)) {
 			$listfields = $fields;
@@ -1136,6 +1138,32 @@ function wikiplugin_trackerlist($data, $params)
 				}
 			}
 		}
+
+		if (!isset($showstatus)) {
+			$showstatus = 'n';
+		}
+		$smarty->assign_by_ref('showstatus', $showstatus);
+
+		if (!isset($showcomments)) {
+			$showcomments = 'y';
+		}
+		$smarty->assign_by_ref('showcomments', $showcomments);
+
+		if (!isset($showcreated)) {
+			$showcreated = $tracker_info['showCreated'];
+		}
+		$smarty->assign_by_ref('showcreated', $showcreated);
+		
+		if (!isset($showlastmodif)) {
+			$showlastmodif = $tracker_info['showLastModif'];
+		}
+		$smarty->assign_by_ref('showlastmodif', $showlastmodif);
+		
+		if (!isset($showlastmodifby)) {
+			$showlastmodifby = $tracker_info['showLastModifBy'];
+		}
+		$smarty->assign_by_ref('showlastmodifby', $showlastmodifby);
+
 		/*** tablesorter ***/
 		//note whether ajax is needed
 		$tsServer = isset($params['server']) && $params['server'] === 'y';
@@ -1159,7 +1187,7 @@ function wikiplugin_trackerlist($data, $params)
 			$adjustCol = (isset($showstatus) && $showstatus == 'y' && $definition->isEnabled('showStatus')) ? -1 : 0;
 			//convert tablesorter filter syntax to tiki syntax
 			if (!empty($_REQUEST['filter'])) {
-				$i = 0;
+				$i = is_array($filterfield) ? count($filterfield) : 0;
 				$tsfiltersArray = explode('|', $tsfilters);
 				foreach ($_REQUEST['filter'] as $col => $ajaxfilter) {
 					$fieldtype = $allfields['data'][$col + $adjustCol]['type'];
@@ -1167,11 +1195,36 @@ function wikiplugin_trackerlist($data, $params)
 					//handle status filter
 					if ($adjustCol === -1 && $col === 0 && in_array($ajaxfilter, ['o','p','c'])) {
 						$status = $ajaxfilter;
+					} elseif ($showcomments != 'n'
+						and $tracker_info['useComments'] == 'y'
+						and ($tracker_info['showComments'] == 'y' || $tracker_info['showLastComment'] == 'y')
+						and $perms['tiki_p_tracker_view_comments'] != 'n'
+						and $col == count($listfields) - $adjustCol + ($showcreated == 'y') + ($showlastmodif == 'y') + ($showlastmodifby == 'y')) {
+						$filter['comment'] = $ajaxfilter;
 					/*
 					 * handle date filter - these are always one filter, in the form of:
 					 * from: >=1427389832000; to: <=1427389832000; both from and to: 1427389832000 - 1427880000000
 					 * which is unix timestamp in milliseconds
 					 */
+					} elseif (($isCreated = $showcreated == 'y' && $col == count($listfields) - $adjustCol)
+						|| ($showlastmodif == 'y' && $col == count($listfields) - $adjustCol + ($showcreated == 'y'))) {
+						$filteredField = $isCreated ? 'created' : 'lastModif';
+						$datefilter = explode(' - ', $ajaxfilter);
+						//a range (from and to filters) will have 2 items in the array
+						if (count($datefilter) == 2) {
+							//use substr to leave off milliseconds since date is stored in seconds in the database
+							$filter[$filteredField.'After'] = substr($datefilter[0], 0, 10);
+							$filter[$filteredField.'Before'] = substr($datefilter[1], 0, 10);
+						} else {
+							//use substr to leave off milliseconds since date is stored in seconds in the database
+							$stamp = substr($datefilter[0], 2, 10);
+							$symbol = substr($datefilter[0], 0, 2);
+							if ($symbol === '<=') {
+								$filter[$filteredField.'Before'] = $stamp;
+							} elseif ($symbol === '>=') {
+								$filter[$filteredField.'After'] = $stamp;
+							}
+						}
 					} elseif (strpos($tsfiltersArray[$col], 'type:date') !== false && in_array($fieldtype, ['f', 'j'])) {
 						$datefilter = explode(' - ', $ajaxfilter);
 						$filterfield[$i] = $id;
@@ -1255,8 +1308,6 @@ function wikiplugin_trackerlist($data, $params)
 				return tra('incorrect filterfield');
 			}
 		}
-
-		$filter = array();
 
 		if (isset($periodQuantity)) {
 			switch ($periodUnit) {
@@ -1408,11 +1459,6 @@ function wikiplugin_trackerlist($data, $params)
 		}
 		$smarty->assign_by_ref('shownbitems', $shownbitems);
 
-		if (!isset($showstatus)) {
-			$showstatus = 'n';
-		}
-		$smarty->assign_by_ref('showstatus', $showstatus);
-
 		if (!isset($showfieldname)) {
 			$showfieldname = 'y';
 		}
@@ -1447,10 +1493,6 @@ function wikiplugin_trackerlist($data, $params)
 			$allowtableexpansion = 'n';
 		}
 		$smarty->assign_by_ref('allowtableexpansion', $allowtableexpansion);
-		if (!isset($showcomments)) {
-			$showcomments = 'y';
-		}
-		$smarty->assign_by_ref('showcomments', $showcomments);
 		if (!isset($sortchoice)) {
 			$sortchoice = '';
 		} else {
@@ -1471,21 +1513,6 @@ function wikiplugin_trackerlist($data, $params)
 			$list_mode = 'y';
 		}
 		$smarty->assign_by_ref('list_mode', $list_mode);
-
-		if (!isset($showcreated)) {
-			$showcreated = $tracker_info['showCreated'];
-		}
-		$smarty->assign_by_ref('showcreated', $showcreated);
-		
-		if (!isset($showlastmodif)) {
-			$showlastmodif = $tracker_info['showLastModif'];
-		}
-		$smarty->assign_by_ref('showlastmodif', $showlastmodif);
-		
-		if (!isset($showlastmodifby)) {
-			$showlastmodifby = $tracker_info['showLastModifBy'];
-		}
-		$smarty->assign_by_ref('showlastmodifby', $showlastmodifby);
 		
 		if (!isset($more))
 			$more = 'n';
