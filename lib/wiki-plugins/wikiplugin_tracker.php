@@ -631,21 +631,22 @@ function wikiplugin_tracker($data, $params)
 	extract($params, EXTR_SKIP);
 
 	if (empty($transactionName) xor empty($transactionStep)) {
-		return '<b>'.tra("You need to define both transaction name and transaction step, or none of the two.").'</b>';
-	} else {
-		if (isset($transactionName) && !isset($_SESSION[$transactionName])) {
+		return '<b>' . tra("You need to define both transaction name and transaction step, or none of the two.") . '</b>';
+	} elseif (isset($transactionName) && isset($transactionStep)) {
+		if (! isset($_SESSION[$transactionName])) {
 			$_SESSION[$transactionName] = array();
 		}
-		if (isset($transactionStep) && !isset($_SESSION[$transactionName][$transactionStep])) {
+		if (! isset($_SESSION[$transactionName][$transactionStep])) {
 			$_SESSION[$transactionName][$transactionStep] = array();
 		}
-		if (!isset($_SESSION[$transactionName]['transactionStep'])) {
+		if (! isset($_SESSION[$transactionName]['transactionStep'])) {
 			$_SESSION[$transactionName]['transactionStep'] = 0;
 		}
 		if ($_SESSION[$transactionName]['transactionStep'] != $transactionStep) {
 			return;
 		}
 	}
+
 	if ($prefs['feature_trackers'] != 'y') {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
@@ -869,7 +870,7 @@ function wikiplugin_tracker($data, $params)
 			}
 			foreach ($definition->getFields() as $field) {
 				// User and group on autoassign create/modify
-				if (  ($user || $registration == 'y' || (isset($_SESSION[$transactionName]) && isset($_SESSION[$transactionName]['registrationName'])))
+				if (  ($user || $registration == 'y' || (isset($transactionName) && isset($_SESSION[$transactionName]) && isset($_SESSION[$transactionName]['registrationName'])))
 				   && ($field['type'] == 'u' || $field['type'] == 'g') ) {
 					$autoassign = $field['options_map']['autoassign'];
 					if ($autoassign == 1 || $autoassign == 2) {
@@ -1040,18 +1041,18 @@ function wikiplugin_tracker($data, $params)
 
 			if (  isset($userField)
 			  && ( ($registration == 'y' && isset($_REQUEST['name']))
-			    || (isset($_SESSION[$transactionName]) && isset($_SESSION[$transactionName]['registrationName'])) ) )
+			    || (isset($transactionName) && isset($_SESSION[$transactionName]) && isset($_SESSION[$transactionName]['registrationName'])) ) )
 			{
 				$userFieldDef = $definition->getField($userField);
 				if (isset($_REQUEST['name']))
 				{
 					$userFieldDef['value'] = $_REQUEST['name'];
-					if (isset($_SESSION[$transactionName]))
+					if (isset($transactionName) && isset($_SESSION[$transactionName]))
 					{
 						$_SESSION[$transactionName]['registrationName'] = $_REQUEST['name'];
 					}
 				}
-				elseif (isset($_SESSION[$transactionName]) && isset($_SESSION[$transactionName]['registrationName']))
+				elseif (isset($transactionName) && isset($_SESSION[$transactionName]) && isset($_SESSION[$transactionName]['registrationName']))
 				{
 					$userFieldDef['value'] = $_SESSION[$transactionName]['registrationName'];
 				}
