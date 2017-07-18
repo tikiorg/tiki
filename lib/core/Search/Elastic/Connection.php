@@ -144,7 +144,12 @@ class Search_Elastic_Connection
 
 	function scroll($scrollId, array $args = [])
 	{
-		return $this->post('/_search/scroll?' . http_build_query($args, '', '&'), $scrollId);
+		if ($this->getVersion() < 5.0) {
+			return $this->post('/_search/scroll?' . http_build_query($args, '', '&'), $scrollId);
+		} else {
+			$args['scroll_id'] = $scrollId;
+			return $this->post('/_search/scroll?' . http_build_query($args, '', '&'), '');
+		}
 	}
 
 	function storeQuery($index, $name, $query)

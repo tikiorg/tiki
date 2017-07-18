@@ -137,7 +137,7 @@ function module_upcoming_events($mod_reference, $module_params)
 		);
 	}
 
-	$smarty->assign('modUpcomingEvents', $events['data']);
+	$smarty->assign('modUpcomingEvents', isset($events['data']) ? $events['data'] : array());
 	$smarty->assign('maxlen', isset($module_params["maxlen"]) ? $module_params["maxlen"] : 0);
 	$smarty->assign('showDescription', isset($module_params['showDescription']) ? $module_params['showDescription'] : 'n');
 	$smarty->assign('showEnd', isset($module_params['showEnd']) ? $module_params['showEnd'] : 'n');

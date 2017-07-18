@@ -399,9 +399,9 @@ function wikiplugin_articles($data, $params)
 		$filter['notArticleId'] = $notArticleId;
 	}
 
-	if ( count($categId) == 0 ) {
+	if ( !is_array($categId) || count($categId) == 0 ) {
 		$categIds = '';
-	} elseif ( count($categId) == 1 ) {
+	} elseif ( is_array($categId) && count($categId) == 1 ) {
 		// For performance reasons, if there is only one value, the SQL query should not return IN () as it does with arrays
 		// So we send a single value instead of a single-value array
 		$categIds = $categId[0];

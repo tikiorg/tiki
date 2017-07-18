@@ -70,7 +70,7 @@ function wikiplugin_localfiles($data, $params)
 	$files = array();
 	if (!is_array( $params['path'])) {
 		if ($params['list'] === 'y' && file_exists($params['path']) && is_dir($params['path'])) {
-			$params['path'] = scandir(dir($params['path']));
+			$params['path'] = scandir($params['path']);
 		} else {
 			$params['path'] =  array($params['path']);
 		}
