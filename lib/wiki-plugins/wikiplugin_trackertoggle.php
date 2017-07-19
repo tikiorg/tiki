@@ -10,7 +10,7 @@ function wikiplugin_trackertoggle_info()
 	return array(
 		'name' => tra('Tracker Toggle'),
 		'documentation' => 'PluginTrackerToggle',
-		'description' => tra('Show or hide tracker content'),
+		'description' => tra("Adjust the visibility of content based on a tracker field's value, possibly dynamically"),
 		'iconname' => 'trackers',
 		'introduced' => 7,
 		'prefs' => array('wikiplugin_trackertoggle', 'feature_jquery', 'feature_trackers'),
