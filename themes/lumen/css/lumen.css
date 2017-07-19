@@ -7730,10 +7730,10 @@ ul.all_languages > li {
 .cke_editable:hover {
   outline: #555555 dotted 1px;
 }
-.cke_wysiwyg_frame,
-.cke_wysiwyg_div {
-  background: #ffffff !important;
-  color: #555555 !important;
+.tiki .cke_wysiwyg_frame,
+.tiki .cke_wysiwyg_div {
+  background: #ffffff;
+  color: #555555;
 }
 .tiki_plugin {
   background-color: transparent;

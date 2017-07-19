@@ -716,10 +716,11 @@ ul.all_languages > li {
 	outline: @gray dotted 1px;
 }
 
-// /* Background for CkEditor */
-.cke_wysiwyg_frame, .cke_wysiwyg_div {
-	background: @body-bg !important;
-	color: @text-color !important;
+// /* Background for CKEditor */
+.tiki .cke_wysiwyg_frame,
+.tiki .cke_wysiwyg_div {
+	background: @editor-bg; // @body-bg;
+	color: @editor-text-color; // @text-color;
 }
 
 .tiki_plugin {
