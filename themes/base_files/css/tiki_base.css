@@ -519,10 +519,10 @@ ul.all_languages > li {
 .cke_editable:hover {
   outline: #555555 dotted 1px;
 }
-.cke_wysiwyg_frame,
-.cke_wysiwyg_div {
-  background: #ffffff !important;
-  color: #333333 !important;
+.tiki .cke_wysiwyg_frame,
+.tiki .cke_wysiwyg_div {
+  background: #ffffff;
+  color: #333333;
 }
 .tiki_plugin {
   background-color: transparent;
@@ -3461,6 +3461,9 @@ legend + * {
 .topbar .navbar {
   margin-bottom: 0;
   border: none;
+}
+.dropdown-menu.dropdown-login li:hover {
+  background: inherit;
 }
 body.tiki.navbar-padding {
   padding-top: 46px;
