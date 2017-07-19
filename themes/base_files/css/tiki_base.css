@@ -1788,10 +1788,6 @@ td.url {
 .articletitle h2 {
   margin: 0 0 .3em;
 }
-.articleheading > div:not(.media-left) {
-  max-width: 100%;
-  overflow: hidden;
-}
 .articletrailer span {
   display: inline-block;
   margin: auto;
@@ -3467,6 +3463,9 @@ legend + * {
 }
 body.tiki.navbar-padding {
   padding-top: 46px;
+}
+body.layout_social.tiki.navbar-padding {
+  padding-top: 66px;
 }
 body.fullscreen.tiki.navbar-padding {
   padding-top: 0;
