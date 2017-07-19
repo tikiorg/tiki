@@ -118,8 +118,7 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 
 	function renderInput($context = array())
 	{
-		if (empty($this->getOption('fieldIdHere'))
-			|| (!empty($context['pluginTracker']) && $context['pluginTracker'] === 'y')) {
+		if (empty($this->getOption('fieldIdHere'))) {
 			return $this->renderOutput();
 		} else {
 			TikiLib::lib('header')->add_jq_onready(

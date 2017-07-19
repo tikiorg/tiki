@@ -1808,11 +1808,7 @@ function wikiplugin_tracker($data, $params)
 							$back.= '<div class="' . $inputclass . ' tracker_input_value tracker_field' . $f['fieldId'] . '">'; // '</td><td class="tracker_input_value">';
 						}
 
-					if ($f['type'] === 'l') {	// items list fields, show output
-						$back .= wikiplugin_tracker_render_value($f, $item);
-					} else {
 						$back .= wikiplugin_tracker_render_input($f, $item, $dynamicSave);
-					}
 						$back .= '</div>'; // chibaguy added /divs
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y' && $registration == 'y') {
 							$back.= '<div class="col-md-1 col-sm-1"><span class="text-danger tips" title=":'
