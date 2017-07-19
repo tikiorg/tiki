@@ -3461,6 +3461,9 @@ legend + * {
   margin-bottom: 0;
   border: none;
 }
+.dropdown-menu.dropdown-login li:hover {
+  background: inherit;
+}
 body.tiki.navbar-padding {
   padding-top: 46px;
 }
