@@ -281,7 +281,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 		$AddUser=false;
 	}
 	if (!empty($prefs['username_pattern']) && !preg_match($prefs['username_pattern'], $_REQUEST['login'])) {
-		$errors[] = tra('User login contains invalid characters');
+		$errors[] = tra('User login contains invalid characters.');
 		$AddUser = false;
 	}
 	// end verify newuser info
@@ -437,7 +437,7 @@ if (isset($_REQUEST['user']) and $_REQUEST['user']) {
 				if ($userlib->user_exists($_POST['login'])) {
 					$errors[] = tra('User already exists');
 				} elseif (!empty($prefs['username_pattern']) && !preg_match($prefs['username_pattern'], $_POST['login'])) {
-					$errors[] = tra('Login contains invalid characters');
+					$errors[] = tra('User login contains invalid characters.');
 				} elseif ($userlib->change_login($userinfo['login'], $_POST['login'])) {
 					Feedback::success(sprintf(tra('%s changed from %s to %s'), tra('login'),
 						$userinfo['login'], $_POST['login']), 'session');
