@@ -46,6 +46,11 @@ legend + * {
 	border: none;
 }
 
+// Make exception to dropdown list item behavior: log-in form background shouldn't change on mouseover.
+.dropdown-menu.dropdown-login li:hover {
+	background: inherit;
+}
+
 body.tiki.navbar-padding {
 	padding-top: @navbar-fixed-height;
 }
