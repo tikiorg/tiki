@@ -21,13 +21,13 @@ class MimeLib
      * @param $path
      * @return string
      */
-    function from_path($filename, $path)
+    static function from_path($filename, $path)
 	{
-		if ($type = $this->physical_check_from_path($path)) {
-			return $this->handle_physical_exceptions($type, $filename);
+		if ($type = self::physical_check_from_path($path)) {
+			return self::handle_physical_exceptions($type, $filename);
 		}
 
-		return $this->from_file_extension($filename);
+		return self::from_file_extension($filename);
 	}
 
     /**
@@ -35,22 +35,22 @@ class MimeLib
      * @param $content
      * @return string
      */
-    function from_content($filename, $content)
+	static function from_content($filename, $content)
 	{
-		if ($type = $this->physical_check_from_content($content)) {
-			return $this->handle_physical_exceptions($type, $filename, $content);
+		if ($type = self::physical_check_from_content($content)) {
+			return self::handle_physical_exceptions($type, $filename, $content);
 		}
 
-		return $this->from_file_extension($filename);
+		return self::from_file_extension($filename);
 	}
 
     /**
      * @param $filename
      * @return string
      */
-    function from_filename($filename)
+    static function from_filename($filename)
 	{
-		return $this->from_file_extension($filename);
+		return self::from_file_extension($filename);
 	}
 
     /**
@@ -116,9 +116,9 @@ class MimeLib
      * @param $path
      * @return string
      */
-    private function physical_check_from_path($path)
+    private static function physical_check_from_path($path)
 	{
-		if ($finfo = $this->get_finfo()) {
+		if ($finfo = self::get_finfo()) {
 			if (file_exists($path)) {
 				$type = $finfo->file($path);
 				return $type;
@@ -130,10 +130,10 @@ class MimeLib
      * @param $content
      * @return string
      */
-    private function physical_check_from_content($content)
+    private static function physical_check_from_content($content)
 	{
-		if ($finfo = $this->get_finfo()) {
-			$type = $finfo->buffer($content);
+		if ($finfo = self::get_finfo()) {
+			$type = self::buffer($content);
 			return $type;
 		}
 	}
