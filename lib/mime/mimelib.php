@@ -133,7 +133,7 @@ class MimeLib
     private static function physical_check_from_content($content)
 	{
 		if ($finfo = self::get_finfo()) {
-			$type = self::buffer($content);
+			$type = $finfo->buffer($content);
 			return $type;
 		}
 	}
