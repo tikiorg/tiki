@@ -67,8 +67,21 @@ class Search_Action_EmailAction implements Search_Action_Action
 
 			tiki_send_email($mail);
 
+			if($prefs['log_mail'] == 'y') {
+				$logslib = TikiLib::lib('logs');
+				foreach($data->to->email() as $email) {
+					$logslib->add_log('mail', tr('EmailAction - send to %0, subject - %1', $email, $subject));
+				}
+			}
+
 			return true;
 		} catch (Exception $e) {
+
+			if($prefs['log_mail'] == 'y') {
+				$logslib = TikiLib::lib('logs');
+				$logslib->add_log('mail error', tr("EmailAction - can't send new message"));
+			}
+
 			return false;
 		}
 	}
