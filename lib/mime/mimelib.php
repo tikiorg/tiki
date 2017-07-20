@@ -120,7 +120,7 @@ class MimeLib
 	{
 		if ($finfo = self::get_finfo()) {
 			if (file_exists($path)) {
-				$type = $finfo->file($path);
+				$type = $finfo->file($path); // Heuristically determine most likely MIME type based on the contents of the file at $path
 				return $type;
 			}
 		}
