@@ -16,8 +16,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 class MimeLib
 {
-	private $finfo;
-
     /**
      * @param $filename
      * @param $path
@@ -143,17 +141,18 @@ class MimeLib
     /**
      * @return finfo
      */
-    private function get_finfo()
+    private static function get_finfo()
 	{
+		static $finfo = false;
 		global $prefs;
 
-		if ($this->finfo) {
-			return $this->finfo;
+		if ($finfo) {
+			return $finfo;
 		}
 
 		if ($prefs['tiki_check_file_content'] == 'y' && class_exists('finfo')) {
-			if ($finfo = new finfo(FILEINFO_MIME_TYPE)) {
-				$this->finfo = $finfo;
+			$finfo = new finfo(FILEINFO_MIME_TYPE);
+			if ($finfo) {
 				return $finfo;
 			}
 		}
