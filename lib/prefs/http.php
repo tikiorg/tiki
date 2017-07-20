@@ -35,7 +35,7 @@ function prefs_http_list()
 			'type' => 'flag',
 			'default' => 'n',
 			'perspective' => false,
-			'tags' => array('basic'),
+			'tags' => array('advanced'),
 		),
 		'http_header_frame_options_value' => array(
 			'name' => tra('Header value'),
@@ -46,7 +46,7 @@ function prefs_http_list()
 			),
 			'default' => 'DENY',
 			'perspective' => false,
-			'tags' => array('basic'),
+			'tags' => array('advanced'),
 			'dependencies' => array(
 				'http_header_frame_options',
 			),
@@ -57,7 +57,7 @@ function prefs_http_list()
 			'type' => 'flag',
 			'default' => 'n',
 			'perspective' => false,
-			'tags' => array('basic'),
+			'tags' => array('advanced'),
 		),
 		'http_header_xss_protection_value' => array(
 			'name' => tra('Header value'),
@@ -69,7 +69,7 @@ function prefs_http_list()
 			),
 			'default' => '1;mode=block',
 			'perspective' => false,
-			'tags' => array('basic'),
+			'tags' => array('advanced'),
 			'dependencies' => array(
 				'http_header_xss_protection',
 			),
@@ -80,7 +80,7 @@ function prefs_http_list()
 			'type' => 'flag',
 			'default' => 'n',
 			'perspective' => false,
-			'tags' => array('basic'),
+			'tags' => array('advanced'),
 		),
 		'http_header_content_security_policy' => array(
 			'name' => tra('HTTP header content-security-policy'),
@@ -88,14 +88,14 @@ function prefs_http_list()
 			'type' => 'flag',
 			'default' => 'n',
 			'perspective' => false,
-			'tags' => array('basic'),
+			'tags' => array('advanced'),
 		),
 		'http_header_content_security_policy_value' => array(
 			'name' => tra('Header value'),
 			'type' => 'text',
 			'default' => '',
 			'perspective' => false,
-			'tags' => array('basic'),
+			'tags' => array('advanced'),
 			'dependencies' => array(
 				'http_header_content_security_policy',
 			),
@@ -106,14 +106,14 @@ function prefs_http_list()
 			'type' => 'flag',
 			'default' => 'n',
 			'perspective' => false,
-			'tags' => array('basic'),
+			'tags' => array('advanced'),
 		),
 		'http_header_strict_transport_security_value' => array(
 			'name' => tra('Header value'),
 			'type' => 'text',
 			'default' => '',
 			'perspective' => false,
-			'tags' => array('basic'),
+			'tags' => array('advanced'),
 			'dependencies' => array(
 				'http_header_strict_transport_security',
 			),
@@ -124,14 +124,14 @@ function prefs_http_list()
 			'type' => 'flag',
 			'default' => 'n',
 			'perspective' => false,
-			'tags' => array('basic'),
+			'tags' => array('advanced'),
 		),
 		'http_header_public_key_pins_value' => array(
 			'name' => tra('Header value'),
 			'type' => 'textarea',
 			'default' => '',
 			'perspective' => false,
-			'tags' => array('basic'),
+			'tags' => array('advanced'),
 			'dependencies' => array(
 				'http_header_public_key_pins',
 			),

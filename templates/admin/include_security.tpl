@@ -97,6 +97,40 @@
 				{preference name=feature_ticketlib}
 				{preference name=feature_ticketlib2}
 			</fieldset>
+			<br/>
+			<fieldset>
+				<legend>{tr}HTTP Headers{/tr}{help url="Security"}</legend>
+				<div class="adminoptionbox">
+					{tr}Use these options to add options related with security to the HTTP Headers{/tr}.
+				</div>
+
+				{preference name=http_header_frame_options}
+				<div class="adminoptionboxchild" id="http_header_frame_options_childcontainer">
+					{preference name=http_header_frame_options_value}
+				</div>
+
+				{preference name=http_header_xss_protection}
+				<div class="adminoptionboxchild" id="http_header_xss_protection_childcontainer">
+					{preference name=http_header_xss_protection_value}
+				</div>
+
+				{preference name=http_header_content_type_options}
+
+				{preference name=http_header_content_security_policy}
+				<div class="adminoptionboxchild" id="http_header_content_security_policy_childcontainer">
+					{preference name=http_header_content_security_policy_value}
+				</div>
+
+				{preference name=http_header_strict_transport_security}
+				<div class="adminoptionboxchild" id="http_header_strict_transport_security_childcontainer">
+					{preference name=http_header_strict_transport_security_value}
+				</div>
+
+				{preference name=http_header_public_key_pins}
+				<div class="adminoptionboxchild" id="http_header_public_key_pins_childcontainer">
+					{preference name=http_header_public_key_pins_value}
+				</div>
+			</fieldset>
 		{/tab}
 
 		{tab name="{tr}Spam Protection{/tr}"}
@@ -175,33 +209,6 @@
 				{preference name=ids_threshold}
 				{preference name=ids_log_to_file}
 				{*{preference name=ids_log_to_database}*}
-			</div>
-
-			{preference name=http_header_frame_options}
-			<div class="adminoptionboxchild" id="http_header_frame_options_childcontainer">
-				{preference name=http_header_frame_options_value}
-			</div>
-
-			{preference name=http_header_xss_protection}
-			<div class="adminoptionboxchild" id="http_header_xss_protection_childcontainer">
-				{preference name=http_header_xss_protection_value}
-			</div>
-
-			{preference name=http_header_content_type_options}
-
-			{preference name=http_header_content_security_policy}
-			<div class="adminoptionboxchild" id="http_header_content_security_policy_childcontainer">
-				{preference name=http_header_content_security_policy_value}
-			</div>
-
-			{preference name=http_header_strict_transport_security}
-			<div class="adminoptionboxchild" id="http_header_strict_transport_security_childcontainer">
-				{preference name=http_header_strict_transport_security_value}
-			</div>
-
-			{preference name=http_header_public_key_pins}
-			<div class="adminoptionboxchild" id="http_header_public_key_pins_childcontainer">
-				{preference name=http_header_public_key_pins_value}
 			</div>
 
 		{/tab}
