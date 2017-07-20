@@ -91,6 +91,8 @@ class Services_Wiki_Controller
 	 */
 	function action_remove_pages($input)
 	{
+		global $user;
+
 		$check = Services_Exception_BadRequest::checkAccess();
 		//first pass - show confirm modal popup
 		if (!empty($check['ticket'])) {
@@ -176,6 +178,7 @@ class Services_Wiki_Controller
 				if ($all || $extra['one']) {
 					$vdesc = tr('All versions');
 					$verb = 'have';
+					$noversionsleft = true;
 				} elseif ($last) {
 					$vdesc = tr('The last version');
 					$verb = 'has';
@@ -195,6 +198,47 @@ class Services_Wiki_Controller
 					'items' => $items,
 				];
 				Feedback::success($feedback, 'session');
+				// Create a Semantic Alias (301 redirect) if this option was selected by user.
+				$createredirect = !empty($input['create_redirect']) && $input['create_redirect'] === 'y';
+				if ($createredirect && $noversionsleft) {
+					$destinationPage = $input['destpage'];
+					if ($destinationPage == "") {
+						$msg = tr('Redirection page not specified. 301 redirect not created.');
+						$feedback = [
+							'tpl' => 'action',
+							'mes' => $msg
+						];
+						Feedback::warning($feedback, 'session');
+					} else {
+						// Append on the destination page's content the following string,
+						// where $page is the name of the deleted page:
+						// "\r\n~tc~(alias($page))~/tc~"
+						// We use the ~tc~ so that it doesn't make the destination page look ugly
+						$pageHyphensForSpaces = str_replace(" ","-",$page); // Otherwise pages with spaces won't work
+						$comment = tr('Semantic alias redirect to this page created when page %0 was deleted',$page);
+						$appendString = "\r\n~tc~ (alias($pageHyphensForSpaces)) ~/tc~";
+						if (TikiLib::lib('tiki')->page_exists($destinationPage)) {
+							// Get wiki page content
+							$infoDestinationPage = TikiLib::lib('tiki')->get_page_info($destinationPage);
+							$page_data = $infoDestinationPage['data'];
+							$page_data .= $appendString;
+							TikiLib::lib('tiki')->update_page($destinationPage, $page_data, $comment, $infoDestinationPage['user'], TikiLib::lib('tiki')->get_ip_address());
+							$msg = tr('A 301 redirect to the following page was created:');
+						} else {
+							// Create a new page
+							$page_data = "THIS PAGE WAS CREATED AUTOMATICALLY when another page was removed. Please edit and write the definitive contents.";
+							$page_data .= $appendString;
+							TikiLib::lib('tiki')->create_page($destinationPage, 0, $page_data, TikiLib::lib('tiki')->now, $comment, $user, TikiLib::lib('tiki')->get_ip_address());
+							$msg = tr('The following page and a 301 redirect to it were created:');
+						}
+						$feedback = [
+							'tpl' => 'action',
+							'mes' => $msg,
+							'items' => $destinationPage,
+						];
+						Feedback::note($feedback, 'session');
+					}
+				}
 			}
 			//return to page
 			if ($count === 1 && ($all || $extra['one'])
@@ -740,4 +784,3 @@ class Services_Wiki_Controller
 		}
 	}
 }
-
