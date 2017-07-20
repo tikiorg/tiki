@@ -30,7 +30,10 @@
 			<div class="col-sm-10">
 				<input type='text' id='newpage' name='newpage' class="form-control" value='{$newname|escape}'>
 				{if $prefs.feature_semantic eq 'y' and $prefs.feature_wiki_1like_redirection eq 'y' and $prefs.feature_wiki_pagealias eq 'y'}
-					<input type='checkbox' id='semantic_alias' name='semantic_alias' value='y'> {tr}Automatic redirect from old page name to new page name (ex.: for search engines or users that may have bookmarked the page){/tr}
+					<input type='checkbox' id='semantic_alias' name='semantic_alias' value='y'> {tr}Redirect original page{/tr}
+					<a tabindex="0" target="_blank" data-toggle="popover" data-trigger="hover" title="{tr}301 Redirect - \"moved permanently\" HTTP response status code{/tr}" data-content="{tr}Create an SEO-friendly, automatic redirect from old page name to new page name (ex.: for search engines or users that may have bookmarked the page){/tr}">
+						<span class="fa fa-info-circle fa-fw "></span>
+					</a>
 				{/if}
 			</div>
 		</div>
