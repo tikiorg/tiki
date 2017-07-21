@@ -24,7 +24,23 @@
 		<fieldset class="table clearfix featurelist">
 			<legend>{tr}Improved Plugins{/tr}</legend>
 			{preference name=wikiplugin_img}
+			{preference name=wikiplugin_pdf}
 			{preference name=wikiplugin_pivottable}
+		</fieldset>
+		<fieldset class="table clearfix featurelist">
+			<legend>{tr}PDF from URL: mPDF new settings{/tr}</legend>
+			{preference name=print_pdf_from_url}
+			<div class="adminoptionboxchild print_pdf_from_url_childcontainer mpdf">
+				{preference name=print_pdf_mpdf_pagetitle}
+				{preference name=print_pdf_mpdf_hyperlinks}
+				{preference name=print_pdf_mpdf_columns}
+				{preference name=print_pdf_mpdf_watermark}
+				{preference name=print_pdf_mpdf_watermark_image}
+				{preference name=print_pdf_mpdf_background}
+				{preference name=print_pdf_mpdf_background_image}
+				{preference name=print_pdf_mpdf_coverpage_text_settings}
+				{preference name=print_pdf_mpdf_coverpage_image_settings}
+			</div>
 		</fieldset>
 		<fieldset class="table clearfix featurelist">
 			<legend>{tr}Other new or Extended Features{/tr}</legend>
