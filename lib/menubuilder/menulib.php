@@ -626,7 +626,7 @@ class MenuLib extends TikiLib
 			$resourceGroups = array_filter(explode(',', $res['groupname'] ?: ''));
 			if (!$do_not_parse) {
 				if (isset($menu['parse']) && $menu['parse'] === 'y') {
-					$res['name'] = TikiLib::lib('parser')->parse_data($res['name']);
+					$res['name'] = TikiLib::lib('parser')->parse_data($res['name'], ['suppress_icons' => true]);
 				} else {
 					$res['name'] = htmlspecialchars($res['name']);
 				}

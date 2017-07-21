@@ -15,6 +15,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 	private $providedMappings = array();
 
 	private $camelCase = false;
+	private $possessiveStemmer = true;
 
 	function __construct(Search_Elastic_Connection $connection, $index)
 	{
@@ -25,6 +26,11 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 	function setCamelCaseEnabled($enabled)
 	{
 		$this->camelCase = (bool) $enabled;
+	}
+
+	function setPossessiveStemmerEnabled($enabled)
+	{
+		$this->possessiveStemmer = (bool) $enabled;
 	}
 
 	function destroy()
@@ -179,7 +185,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 	private function getIndexDefinition()
 	{
 		global $prefs;
-		return [
+		$definition = [
 			'analysis' => [
 				'tokenizer' => [
 					'camel' => [
@@ -190,7 +196,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 				'analyzer' => [
 					'default' => [
 						'tokenizer' => $this->camelCase ? 'camel' : 'standard',
-						'filter' => ['standard', 'lowercase', 'asciifolding', 'tiki_stop', $this->connection->getVersion() >= 5 ? 'porter_stem' : 'porterStem'],
+						'filter' => ['standard', 'lowercase', 'asciifolding'],
 					],
 					'sortable' => [
 						'tokenizer' => 'keyword',
@@ -205,6 +211,26 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 				],
 			],
 		];
+
+		// optionally removes 's from the end of words
+		if ($this->possessiveStemmer) {
+			$definition['analysis']['analyzer']['default']['filter'][] = 'english_possessive_stemmer';
+			$definition['analysis']['analyzer']['sortable']['filter'][] = 'english_possessive_stemmer';
+			$definition['analysis']['filter']['english_possessive_stemmer'] = ['type' => 'stemmer', 'name' => 'possessive_english'];
+		}
+
+		// see https://en.wikipedia.org/wiki/Stemming - e.g.  "stem" will find "stems", "stemmer", "stemming" and "stemmed"
+		if ($this->connection->getVersion() >= 5) {
+			$definition['analysis']['analyzer']['default']['filter'][] = 'porter_stem';
+		} else {
+			$definition['analysis']['analyzer']['default']['filter'][] = 'porterStem';
+		}
+		// stop words need to be last
+		$definition['analysis']['analyzer']['default']['filter'][] = 'tiki_stop';
+		$definition['analysis']['analyzer']['sortable']['filter'][] = 'tiki_stop';
+
+
+		return $definition;
 	}
 
 	function endUpdate()

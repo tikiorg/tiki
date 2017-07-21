@@ -248,7 +248,6 @@ function prefs_unified_list()
 			'name' => tr('Tokenize CamelCase words'),
 			'description' => tr('Consider the components of camel-case words as separate tokens, allowing them to be searched individually.'),
 			'warning' => tr('Conflicts with Tokenize Version Numbers.'),
-			'hint' => tr('Elasticsearch only'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -321,6 +320,12 @@ function prefs_unified_list()
 			),
 			'tags' => array('experimental'), // See warning
 			'warning' => tra('Some plugins may not appear. When using the MySQL engine, can have problems with short plugin names (for MyISAM, those under "ft_min_word_len").'), // See ticket #6313
+		),
+		'unified_elastic_possessive_stemmer' => array(
+			'name' => tr('Possesive Stemmer'),
+			'description' => tr("The possessive stemmer removes 's from any words before indexing"),
+			'type' => 'flag',
+			'default' => 'y',
 		),
 	);
 }
