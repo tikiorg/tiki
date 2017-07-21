@@ -24,6 +24,8 @@
 		<fieldset class="table clearfix featurelist">
 			<legend>{tr}Improved Plugins{/tr}</legend>
 			{preference name=wikiplugin_img}
+			{preference name=wikiplugin_list}
+			{preference name=wikiplugin_listexecute}
 			{preference name=wikiplugin_pdf}
 			{preference name=wikiplugin_pivottable}
 			{preference name=wikiplugin_trackerlist}
