@@ -157,7 +157,7 @@ function prefs_wikiplugin_list($partial = false)
 	// temporary pref for developpment of the list plugin GUI
 	$prefs['wikiplugin_list_gui'] = [
 		'name' => tr('GUI for the list plugin'),
-		'description' => tr('Experimental GUI for the list plugin in popup plugin edit forms.'),
+		'description' => tr('Experimental GUI for the list plugin in popup plugin edit forms.') . (' ') . tr('(listgui)'),
 		'tags' => ['experimental'],
 		'default' => 'n',
 		'dependencies' => ['wikiplugin_list'],
