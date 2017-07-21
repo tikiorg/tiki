@@ -26,6 +26,7 @@
 			{preference name=wikiplugin_img}
 			{preference name=wikiplugin_pdf}
 			{preference name=wikiplugin_pivottable}
+			{preference name=wikiplugin_trackerlist}
 		</fieldset>
 		<fieldset class="table clearfix featurelist">
 			<legend>{tr}PDF from URL: mPDF new settings{/tr}</legend>
