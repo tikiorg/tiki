@@ -125,7 +125,20 @@ function wikiplugin_pdfpage_info()
 							array('text'=>'Off (Links will be removed)','value'=>'off'),
 							array('text'=>'Add as footnote (Links will be listed at end of document)','value'=>'footnote'),
 						)	
-					),					
+					),	
+					'columns' => array(
+						'name' => tra('Number of columns'),
+						'description' => tra(''),
+						'tags' => array('advanced'),
+						'type' => 'list',
+						'default'=>'',
+						'options' => array(
+							array('text'=>'Default - 1 Column','value'=>''),
+							array('text'=>'2 Columns','value'=>'2'),
+							array('text'=>'3 Columns','3'),
+							array('text'=>'4 Columns','4'),							
+						)	
+					),				
 					'watermark' => array(
 						'name' => tra('Watermark text for this page. Set value as "off", to turn off watermark of the page'),
 						'description' => tra('Watermark text value, for example: Confidential, Draft etc.'),
@@ -137,6 +150,18 @@ function wikiplugin_pdfpage_info()
 						'description' => tra('To turn off watermark image on the page, set value as <code>off</code>'),
 						'type' => 'text',
 						'default' => 'Full URL of watermark image',
+					),
+					'background' => array(
+						'name' => tra('Page background color'),
+						'description' => tra('Enter color code'),
+						'type' => 'text',
+						'default' => '',
+					),
+					'background_image' => array(
+						'name' => tra('Page background image'),
+						'description' => tra('Enter complete URL'),
+						'type' => 'text',
+						'default' => '',
 					),
 
                 ),

@@ -185,6 +185,19 @@ function wikiplugin_pdf_info()
 							array('text'=>'Add as footnote (Links will be listed at end of document)','value'=>'footnote'),
 						)	
 					),
+					'columns' => array(
+						'name' => tra('Number of columns'),
+						'description' => tra(''),
+						'tags' => array('advanced'),
+						'type' => 'list',
+						'default'=>'',
+						'options' => array(
+							array('text'=>'Default - 1 Column','value'=>''),
+							array('text'=>'2 Columns','value'=>'2'),
+							array('text'=>'3 Columns','3'),
+							array('text'=>'4 Columns','4'),							
+						)	
+					),					
 					'password' => array(
 						'name' => tra('PDF password for viewing'),
 						'description' => tra('Secure confidential PDF with password, leave blank if password protected is not needed'),
@@ -203,6 +216,18 @@ function wikiplugin_pdf_info()
 						'type' => 'text',
 						'default' => '',
 					),
+					'background' => array(
+						'name' => tra('Page background color'),
+						'description' => tra('Enter color code'),
+						'type' => 'text',
+						'default' => '',
+					),
+					'background_image' => array(
+						'name' => tra('Page background image'),
+						'description' => tra('Enter complete URL'),
+						'type' => 'text',
+						'default' => '',
+					),					
 					'coverpage_text_settings' => array(
 						'name' => tra('CoverPage text settings'),
 						'description' => tra('<code>Heading|Subheading|Text Alignment|Background color|Text color|Page border|Border color</code>. Enter settings separated by <code>|</code>,sequence is important,leave blank for default. For example <code>{PAGETITLE}|Tikiwiki|Center|#fff|#000|1|#ccc</code>'),

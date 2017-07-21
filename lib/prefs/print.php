@@ -61,7 +61,7 @@ function prefs_print_list()
 			'name' => tra('Print Friendly PDF'),
 			'description' => tra('Useful for dark themes, Enabling this option will change theme background color to white and text / headings color to black. If turned off, theme colors will be retained in pdf'),
 			'type' => 'flag',
-			'default' => 'y'
+			'default' => 'n'
 			
 		),
 		'print_pdf_mpdf_orientation' => array(
@@ -211,6 +211,31 @@ function prefs_print_list()
 			'filter' => 'digits',
 			'shorthint' => tra('Warning: Footer can overlap text if bottom margin is not set properly')
 		),
+		'print_pdf_mpdf_hyperlinks' => array(
+			'name' => tra('Hyperlink behaviour in PDF'),
+			'description' => tra(''),
+			'tags' => array('advanced'),
+			'type' => 'list',
+			'default'=>'',
+			'options' => array(
+				array('text'=>'Default','value'=>''),
+				array('text'=>'Off (Links will be removed)','value'=>'off'),
+				array('text'=>'Add as footnote (Links will be listed at end of document)','value'=>'footnote'),
+			)	
+		),
+		'print_pdf_mpdf_columns' => array(
+			'name' => tra('Number of columns'),
+			'description' => tra(''),
+			'tags' => array('advanced'),
+			'type' => 'list',
+			'default'=>'',
+			'options' => array(
+				array('text'=>'Default - 1 Column','value'=>''),
+				array('text'=>'2 Columns','value'=>'2'),
+				array('text'=>'3 Columns','3'),
+				array('text'=>'4 Columns','4'),							
+			)	
+		),					
 		'print_pdf_mpdf_password' => array(
 			'name' => tra('PDF password for viewing'),
 			'description' => tra('Password protect generated PDF'),
@@ -228,6 +253,27 @@ function prefs_print_list()
 		'print_pdf_mpdf_watermark_image' => array(
 			'name' => tra('Watermark Image URL'),
 			'description' => tra('Watermark image will appear under text,enter complete image url'),
+			'tags' => array('advanced'),
+			'type' => 'text',
+			'default' => '',
+		),
+		'print_pdf_mpdf_background' => array(
+			'name' => tra('PDF page background color'),
+			'description' => tra('Enter color code'),
+			'tags' => array('advanced'),
+			'type' => 'text',
+			'default' => '',
+		),
+		'print_pdf_mpdf_background_image' => array(
+			'name' => tra('PDF page background image'),
+			'description' => tra('Enter full URL'),
+			'tags' => array('advanced'),
+			'type' => 'text',
+			'default' => '',
+		),
+		'print_pdf_mpdf_watermark' => array(
+			'name' => tra('Watermark text'),
+			'description' => tra('PDF watermark text, if any'),
 			'tags' => array('advanced'),
 			'type' => 'text',
 			'default' => '',

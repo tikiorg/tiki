@@ -341,8 +341,23 @@ class PdfGenerator
 		  $themecss=str_replace(array("media print","color : fff"),array("media p","color : #fff"),$themecss);
 		  $basecss=str_replace(array("media print","color : fff"),array("media p","color : #fff"),$basecss);
 		}
-		$cssStyles=str_replace(array(".tiki","opacity: 0;"),array("","fill: #fff;opacity:0.3;stroke:black"),'<style>'.$basecss.$themecss.$printcss.$this->bootstrapReplace().'</style>'); //adding css styles with first page content	
+		
 		$pdfPages=$this->getPDFPages($html,$pdfSettings);
+		$ind=1;
+		foreach($pdfPages as $pdfPage) {
+			$bgColor='';$backgroundImage='';
+			$pdfPage['orientation']=="L"?$orientation='landscape':$orientation='portrait';
+			if($pdfPage['background_image']!='') {
+				$backgroundImage='background-image:url(\''.$pdfPage['background_image'].'\');background-repeat:no-repeat;background-position:center center; ';
+			}
+			if($pdfPage['background']!='') {
+				$bgColor='background-color:'.$pdfPage['background'].';  ';
+			}
+			$pageCSS.='@page page'.$ind.'{size:'.$orientation.';'.$backgroundImage.$bgColor.'} ';
+			$ind++;
+		}
+		
+		$cssStyles=str_replace(array(".tiki","opacity: 0;"),array("","fill: #fff;opacity:0.3;stroke:black"),'<style>'.$basecss.$themecss.$printcss.$pageCSS.$this->bootstrapReplace().'</style>'); //adding css styles with first page content
 		//cover page checking
 		if($pdfSettings['coverpage_text_settings']!='' || ($pdfSettings['coverpage_image_settings']!='' && $pdfSettings['coverpage_image_settings']!='off')) {
 			$coverPage=explode("|",$pdfSettings['coverpage_text_settings']);
@@ -361,6 +376,7 @@ class PdfGenerator
 <div style="text-align:'.$coverPage[2].';margin-top:30%;color:'.$coverPage[4].'"><div style=margin-bottom:10px;font-size:50px>'.$coverPage[0].'</div>'.$coverPage[1].'</div></div></body>');
 
 		}	
+		$pageNo=1;
 		//end of coverpage generation			
 		foreach($pdfPages as $pdfPage){
 		 if(strip_tags(trim($pdfPage['pageContent']))!=''){	
@@ -377,8 +393,9 @@ class PdfGenerator
 			elseif($pdfPage['footer']){
 				$footer=$pdfPage['footer'];	
 			}
-	    	$mpdf->SetHeader(str_ireplace("{PAGETITLE}",$params['page'],$header));
-			$mpdf->AddPage($pdfPage['orientation'],'','','','',$pdfPage['margin_left'],$pdfPage['margin_right'] , $pdfPage['margin_top'] , $pdfPage['margin_bottom'] , $pdfPage['margin_header'] , $pdfPage['margin_footer'],'','','','','','','','','',$pdfPage['pagesize']);
+			
+			$mpdf->SetHeader(str_ireplace("{PAGETITLE}",$params['page'],$header));
+			$mpdf->AddPage($pdfPage['orientation'],'','','','',$pdfPage['margin_left'],$pdfPage['margin_right'] , $pdfPage['margin_top'] , $pdfPage['margin_bottom'] , $pdfPage['margin_header'] , $pdfPage['margin_footer'],'','','','','','','','','page'.$pageNo,$pdfPage['pagesize']);
 			$mpdf->SetFooter(str_ireplace("{PAGETITLE}",$params['page'],$footer)); //footer needs to be reset after page content is added
 		
 			//checking watermark on page
@@ -390,11 +407,22 @@ class PdfGenerator
 			if($pdfPage['hyperlinks']!="") {
 				$pdfPage['pageContent']=$this->processHyperlinks($pdfPage['pageContent'],$pdfPage['hyperlinks'],$pageCounter++);
 			}
-			$mpdf->WriteHTML($cssStyles.$pdfPage['pageContent']);
+			if($pdfPage['columns']>1) {
+				$mpdf->SetColumns($pdfPage['columns'],'justify');
+			}
+			else {
+				$mpdf->SetColumns(1,'justify');
+			}
+			$backgroundImage='';$bgColor="";
+			if($pdfPage['background']!='') {
+				$bgColor="background-color:".$pdfPage['background'];
+			}	
+			
+			$mpdf->WriteHTML('<html><body style="'.$bgColor.';margin:0px;padding:0px;">'.$cssStyles.$pdfPage['pageContent'].'</body></html>');
+			$pageNo++;
 			$cssStyles=''; //set to blank after added with first page
 		 }
 		}
-		
 		$mpdf->setWatermarkText($pdfSettings['watermark']);
 		$mpdf->SetWatermarkImage($pdfSettings['watermark_image'], 0.15, '');
 		//resetting header,footer and watermark to blank 
@@ -448,7 +476,10 @@ class PdfGenerator
 		$pdfSettings['watermark_image']=$prefs['print_pdf_mpdf_watermark_image'];
 		$pdfSettings['coverpage_text_settings']=str_ireplace("{PAGETITLE}",$params['page'],$prefs['print_pdf_mpdf_coverpage_text_settings']);
 		$pdfSettings['coverpage_image_settings']=str_ireplace("{PAGETITLE}",$params['page'],$prefs['print_pdf_mpdf_coverpage_image_settings']);
-		$pdfSettings['hyperlinks']=$prefs['print_pdf_mpdf_hyperlinks'];		
+		$pdfSettings['hyperlinks']=$prefs['print_pdf_mpdf_hyperlinks'];
+		$pdfSettings['columns']=$prefs['print_pdf_mpdf_columns'];				
+		$pdfSettings['background']=$prefs['print_pdf_mpdf_background'];				
+		$pdfSettings['background_image']=$prefs['print_pdf_mpdf_background_image'];				
 
 		if($pdfSettings['toc']=='y'){
 			//toc levels
@@ -480,7 +511,7 @@ class PdfGenerator
 			if ($page->hasAttributes()) {
 				foreach ($page->attributes as $attr) {
 					$pages[$attr->nodeName]=$attr->nodeValue;
-					$pageTag.= " ".$attr->nodeName."=\"".$attr->nodeValue."\"";
+						$pageTag.= " ".$attr->nodeName."=\"".htmlentities($attr->nodeValue)."\"";
 				}
 			}
 			$pageTag.=">";
@@ -490,11 +521,11 @@ class PdfGenerator
 				$pages[$setting]=$value;
 			}
 		}
+		
 		if($pages['pagesize']=="Tabloid") {
 			$pages['pagesize']=array(279,432); }
 		elseif($pages['orientation']=='L') {
 			$pages['pagesize']=$pages['pagesize'].'-'.$pages['orientation']; }
-		
 			//dividing content in segments
 			$ppages=explode($pageTag,$mainContent,2);
 			$lpages=explode("</pdfpage>",$ppages[1],2);
@@ -504,11 +535,13 @@ class PdfGenerator
 				$prePage=$pdfSettings;
 				$prePage['pageContent']=$ppages[0];
 				$pageData[]=$prePage;
+				
 			}
 			$pages['pageContent']= $doc->saveXML($page);
 			$pageData[]=$pages;
 			if(trim(strip_tags($lpages[1]))!="") {
 				$mainContent=$lpages[1];
+				
 			}	
 		}
 		//no pages found
@@ -521,7 +554,7 @@ class PdfGenerator
 			$lastPage=$pdfSettings;
 			$lastPage['pageContent']=$lpages[1];
 			$pageData[]=$lastPage;
-		}  
+		}
 		return $pageData;
 	}
 	
