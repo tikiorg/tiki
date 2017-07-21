@@ -241,7 +241,6 @@ function prefs_unified_list()
 			'name' => tr('Tokenize CamelCase words'),
 			'description' => tr('Consider the components of camel-case words as separate tokens, allowing them to be searched individually.'),
 			'warning' => tr('Conflicts with Tokenize Version Numbers.'),
-			'hint' => tr('Elasticsearch only'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -314,6 +313,12 @@ function prefs_unified_list()
 			),
 			'tags' => array('experimental'),
 			'warning' => tra('This is an experimental feature - some plugins may not appear.'),
+		),
+		'unified_elastic_possessive_stemmer' => array(
+			'name' => tr('Possesive Stemmer'),
+			'description' => tr("The possessive stemmer removes 's from any words before indexing"),
+			'type' => 'flag',
+			'default' => 'y',
 		),
 	);
 }
