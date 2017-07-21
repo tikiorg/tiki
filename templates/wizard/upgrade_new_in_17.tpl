@@ -130,6 +130,15 @@
 				{tr}One system cron job can trigger all required actions at their specific scheduled times{/tr}.
 				<a href="https://doc.tiki.org/Scheduler">{tr}More Information{/tr}...</a><br/>
 			</div>
+			<div class="col-sm-2">
+				<b>{tr}Search{/tr}</b>:
+			</div>
+			<div class="description col-sm-offset-1">
+				{tr}Elastic search only{/tr}
+			</div>
+			<div class="col-sm-offset-1 col-sm-11">
+				{preference name="unified_elastic_possessive_stemmer"}
+			</div>
 		</fieldset>
 		<i>{tr}See the full list of changes{/tr}.</i>
 		<a href="https://doc.tiki.org/Tiki17" target="tikihelp" class="tikihelp" title="{tr}Tiki17:{/tr}
