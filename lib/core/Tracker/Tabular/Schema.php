@@ -91,6 +91,9 @@ class Schema
 			} catch (Exception\FieldNotFound $e) {
 				\Feedback::error($e->getMessage(), 'session'); // TODO make error message appear when exporting
 				continue;
+			} catch (Exception\ModeNotSupported $e) {
+				\Feedback::error($e->getMessage(), 'session');
+				continue;
 			}
 			$col->setExportOnly(! empty($column['isExportOnly']));
 
