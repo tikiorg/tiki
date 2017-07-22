@@ -297,7 +297,7 @@ class FileMetadata
 		} else {
 			$smarty->assign('type', 'nodata');
 		}
-		$smarty->display('metadata/meta_view_dialog.tpl');
+		return $smarty->fetch('metadata/meta_view_dialog.tpl');
 	}
 
 	function pageTabs($metadata)

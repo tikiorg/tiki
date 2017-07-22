@@ -338,9 +338,11 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 
 	protected function attemptParse($text)
 	{
+		global $prefs;
+
 		$parseOptions = array();
 		if ($this->getOption('wysiwyg') === 'y') {
-			$parseOptions['is_html'] = true;
+			$parseOptions['is_html'] = ($prefs['wysiwyg_htmltowiki'] !== 'y');
 		}
 		return TikiLib::lib('parser')->parse_data($text, $parseOptions);
 	}

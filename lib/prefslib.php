@@ -892,8 +892,11 @@ class PreferencesLib
 	function setFilters($tags)
 	{
 		global $user;
-		$tikilib = TikiLib::lib('tiki');
-		$tikilib->set_user_preference($user, 'pref_filters', implode(',', $tags));
+
+		if (! in_array($tags, 'basic')) {
+			$tags[] = 'basic';
+		}
+		TikiLib::lib('tiki')->set_user_preference($user, 'pref_filters', implode(',', $tags));
 	}
 
 	private function getEnabledFilters()

@@ -5,8 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_h5p_list()
+function prefs_h5p_list($partial = false)
 {
+	$serviceLib = TikiLib::lib('service');
 	return [
 		'h5p_enabled' => [
 			'name' => tra('H5P support'),
@@ -19,6 +20,10 @@ function prefs_h5p_list()
 			'default' => 'n',
 			'filter' => 'alpha',
 			'hint' => tr('Enable H5P content'),
+			'view' => $partial ? '' : $serviceLib->getUrl([
+				'controller' => 'h5p',
+				'action' => 'list_libraries',
+			]),
 		],
 		'h5p_whitelist' => [
 			'name' => tr('Whitelist'),
@@ -39,6 +44,10 @@ function prefs_h5p_list()
 			'type' => 'flag',
 			'filter' => 'alpha',
 			'default' => 'n',
+			'view' => $partial ? '' : $serviceLib->getUrl([
+				'controller' => 'h5p',
+				'action' => 'list_results',
+			]),
 		],
 		'h5p_dev_mode' => [
 			'name' => tra('H5P Developer Mode'),

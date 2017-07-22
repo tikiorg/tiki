@@ -4522,6 +4522,33 @@ class UsersLib extends TikiLib
 				'scope' => 'object',
 			),
 			array(
+				'name' => 'tiki_p_h5p_view',
+				'description' => tra('Can view H5P content'),
+				'level' => 'registered',
+				'type' => 'h5p',
+				'admin' => false,
+				'prefs' => array('h5p_enabled'),
+				'scope' => 'global',    // adding as global to start with, probably will need to be object type eventually?
+			),
+			array(
+				'name' => 'tiki_p_h5p_edit',
+				'description' => tra('Can edit H5P content'),
+				'level' => 'editors',
+				'type' => 'h5p',
+				'admin' => false,
+				'prefs' => array('h5p_enabled'),
+				'scope' => 'global',
+			),
+			array(
+				'name' => 'tiki_p_h5p_admin',
+				'description' => tra('Can administer H5P content'),
+				'level' => 'admins',
+				'type' => 'h5p',
+				'admin' => false,
+				'prefs' => array('h5p_enabled'),
+				'scope' => 'global',
+			),
+			array(
 				'name' => 'tiki_p_edit_html_pages',
 				'description' => tra('Can edit HTML pages'),
 				'level' => 'editors',
