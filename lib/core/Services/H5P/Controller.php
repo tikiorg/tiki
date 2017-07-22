@@ -273,7 +273,7 @@ class Services_H5P_Controller
 		header('Content-type: application/json');
 
 		if ($name) {
-			print $editor->getLibraryData($name, $major_version, $minor_version, substr($prefs['language'], 0, 2), '', \H5P_H5PTiki::$h5p_path);
+			print $editor->getLibraryData($name, $major_version, $minor_version, substr($prefs['language'], 0, 2), '');
 
 			// Log library load
 			new H5P_Event('library', NULL,
@@ -284,6 +284,48 @@ class Services_H5P_Controller
 		}
 
 		exit;
+	}
+
+	function action_list_libraries($input)
+	{
+		global $prefs;
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$_POST['libraries'] = array();
+			foreach ($input->libraries as $library) {
+				$_POST['libraries'][] = $library;
+			}
+		}
+
+		$editor = \H5P_EditorTikiStorage::get_h5peditor_instance();
+
+		$name = $input->machineName->text();
+		$majorVersion = $input->majorVersion->int();
+		$minorVersion = $input->minorVersion->int();
+
+		if ($name) {
+			$results = $editor->getLibraryData($name, $majorVersion, $minorVersion, substr($prefs['language'], 0, 2), '');
+			$results = json_decode($results, true);
+
+			$results['name'] = $name;
+			$results['majorVersion'] = $majorVersion;
+			$results['minorVersion'] = $minorVersion;
+
+			$results['libraries'] = $editor->findEditorLibraries($name, $majorVersion, $minorVersion);
+
+			// Log library load
+			new H5P_Event('library', NULL,
+				NULL, NULL,
+				$name, $majorVersion . '.' . $minorVersion);
+		} else {
+			$results = $editor->getLibraries();
+			$results = json_decode($results, true);
+		}
+
+		return [
+			'title' => tr('H5P Content Libraries'),
+			'results' => $results,
+		];
 	}
 
 	function action_files($input)
@@ -425,7 +467,7 @@ LEFT JOIN `users_users` AS u ON u.`userId` = r.`user_id`');
 
 		// Verify token to prevent unauthorized use
 		if (!isset($prefs['h5p_cron_token']) || $prefs['h5p_cron_token'] !== $input->token->word()) {
-			return; // Invalid token
+			return 'Invalid token'; // Invalid token
 		}
 
 		// Register run time
@@ -437,5 +479,7 @@ LEFT JOIN `users_users` AS u ON u.`userId` = r.`user_id`');
 		// Check for metadata updates
 		$core = \H5P_H5PTiki::get_h5p_instance('core');
 		$core->fetchLibrariesMetadata();
+
+		return '';
 	}
 }
