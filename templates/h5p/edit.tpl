@@ -1,7 +1,7 @@
 {extends 'layout_view.tpl'}
 
 {block name="title"}
-	{title}{$title|escape}{/title}
+	{title}{$h5p_title|escape}{/title}
 {/block}
 
 {block name="content"}
@@ -16,7 +16,7 @@
 			<div class="form-item form-type-textfield form-item-title">
 				<label for="edit-title">Title
 					<span class="form-required" title="This field is required.">*</span></label>
-				<input type="text" id="edit-title" name="title" value="{$title|escape}" size="60" maxlength="128" class="form-control required">
+				<input type="text" id="edit-title" name="title" value="{$h5p_title|escape}" size="60" maxlength="128" class="form-control required">
 			</div>
 			<br>
 			<div>

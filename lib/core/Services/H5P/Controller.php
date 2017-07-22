@@ -100,7 +100,7 @@ class Services_H5P_Controller
 		}
 		return [
 			'html' => $html,
-			'title' => TikiLib::lib('filegal')->get_file_label($fileId),
+			'h5p_title' => TikiLib::lib('filegal')->get_file_label($fileId),
 		];
 	}
 
@@ -244,7 +244,7 @@ class Services_H5P_Controller
 		return [
 			'loading' => tr('Waiting for javascript...'),
 			'fileId' => $fileId,
-			'title' => empty($content['title']) ? '' : $content['title'],
+			'h5p_title' => empty($content['title']) ? '' : $content['title'],
 			'library' => $library,
 			'parameters' => $parameters,
 			'page' => $page,
