@@ -2,6 +2,9 @@
 {if $actions}
 <form method="post" action="#{$id}" class="form-inline" id="listexecute-{$iListExecute}">
 {/if}
+{if not empty($column.field)}
+	{$column = [$column]}{* if there is only one column then it will not be in an array *}
+{/if}
 <div {if $id}id="{$id}-div" {/if}class="table-responsive ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}>
 	<table {if $id}id="{$id}" {/if}class="table normal table-hover table-striped" data-count="{$count}">
 		<thead>
