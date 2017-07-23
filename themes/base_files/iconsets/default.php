@@ -401,10 +401,10 @@ function iconset_default()
 				'id' => 'table',
 			],
 			'listgui_icon' => [
-				'id' => 'profile',
+				'id' => 'user',
 			],
 			'listgui_body' => [
-				'id' => 'text',
+				'id' => 'align-justify',
 			],
 			'listgui_carousel' => [
 				'id' => 'slideshare',

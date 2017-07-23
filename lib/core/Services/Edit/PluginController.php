@@ -342,7 +342,7 @@ class Services_Edit_PluginController
 		$done = [];    // to keep a track on whcih plugins have already been included
 		$plugins = Services_Edit_ListPluginHelper::getDefinition();
 
-		$this->parsePlugins($body, $current, $done, null, array_keys($plugins));
+		$this->parsePlugins($body, $current, $done, null, $this->getAllowedPlugins($plugins));
 
 
 		$fields = TikiLib::lib('unifiedsearch')->getAvailableFields();
@@ -477,6 +477,33 @@ class Services_Edit_PluginController
 		}
 
 		$plugins = array_filter($plugins);
+	}
+
+	/**
+	 * find all the plugins (commands) within plugin list
+	 *
+	 * @param $plugins array    from \Services_Edit_ListPluginHelper::getDefinition
+	 * @return array            flat array of names of plugins
+	 */
+	private function getAllowedPlugins($plugins): array
+	{
+		$pluginNames = array_keys($plugins);
+
+		foreach($plugins as $plugin) {
+			if (is_array($plugin['params'])) {
+				foreach ($plugin['params'] as $param) {
+					if (is_array($param['options'])) {
+						foreach ($param['options'] as $option) {
+							if (is_array($option['plugins'])) {
+								$pluginNames = array_merge($pluginNames, $this->getAllowedPlugins($option['plugins']));
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return $pluginNames;
 	}
 }
 
