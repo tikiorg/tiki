@@ -485,7 +485,7 @@ class Services_Edit_PluginController
 	 * @param $plugins array    from \Services_Edit_ListPluginHelper::getDefinition
 	 * @return array            flat array of names of plugins
 	 */
-	private function getAllowedPlugins($plugins): array
+	private function getAllowedPlugins($plugins)
 	{
 		$pluginNames = array_keys($plugins);
 
