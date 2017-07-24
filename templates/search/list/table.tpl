@@ -1,4 +1,5 @@
 {* $Id$ *}
+{if empty($iListExecute)}{assign var=iListExecute value=$id}{/if}
 {if $actions}
 <form method="post" action="#{$id}" class="form-inline" id="listexecute-{$iListExecute}">
 {/if}
@@ -57,7 +58,7 @@
 			<tr>
 				{if $actions}
 					<td>
-						<input type="checkbox" name="objects[]" value="{$row.object_type|escape}:{$row.object_id|escape}">
+						<input type="checkbox" name="objects[]" class="checkbox_objects" value="{$row.object_type|escape}:{$row.object_id|escape}">
 						{if $row.report_status eq 'success'}
 							{icon name='ok'}
 						{elseif $row.report_status eq 'error'}
@@ -81,28 +82,50 @@
 	</table>
 </div>
 {if $actions}
-	<select name="list_action" class="form-control">
+	<select name="list_action" class="form-control" id="check_submit_select_{$id}">
 		<option></option>
 		{foreach from=$actions item=action}
 			<option value="{$action->getName()|escape}" data-input="{$action->requiresInput()}">{$action->getName()|escape}</option>
 		{/foreach}
 	</select>
 	<input type="text" name="list_input" value="" class="form-control" style="display:none">
-	<input type="submit" class="btn btn-default btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+	<input type="submit" class="btn btn-default btn-sm" title="{tr}Apply Changes{/tr}" id="submit_form_{$id}" disabled value="{tr}Apply{/tr}">
 </form>
 {jq}
-$('.listexecute-select-all').removeClass('listexecute-select-all')
-	.on('click', function (e) {
-		$(this).closest('form').find('tbody :checkbox:not(:disabled)').each(function () {
-			$(this).prop("checked", ! $(this).prop("checked"));
+(function(){
+	var countChecked = function() {
+		if ($('#{{$id}}-div .checkbox_objects').is(':checked')) {
+			if($('select#check_submit_select_{{$id}}').val()){
+				$('input#submit_form_{{$id}}').prop('disabled', false);
+			}
+		} else {
+			$('input#submit_form_{{$id}}').prop('disabled', true);
+		}
+	};
+	$('#listexecute-{{$iListExecute}} .listexecute-select-all').removeClass('listexecute-select-all')
+		.on('click', function (e) {
+			$(this).closest('form').find('tbody :checkbox:not(:disabled)').each(function () {
+				$(this).prop("checked", ! $(this).prop("checked"));
+			}).promise().done(function(){ countChecked(); });
 		});
-	});
-$('#listexecute-{{$iListExecute}}').find('select[name=list_action]').on('change', function() {
-	if( $(this).find('option:selected').data('input') ) {
-		$(this).siblings('input[name=list_input]').show();
-	} else {
-		$(this).siblings('input[name=list_input]').hide();
-	}
-});
+	$('#listexecute-{{$iListExecute}}').find('select[name=list_action]')
+		.on('change', function() {
+			var valueSel = $('select#check_submit_select_{{$id}}').val();
+			if(valueSel == ''){
+				$('input#submit_form_{{$id}}').prop('disabled', true);
+			} else {
+				if($('#{{$id}}-div .checkbox_objects').is(':checked')){
+					$('input#submit_form_{{$id}}').prop('disabled', false);
+				}
+			}
+			if( $(this).find('option:selected').data('input') ) {
+				$(this).siblings('input[name=list_input]').show();
+			} else {
+				$(this).siblings('input[name=list_input]').hide();
+			}
+		});
+	$( "#{{$id}}-div .checkbox_objects" ).on( "click", countChecked );
+	countChecked();
+})();
 {/jq}
 {/if}
