@@ -209,7 +209,7 @@ class StringBuffer extends Object{
 	* @return StringBuffer			the new lower case string
 	**/
 	function toLowerCase($source=""){
-		return new StringBuffer(preg_replace('/([�-�]|[A-Z])/e','chr(ord(\'\\1\')+32)', $this->str));
+		return new StringBuffer(preg_replace('/([À-Ý]|[A-Z])/e','chr(ord(\'\\1\')+32)', $this->str));
 	}
 	
 	/**
@@ -218,7 +218,7 @@ class StringBuffer extends Object{
 	* @return string 				the new upper case string
 	**/
 	function toUpperCase($source=""){
-		return new StringBuffer(preg_replace('/([�-�]|[a-z])/e','chr(ord(\'\\1\')-32)', $this->str));
+		return new StringBuffer(preg_replace('/([à-ý]|[a-z])/e','chr(ord(\'\\1\')-32)', $this->str));
 	}
 	
 	/**
@@ -274,7 +274,7 @@ class StringBuffer extends Object{
 	* @return the processed string without accent
 	**/
 	function removeAccents(){
-		return new StringBuffer(strtr('AAAAAAaaaaaaOOOOO0ooooooEEEEeeeeCcIIIIiiiiUUUUuuuuyNn','�����������������������������������������������������', $this->str));
+		return new StringBuffer(strtr('AAAAAAaaaaaaOOOOO0ooooooEEEEeeeeCcIIIIiiiiUUUUuuuuyNn','ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ', $this->str));
 	}
 	
 	/**
