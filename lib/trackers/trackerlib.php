@@ -2652,8 +2652,13 @@ class TrackerLib extends TikiLib
 
 		// ---- save image list before sql query ---------------------------------
 		$fieldList = $this->list_tracker_fields($trackerId, 0, -1, 'name_asc', '');
+
+		$statusTypes = $this->status_types();
+		$statusString = isset($statusTypes[$status]['label'] ) ? $statusTypes[$status]['label'] : '';
+
 		$imgList = array();
 		foreach ($fieldList['data'] as $f) {
+			$data_field[] = array('name'=>tr($f['name']),'value'=>$this->get_item_value($trackerId, $itemId, $f['fieldId']));
 			if ( $f['type'] == 'i' ) {
 				$imgList[] = $this->get_item_value($trackerId, $itemId, $f['fieldId']);
 			}
@@ -2669,6 +2674,9 @@ class TrackerLib extends TikiLib
 				$smarty->assign('mail_user', $user);
 				$smarty->assign('mail_action', 'deleted');
 				$smarty->assign('mail_itemId', $itemId);
+				$smarty->assign('mail_item_desc', $itemId);
+				$smarty->assign('mail_fields', $data_field);
+				$smarty->assign('mail_field_status', $statusString);
 				$smarty->assign('mail_trackerId', $trackerId);
 				$smarty->assign('mail_trackerName', $trackerName);
 				$smarty->assign('mail_data', '');
