@@ -21,7 +21,10 @@
 			<tr>
 				{if $actions}
 					{$fieldcount = 1}
-					<th><input type="checkbox" name="objects[]" value="ALL" class="listexecute-select-all"></th>
+					<th>
+						<input type="checkbox" name="selectall" value="" class="listexecute-select-all">
+						<input type="hidden" name="objects[]" value="" class="listexecute-all">
+					</th>
 				{/if}
 				{foreach from=$column item=col}
 					{$fieldcount = $fieldcount + 1}
@@ -101,6 +104,8 @@
 		} else {
 			$('input#submit_form_{{$id}}').prop('disabled', true);
 		}
+		var header_checked = $('#{{$id}}-div .checkbox_objects').not(':checked').length == 0;
+		$('#listexecute-{{$iListExecute}} .listexecute-all').val(header_checked ? 'ALL' : '');
 	};
 	$('#listexecute-{{$iListExecute}} .listexecute-select-all').removeClass('listexecute-select-all')
 		.on('click', function (e) {
