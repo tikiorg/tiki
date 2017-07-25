@@ -660,6 +660,12 @@ class HeaderLib
 						if (file_exists($minifyFile)) {
 							$temp = file_get_contents($minifyFile);
 						} else {
+							// if the file does not exist MatthiasMullie\Minify takes the input to be the file content
+							// which causes js errors and can break the whole site
+							if (! file_exists($f)) {
+								Feedback::error(tr('JavaScript file "%0" cannot be found so will not be minified.', $f), 'session');
+								throw new Exception('File not found');
+							}
 							$minifier = new MatthiasMullie\Minify\JS($f);
 							$temp = $minifier->minify($minifyFile);
 							chmod($minifyFile, 0644);
