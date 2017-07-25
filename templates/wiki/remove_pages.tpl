@@ -27,10 +27,9 @@
 			<div class="checkbox" id="div_checkbox_redirect" style="display:{$div_checkbox_redirect_display};">
 					<label>
 						<input type='checkbox' id='create_redirect' name='create_redirect' value='y' onclick="$('#div_redirect').toggle();return true;" > {tr}Create redirect{/tr}
-						<a tabindex="0" target="_blank" data-toggle="popover" data-trigger="hover" title="{tr}Create a 301 Redirect (\"moved permanently\") to specified page.{/tr} {tr}An SEO-friendly, automatic redirect from the page being deleted to the designated new page (ex.: for search engines or users that may have bookmarked the page being deleted){/tr}">
+						<a tabindex="0" target="_blank" data-toggle="popover" data-trigger="hover" title="{tr}Create a 301 Redirect (\"moved permanently\") to specified page. An SEO-friendly, automatic redirect from the page being deleted to the designated new page (ex.: for search engines or users that may have bookmarked the page being deleted){/tr}">
 							{icon name='information'}
 						</a>
-						<!-- <i class="fa fa-info-circle" data-toggle="tooltip" title="{tr}Create a 301 Redirect (\"moved permanently\") to specified page{/tr}." data-content="{tr}Create an SEO-friendly, automatic redirect from the page being deleted to the designated new page (ex.: for search engines or users that may have bookmarked the page being deleted){/tr}"></i> -->
 					</label>
 			</div>
 			<div id="div_redirect" class="form-group" style="display:none;">
