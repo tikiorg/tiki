@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 /*
-This file is part of J4PHP - Ensembles de propri�t�s et m�thodes permettant le developpment rapide d'application web modulaire
+This file is part of J4PHP - Ensembles de propriétés et méthodes permettant le developpment rapide d'application web modulaire
 Copyright (c) 2002-2004 @PICNet
 
 This program is free software; you can redistribute it and/or
@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 *
 * @update $Date: 2005-05-18 11:01:38 $
 * @version 1.0
-* @author diog�ne MOULRON <logiciel@apicnet.net>
+* @author diogène MOULRON <logiciel@apicnet.net>
 * @package core
 */ 
 class APIClassRegistry extends ErrorManager{
@@ -87,7 +87,7 @@ class APIClassRegistry extends ErrorManager{
 		if (isset($class_class)){
 			$class_package.= '.'.$class_class;
 		}
-		$class_package = preg_replace('/([�-�]|[A-Z])/e','chr(ord(\'\\1\')+32)', $class_package);
+		$class_package = preg_replace('/([À-Ý]|[A-Z])/e','chr(ord(\'\\1\')+32)', $class_package);
 		// determine is a class or is a package
 		if (APIClassRegistry::isClass($class_package)){
 			$extractedClassName = APIClassRegistry::extractClassName($class_package);
@@ -115,11 +115,11 @@ class APIClassRegistry extends ErrorManager{
 		if (!isset($registry)) {
 			$registry =& APIClassRegistry::getInstance();
 		}
-		$class_package      = preg_replace('/([�-�]|[A-Z])/e','chr(ord(\'\\1\')+32)', $class_package);
+		$class_package      = preg_replace('/([À-Ý]|[A-Z])/e','chr(ord(\'\\1\')+32)', $class_package);
 		$extractedClassName = strtolower(APIClassRegistry::extractClassName($class_package));
 		if (isset($registry->instances[$extractedClassName])){
 		//	echo("OK ");
-		//	echo(" chargement effectu� avec succ�s de la class ".$registry->instances[$extractedClassName]->className()."<br>");
+		//	echo(" chargement effectué avec succès de la class ".$registry->instances[$extractedClassName]->className()."<br>");
 			return $registry->instances[$extractedClassName]; 
 		} else {
 		//	echo(" ....");
@@ -194,10 +194,10 @@ class APIClassRegistry extends ErrorManager{
 			if (!isset($class_class)){
 			$class_class = APIClassRegistry::extractClassName($class_package);
 			}
-			$class_class = preg_replace('/([�-�]|[A-Z])/e','chr(ord(\'\\1\')+32)', $class_class);
+			$class_class = preg_replace('/([À-Ý]|[A-Z])/e','chr(ord(\'\\1\')+32)', $class_class);
 			return isset($registry->classes[$class_class]);
 		}else{
-			$class_package = preg_replace('/([�-�]|[A-Z])/e','chr(ord(\'\\1\')+32)', $class_package);
+			$class_package = preg_replace('/([À-Ý]|[A-Z])/e','chr(ord(\'\\1\')+32)', $class_package);
 			return isset($registry->packages[$class_package]);
 		}
 	}
