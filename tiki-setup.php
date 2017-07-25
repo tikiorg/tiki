@@ -391,6 +391,7 @@ if ($prefs['geo_openlayers_version'] === 'ol3') {
 	$headerlib->add_jsfile('lib/jquery_tiki/tiki-maps-ol3.js');
 } else {
 	$headerlib->add_jsfile('lib/jquery_tiki/tiki-maps.js');
+	$headerlib->add_cssfile('lib/openlayers/theme/default/style.css');
 }
 $headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/jquery-json/src/jquery.json.js');
 
