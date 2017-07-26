@@ -281,7 +281,6 @@ class ArtLib extends TikiLib
 			'body' => $body,
 			'publishDate' => (int) $publishDate,
 			'expireDate' => (int) $expireDate,
-			'created' => (int) $this->now,
 			'author' => $user,
 			'type' => $type,
 			'rating' => (float) $rating,
@@ -299,6 +298,7 @@ class ArtLib extends TikiLib
 				'subId' => (int) $subId,
 			));
 		} else {
+			$info['created'] = (int) $this->now;
 			$id = $article_table->insert($info);
 		}
 
