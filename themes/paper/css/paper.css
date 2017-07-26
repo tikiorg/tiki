@@ -8259,6 +8259,12 @@ h6 a.tiki_anchor:hover {
 div.drillshow {
   border: 1px solid #bbbbbb;
 }
+.tiki .chosen-container-single .chosen-single {
+  height: 37px;
+  padding: 6px 6px;
+  font-size: 13px;
+  line-height: 1.846;
+}
 .chosen-container-multi .chosen-choices {
   background-color: rgba(26, 26, 26, 0);
   color: #666666;
