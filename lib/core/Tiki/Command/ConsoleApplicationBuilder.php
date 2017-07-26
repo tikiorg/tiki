@@ -65,6 +65,7 @@ class ConsoleApplicationBuilder
 					new BackupDBCommand,
 					new BackupFilesCommand,
 					new ProfileBaselineCommand,
+					new LockInstallerCommand,
 				],
 			],
 			'checkIsInstalledAndDoNotRequireUpdate' => [
@@ -258,4 +259,3 @@ class ConsoleApplicationBuilder
 	}
 
 }
-
