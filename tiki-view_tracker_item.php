@@ -585,6 +585,11 @@ foreach ($xfields['data'] as $sid => $onefield) {
 $info["createdByReal"] = $tikilib->get_user_preference($info["createdBy"], 'realName', '');
 $info["lastModifByReal"] = $tikilib->get_user_preference($info["lastModifBy"], 'realName', '');
 
+if ($tracker_info['doNotShowEmptyField'] == 'y') {
+	$trackerlib = TikiLib::lib('trk');
+	$fields['data'] = $trackerlib->mark_fields_as_empty($fields['data']);
+}
+
 $smarty->assign('id_fields', $id_fields);
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
 $smarty->assign('tracker_info', $tracker_info);

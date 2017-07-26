@@ -708,6 +708,41 @@ class TrackerLib extends TikiLib
 		return $this->table('tiki_trackers')->fetchFullRow(array('trackerId' => (int) $trackerId));
 	}
 
+	/**
+	 * Marks fields as empty
+	 * @param array $fields
+	 * @return array
+	 */
+	public function mark_fields_as_empty($fields)
+	{
+		$lastHeader = -1;
+		$elemSinceLastHeader = 0;
+		foreach ($fields as $key => $trac) {
+			if (! (empty($trac['value']) && empty($trac['cat'])
+					&& empty($trac['links']) && $trac['type'] != 's'
+					&& $trac['type'] != 'STARS' && $trac['type'] != 'h'
+					&& $trac['type'] != 'l' && $trac['type'] != 'W')
+					&& ! ($trac['options_array'][0] == 'password' && $trac['type'] == 'p')) {
+				if ($trac['type'] == 'h') {
+					if ($lastHeader > 0 && $elemSinceLastHeader == 0) {
+						$fields[$lastHeader]['field_is_empty'] = true;
+					}
+					$lastHeader = $key;
+					$elemSinceLastHeader = 0;
+				} else {
+					$elemSinceLastHeader++;
+				}
+				// this has a value
+				continue;
+			}
+			$fields[$key]['field_is_empty'] = true;
+		}
+		if ($lastHeader > 0 && $elemSinceLastHeader == 0) {
+			$fields[$lastHeader]['field_is_empty'] = true;
+		}
+		return $fields;
+	}
+
 	// includePermissions: Include the permissions of each tracker in its element's "permissions" subelement
 	public function list_trackers($offset=0, $maxRecords=-1, $sort_mode='name_asc', $find='', $includePermissions = false)
 	{

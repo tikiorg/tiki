@@ -10,9 +10,7 @@
 	{assign var=stick value="n"}
 
 	{foreach from=$fields key=ix item=cur_field}
-		{if !($tracker_info.doNotShowEmptyField eq 'y' and (strlen($cur_field.value) == 0) and empty($cur_field.value) and empty($cur_field.cat) and empty($cur_field.links) and
-				$cur_field.type ne 's' and $cur_field.type ne 'STARS' and $cur_field.type ne 'h' and $cur_field.type ne 'l' and $cur_field.type ne 'W') and
-				!($cur_field.options_array[0] eq 'password' and $cur_field.type eq 'p')}
+		{if !($tracker_info.doNotShowEmptyField eq 'y' and isset($cur_field.field_is_empty) and $cur_field.field_is_empty)}
 
 			{if $cur_field.type eq 'h'}
 				</dl>
