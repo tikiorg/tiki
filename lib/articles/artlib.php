@@ -89,15 +89,10 @@ class ArtLib extends TikiLib
 
 	function add_article_hit($articleId)
 	{
-		global $prefs, $user;
-
 		if (StatsLib::is_stats_hit()) {
 			$query = "update `tiki_articles` set `nbreads`=`nbreads`+1 where `articleId`=?";
-
-			$result = $this->query($query, array($articleId));
+			$this->query($query, array($articleId));
 		}
-
-		return true;
 	}
 
 	function remove_article($articleId, $article_data ='')
