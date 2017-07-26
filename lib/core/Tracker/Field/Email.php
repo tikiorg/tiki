@@ -167,6 +167,9 @@ class Tracker_Field_Email extends Tracker_Field_Abstract implements Tracker_Fiel
 			->setRenderTransform(function ($value) {
 				return $value;
 			})
+			->setParseIntoTransform(function (& $info, $value) use ($permName) {
+				$info['fields'][$permName] = $value;
+			})
 			;
 		$schema->addNew($permName, 'mailto')
 			->setLabel($this->getConfiguration('name'))
@@ -174,6 +177,9 @@ class Tracker_Field_Email extends Tracker_Field_Abstract implements Tracker_Fiel
 			->setRenderTransform(function ($value) {
 				$escape = smarty_modifier_escape($value);
 				return "<a href=\"mailto:$escape\">$escape</a>";
+			})
+			->setParseIntoTransform(function (& $info, $value) use ($permName) {
+				$info['fields'][$permName] = strip_tags($value);
 			})
 			;
 
