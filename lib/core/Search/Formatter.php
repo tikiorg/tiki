@@ -68,7 +68,9 @@ class Search_Formatter
 				}
 			}
 
-			$row = array_filter($defaultValues, 'strlen');
+			$row = array_filter($defaultValues, function ($v) {
+				return ($v !== null);	// allow empty default values like "" or 0 (or even false) but not null
+			});
 			// Clear blank values so the defaults prevail
 			foreach ($pre as $k => $value) {
 				if ($value !== '' && $value !== null) {
