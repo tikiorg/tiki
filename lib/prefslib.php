@@ -507,7 +507,7 @@ class PreferencesLib
 						'label' => $profile,
 						'type' => 'profile',
 						'link' => 'tiki-admin.php?page=profiles&list=List&profile=' . urlencode($profile),
-						'met' =>
+						'met' => // FIXME: $info is false, the following surely won't behave as intended. This should indicate whether the profile was applied.
 						( $info['type'] == 'flag' && $info['value'] == 'y' )
 							|| ( $info['type'] != 'flag' && ! empty( $info['value'] ) )
 					);
