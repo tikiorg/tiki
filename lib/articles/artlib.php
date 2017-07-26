@@ -275,7 +275,6 @@ class ArtLib extends TikiLib
 			'body' => $body,
 			'publishDate' => (int) $publishDate,
 			'expireDate' => (int) $expireDate,
-			'created' => (int) $this->now,
 			'author' => $user,
 			'type' => $type,
 			'rating' => (float) $rating,
@@ -292,6 +291,10 @@ class ArtLib extends TikiLib
 				'subId' => (int) $subId,
 			));
 		} else {
+			$info['created'] = (int) $this->now;
+			$info['nbreads'] = 0;
+			$info['votes'] = 0;
+			$info['points'] = 0;
 			$id = $article_table->insert($info);
 		}
 
@@ -442,6 +445,9 @@ class ArtLib extends TikiLib
 
 		} else {
 			$info['created'] = (int) $this->now;
+			$info['nbreads'] = 0;
+			$info['votes'] = 0;
+			$info['points'] = 0;
 
 			$articleId = $article_table->insert($info);
 

@@ -7067,18 +7067,6 @@ a.list-group-item-danger.active:focus {
 .navbar-default .navbar-collapse.collapse.in .dropdown-menu li {
   background: transparent;
 }
-.margin-bottom-xs {
-  margin-bottom: 6px;
-}
-.margin-bottom-sm {
-  margin-bottom: 11px;
-}
-.margin-bottom-md {
-  margin-bottom: 21px;
-}
-.margin-bottom-lg {
-  margin-bottom: 42px;
-}
 .navbar-collapse.collapse.in {
   background: #2c3e50;
 }
@@ -7930,6 +7918,18 @@ input[type="checkbox"].preffilter-toggle-round:checked + label:before {
   color: #ffffff;
   background-color: #2c3e50;
   border-color: #2c3e50;
+}
+.margin-bottom-xs {
+  margin-bottom: 6px;
+}
+.margin-bottom-sm {
+  margin-bottom: 11px;
+}
+.margin-bottom-md {
+  margin-bottom: 21px;
+}
+.margin-bottom-lg {
+  margin-bottom: 42px;
 }
 /* black */
 /* white */

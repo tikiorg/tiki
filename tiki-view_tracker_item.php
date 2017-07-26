@@ -580,6 +580,11 @@ if ($authorfield) {
 $info["createdByReal"] = $tikilib->get_user_preference($info["createdBy"], 'realName', '');
 $info["lastModifByReal"] = $tikilib->get_user_preference($info["lastModifBy"], 'realName', '');
 
+if ($tracker_info['doNotShowEmptyField'] == 'y') {
+	$trackerlib = TikiLib::lib('trk');
+	$fields['data'] = $trackerlib->mark_fields_as_empty($fields['data']);
+}
+
 $smarty->assign('trackerId', $trackerId);
 $smarty->assign('tracker_info', $tracker_info);
 $smarty->assign_by_ref('info', $info);
