@@ -253,7 +253,6 @@ class ArtLib extends TikiLib
 			$imgdata = '';
 
 		$notificationlib = TikiLib::lib('notification');
-		$hash = md5($title . $heading . $body);
 		$query = 'select `name` from `tiki_topics` where `topicId` = ?';
 		$topicName = $this->getOne($query, array((int) $topicId));
 		$size = strlen($body);
@@ -384,7 +383,6 @@ class ArtLib extends TikiLib
 		if ($expireDate < $publishDate) {
 			$expireDate = $publishDate;
 		}
-		$hash = md5($title . $heading . $body);
 		if (empty($imgdata) || $useImage === 'n') {	// remove image data if not using it
 			$imgdata = '';
 		}
