@@ -13,14 +13,14 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class LockInstallerCommand extends Command
+class InstallerLockCommand extends Command
 {
 	protected function configure()
 	{
 		$this
 			->setName('installer:lock')
-			->setDescription('Lock the Tiki installer')
-			->setHelp('Lock the Tiki installer so that users can\'t destroy the database through the browser');
+			->setDescription('Lock the installer')
+			->setHelp('Lock the installer so that users can\'t destroy the database through the browser');
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
@@ -30,14 +30,16 @@ This lock file was created with:
 
 php console.php installer:lock
 
-Please don't remove or rename this file as it would unlock the installer. The
+Don't remove or rename this file as it would re-enable the installer. The
 installer allows a user to change or destroy the site’s database through the
 browser so it is very important to keep it locked.
 
 LOCK;
 		$file='db/lock';
-		file_put_contents($file, $out);
-
-		$output->writeln("Wrote $file");
+		if (!file_put_contents($file, $out)) {
+			$output->writeln("<error>Could not lock installer</error>");
+		} else {
+			$output->writeln("<info>Installer locked</info>");
+		}
 	}
 }
