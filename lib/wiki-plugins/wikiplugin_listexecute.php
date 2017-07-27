@@ -76,7 +76,9 @@ function wikiplugin_listexecute($data, $params)
 			// select only the items to apply the action to
 			foreach ($_POST['objects'] as $identifier) {
 				list($type, $id) = explode(':', $identifier);
-				$query->addObject($type, $id);
+				if ($type && $id) {
+					$query->addObject($type, $id);
+				}
 			}
 		}
 	}
