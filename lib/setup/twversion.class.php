@@ -78,7 +78,7 @@ class TWVersion
 				25=>'Peony',		// 14.x
 				26=>'Situla',		// 15.x
 				27=>'Tabby\'s',		// 16.x
-				28=>'TBA',			// 17.x
+				28=>'Zeta Boötis',	// 17.x
 		);
 	}
 
@@ -252,6 +252,7 @@ class TWVersion
 				'16.2',
 				'17.0alpha',
 				'17.0beta',
+				'17.0',
 			);
 	}
 

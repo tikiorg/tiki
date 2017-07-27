@@ -22,7 +22,7 @@
 		{/if}
 		{if (!isset($module_params.email) or $module_params.email neq 'n') and $tiki_p_tell_a_friend eq 'y'}
 			{if $share_icons}
-				{icon name='share' title="{tr}Send a link{/tr}" href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}" class='btn-link'}
+				{icon name='envelope' title="{tr}Send a link{/tr}" href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}" class='btn-link'}
 			{else}
 				<a href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">
 					{tr}Email this page{/tr}
