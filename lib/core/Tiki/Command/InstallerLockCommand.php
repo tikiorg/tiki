@@ -19,7 +19,7 @@ class InstallerLockCommand extends Command
 	{
 		$this
 			->setName('installer:lock')
-			->setDescription('Lock the installer')
+			->setDescription('Disable the installer')
 			->setHelp('Lock the installer so that users can\'t destroy the database through the browser');
 	}
 
@@ -41,5 +41,7 @@ LOCK;
 		} else {
 			$output->writeln("<info>Installer locked</info>");
 		}
+		$local_php = \TikiInit::getCredentialsFile();
+		$output->writeln($local_php);
 	}
 }
