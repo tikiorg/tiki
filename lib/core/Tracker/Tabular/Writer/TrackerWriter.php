@@ -25,6 +25,39 @@ class TrackerWriter
 
 		$lookup = $this->getItemIdLookup($schema);
 
+		if ($schema->isImportTransaction()) {
+			$errors = array();
+			foreach ($source->getEntries() as $line => $entry) {
+				$info = [
+					'itemId' => false,
+					'fields' => [],
+				];
+
+				foreach ($columns as $column) {
+					$entry->parseInto($info, $column);
+				}
+				
+				$info['itemId'] = $lookup($info);
+
+				if (!$schema->canImportUpdate() && $info['itemId']) {
+					continue;
+				}
+				
+				$lineErrors = $utilities->validateItem($definition, $info);
+				foreach ($lineErrors as $error) {
+					$errors[] = tr('Line %0:', $line+1).' '.$error;
+				}
+			}
+			if (count($errors) > 0) {
+				\Feedback::error(array(
+					'title' => tr('Import file contains errors. Please review and fix before importing.'),
+					'mes' => $errors
+				));
+				$tx->commit();
+				return false;
+			}
+		}
+
 		foreach ($source->getEntries() as $entry) {
 			$info = [
 				'itemId' => false,
@@ -37,6 +70,10 @@ class TrackerWriter
 			}
 			
 			$info['itemId'] = $lookup($info);
+
+			if (!$schema->canImportUpdate() && $info['itemId']) {
+				continue;
+			}
 			
 			if ($info['itemId']) {
 				$utilities->updateItem($definition, $info);
@@ -46,6 +83,7 @@ class TrackerWriter
 		}
 
 		$tx->commit();
+		return true;
 	}
 
 	private function getItemIdLookup($schema)

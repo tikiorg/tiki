@@ -80,7 +80,7 @@ class Services_Tracker_TabularController
 			// FIXME : Blocks save and back does not restore changes, ajax validation required
 			// $schema->validate();
 
-			$lib->update($info['tabularId'], $input->name->text(), $schema->getFormatDescriptor(), $schema->getFilterDescriptor());
+			$lib->update($info['tabularId'], $input->name->text(), $schema->getFormatDescriptor(), $schema->getFilterDescriptor(), $input->config->none());
 
 			return [
 				'FORWARD' => [
@@ -97,6 +97,7 @@ class Services_Tracker_TabularController
 			'tabularId' => $info['tabularId'],
 			'trackerId' => $info['trackerId'],
 			'name' => $info['name'],
+			'config' => $info['config'],
 			'schema' => $schema,
 			'filterCollection' => $schema->getFilterCollection(),
 		];
@@ -336,10 +337,9 @@ class Services_Tracker_TabularController
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && is_uploaded_file($_FILES['file']['tmp_name'])) {
 			$source = new \Tracker\Tabular\Source\CsvSource($schema, $_FILES['file']['tmp_name']);
 			$writer = new \Tracker\Tabular\Writer\TrackerWriter;
-			$writer->write($source);
+			$done = $writer->write($source);
 
 			unlink($_FILES['file']['tmp_name']);
-			$done = true;
 		}
 
 		return [
@@ -491,6 +491,7 @@ class Services_Tracker_TabularController
 		$schema = new \Tracker\Tabular\Schema($tracker);
 		$schema->loadFormatDescriptor($info['format_descriptor']);
 		$schema->loadFilterDescriptor($info['filter_descriptor']);
+		$schema->loadConfig($info['config']);
 
 		return $schema;
 	}
