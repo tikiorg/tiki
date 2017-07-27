@@ -67,9 +67,18 @@ function wikiplugin_listexecute($data, $params)
 		$query->setOrder($_REQUEST[$paginationArguments['sort_arg']]);
 	}
 
-	if (is_array($_POST['objects']) && in_array('ALL', $_POST['objects'])) {
-		// unified search needs a hard limit and we want to apply the action to as many items as possible
-		$query->setRange(0, 9999);
+	if (is_array($_POST['objects'])) {
+		$searchQuery = clone $query;
+		if (in_array('ALL', $_POST['objects'])) {
+			// unified search needs a hard limit and we want to apply the action to as many items as possible
+			$query->setRange(0, 9999);
+		} else {
+			// select only the items to apply the action to
+			foreach ($_POST['objects'] as $identifier) {
+				list($type, $id) = explode(':', $identifier);
+				$query->addObject($type, $id);
+			}
+		}
 	}
 
 	$customOutput = false;
@@ -91,7 +100,7 @@ function wikiplugin_listexecute($data, $params)
 
 	$index = $unifiedsearchlib->getIndex();
 
-	PluginsLibUtil::handleDownload($query, $index, $matches);
+	PluginsLibUtil::handleDownload($searchQuery, $index, $matches);
 
 	$result = $query->search($index);
 	$result->setId('wplistexecute-' . $iListExecute);
@@ -163,17 +172,19 @@ function wikiplugin_listexecute($data, $params)
 			$tx->commit();
 
 			// need to reload search results in case action has modified the original contents
-			// also set pagination arguments back as list processing above was run on the full result set
-			$offsetArg = $paginationArguments['offset_arg'];
-			$maxRecords = $paginationArguments['max'];
-			if (isset($_REQUEST[$offsetArg])) {
-				$query->setRange($_REQUEST[$offsetArg], $maxRecords);
-			} else {
-				$query->setRange(0, $maxRecords);
-			}
-			$result = $query->search($index);
+			// or queried only specific objects
+			$result = $searchQuery->search($index);
 			$result->setId('wplistexecute-' . $iListExecute);
 			$builder->setCount($result->count());
+			// remove any tablesorter header js that will be added twice otherwise
+			foreach (TikiLib::lib('header')->jq_onready as &$scripts) {
+				foreach ($scripts as $key => $js) {
+					if (strstr($js, '$(\'table#wplistexecute-'.$iListExecute.'\').tablesorter(')) {
+						unset($scripts[$key]);
+					}
+				}
+			}
+			$builder->apply($matches);
 			$result->setTsSettings($builder->getTsSettings());
 			$result->setTsOn($tsret['tsOn']);
 			$formatter = $builder->getFormatter();
