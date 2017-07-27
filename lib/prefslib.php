@@ -92,8 +92,21 @@ class PreferencesLib
 			}
 		}
 
+		/* FIXME: Dependencies are not enforced currently. TODO: Activate disabled code below to enforce dependencies
+		// The value element is deprecated. Use either "configuredValue" or "effectiveValue"  instead.
+		$info['configuredValue'] = $info['effectiveValue'] = $info['value'];
+		*/
 		if ( $deps && isset( $info['dependencies'] ) ) {
 			$info['dependencies'] = $this->getDependencies($info['dependencies']);
+			/* TODO: test
+			if ($info['type'] == 'flag' &&
+				$info['effectiveValue'] = 'y' && // Optimization
+					array_filter(array_column($info['dependencies'], 'met'), function($boolean) {
+						return ! $boolean;
+					})) {
+				$info['effectiveValue'] = 'n';
+			}
+			*/
 		}
 
 		if ( $deps && isset( $info['packages_required'] ) && !empty($info['packages_required']) ) {
