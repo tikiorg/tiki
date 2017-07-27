@@ -2122,6 +2122,8 @@ class TrackerLib extends TikiLib
 		}
 
 		// mandatory fields check
+		$utilities = new \Services_Tracker_Utilities;
+		$definition = Tracker_Definition::get($trackerId);
 		$line = 0;
 		$errors = array();
 		while (($data = fgetcsv($csvHandle, 100000, $csvDelimiter)) !== false) {
@@ -2131,41 +2133,33 @@ class TrackerLib extends TikiLib
 					$data[$i] = utf8_encode($data[$i]);
 				}
 			}
+			$itemId = 0;
 			$datafields = array();
 			for ($i = 0; $i < $max; ++$i) {
+				if ($header[$i] == 'itemId') {
+					$itemId = $data[$i];
+				}
 				if (!preg_match('/ -- $/', $header[$i])) {
 					continue;
 				}
 				$h = preg_replace('/ -- $/', '', $header[$i]);
 				foreach ($fields['data'] as $field) {
 					if ($field['name'] == $h) {
-						$datafields[$field['fieldId']] = $field;
-						$datafields[$field['fieldId']]['value'] = $data[$i];
+						$datafields[$field['permName']] = $data[$i];
 					}
 				}
 			}
-			$line_errors = $this->check_field_values(array('data' => $datafields), array(), $trackerId, '');
-			if( count($line_errors['err_mandatory']) > 0 ) {
-				$names = array();
-				foreach ($line_errors['err_mandatory'] as $f) {
-					$names[] = $f['name'];
-				}
-				$errors[] = tr('Line %0: the following mandatory fields are missing: %1', $line, implode(', ', $names));
-			}
-			foreach ($line_errors['err_value'] as $f) {
-				if (! empty($f['errorMsg'])) {
-					$errors[] = tr('Line %0: invalid value in %1: %2', $line, $f['name'], $f['errorMsg']);
-				} else {
-					$errors[] = tr('Line %0: invalid value in %0', $line, $f['name']);
-				}
+			$lineErrors = $utilities->validateItem($definition, array('itemId' => $itemId, 'fields' => $datafields));
+			foreach ($lineErrors as $error) {
+				$errors[] = tr('Line %0:', $line).' '.$error;
 			}
 		}
 
 		if( count($errors) > 0 ) {
-			Feedback::error(tr('Import file contains errors. Please review and fix before importing.'));
-			foreach( $errors as $error ) {
-				Feedback::error($error);
-			}
+			Feedback::error(array(
+				'title' => tr('Import file contains errors. Please review and fix before importing.'),
+				'mes' => $errors
+			));
 			return 0;
 		}
 

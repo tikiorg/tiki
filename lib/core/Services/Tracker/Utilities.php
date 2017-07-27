@@ -44,12 +44,70 @@ class Services_Tracker_Utilities
 		]);
 	}
 
+	function validateItem($definition, $item, $fields = array())
+	{
+		$trackerId = $definition->getConfiguration('trackerId');
+		if (!$fields) {
+			$fields = $this->initializeItemFields($definition, $item['itemId'], $item['fields']);
+		}
+
+		$trklib = TikiLib::lib('trk');
+		$categorizedFields = $definition->getCategorizedFields();
+		$itemErrors = $trklib->check_field_values(array('data' => $fields), $categorizedFields, $trackerId, $item['itemId'] ? $item['itemId'] : '');
+
+		$errors = array();
+
+		if (count($itemErrors['err_mandatory']) > 0) {
+			$names = array();
+			foreach ($itemErrors['err_mandatory'] as $f) {
+				$names[] = $f['name'];
+			}
+			$errors[] = tr('The following mandatory fields are missing: %0', implode(', ', $names));
+		}
+
+		foreach ($itemErrors['err_value'] as $f) {
+			if (! empty($f['errorMsg'])) {
+				$errors[] = tr('Invalid value in %0: %1', $f['name'], $f['errorMsg']);
+			} else {
+				$errors[] = tr('Invalid value in %0', $f['name']);
+			}
+		}
+
+		return $errors;
+	}
+
 	private function replaceItem($definition, $itemId, $status, $fieldMap, array $options)
 	{
 		$trackerId = $definition->getConfiguration('trackerId');
-		$fields = array();
+		$fields = $this->initializeItemFields($definition, $itemId, $fieldMap);
 
-		$factory = $definition->getFieldFactory();
+		$trklib = TikiLib::lib('trk');
+
+		if ($options['validate']) {
+			$errors = $this->validateItem($definition, array('itemId' => $itemId, 'fields' => $fieldMap), $fields);
+		}
+
+		if ($options['skip_categories']) {
+			$categorizedFields = $definition->getCategorizedFields();
+			foreach ($categorizedFields as $fieldId) {
+				unset($fields[$fieldId]);
+			}
+		}
+
+		if (!$options['validate'] || count($errors) == 0) {
+			$newItem = $trklib->replace_item($trackerId, $itemId, array('data' => $fields), $status, 0, $options['bulk_import']);
+			return $newItem;
+		}
+
+		foreach ($errors as $err) {
+			Feedback::error($err, 'session');
+		}
+
+		return false;
+	}
+
+	private function initializeItemFields($definition, $itemId, $fieldMap) {
+		$fields = array();
 		foreach ($fieldMap as $key => $value) {
 			if (preg_match('/ins_/', $key)) { //make compatible with the 'ins_' keys
 				$id = (int)str_replace('ins_', '', $key);
@@ -80,41 +138,7 @@ class Services_Tracker_Utilities
 			}
 		}
 
-		$trklib = TikiLib::lib('trk');
-		$categorizedFields = $definition->getCategorizedFields();
-		$errors = $trklib->check_field_values(array('data' => $fields), $categorizedFields, $trackerId, $itemId ? $itemId : '');
-
-		if ($options['skip_categories']) {
-			foreach ($categorizedFields as $fieldId) {
-				unset($fields[$fieldId]);
-			}
-		}
-
-		if (count($errors['err_mandatory']) == 0 && count($errors['err_value']) == 0) {
-			$newItem = $trklib->replace_item($trackerId, $itemId, array('data' => $fields), $status, 0, $options['bulk_import']);
-			return $newItem;
-		} elseif (! $options['validate']) {
-			$newItem = $trklib->replace_item($trackerId, $itemId, array('data' => $fields), $status, 0, $options['bulk_import']);
-			return $newItem;
-		}
-
-		if (count($errors['err_mandatory']) > 0) {
-			$names = array();
-			foreach ($errors['err_mandatory'] as $f) {
-				$names[] = $f['name'];
-			}
-			Feedback::error(tr('The following mandatory fields are missing: %0', implode(', ', $names)), 'session');
-		}
-
-		foreach ($errors['err_value'] as $f) {
-			if (! empty($f['errorMsg'])) {
-				Feedback::error(tr('Invalid value in %0: %1', $f['name'], $f['errorMsg']), 'session');
-			} else {
-				Feedback::error(tr('Invalid value in %0', $f['name']), 'session');
-			}
-		}
-
-		return false;
+		return $fields;
 	}
 
 	function createField(array $data)
