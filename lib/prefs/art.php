@@ -104,6 +104,9 @@ function prefs_art_list()
 			'name' => tra('Reads'),
 			'type' => 'flag',
 			'default' => 'y',
+			'dependencies' => array(
+				'feature_stats',
+			),
 		),
 		'art_list_size' => array(
 			'name' => tra('Size'),
