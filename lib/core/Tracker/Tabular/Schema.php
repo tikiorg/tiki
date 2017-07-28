@@ -93,6 +93,10 @@ class Schema
 		return $this->config['import_update'];
 	}
 
+	function ignoreImportBlanks() {
+		return $this->config['ignore_blanks'];
+	}
+
 	function isImportTransaction() {
 		return $this->config['import_transaction'];
 	}
