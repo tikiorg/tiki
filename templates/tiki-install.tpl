@@ -4,7 +4,7 @@
 			<img alt="{tr}Tiki Wiki CMS Groupware{/tr}" src="{if isset($ie6)}img/tiki/tikisitelogo.gif{else}img/tiki/Tiki_WCG.png{/if}">
 		</div>
 		<div class="col-md-9">
-			<h1>{tr}Tiki installer{/tr} <small>{$tiki_version_name} <a title="{tr}Help{/tr}" href="https://doc.tiki.org/Installation" target="help">{icon name="help"}</a></small></h1>
+			<h1>{tr}Tiki Installer{/tr} <small>{$tiki_version_name} <a title="{tr}Help{/tr}" href="https://doc.tiki.org/Installation" target="help">{icon name="help"}</a></small></h1>
 		</div>
 	</div><!-- End of install-header -->
 	<div class="row install-body">
