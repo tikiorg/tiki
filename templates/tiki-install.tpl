@@ -91,7 +91,7 @@
 			{if $install_step eq '0' or !$install_step}{* start of installation *}
 				<div class="install-step0">
 					<h1 class="pagetitle">{tr}Welcome{/tr}</h1>
-					<p>{tr}Welcome to the Tiki installation and upgrade script.{/tr} {tr}Use this script to install a new Tiki database or upgrade your existing database to release{/tr} <strong>{$tiki_version_name}</strong></p>
+					<p>{tr _0=$tiki_version_name}Welcome to the <strong>Tiki %0</strong> installer.{/tr} {tr}Use this script to install a new database or upgrade your existing database.{/tr}</p>
 					<ul>
 						<li>{tr}For the latest information about this release, please read the{/tr} <a href="https://doc.tiki.org/Tiki{$tiki_version_short|urlencode}" target="_blank">{tr}Release Notes{/tr}</a>.</li>
 						<li>{tr}For complete documentation, please visit{/tr} <a href="https://doc.tiki.org" target="_blank">doc.tiki.org</a>.</li>
