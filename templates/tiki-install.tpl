@@ -162,7 +162,7 @@
 						{/remarksbox}
 					{else}
 						{remarksbox type=confirm title="{tr}Success{/tr}" close="n"}
-							{icon name="ok"} {tr}Tiki has detected your PHP memory_limit at:{/tr}<strong>{$php_memory_limit|kbsize:true:0}</strong>.
+							{icon name="ok"} {tr}Tiki has detected your PHP memory_limit at:{/tr} <strong>{$php_memory_limit|kbsize:true:0}</strong>.
 						{/remarksbox}
 					{/if}
 					<h2>{tr}Mail{/tr}</h2><a id="mail"> </a>
