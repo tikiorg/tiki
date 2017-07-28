@@ -175,7 +175,8 @@
 								<input type="text" size="40" name="email_test_to" id="email_test_to" value="{if isset($email_test_to)}{$email_test_to}{/if}" placeholder="{tr}tiki@example.com{/tr}">
 								{if isset($email_test_err)}<span class="attention"><em>{$email_test_err}</em></span>
 								{else}<em>{tr}Email address to send test to.{/tr}</em>{/if}
-								{*<br><br>
+								{* Disabled because  interest is unclear
+								<br><br>
 								<input type="checkbox" name="email_test_cc" value="1">
 								<em>{tr}Copy test mail to {/tr} {$email_test_tw}?</em>*}
 							</div>
@@ -838,10 +839,6 @@
 						{/if}
 						{tr}You can now log in into Tiki as user <strong>admin</strong> and start configuring the application.{/tr}
 					</p>
-					{if $install_type eq 'scratch'}
-						<h3>{icon name='information'} {tr}Installation{/tr}</h3>
-						<p>{tr}If this is a first time installation, go to <strong>tiki-admin.php</strong> after login to start configuring your new Tiki installation.{/tr}</p>
-					{/if}
 					{if isset($smarty.post.update)}
 						<h3>{icon name='information'} {tr}Upgrade{/tr}</h3>
 						<p>{tr}If this is an upgrade, clean the Tiki caches manually (the <strong>temp/templates_c</strong> directory) or by using the <strong>Admin &gt; System</strong> option from the Admin menu.{/tr}</p>
