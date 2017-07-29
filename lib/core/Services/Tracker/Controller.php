@@ -1293,6 +1293,7 @@ class Services_Tracker_Controller
 		return array(
 			'trackerId' => $trackerId,
 			'name' => $definition->getConfiguration('name'),
+			'info' => $definition->getInformation(),
 		);
 	}
 
