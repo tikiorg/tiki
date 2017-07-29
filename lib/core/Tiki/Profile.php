@@ -277,6 +277,28 @@ class Tiki_Profile
 		return false;
 	} // }}}
 
+	/**
+	 * Validates if the value supplied can be considered a valid reference
+	 *
+	 * @param string $value The value to test
+	 * @param bool $simpleCheck if you want to check only the name of the reference without the rest of the reference
+	 *
+	 * @return bool
+	 */
+	public static function isValidReference($value, $simpleCheck = false)
+	{
+		if ($simpleCheck){
+			$value = '$simple_test:'.$value.'$';
+		}
+
+		if ( preg_match(self::SHORT_PATTERN, $value, $parts) ){
+			return true;
+		} elseif ( preg_match_all(self::LONG_PATTERN, $value, $parts, PREG_SET_ORDER) ) {
+			return true;
+		}
+		return false;
+	}
+
 	private function __construct() // {{{
 	{
 	} // }}}
@@ -904,5 +926,21 @@ class Tiki_Profile
 			return $domain;
 		}
 	} // }}}
+
+	/**
+	 * Validate that the values of the Named Objects that will be used as references are valid references
+	 *
+	 * @return bool
+	 */
+	public function validateNamedObjectsReferences()
+	{
+		$namedObjects = $this->getNamedObjects();
+		foreach ($namedObjects as $namedObject) {
+			if (!self::isValidReference($namedObject['object'], true)){
+				return false;
+			}
+		}
+		return true;
+	}
 }
 

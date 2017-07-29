@@ -52,6 +52,11 @@ class ProfileInstallCommand extends Command
 			return;
 		}
 
+		if (!$profile->validateNamedObjectsReferences()){ // sanity check on the Named Objects references
+			$output->writeln('<error>Some of the named object references in the profile are invalid</error>');
+			return;
+		}
+
 		$tikilib = \TikiLib::lib('tiki');
 
 		$installer = new \Tiki_Profile_Installer;
