@@ -27,6 +27,11 @@
 				<label for="fieldPrefix">{tr}Field Prefix{/tr}</label>
 				<input class="form-control" type="text" name="fieldPrefix" id="fieldPrefix" value="{$info.fieldPrefix|escape}">
 			</div>
+			{jq}$("#name").change(function() {
+	if ($("#name").val() && ! $("#fieldPrefix").val()) {
+		$("#fieldPrefix").val($("#name").val().replace(/s$/, "").replace(/ /, "").toLowerCase());
+	}
+});{/jq}
 		{/accordion_group}
 		{accordion_group title="{tr}Features{/tr}"}
 			<div class="checkbox">
