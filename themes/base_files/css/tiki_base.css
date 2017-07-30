@@ -3686,6 +3686,49 @@ body.fullscreen.tiki.navbar-padding {
 @-ms-viewport {
   width: auto !important;
 }
+.carousel.fade {
+  opacity: 1;
+}
+.carousel.fade .carousel-inner .item {
+  opacity: 0;
+  -webkit-transition: opacity 0.6s linear;
+  -moz-transition: opacity 0.6s linear;
+  -ms-transition: opacity 0.6s linear;
+  -o-transition: opacity 0.6s linear;
+  transition: opacity 0.6s linear;
+}
+.carousel.fade .carousel-inner .next.left,
+.carousel.fade .carousel-inner .prev.right {
+  opacity: 1;
+}
+.carousel.fade .carousel-inner .active.left,
+.carousel.fade .carousel-inner .active.right {
+  left: 0;
+  opacity: 0;
+  z-index: 1;
+}
+.carousel.fade .carousel-inner .active {
+  opacity: 1;
+}
+.carousel.fade .carousel-inner > .item.next,
+.carousel.fade .carousel-inner > .item.active.right {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.carousel.fade .carousel-inner > .item.prev,
+.carousel.fade .carousel-inner > .item.active.left {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.carousel.fade .carousel-inner > .item.next.left,
+.carousel.fade .carousel-inner > .item.prev.right,
+.carousel.fade .carousel-inner > .item.active {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.carousel.fade .carousel-control {
+  z-index: 2;
+}
 /* becomes height using padding (so it's divided by 2) */
 /* url(icons/loading.gif); */
 /* Filter widget transition */
