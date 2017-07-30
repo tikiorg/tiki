@@ -196,8 +196,8 @@ class Services_Edit_ListPluginHelper
 													],
 													'mode' => [
 														'options' => [
-															'',
-															'raw',
+															'' => [],
+															'raw' => [],
 														],
 													],
 												],
@@ -283,20 +283,56 @@ class Services_Edit_ListPluginHelper
 										'params' => [
 											'id' => [
 												'type' => 'text',
-											],
-											'params' => [
-												'interval' => [
-													'type' => 'number',
-												],
-												'wrap' => [
-													'type' => 'number',
-												],
-												'pause' => [
-													'options' => [
-														'',
-														'hover',
+												'params' => [
+													'interval' => [
+														'type' => 'number',
+													],
+													'wrap' => [
+														'type' => 'number',
+													],
+													'pause' => [
+														'options' => [
+															'' => [],
+															'hover' => [],
+														],
+													],
+													'mode' => [
+														'options' => [
+															'slide' => [],
+															'fade' => [],
+														],
 													],
 												],
+											],
+										],
+									],
+									'body' => [
+										'icon' => 'listgui_body',
+										'parents' => [
+											'output',
+										],
+										'params' => [
+											'field' => [
+												'type' => 'field',
+												'params' => [
+													'mode' => [
+														'options' => [
+															'' => [],
+															'raw' => [],
+														],
+													],
+												],
+											],
+										],
+									],
+									'caption' => [
+										'icon' => 'listgui_caption',
+										'parents' => [
+											'output',
+										],
+										'params' => [
+											'field' => [
+												'type' => 'field',
 											],
 										],
 									],
@@ -387,8 +423,8 @@ class Services_Edit_ListPluginHelper
 											],
 											'content_type' => [
 												'options' => [
-													'html',
-													'forumpost',
+													'html' => [],
+													'forumpost' => [],
 												],
 											],
 										],
@@ -426,7 +462,10 @@ class Services_Edit_ListPluginHelper
 											'default' => [
 												'type' => 'text',
 											],
-											// TODO some way of adding the plugin's params too
+											// TODO some way of adding the plugin's params too (use wildcard for now)
+											'*' => [
+												'type' => 'text',
+											],
 										],
 									],
 								],
@@ -439,8 +478,8 @@ class Services_Edit_ListPluginHelper
 							],
 							'editable' => [
 								'options' => [
-									'inline',
-									'block',
+									'inline' => [],
+									'block' => [],
 								],
 							],
 						],

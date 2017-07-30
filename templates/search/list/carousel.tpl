@@ -1,6 +1,7 @@
 {* $Id$ *}
 {if $carousel and $carousel.id}{$containerId = $carousel.id}{else}{$containerId = 'wp_list_carousel'}{/if}
-<div id="{$containerId}" class="carousel slide" data-ride="carousel"
+{if $carousel and $carousel.mode}{$mode = $carousel.mode}{else}{$mode = ''}{/if}
+<div id="{$containerId}" class="carousel slide {$mode}" data-ride="carousel"
 		{if $carousel and $carousel.interval} data-interval="{$carousel.interval}"{/if}
 		{if $carousel and isset($carousel.pause)} data-pause="{$carousel.pause}"{/if}
 		{if $carousel and isset($carousel.wrap)} data-wrap="{$carousel.wrap}"{/if}
