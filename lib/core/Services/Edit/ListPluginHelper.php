@@ -196,8 +196,8 @@ class Services_Edit_ListPluginHelper
 													],
 													'mode' => [
 														'options' => [
-															'',
-															'raw',
+															'' => [],
+															'raw' => [],
 														],
 													],
 												],
@@ -283,18 +283,24 @@ class Services_Edit_ListPluginHelper
 										'params' => [
 											'id' => [
 												'type' => 'text',
-											],
-											'params' => [
-												'interval' => [
-													'type' => 'number',
-												],
-												'wrap' => [
-													'type' => 'number',
-												],
-												'pause' => [
-													'options' => [
-														'',
-														'hover',
+												'params' => [
+													'interval' => [
+														'type' => 'number',
+													],
+													'wrap' => [
+														'type' => 'number',
+													],
+													'pause' => [
+														'options' => [
+															'' => [],
+															'hover' => [],
+														],
+													],
+													'mode' => [
+														'options' => [
+															'slide' => [],
+															'fade' => [],
+														],
 													],
 												],
 											],
@@ -311,8 +317,8 @@ class Services_Edit_ListPluginHelper
 												'params' => [
 													'mode' => [
 														'options' => [
-															'',
-															'raw',
+															'' => [],
+															'raw' => [],
 														],
 													],
 												],
@@ -417,8 +423,8 @@ class Services_Edit_ListPluginHelper
 											],
 											'content_type' => [
 												'options' => [
-													'html',
-													'forumpost',
+													'html' => [],
+													'forumpost' => [],
 												],
 											],
 										],
@@ -472,8 +478,8 @@ class Services_Edit_ListPluginHelper
 							],
 							'editable' => [
 								'options' => [
-									'inline',
-									'block',
+									'inline' => [],
+									'block' => [],
 								],
 							],
 						],
