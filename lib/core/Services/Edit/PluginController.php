@@ -441,7 +441,7 @@ class Services_Edit_PluginController
 
 				if (! in_array($matchArray, $done)) {
 					if ($hasParent) {
-						$plugins[] = substr($body, $lastMatchEnd, $match->getStart() - $lastMatchEnd);
+						$plugins[] = substr($body, $lastMatchEnd, $match->getStart() - $lastMatchEnd);	// possibly wiki text
 						$lastMatchEnd = $match->getEnd();
 					}
 
@@ -476,7 +476,7 @@ class Services_Edit_PluginController
 			}
 		}
 
-		$plugins = array_filter($plugins);
+		$plugins = array_values(array_filter($plugins));
 	}
 
 	/**

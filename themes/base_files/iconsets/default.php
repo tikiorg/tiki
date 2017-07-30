@@ -409,6 +409,9 @@ function iconset_default()
 			'listgui_wikitext' => [
 				'id' => 'file-text-o',
 			],
+			'listgui_caption' => [
+				'id' => 'align-center',
+			],
 			//lock in defaults
 			//same fa icon used for admin_security, but not the same in other icon sets
 			'log' => array(

@@ -300,6 +300,36 @@ class Services_Edit_ListPluginHelper
 											],
 										],
 									],
+									'body' => [
+										'icon' => 'listgui_body',
+										'parents' => [
+											'output',
+										],
+										'params' => [
+											'field' => [
+												'type' => 'field',
+												'params' => [
+													'mode' => [
+														'options' => [
+															'',
+															'raw',
+														],
+													],
+												],
+											],
+										],
+									],
+									'caption' => [
+										'icon' => 'listgui_caption',
+										'parents' => [
+											'output',
+										],
+										'params' => [
+											'field' => [
+												'type' => 'field',
+											],
+										],
+									],
 								],
 							],
 							'count' => [
@@ -426,7 +456,10 @@ class Services_Edit_ListPluginHelper
 											'default' => [
 												'type' => 'text',
 											],
-											// TODO some way of adding the plugin's params too
+											// TODO some way of adding the plugin's params too (use wildcard for now)
+											'*' => [
+												'type' => 'text',
+											],
 										],
 									],
 								],
