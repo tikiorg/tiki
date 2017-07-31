@@ -102,33 +102,39 @@ class PdfGenerator
      */
     function getPdf( $file, array $params, $pdata='' )
 	{
-		global $prefs, $base_url, $tikiroot;
+		return TikiLib::lib('tiki')->allocate_extra(
+			'tracker_print_pdf_items',
+			function () use ( $file, $params, $pdata ) {
+				global $prefs, $base_url, $tikiroot;
 
-		if ( $prefs['auth_token_access'] == 'y' ) {
-			$perms = Perms::get();
+				if ( $prefs['auth_token_access'] == 'y' ) {
+					$perms = Perms::get();
 
-			require_once 'lib/auth/tokens.php';
-			$tokenlib = AuthTokens::build($prefs);
-			$params['TOKEN'] = $tokenlib->createToken(
-				$tikiroot . $file, $params, $perms->getGroups(),
-				array('timeout' => 120)
-			);
-		}
-		if (is_array($params['printpages']) || is_array($params['printstructures'])) {
-			if (is_array($params['printpages'])) { 
-				$params['printpages'] = implode('&', $params['printpages']);
+					require_once 'lib/auth/tokens.php';
+					$tokenlib = AuthTokens::build($prefs);
+					$params['TOKEN'] = $tokenlib->createToken(
+						$tikiroot . $file, $params, $perms->getGroups(),
+						array('timeout' => 120)
+					);
+				}
+				if (is_array($params['printpages']) || is_array($params['printstructures'])) {
+					if (is_array($params['printpages'])) { 
+						$params['printpages'] = implode('&', $params['printpages']);
+					}
+					else  { 
+						$params['printpages'] = implode('&', $params['printstructures']);
+					}
+					//getting parsed data
+					foreach($params['pages'] as $page) { 
+						$pdata.= $page['parsed'];
+					}
+				}
+				$url = $base_url . $file . '?' . http_build_query($params, '', '&');
+				$session_params = session_get_cookie_params();
+				return $this->{$this->mode}( $url,$pdata,$params);
 			}
-			else  { 
-				$params['printpages'] = implode('&', $params['printstructures']);
-			}
-			//getting parsed data
-			foreach($params['pages'] as $page) { 
-				$pdata.= $page['parsed'];
-			}
-		}
-		$url = $base_url . $file . '?' . http_build_query($params, '', '&');
-        $session_params = session_get_cookie_params();
-	return $this->{$this->mode}( $url,$pdata,$params);	}
+		);
+	}
 
     /**
      * @param $url

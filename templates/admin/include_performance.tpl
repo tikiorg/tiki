@@ -66,16 +66,16 @@
 				{/if}
 
 				<p>
-					<table style="width=520px;border: 0px;text-align:center">
+					<table style="width:520px;border: 0px;text-align:center">
 						<tr>
 							<td><img src="{$memory_graph|escape}" width="250" height="100"></td>
 							<td><img src="{$hits_graph|escape}" width="250" height="100"></td>
 						</tr>
 						<tr>
-							<td style="width=260px">
+							<td style="width:260px">
 								{tr}Memory Used{/tr}: {$opcode_stats.memory_used * 100}% - {tr}Available{/tr}: {$opcode_stats.memory_avail * 100}%
 							</td>
-							<td style="width=260px">
+							<td style="width:260px">
 								{tr}Cache Hits{/tr}: {$opcode_stats.hit_hit * 100}% - {tr}Misses{/tr}: {$opcode_stats.hit_miss * 100}%
 							</td>
 						</tr>
@@ -185,6 +185,8 @@
 			{preference name=allocate_memory_tracker_export_items}
 			{preference name=allocate_time_tracker_export_items}
 			{preference name=allocate_time_tracker_clear_items}
+			{preference name=allocate_memory_tracker_print_pdf_items}
+			{preference name=allocate_time_tracker_print_pdf_items}
 			{preference name="allocate_memory_unified_rebuild"}
 			{preference name="allocate_time_unified_rebuild"}
 		{/tab}
