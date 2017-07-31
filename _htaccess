@@ -5,7 +5,7 @@
 # They enhance security and permit clean URLs.
 # In your Tiki instance, visit tiki-admin.php?page=sefurl to make Tiki use clean URLs in generated links.
 #
-# The htaccess file may be enabled in diffrent ways. (in order of most to least recomended)
+# The htaccess file may be enabled in diffrent ways. (in order of most to least recommended)
 # Option 1: All the installer to handle it.
 # Option 2: reate a symbolic link from .htaccess to _htaccess. This will keep the configuration up-to-date.
 # Option 3: Copy _htaccess to .htaccess. Note : Do not move (rename) _htaccess, it is required for other uses (like SEFURL).
@@ -37,7 +37,7 @@
 
 <IfModule mod_dir.c>
     # -- Home Page Feature -- #
-    # Option 1: (recomended) Not using home page feature.
+    # Option 1: (recommended) Not using home page feature.
 	DirectoryIndex index.php
 
 	# Option 2: If using home page feature you may avoid the home page name being appended to the url by using this option.
@@ -62,7 +62,7 @@
 
 # -- Client Cache Method -- #
 # Google wants either Last-Modified or ETag. Using ETags will improve the YSlow scores.
-# Option 1: recomended
+# Option 1: recommended
 FileETag none
 
 <IfModule mod_headers.c>
@@ -71,7 +71,7 @@ FileETag none
 
     # -- Client Cache Expiration -- #
     # Google suggests to use Expires in favour of Cache-Control.
-    # Option 1: (recomended)
+    # Option 1: (recommended)
     Header unset Cache-Control
 
     #Option 2:
@@ -203,7 +203,7 @@ FileETag none
 </IfModule>
 
 # -- Prevent Directory Browsing -- #
-# Recomended if you do not use it (you will know if you do)
+# recommended if you do not use it (you will know if you do)
 #Options -Indexes
 
 # -- Developer cTag Blocking -- #
@@ -219,7 +219,7 @@ FileETag none
 #</Files>
 
 # -- Web Server Auth -- #
-# Option 1: Recomended
+# Option 1: recommended
 #AuthType Basic
 #AuthName "Restricted Access"
 #AuthUserFile /etc/httpd/passwords
@@ -302,7 +302,7 @@ FileETag none
 
 # Timezone
 # Needed for dates and times to work properly in PHP.
-# Option 1: recomended
+# Option 1: recommended
 #php_value date.timezone "America/New_York"
 
 # Option 2: Set the apache environment variable
