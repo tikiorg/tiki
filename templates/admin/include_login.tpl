@@ -495,7 +495,7 @@
 						The word list will be converted to all lowe case. Duplicate entries will be removed.
 						Typically passwords lists should be arranged with the most commonly used passwords first."}<br>
 						<input type="submit" value="Delete Temporary Index" name="deleteIndex" class="btn btn-primary btn-sm timeout">
-						{help desc="It is recomended that you delete indexed passwords from your database after your done generating your password lists.
+						{help desc="It is recommended that you delete indexed passwords from your database after your done generating your password lists.
 						They can take up quite a lot of space and serve no pourpose after processing is complete."}
 
 						<p>Blacklist Currently Using: {$file_using}</p>
