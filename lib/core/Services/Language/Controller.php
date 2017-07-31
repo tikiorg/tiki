@@ -146,11 +146,7 @@ class Services_Language_Controller
 		//get language
 		if($input->language->text()){
 			$language = $input->language->text();
-		}
-		elseif (isset($user) && isset($user_preferences[$user]['language'])) {
-			$language = $user_preferences[$user]['language'];
-		} 
-		else {
+		} else {
 			global $prefs;
 			$language = $prefs['language'];
 		}
@@ -292,11 +288,7 @@ class Services_Language_Controller
 		//get language
 		if($input->language->text()){
 			$language = $input->language->text();
-		}
-		elseif (isset($user) && isset($user_preferences[$user]['language'])) {
-			$language = $user_preferences[$user]['language'];
-		} 
-		else {
+		} else {
 			global $prefs;
 			$language = $prefs['language'];
 		}
