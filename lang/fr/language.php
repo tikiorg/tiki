@@ -12284,6 +12284,7 @@ $lang = array(
 "Upload Files" => "Envoyer un fichier",
 // "Drop files or " => "Drop files or ",
 "Browse files" => "Parcourir la liste des fichiers",
+"Choose files" => "Choisir des fichiers",
 // "Automatic upload" => "Automatic upload",
 // "Last modification: %0" => "Last modification: %0",
 // "No files found" => "No files found",

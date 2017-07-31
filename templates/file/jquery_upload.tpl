@@ -6,7 +6,7 @@
 		<div class="well fileupload margin-bottom-none">
 			<h3 class="text-center">{icon name="cloud-upload"} {tr}Drop files or {/tr}
 				<div class="btn btn-primary fileinput-button">
-					<span>{tr}Browse files{/tr}</span>
+					<span>{tr}Choose files{/tr}</span>
 					{* The file input field used as target for the file upload widget *}
 					<input id="fileupload" type="file" name="files[]" multiple>
 				</div>
