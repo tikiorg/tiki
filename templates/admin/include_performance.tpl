@@ -185,8 +185,8 @@
 			{preference name=allocate_memory_tracker_export_items}
 			{preference name=allocate_time_tracker_export_items}
 			{preference name=allocate_time_tracker_clear_items}
-			{preference name=allocate_memory_tracker_print_pdf_items}
-			{preference name=allocate_time_tracker_print_pdf_items}
+			{preference name=allocate_memory_print_pdf}
+			{preference name=allocate_time_print_pdf}
 			{preference name="allocate_memory_unified_rebuild"}
 			{preference name="allocate_time_unified_rebuild"}
 		{/tab}

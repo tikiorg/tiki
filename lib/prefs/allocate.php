@@ -11,7 +11,7 @@ function prefs_allocate_list()
 		'unified_rebuild' => array('label' => tr('Search index rebuild'), 'memory' => true, 'time' => true),
 		'tracker_export_items' => array('label' => tr('Tracker item export'), 'memory' => true, 'time' => true),
 		'tracker_clear_items' => array('label' => tr('Tracker clear'), 'memory' => false, 'time' => true),
-		'tracker_print_pdf_items' => array('label' => tr('Printing to PDF'), 'memory' => true, 'time' => true),
+		'print_pdf' => array('label' => tr('Printing to PDF'), 'memory' => true, 'time' => true),
 	);
 
 	$out = array();

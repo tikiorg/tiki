@@ -103,7 +103,7 @@ class PdfGenerator
     function getPdf( $file, array $params, $pdata='' )
 	{
 		return TikiLib::lib('tiki')->allocate_extra(
-			'tracker_print_pdf_items',
+			'print_pdf',
 			function () use ( $file, $params, $pdata ) {
 				global $prefs, $base_url, $tikiroot;
 
