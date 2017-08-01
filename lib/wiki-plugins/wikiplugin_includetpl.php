@@ -19,15 +19,15 @@ function wikiplugin_includetpl_info()
 		'params' => array(
 			'filename' => array(
 				'name' => tr('TPL file name'),
-				'description' => tr('If you need to include tpl files.'),
+				'description' => tr('If you need to include Smarty template files.'),
 				'since' => '15.0',
 				'required' => false,
 				'filter' => 'text'
 			),
 			'values' => array(
-				'name' => tr('values passed to the TPL'),
-				'description' => tr('Values can be passed to tpl file, for example %0',
-					'<code>values=var1:val1&var2:val2</code>'),
+				'name' => tr('Values passed to the TPL'),
+				'description' => tr('Values to be passed to tpl file, for example %0, which can then be accessed in the Smarty template file as %1',
+					'<code>values=var1:val1&var2:val2</code>', '<code>{$values.var1} and {$values.var2}</code>'),
 				'since' => '15.0',
 				'required' => false,
 				'filter' => 'text'
