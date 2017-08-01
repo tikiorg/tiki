@@ -307,36 +307,25 @@ class Installer extends TikiDb_Bridge
 		}
 	} // }}}
 
+	/**
+	 * @throws Exception In case of filesystem access issue
+	 */
 	function buildPatchList() // {{{
 	{
 		$this->patches = array();
 
-		$files = glob(dirname(__FILE__) . '/schema/*_*.sql');
+		$files = glob(dirname(__FILE__) . '/schema/*_*.{sql,yml,php}', GLOB_BRACE); // "php" for standalone PHP scripts
+		if ($files === false) {
+			throw new Exception('Failed to scan patches');
+		}
 		foreach ( $files as $file ) {
 			$filename = basename($file);
 			$this->patches[] = substr($filename, 0, -4);
 		}
-
-		$files = glob(dirname(__FILE__) . '/schema/*_*.yml');
-		if($files != false){
-			foreach ( $files as $file ) {
-				$filename = basename($file);
-				$this->patches[] = substr($filename, 0, -4);
-			}
-		}
-		// Add standalone PHP scripts
-		$files = glob(dirname(__FILE__) . '/schema/*_*.php');
-		foreach ( $files as $file ) {
-			$filename = basename($file);
-			$patch = substr($filename, 0, -4);
-			if (!in_array($patch, $this->patches)) {
-				$this->patches[] = $patch;
-			}
-		}
+		$this->patches = array_unique($this->patches);
 
 		$installed = array();
-		$results = false;
-		
+
 		if ($this->tableExists('tiki_schema')) {
 			$installed = $this->table('tiki_schema')->fetchColumn('patch_name', array());
 		}
