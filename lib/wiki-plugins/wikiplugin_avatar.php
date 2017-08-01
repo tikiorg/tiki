@@ -15,6 +15,7 @@ function wikiplugin_avatar_info()
 		'body' => tra('username'),
 		'iconname' => 'user',
 		'introduced' => 1,
+		'format' => 'html',
 		'params' => array(
 			'page' => array(
 				'required' => false,
