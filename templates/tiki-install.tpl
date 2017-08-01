@@ -512,7 +512,7 @@
 							{tr}You can now log in into Tiki as user <strong>admin</strong> and start configuring the application.{/tr}
 						</p>
 					{/remarksbox}
-					{if $installer->success|@count gt 0}
+					{if $installer->queries.successful|@count gt 0}
 						<p>{icon name="ok"}
 						<span style="font-weight:bold">
 						{if isset($smarty.post.update)}
@@ -521,12 +521,12 @@
 							{tr}Installation operations executed successfully:{/tr}
 						{/if}
 						</span>
-						{$installer->success|@count} {tr}SQL queries.{/tr}</p>
+						{$installer->queries.successful|@count} {tr}SQL queries.{/tr}</p>
 					{else}
 						<p>{icon name="ok"} <span style="font-weight: bold">{tr}Database was left unchanged.{/tr}</span></p>
 					{/if}
 					<form action="tiki-install.php" method="post">
-						{if $installer->failures|@count > 0}
+						{if $installer->queries.failed|@count > 0}
 							<script type='text/javascript'><!--//--><![CDATA[//><!--
 										{literal}
 										function sql_failed() {
@@ -535,12 +535,12 @@
 										{/literal}
 							//--><!]]></script>
 
-							<p>{icon name="error"} <strong>{tr}Operations failed:{/tr}</strong> {$installer->failures|@count} {tr}SQL queries.{/tr}
+							<p>{icon name="error"} <strong>{tr}Operations failed:{/tr}</strong> {$installer->queries.failed|@count} {tr}SQL queries.{/tr}
 							<a href="javascript:sql_failed()">{tr}Display details.{/tr}</a>
 							<div id="sql_failed_log" style="display:none">
 								<p>{tr}During an upgrade, it is normal to have SQL failures resulting with <strong>Table already exists</strong> messages.{/tr}</p>
 								{assign var='patch' value=''}
-								{foreach from=$installer->failures item=item}
+								{foreach from=$installer->queries.failed item=item}
 									{if $patch ne $item[2]}
 										{if $patch ne ''}
 											</textarea>

@@ -37,7 +37,7 @@ class InstallCommand extends Command
 		if (! $installed || $force) {
 			$installer->cleanInstall();
 			$output->writeln('Installation completed.');
-			$output->writeln('<info>Queries executed successfully: ' . count($installer->success) . '</info>');
+			$output->writeln('<info>Queries executed successfully: ' . count($installer->queries['successful']) . '</info>');
 
 			if ( count($installer->queries['failed']) ) {
 				foreach ( $installer->queries['failed'] as $key => $error ) {
