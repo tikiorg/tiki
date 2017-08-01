@@ -44,7 +44,7 @@
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-3 col-md-offset-2 col-sm-10">
-				<input type="submit" class="btn btn-default" name="remind" value="Request Password Reset">
+				<input type="submit" class="btn btn-default" name="remind" value="{tr}Request Password Reset{/tr}">
 			</div>
 		</div>
 	</form>

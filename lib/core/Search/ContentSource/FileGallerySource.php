@@ -38,8 +38,6 @@ class Search_ContentSource_FileGallerySource implements Search_ContentSource_Int
 
 			'gallery_id' => $typeFactory->identifier($item['parentId']),
 
-			'searchable' => $typeFactory->identifier('n'),
-
 			'view_permission' => $typeFactory->identifier('tiki_p_view_file_gallery'),
 		);
 

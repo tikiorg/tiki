@@ -37,8 +37,6 @@ class Search_ContentSource_ForumSource implements Search_ContentSource_Interface
 
 			'forum_section' => $typeFactory->identifier($item['section']),
 
-			'searchable' => $typeFactory->identifier('n'),
-
 			'view_permission' => $typeFactory->identifier('tiki_p_forum_read'),
 		);
 
