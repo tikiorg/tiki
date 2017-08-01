@@ -25,9 +25,8 @@ class Installer extends TikiDb_Bridge
 	public $installed = array();
 	public $executed = array();
 
-	public $success = array();
-	public $failures = array();
-	
+	public $queries = array('successful' => [], 'failed' => []);
+
 	public $useInnoDB = false;
 
     /**
@@ -299,10 +298,10 @@ class Installer extends TikiDb_Bridge
 		$result = $this->queryError($query, $error, $values);
 
 		if ( $result && empty($error) ) {
-			$this->success[] = $query;
+			$this->queries['successful'][] = $query;
 			return $result;
 		} else {
-			$this->failures[] = array($query, $error, substr(basename($patch), 0, -4));
+			$this->queries['failed'][] = array($query, $error, substr(basename($patch), 0, -4));
 			return false;
 		}
 	} // }}}
@@ -332,7 +331,7 @@ class Installer extends TikiDb_Bridge
 		
 		if ( empty($installed) ) {
 			// Erase initial error
-			$this->failures = array();
+			$this->queries['failed'] = array();
 		}
 
 		$this->patches = array_diff($this->patches, $installed);
