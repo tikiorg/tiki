@@ -902,11 +902,13 @@ class HeaderLib
 	public function get_all_css_content()
 	{
 		$files = $this->collect_css_files();
-		$minified = '';
+		$minifier = new MatthiasMullie\Minify\CSS();
+
 		foreach ( array_merge($files['screen'], $files['default']) as $file) {
-			$minified .= $this->minify_css($file);
+			$minifier->add($file);
 		}
-		$minified = $this->handle_css_imports($minified);
+
+		$minified = $minifier->minify();
 
 		return $minified;
 	}
@@ -959,8 +961,10 @@ class HeaderLib
 			$hash = md5($file);
 			$min = $target . "minified_$hash.css";
 
+			$minifier = new MatthiasMullie\Minify\CSS($file);
+
 			if ( ! file_exists($min) ) {
-				file_put_contents($min, $this->minify_css($file));
+				$minifier->minify($min);
 				chmod($min, 0644);
 			}
 
@@ -978,59 +982,17 @@ class HeaderLib
 		$file = $target . "minified_$hash.css";
 
 		if ( ! file_exists($file)) {
-			$minified = '';
+			$minifier = new MatthiasMullie\Minify\CSS();
 
 			foreach ( $files as $f ) {
-				$minified .= $this->minify_css($f);
+				$minifier->add($f);
 			}
 
-			$minified = $this->handle_css_imports($minified);
-
-			file_put_contents($file, $minified);
+			$minifier->minify($file);
 			chmod($file, 0644);
 		}
 
 		return array( $file );
-	}
-
-	private function handle_css_imports( $minified )
-	{
-
-		preg_match_all('/@import\s+url\("([^;]*)"\);/', $minified, $parts);
-		$top = [];
-
-		$pre = '';
-		foreach ( $parts[1] as $k => $f ) {
-			if (substr($f, 0, 2) == '//' || substr($f, 0, 7) == 'http://' || substr($f, 0, 8) == 'https://') {
-				$top[] = $parts[0][$k];
-				unset($parts[0][$k]); // Exclude import removal, external file
-			} else {
-				$pre .= $this->minify_css($f);
-			}
-		}
-
-		$imports = array_unique($parts[0]);
-		$minified = $pre . $minified;
-		$minified = str_replace($imports, '', $minified);
-
-		return implode("\n", $top) . "\n" . $minified;
-	}
-
-	public function minify_css( $file )
-	{
-		global $tikipath, $tikiroot;
-		if (strpos($file, $tikiroot) === 0) {
-			$file = substr($file, strlen($tikiroot));
-		}
-
-		$currentdir = str_replace($tikipath, $tikiroot, str_replace('\\', '/', dirname(realpath($file))));
-		if ( $file[0] == '/' ) {
-			$file = $tikipath . $file;
-		}
-
-		$content = file_get_contents($file);
-
-		return Minify_CSS::minify($content, array('prependRelativePath' => $currentdir.'/', 'bubbleCssImports' => true));
 	}
 
 
