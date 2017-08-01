@@ -26,5 +26,5 @@
 		{/strip}{/foreach}
 	</select>
 {else}
-	<input type="text" name="{$field.ins_id}" value="{$field.value}" class="form-control">
+	<input type="text" name="{$field.ins_id}" value="{$field.value|escape}" class="form-control">
 {/if}
