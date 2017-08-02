@@ -18,6 +18,7 @@ class Patch
 
 	private $name;
 	private $status = null;
+	public $optional = false;
 
 	function __construct($name, $status)
 	{
@@ -41,13 +42,14 @@ class Patch
 	/**
 	 * Get the patches matching the specified statuses
 	 * @param int[] $statuses Allowed statuses
+	 * @param bool true to obtain optional patches, false for required only
 	 * @return Patch[] Matching patches
 	 */
-	static function getPatches($statuses)
+	static function getPatches($statuses, $optional = false)
 	{
 		$matches = [];
 		foreach (self::$list as $name => $patch) {
-			if (in_array($patch->status, $statuses)) {
+			if (in_array($patch->status, $statuses) && ($optional || ! $patch->optional)) {
 				$matches[$name] = $patch;
 			}
 		}
