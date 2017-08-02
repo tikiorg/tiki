@@ -319,13 +319,15 @@ class Installer extends TikiDb_Bridge
 		}
 
 		$patches = [];
-		$files = glob(dirname(__FILE__) . '/schema/*_*.{sql,yml,php}', GLOB_BRACE); // "php" for standalone PHP scripts
-		if ($files === false) {
-			throw new Exception('Failed to scan patches');
-		}
-		foreach ( $files as $file ) {
-			$filename = basename($file);
-			$patches[] = substr($filename, 0, -4);
+		foreach (['sql', 'yml', 'php' /* "php" for standalone PHP scripts */] as $extension) {
+			$files = glob(dirname(__FILE__) . '/schema/*_*.' . $extension); // glob() does not portably support brace expansion, hence the loop
+			if ($files === false) {
+				throw new Exception('Failed to scan patches');
+			}
+			foreach ($files as $file) {
+				$filename = basename($file);
+				$patches[] = substr($filename, 0, -4);
+			}
 		}
 		$patches = array_unique($patches);
 
