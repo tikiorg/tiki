@@ -98,6 +98,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "christian-vigh-phpclasses/PdfToText",
+				"version": "1.6.7",
+				"dist": {
+					"url": "https://github.com/christian-vigh-phpclasses/PdfToText/archive/aa7ccfa.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "ckeditor/ckeditor",
 				"version": "4.1.1",
 				"dist": {
@@ -1548,6 +1559,7 @@
 		"blueimp/javascript-canvas-to-blob": ">=2.2.0",
 		"bombayworks/zendframework1": ">=1.12.3",
 		"chartjs/Chart.js": ">=2.5.0",
+		"christian-vigh-phpclasses/PdfToText": ">=1.6.0",
 		"ckeditor/ckeditor": "*",
 		"ckeditor/ckeditor/skins/kama": "*",
 		"ckeditor/ckeditor/skins/bootstrapck": "*",
