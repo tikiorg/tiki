@@ -14,6 +14,7 @@ class Search_Action_EmailAction implements Search_Action_Action
 			'to+' => true,
 			'cc+' => false,
 			'bcc+' => false,
+			'from' => false,
 			'subject' => true,
 			'content' => true,
 			'pdf_page_attachment' => false,
@@ -35,24 +36,39 @@ class Search_Action_EmailAction implements Search_Action_Action
 			$mail = tiki_get_admin_mail();
 
 			if ($replyto = $this->dereference($data->replyto->text())) {
-				$mail->setReplyTo($replyto);
+				$mail->setReplyTo($replyto[0]);
 			}
 
 			foreach ($data->to->text() as $to) {
-				if( $to = $this->dereference($to) ) {
-					$mail->addTo($to);
+				if ($to = $this->dereference($to)) {
+					foreach ($to as $email) {
+						$mail->addTo($email);
+					}
 				}
 			}
 
 			foreach ($data->cc->text() as $cc) {
-				if( $cc = $this->dereference($cc) ) {
-					$mail->addCc($cc);
+				if ($cc = $this->dereference($cc)) {
+					foreach ($cc as $email) {
+						$mail->addCc($email);
+					}
 				}
 			}
 
 			foreach ($data->bcc->text() as $bcc) {
-				if( $bcc = $this->dereference($bcc) ) {
-					$mail->addBcc($bcc);
+				if ($bcc = $this->dereference($bcc)) {
+					foreach ($bcc as $email) {
+						$mail->addBcc($email);
+					}
+				}
+			}
+
+			if ($from = $data->from->text()) {
+				$fromEmail = $this->dereference($from);
+				$fromName = $this->dereferenceName($from);
+				if (!empty($fromEmail[0])) {
+					$mail->setFrom($fromEmail[0], $fromName);
+					$mail->setSender($fromEmail[0], $fromName);
 				}
 			}
 
@@ -146,9 +162,29 @@ class Search_Action_EmailAction implements Search_Action_Action
 		}
 		$email_or_username = $this->stripNp($email_or_username);
 		if( strstr($email_or_username, '@') ) {
-			return $email_or_username;
+			return array($email_or_username);
 		} else {
-			return TikiLib::lib('user')->get_user_email($email_or_username);
+			$users = TikiLib::lib('trk')->parse_user_field($email_or_username);
+			return array_map(function($username) {
+				return TikiLib::lib('user')->get_user_email($username);
+			}, $users);
+		}
+	}
+
+	private function dereferenceName($email_or_username) {
+		if (empty($email_or_username)) {
+			return null;
+		}
+		$email_or_username = $this->stripNp($email_or_username);
+		if( strstr($email_or_username, '@') ) {
+			return null;
+		} else {
+			$users = TikiLib::lib('trk')->parse_user_field($email_or_username);
+			if ($users) {
+				return TikiLib::lib('user')->clean_user($users[0]);
+			} else {
+				return null;
+			}
 		}
 	}
 
