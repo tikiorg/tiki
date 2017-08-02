@@ -140,6 +140,8 @@ function wikiplugin_listexecute($data, $params)
 		if ($result->count() > 9999) {
 			Feedback::error(tr("There are too many search result items to apply %0 action to.", $_POST['list_action']));
 		} elseif (isset($actions[$action])) {
+			TikiLib::setExternalContext(true);
+
 			$reportSource = new Search_Action_ReportingTransform;
 
 			$tx = TikiDb::get()->begin();
@@ -172,6 +174,8 @@ function wikiplugin_listexecute($data, $params)
 			}
 
 			$tx->commit();
+
+			TikiLib::setExternalContext(false);
 
 			// need to reload search results in case action has modified the original contents
 			// or queried only specific objects
