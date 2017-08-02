@@ -37,10 +37,8 @@ class UpdateCommand extends Command
 		if ($installed) {
 			$installer->update();
 			$output->writeln('Update completed.');
-			if (count($installer->installed)) {
-				foreach ($installer->installed as $patch) {
-					$output->writeln("<info>Installed: $patch</info>");
-				}
+			foreach (array_keys(\Patch::getPatches([\Patch::NEWLY_APPLIED])) as $patch) {
+				$output->writeln("<info>Installed: $patch</info>");
 			}
 
 			if ( count($installer->executed) ) {

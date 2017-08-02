@@ -846,7 +846,7 @@ if ( file_exists($local) ) {
 		if ( $dbcon = initTikiDB($api_tiki, $db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $client_charset, $dbTiki) ) {
 			$smarty->assign('resetdb', isset($_POST['reset']) ? 'y' : 'n');
 
-			$installer = new Installer;
+			$installer = Installer::getInstance();
 			$installer->setServerType($db_tiki);
 
 			if ( ! $client_charset_forced ) {
@@ -858,7 +858,7 @@ if ( file_exists($local) ) {
 		}
 	}
 } elseif ($dbcon) {
-	$installer = new Installer;
+	$installer = Installer::getInstance();
 	TikiDb::get()->setErrorHandler(new InstallerDatabaseErrorHandler);
 } else {
 	// If there is no local.php we check if there is a db/preconfiguration.php preconfiguration file with database connection values which we can prefill the installer with
@@ -942,7 +942,7 @@ if (
 			include $local;
 			// In case of replication, ignore it during installer.
 			unset($shadow_dbs, $shadow_user, $shadow_pass, $shadow_host);
-			$installer = new Installer;
+			$installer = Installer::getInstance();
 			$installer->setServerType($db_tiki);
 		}
 	}
@@ -1215,8 +1215,7 @@ if ($install_step == '2') {
 	$smarty->assign('gd_test', $gd_test);
 } elseif ($install_step == 6 && !empty($_POST['validPatches'])) {
 	foreach ($_POST['validPatches'] as $patch) {
-		global $installer;
-		$installer->recordPatch($patch);
+		Patch::$list[$patch]->record();
 	}
 }
 

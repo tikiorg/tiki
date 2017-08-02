@@ -13,16 +13,16 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 
 require_once 'lib/setup/twversion.class.php';
+require_once 'Patch.php';
 
 /**
- *
+ * @see Patch
  */
 class Installer extends TikiDb_Bridge
 {
-	public $patches = array();
-	public $scripts = array();
+	static $instance = null; // Singleton instance
 
-	public $installed = array();
+	public $scripts = array();
 	public $executed = array();
 
 	public $queries = array('successful' => [], 'failed' => []);
@@ -30,13 +30,24 @@ class Installer extends TikiDb_Bridge
 	public $useInnoDB = false;
 
     /**
-     *
+     * TODO: make private to enforce Singleton
      */
     function __construct() // {{{
 	{
 		$this->buildPatchList();
 		$this->buildScriptList();
 	} // }}}
+
+	/**
+	 * Get the instance (creating one if necessary)
+	 * @return Installer
+	 */
+	static function getInstance() {
+		if (is_null(self::$instance)) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
 
 	function cleanInstall() // {{{
 	{
@@ -59,10 +70,9 @@ class Installer extends TikiDb_Bridge
 			$this->buildScriptList();
 
 			// Base SQL file contains the distribution tiki patches up to this point
-			$patches = $this->patches;
-			foreach ( $patches as $patch ) {
-				if ( preg_match('/_tiki$/', $patch) ) {
-					$this->recordPatch($patch);
+			foreach ( Patch::$list as $patchName => $patch ) {
+				if ( preg_match('/_tiki$/', $patchName) ) {
+					$patch->record();
 				}
 			}
 		}
@@ -115,9 +125,10 @@ class Installer extends TikiDb_Bridge
 			$this->runFile($secdb);
 		}
 		
-		$patches = $this->patches;
-		foreach ($patches as $patch) {
-			$this->installPatch($patch);
+		foreach (Patch::$list as $patchName => $patch) {
+			if (! $patch->isApplied()) {
+				$this->installPatch($patchName);
+			}
 		}
 
 		foreach ( $this->scripts as $script ) {
@@ -130,7 +141,7 @@ class Installer extends TikiDb_Bridge
      */
     function installPatch( $patch ) // {{{
 	{
-		if ( ! in_array($patch, $this->patches) ) {
+		if ( Patch::$list[$patch]->isApplied() ) {
 			return;
 		}
 
@@ -172,8 +183,7 @@ class Installer extends TikiDb_Bridge
 		}
 
 		if (!isset($status) || $status ) {
-			$this->installed[] = $patch;
-			$this->recordPatch($patch);
+			Patch::$list[$patch]->record();
 		}
 	} // }}}
 
@@ -194,14 +204,6 @@ class Installer extends TikiDb_Bridge
 		$this->executed[] = $script;
 	} // }}}
 
-    /**
-     * @param $patch
-     */
-    function recordPatch( $patch ) // {{{
-	{
-		$this->query("INSERT INTO tiki_schema (patch_name, install_date) VALUES(?, NOW())", array($patch));
-		$this->patches = array_diff($this->patches, array($patch));
-	} // }}}
 
 	private function applyProfile($profileFile)
 	{
@@ -309,35 +311,48 @@ class Installer extends TikiDb_Bridge
 	/**
 	 * @throws Exception In case of filesystem access issue
 	 */
-	function buildPatchList() // {{{
+	function buildPatchList()
 	{
-		$this->patches = array();
+		// Optimization
+		if (! is_null(Patch::$list)) {
+			return;
+		}
 
+		$patches = [];
 		$files = glob(dirname(__FILE__) . '/schema/*_*.{sql,yml,php}', GLOB_BRACE); // "php" for standalone PHP scripts
 		if ($files === false) {
 			throw new Exception('Failed to scan patches');
 		}
 		foreach ( $files as $file ) {
 			$filename = basename($file);
-			$this->patches[] = substr($filename, 0, -4);
+			$patches[] = substr($filename, 0, -4);
 		}
-		$this->patches = array_unique($this->patches);
+		$patches = array_unique($patches);
 
 		$installed = array();
 
 		if ($this->tableExists('tiki_schema')) {
 			$installed = $this->table('tiki_schema')->fetchColumn('patch_name', array());
 		}
-		
+
 		if ( empty($installed) ) {
 			// Erase initial error
 			$this->queries['failed'] = array();
 		}
 
-		$this->patches = array_diff($this->patches, $installed);
+		Patch::$list = array();
+		sort($patches);
+		foreach ($patches as $patchName) {
+			if (in_array($patchName, $installed)) {
+				$status = Patch::ALREADY_APPLIED;
+			} else {
+				$status = Patch::NOT_APPLIED;
+			}
+			$patch = new Patch($patchName, $status);
+			Patch::$list[$patchName] = $patch;
+		}
+	}
 
-		sort($this->patches);
-	} // }}}
 
 	function buildScriptList() // {{{
 	{
@@ -372,7 +387,7 @@ class Installer extends TikiDb_Bridge
      */
     function requiresUpdate() // {{{
 	{
-		return count($this->patches) > 0 ;
+		return count(Patch::getPatches([Patch::NOT_APPLIED])) > 0;
 	} // }}}
  function checkInstallerLocked() // {{{
 	{
