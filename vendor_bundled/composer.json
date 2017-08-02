@@ -13,6 +13,7 @@
 		"blueimp/jquery-file-upload": "^9.12.5",
 		"candy-chat/xmpp-prebind-php": "dev-master",
 		"chartjs/Chart.js": "^2.5.0",
+		"christian-vigh-phpclasses/pdftotext": ">1.6.0",
 		"ckeditor/ckeditor": "^4.6.2",
 		"ckeditor/ckeditor/skins/bootstrapck": "^1",
 		"ckeditor/ckeditor/skins/minimalist": "^1",

@@ -1332,6 +1332,12 @@ class FileGalLib extends TikiLib
 				$document = ZendSearch\Lucene\Document\Xlsx::loadXlsxFile($wrapper->getReadableFile(), true);
 				return $document->getField('body')->getUtf8Value();
 			};
+        case 'application/pdf':
+            return function (FileWrapper $wrapper) {
+                include_once "vendor_bundled/vendor/christian-vigh-phpclasses/PdfToText/PdfToText.phpclass";
+                $pdf = new PdfToText($wrapper->getReadableFile());
+                return $pdf->Text;
+            };
 		}
 	}
 
