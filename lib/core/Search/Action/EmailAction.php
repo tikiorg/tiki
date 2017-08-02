@@ -17,6 +17,7 @@ class Search_Action_EmailAction implements Search_Action_Action
 			'from' => false,
 			'subject' => true,
 			'content' => true,
+			'is_html' => false,
 			'pdf_page_attachment' => false,
 		);
 	}
@@ -72,7 +73,7 @@ class Search_Action_EmailAction implements Search_Action_Action
 				}
 			}
 
-			$content = $this->parse($data->content->none());
+			$content = $this->parse($data->content->none(), $data->is_html->boolean());
 			$subject = $this->parse($data->subject->text());
 
 			$mail->setSubject(strip_tags($subject));
@@ -138,7 +139,7 @@ class Search_Action_EmailAction implements Search_Action_Action
 		return false;
 	}
 
-	private function parse($content)
+	private function parse($content, $is_html = null)
 	{
 		$content = "~np~$content~/np~";
 
@@ -147,6 +148,10 @@ class Search_Action_EmailAction implements Search_Action_Action
 		$options = array(
 			'protect_email' => false,
 		);
+
+		if ($is_html) {
+			$options['is_html'] = true;
+		}
 
 		return trim($parserlib->parse_data($content, $options));
 	}
