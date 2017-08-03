@@ -248,7 +248,7 @@
 														{/if}
 														{if $users[user].user ne 'admin' and $users[user].user ne $user}
 															{$libeg}
-																<a href='#' onClick="$('#login-switchuser_1').val('{$users[user].user|username}'); $('#form_switch_user').submit(); return false;">
+																<a href='#' onClick="$('#login-switchuser_1').val('{$users[user].user|username|escape:javascript}'); $('#form_switch_user').submit(); return false;">
 																	{icon name="user" _menu_text='y' _menu_icon='y' alt="{tr}Switch to this user{/tr}"}
 																</a>
 															{$liend}
@@ -366,8 +366,9 @@
 			</form>
 
 			<form id='form_switch_user' action='tiki-login.php' method='post'>
+				{ticket}
 				<input type="hidden" name="su" value="1" class="form-control" />
-				<input type="xidden" name="username" id="login-switchuser_1" value="" class="form-control" />
+				<input type="hidden" name="username" id="login-switchuser_1" value="" class="form-control" />
 			</form>
 
 
