@@ -102,7 +102,7 @@ function wikiplugin_listexecute($data, $params)
 
 	$index = $unifiedsearchlib->getIndex();
 
-	PluginsLibUtil::handleDownload($searchQuery, $index, $matches);
+	PluginsLibUtil::handleDownload($query, $index, $matches);
 
 	$result = $query->search($index);
 	$result->setId('wplistexecute-' . $iListExecute);
