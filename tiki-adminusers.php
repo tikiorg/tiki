@@ -134,11 +134,7 @@ function batchImportUsers()
 			}
 
 			if (empty($u['password'])) {
-				if (!empty($_REQUEST['notification'])) {
-					$u['password'] = $tikilib->genPass();
-				} else {
-					$local[] = discardUser($u, tra('Password is required'));
-				}
+				$u['password'] = $tikilib->genPass();
 			}
 			if (empty($u['email'])) {
 				$local[] = discardUser($u, tra('Email is required'));
