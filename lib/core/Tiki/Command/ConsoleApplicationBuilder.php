@@ -66,6 +66,7 @@ class ConsoleApplicationBuilder
 					new BackupFilesCommand,
 					new ProfileBaselineCommand,
 					new InstallerLockCommand,
+					new PatchCommand
 				],
 			],
 			'checkIsInstalledAndDoNotRequireUpdate' => [
