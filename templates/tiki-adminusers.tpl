@@ -246,19 +246,13 @@
 																{icon name="help" _menu_text='y' _menu_icon='y' alt="{tr}User information{/tr}"}
 															</a>{$liend}
 														{/if}
-
 														{if $users[user].user ne 'admin' and $users[user].user ne $user}
-															<form id='form_{$users[user].userId}' action='tiki-login.php' method='post'>
-																<input type="hidden" name="su" value="1" class="form-control" />
-																<input type="hidden" name="username" id="login-switchuser_1" value="{$users[user].user|username}" class="form-control" />
-																{$libeg}
-																	<a href='#' onClick="document.forms['form_{$users[user].userId}'].submit();return false;">
-																		{icon name="user" _menu_text='y' _menu_icon='y' alt="{tr}Switch to this user{/tr}"}
-																	</a>
-																{$liend}
-															</form>
+															{$libeg}
+																<a href='#' onClick="$('#login-switchuser_1').val('{$users[user].user|username}'); $('#form_switch_user').submit(); return false;">
+																	{icon name="user" _menu_text='y' _menu_icon='y' alt="{tr}Switch to this user{/tr}"}
+																</a>
+															{$liend}
 														{/if}
-
 														{if $users[user].user ne 'admin'}
 															{$libeg}<a href="{bootstrap_modal controller=user action=remove_users checked=$username offset=$offset sort_mode=$sort_mode numrows=$numrows}">
 																{icon name="remove" _menu_text='y' _menu_icon='y' alt="{tr}Delete{/tr}"}
@@ -370,6 +364,13 @@
 				<input type="hidden" name="numrows" value="{$numrows|escape}">
 				<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 			</form>
+
+			<form id='form_switch_user' action='tiki-login.php' method='post'>
+				<input type="hidden" name="su" value="1" class="form-control" />
+				<input type="xidden" name="username" id="login-switchuser_1" value="" class="form-control" />
+			</form>
+
+
 		{if !$ts.enabled}
 			{pagination_links cant=$cant step=$numrows offset=$offset}{/pagination_links}
 		{/if}
