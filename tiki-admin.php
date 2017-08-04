@@ -32,7 +32,7 @@ $logslib = TikiLib::lib('logs');
 function add_feedback( $name, $message, $st, $num = null )
 {
 	TikiLib::lib('prefs')->addRecent($name);
-	
+
 	Feedback::add(['num' => $num,
 		'mes' => $message,
 		'st' => $st,
@@ -562,6 +562,7 @@ if (isset($_REQUEST['page'])) {
 	$helpDescription = tr("Help on %0 Config", $admintitle);
 
 	$smarty->assign('include', $adminPage);
+	$smarty->assign('template_not_found', 'n');
 	if ( substr($adminPage, 0, 3) == 'ta_' && !file_exists("admin/include_$adminPage.tpl")) {
 		$addonadmintplfile = $utilities->getAddonFilePath("templates/admin/include_$adminPage.tpl");
 		if (!file_exists($addonadmintplfile)) {
@@ -570,7 +571,13 @@ if (isset($_REQUEST['page'])) {
 		if (!$utilities->checkAddonActivated(substr($adminPage, 3))) {
 			$smarty->assign('include', 'addon_inactive');
 		}
+	} elseif (!file_exists("templates/admin/include_$adminPage.tpl")) {
+		// Graceful error management when URL is wrong for admin panel
+		$smarty->assign('template_not_found', 'y');
+	} else {
+		$smarty->assign('template_not_found', 'n');
 	}
+
 	//for most admin include page forms, need to redirect as changes to one pref can affect display of others
 	//however other forms that perform actions other than changing preferences should not redirect to avoid infinite loops
 	//for these add a hidden input named redirect with a value of 0

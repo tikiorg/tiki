@@ -32,7 +32,6 @@
 		{remarksbox type="error" title="{tr}Installer not locked{/tr}"}
 			{tr} The installer allows a user to change or destroy the site's database through the browser so it is very important to keep it locked. {/tr}
 			{tr}<br />You can re-run the installer (tiki-install.php), skip to the last step and select <strong>LOCK THE INSTALLER</strong>. Alternatively, you can simply <strong>add a lock file</strong> (file without any extension) in your db/ folder.{/tr}
-
 		{/remarksbox}
 	{/if}
 
@@ -57,5 +56,11 @@
 		{/foreach}
 	{/remarksbox}
 {/if}
-
-{include file="admin/include_$include.tpl"}
+{* Graceful error management when URL is wrong for admin panel *}
+{if $template_not_found eq 'y'}
+		{remarksbox type="error" title="{tr}Error{/tr}"}
+		{tr _0="$include"}The <strong>%0</strong> admin panel does not exist. Select an admin panel above or use the search box.{/tr}
+	{/remarksbox}
+{else}
+	{include file="admin/include_$include.tpl"}
+{/if}
