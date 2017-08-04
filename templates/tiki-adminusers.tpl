@@ -246,7 +246,7 @@
 																{icon name="help" _menu_text='y' _menu_icon='y' alt="{tr}User information{/tr}"}
 															</a>{$liend}
 														{/if}
-														{if $users[user].user ne 'admin' and $users[user].user ne $user}
+														{if $users[user].user ne 'admin' and $users[user].user ne $user and $tiki_p_admin eq 'y'}
 															{$libeg}
 																<a href='#' onClick="$('#login-switchuser_1').val('{$users[user].user|username|escape:javascript}'); $('#form_switch_user').submit(); return false;">
 																	{icon name="user" _menu_text='y' _menu_icon='y' alt="{tr}Switch to this user{/tr}"}
