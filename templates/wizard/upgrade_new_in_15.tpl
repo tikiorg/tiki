@@ -51,6 +51,7 @@
 			<legend>{tr}New Wiki Plugins{/tr}</legend>
 			{preference name=wikiplugin_fullwidthtitle}
 			{preference name=wikiplugin_googlechart}
+			{preference name=wikiplugin_includetpl}
 			{preference name=wikiplugin_like}
 			{preference name=wikiplugin_piwik}
 			{preference name=wikiplugin_tour}
