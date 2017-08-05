@@ -114,11 +114,11 @@
 				</div>
 				<div class="col-md-6">
 					<h4>{tr}Profile Execute_on_list{/tr}</h4>
-					(<a href="tiki-admin.php?profile=Execute_on_list&show_details_for=Execute_on_list&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+					(<a href="tiki-admin.php?profile=Execute+on+list&show_details_for=Execute+on+list&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
 					<br>
 					{tr}This profile demonstrates how to perform actions on several items from a list using Plugin ListExecute{/tr}
 					<br/>
-					<a href="https://doc.tiki.org/PluginListExecute" target="tikihelp" class="tikihelp" title="{tr}Execute_on_list{/tr}:
+					<a href="https://doc.tiki.org/PluginListExecute" target="tikihelp" class="tikihelp" title="{tr}Execute on list{/tr}:
 							{tr}Main features used{/tr}:
 							<ul>
 								<li>{tr}Trackers{/tr}</li>
