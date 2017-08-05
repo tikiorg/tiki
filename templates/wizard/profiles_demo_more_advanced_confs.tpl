@@ -81,8 +81,9 @@
 						</div>
 					</div>
 				</div>
+			</div>
 			<div class="row">
-				<div class="col-md-6 col-md-offset-3">
+				<div class="col-md-6">
 							<h4>{tr}Profile Conditional_Display_in_Forms{/tr}</h4>
 							(<a href="tiki-admin.php?profile=Conditional_Display_in_Forms_14&show_details_for=Conditional_Display_in_Forms_14&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
 							<br>
@@ -111,21 +112,33 @@
 						</div>
 					</div>
 				</div>
-					<!--
-					<div class="col-md-6">
-							<b>{tr}Groupmail{/tr}</b> (<a href="tiki-admin.php?profile=Groupmail&show_details_for=Groupmail&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)<br/>
-							<br>
-							{tr}This profile allows to provide a way for a team (a Tiki group) to process email contact requests, save them in contact lists and act on them and record the process in wiki pages{/tr}
-							{tr}It creates:{/tr}
+				<div class="col-md-6">
+					<h4>{tr}Profile Execute_on_list{/tr}</h4>
+					(<a href="tiki-admin.php?profile=Execute_on_list&show_details_for=Execute_on_list&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+					<br>
+					{tr}This profile demonstrates how to perform actions on several items from a list using Plugin ListExecute{/tr}
+					<br/>
+					<a href="https://doc.tiki.org/PluginListExecute" target="tikihelp" class="tikihelp" title="{tr}Execute_on_list{/tr}:
+							{tr}Main features used{/tr}:
 							<ul>
-								<li>{tr}A tracker for email messages received and store addresses in the Contacts feature{/tr}</li>
-								<li>{tr}Webmail configuration to use an account for groupmail{/tr}</li>
-								<li>{tr}A side module with markers to indicate who took which message{/tr}</li>
-								<li>{tr}A system to review communication logs from that group mail account{/tr}</li>
-								<br/><em>{tr}See also{/tr} <a href="https://doc.tiki.org/Groupmail" target="_blank">{tr}Groupmail in doc.tiki.org{/tr}</a></em>
+								<li>{tr}Trackers{/tr}</li>
+								<li>{tr}Plugin ListExecute{/tr}</li>
+								<br/>
 							</ul>
+						{tr}Click to read more{/tr}"
+					>
+						{icon name="help"}
+					</a>
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2">
+							<a href="http://tiki.org/display1228" class="thumbnail internal" data-box="box" title="{tr}Click to expand{/tr}">
+								<img src="img/profiles/profile_thumb_execute_on_list.png" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+							</a>
+							<div class="small text-center">
+								{tr}Click to expand{/tr}
+							</div>
+						</div>
 					</div>
-					-->
 				</div>
 			</div>
 		</fieldset>
