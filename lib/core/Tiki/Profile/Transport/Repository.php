@@ -46,5 +46,10 @@ class Tiki_Profile_Transport_Repository implements Tiki_Profile_Transport_Interf
 
 		return $content;
 	}
+
+	function getProfilePath()
+	{
+		return $this->url;
+	}	
 }
 

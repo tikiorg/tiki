@@ -31,6 +31,12 @@ class FileGallery extends ObjectWriter
 				InputOption::VALUE_NONE,
 				'Includes all children'
 			)
+			->addOption(
+				'include-files',
+				null,
+				InputOption::VALUE_NONE,
+				'Includes files to export'
+			)			
 			->addArgument(
 				'fileGallery',
 				InputArgument::REQUIRED,
@@ -44,11 +50,13 @@ class FileGallery extends ObjectWriter
 	{
 		$galId = $input->getArgument('fileGallery');
 		$withParents = $input->getOption('with-parents');
+		$includeFiles = $input->getOption('include-files');
+
 		$deep = $input->getOption('deep');
 
 		$writer = $this->getProfileWriter($input);
 
-		$result = \Tiki_Profile_InstallHandler_FileGallery::export($writer, $galId, $withParents, $deep);
+		$result = \Tiki_Profile_InstallHandler_FileGallery::export($writer, $galId, $withParents, $deep, $includeFiles);
 
 		if ($result) {
 			$writer->save();

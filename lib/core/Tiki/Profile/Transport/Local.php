@@ -25,5 +25,9 @@ class Tiki_Profile_Transport_Local implements Tiki_Profile_Transport_Interface
 			return TikiLib::lib('parser')->parse_data($content);
 		}
 	}
+
+	function getProfilePath()
+	{
+	}	
 }
 

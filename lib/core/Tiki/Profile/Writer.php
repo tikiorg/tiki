@@ -42,9 +42,9 @@ class Tiki_Profile_Writer
 	/**
 	 * Write an external page content.
 	 */
-	function writeExternal($page, $content)
+	function writeExternal($page, $content, $ext = '.wiki')
 	{
-		$this->externalWriter->write("$page.wiki", $content);
+		$this->externalWriter->write($page.$ext, $content);
 	}
 
 	function setPreference($name, $value)

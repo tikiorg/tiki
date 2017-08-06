@@ -10,5 +10,7 @@ interface Tiki_Profile_Transport_Interface
 	function getPageContent($pageName);
 
 	function getPageParsed($pageName);
+
+	function getProfilePath();
 }
 

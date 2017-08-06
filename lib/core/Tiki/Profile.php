@@ -415,6 +415,17 @@ class Tiki_Profile
 		return $content;
 	} // }}}
 
+
+	public function getProfilePath()
+	{
+		$path_tmp = $this->transport->getProfilePath();
+		if (! $path_tmp) {
+			$this->setFeedback(tra('Profile Path cannot be found'));
+		}
+
+		return $path_tmp;
+	}
+
 	public function getPageParsed( $pageName ) // {{{
 	{
 		$content = $this->transport->getPageParsed($pageName);
