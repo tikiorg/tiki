@@ -11,6 +11,12 @@
 		</div>
 	{/if}
 
+	{if !empty($search_engine)}
+		<div class="alert alert-info">
+			<p>Unified search engine: <b>{$search_engine}</b>{if !empty($search_version)}, version <b>{$search_version}</b>{/if}</p>
+		</div>
+	{/if}
+
 	{if !empty($stat)}
 		{remarksbox type='feedback' title="{tr}Indexed{/tr}"}
 			<ul>

@@ -50,17 +50,32 @@ class IndexRebuildCommand extends Command
 			$log = 2;
 		} else {
 			$log = 0;
-		} 
+		}
 		$cron = $input->getOption('cron');
 
 		$unifiedsearchlib = \TikiLib::lib('unifiedsearch');
 
 		if ($force && $unifiedsearchlib->rebuildInProgress()) {
-			if (!$cron) { $output->writeln('<info>Removing leftovers...</info>'); }
+			if (! $cron) {
+				$output->writeln('<info>Removing leftovers...</info>');
+			}
 			$unifiedsearchlib->stopRebuild();
 		}
 
-		if (!$cron) { $output->writeln('Started rebuilding index...'); }
+		if (! $cron) {
+			$output->writeln('Started rebuilding index...');
+		}
+
+		if (! $cron) {
+			list($engine, $version) = $unifiedsearchlib->getEngineAndVersion();
+			if (!empty($engine)) {
+				$engineMessage = 'Unified search engine: '. $engine;
+				if (!empty($version)){
+					$engineMessage .= ', version ' . $version;
+				}
+				$output->writeln($engineMessage);
+			}
+		}
 
 		$timer = new \timer();
 		$timer->start();

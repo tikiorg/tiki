@@ -307,6 +307,38 @@ class UnifiedSearchLib
 	}
 
 	/**
+	 * Return the current engine for unified search and version
+	 * @return array
+	 */
+	public function getEngineAndVersion()
+	{
+		global $prefs;
+		global $tikilib;
+
+		switch ($prefs['unified_engine']) {
+			case 'lucene':
+				$engine = 'Lucene';
+				$version = '';
+				break;
+			case 'elastic':
+				$elasticsearch = new \Search_Elastic_Connection($prefs['unified_elastic_url']);
+				$engine = 'Elastic';
+				$version = $elasticsearch->getVersion();
+				break;
+			case 'mysql':
+				$engine = 'MySQL';
+				$version = $tikilib->getMySQLVersion();
+				break;
+			default:
+				$engine = '';
+				$version = '';
+				break;
+		}
+
+		return [$engine, $version];
+	}
+
+	/**
 	 * Get the index location depending on $tikidomain for multi-tiki
 	 *
 	 * @return string	path to index directory
