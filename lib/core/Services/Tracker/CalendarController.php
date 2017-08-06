@@ -75,6 +75,9 @@ class Services_Tracker_CalendarController
 					}
 				}
 			}
+
+			$colormap = base64_decode($input->colormap->word());
+
 			$response[] = array(
 				'id' => $row['object_id'],
 				'trackerId' => isset($row['tracker_id']) ? $row['tracker_id'] : null,
@@ -85,7 +88,7 @@ class Services_Tracker_CalendarController
 				'start' => $this->getTimestamp($row[$start]),
 				'end' => $this->getTimestamp($row[$end]),
 				'editable' => $item->canModify(),
-				'color' => $this->getColor(isset($row[$coloring]) ? $row[$coloring] : ''),
+				'color' => $this->getColor(isset($row[$coloring]) ? $row[$coloring] : '', $colormap),
 				'textColor' => '#000',
 				'resource' => ($resource && isset($row[$resource])) ? strtolower($row[$resource]) : '',
 			);
@@ -107,17 +110,24 @@ class Services_Tracker_CalendarController
 		}
 	}
 
-	private function getColor($value)
+	private function getColor($value, $colormap)
 	{
 		static $colors = array('#6cf', '#6fc', '#c6f', '#cf6', '#f6c', '#fc6');
 		static $map = array();
+
+		if (empty($map) && !empty($colormap)){
+			foreach (explode('|', $colormap) as $color){
+				$colorMapParts = explode(',', $color);
+				$map[trim($colorMapParts[0])] = trim($colorMapParts[1]);
+			}
+		}
 
 		if (! isset($map[$value])) {
 			$color = array_shift($colors);
 			$colors[] = $color;
 			$map[$value] = $color;
 		}
-		
+
 		return $map[$value];
 	}
 }
