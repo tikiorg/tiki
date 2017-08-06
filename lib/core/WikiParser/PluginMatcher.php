@@ -19,6 +19,10 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 
 	private $leftOpen = 0;
 
+	/**
+	 * @param $text
+	 * @return WikiParser_PluginMatcher
+	 */
 	public static function match($text)
 	{
 		$matcher = new self;
@@ -184,11 +188,17 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 		return count($this->starts);
 	}
 
+	/**
+	 * @return WikiParser_PluginMatcher_Match
+	 */
 	function current()
 	{
 		return $this->starts[ $this->scanPosition ];
 	}
 
+	/**
+	 * @return WikiParser_PluginMatcher_Match
+	 */
 	function next()
 	{
 		foreach ($this->starts as $key => $m) {
