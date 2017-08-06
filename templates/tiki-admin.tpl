@@ -56,10 +56,10 @@
 		{/foreach}
 	{/remarksbox}
 {/if}
-{* Graceful error management when URL is wrong for admin panel *}
+
 {if $template_not_found eq 'y'}
-		{remarksbox type="error" title="{tr}Error{/tr}"}
-		{tr _0="$include"}The <strong>%0</strong> admin panel does not exist. Select an admin panel above or use the search box.{/tr}
+	{remarksbox type="error" title="{tr}Error{/tr}"}
+		{tr _0="$include"}The value of the <strong>page</strong> parameter is invalid: <strong>%0</strong>.{/tr}
 	{/remarksbox}
 {else}
 	{include file="admin/include_$include.tpl"}
