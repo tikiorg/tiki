@@ -28,6 +28,7 @@
 			{preference name=wikiplugin_listexecute}
 			{preference name=wikiplugin_pdf}
 			{preference name=wikiplugin_pivottable}
+			{preference name=wikiplugin_trackercalendar}
 			{preference name=wikiplugin_trackerlist}
 		</fieldset>
 		<fieldset class="table clearfix featurelist">
