@@ -288,7 +288,7 @@ class Tiki_Profile
 	public static function isValidReference($value, $simpleCheck = false)
 	{
 		if ($simpleCheck){
-			$value = '$simple_test:'.$value.'$';
+			$value = '$simple_test:'.$value;
 		}
 
 		if ( preg_match(self::SHORT_PATTERN, $value, $parts) ){
