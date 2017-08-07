@@ -5,12 +5,24 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+
 class TranslationReader
 {
+	/**
+	 * Creates a TranslationReader with the file to be translated. this
+	 * class can recognize JSON and CSV files.
+	 * @param [type] $filename [description]
+	 */
 	public function __construct($filename) {
 		$this->filename = $filename;
 	}
-	
+
+	/**
+	 * Return an associative array with translations. The array key is an
+	 * english word and the value is the word translation.
+	 *
+	 * @return array translations
+	 */
 	public function getArray() {
 		$ext = null;
 		$valid = is_string($this->filename)
@@ -26,7 +38,7 @@ class TranslationReader
 		$method = $ext[1] . "Read";
 		return call_user_func(array($this, $method));
 	}
-	
+
 	private function csvRead() {
 		$handle = fopen($this->filename, 'r');
 		$header = fgetcsv($handle);
