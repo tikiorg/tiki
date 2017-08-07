@@ -59,7 +59,7 @@
 
 {if $template_not_found eq 'y'}
 	{remarksbox type="error" title="{tr}Error{/tr}"}
-		{tr _0="$include"}The value of the <strong>page</strong> parameter is invalid: <strong>%0</strong>.{/tr}
+	{tr _0="page" _1={$include|escape}}The <strong>%0</strong> parameter has an invalid value: <strong>%1</strong>.{/tr}
 	{/remarksbox}
 {else}
 	{include file="admin/include_$include.tpl"}
