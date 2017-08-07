@@ -26,10 +26,11 @@ class TikiFilter_RelativeURL implements Zend\Filter\FilterInterface
 		$url =  $filter->filter($input);
 
 		$url = Zend\Uri\UriFactory::factory($url);
+		$url->normalize();
 
 		$query = $url->getQuery();
 		$fragment = $url->getFragment();
-		$url = $url->getPath();
+		$url = preg_replace('/^\/\/+/', '', $url->getPath());
 
 		if ($query)
 			$url .= '?'.$query;
