@@ -455,7 +455,7 @@
 					{else}
 						{include file='password_jq.tpl' ignorejq='y'}
 						<div class="form-group">
-							<label class="col-sm-3 col-md-2 control-label" for="pass1">{tr}New password{/tr}</label>
+							<label class="col-sm-3 col-md-2 control-label" for="pass1">{if isset($userinfo.userId)}{tr}New password{/tr}{else}{tr}Password{/tr}{/if}</label>
 							<div class="col-sm-7 col-md-6">
 								<input type="password" class="form-control" placeholder="{tr}Password{/tr}" name="pass" id="pass1">
 								<div style="margin-left:5px;">
@@ -468,7 +468,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-3 col-md-2 control-label" for="pass2">{tr}Confirm new password{/tr}</label>
+							<label class="col-sm-3 col-md-2 control-label" for="pass2">{if isset($userinfo.userId)}{tr}Confirm new password{/tr}{else}{tr}Confirm password{/tr}{/if}</label>
 							<div class="col-sm-7 col-md-6">
 								<input type="password" class="form-control" name="passAgain" id="pass2" placeholder="{tr}Password{/tr}">
 								<div id="mypassword2_text">
