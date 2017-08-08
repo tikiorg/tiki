@@ -16,6 +16,7 @@
 					</a>
 					<ul class="dropdown-menu" role="menu">
 						<li><span class="dropdown-title">{tr}Preference Filters{/tr}</span></li>
+							<input type="hidden" name="pref_filters[]" value="basic">
 							{foreach from=$pref_filters key=name item=info}
 								<li>
 									<div class="checkbox">
