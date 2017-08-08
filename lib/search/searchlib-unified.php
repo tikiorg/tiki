@@ -1054,6 +1054,38 @@ class UnifiedSearchLib
 				->setRenderMap(TikiLib::lib('language')->get_language_map());
 		}
 
+		if ($prefs['federated_enabled'] === 'y') {
+			$tiki_extwiki = TikiDb::get()->table('tiki_extwiki');
+
+			$indexMap = [
+				$this->getIndexLocation() => tr('Local Search'),
+			];
+
+			foreach (TikiLib::lib('federatedsearch')->getIndices() as $indexname => $index) {
+				$indexMap[$indexname] = $tiki_extwiki->fetchOne('name', [
+					'indexname' => $indexname,
+				]);
+			}
+
+			$facets[] = Search_Query_Facet_Term::fromField('_index')
+				->setLabel(tr('Federated Search'))
+				->setRenderCallback(function ($index) use (& $indexMap) {
+					$out = tr('Index not found');
+					if (isset($indexMap[$index])) {
+						$out = $indexMap[$index];
+					} else {
+						foreach ($indexMap as $candidate => $name) {
+							if (0 === strpos($index, $candidate . '_')) {
+								$indicesMap[$index] = $name;
+								$out = $name;
+								break;
+							}
+						}
+					}
+					return $out;
+				});
+		}
+
 		$provider = new Search_FacetProvider;
 		$provider->addFacets($facets);
 		$this->addSources($provider);

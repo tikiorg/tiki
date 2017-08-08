@@ -906,7 +906,7 @@ class PreferencesLib
 	{
 		global $user;
 
-		if (! in_array($tags, 'basic')) {
+		if (! in_array('basic', $tags)) {
 			$tags[] = 'basic';
 		}
 		TikiLib::lib('tiki')->set_user_preference($user, 'pref_filters', implode(',', $tags));
