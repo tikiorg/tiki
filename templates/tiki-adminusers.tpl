@@ -455,9 +455,9 @@
 					{else}
 						{include file='password_jq.tpl' ignorejq='y'}
 						<div class="form-group">
-							<label class="col-sm-3 col-md-2 control-label" for="pass1">{tr}New Password{/tr}</label>
+							<label class="col-sm-3 col-md-2 control-label" for="pass1">{tr}New password{/tr}</label>
 							<div class="col-sm-7 col-md-6">
-								<input type="password" class="form-control" placeholder="{tr}New Password{/tr}" name="pass" id="pass1">
+								<input type="password" class="form-control" placeholder="{tr}Password{/tr}" name="pass" id="pass1">
 								<div style="margin-left:5px;">
 									<div id="mypassword_text">{icon name='ok' istyle='display:none'}{icon name='error' istyle='display:none' } <span id="mypassword_text_inner"></span></div>
 									<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div>
@@ -468,9 +468,9 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-3 col-md-2 control-label" for="pass2">{tr}Repeat Password{/tr}</label>
+							<label class="col-sm-3 col-md-2 control-label" for="pass2">{tr}Confirm new password{/tr}</label>
 							<div class="col-sm-7 col-md-6">
-								<input type="password" class="form-control" name="passAgain" id="pass2" placeholder="{tr}Repeat Password{/tr}">
+								<input type="password" class="form-control" name="passAgain" id="pass2" placeholder="{tr}Password{/tr}">
 								<div id="mypassword2_text">
 									<div id="match" style="display:none">
 										{icon name='ok' istyle='color:#0ca908'} {tr}Passwords match{/tr}
