@@ -5,7 +5,7 @@
  * $Id: language.js 30343 2010-10-27 12:50:51Z xavidp $
  */
 
-lang = {
+var lang = {
 	"Very Secure" : "بہت محفوظ",
 	"Secure" : "محفوظ",
 	"Very Strong" : "بہت مضبوط",
