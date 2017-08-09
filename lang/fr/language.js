@@ -5,7 +5,7 @@
  * $Id: language.js 30343 2010-10-27 12:50:51Z xavidp $
  */
 
-lang = {
+var lang = {
 	"Default" : "Défaut",
 	"Very Secure" : "Très sécurisé",
 	"Secure" : "Sécurisé",

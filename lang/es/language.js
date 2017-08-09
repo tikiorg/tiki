@@ -5,7 +5,7 @@
  * $Id: language.js 27909 2010-07-09 13:33:31Z jonnybradley $
  */
 
-lang = {
+var lang = {
 	"Default" : "Por omisión",
 	"Very Secure" : "Muy Segura",
 	"Secure" : "Segura",
