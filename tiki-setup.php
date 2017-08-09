@@ -548,7 +548,9 @@ if ( $prefs['feature_jquery_validation'] == 'y' ) {
 }
 
 // note: jquery.async.js load a copy of jquery
+// Used by treetable and a few more places
 $headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/async/jquery.async.js');
+
 $headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/treetable/jquery.treetable.js');
 $headerlib->add_cssfile('vendor_bundled/vendor/jquery/plugins/treetable/css/jquery.treetable.css');
 
