@@ -190,7 +190,7 @@ class HeaderLib
 	 * These are usually dynamic created js scripts for configuration, module settings etc.
 	 * Urls added here will not be further processed (like minified or put into a single file)
 	 * @param string $url - relative url to this tiki instance
-	 * @return object $HeaderLib
+	 * @return HeaderLib Current object
 	 */
 	function add_jsfile_dynamic($url)
 	{
@@ -208,7 +208,7 @@ class HeaderLib
 	 * and cdn files are added after page setup by plugins etc
 	 *
 	 * @param string $url - absolute url including http/https
-	 * @return object $HeaderLib
+	 * @return HeaderLib Current object
 	 */
 	function add_jsfile_cdn($url)
 	{
@@ -223,7 +223,7 @@ class HeaderLib
 	 * Depending on prefs, it could be minified and put into a single js file.
 	 * @param string $file with path relative to tiki dir
 	 * @param boolean $skip_minify default = false - true if the file must not be minified
-	 * @return object $HeaderLib
+	 * @return HeaderLib Current object
 	 */
 	function add_jsfile_dependancy($file, $skip_minify = false)
 	{
@@ -238,7 +238,7 @@ class HeaderLib
 	 * Depending on prefs, it could be minified and put into a single js file.
 	 * @param string $filename with path relative to tiki dir
 	 * @param booloean $skip_minify default = false - true if the file must not be minified
-	 * @return object $HeaderLib
+	 * @return HeaderLib Current object
 	 */
 	function add_jsfile_external($file, $skip_minify = false)
 	{
@@ -252,7 +252,7 @@ class HeaderLib
 	 * Depending on prefs, it could be minified and also put into a single js file
 	 * @param string $file -  path relative to tiki dir
 	 * @param boolean $skip_minify optional, default = false - true if the file must not be minified
-	 * @return object $HeaderLib
+	 * @return HeaderLib Current object
 	 */
 	function add_jsfile($file, $skip_minify=false) {
 		$this->add_jsfile_by_rank($file, '50standard', $skip_minify);
@@ -267,7 +267,7 @@ class HeaderLib
 	 * Depending on prefs, it could be minified and put into a single js file.
 	 * @param string $filename with path relative to tiki dir
 	 * @param boolean $skip_minify default = false - true if the file must not be minified
-	 * @return object $HeaderLib
+	 * @return HeaderLib Current object
 	 */
 	function add_jsfile_late($file, $skip_minify = false)
 	{
@@ -282,7 +282,7 @@ class HeaderLib
 	 * @param string $file
 	 * @param string $rank
 	 * @param boolean $skip_minify
-	 * @return object $HeaderLib
+	 * @return HeaderLib Current object
 	 */
 	function add_jsfile_by_rank($file, $rank, $skip_minify = false) {
 		// if js is added after tiki-setup.php is run, add those js files to 'late'
@@ -305,7 +305,7 @@ class HeaderLib
 	 * Add js that works as config. Usally created dynamically.
 	 * @param string $script
 	 * @param integer $rank - loadorder optional, default 0
-	 * @return object $HeaderLib
+	 * @return HeaderLib Current object
 	 */
 	function add_js_config($script, $rank=0)
 	{
@@ -320,7 +320,7 @@ class HeaderLib
 	 * JS scripts to add as string 
 	 * @param string $script
 	 * @param integer $rank loadorder optional, default = 0
-	 * @return object $HeaderLib
+	 * @return HeaderLib Current object
 	 */
 	function add_js($script, $rank = 0)
 	{
@@ -334,7 +334,7 @@ class HeaderLib
 	 * Adds lines or blocks of JQuery JavaScript to $(document).ready handler
 	 * @param string $script - Script to execute
 	 * @param number $rank - load order (default=0)
-	 * @return $object HeaderLib
+	 * @return HeaderLib Current object
 	 */
 	function add_jq_onready($script,$rank=0)
 	{
@@ -497,7 +497,7 @@ class HeaderLib
 	/**
 	 * Force JS Files being added after tiki-setup.php is done to the rank/loadorder 'late' if rank is not 'external'. 
 	 * Used to seperate page specific JS Files from the rest.
-	 * @return object $HeaderLib
+	 * @return HeaderLib Current object
 	 */
 	public function forceJsRankLate()
 	{
