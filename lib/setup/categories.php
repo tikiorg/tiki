@@ -37,6 +37,9 @@ if ($prefs['feature_categories'] == 'y' && $prefs['categories_used_in_tpl'] == '
 			$objectCategoryIds = $categlib->get_object_categories($objectType, $_REQUEST[$here['itemkey']]);
 			$objectCategoryIdsNoJail = $categlib->get_object_categories($objectType, $_REQUEST[$here['itemkey']], -1, false);
 		} elseif (isset($here['key']) && isset($_REQUEST[$here['key']])) {
+			if ($objectType === 'wiki page' && $prefs['wiki_url_scheme'] !== 'urlencode') {
+				$key = TikiLib::lib('wiki')->get_page_by_slug($key);
+			}
 			$objectCategoryIds = $categlib->get_object_categories($objectType, $key);
 			$objectCategoryIdsNoJail = $categlib->get_object_categories($objectType, $key, -1, false);
 		}
