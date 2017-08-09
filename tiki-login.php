@@ -90,9 +90,22 @@ if (isset($_REQUEST['su']) && $access->checkOrigin('page')) {
 		}
 		if ($userlib->user_exists($_REQUEST['username'])) {
 			$loginlib->switchUser($_REQUEST['username']);
+			$switchedUser = $_REQUEST['username'];
+			if ($prefs['useGroupHome'] == 'y') {
+				$switchedUserGroupHome = $userlib->get_user_default_homepage($switchedUser);
+				if ($switchedUserGroupHome) {
+					$switchPage = $switchedUserGroupHome;
+				} else {
+					$switchPage = $prefs['wikiHomePage'];
+				}
+			} else {
+				$switchPage = $prefs['wikiHomePage'];
+			}
+			$access->redirect($switchPage);
+		} else {
+			$access->redirect($_SESSION['loginfrom']);
 		}
-		
-		$access->redirect($_SESSION['loginfrom']);
+
 	}
 }
 $requestedUser = isset($_REQUEST['user']) ? $_REQUEST['user'] : false;
@@ -510,7 +523,7 @@ if ($stay_in_ssl_mode != 'y' || !$https_mode) {
 	$url = str_replace('https://', 'http://', $url);
 }
 
-/* 
+/*
  * If user logged in with HTTPS after requesting a non-TLS URL but "stay"ing in TLS mode was requested, redirect to HTTPS equivalent of the original URL requested.
  * Not sure why we don't just use the initial URI requested. Chealer 2017-04-19
  */
