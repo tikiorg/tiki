@@ -1,4 +1,4 @@
-{title}{tr}Roll back page{/tr} {$page} {tr}to version{/tr} {$version}{/title}
+{title}{tr _0=$page _1=$version}Roll back page %0 to version %1{/tr}{/title}
 
 <form action="tiki-rollback.php?page={$page|escape:url}&amp;version={$version|escape}&amp;rollback=y" method="post">
 	<input type="submit" class="btn btn-default btn-sm" name="rollback" value="{tr}Roll back{/tr}">
