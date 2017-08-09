@@ -222,7 +222,7 @@ class HeaderLib
 	 * Theses are usally libraries like jquery or codemirror, so files where other js file depend on.
 	 * Depending on prefs, it could be minified and put into a single js file.
 	 * @param string $file with path relative to tiki dir
-	 * @param boolean $skip_minify default = false - true if the file must not be minified
+	 * @param bool $skip_minify true if the file must not be minified, false if it can
 	 * @return HeaderLib Current object
 	 */
 	function add_jsfile_dependancy($file, $skip_minify = false)
@@ -237,7 +237,7 @@ class HeaderLib
 	 * Theses are usally custom libraries like raphael, gaffle etc.
 	 * Depending on prefs, it could be minified and put into a single js file.
 	 * @param string $filename with path relative to tiki dir
-	 * @param booloean $skip_minify default = false - true if the file must not be minified
+	 * @param bool $skip_minify true if the file must not be minified, false if it can
 	 * @return HeaderLib Current object
 	 */
 	function add_jsfile_external($file, $skip_minify = false)
@@ -251,7 +251,7 @@ class HeaderLib
 	 * Adds a js file to load after external. That file must not be loaded from an external source.
 	 * Depending on prefs, it could be minified and also put into a single js file
 	 * @param string $file -  path relative to tiki dir
-	 * @param boolean $skip_minify optional, default = false - true if the file must not be minified
+	 * @param bool $skip_minify true if the file must not be minified, false if it can
 	 * @return HeaderLib Current object
 	 */
 	function add_jsfile($file, $skip_minify=false) {
@@ -266,7 +266,7 @@ class HeaderLib
 	 * @see $this->forceJsRankLate() 
 	 * Depending on prefs, it could be minified and put into a single js file.
 	 * @param string $filename with path relative to tiki dir
-	 * @param boolean $skip_minify default = false - true if the file must not be minified
+	 * @param bool $skip_minify true if the file must not be minified, false if it can
 	 * @return HeaderLib Current object
 	 */
 	function add_jsfile_late($file, $skip_minify = false)
@@ -281,7 +281,7 @@ class HeaderLib
 	 * Only reason that it is public, is for access from lib/core/tiki/PageCache.php
 	 * @param string $file
 	 * @param string $rank
-	 * @param boolean $skip_minify
+	 * @param bool $skip_minify true if the file must not be minified, false if it can
 	 * @return HeaderLib Current object
 	 */
 	function add_jsfile_by_rank($file, $rank, $skip_minify = false) {
