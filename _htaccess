@@ -5,12 +5,12 @@
 # They enhance security and permit clean URLs.
 # In your Tiki instance, visit tiki-admin.php?page=sefurl to make Tiki use clean URLs in generated links.
 #
-# The htaccess file may be enabled in diffrent ways. (in order of most to least recommended)
-# Option 1: All the installer to handle it.
-# Option 2: reate a symbolic link from .htaccess to _htaccess. This will keep the configuration up-to-date.
-# Option 3: Copy _htaccess to .htaccess. Note : Do not move (rename) _htaccess, it is required for other uses (like SEFURL).
+# The .htaccess file may be enabled in number of different ways (in order of the most to the least recommended):
+# Option 1: Let the installer handle it.
+# Option 2: Create a symbolic link from .htaccess to _htaccess. This will keep the configuration up-to-date.
+# Option 3: Copy _htaccess to .htaccess. Note : Do not move (rename) _htaccess, it is required (used internally) by some Tiki features (like SEFURL).
 # Option 4: Add the content of this file to your httpd.conf.
-# This should be repeated when the reference _htaccess file changes (when upgrading Tiki).
+# The last two options should be repeated when the reference _htaccess file changes (when upgrading Tiki).
 #
 # DEVELOPERS: This configuration must be kept synchronized with the configuration for other Web servers.
 # See http://dev.tiki.org/Operating+System+independence#Keep_web.config_and_.htaccess_synchronized
@@ -79,7 +79,7 @@ FileETag none
 
     # -- Persistent Connections -- #
     # Allow multiple requests to be sent over the same TCP connection. Enable if you serve a lot of static content
-    #  but, be aware of the possible disadvantages!
+    # but, be aware of the possible disadvantages!
     # Read more: http://httpd.apache.org/docs/current/en/mod/core.html#keepalive
     #Header set Connection Keep-Alive
 
@@ -125,8 +125,8 @@ FileETag none
     RewriteEngine On
 
     # -- Tiki Root -- #
-    # You need customize the RewriteBase value below if tiki is installed in a subdirectory of your web root.
-    # The value needs to match the subdirectory name that tiki is installed in.
+    # You need to customize the RewriteBase value below if Tiki is installed in a subdirectory of your web root.
+    # The value needs to match the subdirectory name that Tiki is installed in.
     # You will get errors otherwise. e.g. "The requested URL /absolutepath/tiki-index.php was not found on this server"
     #RewriteBase   /tiki
 
@@ -134,19 +134,19 @@ FileETag none
     # Prevent broken pages and slow upload times. e.g., try yourdomain.com/bogus/ or yourdomain.com/tiki/bogus/
     # The below may not work in all configurations depending on redirects already in place.
 
-    # If directories containing other programs are legitimate (e.g. when tiki is installed in a subdirectory), then enable.
+    # If directories containing other programs are legitimate (e.g. when Tiki is installed in a subdirectory), then modify and enable the following line.
     #RewriteCond %{REQUEST_URI} !(^/otherokaydirectory/)
 
-    # If tiki is inslalled in the web root, then enable.
+    # If Tiki is installed in the web root and your home page is named HomePage, then enable this.
     #RewriteRule ^(.+[^/])/$  /HomePage [R=301,L]
 
-    # If tiki is instaleed in a subdirectory of the web root, then customize and endable.
+    # If Tiki is installed in a subdirectory of the web root, then customize and enable it below.
     #RewriteRule ^(.+[^/])/$  /tiki/HomePage [R=301,L]
 
     # -- Legacy Template Image Locations -- #
-    # As of tiki9, image locations have changed. If your custom template links to these images enabling these
-    #  options may fix your broken images.
-    # The perfered solution is to change the directory paths in your custom template.
+    # Since Tiki9, image locations have changed. If your custom template links to these images enabling these
+    # options may fix your broken images.
+    # The preferred solution is to change the directory paths in your custom template.
     # Read more: http://dev.tiki.org/ImgDirectoryRevamp
     #RewriteRule ^img/icons2/(.*)$ img/icons/$1
     #RewriteRule ^pics/large/(.*)$ img/icons/large/$1
@@ -155,7 +155,7 @@ FileETag none
     #RewriteRule ^images/(.*)$ img/icons/$1
 
     # -- Apache Authorization Header -- #
-    # Rewrite rules for passing authorisation with Apache running in CGI or FastCGI mode
+    # Rewrite rules for passing authorization with Apache running in CGI or FastCGI mode
     RewriteCond %{HTTP:Authorization} ^(.*)
     RewriteRule ^(.*) - [E=HTTP_AUTHORIZATION:%1]
 
@@ -172,19 +172,19 @@ FileETag none
 
     # -- Profiles Repository -- #
     # Set the parentId (here set as 1) to the Id of the category containing your profile pages.
-    # Enable feature_wiki_export, feature_wiki and feature_categories in your tiki settings.
-    # Enable tiki_p_view_category and tiki_p_export_wiki in tiki for anonymous to be a repository.
+    # Enable feature_wiki_export, feature_wiki and feature_categories in your Tiki settings.
+    # Enable tiki_p_view_category and tiki_p_export_wiki in Tiki for anonymous to be a repository.
     # Read more: http://doc.tiki.org/Profiles
     #RewriteRule ^profiles$             tiki-browse_categories.php?find=&deep=on&type=wiki+page&parentId=1&sort_mode=name_asc&plain&maxRecords=1000000 [L]
 
     # -- Plain Text Sitemap SEO -- #
     # Makes a short link to a list of objects to export as a plain text sitemap.
     # Set the parentId (here set as 2) to the id of a category containing the objects you wish to be
-    #  crawled by search engines.
+    # crawled by search engines.
     #RewriteRule ^sitemap.txt$          tiki-browse_categories.php?find=&deep=on&type=wiki+page&parentId=2&sort_mode=name_asc&links&maxRecords=1000000 [L]
 
 	# -- RSS Feeds -- #
-	# Example rewrite rule to use the search as a simple rss feed
+	# Example rewrite rule to use the search as a simple RSS feed
 	#RewriteRule feed-(.*)\.rss         tiki-searchindex.php?httpaccept=application\%2Frss\%2Bxml&filter~content=$1  [QSA,L]
 
     # -- Tiki URL Rewriting -- #
@@ -203,7 +203,7 @@ FileETag none
 </IfModule>
 
 # -- Prevent Directory Browsing -- #
-# recommended if you do not use it (you will know if you do)
+# Recommended if you do not use it (you will know if you do).
 #Options -Indexes
 
 # -- Developer cTag Blocking -- #
@@ -232,7 +232,7 @@ FileETag none
 
 # -- Apache Error Handling -- #
 # Tiki can catch some errors and deal with them by redirecting to a similar page, sending you to the
-#  search, etc. However, some errors do not reach Tiki and are only caught by Apache (ex.: filenameThatDoesntExist.php).
+# search, etc. However, some errors do not reach Tiki and are only caught by Apache (ex.: filenameThatDoesntExist.php).
 # To make Tiki handle errors caught by Apache, uncomment some of the following lines and adapt the page names.
 # You must create the pages before trying to use them.
 #ErrorDocument 404 /tiki-index.php?page=File+not+found
@@ -244,7 +244,7 @@ FileETag none
 
 # -- Force PHP Version -- #
 # Tiki requires PHP5.6 - PHP7. If your host doesn't run one of these by default, it's possible that it can
-#  be activated by trying to enable it here.  Check with your host.
+# be activated by trying to enable it here.  Check with your host.
 # Option 1: PHP5
 #AddType application/x-httpd-php5 .php
 #AddHandler application/x-httpd-php5 .php
@@ -260,8 +260,8 @@ FileETag none
 #SetEnv TIKI_HEADER_REPORT_EVENTS on
 
 # -- PHP Settings -- #
-# If posable, its better to change the following settings throguh your php.ini file, or thoguh your webhost control panel.
-# Some web hosts will not allow you to change these setting through the htaccess file.
+# If possible, it's better to change the following settings through your php.ini file, or through your webhosting control panel.
+# Some web hosts will not allow you to change these setting through the .htaccess file.
 
 # To activate the error display, uncomment the following line.
 # Read more http://php.net/manual/en/errorfunc.configuration.php#ini.display-errors
@@ -271,26 +271,26 @@ FileETag none
 # Read more: http://php.net/manual/en/errorfunc.configuration.php#ini.error-reporting
 #php_value error_reporting E_ALL
 
-# Increase memory (default is 128M). Use this if you are getting blank pages and strange errors.
+# Increase memory limit (default is 128M). Use this if you are getting blank pages and/or strange errors.
 # Read more: http://php.net/manual/en/ini.core.php#ini.memory-limit
 #php_value memory_limit 256M
 
 # Increase execution time.
-# Default value in apache use to be 30, and in some cases of long wiki pages with many plugins it may take longer.
+# Default value in Apache used to be 30, and in some cases of long wiki pages with many plugins it may take longer.
 # Read more: http://php.net/manual/en/info.configuration.php#ini.max-execution-time
 #php_value max_execution_time 90
 
 # This sets the maximum time in seconds a script is allowed to parse input data, like POST and GET.
 #php_value max_input_time 90
 
-# Increase the maximum file size for uploads allowed by php.
-# Default value in apache use to be 2M which is usually too low for pdf or documents with some images, screenshots, etc.
+# Increase the maximum file size for uploads allowed by PHP.
+# Default value in Apache used to be 2M which is usually too low for PDF or documents with some images, screenshots, etc.
 # Read more: http://php.net/manual/en/ini.core.php#ini.upload-max-filesize
 # Read more: http://php.net/manual/en/ini.core.php#ini.post-max-size
 #php_value upload_max_filesize 10M
 #php_value post_max_size 11M
 
-# In some cases you may see open_basedir warnings about Smarty accessing php files that it shouldn't.
+# In some cases you may see open_basedir warnings about Smarty accessing PHP files that it shouldn't.
 # The following line (uncommented) will reset the include path to use only Tiki's files which will solve this in most cases.
 #php_value include_path "."
 
