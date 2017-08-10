@@ -324,9 +324,7 @@ function add_watch_icons($descendants, $usercatwatches, $requestid, $categid, $d
 				'alt' =>  $tip_group], $smarty) . '</a>';
 	}
 	$alleyes = $eyes . $eyesgroup;
-	$escapedeyes = htmlspecialchars(strtr($alleyes, array("\\" => "\\\\", "'" => "\\'", "\"" => "\\\"", "\r" => "\\r",
-		"\n" => "\\n", "</" => "<\/" )), ENT_QUOTES, 'UTF-8', true);
-	$popupparams = ['trigger' => 'click', 'fullhtml' => 1, 'center' => true, 'text' =>  $escapedeyes];
+	$popupparams = ['trigger' => 'click', 'fullhtml' => true, 'center' => true, 'text' =>  $alleyes];
 	return '<a class="tips" title="' . tra('Monitoring') . '" href="#" '. smarty_function_popup( $popupparams, $smarty)
 		. 'style="padding:0; margin:0; border:0">' . smarty_function_icon(['name'=> 'wrench'], $smarty) . '</a>';
 

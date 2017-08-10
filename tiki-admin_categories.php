@@ -320,9 +320,7 @@ foreach ($categories as $category) {
 			'type' => 'category',
 			'mode' => 'text',
 		], $smarty);
-		$escapeddata = htmlspecialchars(strtr($data, array("\\" => "\\\\", "'" => "\\'", "\"" => "\\\"", "\r" => "\\r",
-			"\n" => "\\n", "</" => "<\/" )), ENT_QUOTES, 'UTF-8', true);
-		$popupparams = ['trigger' => 'click', 'fullhtml' => 1, 'center' => true, 'text' =>  $escapeddata];
+		$popupparams = ['trigger' => 'click', 'fullhtml' => 1, 'center' => true, 'text' =>  $data];
 		$newdata =  '<a class="tips" title="' . tra('Actions') . '" href="#" '. smarty_function_popup( $popupparams, $smarty)
 		. 'style="padding:0; margin:0; border:0">' . smarty_function_icon(['name'=> 'wrench'], $smarty) . '</a>';
 
