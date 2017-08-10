@@ -1611,7 +1611,6 @@ function wikiplugin_img( $data, $params )
 				. '</a>';
 		}
 	}
-	$repl = str_replace('&', '&amp;', $repl);
 	return '~np~' . $repl . "\r" . '~/np~';
 }
 
