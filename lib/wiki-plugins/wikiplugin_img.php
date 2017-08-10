@@ -827,8 +827,6 @@ function wikiplugin_img( $data, $params )
 			}
 		}
 
-		$fwidth = '';
-		$fheight = '';
 		if (!is_object($imageObj) || isset(TikiLib::lib('parser')->option['indexing']) && TikiLib::lib('parser')->option['indexing']) {
 			$fwidth = 1;
 			$fheight = 1;
