@@ -1909,28 +1909,28 @@ FILL;
 
 		$smarty->assign('showmandatory', $showmandatory);
 
-			if ($prefs['feature_antibot'] == 'y' && empty($user)
-				&& (!isset($transactionStep) || $transactionStep == 0)
-				&& $params['formtag'] != 'n'
-				&& ($registration != 'y' || $prefs["user_register_prettytracker"] != 'y')
-				) {
-				// in_tracker session var checking is for tiki-register.php
-				$smarty->assign('antibot_table', empty($wiki) && empty($tpl)?'n': 'y');
-				$captchalib = TikiLib::lib('captcha');
-				$smarty->assign('captchalib', $captchalib);
-				if ($registration == 'y') {
-					$smarty->assign('form', 'register');
-				}
-				$back .= $smarty->fetch('antibot.tpl');
+		if ($prefs['feature_antibot'] == 'y' && empty($user)
+			&& (!isset($transactionStep) || $transactionStep == 0)
+			&& $params['formtag'] != 'n'
+			&& ($registration != 'y' || $prefs["user_register_prettytracker"] != 'y')
+			) {
+			// in_tracker session var checking is for tiki-register.php
+			$smarty->assign('antibot_table', empty($wiki) && empty($tpl)?'n': 'y');
+			$captchalib = TikiLib::lib('captcha');
+			$smarty->assign('captchalib', $captchalib);
+			if ($registration == 'y') {
+				$smarty->assign('form', 'register');
 			}
-			$back .= '</div>';
+			$back .= $smarty->fetch('antibot.tpl');
+		}
+		$back .= '</div>';
 
-			if ($params['formtag'] == 'y') {
-				if (empty($wiki) && empty($tpl)){
-					$back .= '<div class="form-group"><div class="input_submit_container btn-bar ' . $buttonclass . '">';
-				}else{
-					$back .= '<div class="form-group"><div class="input_submit_container btn-bar">';
-				};
+		if ($params['formtag'] == 'y') {
+			if (empty($wiki) && empty($tpl)){
+				$back .= '<div class="form-group"><div class="input_submit_container btn-bar ' . $buttonclass . '">';
+			}else{
+				$back .= '<div class="form-group"><div class="input_submit_container btn-bar">';
+			}
 
 			if (!empty($reset)) {
 					$back .= '<input class="button submit preview" type="reset" name="tr_reset" value="'.tra($reset).'" />';
@@ -1955,7 +1955,6 @@ FILL;
 		}
 
 		if (!empty($params['_ajax_form_ins_id'])) {	// save new js in a function for the form init fn
-
 			$headerlib->add_js(' var ajaxTrackerFormInit_' . $params['_ajax_form_ins_id'] . ' = function() {' . $headerlib->output_js(false) . '}', 10);
 
 			// put back the pre-existing js
