@@ -201,7 +201,7 @@
 {/if}
 
 {if $user and $prefs.feature_user_watches eq 'y'}
-	<div class="categbar" align="right">
+	<div class="categbar">
 		{if isset($category_watched) && $category_watched eq 'y'}
 			{tr}Watched by categories:{/tr}
 			{section name=i loop=$watching_categories}

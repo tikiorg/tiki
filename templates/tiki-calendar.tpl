@@ -110,7 +110,7 @@
 
 
 
-	<div class="categbar" align="right">
+	<div class="categbar">
 		{if $user and $prefs.feature_user_watches eq 'y'}
 			{if isset($category_watched) and $category_watched eq 'y'}
 				{tr}Watched by categories:{/tr}

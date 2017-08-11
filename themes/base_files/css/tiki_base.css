@@ -1276,6 +1276,10 @@ textarea.wikiedit {
   margin-top: -20px;
   padding-top: 20px;
 }
+div.categbar {
+  text-align: right;
+  clear: both;
+}
 .box-quickadmin li {
   font-size: 0.9em;
 }
