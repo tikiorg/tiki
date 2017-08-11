@@ -17,7 +17,7 @@ if ( $prefs['error_reporting_adminonly'] == 'y' and $tiki_p_admin != 'y' ) {
 } elseif ($prefs['error_reporting_level'] == 2047) {
 	$errorReportingLevel = E_ALL & ~E_STRICT;
 } elseif ($prefs['error_reporting_level'] == 2039) {
-	$errorReportingLevel = E_ALL & ~E_NOTICE;
+	$errorReportingLevel = E_ALL & ~E_STRICT & ~E_NOTICE & ~E_USER_NOTICE;
 } elseif ($prefs['error_reporting_level'] == -1) {
 	$errorReportingLevel = E_ALL;
 } elseif ($prefs['error_reporting_level'] == 1) {
@@ -26,14 +26,13 @@ if ( $prefs['error_reporting_adminonly'] == 'y' and $tiki_p_admin != 'y' ) {
 	$errorReportingLevel = $prefs['error_reporting_level'];
 }
 
-// Handle Smarty Notices
+// Handle Smarty notices
 if (!empty($prefs['smarty_notice_reporting']) and $prefs['smarty_notice_reporting'] === 'y' ) {
-		$errorHandlerReportingLevel = $errorReportingLevel | E_NOTICE | E_USER_NOTICE ;
-} else {
-		$errorHandlerReportingLevel = $errorReportingLevel | E_USER_NOTICE ;
+	// FIXME: This reports all notices, whether or not they are from Smarty. But if we don't do it, we get no Smarty notices if they are enabled and notices are not. Solving involves clarifying the interface so that $prefs['smarty_notice_reporting'] depends on notices being reported. 
+	$errorReportingLevel = $errorReportingLevel | E_NOTICE | E_USER_NOTICE ;
 }
 
-set_error_handler('tiki_error_handling', $errorHandlerReportingLevel);
+set_error_handler('tiki_error_handling', $errorReportingLevel);
 error_reporting($errorReportingLevel);
 
 if ( $prefs['log_sql'] == 'y' && $api_tiki == 'adodb' ) {
