@@ -453,7 +453,8 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline)
 		// See http://ca3.php.net/manual/en/language.operators.errorcontrol.php#98895 and http://php.net/set_error_handler
 		return;
 	}
-
+	
+	// FIXME: Optionally return false so errors are still logged
 	$err[E_ERROR]           = 'E_ERROR';
 	$err[E_CORE_ERROR]      = 'E_CORE_ERROR';
 	$err[E_USER_ERROR]      = 'E_USER_ERROR';
