@@ -833,8 +833,8 @@ try {
 		$smarty->display('tiki.tpl');
 	}
 } catch (SmartyException $e) {
-	//$message = tr('This element cannot be displayed correctly. One of the view/edit templates is missing or has errors (%0)/(%1). Contact the administrator.', $viewItemPretty['value'], $editItemPretty['value']);
-	$message = tr('This element cannot be displayed correctly. One of the view/edit templates is missing or has errors. Contact the administrator. (%0)', $e->getMessage());
+	$message = tr('The requested element cannot be displayed. One of the view/edit templates is missing or has errors: %0', $e->getMessage());
+	trigger_error($e->getMessage(), E_USER_ERROR);
 	$smarty->loadPlugin('smarty_modifier_sefurl');
-	$access->redirect(smarty_modifier_sefurl($info['trackerId'], 'tracker'), $message);
+	$access->redirect(smarty_modifier_sefurl($info['trackerId'], 'tracker'), $message, 302, 'error');
 }
