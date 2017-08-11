@@ -317,22 +317,13 @@ $smarty->assign('tiki_uses_svn', $TWV->svn);
 
 $smarty->assign('symbols', TikiLib::symbols());
 
+// Used by TikiAccessLib::redirect()
 if ( isset( $_GET['msg'] ) ) {
-	$smarty->assign('display_msg', $_GET['msg']);
+	Feedback::add(['mes' => $_GET['msg'], 'type' => $_GET['msgtype']], 'tpl');
 } elseif ( isset( $_SESSION['msg'] ) ) {
-	$smarty->assign('display_msg', $_SESSION['msg']);
+	Feedback::add(['mes' => $_SESSION['msg'], 'type' => $_SESSION['msgtype']], 'tpl');
 	unset($_SESSION['msg']);
-} else {
-	$smarty->assign('display_msg', '');
-}
-
-if ( isset( $_GET['msgtype'] ) ) {
-	$smarty->assign('display_msgtype', $_GET['msgtype']);
-} elseif ( isset( $_SESSION['msgtype'] ) ) {
-	$smarty->assign('display_msgtype', $_SESSION['msgtype']);
 	unset($_SESSION['msgtype']);
-} else {
-	$smarty->assign('display_msgtype', '');
 }
 
 require_once 'lib/setup/events.php';
