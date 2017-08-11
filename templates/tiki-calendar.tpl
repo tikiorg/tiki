@@ -110,18 +110,16 @@
 
 
 
+	{if $user and $prefs.feature_user_watches eq 'y' and isset($category_watched) and $category_watched eq 'y'}
 	<div class="categbar">
-		{if $user and $prefs.feature_user_watches eq 'y'}
-			{if isset($category_watched) and $category_watched eq 'y'}
-				{tr}Watched by categories:{/tr}
-				{section name=i loop=$watching_categories}
-					{assign var=thiswatchingcateg value=$watching_categories[i].categId}
-					{button href="tiki-browse_categories.php?parentId=$thiswatchingcateg" _text=$watching_categories[i].name|escape}
-					&nbsp;
-				{/section}
-			{/if}
-		{/if}
+		{tr}Watched by categories:{/tr}
+		{section name=i loop=$watching_categories}
+			{assign var=thiswatchingcateg value=$watching_categories[i].categId}
+			{button href="tiki-browse_categories.php?parentId=$thiswatchingcateg" _text=$watching_categories[i].name|escape}
+			&nbsp;
+		{/section}
 	</div>
+	{/if}
 
 	{if count($listcals) >= 1}
 		<form class="modal-content" id="filtercal" method="get" action="{$myurl}" name="f" style="display:none;">

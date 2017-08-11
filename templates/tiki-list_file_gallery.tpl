@@ -200,14 +200,12 @@
 	{/remarksbox}
 {/if}
 
-{if $user and $prefs.feature_user_watches eq 'y'}
+{if $user and $prefs.feature_user_watches eq 'y' and isset($category_watched) && $category_watched eq 'y'}
 	<div class="categbar">
-		{if isset($category_watched) && $category_watched eq 'y'}
-			{tr}Watched by categories:{/tr}
-			{section name=i loop=$watching_categories}
-				{button _keepall='y' _text=$watching_categories[i].name|escape href="tiki-browse_categories.php" parentId=$watching_categories[i].categId}
-			{/section}
-		{/if}
+		{tr}Watched by categories:{/tr}
+		{section name=i loop=$watching_categories}
+			{button _keepall='y' _text=$watching_categories[i].name|escape href="tiki-browse_categories.php" parentId=$watching_categories[i].categId}
+		{/section}
 	</div>
 {/if}
 
