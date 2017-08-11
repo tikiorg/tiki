@@ -1847,7 +1847,7 @@ function wikiplugin_tracker($data, $params)
 				}
 
 				if ($f['type'] != 'S' && empty($tpl) && empty($wiki)) {
-					if ($showfieldsdesc == 'y') {
+					if ($showfieldsdesc == 'y' && $f['description']) {
 						$back .= '<div class="form-group tracker-help-block tracker_field' . $f['fieldId'] . ' ">';
 						
 						$back .= '<div class="' . $labelclass
@@ -1950,11 +1950,13 @@ FILL;
 			$back .= '</div></div>';
 		}
 		if ($showmandatory == 'y' and $onemandatory) {
+			$back.= "<br><br><div class='form-group'>";
 			if (empty($wiki) && empty($tpl)){
-				$back.= "<div class='form-group'><div class='" . $buttonclass ."'><div class='text-center alert alert-danger'><em>".tra("Fields marked with an * are mandatory.")."</em></div></div></div>";
+				$back.= "<div class='" . $buttonclass ."'><div class='text-center alert alert-danger'><em>".tra("Fields marked with an * are mandatory.")."</em></div></div>";
 			}else{
-				$back.= "<div class='form-group'><div class='text-center alert alert-danger'><em>".tra("Fields marked with an * are mandatory.")."</em></div></div>";
+				$back.= "<div class='form-group'><div class='text-center alert alert-danger'><em>".tra("Fields marked with an * are mandatory.")."</em></div>";
 			}
+			$back.= "</div>";
 		}
 		if ($params['formtag'] == 'y') {
 			$back.= '</form>';
