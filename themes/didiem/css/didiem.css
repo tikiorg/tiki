@@ -7273,6 +7273,11 @@ div.cvsup {
   background: #f9f9f9;
   color: #363636;
 }
+.objectperms .checkBoxHeader:nth-of-type(odd) > div > label,
+.objectperms td.checkBoxCell:nth-of-type(odd),
+.objectperms .checkBoxHeader:nth-of-type(odd) > .checkBoxLabel {
+  background: #ececec;
+}
 .helptool-admin {
   border-left: medium double #999999;
 }
@@ -7372,6 +7377,11 @@ ul.all_languages > li {
 }
 .cke_editable:hover {
   outline: #555555 dotted 1px;
+}
+.tiki .cke_wysiwyg_frame,
+.tiki .cke_wysiwyg_div {
+  background: #ffffff;
+  color: #363636;
 }
 .tiki_plugin {
   background-color: transparent;
@@ -7576,6 +7586,12 @@ h6 a.tiki_anchor:hover {
 div.drillshow {
   border: 1px solid #999999;
 }
+.tiki .chosen-container-single .chosen-single {
+  height: 34px;
+  padding: 6px 6px;
+  font-size: 14px;
+  line-height: 1.42857143;
+}
 .chosen-container-multi .chosen-choices {
   background-color: #ffffff;
   color: #363636;
@@ -7615,7 +7631,8 @@ a.admbox.off:active {
   border: 1px solid #28301e;
   color: #999999;
 }
-.tiki .ui-widget-content {
+.tiki .ui-widget-content,
+span.plugin-mouseover {
   background: #ffffff;
   color: #363636;
   border: 1px solid rgba(0, 0, 0, 0.2);
