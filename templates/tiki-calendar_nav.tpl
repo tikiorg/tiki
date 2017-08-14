@@ -94,7 +94,7 @@
 
 {*next*}
 		{if !empty($module_params.viewnavbar) && $module_params.viewnavbar eq 'partial'}
-			{self_link _ajax=$ajax _class="next" todate=$focus_next _title=":{tr}Next {$viewmode|escape}{/tr}" _icon_name="next"}{/self_link}
+			{self_link _ajax=$ajax _class="next tips" todate=$focus_next _title=":{tr}Next {$viewmode|escape}{/tr}" _icon_name="next"}{/self_link}
 		{/if}
 	</div>
 {/if}
