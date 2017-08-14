@@ -3143,9 +3143,14 @@ if ( \$('#$id') ) {
 		}
 
 		if ($this->option['is_html']) {
+			// A paragraph cannot contain paragraphs.
+			// The following avoids invalid HTML, but could result in formatting different from that intended. Should a replacement here not at least generate a notice? Chealer 2017-08-14
 			$count = 1;
 			while ($count == 1) {
 				$data = preg_replace("#<p>([^(</p>)]*)<p>([^(</p>)]*)</p>#uims", "<p>$1$2", $data, 1, $count);
+			}
+			if (is_null($data)) {
+				trigger_error('Parsing failed (' . array_flip(get_defined_constants(true)['pcre'])[preg_last_error()] . ')', E_USER_WARNING);
 			}
 		}
 
