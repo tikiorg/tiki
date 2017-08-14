@@ -243,7 +243,8 @@ function wikiplugin_trackercalendar_info()
 			'colormap' => array(
 				'required' => false,
 				'name' => tra('Colormap for coloring'),
-				'description' => tr('Colormap to be used when when segmenting the information using the coloring field'),
+				'description' => tr('Colormap to be used when segmenting the information using the coloring field.
+					Each map is composed of value and color separated with a comma, use pipes to separate multiple colormaps: %0', '<code>1,#6cf|2,#6fc</code>'),
 				'since' => '18.0',
 				'filter' => 'text',
 			),
