@@ -10,9 +10,9 @@
 				<div class="form-group">
 					<div class="input-group col-sm-6">
 						<select name="addaction" class="form-control">
-							<option value="">{$field.options_map.addItems|escape}</a>
+							<option value="">{$field.options_map.addItems|escape}</option>
 							{foreach key=itemId item=label from=$data.predefined}
-							<option value="{$itemId}">{$label|escape}</a>
+								<option value="{$itemId}">{$label|escape}</option>
 							{/foreach}
 						</select>
 						<span class="input-group-btn">
