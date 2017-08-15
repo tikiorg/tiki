@@ -600,14 +600,16 @@ function wikiplugin_tracker_info()
 function wikiplugin_tracker_name($fieldId, $name, $field_errors)
 {
 	foreach ($field_errors['err_mandatory'] as $f) {
-		if ($fieldId == $f['fieldId'])
-			return '<span class="highlight">'.$name.'</span>';
+		if ($fieldId == $f['fieldId']) {
+			return '<span class="highlight">' . htmlspecialchars($name) . '</span>';
+		}
 	}
 	foreach ($field_errors['err_value'] as $f) {
-		if ($fieldId == $f['fieldId'])
-			return '<span class="highlight">'.$name.'</span>';
+		if ($fieldId == $f['fieldId']) {
+			return '<span class="highlight">' . htmlspecialchars($name) . '</span>';
+		}
 	}
-	return $name;
+	return htmlspecialchars($name);
 }
 
 function wikiplugin_tracker($data, $params)
@@ -1666,13 +1668,13 @@ function wikiplugin_tracker($data, $params)
 		if (isset($_REQUEST['register']))
 			$back.= '<input type="hidden" name="register" value="'.$_REQUEST["register"].'" />';
 		if ($showtitle == 'y') {
-			$back.= '<div class="h1">'.$tracker["name"].'</div>';
+			$back .= '<div class="h1">' . htmlspecialchars($tracker["name"]) . '</div>';
 		}
 		if ($showdesc == 'y' && $tracker['description']) {
 			if ($tracker['descriptionIsParsed'] == 'y') {
 				$back .= '<div class="wikitext">' . TikiLib::lib('parser')->parse_data($tracker['description']).'</div><br />';
 			} else {
-				$back.= '<div class="wikitext">'.tra($tracker["description"]).'</div><br />';
+				$back .= '<div class="wikitext">' . htmlspecialchars(tra($tracker["description"])) . '</div><br />';
 			}
 		}
 		if (isset($_REQUEST['tr_preview'])) { // use for the computed and join fields
@@ -1762,7 +1764,7 @@ function wikiplugin_tracker($data, $params)
 					} else {
 						$mand =  ($showmandatory == 'y' and $f['isMandatory'] == 'y')? "&nbsp;<strong class='mandatory_star text-danger tips' title=':" . tra("This field is mandatory") . "'>*</strong>&nbsp;":'';
 						if (!empty($f['description'])) {
-							$desc = $f['descriptionIsParsed'] == 'y' ? TikiLib::lib('parser')->parse_data($f['description']) : tra($f['description']);
+							$desc = $f['descriptionIsParsed'] == 'y' ? TikiLib::lib('parser')->parse_data($f['description']) : htmlspecialchars(tra($f['description']));
 							$desc = '<div class="trackerplugindesc">' . $desc . '</div>';
 						} else {
 							$desc = '';
@@ -1859,7 +1861,7 @@ function wikiplugin_tracker($data, $params)
 							if ($f['descriptionIsParsed'] == 'y') {
 								$back .= TikiLib::lib('parser')->parse_data($f['description']);
 							} else {
-								$back .= tra($f['description']);
+								$back .= htmlspecialchars(tra($f['description']));
 							}
 							$back .= '</div>';
 						}
@@ -1977,11 +1979,11 @@ FILL;
 			$smarty->assign('wikiplugin_tracker', $trackerId);//used in vote plugin
 		$id = ' id="wikiplugin_tracker'.$iTRACKER.'"';
 		if ($showtitle == 'y') {
-			$back.= '<div class="h1"'.$id.'>'.$tracker["name"].'</div>';
+			$back .= '<div class="h1"' . $id . '>' . htmlspecialchars($tracker["name"]) . '</div>';
 			$id = '';
 		}
 		if ($showdesc == 'y') {
-			$back.= '<div class="wikitext"'.$id.'>'.$tracker["description"].'</div><br />';
+			$back .= '<div class="wikitext"' . $id . '>' . htmlspecialchars($tracker["description"]) . '</div><br />';
 			$id = '';
 		}
 		$back .= "<div$id>" . $parserlib->parse_data($data) . '</div>';
