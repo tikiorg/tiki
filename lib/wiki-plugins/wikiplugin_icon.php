@@ -37,6 +37,16 @@ function wikiplugin_icon_info()
 				'accepted' => tra('greater than 0 and less than 10'),
 				'type' => 'digits',
 			),
+			'rotate' => array(
+				'required' => false,
+				'name' => tra('Rotate'),
+				'description' => tra('Rotate the icon (90, 180 or 270 degrees) or flip it (horizontal or vertical).'),
+				'since' => '17.1',
+				'default' => 1,
+				'filter' => 'text',
+				'accepted' => tra('90, 180, 270, horizontal, vertical'),
+				'type' => 'text',
+			),
 		)
 	);
 }

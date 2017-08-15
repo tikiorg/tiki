@@ -1,6 +1,6 @@
-<?php 
+<?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
@@ -20,13 +20,21 @@ function iconset_default()
 		'tag' => 'span', // The default html tag for the icons in the icon set.
 		'prepend' => 'fa fa-',
 		'append' => ' fa-fw',
+		'rotate' => array(
+			// Rotate the icon (only values accepted by fontawesome)
+			'90' => ' fa-rotate-90',
+			'180' => ' fa-rotate-180',
+			'270' => ' fa-rotate-270',
+			'horizontal' => ' fa-flip-horizontal',
+			'vertical' => ' fa-flip-vertical',
+		),
 		'icons' => array(
 			/* This is the definition of an icon in the icon set if it's an "alias" to one of the default icons.
 			 * The key must be unique, it is the "name" parameter at the icon function,
 			 * so eg: {icon name="actions"}
 			 * will find 'actions' in the array and apply the specified configuration */
 
-			'actions' => array( 
+			'actions' => array(
 				'id' => 'play-circle',    // id to match the defaults defined below
 			),
 			'admin' => array(
