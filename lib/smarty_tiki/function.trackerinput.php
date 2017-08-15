@@ -30,8 +30,12 @@ function smarty_function_trackerinput( $params, $smarty )
 			$desc = $params['field']['description'];
 			if ($params['field']['descriptionIsParsed'] == 'y') {
 				$desc = TikiLib::lib('parser')->parse_data($desc);
+			} else {
+				$desc = htmlspecialchars($desc);
 			}
-			if (!empty($desc)) $desc = '<div class="description help-block">'.$desc.'</div>';
+			if (! empty($desc)) {
+				$desc = '<div class="description help-block">' . $desc . '</div>';
+			}
 		}
 
 		return $handler->renderInput($context).$desc;
