@@ -21,7 +21,7 @@ class IconsetLib
 
 		// start with the default base and merge in others which will generally be less complete
 		$iconset = new Iconset($this->loadFile('themes/base_files/iconsets/default.php'));
-		
+
 		//override the default icons with theme specific icons or with site icon set setting
 		if (isset($prefs['theme_iconset']) && $prefs['theme_iconset'] === 'theme_specific_iconset') {
 			$filename = $themelib->get_theme_path($theme, '', str_replace('-', '_', $theme) . '.php');
@@ -48,14 +48,14 @@ class IconsetLib
 				$iconset->merge($iconset1);
 			}
 		}
-		
+
 		//finally override with custom icons of the displayed theme
 		$filename = $themelib->get_theme_path($theme, $theme_option, str_replace('-', '_', $theme_option).'_custom.php', 'icons/');
 		if ($filename) {
 			$iconset1 = new Iconset($this->loadFile($filename));
 			$iconset->merge($iconset1);
 		}
-		
+
 		return $iconset;
 	}
 
@@ -86,6 +86,7 @@ class Iconset
 	private $tag;
 	private $prepend;
 	private $append;
+	private $rotate;
 	private $class;
 
 	private $icons;
@@ -102,6 +103,7 @@ class Iconset
 		$this->tag = $data['tag'];
 		$this->prepend = isset($data['prepend']) ? $data['prepend'] : null;
 		$this->append = isset($data['append']) ? $data['append'] : null;
+		$this->rotate = isset($data['rotate']) ? $data['rotate'] : [];
 		$this->class = isset($data['class']) ? $data['class'] : null;
 		$this->icons = isset($data['icons']) ? $data['icons'] : [];
 		$this->defaults = isset($data['defaults']) ? $data['defaults'] : [];
@@ -184,6 +186,11 @@ class Iconset
 		return $this->append;
 	}
 
+	public function rotate()
+	{
+		return $this->rotate;
+	}
+
 	public function getClass()
 	{
 		return $this->class;
@@ -215,6 +222,12 @@ class Iconset
 			$size = !empty($params['size']) && $params['size'] < 10 ? abs($params->size->int()) : 1;
 			//only used in legacy icon definition
 			$sizedef = isset($icon['size']) ? $icon['size'] : 1;
+			$rotate = '';
+			if (!empty($params['rotate'])) {
+				if (isset($this->rotate[$params['rotate']])) {
+					$rotate = $this->rotate[$params['rotate']];
+				}
+			}
 
 			if ($tag == 'img') { //manage legacy image icons (eg: png, gif, etc)
 				//some ability to use larger legacy icons based on size setting
@@ -238,7 +251,7 @@ class Iconset
 			} else {
 				if (isset($icon['id'])) { //use class defined for the icon if set
 					$space = !empty($icon_class) ? ' ' : '';
-					$icon_class .= $space . $prepend . $icon['id'] . $append;
+					$icon_class .= $space . $prepend . $icon['id'] . $append . $rotate;
 				} else {
 					Feedback::error(tr('Icon set: Class not defined for icon %0', $name), 'session');
 				}
@@ -268,6 +281,7 @@ class Iconset
 			'tag' => $this->tag,
 			'prepend' => $this->prepend,
 			'append' => $this->append,
+			'rotate' => $this->rotate,
 		];
 
 		return $return;
