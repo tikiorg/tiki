@@ -1972,7 +1972,6 @@ FILL;
 			$headerlib->jq_onready = array_merge($headerlib->jq_onready, $old_js['jq_onready']);
 		}
 
-		$smarty->assign_by_ref('tiki_p_admin_trackers', $perms['tiki_p_admin_trackers']);
 		return $back;
 	} else {
 		if (isset($_REQUEST['trackit']) and $_REQUEST['trackit'] == $trackerId)
