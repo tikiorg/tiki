@@ -133,8 +133,8 @@ if ($prefs['mobile_feature'] === 'y') {
 
 require_once ('lib/setup/user_prefs.php');
 require_once ('lib/setup/language.php');
-require_once ('lib/setup/javascript.php');
 require_once ('lib/setup/wiki.php');
+require_once ('lib/setup/javascript.php');
 
 /* Cookie consent setup, has to be after the JS decision and wiki setup */
 
