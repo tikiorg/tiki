@@ -263,7 +263,7 @@
 							{foreach from=$ins_fields key=ix item=cur_field}
 								<div class="form-group">
 									<label class="control-label col-sm-3">
-										{$cur_field.name|tra}
+										{$cur_field.name|tra|escape}
 										{if $cur_field.isMandatory eq 'y'}
 											<strong class='mandatory_star text-danger tips' title=":{tr}This field is mandatory{/tr}">*</strong>
 										{/if}
