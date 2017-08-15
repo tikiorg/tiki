@@ -7,7 +7,7 @@
 	{assign var=start value='-4'}
 {/if}
 {if $field.year > 0 and $field.year < $start}
-		{assign var=start value=$field.year}
+	{assign var=start value=$field.year}
 {/if}
 
 {* ----- End year --- *}
@@ -21,6 +21,7 @@
 {if $field.year > $end}
 	{assign var=end value=$field.year}
 {/if}
+
 {if $field.value eq ''}
 	{assign var=time value="--"}
 {else}
