@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $access->ticketMatch()) {
 		if (!is_array($_POST['enabled'])) {
 			$_POST['enabled'] = array();
 		}
-		foreach ($pluginsAlias as $name) {
+		foreach ($_POST['enabled'] as $name) {
 			WikiPlugin_Negotiator_Wiki_Alias::delete($name);
 		}
 		$pluginsAlias = WikiPlugin_Negotiator_Wiki_Alias::getList();
