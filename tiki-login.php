@@ -89,9 +89,15 @@ if (isset($_REQUEST['su']) && $access->checkOrigin('page')) {
 			}
 		}
 		if ($userlib->user_exists($_REQUEST['username'])) {
-			$loginlib->switchUser($_REQUEST['username']);
+			if (substr($_SESSION['loginfrom'],-19)=="tiki-adminusers.php") {
+				if ($access->ticketMatch()) {
+					$loginlib->switchUser($_REQUEST['username']);
+				}
+			} else {
+				$loginlib->switchUser($_REQUEST['username']);
+			}
 		}
-		
+
 		$access->redirect($_SESSION['loginfrom']);
 	}
 }
