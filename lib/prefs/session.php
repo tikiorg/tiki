@@ -39,6 +39,12 @@ function prefs_session_list()
 			'perspective' => false,
 			'type' => 'flag',
 			'default' => 'n',
+			
+			/* Tag experimental due to issues such as those documented above, and because PHP's session handling just doesn't allow reasonably supporting no sessions
+			(writes to $_SESSION when no session is started don't even trigger a notice as of 5.6). The instance for which this preference was created no longer runs with session_silent.
+			I/O performance improved a lot since this preference was introduced.
+			Also just meant to hide by default, since this is is rarely justified (advanced). I am not sure any instance runs with this enabled. Chealer 2017-08-16 */
+			'tags' => array('experimental')  
 		),
 		'session_cookie_name' => array(
 			'name' => tra('Session cookie name'),
