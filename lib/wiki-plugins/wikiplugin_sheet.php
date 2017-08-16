@@ -250,7 +250,7 @@ EOF;
 		$headerlib = TikiLib::lib('header');
 		$sheetlib->setup_jquery_sheet();
 		$headerlib->add_jq_onready(
-			'$("div.tiki_sheet").each(function() {
+			'$("div#tiki_sheet'.$index.'").each(function() {
 				$(this).sheet($.extend($.sheet.tikiOptions,{
 				editable:false'
 			. $calcOff .
@@ -260,7 +260,7 @@ EOF;
 
 	}
 
-	$ret = '<div id="tiki_sheet' . $sheet->instance . '" class="tiki_sheet' . $class . '" style="overflow:hidden;' . $style . '">' . $ret . '</div>';
+	$ret = '<div id="tiki_sheet' . $index . '" class="tiki_sheet' . $class . '" style="overflow:hidden;' . $style . '">' . $ret . '</div>';
 
 	if ( $editable && ($objectperms->edit_sheet  || $objectperms->admin_sheet || $tiki_p_admin == 'y')) {
 		$smarty->loadPlugin('smarty_function_button');
