@@ -770,6 +770,8 @@ class TikiAccessLib extends TikiLib
 		if (trim($msg)) {
 			$session = session_id();
 			if ( empty($session) ) {
+				// Can happen if session_silent is enabled. But does any instance enable session_silent?
+				// Removing this case would allow removing the $msg parameters and just have callers using Feedback::add() before calling redirect(). Chealer 2017-08-16
 				$start = strpos($url, '?') ? '&' : '?';
 				$url = $start . 'msg=' . urlencode($msg) . '&msgtype=' . urlencode($msgtype);
 			} else {
