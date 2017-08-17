@@ -47,6 +47,7 @@ function prefs_fgal_list()
 		),
 		'fgal_prevent_negative_score' => array(
 			'name' => tra('Prevent download if score becomes negative'),
+			'description' => tra('If using Tiki Score system, users with a negative score cannot download files.'),
 			'type' => 'flag',
 			'help' => 'File+Gallery+config',
 			'default' => 'n',
@@ -59,8 +60,8 @@ function prefs_fgal_list()
 			'default' => 'n',
 		),
 		'fgal_allow_duplicates' => array(
-			'name' => tra('Allow the same file to be uploaded more than once'),
-			'description' => tra(''),
+			'name' => tra('Allow file duplicates'),
+			'description' => tra('Allow the same file to be uploaded more than once.'),
 			'type' => 'list',
 			'help' => 'File+Gallery+config',
 			'perspective' => false,
@@ -72,26 +73,32 @@ function prefs_fgal_list()
 			'default' => 'y',
 		),
 		'fgal_display_zip_option' => array(
-			'name' => tra('Display the .zip option in gallery'),
-			'description' => tra('Display in the gallery the zip option (in upload and gallery file)'),
+			'name' => tra('Display ZIP option in gallery'),
+			'description' => tra('If enabled, users can upload a ZIP (archive file). Tiki will automatically un-ZIP the archive and add each file to the gallery.'),
 			'type' => 'flag',
 			'help' => 'File+Gallery+config',
 			'default' => 'n',
 		),
 		'fgal_match_regex' => array(
 			'name' => tra('Must match'),
+
+			'description' => tra('A regular expression that must be matched to accept the file example A-Za-z* (filename can only have a-z letters) 
+For example, if you want to require that uploads must have a wordprocessing file extension, you could enter .*.(odt|sxw|doc|dot|rtf|wpt|frm|wpd|txt|ODT|SXW|DOC|DOT|RTF|WPT|FRM|WPD|TXT)'),
 			'type' => 'text',
 			'size' => 50,
 			'default' => '',
 		),
 		'fgal_nmatch_regex' => array(
 			'name' => tra('Cannot match'),
+			'description' => tra('A regular expression that if matched rejects the file, example .gif (rejects gif images note that the period must be escaped since we are using regular expressions) If you don’t know anything about regular expressions just leave the fields blank and all the files will be accepted.'),
 			'type' => 'text',
 			'size' => 50,
 			'default' => '',
 		),
 		'fgal_quota' => array (
-			'name' => tra('Quota for all the files and archives'),
+			'name' => tra('Quota for all files and archives'),
+			'description' => tra('It is possible to limit the volume that is uploaded to all the file galleries or a specific file gallery. A quota to a file gallery applies to this file gallery and all the file galleries under it. 
+As soon as the limit is reached not other files can be uploaded. The user will see an error message that the quota is reached. A mail can be sent via the Mail notifications feature. )'),
 			'shorthint' => tra('0 for unlimited'),
 			'type' => 'text',
 			'units' => tra('megabytes'),
@@ -99,7 +106,8 @@ function prefs_fgal_list()
 			'default' => 0,
 		),
 		'fgal_quota_per_fgal' => array (
-			'name' => tra('Quota can be defined for each file gallery'),
+			'name' => tra('Quota for each file gallery'),
+			'description' => tra('If enabled, you can define a different quota for each file gallery.)'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -124,6 +132,7 @@ function prefs_fgal_list()
 		),
 		'fgal_use_db' => array(
 			'name' => tra('Storage'),
+			'description' => tra('Specify if uploaded files should be stored in the Database or Directory'),
 			'type' => 'list',
 			'perspective' => false,
 			'options' => array(
@@ -166,7 +175,6 @@ function prefs_fgal_list()
 		),
 		'fgal_display_replace' => array(
 			'name' => tra('Display "Replace" in the context menu'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 		),
@@ -434,6 +442,7 @@ function prefs_fgal_list()
 		],
 		'fgal_list_comment' => [
 			'name' => tra('Comment'),
+
 			'type' => 'list',
 			'options' => $showOptions,
 			'default' => 'o',

@@ -203,7 +203,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_file_galleries_templates' => array(
 			'name' => tra('File gallery configuration templates'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'keywords' => tra('template'),
 			'dependencies' => array(
@@ -1456,7 +1455,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_referer_highlight' => array(
 			'name' => tra('Referer search highlighting'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'help' => 'Referer+Search+Highlighting',
 			'default' => 'y',
@@ -1464,7 +1462,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_search_stats' => array(
 			'name' => tra('Search statistics'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'help' => 'Search+Stats',
 			'default' => 'n',
@@ -1533,20 +1530,17 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_blog_heading' => array(
 			'name' => tra('Custom blog headings'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 			'warning' => tr('Using custom blog headings will use significantly more server resources. Unless you need per-blog templates, you should customize the template file instead.'),
 		),
 		'feature_blog_edit_publish_date' => array(
 			'name' => tra('Publish dates can be modified'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 		),
 		'feature_blogposts_comments' => array(
 			'name' => tra('Comments on blog posts'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_blogs',
@@ -1565,14 +1559,14 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_file_galleries_rankings' =>array(
 			'name' => tra('Rankings'),
-			'description' => tra(''),
+			'description' => tra('If enabled, users can view the “top” or “most” downloaded files.'),
 			'type' => 'flag',
 			'help' => 'File+Gallery+Config',
 			'default' => 'n',
 		),
 		'feature_file_galleries_comments' =>array(
 			'name' => tra('File gallery comments'),
-			'description' => tra(''),
+			'description' => tra('If enabled, users can post comments on file galleries'),
 			'type' => 'flag',
 			'help' => 'Comments',
 			'default' => 'n',
@@ -1596,6 +1590,7 @@ function prefs_feature_list($partial = false)
 			'name' => tra('Use file galleries for wiki attachments'),
 			'type' => 'flag',
 			'help' => 'File+Gallery+Config',
+			'description' => tra('If enabled, wiki attachments will be stored in the file gallery.'),
 			'dependencies' => array(
 				'feature_file_galleries','feature_wiki_attachments'
 			),
@@ -1665,7 +1660,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_forums_search' => array(
 			'name' => tra('Forum content search'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'hint' => tra('When listing forums'),
 			'default' => 'y',
@@ -2033,7 +2027,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_undo' => array(
 			'name' => tra('Undo'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -2052,7 +2045,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_actionlog_bytes' => array(
 			'name' => tra('Log bytes changes (+/-) in action logs'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'hint' => tra('May impact performance'),
 			'default' => 'n',
@@ -2098,19 +2090,16 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_plurals' => array(
 			'name' => tra('Link plural WikiWords to their singular forms'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 		),
 		'feature_wikiwords_usedash' => array(
 			'name' => tra('Accept dashes and underscores in WikiWords'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 		),
 		'feature_history' => array(
 			'name' => tra('History'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'help' => 'History',
 			'default' => 'y',
@@ -2118,7 +2107,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_history_ip' => array(
 			'name' => tra('Display IP address'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -2331,13 +2319,11 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_show_stay_in_ssl_mode' => array(
 			'name' => tra('Users can choose to stay in SSL mode after an HTTPS login'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 		),
 		'feature_switch_ssl_mode' => array(
 			'name' => tra('Users can switch between secured or standard mode at login'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -2468,7 +2454,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_community_mouseover_lastlogin' => array(
 			'name' => tra('Last login'),
-			'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 		),
