@@ -10,6 +10,8 @@ function prefs_tiki_list()
 	return array(
 		'tiki_version_check_frequency' => array(
 			'name' => tra('Check frequency'),
+			'description' => tra('How often Tiki should check for updates. This field applies only if Check for updates automatically is enabled. '),
+			'hint' => tra('Click "Check for Updates Now" to perform an update check.'),
 			'type' => 'list',
 			'perspective' => false,
 			'options' => array(
@@ -25,6 +27,7 @@ function prefs_tiki_list()
 		),
 		'tiki_release_cycle' => array(
 			'name' => tr('Upgrade cycle'),
+			'description' => tra('Upgrade frequency for Tiki to check against.'),
 			'type' => 'list',
 			'default' => 'regular',
 			'dependencies' => array(

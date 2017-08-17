@@ -339,7 +339,7 @@
 			</fieldset>
 
 			<fieldset>
-				<legend>{tr}SCORM{/tr}</legend>
+				<legend>{tr}SCORM{/tr}{help desc="SCORM is a package format for Learning Management Systems. Tiki can create tracker items based on the SCORM metadata. This allows you to manage SCORM packages within Tiki."}</legend>
 				{preference name=scorm_enabled}
 				<div class="adminoptionboxchild" id="scorm_enabled_childcontainer">
 					{preference name=scorm_tracker}
