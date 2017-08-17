@@ -72,8 +72,6 @@ function wikiplugin_prefdoc( $data, $params )
  *
  * Running this will overwrite any previously generated pref doc files
  *
- * TODO: Handle help links that dont point at doc.tiki.org
- *
  *
  * Class PrefsDoc
  *
@@ -238,7 +236,7 @@ class PrefsDoc extends TWVersion{
 
 		// set name
 		if ($param->help) {
-			$this->prefName = '((' . $param->help . '|' . $param->name . '))';
+			$this->prefName = '<a href="' . $param->help . '">' . $param->name . '</a>';
 		}else {
 			$this->prefName = $param->name;
 		}
