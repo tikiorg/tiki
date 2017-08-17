@@ -70,7 +70,7 @@ if (!isset($_SESSION['loginfrom']) && isset($_SERVER['HTTP_REFERER']) && !preg_m
 		else $_SESSION['loginfrom'] = $base_url . $_SESSION['loginfrom'];
 	}
 }
-if (isset($_REQUEST['su']) && $access->checkOrigin('page')) {
+if (isset($_REQUEST['su']) && $access->check_authenticity()) {
 	$loginlib = TikiLib::lib('login');
 
 	if ($loginlib->isSwitched() && $_REQUEST['su'] == 'revert') {
@@ -89,13 +89,7 @@ if (isset($_REQUEST['su']) && $access->checkOrigin('page')) {
 			}
 		}
 		if ($userlib->user_exists($_REQUEST['username'])) {
-			if (substr($_SESSION['loginfrom'],-19)=="tiki-adminusers.php") {
-				if ($access->ticketMatch()) {
-					$loginlib->switchUser($_REQUEST['username']);
-				}
-			} else {
-				$loginlib->switchUser($_REQUEST['username']);
-			}
+			$loginlib->switchUser($_REQUEST['username']);
 		}
 
 		$access->redirect($_SESSION['loginfrom']);
