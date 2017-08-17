@@ -20,7 +20,7 @@ function prefs_default_list()
 	return array(
 		'default_mail_charset' => array(
 			'name' => tra('Default character set for sending mail'),
-			'description' => tra('Default character set for sending mail'),
+			'description' => tra('Specify the character encoding used by Tiki when sending mail notifications.'),
 			'type' => 'list',
 			'options' => array(
 				'utf-8' => tra('utf-8'),

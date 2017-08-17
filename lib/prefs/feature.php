@@ -964,8 +964,9 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_version_checks' => array(
 			'name' => tra('Check for updates automatically'),
-			'description' => tra('Tiki will check for updates when the main Administration page is accessed'),
+			'description' => tra('If enabled, Tiki will automatically check for new updates each time you access the Admin Home page, based on your Check frequency selection.'),
 			'type' => 'flag',
+			'hint' => tra('Subscribe to the Tiki Newsletter to be notified of new releases. https://doc.tiki.org/Newsletters'),
 			'perspective' => false,
 			'default' => 'y',
 			'tags' => array('basic'),

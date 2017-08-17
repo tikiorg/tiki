@@ -55,6 +55,7 @@ function prefs_zend_list()
 		),
 		'zend_mail_handler' => array(
 			'name' => tra('Mail sender'),
+			'description' => tra('Specify if Tiki should use Sendmail(the PHP mail() function), SMTP or File (Debug) (to debug email sending by means of storing emails as files on disk at ./temp/Mail_yyyymmddhhmmss_randomstring.tmp ) to send mail notifications.'),
 			'type' => 'list',
 			'options' => array(
 				'sendmail' => tra('Sendmail'),
