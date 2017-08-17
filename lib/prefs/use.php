@@ -17,7 +17,7 @@ function prefs_use_list()
 		),
 		'use_proxy' => array(
 			'name' => tra('Use proxy'),
-			'description' => tra('Use proxy'),
+			'description' => tra('Specify if Tiki requires a proxy to access the internet. If enabled, you can specify your proxy Host name (either with or without the http:// prefix), Port settings, Username, and Password.'),
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',

@@ -484,6 +484,7 @@ function prefs_feature_list($partial = false)
 		'feature_contact' => array(
 			'name' => tra('Contact us'),
 			'description' => tra('A basic contact form a visitor can use to contact the site admin'),
+			'hint' => 'You can use Trackers to create custom Contact Us forms.',
 			'help' => 'Contact+us',
 			'type' => 'flag',
 			'default' => 'n',
@@ -789,7 +790,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_referer_stats' => array(
-			'name' => tra('Referer stats'),
+			'name' => tra('Referrer stats'),
 			'description' => tra('Record domain name of sites that send visitors to this Tiki.'),
 			'help' => 'Stats',
 			'keywords' => 'stat analytics referrer refferer refferrer',
@@ -1055,7 +1056,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_help' => array(
 			'name' => tra('Help system'),
-			'description' => tra('Activates links to Tiki documentation'),
+			'description' => tra('Activates links to Tiki documentation.  You can specify a Help URL that contains customized help pages. By default, the Help system uses http://doc.tiki.org/'),
 			'help' => 'Documentation',
 			'type' => 'flag',
 			'default' => 'y',
