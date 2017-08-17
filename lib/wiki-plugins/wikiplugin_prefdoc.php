@@ -131,7 +131,7 @@ class PrefsDoc extends TWVersion{
 		// carry over images from past versions of Tiki, if available.
 		foreach ($versions as $version) {
 			$count =$version;
-			while ($version - $count < 4) {         // If the image is older than 4 tiki versions, dont display it.
+			while ($version - $count < 5) {         // If the image is older than 5 tiki versions, dont display it.
 				if ($imageArray[$count][0]) {
 					$this->docTable .= '{img fileId="'.$imageArray[$count][0].'" thumb="y" rel="box[g]" width="300" desc="Tiki '.  $imageArray[$count][1].' Preferences Image" alt="' . $tabName . '" align="center"}';
 					break;
@@ -150,6 +150,8 @@ class PrefsDoc extends TWVersion{
 	}
 
 	/**
+	 *
+	 * Generates a list of valid pref codes when no preference page was specified
 	 *
 	 * @return string file-tab codes available for use.
 	 */
@@ -193,6 +195,8 @@ class PrefsDoc extends TWVersion{
 				$pref->help = $this->prevFilePrefs->$prefName->help;
 			if (!$pref->hint)
 				$pref->hint = $this->prevFilePrefs->$prefName->hint;
+			if (!$pref->warning)
+				$pref->warning = $this->prevFilePrefs->$prefName->warning;
 			$this->setParams($pref);
 			$this->docTable .= $this->prefName . '~|~' . $this->prefDescription . '~|~' . $this->prefDefault . "\n";
 		}
@@ -243,10 +247,12 @@ class PrefsDoc extends TWVersion{
 		// set description
 		$this->prefDescription = $param->description;
 		if ($param->hint)
-			$this->prefDescription .= " ''Hint: ".$param->hint."''";
+			$this->prefDescription .= '<br><span class="fa fa-hand-pointer-o" title="Hint"></span><i> '.$param->hint.'</i>';
+		if ($param->warning)
+			$this->prefDescription .= '<br><span class="fa fa-exclamation-triangle" title="Warning"></span><i> '.$param->warning.'</i>';
 		foreach ($param->tags as $tag)
 			if ($tag === 'experimental')
-				$this->prefDescription .= ' (experimental)';
+				$this->prefDescription .= ' <span class="fa fa-flask" title="Experimental: may not work as intended"></span>';
 		$this->prefDescription = $this->wikiConvert($this->prefDescription);
 	}
 
@@ -284,7 +290,7 @@ class PrefsDoc extends TWVersion{
 	 * If its not up to date, then update it.
 	 *
 	 * Documentation is updated for every minor version change.
-	 * A seprate set of documentatin is creaed for every major version.
+	 * A separate set of documentation is created for every major version.
 	 * Only consecutive versions are supported (you cant skip a version)
 	 *
 	 * @return bool false on error, true on success.
@@ -350,6 +356,9 @@ class PrefsDoc extends TWVersion{
 
 			}
 		}
+		// Sanitise specific output
+		$prefs['webcron_token']['default'] = 'Random Token';
+
 		$this->PrefVars = $prefs;
 	}
 
@@ -370,15 +379,15 @@ class PrefsDoc extends TWVersion{
 			while ($count >= 1) {
 				$count--;
 				$prefs = array();
-				preg_match_all('/{preference.*name="?\'?(\w*)"?\'?.*}/i', $tabs[2][$count], $prefs);	// Generate aray of all the prefs
+				preg_match_all('/{preference.*name="?\'?(\w*)"?\'?.*}/i', $tabs[2][$count], $prefs);					// Generate array of all the prefs
 				$tabs[1][$count] = mb_ereg_replace('\W','',strtolower($tabs[1][$count]));				// sanitize the tab name for disk
 				foreach ($prefs[1] as $pref) {
-					$tabPrefs[$fileName . '-' . $tabs[1][$count]][$pref] = $this->PrefVars[$pref];      // Add full pref info in right order
+					$tabPrefs[$fileName . '-' . $tabs[1][$count]][$pref] = $this->PrefVars[$pref];							// Add full pref info in right order
 				}
 			}
 		}else if (preg_match_all('/{preference.*name="?\'?(\w*)"?\'?.*}/i', $file, $prefs)){
 			foreach ($prefs[1] as $pref) {
-				$tabPrefs[$fileName][$pref] = $this->PrefVars[$pref];      // Add full pref info in right order
+				$tabPrefs[$fileName][$pref] = $this->PrefVars[$pref];			// Add full pref info in right order
 			}
 		}
 
