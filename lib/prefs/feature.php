@@ -580,7 +580,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_cssmenus' => array(
 			'name' => tra('CSS menus'),
-			'description' => tra('CSS (Superfish) Menus.'),
+			'description' => tra('If enabled, Tiki will use display CSS-styled (Suckerfish) vertical or horizontal menus.'),
 			'help' => 'Menus',
 			'type' => 'flag',
 			'default' => 'y',
@@ -1798,6 +1798,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_siteloclabel' => array(
 			'name' => tra('Prefix breadcrumbs with "Location : "'),
+			'description' => 'If enabled, the word Location: will appear in the breadcrumbs',
 			'type' => 'flag',
 			'default' => 'y',
 		),
@@ -2041,6 +2042,7 @@ function prefs_feature_list($partial = false)
 		'feature_wiki_allowhtml' => array(
 			'name' => tra('Allow HTML'),
 			'description' => tra('Per-page option: HTML tags are used to create elements of the wiki page, instead of being displayed as code.'),
+			'warning' => tra('This is potentially dangerous, as it allows raw HTML to be added. Be sure to enable this option only if trusted users can create and edit menus.'),
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
@@ -2569,7 +2571,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_alternate_registration_page' => array(
 			'name' => tra('Alternate registration page'),
-			'description' => tra('Redirects requests for tiki-register.php to an alternate registration page.'),
+			'description' => tra('Enter URL of a custom registration page. Tiki will automatically redirect default registration page (tiki-register.php) to this page.'),
 			'type' => 'text',
 			'default' => 'tiki-register.php',
 		),

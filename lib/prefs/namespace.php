@@ -10,17 +10,17 @@ function prefs_namespace_list()
 	return array(
 		'namespace_enabled' => array(
 			'name' => tr('Namespace'),
-			'description' => tr('Enable namespaces for wiki pages.'),
+			'description' => tr('Enable namespaces feature for wiki pages.'),
 			'type' => 'flag',
 			'default' => 'n',
-			'help' => 'Namespace',
+			'help' => 'Namespaces',
 			'keywords' => 'Namespaces',
 			'tags' => array('experimental'),
 			'perspective' => false,
 		),
 		'namespace_separator' => array(
 			'name' => tr('Namespace separator'),
-			'description' => tra(''),
+			'description' => tra('Select the character, symbol, or text to use as the namespace separator.'),
 			'size' => 5,
 			'type' => 'text',
 			'default' => ':_:',
