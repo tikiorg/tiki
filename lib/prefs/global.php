@@ -65,7 +65,7 @@ function prefs_global_list($partial = false)
 		),
 		'tmpDir' => array(
 			'name' => tra('Temporary directory'),
-			'description' => tra('Tiki requires full read and write access to this directory.'),
+			'description' => tra('Directory on your server, relative to your Tiki installation, for storing temporary files. Tiki must have full read and write access to this directory.'),
 			'type' => 'text',
 			'size' => 30,
 			'default' => TikiInit::tempdir(),
