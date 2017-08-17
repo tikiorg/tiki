@@ -3501,6 +3501,10 @@ body.fullscreen.tiki.navbar-padding {
 .tiki .popover {
   max-width: inherit;
 }
+.tiki.tiki-list_file_gallery .popover,
+.tiki.tiki_file_galleries .popover {
+  max-width: 50vw;
+}
 .tiki .popover.tour-tour {
   max-width: 276px;
 }
