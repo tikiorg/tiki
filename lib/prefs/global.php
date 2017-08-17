@@ -364,6 +364,7 @@ function prefs_global_list($partial = false)
 		'useUrlIndex' => array(
 			'name' => tra('Use custom homepage'),
 			'description' => tra('Use the top page of a Tiki feature or another homepage'),
+			'warning' => tra('This option will override the Use Tiki feature as homepage setting.'),
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
