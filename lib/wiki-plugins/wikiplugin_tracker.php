@@ -1851,13 +1851,8 @@ function wikiplugin_tracker($data, $params)
 				if ($f['type'] != 'S' && empty($tpl) && empty($wiki)) {
 					if ($showfieldsdesc == 'y' && $f['description']) {
 						$back .= '<div class="form-group tracker-help-block tracker_field' . $f['fieldId'] . ' ">';
-						
-						$back .= '<div class="' . $labelclass
-							. ' control-label sr-only">Label</div>';
-						
 						{
-							$back .= '<div class="' . $inputclass
-								. ' trackerplugindesc help-block">';
+							$back .= '<div class="col-md-12 trackerplugindesc help-block text-right">';
 							if ($f['descriptionIsParsed'] == 'y') {
 								$back .= TikiLib::lib('parser')->parse_data($f['description']);
 							} else {
@@ -1865,7 +1860,6 @@ function wikiplugin_tracker($data, $params)
 							}
 							$back .= '</div>';
 						}
-						
 						$back .= '</div>';
 					}
 				}
