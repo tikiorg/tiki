@@ -35,7 +35,6 @@ function prefs_gal_list()
 		],
 		'gal_image_mouseover' => [
 			'name' => tra('Display image information in a mouseover box'),
-			'description' => '',
 			'type' => 'list',
 			'options' => [
 				'n' => tra('No'),
@@ -46,7 +45,6 @@ function prefs_gal_list()
 		],
 		'gal_list_name' => [
 			'name' => tra('Name'),
-			'description' => '',
 			'type' => 'flag',
 			'default' => 'y',
 		],

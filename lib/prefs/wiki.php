@@ -467,6 +467,8 @@ function prefs_wiki_list($partial = false)
 		),
 		'wiki_list_backlinks' => array(
 			'name' => tra('Backlinks'),
+			'description' => tra('Allows users to view a list of pages, called backlinks, that link to the current page.'),
+			'help' => 'Backlinks',
 			'type' => 'flag',
 			'default' => 'n',
 		),

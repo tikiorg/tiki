@@ -10,7 +10,7 @@ function prefs_url_list()
 	return array(
 		'url_after_validation' => array(
 			'name' => tra('URL the user is redirected to after account validation'),
-			'description' => 'The default page a Registered user sees after account validation is tiki-information.php?msg=Account validated successfully.',
+			'description' => tra('The default page a Registered user sees after account validation is tiki-information.php?msg=Account validated successfully.'),
 			'hint' => tra('Default').': tiki-information.php?msg='.tra('Account validated successfully.'),
 			'type' => 'text',
 			'dependencies' => array(
