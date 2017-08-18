@@ -95,6 +95,7 @@ function prefs_cas_list()
 			'name' => tra('CAS Authentication Verification Timeout'),
 			'description' => tra('Verify authentication with the CAS server every N seconds. Null value means never reverify.'),
 			'type' => 'list',
+			'units' => tra('minutes'),
 			'filter' => 'digits',
 			'perspective' => false,
 			'options' => array (

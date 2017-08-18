@@ -82,7 +82,7 @@ function prefs_wiki_list($partial = false)
 		),
 		'wiki_page_name_above' => array(
 			'name' => tra('Display page name above page'),
-			'description' => tra('Display page name above page instead of inside page.'),
+			'description' => tra('If enabled, Tiki will display the page name in small text at the top of each page (above the page’s content).'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -121,7 +121,7 @@ function prefs_wiki_list($partial = false)
 		),
 		'wiki_actions_bar' => array(
 			'name' => tra('Wiki action bar location'),
-			'description' => tra('Buttons: Save, Preview, Cancel, ...'),
+			'description' => tra('Specify the location of the edit buttons (such as Save, Preview, and Cancel) when editing wiki pages.'),
 			'type' => 'list',
 			'options' => array(
 				'top' => tra('Top'),
@@ -576,6 +576,7 @@ function prefs_wiki_list($partial = false)
 			'name' => tra('Name length'),
 			'description' => tra('Maximum length (in characters) to display before truncating backlink page names. Use "0" for no truncating.'),
 			'type' => 'text',
+			'units' => tra('characters'),
 			'size' => '3',
 			'filter' => 'digits',
 			'dependencies' => array( 'feature_backlinks' ),

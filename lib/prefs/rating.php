@@ -34,6 +34,7 @@ function prefs_rating_list()
 			'name' => tra('Recalculation odds (1 in X)'),
 			'description' => tra('Dice roll performed on every request. When successful, will recalculate a certain number of votes.'),
 			'type' => 'text',
+			'units' => tra('votes'),
 			'size' => 5,
 			'filter' => 'digits',
 			'default' => '100',

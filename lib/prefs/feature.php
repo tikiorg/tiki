@@ -2023,7 +2023,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_warn_on_edit' => array(
 			'name' => tra('Warn on edit conflict'),
-			'description' => tra('Provide a warning to a user who attempts to edit a page that it is currently being edited by another user.'),
+			'description' => tra('If enabled then when a user is editing a page the edit button will be colored red and the name of the user editing the page will be displayed as a tooltip. If the user saves or cancels his or her edit or if the indicated amount of time passes the edit button will be displayed normally. This feature is useful to prevent collisions when editing pages.'),
 			'type' => 'flag',
 			'default' => 'y',
 			'tags' => array('basic'),
@@ -2035,7 +2035,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_footnotes' => array(
 			'name' => tra('Footnotes'),
-			'description' => tra('Enable creating private notes for a page that are visible only to the author.'),
+			'description' => tra('If enabled logged users can write personal footnotes when editing a page. The footnotes will be displayed only to the user who edited them immediately below the Wiki page. This can be used as a good way to let users make personal notes and observations about pages.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -2050,7 +2050,7 @@ function prefs_feature_list($partial = false)
 		'feature_actionlog_bytes' => array(
 			'name' => tra('Log bytes changes (+/-) in action logs'),
 			'type' => 'flag',
-			'hint' => tra('May impact performance'),
+			'warning' => tra('May impact performance'),
 			'default' => 'n',
 		),
 		'feature_sandbox' => array(
@@ -2309,7 +2309,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_show_hide_before' => array(
 			'name' => tra('Show/hide icon before headings'),
-			'description' => tra('Display before headings an icon to show or hide the content that follows the headings'),
+			'description' => tra('For use with the !!- or !!+ syntax. Checking will display the showhide switch at the left of the heading, otherwise it displays below.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),

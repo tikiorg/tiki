@@ -496,7 +496,7 @@ As soon as the limit is reached not other files can be uploaded. The user will s
 			'name' => tra('Source'),
 			'type' => 'list',
 			'options' => $showOptions,
-			'default' => '',
+			'default' => 'n',
 		],
 		'fgal_list_id_admin' => [
 			'name' => tra('ID'),

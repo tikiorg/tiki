@@ -27,6 +27,7 @@ function prefs_display_list()
 			'name' => tra('Start year'),
 			'description' => tra('Year to show first in dropdown lists.') . '<br>' .
 							tra('For example, use "-2" for the current year minus two, or "2010" for a specific year'),
+			'units' => tra('year(s)'),
 			'type' => 'text',
 			'size' => 6,
 			'default' => '-3',
@@ -35,6 +36,7 @@ function prefs_display_list()
 			'name' => tra('End year'),
 			'description' => tra('Year to show last on dropdown lists.') . '<br>' .
 							tra('For example, use "+2" for the current year plus two, or "2016" for a specific year'),
+			'units' => tra('year(s)'),
 			'type' => 'text',
 			'size' => 6,
 			'default' => '+1',

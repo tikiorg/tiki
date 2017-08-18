@@ -246,6 +246,7 @@ function prefs_unified_list()
 		),
 		'unified_elastic_field_limit' => array(
 			'name' => tra('Elasticsearch field limit per index'),
+			'units' => tra('fields'),
 			'type' => 'text',
 			'size' => '5',
 			'filter' => 'digits',
