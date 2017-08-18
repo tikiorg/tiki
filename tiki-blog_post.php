@@ -190,7 +190,7 @@ if (isset($_REQUEST["preview"])) {
 	$post_info['user'] = isset($data) ? $data['user'] : $user;
 	$post_info['created'] = $publishDate;
 	$post_info['avatar'] = isset($data) ? $data['avatar'] : '';
-	if ($postId > 0) { $post_info['postId'] = $postId; }
+	$post_info['postId'] = $postId;
 
 	if ($prefs['feature_freetags'] == 'y' && isset($_REQUEST['freetag_string'])) {
 		$tags = $freetaglib->dumb_parse_tags($_REQUEST['freetag_string']);
