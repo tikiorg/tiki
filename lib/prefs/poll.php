@@ -12,6 +12,7 @@ function prefs_poll_list()
 			'name' => tra('Default number per page'),
 			'description' => tra('number of comments to show for poll pages'),
 			'type' => 'text',
+			'units' => tra('comments'),
 			'size' => '5',
 			'filter' => 'digits',
 			'default' => 10,

@@ -10,7 +10,7 @@ function prefs_page_list()
 	return array(
 		'page_bar_position' => array(
 			'name' => tra('Wiki buttons'),
-			'description' => tra('Page description, icons, backlinks....'),
+			'description' => tra('Specify the location  of the wiki-specific options (such as Backlinks, Page Description, and so on)'),
 			'type' => 'list',
 			'options' => array(
 				'top' => tra('Top '),

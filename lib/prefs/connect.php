@@ -78,6 +78,7 @@ function prefs_connect_list()
 		'connect_frequency' => array(
 			'name' => tra('Connection frequency'),
 			'description' => tra('How often to send information (in hours)').' '.tra('Default:'). '168 ('.tra('weekly') . ')',
+			'units' => tra('hours'),
 			'type' => 'text',
 			'dependencies' => 'connect_feature',
 			'filter' => 'digits',

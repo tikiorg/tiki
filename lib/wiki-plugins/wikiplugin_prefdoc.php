@@ -227,6 +227,8 @@ class PrefsDoc extends TWVersion{
 		$this->prefDefault = trim($this->prefDefault);
 		if ($this->prefDefault == '') {
 			$this->prefDefault = '~~gray:None~~';
+		} else if (!empty($param->units)) {
+			$this->prefDefault .= ' '. $param->units;
 		} else if (!preg_match('/\W/', $this->prefDefault)) {				// if Pref is a singe word
 			$this->prefDefault = ucfirst($this->prefDefault);					// then caps the first letter.
 		} else{
@@ -273,6 +275,8 @@ class PrefsDoc extends TWVersion{
 						$options = substr($options, 0, 397) . '...';
 					}
 				}
+				$options = $this->wikiConvert($options,true);											// sanitize special characters
+				$options = preg_replace('/\s+/',' ',$options);			// replace all excess whitespace characters with a single space.
 				$this->prefDescription .= '~~gray:<span class="fa fa-list-ul" title="Options"></span> ' . $options.'~~';
 			}
 		}
