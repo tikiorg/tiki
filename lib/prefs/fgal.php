@@ -312,7 +312,6 @@ As soon as the limit is reached not other files can be uploaded. The user will s
 			'filter' => 'alpha',
 			'default' => 'n',
 			'help' => 'ViewerJS',
-			'warning' => tra('Experimental'),
 			'tags' => array('experimental'),
 		),
 		'fgal_viewerjs_uri' => array(

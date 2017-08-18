@@ -2695,7 +2695,6 @@ function prefs_feature_list($partial = false)
 			'help' => 'TimeSheet',
 			'keywords' => 'timesheet time sheet project',
 			'default' => 'n',
-			'warning' => tra('Experimental'),
 			'tags' => array('experimental'),
 		),
 		'feature_htmlfeed' => array(
@@ -2705,7 +2704,6 @@ function prefs_feature_list($partial = false)
 			'help' => 'HtmlFeed',
 			'keywords' => 'html feed ads ad share',
 			'default' => 'n',
-			'warning' => tra('Experimental'),
 			'tags' => array('experimental'),
 		),
 		'feature_futurelinkprotocol' => array(
@@ -2715,7 +2713,6 @@ function prefs_feature_list($partial = false)
 			'help' => 'FutureLinkProtocol',
 			'keywords' => 'future link futurelink share feed',
 			'default' => 'n',
-			'warning' => tra('Experimental'),
 			'tags' => array('experimental'),
 		),
 		'feature_community_send_mail_join' => array(

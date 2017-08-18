@@ -94,7 +94,6 @@ function prefs_wysiwyg_list()
 				'feature_wysiwyg',
 			),
 			'tags' => array('experimental'),
-			'warning' => tra('experimental'),
 		),
 		'wysiwyg_extra_plugins' => array(
 			'name' => tra('Extra plugins'),
