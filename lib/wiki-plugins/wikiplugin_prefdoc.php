@@ -212,10 +212,12 @@ class PrefsDoc extends TWVersion{
 	private function setParams($param)
 	{
 		// set default
-		if ($param->default == 'n') {
+		if (!empty($param->options) && !empty($param->default)) {
+			$this->prefDefault = $param->options->{$param->default};
+		}else if ($param->default === 'n') {
 			$this->prefDefault = 'Disabled';
-		} else if ($param->default == 'y') {
-			$this->prefDefault = 'Enabled';            // Change default codes to human readable format
+		} else if ($param->default === 'y') {
+			$this->prefDefault = 'Enabled';						// Change default codes to human readable format
 		} else if (is_array($param->default)) {
 			$this->prefDefault = implode(', ', $param->default);
 		} else {
@@ -223,10 +225,10 @@ class PrefsDoc extends TWVersion{
 		}
 		// end first processing the below should be applied to the above.... not a continuation (eg. empty array)
 		$this->prefDefault = trim($this->prefDefault);
-		if (!$this->prefDefault) {
+		if ($this->prefDefault == '') {
 			$this->prefDefault = '~~gray:None~~';
-		} else if (!preg_match('\W', $this->prefDefault)) {                // if Pref is a singe word
-			$this->prefDefault = ucfirst($this->prefDefault);            // then caps the first letter.
+		} else if (!preg_match('/\W/', $this->prefDefault)) {				// if Pref is a singe word
+			$this->prefDefault = ucfirst($this->prefDefault);					// then caps the first letter.
 		} else{
 			if (strlen($this->prefDefault) > 30) {
 				$this->prefDefault = substr($this->prefDefault, 0, 27) . '...';
@@ -244,13 +246,40 @@ class PrefsDoc extends TWVersion{
 
 		// set description
 		$this->prefDescription = $param->description;
-		if ($param->hint)
-			$this->prefDescription .= '<br><span class="fa fa-hand-pointer-o" title="Hint"></span><i> '.$param->hint.'</i>';
-		if ($param->warning)
-			$this->prefDescription .= '<br><span class="fa fa-exclamation-triangle" title="Warning"></span><i> '.$param->warning.'</i>';
-		foreach ($param->tags as $tag)
-			if ($tag === 'experimental')
-				$this->prefDescription .= ' <span class="fa fa-flask" title="Experimental: may not work as intended"></span>';
+		if ($param->hint) {
+			if ($this->prefDescription)					// new line if existing content
+				$this->prefDescription .= '<br>';
+			$this->prefDescription .= '<span class="fa fa-hand-pointer-o" title="Hint"></span><i> ' . $param->hint . '</i>';
+		}
+		if ($param->warning) {
+			if ($this->prefDescription)					// new line if existing content
+				$this->prefDescription .= '<br>';
+				$this->prefDescription .= '<span class="fa fa-exclamation-triangle" title="Warning"></span><i> ' . $param->warning . '</i>';
+		}
+		// display list of options
+		if (!empty($param->options)) {
+			$count = 0;
+			$options = '';
+			foreach ($param->options as $option) {
+					if ($count)
+						$options .= ' | ';
+					$options .= $option;
+					$count++;
+			}
+			if ($count) {											// If options exist, then add them
+				if ($this->prefDescription) {						// new line if existing content
+					$this->prefDescription .= '<br>';
+					if (strlen($options) > 400) {					// truncate options if they get too long
+						$options = substr($options, 0, 397) . '...';
+					}
+				}
+				$this->prefDescription .= '~~gray:<span class="fa fa-list-ul" title="Options"></span> ' . $options.'~~';
+			}
+		}
+		if (!empty($param->tags))
+			foreach ($param->tags as $tag)
+				if ($tag === 'experimental')
+					$this->prefDescription .= ' <span class="fa fa-flask" title="Experimental: may not work as intended"></span>';
 		$this->prefDescription = $this->wikiConvert($this->prefDescription);
 	}
 
