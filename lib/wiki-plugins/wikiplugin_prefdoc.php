@@ -405,7 +405,7 @@ class PrefsDoc extends TWVersion{
 	private function getAdminUIPrefs($fileName){
 		$file = file_get_contents('templates/admin/' . $fileName);
 		$fileName = substr(substr($fileName, 8), 0, -4);						// prepare the file name for further use
-		$count = preg_match_all('/{tab name="?\'?(?:{tr})?([\w\s]*)(?:{\/tr})?"?\'?}([\w\W]*?){\/tab}/i', $file, $tabs);
+		$count = preg_match_all('/{tab name="?\'?(?:{tr})?([\w\s]*)(?:{\/tr})?"?\'?.*?}([\w\W]*?){\/tab}/i', $file, $tabs);
 		if ($count) {
 			while ($count >= 1) {
 				$count--;
