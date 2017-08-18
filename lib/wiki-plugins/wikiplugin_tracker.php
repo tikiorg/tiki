@@ -16,6 +16,7 @@ function wikiplugin_tracker_info()
 		'body' => tra('Confirmation message after posting form'),
 		'iconname' => 'trackers',
 		'introduced' => 1,
+		'format' => 'html',
 		'params' => array(
 			'trackerId' => array(
 				'required' => true,
@@ -1534,7 +1535,6 @@ function wikiplugin_tracker($data, $params)
 			}
 		}
 		if (!empty($page)) {
-			$back .= '~np~';
 			$smarty->assign_by_ref('tiki_p_admin_trackers', $perms['tiki_p_admin_trackers']);
 		}
 		if (!empty($params['_ajax_form_ins_id'])) {
@@ -1963,8 +1963,6 @@ FILL;
 			$headerlib->jq_onready = array_merge($headerlib->jq_onready, $old_js['jq_onready']);
 		}
 
-		if (!empty($page))
-			$back .= '~/np~';
 		$smarty->assign_by_ref('tiki_p_admin_trackers', $perms['tiki_p_admin_trackers']);
 		return $back;
 	} else {
@@ -1979,7 +1977,7 @@ FILL;
 			$back.= '<div class="wikitext"'.$id.'>'.$tracker["description"].'</div><br />';
 			$id = '';
 		}
-		$back.= "<div$id>".$data.'</div>';
+		$back .= "<div$id>" . $parserlib->parse_data($data) . '</div>';
 		return $back;
 	}
 }
