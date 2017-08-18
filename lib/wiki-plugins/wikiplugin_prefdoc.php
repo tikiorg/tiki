@@ -275,6 +275,7 @@ class PrefsDoc extends TWVersion{
 						$options = substr($options, 0, 397) . '...';
 					}
 				}
+				$options = $this->wikiConvert($options,true);											// sanitize special characters
 				$options = preg_replace('/\s+/',' ',$options);			// replace all excess whitespace characters with a single space.
 				$this->prefDescription .= '~~gray:<span class="fa fa-list-ul" title="Options"></span> ' . $options.'~~';
 			}
