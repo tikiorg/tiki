@@ -23,6 +23,7 @@ $inputConfiguration = array(
 			'convert_to_utf8' => 'xss',
 			'db' => 'alpha',
 			'dbinfo' => 'alpha',
+			'email_test_cc' => 'digits',
 			'email_test_to' => 'email',
 			'use_proxy' => 'alpha',
 			'proxy_host' => 'striptags',
@@ -1127,18 +1128,24 @@ if ($install_step == '9') {
 
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
-// SMTP test
+$email_test_tw = 'mailtest@tiki.org';
+$smarty->assign('email_test_tw', $email_test_tw);
+
+//  Sytem requirements test.
 if ($install_step == '2') {
 	$smarty->assign('mail_test_performed', 'n');
 	if (isset($_POST['perform_mail_test']) && $_POST['perform_mail_test'] == 'y') {
+
+		$email_test_to = $email_test_tw;
 		$email_test_headers = '';
 		$email_test_ready = true;
 
-		if (empty($_POST['email_test_to'])) {
-			$smarty->assign('email_test_err', tra('Email address empty, test mail not sent'));
-			$email_test_ready = false;
-		} else {	// no email supplied, check copy checkbox
+		if (!empty($_POST['email_test_to'])) {
 			$email_test_to =  $_POST['email_test_to'];
+
+			if (isset($_POST['email_test_cc']) && $_POST['email_test_cc'] == '1') {
+				$email_test_headers .= "Cc: $email_test_tw\n";
+			}
 
 			// check email address format
 			$validator = new Zend\Validator\EmailAddress();
@@ -1146,8 +1153,13 @@ if ($install_step == '2') {
 				$smarty->assign('email_test_err', tra('Email address not valid, test mail not sent'));
 				$email_test_ready = false;
 			}
-			$smarty->assign('email_test_to', $email_test_to);
+		} else {	// no email supplied, check copy checkbox
+			if (!isset($_POST['email_test_cc']) || $_POST['email_test_cc'] != '1') {
+				$smarty->assign('email_test_err', tra('Email address empty and "copy" checkbox not set, test mail not sent'));
+				$email_test_ready = false;
+			}
 		}
+		$smarty->assign('email_test_to', $email_test_to);
 
 		if ($email_test_ready) {	// so send the mail
 			$email_test_headers .= 'From: noreply@tiki.org' . "\n";	// needs a valid sender
