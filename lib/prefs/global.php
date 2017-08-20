@@ -18,7 +18,7 @@ function prefs_global_list($partial = false)
 		),
 		'validateUsers' => array(
 			'name' => tra('Validate new user registrations by email'),
-			'description' => tra('Upon registration, the new user will receive an email containing a new-account validation link.'),
+			'description' => tra('If enabled, Tiki will send an email message to the user. The message contains a link that must be clicked to validate the registration. After clicking the link, the user will be validated. You can use this option to limit false registrations or fake email addresses.'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'sender_email',
@@ -212,14 +212,14 @@ function prefs_global_list($partial = false)
 		),
 		'allowRegister' => array(
 			'name' => tra('Users can register'),
-			'description' => tra('Permit user registration'),
+			'description' => tra('If enabled, this will allow users to register, using the webform. The Login module will include a Register link. If disabled, the admin will have to create new users manually on the Admin Users page. '),
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
 		),
 		'validateEmail' => array(
 			'name' => tra("Validate user's email server"),
-			'description' => tra('Tiki will perform a DNS lookup and attempt to validate the email server.'),
+			'description' => tra('If enabled, Tiki will attempt to validate the user’s email address by examining the syntax of the email address. It must be a string of letters, or digits or _ or . or - follows by a @ follows by a string of letters, or digits or _ or . or -. Tiki will perform a DNS lookup and attempt to open a SMTP session to validate the email server.'),
 			'type' => 'list',
 			'options' => array(
 				'n'=> tra('No'),

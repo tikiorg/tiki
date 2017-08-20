@@ -7,6 +7,10 @@
 
 class WikiPlugin_Casperjs_Render
 {
+	/**
+	 * @param WikiPlugin_Casperjs_Result $result
+	 * @return string
+	 */
 	static public function resultAsHTML($result)
 	{
 		$executionResult = "<h3>CasperJs Execution Details</h3>";
@@ -37,5 +41,7 @@ class WikiPlugin_Casperjs_Render
 			$executionResult .= $key . " => " . $valueToPrint . "\n";
 		}
 		$executionResult .= "</pre>";
+
+		return $executionResult;
 	}
 }

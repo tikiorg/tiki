@@ -600,16 +600,14 @@ function wikiplugin_tracker_info()
 function wikiplugin_tracker_name($fieldId, $name, $field_errors)
 {
 	foreach ($field_errors['err_mandatory'] as $f) {
-		if ($fieldId == $f['fieldId']) {
-			return '<span class="highlight">' . htmlspecialchars($name) . '</span>';
-		}
+		if ($fieldId == $f['fieldId'])
+			return '<span class="highlight">'.$name.'</span>';
 	}
 	foreach ($field_errors['err_value'] as $f) {
-		if ($fieldId == $f['fieldId']) {
-			return '<span class="highlight">' . htmlspecialchars($name) . '</span>';
-		}
+		if ($fieldId == $f['fieldId'])
+			return '<span class="highlight">'.$name.'</span>';
 	}
-	return htmlspecialchars($name);
+	return $name;
 }
 
 function wikiplugin_tracker($data, $params)
@@ -1668,13 +1666,13 @@ function wikiplugin_tracker($data, $params)
 		if (isset($_REQUEST['register']))
 			$back.= '<input type="hidden" name="register" value="'.$_REQUEST["register"].'" />';
 		if ($showtitle == 'y') {
-			$back .= '<div class="h1">' . htmlspecialchars($tracker["name"]) . '</div>';
+			$back.= '<div class="h1">'.$tracker["name"].'</div>';
 		}
 		if ($showdesc == 'y' && $tracker['description']) {
 			if ($tracker['descriptionIsParsed'] == 'y') {
-				$back .= '<div class="wikitext">' . TikiLib::lib('parser')->parse_data($tracker['description']).'</div><br />';
+				$back .= '<div class="wikitext">'.TikiLib::lib('parser')->parse_data($tracker['description']).'</div><br />';
 			} else {
-				$back .= '<div class="wikitext">' . htmlspecialchars(tra($tracker["description"])) . '</div><br />';
+				$back.= '<div class="wikitext">'.tra($tracker["description"]).'</div><br />';
 			}
 		}
 		if (isset($_REQUEST['tr_preview'])) { // use for the computed and join fields
@@ -1764,7 +1762,7 @@ function wikiplugin_tracker($data, $params)
 					} else {
 						$mand =  ($showmandatory == 'y' and $f['isMandatory'] == 'y')? "&nbsp;<strong class='mandatory_star text-danger tips' title=':" . tra("This field is mandatory") . "'>*</strong>&nbsp;":'';
 						if (!empty($f['description'])) {
-							$desc = $f['descriptionIsParsed'] == 'y' ? TikiLib::lib('parser')->parse_data($f['description']) : htmlspecialchars(tra($f['description']));
+							$desc = $f['descriptionIsParsed'] == 'y' ? TikiLib::lib('parser')->parse_data($f['description']) : tra($f['description']);
 							$desc = '<div class="trackerplugindesc">' . $desc . '</div>';
 						} else {
 							$desc = '';
@@ -1849,18 +1847,18 @@ function wikiplugin_tracker($data, $params)
 				}
 
 				if ($f['type'] != 'S' && empty($tpl) && empty($wiki)) {
-					if ($showfieldsdesc == 'y' && $f['description']) {
-						$back .= '<div class="form-group tracker-help-block tracker_field' . $f['fieldId'] . ' ">';
-						{
-							$back .= '<div class="col-md-12 trackerplugindesc help-block text-right">';
-							if ($f['descriptionIsParsed'] == 'y') {
-								$back .= TikiLib::lib('parser')->parse_data($f['description']);
-							} else {
-								$back .= htmlspecialchars(tra($f['description']));
-							}
-							$back .= '</div>';
+					if ($showfieldsdesc == 'y') {
+						$back .= '<div class="form-group tracker-help-block tracker_field' . $f['fieldId'] . ' "><div class="' . $labelclass
+							. ' control-label sr-only">Label</div><div class="' . $inputclass
+							. ' trackerplugindesc help-block">';
+
+						if ($f['descriptionIsParsed'] == 'y') {
+							$back .= TikiLib::lib('parser')->parse_data($f['description']);
+						} else {
+							$back .= tra($f['description']);
 						}
-						$back .= '</div>';
+
+						$back .= '</div></div>';
 					}
 				}
 			}
@@ -1911,28 +1909,28 @@ FILL;
 
 		$smarty->assign('showmandatory', $showmandatory);
 
-		if ($prefs['feature_antibot'] == 'y' && empty($user)
-			&& (!isset($transactionStep) || $transactionStep == 0)
-			&& $params['formtag'] != 'n'
-			&& ($registration != 'y' || $prefs["user_register_prettytracker"] != 'y')
-			) {
-			// in_tracker session var checking is for tiki-register.php
-			$smarty->assign('antibot_table', empty($wiki) && empty($tpl)?'n': 'y');
-			$captchalib = TikiLib::lib('captcha');
-			$smarty->assign('captchalib', $captchalib);
-			if ($registration == 'y') {
-				$smarty->assign('form', 'register');
+			if ($prefs['feature_antibot'] == 'y' && empty($user)
+				&& (!isset($transactionStep) || $transactionStep == 0)
+				&& $params['formtag'] != 'n'
+				&& ($registration != 'y' || $prefs["user_register_prettytracker"] != 'y')
+				) {
+				// in_tracker session var checking is for tiki-register.php
+				$smarty->assign('antibot_table', empty($wiki) && empty($tpl)?'n': 'y');
+				$captchalib = TikiLib::lib('captcha');
+				$smarty->assign('captchalib', $captchalib);
+				if ($registration == 'y') {
+					$smarty->assign('form', 'register');
+				}
+				$back .= $smarty->fetch('antibot.tpl');
 			}
-			$back .= $smarty->fetch('antibot.tpl');
-		}
-		$back .= '</div>';
+			$back .= '</div>';
 
-		if ($params['formtag'] == 'y') {
-			if (empty($wiki) && empty($tpl)){
-				$back .= '<div class="form-group"><div class="input_submit_container btn-bar ' . $buttonclass . '">';
-			}else{
-				$back .= '<div class="form-group"><div class="input_submit_container btn-bar">';
-			}
+			if ($params['formtag'] == 'y') {
+				if (empty($wiki) && empty($tpl)){
+					$back .= '<div class="form-group"><div class="input_submit_container btn-bar ' . $buttonclass . '">';
+				}else{
+					$back .= '<div class="form-group"><div class="input_submit_container btn-bar">';
+				};
 
 			if (!empty($reset)) {
 					$back .= '<input class="button submit preview" type="reset" name="tr_reset" value="'.tra($reset).'" />';
@@ -1946,19 +1944,18 @@ FILL;
 			$back .= '</div></div>';
 		}
 		if ($showmandatory == 'y' and $onemandatory) {
-			$back.= "<br><br><div class='form-group'>";
 			if (empty($wiki) && empty($tpl)){
-				$back.= "<div class='" . $buttonclass ."'><div class='text-center alert alert-danger'><em>".tra("Fields marked with an * are mandatory.")."</em></div></div>";
+				$back.= "<div class='form-group'><div class='" . $buttonclass ."'><div class='text-center alert alert-danger'><em>".tra("Fields marked with an * are mandatory.")."</em></div></div></div>";
 			}else{
-				$back.= "<div class='form-group'><div class='text-center alert alert-danger'><em>".tra("Fields marked with an * are mandatory.")."</em></div>";
+				$back.= "<div class='form-group'><div class='text-center alert alert-danger'><em>".tra("Fields marked with an * are mandatory.")."</em></div></div>";
 			}
-			$back.= "</div>";
 		}
 		if ($params['formtag'] == 'y') {
 			$back.= '</form>';
 		}
 
 		if (!empty($params['_ajax_form_ins_id'])) {	// save new js in a function for the form init fn
+
 			$headerlib->add_js(' var ajaxTrackerFormInit_' . $params['_ajax_form_ins_id'] . ' = function() {' . $headerlib->output_js(false) . '}', 10);
 
 			// put back the pre-existing js
@@ -1966,17 +1963,18 @@ FILL;
 			$headerlib->jq_onready = array_merge($headerlib->jq_onready, $old_js['jq_onready']);
 		}
 
+		$smarty->assign_by_ref('tiki_p_admin_trackers', $perms['tiki_p_admin_trackers']);
 		return $back;
 	} else {
 		if (isset($_REQUEST['trackit']) and $_REQUEST['trackit'] == $trackerId)
 			$smarty->assign('wikiplugin_tracker', $trackerId);//used in vote plugin
 		$id = ' id="wikiplugin_tracker'.$iTRACKER.'"';
 		if ($showtitle == 'y') {
-			$back .= '<div class="h1"' . $id . '>' . htmlspecialchars($tracker["name"]) . '</div>';
+			$back.= '<div class="h1"'.$id.'>'.$tracker["name"].'</div>';
 			$id = '';
 		}
 		if ($showdesc == 'y') {
-			$back .= '<div class="wikitext"' . $id . '>' . htmlspecialchars($tracker["description"]) . '</div><br />';
+			$back.= '<div class="wikitext"'.$id.'>'.$tracker["description"].'</div><br />';
 			$id = '';
 		}
 		$back .= "<div$id>" . $parserlib->parse_data($data) . '</div>';
