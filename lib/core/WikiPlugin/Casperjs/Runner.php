@@ -110,7 +110,7 @@ EOT;
 /* ********************* Tiki Bridge PostFix ********************* */
 {$casperInstance}.run(function () {
     tikiBridge.done({$casperInstance});
-    casper.exit();
+    {$casperInstance}.exit();
 });
 
 EOT;
