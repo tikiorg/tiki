@@ -300,6 +300,13 @@
 {/remarksbox}
 {/if}
 
+{if $prefs.print_pdf_from_url === "mpdf" && $mPDFClassMissing}
+	<h2>{tr}Print configurations{/tr}</h2>
+	{remarksbox type='error' title="{tr}mPDF Information{/tr}" close='n'}
+		<p>{tr}mPDF is selected as Print option, however the class can't be loaded, please check "Print Settings" in /tiki-admin.php?page=print{/tr}</p>
+	{/remarksbox}
+{/if}
+
 <h2>{tr}File Gallery Search Indexing{/tr}</h2>
 {icon name='help' href='https://doc.tiki.org/Search+within+files'} <em>{tr _0='<a href="https://doc.tiki.org/Search+within+files">' _1='</a>'}More information %0 here %1{/tr}</em>
 {if $prefs.fgal_enable_auto_indexing eq 'y'}

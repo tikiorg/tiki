@@ -46,6 +46,8 @@ if (is_dir(__DIR__ . '/../../vendor_custom')){
 	}
 }
 
+spl_autoload_register('Tiki_Autoload::autoload');
+
 /**
  * performs some checks on the underlying system, before initializing Tiki.
  * @package TikiWiki\lib\init

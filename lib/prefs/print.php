@@ -56,6 +56,7 @@ function prefs_print_list()
 			'help' => 'mPDF',
 			'dependencies' => array('auth_token_access'),
 			'default' => 'vendor/mpdf/mpdf',
+			'packages_required' => array('mpdf/mpdf' => 'mPDF'),
 		),
 		'print_pdf_mpdf_printfriendly' => array(
 			'name' => tra('Print Friendly PDF'),

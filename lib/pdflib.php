@@ -59,21 +59,9 @@ class PdfGenerator
 				}
 			}
 		} elseif ( $prefs['print_pdf_from_url'] == 'mpdf' ) {
+			self::setupMPDFPathConstants();
 			$path = $prefs['print_pdf_mpdf_path'];
-			if (substr($path, -1) !== '/') {
-				$path .= '/';
-			}
-			if ( ! empty($path) && is_readable($path) && file_exists($path . 'mpdf.php')) {
-				self::setupMPDFCacheLocation();
-
-				//setting up dir for custom fonts and mpdf default fonts
-				define('_MPDF_TTFONTPATH',TIKI_PATH.'/lib/pdf/fontdata/fontttf/');
-		        define('_MPDF_SYSTEM_TTFONTS', $path. '/ttfonts/');
-
-
-				if (!class_exists('mPDF')){
-					include_once($path . 'mpdf.php');
-				}
+			if (class_exists('mPDF')){ // Autoload will take care of loading the mpdf file
 				if (! is_writable(_MPDF_TEMP_PATH) ||! is_writable(_MPDF_TTFONTDATAPATH)) {
 					$this->error = tr('mPDF "%0" and "%1" directories must be writable', 'tmp',
 						'ttfontdata');
@@ -83,9 +71,9 @@ class PdfGenerator
 				}
 			} else {
 				if (!empty($path)) {
-					$this->error = tr('mPDF not found in path "%0"', $path);
+					$this->error = tr('mPDF not found in path "%0", and is not installed using packages.', $path);
 				} else {
-					$this->error = tr('The mPDF path has not been set.');
+					$this->error = tr('The mPDF path has not been set, and is not installed using packages.');
 				}
 			}
 		}
@@ -235,10 +223,17 @@ class PdfGenerator
 	}
 
 	/**
-	 * Setup mPDF Cache locations to a folder (mpdf) inside the filesystem cache
+	 * Setup mPDF Constants related with PATHS in teh filesystem
+	 * It sets the cache locations to a folder (mpdf) inside the filesystem cache
+	 * It sets a extra folder to load fonts
 	 */
-	static public function setupMPDFCacheLocation()
+	static public function setupMPDFPathConstants()
 	{
+		// Set custom Fonts path
+		if (!defined('_MPDF_SYSTEM_TTFONTS')){
+			define('_MPDF_SYSTEM_TTFONTS',TIKI_PATH.'/lib/pdf/fontdata/fontttf/');
+		}
+
 		// set cache paths
 		$cache = new CacheLibFileSystem();
 		$mPDFBaseCachePath = $cache->folder . '/mpdf/';
@@ -298,11 +293,7 @@ class PdfGenerator
        $this->_getImages($html,$tempImgArr);
        
 	   $this->_parseHTML($html);
-	   self::setupMPDFCacheLocation();
-		if (!class_exists('mPDF')){
-	    	include_once($this->location . 'mpdf.php');
-		}
-		
+	   self::setupMPDFPathConstants();
 
 	  	$mpdf=new mPDF('utf-8',$pdfSettings['pagesize'],'','',$pdfSettings['margin_left'],$pdfSettings['margin_right'] , $pdfSettings['margin_top'] , $pdfSettings['margin_bottom'] , $pdfSettings['margin_header'] , $pdfSettings['margin_footer'] ,$pdfSettings['orientation']);
 

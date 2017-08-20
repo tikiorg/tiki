@@ -1933,6 +1933,10 @@ if (!$standalone) {
 	}
 	deack_on_state_change($php_properties, 'PHP');
 	deack_on_state_change($security, 'PHP Security');
+
+	if ( !class_exists('mPDF') ) {
+		$smarty->assign('mPDFClassMissing', true);
+	}
 }
 
 $sensitiveDataDetectedFiles = [];
