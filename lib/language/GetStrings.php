@@ -136,7 +136,7 @@ class Language_GetStrings
 	 * Add a file type object to $this->fileTypes
 	 * and update $this->extensions.
 	 * 
-	 * @param FileType $fileType
+	 * @param $fileType Language_FileType
 	 * @return null
 	 * @throws Language_Exception if type being added already exists
 	 */

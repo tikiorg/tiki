@@ -14,6 +14,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\HelpCommand;
+use Language;
 
 if (isset($_SERVER['REQUEST_METHOD'])) {
 	die('Only available through command-line.');
@@ -179,14 +180,20 @@ class EnglishUpdateCommand extends Command
 		unset ($pairedMatches);
 
 		/**
-		 * @var $updateStrings array final list of translation strings to update
+		 * @var $updateStrings array formatted list of translation strings taken from svn diff
 		 */
 
 		$updateStrings = array();
 		$overCount = 0;
+		$lang = new Language();
 		foreach ($pairedStrings as $strings){
 			$count = 0;
 			while (isset($strings['-'][$count])){
+				// strip any end punctuation from both strings to support tikis punctuations translation functionality.
+				if (in_array(substr($strings['-'][$count], -1),$lang::punctuations))
+				$strings['-'][$count] = substr($strings['-'][$count],0,-1);
+				if (in_array(substr($strings['+'][$count], -1),$lang::punctuations))
+					$strings['+'][$count] = substr($strings['+'][$count],0,-1);
 				if ($strings['-'][$count] !== $strings['+'][$count]){
 					$updateStrings[$overCount]['-'] = $strings['-'][$count];
 					$updateStrings[$overCount]['+'] = $strings['+'][$count];
@@ -199,7 +206,7 @@ class EnglishUpdateCommand extends Command
 
 		/*
 
-		Need to fix. it currently tells if a tr string as been updated, but it really needs to check if its been updated & not updated in the language.php files.
+		Need to fix. it currently tells if a tr string as been changed, but it really needs to check if its been changed & not updated in the language.php files.
 
 
 		// send email if that option is selected, then die
@@ -227,7 +234,7 @@ class EnglishUpdateCommand extends Command
 					$file = file_get_contents($directory . '/language.php');
 					$hash = hash('crc32b', $file);
 					foreach ($updateStrings as $entry) {
-						$file = str_replace('"'.$entry['-'].'"', '"'.$entry['+'].'"', $file);
+						$file = preg_replace('/"'.preg_quote($entry['-'],'/').'['.implode('',$lang::punctuations).']?"/','"'.$entry['+'].'"',$file);
 					}
 					// check if anything has changed and advance the counter if so.
 					$endHash = hash('crc32b', $file);
