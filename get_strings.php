@@ -56,9 +56,9 @@ if ($request->hasProperty('outputFiles')) {
 
 $excludeDirs = array(
 	'dump' , 'img', 'lang',
-	'vendor_bundled', 'vendor', 'vendor_extra',
-	 'lib/test',	'temp',
-	'temp/cache',	'temp/templates_c',
+	'vendor_bundled', 'vendor', 'vendor_extra', 'vendor_custom',
+	 'lib/test',	'temp', 'whelp',
+	'storage',	'tiki_tests', 'doc'
 );
 
 $includeFiles = array(

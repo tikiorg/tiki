@@ -19,6 +19,12 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class Language extends TikiDb_Bridge
 {
+
+	/**
+	 * Characters at end of translation string that are not a part of the translation
+	 */
+	const punctuations = array(':', '!', ';', '.', ',', '?');
+
 	/**
 	 * Return a list of languages available in Tiki
 	 *
