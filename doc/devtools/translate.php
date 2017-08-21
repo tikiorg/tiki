@@ -185,14 +185,13 @@ class EnglishUpdateCommand extends Command
 
 		$updateStrings = array();
 		$overCount = 0;
-		$lang = new Language();
 		foreach ($pairedStrings as $strings){
 			$count = 0;
 			while (isset($strings['-'][$count])){
 				// strip any end punctuation from both strings to support tikis punctuations translation functionality.
-				if (in_array(substr($strings['-'][$count], -1),$lang::punctuations))
+				if (in_array(substr($strings['-'][$count], -1),Language::punctuations))
 				$strings['-'][$count] = substr($strings['-'][$count],0,-1);
-				if (in_array(substr($strings['+'][$count], -1),$lang::punctuations))
+				if (in_array(substr($strings['+'][$count], -1),Language::punctuations))
 					$strings['+'][$count] = substr($strings['+'][$count],0,-1);
 				if ($strings['-'][$count] !== $strings['+'][$count]){
 					$updateStrings[$overCount]['-'] = $strings['-'][$count];
@@ -234,7 +233,7 @@ class EnglishUpdateCommand extends Command
 					$file = file_get_contents($directory . '/language.php');
 					$hash = hash('crc32b', $file);
 					foreach ($updateStrings as $entry) {
-						$file = preg_replace('/"'.preg_quote($entry['-'],'/').'['.implode('',$lang::punctuations).']?"/','"'.$entry['+'].'"',$file);
+						$file = preg_replace('/"'.preg_quote($entry['-'],'/').'['.implode('',Language::punctuations).']?"/','"'.$entry['+'].'"',$file);
 					}
 					// check if anything has changed and advance the counter if so.
 					$endHash = hash('crc32b', $file);
