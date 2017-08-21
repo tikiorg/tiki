@@ -78,9 +78,8 @@ class Language_WriteFile
 				// (except if we already have an explicit translation for 'Login:', in which case we don't reach this else)
 				$stringLength = strlen($string['name']);
 				$stringLastChar = $string['name'][$stringLength - 1];
-				$lang = new Language();
 
-				if (in_array($stringLastChar, $lang::punctuations) ) {
+				if (in_array($stringLastChar, Language::punctuations) ) {
 					$trimmedString = substr($string['name'], 0, $stringLength - 1);
 					$string['name'] = $trimmedString;
 					if (isset($this->translations[$trimmedString])) {

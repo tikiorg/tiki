@@ -153,8 +153,7 @@ function tra_impl($content, $lg = '', $args = array())
 		// This should avoid duplicated strings like 'Log In' and 'Log In:' that were needed before
 		//   (because there is no space before ':' in english, but there is one in others like french)
 		$lastCharacter = $content[strlen($content) - 1];
-		$lang = new Language();
-		if (in_array($lastCharacter, $lang::punctuations)) { // Should stay synchronized with Language_WriteFile::writeStringsToFile()
+		if (in_array($lastCharacter, Language::punctuations)) { // Should stay synchronized with Language_WriteFile::writeStringsToFile()
 			$new_content = substr($content, 0, -1);
 			if ( isset(${"lang_$lg"}[$new_content]) ) {
 				return tr_replace(
