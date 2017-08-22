@@ -26,9 +26,6 @@
  * Note: baseDir and fileName parameters are available in command line mode only
  *
  *
- * If you want to know the translation progression for your language, just visit : http://i18n.tiki.org/status
- * which is made with http://tikiwiki.svn.sourceforge.net/viewvc/tikiwiki/trunk/doc/devtools/get_translation_percentage.php?view=markup
- *
  */
 
 if (php_sapi_name() != 'cli') {
@@ -55,10 +52,10 @@ if ($request->hasProperty('outputFiles')) {
 }
 
 $excludeDirs = array(
-	'dump' , 'img', 'lang',
+	'dump' , 'img', 'lang', 'addons', 'bin', 'installer/schema',
 	'vendor_bundled', 'vendor', 'vendor_extra', 'vendor_custom',
-	 'lib/test',	'temp', 'whelp',
-	'storage',	'tiki_tests', 'doc'
+	 'lib/test',	'temp', 'whelp', 'permissioncheck',
+	'storage',	'tiki_tests', 'doc', 'db','lib/openlayers','tests', 'modules/cache'
 );
 
 $includeFiles = array(
