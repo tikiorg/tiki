@@ -70,7 +70,7 @@ class HistLib extends TikiLib
 		
 		global $prefs;
 		// add rollback comment to existing one (after truncating if needed)
-		$ver_comment = " [" . tra("rollback version ") . $version . "]";
+		$ver_comment = " [" . tr('Rollback by %0 to version %1', $user, $version) . "]";
 		$too_long = 200 - strlen($res["comment"] . $ver_comment);
 		if ($too_long < 0) {
 			$too_long -= 4;
