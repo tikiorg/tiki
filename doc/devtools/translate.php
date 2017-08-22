@@ -59,6 +59,161 @@ class EnglishUpdateCommand extends Command
 			);
 	}
 
+	/**
+	 * The total number of changed strings
+	 * @var int
+	 */
+	private $stringCount = 0;
+
+	/**
+	 *
+	 * Seperates svn diff output into changes made in PHP and TPL files
+	 *
+	 * @param $content string raw svn diff output
+	 *
+	 * @return array with [0] containing PHP and [1] containing TPL strings
+	 */
+
+	private function sepratePhpTpl($content){
+
+		$content .= "\nIndex:  \n=";							// used as a dummy to match the last entry
+
+		// Separate php and tpl content
+		preg_match_all('/^Index:\s.+(php|tpl)$\n={10}([\w\W]+?)(?=^Index:.+\n=)/m',$content,$phpTpl);
+
+		$changes['php'] = '';
+		$changes['tpl'] = '';
+		$count = 0;
+		while ($count < count($phpTpl[1])){
+
+			if ($phpTpl[1][$count] === 'php'){
+				$changes['php'] .= $phpTpl[2][$count];
+			}else if ($phpTpl[1][$count] === 'tpl'){
+				$changes['tpl'] .= $phpTpl[2][$count];
+			}
+			$count++;
+		}
+		return $changes;
+	}
+
+	/**
+	 * @param $content string diff content to split into pairs of removed and added content
+	 *
+	 * @return array equal pairs of added and removed diff content
+	 */
+
+	private function pairMatches($content){
+
+		/**
+		 * @var $pairedMatches array any changes that took away and added lines.
+		 */
+
+		// strip some diff verbiage to prevent conflict in next match
+		$content = preg_replace('/(?>---|\+\+\+)\s.*\)$/m','',$content);
+		// place in an array changes that have multiple lines changes
+		preg_match_all('/(\n[-+].*){2,}/m', $content, $diffs);
+
+		$content = $diffs[0];
+		unset ($diffs);
+
+		$pairs = array();
+		foreach ($content as $diff) {
+
+			//now trim it down so its a - then + pair
+			if (preg_match('/^-[\s\S]*^\+.*/m', $diff, $pair)) {
+
+				// now extract a equally paired sets
+				$count = min(preg_match_all('/^-/m', $pair[0]), preg_match_all('/^\+/m', $pair[0]));
+				if ($count) {
+					preg_match('/(?>\n-.*){' . $count . '}(?>\n\+.*){' . $count . '}/', "\n" . $pair[0], $equilPair);
+					$pairs[] = $equilPair[0];
+				}
+			}
+		}
+
+		unset ($content);
+		$count = 0;
+		$pairedMatches = array();
+
+		foreach ($pairs as $pair){
+			if (preg_match_all('/^-(.*)/m',$pair,$negativeMatch)) {
+				if (preg_match_all('/^\+(.*)/m',$pair,$positiveMatch)){
+					$pairedMatches[$count]['-']= implode('', $negativeMatch[1]);
+					$pairedMatches[$count]['+']= implode('', $positiveMatch[1]);
+					$count++;
+				}
+			}
+		}
+
+		return $pairedMatches;
+	}
+
+	/**
+	 * Takes a semi-prepared list of commit changes (from a diff) and extracts pairs of original and changed translatoion strings
+	 *
+	 * @param $content array of equally paired diff content pairs of removed and added, previously precessed by pairMatches()
+	 * @param $file string can be 'php' or 'tpl'. Will determine how strings are extracted.
+	 *
+	 * @return array extracted strings
+	 */
+	private function pairStrings($content, $file){
+
+		$count = 0;
+		$pairedStrings = array();
+
+		// set what regex to use depending on file type.
+		if ($file === 'php') {
+			$regex ='/tra?\(["\']([\S\s]*?)[\'"]\)/m';
+		}else
+			$regex = '/{tr ?.*?}([\S\s]*?){\/tr}/m';
+
+		foreach ($content as $pair){
+			if (preg_match_all($regex,$pair['-'],$negativeMatch)){
+				if (preg_match_all($regex,$pair['+'],$positiveMatch)){
+					// strip out any changes that have a dissimilar number of translation strings. No way to match them properly :(
+					if (count($negativeMatch[1]) === count($positiveMatch[1])) {
+						$pairedStrings[$count]['-'] = $negativeMatch[1];
+						$pairedStrings[$count]['+'] = $positiveMatch[1];
+						$count++;
+					}
+				}
+			}
+		}
+		return $pairedStrings;
+
+	}
+
+	/**
+	 * Filters, formats & escapes paired translation strings to produce a final list of translation changes.
+	 *
+	 * @param $content array paired strings previously processed by pairStrings()
+	 *
+	 * @return array A final list of before and after translation strings to update.
+	 */
+
+	private function filterStrings($content){
+
+		$updateStrings = array();
+		foreach ($content as $strings){
+			$count = 0;
+			while (isset($strings['-'][$count])){
+				// strip any end punctuation from both strings to support tikis punctuations translation functionality.
+				if (in_array(substr($strings['-'][$count], -1),Language::punctuations))
+					$strings['-'][$count] = substr($strings['-'][$count],0,-1);
+				if (in_array(substr($strings['+'][$count], -1),Language::punctuations))
+					$strings['+'][$count] = substr($strings['+'][$count],0,-1);
+
+				if ($strings['-'][$count] !== $strings['+'][$count]){
+					$updateStrings[$this->stringCount]['-'] = Language::addPhpSlashes($strings['-'][$count]);
+					$updateStrings[$this->stringCount]['+'] = Language::addPhpSlashes($strings['+'][$count]);
+					$this->stringCount++;
+				}
+				$count++;
+			}
+		}
+		return $updateStrings;
+	}
+
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
@@ -95,7 +250,7 @@ class EnglishUpdateCommand extends Command
 		// die gracefully if shell_exec is not enabled;
 		if (!is_callable('shell_exec')) {
 			$output->writeln('<error>Translation string update Failed. Could not execute shell_exec()</error>');
-			die();
+			return false;
 		}
 
 		$max = 3;
@@ -120,88 +275,16 @@ class EnglishUpdateCommand extends Command
 
 		$output->writeln($raw, OutputInterface::VERBOSITY_DEBUG);
 
-		/**
-		 * @var $pairedMatches array any changes that took away and added lines.
-		 */
-		// place in an array changes that have multiple lines changes
-		preg_match_all('/(\n[-+]\s.*){2,}/m',$raw,$diffs);
+		$diffs = $this->sepratePhpTpl($raw);
 
-		unset ($raw);
+		$diffs['php'] = $this->pairMatches($diffs['php']);
+		$diffs['tpl'] = $this->pairMatches($diffs['tpl']);
 
-		$pairs = array();
-		foreach ($diffs[0] as $diff){
+		$diffs['php'] = $this->pairStrings($diffs['php'],'php');
+		$diffs['tpl'] = $this->pairStrings($diffs['tpl'],'tpl');
+		$diffs = array_merge($diffs['php'],$diffs['tpl']);
 
-			//now trim it down so its a - then + pair
-			if (preg_match('/^-[\s\S]*^\+.*/m',$diff,$pair)) {
-
-				// now extract a equally paired sets
-				$count = min(preg_match_all('/^-/m', $pair[0]), preg_match_all('/^\+/m', $pair[0]));
-				if ($count) {
-					preg_match('/(?>\n-.*){'.$count.'}(?>\n\+.*){'.$count.'}/',"\n".$pair[0],$equilPair);
-					$pairs[] = $equilPair[0];
-				}
-			}
-		}
-
-		unset ($diff);
-		$count = 0;
-		$pairedMatches = array();
-
-		foreach ($pairs as $pair){
-			if (preg_match_all('/^-(.*)/m',$pair,$negativeMatch)) {
-				if (preg_match_all('/^\+(.*)/m',$pair,$positiveMatch)){
-					$pairedMatches[$count]['-']= implode('', $negativeMatch[1]);
-					$pairedMatches[$count]['+']= implode('', $positiveMatch[1]);
-					$count++;
-				}
-			}
-		}
-
-		unset ($pairs);
-
-		/**
-		 * @var $pairedStrings array sets of translation strings found.
-		 */
-
-		$count = 0;
-		$pairedStrings = array();
-		foreach ($pairedMatches as $pair){
-			if (preg_match_all('/tra?\(["\']([\S\s]*?)[\'"]\)/m',$pair['-'],$negativeMatch)){
-				if (preg_match_all('/tra?\(["\']([\S\s]*?)[\'"]\)/m',$pair['+'],$positiveMatch)){
-					// strip out any changes that have a dissimilar number of translation strings. No way to match them properly :(
-					if (count($negativeMatch[1]) === count($positiveMatch[1])) {
-						$pairedStrings[$count]['-'] = $negativeMatch[1];
-						$pairedStrings[$count]['+'] = $positiveMatch[1];
-						$count++;
-					}
-				}
-			}
-		}
-		unset ($pairedMatches);
-
-		/**
-		 * @var $updateStrings array formatted list of translation strings taken from svn diff
-		 */
-
-		$updateStrings = array();
-		$overCount = 0;
-		foreach ($pairedStrings as $strings){
-			$count = 0;
-			while (isset($strings['-'][$count])){
-				// strip any end punctuation from both strings to support tikis punctuations translation functionality.
-				if (in_array(substr($strings['-'][$count], -1),Language::punctuations))
-				$strings['-'][$count] = substr($strings['-'][$count],0,-1);
-				if (in_array(substr($strings['+'][$count], -1),Language::punctuations))
-					$strings['+'][$count] = substr($strings['+'][$count],0,-1);
-				if ($strings['-'][$count] !== $strings['+'][$count]){
-					$updateStrings[$overCount]['-'] = $strings['-'][$count];
-					$updateStrings[$overCount]['+'] = $strings['+'][$count];
-					$overCount++;
-				}
-				$count++;
-			}
-		}
-		unset ($pairedStrings);
+		$diffs = $this->filterStrings($diffs);
 
 		/*
 
@@ -210,29 +293,29 @@ class EnglishUpdateCommand extends Command
 
 		// send email if that option is selected, then die
 		if ($input->getOption('email')) {
-			mail($input->getOption('email'), $overCount . ' Undated Translation Strings Found', wordwrap(var_export($updateStrings,true), 70, "\r\n"));
-			$progress->setMessage("$overCount translation strings available for update. Email Sent. Strings not updated.");
+			mail($input->getOption('email'), $this->stringCount . ' Undated Translation Strings Found', wordwrap(var_export($updateStrings,true), 70, "\r\n"));
+			$progress->setMessage("$this->stringCount translation strings available for update. Email Sent. Strings not updated.");
 			$progress->finish();
 			echo "\n";
 			return false;
 		}
 */
 
-		$progress->setMessage("Updating $overCount translation strings");
+		$progress->setMessage("Updating $this->stringCount translation strings");
 		$progress->advance();
 
 		$directories = glob($tikiBase . '/lang/*' , GLOB_ONLYDIR);
 
 		// update the language files with the new strings
 		$count = 0;
-		if ($overCount)
+		if ($this->stringCount)
 			foreach ($directories as $directory){
 				$hash = '';
 				$endHash = '';
 				if (is_writable($directory.'/language.php')) {
 					$file = file_get_contents($directory . '/language.php');
 					$hash = hash('crc32b', $file);
-					foreach ($updateStrings as $entry) {
+					foreach ($diffs as $entry) {
 						$file = preg_replace('/"'.preg_quote($entry['-'],'/').'['.implode('',Language::punctuations).']?"/','"'.$entry['+'].'"',$file);
 					}
 					// check if anything has changed and advance the counter if so.
@@ -243,7 +326,7 @@ class EnglishUpdateCommand extends Command
 				}
 				$output->writeln($directory . ' ' . $hash . ' -> '. $endHash,OutputInterface::VERBOSITY_DEBUG);
 			}
-		$progress->setMessage('Updated '.$overCount .' strings in '.$count.' out of '.count($directories).' language files. ');
+		$progress->setMessage('Updated '.$this->stringCount .' strings in '.$count.' out of '.count($directories).' language files. ');
 		$progress->finish();
 		echo "\n";
 		$output->writeln('Verify before committing.');
