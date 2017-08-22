@@ -131,6 +131,20 @@
 		});
 	$( "#{{$id}}-div .checkbox_objects" ).on( "click", countChecked );
 	countChecked();
+})();
+{/jq}
+{/if}
+{if $downloadable}
+	{if $actions}
+	<br>
+	{/if}
+	<form method="post" id="listexecute-download-{$iListExecute}">
+		<input type="hidden" name="download" value="1">
+		<input type="hidden" name="tsAjax" value="y">
+		<input type="submit" name="submit" value="{tr}Download{/tr}" class="btn btn-default">
+	</form>
+{jq}
+(function(){
 	$('#listexecute-download-{{$iListExecute}}').submit(function(){
 		var $form = $(this);
 		$form.find('input[name^=filter]').remove();
@@ -146,14 +160,4 @@
 	});
 })();
 {/jq}
-{/if}
-{if $downloadable}
-	{if $actions}
-	<br>
-	{/if}
-	<form method="post" id="listexecute-download-{$iListExecute}">
-		<input type="hidden" name="download" value="1">
-		<input type="hidden" name="tsAjax" value="y">
-		<input type="submit" name="submit" value="{tr}Download{/tr}" class="btn btn-default">
-	</form>
 {/if}
