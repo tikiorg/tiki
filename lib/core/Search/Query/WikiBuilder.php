@@ -435,7 +435,7 @@ class Search_Query_WikiBuilder
 		}
 
 		if (Table_Check::isSort()) {
-			foreach ($_GET['sort'] as $key => $dir) {
+			foreach ($_REQUEST['sort'] as $key => $dir) {
 				if( $hasactions ) {
 					$type = $tsc[$key]['type'];
 					$field = @$args[$key-1]['field'];
@@ -460,7 +460,7 @@ class Search_Query_WikiBuilder
 		}
 
 		if (Table_Check::isFilter()) {
-			foreach ($_GET['filter'] as $key => $filter) {
+			foreach ($_REQUEST['filter'] as $key => $filter) {
 				if( $hasactions ) {
 					$type = $tsc[$key]['type'];
 					$field = @$args[$key-1]['field'];

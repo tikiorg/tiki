@@ -73,7 +73,7 @@ class Table_Check
 	 */
 	static public function isAjaxCall()
 	{
-		if (isset($_GET['tsAjax']) && $_GET['tsAjax'] === 'y') {
+		if (isset($_REQUEST['tsAjax']) && $_REQUEST['tsAjax'] === 'y') {
 			return true;
 		} else {
 			return false;
@@ -86,8 +86,8 @@ class Table_Check
 	 */
 	static public function isFilterOrSort()
 	{
-		if (self::isAjaxCall() && ((!empty($_GET['filter']) && is_array($_GET['filter'])
-				|| (!empty($_GET['sort']) && is_array($_GET['sort']))))) {
+		if (self::isAjaxCall() && ((!empty($_REQUEST['filter']) && is_array($_REQUEST['filter'])
+				|| (!empty($_REQUEST['sort']) && is_array($_REQUEST['sort']))))) {
 			return true;
 		} else {
 			return false;
@@ -100,7 +100,7 @@ class Table_Check
 	 */
 	static public function isFilter()
 	{
-		if (self::isAjaxCall() && !empty($_GET['filter']) && is_array($_GET['filter'])) {
+		if (self::isAjaxCall() && !empty($_REQUEST['filter']) && is_array($_REQUEST['filter'])) {
 			return true;
 		} else {
 			return false;
@@ -113,7 +113,7 @@ class Table_Check
 	 */
 	static public function isSort()
 	{
-		if (self::isAjaxCall() && !empty($_GET['sort']) && is_array($_GET['sort'])) {
+		if (self::isAjaxCall() && !empty($_REQUEST['sort']) && is_array($_REQUEST['sort'])) {
 			return true;
 		} else {
 			return false;

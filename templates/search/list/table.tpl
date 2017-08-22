@@ -131,6 +131,19 @@
 		});
 	$( "#{{$id}}-div .checkbox_objects" ).on( "click", countChecked );
 	countChecked();
+	$('#listexecute-download-{{$iListExecute}}').submit(function(){
+		var $form = $(this);
+		$form.find('input[name^=filter]').remove();
+		$('.tablesorter-filter').each(function(i,el){
+			var column = $(el).data('column'),
+					value = $(el).val();
+			if( value ) {
+				$('<input type="hidden" name="filter['+column+']">')
+					.val(value)
+					.appendTo($form);
+			}
+		});
+	});
 })();
 {/jq}
 {/if}
@@ -138,8 +151,9 @@
 	{if $actions}
 	<br>
 	{/if}
-	<form method="post">
+	<form method="post" id="listexecute-download-{$iListExecute}">
 		<input type="hidden" name="download" value="1">
+		<input type="hidden" name="tsAjax" value="y">
 		<input type="submit" name="submit" value="{tr}Download{/tr}" class="btn btn-default">
 	</form>
 {/if}
