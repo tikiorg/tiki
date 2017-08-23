@@ -143,8 +143,8 @@ class EnglishUpdateCommand extends Command
 		foreach ($pairs as $pair) {
 			if (preg_match_all('/^-(.*)/m', $pair, $negativeMatch)) {
 				if (preg_match_all('/^\+(.*)/m', $pair, $positiveMatch)) {
-					$pairedMatches[$count]['-'] = implode('', $negativeMatch[1]);
-					$pairedMatches[$count]['+'] = implode('', $positiveMatch[1]);
+					$pairedMatches[$count]['-'] = implode(' ', $negativeMatch[1]);
+					$pairedMatches[$count]['+'] = implode(' ', $positiveMatch[1]);
 					$count++;
 				}
 			}
@@ -173,7 +173,7 @@ class EnglishUpdateCommand extends Command
 			$php = new Language_FileType_Php;
 
 		} else
-			$regex = array('/\{tr(?:\s+[^\}]*)?\}([\s\S]+?)\{\/tr\}/');
+			$regex = array('/\{tr(?:\s+[^\}]*)?\}(.+?)\{\/tr\}/');
 
 
 		foreach ($content as $pair) {
@@ -245,11 +245,11 @@ class EnglishUpdateCommand extends Command
 		$tikiBase = realpath(dirname(__FILE__) . '/../..');
 
 		$output->writeln('*******************************************************');
-		$output->writeln('*                     Limitations                     *');
-		$output->writeln('* Does not check for multiple uses of changed strings *');
-		$output->writeln('* so dont orphan reused strings.                      *');
-		$output->writeln('* Does not handle string forking so dont use when 2   *');
-		$output->writeln('* identical strings are changed non-identically.      *');
+		$output->writeln('*                     <info>Limitations</info>                     *');
+		$output->writeln('* Will not find strings if they span multiple lines.  *');
+		$output->writeln('*                                                     *');
+		$output->writeln('* Will not match strings if a translation string has  *');
+		$output->writeln('* been added or removed on the line above or below.   *');
 		$output->writeln('*******************************************************');
 		$output->writeln('');
 
@@ -279,16 +279,14 @@ class EnglishUpdateCommand extends Command
 			return false;
 		}
 
-		$max = 3;
-
-		$progress = new ProgressBar($output, $max);
+		$progress = new ProgressBar($output, 3);
 		if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE)
 			$progress->setOverwrite(false);
 		$progress->setFormatDefinition('custom', ' %current%/%max% [%bar%] -- %message%');
 		$progress->setFormat('custom');
 
 
-		$progress->setMessage('Getting Diffs');
+		$progress->setMessage('Getting String Changes');
 		$progress->start();
 
 		$raw = shell_exec("svn diff $rev 2>&1");
@@ -303,12 +301,18 @@ class EnglishUpdateCommand extends Command
 
 		$diffs = $this->separatePhpTpl($raw);
 
+		$output->writeln(var_export($diffs,true),OutputInterface::VERBOSITY_DEBUG);
+
 		$diffs['php'] = $this->pairMatches($diffs['php']);
 		$diffs['tpl'] = $this->pairMatches($diffs['tpl']);
+
+		$output->writeln(var_export($diffs,true),OutputInterface::VERBOSITY_DEBUG);
 
 		$diffs['php'] = $this->pairStrings($diffs['php'], 'php');
 		$diffs['tpl'] = $this->pairStrings($diffs['tpl'], 'tpl');
 		$diffs = array_merge($diffs['php'], $diffs['tpl']);
+
+		$output->writeln(var_export($diffs,true),OutputInterface::VERBOSITY_DEBUG);
 
 		$diffs = $this->filterStrings($diffs);
 
@@ -350,29 +354,31 @@ class EnglishUpdateCommand extends Command
 				if (is_writable($directory . '/language.php')) {
 					$file = file_get_contents($directory . '/language.php');
 					foreach ($diffs as $key => $entry) {
-						$file = preg_replace('/"' . preg_quote($entry['-'], '/') . '[' . implode('', Language::punctuations) . ']?"/', '"' . $entry['+'] . '"', $file, -1, $count);
-						// keep track of overall numbers
-						if ($count) {
-							$string[$key] = true;
-							$lang[$langNow] = true;
-						}
+						if (preg_match('/.*?"' . preg_quote($entry['-'], '/') . '[' . implode('', Language::punctuations) . ']?".*/',$file,$match)){
+							// if the string is in the language file, then replace it with an exact copy and a 'updated' copy on the next line
+							$replace = preg_replace('/"' . preg_quote($entry['-'], '/') . '[' . implode('', Language::punctuations) . ']?"/', '"' . $entry['+'] . '"', $match[0], 2);
+							$file = str_replace($match[0], $match[0] . "\n".$replace,$file);
+
+							// keep track of overall numbers
+								$string[$key] = true;
+								$lang[$langNow] = true;
+							}
 						file_put_contents($directory . '/language.php', $file);
 					}
 				}
 			}
-
 		$progress->setMessage('Updated ' . count($string) . ' of ' . $this->stringCount . ' strings in ' . count($lang) . ' of ' . count($directories) . ' language files.');
 		$progress->finish();
 
 		if (count($string) < $this->stringCount) {
-			$output-> writeln("\n\n<info>These keys were not updated</info>\n");
+			$output-> writeln("\n\n<info>These strings were not updated</info>\n");
 			foreach ($diffs as $key => $entry) {
 				if (!isset($string[$key]))
 					$output->writeln('* '.$entry['-']);
 			}
 		}
-
-		$output->writeln("\nVerify before committing.\n");
+		$output->writeln("\n\nOptionally run php get_strings.php to remove any unused translations.");
+		$output->writeln("Verify before committing.\n");
 
 		return true;
 	}
