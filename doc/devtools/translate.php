@@ -169,11 +169,11 @@ class EnglishUpdateCommand extends Command
 
 		// set what regex to use depending on file type.
 		if ($file === 'php') {
-			$regex = '/\Wtra?\s*\(\s*[\'"](.+?)([\'"])\s*[\),]/';
+			$regex = '/\Wtra?\s*\(\s*([\'"])(.+?)\1\s*[\),]/';
 			$php = new Language_FileType_Php;
 
 		} else
-			$regex = array('/\{tr(?:\s+[^\}]*)?\}(.+?)\{\/tr\}/');
+			$regex = '/\({)tr(?:\s+[^\}]*)?\}(.+?)\{\/tr\}/';
 
 
 		foreach ($content as $pair) {
@@ -183,19 +183,20 @@ class EnglishUpdateCommand extends Command
 					if (count($negativeMatch[1]) === count($positiveMatch[1])) {
 
 						// content needs post processing based on single or double quote matches
-						if (isset($negativeMatch[2][0])) {
-							if ($negativeMatch[2][0] == "'") {
-								$negativeMatch[1] = $php->singleQuoted($negativeMatch[1]);
-							} else {
-								$negativeMatch[1] = $php->doubleQuoted($negativeMatch[1]);
+						if (isset($negativeMatch[1][0])) {
+							var_dump($negativeMatch[1][0]);
+							if ($negativeMatch[1][0] == "'") {
+								$negativeMatch[2] = $php->singleQuoted($negativeMatch[2]);
+							} else if ($negativeMatch[1][0] == '"'){
+								$negativeMatch[2] = $php->doubleQuoted($negativeMatch[2]);
 							}
-							if ($positiveMatch[2][0] == "'") {
-								$positiveMatch[1] = $php->singleQuoted($positiveMatch[1]);
-							} else
-								$positiveMatch[1] = $php->doubleQuoted($positiveMatch[1]);
+							if ($positiveMatch[1][0] == "'") {
+								$positiveMatch[2] = $php->singleQuoted($positiveMatch[2]);
+							} else if ($positiveMatch[1][0] == '"')
+								$positiveMatch[2] = $php->doubleQuoted($positiveMatch[2]);
 						}
-						$pairedStrings[$count]['-'] = $negativeMatch[1];
-						$pairedStrings[$count]['+'] = $positiveMatch[1];
+						$pairedStrings[$count]['-'] = $negativeMatch[2];
+						$pairedStrings[$count]['+'] = $positiveMatch[2];
 						$count++;
 					}
 				}
