@@ -15,6 +15,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\HelpCommand;
 use Language;
+use Language_FileType_Php;
 
 if (isset($_SERVER['REQUEST_METHOD'])) {
 	die('Only available through command-line.');
@@ -39,12 +40,12 @@ class EnglishUpdateCommand extends Command
 		$this
 			->setName('englishupdate')
 			->setDescription("Update translation files with updates made to English strings. Will compare working copy by default.")
-	/*		->addOption(
-				'email',
-				'e',
-				InputOption::VALUE_REQUIRED,
-				'Email address to send a message if untranslated strings are found. Strings will not be updated if this option is selected.'
-			) */
+			/*		->addOption(
+						'email',
+						'e',
+						InputOption::VALUE_REQUIRED,
+						'Email address to send a message if untranslated strings are found. Strings will not be updated if this option is selected.'
+					) */
 			->addOption(
 				'revision',
 				'r',
@@ -65,6 +66,7 @@ class EnglishUpdateCommand extends Command
 	 */
 	private $stringCount = 0;
 
+
 	/**
 	 *
 	 * Seperates svn diff output into changes made in PHP and TPL files
@@ -74,25 +76,27 @@ class EnglishUpdateCommand extends Command
 	 * @return array with [0] containing PHP and [1] containing TPL strings
 	 */
 
-	private function sepratePhpTpl($content){
+	private function separatePhpTpl($content)
+	{
 
-		$content .= "\nIndex:  \n=";							// used as a dummy to match the last entry
+		$content .= "\nIndex:  \n=";                            // used as a dummy to match the last entry
 
 		// Separate php and tpl content
-		preg_match_all('/^Index:\s.+(php|tpl)$\n={10}([\w\W]+?)(?=^Index:.+\n=)/m',$content,$phpTpl);
+		preg_match_all('/^Index:\s.+(php|tpl)$\n={10}([\w\W]+?)(?=^Index:.+\n=)/m', $content, $phpTpl);
 
 		$changes['php'] = '';
 		$changes['tpl'] = '';
 		$count = 0;
-		while ($count < count($phpTpl[1])){
+		while ($count < count($phpTpl[1])) {
 
-			if ($phpTpl[1][$count] === 'php'){
+			if ($phpTpl[1][$count] === 'php') {
 				$changes['php'] .= $phpTpl[2][$count];
-			}else if ($phpTpl[1][$count] === 'tpl'){
+			} else if ($phpTpl[1][$count] === 'tpl') {
 				$changes['tpl'] .= $phpTpl[2][$count];
 			}
 			$count++;
 		}
+
 		return $changes;
 	}
 
@@ -102,14 +106,15 @@ class EnglishUpdateCommand extends Command
 	 * @return array equal pairs of added and removed diff content
 	 */
 
-	private function pairMatches($content){
+	private function pairMatches($content)
+	{
 
 		/**
 		 * @var $pairedMatches array any changes that took away and added lines.
 		 */
 
 		// strip some diff verbiage to prevent conflict in next match
-		$content = preg_replace('/(?>---|\+\+\+)\s.*\)$/m','',$content);
+		$content = preg_replace('/(?>---|\+\+\+)\s.*\)$/m', '', $content);
 		// place in an array changes that have multiple lines changes
 		preg_match_all('/(\n[-+].*){2,}/m', $content, $diffs);
 
@@ -135,11 +140,11 @@ class EnglishUpdateCommand extends Command
 		$count = 0;
 		$pairedMatches = array();
 
-		foreach ($pairs as $pair){
-			if (preg_match_all('/^-(.*)/m',$pair,$negativeMatch)) {
-				if (preg_match_all('/^\+(.*)/m',$pair,$positiveMatch)){
-					$pairedMatches[$count]['-']= implode('', $negativeMatch[1]);
-					$pairedMatches[$count]['+']= implode('', $positiveMatch[1]);
+		foreach ($pairs as $pair) {
+			if (preg_match_all('/^-(.*)/m', $pair, $negativeMatch)) {
+				if (preg_match_all('/^\+(.*)/m', $pair, $positiveMatch)) {
+					$pairedMatches[$count]['-'] = implode('', $negativeMatch[1]);
+					$pairedMatches[$count]['+'] = implode('', $positiveMatch[1]);
 					$count++;
 				}
 			}
@@ -156,22 +161,39 @@ class EnglishUpdateCommand extends Command
 	 *
 	 * @return array extracted strings
 	 */
-	private function pairStrings($content, $file){
+	private function pairStrings($content, $file)
+	{
 
 		$count = 0;
 		$pairedStrings = array();
 
 		// set what regex to use depending on file type.
 		if ($file === 'php') {
-			$regex ='/tra?\(["\']([\S\s]*?)[\'"]\)/m';
-		}else
-			$regex = '/{tr ?.*?}([\S\s]*?){\/tr}/m';
+			$regex = '/\Wtra?\s*\(\s*[\'"](.+?)([\'"])\s*[\),]/';
+			$php = new Language_FileType_Php;
 
-		foreach ($content as $pair){
-			if (preg_match_all($regex,$pair['-'],$negativeMatch)){
-				if (preg_match_all($regex,$pair['+'],$positiveMatch)){
+		} else
+			$regex = array('/\{tr(?:\s+[^\}]*)?\}([\s\S]+?)\{\/tr\}/');
+
+
+		foreach ($content as $pair) {
+			if (preg_match_all($regex, $pair['-'], $negativeMatch)) {
+				if (preg_match_all($regex, $pair['+'], $positiveMatch)) {
 					// strip out any changes that have a dissimilar number of translation strings. No way to match them properly :(
 					if (count($negativeMatch[1]) === count($positiveMatch[1])) {
+
+						// content needs post processing based on single or double quote matches
+						if (isset($negativeMatch[2][0])) {
+							if ($negativeMatch[2][0] == "'") {
+								$negativeMatch[1] = $php->singleQuoted($negativeMatch[1]);
+							} else {
+								$negativeMatch[1] = $php->doubleQuoted($negativeMatch[1]);
+							}
+							if ($positiveMatch[2][0] == "'") {
+								$positiveMatch[1] = $php->singleQuoted($positiveMatch[1]);
+							} else
+								$positiveMatch[1] = $php->doubleQuoted($positiveMatch[1]);
+						}
 						$pairedStrings[$count]['-'] = $negativeMatch[1];
 						$pairedStrings[$count]['+'] = $positiveMatch[1];
 						$count++;
@@ -179,6 +201,7 @@ class EnglishUpdateCommand extends Command
 				}
 			}
 		}
+
 		return $pairedStrings;
 
 	}
@@ -191,19 +214,20 @@ class EnglishUpdateCommand extends Command
 	 * @return array A final list of before and after translation strings to update.
 	 */
 
-	private function filterStrings($content){
+	private function filterStrings($content)
+	{
 
 		$updateStrings = array();
-		foreach ($content as $strings){
+		foreach ($content as $strings) {
 			$count = 0;
-			while (isset($strings['-'][$count])){
+			while (isset($strings['-'][$count])) {
 				// strip any end punctuation from both strings to support tikis punctuations translation functionality.
-				if (in_array(substr($strings['-'][$count], -1),Language::punctuations))
-					$strings['-'][$count] = substr($strings['-'][$count],0,-1);
-				if (in_array(substr($strings['+'][$count], -1),Language::punctuations))
-					$strings['+'][$count] = substr($strings['+'][$count],0,-1);
+				if (in_array(substr($strings['-'][$count], -1), Language::punctuations))
+					$strings['-'][$count] = substr($strings['-'][$count], 0, -1);
+				if (in_array(substr($strings['+'][$count], -1), Language::punctuations))
+					$strings['+'][$count] = substr($strings['+'][$count], 0, -1);
 
-				if ($strings['-'][$count] !== $strings['+'][$count]){
+				if ($strings['-'][$count] !== $strings['+'][$count]) {
 					$updateStrings[$this->stringCount]['-'] = Language::addPhpSlashes($strings['-'][$count]);
 					$updateStrings[$this->stringCount]['+'] = Language::addPhpSlashes($strings['+'][$count]);
 					$this->stringCount++;
@@ -211,6 +235,7 @@ class EnglishUpdateCommand extends Command
 				$count++;
 			}
 		}
+
 		return $updateStrings;
 	}
 
@@ -243,13 +268,14 @@ class EnglishUpdateCommand extends Command
 			// current time minus number of days specified through lag
 			$rev = date('{"Y-m-d H:i"}', time() - $input->getOption('lag') * 60 * 60 * 24);
 			$rev = '-r ' . $rev;
-		}else if ($input->getOption('revision')){
-			$rev = '-r'.$input->getOption('revision');
+		} else if ($input->getOption('revision')) {
+			$rev = '-r' . $input->getOption('revision');
 		}
 
 		// die gracefully if shell_exec is not enabled;
 		if (!is_callable('shell_exec')) {
 			$output->writeln('<error>Translation string update Failed. Could not execute shell_exec()</error>');
+
 			return false;
 		}
 
@@ -271,20 +297,29 @@ class EnglishUpdateCommand extends Command
 		$progress->advance();
 
 		// strip any empty translation strings now to avoid complexities later
-		$raw = preg_replace('/tra?\(["\'](\s*?)[\'"]\)/m','',$raw);
+		$raw = preg_replace('/tra?\(["\'](\s*?)[\'"]\)/m', '', $raw);
 
 		$output->writeln($raw, OutputInterface::VERBOSITY_DEBUG);
 
-		$diffs = $this->sepratePhpTpl($raw);
+		$diffs = $this->separatePhpTpl($raw);
 
 		$diffs['php'] = $this->pairMatches($diffs['php']);
 		$diffs['tpl'] = $this->pairMatches($diffs['tpl']);
 
-		$diffs['php'] = $this->pairStrings($diffs['php'],'php');
-		$diffs['tpl'] = $this->pairStrings($diffs['tpl'],'tpl');
-		$diffs = array_merge($diffs['php'],$diffs['tpl']);
+		$diffs['php'] = $this->pairStrings($diffs['php'], 'php');
+		$diffs['tpl'] = $this->pairStrings($diffs['tpl'], 'tpl');
+		$diffs = array_merge($diffs['php'], $diffs['tpl']);
 
 		$diffs = $this->filterStrings($diffs);
+
+		if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
+			$output->writeln("\n\n<info>Strings Being Updated</info>\n");
+			foreach ($diffs as $diff) {
+				$output->writeln($diff['-']);
+				$output->writeln($diff['+'] . "\n");
+			}
+		}
+
 
 		/*
 
@@ -301,36 +336,44 @@ class EnglishUpdateCommand extends Command
 		}
 */
 
-		$progress->setMessage("Updating $this->stringCount translation strings");
+		$progress->setMessage("Found $this->stringCount translation strings");
 		$progress->advance();
 
-		$directories = glob($tikiBase . '/lang/*' , GLOB_ONLYDIR);
+		$directories = glob($tikiBase . '/lang/*', GLOB_ONLYDIR);
 
 		// update the language files with the new strings
-		$count = 0;
+		$string = array();
+		$lang = array();
 		if ($this->stringCount)
-			foreach ($directories as $directory){
-				$hash = '';
-				$endHash = '';
-				if (is_writable($directory.'/language.php')) {
+			foreach ($directories as $directory) {
+				$langNow = substr($directory, strrpos($directory, "/") + 1);
+				if (is_writable($directory . '/language.php')) {
 					$file = file_get_contents($directory . '/language.php');
-					$hash = hash('crc32b', $file);
-					foreach ($diffs as $entry) {
-						$file = preg_replace('/"'.preg_quote($entry['-'],'/').'['.implode('',Language::punctuations).']?"/','"'.$entry['+'].'"',$file);
+					foreach ($diffs as $key => $entry) {
+						$file = preg_replace('/"' . preg_quote($entry['-'], '/') . '[' . implode('', Language::punctuations) . ']?"/', '"' . $entry['+'] . '"', $file, -1, $count);
+						// keep track of overall numbers
+						if ($count) {
+							$string[$key] = true;
+							$lang[$langNow] = true;
+						}
+						file_put_contents($directory . '/language.php', $file);
 					}
-					// check if anything has changed and advance the counter if so.
-					$endHash = hash('crc32b', $file);
-					if ($hash !== $endHash)
-						$count++;
-					file_put_contents($directory . '/language.php', $file);
 				}
-				$output->writeln($directory . ' ' . $hash . ' -> '. $endHash,OutputInterface::VERBOSITY_DEBUG);
 			}
-		$progress->setMessage('Updated '.$this->stringCount .' strings in '.$count.' out of '.count($directories).' language files. ');
+
+		$progress->setMessage('Updated ' . count($string) . ' of ' . $this->stringCount . ' strings in ' . count($lang) . ' of ' . count($directories) . ' language files.');
 		$progress->finish();
-		echo "\n";
-		$output->writeln('Verify before committing.');
-		echo "\n";
+
+		if (count($string) < $this->stringCount) {
+			$output-> writeln("\n\n<info>These keys were not updated</info>\n");
+			foreach ($diffs as $key => $entry) {
+				if (!isset($string[$key]))
+					$output->writeln('* '.$entry['-']);
+			}
+		}
+
+		$output->writeln("\nVerify before committing.\n");
+
 		return true;
 	}
 }
