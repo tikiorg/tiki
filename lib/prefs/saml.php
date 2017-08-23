@@ -89,7 +89,7 @@ function prefs_saml_list()
 			'perspective' => false,
 			'options' => array (
 				'username' => tra('Username'),
-				'email' => tra('E-mail'),
+				'email' => tra('Email'),
 			),
 			'default' => 'email',
 		),

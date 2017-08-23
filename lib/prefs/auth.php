@@ -160,14 +160,14 @@ function prefs_auth_list()
 		),
 		'auth_ldap_permit_tiki_users' => array(
 			'name' => tra('Use Tiki authentication for users created in Tiki'),
-			'description' => tra(''),
+			'description' => tra('If this option is set, users that are created using Tiki are not authenticated via LDAP. This can be useful to let external users (ex.: partners or consultants) access Tiki, without being in your main user list in LDAP.'),
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',
 		),
 		'auth_ldap_host' => array(
 			'name' => tra('Host'),
-			'description' => tra(''),
+			'description' => tra('The hostnames, ip addresses or URIs of your LDAP servers. Separate multiple entries with Whitespace or ‘,’. If you use URIs, then the settings for Port number and SSL are ignored. Example: “localhost ldaps://master.ldap.example.org:63636” will try to connect to localhost unencrypted and if if fails it will try the master LDAP server at a special port with SSL.'),
 			'type' => 'text',
 			'size' => 20,
 			'perspective' => false,
@@ -176,7 +176,7 @@ function prefs_auth_list()
 		),
 		'auth_ldap_port' => array(
 			'name' => tra('Port'),
-			'description' => tra(''),
+			'description' => tra('The port number your LDAP server uses (389 is the default, 636 if you check SSL).'),
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
@@ -186,9 +186,10 @@ function prefs_auth_list()
 		),
 		'auth_ldap_debug' => array(
 			'name' => tra('Write LDAP debug Information in Tiki Logs'),
-			'description' => tra(''),
+			'description' => tra('Write debug information to Tiki logs (Admin -> Tiki Logs, Tiki Logs have to be enable).'),
 			'type' => 'flag',
 			'perspective' => false,
+			'warning' => tra('Do not enable this option for production sites.'),
 			'default' => 'n',
 			'view' => 'tiki-syslog.php',
 		),
@@ -222,7 +223,7 @@ function prefs_auth_list()
 		),
 		'auth_ldap_scope' => array(
 			'name' => tra('Search scope'),
-			'description' => tra(''),
+			'description' => tra('Used after authentication for getting user and group information.'),
 			'type' => 'list',
 			'perspective' => false,
 			'options' => array(

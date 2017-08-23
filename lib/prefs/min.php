@@ -10,7 +10,7 @@ function prefs_min_list()
 	return array(
 		'min_username_length' => array(
 			'name' => tra('Minimum length'),
-			'description' => tra(''),
+			'description' => tra('The least possible number of characters for a valid username.'),
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
@@ -19,7 +19,7 @@ function prefs_min_list()
 		),
 		'min_pass_length' => array(
 			'name' => tra('Minimum length'),
-			'description' => tra(''),
+			'description' => tra('The least possible number of characters for a valid password.'),
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',

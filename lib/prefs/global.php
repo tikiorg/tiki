@@ -291,6 +291,7 @@ function prefs_global_list($partial = false)
 		),
 		'eponymousGroups' => array(
 			'name' => tra('Create a new group for each user'),
+			'description' => tra('If enabled, Tiki will automatically create a group for the user.'),
 			'type' => 'flag',
 			'hint' => tra("The group name will be the same as the user's username"),
 			'help' => 'Groups',
@@ -311,6 +312,7 @@ function prefs_global_list($partial = false)
 		),
 		'rememberme' => array(
 			'name' => tra('Remember me'),
+			'description' => tra("Use this option to have Tiki remember users. They will automatically be logged in if they leave, then return to the site.<br><br>If “User’s Choice” is selected the Login module will include a “Remember me” checkbox.<br><br>nWithout a rememberme cookie, the session finishes when the PHP session end. A session can finish because the idle time has been reached or the user closes their browser (or tab in the browser, depending on the browser).<br><br>With a rememberme cookie, you can extend the time the system remembers a user (if the user allows cookies and does not limit the cookie to the session time). This time is set in admin->login. When a user checks remember me checkbox, the browser creates a cookie with a name beginning with ‘tiki-user-’ followed by the rememberme name you gave in admin->login.<br><br>The rememberme feature allows you also to be able to close the browser and to be still logged in when you reopen the browser (if the timeout is not reached) The cookie is deleted when you log-out.<br><br>If the user changes their IP or browser, the Remember Me feature will fail."),
 			'type' => 'list',
 			'help' => 'Login+Config#Remember_Me',
 			'options' => array(
@@ -323,6 +325,7 @@ function prefs_global_list($partial = false)
 		),
 		'remembertime' => array(
 			'name' => tra('Duration'),
+			'description' => tra('You can define the length of time that Tiki will “remember” the user.'),
 			'type' => 'list',
 			'options' => array(
 				'300'		=> '5 ' . tra('minutes'),

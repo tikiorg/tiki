@@ -10,7 +10,7 @@ function prefs_lowercase_list()
 	return array(
 		'lowercase_username' => array(
 			'name' => tra('Force lowercase'),
-			'description' => tra(''),
+			'description' => tra('If enabled, Tiki will automatically convert all alphabetic characters in the username to all lowercase letters. For example <b>JohnDoe</b> becomes <b>johndoe</b>.'),
 			'type' => 'flag',
 			'help' => 'Login+Config#Case_Sensitivity',
 			'default' => 'n',
