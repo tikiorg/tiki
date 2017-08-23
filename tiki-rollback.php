@@ -46,7 +46,8 @@ if (isset($_REQUEST["rollback"])) {
 
 	$access->check_authenticity(tr('Are you sure you want to roll back "%0" to version #%1?', $page, $version));
 
-	$histlib->use_version($page, $version, '');
+	$comment = $_REQUEST["comment"];
+	$histlib->use_version($page, $version, $comment);
 	$tikilib->invalidate_cache($page);
 
 	header("location: tiki-index.php?page=" . urlencode($page));

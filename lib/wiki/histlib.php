@@ -53,11 +53,11 @@ class HistLib extends TikiLib
 		    $lastModif = $info["lastModif"];
 		    $user = $info["user"];
 		    $ip = $info["ip"];
-		    $comment = $info["comment"];
+		    $original_comment = $info["comment"];
 		    $data = $info["data"];
 		    $description = $info["description"];
 			$query = "insert into `tiki_history`(`pageName`, `version`, `version_minor`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`,`is_html`) values(?,?,?,?,?,?,?,?,?,?)";
-		    $this->query($query, array($page,(int) $old_version, (int) $info["version_minor"],(int) $lastModif,$user,$ip,$comment,$data,$description, $info["is_html"]));
+		    $this->query($query, array($page,(int) $old_version, (int) $info["version_minor"],(int) $lastModif,$user,$ip,$original_comment,$data,$description, $info["is_html"]));
 		}
 
 		$query = "select * from `tiki_history` where `pageName`=? and `version`=?";
@@ -69,8 +69,11 @@ class HistLib extends TikiLib
 		$res = $result->fetchRow();
 
 		global $prefs;
-		// add rollback comment to existing one (after truncating if needed)
-    $ver_comment = " [" . tr('Rollback by %0 to version %1', $user, $version) . "]";
+		// add both an optional, manual comment, and an automatic comment to existing one (after truncating if needed)
+		if (trim($comment)<>'') {
+			$comment = ". ".trim($comment);
+		}
+		$ver_comment = " [" . tr('Rollback by %0 to version %1', $user, $version) . $comment . "]";
 		$too_long = 200 - strlen($res["comment"] . $ver_comment);
 		if ($too_long < 0) {
 			$too_long -= 4;
