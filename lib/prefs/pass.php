@@ -31,12 +31,13 @@ function prefs_pass_list()
 		'pass_blacklist' => array(
 			'name' => tra('Prevent common passwords'),
 			'description' => tra('For improved security, prevent passwords in your password blacklist from being used.'),
+			'help' => 'Password-Blacklists',
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'pass_due' => array(
 			'name' => tra('Password expires after'),
-			'description' => tra('password expiration period (in days)'),
+			'description' => tra('The number of days after which a password will expire. Days are counted starting with the user’s first login. When the password expires, users will be forced to select a new password when logging in. '),
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'int',
@@ -46,13 +47,13 @@ function prefs_pass_list()
 		),
 		'pass_chr_case' => array(
 			'name' => tra('Require alphabetical characters in lower and upper case'),
-			'description' => tra('Password must contain at least one lowercase alphabetical character like "a" and one uppercase character like "A".'),
+			'description' => tra('Password must contain at least one lowercase alphabetical character like "a" and one uppercase character like "A". Use this option to force users to select stronger passwords.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'pass_chr_special' => array(
 			'name' => tra('Require special characters'),
-			'description' => tra('Password must contain at least one special character in lower case like " / $ % ? & * ( ) _ + ...'),
+			'description' => tra('Password must contain at least one special character in lower case like <b>" / $ % ? & * ( ) _ + .</b> Use this option to force users to select stronger passwords.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -64,7 +65,6 @@ function prefs_pass_list()
 		),
 		'pass_diff_username' => array(
 			'name' => tra('The password must be different from the user\'s log-in name'),
-			'description' => tra('The password must be different from the user\'s log-in name.'),
 			'type' => 'flag',
 			'default' => 'y',
 		),

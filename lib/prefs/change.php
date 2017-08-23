@@ -27,7 +27,7 @@ function prefs_change_list()
 		),
 		'change_password' => array(
 			'name' => tra('Users can change their password'),
-			'description' => tra('Allow users to change their own login password'),
+			'description' => tra('Registered users can change their password from their User Preferences page. If not, passwords can be changed only by the admin.'),
 			'type' => 'flag',
 			'help' => 'User+Preferences',
 			'default' => 'y',

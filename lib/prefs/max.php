@@ -10,7 +10,7 @@ function prefs_max_list()
 	return array(
 		'max_username_length' => array(
 			'name' => tra('Maximum length'),
-			'description' => tra(''),
+			'description' => tra('The greatest number of characters for a valid username.'),
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',

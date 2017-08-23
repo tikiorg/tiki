@@ -45,7 +45,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_areas' => array(
 			'name' => tra('Areas'),
-			'warning' => tra('Experimental'),
 			'description' => tra('Binding categories and perspectives to each other'),
 			'type' => 'flag',
 			'help' => 'Areas',
