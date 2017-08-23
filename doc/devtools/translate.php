@@ -173,8 +173,7 @@ class EnglishUpdateCommand extends Command
 			$php = new Language_FileType_Php;
 
 		} else
-			$regex = '/\({)tr(?:\s+[^\}]*)?\}(.+?)\{\/tr\}/';
-
+			$regex = '/\{(t)r(?:\s+[^\}]*)?\}(.+?)\{\/tr\}/';
 
 		foreach ($content as $pair) {
 			if (preg_match_all($regex, $pair['-'], $negativeMatch)) {
@@ -184,7 +183,6 @@ class EnglishUpdateCommand extends Command
 
 						// content needs post processing based on single or double quote matches
 						if (isset($negativeMatch[1][0])) {
-							var_dump($negativeMatch[1][0]);
 							if ($negativeMatch[1][0] == "'") {
 								$negativeMatch[2] = $php->singleQuoted($negativeMatch[2]);
 							} else if ($negativeMatch[1][0] == '"'){
