@@ -136,13 +136,7 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 		
 		TikiLib::lib('header')->add_jq_onready(
 			'
-var dilIsInit_'. $insertId. ' = false;
-
-$("body").on("change", "input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFieldIdHere . ']", function(e, val) {
-	if (val && val == "' . $insertId . '" && dilIsInit_'. $insertId. ') {
-		return; // on init, only fire one time per select trigger eventhandler. otherwise each init would trigger all prev. registered handlers
-	}
-	dilIsInit_'. $insertId. ' = true;
+$("body").on("change", "input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFieldIdHere . ']", function(e) {
 	$.getJSON(
 		"tiki-tracker_http_request.php",
 		{
@@ -194,7 +188,6 @@ $("body").on("change", "input[name=ins_' . $filterFieldIdHere . '], select[name=
 		} // callback
 	);  // getJSON
 });
-$("input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFieldIdHere . ']").trigger("change", "'. $insertId. '"); // closure
 
 if( $("input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFieldIdHere . ']").length == 0 ) {
 	// inline edit fix
@@ -202,6 +195,9 @@ if( $("input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFi
 }
 		'
 		); // add_jq_onready
+		TikiLib::lib('header')->add_jq_onready('
+$("input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFieldIdHere . ']").trigger("change", "initial");
+', 1);
 
 		return '<select class="form-control" name="' . $insertId . '"></select>';
 
