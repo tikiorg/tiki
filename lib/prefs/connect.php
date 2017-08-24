@@ -84,6 +84,7 @@ function prefs_connect_list()
 			'filter' => 'digits',
 			'default' => '168',
 			'warning' => tra('This feature is experimental and currently not in use. Stay tuned for updated information. Click "Send Info" to connect.'),
+			'tags' => array('experimental'),
 		),
 		'connect_server' => array(
 			'name' => tra('Tiki connect server URL'),

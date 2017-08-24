@@ -38,7 +38,7 @@ function prefs_search_list()
 		),
 		'search_default_interface_language' => array(
 			'name' => tra('Restrict search language by default'),
-			'description' => tra('If enabled, only search content that is in the interface language, otherwise show the language menu.'),
+			'description' => tra('Only search content that is in the interface language, otherwise show the language menu.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),

@@ -21,8 +21,9 @@ function prefs_user_list($partial = false)
 			'tags' => array('basic'),
 		),
 		'user_unique_email' => array(
-			'name' => tra('User e-mails must be unique'),
+			'name' => tra('User emails must be unique'),
 			'help' => 'User+Preferences',
+			'description' => tra('User e-mails must be unique'),
 			'type' => 'flag',
 			'default' => 'n',
 		),

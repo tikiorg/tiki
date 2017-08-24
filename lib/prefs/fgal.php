@@ -74,7 +74,7 @@ function prefs_fgal_list()
 		),
 		'fgal_display_zip_option' => array(
 			'name' => tra('Display ZIP option in gallery'),
-			'description' => tra('If enabled, users can upload a ZIP (archive file). Tiki will automatically un-ZIP the archive and add each file to the gallery.'),
+			'description' => tra('Users can upload a ZIP (archive file). Tiki will automatically un-ZIP the archive and add each file to the gallery.'),
 			'type' => 'flag',
 			'help' => 'File+Gallery+config',
 			'default' => 'n',
@@ -107,7 +107,7 @@ As soon as the limit is reached not other files can be uploaded. The user will s
 		),
 		'fgal_quota_per_fgal' => array (
 			'name' => tra('Quota for each file gallery'),
-			'description' => tra('If enabled, you can define a different quota for each file gallery.)'),
+			'description' => tra('You can define a different quota for each file gallery.)'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
