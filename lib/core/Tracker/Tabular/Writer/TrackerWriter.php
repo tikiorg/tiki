@@ -57,6 +57,11 @@ class TrackerWriter
 
 		if ($schema->isImportTransaction()) {
 			$errors = $iterate(function($line, $info) use ($errors, $utilities, $schema) {
+				static $ids = array();
+				if (!empty($info['itemId']) && in_array($info['itemId'], $ids)) {
+					return array(tr('Line %0:', $line+1).' '.tr('duplicate entry'));
+				}
+				$ids[] = $info['itemId'];
 				return array_map(
 					function($error) use ($line) {
 						return tr('Line %0:', $line+1).' '.$error;
