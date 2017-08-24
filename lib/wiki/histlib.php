@@ -51,13 +51,12 @@ class HistLib extends TikiLib
 			$info = $this->get_hist_page_info($page);
 			$old_version = $info['version'] + 1;
 		    $lastModif = $info["lastModif"];
-		    $user = $info["user"];
 		    $ip = $info["ip"];
 		    $original_comment = $info["comment"];
 		    $data = $info["data"];
 		    $description = $info["description"];
 			$query = "insert into `tiki_history`(`pageName`, `version`, `version_minor`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`,`is_html`) values(?,?,?,?,?,?,?,?,?,?)";
-		    $this->query($query, array($page,(int) $old_version, (int) $info["version_minor"],(int) $lastModif,$user,$ip,$original_comment,$data,$description, $info["is_html"]));
+		    $this->query($query, array($page,(int) $old_version, (int) $info["version_minor"], (int) $lastModif, $info["user"], $ip, $original_comment, $data, $description, $info["is_html"]));
 		}
 
 		$query = "select * from `tiki_history` where `pageName`=? and `version`=?";
@@ -73,8 +72,7 @@ class HistLib extends TikiLib
 		if (trim($comment)<>'') {
 			$comment = ". ".trim($comment);
 		}
-		$user_rollback = $GLOBALS['user'];
-		$ver_comment = " [" . tr('Rollback by %0 to version %1', $user_rollback, $version) . $comment . "]";
+		$ver_comment = " [" . tr('Rollback by %0 to version %1', $GLOBALS['user'], $version) . $comment . "]";
 		$too_long = 200 - strlen($res["comment"] . $ver_comment);
 		if ($too_long < 0) {
 			$too_long -= 4;
