@@ -73,7 +73,8 @@ class HistLib extends TikiLib
 		if (trim($comment)<>'') {
 			$comment = ". ".trim($comment);
 		}
-		$ver_comment = " [" . tr('Rollback by %0 to version %1', $user, $version) . $comment . "]";
+		$user_rollback = $GLOBALS['user'];
+		$ver_comment = " [" . tr('Rollback by %0 to version %1', $user_rollback, $version) . $comment . "]";
 		$too_long = 200 - strlen($res["comment"] . $ver_comment);
 		if ($too_long < 0) {
 			$too_long -= 4;
