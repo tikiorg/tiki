@@ -349,11 +349,11 @@ class EnglishUpdateCommand extends Command
 		// strip any empty translation strings now to avoid complexities later
 		$raw = preg_replace('/tra?\(["\'](\s*?)[\'"]\)/m', '', $raw);
 
-		$output->writeln($raw, OutputInterface::VERBOSITY_DEBUG);
+//		$output->writeln($raw, OutputInterface::VERBOSITY_DEBUG);
 
 		$diffs = $this->separatePhpTpl($raw);
 
-		$output->writeln(var_export($diffs, true), OutputInterface::VERBOSITY_DEBUG);
+//		$output->writeln(var_export($diffs, true), OutputInterface::VERBOSITY_DEBUG);
 
 		$diffs['php'] = $this->pairMatches($diffs['php']);
 		$diffs['tpl'] = $this->pairMatches($diffs['tpl']);
@@ -361,7 +361,7 @@ class EnglishUpdateCommand extends Command
 		$progress->setMessage('Found ' . count($diffs['php']) . ' PHP and ' . count($diffs['tpl']) . ' TPL changes');
 		$progress->advance();
 
-		$output->writeln(var_export($diffs, true), OutputInterface::VERBOSITY_DEBUG);
+//		$output->writeln(var_export($diffs, true), OutputInterface::VERBOSITY_DEBUG);
 
 		$diffs['php'] = $this->pairStrings($diffs['php'], 'php');
 		$diffs['tpl'] = $this->pairStrings($diffs['tpl'], 'tpl');
@@ -370,7 +370,7 @@ class EnglishUpdateCommand extends Command
 		$progress->setMessage('Found ' . count($diffs) . ' String pairs');
 		$progress->advance();
 
-		$output->writeln(var_export($diffs, true), OutputInterface::VERBOSITY_DEBUG);
+//		$output->writeln(var_export($diffs, true), OutputInterface::VERBOSITY_DEBUG);
 
 		$diffs = $this->filterStrings($diffs);
 
@@ -417,11 +417,11 @@ class EnglishUpdateCommand extends Command
 					$file = file_get_contents($directory . '/language.php');
 					foreach ($diffs as $key => $entry) {
 						// if the original string is in the language file
-						if (preg_match('/.*?"' . preg_quote($entry['-'], '/') . '[' . implode('', Language::punctuations) . ']?".*/', $file, $match)) {
+						if (preg_match('/^"' . preg_quote($entry['-'], '/') . '[' . implode('', Language::punctuations) . ']?".*/m', $file, $match)) {
 							// if the replacement string does not already exist
-							if (!strpos($file, '"' . $entry['+'] . '"')) {
+							if (!strpos($file, "\n\"" . $entry['+'] . '"')) {
 								// then replace the original string with an exact copy and a 'updated' copy on the next line
-								$replace = preg_replace('/"' . preg_quote($entry['-'], '/') . '[' . implode('', Language::punctuations) . ']?"/', '"' . $entry['+'] . '"', $match[0], 2);
+								$replace = preg_replace('/"' . preg_quote($entry['-'], '/') . '[' . implode('', Language::punctuations) . ']?"/', '"' . $entry['+'] . '"', $match[0], 1);
 								$file = str_replace($match[0], $match[0] . "\n" . $replace, $file);
 
 								// keep track of overall numbers
@@ -477,7 +477,7 @@ class EnglishUpdateCommand extends Command
 			// if were not in audit mode
 		} else {
 			if (count($string) < $this->stringCount) {
-				$output->writeln("\n\n<info>Original Strings not Found in Language Files</info>");
+				$output->writeln("\n\n<info>Strings Not Translated</info>");
 				foreach ($diffs as $key => $entry) {
 					if (!isset($string[$key]) && !isset($skipped[$key]))
 						$output->writeln('* ' . $entry['-']);
