@@ -317,7 +317,6 @@
 				{/if}
 				{preference name=pam_create_user_tiki}
 				{preference name=pam_skip_admin}
-				{preference name=pam_service}
 			</fieldset>
 		{/tab}
 

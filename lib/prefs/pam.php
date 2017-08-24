@@ -20,13 +20,5 @@ function prefs_pam_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
-		'pam_service' => array(
-			'name' => tra('PAM service'),
-			'description' => tra(''),
-			'type' => 'text',
-			'size' => 20,
-			'hint' => tra('Currently unused'),
-			'default' => '',
-		),
-	);	
+	);
 }
