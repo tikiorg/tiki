@@ -143,7 +143,7 @@ function prefs_unified_list()
 		),
 		'unified_forum_deepindexing' => array(
 			'name' => tra('Index forum replies together with initial post'),
-			'description' => tra('If enabled, forum replies will be indexed together with the initial post as a single document instead of being indexed separately'),
+			'description' => tra('Forum replies will be indexed together with the initial post as a single document instead of being indexed separately'),
 			'type' => 'flag',
 			'default' => 'y',
 		),
@@ -197,7 +197,7 @@ function prefs_unified_list()
 		),
 		'unified_exclude_all_plugins' => array(
 			'name' => tra('Exclude all plugins'),
-			'description' => tra('If enabled, indexing will exclude all plugins.'),
+			'description' => tra('Indexing will exclude all plugins.'),
 			'type' => 'flag',
 			'default' => 'y',
 		),

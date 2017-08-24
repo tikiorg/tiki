@@ -10,7 +10,7 @@ function prefs_log_list()
 	return array(
 		'log_mail' => array(
 			'name' => tra('Log mail in Tiki logs'),
-			'description' => tra('If enabled, a line of type mail will be included in the System Log with the destination address and subject of each email sent.'),
+			'description' => tra('A line of type mail will be included in the System Log with the destination address and subject of each email sent.'),
 			'type' => 'flag',
 			'help' => 'System+Log',
 			'default' => 'n',
@@ -25,7 +25,7 @@ function prefs_log_list()
 		),
 		'log_sql' => array(
 			'name' => tra('Log SQL'),
-			'description' => tra('If enabled, all SQL queries will be registered in the database in the adodb_logsql table. '),
+			'description' => tra('All SQL queries will be registered in the database in the adodb_logsql table. '),
 			'warning' => tra('Do not enable this feature all the time. It can be very resource intensive and will impact performance.'),
 			'type' => 'flag',
 			'default' => 'n',

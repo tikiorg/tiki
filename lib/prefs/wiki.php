@@ -82,7 +82,7 @@ function prefs_wiki_list($partial = false)
 		),
 		'wiki_page_name_above' => array(
 			'name' => tra('Display page name above page'),
-			'description' => tra('If enabled, Tiki will display the page name in small text at the top of each page (above the page’s content).'),
+			'description' => tra('Tiki will display the page name in small text at the top of each page (above the page’s content).'),
 			'type' => 'flag',
 			'default' => 'n',
 		),

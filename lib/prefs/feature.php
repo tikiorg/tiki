@@ -93,7 +93,7 @@ function prefs_feature_list($partial = false)
 		],
 		'feature_gal_rankings' => [
 			'name' => tra('Rankings'),
-			'description' => tra('If enabled, users can see several charts or rankings about the file.'),
+			'description' => tra('Users can see several charts or rankings about the file.'),
 			'type' => 'flag',
 			'default' => 'n',
 		],
@@ -131,7 +131,6 @@ function prefs_feature_list($partial = false)
 			'name' => tra('Machine translation'),
 			'description' => tra('Uses machine translation to translate the content of the site to other languages. Note that this feature relies on external services thay may not be free. Google Translate is a paid service.'),
 			'help' => 'Machine+Translation',
-			'warning' => tra('Experimental'),
 			'tags' => array('experimental'),
 			'type' => 'flag',
 			'default' => 'n',
@@ -159,7 +158,6 @@ function prefs_feature_list($partial = false)
 			'keywords' => 'report trackers logs builder',
 			'default' => 'n',
 			'view' => 'tiki-edit_report.php',
-			'warning' => tra('Experimental'),
 			'tags' => array('experimental'),
 		),
 		'feature_forums' => array(
@@ -563,7 +561,6 @@ function prefs_feature_list($partial = false)
 			'name' => tra('Output should be HTML purified'),
 			'description' => tra('This activates HTML Purifier on wiki content and other outputs, to filter out potential security problems like XSS code. Keep in mind that HTML Purifier is not HTML5 compatible and may rewrite HTML5 syntax, producing unwanted results.'),
 			'help' => 'Purifier',
-			'warning' => tra('Experimental.'),
 			'tags' => array('experimental'),
 			'type' => 'flag',
 			'perspective' => false,
@@ -578,7 +575,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_cssmenus' => array(
 			'name' => tra('CSS menus'),
-			'description' => tra('If enabled, Tiki will use display CSS-styled (Suckerfish) vertical or horizontal menus.'),
+			'description' => tra('Tiki will use display CSS-styled (Suckerfish) vertical or horizontal menus.'),
 			'help' => 'Menus',
 			'type' => 'flag',
 			'default' => 'y',
@@ -963,7 +960,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_version_checks' => array(
 			'name' => tra('Check for updates automatically'),
-			'description' => tra('If enabled, Tiki will automatically check for new updates each time you access the Admin Home page, based on your Check frequency selection.'),
+			'description' => tra('Tiki will automatically check for new updates each time you access the Admin Home page, based on your Check frequency selection.'),
 			'type' => 'flag',
 			'hint' => tra('Subscribe to the Tiki Newsletter to be notified of new releases. https://doc.tiki.org/Newsletters'),
 			'perspective' => false,
@@ -1350,7 +1347,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_cms_rankings' => array(
 			'name' => tra('Rankings'),
-			'description' => tra('If enabled, users can see several charts or rankings about the item.'),
+			'description' => tra('Users can see several charts or rankings about the item.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -1524,7 +1521,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_blog_rankings' => array(
 			'name' => tra('Rankings'),
-			'description' => tra('If enabled, users can see several charts or rankings about the page.'),
+			'description' => tra('Users can see several charts or rankings about the page.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -1559,14 +1556,14 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_file_galleries_rankings' =>array(
 			'name' => tra('Rankings'),
-			'description' => tra('If enabled, users can view the “top” or “most” downloaded files.'),
+			'description' => tra('Users can view the “top” or “most” downloaded files.'),
 			'type' => 'flag',
 			'help' => 'File+Gallery+Config',
 			'default' => 'n',
 		),
 		'feature_file_galleries_comments' =>array(
 			'name' => tra('File gallery comments'),
-			'description' => tra('If enabled, users can post comments on file galleries'),
+			'description' => tra('Users can post comments on file galleries'),
 			'type' => 'flag',
 			'help' => 'Comments',
 			'default' => 'n',
@@ -1583,20 +1580,18 @@ function prefs_feature_list($partial = false)
 			),
 			'default' => 'n',
 			'tags' => array('experimental'),
-			'warning' => tra('experimental'),
 			'keywords' => tra('userfiles'),
 		),
 		'feature_use_fgal_for_wiki_attachments' =>array(
 			'name' => tra('Use file galleries for wiki attachments'),
 			'type' => 'flag',
 			'help' => 'File+Gallery+Config',
-			'description' => tra('If enabled, wiki attachments will be stored in the file gallery.'),
+			'description' => tra('Wiki attachments will be stored in the file gallery.'),
 			'dependencies' => array(
 				'feature_file_galleries','feature_wiki_attachments'
 			),
 			'default' => 'n',
 			'tags' => array('experimental'),
-			'warning' => tra('experimental'),
 		),
 		'feature_file_galleries_author' => array(
 			'name' => tra("Require file creator's name for anonymous uploads"),
@@ -1613,7 +1608,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_forum_rankings' => array(
 			'name' => tra('Rankings'),
-			'description' => tra('If enabled, users can see several charts or rankings about the page.'),
+			'description' => tra('Users can see several charts or rankings about the page.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -1797,7 +1792,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_siteloclabel' => array(
 			'name' => tra('Prefix breadcrumbs with "Location : "'),
-			'description' => tra('If enabled, the word Location: will appear in the breadcrumbs'),
+			'description' => tra('The word Location: will appear in the breadcrumbs'),
 			'type' => 'flag',
 			'default' => 'y',
 		),
@@ -2081,7 +2076,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_export' => array(
 			'name' => tra('Export'),
-			'description' => tra('If enabled, users can export individual pages and structure pages content as a file (requires tiki_p_admin_wiki permission).'),
+			'description' => tra('Users can export individual pages and structure pages content as a file (requires tiki_p_admin_wiki permission).'),
 			'help' => 'XML-Wiki-Import-Export',
 			'type' => 'flag',
 			'default' => 'n',
@@ -2104,7 +2099,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_history' => array(
 			'name' => tra('History'),
-			'description' => tra('If enabled, users (with permission) can see the history of each Wiki page.'),
+			'description' => tra('Users (with permission) can see the history of each Wiki page.'),
 			'type' => 'flag',
 			'help' => 'History',
 			'default' => 'y',
@@ -2141,7 +2136,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_source' => array(
 			'name' => tra('View source'),
-			'description' => tra('If enabled users (with permission) can see the Wiki syntax of the Wiki page.'),
+			'description' => tra('Users (with permission) can see the Wiki syntax of the Wiki page.'),
 			'type' => 'flag',
 			'default' => 'y',
 			'tags' => array('basic'),
@@ -2167,14 +2162,14 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_likePages' => array(
 			'name' => tra('Similar pages'),
-			'description' => tra('If enabled, users can see a listing of pages named similarly to the current page.'),
+			'description' => tra('Users can see a listing of pages named similarly to the current page.'),
 			'help' => 'Using+Wiki+Pages#Similar_Pages',
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_wiki_rankings' => array(
 			'name' => tra('Rankings'),
-			'description' => tra('If enabled, users can see several charts or rankings about the page.'),
+			'description' => tra('Users can see several charts or rankings about the page.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -2281,7 +2276,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_listorphanStructure' => array(
 			'name' => tra('Pages not in structure'),
-			'description' => tra('If enabled users (with permission) can see the sortable, searchable list of Wiki pages (tiki-listpages.php). Use the Configuration area to specify which items to display.'),
+			'description' => tra('Users (with permission) can see the sortable, searchable list of Wiki pages (tiki-listpages.php). Use the Configuration area to specify which items to display.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
