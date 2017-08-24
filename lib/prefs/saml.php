@@ -39,7 +39,7 @@ function prefs_saml_list()
 			'default' => '',
 		),
 		'saml_options_autocreate' => array(
-			'name' => tra('Create user if not in Tiki'),
+			'name' => tra('Create user if not registered in Tiki'),
 			'description' => tra('Auto-provisioning. If user not exists, Tiki will create a new user with the data provided by the IdP.<br>Review the Mapping section.'),
 			'type' => 'flag',
 			'perspective' => false,
@@ -61,7 +61,7 @@ function prefs_saml_list()
 		),
 		'saml_options_skip_admin' => array(
 			'name' => tra('Use Tiki authentication for Admin login'),
-			'description' => tra('Let the admin to authenticate using the traditional login'), 
+			'description' => tra('The user “admin” will be authenticated by <b>only</b> using Tiki’s user database. This option has no effect on users other than “admin”.'),
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'y',

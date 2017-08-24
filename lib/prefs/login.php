@@ -103,10 +103,10 @@ function prefs_login_list()
 			'tags' => array('advanced'),
 		),
 		'login_autologin_createnew' => array(
-			'name' => tr('Create user account if autologin user does not exist'),
 			'description' => tr('Create a new user account if the user that is trying to autologin does not exist on this Tiki.'),
 			'type' => 'flag',
 			'default' => 'y',
+			'name' => tr('Create user if not registered in Tiki'),
 			'tags' => array('advanced'),
 		),
 		'login_autologin_allowedgroups' => array(

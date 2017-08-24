@@ -2572,6 +2572,7 @@ $lang = array(
 "Share access rights with friends when using Share" => "Comparteix drets d'accés amb els seus amics quan s'utilitza Share",
 "Allow users to share their access rights for the current page with a friend when sending the link by email, Twitter, or Facebook. The lifespan of the link is defined by the site" => "Permetre als usuaris a compartir els seus drets d'accés a la pàgina actual amb un amic enviar l'enllaç per correu electrònic / Twitter / Facebook. Vida útil dels enllaços que es defineix pel lloc",
 "Create user if not already a registered user" => "Crear usuari si no en Tiki",
+"Create user if not registered in Tiki" => "Crear usuari si no en Tiki",
 "Automatically create a new Tiki user for the PHPbb login" => "Creació automàtica d'un nou usuari Tiki per a l'inici de sessió phpBB",
 "Use Tiki authentication for Admin login" => "Utilitza l'autenticació de Tiki per Admin login",
 "phpBB Version" => "Versió phpBB",
