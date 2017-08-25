@@ -198,7 +198,7 @@ class PrefsDoc extends TWVersion{
 			if (!$pref->warning)
 				$pref->warning = $this->prevFilePrefs->$prefName->warning;
 			$this->setParams($pref);
-			$this->docTable .= $this->prefName . '~|~' . $this->prefDescription . '~|~' . $this->prefDefault . "\n";
+				$this->docTable .= $this->prefName . '~|~' . $this->prefDescription . '~|~' . $this->prefDefault . "\n";
 		}
 		$this->prevFilePrefs = $FilePrefs->prefs;
 		$this->docTable .= "{FANCYTABLE}";
@@ -351,7 +351,7 @@ class PrefsDoc extends TWVersion{
 				return true;
 		}
 
-		// prepate to generate prefs doc
+		// prepare to generate prefs doc
 		$this->fileCount = 0;
 		$this->prefCount = 0;
 		$this->getPrefs();
@@ -420,7 +420,8 @@ class PrefsDoc extends TWVersion{
 				preg_match_all('/{preference.*name="?\'?(\w*)"?\'?.*}/i', $tabs[2][$count], $prefs);					// Generate array of all the prefs
 				$tabs[1][$count] = mb_ereg_replace('\W','',strtolower($tabs[1][$count]));				// sanitize the tab name for disk
 				foreach ($prefs[1] as $pref) {
-					$tabPrefs[$fileName . '-' . $tabs[1][$count]][$pref] = $this->PrefVars[$pref];							// Add full pref info in right order
+					if ($this->PrefVars[$pref]['name'])																		// dont save prefs that have no name
+						$tabPrefs[$fileName . '-' . $tabs[1][$count]][$pref] = $this->PrefVars[$pref];						// Add full pref info in right order
 				}
 			}
 		}else if (preg_match_all('/{preference.*name="?\'?(\w*)"?\'?.*}/i', $file, $prefs)){
