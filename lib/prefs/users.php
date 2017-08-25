@@ -43,6 +43,7 @@ function prefs_users_list()
 		'users_prefs_user_information' => array(
 			'name' => tra('User information'),
 			'type' => 'list',
+			'description' => 'Specify if users’ information is Public or Private.',
 			'options' => array(
 				'private' => tra('Private'),
 				'public' => tra('Public'),
@@ -147,6 +148,7 @@ function prefs_users_list()
 		'users_prefs_mess_archiveAfter' => array(
 			'name' => tra('Auto-archive read messages after'),
 			'type' => 'list',
+			'description' => 'Number of days after which Tiki will archive users’ read messages.',
 			'dependencies' => array(
 				'feature_messages',
 			),
@@ -168,6 +170,7 @@ function prefs_users_list()
 		'users_prefs_mytiki_pages' => array(
 			'name' => tra('My pages'),
 			'type' => 'flag',
+			'description' => tr('List all wiki pages edited by the user.'),
 			'dependencies' => array(
 				'feature_wiki',
 			),
@@ -177,6 +180,7 @@ function prefs_users_list()
 		'users_prefs_mytiki_blogs' => array(
 			'name' => tra('My blogs'),
 			'type' => 'flag',
+			'description' => tr('List all blogs and blog posts edited by the user.'),
 			'dependencies' => array(
 				'feature_blogs',
 			),
@@ -186,6 +190,7 @@ function prefs_users_list()
 		'users_prefs_mytiki_gals' => array(
 			'name' => tra('My galleries'),
 			'type' => 'flag',
+			'description' => tr('List all galleries edited by the user.'),
 			'dependencies' => array(
 				'feature_galleries',
 			),
@@ -195,6 +200,7 @@ function prefs_users_list()
 		'users_prefs_mytiki_msgs' => array(
 			'name' => tra('My messages'),
 			'type' => 'flag',
+			'description' => tr('List all messages and replies by the user.'),
 			'dependencies' => array(
 				'feature_messages',
 			),
@@ -204,6 +210,7 @@ function prefs_users_list()
 		'users_prefs_mytiki_tasks' => array(
 			'name' => tra('My tasks'),
 			'type' => 'flag',
+			'description' => tr('List all tasks by the user.'),
 			'dependencies' => array(
 				'feature_tasks',
 			),
@@ -213,6 +220,7 @@ function prefs_users_list()
 		'users_prefs_mytiki_forum_topics' => array(
 			'name' => tra('My forum topics'),
 			'type' => 'flag',
+			'description' => tr('List all forum topics by the user.'),
 			'dependencies' => array(
 				'feature_forums',
 			),
@@ -222,6 +230,7 @@ function prefs_users_list()
 		'users_prefs_mytiki_forum_replies' => array(
 			'name' => tra('My forum replies'),
 			'type' => 'flag',
+			'description' => tr('List all forum replies by the user.'),
 			'dependencies' => array(
 				'feature_forums',
 			),
@@ -231,6 +240,7 @@ function prefs_users_list()
 		'users_prefs_mytiki_items' => array(
 			'name' => tra('My items'),
 			'type' => 'flag',
+			'description' => tr('List all tracker items by the user.'),
 			'dependencies' => array(
 				'feature_trackers',
 			),
