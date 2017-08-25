@@ -3099,6 +3099,7 @@ $lang = array(
 "Invoice system" => "Fakturasystem",
 // "Full WYSIWYG editor" => "Full WYSIWYG editor",
 "WYSIWYG is an acronym for \"What You See Is What You Get\". CKEditor is used to provide a word-processor-like editing experience" => "WYSIWYG er en akronym for What You See Is What You Get (Du får det du ser). Bruker CKEditor",
+"WYSIWYG is an acronym for \"What You See Is What You Get\". <a href=\"https://ckeditor.com\">CKEditor</a> is used to provide a word-processor-like editing experience" => "WYSIWYG er en akronym for What You See Is What You Get (Du får det du ser). Bruker CKEditor",
 // "Kaltura video management" => "Kaltura video management",
 // "Integration with the Kaltura video management platform" => "Integration with the Kaltura video management platform",
 // "Friendship network" => "Friendship network",

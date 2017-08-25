@@ -43,7 +43,7 @@ function prefs_users_list()
 		'users_prefs_user_information' => array(
 			'name' => tra('User information'),
 			'type' => 'list',
-			'description' => 'Specify if users’ information is Public or Private.',
+			'description' => tr('Specify if users’ information is Public or Private.'),
 			'options' => array(
 				'private' => tra('Private'),
 				'public' => tra('Public'),
@@ -148,7 +148,7 @@ function prefs_users_list()
 		'users_prefs_mess_archiveAfter' => array(
 			'name' => tra('Auto-archive read messages after'),
 			'type' => 'list',
-			'description' => 'Number of days after which Tiki will archive users’ read messages.',
+			'description' => tr('Number of days after which Tiki will archive users’ read messages.'),
 			'dependencies' => array(
 				'feature_messages',
 			),

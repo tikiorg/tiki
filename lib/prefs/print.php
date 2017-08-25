@@ -122,7 +122,6 @@ function prefs_print_list()
 			'tags' => array('advanced'),
 			'type' => 'text',
 			'default' => 'H1|H2|H3',
-			'shorthint'=>''
 		),
 	
 		'print_pdf_mpdf_header' => array(
@@ -131,7 +130,7 @@ function prefs_print_list()
 			'tags' => array('basic'),
 			'type' => 'text',
 			'default' => '',
-			'shorthint'=>'Left text |Center Text| Right Text'
+			'shorthint'=>tr('Left text').' |'.tr('Center Text').'| '.tr('Right Text')
 		),
 		'print_pdf_mpdf_footer' => array(
 			'name' => tra('PDF footer text'),

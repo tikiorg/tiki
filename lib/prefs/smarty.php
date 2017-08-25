@@ -10,8 +10,9 @@ function prefs_smarty_list()
 	return array(
 		'smarty_notice_reporting' => array(
 			'name' => tra('Include Smarty notices in the PHP error report'),
-			'description' => tra('In most cases, Smarty notices can be safely ignored. However, they may be useful in the development process when unexpected issues occur.'),
+			'hint' => tra('In most cases, Smarty notices can be safely ignored. However, they may be useful in the development process when unexpected issues occur.'),
 			'type' => 'flag',
+			'description' => tr('Tiki will display <a href="https://www.smarty.net">Smarty</a> notices with the PHP error messages.'),
 			'default' => 'n',
 		),
 		'smarty_security' => array(

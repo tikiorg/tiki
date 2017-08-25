@@ -31,7 +31,7 @@ function prefs_log_list()
 			'default' => 'n',
 		),
 		'log_sql_perf_min' => array(
-			'name' => tra('Log queries using more than (seconds)'),
+			'name' => tra('Log queries using more than'),
 			'description' => tra('Use to log only queries that use a specific amount of time.'),
 			'warning' => tra('This may impact performance'),
 			'type' => 'text',

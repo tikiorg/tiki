@@ -22,7 +22,6 @@ function prefs_image_list()
 		],
 		'image_galleries_comments_default_order' => [
 			'name' => tra('Default order of comments'),
-			'description' => '',
 			'type' => 'list',
 			'options' => [
 				'commentDate_desc' => tra('Newest first'),

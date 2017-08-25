@@ -635,7 +635,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_webmail' => array(
 			'name' => tra('Webmail'),
-			'description' => tra('Webmail'),
 			'help' => 'Webmail',
 			'type' => 'flag',
 			'default' => 'n',
@@ -721,7 +720,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wysiwyg' => array(
 			'name' => tra('Full WYSIWYG editor'),
-			'description' => tra('WYSIWYG is an acronym for "What You See Is What You Get". CKEditor is used to provide a word-processor-like editing experience.'),
+			'description' => tra('WYSIWYG is an acronym for "What You See Is What You Get". <a href="https://ckeditor.com">CKEditor</a> is used to provide a word-processor-like editing experience.'),
 			'help' => 'Wysiwyg',
 			'type' => 'flag',
 			'default' => 'n',
@@ -938,7 +937,6 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_xmlrpc' => array(
 			'name' => tra('XMLRPC API'),
-			'description' => tra('XMLRPC API'),
 			'help' => 'Xmlrpc',
 			'type' => 'flag',
 			'default' => 'n',
@@ -1080,8 +1078,9 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_draw_hide_buttons' => array(
 			'name' => tra('Draw (SVG edit) hide buttons'),
-			'description' => tra('Hide buttons in Draw, HTML id, comma-separated. Example: "tool_select,tool_fhpath,tools_line_show,tools_rect_show,tools_ellipse_show,tool_path,tools_shapelib_show,tool_text,tool_image,tool_zoom,tool_eyedropper"'),
+			'description' => tra('Hide buttons in Draw, HTML id, comma-separated.'),
 			'help' => 'Draw',
+			'hint' => tr('Example: "tool_select, tool_fhpath, tools_line_show, tools_rect_show, tools_ellipse_show, tool_path, tools_shapelib_show, tool_text, tool_image, tool_zoom, tool_eyedropper"'),
 			'dependencies' => array(
 				'feature_draw',
 				'feature_file_galleries',
@@ -2567,7 +2566,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_invite' => array(
 			'name' => tra('Invite users'),
-			'description' => tra('Allow users to invite new users by mail to register at this site'),
+			'description' => tra('Allow users to invite new users by mail to register at this site.  (by sending an email)'),
 			'type' => 'flag',
 			'default' => 'n',
 		),

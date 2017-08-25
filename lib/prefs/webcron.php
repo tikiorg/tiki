@@ -27,7 +27,7 @@ function prefs_webcron_list()
 			'default' => 'both',
 		),
 		'webcron_run_interval' => array(
-			'name' => tra('Run interval (seconds)'),
+			'name' => tra('Run interval'),
 			'description' => tra('The amount of time of each run'),
 			'type' => 'text',
 			'size' => 5,

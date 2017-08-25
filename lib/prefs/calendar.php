@@ -10,7 +10,6 @@ function prefs_calendar_list()
 	return array(
 		'calendar_view_days' => array(
 			'name' => tra('Days to display in the calendar'),
-			'description' => '',
 			'type' => 'multicheckbox',
 			'options' => array(
 				0 => tra('Sunday'),
