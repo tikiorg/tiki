@@ -193,6 +193,8 @@ class PrefsDoc extends TWVersion{
 				$pref->help = $this->prevFilePrefs->$prefName->help;
 			if (!$pref->hint)
 				$pref->hint = $this->prevFilePrefs->$prefName->hint;
+			if (!$pref->shorthint)
+				$pref->shorthint = $this->prevFilePrefs->$prefName->shorthint;
 			if (!$pref->warning)
 				$pref->warning = $this->prevFilePrefs->$prefName->warning;
 			$this->setParams($pref);
@@ -252,6 +254,11 @@ class PrefsDoc extends TWVersion{
 			if ($this->prefDescription)					// new line if existing content
 				$this->prefDescription .= '<br>';
 			$this->prefDescription .= '<span class="fa fa-hand-pointer-o text-info" title="Hint"></span><i> ' . $param->hint . '</i>';
+		}
+		if ($param->shorthint) {
+			if ($this->prefDescription)					// new line if existing content
+				$this->prefDescription .= '<br>';
+			$this->prefDescription .= '<span class="fa fa-hand-pointer-o text-info" title="Short Hint"></span><i> ' . $param->shorthint . '</i>';
 		}
 		if ($param->warning) {
 			if ($this->prefDescription)					// new line if existing content
