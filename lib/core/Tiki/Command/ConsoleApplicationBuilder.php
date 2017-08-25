@@ -129,6 +129,7 @@ class ConsoleApplicationBuilder
 					new ProfileExport\Rss,
 					new ProfileExport\Tracker,
 					new ProfileExport\TrackerField,
+					new ProfileExport\TrackerItem,
 					new ProfileExport\WikiPage,
 					new ProfileExport\Finalize,
 				],

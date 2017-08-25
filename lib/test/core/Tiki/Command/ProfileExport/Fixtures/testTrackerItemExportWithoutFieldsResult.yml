@@ -1,0 +1,57 @@
+permissions: {  }
+preferences: {  }
+objects:
+  -
+    type: tracker
+    ref: test_tracker
+    data:
+      name: 'Test Tracker'
+      description: ''
+      restrict_end: '0'
+      form_classes: ''
+      restrict_start: '0'
+  -
+    type: tracker_field
+    ref: test_tracker_name
+    data:
+      name: name
+      permname: name
+      tracker: '$profileobject:test_tracker$'
+      options:
+        samerow: 1
+      type: text_field
+      order: '0'
+      visby: {  }
+      editby: {  }
+      flags:
+        - link
+        - list
+        - searchable
+        - public
+        - mandatory
+  -
+    type: tracker_field
+    ref: test_tracker_text
+    data:
+      name: text
+      permname: text
+      tracker: '$profileobject:test_tracker$'
+      options:
+        samerow: 1
+      type: text_field
+      order: '10'
+      visby: {  }
+      editby: {  }
+      flags:
+        - link
+        - list
+        - searchable
+        - public
+        - mandatory
+  -
+    type: tracker_item
+    ref: tracker_item_1
+    data:
+      tracker: '$profileobject:test_tracker$'
+      status: open
+      values: {  }

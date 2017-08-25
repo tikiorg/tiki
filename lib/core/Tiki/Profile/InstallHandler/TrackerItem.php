@@ -117,4 +117,39 @@ class Tiki_Profile_InstallHandler_TrackerItem extends Tiki_Profile_InstallHandle
 			return $trklib->replace_item($data['tracker'], 0, $fields, $data['status']);
 		}
 	}
+
+	/**
+	 * Function to export one tracker item
+	 *
+	 * @param Tiki_Profile_Writer $writer
+	 * @param array $item
+	 *
+	 * @return bool
+	 */
+	static function export(Tiki_Profile_Writer $writer, $item)
+	{
+		if (!is_array($item) || empty($item)) {
+			return false;
+		}
+
+		$statusMap = new Tiki_Profile_ValueMapConverter(array('open' => 'o', 'pending' => 'p', 'closed' => 'c'));
+
+		$data = array(
+			'tracker' => $writer->getReference('tracker', $item['trackerId']),
+			'status' => $statusMap->reverse($item['status']),
+			'values' => array(),
+		);
+
+		if (isset($item['field_values']) && ! empty($item['field_values'])) {
+			foreach ($item['field_values'] as $valueItems) {
+				$fieldReference = $writer->getReference('tracker_field', $valueItems['fieldId']);
+				$data['values'][] = array($fieldReference, $valueItems['value']);
+			}
+		}
+
+		$writer->addObject('tracker_item', $item['itemId'], $data);
+
+		return true;
+	}
+
 }
