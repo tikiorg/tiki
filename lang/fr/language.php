@@ -2572,6 +2572,7 @@ $lang = array(
 "Share access rights with friends when using Share" => "Partager les droits d'accès avec des amis lors de l'utilisation du bouton « Partager »",
 "Allow users to share their access rights for the current page with a friend when sending the link by email, Twitter, or Facebook. The lifespan of the link is defined by the site" => "Permettre aux utilisateurs de partager leurs droits d'accès sur la page courante avec un ami lors de l'envoie d'un lien par mail/Twitter/Facebook. La durée de vie de ces liens est définie par le site",
 "Create user if not already a registered user" => "Créer l'utilisateur s'il n'existe pas dans Tiki",
+"Create user if not registered in Tiki" => "Créer l'utilisateur s'il n'existe pas dans Tiki",
 // "Automatically create a new Tiki user for the PHPbb login" => "Automatically create a new Tiki user for the PHPbb login",
 "Use Tiki authentication for Admin login" => "Utiliser l'authentification Tiki pour le compte Admin",
 "phpBB Version" => "Version de phpBB",

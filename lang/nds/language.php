@@ -2572,6 +2572,7 @@ $lang = array(
 // "Share access rights with friends when using Share" => "Share access rights with friends when using Share",
 // "Allow users to share their access rights for the current page with a friend when sending the link by email, Twitter, or Facebook. The lifespan of the link is defined by the site" => "Allow users to share their access rights for the current page with a friend when sending the link by email, Twitter, or Facebook. The lifespan of the link is defined by the site",
 "Create user if not already a registered user" => "Opstell Bruker, wenn nau nich in Tiki",
+"Create user if not registered in Tiki" => "Opstell Bruker, wenn nau nich in Tiki",
 // "Automatically create a new Tiki user for the PHPbb login" => "Automatically create a new Tiki user for the PHPbb login",
 // "Use Tiki authentication for Admin login" => "Use Tiki authentication for Admin login",
 "phpBB Version" => "phpBB Verschoon",

@@ -10,6 +10,7 @@ function prefs_shib_list()
 	return array(
 		'shib_group' => array(
 			'name' => tra('Default group'),
+			'description' => tr('The name of the default group. If none, Shibboleth will be used.'),
 			'type' => 'text',
 			'size' => 40,
 			'perspective' => false,
@@ -17,12 +18,14 @@ function prefs_shib_list()
 		),
 		'shib_usegroup' => array(
 			'name' => tra('Create with default group'),
+			'A default group will be created. If no group is specified a default of Shibboleth will be used.',
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',
 		),
 		'shib_affiliation' => array(
 			'name' => tra('Valid affiliations'),
+			'description' =>tr('A list of affiliations which will allow users to log into this Wiki.'),
 			'type' => 'text',
 			'size' => 40,
 			'hint' => tra('Separate multiple affiliations with commas'),
@@ -32,13 +35,15 @@ function prefs_shib_list()
 		'shib_skip_admin' => array(
 			'name' => tra('Use Tiki authentication for Admin login'),
 			'type' => 'flag',
+			'description' => tra('The user “admin” will be authenticated by <b>only</b> using Tiki’s user database. This option has no effect on users other than “admin”.'),
 			'perspective' => false,
 			'default' => 'n',
 		),
 		'shib_create_user_tiki' => array(
-			'name' => tra('Create user if not already a registered user'),
+			'name' => tra('Create user if not registered in Tiki'),
 			'type' => 'flag',
 			'perspective' => false,
+			'description' =>tr('If a user was externally authenticated, but not found in the Tiki user database, Tiki will create an entry in its user database.'),
 			'default' => 'n',
 		),
 	);	
