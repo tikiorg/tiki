@@ -144,7 +144,6 @@
 						{preference name=zotero_style}
 					</div>
 				</div>
-				{preference name=feature_htmlfeed}
 			</fieldset>
 		{/tab}
 

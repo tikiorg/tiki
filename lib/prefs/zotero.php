@@ -11,8 +11,9 @@ function prefs_zotero_list()
 		'zotero_enabled' => array(
 			'name' => tra('Zotero bibliography'),
 			'help' => 'Zotero',
-			'description' => tra('Connect Tiki to the Zotero online bibliography management system.'),
+			'description' => tra('Connect Tiki to the <a href="https://www.zotero.org">Zotero</a> online bibliography management system.'),
 			'type' => 'flag',
+			'hint' => tr('You must supply the following items: Zotero Client Key, Zotero Client Secret, Zotero Group, and Zotero Reference Style.'),
 			'default' => 'n',
 		),
 		'zotero_client_key' => array(

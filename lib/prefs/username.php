@@ -10,7 +10,7 @@ function prefs_username_list()
 	return array(
 		'username_pattern' => array(
 			'name' => tra('Username pattern'),
-			'description' => 'This regex pattern force and forbid the use fo certain characters for username. For example to add Hebrew use: /&#94;&#91; \'\-_a-zA-Z0-9@\.א-ת]*$/ or for Chinese use: /&#94;&#91; \'\-_a-zA-Z0-9@\.\x00-\xff]*$/',
+			'description' => tr('This regex pattern force and forbid the use fo certain characters for username. For example to add Hebrew use: /&#94;&#91; \'\-_a-zA-Z0-9@\.א-ת]*$/ or for Chinese use: /&#94;&#91; \'\-_a-zA-Z0-9@\.\x00-\xff]*$/'),
 			'type' => 'text',
 			'size' => 25,
 			'perspective' => false,

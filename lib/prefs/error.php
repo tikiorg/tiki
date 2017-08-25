@@ -10,13 +10,14 @@ function prefs_error_list()
 	return array(
 		'error_reporting_adminonly' => array(
 			'name' => tra('PHP errors visible to admin only'),
-			'description' => tra('During site development, it\'s better to display errors to all users. However, in production settings, errors should only be displayed to administrators.'),
+			'hint' => tra('During site development, it\'s better to display errors to all users. However, in production settings, errors should only be displayed to administrators.'),
 			'type' => 'flag',
+			'description' => tr('PHP Errors will be shown to only the Admin user.'),
 			'default' => 'y',
 		),
 		'error_reporting_level' => array(
 			'name' => tra('PHP Error reporting level'),
-			'description' => tra('Level of errors to be reported.'),
+			'description' => tra('Level of errors to be reported. Errors can be seen in a collapsible box at the bottom of the page, if any exist.'),
 			'type' => 'list',
 			'options' => array(
 				0 => tra('No error reporting'),

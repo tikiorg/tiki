@@ -16,6 +16,7 @@ function prefs_mobile_list()
 			'help' => 'Mobile',
 			'warning' => tra('Deprecated. This feature is no longer under development following the integration of the Bootstrap CSS framework.'),
 			'type' => 'flag',
+			'tags' => array('experimental'),
 			'dependencies' => array(
 				'feature_perspective',
 			),
@@ -27,6 +28,7 @@ function prefs_mobile_list()
 			'type' => 'text',
 			'separator' => ',',
 			'filter' => 'int',
+			'tags' => array('experimental'),
 			'dependencies' => array(
 				'mobile_feature',
 			),

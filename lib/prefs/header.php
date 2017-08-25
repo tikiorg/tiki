@@ -35,8 +35,9 @@ function prefs_header_list()
 			'description' => tra('Includes a custom block of inline JavaScript in all pages.'),
 			'type' => 'textarea',
 			'size' => 5,
+			'hint' => tr('Use [https://doc.tiki.org/PluginJS|PluginJS] to include Javascript on a single wiki page.'),
 			'default' => '',
-			'hint' => tra('Do not include the <script> and </script> tags.'),
+			'shorthint' => tra('Do not include the < script > tags.'),
 			'filter' => 'none',
 		),
 		'header_custom_less' => array(
