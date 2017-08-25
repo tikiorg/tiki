@@ -2876,5 +2876,14 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 		],
+		'feature_scheduler' => [
+			'name' => tra('Scheduler'),
+			'description' => tra('Provides the ability to run tasks at a scheduled time.'),
+			'help' => 'Scheduler',
+			'type' => 'flag',
+			'view' => 'tiki-admin_schedulers.php',
+			'default' => 'y',
+			'tags' => array('advanced'),
+		],
 	);
 }
