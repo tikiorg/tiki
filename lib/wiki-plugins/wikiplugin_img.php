@@ -1363,16 +1363,13 @@ function wikiplugin_img( $data, $params )
 		$link = filter_out_sefurl($link);
 
 		// For ImgPlugin alignment 
-		$position = '';
 		$style = '';
-		if($imgdata['imalign'] == "right"){
-			$style ='style="float: right;"';
-		}elseif($imgdata['imalign'] == "center"){
-			$position = "center";
+		if($imgdata['imalign'] == "right") {
+			$style = 'style="float: right;"';
 		}
 
 		//Final link string
-		$replimg = "\r\t" . '<a href="' . $link . '"' . $style . ' class="internal" position="' . $position . '"' . $linkrel . $imgtarget . $linktitle
+		$replimg = "\r\t" . '<a href="' . $link . '"' . $style . ' class="internal" ' . $linkrel . $imgtarget . $linktitle
 					. $mouseover . '>' ."\r\t\t" . $replimg . "\r\t" . '</a>';
 		if ($imgdata['thumb'] == 'mouseover') {
 			$mouseevent = "$('.internal').popover({ 
