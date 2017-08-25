@@ -251,12 +251,12 @@ class PrefsDoc extends TWVersion{
 		if ($param->hint) {
 			if ($this->prefDescription)					// new line if existing content
 				$this->prefDescription .= '<br>';
-			$this->prefDescription .= '<span class="fa fa-hand-pointer-o" title="Hint"></span><i> ' . $param->hint . '</i>';
+			$this->prefDescription .= '<span class="fa fa-hand-pointer-o text-info" title="Hint"></span><i> ' . $param->hint . '</i>';
 		}
 		if ($param->warning) {
 			if ($this->prefDescription)					// new line if existing content
 				$this->prefDescription .= '<br>';
-				$this->prefDescription .= '<span class="fa fa-exclamation-triangle" title="Warning"></span><i> ' . $param->warning . '</i>';
+				$this->prefDescription .= '<span class="fa fa-exclamation-triangle text-warning" title="Warning"></span><i> ' . $param->warning . '</i>';
 		}
 		// display list of options
 		if (!empty($param->options)) {
@@ -277,13 +277,13 @@ class PrefsDoc extends TWVersion{
 				}
 				$options = $this->wikiConvert($options,true);											// sanitize special characters
 				$options = preg_replace('/\s+/',' ',$options);			// replace all excess whitespace characters with a single space.
-				$this->prefDescription .= '~~gray:<span class="fa fa-list-ul" title="Options"></span> ' . $options.'~~';
+				$this->prefDescription .= '<span class="small text-muted"><span class="fa fa-list-ul" title="Options"></span> ' . $options.'</span>';
 			}
 		}
 		if (!empty($param->tags))
 			foreach ($param->tags as $tag)
 				if ($tag === 'experimental')
-					$this->prefDescription .= ' <span class="fa fa-flask" title="Experimental: may not work as intended"></span>';
+					$this->prefDescription .= ' <span class="fa fa-flask text-danger" title="Experimental: may not work as intended"></span>';
 		$this->prefDescription = $this->wikiConvert($this->prefDescription);
 	}
 
