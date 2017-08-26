@@ -20,7 +20,7 @@ class Tiki_Command_ProfileExport_TrackerItemTest extends TikiTestCase
 		// create a sample writer that will never write to disk (save is mocked)
 		$this->writer = $this->getMockBuilder(\Tiki_Profile_Writer::class)
 			->setMethods(['save'])
-			->setConstructorArgs([__DIR__."/Fixtures", 'test'])
+			->setConstructorArgs([__DIR__ . "/Fixtures", 'test'])
 			->getMock();
 
 		$this->writer->method('save')->will(
@@ -62,7 +62,7 @@ class Tiki_Command_ProfileExport_TrackerItemTest extends TikiTestCase
 		Tiki_Profile_InstallHandler_TrackerItem::export($this->writer, $item);
 
 		$this->assertYamlFileMatchYamlString(
-			__DIR__.'/Fixtures/testTrackerItemExportResult.yml',
+			__DIR__ . '/Fixtures/testTrackerItemExportResult.yml',
 			$this->writer->dump()
 		);
 	}
@@ -81,7 +81,7 @@ class Tiki_Command_ProfileExport_TrackerItemTest extends TikiTestCase
 		Tiki_Profile_InstallHandler_TrackerItem::export($this->writer, $item);
 
 		$this->assertYamlFileMatchYamlString(
-			__DIR__.'/Fixtures/testTrackerItemExportWithoutFieldsResult.yml',
+			__DIR__ . '/Fixtures/testTrackerItemExportWithoutFieldsResult.yml',
 			$this->writer->dump()
 		);
 	}

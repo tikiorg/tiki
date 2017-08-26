@@ -51,7 +51,7 @@ class TrackerItem extends ObjectWriter
 
 		$trackerDefinition = \Tracker_Definition::get($trackerId);
 		if (! $trackerDefinition) {
-			$output->writeln('<error>'.tr('Tracker not found').'</error>');
+			$output->writeln('<error>' . tr('Tracker not found') . '</error>');
 			return;
 		}
 
@@ -62,8 +62,8 @@ class TrackerItem extends ObjectWriter
 
 		$items = $trackerLib->list_items($trackerId, 0, -1, 'itemId_asc', $exportFields, '', '', '', '', '', $listItemsFilter);
 
-		if (! $items || ! isset($items['data']) || ! is_array($items['data']) || empty($items['data'])) {
-			$output->writeln('<error>'.tr('No Items found to export').'</error>');
+		if (! $items || empty($items['data']) || ! is_array($items['data'])) {
+			$output->writeln('<error>' . tr('No Items found to export') . '</error>');
 			return;
 		}
 
@@ -72,15 +72,15 @@ class TrackerItem extends ObjectWriter
 		foreach ($items['data'] as $item) {
 			$result = \Tiki_Profile_InstallHandler_TrackerItem::export($writer, $item, $exportFields);
 			if ($result) {
-				$output->writeln('<info>'.tr("Tracker item %0 exported", $item['itemId']).'</info>');
+				$output->writeln('<info>' . tr("Tracker item %0 exported", $item['itemId']) . '</info>');
 			} else {
-				$output->writeln('<error>'.tr("Tracker item %0 failed to exported", $item['itemId']).'</error>');
+				$output->writeln('<error>' . tr("Tracker item %0 failed to exported", $item['itemId']) . '</error>');
 			}
 		}
 
 		$writer->save();
 
-		$output->writeln('<info>'.tr("Tracker items for tracker %0 exported", $trackerId).'</info>');
+		$output->writeln('<info>' . tr("Tracker items for tracker %0 exported", $trackerId) . '</info>');
 	}
 
 	/**

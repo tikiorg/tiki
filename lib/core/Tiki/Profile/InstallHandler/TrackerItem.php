@@ -128,8 +128,12 @@ class Tiki_Profile_InstallHandler_TrackerItem extends Tiki_Profile_InstallHandle
 	 */
 	static function export(Tiki_Profile_Writer $writer, $item)
 	{
-		if (!is_array($item) || empty($item)) {
+		if (empty($item) || ! is_array($item)) {
 			return false;
+		}
+
+		if (! isset($item['field_values'])) {
+			$item['field_values'] = [];
 		}
 
 		$statusMap = new Tiki_Profile_ValueMapConverter(array('open' => 'o', 'pending' => 'p', 'closed' => 'c'));
@@ -140,11 +144,9 @@ class Tiki_Profile_InstallHandler_TrackerItem extends Tiki_Profile_InstallHandle
 			'values' => array(),
 		);
 
-		if (isset($item['field_values']) && ! empty($item['field_values'])) {
-			foreach ($item['field_values'] as $valueItems) {
-				$fieldReference = $writer->getReference('tracker_field', $valueItems['fieldId']);
-				$data['values'][] = array($fieldReference, $valueItems['value']);
-			}
+		foreach ($item['field_values'] as $valueItems) {
+			$fieldReference = $writer->getReference('tracker_field', $valueItems['fieldId']);
+			$data['values'][] = array($fieldReference, $valueItems['value']);
 		}
 
 		$writer->addObject('tracker_item', $item['itemId'], $data);
