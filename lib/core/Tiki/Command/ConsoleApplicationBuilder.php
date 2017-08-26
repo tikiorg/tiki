@@ -76,6 +76,7 @@ class ConsoleApplicationBuilder
 					new AddonRemoveCommand,
 					new AddonUpgradeCommand,
 					new DailyReportSendCommand,
+					new FakerTrackerCommand,
 					new GoalCheckCommand,
 					new FilesBatchuploadCommand,
 					new FilesDeleteoldCommand,

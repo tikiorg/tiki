@@ -18,6 +18,13 @@ Expose:
   requiredBy:
     - ids_enabled
   requiredVersion: ^3.0
+Faker:
+  licence: MIT
+  licenceUrl: "https://github.com/fzaninotto/Faker/blob/master/LICENSE"
+  name: fzaninotto/Faker
+  requiredBy:
+    - "Trackers"
+  requiredVersion: dev-master
 Mpdf:
   licence: GPL
   licenceUrl: "https://github.com/mpdf/mpdf/blob/master/LICENSE.txt"
