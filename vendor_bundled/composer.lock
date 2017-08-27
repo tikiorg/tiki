@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d7fafc6c7d420471218a771cdc6bbbe7",
+    "content-hash": "0f51ee786ff0bc1678ae5e575a072ce3",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -249,6 +249,17 @@
                 "url": "https://composer.tiki.org/dist/chartjs/chart-js/chartjs-chart-js-2.5.0.zip",
                 "reference": null,
                 "shasum": "72c113a51917f75646be7ddf4ecae46de8d4c0c9"
+            },
+            "type": "library"
+        },
+        {
+            "name": "christian-vigh-phpclasses/PdfToText",
+            "version": "1.6.7",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/christian-vigh-phpclasses/pdftotext/christian-vigh-phpclasses-pdftotext-1.6.7.zip",
+                "reference": null,
+                "shasum": "4fda0cbb9d044b0c4844587177629763c6afb229"
             },
             "type": "library"
         },
