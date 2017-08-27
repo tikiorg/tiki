@@ -158,7 +158,6 @@ function smarty_block_self_link($params, $content, $smarty, &$repeat = false)
 				$rel = '';
 			}
 			$link .= $rel;
-			unset ($params['_onclick']); // remove _onclick from params because its previously been processed. (as not to use it twice)
 			foreach ( $params as $k => $v ) {
 				if ( strlen($k) > 3 && substr($k, 0, 3) == '_on' && !empty($v) ) {
 					$link .= htmlentities(substr($k, 1)).'="'.$v.'" '; // $v should be already htmlentitized in the template
