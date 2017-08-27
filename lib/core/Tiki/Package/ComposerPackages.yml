@@ -21,7 +21,7 @@ Expose:
 Faker:
   licence: MIT
   licenceUrl: "https://github.com/fzaninotto/Faker/blob/master/LICENSE"
-  name: fzaninotto/Faker
+  name: fzaninotto/faker
   requiredBy:
     - "Trackers"
   requiredVersion: dev-master
