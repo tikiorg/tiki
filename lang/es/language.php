@@ -5485,6 +5485,7 @@ $lang = array(
 // "Wiki copyright" => "Wiki copyright",
 "Enable edit plugin icons" => "Habilita los iconos de edición de conectores (plugins)",
 "Enables editing a plugin, via a popup form, without needing to edit the whole page" => "Permite editar un conector (plugin), vía un formulario emergente, sin la necesidad de editar toda la página",
+"Enables editing a plugin, via a popup form, without needing to edit the whole page. It can be disabled for individual plugins" => "Permite editar un conector (plugin), vía un formulario emergente, sin la necesidad de editar toda la página",
 "Requires JavaScript" => "Requiere JavaScript",
 // "Prevent special characters in page names" => "Prevent special characters in page names",
 // "Some characters may prevent the pages from being easily accessible from the URL or through wiki links. This option prevents from creating pages with such characters" => "Some characters may prevent the pages from being easily accessible from the URL or through wiki links. This option prevents from creating pages with such characters",
