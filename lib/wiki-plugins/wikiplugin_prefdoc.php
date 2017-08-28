@@ -242,9 +242,9 @@ class PrefsDoc extends TWVersion{
 
 		// set name
 		if ($param->help) {
-			$this->prefName = '<a href="' . $param->help . '">' . $param->name . '</a>';
+			$this->prefName = '<a href="' . $param->help . '">~np~' . $param->name . '~/np~</a>';
 		}else {
-			$this->prefName = $param->name;
+			$this->prefName = '~np~'.$param->name.'~/np~';
 		}
 		$this->prefName = $this->wikiConvert($this->prefName);
 
