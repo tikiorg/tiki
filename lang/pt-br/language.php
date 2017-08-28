@@ -4971,6 +4971,7 @@ $lang = array(
 "Examples" => "Exemplos",
 "Logo title (on mouseover)" => "Título do logo (quando o mouse estiver em cima da imagem)",
 "HTML \"alt\" tag description (for text browsers, screen readers, etc.)" => "Descrição alternativa (ex: para navegadores modo texto",
+"HTML \"alt\" tag description" => "Descrição alternativa (ex: para navegadores modo texto",
 // "Site icon" => "Site icon",
 // "Recommended image height: 32 pixel" => "Recommended image height: 32 pixel",
 // "Include Smarty notices in the PHP error report" => "Include Smarty notices in the PHP error report",

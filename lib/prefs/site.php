@@ -43,14 +43,15 @@ Use the Message to display to specify the message that visitors will see when at
 		),
 		'site_crumb_seper' => array(
 			'name' => tra('Locations (breadcrumbs)'),
-			'description' => tra('Locations (breadcrumbs)'),
 			'type' => 'text',
+			'hint' => tr('Examples:  » / >  : -> →'),
 			'size' => '5',
 			'default' => '»',
 		),
 		'site_nav_seper' => array(
 			'name' => tra('Choices'),
 			'type' => 'text',
+			'hint' => tr('Examples: | / ¦  :'),
 			'size' => '5',
 			'default' => '|',
 		),
@@ -107,11 +108,11 @@ Use the Message to display to specify the message that visitors will see when at
 		),
 		'site_google_analytics_account' => array(
 			'name' => tr('Google Analytics account number'),
-			'description' => tra('The account number for the site. The account number from Google is something like UA-XXXXXXX-YY. Enter only XXXXXXX-YY'),
+			'description' => tra('The account number for the site. The account number from Google is something like UA-XXXXXXX-YY.'),
 			'type' => 'text',
 			'size' => 15,
 			'default' => '',
-			'hint' => 'XXXXXXX-YY',
+			'hint' => ' Enter only XXXXXXX-YY (without the UA)',
 			'dependencies' => array(
 				'wikiplugin_googleanalytics',
 			),

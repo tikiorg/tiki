@@ -267,7 +267,7 @@ function prefs_user_list($partial = false)
 			'format' => $fieldFormat,
 		),
 		'user_selector_threshold' => array(
-			'name' => tra('Maximum users n drop-down lists'),
+			'name' => tra('Maximum users in drop-down lists'),
 			'description' => tra('Prevents out-of-memory and performance issues when the user list is very large, by using a jQuery autocomplete text input box.'),
 			'type' => 'text',
 			'size' => '5',

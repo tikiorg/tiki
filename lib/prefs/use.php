@@ -27,11 +27,13 @@ function prefs_use_list()
 		'use_context_menu_icon' => array(
 			'name' => tra('Use context menus for actions (icons)'),
 			'type' => 'flag',
+			'hint' => tr('Currently used in File Galleries only.'),
 			'default' => 'y',
 		),
 		'use_context_menu_text' => array(
 			'name' => tra('Use context menus for actions (text)'),
 			'type' => 'flag',
+			'hint' => tr('Currently used in File Galleries only.'),
 			'default' => 'y',
 		),
 	);
