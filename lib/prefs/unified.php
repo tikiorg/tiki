@@ -44,10 +44,11 @@ function prefs_unified_list()
 		),
 		'unified_lucene_max_resultset_limit' => array(
 			'name' => tra('Lucene maximum result-set limit'),
-			'hint' => tra('Maximum size of result set to consider. Default 1000, 0 = unlimited.'),
+			'hint' => tra('Maximum size of result set to consider.'),
 			'description' => tra('This is used when calculating result scores and sort order which can lead to out of memory errors on large data sets. The default of 1000 is safe with the PHP memory_limit set to 128M'),
 			'type' => 'text',
 			'filter' => 'int',
+			'shorthint' => tr('0 for unlimited'),
 			'units' => tra('result sets'),
 			'default' => 1000,
 			'size' => 6,

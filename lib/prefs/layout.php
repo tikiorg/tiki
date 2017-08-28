@@ -10,14 +10,15 @@ function prefs_layout_list()
 	return array(
 		'layout_fixed_width' => array(
 			'name' => tra('Layout width'),
-			'description' => tra('Constrains the width of the content area of the site (default: 1170px).'),
+			'description' => tra('Constrains the width of the content area of the site.'),
 			'type' => 'text',
 			'units' => tra('pixels'),
 			'hint' => tra('for example, 960px'),
 			'dependencies' => array(
 				'feature_fixed_width',
 			),
-			'default' => '',
+			'default' => '1170',
+			'filter' => 'digits',
 		),
 		'layout_tabs_optional' => array(
 			'name' => tra('Tabs optional'),

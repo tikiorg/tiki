@@ -161,7 +161,7 @@ function prefs_payment_list()
 		),
 		'payment_cclite_merchant_user' => array(
 			'name' => tra('Cclite merchant user'),
-			'description' => tra('Username in Cclite representing "the management". Defaults to "manager"'),
+			'description' => tra('Username in Cclite representing "the management".'),
 			'type' => 'text',
 			'dependencies' => array( 'payment_cclite_registries' ),
 			'default' => 'manager',

@@ -19,7 +19,7 @@ function prefs_poll_list()
 		),
 		'poll_comments_default_ordering' => array(
 			'name' => tra('Default Ordering'),
-			'description' => tra('Poll ordering algorithm (default=Points)'),
+			'description' => tra('Poll ordering algorithm.'),
 			'type' => 'list',
 			'options' => array(
 				'commentDate_desc' => tra('Newest first'),

@@ -17,13 +17,12 @@ function prefs_https_list()
 		),
 		'https_port' => array(
 			'name' => tra('HTTPS port'),
-			'description' => tra('the HTTPS port for this server, default=443'),
+			'description' => tra('the HTTPS port for this server.'),
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
-			'default' => '',
-			'keywords' => 'SSL secure', 
-			'shorthint' => tra('If left empty, port 443 will be used'),
+			'default' => '443',
+			'keywords' => 'SSL secure',
 		),
 		'https_login' => array(
 			'name' => tra('Use HTTPS login'),
