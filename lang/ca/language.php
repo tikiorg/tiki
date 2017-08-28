@@ -3158,6 +3158,7 @@ $lang = array(
 "Look up the user's preferred language through browser preferences" => "Cercar l'idioma preferit de l'usuari a través de les preferències del teu navegador web",
 "Show pages in user's preferred language" => "Mostra la pàgines en l'idioma preferit de l'usuari",
 "When accessing a page which has an equivalent in the user's preferred language, favor the translated page" => "Quan s'accedeix a una pàgina que té un equivalent en l'idioma preferit de l'usuari, afavorir la pàgina traduïda",
+"When accessing a page which has an equivalent in the user's preferred language, favor the translated page. Based on the user’s Tiki preferences" => "Quan s'accedeix a una pàgina que té un equivalent en l'idioma preferit de l'usuari, afavorir la pàgina traduïda",
 "Synchronize page and site language" => "Sincronitzar idioma per a la pàgina i el lloc",
 "Changing the page language also changes the site language" => "Canviar l'idioma de la pàgina també canvia l'idioma del lloc",
 "Translation assistant" => "Assistent Traducció",

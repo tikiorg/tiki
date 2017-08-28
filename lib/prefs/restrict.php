@@ -12,6 +12,7 @@ function prefs_restrict_list()
 			'name' => tra('Restrict supported languages'),
 			'description' => tra('Limit the languages made available on the site.'),
 			'type' => 'flag',
+			'shorthint' => tr('Use Ctrl+Click to select multiple languages.'),
 			'default' => 'n',
 			'tags' => array('basic'),
 		),
