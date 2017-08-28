@@ -24,51 +24,37 @@ class VimeoLib
 	}
 
 	/**
-	 * Gets array of space and uploads left for the Vimeo account in ['user'] or an error in ['err']
+	 * Gets array of space and uploads left for the Vimeo account
 	 *
 	 * @return array
 	 */
 	function getQuota()
 	{
-		$data = $this->callMethod('vimeo.videos.upload.getQuota');
-		return $data;
+		$data = $this->callMethod('/me');
+		return $data['upload_quota'];
 	}
 
 	/**
-	 * Gets an upload ticket in  ['ticket'] or an error in ['err']
+	 * Gets an upload ticket
 	 *
 	 * @return array
 	 */
 	function getTicket()
 	{
 		$data = $this->callMethod(
-			'vimeo.videos.upload.getTicket',
-			array(
-				'upload_method' => 'post',
-			)
+			'/me/videos',
+			array('type' => 'streaming'),
+			'post'
 		);
 		return $data;
 	}
 
-	function verifyChunks($ticketId)
+	function complete($completeUri)
 	{
 		$data = $this->callMethod(
-			'vimeo.videos.upload.verifyChunks',
-			array(
-				'ticket_id' => $ticketId,
-			)
-		);
-		return $data['ticket']['chunks'];
-	}
-
-	function complete($ticketId, $fileName)
-	{
-		$data = $this->callMethod(
-			'vimeo.videos.upload.complete',
-			array(
-				'ticket_id' => $ticketId,
-				'filename' => $fileName,
-			)
+			$completeUri,
+			array(),
+			'delete'
 		);
 		return $data;
 	}
@@ -76,44 +62,45 @@ class VimeoLib
 	function setTitle($videoId, $title)
 	{
 		$data = $this->callMethod(
-			'vimeo.videos.setTitle',
+			'/videos/' . $videoId,
 			array(
-				'video_id' => $videoId,
-				'title' => $title,
-			)
+				'name' => $title,
+			),
+			'patch'
 		);
+		return $data;
 	}
 
 	function deleteVideo($videoId)
 	{
 		$data = $this->callMethod(
-			'vimeo.videos.delete',
-			array(
-				'video_id' => $videoId,
-			)
+			'/videos/' . $videoId,
+			array(),
+			'delete'
 		);
 		return $data;
 	}
 
-	private function callMethod($method, array $arguments = array())
+	private function callMethod($method, array $arguments = array(), $httpmethod = 'get')
 	{
 		$oldVal = ini_get('arg_separator.output');
 		ini_set('arg_separator.output', '&');
 		$response = $this->oauth->do_request(
 			'vimeo',
 			array(
-				'url' => 'https://vimeo.com/api/rest/v2',
-				'post' => array_merge(
-					$arguments,
-					array(
-						'method' => $method,
-						'format' => 'json',
-					)
-				),
+				'url' => 'https://api.vimeo.com' . $method,
+				$httpmethod => $arguments,
 			)
 		);
+
 		ini_set('arg_separator.output', $oldVal);
-		return json_decode($response->getBody(), true);
+
+		if ($httpmethod == 'delete' || $httpmethod == 'patch') {
+			$headers = $response->getHeaders();	
+			return $headers->toArray();
+		} else {
+			return json_decode($response->getBody(), true);
+		}
 	}
 }
 

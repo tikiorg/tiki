@@ -22,7 +22,7 @@ class OAuthLib extends TikiDb_Bridge
 
 		$access = $this->retrieve_token($provider_key);
 
-		if ($access) {
+		if (is_object($access)) {
 			$client = $access->getHttpClient($configuration);
 
 			if (isset($configuration['secretAsGet'])) {
@@ -34,9 +34,20 @@ class OAuthLib extends TikiDb_Bridge
 
 		$client->setUri($arguments['url']);
 
+		if (isset($configuration['oauth2Token'])) {
+			$client->getRequest()->getQuery()->set('access_token', $configuration['oauth2Token']);
+		}
+
 		if (isset($arguments['post'])) {
 			$client->setMethod(Zend\Http\Request::METHOD_POST);
 			foreach ($arguments['post'] as $key => $value) {
+				$client->getRequest()->getPost()->set($key, $value);
+			}
+		}
+
+		if (isset($arguments['patch'])) {
+			$client->setMethod(Zend\Http\Request::METHOD_PATCH);
+			foreach ($arguments['patch'] as $key => $value) {
 				$client->getRequest()->getPost()->set($key, $value);
 			}
 		}
@@ -45,6 +56,10 @@ class OAuthLib extends TikiDb_Bridge
 			foreach ($arguments['get'] as $key => $value) {
 				$client->getRequest()->getQuery()->set($key, $value);
 			}
+		}
+
+		if (isset($arguments['delete'])) {
+			$client->setMethod(Zend\Http\Request::METHOD_DELETE);
 		}
 
 		try {
@@ -108,6 +123,10 @@ class OAuthLib extends TikiDb_Bridge
 	{
 		$config = $this->get_configuration($provider_key);
 
+		if (! empty($config['oauth2Token'])) {
+			return $config['oauth2Token'];
+		}
+
 		if (! empty($config['accessToken']) && ! empty($config['accessTokenSecret'])) {
 			$token = new ZendOAuth\Token\Access();
 			$token->setParams(
@@ -143,14 +162,13 @@ class OAuthLib extends TikiDb_Bridge
 		case 'vimeo':
 			return array(
 				'callbackUrl' => $tikilib->tikiUrl($callback),
-				'siteUrl' => 'https://vimeo.com/oauth',
-				'requestTokenUrl' => 'https://vimeo.com/oauth/request_token',
-				'accessTokenUrl' => 'https://vimeo.com/oauth/access_token',
-				'authorizeUrl' => 'https://vimeo.com/oauth/authorize',
+				'siteUrl' => 'https://api.vimeo.com/oauth',
+				'requestTokenUrl' => 'https://api.vimeo.com/oauth/request_token',
+				'accessTokenUrl' => 'https://api.vimeo.com/oauth/access_token',
+				'authorizeUrl' => 'https://api.vimeo.com/oauth/authorize',
 				'consumerKey' => $prefs['vimeo_consumer_key'],
 				'consumerSecret' => $prefs['vimeo_consumer_secret'],
-				'accessToken' => $prefs['vimeo_access_token'],
-				'accessTokenSecret' => $prefs['vimeo_access_token_secret'],
+				'oauth2Token' => $prefs['vimeo_access_token'],
 			);
 		case 'zotero':
 			return array(
