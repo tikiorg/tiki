@@ -261,10 +261,13 @@ function wikiplugin_trackeritemfield($data, $params)
 
 		if (($val = $trklib->get_item_value($trackerId, $itemId, $fieldId)) !== false) {
 			if ($test) { 
-				if (!empty($value) && $val != $value) {
-					return $dataelse;
+				if (empty($value) && empty($val)) {
+					return $data;
 				}
-				return $data;
+				if (!empty($value) && $val == $value) {
+					return $data;
+				}
+				return $dataelse;
 			} else {
 				$field['value'] = $val;
 				$handler = $trklib->get_field_handler($field, $info);	// gets the handler to blend back the value into the definitions array
