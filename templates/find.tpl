@@ -24,7 +24,7 @@
 	* filter_values         : array( filter_fieldX => filter_fieldX_selected_value, ... )
 	* autocomplete          : name of the variable you want for autocomplete of the input field (only for <input type="text" ... >
 	* find_other            : If value != '', show an input box label with find_other
-	* find_in               : popup to explain on what is the find
+	* find_in               : Unused. Up to r49383, this description of the searched content was brokenly displayed in a tooltip. Should this be re-implemented?
 	* map_only              : to only show the pages map (used with tablesorter since other find functions aren't needed)
 	* Usage examples : {include file='find.tpl'}
 	*                  {include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'}
@@ -61,7 +61,6 @@
 				{/if}
 			</div>
 		</div>
-		{*	{if isset($find_in)}{help url="#" desc="{tr}Find in:{/tr} {$find_in}"}{/if} *}
 		<div class="find-parameters col-sm-12 {if $prefs.javascript_enabled eq 'n' or (!empty($find_type) or !empty($find_topic) or !empty($find_lang) or !empty($find_langOrphan) or !empty($find_show_categories) or !empty($find_categId) or !empty($find_orphans) or !empty($find_other_val) or $maxRecords ne $prefs.maxRecords)}visible{else}hidden{/if}"> {* TODO: figure out why "or !empty($find_show_categories_multi)" does not work *}
 			{if !empty($types) and ( !isset($types_tag) or $types_tag eq 'select' )}
 				<div class="form-group">
