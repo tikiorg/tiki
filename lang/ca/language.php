@@ -5510,6 +5510,7 @@ $lang = array(
 // "Wiki copyright" => "Wiki copyright",
 "Enable edit plugin icons" => "Habilita les icones d'edició de connectors (plugins)",
 "Enables editing a plugin, via a popup form, without needing to edit the whole page" => "Permet l'edició d'un plugin, a través d'una forma mòbil, sense necessitat d'editar tota la pàgina",
+"Enables editing a plugin, via a popup form, without needing to edit the whole page. It can be disabled for individual plugins" => "Permet l'edició d'un plugin, a través d'una forma mòbil, sense necessitat d'editar tota la pàgina",
 "Requires JavaScript" => "Requereix Javascript",
 "Prevent special characters in page names" => "Eviteu caràcters especials en els noms de pàgina",
 "Some characters may prevent the pages from being easily accessible from the URL or through wiki links. This option prevents from creating pages with such characters" => "Alguns personatges poden evitar que les pàgines de ser fàcilment accessible des de la URL o mitjançant enllaços wiki. Aquesta opció impedeix crear pàgines amb tals caràcters",

@@ -5510,6 +5510,7 @@ $lang = array(
 // "Wiki copyright" => "Wiki copyright",
 "Enable edit plugin icons" => "편집 플러그인 아이콘 활성화",
 "Enables editing a plugin, via a popup form, without needing to edit the whole page" => "플러그인의 편집을 허용, 팝업 양식을 통함, 페이지 전체를 편집할 필요 없음",
+"Enables editing a plugin, via a popup form, without needing to edit the whole page. It can be disabled for individual plugins" => "플러그인의 편집을 허용, 팝업 양식을 통함, 페이지 전체를 편집할 필요 없음",
 "Requires JavaScript" => "자바스크립트 필수",
 "Prevent special characters in page names" => "페이지 이름에 특수 문자 금지",
 "Some characters may prevent the pages from being easily accessible from the URL or through wiki links. This option prevents from creating pages with such characters" => "어떤 글자들은 페이지가 URL 혹은 위키 링크를 통하여 쉽게 접근되는 것을 방해합니다. 이 선택사항은 그러한 글자로 페이지를 만드는 것을 방지합니다",

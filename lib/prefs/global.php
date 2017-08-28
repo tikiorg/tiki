@@ -86,6 +86,7 @@ function prefs_global_list($partial = false)
 		'popupLinks' => array(
 			'name' => tra('Open external links in new window'),
 			'type' => 'flag',
+			'description' => tr('Links to external sites should open in a new browser window.'),
 			'default' => 'y',
 			'tags' => array('basic'),
 		),

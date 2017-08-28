@@ -561,6 +561,7 @@ function prefs_feature_list($partial = false)
 			'name' => tra('Output should be HTML purified'),
 			'description' => tra('This activates HTML Purifier on wiki content and other outputs, to filter out potential security problems like XSS code. Keep in mind that HTML Purifier is not HTML5 compatible and may rewrite HTML5 syntax, producing unwanted results.'),
 			'help' => 'Purifier',
+			'hint' => tr('If you are trying to use HTML in your pages and it gets stripped out, you should make sure your HTML is valid or de-activate this feature.'),
 			'tags' => array('experimental'),
 			'type' => 'flag',
 			'perspective' => false,
@@ -2355,6 +2356,7 @@ function prefs_feature_list($partial = false)
 		'feature_wiki_monosp' => array(
 			'name' => tra('Automonospaced text'),
 			'type' => 'flag',
+			'description' => tr('Lines indented with spaces will automatically be converted to monospace font.'),
 			'default' => 'n',
 		),
 		'feature_wiki_tables' => array(
