@@ -26,7 +26,7 @@ function prefs_openpgp_list()
 		),
 		'openpgp_gpg_path' => array(
 			'name' => tra('Path to gpg executable'),
-			'description' => tra('Full path to gpg executable (default /usr/bin/gpg ).'),
+			'description' => tra('Full path to gpg executable.'),
 			'type' => 'text',
 			'size' => 60,
 			'filter' => 'text',
@@ -44,14 +44,15 @@ function prefs_openpgp_list()
 		),
 		'openpgp_gpg_signer_passphrase' => array(
 			'name' => tra('Signer pass phrase'),
-			'description' => tra('GnuPG signer private-key passphrase (default is empty string). Define pass phrase either here or in a signer pass phrase file (leave empty if read from file).'),
+			'description' => tra('GnuPG signer private-key passphrase. Define pass phrase either here or in a signer pass phrase file.'),
 			'type' => 'text',
 			'size' => 60,
+			'shorthint' => tr('leave empty if read from file'),
 			'default' => '',
 		),
 		'openpgp_gpg_signer_passfile' => array(
 			'name' => tra('Path to signer pass phrase filename'),
-			'description' => tra('Full path including the filename of the file containing the GnuPG signer private-key pass phrase (default /home/www/.gnupg/signer/signerpass ). The directory and file must have proper permissions for tiki to access/read the signer pass phrase file.'),
+			'description' => tra('Full path including the filename of the file containing the GnuPG signer private-key pass phrase. The directory and file must have proper permissions for tiki to access/read the signer pass phrase file.'),
 			'type' => 'text',
 			'size' => 60,
 			'default' => '/home/www/.gnupg/signer/signerpass',

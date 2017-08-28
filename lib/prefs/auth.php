@@ -438,7 +438,7 @@ function prefs_auth_list()
 			'perspective' => false,
 			'help' => 'LDAP-authentication#How_to_know_which_LDAP_Bind_Type_you_need_to_use',
 			'options' => array(
-				'default' => tra('Default: Anonymous Bind'),
+				'default' => tra('Anonymous Bind'),
 				'full' => tra('Full: userattr=username,UserDN,BaseDN'),
 				'ol' => tra('OpenLDAP: cn=username,BaseDN'),
 				'ad' => tra('Active Directory (username@domain)'),

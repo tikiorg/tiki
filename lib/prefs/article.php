@@ -24,7 +24,7 @@ function prefs_article_list()
 	return array(
 		'article_comments_per_page' => array(
 			'name' => tra('Default number per page'),
-			'description' => tra('Sets the number of comments per page (default = 10)'),
+			'description' => tra('Sets the number of comments per page.'),
 			'type' => 'text',
 			'size' => '5',
 			'filter' => 'digits',
@@ -33,7 +33,7 @@ function prefs_article_list()
 		),
 		'article_comments_default_ordering' => array(
 			'name' => tra('Default Ordering'),
-			'description' => tra('Sets the default ordering filter for comments (default = points_desc)'),
+			'description' => tra('Sets the default ordering filter for comments.'),
 			'type' => 'list',
 			'options' => $comment_sort_orders,
 			'default' => 'points_desc',
@@ -107,7 +107,7 @@ function prefs_article_list()
 		),
 		'article_image_file_size_max' => array(
 			'name' => tra('Image article maximum file size'),
-			'description' => tra('Maximum size for an Image Article in kilobyte (default = 500000). Article images are stored in the database so it should remain low'),
+			'description' => tra('Maximum size for an Image Article. Article images are stored in the database so it should remain low.'),
 			'type' => 'text',
 			'size' => '10',
 			'filter' => 'digits',

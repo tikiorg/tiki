@@ -27,7 +27,7 @@ function wikiplugin_prefdoc_info()
 			'img' => array(
 				'required' => false,
 				'name' => tra('Images'),
-				'description' => tra('Show images at the top of each version of tiki. Format: TikiVersion:FileGalleryID'),
+				'description' => tra('Show images at the top of each version of Tiki. Format: TikiVersion:FileGalleryID'),
 				'since' => '17',
 				'filter' => 'text',
 			),

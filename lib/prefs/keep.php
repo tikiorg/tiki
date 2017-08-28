@@ -10,7 +10,7 @@ function prefs_keep_list()
 	return array(
 		'keep_versions' => array(
 			'name' => tra('Keep versions for'),
-			'description' => tra('Never delete versions younger than (? days), default=1'),
+			'description' => tra('Never delete versions younger than (? days).'),
 			'type' => 'text',
 			'size' => '5',
 			'units' => tra('days'),

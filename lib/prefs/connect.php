@@ -77,7 +77,7 @@ function prefs_connect_list()
 		),
 		'connect_frequency' => array(
 			'name' => tra('Connection frequency'),
-			'description' => tra('How often to send information (in hours)').' '.tra('Default:'). '168 ('.tra('weekly') . ')',
+			'description' => tra('How often to send information'),
 			'units' => tra('hours'),
 			'type' => 'text',
 			'dependencies' => 'connect_feature',
@@ -88,7 +88,7 @@ function prefs_connect_list()
 		),
 		'connect_server' => array(
 			'name' => tra('Tiki connect server URL'),
-			'description' => tra('Where to send the information.').' '.tra('Default:'). 'http://mother.tiki.org',
+			'description' => tra('Where to send the information.'),
 			'type' => 'text',
 			'dependencies' => 'connect_feature',
 			'default' => 'https://mother.tiki.org',

@@ -671,7 +671,7 @@ function prefs_wiki_list($partial = false)
 		),
 		'wiki_toc_offset' => array(
 			'name' => tr('Table of contents offset'),
-			'description' => tr('Offset for table of contents. Useful when there is a fixed navbar (Default is 10). If used with inline TOC, will behave as a top margin.'),
+			'description' => tr('Offset for table of contents. Useful when there is a fixed navigation bar. If used with inline TOC, will behave as a top margin.'),
 			'type' => 'text',
 			'filter' => 'digits',
 			'units' => tra('pixels'),

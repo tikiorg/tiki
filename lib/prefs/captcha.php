@@ -10,27 +10,27 @@ function prefs_captcha_list()
 	return array (
 		'captcha_wordLen' => array(
 			'name' => tra('Word length of the CAPTCHA image'),
-			'description' => tra('Word length of the CAPTCHA image.').' '.tra('Default:'). '6',
+			'description' => tra('Word length of the CAPTCHA image.'),
 			'type' => 'text',
 			'units' => tra('words'),
 			'default' => 6,
 		),
 		'captcha_width' => array(
 			'name' => tra('Width of the CAPTCHA image'),
-			'description' => tra('Width of the CAPTCHA image in pixels.').' '.tra('Default:'). '180',
+			'description' => tra('Width of the CAPTCHA image in pixels.'),
 			'type' => 'text',
 			'units' => tra('pixels'),
 			'default' => 180,
 		),
 		'captcha_noise' => array(
 			'name' => tra('Level of noise of the CAPTCHA image'),
-			'description' => tra('Level of noise of the CAPTCHA image.').' '.tra('Choose a smaller number for less noise and easier reading.').' '.tra('Default:'). '100',
+			'description' => tra('Level of noise of the CAPTCHA image.').' '.tra('Choose a smaller number for less noise and easier reading.'),
 			'type' => 'text',
 			'default' => 100,
 		),
 		'captcha_questions_active' => array(
 			'name' => tra('CAPTCHA questions'),
-			'description' => tra('Requires anonymous visitors to enter the answer to a question .'),
+			'description' => tra('Requires anonymous visitors to enter the answer to a question.'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_antibot',

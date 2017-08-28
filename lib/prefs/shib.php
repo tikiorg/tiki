@@ -10,7 +10,7 @@ function prefs_shib_list()
 	return array(
 		'shib_group' => array(
 			'name' => tra('Default group'),
-			'description' => tr('The name of the default group. If none, Shibboleth will be used.'),
+			'description' => tr('The name of the default group.'),
 			'type' => 'text',
 			'size' => 40,
 			'perspective' => false,

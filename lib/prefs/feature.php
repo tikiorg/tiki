@@ -1175,7 +1175,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_menusfolderstyle' => array(
 			'name' => tra('Use folder icons for menu section (parent) items'),
-			'description' => tra('When a menu isn\'t set as a Bootstrap or CSS menu, use folder icons for menu section items (rather than plus/minus signs); defaults to "y"'),
+			'description' => tra('When a menu isn\'t set as a Bootstrap or CSS menu, use folder icons for menu section items (rather than plus/minus signs).'),
 			'type' => 'flag',
 			'default' => 'y',
 		),
