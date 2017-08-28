@@ -986,7 +986,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_best_language' => array(
 			'name' => tra('Show pages in user\'s preferred language'),
-			'description' => tra('When accessing a page which has an equivalent in the user\'s preferred language, favor the translated page.'),
+			'description' => tra('When accessing a page which has an equivalent in the user\'s preferred language, favor the translated page. Based on the user’s Tiki preferences.'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_userPreferences',

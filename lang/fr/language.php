@@ -3157,6 +3157,7 @@ $lang = array(
 "Look up the user's preferred language through browser preferences" => "Look up the user's preferred language through browser preferences",
 "Show pages in user's preferred language" => "Affiche les pages dans la langue préférée de l'utilisateur",
 "When accessing a page which has an equivalent in the user's preferred language, favor the translated page" => "Lors d'un accès à un page ayant un équivalent dans la langue préférée de l'utilisateur, favoriser la page traduite",
+"When accessing a page which has an equivalent in the user's preferred language, favor the translated page. Based on the user’s Tiki preferences" => "Lors d'un accès à un page ayant un équivalent dans la langue préférée de l'utilisateur, favoriser la page traduite",
 // "Synchronize page and site language" => "Synchronize page and site language",
 "Changing the page language also changes the site language" => "Changer la langue de la page change également la langue du site",
 "Translation assistant" => "Assistant de traduction",
