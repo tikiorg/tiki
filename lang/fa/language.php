@@ -4970,6 +4970,7 @@ $lang = array(
 // "Examples" => "Examples",
 // "Logo title (on mouseover)" => "Logo title (on mouseover)",
 "HTML \"alt\" tag description (for text browsers, screen readers, etc.)" => " شرح جايگزين (مثلا براي مرورگرهاي مبتني بر متن)",
+"HTML \"alt\" tag description" => " شرح جايگزين (مثلا براي مرورگرهاي مبتني بر متن)",
 // "Site icon" => "Site icon",
 // "Recommended image height: 32 pixel" => "Recommended image height: 32 pixel",
 // "Include Smarty notices in the PHP error report" => "Include Smarty notices in the PHP error report",

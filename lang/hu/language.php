@@ -4973,6 +4973,7 @@ $lang = array(
 "Examples:" => "Példák:",
 "Logo title (on mouseover)" => "Logó neve (egér rámozgatására jelenik meg)",
 "HTML \"alt\" tag description (for text browsers, screen readers, etc.)" => "Képleírás (pld szöveges böngészés számára)",
+"HTML \"alt\" tag description" => "Képleírás (pld szöveges böngészés számára)",
 // "Site icon" => "Site icon",
 // "Recommended image height: 32 pixel" => "Recommended image height: 32 pixel",
 // "Include Smarty notices in the PHP error report" => "Include Smarty notices in the PHP error report",

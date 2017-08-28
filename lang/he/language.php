@@ -3319,6 +3319,7 @@ $lang = array(
 // "The &lt;base&gt; tag specifies a default address for all links on a page" => "The &lt;base&gt; tag specifies a default address for all links on a page",
 "Site logo and title" => "לוגו וכותרת האתר",
 "Display a site logo image and/or title" => "מציג את הלוגו של האתר ו/או הכותרת",
+"Display a site logo image and/or title in the page header area" => "מציג את הלוגו של האתר ו/או הכותרת",
 // "This setting is expected to be moved from here to the admin-modules page " => "This setting is expected to be moved from here to the admin-modules page ",
 "Left column" => "טור שמאלי (ימני בתצוגה מימין לשמאל)",
 // "Controls visibility of the left column of modules" => "Controls visibility of the left column of modules",

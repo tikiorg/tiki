@@ -24,7 +24,7 @@ function prefs_header_list()
 		),
 		'header_custom_css' => array(
 			'name' => tra('Custom CSS'),
-			'description' => tra('Includes a custom block of CSS in the <html> <head> section of all pages.'),
+			'description' => tra('Additional CSS rules can be entered here and will apply to all pages, or the page’s CSS id can be used to limit the scope of the rule (check the page’s HTML source to find the body tag of the particular page.)'),
 			'type' => 'textarea',
 			'size' => 5,
 			'default' => '',
@@ -32,7 +32,7 @@ function prefs_header_list()
 		),
 		'header_custom_js' => array(
 			'name' => tra('Custom JavaScript'),
-			'description' => tra('Includes a custom block of inline JavaScript in all pages.'),
+			'description' => tra('Includes a block of inline JavaScript after the inclusion of jQuery and other JavaScript libs in all pages.'),
 			'type' => 'textarea',
 			'size' => 5,
 			'hint' => tr('Use [https://doc.tiki.org/PluginJS|PluginJS] to include Javascript on a single wiki page.'),

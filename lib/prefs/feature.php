@@ -582,7 +582,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_shadowbox' => array(
 			'name' => tra('Shadowbox / ColorBox'),
-			'description' => tra('Display images in a modal popup box'),
+			'description' => tra('Display images in a modal popup box. Modals are Also know as shadowbox, lightbox or colorbox.'),
 			'help' => 'Shadowbox',
 			'type' => 'flag',
 			'default' => 'y',
@@ -1700,7 +1700,9 @@ function prefs_feature_list($partial = false)
 			'description' => tra('Edit CSS files directly in the browser.'),
 			'type' => 'flag',
 			'help' => 'Edit+CSS',
+			'warning' => tr('May not be functional in Tiki 14+'),
 			'perspective' => false,
+			'tags' => array('experimental'),
 			'default' => 'n',
 			'view' => 'tiki-edit_css.php',
 		),
@@ -1718,8 +1720,10 @@ function prefs_feature_list($partial = false)
 		'feature_view_tpl' => array(
 			'name' => tra('Tiki template viewing'),
 			'type' => 'flag',
+			'warning' => tr('May not be functional in Tiki 14+'),
 			'help' => 'View+Templates',
 			'keywords' => tra('template'),
+			'tags' => array('experimental'),
 			'perspective' => false,
 			'default' => 'n',
 		),
@@ -1727,6 +1731,7 @@ function prefs_feature_list($partial = false)
 			'name' => tra('Edit templates'),
 			'type' => 'flag',
 			'help' => 'Edit+Templates',
+			'warning' => tr('May not be functional in Tiki 14+'),
 			'keywords' => tra('template'),
 			'perspective' => false,
 			'dependencies' => array(
@@ -1737,8 +1742,8 @@ function prefs_feature_list($partial = false)
 			'tags' => array('experimental'),
 		),
 		'feature_custom_html_head_content' => array(
-			'name' => tra('Custom HTML <head> content'),
-			'description' => tra('Use to include custom &lt;meta&gt; or &lt;link&gt; tags.'),
+			'name' => tra('Custom HTML HEAD content'),
+			'description' => tra('This is for adding additional content such at META or LINK tags, in the HEAD section of HTML files. Smarty filters can be used here.'),
 			'hint' => tra('Example:') . " {if \$page eq 'Slideshow'}{literal}<style type=\"text/css\">.slideshow { height: 232px; width: 232px; }</style>{/literal}{/if}",
 			'type' => 'textarea',
 			'size' => '6',
@@ -1746,16 +1751,16 @@ function prefs_feature_list($partial = false)
 			'default' => '',
 		),
 		'feature_html_head_base_tag' => array(
-			'name' => tra('Add <base> tag in the page <head>'),
-			'description' => tra('The &lt;base&gt; tag specifies a default address for all links on a page.'),
+			'name' => tra('Add BASE tag in the page HEAD'),
+			'description' => tra('The BASE tag specifies a default address for all links on a page.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_sitelogo' => array(
 			'name' => tra('Site logo and title'),
-			'description' => tra('Display a site logo image and/or title'),
+			'description' => tra('Display a site logo image and/or title in the page header area.'),
 			'type' => 'flag',
-			'warning' => tra('This setting is expected to be moved from here to the admin-modules page .'),
+			'warning' => tra('This setting is expected to be moved from here to the admin-modules page.'),
 			'default' => 'y',
 			'tags' => array('basic'),
 		),
@@ -1831,6 +1836,7 @@ function prefs_feature_list($partial = false)
 		'feature_endbody_code' => array(
 			'name' => tra('Custom code just before the closing </body> tag'),
 			'type' => 'textarea',
+			'description' => tr('Anything entered here will be placed near the end of the HTML file.'),
 			'size' => '6',
 			'filter' => 'rawhtml_unsafe',
 			'default' => '',
@@ -1838,11 +1844,13 @@ function prefs_feature_list($partial = false)
 		'feature_site_report' => array(
 			'name' => tra('Webmaster report'),
 			'type' => 'flag',
+			'description' => tr('This activates the feature to report a problematic page to the webmaster.'),
 			'default' => 'n',
 		),
 		'feature_site_report_email' => array(
 			'name' => tra('Webmaster email'),
 			'hint' => tra('Leave blank to use the default sender email'),
+			'description' => tr('A specific email address can be set for receiving the webmaster reports.'),
 			'type' => 'text',
 			'size' => '20',
 			'dependencies' => array(
@@ -1852,8 +1860,9 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_site_send_link' => array(
 			'name' => tra('Email this page'),
-			'description' => tra('Add a link at the bottom if set, otherwise add a link at the top'),
+			'hint' => tra('Adds a link at the bottom if set, otherwise adds a link at the top'),
 			'type' => 'flag',
+			'description' => tr('This enables users to share a page with others, by emailing a short message and link to the page.'),
 			'dependencies' => array(
 				'feature_tell_a_friend',
 			),
