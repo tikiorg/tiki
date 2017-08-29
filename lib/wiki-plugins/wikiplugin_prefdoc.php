@@ -27,7 +27,7 @@ function wikiplugin_prefdoc_info()
 			'img' => array(
 				'required' => false,
 				'name' => tra('Images'),
-				'description' => tra('Show images at the top of each version of Tiki. Format: TikiVersion:FileGalleryID'),
+				'description' => tra('Show images at the top of each version of Tiki. Format: TikiVersion:FileGalleryID. Multiple images my be separated like so: TikiVersion1:FileGalleryID1|TikiVersion2:FileGalleryID2.'),
 				'since' => '17',
 				'filter' => 'text',
 			),
@@ -198,7 +198,7 @@ class PrefsDoc extends TWVersion{
 			if (!$pref->warning)
 				$pref->warning = $this->prevFilePrefs->$prefName->warning;
 			$this->setParams($pref);
-				$this->docTable .= $this->prefName . '~|~' . $this->prefDescription . '~|~' . $this->prefDefault . "\n";
+			$this->docTable .= $this->prefName . '~|~' . $this->prefDescription . '~|~' . $this->prefDefault . "\n";
 		}
 		$this->prevFilePrefs = $FilePrefs->prefs;
 		$this->docTable .= "{FANCYTABLE}";
@@ -214,7 +214,7 @@ class PrefsDoc extends TWVersion{
 	private function setParams($param)
 	{
 		// set default
-		if (!empty($param->options) && !empty($param->default)) {
+		if (!empty($param->options) && isset($param->default) && $param->default !== '') {
 			$this->prefDefault = $param->options->{$param->default};
 		}else if ($param->default === 'n') {
 			$this->prefDefault = 'Disabled';
