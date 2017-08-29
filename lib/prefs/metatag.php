@@ -70,6 +70,7 @@ function prefs_metatag_list()
 			'description' => tra('The latitude and longitude of the physical location of the site. For example "38.898748, -77.037684".'),
 			'type' => 'text',
 			'size' => '50',
+			'help' => 'http://geotags.com/geo/geotags2.html',
 			'default' => '',
 		),
 		'metatag_georegion' => array(
@@ -77,6 +78,7 @@ function prefs_metatag_list()
 			'description' => tra('The ISO-3166 country and region codes for your location. For example, "US-NY".'),
 			'type' => 'text',
 			'size' => '50',
+			'help' => 'http://en.wikipedia.org/wiki/ISO_3166-1',
 			'default' => '',
 		),
 		'metatag_geoplacename' => array(
@@ -90,6 +92,7 @@ function prefs_metatag_list()
 			'name' => tra('Meta robots'),
 			'description' => tra('Specify how Web robots should index your site. Valid values include: INDEX or NOINDEX, and FOLLOW or NOFOLLOW'),
 			'type' => 'text',
+			'help' => 'Robots-Exclusion-Protocol#HTML_META_Directives',
 			'size' => '50',
 			'default' => '',
 		),
@@ -97,9 +100,9 @@ function prefs_metatag_list()
 			'name' => tra('Revisit after'),
 			'description' => tra('Specify how often (in days) Web robots should visit your site.'),
 			'type' => 'text',
+			'unit' => tr('days'),
 			'size' => '50',
 			'default' => '',
-			//'warning' => tra('This feature uses non-standard HTML.'),
 			'tags' => array('experimental'),
 		),
 	);

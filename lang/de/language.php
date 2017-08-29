@@ -3438,6 +3438,7 @@ $lang = array(
 "Report it in wiki links" => "Berichte es in Wiki Links",
 "Import pages" => "Importiere Seiten",
 "A personal page for the user to manage" => "Eine persönliche Seite für den Benutzer selbst",
+"A personal wiki page for each user" => "Eine persönliche Seite für den Benutzer selbst",
 "Userpage prefix" => "Präfix für Benutzerseiten",
 "All userpages share a common prefix. The page name will be a concatenation of the prefix and the username. A prefix is required" => "Alle Benutzerseiten haben ein gemeinsames, allgemein gültiges Präfix. Die Verknüpfung von Präfix und Benutzernamen erstellt den Dateinamen. Der Präfix darf nicht leer sein",
 "Users can lock pages" => "Benutzer können ihre Seiten schliessen",

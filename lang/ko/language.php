@@ -3441,6 +3441,7 @@ $lang = array(
 "Report it in wiki links" => "위키 링크 내에 이를 보고",
 "Import pages" => "페이지 가져오기",
 "A personal page for the user to manage." => "사용자가 관리하는 개인 페이지",
+"A personal wiki page for each user" => "사용자가 관리하는 개인 페이지",
 "Userpage prefix" => "사용자 페이지 접두사",
 "All userpages share a common prefix. The page name will be a concatenation of the prefix and the username. A prefix is required." => "모든 사용자 페이지는 공통의 접두사를 공유합니다. 접두사와 사용자명의 연결로 페이지명이 생성됩니다. 접두사는 비어있을 수 없습니다.",
 "Users can lock pages" => "사용자는 페이지를 잠글 수 있습니다",
