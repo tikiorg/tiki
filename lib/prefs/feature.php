@@ -814,9 +814,9 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_minical' => array(
 			'name' => tra('Mini calendar'),
-			'description' => tra('Mini Calendar'),
 			'help' => 'Calendar',
 			'type' => 'flag',
+			'description' => tr('Displays a personal calendar for each user.'),
 			'default' => 'n',
 		),
 		'feature_userPreferences' => array(
@@ -863,6 +863,7 @@ function prefs_feature_list($partial = false)
 		'feature_daily_report_watches' => array(
 			'name' => tra('Daily reports for user watches'),
 			'help' => 'Daily+Reports',
+			'description' => tr('Allows you to schedule daily reports of watches to be sent (batched) at specific times.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -2253,7 +2254,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_userpage' => array(
 			'name' => tra("User's information page"),
-			'description' => tra('A personal page for the user to manage.'),
+			'description' => tra('A personal wiki page for each user.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),

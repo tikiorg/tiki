@@ -3441,6 +3441,7 @@ $lang = array(
 "Report it in wiki links" => "Informa'n en enllaços wiki",
 "Import pages" => "Importa les pàgines",
 "A personal page for the user to manage" => "Una pàgina personal de l'usuari per fer",
+"A personal wiki page for each user" => "Una pàgina personal de l'usuari per fer",
 "Userpage prefix" => "Prefix per a la PlanaUsuari",
 "All userpages share a common prefix. The page name will be a concatenation of the prefix and the username. A prefix is required" => "Totes les pàgines d'usuari comparteixen un prefix comú. La concatenació del prefix i el nom d'usuari generarà el nom de la pàgina. El prefix no pot estar buit",
 "Users can lock pages" => "Els usuaris poden bloquejar pàgines",

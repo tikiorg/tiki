@@ -131,11 +131,14 @@ function prefs_global_list($partial = false)
 		'modallgroups' => array(
 			'name' => tra('Always display modules to all groups'),
 			'type' => 'flag',
+			'description' => tr('Any setting for the Groups parameter will be ignored and the module will be displayed to all users.'),
 			'default' => 'n',
+			'help' => 'Module+Setttings+Parameters',
 		),
 		'modseparateanon' => array(
 			'name' => tra('Hide anonymous-only modules from registered users'),
 			'type' => 'flag',
+			'description' => tr('If an individual module is assigned to the Anonymous group, the module will be displayed only to anonymous visitors. Registered users will not see the module.'),
 			'default' => 'n',
 		),
 		'modhideanonadmin' => array(
