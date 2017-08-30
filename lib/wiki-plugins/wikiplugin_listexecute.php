@@ -134,7 +134,8 @@ function wikiplugin_listexecute($data, $params)
 				'iListExecute' => $iListExecute
 			)
 		);
-		$formatter = Search_Formatter_Factory::newFormatter($plugin);
+		$builder->setFormatterPlugin($plugin);
+		$formatter = $builder->getFormatter();
 	}
 
 	if (isset($_POST['list_action'], $_POST['objects'])) {
