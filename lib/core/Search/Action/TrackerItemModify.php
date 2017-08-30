@@ -76,7 +76,7 @@ class Search_Action_TrackerItemModify implements Search_Action_Action
 			$query = new Search_Query;
 			$unifiedsearchlib->initQuery($query);
 			foreach ($aggregateFields as $agField => $value) {
-				$query->filterIdentifier($value, $agField);
+				$query->filterIdentifier((string)$value, $agField);
 			}
 			$result = $query->search($index);
 			foreach ($result as $entry) {
