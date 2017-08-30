@@ -76,7 +76,7 @@ function wikiplugin_listexecute($data, $params)
 			// select only the items to apply the action to
 			foreach ($_POST['objects'] as $identifier) {
 				list($type, $id) = explode(':', $identifier);
-				if ($type && $id) {
+				if ($type && $type != 'aggregate' && $id) {
 					$query->addObject($type, $id);
 				}
 			}
@@ -106,6 +106,10 @@ function wikiplugin_listexecute($data, $params)
 
 	$result = $query->search($index);
 	$result->setId('wplistexecute-' . $iListExecute);
+
+	$resultBuilder = new Search_ResultSet_WikiBuilder($result);
+	$resultBuilder->setPaginationArguments($paginationArguments);
+	$resultBuilder->apply($matches);
 
 	$dataSource = $unifiedsearchlib->getDataSource();
 	$builder = new Search_Formatter_Builder;
@@ -181,6 +185,9 @@ function wikiplugin_listexecute($data, $params)
 			// or queried only specific objects
 			$result = $searchQuery->search($index);
 			$result->setId('wplistexecute-' . $iListExecute);
+			$resultBuilder = new Search_ResultSet_WikiBuilder($result);
+			$resultBuilder->setPaginationArguments($paginationArguments);
+			$resultBuilder->apply($matches);
 			$builder->setCount($result->count());
 			// remove any tablesorter header js that will be added twice otherwise
 			foreach (TikiLib::lib('header')->jq_onready as &$scripts) {

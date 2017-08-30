@@ -201,6 +201,33 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 		$this->exchangeArray($out);
 	}
 
+	function aggregate(array $fields = array(), array $totals = array())
+	{
+		$out = array();
+		foreach ($this as $entry) {
+			$values = array_map(function($field) use ($entry) {
+				return isset($entry[$field]) ? $entry[$field] : '';
+			}, $fields);
+			$key = implode('', $values);
+			if (! isset($out[$key])) {
+				$out[$key] = array_combine($fields, $values);
+				$out[$key]['aggregate_fields'] = $out[$key];
+				$out[$key]['object_type'] = 'aggregate';
+				$out[$key]['object_id'] = $key;
+				foreach ($totals as $field) {
+					$out[$key][$field] = 0;
+				}
+			}
+			foreach ($totals as $field) {
+				if (isset($entry[$field])) {
+					$out[$key][$field] += $entry[$field];
+				}
+			}
+		}
+
+		$this->exchangeArray($out);
+	}
+
 	function applyTransform(callable $transform)
 	{
 		foreach ($this as & $entry) {

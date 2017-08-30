@@ -33,6 +33,13 @@ class Search_ResultSet_WikiBuilder
 				$collect = isset($arguments['collect']) ? explode(',', $arguments['collect']) : array('user');
 				$this->result->groupBy($field, $collect);
 			}
+			if ($name == 'aggregate') {
+				$arguments = $argumentParser->parse($match->getArguments());
+
+				$fields = isset($arguments['fields']) ? explode(',', $arguments['fields']) : array();
+				$totals = isset($arguments['totals']) ? explode(',', $arguments['totals']) : array();
+				$this->result->aggregate($fields, $totals);
+			}
 		}
 
 		if ($this->paginationArguments) {
