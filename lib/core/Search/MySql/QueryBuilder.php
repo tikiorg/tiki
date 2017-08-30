@@ -85,9 +85,16 @@ class Search_MySql_QueryBuilder
 		} elseif ($node instanceof NotX) {
 			return 'NOT (' . reset($childNodes) . ')';
 		} elseif ($node instanceof Token) {
-			$value = $this->getQuoted($node);
-			$this->requireIndex($node->getField(), 'index', $node->getWeight());
-			return "`{$node->getField()}` = $value";
+			$raw = $this->getRaw($node);
+			if (is_numeric($raw) && intval($raw) != $raw) {
+				$from = $this->db->qstr($raw - 0.00001);
+				$to = $this->db->qstr($raw + 0.00001);
+				return "`{$node->getField()}` BETWEEN $from AND $to";
+			} else {
+				$value = $this->getQuoted($node);
+				$this->requireIndex($node->getField(), 'index', $node->getWeight());
+				return "`{$node->getField()}` = $value";
+			}
 		} elseif ($node instanceof Initial) {
 			$value = $this->getQuoted($node, '%');
 			$this->requireIndex($node->getField(), 'index', $node->getWeight());
@@ -141,7 +148,11 @@ class Search_MySql_QueryBuilder
 
 	private function getQuoted($node, $suffix = '')
 	{
-		$string = $node->getValue($this->factory)->getValue();
+		$string = $this->getRaw($node);
 		return $this->db->qstr($string . $suffix);
+	}
+
+	private function getRaw($node) {
+		return $node->getValue($this->factory)->getValue();
 	}
 }
