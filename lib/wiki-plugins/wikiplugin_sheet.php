@@ -255,6 +255,7 @@ EOF;
 				editable:false'
 			. $calcOff .
 			'}));
+			$(\'.icon-pdf\').parent().click(function(){storeSortTable("#tiki_sheet'.$index.'",$("#tiki_sheet'.$index.'").html())});
 			});'
 		);
 
@@ -267,7 +268,7 @@ EOF;
 
 		//If you've given the sheet a url, you can't edit it, disable if not possible
 		if (!isset($url)) {
-			$button_params = array('_text' => tra("Edit Sheet"), '_script' => "tiki-view_sheets.php?sheetId=$id&parse=edit$urlHeight&page=$page");
+			$button_params = array('_text' => tra("Edit Sheet"), '_script' => "tiki-view_sheets.php?sheetId=$id&parse=edit$urlHeight&page=$page", '_class' => "tiki_sheeteditbtn");
 		}
 
 		$ret .= smarty_function_button($button_params, $smarty);

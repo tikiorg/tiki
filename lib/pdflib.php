@@ -328,6 +328,7 @@ class PdfGenerator
 		$themeLib = TikiLib::lib('theme');
         $themecss=$themeLib->get_theme_path($prefs['theme'], '', $prefs['theme'] . '.css');
 		$themecss = file_get_contents($themecss); // external css
+		$extcss = file_get_contents('vendor/jquery/jquery-sheet/jquery.sheet.css');
 
 		//checking if print friendly option is enabled, then attach print css otherwise theme styles will be retained by theme css
 		if($pdfSettings['print_pdf_mpdf_printfriendly']=='y') {
@@ -354,7 +355,7 @@ class PdfGenerator
 			$ind++;
 		}
 		
-		$cssStyles=str_replace(array(".tiki","opacity: 0;"),array("","fill: #fff;opacity:0.3;stroke:black"),'<style>'.$basecss.$themecss.$printcss.$pageCSS.$this->bootstrapReplace().'</style>'); //adding css styles with first page content
+		$cssStyles=str_replace(array(".tiki","opacity: 0;"),array("","fill: #fff;opacity:0.3;stroke:black"),'<style>'.$basecss.$themecss.$printcss.$pageCSS.$extcss.$this->bootstrapReplace().'</style>'); //adding css styles with first page content
 		//cover page checking
 		if($pdfSettings['coverpage_text_settings']!='' || ($pdfSettings['coverpage_image_settings']!='' && $pdfSettings['coverpage_image_settings']!='off')) {
 			$coverPage=explode("|",$pdfSettings['coverpage_text_settings']);
@@ -630,8 +631,8 @@ class PdfGenerator
 		$xpath = new DOMXpath($doc);
 		
 		//defining array of plugins to be sorted
-		$pluginArr=array(array("class","customsearch_results","div"),array("id","container_pivottable","div"),array("class","dynavar","a"));
-		$tagsArr=array(array("input","tablesorter-filter","class"),array("select","tablesorter-filter","class"),array("select","pvtRenderer","class"),array("select","pvtAggregator","class"),array("td","pvtCols","class"),array("td","pvtUnused","class"),array("td","pvtRows","class"),array("div","plot-container","class"),array("a","heading-link","class"),array("a","tablename","class","1"));
+		$pluginArr=array(array("class","customsearch_results","div"),array("id","container_pivottable","div"),array("class","dynavar","a"), array("class", "tiki_sheet", "div"));
+		$tagsArr=array(array("input","tablesorter-filter","class"),array("select","tablesorter-filter","class"),array("select","pvtRenderer","class"),array("select","pvtAggregator","class"),array("td","pvtCols","class"),array("td","pvtUnused","class"),array("td","pvtRows","class"),array("div","plot-container","class"),array("a","heading-link","class"),array("a","tablename","class","1"), array("div", "jSScroll", "class"), array("span", "jSTabContainer", "class"), array("a", "tiki_sheeteditbtn", "class"));
 
 		foreach($pluginArr as $pluginInfo)
 		{
@@ -709,7 +710,7 @@ class PdfGenerator
      }
 
 	 function bootstrapReplace(){
-	    return ".col-xs-12 {width: 100%;}.col-xs-11 {width: 81.66666667%;}.col-xs-10 {width: 72%;}.col-xs-9 {width: 64%;}.col-xs-8 {width: 62%;}.col-xs-7 {width: 49%;}.col-xs-6 {width: 45.7%;}.col-xs-5 {width: 35%;}.col-xs-4 {width: 28%;}.col-xs-3{width: 20%;}.col-xs-2 {width: 12.2%;}.col-xs-1 {width: 3.92%;}    .table-striped {border:1px solid #ccc;} .table-striped td { padding: 8px; line-height: 1.42857143;vertical-align: center;border-top: 1px solid #ccc;} .table-striped th { padding: 10px; line-height: 1.42857143;vertical-align: center;   } .table-striped .odd {padding:10px;} .table-striped .even {padding:10px;}.trackerfilter form{display:none;} table.pvtTable tr td {border:1px solid}.wp-sign{position:relative;display:block;background-color:#fff;color:#666;font-size:10px} .wp-sign a,.wp-sign a:visited{color:#999} .icon-link-external{margin-left:10px;font-size:10px}";
+	    return ".col-xs-12 {width: 100%;}.col-xs-11 {width: 81.66666667%;}.col-xs-10 {width: 72%;}.col-xs-9 {width: 64%;}.col-xs-8 {width: 62%;}.col-xs-7 {width: 49%;}.col-xs-6 {width: 45.7%;}.col-xs-5 {width: 35%;}.col-xs-4 {width: 28%;}.col-xs-3{width: 20%;}.col-xs-2 {width: 12.2%;}.col-xs-1 {width: 3.92%;}    .table-striped {border:1px solid #ccc;} .table-striped td { padding: 8px; line-height: 1.42857143;vertical-align: center;border-top: 1px solid #ccc;} .table-striped th { padding: 10px; line-height: 1.42857143;vertical-align: center;   } .table-striped .odd {padding:10px;} .table-striped .even {padding:10px;}.trackerfilter form{display:none;} table.pvtTable tr td {border:1px solid}.wp-sign{position:relative;display:block;background-color:#fff;color:#666;font-size:10px} .wp-sign a,.wp-sign a:visited{color:#999} .icon-link-external{margin-left:10px;font-size:10px} .ui-widget-content{width:100%} .ui-widget-content td{border:solid 1px #ccc;padding:5px} .jSBarLeft{width:30px}";
 	}
 	
 	function sortContent(&$table,&$tempValue,&$sortedContent,$tag)
@@ -728,8 +729,9 @@ class PdfGenerator
                             $tableTag.=" ".$attr->nodeName."=\"".$attr->nodeValue."\"";
 	                   }
                   }
-			   $tableTag.=">";
-               $content=$tableTag.$content.'</'.$tag.'>';
+				$tableTag.=">";
+				$content = str_ireplace('<st<x>yle>', '<style>', $content);
+				$content=$tableTag.$content.'</'.$tag.'>';
 			   //end of cleaning content
 			   $sortedContent[]=str_replace('<sc<x>ript type="text/javascript">
 <!--//--><![CDATA[//><!--
