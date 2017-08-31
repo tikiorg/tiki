@@ -108,7 +108,6 @@ function wikiplugin_listexecute($data, $params)
 	$result->setId('wplistexecute-' . $iListExecute);
 
 	$resultBuilder = new Search_ResultSet_WikiBuilder($result);
-	$resultBuilder->setPaginationArguments($paginationArguments);
 	$resultBuilder->apply($matches);
 
 	$dataSource = $unifiedsearchlib->getDataSource();
@@ -187,7 +186,6 @@ function wikiplugin_listexecute($data, $params)
 			$result = $searchQuery->search($index);
 			$result->setId('wplistexecute-' . $iListExecute);
 			$resultBuilder = new Search_ResultSet_WikiBuilder($result);
-			$resultBuilder->setPaginationArguments($paginationArguments);
 			$resultBuilder->apply($matches);
 			$builder->setCount($result->count());
 			// remove any tablesorter header js that will be added twice otherwise
