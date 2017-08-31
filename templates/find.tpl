@@ -272,15 +272,17 @@
 			{/if}
 		</div><!-- End of find-parameters -->
 		{/if}
+		{if isset($gmapbuttons) && $gmapbuttons}
 		<div class="find-map form-group">
-			{if (isset($gmapbuttons) && $gmapbuttons) and (isset($mapview) && $mapview)}
+			{if isset($mapview) && $mapview}
 				<input class="btn btn-default btn-sm" type="submit" name="searchlist" value="{tr}Hide Map{/tr}">
 				<input type="hidden" name="mapview" value="y">
-			{elseif (isset($gmapbuttons) && $gmapbuttons)}
+			{else}
 				<input type="submit" class="btn btn-default btn-sm" name="searchmap" value="{tr}Show Map{/tr}">
 				<input type="hidden" name="mapview" value="n">
 			{/if}
 		</div>
+		{/if}
 		{jq notonready=true}
 			$( ".find-parameters-btn" ).click(function() {
 				$( ".find-parameters" ).toggleClass( "hidden" );
