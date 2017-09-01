@@ -226,7 +226,7 @@
 		<div class="row">
 		{if $prefs.fgal_search eq 'y' and $view neq 'page'}
 			<div class="col-sm-6">
-				{include file='find.tpl' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations find_show_sub='y' find_other="{tr}Gallery of this fileId{/tr}" find_in="<ul><li>{tr}Name{/tr}</li><li>{tr}Filename{/tr}</li><li>{tr}Description{/tr}</li></ul>"}
+				{include file='find.tpl' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations find_show_sub='y' find_other="{tr}Gallery of the file with the identifier{/tr}" find_in="<ul><li>{tr}Name{/tr}</li><li>{tr}Filename{/tr}</li><li>{tr}Description{/tr}</li></ul>"}
 			</div>
 		{/if}
 		{if $prefs.fgal_search_in_content eq 'y' and $galleryId > 0}
