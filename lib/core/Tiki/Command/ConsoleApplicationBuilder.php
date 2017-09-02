@@ -79,6 +79,7 @@ class ConsoleApplicationBuilder
 					new FakerTrackerCommand,
 					new GoalCheckCommand,
 					new FilesBatchuploadCommand,
+					new FilesCopyCommand,
 					new FilesDeleteoldCommand,
 					new IndexRebuildCommand,
 					new IndexOptimizeCommand,

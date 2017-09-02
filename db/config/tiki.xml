@@ -102,6 +102,9 @@
 		<service id="tiki.lib.filegalbatch" class="FileGalBatchLib">
 			<file>%kernel.root_dir%/lib/filegals/filegalbatchlib.php</file>
 		</service>
+		<service id="tiki.lib.filegalcopy" class="FileGalCopyLib">
+			<file>%kernel.root_dir%/lib/filegals/filegalcopylib.php</file>
+		</service>
 		<service id="tiki.lib.freetag" class="FreetagLib">
 			<file>%kernel.root_dir%/lib/freetag/freetaglib.php</file>
 		</service>
