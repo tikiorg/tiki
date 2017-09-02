@@ -15,7 +15,7 @@ class Tiki_Autoload
 	/**
 	 * Entry point to the autoload
 	 *
-	 * @param $class the class to be autoloaded
+	 * @param string $class the name of the class to be autoloaded
 	 */
 	static public function autoload($class)
 	{
@@ -29,7 +29,7 @@ class Tiki_Autoload
 	/**
 	 * Handle mPDF autoload process based on tiki preferences
 	 *
-	 * @param $class
+	 * @param string $class the name of the class to be autoloaded
 	 */
 	static protected function loadMpdf($class)
 	{
