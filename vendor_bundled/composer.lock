@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0f51ee786ff0bc1678ae5e575a072ce3",
+    "content-hash": "02a6ca66b46707cdecb9745dd038e011",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -660,6 +660,50 @@
             "description": "DOMPDF is a CSS 2.1 compliant HTML to PDF converter",
             "homepage": "https://github.com/dompdf/dompdf",
             "time": "2015-12-07T04:07:13+00:00"
+        },
+        {
+            "name": "evert/sitemap-php",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/evert/sitemap-php.git",
+                "reference": "be07a062943401067bf0ba62710ca733c838bc24"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/evert/sitemap-php/zipball/be07a062943401067bf0ba62710ca733c838bc24",
+                "reference": "be07a062943401067bf0ba62710ca733c838bc24",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "SitemapPHP": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Osman Üngür",
+                    "email": "osmanungur@gmail.com"
+                },
+                {
+                    "name": "Evert Pot",
+                    "email": "evert@rooftopsolutions.nl"
+                }
+            ],
+            "description": "Lightweight library for generating Google sitemap XML files",
+            "homepage": "http://code.google.com/p/sabredav/",
+            "keywords": [
+                "Sitemap"
+            ],
+            "time": "2015-04-17T21:45:50+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",

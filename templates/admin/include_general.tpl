@@ -249,6 +249,12 @@
 				<legend>{tr}User{/tr}</legend>
 				{preference name='urlOnUsername'}
 			</fieldset>
+
+			<fieldset>
+				<legend>{tr}Sitemap protocol{/tr}</legend>
+				{preference name=sitemap_enable}
+			</fieldset>
+
 			<fieldset>
 				<legend>{tr}Site access{/tr}</legend>
 				{preference name=site_closed}

@@ -99,6 +99,7 @@ class ConsoleApplicationBuilder
 					new RssClearCacheCommand,
 					new SchedulerRunCommand,
 					new TrackerImportCommand,
+					new SitemapGenerateCommand,
 					new TrackerClearCommand,
 					new AdminIndexRebuildCommand,
 					new UsersListCommand,

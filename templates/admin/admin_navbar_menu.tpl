@@ -193,6 +193,9 @@
 			{if $prefs.feature_scheduler eq "y" and $tiki_p_admin}
 				<li><a href="tiki-admin_schedulers.php">{tr}Scheduler{/tr}</a></li>
 			{/if}
+			{if $prefs.sitemap_enable eq "y" and $tiki_p_admin}
+				<li><a href="tiki-admin_sitemap.php">{tr}Sitemap{/tr}</a></li>
+			{/if}
 			<li class="divider"></li>
 			<li><a href="tiki-wizard_admin.php">{tr}Wizards{/tr}</a></li>
 		</ul>
