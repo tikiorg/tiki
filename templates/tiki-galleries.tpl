@@ -7,6 +7,9 @@
 			{if $galleryId ne 0}
 				{button href="tiki-browse_gallery.php?galleryId=$galleryId" class="btn btn-default" _icon_name="view" _text="{tr}Browse Gallery{/tr}"}
 			{/if}
+			{if $display_migrate_filegal}
+				{button href="tiki-galleries.php?migrate_images_to_fgal=1" class="btn btn-default" _icon_name="file" _text="{tr}Migrate Images to File Gallery{/tr}"}
+			{/if}
 		</div>
 	{/if}
 

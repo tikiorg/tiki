@@ -169,6 +169,145 @@ class FileGalLib extends TikiLib
 	}
 
 	/**
+	 * Functionality to migrate files from image galleries to file galleries
+	 *
+	 * @return true
+	 */
+
+	function migrateFilesFromImageGalleries(){
+
+		global $prefs;
+
+		$attributelib = TikiLib::lib('attribute');
+
+		$tikiGalleries = TikiDb::get()->table('tiki_galleries');
+		$tikiGalleriesScales = TikiDb::get()->table('tiki_galleries_scales');
+		$tikiImages = TikiDb::get()->table('tiki_images');
+		$tikiImagesData = TikiDb::get()->table('tiki_images_data');
+
+		$galleryIdMap = [];
+
+		if ($tikiImages->fetchCount([])) {
+
+			$rootFileGalleryId = $this->replace_file_gallery([
+				'name' => tra('Migrated Image Galleries'),
+				'description' => tra('Converted image galleries from version created by Tiki 17'),
+			]);
+
+			foreach ($tikiGalleries->fetchAll() as $gallery) {
+				$gallery['sort_mode'] = $gallery['sortorder'] . '_' . $gallery['sortdirection'];
+				$oldGalleryId = $gallery['galleryId'];
+				$gallery['galleryId'] = 0;		// we want a new one
+
+				if ($gallery['parentgallery'] < 0 || empty($galleryIdMap[$gallery['parentgallery']])) {
+					$gallery['parentId'] = $rootFileGalleryId;
+				} else {
+					$gallery['parentId'] = $galleryIdMap[$gallery['parentgallery']];
+				}
+
+				$gallery['show_name'] = $gallery['showname'];
+				$gallery['show_id'] = $gallery['showimageid'];
+				$gallery['show_description'] = $gallery['showdescription'];
+				$gallery['show_author'] = $gallery['showuser'];    // TODO something about creator?
+				$gallery['show_hits'] = $gallery['showhits'];
+
+				if ($gallery['show_name'] === 'y' && $gallery['show_filename'] === 'y') {
+					$gallery['show_name'] = 'a';
+				} else if ($gallery['show_filename'] === 'y') {
+					$gallery['show_name'] = 'f';
+				} else {
+					$gallery['show_name'] = 'n';
+				}
+
+				unset(
+					$gallery['geographic'],
+					$gallery['theme'],
+					$gallery['rowImages'],
+					$gallery['thumbSizeX'],
+					$gallery['thumbSizeY'],
+					$gallery['sortorder'],
+					$gallery['sortdirection'],
+					$gallery['galleryimage'],    // TODO something?
+					$gallery['parentgallery'],
+					$gallery['showname'],
+					$gallery['showimageid'],
+					$gallery['showdescription'],
+					$gallery['showcreated'],
+					$gallery['showuser'],
+					$gallery['showhits'],
+					$gallery['showxysize'],
+					$gallery['showfilesize'],
+					$gallery['showname'],
+					$gallery['showfilename'],
+					$gallery['defaultscale'],    // TODO something?
+					$gallery['showcategories']
+				);
+
+				$fileGalleryId = $this->replace_file_gallery($gallery);
+				$gallery['galleryId'] = $fileGalleryId;
+				$galleryIdMap[$oldGalleryId] = $fileGalleryId;
+
+				$images = $tikiImages->fetchAll([], ['galleryId' => $oldGalleryId]);
+				foreach ($images as $image) {
+
+					$imageData = $tikiImagesData->fetchAll([], [
+						'type' => 'o',                            // not thumbnails
+						'imageId' => $image['imageId'],
+					]);
+					$image = array_merge($imageData[0], $image);
+
+					if (strlen($image['data']) < 3 && !empty($image['path'])){ // read from disk
+						if (file_exists($prefs['gal_use_dir'] . $image["path"])){
+							$image['data'] = file_get_contents($prefs['gal_use_dir'] . $image["path"]);
+						}
+						$image['path'] = '';
+					}
+
+					$image['galleryId'] = $fileGalleryId;
+
+					if ($this->convert_from_data($gallery, $fhash, $image['data'])) {
+						$image['data'] = null;
+						$image['path'] = $fhash;
+					}
+					$fileId = $this->insert_file(
+						$image['galleryId'],
+						$image['name'],
+						$image['description'],
+						$image['filename'],
+						$image['data'],
+						$image['filesize'],
+						$image['filetype'],
+						$image['creator'],
+						$image['path'],
+						$image['comment'],
+						$image['author'],
+						$image['created'],
+						$image['lockedby'],
+						$image['deleteAfter'],
+						$image['id'],
+						$image['metadata'],
+						$image['xsize'],
+						$image['ysize']
+					);
+
+					TikiLib::lib('geo')->set_coordinates(
+						'file',
+						$fileId,
+						[
+							'lon' => $image['lon'],
+							'lat' => $image['lat'],
+						]);
+
+					// add the old imageId as an attribute for future use in the img plugin
+					$attributelib->set_attribute('file', $fileId, 'tiki.file.imageid', $image['imageId']);
+
+				}
+			}
+		}
+		return true;
+	}
+
+	/**
 	 * Calculate gallery name for user galleries
 	 *
 	 * @param array $gal_info	gallery info array

@@ -15,6 +15,14 @@ if (!isset($_REQUEST["nocache"]))
 include_once ("tiki-setup.php");
 $imagegallib = TikiLib::lib('imagegal');
 
+if($prefs['feature_file_galleries'] == 'y' && $prefs['file_galleries_redirect_from_image_gallery'] == 'y') {
+	$fileGalleryInfo = $tikilib->table('tiki_object_attributes')->fetchRow([], array('value' => $_REQUEST["id"],'attribute'=>'tiki.file.imageid'));
+	if ($fileGalleryInfo) {
+		include_once($tikipath . 'tiki-sefurl.php');
+		TikiLib::lib('access')->redirect(filter_out_sefurl('tiki-download_file.php?fileId=' . $file_gallery['itemId']));
+	}
+}
+
 // show_image.php
 // application to display an image from the database with 
 // option to resize the image dynamically creating a thumbnail on the fly.

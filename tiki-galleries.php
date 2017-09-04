@@ -10,7 +10,7 @@ require_once ('tiki-setup.php');
 
 $imagegallib = TikiLib::lib('imagegal');
 $categlib = TikiLib::lib('categ');
-include_once ('lib/map/usermap.php');
+
 $access->check_feature('feature_galleries');
 
 if (isset($_REQUEST['find'])) {
@@ -34,6 +34,14 @@ $access->check_permission('tiki_p_list_image_galleries');
 $smarty->assign('individual', 'n');
 
 $tikilib->get_perm_object($_REQUEST['galleryId'], 'image gallery');
+
+if (isset($_REQUEST['migrate_images_to_fgal'])) {
+	$access->check_feature('feature_file_galleries');
+	$access->check_permission('tiki_p_admin');
+	TikiLib::lib('filegal')->migrateFilesFromImageGalleries();
+	Feedback::success('All files copied', 'session');
+	$access->redirect('tiki-galleries.php');
+}
 
 $foo = parse_url($_SERVER['REQUEST_URI']);
 $foo['path'] = str_replace('tiki-galleries', 'tiki-browse_gallery', $foo['path']);
@@ -476,6 +484,9 @@ $defaultRows = 5;
 
 include_once ('tiki-section_options.php');
 ask_ticket('galleries');
+
+$perms = Perms::get();
+$smarty->assign('display_migrate_filegal', ($perms->admin == 'y' && $prefs['feature_file_galleries'] == 'y') ? true : false);
 
 // Display the template
 $smarty->assign('mid', 'tiki-galleries.tpl');

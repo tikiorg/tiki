@@ -37,5 +37,11 @@ function prefs_file_list()
 				'feature_jquery_ui',
 			),
 		),
+		'file_galleries_redirect_from_image_gallery' => [
+			'name' => tra('Redirect to file gallery'),
+			'description' => tra('If enabled, redirect all requests to images that were migrated from the image gallery to the corresponding file in the file gallery'),
+			'type' => 'flag',
+			'default' => 'n',
+		],
 	);
 }
