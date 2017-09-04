@@ -2232,7 +2232,9 @@ if ($standalone && !$nagios) {
 			'make' => 'make',
 			'php-cli' => 'php',
 			'rsync' => 'rsync',
+			'nice' => 'nice',
 			'tar' => 'tar',
+			'bzip2' => 'bzip2',
 			'ssh' => 'ssh',
 			'ssh-copy-id' => 'ssh-copy-id',
 			'scp' => 'scp',
@@ -2245,8 +2247,6 @@ if ($standalone && !$nagios) {
 
 		$serverPHPExtensions = [
 			'php5-sqlite' => 'sqlite3',
-			'gz' => 'zlib',
-			'bz2' => 'bz2',
 		];
 
 		foreach ($serverPHPExtensions as $key => $extension) {
@@ -2261,8 +2261,9 @@ if ($standalone && !$nagios) {
 
 		$clientCommands = [
 			'php-cli' => 'php',
-			'tar' => 'tar',
+			'mysql' => 'mysql',
 			'mysqldump' => 'mysqldump',
+			'gzip' => 'gzip',
 		];
 
 		foreach ($clientCommands as $key => $command) {
