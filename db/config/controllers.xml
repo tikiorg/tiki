@@ -43,6 +43,7 @@
 		<service id="tiki.controller.object" class="Services_Object_Controller"/>
 		<service id="tiki.controller.payment" class="Services_Payment_Controller"/>
 		<service id="tiki.controller.pivot" class="Services_Pivot_Controller"/>
+		<service id="tiki.controller.pdf" class="Services_PDF_Controller"/>
 		<service id="tiki.controller.plugin" class="Services_Edit_PluginController"/>
 		<service id="tiki.controller.rating" class="Services_Rating_Controller"/>
 		<service id="tiki.controller.relation" class="Services_Relation_Controller"/>
