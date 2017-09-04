@@ -12,9 +12,7 @@
 				{button href="tiki-admingroups.php?add=1&amp;cookietab=2" class="btn btn-default" _icon_name="create" _text="{tr}Add New Group{/tr}"}
 			{/if}
 		{/if}
-		<button class="btn btn-link">
-			{permission_link mode=text _type="link"}
-		</button>
+		{button href="tiki-objectpermissions.php" class="btn btn-link" _type="link" _icon_name="permission" _text="{tr}Permissions{/tr}"}
 		{if $prefs.feature_invite eq 'y' and $tiki_p_invite eq 'y'}
 			{button href="tiki-list_invite.php" class="btn btn-default" _type="link" _icon_name="thumbs-up" _text="{tr}Invitation List{/tr}"}
 		{/if}
