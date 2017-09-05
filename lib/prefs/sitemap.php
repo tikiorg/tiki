@@ -9,9 +9,11 @@ function prefs_sitemap_list()
 {
 	return array(
 		'sitemap_enable' => array(
-			'name' => tra('Support for generate the xml for sitemap protocol'),
+			'name' => tra('Support for generate the XML for Sitemap protocol'),
+			'description' => tra('Allows the generation of the XML compliant with Sitemap protocol. See: https://www.sitemaps.org/protocol.html'),
 			'type' => 'flag',
 			'default' => 'n',
+			'size' => '18',
 			'tags' => array('advanced'),
 		),
 	);
