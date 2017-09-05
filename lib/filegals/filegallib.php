@@ -170,10 +170,7 @@ class FileGalLib extends TikiLib
 
 	/**
 	 * Functionality to migrate files from image galleries to file galleries
-	 *
-	 * @return true
 	 */
-
 	function migrateFilesFromImageGalleries(){
 
 		global $prefs;
@@ -191,7 +188,7 @@ class FileGalLib extends TikiLib
 
 			$rootFileGalleryId = $this->replace_file_gallery([
 				'name' => tra('Migrated Image Galleries'),
-				'description' => tra('Converted image galleries from version created by Tiki 17'),
+				'description' => tra('Converted from image gallery'),
 			]);
 
 			foreach ($tikiGalleries->fetchAll() as $gallery) {
@@ -304,7 +301,6 @@ class FileGalLib extends TikiLib
 				}
 			}
 		}
-		return true;
 	}
 
 	/**
