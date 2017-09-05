@@ -40,6 +40,11 @@ class Search_Formatter_ValueFormatter_Datetime extends Search_Formatter_ValueFor
 			$value = date_create_from_format('YmdHise', $value . 'UTC')->getTimestamp();
 		}
 
+		if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $value)) {
+			// YYYY-MM-DD formatted date without time portion => assume UTC to parse it without date shifts below
+			$value = date_create_from_format('Y-m-de', $value . 'UTC')->getTimestamp();
+		}
+
 		// indexed datetime value is always UTC, so use correct timezone when converting back to timestamp
 		$old_tz = date_default_timezone_get();
 		date_default_timezone_set('UTC');

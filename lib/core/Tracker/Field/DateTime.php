@@ -170,7 +170,7 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 	{
 		$baseKey = $this->getBaseKey();
 		return array(
-			$baseKey => $typeFactory->timestamp($this->getValue()),
+			$baseKey => $typeFactory->timestamp($this->getValue(), $this->getOption('datetime') == 'd'),
 		);
 	}
 

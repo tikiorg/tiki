@@ -8,15 +8,21 @@
 class Search_Type_Timestamp implements Search_Type_Interface
 {
 	private $value;
+ 	private $dateOnly;
 
-	function __construct($value)
+	function __construct($value, $dateOnly = false)
 	{
 		$this->value = $value;
+		$this->dateOnly = $dateOnly;
 	}
 
 	function getValue()
 	{
 		return $this->value;
+	}
+
+	function isDateOnly() {
+		return $this->dateOnly;
 	}
 }
 

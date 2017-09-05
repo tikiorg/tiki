@@ -21,9 +21,9 @@ class Search_Elastic_TypeFactory implements Search_Type_Factory_Interface
 		return new Search_Type_WikiText($value);
 	}
 
-	function timestamp($value)
+	function timestamp($value, $dateOnly = false)
 	{
-		return new Search_Type_DateTime($value);
+		return new Search_Type_DateTime($value, $dateOnly);
 	}
 
 	function identifier($value)

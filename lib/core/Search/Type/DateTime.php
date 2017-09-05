@@ -9,10 +9,16 @@ class Search_Type_DateTime implements Search_Type_Interface
 {
 	private $value;
 
-	function __construct($value)
+	function __construct($value, $dateOnly = false)
 	{
 		if (is_numeric($value)) {
-			$this->value = gmdate(DateTime::W3C, $value);
+			if ($dateOnly) {
+				// dates are stored as formatted strings in Tiki timezone to prevent date shifts when timezones differ
+				$this->value = date('Y-m-d', $value);
+			} else {
+				// dates with times are stored in GMT
+				$this->value = gmdate(DateTime::W3C, $value);
+			}
 		}
 	}
 

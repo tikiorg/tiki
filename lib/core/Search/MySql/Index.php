@@ -61,7 +61,7 @@ class Search_MySql_Index implements Search_Index_Interface
 		} elseif ($value instanceof Search_Type_MultivalueText) {
 			$this->table->ensureHasField($name, 'TEXT');
 		} elseif ($value instanceof Search_Type_Timestamp) {
-			$this->table->ensureHasField($name, 'DATETIME');
+			$this->table->ensureHasField($name, $value->isDateOnly() ? 'DATE' : 'DATETIME');
 		} else {
 			throw new Exception('Unsupported type: ' . get_class($value));
 		}
