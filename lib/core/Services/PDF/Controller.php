@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: Controller.php 61688 2017-03-14 17:03:16Z jonnybradley $
+// $Id$
 
 class Services_PDF_Controller
 {
