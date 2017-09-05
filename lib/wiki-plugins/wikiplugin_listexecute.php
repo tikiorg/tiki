@@ -152,6 +152,7 @@ function wikiplugin_listexecute($data, $params)
 			$tx = TikiDb::get()->begin();
 
 			$action = $actions[$action];
+			$numGood = 0;
 			$list = $formatter->getPopulatedList($result);
 
 			foreach ($list as $entry) {
@@ -174,6 +175,10 @@ function wikiplugin_listexecute($data, $params)
 						$success = false;
 					}
 
+					if ($success) {
+						$numGood++;
+					}
+
 					$reportSource->setStatus($entry['object_type'], $entry['object_id'], $success);
 				}
 			}
@@ -181,6 +186,10 @@ function wikiplugin_listexecute($data, $params)
 			$tx->commit();
 
 			TikiLib::setExternalContext(false);
+
+			if ($numGood) {
+				Feedback::success(tr("Action %0 executed successfully on %1 item(s).", $_POST['list_action'], $numGood));
+			}
 
 			// need to reload search results in case action has modified the original contents
 			// or queried only specific objects
