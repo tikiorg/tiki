@@ -42,7 +42,7 @@ class Search_Formatter_ValueFormatter_Datetime extends Search_Formatter_ValueFor
 
 		if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $value)) {
 			// YYYY-MM-DD formatted date without time portion => assume UTC to parse it without date shifts below
-			$value = date_create_from_format('Y-m-de', $value . 'UTC')->format('Y-m-d H:i:s');
+			$value = date_create_from_format('Y-m-de', $value . 'UTC')->format('Y-m-d 12:00:00');
 		}
 
 		// indexed datetime value is always UTC, so use correct timezone when converting back to timestamp
