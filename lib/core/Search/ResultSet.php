@@ -214,6 +214,7 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 				$out[$key]['aggregate_fields'] = $out[$key];
 				$out[$key]['object_type'] = 'aggregate';
 				$out[$key]['object_id'] = $key;
+				$out[$key]['title'] = implode(' ', $values);
 				foreach ($totals as $field) {
 					$out[$key][$field] = 0;
 				}
