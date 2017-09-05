@@ -37,12 +37,12 @@ class Search_Formatter_ValueFormatter_Datetime extends Search_Formatter_ValueFor
 		if (preg_match('/^\d{14}$/', $value)) {
 			// Facing a date formated as YYYYMMDDHHIISS as indexed in lucene
 			// Always stored as UTC
-			$value = date_create_from_format('YmdHise', $value . 'UTC')->getTimestamp();
+			$value = date_create_from_format('YmdHise', $value . 'UTC')->format('Y-m-d H:i:s');
 		}
 
 		if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $value)) {
 			// YYYY-MM-DD formatted date without time portion => assume UTC to parse it without date shifts below
-			$value = date_create_from_format('Y-m-de', $value . 'UTC')->getTimestamp();
+			$value = date_create_from_format('Y-m-de', $value . 'UTC')->format('Y-m-d H:i:s');
 		}
 
 		// indexed datetime value is always UTC, so use correct timezone when converting back to timestamp
