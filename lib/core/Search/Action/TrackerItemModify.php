@@ -26,7 +26,7 @@ class Search_Action_TrackerItemModify implements Search_Action_Action
 		$field = $data->field->word();
 		$value = $data->value->text();
 		$calc = $data->calc->text();
-		$aggregateFields = $data->aggregate_fields->array();
+		$aggregateFields = $data->aggregate_fields->none();
 
 		if ($aggregateFields && $object_type != 'aggregate') {
 			throw new Search_Action_Exception(tr('Cannot apply tracker_item_modify action to an aggregation type %0.', $object_type));
@@ -68,7 +68,7 @@ class Search_Action_TrackerItemModify implements Search_Action_Action
 	function execute(JitFilter $data)
 	{
 		$object_id = $data->object_id->int();
-		$aggregateFields = $data->aggregate_fields->array();
+		$aggregateFields = $data->aggregate_fields->none();
 
 		if ($aggregateFields) {
 			$unifiedsearchlib = TikiLib::lib('unifiedsearch');
