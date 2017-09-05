@@ -29,10 +29,6 @@ class FilegalCopyLib extends FileGalLib
 	 */
 
 	function processCopy($files, $options = []) {
-		include_once ('lib/mime/mimetypes.php');
-		global $mimetypes, $user, $prefs;
-
-		$userlib = TikiLib::lib('user');
 
 		$feedback = [];
 
@@ -72,7 +68,7 @@ class FilegalCopyLib extends FileGalLib
 	 * @param array $info		[source, sourcePath, destinationPath]
 	 * @return array			[fhash[,error]]
 	 */
-	function handle_copy($info)
+	static function handle_copy($info)
 	{
 
 		$sourcePath = $info['sourcePath'];
