@@ -24,7 +24,7 @@
 	* filter_values         : array( filter_fieldX => filter_fieldX_selected_value, ... )
 	* autocomplete          : name of the variable you want for autocomplete of the input field (only for <input type="text" ... >
 	* find_other            : If value != '', show an input box label with find_other
-	* find_in               : Unused. Up to r49383, this description of the searched content was brokenly displayed in a tooltip. Should this be re-implemented?
+	* find_in               : Description of the searched content (displayed in a tooltip on the search term field, should possibly be reviewed)
 	* map_only              : to only show the pages map (used with tablesorter since other find functions aren't needed)
 	* Usage examples : {include file='find.tpl'}
 	*                  {include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'}
@@ -42,10 +42,13 @@
 						{* This icon made some sense when this form was on a single line by default. Now that it spans numerous lines, the area indicated by this search icon is no longer clear. This should be removed or the scope should be clarified. 2017-09-01 *}
 						{icon name="search"}
 					</span>
-					<input class="form-control" type="text" name="find" id="find" value="{$find|escape}" placeholder="{if empty($whatlabel)}{tr}Find{/tr}...{else}{tr}{$whatlabel}{/tr}{/if}">
+					<input class="form-control" type="text" name="find" id="find" value="{$find|escape}" placeholder="{if empty($whatlabel)}{tr}Find{/tr}...{else}{tr}{$whatlabel}{/tr}{/if}" title="{$find_in|escape}" data-html="true" data-toggle="focus">
 					{if isset($autocomplete)}
 						{jq}$("#find").tiki("autocomplete", "{{$autocomplete}}");{/jq}
 					{/if}
+					{jq}
+						jQuery("#find").tooltip();
+					{/jq}
 				</div>
 				{if !empty($find) or !empty($find_type) or !empty($find_topic) or !empty($find_lang) or !empty($find_langOrphan) or !empty($find_categId) or !empty($find_orphans) or !empty($find_other_val) or $maxRecords ne $prefs.maxRecords}{* $find_date_from & $find_date_to get set usually *}
 					<div class="find-clear-filter text-center">
