@@ -58,8 +58,6 @@ if ( isset($_REQUEST['galleryId']) && ! isset($galleryId)) {
 	$galleryId = $_REQUEST['galleryId'];
 }
 
-$gal_info = '';
-
 if ( empty($galleryId) && isset($_REQUEST['parentId']) ) {
 
 	// check perms on parent gallery
