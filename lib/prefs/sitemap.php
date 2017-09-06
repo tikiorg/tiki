@@ -9,8 +9,8 @@ function prefs_sitemap_list()
 {
 	return array(
 		'sitemap_enable' => array(
-			'name' => tra('Support for generate the XML for Sitemap protocol'),
-			'description' => tra('Allows generation of a Sitemap protocol XML compliant page. Mostly used for submitting your site to search engines.'),
+			'name' => tra('Sitemap protocol'),
+			'description' => tra('Allows generating site maps based on the Sitemap protocol, in the form of XML documents. Mostly used to facilitate indexation of a site by web search engines.'),
 			'type' => 'flag',
 			'help' => 'https://www.sitemaps.org/protocol.html',
 			'default' => 'n',
