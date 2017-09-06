@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Command\HelpCommand;
 
 class FilesCopyCommand extends Command
 {
@@ -34,7 +35,7 @@ class FilesCopyCommand extends Command
 				'confirm',
 				null,
 				InputOption::VALUE_NONE,
-				'Perform the copy'
+				'Perform the copy (required)'
 			)
 		;
 	}	
@@ -106,10 +107,13 @@ class FilesCopyCommand extends Command
 			}
 
 			if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-				$output->writeln('<comment>Files Copy complete</comment>');
+				$output->writeln('<comment>File Copy complete</comment>');
 			}
 		} else {
-			$output->writeln("<info>Use the --confirm option to proceed with the copy operation.</info>");
+			$help = new HelpCommand();
+			$help->setCommand($this);
+			$help->run($input, $output);
+			throw new \Exception("Use the \"--confirm\" option to proceed with the copy operation.");
 		}
 
 	}
