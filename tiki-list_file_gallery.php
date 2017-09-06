@@ -49,20 +49,24 @@ $auto_query_args = array( 'galleryId'
 if (!empty($_REQUEST['find_other'])) {
 	$info = $filegallib->get_file_info($_REQUEST['find_other']);
 	if (!empty($info)) {
-		$_REQUEST['galleryId'] = $info['galleryId'];
+		$galleryId = $info['galleryId'];
 		$smarty->assign('find_other_val', $_REQUEST['find_other']);
 	}
 }
 
+if ( isset($_REQUEST['galleryId']) && ! isset($galleryId)) {
+	$galleryId = $_REQUEST['galleryId'];
+}
+
 $gal_info = '';
 
-if ( empty($_REQUEST['galleryId']) && isset($_REQUEST['parentId']) ) {
+if ( empty($galleryId) && isset($_REQUEST['parentId']) ) {
 
 	// check perms on parent gallery
 	$parent_gal_info = $filegallib->get_file_gallery($_REQUEST['parentId']);
 	$tikilib->get_perm_object('', 'file gallery', $parent_gal_info);
 
-	$_REQUEST['galleryId'] = 0;
+	$galleryId = 0;
 
 	// Initialize listing fields with default values (used for the main gallery listing)
 	$gal_info = $filegallib->get_file_gallery();
@@ -79,32 +83,31 @@ if ( empty($_REQUEST['galleryId']) && isset($_REQUEST['parentId']) ) {
 	$old_gal_info = array();
 
 } else {
-	if ( ! isset($_REQUEST['galleryId']) ) {
-		$_REQUEST['galleryId'] = $prefs['fgal_root_id'];
+	if (! isset($_REQUEST['galleryId']) ) {
+		$galleryId = $prefs['fgal_root_id'];
 	}
 
-	if ( $gal_info = $filegallib->get_file_gallery($_REQUEST['galleryId']) ) {
-		$tikilib->get_perm_object($_REQUEST['galleryId'], 'file gallery', $gal_info);
-		if ($userlib->object_has_one_permission($_REQUEST['galleryId'], 'file gallery')) {
+	if ( $gal_info = $filegallib->get_file_gallery($galleryId) ) {
+		$tikilib->get_perm_object($galleryId, 'file gallery', $gal_info);
+		if ($userlib->object_has_one_permission($galleryId, 'file gallery')) {
 			$smarty->assign('individual', 'y');
 		}
-		$podCastGallery = $filegallib->isPodCastGallery($_REQUEST['galleryId'], $gal_info);
+		$podCastGallery = $filegallib->isPodCastGallery($galleryId, $gal_info);
 	} else {
 		$smarty->assign('msg', tra('Non-existent gallery'));
 		$smarty->display('error.tpl');
 		die;
 	}
-	$gal_info['usedSize'] = $filegallib->getUsedSize($_REQUEST['galleryId']);
+	$gal_info['usedSize'] = $filegallib->getUsedSize($galleryId);
 	$gal_info['maxQuota'] = $filegallib->getQuota($gal_info['parentId']);
-	$gal_info['minQuota'] = $filegallib->getMaxQuotaDescendants($_REQUEST['galleryId']);
+	$gal_info['minQuota'] = $filegallib->getMaxQuotaDescendants($galleryId);
 
-	if ($_REQUEST['galleryId'] == $prefs['fgal_root_user_id'] && $tiki_p_admin_file_galleries !== 'y') {
+	if ($galleryId == $prefs['fgal_root_user_id'] && $tiki_p_admin_file_galleries !== 'y') {
 		include_once('tiki-sefurl.php');
 		header('Location: ' . filter_out_sefurl('tiki-list_file_gallery.php?galleryId=' . $filegallib->get_user_file_gallery()));
 	}
 }
 
-$galleryId = $_REQUEST['galleryId'];
 if (($galleryId != 0 || $tiki_p_list_file_galleries != 'y') && ($galleryId == 0 || $tiki_p_view_file_gallery != 'y')) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('You do not have permission to view this section'));
@@ -132,13 +135,13 @@ $smarty->assign('parentId', isset($_REQUEST['parentId']) ? (int)$_REQUEST['paren
 $smarty->assign('creator', $user);
 $smarty->assign('sortorder', 'name');
 $smarty->assign('sortdirection', 'asc');
-if ( $_REQUEST['galleryId'] === "1") {
+if ($galleryId === "1") {
 	$traname = tra($gal_info['name']);
 	$smarty->assign_by_ref('name', $traname); //get_strings tra('File Galleries')
 } else {
 	$smarty->assign_by_ref('name', $gal_info['name']);
 }
-$smarty->assign_by_ref('galleryId', $_REQUEST['galleryId']);
+$smarty->assign_by_ref('galleryId', $galleryId);
 $smarty->assign('reindex_file_id', -1);
 $_REQUEST['view'] = isset($_REQUEST['view']) ? $_REQUEST['view'] : $gal_info['default_view'];
 
@@ -196,8 +199,8 @@ if ($tiki_p_admin_file_galleries == 'y') {
 		$access->check_authenticity(tra('Are you sure you want to reset to the default gallery list view settings?'));
 		if (!empty($_REQUEST['subgal'])) {
 			$filegallib->setDefault(array_values($_REQUEST['subgal']));
-		} else if (!empty($_REQUEST['galleryId'])) {
-			$filegallib->setDefault(array((int)$_REQUEST['galleryId']));
+		} else if (!empty($galleryId)) {
+			$filegallib->setDefault(array((int)$galleryId));
 		}
 		unset($_REQUEST['view']);
 	}
@@ -337,14 +340,14 @@ if (isset($_REQUEST['edit_mode']) and $_REQUEST['edit_mode']) {
 	if ($prefs['feature_groupalert'] == 'y') {
 		$smarty->assign('groupforAlert', isset($_REQUEST['groupforAlert']) ? $_REQUEST['groupforAlert'] : '');
 		$all_groups = $userlib->list_all_groups();
-		$groupselected = $groupalertlib->GetGroup('file gallery', $_REQUEST['galleryId']);
+		$groupselected = $groupalertlib->GetGroup('file gallery', $galleryId);
 		if (is_array($all_groups)) {
 			foreach ($all_groups as $g) {
 				$groupforAlertList[$g] = ($g == $groupselected) ? 'selected' : '';
 			}
 		}
 		$smarty->assign_by_ref('groupforAlert', $groupselected);
-		$showeachuser = $groupalertlib->GetShowEachUser('file gallery', $_REQUEST['galleryId'], $groupselected);
+		$showeachuser = $groupalertlib->GetShowEachUser('file gallery', $galleryId, $groupselected);
 		$smarty->assign_by_ref('showeachuser', $showeachuser);
 		$smarty->assign_by_ref('groupforAlertList', $groupforAlertList);
 	}
@@ -605,7 +608,7 @@ if (isset($_REQUEST['edit'])) {
 }
 
 // Process duplication of a gallery
-if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQUEST['galleryId'])) {
+if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($galleryId)) {
 	if ($tiki_p_create_file_galleries != 'y' || $gal_info['type'] == 'user') {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra('You do not have permission to duplicate this gallery'));
@@ -666,7 +669,7 @@ if (isset($_REQUEST['comment']) && $_REQUEST['comment'] != '' && isset($_REQUEST
 	$msg = '';
 	if (!$fileInfo = $filegallib->get_file_info($_REQUEST['fileId'])) {
 		$msg = tra('Incorrect param');
-	} elseif ($_REQUEST['galleryId'] != $fileInfo['galleryId']) {
+	} elseif ($galleryId != $fileInfo['galleryId']) {
 		$msg = tra('Could not find the file requested');
 	} elseif ((!empty($fileInfo['lockedby']) && $fileInfo['lockedby'] != $user && $tiki_p_admin_file_galleries != 'y') || $tiki_p_edit_gallery_file != 'y') {
 		$smarty->assign('errortype', 401);
@@ -782,7 +785,7 @@ if (isset($_GET['slideshow'])) {
 		-1,
 		$_REQUEST['sort_mode'],
 		$_REQUEST['find'],
-		$_REQUEST['galleryId'],
+		$galleryId,
 		false,
 		false,
 		false,
@@ -818,7 +821,7 @@ if (isset($_GET['slideshow'])) {
 		$recursive = (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') || $find_sub;
 		$with_subgals = !((isset($_REQUEST['view']) && ($_REQUEST['view'] == 'admin' || $_REQUEST['view'] == 'page')) || $find_sub);
 		if (!empty($_REQUEST['filegals_manager'])) {	// get wiki syntax if needed
-			$syntax = $filegallib->getWikiSyntax($_REQUEST['galleryId']);
+			$syntax = $filegallib->getWikiSyntax($galleryId);
 		} else {
 			$syntax = '';
 		}
@@ -829,7 +832,7 @@ if (isset($_GET['slideshow'])) {
 			$_REQUEST['maxRecords'],
 			$_REQUEST['sort_mode'],
 			$_REQUEST['find'],
-			$_REQUEST['galleryId'],
+			$galleryId,
 			$with_archive,
 			$with_subgals,
 			true,
@@ -876,7 +879,7 @@ if (isset($_GET['slideshow'])) {
 		$smarty->assign('filescount', $files['cant'] - $subs);
 	}
 	//for page view to get offset in pagination right since subgalleries are not included
-	$subgals = $filegallib->getSubGalleries($_REQUEST['galleryId']);
+	$subgals = $filegallib->getSubGalleries($galleryId);
 	$smarty->assign('subcount', count($subgals) - 1);
 
 	$smarty->assign('mid', 'tiki-list_file_gallery.tpl');
@@ -908,7 +911,7 @@ include_once ('tiki-section_options.php');
 // Theme control
 if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'file gallery';
-	$cat_objid = $_REQUEST['galleryId'];
+	$cat_objid = $galleryId;
 	include ('tiki-tc.php');
 }
 
@@ -998,7 +1001,7 @@ if (isset($files['data']) and ((isset($_REQUEST['view']) && $_REQUEST['view'] ==
 	}
 }
 
-if ($_REQUEST['galleryId'] == 0) {
+if ($galleryId == 0) {
 	$smarty->assign('download_path', ((isset($podCastGallery) && $podCastGallery) ? $prefs['fgal_podcast_dir'] : $prefs['fgal_use_dir']));
 	// Add a file hit
 	$statslib->stats_hit($gal_info['name'], 'file gallery', $galleryId);
@@ -1008,7 +1011,7 @@ if ($_REQUEST['galleryId'] == 0) {
 } else {
 	if (!isset($_REQUEST['fileId'])) {
 		// Add a gallery hit
-		$filegallib->add_file_gallery_hit($_REQUEST['galleryId']);
+		$filegallib->add_file_gallery_hit($galleryId);
 	}
 }
 
