@@ -3057,40 +3057,28 @@ table.objectperms > tbody .checkBoxLabel {
   width: 140px;
   display: block;
   position: absolute;
-  left: -15px;
-  bottom: 60px;
+  left: -20px;
+  bottom: 40px;
   overflow: hidden;
   text-overflow: ellipsis;
-  z-index: 2;
+  line-height: 2;
+  text-indent: 1.7em;
 }
-@-moz-document url-prefix() {
-  table.objectperms .checkBoxHeader > div,
-  table.objectperms > tbody .checkBoxLabel {
-    width: auto;
-  }
-}
-@supports (-ms-ime-align:auto) {
-  table.objectperms .checkBoxHeader > div,
-  table.objectperms > tbody .checkBoxLabel {
-    width: auto;
-  }
+.objectperms .checkBoxHeader > div > label {
+  width: 140px;
+  position: absolute;
+  top: -25px;
+  padding-top: 25px;
+  padding-bottom: 5px;
 }
 @media all and (-ms-high-contrast: none) {
-  table.objectperms .checkBoxHeader > div,
-  table.objectperms > tbody .checkBoxLabel {
+  .objectperms .checkBoxHeader > div > label {
     width: auto;
+    position: absolute;
+    top: -25px;
+    padding-top: 0;
+    padding-bottom: 5px;
   }
-  /* IE10 */
-  *::-ms-backdrop,
-  table.objectperms .checkBoxHeader > div {
-    width: auto;
-  }
-  /* IE11 */
-}
-table.objectperms .checkBoxHeader > div,
-table.objectperms > tbody .checkBoxLabel {
-  line-height: 2;
-  text-indent: .6em;
 }
 .objectperms .checkBoxHeader > div > label {
   width: 140px;
@@ -3103,7 +3091,8 @@ table.treetable.objectperms span.indenter,
   padding-left: 0 !important;
 }
 table.objectperms > tbody .checkBoxCell {
-  width: 30px !important;
+  padding-left: 10px;
+  padding-right: 5px;
 }
 form.simple label.error {
   padding: 4px 0 0 20px;

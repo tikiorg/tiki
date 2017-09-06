@@ -215,41 +215,57 @@ table.objectperms > tbody .checkBoxLabel {
 	width: 140px;
 	display: block;
 	position: absolute;
-	left: -15px;
-	bottom: 60px;
+	left: -20px;
+	bottom: 40px;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	z-index: 2;
+	line-height: 2;
+	text-indent: 1.7em;
+}
+// Added 9/6/2017 to position top labels
+.objectperms .checkBoxHeader > div > label {
+	width: 140px;
+	position: absolute;
+	top: -25px;
+	padding-top: 25px;
+	padding-bottom: 5px;
 }
 
 
-// Target Firefox to fix checkbox label text not displaying
-@-moz-document url-prefix() {
-	table.objectperms .checkBoxHeader > div,
-	table.objectperms > tbody .checkBoxLabel {
-		width: auto;
-	}
-}
+//// Target Firefox to fix checkbox label text not displaying
+//@-moz-document url-prefix() {
+//	table.objectperms .checkBoxHeader > div,
+//	table.objectperms > tbody .checkBoxLabel {
+//		width: auto;
+//	}
+//}
 
-// Target MS Edge to fix checkbox label text not displaying
-@supports (-ms-ime-align:auto) {
-	table.objectperms .checkBoxHeader > div,
-	table.objectperms > tbody .checkBoxLabel {
-		width: auto;
-	}
-}
+//// Target MS Edge to fix checkbox label text not displaying
+//@supports (-ms-ime-align:auto) {
+//	table.objectperms .checkBoxHeader > div,
+//	table.objectperms > tbody .checkBoxLabel {
+//		width: auto;
+//	}
+//}
 
 // Target MS IE to fix checkbox label text not displaying
 @media all and (-ms-high-contrast:none) {
-	table.objectperms .checkBoxHeader > div,
-	table.objectperms > tbody .checkBoxLabel { width: auto; } /* IE10 */
-	*::-ms-backdrop, table.objectperms .checkBoxHeader > div { width: auto; } /* IE11 */
+//	table.objectperms .checkBoxHeader > div,
+//	table.objectperms > tbody .checkBoxLabel { width: auto; } /* IE10 */
+//	*::-ms-backdrop, table.objectperms .checkBoxHeader > div { width: auto; } /* IE11 */
+	.objectperms .checkBoxHeader > div > label {
+		width: auto;
+		position: absolute;
+		top: -25px;
+		padding-top: 0;
+		padding-bottom: 5px;
+	}
 }
 
-table.objectperms .checkBoxHeader > div,
-table.objectperms > tbody .checkBoxLabel {
-line-height: 2;
-text-indent: .6em; }
+//table.objectperms .checkBoxHeader > div,
+//table.objectperms > tbody .checkBoxLabel {
+//line-height: 2;
+//text-indent: .6em; }
 
 .objectperms .checkBoxHeader > div > label { width: 140px; }
 
@@ -258,4 +274,8 @@ text-indent: .6em; }
 table.treetable.objectperms span.indenter,
 .subHeader .checkBoxHeader .indenter { padding-left: 0 !important; }
 
-table.objectperms > tbody .checkBoxCell { width: 30px !important; }
+table.objectperms > tbody .checkBoxCell {
+//	width: 30px !important; Not doing anything
+	padding-left: 10px;
+	padding-right: 5px;
+}
