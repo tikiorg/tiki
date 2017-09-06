@@ -92,7 +92,7 @@
 			{if $tiki_p_admin eq "y"}
 				<li><a href="{service controller=managestream action=list}">{tr}Activity Rules{/tr}</a></li>
 			{/if}
-			{if ($prefs.feature_wiki_templates eq "y" or $prefs.feature_cms_templates eq "y") and $tiki_p_edit_content_templates eq "y"}
+			{if ($prefs.feature_wiki_templates eq "y" or $prefs.feature_cms_templates eq "y" or $prefs.feature_file_galleries_templates eq 'y') and $tiki_p_edit_content_templates eq "y"}
 				<li><a href="tiki-admin_content_templates.php ">{tr}Content Templates{/tr}</a></li>
 			{/if}
 			{if $prefs.feature_contribution eq "y" and $tiki_p_admin_contribution eq "y"}

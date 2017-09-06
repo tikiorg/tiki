@@ -4095,7 +4095,7 @@ class UsersLib extends TikiLib
 				'level' => 'editors',
 				'type' => 'content templates',
 				'admin' => false,
-				'prefs' => array('feature_wiki_templates', 'feature_cms_templates'),
+				'prefs' => array('feature_wiki_templates', 'feature_cms_templates', 'feature_file_galleries_templates'),
 				'scope' => 'object',
 			),
 			array(
