@@ -59,7 +59,6 @@
 				{remarksbox type="note" title="{tr}Note{/tr}"}
 					{tr}The following preferences affect what permissions the user is asked to allow Tiki to do by Facebook when authorizing it.{/tr}
 				{/remarksbox}
-				{preference name=socialnetworks_facebook_offline_access}
 				{preference name=socialnetworks_facebook_publish_stream}
 				{preference name=socialnetworks_facebook_manage_events}
 				{preference name=socialnetworks_facebook_manage_pages}
