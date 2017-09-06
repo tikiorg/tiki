@@ -146,11 +146,8 @@ class SocialNetworksLib extends LogsLib
 			return false;
 		}
 		$scopes = array();
-		if ($prefs['socialnetworks_facebook_offline_access'] == 'y') {
-			$scopes[] = 'offline_access';
-		}
 		if ($prefs['socialnetworks_facebook_publish_stream'] == 'y') {
-			$scopes[] = 'publish_stream';
+			$scopes[] = 'publish_actions';
 		}
 		if ($prefs['socialnetworks_facebook_manage_events'] == 'y') {
 			$scopes[] = 'create_event';

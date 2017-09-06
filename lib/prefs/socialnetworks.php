@@ -100,13 +100,6 @@ function prefs_socialnetworks_list()
 			),
 			'default' => 'n',
 		),
-		'socialnetworks_facebook_offline_access' => array(
-			'name' => tra('Tiki can access Facebook at any time'),
-			'description' => tra('Even when the user is not logged in to Facebook, Tiki can access it.'),
-			'keywords' => 'social networks',
-			'type' => 'flag',
-			'default' => 'n',
-		),
 		'socialnetworks_facebook_publish_stream' => array(
 			'name' => tra('Tiki can post to the Facebook wall'),
 			'description' => tra('Tiki may post status messages, notes, photos, and videos to the Facebook Wall'),
