@@ -323,8 +323,7 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'refresh_metadata') {
 	$filegallib->metadataAction($_REQUEST['fileId'], 'refresh');
 }
 
-$foo = parse_url($_SERVER['REQUEST_URI']);
-$smarty->assign('url', $tikilib->httpPrefix() . $foo['path']);
+$smarty->assign('url', $tikilib->httpPrefix() . parse_url($_SERVER['REQUEST_URI'])['path']);
 // Edit mode
 if (isset($_REQUEST['edit_mode']) and $_REQUEST['edit_mode']) {
 	$smarty->assign('edit_mode', 'y');
@@ -799,7 +798,7 @@ if (isset($_GET['slideshow'])) {
 		$find
 	);
 	$smarty->assign('cant', $files['cant']);
-	$smarty->assign_by_ref('file', $files['data']);
+	$smarty->assign_by_ref('files', $files['data']);
 
 	$smarty->assign('show_find', 'n');
 	$smarty->assign('direct_pagination', 'y');

@@ -31,17 +31,17 @@
 				</p>
 			{else}
 				<ul>
-					{foreach from=$file key=i item=f name=files}
+					{foreach $files as $index => $file}
 						<li>
-							<a id="id{$i}" href="tiki-download_file.php?preview&fileId={$f.id}"
+							<a id="id{$index}" href="tiki-download_file.php?preview&fileId={$file.id}"
 								data-box="shadowbox[slideshow];type=img"
 								{if ($caption)}
 									{if ($caption eq 'd')}
-										{assign var="itemcaption" value="{$f.description}"}
+										{assign var="itemcaption" value="{$file.description}"}
 									{elseif ($caption eq 'n')}
-										{assign var="itemcaption" value="{$f.name}"}
+										{assign var="itemcaption" value="{$file.name}"}
 									{elseif ($caption eq 'f')}
-										{assign var="itemcaption" value="{$f.filename}"}
+										{assign var="itemcaption" value="{$file.filename}"}
 									{/if}
 									title="{$itemcaption}">{$itemcaption}
 								{/if}
