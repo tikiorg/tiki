@@ -14,7 +14,7 @@ function prefs_sitemap_list()
 			'type' => 'flag',
 			'help' => 'https://www.sitemaps.org/protocol.html',
 			'default' => 'n',
-			'size' => '18',
+			'since' => '18',
 			'tags' => array('advanced'),
 		),
 	);
