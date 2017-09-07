@@ -37,8 +37,8 @@
 								{/foreach}
 								{jq}
 $('#fgal_template').change( function() {
-var otherTabs = $('span.tabinactive');
-var otherParams = $('#description').parents('tr').nextAll('tr');
+var otherTabs = $('ul.nav-tabs li:not(.active)');
+var otherParams = $('#description').parents('div.form-group').nextAll('div.form-group');
 
 if ($(this).val() != '') {
 	// Select template, hide parameters
