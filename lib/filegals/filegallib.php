@@ -2761,6 +2761,11 @@ class FileGalLib extends TikiLib
 		return true;
 	}
 
+	/**
+	 * Get a file by file id OR a random file from the given gallery
+	 * 
+	 * @see self::get_file_info() for another way to select by file id
+	 */
 	function get_file($id, $randomGalleryId='')
 	{
 		if (empty($randomGalleryId)) {
