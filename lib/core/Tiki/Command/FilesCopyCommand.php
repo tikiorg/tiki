@@ -31,12 +31,6 @@ class FilesCopyCommand extends Command
 				InputArgument::REQUIRED,
 				'Path to copy files to'
 			)
-			->addOption(
-				'confirm',
-				null,
-				InputOption::VALUE_NONE,
-				'Perform the copy (required)'
-			)
 		;
 	}	
 
@@ -69,9 +63,6 @@ class FilesCopyCommand extends Command
 
 		$sourcePath = $filegallib->get_gallery_save_dir($galleryId);
 
-
-		$confirm = $input->getOption('confirm');
-
 		$files = $filegallib->get_files_info_from_gallery_id($galleryId);
 
 		if (! $files) {
@@ -81,39 +72,28 @@ class FilesCopyCommand extends Command
 			return;
 		}
 
-		if ($confirm) {
-			if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-				$output->writeln('<comment>Files Copy starting...</comment>');
-			}
+		if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+			$output->writeln('<comment>Files Copy starting...</comment>');
+		}
 
-			$feedback = $filegalcopylib->processCopy($files, [
-					'sourcePath' => $sourcePath,
-					'destinationPath' => $destinationPath,
-			]);
-			foreach ($feedback as $message) {
-				if (strpos($message, '<span class="text-danger">') !== false) {
-					$error = true;
-				} else {
-					$error = false;
-				}
-				$message = strip_tags(str_replace('<br>', ' : ', $message));
-				if ($error) {
-					$message = "<error>$message</error>";
-					$output->writeln($message);
-				} else if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-					$message = "<info>$message</info>";
-					$output->writeln($message);
-				}
+		$feedback = $filegalcopylib->processCopy($files, [
+				'sourcePath' => $sourcePath,
+				'destinationPath' => $destinationPath,
+		]);
+		foreach ($feedback as $message) {
+			$error = strpos($message, '<span class="text-danger">') !== false;
+			$message = strip_tags(str_replace('<br>', ' : ', $message));
+			if ($error) {
+				$message = "<error>$message</error>";
+				$output->writeln($message);
+			} else if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+				$message = "<info>$message</info>";
+				$output->writeln($message);
 			}
+		}
 
-			if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-				$output->writeln('<comment>File Copy complete</comment>');
-			}
-		} else {
-			$help = new HelpCommand();
-			$help->setCommand($this);
-			$help->run($input, $output);
-			throw new \Exception("Use the \"--confirm\" option to proceed with the copy operation.");
+		if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+			$output->writeln('<comment>File Copy complete</comment>');
 		}
 
 	}
