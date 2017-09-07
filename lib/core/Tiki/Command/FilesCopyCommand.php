@@ -42,10 +42,6 @@ class FilesCopyCommand extends Command
 			throw new \Exception("Feature Galleries not set up.");
 		}
 
-		#if ($prefs['fgal_use_db'] == 'y' ) {
-		#	throw new \Exception("Not implemented for preference fgal_use_db.");
-		#}
-
 		$filegallib = \TikiLib::lib('filegal');
 		$filegalcopylib = \TikiLib::lib('filegalcopy');
 
