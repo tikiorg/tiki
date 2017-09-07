@@ -205,7 +205,7 @@ function prefs_feature_list($partial = false)
 				'feature_file_galleries',
 			),
 			'default' => 'n',
-			'tags' => ['advanced', 'experimental' /*  Entirely undocumented template type in YAML format. Introduced in r31429. Very doubtful, goes against the interface and the template documentation. Chealer 2017-09-06 */],
+			'tags' => ['advanced', 'experimental' /* Unclear template type in YAML format entirely undocumented. Introduced in r31429. Very doubtful, goes against the interface and the template documentation. As of r63754, either broken or (fails to validate templates and fails to handle application of invalid templates). Chealer 2017-09-06 */],
 		),
 		'feature_articles' => array(
 			'name' => tra('Articles'),
