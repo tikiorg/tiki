@@ -128,6 +128,8 @@
 			<div class="adminoptionboxchild" id="log_sql_childcontainer">
 				{preference name=log_sql_perf_min}
 			</div>
+			{preference name=feature_search_show_forbidden_obj}
+			{preference name=feature_search_show_forbidden_cat}
 		{/tab}
 
 		{tab name="{tr}Memcache{/tr}"}

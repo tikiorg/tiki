@@ -9,22 +9,23 @@ function prefs_captcha_list()
 {
 	return array (
 		'captcha_wordLen' => array(
-			'name' => tra('Word length of the CAPTCHA image'),
-			'description' => tra('Word length of the CAPTCHA image.'),
+			'name' => tra('CAPTCHA image word length'),
+			'description' => tra('Number of characters the CAPTCHA will display.'),
 			'type' => 'text',
-			'units' => tra('words'),
 			'default' => 6,
+			'units' => tra('characters'),
 		),
 		'captcha_width' => array(
-			'name' => tra('Width of the CAPTCHA image'),
+			'name' => tra('CAPTCHA image width'),
 			'description' => tra('Width of the CAPTCHA image in pixels.'),
 			'type' => 'text',
 			'units' => tra('pixels'),
 			'default' => 180,
 		),
 		'captcha_noise' => array(
-			'name' => tra('Level of noise of the CAPTCHA image'),
-			'description' => tra('Level of noise of the CAPTCHA image.').' '.tra('Choose a smaller number for less noise and easier reading.'),
+			'name' => tra('CAPTCHA image noise'),
+			'description' => tra('Level of noise of the CAPTCHA image.'),
+			'hint' => tra('Choose a smaller number for less noise and easier reading.'),
 			'type' => 'text',
 			'default' => 100,
 		),
