@@ -12,6 +12,7 @@ function prefs_use_list()
 			'name' => tra('Close site when server load is above the threshold'),
 			'description' => tra('Use this option to “close” your Tiki when the server load exceeds a specific threshold. Only users with specific permission will be allowed to log in. Use Maximum average server load threshold in the last minute to define the maximum server load. Use the Message to display to specify the message that visitors will see when attempting to access your site.'),
 			'type' => 'flag',
+			'help' => 'Site-Access#Close_site',
 			'perspective' => false,
 			'default' => 'n',
 		),

@@ -11,7 +11,7 @@ function prefs_openpgp_list()
 	return array(
 		'openpgp_gpg_pgpmimemail' => array(
 			'name' => tra('PGP/MIME encrypted email messaging'),
-			'description' => tra('Use OpenPGP PGP/MIME compliant encrypted email messaging (default is \'n\' ). All email-messaging/notifications/newsletters are sent as PGP/MIME-encrypted messages, signed with the signer-key, and are completely 100% opaque to outsiders. All user accounts need to be properly configured into gnupg keyring with public-keys related to their tiki-account-related email-addresses.'),
+			'description' => tra('Use OpenPGP PGP/MIME compliant encrypted email messaging. All email-messaging/notifications/newsletters are sent as PGP/MIME-encrypted messages, signed with the signer-key, and are completely 100% opaque to outsiders. All user accounts need to be properly configured into gnupg keyring with public-keys related to their tiki-account-related email-addresses.'),
 			'type' => 'flag',
 			'default' => 'n',
 			'warning' => tra('Enable only if gpg, keyring, and tikiaccounts are properly configured for PGP/MIME functionality. NOTE: Requires that all accounts have their public-keys configured into gnupg-keyring, so do not allow non-administred registrations (or e.g. non-configured emails for newsletters etc) to site if this feature turned on.'),

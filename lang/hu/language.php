@@ -4223,6 +4223,7 @@ $lang = array(
 // "Do not enable this feature all the time. It can be very resource intensive and will impact performance" => "Do not enable this feature all the time. It can be very resource intensive and will impact performance",
 // "Log queries using more than (seconds)" => "Log queries using more than (seconds)",
 "Use to log only queries that use a specific amount of time" => "Ez hatással lehet a teljesítményre",
+"Use to log only queries that exceed a specific amount of time" => "Ez hatással lehet a teljesítményre",
 "This may impact performance" => "Ez hatással lehet a teljesítményre",
 // "Use email as username" => "Use email as username",
 // "Instead of creating new usernames, use the user's email address for authentication. On the registration form, there will be no Username field" => "Instead of creating new usernames, use the user's email address for authentication. On the registration form, there will be no Username field",

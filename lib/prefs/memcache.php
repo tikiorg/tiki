@@ -28,7 +28,7 @@ function prefs_memcache_list()
 			'description' => tra('Server list which may be accessed. For each server, the address, port and weight must be specified.'),
 			'type' => 'textarea',
 			'filter' => 'striptags',
-			'hint' => tra('One per line, with format of address:port (weight); for example, "localhost:11211 (1)"'),
+			'hint' => tra('One per line, with format of __address:port (weight)__; for example, "localhost:11211 (1)"'),
 			'serialize' => 'prefs_memcache_serialize_servers',
 			'unserialize' => 'prefs_memcache_unserialize_servers',
 			'size' => 10,

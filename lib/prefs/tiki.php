@@ -143,7 +143,7 @@ function prefs_tiki_list()
 		),
 		'tiki_allow_trust_input' => array(
 			'name' => tra('Allow the tiki_p_trust_input permission.'),
-			'hint' => tra('Bypasses user input filtering'),
+			'description' => tra('Bypasses user input filtering'),
 			'warning' => tra('Note: all permissions are granted to the Admins group including this one, so if you enable this you may expose your site to XSS (Cross Site Scripting) attacks for admin users.'),
 			'type' => 'flag',
 			'default' => 'n',

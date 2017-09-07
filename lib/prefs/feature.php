@@ -1152,7 +1152,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_ext_rel_nofollow' => array(
 			'name' => tra('Add "rel=nofollow" to external links'),
-			'description' => tra("nofollow is used to instruct some search engines that the link should not influence the ranking of the link's target in the search engine's index"),
+			'description' => tra("Nofollow is used to instruct some search engines that the link should not influence the ranking of the link's target in the search engine's index."),
 			'type' => 'flag',
 			'keywords' => 'no follow spam',
 			'default' => 'n',
@@ -1160,7 +1160,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_semantic' => array(
 			'name' => tra('Semantic links'),
-			'description' => tra('Going beyond Backlinks functionality, this allows some semantic relationships to be defined between wiki pages'),
+			'description' => tra('Going beyond Backlinks functionality, this allows some semantic relationships to be defined between wiki pages.'),
 			'help' => 'Semantic',
 			'type' => 'flag',
 			'dependencies' => array(
@@ -1170,7 +1170,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_webservices' => array(
 			'name' => tra('Web services'),
-			'description' => tra('Can receive web services via JSON or YAML'),
+			'description' => tra('Can receive web services via JSON or YAML.'),
 			'help' => 'WebServices',
 			'type' => 'flag',
 			'default' => 'n',
@@ -1183,7 +1183,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_breadcrumbs' => array(
 			'name' => tra('Breadcrumbs'),
-			'description' => tra('Indicates the navigation path through parent pages to the current page'),
+			'description' => tra('Indicates the navigation path through parent pages to the current page.'),
 			'help' => 'Breadcrumbs',
 			'warning' => tra('Unmaintained feature'),
 			'type' => 'flag',
@@ -1191,7 +1191,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_antibot' => array(
 			'name' => tra('Anonymous editors must enter anti-bot code (CAPTCHA)'),
-			'description' => tra('Use CAPTCHA to ensure that anonymous input is from a person'),
+			'description' => tra('Use CAPTCHA to ensure that anonymous input is from a person.'),
 			'help' => 'Spam+protection',
 			'type' => 'flag',
 			'default' => 'y',
@@ -1406,8 +1406,8 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_search_show_forbidden_cat' => array(
 			'name' => tra('Ignore category viewing restrictions'),
-			'description' => tra('allow showing forbidden (restricted) items in search result'),
-			'hint' => tra('Will improve performance, but may show forbidden results'),
+			'description' => tra('Allow showing forbidden (restricted) items in search result.'),
+			'warning' => tra('Will improve performance, but may show forbidden results'),
 			'type' => 'flag',
 			'help' => 'Search',
 			'default' => 'n',
@@ -1469,8 +1469,8 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_search_show_forbidden_obj' => array(
 			'name' => tra('Ignore individual object permissions'),
-			'description' => tra('allow forbidden items in search result'),
-			'hint' => tra('Will improve performance, but may show forbidden results'),
+			'description' => tra('Allow forbidden items in search results.'),
+			'warning' => tra('Will improve performance, but may show forbidden results.'),
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',

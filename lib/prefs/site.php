@@ -18,6 +18,7 @@ function prefs_site_list()
 			'description' => tra('Use this setting to “close” your Tiki (such as for maintenance). Users attempting to access your site will see only a login box. Only users with specific permission will be allowed to log in.
 Use the Message to display to specify the message that visitors will see when attempting to access your site.'),
 			'type' => 'flag',
+			'help' => 'Site-Access#Close_site',
 			'perspective' => false,
 			'tags' => array('basic'),
 			'default' => 'n',
