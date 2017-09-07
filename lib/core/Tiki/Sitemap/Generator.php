@@ -25,6 +25,16 @@ class Generator
 	 */
 	const BASE_CLASS = '\\Tiki\\Sitemap\\AbstractType';
 
+	/**
+	 * The base of the sitemap file name
+	 */
+	const BASE_FILE_NAME = 'sitemap';
+
+	/**
+	 * The relative path where the sitemap will be stored
+	 */
+	const RELATIVE_PATH = 'storage/public/';
+
 	protected $basePath;
 
 	public function __construct($basePath = null)
@@ -53,8 +63,8 @@ class Generator
 		$perms->setGroups(['Anonymous']); // ensure that permissions are processed as Anonymous
 
 		$sitemap = new Sitemap($baseUrl);
-		$sitemap->setPath($this->basePath . 'temp/public/');
-		$sitemap->setFilename('sitemap');
+		$sitemap->setPath($this->basePath . self::RELATIVE_PATH);
+		$sitemap->setFilename(self::BASE_FILE_NAME);
 
 		// Add the website root
 		$sitemap->addItem('/', '1.0', 'daily', date('Y-m-d'));
@@ -63,7 +73,7 @@ class Generator
 		$directoryFiles = new \GlobIterator(__DIR__ . '/Type/*.php');
 		/** @var \SplFileInfo $file */
 		foreach ($directoryFiles as $file) {
-			if ($file->getFilename() === 'index.php'){
+			if ($file->getFilename() === 'index.php') {
 				continue; // file to prevent directory browsing
 			}
 
@@ -83,8 +93,25 @@ class Generator
 			}
 		}
 
-		$sitemap->createSitemapIndex($baseUrl . '/public/', date('Y-m-d'));
+		$sitemap->createSitemapIndex($baseUrl . self::RELATIVE_PATH, date('Y-m-d'));
 
 		$perms->setGroups($oldGroups); // restore the group configuration for permissions
+	}
+
+	/**
+	 * Return the path to the sitemap
+	 *
+	 * @param bool $relative if it should return only the relative path (default true)
+	 * @return string
+	 */
+	public function getSitemapPath($relative = true)
+	{
+		$path = self::RELATIVE_PATH . self::BASE_FILE_NAME . '-index.xml';
+
+		if (! $relative) {
+			$path = $this->basePath . $path;
+		}
+
+		return $path;
 	}
 }

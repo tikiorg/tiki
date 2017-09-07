@@ -4,16 +4,24 @@
 
 {button href="tiki-admin_sitemap.php?rebuild=1" _icon_name="sitemap" class="btn btn-default" _text="{tr}Rebuild sitemap{/tr}"}
 
-<br />
-<h2>{tr}Submit the Sitemap{/tr}</h2>
+<br/><h2>{tr}Submit the Sitemap{/tr}</h2>
+{remarksbox type="info" title="{tr}Submit the Sitemap{/tr}" close="n"}
 {if $sitemapAvailable}
-<div class="alert alert-info">
 	{tr}You can submit the sitemap for processing in all major search engines using the following URL:{/tr}
-	<br><br>
-	<a href="{$url}" target="_blank">{$xml}</a>
-</div>
+	<br>
+	<br>
+	<a href="{$url}" target="_blank">{$url}</a>
 {else}
-<div class="alert alert-info">
 	{tr}The URL that you will need to use for submitting the sitemap will be available after you rebuild the sitemap.{/tr}
-</div>
 {/if}
+{/remarksbox}
+{remarksbox type="info" title="{tr}Automate Sitemap generation{/tr}" close="n"}
+	<p>
+		{tr}You can automate the sitemap generation by using the scheduler functionality:
+			<a href="https://doc.tiki.org/Scheduler">https://doc.tiki.org/Scheduler</a>
+		{/tr}
+	</p>
+	<p>
+		{tr}Or you can use directly the command line:{/tr} <code>php console.php sitemap:generate {$base_host}</code>
+	</p>
+{/remarksbox}

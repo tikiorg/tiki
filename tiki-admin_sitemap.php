@@ -12,21 +12,18 @@ global $base_host, $prefs, $tikipath;
 $access->check_permission('tiki_p_admin');
 $access->check_feature('sitemap_enable');
 
+$sitemap = new Tiki\Sitemap\Generator();
+
 if (isset($_REQUEST['rebuild'])) {
 
-	$sitemap = new Tiki\Sitemap\Generator();
 	$sitemap->generate($base_host);
 
 	Feedback::success(tr('New sitemap created!'), 'session');
 	$access->redirect('tiki-admin_sitemap.php');
 }
 
-$xml = $base_host . '/temp/public/sitemap.xml';
-$url = 'temp/public/sitemap.xml';
-
 $smarty->assign('title', tr('Sitemap'));
-$smarty->assign('xml', $xml);
-$smarty->assign('url', $url);
-$smarty->assign('sitemapAvailable', file_exists($tikipath . 'temp/public/sitemap.xml'));
+$smarty->assign('url', $base_host . '/' . $sitemap->getSitemapPath());
+$smarty->assign('sitemapAvailable', file_exists($sitemap->getSitemapPath(false)));
 $smarty->assign('mid', 'tiki-admin_sitemap.tpl');
 $smarty->display('tiki.tpl');
