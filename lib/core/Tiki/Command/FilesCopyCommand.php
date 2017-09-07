@@ -42,9 +42,9 @@ class FilesCopyCommand extends Command
 			throw new \Exception("Feature Galleries not set up.");
 		}
 
-		if ($prefs['fgal_use_db'] == 'y' ) {
-			throw new \Exception("Not impĺemented for preference fgal_use_db.");
-		}
+		#if ($prefs['fgal_use_db'] == 'y' ) {
+		#	throw new \Exception("Not implemented for preference fgal_use_db.");
+		#}
 
 		$filegallib = \TikiLib::lib('filegal');
 		$filegalcopylib = \TikiLib::lib('filegalcopy');
@@ -62,6 +62,10 @@ class FilesCopyCommand extends Command
 		}
 
 		$sourcePath = $filegallib->get_gallery_save_dir($galleryId);
+		// in the unlikely case where fgal_use_db was once !== 'y' and then became == 'y'
+		if (empty($sourcePath)) {
+			$sourcePath = $prefs['fgal_use_dir'];
+		}
 
 		$files = $filegallib->get_files_info_from_gallery_id($galleryId);
 

@@ -66,25 +66,39 @@ class FilegalCopyLib extends FileGalLib
 	 *	Takes a file from a file gallery and copies it to a local path
 	 *
 	 * @param array $info		[source, sourcePath, destinationPath]
-	 * @return array			[fhash[,error]]
+	 * @return array			[fileName[,error]]
 	 */
-	static function handle_copy($info)
+	function handle_copy($info)
 	{
 
 		$sourcePath = $info['sourcePath'];
 		$destinationPath = $info['destinationPath'];
+		$fileId = $info['source']['fileId'];
+		$filePath = $info['source']['path']; // fgal_use_db !== 'y'
+		$fileName = $info['source']['filename'];
 
-		$fhash = $info['source']['filename'];
-		if (! copy($sourcePath.$info['source']['path'], $destinationPath . $fhash)) {
-			if (! is_writable($destinationPath)) {
-				return array('error' => tra('Cannot write to this path: ') .  $destinationPath);
-			} else {
-				return array('error' => tra('Cannot read this file: ') . $sourcePath.$info['source']['path']);
+		if (empty($filePath)) { // fgal_use_db === 'y'
+			$filesTable = $this->table('tiki_files');
+			$fileData = $filesTable->fetchOne('data', array('fileId' => (int)$fileId));
+			if (! file_put_contents($destinationPath . $fileName, $fileData)) {
+				if (! is_writable($destinationPath)) {
+					return array('error' => tra('Cannot write to this path: ') .  $destinationPath);
+				} else {
+					return array('error' => tra('Cannot get filedata from db: ') . $fileName);
+				}
+			}
+		} else {
+			if (! copy($sourcePath . $filePath, $destinationPath . $fileName)) {
+				if (! is_writable($destinationPath)) {
+					return array('error' => tra('Cannot write to this path: ') . $destinationPath);
+				} else {
+					return array('error' => tra('Cannot read this file: ') . $sourcePath . $filePath);
+				}
 			}
 		}
 
 		return array(
-			'fhash' => $fhash,
+			'fileName' => $fileName,
 		);
 	}
 }
