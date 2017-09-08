@@ -48,7 +48,7 @@ class FilesCopyCommand extends Command
 		$galleryId = (int) $input->getArgument('galleryId');
 
 		$gal_info = $filegallib->get_file_gallery($galleryId);
-		if (! $gal_info || trim($gal_info['name']) ==  '') {
+		if (! $gal_info || empty($gal_info['name'])) {
 			throw new \Exception("Files Copy: Gallery #$galleryId not found");
 		}
 
@@ -76,10 +76,7 @@ class FilesCopyCommand extends Command
 			$output->writeln('<comment>Files Copy starting...</comment>');
 		}
 
-		$feedback = $filegalcopylib->processCopy($files, [
-				'sourcePath' => $sourcePath,
-				'destinationPath' => $destinationPath,
-		]);
+		$feedback = $filegalcopylib->processCopy($files, $sourcePath, $destinationPath);
 		foreach ($feedback as $message) {
 			$error = strpos($message, '<span class="text-danger">') !== false;
 			$message = strip_tags(str_replace('<br>', ' : ', $message));

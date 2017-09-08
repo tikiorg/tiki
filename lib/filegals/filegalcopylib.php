@@ -24,35 +24,18 @@ class FilegalCopyLib extends FileGalLib
 	 * Processes a list of files to be copied to a directory in the filesystem
 	 *
 	 * @param array $files
-	 * @param array $options		[string sourcePath, string destinationPath]
-	 * @return array				feedback messages
+	 * @param string $sourcePath
+	 * @param string $destinationPath
+	 * @return array					feedback messages
 	 */
 
-	function processCopy($files, $options = []) {
+	function processCopy($files, $sourcePath = '', $destinationPath) {
 
 		$feedback = [];
 
-		$options = array_merge(
-			[
-				'sourcePath' => '',
-				'destinationPath' => '',
-			],
-			$options
-		);
-
-		$sourcePath = $options['sourcePath'];
-		$destinationPath = $options['destinationPath'];
-
 		// cycle through all files to copy
 		foreach ($files as $file) {
-			$result = $this->handle_copy(
-					[
-							'source' => $file,
-							'sourcePath' => $sourcePath,
-							'destinationPath' => $destinationPath,
-					]
-			);
-
+			$result = $this->copyFile($file, $sourcePath, $destinationPath);
 			if (isset($result['error'])) {
 				$feedback[] = '<span class="text-danger">' . tr('Copy was not successful for "%0"', $file['filename']) . '<br>(' . $result['error'] . ')</span>';
 			} else {
@@ -65,34 +48,37 @@ class FilegalCopyLib extends FileGalLib
 	/**
 	 *	Takes a file from a file gallery and copies it to a local path
 	 *
-	 * @param array $info		[source, sourcePath, destinationPath]
-	 * @return array			[fileName[,error]]
+	 * @param array $file
+	 * @param string $sourcePath
+	 * @param string $destinationPath
+	 * @return array					[fileName[,error]]
 	 */
-	function handle_copy($info)
+	function copyFile($file, $sourcePath = '', $destinationPath)
 	{
 
-		$sourcePath = $info['sourcePath'];
-		$destinationPath = $info['destinationPath'];
-		$fileId = $info['source']['fileId'];
-		$filePath = $info['source']['path']; // fgal_use_db !== 'y'
-		$fileName = $info['source']['filename'];
+		$fileId = $file['fileId'];
+		$filePath = $file['path'];
+		$fileName = $file['filename'];
 
-		if (empty($filePath)) { // fgal_use_db === 'y'
-			$filesTable = $this->table('tiki_files');
-			$fileData = $filesTable->fetchOne('data', array('fileId' => (int)$fileId));
-			if (! file_put_contents($destinationPath . $fileName, $fileData)) {
-				if (! is_writable($destinationPath)) {
-					return array('error' => tra('Cannot write to this path: ') .  $destinationPath);
-				} else {
-					return array('error' => tra('Cannot get filedata from db: ') . $fileName);
-				}
+		if (! empty($filePath)) { // i.e., fgal_use_db !== 'y'
+			if ($sourcePath == '') {
+				return array('error' => tra('Source path empty'));
 			}
-		} else {
 			if (! copy($sourcePath . $filePath, $destinationPath . $fileName)) {
 				if (! is_writable($destinationPath)) {
 					return array('error' => tra('Cannot write to this path: ') . $destinationPath);
 				} else {
 					return array('error' => tra('Cannot read this file: ') . $sourcePath . $filePath);
+				}
+			}
+		} else {
+			$filesTable = $this->table('tiki_files');
+			$fileData = $filesTable->fetchOne('data', array('fileId' => (int)$fileId));
+			if (file_put_contents($destinationPath . $fileName, $fileData) === false) {
+				if (! is_writable($destinationPath)) {
+					return array('error' => tra('Cannot write to this path: ') . $destinationPath);
+				} else {
+					return array('error' => tra('Cannot get filedata from db'));
 				}
 			}
 		}
