@@ -864,7 +864,7 @@ if (isset($_GET['slideshow'])) {
 			$smarty->assign(
 				'metarray',
 				isset($files['data'][0]['metadata']) ?
-				json_decode($files['data'][0]['metadata'], true) : ''
+				json_decode($files['data'][0]['metadata'], true) : null
 			);
 		}
 		$smarty->assign_by_ref('files', $files['data']);
