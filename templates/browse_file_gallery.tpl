@@ -13,16 +13,16 @@
 {/jq}
 <div id="thumbnails"{* style="float:left"*}>
 
-	{section name=changes loop=$files}
+	{foreach $files as $file}
 
 		{* Checkboxes *}
-		{if $files[changes].isgal eq 1}
+		{if $file.isgal eq 1}
 			{assign var=checkname value=$subgal_checkbox_name|default:'subgal'}
 		{else}
 			{assign var=checkname value=$file_checkbox_name|default:'file'}
 		{/if}
 		{if $prefs.fgal_checked neq 'n' and isset($smarty.request.$checkname) and $smarty.request.$checkname
-			and in_array($files[changes].id,$smarty.request.$checkname)}
+			and in_array($file.id,$smarty.request.$checkname)}
 			{assign var=is_checked value='y'}
 		{else}
 			{assign var=is_checked value='n'}
@@ -32,21 +32,21 @@
 		{* build link *}
 		{capture assign=link}
 			{strip}
-				{if $files[changes].isgal eq 1}
-					href="tiki-list_file_gallery.php?galleryId={$files[changes].id}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}&amp;view=browse"
+				{if $file.isgal eq 1}
+					href="tiki-list_file_gallery.php?galleryId={$file.id}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}&amp;view=browse"
 				{else}
 					{if !empty($filegals_manager)}
-						href="#" onclick="window.opener.insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');checkClose();return false;" title="{tr}Click here to use the file{/tr}"
+						href="#" onclick="window.opener.insertAt('{$filegals_manager}','{$file.wiki_syntax|escape}');checkClose();return false;" title="{tr}Click here to use the file{/tr}"
 					{elseif $tiki_p_download_files eq 'y'}
 						{if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
-							href="{$prefs.fgal_podcast_dir}{$files[changes].path}"
+							href="{$prefs.fgal_podcast_dir}{$file.path}"
 						{else}
-							href="{if $prefs.javascript_enabled eq 'y' && $files[changes].type|truncate:5:'':true eq 'image'}
-											{$files[changes].id|sefurl:preview}
-										{elseif $files[changes].type neq 'application/x-shockwave-flash'}
-											{$files[changes].id|sefurl:file}
+							href="{if $prefs.javascript_enabled eq 'y' && $file.type|truncate:5:'':true eq 'image'}
+											{$file.id|sefurl:preview}
+										{elseif $file.type neq 'application/x-shockwave-flash'}
+											{$file.id|sefurl:file}
 										{else}
-											{$files[changes].id|sefurl:display}
+											{$file.id|sefurl:display}
 										{/if}"
 						{/if}
 					{/if}
@@ -62,7 +62,7 @@
 					<div class="thumbactions">
 				{if $prefs.fgal_checked neq 'n' and $tiki_p_admin_file_galleries eq 'y' and $view neq 'page'}
 					<label style="float:left">
-						<input type="checkbox" onclick="flip_thumbnail_status('{$checkname}_{$files[changes].id}')" name="{$checkname}[]" value="{$files[changes].id|escape}" {if $is_checked eq 'y'}checked="checked"{/if}>
+						<input type="checkbox" onclick="flip_thumbnail_status('{$checkname}_{$file.id}')" name="{$checkname}[]" value="{$file.id|escape}" {if $is_checked eq 'y'}checked="checked"{/if}>
 						{if isset($checkbox_label)}
 							{$checkbox_label}
 						{/if}
@@ -81,70 +81,9 @@
 			</div> {* thumbactions *}
 			{/if}
 		{/capture}
-		<div id="{$checkname}_{$files[changes].id}" class="{if $view eq 'page'}clearfix thumbnailcontener-heightauto{else}clearfix thumbnailcontener{if $is_checked eq 'y'} thumbnailcontenerchecked{/if}{if $files[changes].isgal eq 1} subgallery{/if}{/if}" style="{if $view eq 'browse'}float:left;{/if}{if $view neq 'page'}width:{$thumbnailcontener_size}px{/if}">
+		<div id="{$checkname}_{$file.id}" class="{if $view eq 'page'}clearfix thumbnailcontener-heightauto{else}clearfix thumbnailcontener{if $is_checked eq 'y'} thumbnailcontenerchecked{/if}{if $file.isgal eq 1} subgallery{/if}{/if}" style="{if $view eq 'browse'}float:left;{/if}{if $view neq 'page'}width:{$thumbnailcontener_size}px{/if}">
 			<div class="thumbnail" style="float:left; {if $view neq 'page'}width:{$thumbnailcontener_size}px{/if}">
-				<div class="thumbnailframe" style="width:100%;height:{if $view != 'page'}{$thumbnailcontener_size}px{else}100%{/if}{if $show_infos neq 'y'};margin-bottom:4px{/if}">
-					<div class="thumbimage">
-						<div class="thumbimagesub">{assign var=key_type value=$files[changes].type}
-							{$imagetypes = 'n'}
-							{if $files[changes].isgal eq 1}
-								<a {$link}>
-									{if empty($files[changes].icon_fileId)}
-										{icon name="admin_fgal" size=3}
-									{else}
-										<img src="{$files[changes].icon_fileId|sefurl:thumbnail}">
-									{/if}
-								</a>
-							{else}
-								{if $key_type eq 'image/png' or $key_type eq 'image/jpeg'
-									or $key_type eq 'image/jpg' or $key_type eq 'image/gif'
-									or $filetype eq 'image/x-ms-bmp'}
-									{$imagetypes = 'y'}
-								{/if}
-								<a {$link}
-									{if $prefs.feature_shadowbox eq 'y' && empty($filegals_manager)}
-										{if $imagetypes eq 'y' }
-												data-box="box[g]"
-										{elseif $key_type eq 'text/html'}
-												data-box="shadowbox[gallery];type=iframe"
-										{elseif $key_type eq 'application/x-shockwave-flash'}
-												data-box="shadowbox[gallery];type=flash"
-										{/if}
-									{/if}
-									{capture assign='popupContents'}
-										<div class='opaque'>
-											<div class='box-title'>
-												{tr}Properties{/tr}
-											</div>
-											<div class='box-data'>
-												{include file='file_properties_table.tpl'}
-											</div>
-										</div>
-									{/capture}
-									{if $popupContents neq ''}
-										{popup fullhtml="1" text=$popupContents}
-									{else}
-										title="{if $files[changes].name neq ''}{$files[changes].name|escape}{/if}{if $files[changes].description neq ''} - {$files[changes].description|escape}{/if}"
-									{/if}>
-									{if $key_type neq 'image/svg' and $key_type neq 'image/svg+xml'}
-										{if $imagetypes eq 'y' or $prefs.theme_iconset eq 'legacy'}
-											{if $view eq 'page'}
-												<img src="tiki-download_file.php?fileId={$files[changes].id}&preview" style="width:{$maxWidth};max-width: 100%;">
-											{else}
-												<img src="{$files[changes].id|sefurl:thumbnail}" style="max-height:{$thumbnailcontener_size}px">
-											{/if}
-										{else}
-											{$files[changes].filename|iconify:$key_type:null:3}
-										{/if}
-									{else}
-										<object data="{$files[changes].id|sefurl:thumbnail}" style="width:{$thumbnail_size}px;height:{$thumbnailcontener_size}px;" type="{$key_type}"></object>
-									{/if}
-								</a>
-							{/if}
-						</div>
-					</div>
-				</div>
-
+				{include file='fgal_thumbnailframe.tpl'}
 				{if $show_infos eq 'y'}
 					<div class="thumbinfos">
 						{if $view eq 'page'}
@@ -164,14 +103,14 @@
 										or $propname eq 'name'
 									)
 								}
-									{if isset($files[changes].$propname)}
-										{assign var=propval value=$files[changes].$propname|escape}
+									{if isset($file.$propname)}
+										{assign var=propval value=$file.$propname|escape}
 									{/if}
 									{* Format property values *}
 									{if $propname eq 'id' or $propname eq 'name'}
 										{if $propname eq 'name' and $propval eq '' and $gal_info.show_name eq 'n'}
 											{* show the filename if only name should be displayed but is empty *}
-											{assign var=propval value=$files[changes].filename|truncate:$key_name_len}
+											{assign var=propval value=$file.filename|truncate:$key_name_len}
 											{assign var=propval value="<a class='fgalname namealias' $link>$propval</a>"}
 										{else}
 											{assign var=propval value="<a class='fgalname' $link>$propval</a>"}
@@ -193,9 +132,9 @@
 											<div class="thumbname">
 												<div class="thumbnamesub" style="width:{$thumbnail_size}px; overflow: hidden;{if $view eq 'page'}text-align:center{/if}">
 													{if $gal_info.show_name eq 'f' or ($gal_info.show_name eq 'a'
-														and $files[changes].name eq '')}
-														<a class="fgalname" {$link} title="{$files[changes].filename}" {if $view eq 'page'}style="text-align:center"{/if}>
-															{$files[changes].filename|truncate:$key_name_len}
+														and $file.name eq '')}
+														<a class="fgalname" {$link} title="{$file.filename}" {if $view eq 'page'}style="text-align:center"{/if}>
+															{$file.filename|truncate:$key_name_len}
 														</a>
 													{else}
 														{$propval}
@@ -233,7 +172,7 @@
 				</div>
 				<br clear="all">
 				<div>
-					{include file='tiki-upload_file_progress.tpl' fileId=$files[changes].id name=$files[changes].filename}
+					{include file='tiki-upload_file_progress.tpl' fileId=$file.id name=$file.filename}
 				</div>
 				{if isset($metarray) and $metarray|count gt 0}
 					<br>
@@ -249,11 +188,11 @@
 			adjustThumbnails()
 		{/jq}
 
-	{sectionelse}
+	{foreachelse}
 		<div>
 			<b>{tr}No records found{/tr}</b>
 		</div>
-	{/section}
+	{/foreach}
 
 </div>
 

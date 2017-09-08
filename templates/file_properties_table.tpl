@@ -7,15 +7,15 @@
 		{else}
 			{assign var=propkey value="show_$propname"}
 		{/if}
-		{if isset($files[changes].$propname)}
-			{if $propname == 'share' && isset($files[changes].share.data)}
+		{if isset($file.$propname)}
+			{if $propname == 'share' && isset($file.share.data)}
 				{$email = []}
-				{foreach item=tmp_prop key=tmp_propname from=$files[changes].share.data}
+				{foreach item=tmp_prop key=tmp_propname from=$file.share.data}
 					{$email[]=$tmp_prop.email}
 				{/foreach}
 				{assign var=propval value=$email|implode:','}
 			{else}
-				{assign var=propval value=$files[changes].$propname}
+				{assign var=propval value=$file.$propname}
 			{/if}
 		{/if}
 		{* Format property values *}
@@ -44,7 +44,6 @@
 					<span class="pull-left">{$propval}</span>
 				</td>
 			</tr>
-			{assign var=nb_over_infos value=$nb_over_infos+1}
 		{/if}
 	{/foreach}
 </table>
