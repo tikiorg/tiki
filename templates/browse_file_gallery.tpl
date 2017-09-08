@@ -30,7 +30,6 @@
 
 		{* show files and subgals in browsing view *}
 		{if 1}
-			{assign var=nb_over_infos value=0}
 			{* build link *}
 			{capture assign=link}
 				{strip}
