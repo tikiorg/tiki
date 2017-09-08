@@ -31,79 +31,6 @@
 		{* show files and subgals in browsing view *}
 		{if 1}
 			{assign var=nb_over_infos value=0}
-			{if $view neq 'page'}
-				{$capturename = 'over_infos'}
-			{else}
-				{$capturename = 'page_infos'}
-			{/if}
-			{capture name=$capturename}
-				{strip}
-					<div {if $view neq 'page'}class='opaque'{/if}>
-						<div class='box-title'>
-							{if $view neq 'page'}
-								{tr}Properties{/tr}
-							{/if}
-						</div>
-						<div class='box-data'>
-							<table>
-								{foreach item=prop key=propname from=$fgal_listing_conf}
-									{if isset($item.key)}
-										{assign var=propkey value=$item.key}
-									{else}
-										{assign var=propkey value="show_$propname"}
-									{/if}
-									{if isset($files[changes].$propname)}
-										{if $propname == 'share' && isset($files[changes].share.data)}
-											{$email = []}
-											{foreach item=tmp_prop key=tmp_propname from=$files[changes].share.data}
-												{$email[]=$tmp_prop.email}
-											{/foreach}
-											{assign var=propval value=$email|implode:','}
-										{else}
-											{assign var=propval value=$files[changes].$propname}
-										{/if}
-									{/if}
-									{* Format property values *}
-									{if $propname eq 'created' or $propname eq 'lastModif' or $propname eq 'lastDownload'}
-										{assign var=propval value=$propval|tiki_long_date}
-									{elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}
-										{assign var=propval value=$propval|username}
-									{elseif $propname eq 'size'}
-										{assign var=propval value=$propval|kbsize:true}
-									{elseif $propname eq 'description'}
-										{assign var=propval value=$propval|nl2br}
-									{/if}
-
-									{if isset($gal_info.$propkey)
-										and $propval neq ''
-										and ($propname neq 'name' or $view eq 'page')
-										and ($gal_info.$propkey eq 'a' or $gal_info.$propkey eq 'o'
-												or ($view eq 'page' and ($gal_info.$propkey neq 'n' or $propname eq 'name'))
-											)
-									}
-										<tr>
-											<td class="pull-right">
-												<b>{$fgal_listing_conf.$propname.name}</b>
-											</td>
-											<td style="padding-left:5px">
-												<span class="pull-left">{$propval}</span>
-											</td>
-										</tr>
-										{assign var=nb_over_infos value=$nb_over_infos+1}
-									{/if}
-								{/foreach}
-							</table>
-						</div>
-					</div>
-				{/strip}
-			{/capture}
-
-			{if $nb_over_infos gt 0 and !empty($smarty.capture.over_infos)}
-				{assign var=over_infos value=$smarty.capture.over_infos}
-			{else}
-				{assign var=over_infos value=''}
-			{/if}
-
 			{* build link *}
 			{capture assign=link}
 				{strip}
@@ -186,8 +113,18 @@
 													data-box="shadowbox[gallery];type=flash"
 											{/if}
 										{/if}
-										{if $over_infos neq ''}
-											{popup fullhtml="1" text=$over_infos}
+										{capture assign='popupContents'}
+											<div class='opaque'>
+												<div class='box-title'>
+													{tr}Properties{/tr}
+												</div>
+												<div class='box-data'>
+													{include file='file_properties_table.tpl'}
+												</div>
+											</div>
+										{/capture}
+										{if $popupContents neq ''}
+											{popup fullhtml="1" text=$popupContents}
 										{else}
 											title="{if $files[changes].name neq ''}{$files[changes].name|escape}{/if}{if $files[changes].description neq ''} - {$files[changes].description|escape}{/if}"
 										{/if}>
@@ -291,7 +228,9 @@
 				{* property table in page file view *}
 				{if $view eq 'page'}
 					<div style="float:left">
-						{$smarty.capture.page_infos}<br>
+						<div class='box-data'>
+							{include file='file_properties_table.tpl'}
+						</div>
 					</div>
 					<br clear="all">
 					<div>
