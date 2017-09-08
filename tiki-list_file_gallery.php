@@ -851,31 +851,26 @@ if (isset($_GET['slideshow'])) {
 			$smarty->assign('maxWidth', isset($_REQUEST['maxWidth']) ? $_REQUEST['maxWidth'] : '300px');
 			//need to convert fileId to an offset to bring up a specific file for page view
 			if (isset($_REQUEST['fileId'])) {
-				$filesrecords = array_values($files['data']);
-				foreach ($filesrecords as $key => $file) {
-					if ($file['fileId'] == $_REQUEST['fileId']) {
-						$files['data'] = array($file);
-						$smarty->assign('metarray', json_decode($files['data'][0]['metadata'], true));
-						break;
-					}
-				}
+				$files['data'] = array_values(array_filter($files['data'], function ($file) {
+					return $file['fileId'] == $_REQUEST['fileId'];
+				}));
 			}
 			$smarty->assign('maxRecords', 1);
 			$smarty->assign(
 				'metarray',
 				isset($files['data'][0]['metadata']) ?
-				json_decode($files['data'][0]['metadata'], true) : null
+					json_decode($files['data'][0]['metadata'], true) : null
 			);
 		}
 		$smarty->assign_by_ref('files', $files['data']);
-		$smarty->assign('cant', $files['cant']);
+		$smarty->assign('cant', count($files['data']));
 		$subs = 0;
 		if ($with_subgals) {
 			foreach ($files['data'] as $f) {
 				$subs = $subs + $f['isgal'];
 			}
 		}
-		$smarty->assign('filescount', $files['cant'] - $subs);
+		$smarty->assign('filescount', count($files['data']) - $subs);
 	}
 	//for page view to get offset in pagination right since subgalleries are not included
 	$subgals = $filegallib->getSubGalleries($galleryId);
