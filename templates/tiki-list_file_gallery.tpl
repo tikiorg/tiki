@@ -222,15 +222,15 @@
 {elseif $dup_mode eq 'y'}
 	{include file='duplicate_file_gallery.tpl'}
 {else}
-	{if $prefs.fgal_elfinder_feature neq 'y' or $view neq 'finder'}
-		<div class="row">
-		{if $prefs.fgal_search eq 'y' and $view neq 'page'}
-			<div class="col-sm-6">
-				{include file='find.tpl' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations find_show_sub='y' find_other="{tr}Gallery of the file with the identifier{/tr}" find_in="<ul><li>{tr}Name{/tr}</li><li>{tr}Filename{/tr}</li><li>{tr}Description{/tr}</li></ul>"}
-			</div>
-		{/if}
-		{if $prefs.fgal_search_in_content eq 'y' and $galleryId > 0}
-			{if $view neq 'page'}
+	{if $view neq 'page'}
+		{if $prefs.fgal_elfinder_feature neq 'y' or $view neq 'finder'}
+			<div class="row">
+			{if $prefs.fgal_search eq 'y'}
+				<div class="col-sm-6">
+					{include file='find.tpl' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations find_show_sub='y' find_other="{tr}Gallery of the file with the identifier{/tr}" find_in="<ul><li>{tr}Name{/tr}</li><li>{tr}Filename{/tr}</li><li>{tr}Description{/tr}</li></ul>"}
+				</div>
+			{/if}
+			{if $prefs.fgal_search_in_content eq 'y' and $galleryId > 0}
 				<div class="col-sm-6">
 					<form id="search-form" class="form" role="form" method="get" action="tiki-search{if $prefs.feature_forum_local_tiki_search eq 'y'}index{else}results{/if}.php">
 						<input type="hidden" name="where" value="files">
@@ -245,11 +245,9 @@
 					</form>
 				</div>
 			{/if}
+			</div>
 		{/if}
-		</div>
-	{/if}
-
-	{if $view eq 'page'}
+	{else}
 		<div class="pageview">
 			<form id="size-form" class="form form-inline" role="form" action="tiki-list_file_gallery.php">
 				<input type="hidden" name="view" value="page">
