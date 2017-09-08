@@ -12,9 +12,7 @@
 					{/if}
 				</a>
 			{else}
-				{if $key_type eq 'image/png' or $key_type eq 'image/jpeg'
-					or $key_type eq 'image/jpg' or $key_type eq 'image/gif'
-					or $filetype eq 'image/x-ms-bmp'}
+				{if in_array($key_type, ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/x-ms-bmp'])}
 					{$imagetypes = 'y'}
 				{/if}
 				<a {$link}
