@@ -224,7 +224,7 @@
 			{/if}
 		</div>
 	</div>
-	<div id='heading_only' class="form-group margin-side-0{if $types.$type.heading_only eq 'y'} hidden{/if}">
+	<div class="form-group" id='heading_only' {if $types.$type.heading_only eq 'y'}style="display: none;"{/if}>
 		<label class="col-sm-3 control-label">{tr}Body{/tr}</label>
 		<div class="col-sm-7">
 			{textarea name="body" id="body"}{$body}{/textarea}
