@@ -78,9 +78,9 @@ function s_f_attachments_actionshandler( $params )
 }
 
 /*
- * smarty_function_attachments: Display the list of files attached to a wiki page
+ * smarty_function_attachments: Display the list of files attached to a wiki page (when stored in a file gallery)
  *
- * params will be used as smarty params for browse_file_gallery.tpl, except special params starting with '_' :
+ * params will be used as smarty params for fgal_attachments.tpl, except special params starting with '_' :
  *   _id : id of the object (for a wiki page, use it's name)
  *   _type : type of the object ( e.g. "wiki page" - see objectTypes in lib/setup/sections.php )
  */
@@ -143,22 +143,20 @@ function smarty_function_attachments($params, $template)
 	}
 
 	// Reajust perms using special wiki attachments perms
-	global $tiki_p_wiki_admin_attachments, $tiki_p_wiki_attach_files, $tiki_p_wiki_view_attachments;
+	global $tiki_p_wiki_admin_attachments, $tiki_p_wiki_view_attachments;
 
-	foreach ( $files[ 'data' ] as $k => $v ) {
-		$p =& $files[ 'data' ][ $k ][ 'perms' ];
-
+	foreach ( $files[ 'data' ] as &$file ) {
 		// First disable file galleries "assign perms" & "admin" perms that allows too much actions on the list of files or that are related to subgalleries
 		//   (attachements display should be simple)
-		$p[ 'tiki_p_admin_file_galleries' ] = 'n';
-		$p[ 'tiki_p_assign_perm_file_gallery' ] = 'n';
+		$file['perms'][ 'tiki_p_admin_file_galleries' ] = 'n';
+		$file['perms'][ 'tiki_p_assign_perm_file_gallery' ] = 'n';
 
 		// Disabling permissions below should not be necessary because subgalleries in attachments galleries should not happen...
 		// $p[ 'tiki_p_upload_files' ] = 'n';
 		// $p[ 'tiki_p_create_file_galleries' ] = 'n';
 
-		$p[ 'tiki_p_download_files' ] = ( $tiki_p_wiki_admin_attachments == 'y' || $tiki_p_wiki_view_attachments == 'y' ) ? 'y' : 'n';
-		$p[ 'tiki_p_edit_gallery_file' ] = $tiki_p_wiki_admin_attachments;
+		$file['perms'][ 'tiki_p_download_files' ] = ( $tiki_p_wiki_admin_attachments == 'y' || $tiki_p_wiki_view_attachments == 'y' ) ? 'y' : 'n';
+		$file['perms'][ 'tiki_p_edit_gallery_file' ] = $tiki_p_wiki_admin_attachments;
 	}
 
 	$params['gal_info'] = $gal_info;
