@@ -191,8 +191,9 @@ if ($tiki_p_admin_file_galleries == 'y' || $tiki_p_remove_files === 'y') {
 	}
 }
 
-if ($tiki_p_admin_file_galleries == 'y') {
-	if (!empty($_REQUEST['fgal_actions']) && $_REQUEST['fgal_actions'] === 'defaultsel_x') {
+if (isset($_REQUEST['fgal_actions']) && $tiki_p_admin_file_galleries == 'y') {
+	if ($_REQUEST['fgal_actions'] === 'defaultsel_x') {
+		$access->check_permission('admin_file_galleries');
 		check_ticket('fgal');
 		$access->check_authenticity(tra('Are you sure you want to reset to the default gallery list view settings?'));
 		if (!empty($_REQUEST['subgal'])) {
@@ -203,14 +204,16 @@ if ($tiki_p_admin_file_galleries == 'y') {
 		unset($_REQUEST['view']);
 	}
 
-	if (!empty($_REQUEST['fgal_actions']) && $_REQUEST['fgal_actions'] === 'refresh_metadata_x') {
+	if ($_REQUEST['fgal_actions'] === 'refresh_metadata_x') {
+		$access->check_permission('admin_file_galleries');
 		foreach (array_values($_REQUEST['file']) as $file) {
 			$filegallib->metadataAction($file, 'refresh');
 		}
 	}
 }
 
-if (!empty($_REQUEST['fgal_actions']) && $_REQUEST['fgal_actions'] === 'zipsel_x' && $tiki_p_upload_files == 'y') {
+if (!empty($_REQUEST['fgal_actions']) && $_REQUEST['fgal_actions'] === 'zipsel_x') {
+	$access->check_permission('upload_files');
 	check_ticket('fgal');
 	$href = array();
 	if (isset($_REQUEST['file'])) {
@@ -227,16 +230,16 @@ if (!empty($_REQUEST['fgal_actions']) && $_REQUEST['fgal_actions'] === 'zipsel_x
 	die;
 }
 
-if (!empty($_REQUEST['fgal_actions']) && $_REQUEST['fgal_actions'] === 'permsel_x'
-	&& $tiki_p_assign_perm_file_gallery == 'y')
-{
+if (!empty($_REQUEST['fgal_actions']) && $_REQUEST['fgal_actions'] === 'permsel_x') {
+	$access->check_permission('assign_perm_file_gallery');
 	$perms = $userlib->get_permissions(0, -1, 'permName_asc', '', 'file galleries');
 	$smarty->assign_by_ref('perms', $perms['data']);
 	$groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 	$smarty->assign_by_ref('groups', $groups['data']);
 }
 
-if (isset($_REQUEST['permsel']) && $tiki_p_assign_perm_file_gallery == 'y' && isset($_REQUEST['subgal'])) {
+if (isset($_REQUEST['permsel']) && isset($_REQUEST['subgal'])) {
+	$access->check_permission('assign_perm_file_gallery');
 	check_ticket('fgal');
 	foreach ($_REQUEST['subgal'] as $id) {
 		foreach ($_REQUEST['perms'] as $perm) {
