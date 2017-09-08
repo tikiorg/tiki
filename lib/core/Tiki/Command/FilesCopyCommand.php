@@ -76,7 +76,7 @@ class FilesCopyCommand extends Command
 			$output->writeln('<comment>Files Copy starting...</comment>');
 		}
 
-		$feedback = $filegalcopylib->processCopy($files, $sourcePath, $destinationPath);
+		$feedback = $filegalcopylib->processCopy($files, $destinationPath, $sourcePath);
 		foreach ($feedback as $message) {
 			$error = strpos($message, '<span class="text-danger">') !== false;
 			$message = strip_tags(str_replace('<br>', ' : ', $message));

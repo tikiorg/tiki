@@ -24,18 +24,18 @@ class FilegalCopyLib extends FileGalLib
 	 * Processes a list of files to be copied to a directory in the filesystem
 	 *
 	 * @param array $files
-	 * @param string $sourcePath
 	 * @param string $destinationPath
+	 * @param string $sourcePath
 	 * @return array					feedback messages
 	 */
 
-	function processCopy($files, $sourcePath = '', $destinationPath) {
+	function processCopy($files, $destinationPath, $sourcePath = '') {
 
 		$feedback = [];
 
 		// cycle through all files to copy
 		foreach ($files as $file) {
-			$result = $this->copyFile($file, $sourcePath, $destinationPath);
+			$result = $this->copyFile($file, $destinationPath, $sourcePath);
 			if (isset($result['error'])) {
 				$feedback[] = '<span class="text-danger">' . tr('Copy was not successful for "%0"', $file['filename']) . '<br>(' . $result['error'] . ')</span>';
 			} else {
@@ -49,11 +49,11 @@ class FilegalCopyLib extends FileGalLib
 	 *	Takes a file from a file gallery and copies it to a local path
 	 *
 	 * @param array $file
-	 * @param string $sourcePath
 	 * @param string $destinationPath
+	 * @param string $sourcePath
 	 * @return array					[fileName[,error]]
 	 */
-	function copyFile($file, $sourcePath = '', $destinationPath)
+	function copyFile($file, $destinationPath, $sourcePath = '')
 	{
 
 		$fileId = $file['fileId'];
