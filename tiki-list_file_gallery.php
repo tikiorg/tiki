@@ -145,47 +145,47 @@ $_REQUEST['view'] = isset($_REQUEST['view']) ? $_REQUEST['view'] : $gal_info['de
 
 // Execute batch actions
 
-if ($tiki_p_admin_file_galleries == 'y' || $tiki_p_remove_files === 'y') {
-	if (!empty($_REQUEST['fgal_actions']) && $_REQUEST['fgal_actions'] === 'delsel_x') {
-		check_ticket('fgal');
-		$access->check_authenticity(tra('Are you sure you want to remove that file or gallery?'));
-		if (isset($_REQUEST['file'])) {
-			foreach (array_values($_REQUEST['file']) as $file) {
-				if ($info = $filegallib->get_file_info($file)) {
-					$filegallib->remove_file($info, $gal_info);
-				}
-			}
-		}
-
-		if (isset($_REQUEST['subgal']) && $tiki_p_admin_file_galleries == 'y') {
-			foreach (array_values($_REQUEST['subgal']) as $subgal) {
-				$subgalInfo = $filegallib->get_file_gallery_info($subgal);
-				$subgalPerms = $tikilib->get_perm_object($subgal, 'file gallery', $subgalInfo, false);
-
-				if ($subgalPerms['tiki_p_admin_file_galleries'] === 'y') {
-					$filegallib->remove_file_gallery($subgal, $galleryId);
-				}
+if (!empty($_REQUEST['fgal_actions']) && $_REQUEST['fgal_actions'] === 'delsel_x') {
+	$access->check_permission_either(['admin_file_galleries', 'remove_files']);
+	check_ticket('fgal');
+	$access->check_authenticity(tra('Are you sure you want to remove that file or gallery?'));
+	if (isset($_REQUEST['file'])) {
+		foreach (array_values($_REQUEST['file']) as $file) {
+			if ($info = $filegallib->get_file_info($file)) {
+				$filegallib->remove_file($info, $gal_info);
 			}
 		}
 	}
 
-	if (isset($_REQUEST['movesel'])) {
-		check_ticket('fgal');
-		$movegalInfo = $filegallib->get_file_gallery_info($_REQUEST['moveto']);
-		$movegalPerms = $tikilib->get_perm_object($_REQUEST['moveto'], 'file gallery', $movegalInfo, false);
+	if (isset($_REQUEST['subgal']) && $tiki_p_admin_file_galleries == 'y') {
+		foreach (array_values($_REQUEST['subgal']) as $subgal) {
+			$subgalInfo = $filegallib->get_file_gallery_info($subgal);
+			$subgalPerms = $tikilib->get_perm_object($subgal, 'file gallery', $subgalInfo, false);
 
-		if ($movegalPerms['tiki_p_upload_files'] === 'y') {
-			if (isset($_REQUEST['file'])) {
-				foreach (array_values($_REQUEST['file']) as $file) {
-					$filegallib->set_file_gallery($file, $_REQUEST['moveto']);
-				}
+			if ($subgalPerms['tiki_p_admin_file_galleries'] === 'y') {
+				$filegallib->remove_file_gallery($subgal, $galleryId);
 			}
 		}
-		if ($tiki_p_admin_file_galleries == 'y' || $movegalPerms['tiki_p_admin_file_galleries'] === 'y') {
-			if (isset($_REQUEST['subgal'])) {
-				foreach (array_values($_REQUEST['subgal']) as $subgal) {
-					$filegallib->move_file_gallery($subgal, $_REQUEST['moveto']);
-				}
+	}
+}
+
+if (isset($_REQUEST['movesel'])) {
+	$access->check_permission_either(['admin_file_galleries', 'remove_files']);
+	check_ticket('fgal');
+	$movegalInfo = $filegallib->get_file_gallery_info($_REQUEST['moveto']);
+	$movegalPerms = $tikilib->get_perm_object($_REQUEST['moveto'], 'file gallery', $movegalInfo, false);
+
+	if ($movegalPerms['tiki_p_upload_files'] === 'y') {
+		if (isset($_REQUEST['file'])) {
+			foreach (array_values($_REQUEST['file']) as $file) {
+				$filegallib->set_file_gallery($file, $_REQUEST['moveto']);
+			}
+		}
+	}
+	if ($tiki_p_admin_file_galleries == 'y' || $movegalPerms['tiki_p_admin_file_galleries'] === 'y') {
+		if (isset($_REQUEST['subgal'])) {
+			foreach (array_values($_REQUEST['subgal']) as $subgal) {
+				$filegallib->move_file_gallery($subgal, $_REQUEST['moveto']);
 			}
 		}
 	}
