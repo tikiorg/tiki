@@ -145,30 +145,6 @@ $_REQUEST['view'] = isset($_REQUEST['view']) ? $_REQUEST['view'] : $gal_info['de
 
 // Execute batch actions
 
-if (!empty($_REQUEST['fgal_actions']) && $_REQUEST['fgal_actions'] === 'delsel_x') {
-	$access->check_permission_either(['admin_file_galleries', 'remove_files']);
-	check_ticket('fgal');
-	$access->check_authenticity(tra('Are you sure you want to remove that file or gallery?'));
-	if (isset($_REQUEST['file'])) {
-		foreach (array_values($_REQUEST['file']) as $file) {
-			if ($info = $filegallib->get_file_info($file)) {
-				$filegallib->remove_file($info, $gal_info);
-			}
-		}
-	}
-
-	if (isset($_REQUEST['subgal']) && $tiki_p_admin_file_galleries == 'y') {
-		foreach (array_values($_REQUEST['subgal']) as $subgal) {
-			$subgalInfo = $filegallib->get_file_gallery_info($subgal);
-			$subgalPerms = $tikilib->get_perm_object($subgal, 'file gallery', $subgalInfo, false);
-
-			if ($subgalPerms['tiki_p_admin_file_galleries'] === 'y') {
-				$filegallib->remove_file_gallery($subgal, $galleryId);
-			}
-		}
-	}
-}
-
 if (isset($_REQUEST['movesel'])) {
 	$access->check_permission_either(['admin_file_galleries', 'remove_files']);
 	check_ticket('fgal');
@@ -191,7 +167,31 @@ if (isset($_REQUEST['movesel'])) {
 	}
 }
 
-if (isset($_REQUEST['fgal_actions']) && $tiki_p_admin_file_galleries == 'y') {
+if (isset($_REQUEST['fgal_actions'])) {
+	if ($_REQUEST['fgal_actions'] === 'delsel_x') {
+		$access->check_permission_either(['admin_file_galleries', 'remove_files']);
+		check_ticket('fgal');
+		$access->check_authenticity(tra('Are you sure you want to remove that file or gallery?'));
+		if (isset($_REQUEST['file'])) {
+			foreach (array_values($_REQUEST['file']) as $file) {
+				if ($info = $filegallib->get_file_info($file)) {
+					$filegallib->remove_file($info, $gal_info);
+				}
+			}
+		}
+	
+		if (isset($_REQUEST['subgal']) && $tiki_p_admin_file_galleries == 'y') {
+			foreach (array_values($_REQUEST['subgal']) as $subgal) {
+				$subgalInfo = $filegallib->get_file_gallery_info($subgal);
+				$subgalPerms = $tikilib->get_perm_object($subgal, 'file gallery', $subgalInfo, false);
+	
+				if ($subgalPerms['tiki_p_admin_file_galleries'] === 'y') {
+					$filegallib->remove_file_gallery($subgal, $galleryId);
+				}
+			}
+		}
+	}
+
 	if ($_REQUEST['fgal_actions'] === 'defaultsel_x') {
 		$access->check_permission('admin_file_galleries');
 		check_ticket('fgal');
@@ -210,33 +210,32 @@ if (isset($_REQUEST['fgal_actions']) && $tiki_p_admin_file_galleries == 'y') {
 			$filegallib->metadataAction($file, 'refresh');
 		}
 	}
+	if ($_REQUEST['fgal_actions'] === 'zipsel_x') {
+		$access->check_permission('upload_files');
+		check_ticket('fgal');
+		$href = array();
+		if (isset($_REQUEST['file'])) {
+			foreach (array_values($_REQUEST['file']) as $file) {
+				$href[] = "fileId[]=$file";
+			}
+		}
+		if (isset($_REQUEST['subgal'])) {
+			foreach (array_values($_REQUEST['subgal']) as $subgal) {
+				$href[] = "galId[]=$subgal";
+			}
+		}
+		header("Location: tiki-download_file.php?" . implode('&', $href));
+		die;
+	}
+	if ($_REQUEST['fgal_actions'] === 'permsel_x') {
+		$access->check_permission('assign_perm_file_gallery');
+		$perms = $userlib->get_permissions(0, -1, 'permName_asc', '', 'file galleries');
+		$smarty->assign_by_ref('perms', $perms['data']);
+		$groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
+		$smarty->assign_by_ref('groups', $groups['data']);
+	}
 }
 
-if (!empty($_REQUEST['fgal_actions']) && $_REQUEST['fgal_actions'] === 'zipsel_x') {
-	$access->check_permission('upload_files');
-	check_ticket('fgal');
-	$href = array();
-	if (isset($_REQUEST['file'])) {
-		foreach (array_values($_REQUEST['file']) as $file) {
-			$href[] = "fileId[]=$file";
-		}
-	}
-	if (isset($_REQUEST['subgal'])) {
-		foreach (array_values($_REQUEST['subgal']) as $subgal) {
-			$href[] = "galId[]=$subgal";
-		}
-	}
-	header("Location: tiki-download_file.php?" . implode('&', $href));
-	die;
-}
-
-if (!empty($_REQUEST['fgal_actions']) && $_REQUEST['fgal_actions'] === 'permsel_x') {
-	$access->check_permission('assign_perm_file_gallery');
-	$perms = $userlib->get_permissions(0, -1, 'permName_asc', '', 'file galleries');
-	$smarty->assign_by_ref('perms', $perms['data']);
-	$groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
-	$smarty->assign_by_ref('groups', $groups['data']);
-}
 
 if (isset($_REQUEST['permsel']) && isset($_REQUEST['subgal'])) {
 	$access->check_permission('assign_perm_file_gallery');
