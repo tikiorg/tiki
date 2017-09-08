@@ -11,10 +11,11 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+// To disable for certain templates where this would break, temporarily set a log_tpl template variable to false.
 function smarty_prefilter_log_tpl($source, $smarty)
 {
 	global $prefs;
-	if ($prefs['log_tpl'] != 'y') {
+	if ($prefs['log_tpl'] != 'y' || $smarty->getTemplateVars('log_tpl') === false) {
 		return $source;
 	}
 
