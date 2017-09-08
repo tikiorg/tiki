@@ -1138,11 +1138,11 @@ class FileGalLib extends TikiLib
 	{
 		$files = $this->table('tiki_files');
 
-		$fields = array('fileId', 'galleryId', 'name', 'description', 'created', 'filename', 'filesize', 'filetype', 'user', 'author', 'hits', 'votes', 'points', 'path', 'reference_url', 'is_reference', 'hash', 'lastModif', 'lastModifUser', 'lockedby', 'comment', 'archiveId');
 
 		if ($include_search_data && $include_data) {
 			$fields = $files->all();
 		} else {
+			$fields = array('fileId', 'galleryId', 'name', 'description', 'created', 'filename', 'filesize', 'filetype', 'user', 'author', 'hits', 'votes', 'points', 'path', 'reference_url', 'is_reference', 'hash', 'lastModif', 'lastModifUser', 'lockedby', 'comment', 'archiveId');
 			if ($include_search_data) {
 				$fields[] = 'search_data';
 			}
@@ -2764,7 +2764,7 @@ class FileGalLib extends TikiLib
 	/**
 	 * Get a file by file id OR a random file from the given gallery
 	 * 
-	 * @see self::get_file_info() for another way to select by file id
+	 * @see get_file_info() for another way to select by file id
 	 */
 	function get_file($id, $randomGalleryId='')
 	{
