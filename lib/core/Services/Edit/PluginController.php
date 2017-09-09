@@ -46,7 +46,7 @@ class Services_Edit_PluginController
 			$query = 'wikiplugin_*';
 			$sort = 'object_id_asc';
 		}
-		$filters = TikiLib::lib('prefs')->getFilters();
+		$filters = TikiLib::lib('prefs')->getEnabledFilters();
 		$results = TikiLib::lib('prefs')->getMatchingPreferences($query, $filters, 500, $sort);
 
 		foreach ($results as $result) {
