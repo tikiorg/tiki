@@ -213,7 +213,7 @@ function prefs_global_list($partial = false)
 			'type' => 'text',
 			'units' => tra('versions'),
 			'size' => '5',
-			'hint' => tra('0 for unlimited versions'),
+			'hint' => tra('0 for unlimited'),
 			'default' => 0,
 		),
 		'allowRegister' => array(

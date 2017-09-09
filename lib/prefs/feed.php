@@ -17,7 +17,7 @@ function prefs_feed_list()
 				'2' => tra('RSS 2.0'),
 			),
 			'default' => '5',
-			'shorthint' => '[http://atomenabled.org/developers/syndication/atom-format-spec.php|Atom 1.0]'
+			'shorthint' => '[https://validator.w3.org/feed/docs/atom.html|Atom 1.0]'
 						.' - '
 						.'[http://cyber.law.harvard.edu/rss/rss.html|RSS 2.0]',
 		),
@@ -25,7 +25,7 @@ function prefs_feed_list()
 		// atom specific preferences
 		'feed_atom_author_name' => array(
 			'name' => tra('Feed author name'),
-			'description' => tra(''),
+			'description' => tra('Default author of each item in the feed.'),
 			'type' => 'text',
 			'size' => '40',
 			'hint' => tra('This field is mandatory unless both feed author email and homepage are empty.'),
@@ -33,14 +33,14 @@ function prefs_feed_list()
 		),
 		'feed_atom_author_email' => array(
 			'name' => tra('Feed author email'),
-			'description' => tra(''),
+			'description' => tra('Email of the author of each item in the feed.'),
 			'type' => 'text',
 			'size' => '40',
 			'default' => '',
 		),
 		'feed_atom_author_url' => array(
 			'name' => tra('Feed author homepage'),
-			'description' => tra(''),
+			'description' => tra('Homepage URL of the author of each item in the feed.'),
 			'type' => 'text',
 			'size' => '40',
 			'default' => '',
@@ -85,7 +85,7 @@ function prefs_feed_list()
 		),
 		'feed_cache_time' => array(
 			'name' => tra('Feed caching time'),
-			'description' => tra('"Cache the feed for this number of seconds'),
+			'description' => tra('Cache the feed for this number of seconds.'),
 			'type' => 'text',
 			'size' => '5',
 			'filter' => 'digits',

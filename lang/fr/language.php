@@ -3965,6 +3965,7 @@ $lang = array(
 "Maximum number of versions" => "Nombre maximum de versions",
 // "versions" => "versions",
 "0 for unlimited versions" => "0 pour un nombre illimité de versions",
+"0 for unlimited" => "0 pour un nombre illimité",
 "Users can register" => "Permettre aux utilisateurs de s'inscrire",
 // "This will allow users to register, using the webform. The Login module will include a Register link. If disabled, the admin will have to create new users manually on the Admin Users page. " => "This will allow users to register, using the webform. The Login module will include a Register link. If disabled, the admin will have to create new users manually on the Admin Users page. ",
 // "Tiki will attempt to validate the user’s email address by examining the syntax of the email address. It must be a string of letters, or digits or _ or . or - follows by a @ follows by a string of letters, or digits or _ or . or -. Tiki will perform a DNS lookup and attempt to open a SMTP session to validate the email server" => "Tiki will attempt to validate the user’s email address by examining the syntax of the email address. It must be a string of letters, or digits or _ or . or - follows by a @ follows by a string of letters, or digits or _ or . or -. Tiki will perform a DNS lookup and attempt to open a SMTP session to validate the email server",
