@@ -1023,8 +1023,9 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_multilingual_structures' => array(
 			'name' => tra('Multilingual structures'),
-			'description' => tra('Structures search for equivalent pages in other languages. May cause performance problems with larger structures.'),
+			'description' => tra('Structures search for equivalent pages in other languages.'),
 			'type' => 'flag',
+			'warning' => tr('May cause performance problems with larger structures.'),
 			'dependencies' => array(
 				'feature_wiki_structure',
 				'feature_multilingual',
@@ -1454,6 +1455,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_referer_highlight' => array(
 			'name' => tra('Referer search highlighting'),
+			'description' => tr('Referrer search highlighting is when a user goes to a search engine such as Google or Yahoo and performs a search that generates links to your pages. When they click on the link and this feature is active, Tiki notices that they have come from a search engine site and highlights the search words they used. The result is similar to using the search using Tiki’s own search facility.'),
 			'type' => 'flag',
 			'help' => 'Referer+Search+Highlighting',
 			'default' => 'y',
@@ -1464,6 +1466,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'help' => 'Search+Stats',
 			'default' => 'n',
+			'description' => tr('This option enables administrators to collect and view statistics on search activity.'),
 			'keywords' => 'stat analytics',
 			'view' => 'tiki-search_stats.php',
 			'dbfeatures' => array('mysql_fulltext'),
@@ -1671,7 +1674,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'y',
 		),
 		'feature_forum_local_tiki_search' => array(
-			'name' => tra('Tiki-indexed search.'),
+			'name' => tra('Tiki-indexed search'),
 			'type' => 'flag',
 			'default' => 'n',
 			'dependencies' => array(
@@ -1679,7 +1682,7 @@ function prefs_feature_list($partial = false)
 			),
 		),
 		'feature_forum_local_search' => array(
-			'name' => tra('Use database (full-text) search.'),
+			'name' => tra('Use database (full-text) search'),
 			'type' => 'flag',
 			'default' => 'n',
 			'dependencies' => array(

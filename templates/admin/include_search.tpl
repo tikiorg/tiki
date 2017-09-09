@@ -31,7 +31,7 @@
 
 			<fieldset>
 				<legend>
-					{tr}Search{/tr}
+					{tr}Search{/tr}{help url="Search-General-Settings"}
 				</legend>
 				{remarksbox type=tip title="{tr}About the Unified Index{/tr}"}
 				{tr}The Unified Index provides many underlying features for Tiki, including object selectors for translations amongst other things.{/tr}

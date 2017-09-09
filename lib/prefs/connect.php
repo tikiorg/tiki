@@ -14,7 +14,7 @@ function prefs_connect_list()
 			'type' => 'flag',
 			'default' => 'n',	// to be enabled by default when working for Tiki 8
 			'tags' => array('experimental', 'basic'),
-			'warning' => tra('Experimental. This feature is still under development.'),
+			'warning' => tra('This feature is still under development.'),
 			'admin' => 'connect',
 			'help' => 'Connect',
 		),
@@ -82,8 +82,9 @@ function prefs_connect_list()
 			'type' => 'text',
 			'dependencies' => 'connect_feature',
 			'filter' => 'digits',
+			'hint' => tr('Click "Send Info" to connect.'),
 			'default' => '168',
-			'warning' => tra('This feature is experimental and currently not in use. Stay tuned for updated information. Click "Send Info" to connect.'),
+			'warning' => tra('Currently not in use.'),
 			'tags' => array('experimental'),
 		),
 		'connect_server' => array(

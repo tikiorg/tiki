@@ -147,7 +147,7 @@ function prefs_category_list()
 		'category_browse_count_objects' => array(
 			'name' => tra('Show category object count'),
 			'description' => tra('Show object count when browsing categories, complying with search and type filters'),
-			'hint' => tra('Can slow the loading of the categories page on large sites.'),
+			'warning' => tra('Can slow the loading of the categories page on large sites.'),
 			'type' => 'flag',
 			'default' => 'y',
 		),
