@@ -44,6 +44,7 @@ function prefs_search_list()
 		),
 		'search_autocomplete' => array(
 			'name' => tra('Autocomplete page names'),
+			'description' => tr('Automatically complete page names as the user starts typing. For example the user types the start of the wiki page name “Sear” and Tiki returns “Search”, “Search General Settings”, etc'),
 			'type' => 'flag',
 			'dependencies' => array('feature_jquery_autocomplete', 'javascript_enabled'),
 			'warning' => tra('deprecated'),

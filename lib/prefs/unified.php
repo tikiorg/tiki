@@ -28,9 +28,10 @@ function prefs_unified_list()
 		),
 		'unified_lucene_highlight' => array(
 			'name' => tra('Highlight results snippets'),
-			'description' => tra('Highlight the result snippet based on the search query. Enabling this option will impact performance, but improve user experience.'),
+			'description' => tra('Highlight the result snippet based on the search query to improve user experience.'),
 			'type' => 'flag',
 			'default' => 'n',
+			'warning' => tra('May impact performance'),
 			'tags' => array('basic'),
 		),
 		'unified_lucene_max_result' => array(
@@ -84,10 +85,10 @@ function prefs_unified_list()
 		),
 		'unified_lucene_default_operator' => array(
 			'name' => tra('Default Boolean Operator'),
-			'description' => tra('Use OR (default) or AND as the default search operator.'),
+			'description' => tra('Use OR or AND as the default search operator.'),
 			'type' => 'list',
 			'filter' => 'int',
-			'default' => ZendSearch\Lucene\Search\QueryParser::B_OR,
+			'default' => 0,
 			'options' => array(
 				0 => tra('OR'),
 				1 => tra('AND'),
@@ -95,7 +96,7 @@ function prefs_unified_list()
 		),
 		'unified_lucene_merge_factor' => array(
 			'name' => tra('Lucene merge factor'),
-			'description' => tra('How often segment indices are merged by addDocument(). With smaller values, less RAM is used while indexing, and searches on unoptimized indices are faster, but indexing speed is slower. With larger values, more RAM is used during indexing, and while searches on unoptimized indices are slower, indexing is faster. Thus larger values (> 10) are best for batch index creation, and smaller values (< 10) for indices that are interactively maintained.'),
+			'description' => tra('How often segment indices are merged by addDocument(). With smaller values, less RAM is used while indexing, and searches on unoptimized indices are faster, but indexing speed is slower. With larger values, more RAM is used during indexing, and while searches on unoptimized indices are slower, indexing is faster.'),
 			'hint' => tra('Large values (greater than 10) are best for batch index creation, and smaller values (less than 10) for indices that are interactively maintained.'),
 			'type' => 'text',
 			'filter' => 'int',
@@ -104,8 +105,9 @@ function prefs_unified_list()
 		),
 		'unified_incremental_update' => array(
 			'name' => tra('Incremental Index Update'),
-			'description' => tra('Update the index incrementally as the site content is modified. This may lead to lower performance and accuracy than processing the index on a periodic basis.'),
+			'description' => tra('Update the index incrementally as the site content is modified.'),
 			'type' => 'flag',
+			'warning' => tra('This may lead to lower performance and accuracy than processing the index on a periodic basis.'),
 			'default' => 'y',
 		),
 		'unified_field_weight' => array(
@@ -150,8 +152,9 @@ function prefs_unified_list()
 		),
 		'unified_relation_object_indexing' => array(
 			'name' => tra('Relation types to index within object.'),
-			'description' => tra('Comma-separated relation types for which objects should be indexed in their related objects. (Elasticsearch needed)'),
+			'description' => tra('Comma-separated relation types for which objects should be indexed in their related objects.'),
 			'type' => 'textarea',
+			'hint' => tr('Elasticsearch needed'),
 			'default' => '',
 			'dependencies' => array(
 				'unified_elastic_index_current',
@@ -183,9 +186,10 @@ function prefs_unified_list()
 		),
 		'unified_parse_results' => array(
 			'name' => tra('Parse the results'),
-			'description' => tra('Parse the results. May impact performance'),
 			'type' => 'flag',
+			'description' => tr('Parse the results of Lucene search results.'),
 			'default' => 'n',
+			'warning' => tra('May impact performance'),
 		),
 		'unified_excluded_categories' => array(
 			'name' => tra('Excluded categories'),
@@ -211,7 +215,7 @@ function prefs_unified_list()
 		),
 		'unified_included_plugins' => array(
 			'name' => tra('Except included plugins'),
-			'description' => tra('List of plugin names that are required to be included while indexing, when excluding all.'). ' ' . tra('Example: fancytable,list,trackerlist,trackerfilter .'),
+			'description' => tra('List of plugin names that are required to be included while indexing, when excluding all.'). ' ' . tra('Example: fancytable,list,trackerlist,trackerfilter'),
 			'type' => 'text',
 			'filter' => 'word',
 			'separator' => ',',

@@ -12,6 +12,7 @@ function prefs_log_list()
 			'name' => tra('Log mail in Tiki logs'),
 			'description' => tra('A line of type mail will be included in the System Log with the destination address and subject of each email sent.'),
 			'type' => 'flag',
+			'warning' => tra('May impact performance'),
 			'help' => 'System+Log',
 			'default' => 'n',
 		),
@@ -19,8 +20,9 @@ function prefs_log_list()
 			'name' => tra('Smarty template usage indicator'),
 			'description' => tra('Add HTML comment at start and end of each Smarty template (.tpl file)'),
 			'hint' => tra('Use only for development, not in production because these warnings are added to emails as well, and visible to the users'),
-			'warning' => tra('You need to clear your Tiki template cache for this change to take effect'),
+			'detail' => tra('You need to clear your Tiki template cache for this change to take effect'),
 			'type' => 'flag',
+			'warning' => tra('May impact performance'),
 			'default' => 'n',
 		),
 		'log_sql' => array(
@@ -33,7 +35,7 @@ function prefs_log_list()
 		'log_sql_perf_min' => array(
 			'name' => tra('Log queries using more than'),
 			'description' => tra('Use to log only queries that exceed a specific amount of time.'),
-			'warning' => tra('This may impact performance'),
+			'warning' => tra('May impact performance'),
 			'type' => 'text',
 			'units' => tra('seconds'),
 			'size' => 5,

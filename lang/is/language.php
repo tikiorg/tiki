@@ -2825,6 +2825,7 @@ $lang = array(
 // "Tiki connect" => "Tiki connect",
 // "Connect your Tiki with the community by sending anonymised statistical data to tiki.org" => "Connect your Tiki with the community by sending anonymised statistical data to tiki.org",
 "Experimental. This feature is still under development" => "Tilraunaútgáfa. Þessi sérkenni eru í þróun",
+"This feature is still under development" => "Tilraunaútgáfa. Þessi sérkenni eru í þróun",
 // "Send site information" => "Send site information",
 // "Additionally send keywords, location, etc. to tiki.org so you can connect with other Tiki sites near you" => "Additionally send keywords, location, etc. to tiki.org so you can connect with other Tiki sites near you",
 // "Site title" => "Site title",

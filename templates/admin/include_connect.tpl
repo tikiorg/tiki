@@ -55,7 +55,7 @@
 			{ticket}
 			{include file='admin/include_apply_top.tpl'}
 			<fieldset>
-				<legend>{tr}Tiki connect{/tr}</legend>
+				<legend>{tr}Tiki connect{/tr}{help url="Connect"}</legend>
 				{remarksbox type="info" title="{tr}New Feature{/tr}" icon="bricks"}
 					<p><em>{tr}Please note: Experimental - work in progress{/tr}</em></p>
 					<p>{tr}Tiki Connect is a way to let the Tiki project know how it is being used, and which parts people like or would like fixing (or explaining).{/tr}<br>
@@ -64,8 +64,6 @@
 					<p>{tr}You can also send feedback about Tiki by checking the 'Feedback' checkbox(once Tiki Connect is enabled, next to the 'Preference Filters' bar above).{/tr}
 						{tr}Icons will appear next to all the preferences where you can 'like', request a 'fix' or ask 'what is this for?'{/tr}<br>
 						{tr}Your votes are sent when you connect with mother.tiki.org (currently only by clicking the '<strong>Send Info</strong>' button){/tr}
-					</p>
-					<p>{tr}For more info{/tr} <a href="https://doc.tiki.org/Connect">{tr}click here{/tr}</a></p>
 				{/remarksbox}
 				{preference name="connect_feature"}
 				<div class="adminoptionboxchild" id="connect_feature_childcontainer">
@@ -165,7 +163,7 @@
 			{ticket}
 			{include file='admin/include_apply_top.tpl'}
 			<fieldset>
-				<legend>{tr}Jitsi{/tr}</legend>
+				<legend>{tr}Jitsi{/tr}{help url="Jitsi"}</legend>
 
 				<div class="form-group">
 					<label class="control-label col-sm-4" for="jitsi-url">
