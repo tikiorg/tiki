@@ -189,6 +189,8 @@ class PrefsDoc extends TWVersion{
 			// carry over missing information filled out in a newer version
 			if (!$pref->description)
 				$pref->description = $this->prevFilePrefs->$prefName->description;
+			if (!$pref->detail)
+				$pref->help = $this->prevFilePrefs->$prefName->detail;
 			if (!$pref->help)
 				$pref->help = $this->prevFilePrefs->$prefName->help;
 			if (!$pref->hint)
@@ -250,6 +252,11 @@ class PrefsDoc extends TWVersion{
 
 		// set description
 		$this->prefDescription = $param->description;
+		if ($param->detail) {
+			if ($this->prefDescription)					// new line if existing content
+				$this->prefDescription .= '<br>';
+			$this->prefDescription .= '<span class="fa fa-asterisk text-info" title="Detail"></span><i> ' . $param->detail . '</i>';
+		}
 		if ($param->hint) {
 			if ($this->prefDescription)					// new line if existing content
 				$this->prefDescription .= '<br>';
