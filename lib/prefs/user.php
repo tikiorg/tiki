@@ -324,7 +324,7 @@ function prefs_user_list($partial = false)
 		'user_use_gravatar' => array(
 			'name' => tr('Use Gravatar for user profile pictures'),
 			'description' => tr('Always request the Gravatar image for the user profile picture.'),
-			'help' => 'http://gravatar.com'),
+			'help' => 'http://gravatar.com',
 			'type' => 'flag',
 			'default' => 'n',
 		),
