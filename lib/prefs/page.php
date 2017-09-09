@@ -34,9 +34,10 @@ function prefs_page_list()
 		),
 		'page_content_fetch_readability' => array(
 			'name' => tra('Path to PHP-Readability library'),
-			'description' => tra('Enter path to PHP-Readability library php file here (not included with Tiki due to licensing reasons'),
+			'description' => tra('Enter path to PHP-Readability library php file here.'),
 			'type' => 'text',
 			'size' => 20,
+			'detail' => tr('Not included with Tiki due to licensing reasons.'),
 			'default' => '',
 		),
 	);

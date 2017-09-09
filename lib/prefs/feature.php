@@ -2665,7 +2665,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_dummy' => array(
 			'name' => tra('Dummy preference'),
-			'description' => tra('This is useful for developers to learn how to create a new preference.'),
+			'description' => tra('This is useful for developers to learn how to create a new preference. HTML may be used.'),
 			'type' => 'text',
 			'size' => '15',
 			'help' => 'Preferences',
@@ -2674,8 +2674,8 @@ function prefs_feature_list($partial = false)
 			'default' => 'This is the default value of this preference.',
 			'detail' => tra('This is the detail.'),
 			'warning' => tra('This is the warning.'),
-			'hint' => tra('This is the hint.'),
-			'shorthint' => tra('This is the shorthint.'),
+			'hint' => tra('This is the hint. Wiki syntax may be used.'),
+			'shorthint' => tra('This is the shorthint. Wiki syntax may be used.'),
 			'tags' => array(
 				'experimental',
 				),

@@ -10,9 +10,10 @@ function prefs_messu_list()
 	return array(
 		'messu_mailbox_size' => array(
 			'name' => tra('Maximum mailbox size'),
-			'description' => tra('Maximum number of messages allowed in the mailbox. Enter 0 for unlimited.'),
+			'description' => tra('Maximum number of messages allowed in the mailbox.'),
 			'type' => 'text',
 			'size' => '10',
+			'hint' => tr('0 for unlimited'),
 			'filter' => 'digits',
 			'units' => tra('messages'),
 			'dependencies' => array(
@@ -22,9 +23,10 @@ function prefs_messu_list()
 		),
 		'messu_archive_size' => array(
 			'name' => tra('Maximum mail archive size'),
-			'description' => tra('Maximum number of archive messages allowed. Enter 0 for unlimited.'),
+			'description' => tra('Maximum number of archive messages allowed.'),
 			'type' => 'text',
 			'size' => '10',
+			'hint' => tr('0 for unlimited'),
 			'filter' => 'digits',
 			'units' => tra('messages'),
 			'dependencies' => array(
@@ -34,9 +36,10 @@ function prefs_messu_list()
 		),
 		'messu_sent_size' => array(
 			'name' => tra('Maximum sent box size'),
-			'description' => tra('Maximum number of sent messages allowed in the mailbox. Enter 0 for unlimited.'),
+			'description' => tra('Maximum number of sent messages allowed in the mailbox.'),
 			'type' => 'text',
 			'size' => '10',
+			'hint' => tr('0 for unlimited'),
 			'filter' => 'digits',
 			'units' => tra('messages'),
 			'dependencies' => array(

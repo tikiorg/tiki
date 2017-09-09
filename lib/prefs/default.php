@@ -64,6 +64,7 @@ function prefs_default_list()
 		'default_rows_textarea_comment' => array(
 			'name' => tra('Comment box'),
 			'type' => 'text',
+			'description' => tr('Size (height) of the comment text area.'),
 			'size' => '3',
 			'units' => tra('rows'),
 			'filter' => 'digits',
