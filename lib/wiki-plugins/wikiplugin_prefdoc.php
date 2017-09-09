@@ -217,7 +217,8 @@ class PrefsDoc extends TWVersion{
 	{
 		// set default
 		if (!empty($param->options) && isset($param->default) && $param->default !== '') {
-			$this->prefDefault = $param->options->{$param->default};
+			$param->options = (array)$param->options;
+			$this->prefDefault = $param->options[$param->default];
 		}else if ($param->default === 'n') {
 			$this->prefDefault = 'Disabled';
 		} else if ($param->default === 'y') {
