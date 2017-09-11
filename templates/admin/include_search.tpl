@@ -63,7 +63,6 @@
 					{/if}
 					<div class="adminoptionboxchild unified_engine_childcontainer lucene">
 						{preference name="unified_lucene_highlight"}
-						{preference name=unified_parse_results}
 
 						<fieldset>
 							<legend>{tr}Search engine settings{/tr}</legend>

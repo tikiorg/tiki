@@ -184,13 +184,6 @@ function prefs_unified_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
-		'unified_parse_results' => array(
-			'name' => tra('Parse the results'),
-			'type' => 'flag',
-			'description' => tr('Parse the results of Lucene search results.'),
-			'default' => 'n',
-			'warning' => tra('May impact performance'),
-		),
 		'unified_excluded_categories' => array(
 			'name' => tra('Excluded categories'),
 			'description' => tra('List of category IDs to exclude from the search index.'),
