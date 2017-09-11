@@ -68,6 +68,17 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 						'description' => tr('Uses the translate function to replace %0 etc with the field values. E.g. "%0 any text %1"'),
 						'filter' => 'text',
 					),
+					'sortField' => array(
+						'name' => tr('Sort Fields'),
+						'description' => tr('Order results by one or more fields from the other tracker.'),
+						'filter' => 'int',
+						'separator' => '|',
+						'legacy_index' => 6,
+						'profile_reference' => 'tracker_field',
+						'parent' => 'trackerId',
+						'parentkey' => 'tracker_id',
+						'sort_order' => 'position_nasc',
+					),
 					'linkToItems' => array(
 						'name' => tr('Display'),
 						'description' => tr('How the link to the items should be rendered'),
@@ -284,9 +295,11 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 		$filterFieldHere = $this->getTrackerDefinition()->getField($filterFieldIdHere); 
 		$filterFieldThere = $trklib->get_tracker_field($filterFieldIdThere);
 		
-		$displayFieldIds = $this->getOption('displayFieldIdThere');
+		$sortFieldIds = $this->getOption('sortField');
 		$status = $this->getOption('status', 'opc');
 		$tracker = Tracker_Definition::get($trackerId);
+
+		
 
 		// note: if itemlink or dynamic item list is used, than the final value to compare with must be calculated based on the current itemid
 
@@ -311,7 +324,7 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 			if( !$itemId ) {
 				$items = array();
 			} else {
-				$items = $trklib->get_items_list($trackerId, $filterFieldIdThere, $itemId, $status);
+				$items = $trklib->get_items_list($trackerId, $filterFieldIdThere, $itemId, $status, false, $sortFieldIds);
 			}
 		} else {
 			// when this is an item link or dynamic item list field, localvalue contains the target itemId
@@ -337,7 +350,7 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 			}
 			// Skip nulls
 			if ($localValue) {
-				$items = $trklib->get_items_list($trackerId, $filterFieldIdThere, $localValue, $status);
+				$items = $trklib->get_items_list($trackerId, $filterFieldIdThere, $localValue, $status, false, $sortFieldIds);
 			} else {
 				$items = array();
 			}

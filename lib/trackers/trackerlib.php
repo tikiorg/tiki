@@ -686,21 +686,47 @@ class TrackerLib extends TikiLib
 	}
 
 	/* experimental shared */
-	public function get_items_list($trackerId, $fieldId, $value, $status='o', $multiple = false)
+	public function get_items_list($trackerId, $fieldId, $value, $status='o', $multiple = false, $sortFieldIds = null)
 	{
 		$query = "select distinct tti.`itemId`, tti.`itemId` i from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif ";
+		$bindvars = array();
+		if (is_string($sortFieldIds)) {
+			$sortFieldIds = preg_split('/\|/', $sortFieldIds, -1, PREG_SPLIT_NO_EMPTY);
+		}
+		if (!empty($sortFieldIds)) {
+			foreach ($sortFieldIds as $i => $sortFieldId) {
+				$query .= " left join `tiki_tracker_item_fields` ttif$i on ttif.`itemId` = ttif$i.`itemId` and ttif$i.`fieldId` = ?";
+				$bindvars[] = intval($sortFieldId);
+			}
+		}
 		$query.= " where tti.`itemId`=ttif.`itemId` and ttif.`fieldId`=?";
+		$bindvars[] = intval($fieldId);
 		if( $multiple ) {
 			$query .= " and ttif.`value` REGEXP CONCAT('[[:<:]]', ?, '[[:>:]]')";
 		} else {
 			$query .= " and ttif.`value`=?";
 		}
-		$bindvars = array((int) $fieldId, $value);
+		$bindvars[] = $value;
 		if (!empty($status)) {
 			$query .= ' and ' . $this->in('tti.status', str_split($status, 1), $bindvars);
 		}
-		$items = $this->fetchMap($query, $bindvars);
-		return array_values($items);
+		if (!empty($sortFieldIds)) {
+			$query .= " order by ".implode(',',
+				array_map(
+					function($i) {
+						return "ttif$i.value";
+					},
+					array_keys($sortFieldIds)
+				)
+			);
+		}
+		$items = $this->fetchAll($query, $bindvars);
+		return array_map(
+			function($row){
+				return $row['itemId'];
+			},
+			$items
+		);
 	}
 
 	public function get_tracker($trackerId)
