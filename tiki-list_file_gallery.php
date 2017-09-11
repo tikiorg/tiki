@@ -847,6 +847,7 @@ if (isset($_GET['slideshow'])) {
 			$find,
 			$syntax
 		);
+		$smarty->assign('cant', $files['cant']);
 		if (isset($_REQUEST['view']) and $_REQUEST['view'] == 'page') {
 			$smarty->assign('maxWidth', isset($_REQUEST['maxWidth']) ? $_REQUEST['maxWidth'] : '300px');
 			//need to convert fileId to an offset to bring up a specific file for page view
@@ -863,7 +864,6 @@ if (isset($_GET['slideshow'])) {
 			);
 		}
 		$smarty->assign_by_ref('files', $files['data']);
-		$smarty->assign('cant', count($files['data']));
 		$subs = 0;
 		if ($with_subgals) {
 			foreach ($files['data'] as $f) {
