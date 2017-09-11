@@ -378,13 +378,13 @@ $admin_icons = array(
 		'title' => tr('Forums'),
 		'disabled' => $prefs['feature_forums'] != 'y',
 		'description' => tr('Settings and features for forums'),
-		'help' => 'Forum',
+		'help' => 'Forums-Admin',
 	),
 	"trackers" => array(
 		'title' => tr('Trackers'),
 		'disabled' => $prefs['feature_trackers'] != 'y',
 		'description' => tr('Settings and features for trackers'),
-		'help' => 'Trackers',
+		'help' => 'Trackers-Admin',
 	),
 	"polls" => array(
 		'title' => tr('Polls'),
@@ -402,7 +402,7 @@ $admin_icons = array(
 		'title' => tr('Categories'),
 		'disabled' => $prefs['feature_categories'] != 'y',
 		'description' => tr('Settings and features for categories'),
-		'help' => 'Category',
+		'help' => 'Categories-Admin',
 	),
 	"workspace" => array(
 		'title' => tr('Workspaces'),
@@ -462,7 +462,7 @@ $admin_icons = array(
 		'title' => tr('Banners'),
 		'disabled' => $prefs['feature_banners'] != 'y',
 		'description' => tr('Site advertisements and notices'),
-		'help' => 'Banners',
+		'help' => 'Banner-Admin',
 	),
 	"intertiki" => array(
 		'title' => tr('InterTiki'),
@@ -486,13 +486,13 @@ $admin_icons = array(
 		'title' => tr('SEF URL'),
 		'disabled' => $prefs['feature_sefurl'] != 'y' && $prefs['feature_canonical_url'] != 'y',
 		'description' => tr('Search Engine Friendly URLs'),
-		'help' => 'Rewrite Rules',
+		'help' => 'Search-Engine-Friendly-URL',
 	),
 	"video" => array(
 		'title' => tr('Video'),
 		'disabled' => $prefs['feature_kaltura'] != 'y',
 		'description' => tr('Video integration configuration'),
-		'help' => 'Kaltura Config',
+		'help' => 'Video-Admin',
 	),
 	"payment" => array(
 		'title' => tr('Payment'),
@@ -521,12 +521,12 @@ $admin_icons = array(
 		'title' => tr('Statistics'),
 //		'disabled' => $prefs['feature_stats'] != 'y',
 		'description' => tr('Configure statistics reporting for your site usage'),
-		'help' => 'Statistics',
+		'help' => 'Statistics-Admin',
 	),
 	"print" => array(
 		'title' => tr('Print Settings'),
 		'description' => tr('Settings and features for print versions and pdf generation'),
-		'help' => 'Print',
+		'help' => 'Print Setting-Admin',
 	),
 );
 
