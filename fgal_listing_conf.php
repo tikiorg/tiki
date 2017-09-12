@@ -83,7 +83,14 @@ $fgal_options = array(
 	'icon_fileId' => array('name' => tra('Gallery icon')),
 );
 
-if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') {
+if (! array_key_exists('view', get_defined_vars())) {
+	if (isset($_REQUEST['view'])) {
+		$view = $_REQUEST['view'];
+	} else {
+		$view = null;
+	}
+}
+if ($view == 'admin') {
 	$fgal_options['show_explorer'] = 'n';
 	$fgal_options['show_path'] = 'n';
 	$fgal_options['show_slideshow'] = 'n';

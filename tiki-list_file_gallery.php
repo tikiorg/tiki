@@ -141,7 +141,11 @@ if ($galleryId === "1") {
 }
 $smarty->assign_by_ref('galleryId', $galleryId);
 $smarty->assign('reindex_file_id', -1);
-$_REQUEST['view'] = isset($_REQUEST['view']) ? $_REQUEST['view'] : $gal_info['default_view'];
+if (isset($_REQUEST['view'])) {
+	$view = $_REQUEST['view'];
+} else {
+	$view = $gal_info['default_view'];
+}
 
 // Execute batch actions
 
@@ -201,7 +205,7 @@ if (isset($_REQUEST['fgal_actions'])) {
 		} else if (!empty($galleryId)) {
 			$filegallib->setDefault(array((int)$galleryId));
 		}
-		unset($_REQUEST['view']);
+		$view = null;
 	}
 
 	if ($_REQUEST['fgal_actions'] === 'refresh_metadata_x') {
@@ -685,7 +689,7 @@ if (isset($_REQUEST['comment']) && $_REQUEST['comment'] != '' && isset($_REQUEST
 
 // Set display config
 if (!isset($_REQUEST['maxRecords']) || $_REQUEST['maxRecords'] <= 0) {
-	if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'page' && empty($_REQUEST['fileId'])) {
+	if ($view == 'page' && empty($_REQUEST['fileId'])) {
 		$_REQUEST['maxRecords'] = 1;
 	} elseif (isset($gal_info['maxRows']) && $gal_info['maxRows'] > 0) {
 		$_REQUEST['maxRecords'] = $gal_info['maxRows'];
@@ -817,8 +821,8 @@ if (isset($_GET['slideshow'])) {
 	die();
 } else {
 	if (!isset($_REQUEST["edit_mode"]) && !isset($_REQUEST["edit"])) {
-		$recursive = (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') || $find_sub;
-		$with_subgals = !((isset($_REQUEST['view']) && ($_REQUEST['view'] == 'admin' || $_REQUEST['view'] == 'page')) || $find_sub);
+		$recursive = $view == 'admin' || $find_sub;
+		$with_subgals = !(in_array($view, ['admin', 'page']) || $find_sub);
 		if (!empty($_REQUEST['filegals_manager'])) {	// get wiki syntax if needed
 			$syntax = $filegallib->getWikiSyntax($galleryId);
 		} else {
@@ -826,7 +830,7 @@ if (isset($_GET['slideshow'])) {
 		}
 		$with_archive = ( isset($gal_info['archives']) && $gal_info['archives'] == '-1') ? false : true;
 		
-		if (isset($_REQUEST['view']) and $_REQUEST['view'] == 'page' && isset($_REQUEST['fileId'])) {
+		if ($view == 'page' && isset($_REQUEST['fileId'])) {
 			$file = $filegallib->get_file_info($_REQUEST['fileId']);
 			$smarty->assign('cant', 1);
 		} else {
@@ -853,11 +857,11 @@ if (isset($_GET['slideshow'])) {
 				$syntax
 			);
 			$smarty->assign('cant', $files['cant']);
-			if (isset($_REQUEST['view']) and $_REQUEST['view'] == 'page') {
+			if ($view == 'page') {
 				$file = $files['data'][0];
 			}
 		}
-		if (isset($_REQUEST['view']) and $_REQUEST['view'] == 'page') {
+		if ($view == 'page') {
 			$smarty->assign('maxWidth', isset($_REQUEST['maxWidth']) ? $_REQUEST['maxWidth'] : '300px');
 			//need to convert fileId to an offset to bring up a specific file for page view
 			$smarty->assign('maxRecords', 1);
@@ -995,8 +999,7 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y'
 }
 
 ask_ticket('fgal');
-if (isset($files['data']) and ((isset($_REQUEST['view']) && $_REQUEST['view'] == 'browse')
-	or (isset($_REQUEST['view']) and $_REQUEST['view'] == 'page'))) {
+if (isset($files['data']) and in_array($view, ['browse', 'page'])) {
 	foreach ($files['data'] as $file) {
 		$_SESSION['allowed'][$file['fileId']] = true;
 	}
@@ -1018,9 +1021,12 @@ if ($galleryId == 0) {
 
 // Get listing display config
 include_once ('fgal_listing_conf.php');
+if (! isset($view)) {
+	$view = $fgal_options['default_view']['value'];
+}
 
 $find_durations = array();
-if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') {
+if ($view == 'admin') {
 	$find_durations[] = array('label' => tra('Not modified for')
 													, 'prefix' => 'find_lastModif'
 													, 'default' => empty($_REQUEST['find_lastModif'])?'':$_REQUEST['find_lastModif']
@@ -1048,7 +1054,7 @@ if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') {
 $smarty->assign_by_ref('find_durations', $find_durations);
 $smarty->assign_by_ref('gal_info', $gal_info);
 
-$smarty->assign('view', isset($_REQUEST['view']) ? $_REQUEST['view'] : $fgal_options['default_view']['value']);
+$smarty->assign('view', $view);
 
 // Display the template
 if (!empty($_REQUEST['filegals_manager'])) {
