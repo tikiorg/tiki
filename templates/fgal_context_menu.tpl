@@ -168,8 +168,7 @@
 							{icon _menu_text=$menu_text _menu_icon=$menu_icon name='tag' alt="{tr}Refresh metadata{/tr}"}
 						</a>
 						{if $view != 'page'}
-							{$pageoffset = $changes - $subcount + $offset}
-							<a href="tiki-list_file_gallery.php?galleryId={$file.galleryId}&offset={$pageoffset}&fileId={$file.id}&view=page">
+							<a href="tiki-list_file_gallery.php?galleryId={$file.galleryId}&fileId={$file.id}&view=page">
 								{icon _menu_text=$menu_text _menu_icon=$menu_icon name='textfile' alt="{tr}Page view{/tr}"}
 							</a>
 						{/if}
