@@ -2857,7 +2857,7 @@ class FileGalLib extends TikiLib
 	 * @param string wiki_syntax: text to be inserted in editor onclick (from fgal manager)
 	 * @return array of found files and subgals
 	 */
-	function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false,
+	function get_files($offset, $maxRecords, $sort_mode, $find = null, $galleryId=-1, $with_archive=false, $with_subgals=false,
 						$with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true,
 						$recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false, $with_backlink=false, $filter='',
 						$wiki_syntax = '')
@@ -2993,7 +2993,7 @@ class FileGalLib extends TikiLib
 
 		$mid = '';
 		$midvars = array();
-		if ( $find ) {
+		if (isset($find)) {
 			$findesc = '%'.$find.'%';
 			$tab = $with_subgals?'tab':'tf';
 			$mid = " (upper($tab.`name`) LIKE upper(?) OR upper($tab.`description`) LIKE upper(?) OR upper($tab.`filename`) LIKE upper(?))";
