@@ -3268,6 +3268,27 @@ class FileGalLib extends TikiLib
 
 		return array('data' => $ret, 'cant' => $cant);
 	}
+	
+	/**
+	 * Get a file with additional data
+	 *
+	 * @param int $fileId
+	 * @return array An array representing a file, formatted like get_files()
+	 * @throws Exception if file does not exist
+	 */
+	function get_file_additional($fileId)
+	{
+		$file = $this->get_file_info($fileId);
+		$files = $this->get_files(-1, -1, false, null, $file['galleryId'])['data'];
+		$files = array_filter($files, function($file) use ($fileId) {
+			return $file['fileId'] == $fileId;
+		});
+		if (! $files) {
+			throw new Exception('File not found');
+		}
+		return $files[0];
+	}
+
 
 	/**
 	 * No longer used (12.x) - was only called from listfgal_pref() in /lib/prefs/home.php
