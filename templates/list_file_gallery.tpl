@@ -74,12 +74,16 @@
 			{assign var=other_columns_selected value=''}
 			{if $view eq 'browse' or $view eq 'page'}
 				{assign var=show_infos value='y'}
-				{include file='browse_file_gallery.tpl'}
+				{if $view eq 'page'}
+					{include file='fgal_view_page.tpl'}
+				{else}
+					{include file='browse_file_gallery.tpl'}
+				{/if}
 			{else}
 				{assign var=show_infos value='n'}
 				{include file='list_file_gallery_content.tpl'}
 			{/if}
-			{if ($files
+			{if (isset($files) && $files
 				and $gal_info.show_checked neq 'n'
 				and $prefs.fgal_checked eq 'y'
 				and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y' or $tiki_p_assign_perm_file_gallery eq 'y')

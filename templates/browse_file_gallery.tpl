@@ -1,4 +1,4 @@
-{if $parentId gt 0 and $view neq 'page' and ($prefs.feature_use_fgal_for_user_files neq 'y' or $tiki_p_admin_file_galleries eq 'y' or $gal_info.type neq 'user')}
+{if $parentId gt 0 and ($prefs.feature_use_fgal_for_user_files neq 'y' or $tiki_p_admin_file_galleries eq 'y' or $gal_info.type neq 'user')}
 	<div style="float:left;width:100%">
 		{self_link galleryId=$parentId}
 			{icon name="previous"} {tr}Parent Gallery{/tr}
@@ -40,7 +40,7 @@
 		{capture name="thumbactions"}
 			{if ($prefs.fgal_show_thumbactions eq 'y' or $show_details eq 'y')}
 					<div class="thumbactions">
-				{if $prefs.fgal_checked neq 'n' and $tiki_p_admin_file_galleries eq 'y' and $view neq 'page'}
+				{if $prefs.fgal_checked neq 'n' and $tiki_p_admin_file_galleries eq 'y'}
 					<label style="float:left">
 						<input type="checkbox" onclick="flip_thumbnail_status('{$checkname}_{$file.id}')" name="{$checkname}[]" value="{$file.id|escape}" {if $is_checked eq 'y'}checked="checked"{/if}>
 						{if isset($checkbox_label)}
@@ -61,108 +61,82 @@
 			</div> {* thumbactions *}
 			{/if}
 		{/capture}
-		<div id="{$checkname}_{$file.id}" class="{if $view eq 'page'}clearfix thumbnailcontener-heightauto{else}clearfix thumbnailcontener{if $is_checked eq 'y'} thumbnailcontenerchecked{/if}{if $file.isgal eq 1} subgallery{/if}{/if}" style="{if $view eq 'browse'}float:left;{/if}{if $view neq 'page'}width:{$thumbnailcontener_size}px{/if}">
-			<div class="thumbnail" style="float:left; {if $view neq 'page'}width:{$thumbnailcontener_size}px{/if}">
+		<div id="{$checkname}_{$file.id}" class="clearfix thumbnailcontener{if $is_checked eq 'y'} thumbnailcontenerchecked{/if}{if $file.isgal eq 1} subgallery{/if}" style="{if $view eq 'browse'}float:left;{/if}width:{$thumbnailcontener_size}px">
+			<div class="thumbnail" style="float:left; width:{$thumbnailcontener_size}px">
 				{include file='fgal_thumbnailframe.tpl'}
 				{if $show_infos eq 'y'}
 					<div class="thumbinfos">
-						{if $view eq 'page'}
-							{$smarty.capture.thumbactions}
-						{else}
-							{foreach from=$fgal_listing_conf item=item key=propname}
-								{assign var=key_name_len value=$prefs.fgal_browse_name_max_length}
-								{if isset($item.key)}
-									{assign var=key_name value=$item.key}
-								{else}
-									{assign var=key_name value="show_$propname"}
+						{foreach from=$fgal_listing_conf item=item key=propname}
+							{assign var=key_name_len value=$prefs.fgal_browse_name_max_length}
+							{if isset($item.key)}
+								{assign var=key_name value=$item.key}
+							{else}
+								{assign var=key_name value="show_$propname"}
+							{/if}
+							{if isset($gal_info.$key_name)
+								and ( $gal_info.$key_name eq 'y'
+									or $gal_info.$key_name eq 'a'
+									or $gal_info.$key_name eq 'i'
+									or $propname eq 'name'
+								)
+							}
+								{if isset($file.$propname)}
+									{assign var=propval value=$file.$propname|escape}
 								{/if}
-								{if isset($gal_info.$key_name)
-									and ( $gal_info.$key_name eq 'y'
-										or $gal_info.$key_name eq 'a'
-										or $gal_info.$key_name eq 'i'
-										or $propname eq 'name'
-									)
-								}
-									{if isset($file.$propname)}
-										{assign var=propval value=$file.$propname|escape}
+								{* Format property values *}
+								{if $propname eq 'id' or $propname eq 'name'}
+									{if $propname eq 'name' and $propval eq '' and $gal_info.show_name eq 'n'}
+										{* show the filename if only name should be displayed but is empty *}
+										{assign var=propval value=$file.filename|truncate:$key_name_len}
+										{assign var=propval value="<a class='fgalname namealias' $link>$propval</a>"}
+									{else}
+										{assign var=propval value="<a class='fgalname' $link>$propval</a>"}
 									{/if}
-									{* Format property values *}
-									{if $propname eq 'id' or $propname eq 'name'}
-										{if $propname eq 'name' and $propval eq '' and $gal_info.show_name eq 'n'}
-											{* show the filename if only name should be displayed but is empty *}
-											{assign var=propval value=$file.filename|truncate:$key_name_len}
-											{assign var=propval value="<a class='fgalname namealias' $link>$propval</a>"}
-										{else}
-											{assign var=propval value="<a class='fgalname' $link>$propval</a>"}
-										{/if}
-									{elseif $propname eq 'created' or $propname eq 'lastModif'}
-										{assign var=propval value=$propval|tiki_short_date}
-									{elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}
-										{assign var=propval value=$propval|userlink}
-									{elseif $propname eq 'size'}
-										{assign var=propval value=$propval|kbsize:true}
-									{elseif $propname eq 'description' and $gal_info.max_desc gt 0}
-										{assign var=propval value=$propval|truncate:$gal_info.max_desc:"...":false|nl2br}
-									{elseif $propname eq 'lockedby' and $propval neq ''}
-										{assign var=propval value=$propval|userlink}
-									{/if}
-	
-									{if $propname eq 'name'}
-										<div class="thumbnamecontener">
-											<div class="thumbname">
-												<div class="thumbnamesub" style="width:{$thumbnail_size}px; overflow: hidden;{if $view eq 'page'}text-align:center{/if}">
-													{if $gal_info.show_name eq 'f' or ($gal_info.show_name eq 'a'
-														and $file.name eq '')}
-														<a class="fgalname" {$link} title="{$file.filename}" {if $view eq 'page'}style="text-align:center"{/if}>
-															{$file.filename|truncate:$key_name_len}
-														</a>
-													{else}
-														{$propval}
-													{/if}
-												</div>
+								{elseif $propname eq 'created' or $propname eq 'lastModif'}
+									{assign var=propval value=$propval|tiki_short_date}
+								{elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}
+									{assign var=propval value=$propval|userlink}
+								{elseif $propname eq 'size'}
+									{assign var=propval value=$propval|kbsize:true}
+								{elseif $propname eq 'description' and $gal_info.max_desc gt 0}
+									{assign var=propval value=$propval|truncate:$gal_info.max_desc:"...":false|nl2br}
+								{elseif $propname eq 'lockedby' and $propval neq ''}
+									{assign var=propval value=$propval|userlink}
+								{/if}
+
+								{if $propname eq 'name'}
+									<div class="thumbnamecontener">
+										<div class="thumbname">
+											<div class="thumbnamesub" style="width:{$thumbnail_size}px; overflow: hidden;{if $view eq 'page'}text-align:center{/if}">
+												{if $gal_info.show_name eq 'f' or ($gal_info.show_name eq 'a'
+													and $file.name eq '')}
+													<a class="fgalname" {$link} title="{$file.filename}" {if $view eq 'page'}style="text-align:center"{/if}>
+														{$file.filename|truncate:$key_name_len}
+													</a>
+												{else}
+													{$propval}
+												{/if}
 											</div>
 										</div>
-									{elseif $propval neq '' and $propname neq 'type'}
-										<div class="thumbinfo{if $propname eq 'description'} thumbdescription{/if}"{if $show_details eq 'n' and $propname neq 'description'} style="display:none"{/if}>
-											{if $propname neq 'description'}
-												<span class="thumbinfoname">
-													{$item.name}:
-												</span>
-											{/if}
-											<span class="thumbinfoval"{if $propname neq 'description'} style="white-space: nowrap"{/if}>
-												{$propval}
+									</div>
+								{elseif $propval neq '' and $propname neq 'type'}
+									<div class="thumbinfo{if $propname eq 'description'} thumbdescription{/if}"{if $show_details eq 'n' and $propname neq 'description'} style="display:none"{/if}>
+										{if $propname neq 'description'}
+											<span class="thumbinfoname">
+												{$item.name}:
 											</span>
-										</div>
-									{/if}
+										{/if}
+										<span class="thumbinfoval"{if $propname neq 'description'} style="white-space: nowrap"{/if}>
+											{$propval}
+										</span>
+									</div>
 								{/if}
-							{/foreach}
-						{/if}
+							{/if}
+						{/foreach}
 					</div> {* thumbinfos *}
 				{/if}
-				{if $view neq 'page'}
-					{$smarty.capture.thumbactions}
-				{/if}
+				{$smarty.capture.thumbactions}
 			</div> {* thumbnail *}
-			{* property table in page file view *}
-			{if $view eq 'page'}
-				<div style="float:left">
-					<div class='box-data'>
-						{include file='file_properties_table.tpl'}
-					</div>
-				</div>
-				<br clear="all">
-				<div>
-					{include file='tiki-upload_file_progress.tpl' fileId=$file.id name=$file.filename}
-				</div>
-				{if isset($metarray) and $metarray|count gt 0}
-					<br>
-					<div class="text-left">
-						{remarksbox type="tip" title="{tr}Metadata{/tr}"}
-							{include file='metadata/meta_view_tabs.tpl'}
-						{/remarksbox}
-					</div>
-				{/if}
-			{/if}
 		</div> {* thumbnailcontener *}
 		{jq}
 			adjustThumbnails()
@@ -173,12 +147,11 @@
 			<b>{tr}No records found{/tr}</b>
 		</div>
 	{/foreach}
-
 </div>
 
 <br clear="all" />
 {if ($prefs.fgal_checked neq 'n' and $tiki_p_admin_file_galleries eq 'y'
-	and ( !isset($show_selectall) or $show_selectall eq 'y') and $view neq 'page' )
+	and ( !isset($show_selectall) or $show_selectall eq 'y') )
 			and ($prefs.fgal_show_thumbactions eq 'y' or $show_details eq 'y')}
 	{select_all checkbox_names='file[],subgal[]' label="{tr}Select All{/tr}"}
 {/if}

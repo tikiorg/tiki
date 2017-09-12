@@ -825,52 +825,59 @@ if (isset($_GET['slideshow'])) {
 			$syntax = '';
 		}
 		$with_archive = ( isset($gal_info['archives']) && $gal_info['archives'] == '-1') ? false : true;
-		// Get list of files in the gallery
-		$files = $filegallib->get_files(
-			$_REQUEST['offset'],
-			$_REQUEST['maxRecords'],
-			$_REQUEST['sort_mode'],
-			$_REQUEST['find'],
-			$galleryId,
-			$with_archive,
-			$with_subgals,
-			true,
-			true,
-			false,
-			false,
-			true,
-			$recursive,
-			'',
-			true,
-			false,
-			($gal_info['show_backlinks']!='n'),
-			$find,
-			$syntax
-		);
-		$smarty->assign('cant', $files['cant']);
+		
+		if (isset($_REQUEST['view']) and $_REQUEST['view'] == 'page' && isset($_REQUEST['fileId'])) {
+			$file = $filegallib->get_file_info($_REQUEST['fileId']);
+			$smarty->assign('cant', 1);
+		} else {
+			// Get list of files in the gallery
+			$files = $filegallib->get_files(
+				$_REQUEST['offset'],
+				$_REQUEST['maxRecords'],
+				$_REQUEST['sort_mode'],
+				$_REQUEST['find'],
+				$galleryId,
+				$with_archive,
+				$with_subgals,
+				true,
+				true,
+				false,
+				false,
+				true,
+				$recursive,
+				'',
+				true,
+				false,
+				($gal_info['show_backlinks']!='n'),
+				$find,
+				$syntax
+			);
+			$smarty->assign('cant', $files['cant']);
+			if (isset($_REQUEST['view']) and $_REQUEST['view'] == 'page') {
+				$file = $files['data'][0];
+			}
+		}
 		if (isset($_REQUEST['view']) and $_REQUEST['view'] == 'page') {
 			$smarty->assign('maxWidth', isset($_REQUEST['maxWidth']) ? $_REQUEST['maxWidth'] : '300px');
 			//need to convert fileId to an offset to bring up a specific file for page view
-			if (isset($_REQUEST['fileId'])) {
-				$files['data'] = array_values(array_filter($files['data'], function ($file) {
-					return $file['fileId'] == $_REQUEST['fileId'];
-				}));
-			}
 			$smarty->assign('maxRecords', 1);
 			$smarty->assign(
 				'metarray',
-				isset($files['data'][0]['metadata']) ?
-					json_decode($files['data'][0]['metadata'], true) : null
+				isset($file['metadata']) ?
+					json_decode($file['metadata'], true) : null
 			);
-		}
-		$smarty->assign_by_ref('files', $files['data']);
-		$subs = 0;
-		if ($with_subgals) {
-			foreach ($files['data'] as $f) {
-				$subs = $subs + $f['isgal'];
+			$smarty->assign_by_ref('file', $file);
+		} else {
+			$smarty->assign_by_ref('files', $files['data']);
+			
+			$subs = 0;
+			if ($with_subgals) {
+				foreach ($files['data'] as $f) {
+					$subs = $subs + $f['isgal'];
+				}
 			}
+			$smarty->assign('filescount', $files['cant'] - $subs);
 		}
-		$smarty->assign('filescount', count($files['data']) - $subs);
 	}
 	//for page view to get offset in pagination right since subgalleries are not included
 	$subgals = $filegallib->getSubGalleries($galleryId);
