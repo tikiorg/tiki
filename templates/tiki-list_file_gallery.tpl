@@ -227,7 +227,21 @@
 			<div class="row">
 			{if $prefs.fgal_search eq 'y'}
 				<div class="col-sm-6">
-					{include file='find.tpl' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations find_show_sub='y' find_other="{tr}Gallery of the file with the identifier{/tr}" find_in="<ul><li>{tr}Name{/tr}</li><li>{tr}Filename{/tr}</li><li>{tr}Description{/tr}</li></ul>"}
+					{include file='find.tpl' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations find_show_sub='y' find_in="<ul><li>{tr}Name{/tr}</li><li>{tr}Filename{/tr}</li><li>{tr}Description{/tr}</li></ul>"}
+					<form id="search-by-id" class="form" role="form" method="get" action="tiki-list_file_gallery.php">
+						<div class="input-group" style="margin-top: 10px; margin-bottom: 10px">
+							<span class="input-group-addon">
+								{icon name="search"}
+							</span>
+							<input class="form-control" type="text" name="fileId" id="fileId" {if isset($fileId)} value="{$fileId}"{/if} placeholder="1234" title="Search for the file with this number in all galleries">
+							{jq}
+								jQuery("#fileId").tooltip();
+							{/jq}
+							<div class="input-group-btn">
+								<button type="submit" class="btn btn-default" style="text-align: right">{tr}Search by identifier{/tr}</button>
+							</div>
+						</div>
+					</form>
 				</div>
 			{/if}
 			{if $prefs.fgal_search_in_content eq 'y' and $galleryId > 0}
