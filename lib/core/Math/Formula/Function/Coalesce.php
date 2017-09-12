@@ -12,6 +12,14 @@ class Math_Formula_Function_Coalesce extends Math_Formula_Function
 		foreach ( $element as $child ) {
 			$value = $this->evaluateChild($child);
 
+			if (is_array($value)) {
+				foreach ($value as $val) {
+					if (! empty($val)) {
+						return $val;
+					}
+				}
+			}
+
 			if (! empty($value)) {
 				return $value;
 			}
