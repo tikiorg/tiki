@@ -144,7 +144,11 @@ $smarty->assign('reindex_file_id', -1);
 if (isset($_REQUEST['view'])) {
 	$view = $_REQUEST['view'];
 } else {
-	$view = $gal_info['default_view'];
+	if (isset($_REQUEST['fileId'])) {
+		$view = 'page';
+	} else {
+		$view = $gal_info['default_view'];
+	}
 }
 
 // Execute batch actions
@@ -737,7 +741,14 @@ if (!isset($_REQUEST['find']))
 $smarty->assign_by_ref('find', $_REQUEST['find']);
 
 if (isset($_REQUEST['fileId'])) {
-	$smarty->assign('fileId', $_REQUEST['fileId']);
+	if (! is_numeric($_REQUEST['fileId'])) {
+		$smarty->assign('errortype', 400);
+		$smarty->assign('msg', tr('Invalid %0 parameter', 'fileId'));
+		$smarty->display('error.tpl');
+	}
+	$fileId = (int) $_REQUEST['fileId'];
+
+	$smarty->assign('fileId', $fileId);
 }
 if ($prefs['feature_categories'] == 'y') {
 	if (!empty($_REQUEST['cat_categories'])) {
@@ -831,7 +842,14 @@ if (isset($_GET['slideshow'])) {
 		$with_archive = ( isset($gal_info['archives']) && $gal_info['archives'] == '-1') ? false : true;
 		
 		if ($view == 'page' && isset($_REQUEST['fileId'])) {
-			$file = $filegallib->get_file_info($_REQUEST['fileId']);
+			try {
+				$file = $filegallib->get_file_additional($fileId);
+			} catch (Exception $e) {
+				$smarty->assign('errortype', 404);
+				$smarty->assign('msg', tr('File %0 not found', $fileId));
+				$smarty->display('error.tpl');
+				die;
+			}
 			$smarty->assign('cant', 1);
 		} else {
 			// Get list of files in the gallery
