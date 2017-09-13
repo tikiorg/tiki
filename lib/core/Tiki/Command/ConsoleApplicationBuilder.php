@@ -82,6 +82,7 @@ class ConsoleApplicationBuilder
 					new FilesBatchuploadCommand,
 					new FilesCopyCommand,
 					new FilesDeleteoldCommand,
+					new FilesMoveCommand,
 					new IndexRebuildCommand,
 					new IndexOptimizeCommand,
 					new IndexCatchUpCommand,
