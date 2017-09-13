@@ -375,3 +375,21 @@ div.cvsup {
 		margin-top: -34px;
 	}
 }
+
+@media (max-width: @screen-xs-max) {
+	.box-search {
+		.form-inline .input-group {
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+			.form-control { width: auto; }
+			.input-group-btn { float: left; width: auto; }
+		}
+
+		.panel-body .form-inline .input-group {
+			width: 100%;
+			.input-group-addon, .input-group-btn, .form-control {
+				width: 100%;
+			}
+		}
+	}
+}

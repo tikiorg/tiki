@@ -1575,6 +1575,27 @@ div.cvsup {
     margin-top: -34px;
   }
 }
+@media (max-width: 767px) {
+  .box-search .form-inline .input-group {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .box-search .form-inline .input-group .form-control {
+    width: auto;
+  }
+  .box-search .form-inline .input-group .input-group-btn {
+    float: left;
+    width: auto;
+  }
+  .box-search .panel-body .form-inline .input-group {
+    width: 100%;
+  }
+  .box-search .panel-body .form-inline .input-group .input-group-addon,
+  .box-search .panel-body .form-inline .input-group .input-group-btn,
+  .box-search .panel-body .form-inline .input-group .form-control {
+    width: 100%;
+  }
+}
 .textarea-toolbar img.icon {
   vertical-align: middle;
   margin: 1px 3px;
