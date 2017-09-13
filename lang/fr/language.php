@@ -11593,6 +11593,8 @@ $lang = array(
 // "Go to the <a href=\"tiki-admin.php?page=look\" class=\"alert-link\">Look & Feel</a> section for additional site customization preferences" => "Go to the <a href=\"tiki-admin.php?page=look\" class=\"alert-link\">Look & Feel</a> section for additional site customization preferences",
 "These values will be stored in plain text in the database" => "Ces valeurs seront enregistrées en texte clair dans la base de données",
 "Email to send a test mail" => "Courriel pour l'envoi d'un test",
+"Search by identifier" => "Chercher par identifiant",
+"Search for the file with this number, in all galleries" => "Chercher le fichier avec ce numéro, dans toutes les galeries",
 // "Logging and reporting" => "Logging and reporting",
 // "Web Cron" => "Web Cron",
 // "Call Web Cron URL" => "Call Web Cron URL",

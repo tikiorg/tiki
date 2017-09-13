@@ -233,7 +233,7 @@
 							<span class="input-group-addon">
 								{icon name="search"}
 							</span>
-							<input class="form-control" type="text" name="fileId" id="fileId" {if isset($fileId)} value="{$fileId}"{/if} placeholder="1234" title="Search for the file with this number in all galleries">
+							<input class="form-control" type="text" name="fileId" id="fileId" {if isset($fileId)} value="{$fileId}"{/if} placeholder="1234" title="{tr}Search for the file with this number, in all galleries{/tr}">
 							{jq}
 								jQuery("#fileId").tooltip();
 							{/jq}
