@@ -54,7 +54,7 @@ class CategLib extends ObjectLib
 	function get_category($categId)
 	{
 		if (!is_numeric($categId)) {
-			throw new Exception('Invalid category identifier');
+			throw new Exception(tr('Invalid category identifier: "%0"', $categId));
 		}
 		$categories = $this->getCategories(array('identifier' => (int) $categId), false, false);
 		return empty($categories) ? false : $categories[$categId];

@@ -912,7 +912,7 @@ class PreferencesLib
 		TikiLib::lib('tiki')->set_user_preference($user, 'pref_filters', implode(',', $tags));
 	}
 
-	private function getEnabledFilters()
+	public function getEnabledFilters()
 	{
 		global $user;
 		$tikilib = TikiLib::lib('tiki');

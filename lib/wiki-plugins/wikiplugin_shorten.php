@@ -122,6 +122,7 @@ function wikiplugin_shorten($data, $params)
 				.		'$btn_more.hide();'
 				.		'$btn_less.show();'
 				.		'$content.show(show_speed);'
+				.		'return false;'
 				.	'});'
 
 				.	'$btn_less.click(function(){'
@@ -129,6 +130,7 @@ function wikiplugin_shorten($data, $params)
 				.		'$btn_less.hide();'
 				.		'$btn_more.show();'
 				.		'$content.hide(hide_speed);'
+				.		'return false;'
 				.	'});'
 				.'});'
 			);
@@ -152,11 +154,9 @@ function wikiplugin_shorten($data, $params)
 		$index = strlen($match[0]);
 
 		$sample = substr($data, 0, $index);
-		$sample .= '{button _text="'.$moreText.'" _class="btn_more" href="#"}';
-		$sample = TikiLib::lib('parser')->parse_data($sample, array());
+		$sample .= '<a href="#" class="btn_more btn btn-default">'.$moreText.'</a>';
 
-		$content = $data . '{button _text="'.$lessText.'" _class="btn_less" href="#"}';
-		$content = TikiLib::lib('parser')->parse_data($content, array());
+		$content = $data . '<a href="#" class="btn_less btn btn-default">'.$lessText.'</a>';
 
 		$out = sprintf($html, $sample, $content);
 		return $out;

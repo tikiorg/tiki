@@ -14,6 +14,7 @@ function wikiplugin_smarty_info()
 		'prefs' => array('wikiplugin_smarty'),
 		'validate' => 'all',
 		'extraparams' => true,
+		'format' => 'html',
 		'tags' => array( 'experimental' ),
 		'iconname' => 'code',
 		'introduced' => 5,
@@ -21,8 +22,11 @@ function wikiplugin_smarty_info()
 			'name' => array(
 				'required' => true,
 				'name' => tra('Smarty function'),
-				'description' => tr('The name of the Smarty function that the button will activate. Available
-					functions can be found at %0', '<code>lib/smarty/libs/plugins/function.(<strong>name</strong>).php</code>'),
+				'description' => tr(
+					'The name of the Smarty function that the plugin will activate. Available functions can be found at %0 and %1',
+					'<code>lib/smarty_tiki/function.(<strong>name</strong>).php</code>',
+					'<code>vendor_bundled/vendor/smarty/smarty/libs/plugins/function.(<strong>name</strong>).php</code>'
+				),
 				'since' => '7.0',
 				'filter' => 'word',
 				'default' => '',
@@ -51,5 +55,5 @@ function wikiplugin_smarty($data, $params)
 		$func = 'smarty_function_'.$params['name'];
 		$content = $func($params, $smarty);
 	}
-	return '~np~'.$content.'~/np~';
+	return $content;
 }
