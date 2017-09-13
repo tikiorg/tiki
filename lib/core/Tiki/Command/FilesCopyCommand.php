@@ -12,7 +12,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\HelpCommand;
 
 class FilesCopyCommand extends Command
 {
@@ -20,7 +19,7 @@ class FilesCopyCommand extends Command
 	{
 		$this
 			->setName('files:copy')
-			->setDescription('Copy files from file galleries to a regular directory on the file system')
+			->setDescription(tra('Copy files from file galleries to a regular directory on the file system'))
 			->addArgument(
 				'galleryId',
 				InputArgument::REQUIRED,
@@ -39,7 +38,7 @@ class FilesCopyCommand extends Command
 		global $prefs;
 
 		if ($prefs['feature_file_galleries'] != 'y' ) {
-			throw new \Exception("Feature Galleries not set up.");
+			throw new \Exception(tra('Feature Galleries not set up'));
 		}
 
 		$filegallib = \TikiLib::lib('filegal');
@@ -49,12 +48,12 @@ class FilesCopyCommand extends Command
 
 		$gal_info = $filegallib->get_file_gallery($galleryId);
 		if (! $gal_info || empty($gal_info['name'])) {
-			throw new \Exception("Files Copy: Gallery #$galleryId not found");
+			throw new \Exception(tr('File Copy: Gallery #%0 not found', $galleryId));
 		}
 
 		$destinationPath = $input->getArgument('destinationPath');
 		if (empty($destinationPath)) {
-			throw new \Exception("Files Copy: Destination path required");
+			throw new \Exception(tra('File Copy: Destination path required'));
 		}
 
 		$sourcePath = $filegallib->get_gallery_save_dir($galleryId);
@@ -64,16 +63,15 @@ class FilesCopyCommand extends Command
 		}
 
 		$files = $filegallib->get_files_info_from_gallery_id($galleryId);
-
 		if (! $files) {
 			if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-				$output->writeln('<comment>No files to copy</comment>');
+				$output->writeln('<comment>'.tra('No files to copy').'</comment>');
 			}
 			return;
 		}
 
 		if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-			$output->writeln('<comment>Files Copy starting...</comment>');
+			$output->writeln('<comment>'.tra('File Copy starting...').'</comment>');
 		}
 
 		$feedback = $filegalcopylib->processCopy($files, $destinationPath, $sourcePath);
@@ -90,7 +88,7 @@ class FilesCopyCommand extends Command
 		}
 
 		if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-			$output->writeln('<comment>File Copy complete</comment>');
+			$output->writeln('<comment>'.tra('File Copy complete').'</comment>');
 		}
 
 	}
