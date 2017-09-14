@@ -73,6 +73,7 @@ function wikiplugin_shorten($data, $params)
 {
 	static $shorten_count;
 	$headerlib = TikiLib::lib('header');
+	$parserlib = TikiLib::lib('parser');
 
 	extract(array(
 		'length' => 20,
@@ -146,21 +147,23 @@ function wikiplugin_shorten($data, $params)
 			$lessText = strip_tags($params['lessText']);
 		}
 
-		$html = '<span class="wikiplugin-shorten"' . $show_speed . $hide_speed . '>';
-		$html .= '<span class="sample"  data-btn-more="'.$moreText.'">%s</span>';
-		$html .= '<span class="content" data-btn-less="'.$lessText.'">%s</span>';
-		$html .= '</span>';
+		$html = '<div class="wikiplugin-shorten"' . $show_speed . $hide_speed . '>';
+		$html .= '<div class="sample"  data-btn-more="'.$moreText.'">%s</div>';
+		$html .= '<div class="content" data-btn-less="'.$lessText.'">%s</div>';
+		$html .= '</div>';
 
 		$index = strlen($match[0]);
 
-		$sample = substr($data, 0, $index);
+		$sample = $parserlib->parse_data_plugin(substr($data, 0, $index));
 		$sample .= '<a href="#" class="btn_more btn btn-default">'.$moreText.'</a>';
 
-		$content = $data . '<a href="#" class="btn_less btn btn-default">'.$lessText.'</a>';
+		$content =  $parserlib->parse_data_plugin($data) . '<a href="#" class="btn_less btn btn-default">'.$lessText.'</a>';
 
 		$out = sprintf($html, $sample, $content);
 		return $out;
-	}
 
-	return $data;
+	} else {		// short enough already
+
+		return $parserlib->parse_data_plugin($data);
+	}
 }
