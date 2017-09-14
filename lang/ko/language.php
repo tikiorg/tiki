@@ -4304,7 +4304,6 @@ $lang = array(
 "Force lowercase" => "소문자 강제 적용",
 // "Tiki will automatically convert all alphabetic characters in the username to all lowercase letters. For example <b>JohnDoe</b> becomes <b>johndoe</b>" => "Tiki will automatically convert all alphabetic characters in the username to all lowercase letters. For example <b>JohnDoe</b> becomes <b>johndoe</b>",
 "Mail end of line" => "메일 줄 끝",
-"Specify the end-of-line (EOL) character used by Tiki when sending mail notifications" => "메일 줄 끝",
 "CRLF (standard)" => "CRLF (표준)",
 "LF (some Unix MTA)" => "LF (몇몇 Unix MTA)",
 // "Text string used to customise mail templates" => "Text string used to customise mail templates",

@@ -4303,7 +4303,6 @@ $lang = array(
 "Force lowercase" => "Forçar minúscules",
 // "Tiki will automatically convert all alphabetic characters in the username to all lowercase letters. For example <b>JohnDoe</b> becomes <b>johndoe</b>" => "Tiki will automatically convert all alphabetic characters in the username to all lowercase letters. For example <b>JohnDoe</b> becomes <b>johndoe</b>",
 "Mail end of line" => "Final de la línia de correu",
-"Specify the end-of-line (EOL) character used by Tiki when sending mail notifications" => "Final de la línia de correu",
 "CRLF (standard)" => "CRLF (estàndard)",
 "LF (some Unix MTA)" => "LF (alguns MTA Unix)",
 // "Text string used to customise mail templates" => "Text string used to customise mail templates",

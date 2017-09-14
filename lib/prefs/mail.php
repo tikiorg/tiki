@@ -9,8 +9,8 @@ function prefs_mail_list()
 {
 	return array(
 		'mail_crlf' => array(
-			'name' => tra('Mail end of line'),
-			'description' => tra('Specify the end-of-line (EOL) character used by Tiki when sending mail notifications.'),
+			'name' => tra('Email newline character(s)'),
+			'description' => tra('End-of-line (EOL) character used in outgoing emails'),
 			'type' => 'list',
 			'options' => array(
 				'CRLF' => tra('CRLF (standard)'),
