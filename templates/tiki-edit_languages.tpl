@@ -64,7 +64,7 @@
 	</div>
 	<div class="form-group">
 		<div class="adminoptionbox">
-			<label for="add_tran_sw" class="col-md-4 control-label">{tr}Unstranslated strings{/tr}</label>
+			<label for="add_tran_sw" class="col-md-4 control-label">{tr}Untranslated strings{/tr}</label>
 			<div class="col-md-8">
 				<label class="radio-inline"><input id="edit_rec_sw" class="translation_action" align="right" type="radio" name="action" value="edit_rec_sw" {if $action eq 'edit_rec_sw'}checked="checked"{/if}>{tr}Untranslated{/tr}</label>
 				{if $prefs.record_untranslated eq 'y'}
