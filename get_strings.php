@@ -28,8 +28,8 @@
  *
  */
 
+require_once('tiki-setup.php');
 if (php_sapi_name() != 'cli') {
-	require_once('tiki-setup.php');
 	$access->check_permission('tiki_p_admin');
 }
 

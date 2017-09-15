@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once('lib/init/initlib.php');
+require_once(dirname(dirname(__FILE__)) . '/init/initlib.php');
 
 class TikiSetup extends TikiInit
 {
