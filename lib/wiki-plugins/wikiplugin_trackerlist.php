@@ -1107,6 +1107,9 @@ function wikiplugin_trackerlist($data, $params)
 		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $trklib->flaten($limit));
 		if (!empty($fields)) {
 			$listfields = $fields;
+			if (is_string($listfields)) {
+				$listfields = explode(':', $listfields);
+			}
 
 			//We must include the $calendarfielddate, even if they are not in the listfields
 			if (!empty($calendarfielddate)) {
@@ -1128,7 +1131,7 @@ function wikiplugin_trackerlist($data, $params)
 					$listfields = $trklib->get_pretty_fieldIds($tpl, 'tpl', $prettyModifier, $trackerId);
 				}
 		} else {
-			$listfields = '';
+			$listfields = array();
 		}
 		if (!empty($compute) && !empty($listfields)) {
 			if (preg_match_all('/[0-9.]+/', $compute, $matches)) {
