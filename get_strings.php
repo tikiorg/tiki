@@ -26,9 +26,10 @@
  * 		- php get_strings.php lang=pt-br outputFiles=true
  * 
  * 		Only scan lib/, and only part of lib/ (exclude lib/core/Zend and lib/captcha), but still include captchalib.php and index.php
+ * 		This FAILS as of 2017-09-15, since the language files (for output) are looked for in baseDir.
  * 		- php get_strings.php baseDir=lib/ excludeDirs=lib/core/Zend,lib/captcha includeFiles=captchalib.php,index.php fileName=language_r.php
  *
- * Note: Parameters controlling scanned files (baseDir, excludeDirs, includeFiles and fileName) are available in command line mode only.
+ * Note: Parameters controlling scanned files (baseDir, excludeDirs, includeFiles) and fileName are available in command line mode only.
  *
  *
  */
