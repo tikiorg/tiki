@@ -56,9 +56,9 @@ class AuthTokens
 		return $data;
 	}
 
-	function getTokens()
+	function getTokens($conditions=array())
 	{
-		return $this->table->fetchAll(array(), array(), -1, -1, array('creation' => 'asc'));
+		return $this->table->fetchAll(array(), $conditions, -1, -1, array('creation' => 'asc'));
 	}
 
 	function getGroups( $token, $entry, $parameters )

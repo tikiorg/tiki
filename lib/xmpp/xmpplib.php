@@ -47,6 +47,7 @@ class XMPPLib extends TikiLib {
 		if(!$token || $token['entry'] !== 'openfireauthtoken') {
 			return false;
 		}
+		// TODO: figure out how to delete token after n usages
 		$tokenlib->deleteToken($token['tokenId']);
 		
 		$param = json_decode($token['parameters'], A_ARRAY);
@@ -93,7 +94,7 @@ class XMPPLib extends TikiLib {
 		
 		try{
 			$xmppPrebind->auth();
-			$result = $xmppPrebind->getSessionInfo();			
+			$result = $xmppPrebind->getSessionInfo();
 		} catch(XmppPrebindException $e) {
 			throw new Exception($e->getMessage(), 401);
 		}
