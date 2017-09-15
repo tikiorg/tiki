@@ -10,6 +10,9 @@
 
 /**
  * Update lang/xx/language.php files
+ * 
+ * Scans a directory (its files) and a set of (individual) files
+ * By default, the directory scanned is the Tiki root, excluding $excludeDirs. By default, the individual files scanned are files in these otherwise excluded directories.
  *
  * Examples:
  * 		- http://localhost/pathToTiki/get_strings.php -> update all language.php files
@@ -21,9 +24,11 @@
  * Command line examples:
  * 		- php get_strings.php
  * 		- php get_strings.php lang=pt-br outputFiles=true
+ * 
+ * 		Only scan lib/, and only part of lib/ (exclude lib/core/Zend and lib/captcha), but still include captchalib.php and index.php
  * 		- php get_strings.php baseDir=lib/ excludeDirs=lib/core/Zend,lib/captcha includeFiles=captchalib.php,index.php fileName=language_r.php
  *
- * Note: baseDir and fileName parameters are available in command line mode only
+ * Note: Parameters controlling scanned files (baseDir, excludeDirs, includeFiles and fileName) are available in command line mode only.
  *
  *
  */
@@ -58,6 +63,7 @@ $excludeDirs = array(
 	'storage',	'tiki_tests', 'doc', 'db','lib/openlayers','tests', 'modules/cache'
 );
 
+// Files are processed after the base directory, so adding a file here allows to scan it even if its directory was excluded.
 $includeFiles = array(
 	'./lang/langmapping.php', './img/flags/flagnames.php'
 );
