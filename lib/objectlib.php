@@ -570,6 +570,9 @@ class ObjectLib extends TikiLib
 					$id = TikiLib::lib('tiki')->get_user_login($id);
 				}
 				return TikiLib::lib('user')->clean_user($id);
+			case 'calendar':
+				$info = TikiLib::lib('calendar')->get_calendar($id);
+				return $info['name'];
 		}
 
 		$title = $this->table('tiki_objects')->fetchOne(

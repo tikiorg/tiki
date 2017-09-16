@@ -457,6 +457,11 @@ class UnifiedSearchLib
 			$types['activity'] = tra('activity');
 		}
 
+		if ($prefs['feature_calendar'] === 'y') {
+			$types['calendaritem'] = tra('calendar item');
+			$types['calendar'] = tra('calendar');
+		}
+
 		$types['user'] = tra('user');
 		$types['group'] = tra('group');
 
@@ -625,6 +630,11 @@ class UnifiedSearchLib
 
 		if (isset($types['group'])) {
 			$aggregator->addContentSource('group', new Search_ContentSource_GroupSource);
+		}
+
+		if (isset($types['calendar'])) {
+			$aggregator->addContentSource('calendaritem', new Search_ContentSource_CalendarItemSource());
+			$aggregator->addContentSource('calendar', new Search_ContentSource_CalendarSource());
 		}
 
 		if ($prefs['activity_custom_events'] == 'y' || $prefs['activity_basic_events'] == 'y' || $prefs['monitor_enabled'] == 'y') {

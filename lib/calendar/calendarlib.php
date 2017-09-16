@@ -104,6 +104,7 @@ class CalendarLib extends TikiLib
 		$now = time();
 		if ($calendarId > 0) {
 			// modification of a calendar
+			$finalEvent = 'tiki.calendar.update';
 			$query = "update `tiki_calendars` set `name`=?, `user`=?, `description`=?, ";
 			$bindvars = array($name,$user,$description);
 			foreach ($customflags as $k => $v) {
@@ -116,6 +117,7 @@ class CalendarLib extends TikiLib
 			$result = $this->query($query, $bindvars);
 		} else {
 			// create a new calendar
+			$finalEvent = 'tiki.calendar.create';
 			$query = 'insert into `tiki_calendars` (`name`,`user`,`description`,`created`,`lastmodif`';
 			$bindvars = array($name,$user,$description,$now,$now);
 			if (!empty($customflags)) {
@@ -143,6 +145,13 @@ class CalendarLib extends TikiLib
 				$this->query('insert into `tiki_calendar_options` (`calendarId`,`optionName`,`value`) values (?,?,?)', array((int)$calendarId,$name,$value));
 			}
 		}
+
+		TikiLib::events()->trigger($finalEvent, [
+			'type' => 'calendar',
+			'object' => $calendarId,
+			'user' => $GLOBALS['user'],
+		]);
+
 		return $calendarId;
 	}
 
@@ -186,6 +195,8 @@ class CalendarLib extends TikiLib
      */
     function drop_calendar($calendarId)
 	{
+		$transaction = $this->begin();
+
 		// find and remove roles for all calendar items:
 		$query = "select `calitemId` from `tiki_calendar_items` where `calendarId`=?";
 		$result = $this->query($query, array( $calendarId ));
@@ -212,6 +223,14 @@ class CalendarLib extends TikiLib
 		// now remove the calendar itself:
 		$query = "delete from `tiki_calendars` where `calendarId`=?";
 		$this->query($query, array($calendarId));
+
+		TikiLib::events()->trigger('tiki.calendar.delete', [
+			'type' => 'calendar',
+			'object' => $calendarId,
+			'user' => $GLOBALS['user'],
+		]);
+
+		$transaction->commit();
 	}
 
 	/* tsart ans tstop are in user time - the data base is in server time */
@@ -560,6 +579,7 @@ class CalendarLib extends TikiLib
 		foreach ($customs as $custom) $realcolumns[]=$custom;
 
 		if ($calitemId) {
+			$finalEvent = 'tiki.calendaritem.update';
 			$new = false;
 			$data['lastmodif']=$this->now;
 
@@ -577,6 +597,7 @@ class CalendarLib extends TikiLib
 
 			$result = $this->query($query, $r);
 		} else {
+			$finalEvent = 'tiki.calendaritem.create';
 			$new = true;
 			$data['lastmodif']=$this->now;
 			$data['created']=$this->now;
@@ -612,6 +633,12 @@ class CalendarLib extends TikiLib
 		if ($prefs['feature_user_watches'] == 'y') {
 			$this->watch($calitemId, $data);
 		}
+
+		TikiLib::events()->trigger($finalEvent, [
+			'type' => 'calendaritem',
+			'object' => $calitemId,
+			'user' => $GLOBALS['user'],
+		]);
 
 		return $calitemId;
 	}
@@ -671,6 +698,13 @@ class CalendarLib extends TikiLib
 		if ($calitemId) {
 			$query = "delete from `tiki_calendar_items` where `calitemId`=?";
 			$this->query($query, array($calitemId));
+
+			TikiLib::events()->trigger('tiki.calendaritem.delete', [
+				'type' => 'calendaritem',
+				'object' => $calitemId,
+				'user' => $user,
+			]);
+
 		}
 	}
 

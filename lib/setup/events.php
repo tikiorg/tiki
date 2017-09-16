@@ -346,6 +346,16 @@ function tiki_setup_events()
 	$events->bind('tiki.mustread.completed', 'tiki.save');
 	$events->bind('tiki.mustread.required', 'tiki.save');
 
+	$events->bind('tiki.calendar.update', 'tiki.calendar.save');
+	$events->bind('tiki.calendar.create', 'tiki.calendar.save');
+	$events->bind('tiki.calendar.delete', 'tiki.save');
+	$events->bind('tiki.calendar.save', 'tiki.save');
+
+	$events->bind('tiki.calendaritem.update', 'tiki.calendaritem.save');
+	$events->bind('tiki.calendaritem.create', 'tiki.calendaritem.save');
+	$events->bind('tiki.calendaritem.delete', 'tiki.save');
+	$events->bind('tiki.calendaritem.save', 'tiki.save');
+
 	// As PHP's register_shutdown_function might change the working directory, change it back to avoid bugs.
 	$events->bindPriority(-20, 'tiki.process.shutdown', 'tiki_shutdown_cwd');
 
