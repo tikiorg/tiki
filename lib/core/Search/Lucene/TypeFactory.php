@@ -17,7 +17,7 @@ class Search_Lucene_TypeFactory implements Search_Type_Factory_Interface
 		return new Search_Type_WikiText($value);
 	}
 
-	function timestamp($value)
+	function timestamp($value, $dateOnly = false)
 	{
 		if (is_numeric($value)) {
 			return new Search_Type_Timestamp(gmdate('YmdHis', $value));

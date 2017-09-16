@@ -12,7 +12,7 @@ interface Search_Type_Factory_Interface
 	// wiki parsed before indexed - tokenized - indexed - unstored in database
 	function wikitext($value);
 	// not tokenized - indexed - stored in database
-	function timestamp($value);
+	function timestamp($value, $dateOnly = false);
 	// not tokenized - indexed - stored in database
 	function identifier($value);
 	// not tokenized - indexed - stored in database
