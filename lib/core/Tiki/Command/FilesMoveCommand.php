@@ -79,30 +79,33 @@ class FilesMoveCommand extends Command
 
 		$confirm = $input->getOption('confirm');
 
-		if ($confirm) {
-			if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-				$output->writeln('<comment>'.tra('File Move starting...').'</comment>');
-			}
-			$feedback = $filegalcopylib->processCopy($files, $destinationPath, $sourcePath, true);
-			foreach ($feedback as $message) {
-				$error = strpos($message, '<span class="text-danger">') !== false;
-				$message = strip_tags(str_replace('<br>', ' : ', $message));
-				if ($error) {
-					$message = "<error>$message</error>";
-					$output->writeln($message);
-				} else if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-					$message = "<info>$message</info>";
-					$output->writeln($message);
-				}
-			}
-			if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-				$output->writeln('<comment>'.tra('File Move complete').'</comment>');
-			}
-		} else {
+		if (!$confirm) {
 			$help = new HelpCommand();
 			$help->setCommand($this);
 			$help->run($input, $output);
-			throw new \Exception(tra('Use the --confirm option to proceed with the copy operation'));
+			throw new \Exception(tra('Use the --confirm option to proceed with the move operation'));
+		}
+
+		if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+			$output->writeln('<comment>'.tra('File Move starting...').'</comment>');
+		}
+
+		$feedback = $filegalcopylib->processCopy($files, $destinationPath, $sourcePath, true);
+
+		foreach ($feedback as $message) {
+			$error = strpos($message, '<span class="text-danger">') !== false;
+			$message = strip_tags(str_replace('<br>', ' : ', $message));
+			if ($error) {
+				$message = "<error>$message</error>";
+				$output->writeln($message);
+			} else if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+				$message = "<info>$message</info>";
+				$output->writeln($message);
+			}
+		}
+
+		if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+			$output->writeln('<comment>'.tra('File Move complete').'</comment>');
 		}
 	}
 }

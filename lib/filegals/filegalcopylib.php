@@ -39,9 +39,18 @@ class FilegalCopyLib extends FileGalLib
 		foreach ($files as $file) {
 			$result = $this->copyFile($file, $destinationPath, $sourcePath, $move);
 			if (isset($result['error'])) {
-				$feedback[] = '<span class="text-danger">' . tr('%0 was not successful for "%1"', $operation, $file['filename']) . '<br>(' . $result['error'] . ')</span>';
+				if ($move) {
+					$feedback[] = '<span class="text-danger">' . tr('Move was not successful for "%0"', $file['filename']) . '<br>(' . $result['error'] . ')</span>';
+				} else {
+					$feedback[] = '<span class="text-danger">' . tr('Copy was not successful for "%0"', $file['filename']) . '<br>(' . $result['error'] . ')</span>';
+				}
 			} else {
-				$feedback[] = tr('%0 was successful', $operation) . ': ' . $file['filename'];
+				if ($move) {
+					$feedback[] = tra('Move was successful') . ': ' . $file['filename'];
+				} else {
+					$feedback[] = tra('Copy was successful') . ': ' . $file['filename'];
+				}
+
 			}
 		}
 		return $feedback;
@@ -92,6 +101,7 @@ class FilegalCopyLib extends FileGalLib
 			// remove_file() needs $file['data'], despite it being an optional field.
 			// In the end, no Handlers in FileGallery implement any usage of $file['data']
 			$file['data'] = null;
+
 			if ($this->remove_file($file, '', true) === false) {
 				return array('error' => tra('Cannot remove file from gallery'));
 			}
