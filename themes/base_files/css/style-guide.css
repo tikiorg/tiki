@@ -1,0 +1,506 @@
+/*
+==========================================================================
+Misc. Stuff
+==========================================================================
+*/
+footer {
+  padding-bottom: 50px;
+}
+.tiki .page-header {
+  padding-bottom: 20px;
+}
+.colorpicker-element .input-group-addon i {
+  width: 20px;
+  height: 20px;
+}
+.input-group-addon {
+  display: inline-block;
+  width: auto;
+  margin-left: 5px;
+  padding: 3px;
+  vertical-align: bottom;
+  border: 2px solid #aaa !important;
+  border-radius: 3px !important;
+}
+/*
+==========================================================================
+Style guide
+==========================================================================
+*/
+.style-guide > div {
+  margin-bottom: 40px;
+}
+.style-guide h1,
+.style-guide h2 {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  font-weight: 600;
+  border-bottom: 1px solid #000;
+}
+.style-guide h1 + p {
+  margin-bottom: 40px;
+}
+.style-guide select {
+  display: block !important;
+}
+.style-guide .chosen-container {
+  display: none;
+}
+.style-guide .row {
+  margin: 0 0 25px 0;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.style-guide .row:last-child {
+  border-bottom: none;
+}
+.style-guide .col-md-9 {
+  padding-left: 0;
+}
+.style-guide .col-md-3 {
+  padding-right: 0;
+}
+.style-guide .input {
+  display: inline-block;
+}
+.style-guide .input p {
+  margin-bottom: 0.75em;
+  font-size: inherit !important;
+  font-weight: normal !important;
+  font-style: normal !important;
+  text-transform: none !important;
+}
+.style-guide .input input,
+.style-guide .input textarea,
+.style-guide .input select {
+  width: 75px;
+  padding: 4px;
+  border-radius: 3px;
+  border: 1px solid #aaa;
+}
+.style-guide .input input {
+  background-color: #fff;
+  color: #000;
+}
+.style-guide .input input[disabled] {
+  background-color: #ff0000;
+  border: 1px solid #ff0000;
+  cursor: not-allowed;
+}
+.style-guide .colors {
+  margin-bottom: 80px;
+}
+.style-guide .colors p:first-child {
+  margin-bottom: 0.5em;
+  font-size: 1.5em !important;
+  line-height: 1.1;
+}
+.style-guide .colors .input {
+  display: inline-table;
+  margin: 0 30px 25px 0;
+}
+.style-guide .colors .input span {
+  width: 150px;
+  height: 150px;
+  margin: 0 0 0.75em;
+}
+.style-guide .colors .input span i {
+  width: 100%;
+  height: 100%;
+}
+.style-guide .colors .input input {
+  display: block;
+}
+.style-guide .colors .input .error:after {
+  text-align: left;
+  padding-right: 0;
+}
+.style-guide .fonts .h3a {
+  font-size: 1.5em;
+}
+.style-guide .fonts .input input {
+  width: 150px;
+}
+.style-guide .fonts .input label {
+  width: 94px;
+}
+.style-guide .fonts .input .check {
+  width: auto;
+  margin: 0 5px 0 0;
+  vertical-align: middle;
+}
+.style-guide .fonts .input .error:after {
+  padding-right: 0;
+}
+.style-guide .headings .h1,
+.style-guide .headings .h2,
+.style-guide .headings .h3,
+.style-guide .headings .h4,
+.style-guide .headings .h5,
+.style-guide .headings .h6 {
+  text-decoration: underline;
+}
+.style-guide .headings .input label {
+  width: 100px;
+}
+.style-guide .headings .input .check {
+  width: auto;
+  margin: 0 5px 0 0;
+  vertical-align: middle;
+}
+.style-guide .headings .input .error:not(.picker):after {
+  padding-right: 0px;
+}
+.style-guide .tables .col-md-9 > p {
+  font-size: 1.5em;
+  line-height: 1.1;
+}
+.style-guide .tables .row:last-child .error:after {
+  text-align: left;
+}
+.style-guide .tables .row:last-child .picker.error:after {
+  text-align: right;
+  padding-right: 88px;
+}
+.style-guide .tables .input label {
+  width: 125px;
+}
+.style-guide .tables .input .nocolor {
+  width: 200px;
+}
+.style-guide .buttons button {
+  margin-right: 10px;
+}
+.style-guide .buttons .input label {
+  width: 100px;
+}
+.style-guide .forms span:not(.input-group-addon) {
+  display: inline-block;
+  width: 85px;
+}
+.style-guide .forms .col-md-9 input,
+.style-guide .forms .col-md-9 > textarea,
+.style-guide .forms .col-md-9 > select {
+  width: 100%;
+  margin: 0 0 20px 0;
+}
+.style-guide .forms .col-md-9 label {
+  display: block;
+}
+.style-guide .forms .col-md-9 input[type="checkbox"],
+.style-guide .forms .col-md-9 input[type="radio"] {
+  width: 18px;
+  margin: 0 5px 0 0;
+}
+.style-guide .forms .col-md-9 .has-error input {
+  margin: 0;
+}
+.style-guide .forms .col-md-9 .has-error .label-warning {
+  display: inline;
+}
+.style-guide .forms .input label {
+  width: 100px;
+}
+.style-guide .forms .input .error:after {
+  text-align: right;
+  padding-right: 35px;
+}
+.style-guide .lists .input input {
+  width: 200px;
+}
+.style-guide .lists .input label {
+  width: 125px;
+}
+.style-guide .lists .input .error:after {
+  text-align: left;
+  padding-right: 0;
+}
+.style-guide .navbars {
+  min-height: 300px;
+}
+.style-guide .navbars ul {
+  margin: 0;
+  list-style-type: none !important;
+}
+.style-guide .navbars .row {
+  overflow: visible;
+}
+.style-guide .navbars .navbar-nav {
+  padding: 0 !important;
+}
+.style-guide .navbars .dropdown-menu {
+  padding: 5px 0 !important;
+}
+.style-guide .navbars .input label {
+  width: 115px;
+}
+.style-guide .dropdowns .dropdown-menu {
+  display: block;
+  padding: 5px 0 !important;
+}
+.style-guide .dropdowns .dropdown-menu > li {
+  padding: 0 !important;
+}
+.style-guide .dropdowns .input label {
+  width: 108px;
+}
+.style-guide .dropdowns .input p:last-child input {
+  width: 100%;
+}
+.style-guide .dropdowns .input .nocolor {
+  width: 200px;
+}
+.style-guide .dropdowns .input .error:after {
+  text-align: left;
+  padding-right: 0;
+}
+.style-guide .dropdowns .input .picker.error:after {
+  text-align: right;
+  padding-right: 94px;
+}
+.style-guide .tabs .input label {
+  width: 115px;
+}
+.style-guide .tabs .input .nocolor {
+  width: 140px;
+}
+.style-guide .tabs .input .error:after {
+  text-align: left;
+  padding-right: 0;
+}
+.style-guide .alerts > div {
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+.style-guide .alerts .input label {
+  width: 100px;
+}
+.style-guide .alerts .input .error:after {
+  padding-right: 40px;
+}
+.style-guide .icons .fa {
+  display: inline-table;
+  min-width: 25px;
+  min-height: 25px;
+  margin: 0 10px 10px 0;
+  padding: 0.35em;
+  border-radius: 50%;
+  color: #fff;
+  background: #337ab7;
+  text-align: center;
+  cursor: pointer;
+}
+.style-guide .icons .fa:before {
+  display: table-cell;
+  vertical-align: middle;
+}
+.style-guide .icons .input label {
+  width: 100px;
+}
+.style-guide .custom-css .input {
+  width: 100%;
+}
+.style-guide .custom-css .input textarea {
+  width: 100%;
+  height: 200px;
+  margin: 0;
+  resize: none;
+  color: #000;
+  font-family: "Helvetica Neue";
+  font-size: 14px;
+  background-color: #fff;
+}
+.style-guide .custom-css .input > span {
+  display: none;
+}
+.style-guide .custom-css .copy-custom-css {
+  margin-left: 10px;
+}
+.style-guide .custom-css .delete-custom-css {
+  float: right;
+}
+.style-guide .custom-css .css-error {
+  position: relative;
+}
+.style-guide .custom-css .css-error textarea {
+  background-color: #f2dede;
+  border: 1px solid #d43f3a;
+}
+.style-guide .custom-css .css-error > span {
+  position: absolute;
+  display: block;
+  width: 100px;
+  top: 5px;
+  left: 5px;
+  border-bottom: 1px dotted red;
+}
+.style-guide p.error input,
+.style-guide p.error textarea {
+  border-color: #d43f3a;
+  background-color: #f2dede !important;
+}
+.style-guide p.error:after {
+  content: 'invalid value';
+  display: block;
+  padding-right: 35px;
+  color: #a94442;
+  font-size: 0.85em;
+  text-align: right;
+}
+.sg-footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #000;
+}
+.sg-footer span {
+  color: #fff;
+}
+.sg-footer .btn {
+  margin-right: 12px;
+  padding: 5px 10px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+}
+.sg-footer .keep-changes {
+  margin: 0 5px;
+  vertical-align: middle;
+}
+.sg-footer [id*="plugin-edit"] {
+  display: none;
+}
+.sg-footer .editplugin {
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+}
+.sg-footer .container {
+  background-color: inherit;
+  border: none;
+}
+.sg-footer .footer-ui {
+  float: left;
+  padding: 10px 0;
+}
+.sg-footer .dropup {
+  float: right;
+}
+.sg-footer .dropup > a {
+  display: block;
+  padding: 15px;
+  color: #fff;
+}
+.sg-footer .dropup.open > a,
+.sg-footer .dropup > a:hover {
+  background-color: #262626;
+}
+.sg-footer .dropup a:hover {
+  text-decoration: none;
+}
+.sg-footer .dropup .dropdown-menu {
+  left: -2px;
+  margin-bottom: -1px;
+  border-radius: 4px 4px 0 0;
+}
+/*
+==========================================================================
+Styleguide Responsive Design Stuff
+==========================================================================
+*/
+@media (max-width: 767px) {
+  footer {
+    padding-bottom: 124px;
+  }
+  .style-guide .col-md-3 {
+    padding-left: 0;
+  }
+  .style-guide .input {
+    max-width: 300px;
+    padding-top: 20px;
+  }
+  .style-guide .colors .input {
+    padding-top: 0;
+  }
+  .style-guide .colors .input span {
+    width: 80px;
+    height: 80px;
+  }
+  .style-guide .buttons button {
+    margin-bottom: 5px;
+  }
+  .style-guide .navbars .navbar-form .form-control {
+    width: auto;
+  }
+  .style-guide .dropdowns .input {
+    padding-top: 160px;
+  }
+  .style-guide .alerts .input {
+    padding-top: 0;
+  }
+  .sg-footer .footer-ui > span {
+    position: absolute;
+    display: table;
+    top: 6px;
+    right: 10px;
+    width: 130px;
+  }
+  .sg-footer .footer-ui > span input,
+  .sg-footer .footer-ui > span span {
+    display: table-cell;
+  }
+  .sg-footer .dropup {
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+  }
+  .sg-footer .dropup > a {
+    padding: 10px;
+  }
+  .sg-footer .icon {
+    display: none;
+  }
+  .sg-footer .btn {
+    display: block;
+    width: 170px;
+    margin-bottom: 10px;
+    padding: 4px 10px;
+  }
+  .sg-footer #generate-css {
+    margin-bottom: 0;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  footer {
+    padding-bottom: 75px;
+  }
+  .style-guide .colors .input span {
+    width: 110px;
+    height: 110px;
+  }
+  .style-guide .tabs .input label,
+  .style-guide .tables .input label,
+  .style-guide .navbars .input label,
+  .style-guide .dropdowns .input label {
+    display: block;
+  }
+  .sg-footer .footer-ui > span {
+    display: block;
+    margin-top: 7px;
+  }
+  .sg-footer .keep-changes {
+    margin-left: 0;
+  }
+  .sg-footer .icon {
+    display: none;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .style-guide .tables .input label,
+  .style-guide .navbars .input label,
+  .style-guide .dropdowns .input label {
+    display: block;
+  }
+}

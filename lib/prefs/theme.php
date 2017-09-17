@@ -93,5 +93,14 @@ function prefs_theme_list($partial = false)
 			'help' => 'Icons',
 			'tags' => array('basic'),
 		),
+		'theme_styleguide' => [
+			'name' => tra('Style Guide Tool'),
+			'description' => tra('Add a style guide tool to enable easy theme customisation.'),
+			'type' => 'flag',
+			'help' => 'Themes',
+			'default' => 'n',
+			'tags' => ['experimental'],
+			'view' => TikiLib::lib('service')->getUrl(['controller' => 'styleguide', 'action' => 'show']),
+		],
 	);
 }
