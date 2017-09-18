@@ -153,7 +153,7 @@
 								{/if}
 								{if $showcomments ne 'n' and $tracker_info.useComments eq 'y' and ($tracker_info.showComments eq 'y' || $tracker_info.showLastComment eq 'y') and $perms.tiki_p_tracker_view_comments ne 'n'}
 									{$postcols = $postcols + 1}
-									<th{if $tracker_info.showLastComment ne 'y'} style="width:5%"{/if}>{tr}Coms{/tr}</th>
+									<th{if $tracker_info.showLastComment ne 'y'} style="width:5%"{/if}>{tr}Comments{/tr}</th>
 								{/if}
 								{if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}
 									{$postcols = $postcols + 1}
