@@ -19,4 +19,40 @@
 		{if in_array('alerts', $sections)}{include file='templates/styleguide/sections/alerts.tpl'}{/if}
 		{if in_array('icons', $sections)}{include file='templates/styleguide/sections/icons.tpl'}{/if}
 	</div>
+
+	<div class="sg-footer">
+		<div class="container">
+
+			<div class="footer-ui">
+				<button class="btn btn-danger apply-custom-css">Apply Custom CSS</button>
+				<a href="" id="generate-var" class="btn btn-primary generate-var" download="styleguide.less">
+					Generate LESS
+				</a>
+				<a href="" id="generate-css" class="btn btn-primary generate-css" download="styleguide.css">
+					Generate CSS
+				</a>
+				<label><input class="keep-changes" type="checkbox"><span>Keep changes after refresh</span></label>
+			</div>
+
+			<div class="dropup">
+				<a id="dLabel" data-target="#" href="http://example.com" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+					Select a section: <span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu" aria-labelledby="dLabel">
+					<li><a href="#Colors">Colors</a></li>
+					<li><a href="#Fonts">Fonts</a></li>
+					<li><a href="#Headings">Headings</a></li>
+					<li><a href="#Tables">Tables</a></li>
+					<li><a href="#Buttons">Buttons</a></li>
+					<li><a href="#Forms">Forms</a></li>
+					<li><a href="#Lists">Lists</a></li>
+					<li><a href="#Navbar">Navbar</a></li>
+					<li><a href="#Dropdowns">Dropdowns</a></li>
+					<li><a href="#Tabs">Tabs</a></li>
+					<li><a href="#Alerts">Alerts</a></li>
+					<li><a href="#Icons">Icons</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 {/block}
