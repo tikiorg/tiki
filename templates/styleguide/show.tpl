@@ -20,6 +20,8 @@
 		{if in_array('icons', $sections)}{include file='templates/styleguide/sections/icons.tpl'}{/if}
 	</div>
 
+	{preference name="header_custom_less" syntax="css"}
+
 	<div class="sg-footer">
 		<div class="container">
 
@@ -30,6 +32,9 @@
 				</a>
 				<a href="" id="generate-css" class="btn btn-primary generate-css" download="styleguide.css">
 					Generate CSS
+				</a>
+				<a href="" id="generate-less" class="btn btn-primary generate-less"">
+					Generate Custom LESS
 				</a>
 				<label><input class="keep-changes" type="checkbox"><span>Keep changes after refresh</span></label>
 			</div>
