@@ -44,18 +44,6 @@
 					Select a section: <span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu" aria-labelledby="dLabel">
-					<li><a href="#Colors">Colors</a></li>
-					<li><a href="#Fonts">Fonts</a></li>
-					<li><a href="#Headings">Headings</a></li>
-					<li><a href="#Tables">Tables</a></li>
-					<li><a href="#Buttons">Buttons</a></li>
-					<li><a href="#Forms">Forms</a></li>
-					<li><a href="#Lists">Lists</a></li>
-					<li><a href="#Navbar">Navbar</a></li>
-					<li><a href="#Dropdowns">Dropdowns</a></li>
-					<li><a href="#Tabs">Tabs</a></li>
-					<li><a href="#Alerts">Alerts</a></li>
-					<li><a href="#Icons">Icons</a></li>
 				</ul>
 			</div>
 		</div>
