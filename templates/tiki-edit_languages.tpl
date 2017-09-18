@@ -2,9 +2,9 @@
 {title admpage="i18n"}{tr}Edit languages{/tr}{/title}
 <div class="t_navbar margin-bottom-md">
 	{if $smarty.session.interactive_translation_mode eq 'on'}
-		{button href="tiki-interactive_trans.php?interactive_translation_mode=off" _text="{tr}Toggle interactive translation off{/tr}" _ajax="n"}
+		{button href="tiki-interactive_trans.php?interactive_translation_mode=off" _text="{tr}Turn off interactive translation{/tr}" _ajax="n"}
 	{else}
-		{button href="tiki-interactive_trans.php?interactive_translation_mode=on" _text="{tr}Toggle interactive translation on{/tr}" _ajax="n"}
+		{button href="tiki-interactive_trans.php?interactive_translation_mode=on" _text="{tr}Turn on interactive translation{/tr}" _ajax="n"}
 	{/if}
 	<a class="btn btn-link tips" href="{service controller=language action=manage_custom_php_translations}" title="{tr}Customized String Translation{/tr}:{tr}Manage local translations in a custom.php file{/tr}">
 		{icon name="file-code-o"} {tr}Custom Translations{/tr}
