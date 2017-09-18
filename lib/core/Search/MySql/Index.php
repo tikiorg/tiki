@@ -160,6 +160,8 @@ class Search_MySql_Index implements Search_Index_Interface
 			}
 		}
 
+		$this->table->ensureHasIndex($order->getField(), 'sort');
+
 		if ($order->getMode() == Search_Query_Order::MODE_NUMERIC) {
 			return $this->table->expr("CAST(`{$order->getField()}` as SIGNED) {$order->getOrder()}");
 		} else {

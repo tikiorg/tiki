@@ -7,12 +7,20 @@
 
 class Search_Elastic_OrderBuilder
 {
+	private $index;
+
+	function __construct(Search_Elastic_Index $index = null)
+	{
+		$this->index = $index;
+	}
+
 	function build(Search_Query_Order $order)
 	{
 		$component = '_score';
 		$field = $order->getField();
 
 		if ($field !== Search_Query_Order::FIELD_SCORE) {
+			$this->ensureHasField($field);
 			if ($order->getMode() == Search_Query_Order::MODE_NUMERIC) {
 				$component = array(
 					"$field.nsort" => $order->getOrder(),
@@ -43,6 +51,20 @@ class Search_Elastic_OrderBuilder
 				$component,
 			),
 		);
+	}
+
+	function ensureHasField($field) {
+		global $prefs;
+
+		$mapping = $this->index ? $this->index->getFieldMapping($field) : new stdClass;
+		if ((empty($mapping) || empty((array)$mapping)) && $prefs['search_error_missing_field'] === 'y') {
+			if (preg_match('/^tracker_field_/', $field)) {
+				$msg = tr('Field %0 does not exist in the current index. Please check field permanent name and if you have any items in that tracker.', $field);
+			} else {
+				$msg = tr('Field %0 does not exist in the current index. If this is a tracker field, the proper syntax is tracker_field_%0.', $field, $field);
+			}
+			throw new Search_Elastic_QueryParsingException($msg);
+		}
 	}
 }
 
