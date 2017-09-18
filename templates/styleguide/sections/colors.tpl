@@ -1,10 +1,15 @@
 <div class="colors">
 	<h2>Colors</h2>
 	<div class="input">
+		{if $prefs.site_layout eq 'classic' or $prefs.site_layout eq 'header_middle_footer_containers_3-6-3'}
+			{$header_selector = '.header_outer'}
+		{else}
+			{$header_selector = '.page-header,.topbar'}
+		{/if}
 		<p class="regular">Header</p>
-		<p class="picker" data-selector=".header_outer" data-element="background-color">
+		<p class="picker" data-selector="{$header_selector}" data-element="background-color">
 			<span class="input-group-addon"><i></i></span>
-			<input id="sg-header-color" data-selector=".header_outer" data-element="background-color" type="text">
+			<input id="sg-header-color" data-selector="{$header_selector}" data-element="background-color" type="text">
 		</p>
 	</div>
 
