@@ -5,28 +5,43 @@
 			<p>Striped table</p>
 			<table class="table table-striped">
 				<thead>
-				<tr>
-					<th>#</th>
-					<th>Name</th>
-					<th>Title</th>
-				</tr>
+					<tr>
+						<th>Version</th>
+						<th>Star</th>
+						<th>Year</th>
+					</tr>
 				</thead>
 				<tbody>
-				<tr>
-					<td>1</td>
-					<td>Benoit Roy</td>
-					<td>Front-End Ninja</td>
-				</tr>
-				<tr>
-					<td>2</td>
-					<td>Marc Laporte</td>
-					<td>Banjo Player</td>
-				</tr>
-				<tr>
-					<td>3</td>
-					<td>Isabelle Montminy</td>
-					<td>Dancing Queen</td>
-				</tr>
+					<tr>
+						<td>12.x</td>
+						<td>Altair</td>
+						<td>2013</td>
+					</tr>
+					<tr>
+						<td>13.x</td>
+						<td>Fomalhaut</td>
+						<td>2014</td>
+					</tr>
+					<tr>
+						<td>14.x</td>
+						<td>Peony</td>
+						<td>2015</td>
+					</tr>
+					<tr>
+						<td>15.x</td>
+						<td>Situla</td>
+						<td>2016</td>
+					</tr>
+					<tr>
+						<td>16.x</td>
+						<td>Tabby's</td>
+						<td>2016</td>
+					</tr>
+					<tr>
+						<td>17.x</td>
+						<td>Zeta Boötis</td>
+						<td>2017</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>
@@ -56,28 +71,38 @@
 			<p>Bordered table</p>
 			<table class="table table-bordered">
 				<thead>
-				<tr>
-					<th class="tb">#</th>
-					<th class="tb">Name</th>
-					<th class="tb">Title</th>
-				</tr>
+					<tr>
+						<th class="tb">Site</th>
+						<th class="tb">Name</th>
+						<th class="tb">Purpose</th>
+					</tr>
 				</thead>
 				<tbody>
-				<tr>
-					<td class="tb">1</td>
-					<td class="tb">Benoit Roy</td>
-					<td class="tb">Front-End Ninja</td>
-				</tr>
-				<tr>
-					<td class="tb">2</td>
-					<td class="tb">Marc Laporte</td>
-					<td class="tb">Banjo Player</td>
-				</tr>
-				<tr>
-					<td class="tb">3</td>
-					<td class="tb">Isabelle Montminy</td>
-					<td class="tb">Dancing Queen</td>
-				</tr>
+					<tr>
+						<td class="tb"><a href="https://tiki.org/">tiki.org</a></td>
+						<td class="tb">{tr}About &amp; News{/tr}</td>
+						<td class="tb"{tr}>Information and introduction portal{/tr}</td>
+					</tr>
+					<tr>
+						<td class="tb"><a href="https://doc.tiki.org/">doc.tiki.org</a></td>
+						<td class="tb">{tr}Documentation{/tr}</td>
+						<td class="tb">{tr}How to use Tiki{/tr}</td>
+					</tr>
+					<tr>
+						<td class="tb"><a href="https://dev.tiki.org/">dev.tiki.org</a></td>
+						<td class="tb">{tr}Development{/tr}</td>
+						<td class="tb">{tr}How make Tiki{/tr}</td>
+					</tr>
+					<tr>
+						<td class="tb"><a href="https://tiki.org/Community">tiki.org/Community</a></td>
+						<td class="tb">{tr}Community{/tr}</td>
+						<td class="tb"{tr}>Forums and general community information{/tr}</td>
+					</tr>
+					<tr>
+						<td class="tb"><a href="https://themes.tiki.org/">themes.tiki.org</a></td>
+						<td class="tb">{tr}Themes{/tr}</td>
+						<td class="tb">{tr}How make Tiki look pretty{/tr}</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>
