@@ -224,10 +224,21 @@ function prefs_print_list()
 			'type' => 'list',
 			'default'=>'',
 			'options' => array(
-				array('text'=>'Default','value'=>''),
-				array('text'=>'Off (Links will be removed)','value'=>'off'),
-				array('text'=>'Add as footnote (Links will be listed at end of document)','value'=>'footnote'),
+				''=>tra('Default'),
+				'off'=>tra('Off (Links will be removed)'),
+				'footnote'=>tra('Add as footnote (Links will be listed at end of document')
 			)	
+		),
+		'print_pdf_mpdf_autobookmarks' => array(
+			'name' => tra('Auto bookmarks Adobe Reader'),
+			'description' => tra('Automatically generate bookmarks from h1 - h3'),
+			'tags' => array('advanced'),
+			'type' => 'list',
+			'default'=>'',
+			'options' => array(
+				''=>tra('Off'),
+				'On'=>tra('On')
+			)
 		),
 		'print_pdf_mpdf_columns' => array(
 			'name' => tra('Number of columns'),
@@ -236,10 +247,10 @@ function prefs_print_list()
 			'type' => 'list',
 			'default'=>'',
 			'options' => array(
-				array('text'=>'Default - 1 Column','value'=>''),
-				array('text'=>'2 Columns','value'=>'2'),
-				array('text'=>'3 Columns','3'),
-				array('text'=>'4 Columns','4'),							
+				''=>tra('Default - 1 Column'),
+				'2'=>tra('2 Columns'),
+				'3'=>tra('3 Columns'),
+				'4'=>tra('4 Columns')
 			)	
 		),					
 		'print_pdf_mpdf_password' => array(

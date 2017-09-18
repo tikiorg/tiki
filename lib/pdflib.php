@@ -373,13 +373,17 @@ class PdfGenerator
 			$mpdf->WriteHTML('<body style="'.$bgColor.';margin:0px;padding:0px"><div style="height:100%;background-image:url('.$coverImage.');padding:20px;background-repeat: no-repeat;background-position: center; "><div style="'.$coverPageTextStyles.'height:95%;">
 <div style="text-align:'.$coverPage[2].';margin-top:30%;color:'.$coverPage[4].'"><div style=margin-bottom:10px;font-size:50px>'.$coverPage[0].'</div>'.$coverPage[1].'</div></div></body>');
 
-		}	
+		}
+		//Checking bookmark
+		if($pdfSettings['autobookmarks']=='On'){
+			$mpdf->h2bookmarks = array('H1'=>0, 'H2'=>1, 'H3'=>2);
+		}
 		$pageNo=1;
-		//end of coverpage generation			
+		//end of coverpage generation
 		foreach($pdfPages as $pdfPage){
-		 if(strip_tags(trim($pdfPage['pageContent']))!=''){	
-		//checking header and footer
-			if($pdfPage['header']=="off") {
+			if(strip_tags(trim($pdfPage['pageContent']))!=''){
+				//checking header and footer
+				if($pdfPage['header']=="off") {
 				$header="";
 			}
 			else{
@@ -391,7 +395,6 @@ class PdfGenerator
 			elseif($pdfPage['footer']){
 				$footer=$pdfPage['footer'];	
 			}
-			
 			$mpdf->SetHeader(str_ireplace("{PAGETITLE}",$params['page'],$header));
 			$mpdf->AddPage($pdfPage['orientation'],'','','','',$pdfPage['margin_left'],$pdfPage['margin_right'] , $pdfPage['margin_top'] , $pdfPage['margin_bottom'] , $pdfPage['margin_header'] , $pdfPage['margin_footer'],'','','','','','','','','page'.$pageNo,$pdfPage['pagesize']);
 			$mpdf->SetFooter(str_ireplace("{PAGETITLE}",$params['page'],$footer)); //footer needs to be reset after page content is added
@@ -433,13 +436,12 @@ class PdfGenerator
 	function getPDFSettings($html,$prefs,$params)
 	{
 		$pdfSettings=array();
-		
 		//checking if pdf plugin is set and passed
 		$doc = new DOMDocument();
-			@$doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+		@$doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
 
-			$pdf = $doc->getElementsByTagName('pdfsettings')->item(0);
-			$prefs['print_pdf_mpdf_pagesize']=$prefs['print_pdf_mpdf_size'];
+		$pdf = $doc->getElementsByTagName('pdfsettings')->item(0);
+		$prefs['print_pdf_mpdf_pagesize']=$prefs['print_pdf_mpdf_size'];
 			if($pdf)
 			{ 	if ($pdf->hasAttributes()) {
 					foreach ($pdf->attributes as $attr) {
@@ -477,7 +479,8 @@ class PdfGenerator
 		$pdfSettings['hyperlinks']=$prefs['print_pdf_mpdf_hyperlinks'];
 		$pdfSettings['columns']=$prefs['print_pdf_mpdf_columns'];				
 		$pdfSettings['background']=$prefs['print_pdf_mpdf_background'];				
-		$pdfSettings['background_image']=$prefs['print_pdf_mpdf_background_image'];				
+		$pdfSettings['background_image']=$prefs['print_pdf_mpdf_background_image'];
+		$pdfSettings['autobookmarks']=$prefs['print_pdf_mpdf_autobookmarks'];
 
 		if($pdfSettings['toc']=='y'){
 			//toc levels
