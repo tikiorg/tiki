@@ -285,7 +285,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 		}
 		/**End of Sorted Search size adjustment (part 1)*/
 
-		$builder = new Search_Elastic_OrderBuilder;
+		$builder = new Search_Elastic_OrderBuilder($this);
 		$orderPart = $builder->build($query->getSortOrder());
 
 		$builder = new Search_Elastic_FacetBuilder($this->facetCount, $this->connection->getVersion() >= 2.0);
@@ -430,7 +430,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 
 	function scroll(Search_Query_Interface $query)
 	{
-		$builder = new Search_Elastic_OrderBuilder;
+		$builder = new Search_Elastic_OrderBuilder($this);
 		$orderPart = $builder->build($query->getSortOrder());
 
 		$builder = new Search_Elastic_QueryBuilder($this);
