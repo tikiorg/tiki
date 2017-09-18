@@ -267,16 +267,11 @@ class TikiInit
      * In Unix, this is usually /tmp
      * In Windows, this is usually c:\windows\temp or c:\winnt\temp
      * @static
+	 * @deprecated by sys_get_temp_dir()
      */
 	static function tempdir()
 	{
-		static $tempdir;
-		if (!$tempdir) {
-			$tempfile = @tempnam(false, '');
-			$tempdir = dirname($tempfile);
-			@unlink($tempfile);
-		}
-		return $tempdir;
+		return sys_get_temp_dir();
 	}
 
 	/**
