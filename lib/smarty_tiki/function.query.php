@@ -109,7 +109,14 @@ function smarty_function_query($params, $smarty)
 				if ( is_array($v) ) {
 					foreach ( $v as $vk => $vv ) {
 						$vrname = $rname.'['.htmlspecialchars($vk, ENT_QUOTES, 'UTF-8').']';
-						$ret .= $rtag.' name="'.$vrname.'" value="'.htmlspecialchars($vv, ENT_QUOTES, 'UTF-8').'" />'."\n";
+						if (is_array($vv)) {	// handle nested array values
+							foreach ($vv as $vvk => $vvv) {
+								$vrname2 = $vrname . '[' . htmlspecialchars($vvk, ENT_QUOTES, 'UTF-8') . ']';
+								$ret .= $rtag.' name="'.$vrname2.'" value="'.htmlspecialchars($vvv, ENT_QUOTES, 'UTF-8').'" />'."\n";
+							}
+						} else {
+							$ret .= $rtag.' name="'.$vrname.'" value="'.htmlspecialchars($vv, ENT_QUOTES, 'UTF-8').'" />'."\n";
+						}
 					}
 				} else {
 					$ret .= $rtag.' name="'.$rname.'" value="'.htmlspecialchars($v, ENT_QUOTES, 'UTF-8').'" />'."\n";
