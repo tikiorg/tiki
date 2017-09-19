@@ -109,6 +109,10 @@ class Search_Formatter_Builder
 	{
 		$arguments = $this->parser->parse($match->getArguments());
 
+		if (isset($arguments['mode']) && $arguments['mode'] == 'download' && !$this->isDownload) {
+			return;
+		}
+
 		if (isset($arguments['name'])) {
 			$plugin = new Search_Formatter_Plugin_WikiTemplate($match->getBody());
 			$plugin->setRaw(! empty($arguments['mode']) && $arguments['mode'] == 'raw');
