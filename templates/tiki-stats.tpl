@@ -5,7 +5,7 @@
 {tabset}
 	{tab name="{tr}Tiki Statistics{/tr}"}
 		<div class="t_navbar margin-bottom-md">
-			{button href="site_stats" _type="link" class="btn btn-link" _icon_name="home" _text="{tr}Site{/tr}"}
+			{button href="#site_stats" _type="link" class="btn btn-link" _icon_name="home" _text="{tr}Site{/tr}"}
 			{if $wiki_stats}
 				{button href="#wiki_stats" _type="link" class="btn btn-link" _icon_name="file-text" _text="{tr}Wiki{/tr}"}
 			{/if}
@@ -25,7 +25,7 @@
 				{button href="#blog_stats" _type="link" class="btn btn-link" _icon_name="bold" _text="{tr}Blogs{/tr}"}
 			{/if}
 			{if $poll_stats}
-				{button href="#poll_stats" _type="link" class="btn btn-link" _icon_name="task" _text="{tr}Polls{/tr}"}
+				{button href="#poll_stats" _type="link" class="btn btn-link" _icon_name="check-square-o" _text="{tr}Polls{/tr}"}
 			{/if}
 			{if $faq_stats}
 				{button href="#faq_stats" _type="link" class="btn btn-link" _icon_name="question" _text="{tr}FAQs{/tr}"}
