@@ -41,7 +41,7 @@ function smarty_function_permission_link( $params, $smarty )
 	if (! $objectType ) {
 		$objectType = $type;
 	}
-	$id = $params->id->text();
+	$id = $params->id->none();
 
 	$objectlib = TikiLib::lib('object');
 	if (isset($params['type'], $params['id'])) {
@@ -49,7 +49,7 @@ function smarty_function_permission_link( $params, $smarty )
 			'objectType' => $objectType,
 			'objectId' => $id,
 			'permType' => $type,
-			'objectName' => $params->title->text() ?: $objectlib->get_title($type, $id),
+			'objectName' => $params->title->none() ?: $objectlib->get_title($type, $id),
 		];
 	} else {
 		$arguments = [];
