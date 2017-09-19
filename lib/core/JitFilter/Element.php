@@ -28,7 +28,7 @@
  * @method TikiFilter_HtmlPurifier purifier
  * @method TikiFilter_WikiContent wikicontent
  * @method TikiFilter_RawUnsafe rawhtml_unsafe
- * @method TikiFilter_RawUnsafe none
+ * @method TikiFilter_None none
  * @method string lang
  * @method string imgsize
  * @method TikiFilter_AttributeType attribute_type

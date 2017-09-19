@@ -102,9 +102,15 @@ class TikiFilter
 				return new TikiFilter_HtmlPurifier('temp/cache');
 			case 'wikicontent':
 				return new TikiFilter_WikiContent;
-			case 'rawhtml_unsafe':
+			
+			// Dummy filter to keep value unchanges
 			case 'none':
+				return new TikiFilter_None;
+				
+			// Exotic filter which may alter the filtered value, for values previously "neutered" by the PreventXss filter 
+			case 'rawhtml_unsafe':
 				return new TikiFilter_RawUnsafe;
+				
 			case 'lang':
 				// Allows values for languages (such as 'en') available on the site
 				return new TikiFilter_Lang;
