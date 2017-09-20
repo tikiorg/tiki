@@ -11,7 +11,7 @@
 require_once ('tiki-setup.php');
 
 $access->check_feature('feature_webservices');
-$access->check_permission('tiki_p_admin');
+$access->check_permission('tiki_p_admin_webservices');
 
 require_once 'lib/ointegratelib.php';
 require_once 'lib/webservicelib.php';
