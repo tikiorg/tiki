@@ -26,7 +26,7 @@
 								<input type="hidden" name="{$k}" value="{$i|escape}">
 							{/foreach}
 							<input type="submit" class="btn btn-success" name="ticket_action_button"
-								value="{tr}Click here to confirm your action{/tr}">
+								value="{tr}Confirm action{/tr}">
 						</form>
 					</div>
 				</div>
@@ -44,7 +44,7 @@
 								<input type="hidden" name="{$k}" value="{$i|escape}">
 							{/foreach}
 							<input type="submit" class="btn btn-success" name="ticket_action_button"
-								value="{tr}Click here to confirm your action{/tr}">
+								value="{tr}Confirm action{/tr}">
 						</form>
 					</div>
 				</div>
@@ -65,7 +65,7 @@
 								<input type="hidden" name="{$k}" value="{$i|escape}">
 							{/foreach}
 							<input type="submit" class="btn btn-success" name="ticket_action_button"
-								value="{tr}Click here to confirm your action{/tr}">
+								value="{tr}Confirm action{/tr}">
 						</form>
 					</div>
 				</div>
@@ -86,7 +86,7 @@
 								<input type="hidden" name="{$k}" value="{$i|escape}">
 							{/foreach}
 							<input type="submit" class="btn btn-success" name="ticket_action_button"
-								value="{tr}Click here to confirm your action{/tr}">
+								value="{tr}Confirm action{/tr}">
 						</form>
 					</div>
 				</div>

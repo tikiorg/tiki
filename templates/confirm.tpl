@@ -13,7 +13,7 @@
 			<div>
 				{query _type='form_input' _keepall='y'}
 				{ticket}
-				{button href="#" _onclick="javascript:document.forms['confirm'].submit();return false;" _text="{tr}Click here to confirm your action{/tr}" _ajax="n"}
+				{button href="#" _onclick="javascript:document.forms['confirm'].submit();return false;" _text="{tr}Confirm action{/tr}" _ajax="n"}
 				{button href="#" _onclick="javascript:history.back(); return false;" _text="{tr}Go back{/tr}" _ajax="n"}
 				{button href=$prefs.tikiIndex _text="{tr}Return to home page{/tr}"}
 			</div>

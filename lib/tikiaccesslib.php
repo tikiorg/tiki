@@ -545,7 +545,7 @@ class TikiAccessLib extends TikiLib
 				if ($returnHtml) {
 					//redirect to a confirmation page
 					if (empty($confirmation_text)) {
-						$confirmation_text = tra('Click here to confirm your action');
+						$confirmation_text = tra('Confirm action');
 					}
 					if (empty($confirmaction)) {
 						$confirmaction = $_SERVER['PHP_SELF'];
