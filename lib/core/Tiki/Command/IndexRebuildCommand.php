@@ -109,6 +109,9 @@ class IndexRebuildCommand extends Command
 			$errors = \Feedback::get();
 			if (is_array($errors)) {
 				foreach ($errors as $message) {
+					if (is_array($message)) {
+						$message = implode(',', $message);
+					}
 					$output->writeln("<info>$message</info>");
 				}
 				$output->writeln("\n<error>Search index rebuild failed. Last messages shown above.</error>");
