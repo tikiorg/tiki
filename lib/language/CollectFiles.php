@@ -48,7 +48,8 @@ class Language_CollectFiles
 			$dir = $cwd . $dir;
 			
 			if (!is_dir($dir)) {
-				throw new Language_Exception("Dir $dir does not exist");
+				// Is even a notice really warranted? Chealer 2017-09-20
+				trigger_error("Directory $dir does not exist", E_USER_NOTICE);
 			}
 			
 			$excludeDirs[$key] = $dir;
