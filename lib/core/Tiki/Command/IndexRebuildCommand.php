@@ -93,9 +93,13 @@ class IndexRebuildCommand extends Command
 		} else {
 			$errors = \Feedback::get();
 			if (is_array($errors)) {
-				foreach ($errors as $message) {
+				foreach ($errors as $type => $message) {
 					if (is_array($message)) {
-						$message = implode(',', $message);
+						if (is_array($message[0]) && ! empty( $message[0]['mes'])) {
+							$message = $type . ': ' . str_replace('<br />', "\n", $message[0]['mes'][0]);
+						} else if (! empty( $message['mes'])) {
+							$message = $type . ': ' . str_replace('<br />', "\n", $message['mes']);
+						}
 					}
 					$output->writeln("<info>$message</info>");
 				}
