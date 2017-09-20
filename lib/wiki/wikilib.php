@@ -119,9 +119,11 @@ class WikiLib extends TikiLib
 				return $cache_page_contributors['contributors'];
 			}
 			$ret = array();
-			foreach ($cache_page_contributors['contributors'] as $res) {
-				if (isset($res['user']) && $res['user'] != $last) {
-					$ret[] = $res;
+			if (is_array($cache_page_contributors['contributors'])) {
+				foreach ($cache_page_contributors['contributors'] as $res) {
+					if (isset($res['user']) && $res['user'] != $last) {
+						$ret[] = $res;
+					}
 				}
 			}
 			return $ret;
