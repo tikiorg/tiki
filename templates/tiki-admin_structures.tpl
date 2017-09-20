@@ -68,8 +68,8 @@
 {/if}
 
 {tabset}
-	{tab name="{tr}Structures{/tr}"}
-		<h2>{tr}Structures{/tr}</h2>
+	{tab name="{tr}Existing Structures{/tr}"}
+		<h2>{tr}Existing Structures{/tr}</h2>
 		{if $channels or ($find ne '')}
 			<div class="clearfix">
 				{include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'}
@@ -103,7 +103,7 @@
 							{/if}
 							<td class="text">
 								<a class="tips" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}" title=":{tr}View Structure{/tr}">
-									{$channels[ix].pageName}
+									{$channels[ix].pageName|escape}
 									{if $channels[ix].page_alias}
 										({$channels[ix].page_alias})
 									{/if}
