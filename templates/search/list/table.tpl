@@ -44,12 +44,24 @@
 									{/if}
 								{/if}
 								{$click = $sort_jsvar|cat:'=\''|cat:$col.sort|cat:$order|cat:'\';'|cat:$_onclick}
-								{self_link _onclick=$click _ajax='y'}{$col.label|escape}{/self_link}
+								{if $col.translatelabel == 'y'}
+									{self_link _onclick=$click _ajax='y'}{$col.label|tra|escape}{/self_link}
+								{else}
+									{self_link _onclick=$click _ajax='y'}{$col.label|escape}{/self_link}
+								{/if}
 							{else}
-								{self_link _sort_arg=$sort_arg _sort_field=$col.sort}{$col.label|escape}{/self_link}
+								{if $col.translatelabel == 'y'}
+									{self_link _sort_arg=$sort_arg _sort_field=$col.sort}{$col.label|tra|escape}{/self_link}
+								{else}
+									{self_link _sort_arg=$sort_arg _sort_field=$col.sort}{$col.label|escape}{/self_link}
+								{/if}
 							{/if}
 						{else}
-							{$col.label|escape}
+							{if $col.translatelabel == 'y'}
+								{$col.label|tra|escape}
+							{else}
+								{$col.label|escape}
+							{/if}
 						{/if}
 					</th>
 				{/foreach}
