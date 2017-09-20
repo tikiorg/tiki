@@ -93,11 +93,11 @@
 							<li class="divider"></li>
 							<li role="presentation">
 								{section name=struct loop=$showstructs}
-									<a href="tiki-index.php?page={$page}&amp;structure={$showstructs[struct].pageName|escape}" {if isset($structure_path[0].pageName) and $showstructs[struct].pageName eq $structure_path[0].pageName} title="Current structure: {$showstructs[struct].pageName|escape}" class="selected tips" {else} class="tips" title="{tr}Show structure{/tr}: {$showstructs[struct].pageName|escape}"{/if}>
+									<a href="tiki-index.php?page={$page|escape:url}&amp;structure={$showstructs[struct].pageName|escape:url}" {if isset($structure_path[0].pageName) and $showstructs[struct].pageName eq $structure_path[0].pageName} title="Current structure: {$showstructs[struct].pageName|escape}" class="selected tips" {else} class="tips" title="{tr}Show structure{/tr}: {$showstructs[struct].pageName|escape}"{/if}>
 										{if $showstructs[struct].page_alias}
 											{$showstructs[struct].page_alias}
 										{else}
-											{$showstructs[struct].pageName}
+											{$showstructs[struct].pageName|escape}
 										{/if}
 									</a>
 								{/section}
