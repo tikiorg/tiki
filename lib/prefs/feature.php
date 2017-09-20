@@ -2745,7 +2745,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_inline_comments' => array(
 			'name' => tra('Inline comments (annotations)'),
-			'description' => tra('Enable/disable inline comments using Apache Annotator.'),
+			'description' => tra('Contextual comments (using Apache Annotator)'),
 			'dependencies' => array(
 				'feature_wiki_comments',
 				'feature_wiki_paragraph_formatting',
@@ -2753,6 +2753,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 			'help' => 'Inline+comments',
+			'tags' => ['experimental'], // Anchoring absolutely not robust. Positioning is based on the tiki.comments.ranges attribute, which is not updated when wiki pages change, so it breaks when annotated text changes. Chealer 2017-09-20
 			'keywords' => 'annotation annotatorjs',
 		),
 		'feature_equal_height_rows_js' => array(
