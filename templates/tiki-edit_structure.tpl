@@ -65,7 +65,7 @@
 				<label for="pageAlias" class="control-label">{tr}Alias{/tr}:</label>
 				<input type="hidden" name="page_ref_id" value="{$structure_id}">
 				<div class="input-group">
-					<input type="text" class="form-control input-sm" name="pageAlias" id="pageAlias" value="{$topPageAlias}">
+					<input type="text" class="form-control input-sm" name="pageAlias" id="pageAlias" value="{$topPageAlias|escape}">
 					<div class="input-group-btn">
 						<input type="submit" class="btn btn-primary btn-sm" name="create" value="{tr}Update{/tr}">
 					</div>
@@ -156,7 +156,7 @@
 				<ul id="page_list_container">
 					{section name=list loop=$listpages}
 						<li class="ui-state-default">
-							{$listpages[list].pageName}
+							{$listpages[list].pageName|escape}
 						</li>
 					{/section}
 				</ul>
