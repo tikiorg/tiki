@@ -164,7 +164,7 @@
 									{/if}
 									{assign var=itemIndex value=$smarty.foreach.translations.index}
 									{if isset($item.originalTranslation)}
-										{button _flip_id="diff_$itemIndex" _flip_hide_text="n" _text="{tr}Compare{/tr}" _title=":{tr}Compare the origional translation with the database translation{/tr}" _class="btn btn-default btn-sm tips"}
+										{button _flip_id="diff_$itemIndex" _flip_hide_text="n" _text="{tr}Compare{/tr}" _title=":{tr}Compare the original translation with the database translation{/tr}" _class="btn btn-default btn-sm tips"}
 									{/if}
 									{if isset($item.user) && isset($item.lastModif)}
 										<span class="help-block">
