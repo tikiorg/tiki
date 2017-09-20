@@ -105,7 +105,7 @@
 								<a class="tips" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}" title=":{tr}View Structure{/tr}">
 									{$channels[ix].pageName|escape}
 									{if $channels[ix].page_alias}
-										({$channels[ix].page_alias})
+										({$channels[ix].page_alias|escape})
 									{/if}
 								</a>
 							</td>
