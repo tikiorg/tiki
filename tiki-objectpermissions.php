@@ -185,7 +185,7 @@ if (isset($_REQUEST['group'])) {
 
 // Process the form to assign a new permission to this object
 if (isset($_REQUEST['assign']) && !isset($_REQUEST['quick_perms'])) {
-	check_ticket('object-perms');
+	$access->check_authenticity(tr('Are you sure you want to modify permissions?'));
 	if (isset($_REQUEST['perm']) && !empty($_REQUEST['perm'])) {
 		foreach ($_REQUEST['perm'] as $group => $gperms) {
 			foreach ($gperms as $perm) {
@@ -262,7 +262,7 @@ if ( $prefs['feature_quick_object_perms'] == 'y' ) {
 	}
 
 	if (isset($_REQUEST['assign']) && isset($_REQUEST['quick_perms'])) {
-		check_ticket('object-perms');
+		$access->check_authenticity(tr('Are you sure you want to modify permissions?'));
 
 		$groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 
@@ -524,8 +524,6 @@ $("table.objectperms input[type=checkbox]").change(function () {
 ';
 
 $headerlib->add_jq_onready($js);
-
-ask_ticket('object-perms');
 
 // setup smarty remarks flags
 
