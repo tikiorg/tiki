@@ -2,7 +2,7 @@
 /**
  * @package tikiwiki
  */
-// (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2017 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -116,7 +116,7 @@ if (isset($_REQUEST['edit_assign']) || isset($_REQUEST['preview'])) {	// will be
 }
 
 if (!empty($_REQUEST['unassign'])) {
-	check_ticket('admin-modules');
+	$access->check_authenticity(tr('Are you sure you want to unassign this module?'));
 	$info = $modlib->get_assigned_module($_REQUEST['unassign']);
 	$modlib->unassign_module($_REQUEST['unassign']);
 	$logslib->add_log('adminmodules', 'unassigned module ' . $info['name']);
@@ -165,7 +165,15 @@ if (isset($_REQUEST['um_update'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
-	check_ticket('admin-modules');
+	if ($_REQUEST['um_update'] === tr('Create')) {
+		$access->check_authenticity(
+			tr('Are you sure you want to create this module?') . ' ("' . $_REQUEST['um_name'] . '")'
+		);
+	} else {
+		$access->check_authenticity(
+			tr('Are you sure you want to modify this module?') . ' ("' . $_REQUEST['um_name'] . '")'
+		);
+	}
 	$_REQUEST['um_update'] = urldecode($_REQUEST['um_update']);
 	$smarty->assign_by_ref('um_name', $_REQUEST['um_name']);
 	$smarty->assign_by_ref('um_title', $_REQUEST['um_title']);
@@ -302,7 +310,7 @@ if (isset($_REQUEST['preview'])) {
 }
 
 if (isset($_REQUEST['assign'])) {
-	check_ticket('admin-modules');
+	$access->check_authenticity(tr('Are you sure you want to assign this module?'));
 	$assign_name = urldecode($_REQUEST['assign_name']);
 	$smarty->assign_by_ref('assign_name', $assign_name);
 	$smarty->assign_by_ref('assign_position', $_REQUEST['assign_position']);
@@ -358,7 +366,7 @@ if (isset($_REQUEST['um_remove'])) {
 }
 
 if (isset($_REQUEST['um_edit'])) {
-	check_ticket('admin-modules');
+	$access->check_authenticity(tr('Are you sure you want to modify this module?'));
 	$_REQUEST['um_edit'] = urldecode($_REQUEST['um_edit']);
 	$um_info = $modlib->get_user_module($_REQUEST['um_edit']);
 	$smarty->assign('um_name', $um_info['name']);
