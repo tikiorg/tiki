@@ -405,7 +405,7 @@ class Tracker_Field_Wiki extends Tracker_Field_Text implements Tracker_Field_Exp
 	 * @param $short_name
 	 * @return string
 	 */
-	private function getFullPageName($short_name): string
+	private function getFullPageName($short_name)
 	{
 		global $prefs;
 
