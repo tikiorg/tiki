@@ -44,7 +44,7 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 					),
 					'fieldIdHere' => array(
 						'name' => tr('Value Field ID'),
-						'description' => tr('Field ID from this tracker matching the value in the link field ID from the other tracker if the field above is not an item link.'),
+						'description' => tr('Field ID from this tracker matching the value in the link field ID from the other tracker if the field above is not an item link. If the field chosen here is an ItemLink, Link Field ID above can be left empty.'),
 						'filter' => 'int',
 						'legacy_index' => 2,
 						'profile_reference' => 'tracker_field',
