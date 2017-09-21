@@ -46,6 +46,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract implements Tracker_Fiel
 						'options' => array(
 							'' => tr('Links'),
 							'barelink' => tr('Bare Links'),
+							'table' => tr('Table'),
 							'img' => tr('Images'),
 							'vimeo' => tr('Vimeo'),
 							'googleviewer' => tr('Google Viewer'),
@@ -409,6 +410,10 @@ class Tracker_Field_Files extends Tracker_Field_Abstract implements Tracker_Fiel
 						foreach ($this->getConfiguration('files') as $fileId => $file) {
 							$ret .= smarty_modifier_sefurl($file['fileId'], 'file');
 						}
+				} else if ($this->getOption('displayMode') == 'table') {
+					$ret = $this->renderTemplate('trackeroutput/files_table.tpl', $context, array(
+						'files' => $this->getConfiguration('files')
+					));
 				}
 				$ret = preg_replace('/~\/?np~/', '', $ret);
 			} else {
@@ -546,7 +551,9 @@ class Tracker_Field_Files extends Tracker_Field_Abstract implements Tracker_Fiel
 				'fileId',
 				'name',
 				'filetype',
-				'archiveId'
+				'archiveId',
+				'lastModif',
+				'description'
 			),
 			array(
 				'fileId' => $table->in($ids),
