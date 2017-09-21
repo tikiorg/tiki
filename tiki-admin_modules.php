@@ -366,7 +366,7 @@ if (isset($_REQUEST['um_remove'])) {
 }
 
 if (isset($_REQUEST['um_edit'])) {
-	$access->check_authenticity(tr('Are you sure you want to modify this module?'));
+	check_ticket('admin-modules');
 	$_REQUEST['um_edit'] = urldecode($_REQUEST['um_edit']);
 	$um_info = $modlib->get_user_module($_REQUEST['um_edit']);
 	$smarty->assign('um_name', $um_info['name']);
