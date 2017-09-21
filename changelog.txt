@@ -31,6 +31,507 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 15.5
+<http://doc.tiki.org/Tiki15>
+------------------
+
+----------------------------------------------
+r63928 | jonnybradley | 2017-09-21 20:03:46 +0200 (Thu, 21 Sep 2017) | 1 line
+
+[bp/r63927][bp/r63926][FIX] feature check for inline editing
+----------------------------------------------
+r63924 | jonnybradley | 2017-09-21 19:20:03 +0200 (Thu, 21 Sep 2017) | 1 line
+
+[bp/r63923][bp/r63922][FIX] trackers: Require post for most controller actions
+----------------------------------------------
+r63919 | luciash | 2017-09-21 17:42:29 +0200 (Thu, 21 Sep 2017) | 1 line
+
+[bp/r63915] Modules: rollback one unnecessary confirmation step (no need to confirm before editing, when saving the edit is enough)
+----------------------------------------------
+r63918 | jonnybradley | 2017-09-21 17:40:33 +0200 (Thu, 21 Sep 2017) | 2 lines
+
+[bp/r63916][bp/r63829][FIX] users: Add confirmation step to assign user to group operation (thanks Jyhem)
+Also remove deprecated ticket function calls
+----------------------------------------------
+r63913 | jonnybradley | 2017-09-21 17:26:51 +0200 (Thu, 21 Sep 2017) | 3 lines
+
+[bp/r63911][bp/r63871][FIX] query: Add support for arrays of arrays in "form_input" type query generation (which generates hidden inputs for all request variables) 
+[bp/r63912][bp/r63872][FIX] perms: Add confirm check for permission changes
+[not: 'and suppress spurious "admin removed from Admins" message' as feedback not present before 17.x]
+----------------------------------------------
+r63905 | luciash | 2017-09-21 15:37:27 +0200 (Thu, 21 Sep 2017) | 1 line
+
+[bp/r63899][FIX] Modules: add confirmation steps for creating, modifying, assigning and unassigning modules (including the custom modules)
+----------------------------------------------
+r63697 | chealer | 2017-08-29 19:01:47 +0200 (Tue, 29 Aug 2017) | 2 lines
+
+[bp/r63696] [FIX] Output of TRACKER plugin sometimes parsed (breaking HTML)
+Declares output as HTML
+----------------------------------------------
+r63559 | robertokir | 2017-08-15 22:44:19 +0200 (Tue, 15 Aug 2017) | 2 lines
+
+[bp/r63545][FIX] PluginAlias: deleting an alias deletes them all. Thanks luis_asa!
+
+----------------------------------------------
+r63513 | luciash | 2017-08-10 17:33:44 +0200 (Thu, 10 Aug 2017) | 1 line
+
+[bp/r62126][FIX] PluginImg: Images Will Not Show Side by Side with Captions (https://dev.tiki.org/item6301)
+----------------------------------------------
+r63510 | chealer | 2017-08-09 22:24:36 +0200 (Wed, 09 Aug 2017) | 1 line
+
+[bp/r63509][FIX] JavaScript translation
+----------------------------------------------
+r63497 | chealer | 2017-08-09 15:14:55 +0200 (Wed, 09 Aug 2017) | 1 line
+
+[bp/r63496][TRA] "Drop files or "
+----------------------------------------------
+r63462 | xavidp | 2017-08-05 14:15:36 +0200 (Sat, 05 Aug 2017) | 1 line
+
+[bp/r63459][FIX]Added info about plugin includetpl which seems to have been introduced in Tiki15
+----------------------------------------------
+r63415 | drsassafras | 2017-07-31 04:01:46 +0200 (Mon, 31 Jul 2017) | 1 line
+
+[bp/r63335][FIX] significantly reduce false positive filter hits
+----------------------------------------------
+r63369 | chealer | 2017-07-26 21:12:40 +0200 (Wed, 26 Jul 2017) | 1 line
+
+[bp/r63368] [FIX] replace_submission(), replace_article(): Initialize nbreads, votes and points columns of tiki_submissions and articles when creating
+----------------------------------------------
+r63363 | jyhem | 2017-07-26 18:43:21 +0200 (Wed, 26 Jul 2017) | 1 line
+
+[bp/r63361] fix vim-user style typo
+----------------------------------------------
+r63352 | kroky6 | 2017-07-26 07:07:45 +0200 (Wed, 26 Jul 2017) | 1 line
+
+[bp/r63350] [FIX] add forgotten transformation function in email tracker field in order for tabular imports to work with that field type
+----------------------------------------------
+r63348 | rjsmelo | 2017-07-26 01:44:02 +0200 (Wed, 26 Jul 2017) | 2 lines
+
+[bp/63346][FIX] Fix file encoding
+
+----------------------------------------------
+r63334 | drsassafras | 2017-07-24 22:16:08 +0200 (Mon, 24 Jul 2017) | 1 line
+
+[bp/r63210][FIX] Dont kill donkeys and monkeys.
+----------------------------------------------
+r63302 | rjsmelo | 2017-07-21 01:02:02 +0200 (Fri, 21 Jul 2017) | 2 lines
+
+[bp/63301][FIX] Email Action (Plugin ListExecute) did not respect pref log_mail
+
+----------------------------------------------
+r63291 | kroky6 | 2017-07-20 16:18:37 +0200 (Thu, 20 Jul 2017) | 1 line
+
+[bp/r63287] [FIX] trackerlist tablesorter number of columns mismatch when last comment field is used or a field is hidden/not accessible
+----------------------------------------------
+r63290 | kroky6 | 2017-07-20 16:15:29 +0200 (Thu, 20 Jul 2017) | 1 line
+
+[bp/r63286] [FIX] server-side ajax filtering work along with filters specified in wiki plugin code
+----------------------------------------------
+r63278 | kroky6 | 2017-07-19 10:07:18 +0200 (Wed, 19 Jul 2017) | 1 line
+
+[bp/r63276] [FIX] ItemsList field use input rather than output in PluginTracker context to allow dynamic selection based on the other field in the tracker; note: several fixes were attempted here all of which were partial and broke certain scenarios; this one aims to make things consistent - always use ItemsList->renderInput in PluginTracker and depend on the fieldIdHere value to show the right value
+----------------------------------------------
+r63226 | drsassafras | 2017-07-10 15:04:06 +0200 (Mon, 10 Jul 2017) | 1 line
+
+[bp/r63224][FIX] Fix for tiki-wizard_admin.php (2 of 2)
+----------------------------------------------
+r63225 | drsassafras | 2017-07-10 15:01:09 +0200 (Mon, 10 Jul 2017) | 1 line
+
+[bp/r63223][FIX] Fix for tiki-wizard_admin.php (1 of 2)
+----------------------------------------------
+r63199 | chealer | 2017-07-06 23:27:58 +0200 (Thu, 06 Jul 2017) | 2 lines
+
+[bp/r63198] Stop automatically hiding and showing action popover
+This restores the pre-Tiki 14 behavior, which works around issue #5668.
+----------------------------------------------
+r63186 | kroky6 | 2017-07-06 16:34:07 +0200 (Thu, 06 Jul 2017) | 1 line
+
+[bp/r63184] [FIX] update permission error message in module menupage to be more accurate
+----------------------------------------------
+r63164 | kroky6 | 2017-07-04 15:57:47 +0200 (Tue, 04 Jul 2017) | 1 line
+
+[bp/63162] [FIX] PluginTracker ItemsList prefill fixed to display the preselected value
+----------------------------------------------
+r63149 | chibaguy | 2017-07-03 05:45:46 +0200 (Mon, 03 Jul 2017) | 1 line
+
+[FIX]Fix typo in inline CSS. Thanks to Mike for reporting (https://tiki.org/forumthread65733).
+----------------------------------------------
+r63141 | jonnybradley | 2017-07-02 18:07:05 +0200 (Sun, 02 Jul 2017) | 1 line
+
+[bp/r63140][bp/r62757][FIX] better var filtering for batch_send_newsletters
+----------------------------------------------
+r63136 | jonnybradley | 2017-07-02 17:38:49 +0200 (Sun, 02 Jul 2017) | 1 line
+
+[bp/r63135][bp/r62780][FIX] debug: Observe $prefs.feature_debug_console when showing smarty debug info (and add a warning)
+----------------------------------------------
+r63134 | lindonb | 2017-07-02 17:26:40 +0200 (Sun, 02 Jul 2017) | 1 line
+
+[bp/r62572, r62651 and r62652][FIX] wizard admin: better request filtering, including adding a relative url filter
+----------------------------------------------
+r63104 | kroky6 | 2017-06-28 15:31:03 +0200 (Wed, 28 Jun 2017) | 1 line
+
+[bp/63102] [FIX] ListExecute plugin table output fix column count when using tstotals option
+----------------------------------------------
+r63077 | lindonb | 2017-06-26 03:37:46 +0200 (Mon, 26 Jun 2017) | 4 lines
+
+[bp/r63052 and r63074][FIX] HTML special characters escaping
+			[FIX] JavaScript string special characters escaping
+			Use pagename filter for wiki page object ID
+			Add attr escape modifier option
+----------------------------------------------
+r63042 | kroky6 | 2017-06-20 00:05:34 +0200 (Tue, 20 Jun 2017) | 1 line
+
+[bp/63040] [FIX] ItemLink ObjectSelector usage did not display proper multiple fields formatted string for already selected value
+----------------------------------------------
+r63025 | lindonb | 2017-06-18 16:52:11 +0200 (Sun, 18 Jun 2017) | 1 line
+
+[bp/r62084][FIX] Prevent bypassing of the xss filter by padding zeros
+----------------------------------------------
+r63022 | lindonb | 2017-06-18 16:06:45 +0200 (Sun, 18 Jun 2017) | 1 line
+
+[bp/r63017][FIX] Add attributes to xss filter. Not an exact backport - simply backporting the latest list of attributes from 17.x
+----------------------------------------------
+r62996 | kroky6 | 2017-06-13 14:43:55 +0200 (Tue, 13 Jun 2017) | 1 line
+
+[bp/62994] [FIX] allow datetimepicker to work during inline edit by not submitting immediately after date choice but rather onClose calendar event
+----------------------------------------------
+r62971 | lindonb | 2017-06-12 04:08:50 +0200 (Mon, 12 Jun 2017) | 1 line
+
+[bp/r62968][FIX] Additional escaping for css values used in text color wiki syntax
+----------------------------------------------
+r62954 | lindonb | 2017-06-11 04:41:41 +0200 (Sun, 11 Jun 2017) | 1 line
+
+[bp/r62875][FIX] implement checkOrigin() to avoid false CSRF errors. Fixes r62751 and r62753
+----------------------------------------------
+r62947 | kroky6 | 2017-06-09 21:15:16 +0200 (Fri, 09 Jun 2017) | 1 line
+
+[bp/r62945] [FIX] use default tiki preference for mail charset in ListExecute EmailAction
+----------------------------------------------
+r62850 | jyhem | 2017-05-31 18:02:29 +0200 (Wed, 31 May 2017) | 1 line
+
+[FIX][bp/r62847] Improve r62661 with better label to avoid confusing with well known activists group (thanks Luci)
+----------------------------------------------
+r62845 | jyhem | 2017-05-31 17:50:41 +0200 (Wed, 31 May 2017) | 1 line
+
+[FIX][bp/r62661] Make it obvious which comments were entered by anonymous
+----------------------------------------------
+r62799 | drsassafras | 2017-05-29 04:02:53 +0200 (Mon, 29 May 2017) | 1 line
+
+[bp/r62797][FIX] better var filtering in tiki-contact
+----------------------------------------------
+r62719 | kroky6 | 2017-05-24 13:51:54 +0200 (Wed, 24 May 2017) | 1 line
+
+[bp/62717] [FIX] bug introduced by 56741 refactoring - autosearchdelay is now zero and not missing by default which requires a change in its application logic
+----------------------------------------------
+r62697 | jyhem | 2017-05-23 02:20:02 +0200 (Tue, 23 May 2017) | 1 line
+
+[FIX] Rolls back r62696 (I was not in the directory I thought I was in)
+----------------------------------------------
+r62696 | jyhem | 2017-05-23 02:06:06 +0200 (Tue, 23 May 2017) | 1 line
+
+[FIX] Make all these mandatory_star stars consistent so users and theme creators can style them (completes r62695)
+----------------------------------------------
+r62675 | lindonb | 2017-05-21 04:44:42 +0200 (Sun, 21 May 2017) | 1 line
+
+[FIX] filter: alphaspace filter used in r62673 doesn't exist in Tiki15
+----------------------------------------------
+r62673 | lindonb | 2017-05-21 04:29:42 +0200 (Sun, 21 May 2017) | 1 line
+
+[bp/r62670 and r62671][FIX] comments: better filtering and escaping for comment object IDs
+----------------------------------------------
+r62667 | jyhem | 2017-05-20 02:19:28 +0200 (Sat, 20 May 2017) | 1 line
+
+[FIX][bp/r62664] Get correct permissions for blog posts of categorised blogs
+----------------------------------------------
+r62626 | jyhem | 2017-05-17 03:29:22 +0200 (Wed, 17 May 2017) | 1 line
+
+[FIX][bp/r62624] Also display visible subgalleries in galleries listings when user does not have global list_file_galleries permission. Plus a minor garbled indent
+----------------------------------------------
+r62613 | jyhem | 2017-05-16 17:56:49 +0200 (Tue, 16 May 2017) | 1 line
+
+[FIX][bp/r62611] Don't mention comments to users who cannot read them
+----------------------------------------------
+r62580 | lindonb | 2017-05-14 02:23:11 +0200 (Sun, 14 May 2017) | 1 line
+
+[bp/r62577][FIX] user messages: array to string error in db query was causing download of all messages to fail
+----------------------------------------------
+r62561 | luciash | 2017-05-12 15:54:39 +0200 (Fri, 12 May 2017) | 1 line
+
+[bp/r62557][FIX] minichat: check permission to use the feature (thanks marclaporte)
+----------------------------------------------
+r62559 | luciash | 2017-05-12 15:49:41 +0200 (Fri, 12 May 2017) | 1 line
+
+[bp/r62556][FIX] minichat: instead of empty <> show <Anonymous> for non-registered users and show system real user names when feature enabled (thanks marclaporte)
+----------------------------------------------
+r62518 | jonnybradley | 2017-05-09 23:29:39 +0200 (Tue, 09 May 2017) | 1 line
+
+[bp/r62517][bp/r62516][FIX] trackers: Quick fix to prevent tiki-view_tracker_item.php from unnecessarily loading the entire history causing server outages (with possibly 1GB+ of tracker logs)
+----------------------------------------------
+r62514 | jonnybradley | 2017-05-09 19:11:08 +0200 (Tue, 09 May 2017) | 1 line
+
+[bp/r62513][bp/r62362][FIX] trackers: Don't log changes to the results of webservice field requests as they tend to pollute the item history with unintelligible external data that hasn't been changed in the tracker itself
+----------------------------------------------
+r62506 | luciash | 2017-05-09 14:31:53 +0200 (Tue, 09 May 2017) | 1 line
+
+[bp/r62504][FIX][UX] File Galleries: Clicking file gallery actions icon brings to page top (thanks chealer)
+----------------------------------------------
+r62443 | pom2ter | 2017-05-04 01:33:07 +0200 (Thu, 04 May 2017) | 1 line
+
+[bp/r62442][FIX] timeago markup bugs in attributes for calendar events
+----------------------------------------------
+r62437 | chealer | 2017-05-02 19:53:21 +0200 (Tue, 02 May 2017) | 3 lines
+
+[bp/r62436][FIX] replace_hotwords(): empty lines returned when some hotwords containing PCRE metacharacters are present
+Escape all PCRE metacharacters rather than just slashes.
+See also https://sourceforge.net/p/tikiwiki/mailman/message/35710889/
+----------------------------------------------
+r62420 | chibaguy | 2017-05-02 14:33:21 +0200 (Tue, 02 May 2017) | 1 line
+
+[FIX]Misspelling in interface text.
+----------------------------------------------
+r62393 | lindonb | 2017-04-30 18:31:33 +0200 (Sun, 30 Apr 2017) | 1 line
+
+[bp/r62386 and r62389][FIX] filters: improve language and imgsize filters
+----------------------------------------------
+r62354 | luciash | 2017-04-27 14:14:24 +0200 (Thu, 27 Apr 2017) | 1 line
+
+[bp/r62353][UX][UI] Module Calendar New: remove unnecessary inline style attribute from the "Add Event" link where in some languages it was not wide enough and causing the text to wrap on two lines + use Bootstrap class instead (thanks chealer, marclaporte)
+----------------------------------------------
+r62342 | patrick-proulx | 2017-04-25 23:11:29 +0200 (Tue, 25 Apr 2017) | 5 lines
+
+[/bp62340][FIX] Fixed issue with Item Link facet showing url. Also fixed a couple other issues.
+
+Issue with inverted logic in getItemLabel function call on whether to show link or strip tags. 
+Issue with having nested link (link being called twice in RenderOutput and then again within getItemLabel).
+
+----------------------------------------------
+r62335 | patrick-proulx | 2017-04-25 16:44:04 +0200 (Tue, 25 Apr 2017) | 2 lines
+
+[FIX] Fixed an issue with IE 10/11 not being able to submit the form in the ajax confirmation modals
+
+----------------------------------------------
+r62328 | rjsmelo | 2017-04-25 01:25:24 +0200 (Tue, 25 Apr 2017) | 2 lines
+
+[ENH] Backport tiki-check.php to all supported versions
+
+----------------------------------------------
+r62310 | lindonb | 2017-04-24 03:07:09 +0200 (Mon, 24 Apr 2017) | 1 line
+
+[bp/r62307][FIX] forum watches: wrong method call resulted in no watches being returned for notifications; additionally, the new $threadId posted was being used instead of the parentId also causing a watch notification to not be sent. (thanks Tommy on stackoverflow for reporting)
+----------------------------------------------
+r62263 | kroky6 | 2017-04-18 23:17:46 +0200 (Tue, 18 Apr 2017) | 1 line
+
+[bp/62261] [FIX] Relation field edge cases - circular refresh on save depleting function call stack, orphan field relations when target objects have been deleted
+----------------------------------------------
+r62257 | yonixxx | 2017-04-18 16:56:33 +0200 (Tue, 18 Apr 2017) | 1 line
+
+[FIX][bp/62254]There is no admin report page so the link show an error.
+----------------------------------------------
+r62248 | chibaguy | 2017-04-17 17:57:36 +0200 (Mon, 17 Apr 2017) | 1 line
+
+[FIX][UI] Bad contrast in WYSIWYG editor textarea. Problem reported by user Durgeoble in IRC.
+----------------------------------------------
+r62247 | kroky6 | 2017-04-17 15:40:01 +0200 (Mon, 17 Apr 2017) | 1 line
+
+[bp/62245] [FIX] observe tracker item view permission before offering a link to the item from Relation field or anything using object_link smarty function
+----------------------------------------------
+r62231 | rjsmelo | 2017-04-16 17:44:43 +0200 (Sun, 16 Apr 2017) | 2 lines
+
+[bp/62229][FIX] Message "array_key_exists() expects parameter 2 to be array, string given" when running index rebuild
+
+----------------------------------------------
+r62228 | rjsmelo | 2017-04-16 17:19:21 +0200 (Sun, 16 Apr 2017) | 2 lines
+
+[bp/62226][FIX] Message "Illegal string offset 'xxx'" when running index rebuild
+
+----------------------------------------------
+r62220 | rjsmelo | 2017-04-15 19:48:28 +0200 (Sat, 15 Apr 2017) | 2 lines
+
+[bp/62218][FIX] Wrong name used when calling private method _ldap_sync_groups
+
+----------------------------------------------
+r62208 | lindonb | 2017-04-14 03:18:05 +0200 (Fri, 14 Apr 2017) | 1 line
+
+[bp/r62205][FIX] wiki: check permissions before showing edit button on source view (thanks Marc!)
+----------------------------------------------
+r62195 | drsassafras | 2017-04-12 17:14:35 +0200 (Wed, 12 Apr 2017) | 1 line
+
+[rb/r62193] fixing revert
+----------------------------------------------
+r62193 | drsassafras | 2017-04-12 02:57:49 +0200 (Wed, 12 Apr 2017) | 1 line
+
+[rb/r62189:62183] reverting tagged branch changes
+----------------------------------------------
+r62123 | nkoth | 2017-04-06 21:29:20 +0200 (Thu, 06 Apr 2017) | 2 lines
+
+[bp/r62121][FIX] Facebook login broken due to something Facebook changed on their end (this fix retains previous behavior just in case)
+
+----------------------------------------------
+r62114 | kroky6 | 2017-04-06 15:16:10 +0200 (Thu, 06 Apr 2017) | 2 lines
+
+[bp/r62111] [bp/r62112] [FIX] AutoIncrement field exclude prepend/append HTML from CSV export
+[FIX] AutoIncrement field expose prepend/append value besides the numeric one for unified index to use it
+----------------------------------------------
+r62086 | kroky6 | 2017-04-05 16:31:44 +0200 (Wed, 05 Apr 2017) | 2 lines
+
+[bp/r60715] [bp/r60730] [ENH] allow searching for ranges of data in trackerfilter
+[FIX] tracker filter range fix for DateTime fields entered by selecting year/month/day individually
+----------------------------------------------
+r62052 | kroky6 | 2017-04-03 14:20:08 +0200 (Mon, 03 Apr 2017) | 1 line
+
+[bp/62050] [FIX] handle and report incorrectly configured DynamicList tracker field instead of dying with an error
+----------------------------------------------
+r62049 | jonnybradley | 2017-04-03 14:09:50 +0200 (Mon, 03 Apr 2017) | 1 line
+
+[bp/r62048][bp/r61808][FIX] memory: Correct existing allocate memory prefs which may use "MB", "GB" etc to be only "M" or "G" according to http://www.php.net/manual/en/faq.using.php#faq.using.shorthandbytes (so we were trying to set a memory_limit of 512 bytes instead of megabytes)
+----------------------------------------------
+r62047 | marclaporte | 2017-04-03 10:24:02 +0200 (Mon, 03 Apr 2017) | 1 line
+
+fix a typo. Issue not present in 17.x so not a backport
+----------------------------------------------
+r61774 | arildb | 2017-03-19 22:46:55 +0100 (Sun, 19 Mar 2017) | 1 line
+
+[FIX] myisam to innodb conversion scipt
+----------------------------------------------
+r61724 | luciash | 2017-03-17 15:36:55 +0100 (Fri, 17 Mar 2017) | 1 line
+
+[FIX][UI] Recompiled the CSS for "Giving a little space so the admin filter menu checkboxes are not glued to the dropdown border."
+----------------------------------------------
+r61723 | kroky6 | 2017-03-17 15:20:30 +0100 (Fri, 17 Mar 2017) | 1 line
+
+[bp/r61721] [FIX] showlinks=n fix for plugin trackerlist
+----------------------------------------------
+r61720 | luciash | 2017-03-17 14:55:44 +0100 (Fri, 17 Mar 2017) | 1 line
+
+[bp/r61588][FIX][UI] Giving a little space so the admin filter menu checkboxes are not glued to the dropdown border.
+----------------------------------------------
+r61710 | luciash | 2017-03-16 19:43:14 +0100 (Thu, 16 Mar 2017) | 1 line
+
+[bp/r61708][FIX] PluginImg: Image with Description Loses Constraints (https://dev.tiki.org/item5990 - thanks jmorris)
+----------------------------------------------
+r61705 | kroky6 | 2017-03-16 14:46:09 +0100 (Thu, 16 Mar 2017) | 1 line
+
+[bp/r61703] [FIX] trackerlist using missing wiki page template for pretty tracker handle exception more gracefully, so index rebuild does not stop in the middle
+----------------------------------------------
+r61700 | kroky6 | 2017-03-15 18:37:29 +0100 (Wed, 15 Mar 2017) | 1 line
+
+[bp/r61698] [FIX] ignore mysql index buffer errors when destructing the table object
+----------------------------------------------
+r61687 | luciash | 2017-03-14 17:58:36 +0100 (Tue, 14 Mar 2017) | 1 line
+
+[bp/r61602][ENH] added new preference to show error on missing fields in search index
+----------------------------------------------
+r61682 | luciash | 2017-03-14 13:40:31 +0100 (Tue, 14 Mar 2017) | 1 line
+
+[bp/r61608][REF][FIX] minichat: more of Bootstrapification, code optimalization, fixed smiley sizes (thanks marclaporte)
+----------------------------------------------
+r61678 | luciash | 2017-03-14 10:59:40 +0100 (Tue, 14 Mar 2017) | 1 line
+
+[bp/r61601][FIX] minichat: some Bootstrapification of the module, added spaces for better readability, fixed broken paths to smileys (thanks marclaporte) <- no broken path in branch 15.x actually -- luci
+----------------------------------------------
+r61656 | chibaguy | 2017-03-13 05:05:52 +0100 (Mon, 13 Mar 2017) | 1 line
+
+[FIX][UI] Removed CSS rule that made all text on tiki-view_sheets.php 14px (including headings, etc.) ironically except for in the spreadsheet itself.
+----------------------------------------------
+r61652 | rjsmelo | 2017-03-13 01:23:48 +0100 (Mon, 13 Mar 2017) | 2 lines
+
+[bp/61649][FIX] Keep PEAR constructor compatibility, adjust constructor visibility on child classes (issue introduced in r60748)
+
+----------------------------------------------
+r61645 | rjsmelo | 2017-03-13 00:07:44 +0100 (Mon, 13 Mar 2017) | 2 lines
+
+[bp/61643][FIX] Keep PEAR constructor compatibility (issue introduced in r60748)
+
+----------------------------------------------
+r61586 | chibaguy | 2017-03-09 05:26:46 +0100 (Thu, 09 Mar 2017) | 1 line
+
+[FIX][UI] Contrast problem in United theme login popup mode links (now same as in module mode). Thanks, Marc.
+----------------------------------------------
+r61538 | eromneg | 2017-03-07 09:52:21 +0100 (Tue, 07 Mar 2017) | 1 line
+
+[FIX] tidy up code where a closing > for a div straddled a line
+----------------------------------------------
+r61528 | jonnybradley | 2017-03-06 18:27:10 +0100 (Mon, 06 Mar 2017) | 1 line
+
+[bp/r61527][bp/r61526][FIX] maps: Trim off leading .*: from dialog titles (as seen in cartograf_15, thanks luciash)
+----------------------------------------------
+r61514 | eromneg | 2017-03-06 00:10:10 +0100 (Mon, 06 Mar 2017) | 1 line
+
+[ENH] [bp61512] additional tracker fieldId selector to allow more css customisation
+----------------------------------------------
+r61484 | pom2ter | 2017-03-03 22:36:35 +0100 (Fri, 03 Mar 2017) | 1 line
+
+[bp/r61419] [FIX] change the styles for the caption in plugincode to be more like it was in 12.x
+----------------------------------------------
+r61464 | rjsmelo | 2017-03-03 08:39:44 +0100 (Fri, 03 Mar 2017) | 5 lines
+
+[bp/61384][ENH] Trim changelog and change the release script to trim the changelog also in next releases
+Instead of keeping all the history, all file after the last version of the previous major is trimmed and
+a message added instead pointing the user to the changelog.txt file of that release in SF SVN
+
+
+----------------------------------------------
+r61447 | eromneg | 2017-03-02 00:09:12 +0100 (Thu, 02 Mar 2017) | 1 line
+
+[FIX] [bp 61439] only show the auto_toc settings in the Properties tab if the feature is 'on' - still don't understand why the wiki_page_hide_title pref is also checked but logic changed from OR to AND since OR didn't make any sense
+----------------------------------------------
+r61420 | pom2ter | 2017-02-28 01:29:19 +0100 (Tue, 28 Feb 2017) | 1 line
+
+[bp/r61090] [FIX] fixed bugs related to the display of svg charts in spreadsheets
+----------------------------------------------
+r61413 | yonixxx | 2017-02-27 17:07:56 +0100 (Mon, 27 Feb 2017) | 1 line
+
+[bp/61411] [FIX] Trackerstat count average based on correct totals (thanks Victor)
+----------------------------------------------
+r61374 | eromneg | 2017-02-23 17:52:48 +0100 (Thu, 23 Feb 2017) | 1 line
+
+[FIX] [bp61355] fix inadvertent sorting of top level wiki pages in the structure edit screen due to recent changes for the toc plugin
+----------------------------------------------
+r61285 | kroky6 | 2017-02-13 15:12:36 +0100 (Mon, 13 Feb 2017) | 1 line
+
+[bp/r61283] [FIX] DynamicItemsList field using ItemLink-to-ItemLink as connction was comparing value against id wrongly; it now compares the ids
+----------------------------------------------
+r61263 | xavidp | 2017-02-09 11:47:16 +0100 (Thu, 09 Feb 2017) | 1 line
+
+[bp/r61174][FIX] reduced size of icon shown with pluginfile. thanks pom2ter and marclaporte
+----------------------------------------------
+r61233 | rjsmelo | 2017-02-07 08:09:06 +0100 (Tue, 07 Feb 2017) | 2 lines
+
+[bp/61119][FIX] Use of undefined variable, fix to use the right value from the credentials array
+
+----------------------------------------------
+r61228 | jonnybradley | 2017-02-06 17:44:32 +0100 (Mon, 06 Feb 2017) | 1 line
+
+[UPD] New composer.lock without the problematic things
+----------------------------------------------
+r61190 | kroky6 | 2017-02-02 12:44:55 +0100 (Thu, 02 Feb 2017) | 1 line
+
+[bp/61189] [ENH] improve error message in mysql and elastic search index when query cannot find a field in the index
+----------------------------------------------
+r61136 | yonixxx | 2017-01-30 11:39:55 +0100 (Mon, 30 Jan 2017) | 1 line
+
+[DOC] [bp/61133] Correcting and Clarifying help text according to what the parameters really do when using the plugin.
+----------------------------------------------
+r61114 | yonixxx | 2017-01-29 11:09:44 +0100 (Sun, 29 Jan 2017) | 1 line
+
+[FIX] Corrected the pref to use the wiki page description (when set accordingly) in the meta tag description. (seems it was broken for sometimes)
+----------------------------------------------
+r61109 | xavidp | 2017-01-28 23:46:34 +0100 (Sat, 28 Jan 2017) | 1 line
+
+[bp/r61087][FIX]Typo
+----------------------------------------------
+r61108 | xavidp | 2017-01-28 23:36:16 +0100 (Sat, 28 Jan 2017) | 1 line
+
+[bp/r61107][FIX]setSize was apparently renamed to setColSpan as a method but not replaced everywhere where it was used, surprisingly. Should address wish5961. Also importing with semicolon works after this fix, but not yet when using comma.
+----------------------------------------------
+r61106 | xavidp | 2017-01-28 22:58:28 +0100 (Sat, 28 Jan 2017) | 1 line
+
+[bp/r61100[FIX] Sheet Profile Importer stoped working with new YAML library. The format of the profile was defined with named and unamed sequences at the same level, changed to support title and rows, or take a unamed sequence as rows to keep as compatible as possible. thanks rjsmelo and marclaporte
+----------------------------------------------
+r61098 | lindonb | 2017-01-28 16:14:55 +0100 (Sat, 28 Jan 2017) | 1 line
+
+[bp/r61097][FIX] admin groups: capture user, group and user registration fields if available when first creating a group. Prior to Tiki14 or so the fields were not available until the group was created. Should not be merged with trunk since that code is different now and issue was fixed with r61022.
+----------------------------------------------
 Version 15.4
 <http://doc.tiki.org/Tiki15>
 ------------------
