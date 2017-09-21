@@ -42,27 +42,31 @@ class Services_Edit_Controller
 	{
 		global $user;
 
-		$pageName = $input->page->text();
-		$info = TikiLib::lib('tiki')->get_page_info($pageName);
-		$data = $input->data->none();
+		Services_Exception_Disabled::check('wysiwyg_inline_editing');
 
-		// Check if HTML format is allowed
-		if ($info['is_html']) {
-			// Save as HTML
-			$edit_data = TikiLib::lib('edit')->partialParseWysiwygToWiki($data);
-			$is_html= '1';
-		} else {
-			// Convert HTML to wiki and save as wiki
-			$edit_data = TikiLib::lib('edit')->parseToWiki($data);
-			$is_html= null;
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+			$pageName = $input->page->text();
+			$info = TikiLib::lib('tiki')->get_page_info($pageName);
+			$data = $input->data->none();
+
+			// Check if HTML format is allowed
+			if ($info['is_html']) {
+				// Save as HTML
+				$edit_data = TikiLib::lib('edit')->partialParseWysiwygToWiki($data);
+				$is_html = '1';
+			} else {
+				// Convert HTML to wiki and save as wiki
+				$edit_data = TikiLib::lib('edit')->parseToWiki($data);
+				$is_html = null;
+			}
+
+			$edit_comment = tra('Inline editor update');
+			$res = TikiLib::lib('tiki')->update_page($pageName, $edit_data, $edit_comment, $user, $_SERVER['REMOTE_ADDR']);
+
+			return array(
+				'data' => $res,
+			);
 		}
-
-		$edit_comment = tra('Inline editor update');
-		$res = TikiLib::lib('tiki')->update_page($pageName, $edit_data, $edit_comment, $user, $_SERVER['REMOTE_ADDR']);
-
-		return array(
-			'data' => $res,
-		);
 	}
 
 	function action_preview($input)
