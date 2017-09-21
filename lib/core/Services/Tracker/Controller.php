@@ -90,7 +90,7 @@ class Services_Tracker_Controller
 			throw new Services_Exception(tr('Type does not exist'), 400);
 		}
 
-		if ($input->type->word()) {
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && $input->type->word()) {
 			if (empty($name)) {
 				throw new Services_Exception_MissingValue('name');
 			}
@@ -302,7 +302,7 @@ class Services_Tracker_Controller
 			}
 		}
 
-		if ($input->name->text()) {
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && $input->name->text()) {
 			$input->replaceFilters(
 				array(
 					'visible_by' => 'groupname',
@@ -406,7 +406,7 @@ class Services_Tracker_Controller
 			}
 		}
 
-		if ($input->confirm->int()) {
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && $input->confirm->int()) {
 			$trklib = TikiLib::lib('trk');
 			$tx = TikiDb::get()->begin();
 			foreach ($fields as $fieldId) {
@@ -1267,7 +1267,7 @@ class Services_Tracker_Controller
 			throw new Services_Exception_NotFound;
 		}
 
-		if ($confirm) {
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && $confirm) {
 			$this->utilities->removeTracker($trackerId);
 
 			return array(
@@ -1330,7 +1330,7 @@ class Services_Tracker_Controller
 			throw new Services_Exception_Denied;
 		}
 
-		if ($input->confirm->int()) {
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && $input->confirm->int()) {
 			$result = $this->utilities->updateItem(
 				$definition,
 				array(
@@ -1385,7 +1385,7 @@ class Services_Tracker_Controller
 					throw new Services_Exception_NotFound;
 				}
 
-				if ($confirm) {
+				if ($_SERVER['REQUEST_METHOD'] === 'POST' && $confirm) {
 					$this->utilities->clearTracker($trackerId);
 
 					return array(
@@ -1424,7 +1424,7 @@ class Services_Tracker_Controller
 		$cat_type = 'tracker';
 		$cat_objid = $trackerId;
 
-		if ($confirm) {
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && $confirm) {
 			$name = $input->name->text();
 
 			if (! $name) {
@@ -1536,7 +1536,7 @@ class Services_Tracker_Controller
 	{
 		$confirm = $input->confirm->int();
 		
-		if ($confirm) {
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && $confirm) {
 			$trackerId = $input->trackerId->int();
 			$perms = Perms::get('tracker', $trackerId);
 				if (! $perms->admin_trackers || ! Perms::get()->admin_trackers) {
@@ -1826,7 +1826,7 @@ class Services_Tracker_Controller
 		unset($success);
 		$confirm = $input->confirm->int();
 		
-		if ($confirm) {
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && $confirm) {
 				
 			$raw = $input->raw->none();
 			$preserve = $input->preserve->int();
@@ -1948,7 +1948,7 @@ class Services_Tracker_Controller
 		unset($success);
 		$confirm = $input->confirm->int();
 		
-		if ($confirm) {
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && $confirm) {
 		
 			$transaction = $tikilib->begin();
 			$installer = new Tiki_Profile_Installer;
