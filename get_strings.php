@@ -60,7 +60,7 @@ if ($request->hasProperty('outputFiles')) {
 $excludeDirs = array(
 	'dump' , 'img', 'lang', 'addons', 'bin', 'installer/schema',
 	'vendor_bundled', 'vendor', 'vendor_extra', 'vendor_custom',
-	 'lib/test',	'temp', 'whelp', 'permissioncheck',
+	 'lib/test',	'temp', 'permissioncheck',
 	'storage',	'tiki_tests', 'doc', 'db','lib/openlayers','tests', 'modules/cache'
 );
 
