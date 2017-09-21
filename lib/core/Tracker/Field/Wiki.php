@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Tracker_Field_Wiki extends Tracker_Field_Text
+class Tracker_Field_Wiki extends Tracker_Field_Text implements Tracker_Field_Exportable
 {
 	public static function getTypes()
 	{
@@ -122,11 +122,18 @@ class Tracker_Field_Wiki extends Tracker_Field_Text
 		);
 	}
 
-	function isValid($ins_fields_data)
+	/**
+	 * @param $ins_fields_data
+	 * @param int $itemId           set to itemId when importing
+	 * @return bool|mixed|string
+	 */
+	function isValid($ins_fields_data, $itemId = 0)
 	{
 		$pagenameField = $this->getOption('fieldIdForPagename');
 		$pagename = $ins_fields_data[$pagenameField]['value'];
-		$itemId = $this->getItemId();
+		if (! $itemId) {
+			$itemId = $this->getItemId();
+		}
 
 		if (TikiLib::lib('trk')->check_field_value_exists($pagename, $pagenameField, $itemId)) {
 			return tr('The page name provided already exists. Please choose another.');
@@ -156,7 +163,16 @@ class Tracker_Field_Wiki extends Tracker_Field_Text
 			$is_html = false;
 		}
 
-		if ($page_name = $this->getValue()) {
+		$page_name = $this->getValue();
+
+		if (! $page_name && ! empty($requestData['itemId'])) {	// from tabular import replace
+			$page_name = $this->getFullPageName($requestData['ins_' . $this->getOption('fieldIdForPagename')]);
+			$itemId = $requestData['itemId'];
+		} else {
+			$itemId = 0;
+		}
+
+		if ($page_name) {
 			// There is already a wiki pagename set (the value of the field is the wiki page name)
 			if (TikiLib::lib('tiki')->page_exists($page_name)) {
 				// Get wiki page content
@@ -169,7 +185,7 @@ class Tracker_Field_Wiki extends Tracker_Field_Text
 						$edit_comment = 'Updated by Tracker Field ' . $fieldId;
 						$short_name = $requestData['ins_' . $this->getOption('fieldIdForPagename')];
 						$ins_fields_data[$this->getOption('fieldIdForPagename')]['value'] = $short_name;
-						if ($this->isValid($ins_fields_data) === true) {
+						if ($this->isValid($ins_fields_data, $itemId) === true) {
 							TikiLib::lib('tiki')->update_page($page_name, $requestData[$ins_id], $edit_comment, $user, TikiLib::lib('tiki')->get_ip_address(), '', 0, '', $is_html, null, null, $this->getOption('wysiwyg'));
 						}
 					}
@@ -180,14 +196,7 @@ class Tracker_Field_Wiki extends Tracker_Field_Text
 		} elseif (!empty($requestData[$ins_id])) {
 			// the field value is currently null and there is input, so would need to create page.
 			if ($short_name = $requestData['ins_' . $this->getOption('fieldIdForPagename')]) {
-				$namespace = $this->getOption('namespace');
-				if ($namespace == 'none') {
-					$page_name = $short_name;
-				} elseif ($namespace == 'custom' && !empty($this->getOption('customnamespace'))) {
-					$page_name = $this->getOption('customnamespace') . $prefs['namespace_separator'] . $short_name;
-				} else {
-					$page_name = 'trackerfield' . $fieldId . $prefs['namespace_separator'] . $short_name;
-				}
+				$page_name = $this->getFullPageName($short_name);
 				if (!TikiLib::lib('tiki')->page_exists($page_name)) {
 					$ins_fields_data[$this->getOption('fieldIdForPagename')]['value'] = $short_name;
 					if ($this->isValid($ins_fields_data) === true) {
@@ -271,6 +280,7 @@ class Tracker_Field_Wiki extends Tracker_Field_Text
 				$data = array(
 					$baseKey => $typeFactory->identifier($value),
 					"{$baseKey}_text" => $typeFactory->wikitext($info['data']),
+					"{$baseKey}_raw" => $typeFactory->identifier($info['data']),
 				);
 			}
 
@@ -304,7 +314,80 @@ class Tracker_Field_Wiki extends Tracker_Field_Text
 
 	function getTabularSchema()
 	{
-		// TODO
+		$definition = $this->getTrackerDefinition();
+		$schema = new Tracker\Tabular\Schema($definition);
+
+		$permName = $this->getConfiguration('permName');
+		$name = $this->getConfiguration('name');
+		$insertId = $this->getInsertId();
+		$baseKey = $this->getBaseKey();
+		$fieldIdForPagename = $this->getOption('fieldIdForPagename');
+		$fieldForPagename = $definition->getField($fieldIdForPagename);
+
+
+		$plain = function () {
+			return function ($value, $extra) {
+				if (isset($extra['text'])) {	// indexed value from addQuerySource _raw indexed field
+					$value = $extra['text'];
+				} else {
+					// not indexed yet, need to find page contents for $value
+					if (TikiLib::lib('tiki')->page_exists($value)) {
+						// Get wiki page content
+						$page_info = TikiLib::lib('tiki')->get_page_info($value);
+						$value = $page_info['data'];
+					}
+				}
+
+				return $value;
+			};
+		};
+
+		$render = function () use ($plain) {
+			$f = $plain();
+			return function ($value, $extra) use ($f) {
+				$value = $f($value, $extra);
+
+				return $this->attemptParse($value);
+			};
+		};
+
+		$schema->addNew($permName, 'default')
+			->setLabel($name)
+			->setRenderTransform(function ($value) {
+				return $value;
+			})
+			->setParseIntoTransform(function (& $info, $value) use ($permName) {
+				$info['fields'][$permName] = $value;
+			});
+
+		$schema->addNew($permName, 'content-raw')
+			->setLabel($name)
+			->addQuerySource('text', "{$baseKey}_raw")
+			->setRenderTransform($plain())
+			->setParseIntoTransform(function (& $info, $value) use ($permName, $fieldForPagename, $insertId) {
+				$data = $this->getFieldData([
+					$insertId => $value,
+					'ins_' . $fieldForPagename['fieldId'] => $info['fields'][$fieldForPagename['permName']],
+					'itemId' => empty($info['itemId']) ? 0 : $info['itemId'],
+				]);
+				$info['fields'][$permName] = $data['value'];
+			});
+
+		// convert incoming html to wiki syntax and the opposite on export
+		$schema->addNew($permName, 'content-wiki-html')
+			->setLabel($name)
+			->addQuerySource('text', "{$baseKey}_raw")
+			->setRenderTransform($render())
+			->setParseIntoTransform(function (& $info, $value) use ($permName, $fieldForPagename, $insertId) {
+				$data = $this->getFieldData([
+					$this->getInsertId() => TikiLib::lib('edit')->parseToWiki($value),
+					'ins_' . $fieldForPagename['fieldId'] => $info['fields'][$fieldForPagename['permName']],
+					'itemId' => empty($info['itemId']) ? 0 : $info['itemId'],
+				]);
+				$info['fields'][$permName] = $data['value'];
+			});
+
+		return $schema;
 	}
 
 	protected function attemptParse($text)
@@ -316,6 +399,25 @@ class Tracker_Field_Wiki extends Tracker_Field_Text
 			$parseOptions['is_html'] = true;
 		}
 		return TikiLib::lib('parser')->parse_data($text, $parseOptions);
+	}
+
+	/**
+	 * @param $short_name
+	 * @return string
+	 */
+	private function getFullPageName($short_name): string
+	{
+		global $prefs;
+
+		$namespace = $this->getOption('namespace');
+		if ($namespace == 'none') {
+			$page_name = $short_name;
+		} elseif ($namespace == 'custom' && ! empty($this->getOption('customnamespace'))) {
+			$page_name = $this->getOption('customnamespace') . $prefs['namespace_separator'] . $short_name;
+		} else {
+			$page_name = 'trackerfield' . $this->getConfiguration('fieldId') . $prefs['namespace_separator'] . $short_name;
+		}
+		return $page_name;
 	}
 
 }
