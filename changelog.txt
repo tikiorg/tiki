@@ -32,6 +32,11 @@ The tags info is also online: https://dev.tiki.org/Commit+Tags
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 17.1
+<http://doc.tiki.org/Tiki17>
+------------------
+
+----------------------------------------------
 Version 17.0
 <http://doc.tiki.org/Tiki17>
 ------------------
