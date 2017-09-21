@@ -33,13 +33,15 @@ if (!isset($_REQUEST["assign_user"]) || ($tiki_p_admin != 'y' && $tiki_p_admin_u
 $assign_user = $_REQUEST["assign_user"];
 
 if (isset($_REQUEST["action"]) && $access->checkOrigin()) {
-	check_ticket('admin-assign-user');
 
 	if (!isset($_REQUEST["group"])) {
 		$smarty->assign('msg', tra("You have to indicate a group"));
 		$smarty->display("error.tpl");
 		die;
 	}
+
+	$access->check_authenticity(tr('Are you sure you want to add user %0 to group %1', $_REQUEST['assign_user'], $_REQUEST['group']));
+
 	if ($userChoice == 'y') {
 		$gps = $userlib->get_groups(0, -1, 'groupName_asc', '', '', '', '', $userChoice);
 		$groups = array();
@@ -141,8 +143,6 @@ $smarty->assign_by_ref('cant_pages', $users["cant"]);
 
 // Get users (list of users)
 $smarty->assign_by_ref('users', $users["data"]);
-
-ask_ticket('admin-assign-user');
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
