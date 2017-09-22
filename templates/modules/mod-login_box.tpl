@@ -53,7 +53,7 @@ if (jqueryTiki.no_cookie) {
 					</fieldset>
 				</form>
 			{elseif $tiki_p_admin eq 'y'}
-				<form action="{$login_module.login_url|escape}" method="post"{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if} role="form">
+				<form action="{$login_module.login_url|escape}" method="post"{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
 					{ticket}
 					<fieldset>
 						<legend>{tr}Switch User{/tr}</legend>
