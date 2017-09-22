@@ -81,7 +81,7 @@
 					<tr>
 						<td class="tb"><a href="https://tiki.org/">tiki.org</a></td>
 						<td class="tb">{tr}About &amp; News{/tr}</td>
-						<td class="tb"{tr}>Information and introduction portal{/tr}</td>
+						<td class="tb">{tr}Information and introduction portal{/tr}</td>
 					</tr>
 					<tr>
 						<td class="tb"><a href="https://doc.tiki.org/">doc.tiki.org</a></td>
@@ -96,7 +96,7 @@
 					<tr>
 						<td class="tb"><a href="https://tiki.org/Community">tiki.org/Community</a></td>
 						<td class="tb">{tr}Community{/tr}</td>
-						<td class="tb"{tr}>Forums and general community information{/tr}</td>
+						<td class="tb">{tr}Forums and general community information{/tr}</td>
 					</tr>
 					<tr>
 						<td class="tb"><a href="https://themes.tiki.org/">themes.tiki.org</a></td>

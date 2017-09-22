@@ -2,21 +2,21 @@
 	<h2>Fonts</h2>
 	<div class="row">
 		<div class="col-sm-8 col-md-9">
-			<p class="h3a regular ff1">Font: </p>
+			<h3 class="ff1">Font: </h3>
 			<p class="font1">In mauris integer etiam aliquet integer duis rhoncus ultricies cras in habitasse ac sociis
 				porttitor placerat ac porttitor, in ac. A, tristique dapibus mauris, vut et porta? Enim, porta
 				penatibus, augue egestas aliquam eu velit placerat, sociis hac et, pulvinar tincidunt amet ut turpis
 				dapibus. Dolor. Lundium rhoncus elementum vel. Tempor sit nisi aliquam ut augue tincidunt tincidunt cum
 				egestas massa, nunc etiam ac scelerisque auctor sed sed facilisis!</p>
 
-			<p class="h3a regular ff2">Font: </p>
+			<h3 class="ff2">Font: </h3>
 			<p class="font2">In mauris integer etiam aliquet integer duis rhoncus ultricies cras in habitasse ac sociis
 				porttitor placerat ac porttitor, in ac. A, tristique dapibus mauris, vut et porta? Enim, porta
 				penatibus, augue egestas aliquam eu velit placerat, sociis hac et, pulvinar tincidunt amet ut turpis
 				dapibus. Dolor. Lundium rhoncus elementum vel. Tempor sit nisi aliquam ut augue tincidunt tincidunt cum
 				egestas massa, nunc etiam ac scelerisque auctor sed sed facilisis!</p>
 
-			<p class="h3a regular ff3">Font: </p>
+			<h3 class="ff3">Font: </h3>
 			<p class="font3">In mauris integer etiam aliquet integer duis rhoncus ultricies cras in habitasse ac sociis
 				porttitor placerat ac porttitor, in ac. A, tristique dapibus mauris, vut et porta? Enim, porta
 				penatibus, augue egestas aliquam eu velit placerat, sociis hac et, pulvinar tincidunt amet ut turpis

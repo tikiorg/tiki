@@ -56,8 +56,10 @@ Style guide
 }
 .style-guide .col-md-9 {
   padding-left: 0;
+  padding-right: 30px;
 }
 .style-guide .col-md-3 {
+  padding-left: 0;
   padding-right: 0;
 }
 .style-guide .input {
@@ -141,7 +143,7 @@ Style guide
   text-decoration: underline;
 }
 .style-guide .headings .input label {
-  width: 100px;
+  width: 90px;
 }
 .style-guide .headings .input .check {
   width: auto;
@@ -163,7 +165,7 @@ Style guide
   padding-right: 88px;
 }
 .style-guide .tables .input label {
-  width: 125px;
+  width: 135px;
 }
 .style-guide .tables .input .nocolor {
   width: 200px;
@@ -172,7 +174,7 @@ Style guide
   margin-right: 10px;
 }
 .style-guide .buttons .input label {
-  width: 100px;
+  width: 90px;
 }
 .style-guide .forms span:not(.input-group-addon) {
   display: inline-block;
@@ -199,7 +201,7 @@ Style guide
   display: inline;
 }
 .style-guide .forms .input label {
-  width: 100px;
+  width: 90px;
 }
 .style-guide .forms .input .error:after {
   text-align: right;
@@ -232,7 +234,7 @@ Style guide
   padding: 5px 0 !important;
 }
 .style-guide .navbars .input label {
-  width: 115px;
+  width: 90px;
 }
 .style-guide .dropdowns .dropdown-menu {
   display: block;
@@ -242,7 +244,7 @@ Style guide
   padding: 0 !important;
 }
 .style-guide .dropdowns .input label {
-  width: 108px;
+  width: 90px;
 }
 .style-guide .dropdowns .input p:last-child input {
   width: 100%;
@@ -259,7 +261,7 @@ Style guide
   padding-right: 94px;
 }
 .style-guide .tabs .input label {
-  width: 115px;
+  width: 135px;
 }
 .style-guide .tabs .input .nocolor {
   width: 140px;
@@ -273,7 +275,7 @@ Style guide
   margin-bottom: 30px;
 }
 .style-guide .alerts .input label {
-  width: 100px;
+  width: 90px;
 }
 .style-guide .alerts .input .error:after {
   padding-right: 40px;
@@ -295,7 +297,7 @@ Style guide
   vertical-align: middle;
 }
 .style-guide .icons .input label {
-  width: 100px;
+  width: 90px;
 }
 .style-guide .custom-css .input {
   width: 100%;
