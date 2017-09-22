@@ -14,7 +14,7 @@
 	</div>
 </div>
 <div class="modal fade intertrans" id="intertrans-modal" tabindex="-1" role="dialog" aria-labelledby="intertransModalLabel">
-	<form method="post" action="tiki-interactive_trans.php" role="form" class="form">
+	<form method="post" action="tiki-interactive_trans.php" class="form">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
