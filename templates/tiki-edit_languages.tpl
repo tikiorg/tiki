@@ -53,7 +53,7 @@
 	</div>
 	<div class="form-group">
 		<div class="adminoptionbox">
-			<label for="add_tran_sw" class="col-md-4 control-label">{tr}Edit translations{/tr}</label>
+			<label for="edit_tran_sw" class="col-md-4 control-label">{tr}Edit translations{/tr}</label>
 			<div class="col-md-8">
 				<input id="edit_tran_sw" class="translation_action" type="radio" name="action" value="edit_tran_sw" {if $action eq 'edit_tran_sw'}checked="checked"{/if}>
 				<div class="adminoptionboxchild">
@@ -64,7 +64,7 @@
 	</div>
 	<div class="form-group">
 		<div class="adminoptionbox">
-			<label for="add_tran_sw" class="col-md-4 control-label">{tr}Untranslated strings{/tr}</label>
+			<label for="edit_rec_sw" class="col-md-4 control-label">{tr}Untranslated strings{/tr}</label>
 			<div class="col-md-8">
 				<input id="edit_rec_sw" class="translation_action" type="radio" name="action" value="edit_rec_sw" {if $action eq 'edit_rec_sw'}checked="checked"{/if}>
 				{if $prefs.record_untranslated eq 'y'}
