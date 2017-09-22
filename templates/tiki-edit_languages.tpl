@@ -118,14 +118,12 @@
 					{tr}Untranslated strings{/tr}
 				{/if}
 			</div>
+			{* Forms cannot embed forms. <div class="col-md-8">
+				{include file='find.tpl' find_show_num_rows='y'}
+			</div>*}
 			<div class="panel-body">
 				<table class="table table-condensed table-hover" id="edit_translations">
 					<thead>
-						<tr>
-							<div class="col-md-8">
-								{include file='find.tpl' find_show_num_rows='y'}
-							</div>
-						</tr>					
 						<tr>
 							<th>
 								{tr}Original string{/tr}
@@ -136,10 +134,10 @@
 							<th>
 								{tr}Translation{/tr}
 							</th>
-							<th></th>								
+							<th></th>
 						</tr>
 					</thead>
-					<tbody>					
+					<tbody>
 						{foreach from=$translations name=translations item=item}
 							<tr>
 								<td class="col-md-3">
