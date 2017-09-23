@@ -117,6 +117,16 @@ class Tracker_Field_Wiki extends Tracker_Field_Text implements Tracker_Field_Exp
 							1 => tr('Yes'),
 						),
 					),
+					'removeBadChars' => array(
+						'name' => tr('Remove Bad Chars'),
+						'description' => tr('Remove bad characters from the Wiki Page name.'),
+						'default' => 'n',
+						'filter' => 'alpha',
+						'options' => array(
+							'n' => tr('No'),
+							'y' => tr('Yes'),
+						),
+					),
 				),
 			),
 		);
@@ -129,8 +139,10 @@ class Tracker_Field_Wiki extends Tracker_Field_Text implements Tracker_Field_Exp
 	 */
 	function isValid($ins_fields_data, $itemId = 0)
 	{
+		global $prefs;
+
 		$pagenameField = $this->getOption('fieldIdForPagename');
-		$pagename = $ins_fields_data[$pagenameField]['value'];
+		$pagename = $this->cleanPageName($ins_fields_data[$pagenameField]['value']);
 		if (! $itemId) {
 			$itemId = $this->getItemId();
 		}
@@ -139,9 +151,13 @@ class Tracker_Field_Wiki extends Tracker_Field_Text implements Tracker_Field_Exp
 			return tr('The page name provided already exists. Please choose another.');
 		}
 
-		if (TikiLib::lib('wiki')->contains_badchars($pagename)) {
+		if ($prefs['wiki_badchar_prevent'] == 'y' && TikiLib::lib('wiki')->contains_badchars($pagename)) {
 			$bad_chars = TikiLib::lib('wiki')->get_badchars();
-			return tr('The page name specified contains unallowed characters. It will not be possible to save the page until those are removed: %0', $bad_chars);
+			return tr(
+				'The page name specified "%0" contains unallowed characters. It will not be possible to save the page until those are removed: %1',
+				$pagename,
+				$bad_chars
+			);
 		}
 
 		return true;
@@ -164,12 +180,13 @@ class Tracker_Field_Wiki extends Tracker_Field_Text implements Tracker_Field_Exp
 		}
 
 		$page_name = $this->getValue();
+		$insForPagenameField = 'ins_' . $this->getOption('fieldIdForPagename');
 
-		if (! $page_name && ! empty($requestData['itemId'])) {	// from tabular import replace
-			$page_name = $this->getFullPageName($requestData['ins_' . $this->getOption('fieldIdForPagename')]);
+		if (! $page_name && ! empty($requestData['itemId']) && ! empty($requestData[$insForPagenameField])) {	// from tabular import replace
+			$page_name = $this->getFullPageName($requestData[$insForPagenameField]);
 			$itemId = $requestData['itemId'];
 		} else {
-			$itemId = 0;
+			$itemId = $this->getItemId();
 		}
 
 		if ($page_name) {
@@ -183,7 +200,7 @@ class Tracker_Field_Wiki extends Tracker_Field_Text implements Tracker_Field_Exp
 					if ($page_data != $requestData[$ins_id]) {
 						// Update page data
 						$edit_comment = 'Updated by Tracker Field ' . $fieldId;
-						$short_name = $requestData['ins_' . $this->getOption('fieldIdForPagename')];
+						$short_name = $requestData[$insForPagenameField];
 						$ins_fields_data[$this->getOption('fieldIdForPagename')]['value'] = $short_name;
 						if ($this->isValid($ins_fields_data, $itemId) === true) {
 							TikiLib::lib('tiki')->update_page($page_name, $requestData[$ins_id], $edit_comment, $user, TikiLib::lib('tiki')->get_ip_address(), '', 0, '', $is_html, null, null, $this->getOption('wysiwyg'));
@@ -195,7 +212,7 @@ class Tracker_Field_Wiki extends Tracker_Field_Text implements Tracker_Field_Exp
 			}
 		} elseif (!empty($requestData[$ins_id])) {
 			// the field value is currently null and there is input, so would need to create page.
-			if ($short_name = $requestData['ins_' . $this->getOption('fieldIdForPagename')]) {
+			if ($short_name = $requestData[$insForPagenameField]) {
 				$page_name = $this->getFullPageName($short_name);
 				if (!TikiLib::lib('tiki')->page_exists($page_name)) {
 					$ins_fields_data[$this->getOption('fieldIdForPagename')]['value'] = $short_name;
@@ -416,6 +433,24 @@ class Tracker_Field_Wiki extends Tracker_Field_Text implements Tracker_Field_Exp
 			$page_name = $this->getOption('customnamespace') . $prefs['namespace_separator'] . $short_name;
 		} else {
 			$page_name = 'trackerfield' . $this->getConfiguration('fieldId') . $prefs['namespace_separator'] . $short_name;
+		}
+
+		$page_name = $this->cleanPageName($page_name);
+
+		return $page_name;
+	}
+
+	/**
+	 * @param $page_name
+	 * @return string
+	 */
+	private function cleanPageName($page_name)
+	{
+		$wikilib = TikiLib::lib('wiki');
+		if ($this->getOption('removeBadChars') === 'y' && $wikilib->contains_badchars($page_name)) {
+			$bad_chars = $wikilib->get_badchars();
+			$page_name = preg_replace('/[' . preg_quote($bad_chars, '/') . ']/', ' ', $page_name);
+			$page_name = trim(preg_replace('/\s+/', ' ', $page_name));
 		}
 		return $page_name;
 	}
