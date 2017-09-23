@@ -5,7 +5,7 @@
  * $Id$
  */
 
-var lang = {
+lang = {
 //	"Very Secure" : "Very Secure",
 //	"Secure" : "Secure",
 //	"Very Strong" : "Very Strong",

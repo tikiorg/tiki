@@ -178,6 +178,9 @@ if (! $options['no-check-php'] && important_step("Check syntax of all PHP files"
 
 if (! $options['no-check-smarty'] && important_step("Check syntax of all Smarty templates")) {
 	$error_msg = '';
+	require_once ROOT . '/lib/core/TikiDb.php';
+	require_once ROOT . '/lib/core/TikiDb/Bridge.php';
+	require_once ROOT . '/lib/language/Language.php';
 	check_smarty_syntax($error_msg);
 	info('>> Current Smarty code successfully passed the syntax check.');
 }
@@ -562,7 +565,7 @@ function build_packages($releaseVersion)
 		echo $shellout."\n";
 
 	echo "Creating $fileName.7z\n";
-	$shellout =  shell_exec("cd $relDir; 7za a -mx9 ".escapeshellarg($fileName.".7z").' '.escapeshellarg($fileName).' -r -x!*.DS_Store 2>&1');
+	$shellout =  shell_exec("cd $relDir; 7za a ".escapeshellarg($fileName.".7z").' '.escapeshellarg($fileName).' 2>&1');
 	if (strpos($shellout, 'command not found'))
 		error("7za not installed. Archive creation failed.\n");
 	if ($options['debug-packaging'])

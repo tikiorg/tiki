@@ -5,7 +5,7 @@
  * $Id$
  */
 
-var lang = {
+lang = {
 	"Default" : "Por omisión",
 	"Very Secure" : "Muy Segura",
 	"Secure" : "Segura",

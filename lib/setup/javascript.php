@@ -85,7 +85,7 @@ if ($prefs['javascript_enabled'] == 'y') {	// we have JavaScript
 	if (file_exists('lang/' . $prefs['language'] . '/language.js')) {
 		// after the usual lib includes (up to 10) but before custom.js (50)
 		$headerlib
-			->add_jsfile('lang/' . $prefs['language'] . '/language.js')
+			->add_jsfile_late('lang/' . $prefs['language'] . '/language.js')
 			->add_js("$.lang = '" . $prefs['language'] . "';");
 	}
 

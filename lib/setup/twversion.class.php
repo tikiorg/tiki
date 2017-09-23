@@ -253,6 +253,7 @@ class TWVersion
 				'17.0alpha',
 				'17.0beta',
 				'17.0',
+				'17.1',
 			);
 	}
 
