@@ -7401,7 +7401,7 @@ class UsersLib extends TikiLib
 				INNER JOIN `tiki_history` p2 ON ( p1.`pageName` = p2.`pageName` )
 				INNER JOIN `users_users` u2 ON ( u2.`login` = p2.`user` )
 				WHERE u2.`login` = ? AND u1.`login` <> ?
-				GROUP BY p1.`pageName`
+				GROUP BY p1.`pageName`, u1.`login` 
 				ORDER BY quantity DESC
 				';
 		} else {

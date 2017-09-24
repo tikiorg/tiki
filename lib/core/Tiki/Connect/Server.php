@@ -209,7 +209,7 @@ class Tiki_Connect_Server extends Tiki_Connect_Abstract
 	{
 
 		// select distinct guid from tiki_connect where server=1;
-		$res = TikiLib::lib('tiki')->fetchAll('SELECT * FROM (SELECT * FROM `tiki_connect` WHERE `server` = 1 AND `type` = \'received\' ORDER BY `created` DESC) as `tc` GROUP BY `guid` ORDER BY `created` DESC;');
+		$res = TikiLib::lib('tiki')->fetchAll('SELECT `data` FROM (SELECT * FROM `tiki_connect` WHERE `server` = 1 AND `type` = \'received\' ORDER BY `created` DESC) as `tc` GROUP BY `guid`, `data`, `created` ORDER BY `created` DESC;');
 
 		return $res;
 	}

@@ -953,7 +953,8 @@ class Comments extends TikiLib
 				where 1 = 1 $where" . ($forumId ? 'AND a.`object`=?' : '')
 				.(($include_archived) ? '' : ' and (a.`archived` is null or a.`archived`=?)')
 				." and a.`objectType` = 'forum'
-				and a.`parentId` = ? $time_cond group by a.`threadId`";
+				and a.`parentId` = ? $time_cond 
+				group by a.`threadId`, a.`object`, a.`objectType`, a.`parentId`, a.`userName`, a.`commentDate`, a.`hits`, a.`type`, a.`points`, a.`votes`, a.`average`, a.`title`, a.`data`, a.`hash`, a.`user_ip`, a.`summary`, a.`smiley`, a.`message_id`, a.`in_reply_to`, a.`comment_rating`, a.`locked`, a.archived ";
 
 		if ($reply_state == 'none') {
 			$query .= ' HAVING `replies` = 0 ';
@@ -1809,11 +1810,11 @@ class Comments extends TikiLib
 				$bind[] = $lang;
 			}
 
-			$query = $query. " GROUP BY `tiki_comments`.`object` ORDER BY count(*) DESC";
+			$query = $query. " GROUP BY `tiki_comments`.`object`,`tiki_articles`.`articleId`,`tiki_articles`.`title` ORDER BY count(*) DESC";
 		} elseif ($type == 'blog') {
 			if ($prefs['feature_blogs'] != 'y')
 				return false;
-			$query = "SELECT count(*),`tiki_blog_posts`.`postId`,`tiki_blog_posts`.`title` FROM `tiki_comments` INNER JOIN `tiki_blog_posts` ON `tiki_comments`.`object`=`tiki_blog_posts`.`postId` WHERE `tiki_comments`.`objectType`='blog post' and `tiki_comments`.`approved`='y' GROUP BY `tiki_comments`.`object` ORDER BY count(*) DESC";
+			$query = "SELECT count(*),`tiki_blog_posts`.`postId`,`tiki_blog_posts`.`title` FROM `tiki_comments` INNER JOIN `tiki_blog_posts` ON `tiki_comments`.`object`=`tiki_blog_posts`.`postId` WHERE `tiki_comments`.`objectType`='blog post' and `tiki_comments`.`approved`='y' GROUP BY `tiki_comments`.`object`, `tiki_blog_posts`.`postId`, `tiki_blog_posts`.`title` ORDER BY count(*) DESC";
 		} else {
 			//Default to Wiki
 			if ($prefs['feature_wiki'] != 'y')
@@ -1825,7 +1826,7 @@ class Comments extends TikiLib
 				$bind[] = $lang;
 			}
 
-			$query = $query. " GROUP BY `tiki_comments`.`object` ORDER BY count(*) DESC";
+			$query = $query. " GROUP BY `tiki_comments`.`object`,`tiki_pages`.`pageName` ORDER BY count(*) DESC";
 		}
 
 		$ret = $this->fetchAll($query, $bind, $maxRecords);

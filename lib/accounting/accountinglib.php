@@ -283,7 +283,7 @@ class AccountingLib extends LogsLib
 							" LEFT JOIN tiki_acct_item ON tiki_acct_journal.journalId=tiki_acct_item.itemJournalId" .
 							" AND tiki_acct_account.accountId=tiki_acct_item.itemAccountId" .
 							" WHERE tiki_acct_account.accountBookId=? $allcond" .
-							" GROUP BY accountId, accountName, accountNotes, accountBudget, accountLocked";
+							" GROUP BY accountId, accountName, accountNotes, accountBudget, accountLocked, accountBookId";
 
 		return $this->fetchAll($query, array($bookId));
 	}//getExtendedAccounts

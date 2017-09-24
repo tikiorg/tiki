@@ -234,7 +234,7 @@ class StatsLib extends TikiLib
 			$max = $this->fetchAll(
 				"SELECT SUM(`pageviews`) AS views, `day` AS unixtime" .
 				" FROM `tiki_pageviews`" .
-				" GROUP BY FROM_UNIXTIME(`day`, '%Y-%m-%d')" .
+				" GROUP BY FROM_UNIXTIME(`day`, '%Y-%m-%d'), day" .
 				" ORDER BY views DESC" .
 				" LIMIT 1"
 			);
@@ -244,7 +244,7 @@ class StatsLib extends TikiLib
 			$min = $this->fetchAll(
 				"SELECT SUM(`pageviews`) AS views, `day` AS unixtime" .
 				" FROM `tiki_pageviews`" .
-				" GROUP BY FROM_UNIXTIME(`day`, '%Y-%m-%d')" .
+				" GROUP BY FROM_UNIXTIME(`day`, '%Y-%m-%d'), day" .
 				" ORDER BY views ASC" .
 				" LIMIT 1"
 			);
@@ -254,8 +254,8 @@ class StatsLib extends TikiLib
 			$views = $this->fetchAll(
 				"SELECT SUM(`pageviews`) AS views, FROM_UNIXTIME(`day`, '%Y-%m-%d') AS date, `day` AS unixtime" .
 				" FROM `tiki_pageviews`" .
-				" GROUP BY FROM_UNIXTIME(`day`, '%Y-%m-%d')" .
-				" HAVING views = '$maxvar' OR views = '$minvar'" .
+				" GROUP BY FROM_UNIXTIME(`day`, '%Y-%m-%d'), day" .
+				" HAVING SUM(`pageviews`) = '$maxvar' OR SUM(`pageviews`) = '$minvar'" .
 				" ORDER BY date ASC"
 			);
 

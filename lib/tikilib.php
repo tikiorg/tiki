@@ -1340,7 +1340,7 @@ class TikiLib extends TikiDb_Bridge
 				from `tiki_object_scores` tos
 				where `recipientObjectType`='user'
 				and tos.`id` = (select max(id) from `tiki_object_scores` where `recipientObjectId` = tos.`recipientObjectId` and `recipientObjectType`='user' group by `recipientObjectId`)
-				group by `recipientObjectId` order by `score` desc";
+				group by `recipientObjectId`, `pointsBalance` order by `score` desc";
 
 			$result = $this->fetchAll($query, NULL, $limit, $start);
 		} else {
@@ -1354,7 +1354,7 @@ class TikiLib extends TikiDb_Bridge
 				from `tiki_object_scores` tos
 				where `recipientObjectType`='user'
 				and tos.`id` = (select max(id) from `tiki_object_scores` where `recipientObjectId` = tos.`recipientObjectId` and `recipientObjectType`='user' group by `recipientObjectId`)
-				group by `recipientObjectId` order by `score` desc";
+				group by `recipientObjectId`, `pointsBalance` order by `score` desc";
 
 			$result = $this->fetchAll($query, $score_expiry_days, $limit, $start);
 		}

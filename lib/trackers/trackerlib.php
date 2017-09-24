@@ -1522,7 +1522,7 @@ class TrackerLib extends TikiLib
 				.', '.( ($numsort) ? "cast(max($csort_mode) as decimal)" : "max($csort_mode)").' as `sortvalue`'
 			.' FROM '.$base_tables.$sort_tables.$cat_table
 			.$mid
-			.' GROUP BY tti.`itemId`'
+			.' GROUP BY tti.`itemId`, tti.`trackerId`, tti.`created`, tti.`createdBy`, tti.`status`, tti.`lastModif`, tti.`lastModifBy`, '. $csort_mode
 			.' ORDER BY '.$this->convertSortMode('sortvalue_'.$corder);
 		if ($numsort) {
 			$query .= ','.$this->convertSortMode($csort_mode);

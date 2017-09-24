@@ -221,7 +221,7 @@ class TikiCalendarLib extends CalendarLib
 				$query = "select count(s.`email`) as `head`, max(s.`subscribed`) as `start`, s.`nlId` as `id`, n.`name` as `name`" .
 									" from `tiki_newsletter_subscriptions` as s " .
 									" left join `tiki_newsletters` as n on n.`nlId`=s.`nlId` where (`subscribed`>? and `subscribed`<?)" .
-									" group by s.`nlId`, FROM_UNIXTIME(s.`subscribed`,'%d')";
+									" group by s.`nlId`, FROM_UNIXTIME(s.`subscribed`,'%d'), s.`email`, n.`name`";
 				break;
 
 			case 'quiz':
@@ -250,7 +250,6 @@ class TikiCalendarLib extends CalendarLib
 									' from `tiki_actionlog` where (`lastModif`>? and `lastModif`<?) and `objectType`=?';
 				break;
 		}
-
 		if ( $query != '' ) {
 			if ( is_array($bindvars) && ($nb_vars = substr_count($query, '?')) > 0 ) {
 				return $this->query($query, array_slice($bindvars, 0, $nb_vars));

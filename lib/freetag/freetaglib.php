@@ -258,7 +258,7 @@ class FreetagLib extends ObjectLib
 									. ' WHERE ' . $tag_sql
 									. ' AND fto.`tagId` = t.`tagId` AND o.`objectId` = fto.`objectId` ' . $mid_t
 									. ' GROUP BY o.`objectId`'
-									. ' HAVING uniques = ?'
+									. ' HAVING COUNT(DISTINCT t.`tag`) = ?'
 									;
 			$query_t .= $query_end_t;
 			$result = $this->query($query_t, $bindvals_t, -1, 0);
@@ -307,6 +307,7 @@ class FreetagLib extends ObjectLib
 								.	' WHERE fto.`tagId` = t.`tagId` AND o.`objectId` = fto.`objectId`'
 								.	' AND ' . $tag_sql
 								. $mid
+								.	' GROUP BY o.`objectId`, o.`type`, o.`itemId`, o.`description`, o.`created`,  o.`name`,  o.`href`,  o.`hits`,  o.`comments_locked` '
 								.	' ORDER BY ' . $this->convertSortMode($sort_mode);
 		// note the original line was originally here to fix ambiguous 'created' column for default sort.
 		// Not a neat fix the o. prefix is ugly.	So changed default order instead.

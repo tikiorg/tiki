@@ -2964,6 +2964,11 @@ class FileGalLib extends TikiLib
 			$f_table .= ' LEFT JOIN `tiki_file_backlinks` tfb ON (tf.`fileId` = tfb.`fileId`)';
 			$f_group_by = ' GROUP BY tf.`fileId`';
 		}
+
+		if($f_group_by){
+			$f_group_by .= ', tf.`fileId`, tf.`galleryId`, tf.`name`, tf.`description`, tf.`filesize`, tf.`created`, tf.`filename`, tf.`filetype`, tf.`user`, tf.`author`, tf.`hits`, tf.`lastDownload`, tf.`votes`, tf.`points`, tf.`path`, tf.`reference_url`, tf.`is_reference`, tf.`hash`, tf.`search_data`, tf.`metadata`, tf.`lastModif`, tf.`lastModifUser`, tf.`lockedby`, tf.`comment`, tf.`deleteAfter`, tf.`maxhits`, tf.`archiveId`, tf.`fileId`, tf.`galleryId`, tf.`filesize`, tf.`filetype`, tf.`user`, tf.`lastModifUser`';
+		}
+
 		if ( !empty($filter['orphan']) && $filter['orphan'] == 'y' ) {
 			$f_where .= ' AND tfb.`objectId` IS NULL';
 			if (!$with_backlink) {
@@ -3084,6 +3089,9 @@ class FileGalLib extends TikiLib
 				$join .= ' LEFT OUTER JOIN `tiki_file_galleries` tfgp ON (tab.`parentId` = tfgp.`galleryId`)';
 			}
 
+			if($g_group_by){
+				$g_group_by .= ", tfg.`parentId`, tfg.`name`, tfg.`description`, tfg.`created`, tfg.`name`, tfg.`type`, tfg.`user`, tfg.`hits`, tfg.`votes`, tfg.`points`, tfg.`name`, tfg.`lastModif`, tfg.`visible`, tfg.`public`, tfg.`galleryId`, tfg.`parentId`, tfg.`type`, tfg.`user`, `icon_fileId` ";
+			}
 			if ( $with_files ) {
 				$query = "SELECT $select FROM (($f_query $f_group_by) UNION ($g_query $g_group_by)) as tab".$join;
 				$bindvars = array_merge($f_jail_bind, $bindvars);

@@ -738,7 +738,7 @@ class MultilingualLib extends TikiLib
 				INNER JOIN tiki_pages page ON source.page_id = page.page_id
 			WHERE
 				target.page_id = ?
-			GROUP BY target.version, page.page_id",
+			GROUP BY target.version, page.page_id, page.pageName",
 			array( $pageId )
 		);
 
@@ -774,7 +774,7 @@ class MultilingualLib extends TikiLib
 				INNER JOIN tiki_pages page ON target.page_id = page.page_id
 			WHERE
 				source.page_id = ?
-			GROUP BY page.page_id, target.version",
+			GROUP BY page.page_id, target.version, page.pageName",
 			array( $pageId )
 		);
 

@@ -63,7 +63,7 @@ class PollLibShared extends TikiLib
 							' from `tiki_poll_options` tpo' .
 							' left join `tiki_user_votings` tuv on (tpo.`optionId` = tuv.`optionId`)' .
 							' where `pollId`=? and ((tuv.`time` >= ? and tuv.`time` <= ?) or tuv.`time` = ?)' .
-							' group by `votes`';
+							' group by `votes`, tpo.`pollId`, tpo.`optionId`, tpo.`title`, tpo.`position` ';
 			$bindVars = array((int)$pollId, (int)$from, (int)$to, 0);
 		}
 

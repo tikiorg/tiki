@@ -88,7 +88,7 @@ class RatingConfigLib extends TikiDb_Bridge
 		}
 
 		return $this->fetchAll(
-			'SELECT `type`, `object` FROM `tiki_rating_obtained` WHERE `expire` < UNIX_TIMESTAMP() GROUP BY `type`, `object` ORDER BY `expire`',
+			'SELECT `type`, `object` FROM `tiki_rating_obtained` WHERE `expire` < UNIX_TIMESTAMP() GROUP BY `type`, `object`, `expire` ORDER BY `expire`',
 			array(),
 			$max
 		);
