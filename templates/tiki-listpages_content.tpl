@@ -163,7 +163,7 @@
 					<th id="catpaths">{tr}Categories{/tr}</th>
 				{/if}
 
-				{if $prefs.wiki_list_rating eq 'y'}
+				{if $prefs.wiki_list_rating eq 'y' AND $prefs.feature_polls eq 'y'}
 					{assign var='cntcol' value=$cntcol+1}
 					<th id="rating">
 						{self_link _sort_arg='sort_mode' _sort_field='rating' _title="{tr}Ratings{/tr}"}{tr}Ratings{/tr}{/self_link}
@@ -350,7 +350,7 @@
 						</td>
 					{/if}
 
-					{if $prefs.wiki_list_rating eq 'y'}
+					{if $prefs.wiki_list_rating eq 'y' AND $prefs.feature_polls eq 'y'}
 						<td class="integer">
 							{if isset($listpages[changes].rating)}{$listpages[changes].rating}{/if}
 						</td>
