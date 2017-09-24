@@ -46,7 +46,7 @@ function tiki_route($path)
 		'quizzes' => 'tiki-list_quizzes.php',
 		'register' => 'tiki-register.php',
 		'sheets' => 'tiki-sheets.php',
-		'stats' => 'tiki-stats.php',
+		'statistics' => 'tiki-stats.php',
 		'surveys' => 'tiki-list_surveys.php',
 		'trackers' => 'tiki-list_trackers.php',
 		'users' => 'tiki-list_users.php',
