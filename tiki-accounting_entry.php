@@ -99,5 +99,6 @@ if (is_array($result)) {
 $journal = $accountinglib->getJournal($bookId, '%', '`journalId` DESC', 5);
 $smarty->assign('journal', $journal);
 
+$smarty->assign('req_url', $_SERVER['REQUEST_URI']);
 $smarty->assign('mid', 'tiki-accounting_entry.tpl');
 $smarty->display('tiki.tpl');

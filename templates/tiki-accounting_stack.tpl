@@ -40,14 +40,14 @@ var account='';
 		{icon name='error' alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}
 		{foreach from=$errors item=m name=errors}
 			{$m}
-			{if !$smarty.foreach.errors.last}<br>{/if}
+			{if !$smarty.foreach.errors.last}{/if}
 		{/foreach}
 	</div>
 {/if}
 
 <div class="row">
 	<div id="mask" class="col-md-8" style="{if $hideform==1} display: none;{/if}">
-		<form method="post" action="tiki-accounting_stack.php" class="form-horizontal">
+		<form method="post" action="{if $req_url}{$req_url}{else}tiki-accounting_stack.php{/if}" class="form-horizontal">
 			{ticket}
 			{if $firstid}<input type="hidden" name="firstid" value="{$firstid}">{/if}
 			{if $statementId}<input type="hidden" name="statementId" value="{$statementId}">{/if}
@@ -57,7 +57,7 @@ var account='';
 			<fieldset>
 				<legend>{tr}Post{/tr}</legend>
 				<div class="form-group">
-					<label class="control-label col-md-4">{tr}Booking Date{/tr}</label>
+					<label class="control-label col-md-4">{tr}Booking Date{/tr} <span class="text-danger">*</span></label>
 					<div class="col-md-8">
 						{html_select_date prefix="stack_" time=$stackDate start_year="-10" end_year="+10" field_order=$prefs.display_field_order}
 					</div>
@@ -69,7 +69,7 @@ var account='';
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-md-4">{tr}Amount{/tr}</label>
+					<label class="control-label col-md-4">{tr}Amount{/tr} <span class="text-danger">*</span></label>
 					<div class="col-md-8">
 						<input name="totalAmount" id="totalAmount" type="number" class="form-control" value="{$totalAmount}" onchange="javascript:setAmount()">
 					</div>
@@ -81,7 +81,7 @@ var account='';
 					<tr>
 						<th>{tr}Text{/tr}</th>
 						<th>{tr}Account{/tr}</th>
-						<th>{tr}Amount{/tr}</th>
+						<th>{tr}Amount{/tr} <span class="text-danger">*</span></th>
 					</tr>
 					{section name=debit loop=$debitAccount}{assign var='i' value=$smarty.section.debit.iteration-1}
 						<tr {if $i==0}id="Row_StartDebit" {/if}>
@@ -114,7 +114,7 @@ var account='';
 						<tr>
 							<th>{tr}Text{/tr}</th>
 							<th>{tr}Account{/tr}</th>
-							<th>{tr}Amount{/tr}</th>
+							<th>{tr}Amount{/tr} <span class="text-danger">*</span></th>
 						</tr>
 						<tr {if $i==0}id="Row_StartCredit" {/if}>
 							<td>

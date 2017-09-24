@@ -22,13 +22,13 @@
 		<fieldset>
 			<legend>Account properties</legend>
 			<div class="form-group">
-				<label class="control-label col-md-4">{tr}Account number{/tr}</label>
+				<label class="control-label col-md-4">{tr}Account number{/tr} <span class="text-danger">*</span></label>
 				<div class="col-md-8">
 					<input class="form-control" class="form-control" type="text" name="newAccountId" id="newAccountId" {if !$account.changeable}readonly{/if} value="{$account.accountId}">
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-md-4">{tr}Account name{/tr}</label>
+				<label class="control-label col-md-4">{tr}Account name{/tr} <span class="text-danger">*</span></label>
 				<div class="col-md-8">
 					<input class="form-control" type="text" name="accountName" id="accountName" value="{$account.accountName}">
 				</div>
@@ -40,7 +40,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-md-4">{tr}Budget{/tr}</label>
+				<label class="control-label col-md-4">{tr}Budget{/tr} <span class="text-danger">*</span></label>
 				<div class="col-md-8">
 					<input class="form-control" type="text" name="accountBudget" id="accountBudget" value="{$account.accountBudget}">
 				</div>

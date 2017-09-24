@@ -42,27 +42,27 @@
 		{tab name="{tr}Create a book{/tr}"}
 			<h2>{tr}Create a book{/tr}</h2>
 			<div id="createbookform">
-				<form action="tiki-accounting_books.php" method="post" class="form-horizontal">
+				<form action="tiki-accounting_books.php" method="post" class="form-horizontal" data-toggle="validator">
 					{ticket}
 					<input type="hidden" name="action" value="create">
 					<input type="hidden" name="bookClosed" id="bookClosed" value="n">
 					<fieldset>
 						<legend>{tr}Book properties{/tr}</legend>
 						<div class="form-group">
-							<label class="control-label col-md-4">{tr}Name of the book{/tr}</label>
+							<label class="control-label col-md-4">{tr}Name of the book{/tr} <span class="text-danger">*</span></label>
 							<div class="col-md-8">
-								<input type="text" class=" form-control" name="bookName" id="bookName" value="{$bookName}">
+								<input type="text" class=" form-control" name="bookName" id="bookName" {if $bookName}value="{$bookName}"{/if}>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-4">{tr}First date in journal{/tr}</label>
+							<label class="control-label col-md-4">{tr}First date in journal{/tr} <span class="text-danger">*</span></label>
 							<div class="col-md-8">
 								{*<input type="text" class=" form-control" name="bookStartDate" id="bookStartDate" value="{$bookStartDate}">*}
 								{html_select_date prefix="book_start_" time=$bookStartDate start_year="-10" end_year="+10" field_order=$prefs.display_field_order}
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-4">{tr}Last date in journal{/tr}</label>
+							<label class="control-label col-md-4">{tr}Last date in journal{/tr} <span class="text-danger">*</span></label>
 							<div class="col-md-8">
 								{*<input type="text" class=" form-control" name="bookEndDate" id="bookEndDate" value="{$bookEndDate}">*}
 								{html_select_date prefix="book_end_" time=$bookEndDate start_year="-10" end_year="+10" field_order=$prefs.display_field_order}

@@ -50,8 +50,8 @@ class AccountingLib extends LogsLib
 	 *
 	 * Creates a new book and gives full permissions to the creator
 	 * @param	string	$bookName			descriptive name of the book
-	 * @param	date	$bookStartDate		first permitted date for the book
-	 * @param	date	$bookEndDate		last permitted date for the book
+	 * @param	string	$bookStartDate		first permitted date for the book
+	 * @param	string	$bookEndDate		last permitted date for the book
 	 * @param	string	$bookCurrency		up to 3 letter cuurency code
 	 * @param	int		$bookCurrencyPos	where should the currency symbol appear -1=before, 1=after
 	 * @param	int		$bookDecimals		number of decimal points
@@ -60,7 +60,8 @@ class AccountingLib extends LogsLib
 	 * @param	string	$exportSeparator	separator between fields when exporting CSV
 	 * @param	string	$exportEOL			end of line definition, either CR, LF or CRLF
 	 * @param	string	$exportQuote		Quote character to enclose strings in CSV
-	 * @param	bool	$bookClosed			true, if the book is closed (no more changes)
+	 * @param	string	$bookClosed			true, if the book is closed (no more changes)
+	 * @param	string	$bookAutoTax
 	 * @return	int/string					bookId on success, error message otherwise
 	 */
 	function createBook($bookName
@@ -127,7 +128,7 @@ class AccountingLib extends LogsLib
 		} while ($groupexists);
 
 		if ($groupId != $bookId) {
-			$query = "UPDATE `tiki_acct_book` SET `bookId=? WHERE `bookId`=?";
+			$query = "UPDATE `tiki_acct_book` SET `bookId`=? WHERE `bookId`=?";
 			$res = $this->query($query, array($groupId, $bookId));
 			$bookId = $groupId;
 		}
@@ -182,7 +183,7 @@ class AccountingLib extends LogsLib
 	 * @param	int		$accountId	account for which we should display the journal, defaults to '%' (all accounts)
 	 * @param	string	$order		sorting order
 	 * @param	int		$limit		max number of records to fetch, defaults to 0 = all
-	 * @return	array/bool			journal with all posts, false on errors
+	 * @return	array|bool			journal with all posts, false on errors
 	 */
 	function getJournal($bookId, $accountId = '%', $order = '`journalId` ASC', $limit = 0)
 	{
@@ -339,7 +340,7 @@ class AccountingLib extends LogsLib
 	 * @param	float	$accountBudget	planned budget for the account
 	 * @param	boolean	$accountLocked	can this account be used, 0=unlocked, 1=locked
 	 * @param	int		$accountTax		taxId for tax automation
-	 * @return	array/boolean			list of errors or true on success
+	 * @return	array|bool			list of errors or true on success
 	 */
 	function createAccount(
 				$bookId,
@@ -431,7 +432,7 @@ class AccountingLib extends LogsLib
 	 * @param	float	$accountBudget	planned yearly budget for the account
 	 * @param	boolean	$accountLocked	can this account be used 0=unlocked, 1=locked
 	 * @param	int		$accountTax		id of the auto tax type, defaults to 0
-	 * @return	array/boolean			list of errors, true on success
+	 * @return	array|bool			list of errors, true on success
 	 */
 	function updateAccount(
 				$bookId,
@@ -464,7 +465,7 @@ class AccountingLib extends LogsLib
 		if ($cleanbudget === '')
 			$errors[] = tra('Budget is not a valid amount: ') . $cleanbudget;
 
-		if ($locked != 0 and $locked != 1)
+		if ($accountLocked != 0 and $accountLocked != 1)
 			$errors[] = tra('Locked must be either 0 or 1.');
 
 		if ($accountTax != 0) {
@@ -506,7 +507,7 @@ class AccountingLib extends LogsLib
 	 * @param	int		$bookId				id of the current book
 	 * @param	int		$accountId			account id to delete
 	 * @param	bool	$checkChangeable	check, if the account is unused and can be deleted
-	 * @return	array/bool					array with errors or true, if deletion was successful
+	 * @return	array|bool					array with errors or true, if deletion was successful
 	 */
 	function deleteAccount($bookId, $accountId, $checkChangeable = true)
 	{
@@ -535,7 +536,7 @@ class AccountingLib extends LogsLib
 	function manualRollback($bookId, $journalId)
 	{
 		$errors = array();
-		$query = "DELETE FROM `tiki_acct_item` WHERE `itemBookId`=? AND `itemJournalId=?";
+		$query = "DELETE FROM `tiki_acct_item` WHERE `itemBookId`=? AND `itemJournalId`=?";
 		$res = $this->query($query, array($bookId, $journalId));
 		$rollback = ($res!==false);
 		$query = "DELETE FROM `tiki_acct_journal` WHERE `journalBookId`=? AND `journalId`=?";
@@ -550,10 +551,11 @@ class AccountingLib extends LogsLib
 	} //manualRollback
 
 	/**
-	 *
 	 * Checks if the book date is within the books limits
+	 *
 	 * @param array		$book		book array
 	 * @param DateTime $Date
+	 * @retun array|bool
 	 */
 	function checkBookDates($book, $Date)
 	{
@@ -574,14 +576,14 @@ class AccountingLib extends LogsLib
 	 * books a simple transaction
 	 *
 	 * @param	int		$bookId				id of the current book
-	 * @param	date	$journalDate		date of the transaction
+	 * @param	string	$journalDate		date of the transaction
 	 * @param	string	$journalDescription	description of this transaction
 	 * @param	int		$debitAccount		account to debit
 	 * @param	int		$creditAccount		account to credit
 	 * @param	double	$amount				amount to transfer between the accounts
 	 * @param	string	$debitText			text for the debit post, defaults to an empty string
 	 * @param	string	$creditText			text for the credit post, defaults to an empty string
-	 * @return	int/array					list of errors or journalId on success
+	 * @return	int|array					list of errors or journalId on success
 	 */
 	function simpleBook(
 				$bookId,
@@ -634,7 +636,7 @@ class AccountingLib extends LogsLib
 
 		if ($res === false) {
 			$errors[] = tra('Booking error creating debit entry') . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";
-			$errors[] = $this->manualRollback($journalId);
+			$errors[] = $this->manualRollback($bookId, $journalId);
 			return $errors;
 		}
 
@@ -642,7 +644,7 @@ class AccountingLib extends LogsLib
 
 		if ($res === false) {
 			$errors[] = tra('Booking error creating credit entry') . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";
-			$errors[] = $this->manualRollback($journalId);
+			$errors[] = $this->manualRollback($bookId, $journalId);
 			return $errors;
 		}
 		// everything ok
@@ -653,7 +655,7 @@ class AccountingLib extends LogsLib
 	 * books a complex transaction with multiple accounts on one side
 	 *
 	 * @param	int		$bookId				id of the current book
-	 * @param	date	$journalDate		date of the transaction
+	 * @param	DateTime	$journalDate		date of the transaction
 	 * @param	string	$journalDescription	description of this transaction
 	 * @param	mixed	$debitAccount		account(s) to debit
 	 * @param	mixed	$creditAccount		account(s) to credit
@@ -662,7 +664,7 @@ class AccountingLib extends LogsLib
 	 * @param	mixed	$debitText			text(s) for the debit post, defaults to an empty string
 	 * @param	mixed	$creditText			text(s) for the credit post, defaults to an empty string
 	 *
-	 * @return	int/array					journalID or list of errors
+	 * @return	int|array					journalID or list of errors
 	 */
 	function book(
 				$bookId,
@@ -789,7 +791,7 @@ class AccountingLib extends LogsLib
 	 *
 	 * @param	int		$bookId		id of the current book
 	 * @param	int		$journalId	id of the post in the journal
-	 * @return	array/bool			array with post, false on error
+	 * @return	array|bool			array with post, false on error
 	 */
 	function getTransaction($bookId, $journalId)
 	{
@@ -829,7 +831,7 @@ class AccountingLib extends LogsLib
 	 * Returns the complete stack
 	 *
 	 * @param	int		$bookId		id of the current book
-	 * @return	array/bool			stack with all posts, false on errors
+	 * @return	array|bool			stack with all posts, false on errors
 	 */
 	function getStack($bookId)
 	{
@@ -861,7 +863,7 @@ class AccountingLib extends LogsLib
 	function stackManualRollback($bookId, $stackId)
 	{
 		$errors = array();
-		$query = "DELETE FROM `tiki_acct_stackitem` WHERE `stackitemBookId`=? AND `stackitemJournalId=?";
+		$query = "DELETE FROM `tiki_acct_stackitem` WHERE `stackitemBookId`=? AND `stackitemJournalId`=?";
 		$res = $this->query($query, array($bookId, $stackId));
 		$rollback = ($res !== false);
 		$query = "DELETE FROM `tiki_acct_stack` WHERE `stackBookId`=? AND `stackId`=?";
@@ -878,7 +880,7 @@ class AccountingLib extends LogsLib
 	 * books a complex transaction with multiple accounts on one side into the stack
 	 *
 	 * @param	int		$bookId				id of the current book
-	 * @param	date	$stackDate			date of the transaction
+	 * @param	DateTime	$stackDate			date of the transaction
 	 * @param	string	$stackDescription	description of this transaction
 	 * @param	mixed	$debitAccount		account(s) to debit
 	 * @param	mixed	$creditAccount		account(s) to credit
@@ -887,7 +889,7 @@ class AccountingLib extends LogsLib
 	 * @param	mixed	$debitText			text(s) for the debit post, defaults to an empty string
 	 * @param	mixed	$creditText			text(s) for the credit post, defaults to an empty string
 	 *
-	 * @return	int/array					stackID or list of errors
+	 * @return	int|array					stackID or list of errors
 	 */
 	function stackBook(
 				$bookId,
@@ -905,11 +907,9 @@ class AccountingLib extends LogsLib
 		$book = $this->getBook($bookId);
 		if ($book['bookClosed'] == 'y') {
 			$errors[] = tra("This book has been closed. Bookings can no longer be made in it.");
-		} try {
-			$date = new DateTime($stackDate);
-		} catch (Exception $e) {
-			return array(tra("Invalid booking date."));
 		}
+
+		$date = $stackDate;
 		$errors = $this->checkBookDates($book, $date);
 		if (is_array($errors)) {
 			return $errors;
@@ -967,7 +967,7 @@ class AccountingLib extends LogsLib
 		if (count($errors)>0) return $errors;
 
 		$query = "INSERT INTO `tiki_acct_stack` (`stackBookId`, `stackDate`, `stackDescription`) VALUES (?,?,?)";
-		$res = $this->query($query, array($bookId, $date->toString('Y-M-d'), $stackDescription));
+		$res = $this->query($query, array($bookId, date('Y-m-d',$date->getTimestamp()), $stackDescription));
 
 		if ($res === false) {
 			$errors[] = tra('Booking error creating stack entry') . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";
@@ -1020,11 +1020,9 @@ class AccountingLib extends LogsLib
 		$book = $this->getBook($bookId);
 		if ($book['bookClosed'] == 'y') {
 			$errors[] = tra("This book has been closed. Bookings can no longer be made in it.");
-		}	try {
-			$date = new DateTime($stackDate);
-		} catch (Exception $e) {
-			return array(tra("Invalid booking date."));
 		}
+
+		$date = $stackDate;
 		$errors = $this->checkBookDates($book, $date);
 		if (is_array($errors)) {
 			return $errors;
@@ -1082,7 +1080,7 @@ class AccountingLib extends LogsLib
 		if (count($errors)>0) return $errors;
 
 		$query = "UPDATE `tiki_acct_stack` SET `stackDate`=?, `stackDescription`=? WHERE `stackBookId`=? AND `stackId`=?";
-		$res = $this->query($query, array($date->toString('Y-M-d'), $stackDescription, $bookId, $stackId));
+		$res = $this->query($query, array(date('Y-m-d',$date->getTimestamp()), $stackDescription, $bookId, $stackId));
 		if ($res === false) {
 			$errors[] = tra('Booking error creating stack entry') . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";
 			return $errors;
@@ -1127,7 +1125,7 @@ class AccountingLib extends LogsLib
 	 * deletes an entry from the stack
 	 * @param	int		$bookId		id of the current book
 	 * @param	int		$stackId	id of the entry to delete
-	 * @return	bool/array			true on success, array of error messages otherwise
+	 * @return	bool|array			true on success, array of error messages otherwise
 	 */
 	function stackDelete($bookId, $stackId)
 	{
@@ -1187,7 +1185,7 @@ class AccountingLib extends LogsLib
 	 *
 	 * @param	int		$bookId		id of the current book
 	 * @param	int		$journalId	id of the post in the journal
-	 * @return	array/bool			array with post, false on error
+	 * @return	array|bool			array with post, false on error
 	 */
 	function getStackTransaction($bookId, $stackId)
 	{
@@ -1224,7 +1222,7 @@ class AccountingLib extends LogsLib
 	 *
 	 * @param	int		$bookId		id of the current book
 	 * @param	int		$accountId	id of the account to fetch the statements for
-	 * @return	array/bool			list of statements or false if an error occurred
+	 * @return	array|bool			list of statements or false if an error occurred
 	 */
 	function getOpenStatements($bookId, $accountId)
 	{
@@ -1238,7 +1236,7 @@ class AccountingLib extends LogsLib
 	 * Returns the statement with the given Id from the list of statements
 	 *
 	 * @param	int	$statetmentId	id of the statement to retrieve
-	 * @return	array	statement data or false on error
+	 * @return	array|bool	statement data or false on error
 	 */
 	function getStatement($statementId)
 	{
@@ -1252,7 +1250,7 @@ class AccountingLib extends LogsLib
 	 * Returns the import specification for a given accountId
 	 * @param	int		$bookId		id of the current book
 	 * @param	int		$accountId	id of the account we want the specs for
-	 * @return	array/bool			list of statements or false
+	 * @return	array|bool			list of statements or false
 	 */
 	function getBankAccount($bookId, $accountId)
 	{
@@ -1306,7 +1304,7 @@ class AccountingLib extends LogsLib
 	 *
 	 * @param	int		$statementId	id of the statement to update
 	 * @param	int		$journalId		id of the entry in the journal which was caused by this statement
-	 * @return	array/boolean			list of errors, empty if no errors were found
+	 * @return	array|boolean			list of errors, empty if no errors were found
 	 */
 	function updateStatement($statementId, $journalId)
 	{
@@ -1326,7 +1324,7 @@ class AccountingLib extends LogsLib
 	 *
 	 * @param	int		$statementId	id of the statement to update
 	 * @param	int		$journalId		id of the entry in the journal which was caused by this statement
-	 * @return	array/boolean			list of errors, empty if no errors were found
+	 * @return	array|bool			list of errors, empty if no errors were found
 	 */
 	function updateStatementStack($statementId, $stackId)
 	{
@@ -1348,7 +1346,7 @@ class AccountingLib extends LogsLib
 	 * @param string	$taxText
 	 * @param double	$taxAmount
 	 * @param string	$taxIsFix
-	 * @return			id of the newly created tax
+	 * @return int		id of the newly created tax
 	 */
 	function createTax($bookId, $taxText, $taxAmount, $taxIsFix = 'n')
 	{

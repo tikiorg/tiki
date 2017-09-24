@@ -66,7 +66,7 @@ var account='';
 	</table>
 </div>
 <div id="mask" style="float:left;">
-	<form class="form-horizontal" method="post" action="tiki-accounting_entry.php">
+	<form class="form-horizontal" method="post" action="{if $req_url}{$req_url}{else}tiki-accounting_entry.php{/if}">
 		{ticket}
 		{if $firstid}<input type="hidden" name="firstid" value="{$firstid}">{/if}
 		{if $statementId}<input type="hidden" name="statementId" value="{$statementId}">{/if}
@@ -74,7 +74,7 @@ var account='';
 		<fieldset>
 			<legend>{tr}Post{/tr}</legend>
 			<div class="form-group">
-				<label class="control-label col-md-4">{tr}Booking Date{/tr}</label>
+				<label class="control-label col-md-4">{tr}Booking Date{/tr} <span class="text-danger">*</span></label>
 				<div class="col-md-8">
 					{html_select_date prefix="journal_" time=$journalDate start_year="-10" end_year="+10" field_order=$prefs.display_field_order}
 				</div>
@@ -86,7 +86,7 @@ var account='';
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-md-4">{tr}Amount{/tr}</label>
+				<label class="control-label col-md-4">{tr}Amount{/tr} <span class="text-danger">*</span></label>
 				<div class="col-md-8">
 				<input class="form-control" type="number" name="totalAmount" id="totalAmount" value="{$totalAmount}" onchange="javascript:setAmount()">
 				</div>
@@ -97,8 +97,8 @@ var account='';
 			<table id="tbl_debit" class="table">
 				<tr>
 					<th>{tr}Text{/tr}</th>
-					<th>{tr}Account{/tr}</th>
-					<th>{tr}Amount{/tr}</th>
+					<th>{tr}Account{/tr} <span class="text-danger">*</span></th>
+					<th>{tr}Amount{/tr} <span class="text-danger">*</span></th>
 				</tr>
 				{section name=debit loop=$debitAccount}{assign var='i' value=$smarty.section.debit.iteration-1}
 					<tr {if $i==0}id="Row_StartDebit" {/if}>
@@ -129,8 +129,8 @@ var account='';
 			<table id="tbl_credit" class="table">
 				<tr>
 					<th>{tr}Text{/tr}</th>
-					<th>{tr}Account{/tr}</th>
-					<th>{tr}Amount{/tr}</th>
+					<th>{tr}Account{/tr} <span class="text-danger">*</span></th>
+					<th>{tr}Amount{/tr} <span class="text-danger">*</span></th>
 				</tr>
 				{section name=credit loop=$creditAccount}{assign var='i' value=$smarty.section.credit.iteration-1}
 					<tr {if $i==0}id="Row_StartCredit" {/if}>
@@ -160,6 +160,7 @@ var account='';
 		{button href="tiki-accounting.php?bookId=$bookId" _text="{tr}Back to book page{/tr}"}
 	</form>
 </div>
+
 <div id="journal" style="clear: both;">
 	{include file='tiki-accounting_journal.tpl'}
 </div>

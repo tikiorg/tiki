@@ -181,5 +181,6 @@ if ($globalperms->acct_book or $objectperms->acct_book) {
 
 $stack=$accountinglib->getStack($bookId);
 $smarty->assign('stack', $stack);
+$smarty->assign('req_url', $_SERVER['REQUEST_URI']);
 $smarty->assign('mid', 'tiki-accounting_stack.tpl');
 $smarty->display('tiki.tpl');

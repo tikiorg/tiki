@@ -33,10 +33,10 @@
 		</div>
 		<div class="box">
 			<h3 class="boxtitle">{tr}Tasks{/tr}</h3>
-			<div class="box-data" style="width: 500px">
-				{if $canBook}{button href="tiki-accounting_entry.php?bookId={$bookId}{ticket mode=get}" _class="timeout" _text="{tr}Book new entries{/tr}"}<br>
-				{button href="tiki-accounting_stack.php?bookId={$bookId}&hideform=1{ticket mode=get}" _class="timeout" _text="{tr}Confirm stack entries{/tr}"}<br>{/if}
-				{if $canStack}{button href="tiki-accounting_stack.php?bookId={$bookId}{ticket mode=get}" _class="timeout" _text="{tr}Book into Stack{/tr}"}<br>{/if}
+			<div class="box-data col-md-12">
+				{if $canBook}{button href="tiki-accounting_entry.php?bookId={$bookId}{ticket mode=get}" _class="timeout btn" _text="{tr}Book new entries{/tr}"}
+				{button href="tiki-accounting_stack.php?bookId={$bookId}&hideform=1{ticket mode=get}" _class="timeout btn" _text="{tr}Confirm stack entries{/tr}"}{/if}
+				{if $canStack}{button href="tiki-accounting_stack.php?bookId={$bookId}{ticket mode=get}" _class="timeout btn" _text="{tr}Book into Stack{/tr}"}{/if}
 			</div>
 		</div>
 	{/tab}
