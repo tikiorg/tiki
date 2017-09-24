@@ -10,7 +10,7 @@
 
 $section = 'accounting';
 require_once ('tiki-setup.php');
-require_once ('lib/accounting/accountinglib.php');
+
 $access->checkAuthenticity();
 
 // Feature available?
@@ -49,6 +49,7 @@ if (isset($_REQUEST['hideform'])) {
 	$smarty->assign('hideform', 0);
 }
 
+$accountinglib = TikiLib::lib('accounting');
 $book = $accountinglib->getBook($bookId);
 $smarty->assign('book', $book);
 

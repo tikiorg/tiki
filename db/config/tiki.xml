@@ -355,6 +355,9 @@
 		<service id="tiki.lib.version" class="TWVersion">
 			<file>%kernel.root_dir%/lib/setup/twversion.class.php</file>
 		</service>
+		<service id="tiki.lib.accounting" class="AccountingLib">
+			<file>%kernel.root_dir%/lib/accounting/accountinglib.php</file>
+		</service>
 
 		<service id="tiki.wiki.slug.dash" class="Tiki\Wiki\SlugManager\DashGenerator">
 			<tag name="tiki.wiki.slug.generator"/>

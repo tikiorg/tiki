@@ -10,7 +10,6 @@
 
 $section = 'accounting';
 require_once ('tiki-setup.php');
-require_once ('lib/accounting/accountinglib.php');
 
 
 // Feature available?
@@ -44,6 +43,7 @@ if (!($globalperms->acct_view or $objectperms->acct_book)) {
 	die;		
 }
 
+$accountinglib = TikiLib::lib('accounting');
 $book=$accountinglib->getBook($bookId);
 $smarty->assign('book', $book);
 

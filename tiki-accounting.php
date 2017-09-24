@@ -10,7 +10,6 @@
 
 $section = 'accounting';
 require_once ('tiki-setup.php');
-require_once ('lib/accounting/accountinglib.php');
 $access->checkAuthenticity();
 
 
@@ -37,6 +36,7 @@ if (!($globalperms->acct_view or $objectperms->acct_view)) {
 	die;		
 }
 
+$accountinglib = TikiLib::lib('accounting');
 $book=$accountinglib->getBook($bookId);
 $smarty->assign('book', $book);
 

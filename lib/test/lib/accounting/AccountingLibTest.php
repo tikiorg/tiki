@@ -25,8 +25,8 @@ class AccountingLibTest extends PHPUnit_Framework_TestCase
 
 	public function testBasicUsage()
 	{
-		require('lib/accounting/accountinglib.php');
 		/** @var AccountingLib $accountinglib */
+		$accountinglib = TikiLib::lib('accounting');
 
 		// Create a Book
 		$bookA = $accountinglib->createBook(

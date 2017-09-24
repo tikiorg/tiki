@@ -1430,7 +1430,3 @@ class AccountingLib extends LogsLib
 		return $errors;
 	} // validateId
 }
-
-global $accountinglib;
-
-$accountinglib = new AccountingLib;

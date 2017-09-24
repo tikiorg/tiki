@@ -10,7 +10,7 @@
 
 $section = 'accounting';
 require_once ('tiki-setup.php');
-require_once ('lib/accounting/accountinglib.php');
+
 $access->checkAuthenticity();
 
 // Feature available?
@@ -24,6 +24,7 @@ if (!isset($_REQUEST['action'])) {
 }
 
 $globalperms = Perms::get();
+$accountinglib = TikiLib::lib('accounting');
 
 if ($_REQUEST['book_start_Year']) {
 	$bookStartDate = new DateTime();
