@@ -912,7 +912,7 @@ class CalendarLib extends TikiLib
 
 		$ret = $this->fetchAll($query, $bindvars, $maxrows, $start);
 
-		$query_cant = "select count(*) from `tiki_calendar_items` i $ljoin where 1=1 ".$cond." order by ".$this->convertSortMode($order);
+		$query_cant = "select count(*) from `tiki_calendar_items` i $ljoin where 1=1 ".$cond." GROUP BY i.calitemId order by ".$this->convertSortMode($order);
 		$cant = $this->getOne($query_cant, $bindvars);
 
 		foreach ( $ret as &$res ) {
