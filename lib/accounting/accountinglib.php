@@ -60,7 +60,7 @@ class AccountingLib extends LogsLib
 	 * @param	string	$exportSeparator	separator between fields when exporting CSV
 	 * @param	string	$exportEOL			end of line definition, either CR, LF or CRLF
 	 * @param	string	$exportQuote		Quote character to enclose strings in CSV
-	 * @param	string	$bookClosed			true, if the book is closed (no more changes)
+	 * @param	string	$bookClosed			'y' if the book is closed (no more changes), 'n' otherwise
 	 * @param	string	$bookAutoTax
 	 * @return	int/string					bookId on success, error message otherwise
 	 */
