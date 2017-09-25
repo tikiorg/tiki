@@ -253,14 +253,13 @@ class FreetagLib extends ObjectLib
 
 			$bindvals_t[] = $numTags;
 
-			$query_t = 'SELECT o.`objectId`, COUNT(DISTINCT t.`tag`) AS uniques ';
-			$query_end_t = ' FROM `tiki_objects` o, `tiki_freetagged_objects` fto, `tiki_freetags` t'
+			$query_t = 'SELECT o.`objectId` 
+						 FROM `tiki_objects` o, `tiki_freetagged_objects` fto, `tiki_freetags` t'
 									. ' WHERE ' . $tag_sql
 									. ' AND fto.`tagId` = t.`tagId` AND o.`objectId` = fto.`objectId` ' . $mid_t
 									. ' GROUP BY o.`objectId`'
 									. ' HAVING COUNT(DISTINCT t.`tag`) = ?'
 									;
-			$query_t .= $query_end_t;
 			$result = $this->query($query_t, $bindvals_t, -1, 0);
 			$ret = array();
 			while ($row = $result->fetchRow()) {
