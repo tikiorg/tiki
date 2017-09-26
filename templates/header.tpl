@@ -20,7 +20,6 @@
 {/if}
 {if $prefs.metatag_author neq ''}
 	<meta name="author" content="{$prefs.metatag_author|escape}">
-	<meta property="article:author" content="{$prefs.metatag_author|escape}"/>
 {/if}
 {* --- Blog description --- *}
 {if isset($section) and $section eq "blogs"}
