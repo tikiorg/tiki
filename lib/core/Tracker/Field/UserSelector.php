@@ -59,7 +59,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 					),
 					'notify_template' => array(
 						'name' => tr('Notification Template'),
-						'description' => tr('The notification email template to use in templates/mail directory or in wiki:PAGE format. Default: tracker_changed_notification.tpl. A corresponding subject template must also exist, e.g. tracker_changed_notification_subject.tpl.'),
+						'description' => tr('The notification email template to use in templates/mail directory or in wiki:PAGE or tplwiki:PAGE format. Default: tracker_changed_notification.tpl. A corresponding subject template must also exist, e.g. tracker_changed_notification_subject.tpl (optional for wiki page templates).'),
 						'filter' => 'text',
 						'depends' => array(
 							'field' => 'notify',
