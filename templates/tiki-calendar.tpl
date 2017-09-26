@@ -248,7 +248,6 @@
 							$( "#calendar_dialog h1, #calendar_dialog .navbar", $dialog ).remove();
 							$( "#calendar_dialog .modal-title", $dialog ).html(event.title);
 							$dialog.appendTo("body").modal({backdrop:"static"});
-							$this.tikiModal();
 						}
 					});
 					return false;

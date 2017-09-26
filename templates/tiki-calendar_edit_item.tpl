@@ -456,7 +456,7 @@ $("#id_recurrent").click(function () {
 						{html_select_time prefix="duration_" display_seconds=false time=$calitem.duration|default:'01:00' minute_interval=$prefs.calendar_timespan}
 					</div>
 					<div class="col-md-2 time">
-						<a href="#" id="durationBtn" class="btn btn-xs">
+						<a href="#" id="durationBtn" class="btn btn-xs btn-default">
 							{tr}Show duration{/tr}
 						</a>
 					</div>
@@ -535,8 +535,8 @@ $(".start.time select, .duration.time select, #start").change(function () {
 	times.end = new Date(times.start.getTime() + times.duration.getTime());
 	$("select[name=end_Hour]").val(fNum(times.end.getHours())).trigger("chosen:updated");
 	$("select[name=end_Minute]").val(fNum(times.end.getMinutes())).trigger("chosen:updated");
-	$("#end").next()
-		.datepicker("setDate", $.datepicker.formatDate($("#end").next().datepicker("option", "dateFormat"), times.end))
+	$("#end").nextAll("input[type=text]")
+		.datepicker("setDate", $.datepicker.formatDate($("#end").nextAll("input[type=text]").datepicker("option", "dateFormat"), times.end))
 		.datepicker("refresh");
 	$("#end").val(times.end.getTime() / 1000);
 	$("#start").val(times.start.getTime() / 1000);
@@ -548,8 +548,8 @@ $(".end.time select, #end").change(function () {
 	if (e <= s) {
 		$("select[name=start_Hour]").val(fNum(times.end.getHours())).trigger("chosen:updated");
 		$("select[name=start_Minute]").val(fNum(times.end.getMinutes())).trigger("chosen:updated");
-		$("#start").next()
-			.datepicker("setDate", $.datepicker.formatDate($("#start").next().datepicker("option", "dateFormat"), times.end))
+		$("#start").nextAll("input[type=text]")
+			.datepicker("setDate", $.datepicker.formatDate($("#start").nextAll("input[type=text]").datepicker("option", "dateFormat"), times.end))
 			.datepicker( "refresh" );
 		$("#start").val(times.end.getTime() / 1000);
 		s = e;
