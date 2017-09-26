@@ -5117,7 +5117,7 @@ class TrackerLib extends TikiLib
 		$tikilib = TikiLib::lib('tiki');
 		$subject = "";
 		if (!empty($template)) { //tpl
-			if (! preg_match('/^(:?tpl)wiki\:/', $template, $match)) {
+			if (! preg_match('/^(:?tpl)?wiki\:/', $template, $match)) {
 				if (!preg_match('/\.tpl$/', $template)) {		// template file
 					$template .= '.tpl';
 				}
