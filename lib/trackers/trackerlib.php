@@ -5117,20 +5117,26 @@ class TrackerLib extends TikiLib
 		$tikilib = TikiLib::lib('tiki');
 		$subject = "";
 		if (!empty($template)) { //tpl
-			if (strpos($template, 'wiki:') !== 0) {
+			if (! preg_match('/^(:?tpl)wiki\:/', $template, $match)) {
 				if (!preg_match('/\.tpl$/', $template)) {		// template file
 					$template .= '.tpl';
 				}
 				$template = 'mail/' . $template;
 				$subject = str_replace('.tpl', '_subject.tpl', $template);
 			} else {	// wiki template
-				if (! $tikilib->page_exists(substr($template, 5))) {
+				$pageName = substr($template, strlen($match[0]));
+				if (! $tikilib->page_exists($pageName)) {
 					Feedback::error(tr('Missing wiki email template page "%0"', htmlspecialchars($template)), 'session');
 					$template = '';
 				} else {
-					$subject_name = str_replace('tpl', 'subject tpl', $template);
-					if ($tikilib->page_exists(substr($subject_name, 5))) {
-						$subject = $subject_name;
+					$subject_name = str_replace('tpl', 'subject tpl', $pageName);
+					if ($tikilib->page_exists($subject_name)) {
+						$subject = $match[0] . $subject_name;
+					} else {
+						$subject_name = str_replace('tpl', 'subject-tpl', $pageName);
+						if ($tikilib->page_exists($subject_name)) {
+							$subject = $match[0] . $subject_name;
+						}
 					}
 				}
 			}
