@@ -29,8 +29,13 @@ class TikiDb_Pdo_Result
 
 class TikiDb_Pdo extends TikiDb
 {
+	/** @var PDO $db */
 	private $db;
 
+	/**
+	 * TikiDb_Pdo constructor.
+	 * @param PDO $db 
+	 */
 	function __construct( $db ) // {{{
 	{
 		if (!$db) {
