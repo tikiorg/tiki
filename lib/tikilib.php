@@ -4321,7 +4321,7 @@ class TikiLib extends TikiDb_Bridge
 	 * @param string $sep
 	 * @return string
 	 */
-	function protect_email($name, $domain, $sep = '@')
+	static function protect_email($name, $domain, $sep = '@')
 	{
 		TikiLib::lib('header')->add_jq_onready(
 			'$(".convert-mailto").removeClass("convert-mailto").each(function () {
