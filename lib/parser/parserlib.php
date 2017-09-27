@@ -1375,6 +1375,7 @@ if ( \$('#$id') ) {
 	}
 
 	// Make plain text URIs in text into clickable hyperlinks
+	//	check to see if autolinks is enabled before calling this function ($prefs['feature_autolinks'] == "y")
 	//*
 	function autolinks($text)
 	{
@@ -1382,17 +1383,13 @@ if ( \$('#$id') ) {
 			global $prefs;
 			static $mail_protect_pattern = '';
 
-			$smarty = TikiLib::lib('smarty');
-			$tikilib = TikiLib::lib('tiki');
-			//	check to see if autolinks is enabled before calling this function
-			//		if ($prefs['feature_autolinks'] == "y") {
 			$attrib = '';
 			if ($prefs['popupLinks'] == 'y')
 				$attrib .= 'target="_blank" ';
 			if ($prefs['feature_wiki_ext_icon'] == 'y') {
 				$attrib .= 'class="wiki external" ';
 				include_once('lib/smarty_tiki/function.icon.php');
-				$ext_icon = smarty_function_icon(array('name' => 'link-external'), $smarty);
+				$ext_icon = smarty_function_icon(array('name' => 'link-external'), TikiLib::lib('smarty'));
 
 			} else {
 				$attrib .= 'class="wiki" ';
@@ -1401,25 +1398,31 @@ if ( \$('#$id') ) {
 
 			// add a space so we can match links starting at the beginning of the first line
 			$text = " " . $text;
-			// match prefix://suffix, www.prefix.suffix/optionalpath, prefix@suffix
 			$patterns = array();
 			$replacements = array();
+			
+			// protocol://suffix
 			$patterns[] = "#([\n ])([a-z0-9]+?)://([^<, \n\r]+)#i";
 			$replacements[] = "\\1<a $attrib href=\"\\2://\\3\">\\2://\\3$ext_icon</a>";
+			
+			// www.domain.ext/optionalpath
 			$patterns[] = "#([\n ])www\.([a-z0-9\-]+)\.([a-z0-9\-.\~]+)((?:/[^,< \n\r]*)?)#i";
 			$replacements[] = "\\1<a $attrib href=\"http://www.\\2.\\3\\4\">www.\\2.\\3\\4$ext_icon</a>";
+			
+			// email address (foo@domain.ext)
 			$patterns[] = "#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i";
 			if ($this->option['protect_email'] && $prefs['feature_wiki_protect_email'] == 'y') {
-
 				if (! $mail_protect_pattern) {
-					$mail_protect_pattern = "\\1" . $tikilib->protect_email("\\2", "\\3");
+					$mail_protect_pattern = "\\1" . TikiLib::protect_email("\\2", "\\3");
 				}
 				$replacements[] = $mail_protect_pattern;
 			} else {
 				$replacements[] = "\\1<a class='wiki' href=\"mailto:\\2@\\3\">\\2@\\3</a>";
 			}
+			
 			$patterns[] = "#([\n ])magnet\:\?([^,< \n\r]+)#i";
 			$replacements[] = "\\1<a class='wiki' href=\"magnet:?\\2\">magnet:?\\2</a>";
+			
 			$text = preg_replace($patterns, $replacements, $text);
 			// strip the space we added
 			$text = substr($text, 1);
