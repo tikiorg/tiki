@@ -18918,4 +18918,5 @@ $lang = array(
 "Last pages" => "Dernières pages",
 // "Note, deprecated file tiki-wikiplugin_edit.php, code moved to service plugin->replace" => "Note, deprecated file tiki-wikiplugin_edit.php, code moved to service plugin->replace",
 // "New in Tiki 12 (LTS)" => "New in Tiki 12 (LTS)",
+"Contribute:" => "Contribuer :",
 );

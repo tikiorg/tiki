@@ -154,12 +154,12 @@
 								<td class="col-md-3 text-center">
 									{if $prefs.lang_control_contribution eq 'y' and isset($item.id)}{* Only translations in the database have an id. *}
 									<label for="scope_{$smarty.foreach.translations.index}">
-										Contribute :
+										{tr}Contribute:{/tr}
 									</label>
 									<select name="scope_{$smarty.foreach.translations.index}" id="scope_{$smarty.foreach.translations.index}">
-										<option {if ! isset($item.general)}selected {/if}value="">Undecided</option>
-										<option {if $item.general === true}selected {/if}value="general">Yes</option>
-										<option {if $item.general === false}selected {/if}value="local">No</option>
+										<option {if ! isset($item.general)}selected {/if}value="">{tr}Undecided{/tr}</option>
+										<option {if $item.general === true}selected {/if}value="general">{tr}Yes{/tr}</option>
+										<option {if $item.general === false}selected {/if}value="local">{tr}No{/tr}</option>
 									</select>
 									{/if}
 									<div>
