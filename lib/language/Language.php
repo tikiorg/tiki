@@ -57,7 +57,7 @@ class Language extends TikiDb_Bridge
 	}
 
 	/**
-	 * Translate as in "Table 7-1 Escaped characters" in the PHP manual
+	 * Translate characters for usage in a double-quoted PHP string (per "Escaped characters" table in http://php.net/manual/language.types.string.php#language.types.string.syntax.doublein )
 	 * $string = str_replace ("\n", '\n',   $string);
 	 * $string = str_replace ("\r", '\r',   $string);
 	 * $string = str_replace ("\t", '\t',   $string);
