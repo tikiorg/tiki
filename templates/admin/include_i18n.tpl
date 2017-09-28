@@ -69,6 +69,9 @@
 			{preference name=wikiplugin_translated}
 		</div>
 		{preference name=lang_use_db}
+		<div class="adminoptionboxchild" id="lang_use_db_childcontainer">
+			{preference name=lang_control_contribution}
+		</div>
 		{preference name=record_untranslated}
 		{preference name=feature_machine_translation}
 		<div class="adminoptionboxchild" id="feature_machine_translation_childcontainer">

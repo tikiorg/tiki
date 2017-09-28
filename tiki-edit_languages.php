@@ -89,7 +89,19 @@ if ($action == "edit_rec_sw" || $action == "edit_tran_sw") {
 		if (isset($_REQUEST["edit_tran_$i"]) || isset($_REQUEST['translate_all'])) {
 			// Handle edits in edit translations
 			if (strlen($_REQUEST["tran_$i"]) > 0 && strlen($_REQUEST["source_$i"]) > 0) {
-				$translations->updateTrans($_REQUEST["source_$i"], $_REQUEST["tran_$i"]);
+				if ($prefs['lang_control_contribution'] == 'y') {
+					 if (! isset($_REQUEST["scope_$i"])) {
+					 	throw new Exception('scope parameter required');
+					 } elseif ($_REQUEST["scope_$i"] == '') {
+					 	$general = null;
+					 } else {
+					 	$general = $_REQUEST["scope_$i"] == 'general';
+					 }
+					$optionalParameters = ['general' => $general];
+				} else {
+					$optionalParameters = [];
+				}
+				$translations->updateTrans($_REQUEST["source_$i"], $_REQUEST["tran_$i"], $optionalParameters);
 			}
 		} elseif (isset($_REQUEST["del_tran_$i"])) {
 			// Handle deletes here

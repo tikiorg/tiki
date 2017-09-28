@@ -108,7 +108,8 @@ class Services_Language_Controller
 			$export_language = new LanguageTranslations($language);
 			//write to language.php
 			try {
-				$stats = $export_language->writeLanguageFile();
+				global $prefs;
+				$stats = $export_language->writeLanguageFile($prefs['lang_control_contribution'] == 'y' && ! $input->offsetExists('all'));
 			} catch (Exception $e) { //TODO: this is messy
 				$smarty->assign('msg', $e->getMessage());
 				$smarty->display('error.tpl');

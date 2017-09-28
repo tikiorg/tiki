@@ -1244,6 +1244,7 @@ CREATE TABLE `tiki_language` (
   `lang` char(16) NOT NULL default '',
   `tran` text,
   `changed` bool,
+  `general` bool DEFAULT NULL COMMENT 'true if this translation is general and can be contributed to the Tiki community, false if it is specific to this instance',
   `userId` int(8),
   `lastModif` int(14) NULL,
   PRIMARY KEY (`id`)

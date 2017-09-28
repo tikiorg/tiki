@@ -152,14 +152,26 @@
 									<textarea id="tran_{$smarty.foreach.translations.index}" name="tran_{$smarty.foreach.translations.index}" class="form-control" rows="2">{$item.tran|escape}</textarea>
 								</td>
 								<td class="col-md-3 text-center">
-									<button type="submit" class="btn btn-primary btn-sm tips" name="edit_tran_{$smarty.foreach.translations.index}" title=":{tr}Save translation in the database{/tr}">
-										{tr}Translate{/tr}
-									</button>
-									{if $action eq 'edit_tran_sw' && isset($item.changed)}
-										<button type="submit" class="btn btn-warning btn-sm tips" name="del_tran_{$smarty.foreach.translations.index}" title=":{tr}Delete translation from the database{/tr}">
-											{tr}Delete{/tr}
-										</button>
+									{if $prefs.lang_control_contribution eq 'y' and isset($item.id)}{* Only translations in the database have an id. *}
+									<label for="scope_{$smarty.foreach.translations.index}">
+										Contribute :
+									</label>
+									<select name="scope_{$smarty.foreach.translations.index}" id="scope_{$smarty.foreach.translations.index}">
+										<option {if ! isset($item.general)}selected {/if}value="">Undecided</option>
+										<option {if $item.general === true}selected {/if}value="general">Yes</option>
+										<option {if $item.general === false}selected {/if}value="local">No</option>
+									</select>
 									{/if}
+									<div>
+										<button type="submit" class="btn btn-primary btn-sm tips" name="edit_tran_{$smarty.foreach.translations.index}" title=":{tr}Save translation in the database{/tr}">
+											{tr}Translate{/tr}
+										</button>
+										{if $action eq 'edit_tran_sw' && isset($item.changed)}
+											<button type="submit" class="btn btn-warning btn-sm tips" name="del_tran_{$smarty.foreach.translations.index}" title=":{tr}Delete translation from the database{/tr}">
+												{tr}Delete{/tr}
+											</button>
+										{/if}
+									</div>
 									{assign var=itemIndex value=$smarty.foreach.translations.index}
 									{if isset($item.originalTranslation)}
 										{button _flip_id="diff_$itemIndex" _flip_hide_text="n" _text="{tr}Compare{/tr}" _title=":{tr}Compare the original translation with the database translation{/tr}" _class="btn btn-default btn-sm tips"}
@@ -187,6 +199,11 @@
 						{/foreach}
 					</tbody>
 				</table>
+				{jq}
+					jQuery('select[name^="scope_"]').tooltip(
+						{title: tr("For translations specific to this Tiki instance, select No. If this translation can be contributed to the Tiki community, select Yes.")}
+						);
+				{/jq}
 				<div class="text-center">
 					{pagination_links cant=$total step=$maxRecords offset=$offset _ajax='n'}{strip}
 					tiki-edit_languages.php?edit_language={$edit_language}&action={$action}&maxRecords={$maxRecords}&only_db_translations={$only_db_translations}&only_db_untranslated={$only_db_untranslated}{if isset($find)}&find={$find}{/if}

@@ -16,6 +16,13 @@ function prefs_lang_list()
 			'default' => 'n',
 			'hint' => tr('Edit, export and import languages'),
 		),
+		'lang_control_contribution' => array(
+			'name' => tra('Manage contribution of translated strings'),
+			'description' => tra('Offers to set whether each translated string should be contributed to the Tiki community or kept locally'),
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => ['advanced'],
+		),
 		'lang_machine_translate_implementation' => array(
 			'name' => tr('Machine translation implementation'),
 			'description' => tr('Select between alternate impementations for machine translation. Depending on the implementation, different API keys may be required.'),

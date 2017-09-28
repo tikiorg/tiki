@@ -1,0 +1,1 @@
+ALTER TABLE `tiki_language` ADD `general` bool DEFAULT NULL COMMENT 'true if this translation is general and can be contributed to the Tiki community, false if it is specific to this instance' AFTER `changed`;
