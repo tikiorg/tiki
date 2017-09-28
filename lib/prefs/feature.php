@@ -2623,13 +2623,13 @@ function prefs_feature_list($partial = false)
 			'tags' => array('experimental'),
 		),
 		'feature_syntax_highlighter' => array(
-			'name' => tra('Syntax highlighter (CodeMirror)'),
-			'description' => tra('Enables syntax highlighting provided by CodeMirror'),
+			'name' => tra('Code editor (CodeMirror)'),
+			'description' => tra('CodeMirror code editor, which provides syntax highlighting'),
 			'type' => 'flag',
 			'help' => 'Syntax+Highlighter',
 			'keywords' => 'Code Mirror Syntax Highlighter',
 			'default' => 'n',
-			'tags' => array('experimental'),			
+			'tags' => array('experimental'),	// Browser search fails to find some term occurences (issue #6458). Chealer 2017-09-27 
 		),
 		'feature_syntax_highlighter_theme' => array(
 			'name' => tra('Syntax highlighter (CodeMirror) Theme'),
