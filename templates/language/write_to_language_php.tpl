@@ -4,7 +4,7 @@
 	{title}{$title|escape}{/title}
 {/block}
 {block name="content"}
-	<form action="{service controller=language action=write_to_language_php}" method="post" role="form" class="form">
+	<form action="{service controller=language action=write_to_language_php}" method="post" class="form">
 		{if isset($expmsg)}
 			{remarksbox type="note" title="{tr}Note:{/tr}"}
 				{$expmsg}
