@@ -66,7 +66,7 @@ class Services_Language_Controller
 	/**
 	 * Translations in the database will be merged with the other translations in language.php. Note that after writing translations to language.php they are removed from the database.
 	 *
-	 * @param $input
+	 * @param $input JitFilter
 	 *
 	 * @return array
 	 */
