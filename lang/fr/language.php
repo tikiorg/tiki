@@ -18919,4 +18919,5 @@ $lang = array(
 // "Note, deprecated file tiki-wikiplugin_edit.php, code moved to service plugin->replace" => "Note, deprecated file tiki-wikiplugin_edit.php, code moved to service plugin->replace",
 // "New in Tiki 12 (LTS)" => "New in Tiki 12 (LTS)",
 "Contribute:" => "Contribuer :",
+"For translations specific to this Tiki instance, select No. If this translation can be contributed to the Tiki community, select Yes." => "Pour les traductions spécifiques à cette instance Tiki, choisissez Non. Si cette traduction peut être contribuée à la communauté Tiki, choisissez Oui.",
 );

@@ -201,7 +201,7 @@
 				</table>
 				{jq}
 					jQuery('select[name^="scope_"]').tooltip(
-						{title: tr("For translations specific to this Tiki instance, select No. If this translation can be contributed to the Tiki community, select Yes.")}
+						{title: "{tr}For translations specific to this Tiki instance, select No. If this translation can be contributed to the Tiki community, select Yes.{/tr}"}
 						);
 				{/jq}
 				<div class="text-center">
