@@ -186,16 +186,12 @@ function wikiplugin_pdf_info()
 						)	
 					),
 					'autobookmarks' => array(
-						'name' => tra('Auto Bookmarks for Adobe Reader'),
-						'description' => tra(''),
+						'name' => tra('Generate PDF Bookmarks'),
+						'description' => tra('Values H1-H6,separated by | <code>For example H1|H2|H3</code>'),
 						'tags' => array('advanced'),
-						'type' => 'list',
-						'default'=>'',
-						'options' => array(
-							array('text'=>'Default','value'=>''),
-							array('text'=>'Off','value'=>'off'),
-							array('text'=>'On (Automatically generate bookmarks from h1 - h3)','value'=>'On'),
-						)
+						'type' => 'text',
+						'default'=>'h1|h2|h3',
+
 					),
 					'columns' => array(
 						'name' => tra('Number of columns'),

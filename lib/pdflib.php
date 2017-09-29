@@ -375,8 +375,8 @@ class PdfGenerator
 
 		}
 		//Checking bookmark
-		if($pdfSettings['autobookmarks']=='On'){
-			$mpdf->h2bookmarks = array('H1'=>0, 'H2'=>1, 'H3'=>2);
+		if(is_array($pdfSettings['autobookmarks'])){
+			$mpdf->h2bookmarks = $pdfSettings['autobookmarks'];
 		}
 		$pageNo=1;
 		//end of coverpage generation
@@ -490,6 +490,15 @@ class PdfGenerator
 			$pdfSettings['toclevels']=array();
 			for($toclevel=0;$toclevel<count($toclevels);$toclevel++){
 				$pdfSettings['toclevels'][$toclevels[$toclevel]]=$toclevel;
+			}
+		}
+
+		//Setting PDF bookmarks
+		if($pdfSettings['autobookmarks']){
+			$bookmark=explode("|",$pdfSettings['autobookmarks']);
+			$pdfSettings['autobookmarks']=array();
+			for($level=0;$level<count($bookmark);$level++){
+				$pdfSettings['autobookmarks'][strtoupper($bookmark[$level])]=$level;
 			}
 		}
 		//PDF settings
@@ -635,7 +644,7 @@ class PdfGenerator
 		
 		//defining array of plugins to be sorted
 		$pluginArr=array(array("class","customsearch_results","div"),array("id","container_pivottable","div"),array("class","dynavar","a"), array("class", "tiki_sheet", "div"));
-		$tagsArr=array(array("input","tablesorter-filter","class"),array("select","tablesorter-filter","class"),array("select","pvtRenderer","class"),array("select","pvtAggregator","class"),array("td","pvtCols","class"),array("td","pvtUnused","class"),array("td","pvtRows","class"),array("div","plot-container","class"),array("a","heading-link","class"),array("a","tablename","class","1"), array("div", "jSScroll", "class"), array("span", "jSTabContainer", "class"), array("a", "tiki_sheeteditbtn", "class"),array("div","comment-footer","class"),array("div","buttons comment-form","class"));
+		$tagsArr=array(array("input","tablesorter-filter","class"),array("select","tablesorter-filter","class"),array("select","pvtRenderer","class"),array("select","pvtAggregator","class"),array("td","pvtCols","class"),array("td","pvtUnused","class"),array("td","pvtRows","class"),array("div","plot-container","class"),array("a","heading-link","class"),array("a","tablename","class","1"), array("div", "jSScroll", "class"), array("span", "jSTabContainer", "class"), array("a", "tiki_sheeteditbtn", "class"),array("div","comment-footer","class"),array("div","buttons comment-form","class"),array("div","clearfix tabs","class"));
 
 		foreach($pluginArr as $pluginInfo)
 		{

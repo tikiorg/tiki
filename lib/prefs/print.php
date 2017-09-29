@@ -230,15 +230,12 @@ function prefs_print_list()
 			)	
 		),
 		'print_pdf_mpdf_autobookmarks' => array(
-			'name' => tra('Auto bookmarks Adobe Reader'),
-			'description' => tra('Automatically generate bookmarks from h1 - h3'),
+			'name' => tra('PDF Bookmarks'),
+			'description' => tra('Automatically generate bookmarks'),
 			'tags' => array('advanced'),
-			'type' => 'list',
-			'default'=>'',
-			'options' => array(
-				''=>tra('Off'),
-				'On'=>tra('On')
-			)
+			'type' => 'text',
+			'default'=>'H1|H2|H3',
+			'shorthint' => tra('H1-H6, separated by |.For example: H1|H2|H3')
 		),
 		'print_pdf_mpdf_columns' => array(
 			'name' => tra('Number of columns'),
