@@ -16,7 +16,13 @@ function smarty_function_trackerinput( $params, $smarty )
 	$trklib = TikiLib::lib('trk');
 
 	$field = $params['field'];
-	$item = isset($params['item']) ? $params['item'] : array();
+	if (isset($params['item'])) {
+		$item = $params['item'];
+	} elseif ($params['itemId']) {
+		$item = $trklib->get_item_info($params['itemId']);
+	} else {
+		$item = array();
+	}
 
 	$handler = $trklib->get_field_handler($field, $item);
 

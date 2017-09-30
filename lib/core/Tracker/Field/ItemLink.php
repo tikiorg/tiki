@@ -328,6 +328,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 				'placeholder' => $placeholder,
 				'status' => $status,
 				'selector_value' => $value,
+				'selector_id' => 'item'.$this->getItemId().$this->getInsertId(),
 				'format' => $format,
 				'createTrackerItems' => $trackerPerms->create_tracker_items,
 			]);
