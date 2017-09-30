@@ -93,7 +93,7 @@ class Generator
 			}
 		}
 
-		$sitemap->createSitemapIndex($baseUrl . self::RELATIVE_PATH, date('Y-m-d'));
+		$sitemap->createSitemapIndex($baseUrl . '/' . self::RELATIVE_PATH, date('Y-m-d'));
 
 		$perms->setGroups($oldGroups); // restore the group configuration for permissions
 	}
