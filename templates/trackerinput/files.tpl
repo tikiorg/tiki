@@ -107,6 +107,8 @@
 					$self.data('firstfile', fileId);
 				}
 
+				$field.change();
+
 				toggleWarning();
 			}
 
@@ -159,7 +161,9 @@
 			$files.parent().on('click', '.file-delete-icon', function (e) {
 				var fileId = $(e.target).closest('li').data('file-id');
 				if (fileId) {
-					$field.input_csv('delete', ',', fileId); $(e.target).closest('li').remove();
+					$field.input_csv('delete', ',', fileId);
+					$(e.target).closest('li').remove();
+					$field.change();
 					toggleWarning();
 				}
 			});
