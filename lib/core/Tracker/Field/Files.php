@@ -335,7 +335,9 @@ class Tracker_Field_Files extends Tracker_Field_Abstract implements Tracker_Fiel
 		}
 
 		$ret = '';
-		if (!empty($value)) {
+		if (empty($value)) {
+			$ret = '&nbsp;';
+		} else {
 			if ($this->getOption('displayMode')) { // images etc
 				$params = array(
 					'fileId' => $value,
