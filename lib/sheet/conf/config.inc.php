@@ -16,17 +16,17 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 @Define("DRVXML", 				"DOMXML");
 
 
-/*information sur la configuration de la securité @PICNet FrameWorks*/
+/*information sur la configuration de la securitÃ© @PICNet FrameWorks*/
 @define("SECUR_INCLUDE", 			"./");
 
 /*Configuration de la gestion des erreurs de moteur de template*/
-@define("ERROR_MANAGER_SYSTEM", 	"on");    		//Les erreurs sont remontées pour on, ignorées pour off.
-@define("ERROR_MANAGER_LEVEL", 		"0");      		//Précise le niveau d"erreur toléré, plus il est bas, moins les erreurs sont tolérées.
-//@define("ERROR_MANAGER_ESCAPE", 	APATH_ROOT."include/org/apicnet/ui/erreur.html"); //Permet de spécifier une url locale de remplacement en cas de remontée d"erreurs.
-@define("ERROR_MANAGER_LOG", 		APATH_ROOT."cache/erreur.log");	//Permet de définir un fichier de log.
-@define("ERROR_MANAGER_ALARME", 	"");	//Permet de définir une série d"adresse email à laquelle sera envoyé un mail d"alerte.
+@define("ERROR_MANAGER_SYSTEM", 	"on");    		//Les erreurs sont remontÃ©es pour on, ignorÃ©es pour off.
+@define("ERROR_MANAGER_LEVEL", 		"0");      		//PrÃ©cise le niveau d"erreur tolÃ©rÃ©, plus il est bas, moins les erreurs sont tolÃ©rÃ©es.
+//@define("ERROR_MANAGER_ESCAPE", 	APATH_ROOT."include/org/apicnet/ui/erreur.html"); //Permet de spÃ©cifier une url locale de remplacement en cas de remontÃ©e d"erreurs.
+@define("ERROR_MANAGER_LOG", 		APATH_ROOT."cache/erreur.log");	//Permet de dÃ©finir un fichier de log.
+@define("ERROR_MANAGER_ALARME", 	"");	//Permet de dÃ©finir une sÃ©rie d"adresse email Ã  laquelle sera envoyÃ© un mail d"alerte.
 
-/*Configuration générale de l'application*/
+/*Configuration gÃ©nÃ©rale de l'application*/
 @define("APIC_VERBOSE_MODE", 	 	TRUE);
 @define("APIC_ZEND_ENCODER_MODE", 	FALSE);
 
