@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 
-/*This file is part of J4PHP - Ensembles de propriétés et méthodes permettant le developpment rapide d'application web modulaire
+/*This file is part of J4PHP - Ensembles de propriÃ©tÃ©s et mÃ©thodes permettant le developpment rapide d'application web modulaire
 Copyright (c) 2002-2004 @PICNet
 
 This program is free software; you can redistribute it and/or
@@ -196,7 +196,7 @@ class OOoStyle extends absOOo {
 	}
 	
 	/**
-	 * OOoStyle::addStylePage() est une méthode d'ajout d'un entête ou d'un pied de page.
+	 * OOoStyle::addStylePage() est une mÃ©thode d'ajout d'un entÃªte ou d'un pied de page.
 	 * 
 	 * @param Array $argPage de type
 	 * 	$argPage = array(
@@ -204,12 +204,12 @@ class OOoStyle extends absOOo {
 			"NameStyleSuiv" => "Standard",
 			"pageWidth"		=> "20.999",			//text
 			"pageHeight"	=> "29.699",			// (top, bottom, or center) (left, right, or center)
-			"printOrient"	=> "portrait",			// Ecart entre l'entête et le corp du document
+			"printOrient"	=> "portrait",			// Ecart entre l'entÃªte et le corp du document
 			"marginT"		=> "2",
 			"marginB"		=> "2",
-			"marginL"		=> "2",					// Mager de gauche de l'entête
-			"marginR"		=> "2",					// Mager de Droite de l'entête
-			"writingMode"	=> "lr-tb"				// Hauteur de l'entête
+			"marginL"		=> "2",					// Mager de gauche de l'entÃªte
+			"marginR"		=> "2",					// Mager de Droite de l'entÃªte
+			"writingMode"	=> "lr-tb"				// Hauteur de l'entÃªte
 		);
 	 * @return none
 	 **/
@@ -264,7 +264,7 @@ class OOoStyle extends absOOo {
 	
 	
 	/**
-	 * OOoStyle::addStyleHeadFoot() est une méthode d'ajout d'un entête ou d'un pied de page.
+	 * OOoStyle::addStyleHeadFoot() est une mÃ©thode d'ajout d'un entÃªte ou d'un pied de page.
 	 * 
 	 * @param Array $styleArg de type
 	 * 	$argHeager = array(
@@ -273,21 +273,21 @@ class OOoStyle extends absOOo {
 					"scr"		=> "E:/_WebDev/www/cOOlWare2/cache/c_projekte.png",
 					"type"		=> "no-repeat",		// (no-repeat|repeat|stretch)
 					"position"	=> "bottom right"),	// (top, bottom, or center) (left, right, or center)
-			"marginB"	=> "0.499",					// Ecart entre l'entête et le corp du document
-			"marginL"	=> "0.499",					// Mager de gauche de l'entête
-			"marginR"	=> "0.499",					// Mager de Droite de l'entête
-			"minHeight"	=> "0.998",					// Hauteur de l'entête
-			"align"		=> "center",				// Alignement du texte de l'entête (left|center|right)
-			"BgColor"	=> "CEFFB5",				// Couleur de fond de l'entête dans le cas ou ce dernier n'a pas d'image
+			"marginB"	=> "0.499",					// Ecart entre l'entÃªte et le corp du document
+			"marginL"	=> "0.499",					// Mager de gauche de l'entÃªte
+			"marginR"	=> "0.499",					// Mager de Droite de l'entÃªte
+			"minHeight"	=> "0.998",					// Hauteur de l'entÃªte
+			"align"		=> "center",				// Alignement du texte de l'entÃªte (left|center|right)
+			"BgColor"	=> "CEFFB5",				// Couleur de fond de l'entÃªte dans le cas ou ce dernier n'a pas d'image
 		);
-	 * @param String $type est le type a créer, soit un entête soit un pied de page
+	 * @param String $type est le type a crÃ©er, soit un entÃªte soit un pied de page
 	 * @param $pageMasterName
 	 * @return none
 	 **/
 	function addStyleHeadFoot($styleArg, $type, $pageMasterName){
 		
 		if ($type != "Header" && $type != "Footer") {
-		    $this -> ErrorTracker(4, "Le type demander doit être Header ou Footer", 'addStyleHeadFoot', __FILE__, __LINE__);
+		    $this -> ErrorTracker(4, "Le type demander doit Ãªtre Header ou Footer", 'addStyleHeadFoot', __FILE__, __LINE__);
 		}
 		$this->verifIntegrite($styleArg, $type);
 		$headerStyleNode = & $this->getNode("/office:document-styles/office:automatic-styles/style:page-master@[style:name='".$pageMasterName."']/style:".strtolower($type)."-style");
@@ -314,7 +314,7 @@ class OOoStyle extends absOOo {
 		
 		$headerNode =& $this->xml->createElement("style:".strtolower($type));
 		
-		/********************Création de la cellule********************/
+		/********************CrÃ©ation de la cellule********************/
 		if (isset($styleArg["Text"]) && is_object($styleArg["Text"])){
 			
 			if ($styleArg["Text"]->className() == "oooimg") {
@@ -332,7 +332,7 @@ class OOoStyle extends absOOo {
 			$pNode->appendChild($this->xml->createTextNode($styleArg["Text"]));
 			$headerNode->appendChild($pNode);
 		}
-		/**********************Fin de Création*************************/
+		/**********************Fin de CrÃ©ation*************************/
 		$masterPageNode->appendChild($headerNode);	
 	}
 	

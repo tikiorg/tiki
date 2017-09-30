@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 /*
-This file is part of J4PHP - Ensembles de propriétés et méthodes permettant le developpment rapide d'application web modulaire
+This file is part of J4PHP - Ensembles de propriÃ©tÃ©s et mÃ©thodes permettant le developpment rapide d'application web modulaire
 Copyright (c) 2002-2004 @PICNet
 
 This program is free software; you can redistribute it and/or
@@ -25,14 +25,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 /*
-* SuperClass Object offrant toutes les fonctionnalités de gestion des objets tel que le nom de la class courante, le parent de la class courant s'il y a.
-* Cette class permet aussi l'instanciation de la superClass général de gestion d'erreur ErrorManager
+* SuperClass Object offrant toutes les fonctionnalitÃ©s de gestion des objets tel que le nom de la class courante, le parent de la class courant s'il y a.
+* Cette class permet aussi l'instanciation de la superClass gÃ©nÃ©ral de gestion d'erreur ErrorManager
 * 
 * @module APIC
 * @package core
 * @update $Date: 2006-07-14 11:00:50 $
 * @version 1.0
-* @author diogène MOULRON <logiciel@apicnet.net>
+* @author diogÃ¨ne MOULRON <logiciel@apicnet.net>
 * @see ErrorManager.php
 */ 
 class Object{

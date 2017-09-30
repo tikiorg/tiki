@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 
-/*This file is part of J4PHP - Ensembles de propriétés et méthodes permettant le developpment rapide d'application web modulaire
+/*This file is part of J4PHP - Ensembles de propriÃ©tÃ©s et mÃ©thodes permettant le developpment rapide d'application web modulaire
 Copyright (c) 2002-2004 @PICNet
 
 This program is free software; you can redistribute it and/or

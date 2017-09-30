@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 
-/*This file is part of J4PHP - Ensembles de propriétés et méthodes permettant le developpment rapide d'application web modulaire
+/*This file is part of J4PHP - Ensembles de propriÃ©tÃ©s et mÃ©thodes permettant le developpment rapide d'application web modulaire
 Copyright (c) 2002-2004 @PICNet
 
 This program is free software; you can redistribute it and/or
@@ -39,7 +39,7 @@ APIC::import("org.apicnet.io.File");
 class OOoMeta extends absOOo {
 
 	/**
-	 * OOoMeta::OOoMeta(), construteur. méthode d'instanciation des paramètre nécessaire au bon fonctionnement de cette class
+	 * OOoMeta::OOoMeta(), construteur. mÃ©thode d'instanciation des paramÃ¨tre nÃ©cessaire au bon fonctionnement de cette class
 	 * 
 	 * @param $dir
 	 * @return none
@@ -62,7 +62,7 @@ class OOoMeta extends absOOo {
 	
 	
 	/**
-	 * OOoMeta::create() est la méthode de création d'un fichier de méta vierge.
+	 * OOoMeta::create() est la mÃ©thode de crÃ©ation d'un fichier de mÃ©ta vierge.
 	 * 
 	 * @return none
 	 **/
@@ -87,16 +87,16 @@ class OOoMeta extends absOOo {
 	}
 	
 	/**
-	 * OOoMeta::getBody() permet de générer la chaine de caractère correspondant au fichier de méta
+	 * OOoMeta::getBody() permet de gÃ©nÃ©rer la chaine de caractÃ¨re correspondant au fichier de mÃ©ta
 	 * 
-	 * @return String le fichier méta sous forme de chaîne de carctère
+	 * @return String le fichier mÃ©ta sous forme de chaÃ®ne de carctÃ¨re
 	 **/
 	function getBody(){
 		return $this->toString();
 	}
 	
 	/**
-	 * OOoMeta::generator(), la méthode pour connaitre l'outil ayant générer le document Ouvert. lorsque le document des crée avec OOoPHP le générator est "C@RCOO 1.0".
+	 * OOoMeta::generator(), la mÃ©thode pour connaitre l'outil ayant gÃ©nÃ©rer le document Ouvert. lorsque le document des crÃ©e avec OOoPHP le gÃ©nÃ©rator est "C@RCOO 1.0".
 	 * 
 	 * @return String
 	 **/

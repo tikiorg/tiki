@@ -8,7 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 
 /*
-This file is part of J4PHP - Ensembles de propriÈtÈs et mÈthodes permettant le developpment rapide d'application web modulaire
+This file is part of J4PHP - Ensembles de propri√©t√©s et m√©thodes permettant le developpment rapide d'application web modulaire
 Copyright (c) 2002-2004 @PICNet
 
 This program is free software; you can redistribute it and/or
@@ -43,15 +43,15 @@ APIClass::import("org.apicnet.xml.Xml");
 *
 * @update $Date: 2005-05-18 11:01:22 $
 * @version 1.0
-* @author diogËne MOULRON <logiciel@apicnet.net>
+* @author diog√®ne MOULRON <logiciel@apicnet.net>
 * @package core
 */ 
 class APIC extends Object {
 	
 	/**
-	* MÈthode static d'importation de class;
+	* M√©thode static d'importation de class;
 	*
-	* @param string $class nom de la class a importer ; espace de nommage identique a celle utilisÈe en java (sous la forme org.apicnet.maclass).
+	* @param string $class nom de la class a importer ; espace de nommage identique a celle utilis√©e en java (sous la forme org.apicnet.maclass).
 	* @param string $module nom du module ou trouver la class a charger
  	* @access public
 	* @since 1.1
@@ -111,14 +111,14 @@ class APIC extends Object {
 	
 	/**
 	* 
-	* MÈthode static d'instanciation de class / object;
+	* M√©thode static d'instanciation de class / object;
 	* 
 	* 
 	*
-	* @param string  $class nom de class ‡ charger et ‡ instancier ; espace de nommage identique a celle utilisÈe en java.
+	* @param string  $class nom de class √† charger et √† instancier ; espace de nommage identique a celle utilis√©e en java.
 	* @param array   $parameters parametres de la class s'il y en a.
-	* @param boolean $new_class indique si, lorsque la class est dÈj‡ dans le registre, on doit en instancier une nouvelle.
-	* @return object un pointeur sur la class instanciÈ
+	* @param boolean $new_class indique si, lorsque la class est d√©j√† dans le registre, on doit en instancier une nouvelle.
+	* @return object un pointeur sur la class instanci√©
 	* @access public
 	* @since 1.1
 	* @update 06/06/2002
@@ -214,7 +214,7 @@ class APIC extends Object {
 	* 
 	*
 	*
-	* @param string $path chemin du rÈpertoire ‡ lister.
+	* @param string $path chemin du r√©pertoire √† lister.
 	* @access public
 	* @since 1.1
 	* @update 06/06/2002

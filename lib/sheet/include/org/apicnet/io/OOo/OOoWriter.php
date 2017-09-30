@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 
-/*This file is part of J4PHP - Ensembles de propriétés et méthodes permettant le developpment rapide d'application web modulaire
+/*This file is part of J4PHP - Ensembles de propriÃ©tÃ©s et mÃ©thodes permettant le developpment rapide d'application web modulaire
 Copyright (c) 2002-2004 @PICNet
 
 This program is free software; you can redistribute it and/or
@@ -27,7 +27,7 @@ APIC::import("org.apicnet.io.OOo.absOOo");
 APIC::import("org.apicnet.io.OOo.objOOo.OOoText");
 
 /**
- * OOoWriter, classe de génération et de modification d'un fichier Writer
+ * OOoWriter, classe de gÃ©nÃ©ration et de modification d'un fichier Writer
  * 
  * @package 
  * @author apicnet
@@ -248,9 +248,9 @@ class OOoWriter extends absOOo {
 	
 	
 	/**
-	 * OOoWriter::addLine(), méthode permettant d'ajouter des lignes au document
+	 * OOoWriter::addLine(), mÃ©thode permettant d'ajouter des lignes au document
 	 * 
-	 * @param integer $num nombre de ligne à ajouter
+	 * @param integer $num nombre de ligne Ã  ajouter
 	 * @return none
 	 **/
 	function addLine($num = 1){

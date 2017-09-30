@@ -8,7 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 
 /*
-This file is part of J4PHP - Ensembles de propriétés et méthodes permettant le developpment rapide d'application web modulaire
+This file is part of J4PHP - Ensembles de propriÃ©tÃ©s et mÃ©thodes permettant le developpment rapide d'application web modulaire
 Copyright (c) 2002-2004 @PICNet
 
 This program is free software; you can redistribute it and/or
@@ -28,7 +28,7 @@ APIC::import("org.apicnet.io.OOo.absOOo");
 //APIC::import("org.apicnet.io.OOo.objOOo.OOoCell");
 
 /**
- * OOoWriter, classe de génération et de modification d'un fichier Writer
+ * OOoWriter, classe de gÃ©nÃ©ration et de modification d'un fichier Writer
  * 
  * @package 
  * @author apicnet
@@ -156,7 +156,7 @@ class OOoCalc extends absOOo {
 	
 	
 	/**
-	 * OOoTable::colSpan(), méthode de fusion de colonnes. Le numéro des colonnes commence à 0.
+	 * OOoTable::colSpan(), mÃ©thode de fusion de colonnes. Le numÃ©ro des colonnes commence Ã  0.
 	 * 
 	 * @param $argSpan = array(
 	 			"lignSPan"	=> 1,
@@ -171,7 +171,7 @@ class OOoCalc extends absOOo {
 	
 	
 	/**
-	 * OOoTable::rowSpan(), méthode de fusion de lignes. Le numéro des lignes commence à 0.
+	 * OOoTable::rowSpan(), mÃ©thode de fusion de lignes. Le numÃ©ro des lignes commence Ã  0.
 	 * 
 	 * @param $argSpan = array(
 	 			"lignDeb"	=> 1,
@@ -186,7 +186,7 @@ class OOoCalc extends absOOo {
 	}
 
     /**
-     * table::addcellData(), méthode d'ajout de données dans une cellule.
+     * table::addcellData(), mÃ©thode d'ajout de donnÃ©es dans une cellule.
      * 
      * @param  $argData  = array(
 	 			"data"			=> DATA
@@ -211,7 +211,7 @@ class OOoCalc extends absOOo {
      * @return none
      */
 	function addcellData($lign, $Col, $argData){
-		echo "/************************traitement des données***********************************/<br>";
+		echo "/************************traitement des donnÃ©es***********************************/<br>";
 		echo("Col : ".$Col."<br>");
 		echo("lign : ".$lign."<br>");
 	
@@ -232,7 +232,7 @@ class OOoCalc extends absOOo {
 		$tableCellNode->appendChild($pNode);
 		
 		if ($tableNode->hasChildNodes()) {
-			echo("/**************************il existe des données dans la feuille calc****************/<br>");
+			echo("/**************************il existe des donnÃ©es dans la feuille calc****************/<br>");
 			echo("tableNode->childCount : ".count($tableNode->childNodes)."<br>");
 			
 			$currentNode = &$tableNode->firstChild;
@@ -295,7 +295,7 @@ class OOoCalc extends absOOo {
 			}
 			
 		} else {
-			echo("/**************************Aucune données dans la feuille calc****************/<br>");
+			echo("/**************************Aucune donnÃ©es dans la feuille calc****************/<br>");
 			for ($i = 0; $i < $lign; $i++){
 				$currentRowNode =& $tableRowNode->cloneNode(true);
 				echo("/******************Ajout de ligne******************/<br>");
@@ -322,7 +322,7 @@ class OOoCalc extends absOOo {
 	}
 	
 	 /**
-     * table::addcellData(), méthode d'ajout de données dans une cellule.
+     * table::addcellData(), mÃ©thode d'ajout de donnÃ©es dans une cellule.
      * 
      * @param  $argData  = array(
 	 			"name"			=> Nom
