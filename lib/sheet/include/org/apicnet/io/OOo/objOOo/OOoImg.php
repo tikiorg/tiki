@@ -63,8 +63,8 @@ class OOoImg extends absOOo {
 	)
 	 * @return none
 	 **/
-	function OOoImg($argStyle){
-		parent :: absOOo();
+	function __construct($argStyle){
+		parent::__construct();
 
 		if (is_array($argStyle)) {
 			$this -> verifIntegrite($argStyle, "imgStyle");
@@ -122,8 +122,8 @@ class OOoImg extends absOOo {
 		if (isset($this->_styleImg["anchorType"])) $imageNode->setAttribute("text:anchor-type", $this->_styleImg["anchorType"]);
 
 		$result = shell_exec(APIC_LIBRARY_PATH."/org/apicnet/io/OOo/objOOo/Taille.exe ".$dir."/Pictures/".$tmpfile);
-		$temp   = split("centimeters", $result);
-		$cm     = split("\*", substr($temp[count($temp)-1], 2));
+		$temp   = explode("centimeters", $result);
+		$cm     = explode("*", substr($temp[count($temp)-1], 2));
 		//	echo("cm : ".$cm[0]."<br>");
 		//	echo("cm : ".$cm[1]);
 

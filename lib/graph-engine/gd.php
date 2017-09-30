@@ -27,7 +27,7 @@ class GD_GRenderer extends GRenderer // {{{1
 
 	var $imageMap;
 
-	function GD_GRenderer( $width = 0, $height = 0, $format = 'png' ) // {{{2
+	function __construct( $width = 0, $height = 0, $format = 'png' ) // {{{2
 	{
 		// Null size does not create a graphic.
 		$this->styles = array();

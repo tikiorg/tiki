@@ -62,6 +62,7 @@ class Session
     /**
      * @param $sesskey
      * @param $data
+     * @return bool
      */
     public function write($sesskey, $data)
 	{
@@ -71,22 +72,24 @@ class Session
 
 		TikiDb::get()->query('delete from sessions where sesskey = ?', array( $sesskey ));
 		TikiDb::get()->query('insert into sessions (sesskey, data, expiry) values( ?, ?, ? )', array( $sesskey, $data, $expiry ));
+
+		return true;
 	}
 
     /**
      * @param $sesskey
-     * @return int
+     * @return bool
      */
     public function destroy($sesskey)
 	{
 		$qry = 'delete from sessions where sesskey = ?';
 		TikiDb::get()->query($qry, array( $sesskey ));
-		return 1;
+		return true;
 	}
 
     /**
      * @param $maxlifetime
-     * @return int
+     * @return bool
      */
     public function gc($maxlifetime)
 	{
@@ -97,7 +100,7 @@ class Session
 			TikiDb::get()->query($qry, array( time() ));
 		}
 
-		return 1;
+		return true;
 	}
 }
 

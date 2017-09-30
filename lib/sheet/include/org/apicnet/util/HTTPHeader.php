@@ -44,7 +44,7 @@ class HTTPHeader {
 	 * @return mixed 
 	 * @todo change order (POST normally overrides GET)
 	 */	
-	function HTTPHeader(){
+	function __construct(){
 		if (sizeof($_GET)>0) $this->_var = array_merge($this->_var, $_GET);
 		if (sizeof($_POST)>0) $this->_var = array_merge($this->_var, $_POST);
 	}

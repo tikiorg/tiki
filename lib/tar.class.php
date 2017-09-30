@@ -91,7 +91,7 @@ class tar
     /**
      * @return bool
      */
-    function tar() {
+    function __construct() {
 		return true;
 	}
 

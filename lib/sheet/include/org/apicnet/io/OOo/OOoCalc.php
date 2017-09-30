@@ -45,8 +45,8 @@ class OOoCalc extends absOOo {
 		'style_page_style'	=> 1
 	);
 	
-	function OOoCalc($dir){
-		parent::absOOo();
+	function __construct($dir){
+		parent::__construct();
 		$this->DIRXML = $dir;
 		$this->FILENAME = "content.xml";
 		

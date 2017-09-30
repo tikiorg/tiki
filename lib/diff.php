@@ -48,7 +48,7 @@ class _WikiDiffEngine
      * @param $from_lines
      * @param $to_lines
      */
-    function _WikiDiffEngine ($from_lines, $to_lines)
+    function __construct ($from_lines, $to_lines)
 	{
 		$n_from = count($from_lines);
 		$n_to = count($to_lines);
@@ -476,7 +476,7 @@ class WikiDiff
 	/**
 	 * Compute diff between files (or deserialize serialized WikiDiff.)
 	 */
-	function WikiDiff($from_lines = false, $to_lines = false)
+	function __construct($from_lines = false, $to_lines = false)
 	{
 		if ($from_lines && $to_lines) {
 			$compute = new _WikiDiffEngine($from_lines, $to_lines);
@@ -779,7 +779,7 @@ class WikiDiffFormatter
     /**
      * @param bool $reverse
      */
-    function WikiDiffFormatter ($reverse = false)
+    function __construct ($reverse = false)
 	{
 		$this->do_reverse_diff = $reverse;
 		$this->context_lines = 0;
@@ -986,7 +986,7 @@ class WikiUnifiedDiffFormatter extends WikiDiffFormatter
      * @param bool $reverse
      * @param int $context_lines
      */
-    function WikiUnifiedDiffFormatter ($reverse = false, $context_lines = 3)
+    function __construct ($reverse = false, $context_lines = 3)
 	{
 		$this->do_reverse_diff = $reverse;
 		$this->context_lines = $context_lines;

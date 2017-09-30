@@ -23,7 +23,7 @@ class PDFLib_GRenderer extends GRenderer // {{{1
 	public $width;
 	public $height;
 
-	function PDFLib_GRenderer( $format = null, $orientation = 'landscape' ) // {{{2
+	function __construct( $format = null, $orientation = 'landscape' ) // {{{2
 	{
 		// Null size does not create a graphic.
 		$this->styles = array();

@@ -113,7 +113,7 @@ class OpenPGPLib
 	/**
 	* Constructor function. Set initial defaults.
 	*/
-	function OpenPGPLib()
+	function __construct()
 	{
 		global $prefs,$tiki_p_admin;
 
@@ -663,7 +663,9 @@ class OpenPGPLib
 		preg_match_all('/(\w*[\x80-\xFF]+\w*)/', $input, $matches);
 
 		foreach ($matches[1] as $value) {
-			$replacement = preg_replace('/([\x80-\xFF])/e', '"=" . strtoupper(dechex(ord("\1")))', $value);
+			$replacement = preg_replace_callback('/([\\x80-\\xFF])/', function ($match) {
+				return "=" . strtoupper(dechex(ord($match[1])));
+			}, $value);
 
 			$input = str_replace($value, '=?' . $charset . '?Q?' . $replacement . '?=', $input);
 		}

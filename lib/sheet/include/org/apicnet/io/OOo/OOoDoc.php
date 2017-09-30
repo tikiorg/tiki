@@ -40,7 +40,7 @@ class OOoDoc extends OOoUtil {
 	var $TYPE;
 	
 	
-	function OOoDoc(){
+	function __construct(){
 		$this->TYPE     = NULL;
 		$this->docExist = FALSE;
 		$this->manifest = NULL;
@@ -71,7 +71,7 @@ class OOoDoc extends OOoUtil {
 	
 	function openWriter($file){
 		$this->TYPE     = "Writer";
-		$allRep         = split("\/", $file);
+		$allRep         = explode("/", $file);
 		$this->fileName = array_pop($allRep);
 		$this->dirName  = join ("/", $allRep);
 
@@ -86,7 +86,7 @@ class OOoDoc extends OOoUtil {
 	function openCalc($file){
 		$this->TYPE     = "Calc";
 		
-		$allRep         = split("\/", $file);
+		$allRep         = explode("/", $file);
 		$this->fileName = array_pop($allRep);
 		$this->dirName  = join ("/", $allRep);
 

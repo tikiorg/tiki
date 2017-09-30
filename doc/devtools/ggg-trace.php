@@ -35,7 +35,7 @@ class ggg_trace
     /**
      * @param string $nameStr
      */
-    function ggg_trace($nameStr = 'ggg-trace.out')
+    function __construct($nameStr = 'ggg-trace.out')
 	{
 		register_shutdown_function(array(&$this, '_ggg_trace')); // the & is important
 		$this->fp = fopen($nameStr, 'a');

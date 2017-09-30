@@ -1183,7 +1183,10 @@ class ModsLib
 					$smarty->assign('help', '');
 				}
 				for ($i=0, $count_config = count($info->configuration); $i < $count_config; $i++) {
-					$info->configuration[$i][2] = preg_replace('/\\$([_A-Z]*)/e', '$conf[\'_SERVER\'][\'\\1\']', $info->configuration[$i][2]);
+					$info->configuration[$i][2] = preg_replace_callback('/\\$([_A-Z]*)/', function ($match) use ($conf) {
+						$key = $match[1];
+						return $conf['_SERVER'][$key];
+					}, $info->configuration[$i][2]);
 				}
 				$smarty->assign('type', $info->type);
 				$smarty->assign('package', $info->name);
@@ -1200,7 +1203,10 @@ class ModsLib
 				if ($this->revision_compare($from->revision, $v) < 0) {
 					foreach ($vv as $sql) {
 						if (count($conf) and strpos($sql, '$')) {
-							$sql = preg_replace('/\\$([_a-zA-Z0-9]*)/e', '$conf[\'\\1\'][0]', $sql);
+							$sql = preg_replace_callback('/\\$([_a-zA-Z0-9]*)/', function ($match) use ($conf) {
+								$key = $match[1];
+								return $conf[$key][0];
+							}, $sql);
 						}
 						$this->feedback_error($from->revision." -> $v : $sql");
 						$tikilib->query($sql, array());
@@ -1211,7 +1217,10 @@ class ModsLib
 			global $tikilib;
 			foreach ($info->sql_install as $sql) {
 				if (count($conf) and strpos($sql, '$')) {
-					$sql = preg_replace('/\\$([_a-zA-Z0-9]*)/e', '$conf[\'\\1\'][0]', $sql);
+					$sql = preg_replace_callback('/\\$([_a-zA-Z0-9]*)/', function ($match) use ($conf) {
+						$key = $match[1];
+						return $conf[$key][0];
+					}, $sql);
 				}
 				$tikilib->query($sql, array());
 			}
@@ -1227,7 +1236,10 @@ class ModsLib
 				}
 				if (substr(basename($f[0]), 0, 7) == "sample:") {
 					$text = implode('', file($path.$f[0]));
-					$text = preg_replace('/\[:::\[([^\]]*)\]:::\]/e', '$conf[\'\\1\'][0]', $text);
+					$text = preg_replace_callback('/\[:::\[([^\]]*)\]:::\]/', function ($match) use ($conf) {
+						$key = $match[1];
+						return $conf[$key][0];
+					}, $text);
 					$f[0] = str_replace('sample:', '', $f[0]);
 					$fp = fopen($path.'/'.$f[0], "w");
 					fputs($fp, $text);

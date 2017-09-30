@@ -71,13 +71,13 @@ class ErrorManager extends Object {
      * @param string $alarme
      * @return 
      **/
-    function ErrorManager($errorManagerSystem = '', $level = '', $escape = '', $file = '', $alarme = ''){
+    function __construct($errorManagerSystem = '', $level = '', $escape = '', $file = '', $alarme = ''){
 		$this -> SetErrorSystem($errorManagerSystem);
 		$this -> SetErrorLevel($level);
 		$this -> SetErrorEscape($escape);
 		$this -> SetErrorAlarme($alarme);
 		$this -> SetErrorLog($file);
-		parent::Object();
+		parent::__construct();
 	}
 
 	/**
@@ -123,7 +123,7 @@ class ErrorManager extends Object {
         }
 
     function SetErrorOut($url){
-        if (is_file($url) || ereg('http://', $url)) {
+        if (is_file($url) || strpos($url, 'http://') !== false) {
             $this -> errorEscape = $url;
             return true;
             }

@@ -30,13 +30,13 @@ $db_host = 'localhost';
 // remember the trailing /
 $extract_to = '/home/damian/public_html/tikiimages/dump/';
 
-$db = mysql_connect($db_host, $db_user, $db_pass);
-mysql_select_db($db_tiki);
+$db = mysqli_connect($db_host, $db_user, $db_pass);
+mysqli_select_db($db, $db_tiki);
 
 $query = "select * from tiki_images_data where type = 'o'";
-$results = mysql_query($query);
+$results = mysqli_query($db, $query);
 
-while ($r = mysql_fetch_array($results)) {
+while ($r = mysqli_fetch_array($db, $results)) {
 	extract($r, EXTR_PREFIX_ALL, 'r');
 
 	echo "$r_filename ";

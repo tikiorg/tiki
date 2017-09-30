@@ -26,7 +26,7 @@ class StringBuffer extends Object{
 	* @param	string|core.StringBuffer	string source
 	* @access	public
 	*/
-	function StringBuffer( $str = '' ) {
+	function __construct( $str = '' ) {
 		$this->setString($str);
 	}
 	
@@ -209,7 +209,10 @@ class StringBuffer extends Object{
 	* @return StringBuffer			the new lower case string
 	**/
 	function toLowerCase($source=""){
-		return new StringBuffer(preg_replace('/([À-Ý]|[A-Z])/e','chr(ord(\'\\1\')+32)', $this->str));
+		$string = preg_replace_callback('/([À-Ý]|[A-Z])/', function ($match) {
+			return chr(ord($match[1])+32);
+		}, $this->str);
+		return new StringBuffer($string);
 	}
 	
 	/**
@@ -218,7 +221,10 @@ class StringBuffer extends Object{
 	* @return string 				the new upper case string
 	**/
 	function toUpperCase($source=""){
-		return new StringBuffer(preg_replace('/([à-ý]|[a-z])/e','chr(ord(\'\\1\')-32)', $this->str));
+		$string = preg_replace_callback('/([à-ý]|[a-z])/', function ($match) {
+			return chr(ord($match[1])-32);
+		}, $this->str);
+		return new StringBuffer($string);
 	}
 	
 	/**
@@ -292,7 +298,7 @@ class StringBuffer extends Object{
 				$s = StringBuffer::toUpperCase($s);
 				$s = preg_replace('/(.)\\1/', '\\1', $s); 
 				$first_letter = $s[0];
-				$s = ereg_replace('AEIOUYHW', '', $s); 
+				$s = preg_replace('/AEIOUYHW/', '', $s); 
 				$s = strtr('112223345567788899', 'BPCKQDTLMNRGJXZSFV', $s); 
 				$s = $first_letter . $s;
 				if (strlen($s)<4){

@@ -22,7 +22,7 @@ class Tiki_ShareGroup
     /**
      * @param $name
      */
-    function Tiki_ShareGroup( $name )
+    function __construct( $name )
 	{
 		$this->name = $name;
 		$this->groupPerm = array();

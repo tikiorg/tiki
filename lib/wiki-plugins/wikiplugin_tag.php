@@ -45,7 +45,7 @@ function wikiplugin_tag($data, $params)
 		$tag = 'span';
 	} else {
 		// remove eveyrything what's not a word to allow only tags without attributes
-		$tag = preg_replace("/[^\w]/e", "", $tag);
+		$tag = preg_replace("/[^\w]/", "", $tag);
 	}
 	
 	if (isset($style)) {

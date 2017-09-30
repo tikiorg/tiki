@@ -16,9 +16,9 @@ class MultilineGraphic extends GridBasedGraphic
 {
 	var $lines;
 
-	function MultilineGraphic()
+	function __construct()
 	{
-		GridBasedGraphic::GridBasedGraphic();
+		parent::__construct();
 		$this->lines = array();
 	}
 

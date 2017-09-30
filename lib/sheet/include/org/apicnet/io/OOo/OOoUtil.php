@@ -43,7 +43,7 @@ class OOoUtil extends absOOo{
 	var $tmpdir;
 	var $docExist;
 
-	function OOoUtil(){}
+	function __construct(){}
 
 	function isTextDocument () {}
 

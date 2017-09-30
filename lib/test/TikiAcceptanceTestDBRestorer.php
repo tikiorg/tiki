@@ -56,9 +56,9 @@ abstract class TikiAcceptanceTestDBRestorer
 
 	function set_mysql_data_dir()
 	{
-		mysql_connect($this->host, $this->tiki_test_db_user, $this->tiki_test_db_pwd) or die(mysql_error());
-		$result = mysql_query("select @@datadir;");
-		while ($array = mysql_fetch_array($result)) {
+		$conn = mysqli_connect($this->host, $this->tiki_test_db_user, $this->tiki_test_db_pwd) or die(mysqli_error($conn));
+		$result = mysqli_query($conn, "select @@datadir;");
+		while ($array = mysqli_fetch_array($conn, $result)) {
 			$datadir = $array[0];
 		}
 		return $datadir; 

@@ -16,9 +16,9 @@ class PieChartGraphic extends Graphic
 {
 	var $pie_data;
 
-	function PieChartGraphic()
+	function __construct()
 	{
-		Graphic::Graphic();
+		parent::__construct();
 		$this->pie_data = array();
 	}
 

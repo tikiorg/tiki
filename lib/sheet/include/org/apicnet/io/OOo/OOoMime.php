@@ -28,7 +28,7 @@ APIC::import("org.apicnet.io.File");
 
 class OOoMime extends ErrorManager {
 
-	function OOoMime($dir, $type){
+	function __construct($dir, $type){
 		
 		$file = new File($dir."/mimetype");
 		if (!$file->exists()) {

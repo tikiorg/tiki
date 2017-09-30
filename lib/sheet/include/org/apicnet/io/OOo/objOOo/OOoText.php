@@ -38,7 +38,7 @@ class OOoText extends absOOo {
 	 * 
 	 * @return 
 	 **/
-	function OOoText(){
+	function __construct(){
 		$this->xml = new DOMIT_Document();
 	}
 		/**

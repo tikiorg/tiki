@@ -13,9 +13,9 @@ class BarBasedGraphic extends GridBasedGraphic // {{{1
 	var $styleMap;
 	var $columnMap;
 
-	function BarBasedGraphic() // {{{2
+	function __construct() // {{{2
 	{
-		GridBasedGraphic::GridBasedGraphic();
+		parent::__construct();
 		$this->columns = array();
 		$this->styleMap = array();
 		$this->columnMap = array();
@@ -192,9 +192,9 @@ class BarBasedGraphic extends GridBasedGraphic // {{{1
 
 class BarStackGraphic extends BarBasedGraphic // {{{1
 {
-	function BarStackGraphic() // {{{2
+	function __construct() // {{{2
 	{
-		BarBasedGraphic::BarBasedGraphic();
+		parent::__construct();
 	}
 
 	function _getMinValue( $type ) // {{{2
@@ -274,9 +274,9 @@ class BarStackGraphic extends BarBasedGraphic // {{{1
 
 class MultibarGraphic extends BarBasedGraphic // {{{1
 {
-	function MultibarGraphic() // {{{2
+	function __construct() // {{{2
 	{
-		BarBasedGraphic::BarBasedGraphic();
+		parent::__construct();
 	}
 
 	function _drawColumn( &$renderer, $values, $zero ) // {{{2

@@ -49,9 +49,14 @@ if (isset($_REQUEST["import"])) {
 
 		foreach ($parts as $part) {
 
-			$part["body"] = preg_replace("/\[([^\]]*)\]/e", "str_replace(' ','',ucwords('(($1))'))", $part["body"]);
-			$part["body"] = preg_replace("/(\(\([^\)]*\)\))/e", "str_replace(' ','',ucwords('$1'))", $part["body"]);
-			
+			$part["body"] = preg_replace_callback('/\[([^\]]*)\]/', function ($match) {
+				return str_replace(' ', '', ucwords('((' . $match[1] . '))'));
+			}, $part["body"]);
+
+			$part["body"] = preg_replace_callback('/(\(\([^\)]*\)\))/', function ($match) {
+				return str_replace(' ', '', ucwords($match[1]));
+			}, $part["body"]);
+
 			$part["body"] = preg_replace("/( |\n|^)(http:\/\/[^ ]+)( |\n)/", "$1[$2]$3", $part["body"]);
 			
 			// "A link to Google":http://google.com

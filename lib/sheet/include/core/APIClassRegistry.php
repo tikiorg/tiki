@@ -51,11 +51,11 @@ class APIClassRegistry extends ErrorManager{
 	* Class registry constructor
 	* @access private
 	*/
-	function APIClassRegistry(){
+	function __construct(){
 		$this->packages = array();
 		$this->classes = array();
 		$this->instances = array();
-		parent::ErrorManager();
+		parent::__construct();
 	}
 	
 	
@@ -87,7 +87,11 @@ class APIClassRegistry extends ErrorManager{
 		if (isset($class_class)){
 			$class_package.= '.'.$class_class;
 		}
-		$class_package = preg_replace('/([À-Ý]|[A-Z])/e','chr(ord(\'\\1\')+32)', $class_package);
+
+		$class_package = preg_replace_callback('/([À-Ý]|[A-Z])/', function ($match) {
+			return chr(ord($match[1])+32);
+		}, $class_package);
+
 		// determine is a class or is a package
 		if (APIClassRegistry::isClass($class_package)){
 			$extractedClassName = APIClassRegistry::extractClassName($class_package);
@@ -115,7 +119,11 @@ class APIClassRegistry extends ErrorManager{
 		if (!isset($registry)) {
 			$registry =& APIClassRegistry::getInstance();
 		}
-		$class_package      = preg_replace('/([À-Ý]|[A-Z])/e','chr(ord(\'\\1\')+32)', $class_package);
+
+		$class_package = preg_replace_callback('/([À-Ý]|[A-Z])/', function ($match) {
+			return chr(ord($match[1])+32);
+		}, $class_package);
+
 		$extractedClassName = strtolower(APIClassRegistry::extractClassName($class_package));
 		if (isset($registry->instances[$extractedClassName])){
 		//	echo("OK ");
@@ -194,10 +202,17 @@ class APIClassRegistry extends ErrorManager{
 			if (!isset($class_class)){
 			$class_class = APIClassRegistry::extractClassName($class_package);
 			}
-			$class_class = preg_replace('/([À-Ý]|[A-Z])/e','chr(ord(\'\\1\')+32)', $class_class);
+
+			$class_class = preg_replace_callback('/([À-Ý]|[A-Z])/', function ($match) {
+				return chr(ord($match[1])+32);
+			}, $class_class);
+
 			return isset($registry->classes[$class_class]);
 		}else{
-			$class_package = preg_replace('/([À-Ý]|[A-Z])/e','chr(ord(\'\\1\')+32)', $class_package);
+			$class_package = preg_replace_callback('/([À-Ý]|[A-Z])/', function ($match) {
+				return chr(ord($match[1])+32);
+			}, $class_package);
+
 			return isset($registry->packages[$class_package]);
 		}
 	}

@@ -89,6 +89,7 @@ class MemcacheSession
 
 	function gc( $maxlifetime )
 	{
+		return $this->enabled;
 	}
 }
 

@@ -85,10 +85,9 @@ class TikiPhpBBLib
 
 		// MySQL queries are case insensitive anyway
 		$query = "select username from ".$prefs['auth_phpbb_table_prefix']."users where lcase(username) = lcase('". $username ."')";
+		/** @var ADORecordSet $result */
 		$result = $dbconnection->Execute($query);
 		if ($result === false) die('AuthPhpBB : Query failed: ' . $dbconnection->ErrorMsg());
-
-		$numrows = mysql_num_rows($result);
 
 		return $result->RecordCount() > 0;
 

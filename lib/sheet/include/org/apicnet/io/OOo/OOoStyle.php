@@ -44,8 +44,8 @@ class OOoStyle extends absOOo {
 		'style_page_style'	=> 1
 	);
 
-	function OOoStyle($dir){
-		parent::absOOo();
+	function __construct($dir){
+		parent::__construct();
 		$this->DIRXML = $dir;
 		$this->FILENAME = "styles.xml";
 		

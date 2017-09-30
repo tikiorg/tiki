@@ -123,7 +123,7 @@ class Fake_GRenderer extends GRenderer // {{{1
 	var $width;
 	var $height;
 
-	function Fake_GRenderer( &$renderer, $left, $top, $right, $bottom )
+	function __construct( &$renderer, $left, $top, $right, $bottom )
 	{
 		$this->renderer = &$renderer;
 		$this->left = $left;
@@ -249,7 +249,7 @@ class Graphic // {{{1
 	var $parameters;
 	var $dataHandlers;
 
-	function Graphic() // {{{2
+	function __construct() // {{{2
 	{
 		$this->legend = array();
 		$this->parameters = array();

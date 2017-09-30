@@ -21,7 +21,7 @@ APIC::import("org.apicnet.io.File");
 
 class CZip {
 
-	function CZip(){}
+	function __construct(){}
 
 	function Zip($dir, $zipfilename){
     	if (@function_exists('gzcompress')) {
@@ -230,7 +230,7 @@ class CZip {
 
 	
 	function createDir($dir){
-		if (eregi("(\/$)", $dir)) @mkdir (substr($dir, 0, strlen($dir) - 1));
+		if (preg_match("/(\/$)/i", $dir)) @mkdir (substr($dir, 0, strlen($dir) - 1));
 		else @mkdir ($dir);
 	}
 	
@@ -254,7 +254,7 @@ class CZip {
 			   while ($zip_entry = zip_read($zip)) {
 			       if (zip_entry_open($zip, $zip_entry, "r")) {
 			           $buf = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
-					   if (eregi("(\/)", zip_entry_name($zip_entry))) $this->createDir($dir."/".eregi_replace("\/.*$", "", zip_entry_name($zip_entry))); 
+					   if (preg_match("/(\/)/i", zip_entry_name($zip_entry))) $this->createDir($dir."/".preg_replace("/\/.*$/", "", zip_entry_name($zip_entry))); 
 					   $this->createFile($dir."/".zip_entry_name($zip_entry), $buf);
 			           zip_entry_close($zip_entry);
 			       }

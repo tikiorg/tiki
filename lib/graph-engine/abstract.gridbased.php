@@ -14,9 +14,9 @@ class GridBasedGraphic extends Graphic // {{{1
 	var $vertical;
 	var $horizontal;
 
-	function GridBasedGraphic() // {{{2
+	function __construct() // {{{2
 	{
-		Graphic::Graphic();
+		parent::__construct();
 	}
 
 	function _getMinValue( $type ) // {{{2
@@ -181,7 +181,7 @@ class GridScale // {{{1
 	var $type;
 	var $layout;
 
-	function GridScale( $type, $layout ) // {{{2
+	function __construct( $type, $layout ) // {{{2
 	{
 		$this->type = $type;
 		$this->layout = $layout;
@@ -235,9 +235,9 @@ class LinearGridScale extends GridScale // {{{1
 	var $skip;
 	var $count;
 
-	function LinearGridScale( $type, $layout, $min, $max ) // {{{2
+	function __construct( $type, $layout, $min, $max ) // {{{2
 	{
-		parent::GridScale($type, $layout);
+		parent::__construct($type, $layout);
 		$this->min = $min;
 		$this->max = $max;
 		$this->count = 0;
@@ -519,9 +519,9 @@ class StaticGridScale extends GridScale // {{{1
 	var $layers;
 	var $count;
 
-	function StaticGridScale( $type, $layout, $labels ) // {{{2
+	function __construct( $type, $layout, $labels ) // {{{2
 	{
-		parent::GridScale($type, $layout);
+		parent::__construct($type, $layout);
 		$this->labels = $labels;
 		$this->width = 1 / count($labels);
 		$this->count = 0;

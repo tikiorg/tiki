@@ -24,12 +24,12 @@ class File extends ErrorManager {
 	var $separator = NULL;
 	var $os = NULL;
 	
-	function File($path=NULL, $new=False){
+	function __construct($path=NULL, $new=False){
 		$this->separator = DIRECTORY_SEPARATOR;
 		$this->os = getenv('OS');
 		$this->setFilePath($path);
 		if ($new) $this->createFile();
-		parent::ErrorManager();
+		parent::__construct();
 	}
 	
 	function setFilePath($path){

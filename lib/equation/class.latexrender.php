@@ -70,7 +70,7 @@ class LatexRender
      * @param string path where the rendered pictures should be stored
      * @param string same path, but from the httpd chroot
      */
-    function LatexRender($picture_path,$picture_path_httpd,$tmp_dir) {
+    function __construct($picture_path,$picture_path_httpd,$tmp_dir) {
         $this->_picture_path = $picture_path;
         $this->_picture_path_httpd = $picture_path_httpd;
         $this->_tmp_dir = $tmp_dir;

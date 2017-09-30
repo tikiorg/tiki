@@ -175,8 +175,8 @@ class absOOo extends ErrorManager {
 	 * @return none
 	 * @access public
 	 **/
-	function absOOo(){
-		parent::ErrorManager();
+	function __construct(){
+		parent::__construct();
 	}
 
 
@@ -367,10 +367,10 @@ class absOOo extends ErrorManager {
 	 * @access private
 	 **/
 	function &accessor($path, $item = NULL){
-		if (eregi("@", $path)) {
+		if (preg_match("/@/i", $path)) {
 
-			$arrPath     = split("@", $path);
-			$arrAtt		 = split("=", $arrPath[1]);
+			$arrPath     = explode("@", $path);
+			$arrAtt		 = explode("=", $arrPath[1]);
 
 			$attName	 = substr($arrAtt[0], 1);
 			$attValue	 = substr($arrAtt[1], 1, strlen($arrAtt[1]) - 3);
@@ -379,7 +379,7 @@ class absOOo extends ErrorManager {
 			$strAtt		 = $arrPath[1];
 		}
 
-		$arrPath       = split("/", $path);
+		$arrPath       = explode("/", $path);
 		$currentNode   = & $this->xml->documentElement;
 
 		for($i=1; $i < count($arrPath); $i++){
@@ -418,13 +418,13 @@ class absOOo extends ErrorManager {
 	 **/
 	function &getNodeRec(&$node, $path){
 
-		$arrPath     = split("/", $path);
+		$arrPath     = explode("/", $path);
 
 		//	echo("<h4>".$arrPath[1]."</h4>");
 
-		if (eregi("@", $arrPath[1])) {
-			$arrNode     = split("@", $arrPath[1]);
-			$arrAtt		 = split("=", $arrNode[1]);
+		if (preg_match("/@/i", $arrPath[1])) {
+			$arrNode     = explode("@", $arrPath[1]);
+			$arrAtt		 = explode("=", $arrNode[1]);
 
 			$attName	 = substr($arrAtt[0], 1);
 			$attValue	 = substr($arrAtt[1], 1, strlen($arrAtt[1]) - 3);
@@ -499,7 +499,7 @@ class absOOo extends ErrorManager {
 	 * @access private
 	 **/
 	function removeNode($path){
-		$arrPath     = split("/", $path);
+		$arrPath     = explode("/", $path);
 		$parentPath  = "/".implode("/", array_slice ($arrPath, 2));
 		$childPath	 = $path;
 		$parentNode	 = &$this->getNode($parentPath);
@@ -519,9 +519,9 @@ class absOOo extends ErrorManager {
 	function ssNodeExist(&$node, $nodeSearch){
 		$currentNode = &$node;
 		$find        = FALSE;
-		if (eregi("@", $nodeSearch)) {
-			$arrNode     = split("@", $nodeSearch);
-			$arrAtt		 = split("=", $arrNode[1]);
+		if (preg_match("/@/i", $nodeSearch)) {
+			$arrNode     = explode("@", $nodeSearch);
+			$arrAtt		 = explode("=", $arrNode[1]);
 
 			$nodeName	 = $arrNode[0];
 			$attName	 = substr($arrAtt[0], 1);
@@ -532,7 +532,7 @@ class absOOo extends ErrorManager {
 
 		while (!$find && $currentNode != NULL) {
 			if ($currentNode->nodeName == $nodeName) {
-				if (eregi("@", $nodeSearch)) {
+				if (preg_match("/@/i", $nodeSearch)) {
 					$currentAtt = $currentNode->getAttribute($attName);
 
 					if ($currentAtt = $attValue) {
@@ -560,7 +560,7 @@ class absOOo extends ErrorManager {
 	 * @access private
 	 **/
 	function countNode($path){
-		$arrPath       = split("/", $path);
+		$arrPath       = explode("/", $path);
 		$currentNode   = & $this->xml->documentElement;
 
 		for($i=1; $i < count($arrPath); $i++){

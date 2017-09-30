@@ -46,9 +46,9 @@ if ( !defined( "INCLUCDED_DIR" ) ) {
 Class CDir extends ErrorManager {
     var $aFiles;
 
-    Function CDir(){
+    Function __construct(){
         $this->Init();
-		parent::ErrorManager();
+		parent::__construct();
     }
 
     Function Init(){
@@ -86,11 +86,11 @@ Class CDir extends ErrorManager {
                 $sFullname .= $sFilename;
 
                 if ( !empty( $sInclude ) )
-                    if ( !ereg( $sInclude, $sFullname ) )
+                    if ( !preg_match( '/' . $sInclude . '/', $sFullname ) )
                         $fInsert = false;
 
                 if ( !empty( $sExclude ) )
-                    if ( ereg( $sExclude, $sFullname ) )
+                    if ( preg_match( '/' . $sExclude . '/', $sFullname ) )
                         $fInsert = false;
             }
 

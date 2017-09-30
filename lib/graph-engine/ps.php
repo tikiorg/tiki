@@ -23,7 +23,7 @@ class PS_GRenderer extends GRenderer // {{{1
 	var $width;
 	var $height;
 
-	function PS_GRenderer( $format = null, $orientation = 'landscape' ) // {{{2
+	function __construct( $format = null, $orientation = 'landscape' ) // {{{2
 	{
 		// Null size does not create a graphic.
 		$this->styles = array();

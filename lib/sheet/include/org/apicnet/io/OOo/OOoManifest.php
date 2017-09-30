@@ -30,8 +30,8 @@ APIC::import("org.apicnet.io.cdir");
 
 class OOoManifest extends absOOo {
 
-	function OOoManifest($dir){
-		parent::absOOo();
+	function __construct($dir){
+		parent::__construct();
 		
 		$this->DIRXML   = $dir;
 		$this->FILENAME = "META-INF/manifest.xml";

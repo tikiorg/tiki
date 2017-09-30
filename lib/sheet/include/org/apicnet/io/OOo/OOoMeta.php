@@ -44,8 +44,8 @@ class OOoMeta extends absOOo {
 	 * @param $dir
 	 * @return none
 	 **/
-	function OOoMeta($dir){
-		parent::absOOo();
+	function __construct($dir){
+		parent::__construct();
 		$this->DIRXML = $dir;
 		$this->FILENAME = "meta.xml";
 		

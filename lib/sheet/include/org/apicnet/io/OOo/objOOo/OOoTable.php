@@ -60,8 +60,8 @@ class OOoTable extends absOOo {
 	)
 	 * @return
 	 **/
-	function OOoTable($column, $row, $argStyle){
-		parent :: absOOo();
+	function __construct($column, $row, $argStyle){
+		parent::__construct();
 		$this -> _column  = $column;
 		$this -> _row     = $row;
 		$this -> _lignCur = 0;
