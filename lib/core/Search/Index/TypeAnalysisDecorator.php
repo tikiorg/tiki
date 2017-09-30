@@ -31,5 +31,10 @@ class Search_Index_TypeAnalysisDecorator extends Search_Index_AbstractIndexDecor
 	{
 		return array_keys(array_filter($this->mapping));
 	}
+
+	function getFieldCount()
+	{
+		return count(array_keys($this->mapping));
+	}
 }
 

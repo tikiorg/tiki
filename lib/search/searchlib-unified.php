@@ -238,7 +238,7 @@ class UnifiedSearchLib
 					return $indexer->rebuild();
 				}
 			);
-
+			$stat['total fields in the search index'] = $index->getFieldCount();
 			$tikilib->set_preference('unified_identifier_fields', $index->getIdentifierFields());
 		} catch (Exception $e) {
 			Feedback::error(tr('The search index could not be rebuilt.') . '<br />' . $e->getMessage(), 'session');
