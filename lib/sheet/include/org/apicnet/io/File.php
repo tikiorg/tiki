@@ -84,7 +84,7 @@ class File extends ErrorManager {
 	
 	function writeData($data){
 		$isSucceful = true;
-		// Assurons nous que le fichier est accessible en écriture
+		// Assurons nous que le fichier est accessible en Ã©criture
 		if ($this->isWriteable()) {      
 			if (!$handle = fopen($this->getFilePath(), 'w')) {
 				$isSucceful = false;
@@ -102,7 +102,7 @@ class File extends ErrorManager {
 	
 	function readData(){
 		$isSucceful = true;
-		// Assurons nous que le fichier est accessible en écriture
+		// Assurons nous que le fichier est accessible en Ã©criture
 		if ($this->isReadable()) {      
 			if (!$handle = fopen($this->getFilePath(), 'r')) {
 				$isSucceful = false;

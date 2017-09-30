@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 # Makes zip archive
 #
 # Based on "Zip file creation class", uses zLib
-# Modification pour prendre en compte la décompression d'un zip  (c) @PICNet 2004
+# Modification pour prendre en compte la dÃ©compression d'un zip  (c) @PICNet 2004
 #
 
 APIC::import("org.apicnet.io.File");

@@ -9,30 +9,30 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 /*
 --Licence et conditions d'utilisations--
--Français-
-ModeliXe est distribué sous licence LGPL, merci de laisser cette en-tête, gage et garantie de cette licence.
-ModeliXe est un moteur de template destiné à être utilisé par des applications écrites en PHP.
-ModeliXe peut être utilisé dans des scripts vendus à des tiers aux titres de la licence LGPL. ModeliXe n'en reste
-pas moins OpenSource et libre de droits en date du 23 Août 2001.
+-FranÃ§ais-
+ModeliXe est distribuÃ© sous licence LGPL, merci de laisser cette en-tÃªte, gage et garantie de cette licence.
+ModeliXe est un moteur de template destinÃ© Ã  Ãªtre utilisÃ© par des applications Ã©crites en PHP.
+ModeliXe peut Ãªtre utilisÃ© dans des scripts vendus Ã  des tiers aux titres de la licence LGPL. ModeliXe n'en reste
+pas moins OpenSource et libre de droits en date du 23 AoÃ»t 2001.
 
 Copyright (C) 2001  - Auteur ANDRE thierry
 
-Cette bibliothèque est libre, vous pouvez la redistribuer et/ou la modifier selon les termes de la Licence Publique
-Générale GNU Limitée publiée par la Free Software Foundation version 2.1 et ultérieure.
+Cette bibliothÃ¨que est libre, vous pouvez la redistribuer et/ou la modifier selon les termes de la Licence Publique
+GÃ©nÃ©rale GNU LimitÃ©e publiÃ©e par la Free Software Foundation version 2.1 et ultÃ©rieure.
 
-Cette bibliothèque est distribuée car potentiellement utile, mais SANS AUCUNE GARANTIE, ni explicite ni implicite,
-y compris les garanties de commercialisation ou d'adaptation dans un but spécifique. Reportez-vous à la Licence
-Publique Générale GNU Limitée pour plus de détails.
+Cette bibliothÃ¨que est distribuÃ©e car potentiellement utile, mais SANS AUCUNE GARANTIE, ni explicite ni implicite,
+y compris les garanties de commercialisation ou d'adaptation dans un but spÃ©cifique. Reportez-vous Ã  la Licence
+Publique GÃ©nÃ©rale GNU LimitÃ©e pour plus de dÃ©tails.
 
-Vous devez avoir reçu une copie de la Licence Publique Générale GNU Limitée en même temps que cette bibliothèque;
-si ce n'est pas le cas, écrivez à:
+Vous devez avoir reÃ§u une copie de la Licence Publique GÃ©nÃ©rale GNU LimitÃ©e en mÃªme temps que cette bibliothÃ¨que;
+si ce n'est pas le cas, Ã©crivez Ã :
 
 Free Software Foundation,
 Inc., 59 Temple Place,
 Suite 330, Boston,
 MA 02111-1307, Etats-Unis.
 
-Pour tout renseignements mailez à modelixe@free.fr ou thierry.andre@freesbee.fr
+Pour tout renseignements mailez Ã  modelixe@free.fr ou thierry.andre@freesbee.fr
 */
 $incErrorManager = true;
 
@@ -169,19 +169,19 @@ class ErrorManager extends Object {
         if ($this -> numberError > 1) $pre = "\t<li>";
         else $pre = "\n<ul>\n\t";
 
-        $this -> errorMessage .= "<br>".$type.' N° '.$this -> errorCounter[$warning].' : <i>'.$message.'</i>';
+        $this -> errorMessage .= "<br>".$type.' NÂ° '.$this -> errorCounter[$warning].' : <i>'.$message.'</i>';
 		
 		
 		for($i=0; $i<sizeof($stackError); $i++){
 			if ($i == 0) {
-			    $this -> errorMessage .= ' dans <b>'.$stackError[$i][file].'</b> à la ligne <b>'.$stackError[$i][line].'</b>';
+			    $this -> errorMessage .= ' dans <b>'.$stackError[$i][file].'</b> Ã  la ligne <b>'.$stackError[$i][line].'</b>';
 				if ($stackError[$i]['class'] != "") $this -> errorMessage .= ' Dans la fonction '.$stackError[$i]['class'].'->'.$stackError[$i+1]['function'].'()';
 				else $this -> errorMessage .= 'Dans la fonction '.$stackError[$i+1]['function'].'()';
-				$this -> errorMessage .= "<br>Fonction et fichier ayant été appellée :".$pre;
+				$this -> errorMessage .= "<br>Fonction et fichier ayant Ã©tÃ© appellÃ©e :".$pre;
 			} else if ($i == sizeof($stackError)-1) {
-				$this -> errorMessage .= '<li><b>'.$stackError[$i][file].'</b> à la ligne <b>'.$stackError[$i][line].'</b>';
+				$this -> errorMessage .= '<li><b>'.$stackError[$i][file].'</b> Ã  la ligne <b>'.$stackError[$i][line].'</b>';
 			} else {
-				$this -> errorMessage .= '<li><b>'.$stackError[$i][file].'</b> à la ligne <b>'.$stackError[$i][line].'</b>';
+				$this -> errorMessage .= '<li><b>'.$stackError[$i][file].'</b> Ã  la ligne <b>'.$stackError[$i][line].'</b>';
 				if ($stackError[$i]['class'] != "") $this -> errorMessage .= ' Dans la fonction '.$stackError[$i]['class'].'->'.$stackError[$i+1]['function'].'()';
 				else $this -> errorMessage .= 'Dans la fonction '.$stackError[$i+1]['function'].'()';
 			}
