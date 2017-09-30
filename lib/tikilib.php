@@ -5251,7 +5251,7 @@ class TikiLib extends TikiDb_Bridge
 	function read_raw($text)
 	{
 		$file = explode("\n", $text);
-		$back = '';
+		$back = [];
 		foreach ($file as $line) {
 			$r = $s = '';
 			if (substr($line, 0, 1) != "#") {
