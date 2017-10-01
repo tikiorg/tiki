@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e544eabf5b012922cd29b7f19df09bbf",
+    "content-hash": "d656d75afbbafe2d65da4cb33e2bef92",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -109,6 +109,60 @@
             "time": "2015-07-20T20:04:00+00:00"
         },
         {
+            "name": "ahand/mobileesp",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ahand/mobileesp.git",
+                "reference": "c02055dbe9baee63aab11438f4d7b5d25075d347"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ahand/mobileesp/zipball/c02055dbe9baee63aab11438f4d7b5d25075d347",
+                "reference": "c02055dbe9baee63aab11438f4d7b5d25075d347",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "PHP"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Anthony Hand",
+                    "email": "anthony.hand@gmail.com",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Since 2008, MobileESP provides web site developers an easy-to-use and lightweight API for detecting whether visitors are using a mobile device, and if so, what kind. The APIs provide simple boolean results ('true' or 'false') for identifying individual device categories (such as iPhone, BlackBerry, Android, and Windows Mobile), device capabilities (e.g., J2ME), and broad classes of devices, such as 'iPhone Tier' (iPhone/Android/Tizen) or 'Tablet Tier.' APIs are available in PHP, JavaScript, Java, C#, Ruby Python, and more.",
+            "homepage": "http://www.mobileesp.org",
+            "keywords": [
+                "Mobile-Detect",
+                "browser",
+                "detect android",
+                "detect ipad",
+                "detect iphone",
+                "detect tablet",
+                "mobile",
+                "mobile detect",
+                "mobile detector",
+                "mobile device",
+                "mobile esp",
+                "mobile redirect",
+                "mobile view managing",
+                "mobiledetect",
+                "responsive web",
+                "user agent",
+                "useragent"
+            ],
+            "time": "2017-06-06T22:20:56+00:00"
+        },
+        {
             "name": "alxlit/bootstrap-chosen",
             "version": "1.0.1",
             "dist": {
@@ -201,9 +255,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/candy-chat/xmpp-prebind-php/candy-chat-xmpp-prebind-php-76f738299eaa26625abe6c2a7ec95465c7d92985-zip-b98669.zip",
+                "url": "https://api.github.com/repos/candy-chat/xmpp-prebind-php/zipball/76f738299eaa26625abe6c2a7ec95465c7d92985",
                 "reference": "76f738299eaa26625abe6c2a7ec95465c7d92985",
-                "shasum": "117fc5691b8c57deb66c9f199eba7e764c6a44a3"
+                "shasum": ""
             },
             "require": {
                 "lib-libxml": "*",
@@ -671,9 +725,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/evert/sitemap-php/evert-sitemap-php-be07a062943401067bf0ba62710ca733c838bc24-zip-e4b801.zip",
+                "url": "https://api.github.com/repos/evert/sitemap-php/zipball/be07a062943401067bf0ba62710ca733c838bc24",
                 "reference": "be07a062943401067bf0ba62710ca733c838bc24",
-                "shasum": "2a4cb4cc27b6401319f1cbcf90a16fe99366b425"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
@@ -853,9 +907,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/h5p/h5p-core/h5p-h5p-core-bfda796ab7605889ea87b64f082233a97a52968c-zip-201452.zip",
+                "url": "https://api.github.com/repos/h5p/h5p-php-library/zipball/bfda796ab7605889ea87b64f082233a97a52968c",
                 "reference": "bfda796ab7605889ea87b64f082233a97a52968c",
-                "shasum": "27f702d75d2266fd86c3f080fbfe4230e0e8a80f"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
@@ -909,9 +963,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/h5p/h5p-editor/h5p-h5p-editor-1880ae7eb5b088c607ca1fc298b55be6e230a0c7-zip-856f1b.zip",
+                "url": "https://api.github.com/repos/h5p/h5p-editor-php-library/zipball/1880ae7eb5b088c607ca1fc298b55be6e230a0c7",
                 "reference": "1880ae7eb5b088c607ca1fc298b55be6e230a0c7",
-                "shasum": "b0589a2fe249d32b3c311deb4a5bc8d7d2b0d2db"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
@@ -1317,6 +1371,50 @@
             "type": "library"
         },
         {
+            "name": "kaltura/api-client-library",
+            "version": "v12.20.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kaltura/KalturaGeneratedAPIClientsPHP53.git",
+                "reference": "1710f9b2aed7665977cbceeb1d5571e2e625de93"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kaltura/KalturaGeneratedAPIClientsPHP53/zipball/1710f9b2aed7665977cbceeb1d5571e2e625de93",
+                "reference": "1710f9b2aed7665977cbceeb1d5571e2e625de93",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Kaltura": "library"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "AGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Kaltura",
+                    "homepage": "http://www.kaltura.org/"
+                }
+            ],
+            "description": "An auto generated Composer package for the Kaltura API client library",
+            "keywords": [
+                "api",
+                "client library",
+                "kaltura",
+                "open source video",
+                "video",
+                "video platform"
+            ],
+            "time": "2017-07-18T08:14:36+00:00"
+        },
+        {
             "name": "matthiasmullie/minify",
             "version": "1.3.52",
             "source": {
@@ -1386,9 +1484,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/matthiasmullie/path-converter/matthiasmullie-path-converter-08551ec1b156e923c242a10ab484bd4d6ead6631-zip-8b1a1b.zip",
+                "url": "https://api.github.com/repos/matthiasmullie/path-converter/zipball/08551ec1b156e923c242a10ab484bd4d6ead6631",
                 "reference": "08551ec1b156e923c242a10ab484bd4d6ead6631",
-                "shasum": "b18d9045ce02e82e42754bee1b851ac14178b9a3"
+                "shasum": ""
             },
             "require": {
                 "ext-pcre": "*",
@@ -1679,6 +1777,17 @@
             "type": "library"
         },
         {
+            "name": "openid/php-openid",
+            "version": "2.2.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/openid/php-openid/openid-php-openid-2.2.2.zip",
+                "reference": null,
+                "shasum": "313ad65fae6c2f6270ba564c593eae8c52267376"
+            },
+            "type": "library"
+        },
+        {
             "name": "openlayers/ol3",
             "version": "3.6.0",
             "dist": {
@@ -1798,6 +1907,543 @@
                 "random"
             ],
             "time": "2017-03-13T16:27:32+00:00"
+        },
+        {
+            "name": "pclzip/pclzip",
+            "version": "2.8.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ivanlanin/pclzip.git",
+                "reference": "19dd1de9d3f5fc4d7d70175b4c344dee329f45fd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ivanlanin/pclzip/zipball/19dd1de9d3f5fc4d7d70175b4c344dee329f45fd",
+                "reference": "19dd1de9d3f5fc4d7d70175b4c344dee329f45fd",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "pclzip.lib.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Vincent Blavet"
+                }
+            ],
+            "description": "A PHP library that offers compression and extraction functions for Zip formatted archives",
+            "homepage": "http://www.phpconcept.net/pclzip",
+            "keywords": [
+                "php",
+                "zip"
+            ],
+            "time": "2014-06-05T11:42:24+00:00"
+        },
+        {
+            "name": "pear/archive_tar",
+            "version": "1.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/Archive_Tar.git",
+                "reference": "43455c960da70e655c6bdf8ea2bc8cc1a6034afb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/Archive_Tar/zipball/43455c960da70e655c6bdf8ea2bc8cc1a6034afb",
+                "reference": "43455c960da70e655c6bdf8ea2bc8cc1a6034afb",
+                "shasum": ""
+            },
+            "require": {
+                "pear/pear-core-minimal": "^1.10.0alpha2",
+                "php": ">=5.2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "suggest": {
+                "ext-bz2": "bz2 compression support.",
+                "ext-xz": "lzma2 compression support.",
+                "ext-zlib": "Gzip compression support."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Archive_Tar": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Vincent Blavet",
+                    "email": "vincent@phpconcept.net"
+                },
+                {
+                    "name": "Greg Beaver",
+                    "email": "greg@chiaraquartet.net"
+                },
+                {
+                    "name": "Michiel Rook",
+                    "email": "mrook@php.net"
+                }
+            ],
+            "description": "Tar file management class",
+            "homepage": "https://github.com/pear/Archive_Tar",
+            "keywords": [
+                "archive",
+                "tar"
+            ],
+            "time": "2017-06-11T17:28:11+00:00"
+        },
+        {
+            "name": "pear/console_getopt",
+            "version": "v1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/Console_Getopt.git",
+                "reference": "82f05cd1aa3edf34e19aa7c8ca312ce13a6a577f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/Console_Getopt/zipball/82f05cd1aa3edf34e19aa7c8ca312ce13a6a577f",
+                "reference": "82f05cd1aa3edf34e19aa7c8ca312ce13a6a577f",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Console": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Beaver",
+                    "email": "cellog@php.net",
+                    "role": "Helper"
+                },
+                {
+                    "name": "Andrei Zmievski",
+                    "email": "andrei@php.net",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Stig Bakken",
+                    "email": "stig@php.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "More info available on: http://pear.php.net/package/Console_Getopt",
+            "time": "2015-07-20T20:28:12+00:00"
+        },
+        {
+            "name": "pear/db",
+            "version": "1.7.13",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/pear/db/pear-db-1.7.13.zip",
+                "reference": null,
+                "shasum": "5cbb15606739bd77a2e09e8a90c1e302d52b974e"
+            },
+            "type": "library"
+        },
+        {
+            "name": "pear/net_socket",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/Net_Socket.git",
+                "reference": "f31d75ac352d49908f8987bbb1496c02a409812a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/Net_Socket/zipball/f31d75ac352d49908f8987bbb1496c02a409812a",
+                "reference": "f31d75ac352d49908f8987bbb1496c02a409812a",
+                "shasum": ""
+            },
+            "require": {
+                "pear/pear_exception": "@stable",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Net": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Chuck Hagenbuch",
+                    "email": "chuck@horde.org",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Aleksander Machniak",
+                    "email": "alec@php.net",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Stig Bakken",
+                    "email": "stig@php.net",
+                    "role": "Lead"
+                }
+            ],
+            "description": "More info available on: http://pear.php.net/package/Net_Socket",
+            "time": "2017-04-06T15:16:38+00:00"
+        },
+        {
+            "name": "pear/pear",
+            "version": "v1.10.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/pear-core.git",
+                "reference": "e93b1c7bfe22c3a34ed54a195738283d11a09e30"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/pear/pear/pear-pear-e93b1c7bfe22c3a34ed54a195738283d11a09e30-zip-eecb92.zip",
+                "reference": "e93b1c7bfe22c3a34ed54a195738283d11a09e30",
+                "shasum": "a70fcc863031ca0ffd998b4c0ac1a3ed34f0baaa"
+            },
+            "require": {
+                "ext-pcre": "*",
+                "ext-xml": "*",
+                "pear/archive_tar": "*",
+                "pear/console_getopt": "*",
+                "pear/structures_graph": "*",
+                "pear/xml_util": "*"
+            },
+            "replace": {
+                "pear/pear-core-minimal": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "suggest": {
+                "pear/pear_frontend_gtk": "For GTK support",
+                "pear/pear_frontend_web": "For Web support"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "./"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Helgi Thormar",
+                    "email": "dufuz@php.net",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Martin Jansen",
+                    "email": "mj@php.net",
+                    "role": "Helper"
+                },
+                {
+                    "name": "Stig Bakken",
+                    "email": "stig@php.net",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Pierre-Alain Joye",
+                    "email": "pierre@php.net",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Tias Guns",
+                    "email": "tias@php.net",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Tim Jackson",
+                    "email": "timj@php.net",
+                    "role": "Helper"
+                },
+                {
+                    "name": "Bertrand Gugger",
+                    "email": "toggg@php.net",
+                    "role": "Helper"
+                },
+                {
+                    "name": "Greg Beaver",
+                    "email": "cellog@php.net",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Tomas V.V.Cox",
+                    "email": "cox@idecnet.com",
+                    "role": "Lead"
+                }
+            ],
+            "description": "This is the definitive source of PEAR's core files.",
+            "time": "2017-06-27T12:10:49+00:00"
+        },
+        {
+            "name": "pear/pear_exception",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/PEAR_Exception.git",
+                "reference": "8c18719fdae000b690e3912be401c76e406dd13b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/PEAR_Exception/zipball/8c18719fdae000b690e3912be401c76e406dd13b",
+                "reference": "8c18719fdae000b690e3912be401c76e406dd13b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=4.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "class",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "PEAR": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "."
+            ],
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Helgi Thormar",
+                    "email": "dufuz@php.net"
+                },
+                {
+                    "name": "Greg Beaver",
+                    "email": "cellog@php.net"
+                }
+            ],
+            "description": "The PEAR Exception base class.",
+            "homepage": "https://github.com/pear/PEAR_Exception",
+            "keywords": [
+                "exception"
+            ],
+            "time": "2015-02-10T20:07:52+00:00"
+        },
+        {
+            "name": "pear/structures_graph",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/Structures_Graph.git",
+                "reference": "608fdc835a62fb238e61bd1cf0aaf6c7a4420b5c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/Structures_Graph/zipball/608fdc835a62fb238e61bd1cf0aaf6c7a4420b5c",
+                "reference": "608fdc835a62fb238e61bd1cf0aaf6c7a4420b5c",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Structures": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "PHP License"
+            ],
+            "authors": [
+                {
+                    "name": "Sérgio Carvalho",
+                    "email": "sergiosgc@gmail.com",
+                    "role": "Lead"
+                }
+            ],
+            "description": "More info available on: http://pear.php.net/package/Structures_Graph",
+            "time": "2015-07-20T20:05:12+00:00"
+        },
+        {
+            "name": "pear/text_wiki_mediawiki",
+            "version": "0.2.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/pear/text_wiki_mediawiki/pear-text_wiki_mediawiki-0.2.0.zip",
+                "reference": null,
+                "shasum": "8e7ab56efd4d446887b601bcfa70ecb2cd495c4d"
+            },
+            "type": "library"
+        },
+        {
+            "name": "pear/xml_parser",
+            "version": "v1.3.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/XML_Parser.git",
+                "reference": "c9fc042d3a168c440c84ab1fed187ec784b3aac0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/XML_Parser/zipball/c9fc042d3a168c440c84ab1fed187ec784b3aac0",
+                "reference": "c9fc042d3a168c440c84ab1fed187ec784b3aac0",
+                "shasum": ""
+            },
+            "require": {
+                "pear/pear-core-minimal": "*"
+            },
+            "require-dev": {
+                "pear/pear": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "XML": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Stephan Schmidt",
+                    "email": "schst@php-tools.net",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Chuck Burgess",
+                    "email": "ashnazg@php.net",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Stig S&#230;ther Bakken",
+                    "email": "stig@php.net",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Tomas V.V.Cox",
+                    "email": "cox@php.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "XML parser",
+            "time": "2016-07-04T21:23:25+00:00"
+        },
+        {
+            "name": "pear/xml_rpc",
+            "version": "1.5.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/pear/xml_rpc/pear-xml_rpc-1.5.1.zip",
+                "reference": null,
+                "shasum": "9d3e0e12a023107ac1b041bae82e08a4bb72e6d8"
+            },
+            "type": "library"
+        },
+        {
+            "name": "pear/xml_util",
+            "version": "v1.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/XML_Util.git",
+                "reference": "c74278d925be9c2f7d39955cdce45d8275571a1d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/XML_Util/zipball/c74278d925be9c2f7d39955cdce45d8275571a1d",
+                "reference": "c74278d925be9c2f7d39955cdce45d8275571a1d",
+                "shasum": ""
+            },
+            "require": {
+                "pear/pear-core-minimal": "^1.10.1",
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "@stable"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "XML_Util": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Stephan Schmidt",
+                    "email": "schst@php-tools.net",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Chuck Burgess",
+                    "email": "ashnazg@php.net",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Davey Shafik",
+                    "email": "davey@php.net",
+                    "role": "Helper"
+                }
+            ],
+            "description": "Methods to work with XML documents",
+            "homepage": "http://pear.php.net/package/XML_Util",
+            "time": "2017-06-28T19:21:19+00:00"
         },
         {
             "name": "phenx/php-font-lib",
@@ -4551,9 +5197,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/zendframework/zendservice-recaptcha/zendframework-zendservice-recaptcha-6c6877c07c8ac73b187911ea5d264a640b234361-zip-9d3c6f.zip",
+                "url": "https://api.github.com/repos/zendframework/ZendService_ReCaptcha/zipball/6c6877c07c8ac73b187911ea5d264a640b234361",
                 "reference": "6c6877c07c8ac73b187911ea5d264a640b234361",
-                "shasum": "6f1e81afb14a367948a5180b50290f0362cba920"
+                "shasum": ""
             },
             "require": {
                 "php": "^5.6 || ^7.0",
@@ -6240,6 +6886,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "ahand/mobileesp": 20,
         "candy-chat/xmpp-prebind-php": 20,
         "zendframework/zendsearch": 5,
         "bafs/testify": 20

@@ -11,8 +11,6 @@ if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
 
 if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 
-	require_once 'vendor_extra/mobileesp/mdetect.php';
-
 	$uagent_info = new uagent_info();
 
 	$supported_device = $uagent_info->DetectIphoneOrIpod() ||

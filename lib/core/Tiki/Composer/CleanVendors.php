@@ -383,6 +383,17 @@ class CleanVendors
 				'jquery-ui',
 			]
 		);
+
+		self::removeMultiple($vendors.'ahand/mobileesp',
+			[
+				'ASP_NET',
+				'Cpp',
+				'Java',
+				'JavaScript',
+				'MobileESP_UA-Test-Strings',
+				'Python',
+			]
+		);
 	}
 
 	private static function addIndexFile($path)

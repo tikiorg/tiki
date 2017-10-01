@@ -1030,7 +1030,6 @@ class FileGalLib extends TikiLib
 
 	function process_batch_file_upload($galleryId, $file, $user, $description, &$errors)
 	{
-		include_once ('vendor_extra/pclzip/pclzip.lib.php');
 		$extract_dir = 'temp/'.basename($file).'/';
 		mkdir($extract_dir);
 		$archive = new PclZip($file);
@@ -1744,7 +1743,6 @@ class FileGalLib extends TikiLib
 		$info['filename'] = "$zipName.zip";
 		$zip = $temp.$info['filename'];
 		define(PCZLIB_SEPARATOR, '\001');
-		include_once ('vendor_extra/pclzip/pclzip.lib.php');
 		if (!$archive = new PclZip($zip)) {
 			$error = $archive->errorInfo(true);
 			return false;
