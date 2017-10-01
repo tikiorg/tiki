@@ -12,8 +12,8 @@ class AccountingLibTest extends PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-		require('lib/test/TestHelpers.php');
-		$this->testHelpers = $testhelpers;
+		require_once('lib/test/TestHelpers.php');
+		$this->testHelpers = new TestHelpers();
 
 		$this->testHelpers->simulate_tiki_script_context('tiki-accounting_books.php', 'admin');
 	}
