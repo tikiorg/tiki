@@ -1114,17 +1114,35 @@ if (is_file('.svn/wc.db')) {
 	}
 }
 
-$s = extension_loaded('mcrypt');
+
+$s = extension_loaded('openssl');
 $msg = tra('Enable safe, encrypted storage of data such as passwords. Required for the User Encryption feature and improves encryption in other features, when available.');
 if ($s) {
-	$php_properties['mcrypt'] = array(
+	$php_properties['openssl'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Loaded',
 		'message' => $msg
 	);
 } else {
-	$php_properties['mcrypt'] = array(
+	$php_properties['openssl'] = array(
 		'fitness' => tra('ugly'),
+		'setting' => 'Not available',
+		'message' => $msg
+	);
+}
+
+
+$s = extension_loaded('mcrypt');
+$msg = tra('MCrypt is abandonware and is being phased out. Starting in Tiki18 OpenSSL is used instead of MCrypt in Tiki. 3rd party libraries may still use MCrypt');
+if ($s) {
+	$php_properties['mcrypt'] = array(
+		'fitness' => tra('info'),
+		'setting' => 'Loaded',
+		'message' => $msg
+	);
+} else {
+	$php_properties['mcrypt'] = array(
+		'fitness' => tra('info'),
 		'setting' => 'Not available',
 		'message' => $msg
 	);
