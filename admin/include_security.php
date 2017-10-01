@@ -15,3 +15,7 @@ if (!extension_loaded('mcrypt')) {
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('no_mcrypt', 'y');
 }
+if (!extension_loaded('openssl')) {
+	$smarty = TikiLib::lib('smarty');
+	$smarty->assign('no_openssl', 'y');
+}

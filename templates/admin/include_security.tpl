@@ -73,18 +73,18 @@
 			{preference name=feature_quick_object_perms}
 			{preference name=feature_user_encryption}
 			<div class="adminoptionboxchild" id="feature_user_encryption_childcontainer">
-				{if isset($no_mcrypt)}
-					{remarksbox type="warning" title="{tr}Mcrypt is not loaded{/tr}"}
-					{tr}User Encryption requires the PHP extension Mcrypt for encryption.
-						You should activate Mcrypt before activating User Encryption{/tr}.
+				{if isset($no_openssl)}
+					{remarksbox type="warning" title="{tr}OpenSSL is not loaded{/tr}"}
+					{tr}User Encryption requires the PHP extension OpenSSL for encryption.
+						You should activate OpenSSL before activating User Encryption{/tr}.
 					{/remarksbox}
 				{else}
-					Requires the Mcrypt PHP extension for encryption. <u>You have Mcrypt installed</u>.<br>
+					{tr}Requires the OpenSSL PHP extension for encryption.{/tr} {tr}You have OpenSSL installed.{/tr}<br>
 				{/if}
-				You may also want to add the "Domain Password" module somewhere.<br>
+				{tr}You may also want to add the Domain Password module somewhere.{/tr}<br>
 				<br>
-				Comma separated list of password domains, e.g.: Company ABC,Company XYZ<br>
-				The user can add passwords for a registered password domain.
+				{tr}Comma separated list of password domains, e.g.: Company ABC,Company XYZ{/tr}<br>
+				{tr}The user can add passwords for a registered password domain.{/tr}
 				{preference name=feature_password_domains}
 			</div>
 			{preference name=zend_http_sslverifypeer}

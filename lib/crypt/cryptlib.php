@@ -18,12 +18,17 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * CryptLib (aims to) safely store encrypted data, e.g. passwords for external systems, in Tiki.
  * The encrypted data can only be decrypted by the owner/user.
  *
- * CryptLib will use mcrypt if the PHP extension is available.
+ * CryptLib will use openssl if the PHP extension is available.
  * Otherwise it reverts to (near-plaintext) Base64 encoding.
  *
- * In order to use mcrypt
- * 1. The mcrypt PHP extension must be available
+ * In order to use openssl
+ * 1. The openssl PHP extension must be available
  * 2. Call the init method before using cryptlib
+ *
+ * Before Tiki18 CryptLib used the mcrypt library which is being depreciated in PHP 7.1 and removed from the standard installation starting with PHP 7.2.
+ * See http://php.net/manual/en/migration71.deprecated.php fro details.
+ * In order to convert existing, encrypted data the mcrypt must be used.
+ * Thus CryptLib still may attempt to use mcrypt if such data is found. The mcrypt reference may be completely removed, once it is sure that no mcrypt encrypted data exist.
  *
  * The method setUserData encrypts the value and stores a user preference
  * getUserData reads it back into cleartext
@@ -50,11 +55,17 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 class CryptLib extends TikiLib
 {
-	private $key;			// mcrypt key
+	// MCrypt attributes (Old, phased out encryption) . Kept for conversion of existing data
+	private $mcrypt_key;	// mcrypt key
 	private $mcrypt;		// mcrypt object
 	private $iv;			// mcrypt initialization vector
+	private $mcrypt_prefprefix = 'dp';		// prefix for user pref keys: 'test' => 'dp.test'
 
-	private $prefprefix = 'dp';		// prefix for user pref keys: 'test' => 'dp.test'
+	// OpenSSL attributes
+	private $hasOpenSLL = false;
+	private $cryptMethod = 'aes-256-ctr';
+	private $key;					// crypt key
+	private $prefprefix = 'ds';		// prefix for user pref keys: 'test' => 'ds.test'
 
 	//
 	// Init and release
@@ -81,8 +92,13 @@ class CryptLib extends TikiLib
 
 	function initSeed($phraseMD5)
 	{
-		if (extension_loaded('mcrypt') && $this->mcrypt == null) {
+		if (extension_loaded('openssl')) {
+			$this->hasOpenSLL = true;
 			$this->key = $phraseMD5;
+		}
+
+		if (extension_loaded('mcrypt') && $this->mcrypt == null) {
+			$this->mcrypt_key = $phraseMD5;
 
 			// Using Rijndael 256 in CBC mode.
 			$this->mcrypt = mcrypt_module_open(MCRYPT_RIJNDAEL_256, '', 'cbc', '');
@@ -101,9 +117,12 @@ class CryptLib extends TikiLib
 
 	function release()
 	{
+		if ($this->hasOpenSLL){
+			$this->key = null;
+		}
 		if ($this->mcrypt != null) {
 			mcrypt_module_close($this->mcrypt);
-			$this->key = null;
+			$this->mcrypt_key = null;
 			$this->mcrypt = null;
 			$this->iv = null;
 		}
@@ -116,6 +135,12 @@ class CryptLib extends TikiLib
 
 	// Check if encryption is used (and not Base64)
 	function hasCrypt()
+	{
+		return $this->hasOpenSLL;
+	}
+
+	// Check if MCrypt moidule is available in case a conversion is needed
+	function hasMCrypt()
 	{
 		return $this->mcrypt != null;
 	}
@@ -131,7 +156,12 @@ class CryptLib extends TikiLib
 		}
 		$storedPwd64 = $this->get_user_preference($user, $this->prefprefix.'.'.$userprefKey.$paramName);
 		if (empty($storedPwd64)) {
-			return false;
+			// Check if old, mcrypt encrypted data exist
+			// Decryption is done when getting data
+			$storedPwdMCrypt = $this->get_user_preference($user, $this->mcrypt_prefprefix.'.'.$userprefKey.$paramName);
+			if (empty($storedPwdMCrypt)) {
+				return false;
+			}
 		}
 		return true;
 	}
@@ -211,8 +241,9 @@ class CryptLib extends TikiLib
 		$storedPwd64 = $this->get_user_preference($user, $this->prefprefix.'.'.$userprefKey.$paramName);
 		if (empty($storedPwd64)) {
 			return false;
+		} else {
+			$cleartext = $this->decryptData($storedPwd64);
 		}
-		$cleartext = $this->decryptData($storedPwd64);
 
 		// Check if the cleartext contain any illigal password character.
 		// 	If found, it indicates that the decryption has failed.
@@ -226,6 +257,7 @@ class CryptLib extends TikiLib
 	// Recover the stored cleartext data from the user preferences.
 	// Return stored data in cleartext or false on error
 	/*
+	 * WARNING: Not converted to OpenSSL
 	function recoverUserData($username, $cleartextPwd, $userprefKey, $paramName = '')
 	{
 		if (empty($cleartextPwd)) {
@@ -287,26 +319,37 @@ class CryptLib extends TikiLib
 
 	// Encrypt data
 	// Return encrypted data, or false on error
-	function encryptData($cleartextData)
+	private function encryptData($cleartextData)
 	{
 		if(empty($cleartextData)) {
 			return false;
 		}
 
+		// Due to appending spaces to short input data, short cleartext data cannot end with space
+		$pwdLen = mb_strlen($cleartextData);
+		if ($pwdLen < 20 && $cleartextData[$pwdLen] == ' ') {
+			throw new Exception('Data to encrypt cannot end with a space');
+		}
+		// Make sure the data is at least 20 characters long
+		// The spaces are trimmed when decrypting
+		while(mb_strlen($cleartextData) < 20) {
+			$cleartextData .= ' ';
+		}
+
 		// Encrypt the data
-		$cryptData = $this->encrypt($cleartextData, $this->iv);
+		$cryptData = $this->encrypt($cleartextData);
 		if(empty($cryptData)) {
 			return false;
 		}
 
 		// Save iv in the stored data
-		$cryptData64 = base64_encode($this->iv.$cryptData);
+		$cryptData64 = base64_encode($cryptData);
 		return $cryptData64;
 	}
 
 	// Decrypt data
 	// Return cleartext data, or false on error
-	function decryptData($cryptData64)
+	private function decryptData($cryptData64)
 	{
 		if(empty($cryptData64)) {
 			return false;
@@ -314,13 +357,10 @@ class CryptLib extends TikiLib
 
 		// Extract the iv and crypttext
 		$cryptData = base64_decode($cryptData64);
-		$ivSize = mcrypt_enc_get_iv_size($this->mcrypt);
-		$iv = substr($cryptData, 0, $ivSize);
-		$crypttext = substr($cryptData, $ivSize);
 
 		// Decrypt
-		$cleartext = $this->decrypt($crypttext, $iv);
-		return $cleartext;
+		$cleartext = $this->decrypt($cryptData);
+		return rtrim($cleartext);
 	}
 
 	//
@@ -337,6 +377,8 @@ class CryptLib extends TikiLib
 
 		// Store the pass phrase in a session variable
 		$_SESSION['cryptphrase'] = $phraseMD5;
+
+		$this->convertOldData($user, $cleartextPwd);
 	}
 
 	// User has changed the password
@@ -406,31 +448,109 @@ class CryptLib extends TikiLib
 	// Crypt
 	////////////////////////////////
 
-	// Use MCrypt if available. Otherwise Base64 encode only
-	// Return base64 encoded string, containing either the crypttext or cleartext (if on base64 encoding is used)
+	// Use OpenSSL if available. Otherwise Base64 encode only
+	// Return base64 encoded string, containing either the crypttext with the iv prepended, or the cleartext if on base64 encoding is used
 	private function encrypt($cleartext, $iv)
 	{
 		if ($this->hasCrypt()) {
-			$crypttext = mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $this->key, $cleartext, MCRYPT_MODE_CBC, $iv);
+			$ivSize = openssl_cipher_iv_length($this->cryptMethod);
+			$iv = openssl_random_pseudo_bytes($ivSize);
+
+			$crypttext = openssl_encrypt(
+				$cleartext,
+				$this->cryptMethod,
+				$this->key,
+				OPENSSL_RAW_DATA,
+				$iv
+			);
+
+			// Prepend the iv
+			$crypttext = $iv.$crypttext;
+
 		} else {
-			// Use Base64 encoding
 			$crypttext = base64_encode($cleartext);
 		}
 		return $crypttext;
 	}
 
-	// Use MCrypt if available. Otherwise Base64 decode
+	// Use OpenSSL if available. Otherwise Base64 decode
 	// Return cleartext
-	private function decrypt($crypttext, $iv)
+	private function decrypt($crypttext)
 	{
 		if ($this->hasCrypt()) {
-			$rawcleartext = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $this->key, $crypttext, MCRYPT_MODE_CBC, $iv);
+			$ivSize = openssl_cipher_iv_length($this->cryptMethod);
+			$iv = substr($crypttext, 0, $ivSize);
+			$ciphertext = substr($crypttext, $ivSize);
+
+			$rawcleartext = openssl_decrypt(
+				$ciphertext,
+				$this->cryptMethod,
+				$this->key,
+				OPENSSL_RAW_DATA,
+				$iv
+			);
+		} else {
+			// Use Base64 encoding
+			$rawcleartext = base64_decode($crypttext);
+		}
+
+		// Clear trailing null-characters
+		$cleartext = rtrim($rawcleartext);
+
+		return $cleartext;
+	}
+
+
+	//
+	// Old MCrypt coded data conversion
+	////////////////////////////////
+
+	// Use MCrypt if available. Otherwise Base64 decode
+	// Return cleartext
+	private function decryptMcrypt($cryptData64)
+	{
+		if ($this->hasMCrypt()) {
+			$cryptData = base64_decode($cryptData64);
+
+			$ivSize = mcrypt_enc_get_iv_size($this->mcrypt);
+			$iv = substr($cryptData, 0, $ivSize);
+			$crypttext = substr($cryptData, $ivSize);
+
+			$rawcleartext = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $this->mcrypt_key, $crypttext, MCRYPT_MODE_CBC, $iv);
+
 			// Clear trailing null-characters
 			$cleartext = rtrim($rawcleartext);
 		} else {
 			// Use Base64 encoding
-			$cleartext = base64_decode($crypttext);
+			$cleartext = base64_decode($cryptData64);
 		}
 		return $cleartext;
+	}
+
+	private function convertOldData($login, $cleartextPwd)
+	{
+		$this->init();
+
+		$query = 'SELECT `prefName` , `value` FROM `tiki_user_preferences` WHERE `prefName` like \'dp.%\' and  `user` = ?';
+		$result = $this->query($query, array($login));
+
+		while ( $row = $result->fetchRow() ) {
+			$orgPrefName = $row['prefName'];
+			$storedPwdMCrypt64 = $row['value'];
+
+			if ($this->hasMCrypt()) {
+				$cleartext = $this->decryptMcrypt($storedPwdMCrypt64);
+
+				// Strip dp. from prefName
+				$prefName = str_replace('dp.', '', $orgPrefName);
+
+				// Add new OpenSSL coded user data
+				$this->setUserData($prefName, $cleartext);
+			}
+
+			// Delete old Mcrypt coded user data
+			$userPreferences = $this->table('tiki_user_preferences');
+			$userPreferences->delete(array('user' => $login, 'prefName' => $orgPrefName));
+		}
 	}
 }
