@@ -18,19 +18,6 @@ elseif ( $prefs['wiki_page_regex'] == 'full' )
 else
 	$page_regex = '([^\n|\(\)])((?!(\)\)|\||\n)).)*?';
 
-// Wiki dump
-
-$wiki_dump_exists = 'n';
-$dump_path = 'dump';
-
-if ( $tikidomain ) {
-	$dump_path .= "/$tikidomain";
-}
-if ( file_exists($dump_path.'/new.tar') ) {
-	$wiki_dump_exists = 'y';
-}
-$smarty->assign('wiki_dump_exists', $wiki_dump_exists);
-
 // find out the page name if url=tiki-index_x.php (can be needed in module)
 if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php')
 		|| strstr($_SERVER['SCRIPT_NAME'], 'tiki-index_p.php')
