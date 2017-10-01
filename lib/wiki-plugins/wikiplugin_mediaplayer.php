@@ -250,7 +250,7 @@ function wikiplugin_mediaplayer($data, $params)
 		if ($params['type'] === 'pdf' || $params['type'] === 'odt' || $params['type'] === 'ods' || $params['type'] === 'odp' || $params['type'] === 'viewerjs' ) {
 			if ($prefs['fgal_viewerjs_feature'] === 'y') {
 
-				$src = \ZendOpenId\OpenId::absoluteUrl($params['src']);
+				$src = TikiLib::lib('access')->absoluteUrl($params['src']);
 				$src = $prefs['fgal_viewerjs_uri'] . '#' . $src;
 
 				$out = "<iframe width=\"{$params['width']}\" height=\"{$params['height']}\" src=\"{$src}\" allowfullscreen webkitallowfullscreen></iframe>";

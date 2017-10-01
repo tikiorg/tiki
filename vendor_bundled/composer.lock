@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d656d75afbbafe2d65da4cb33e2bef92",
+    "content-hash": "1eec2d638da8224e0074a9665aa8fa23",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -293,7 +293,7 @@
                 "prebind",
                 "xmpp"
             ],
-            "time": "2015-02-26T17:32:01+00:00"
+            "time": "2015-02-26 17:32:01"
         },
         {
             "name": "chartjs/Chart.js",
@@ -5061,52 +5061,6 @@
                 "zf2"
             ],
             "time": "2014-04-09T01:02:18+00:00"
-        },
-        {
-            "name": "zendframework/zendopenid",
-            "version": "2.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/ZendOpenId.git",
-                "reference": "16648e1b2acf760d0c67a8c1dd913fed0c0f61f7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/zendframework/zendopenid/zendframework-zendopenid-16648e1b2acf760d0c67a8c1dd913fed0c0f61f7-zip-038e8c.zip",
-                "reference": "16648e1b2acf760d0c67a8c1dd913fed0c0f61f7",
-                "shasum": "02b674e0c7d0ea7e6fbbc1c501b54473c5fb79c4"
-            },
-            "require": {
-                "php": ">=5.3.3",
-                "zendframework/zend-eventmanager": "~2.0",
-                "zendframework/zend-http": "~2.0",
-                "zendframework/zend-session": "~2.0"
-            },
-            "require-dev": {
-                "zendframework/zendframework": "~2.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "ZendOpenId": "library/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "provides a simple API for building OpenID-enabled sites and identity providers",
-            "homepage": "http://packages.zendframework.com/",
-            "keywords": [
-                "OpenId",
-                "zf2"
-            ],
-            "time": "2014-03-05T23:58:08+00:00"
         },
         {
             "name": "zendframework/zendsearch",

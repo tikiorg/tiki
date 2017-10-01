@@ -100,7 +100,7 @@ if ($prefs['fgal_viewerjs_feature'] === 'y') {
 
 	} else {												// remote (will take a while)
 
-		$file_headers = get_headers(\ZendOpenId\OpenId::absoluteUrl($prefs['fgal_viewerjs_uri']));
+		$file_headers = get_headers(TikiLib::lib('access')->absoluteUrl($prefs['fgal_viewerjs_uri']));
 		if (strpos($file_headers[0], '200') === false) {
 			$viewerjs_err = tr('ViewerJS URI not found (%0)', $file_headers[0]);
 		}

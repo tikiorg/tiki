@@ -115,7 +115,6 @@
 		"zendframework/zend-validator": "^2.8",
 		"zendframework/zendgdata": "~2.0",
 		"zendframework/zendoauth": "~2.0",
-		"zendframework/zendopenid": "~2.0",
 		"zendframework/zendsearch": "~2.0.0@RC",
 		"zendframework/zendservice-akismet": "~2.0",
 		"zendframework/zendservice-recaptcha": "~3.0",

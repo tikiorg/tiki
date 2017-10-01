@@ -63,7 +63,7 @@ class AreasLib extends CategLib
 
 				if (($area && !$area['share_common']) || ($objectArea && $objectArea['exclusive'])) {
 					$perspectivelib->set_perspective($objectPerspective, true);
-					$accesslib->redirect(self::selfUrl(), '', 301);
+					$accesslib->redirect($accesslib->selfUrl(), '', 301);
 				}
 			}
 		}
@@ -73,71 +73,10 @@ class AreasLib extends CategLib
 			if ($area) {
 				if ( !$area['share_common']) {
 					$perspectivelib->set_perspective($objectPerspective, true);
-					$accesslib->redirect(self::selfUrl(), '', 301);
+					$accesslib->redirect($accesslib->selfUrl(), '', 301);
 				}
 			}
 		}
-	}
-
-	/**
-	 * Returns a full URL that was requested on current HTTP request.
-	 *
-	 * Inspired on \ZendOpenId\OpenId::selfUrl
-	 *
-	 * @return string
-	 */
-	public static function selfUrl()
-	{
-		$url = '';
-		$port = '';
-
-		if (isset($_SERVER['HTTP_HOST'])) {
-			if (($pos = strpos($_SERVER['HTTP_HOST'], ':')) === false) {
-				if (isset($_SERVER['SERVER_PORT'])) {
-					$port = ':' . $_SERVER['SERVER_PORT'];
-				}
-				$url = $_SERVER['HTTP_HOST'];
-			} else {
-				$url = substr($_SERVER['HTTP_HOST'], 0, $pos);
-				$port = substr($_SERVER['HTTP_HOST'], $pos);
-			}
-		} elseif (isset($_SERVER['SERVER_NAME'])) {
-			$url = $_SERVER['SERVER_NAME'];
-			if (isset($_SERVER['SERVER_PORT'])) {
-				$port = ':' . $_SERVER['SERVER_PORT'];
-			}
-		}
-
-		if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
-			$url = 'https://' . $url;
-			if ($port == ':443') {
-				$port = '';
-			}
-		} else {
-			$url = 'http://' . $url;
-			if ($port == ':80') {
-				$port = '';
-			}
-		}
-
-		$url .= $port;
-		if (isset($_SERVER['HTTP_X_REWRITE_URL'])) {
-			$url .= $_SERVER['HTTP_X_REWRITE_URL'];
-		} elseif (isset($_SERVER['REQUEST_URI'])) {
-			$url .= $_SERVER['REQUEST_URI'];
-		} elseif (isset($_SERVER['SCRIPT_URL'])) {
-			$url .= $_SERVER['SCRIPT_URL'];
-		} elseif (isset($_SERVER['REDIRECT_URL'])) {
-			$url .= $_SERVER['REDIRECT_URL'];
-		} elseif (isset($_SERVER['PHP_SELF'])) {
-			$url .= $_SERVER['PHP_SELF'];
-		} elseif (isset($_SERVER['SCRIPT_NAME'])) {
-			$url .= $_SERVER['SCRIPT_NAME'];
-			if (isset($_SERVER['PATH_INFO'])) {
-				$url .= $_SERVER['PATH_INFO'];
-			}
-		}
-		return $url;
 	}
 
 	public function getAreaByCategId($categId, $enabled = true)

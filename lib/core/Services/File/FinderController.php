@@ -208,8 +208,7 @@ class Services_File_FinderController
 					} else if ($prefs['fgal_viewerjs_feature'] === 'y' &&
 							($info['filetype'] === 'application/pdf' or
 									strpos($info['filetype'], 'application/vnd.oasis.opendocument.') !== false)) {
-
-						$url = \ZendOpenId\OpenId::absoluteUrl($prefs['fgal_viewerjs_uri']) . '#' . $url;
+						$url = TikiLib::lib('access')->absoluteUrl($prefs['fgal_viewerjs_uri'].'#'.$url);
 					}
 				}
 

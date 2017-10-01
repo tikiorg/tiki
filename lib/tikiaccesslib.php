@@ -749,6 +749,110 @@ class TikiAccessLib extends TikiLib
 	}
 
 	/**
+	 * Returns an absolute URL for the given one
+	 *
+	 * Inspired on \ZendOpenId\OpenId::absoluteUrl
+	 *
+	 * @param string $url absolute or relative URL
+	 * @return string
+	 */
+	public static function absoluteUrl($url)
+	{
+		if (empty($url)) {
+			return self::selfUrl();
+		} elseif (!preg_match('|^([^:]+)://|', $url)) {
+			if (preg_match('|^([^:]+)://([^:@]*(?:[:][^@]*)?@)?([^/:@?#]*)(?:[:]([^/?#]*))?(/[^?]*)?((?:[?](?:[^#]*))?(?:#.*)?)$|', self::selfUrl(), $reg)) {
+				$scheme = $reg[1];
+				$auth = $reg[2];
+				$host = $reg[3];
+				$port = $reg[4];
+				$path = $reg[5];
+				$query = $reg[6];
+				if ($url[0] == '/') {
+					return $scheme
+						. '://'
+						. $auth
+						. $host
+						. (empty($port) ? '' : (':' . $port))
+						. $url;
+				} else {
+					$dir = dirname($path);
+					return $scheme
+						. '://'
+						. $auth
+						. $host
+						. (empty($port) ? '' : (':' . $port))
+						. (strlen($dir) > 1 ? $dir : '')
+						. '/'
+						. $url;
+				}
+			}
+		}
+		return $url;
+	}
+
+	/**
+	 * Returns a full URL that was requested on current HTTP request.
+	 *
+	 * Inspired on \ZendOpenId\OpenId::selfUrl
+	 *
+	 * @return string
+	 */
+	public static function selfUrl()
+	{
+		$url = '';
+		$port = '';
+
+		if (isset($_SERVER['HTTP_HOST'])) {
+			if (($pos = strpos($_SERVER['HTTP_HOST'], ':')) === false) {
+				if (isset($_SERVER['SERVER_PORT'])) {
+					$port = ':' . $_SERVER['SERVER_PORT'];
+				}
+				$url = $_SERVER['HTTP_HOST'];
+			} else {
+				$url = substr($_SERVER['HTTP_HOST'], 0, $pos);
+				$port = substr($_SERVER['HTTP_HOST'], $pos);
+			}
+		} elseif (isset($_SERVER['SERVER_NAME'])) {
+			$url = $_SERVER['SERVER_NAME'];
+			if (isset($_SERVER['SERVER_PORT'])) {
+				$port = ':' . $_SERVER['SERVER_PORT'];
+			}
+		}
+
+		if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+			$url = 'https://' . $url;
+			if ($port == ':443') {
+				$port = '';
+			}
+		} else {
+			$url = 'http://' . $url;
+			if ($port == ':80') {
+				$port = '';
+			}
+		}
+
+		$url .= $port;
+		if (isset($_SERVER['HTTP_X_REWRITE_URL'])) {
+			$url .= $_SERVER['HTTP_X_REWRITE_URL'];
+		} elseif (isset($_SERVER['REQUEST_URI'])) {
+			$url .= $_SERVER['REQUEST_URI'];
+		} elseif (isset($_SERVER['SCRIPT_URL'])) {
+			$url .= $_SERVER['SCRIPT_URL'];
+		} elseif (isset($_SERVER['REDIRECT_URL'])) {
+			$url .= $_SERVER['REDIRECT_URL'];
+		} elseif (isset($_SERVER['PHP_SELF'])) {
+			$url .= $_SERVER['PHP_SELF'];
+		} elseif (isset($_SERVER['SCRIPT_NAME'])) {
+			$url .= $_SERVER['SCRIPT_NAME'];
+			if (isset($_SERVER['PATH_INFO'])) {
+				$url .= $_SERVER['PATH_INFO'];
+			}
+		}
+		return $url;
+	}
+
+	/**
 	 * Utility function redirect the browser location to another url
 
 	 * @param string $url       The target web address
