@@ -461,9 +461,11 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline)
 	$err[E_USER_WARNING]    = 'E_USER_WARNING';
 	$err[E_COMPILE_WARNING] = 'E_COMPILE_WARNING';
 	$err[E_PARSE]           = 'E_PARSE';
+	$err[E_STRICT]          = 'E_STRICT';
 	$err[E_NOTICE]          = 'E_NOTICE';
 	$err[E_USER_NOTICE]     = 'E_USER_NOTICE';
-	$err[E_STRICT]          = 'E_STRICT';
+	$err[E_DEPRECATED]      = 'E_DEPRECATED';
+	$err[E_USER_DEPRECATED] = 'E_USER_DEPRECATED';
 
 	global $tikipath;
 	$errfile = str_replace($tikipath, '', $errfile);
@@ -495,7 +497,7 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline)
 			if ( ! empty($prefs['smarty_notice_reporting']) && $prefs['smarty_notice_reporting'] != 'y' && strstr($errfile, '.tpl.php'))
 				break;
 			$back = "<div class='rbox-data' style='font-size:10px;border:1px solid'>";
-			$back.= "<b>PHP (".PHP_VERSION.") NOTICE (".(isset($err[$errno]) ? $err[$errno] : '')."):</b><br />";
+			$back.= "<b>PHP (".PHP_VERSION.") NOTICE ($err[$errno]):</b><br />";
 			$back.= "<b style='font-family: monospace'>File:</b> $errfile<br />";
 			$back.= "<b style='font-family: monospace'>Line:</b> $errline<br />";
 			$back.= "<b style='font-family: monospace'>Type:</b> $errstr";
