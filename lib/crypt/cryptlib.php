@@ -25,9 +25,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * 1. The openssl PHP extension must be available
  * 2. Call the init method before using cryptlib
  *
- * Before Tiki18 CryptLib used the mcrypt library which is being depreciated in PHP 7.1 and removed from the standard installation starting with PHP 7.2.
+ * Before Tiki 18, CryptLib used the mcrypt library, which is being deprecated in PHP 7.1 and removed from the standard installation starting with PHP 7.2.
  * See http://php.net/manual/en/migration71.deprecated.php for details.
- * In order to convert existing, encrypted data the mcrypt must be used.
+ * In order to convert existing, encrypted data, the mcrypt must be used.
  * Thus CryptLib still may attempt to use mcrypt if such data is found. The mcrypt reference may be completely removed, once it is sure that no mcrypt encrypted data exist.
  *
  * The method setUserData encrypts the value and stores a user preference
@@ -131,7 +131,7 @@ class CryptLib extends TikiLib
 		return $this->hasOpenSLL;
 	}
 
-	// Check if MCrypt moidule is available in case a conversion is needed
+	// Check if MCrypt module is available in case a conversion is needed
 	function hasMCrypt()
 	{
 		return $this->mcrypt != null;
