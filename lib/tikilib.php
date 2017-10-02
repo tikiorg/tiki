@@ -76,7 +76,10 @@ class TikiLib extends TikiDb_Bridge
 				return self::$libraries[$name] = $tikilib;
 		}
 
-		unlink(dirname(__FILE__).'/../temp/cache/container.php'); // Remove the container cache to help transition
+		if (file_exists(__DIR__.'/../temp/cache/container.php')) {
+			unlink(__DIR__.'/../temp/cache/container.php'); // Remove the container cache to help transition
+		}
+
 		throw new Exception(tr("%0 library not found. This may be due to a typo or caused by a recent update.", $name));
 	}
 
