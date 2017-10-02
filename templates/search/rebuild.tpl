@@ -42,7 +42,7 @@
 						<input type="checkbox" name="loggit" value="1">
 						{tr}Enable logging{/tr}
 					</label>
-					<div class="help-block">{tr}Log file is saved as temp/Search_Indexer.log{/tr}</div>
+					<div class="help-block">{tr}Log file is saved as {$prefs.tmpDir}/Search_Indexer.log{/tr}</div>
 				</div>
 			</div>
 			<div class="form-group submit">
@@ -71,6 +71,6 @@
 		<kbd>php console.php{if not empty($tikidomain)} --site={$tikidomain|replace:'/':''}{/if} index:optimize</kbd><br>
 		<kbd>php console.php{if not empty($tikidomain)} --site={$tikidomain|replace:'/':''}{/if} index:rebuild</kbd><br>
 		<kbd>php console.php{if not empty($tikidomain)} --site={$tikidomain|replace:'/':''}{/if} index:rebuild --log</kbd><br>
-		<p>{tr}Log file is saved as temp/Search_Indexer_console.log{/tr}</p>
+		<p>{tr}Log file is saved as {$prefs.tmpDir}/Search_Indexer_console.log{/tr}</p>
 	{/remarksbox}
 {/block}
