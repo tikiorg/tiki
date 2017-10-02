@@ -11,14 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
-if (!extension_loaded('mcrypt')) {
-	$smarty = TikiLib::lib('smarty');
-	$smarty->assign('no_mcrypt', 'y');
-}
-if (!extension_loaded('openssl')) {
-	$smarty = TikiLib::lib('smarty');
-	$smarty->assign('no_openssl', 'y');
-}
+TikiLib::lib('smarty')->assign('openssl_available', extension_loaded('openssl'));
 
 if($prefs['feature_user_encryption'] == 'y') {
 	$cryptlib = TikiLib::lib('crypt');
