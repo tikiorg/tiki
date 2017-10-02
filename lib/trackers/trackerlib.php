@@ -5756,6 +5756,7 @@ class TrackerLib extends TikiLib
 						'trackerId' => $field['trackerId'],
 						'itemId' => $item['itemId'],
 						'fieldId' => $field['fieldId'],
+						'listMode' => $context['list_mode']
 					);
 				}
 

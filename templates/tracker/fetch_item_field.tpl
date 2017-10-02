@@ -6,7 +6,7 @@
 
 {block name="content"}
 	{if $mode eq 'output'}
-		{trackeroutput field=$field}
+		{trackeroutput field=$field list_mode=$listMode}
 	{else}
 		{trackerinput field=$field itemId=$itemId}
 	{/if}
