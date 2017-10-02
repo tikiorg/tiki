@@ -23,6 +23,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 class TikiAccessLib extends TikiLib
 {
 	private $noRedirect = false;
+	private $noDisplayError = false;
 	//used in CSRF protection methods
 	private $check;
 	private $base;
@@ -34,6 +35,17 @@ class TikiAccessLib extends TikiLib
 	function preventRedirect($prevent)
 	{
 		$this->noRedirect = (bool) $prevent;
+	}
+
+	/**
+	 * Prevent the display of errors
+	 * useful during plugin parsing to mute error redirects
+	 *
+	 * @param bool $prevent
+	 */
+	function preventDisplayError($prevent)
+	{
+		$this->noDisplayError = (bool) $prevent;
 	}
 
 	/**
@@ -631,6 +643,10 @@ class TikiAccessLib extends TikiLib
 	 */
 	function display_error($page, $errortitle = "", $errortype = "", $enableRedirect = true, $message = '')
 	{
+		if ($this->noDisplayError){
+			return;
+		}
+
 		global $prefs, $tikiroot, $user;
 		require_once ('tiki-setup.php');
 		$userlib = TikiLib::lib('user');

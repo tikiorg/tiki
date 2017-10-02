@@ -65,8 +65,11 @@ class ConsoleApplicationBuilder
 					new BackupDBCommand,
 					new BackupFilesCommand,
 					new ProfileBaselineCommand,
+					new PluginApproveRunCommand,
+					new PluginListRunCommand,
+					new PluginRefreshRunCommand,
 					new InstallerLockCommand,
-					new PatchCommand
+					new PatchCommand,
 				],
 			],
 			'checkIsInstalledAndDoNotRequireUpdate' => [
