@@ -205,8 +205,8 @@ class Search_Elastic_QueryBuilder
 	private function handleToken($node)
 	{
 		$value = $node->getValue($this->factory)->getValue();
+		$mapping = $this->index ? $this->index->getFieldMapping($node->getField()) : new stdClass;
 		if( $value === '' ) {
-			$mapping = $this->index ? $this->index->getFieldMapping($node->getField()) : new stdClass;
 			if( isset($mapping->type) && $mapping->type === 'date' ) {
 				return array(
 					"bool" => array(
@@ -229,6 +229,9 @@ class Search_Elastic_QueryBuilder
 				);
 			}
 		}
+		if (isset($mapping->type) && $mapping->type === 'float') {
+			$value = floatval($value);
+		}
 		if ($node->getType() == 'identifier') {
 			return array("match" => array(
 				$this->getNodeField($node) => array(
@@ -250,7 +253,7 @@ class Search_Elastic_QueryBuilder
 		} else {
 			return array("match" => array(
 				$this->getNodeField($node) => array(
-					"query" => $this->getTerm($node),
+					"query" => strtolower($value),
 					"boost" => $node->getWeight(),
 					"operator" => "and",
 				),
