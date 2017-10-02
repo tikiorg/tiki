@@ -91,12 +91,12 @@
 					{tr}The user can add passwords for a registered password domain.{/tr}
 					{preference name=feature_password_domains}
 					{if $show_user_encyption_stats eq 'y'}
-						{tr}Statistics for existing data{/tr}
+						{tr}Statistics for existing data:{/tr}
 						<ul>
-							<li>OpenSSL: {$user_encyption_stat_openssl}</li>
-							<li>MCrypt: {$user_encyption_stat_mcrypt}</li>
+							<li>OpenSSL: {$user_encryption_stat_openssl}</li>
+							<li>MCrypt: {$user_encryption_stat_mcrypt}</li>
 						</ul>
-						{tr}When no MCrypt coded data is present, the User Encryption does not need the MCrypt module{/tr}
+						{tr}When no data which was encoded by MCrypt in Tiki versions prior to 18 is present, User Encryption does not need the MCrypt PHP extension.{/tr}
 					{/if}
 				</div>
 			</fieldset>

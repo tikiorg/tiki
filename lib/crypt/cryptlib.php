@@ -159,27 +159,21 @@ class CryptLib extends TikiLib
 	}
 
 	/**
-	 * Count the number of rows associated with each crypto method
-	 * The methods are: mcrypt and openss.
-	 * @return array of crypt name => count
+	 * Get the number of rows associated with the specified cryptographic method
+	 * @param string $method "mcrypt" for MCrypt, or "openssl" for OpenSSL
+	 * @return int Number of rows
 	 */
-	function getUserCryptDataStats()
+	function getUserCryptDataStats($method)
 	{
-		$res = array();
+		if ($method == 'mcrypt') {
+			$pattern = 'dp.%';
+		} elseif ($method == 'openssl') {
+			$pattern = 'ds.%';
+		} else {
+			throw new DomainException('Invalid method');
+		}
 
-		// Check mcrypt
-		$query = 'SELECT count(*) as Nr FROM `tiki_user_preferences` WHERE `prefName` like \'dp.%\' ';
-		$result = $this->query($query);
-		$row = $result->fetchRow();
-		$res['mcrypt'] = $row['Nr'];
-
-		// Check openssl
-		$query = 'SELECT count(*) as Nr FROM `tiki_user_preferences` WHERE `prefName` like \'ds.%\' ';
-		$result = $this->query($query);
-		$row = $result->fetchRow();
-		$res['openssl'] = $row['Nr'];
-
-		return $res;
+		return $this->getOne('SELECT count(*) as Nr FROM `tiki_user_preferences` WHERE `prefName` like \'' . $pattern . "'");
 	}
 
 	//
