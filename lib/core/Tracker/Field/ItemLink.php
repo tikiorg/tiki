@@ -457,6 +457,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 	/**
 	 * gets the field permName or fieldId depending on unified_trackerfield_keys
+	 * DynamicList and ItemLink fields return the permName_text version to render the actual label
 	 *
 	 * @param $fieldArray
 	 * @return string
@@ -467,6 +468,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 		if ($prefs['unified_trackerfield_keys'] === 'fieldId') {
 			return $fieldArray['fieldId'];
+		} elseif ($fieldArray['type'] == 'r' || $fieldArray['type'] == 'w') {
+			return $fieldArray['permName'].'_text';
 		} else {
 			return $fieldArray['permName'];
 		}
