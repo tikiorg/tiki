@@ -26,7 +26,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * 2. Call the init method before using cryptlib
  *
  * Before Tiki18 CryptLib used the mcrypt library which is being depreciated in PHP 7.1 and removed from the standard installation starting with PHP 7.2.
- * See http://php.net/manual/en/migration71.deprecated.php fro details.
+ * See http://php.net/manual/en/migration71.deprecated.php for details.
  * In order to convert existing, encrypted data the mcrypt must be used.
  * Thus CryptLib still may attempt to use mcrypt if such data is found. The mcrypt reference may be completely removed, once it is sure that no mcrypt encrypted data exist.
  *
@@ -58,7 +58,6 @@ class CryptLib extends TikiLib
 	// MCrypt attributes (Old, phased out encryption) . Kept for conversion of existing data
 	private $mcrypt_key;	// mcrypt key
 	private $mcrypt;		// mcrypt object
-	private $iv;			// mcrypt initialization vector
 	private $mcrypt_prefprefix = 'dp';		// prefix for user pref keys: 'test' => 'dp.test'
 
 	// OpenSSL attributes
@@ -102,12 +101,6 @@ class CryptLib extends TikiLib
 
 			// Using Rijndael 256 in CBC mode.
 			$this->mcrypt = mcrypt_module_open(MCRYPT_RIJNDAEL_256, '', 'cbc', '');
-
-			if (TikiInit::isWindows()) {
-				$this->iv = mcrypt_create_iv(mcrypt_enc_get_iv_size($this->mcrypt), MCRYPT_RAND);
-			} else {
-				$this->iv = mcrypt_create_iv(mcrypt_enc_get_iv_size($this->mcrypt), MCRYPT_DEV_RANDOM);
-			}
 		}
 	}
 	function makeCryptPhrase($username, $cleartextPwd)
@@ -124,7 +117,6 @@ class CryptLib extends TikiLib
 			mcrypt_module_close($this->mcrypt);
 			$this->mcrypt_key = null;
 			$this->mcrypt = null;
-			$this->iv = null;
 		}
 	}
 
