@@ -1133,7 +1133,7 @@ if ($s) {
 
 
 $s = extension_loaded('mcrypt');
-$msg = tra('MCrypt is abandonware and is being phased out. Starting in Tiki18 OpenSSL is used instead of MCrypt in Tiki. 3rd party libraries may still use MCrypt');
+$msg = tra('MCrypt is abandonware and is being phased out. Starting in version 18, Tiki uses OpenSSL where it previously used MCrypt, except perhaps via third-party libraries.') . ' Tiki still uses MCrypt to decrypt user data encrypted with MCrypt, when converting that data to OpenSSL.';
 if ($s) {
 	$php_properties['mcrypt'] = array(
 		'fitness' => tra('info'),
