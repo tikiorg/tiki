@@ -71,24 +71,35 @@
 			{preference name=tiki_check_file_content}
 			{preference name=tiki_allow_trust_input}
 			{preference name=feature_quick_object_perms}
-			{preference name=feature_user_encryption}
-			<div class="adminoptionboxchild" id="feature_user_encryption_childcontainer">
-				{if isset($no_openssl)}
-					{remarksbox type="warning" title="{tr}OpenSSL is not loaded{/tr}"}
-					{tr}User Encryption requires the PHP extension OpenSSL for encryption.
-						You should activate OpenSSL before activating User Encryption{/tr}.
-					{/remarksbox}
-				{else}
-					{tr}Requires the OpenSSL PHP extension for encryption.{/tr} {tr}You have OpenSSL installed.{/tr}<br>
-				{/if}
-				{tr}You may also want to add the Domain Password module somewhere.{/tr}<br>
-				<br>
-				{tr}Comma separated list of password domains, e.g.: Company ABC,Company XYZ{/tr}<br>
-				{tr}The user can add passwords for a registered password domain.{/tr}
-				{preference name=feature_password_domains}
-			</div>
 			{preference name=zend_http_sslverifypeer}
 			{preference name=feature_debug_console}
+			<fieldset>
+				<legend>{tr}User Encryption{/tr}{help url="User Encryption"}</legend>
+				{preference name=feature_user_encryption}
+				<div class="adminoptionboxchild" id="feature_user_encryption_childcontainer">
+					{if isset($no_openssl)}
+						{remarksbox type="warning" title="{tr}OpenSSL is not loaded{/tr}"}
+						{tr}User Encryption requires the PHP extension OpenSSL for encryption.
+							You should activate OpenSSL before activating User Encryption{/tr}.
+						{/remarksbox}
+					{else}
+						{tr}Requires the OpenSSL PHP extension for encryption.{/tr} {tr}You have OpenSSL installed.{/tr}<br>
+					{/if}
+					{tr}You may also want to add the Domain Password module somewhere.{/tr}<br>
+					<br>
+					{tr}Comma separated list of password domains, e.g.: Company ABC,Company XYZ{/tr}<br>
+					{tr}The user can add passwords for a registered password domain.{/tr}
+					{preference name=feature_password_domains}
+					{if $show_user_encyption_stats eq 'y'}
+						{tr}Statistics for existing data{/tr}
+						<ul>
+							<li>OpenSSL: {$user_encyption_stat_openssl}</li>
+							<li>MCrypt: {$user_encyption_stat_mcrypt}</li>
+						</ul>
+						{tr}When no MCrypt coded data is present, the User Encryption does not need the MCrypt module{/tr}
+					{/if}
+				</div>
+			</fieldset>
 			<fieldset>
 				<legend>{tr}CSRF security{/tr}{help url="Security"}</legend>
 				<div class="adminoptionbox">

@@ -19,3 +19,11 @@ if (!extension_loaded('openssl')) {
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('no_openssl', 'y');
 }
+
+if($prefs['feature_user_encryption'] == 'y') {
+	$cryptlib = TikiLib::lib('crypt');
+	$stats = $cryptlib->getUserCryptDataStats();
+	$smarty->assign('show_user_encyption_stats', 'y');
+	$smarty->assign('user_encyption_stat_mcrypt', $stats['mcrypt']);
+	$smarty->assign('user_encyption_stat_openssl', $stats['openssl']);
+}
