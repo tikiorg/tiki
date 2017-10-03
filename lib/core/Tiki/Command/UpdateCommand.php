@@ -41,10 +41,10 @@ class UpdateCommand extends Command
 				$output->writeln("<info>Installed: $patch</info>");
 			}
 			foreach (array_keys(\Patch::getPatches([\Patch::NOT_APPLIED])) as $patch) {
-				$output->writeln("<info>Failed: $patch</info>");
+				$output->writeln("<error>Failed: $patch</error>");
 
 				if ($autoRegister) {
-					$installer->recordPatch($patch);
+					\Patch::$list[$patch]->record();
 				}
 			}
 
@@ -63,7 +63,7 @@ class UpdateCommand extends Command
 					$output->writeln("<error>Error $key in $patch\n\t$query\n\t$message</error>");
 
 					if ($autoRegister) {
-						$installer->recordPatch($patch);
+						\Patch::$list[$patch]->record();
 					}
 				}
 			}
