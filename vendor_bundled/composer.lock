@@ -118,9 +118,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ahand/mobileesp/zipball/c02055dbe9baee63aab11438f4d7b5d25075d347",
+                "url": "https://composer.tiki.org/dist/ahand/mobileesp/ahand-mobileesp-c02055dbe9baee63aab11438f4d7b5d25075d347-zip-99e6d2.zip",
                 "reference": "c02055dbe9baee63aab11438f4d7b5d25075d347",
-                "shasum": ""
+                "shasum": "b2838bc7649dbf90e6d9e98cd09ca7063d7471a9"
             },
             "type": "library",
             "autoload": {
@@ -255,9 +255,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/candy-chat/xmpp-prebind-php/zipball/76f738299eaa26625abe6c2a7ec95465c7d92985",
+                "url": "https://composer.tiki.org/dist/candy-chat/xmpp-prebind-php/candy-chat-xmpp-prebind-php-76f738299eaa26625abe6c2a7ec95465c7d92985-zip-b98669.zip",
                 "reference": "76f738299eaa26625abe6c2a7ec95465c7d92985",
-                "shasum": ""
+                "shasum": "117fc5691b8c57deb66c9f199eba7e764c6a44a3"
             },
             "require": {
                 "lib-libxml": "*",
@@ -293,7 +293,7 @@
                 "prebind",
                 "xmpp"
             ],
-            "time": "2015-02-26 17:32:01"
+            "time": "2015-02-26T17:32:01+00:00"
         },
         {
             "name": "chartjs/Chart.js",
@@ -725,9 +725,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evert/sitemap-php/zipball/be07a062943401067bf0ba62710ca733c838bc24",
+                "url": "https://composer.tiki.org/dist/evert/sitemap-php/evert-sitemap-php-be07a062943401067bf0ba62710ca733c838bc24-zip-e4b801.zip",
                 "reference": "be07a062943401067bf0ba62710ca733c838bc24",
-                "shasum": ""
+                "shasum": "2a4cb4cc27b6401319f1cbcf90a16fe99366b425"
             },
             "require": {
                 "php": ">=5.3.0"
@@ -744,7 +744,7 @@
             ],
             "authors": [
                 {
-                    "name": "Osman Üngür",
+                    "name": "Osman Ungur",
                     "email": "osmanungur@gmail.com"
                 },
                 {
@@ -907,9 +907,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/h5p/h5p-php-library/zipball/bfda796ab7605889ea87b64f082233a97a52968c",
+                "url": "https://composer.tiki.org/dist/h5p/h5p-core/h5p-h5p-core-bfda796ab7605889ea87b64f082233a97a52968c-zip-201452.zip",
                 "reference": "bfda796ab7605889ea87b64f082233a97a52968c",
-                "shasum": ""
+                "shasum": "27f702d75d2266fd86c3f080fbfe4230e0e8a80f"
             },
             "require": {
                 "php": ">=5.3.0"
@@ -963,9 +963,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/h5p/h5p-editor-php-library/zipball/1880ae7eb5b088c607ca1fc298b55be6e230a0c7",
+                "url": "https://composer.tiki.org/dist/h5p/h5p-editor/h5p-h5p-editor-1880ae7eb5b088c607ca1fc298b55be6e230a0c7-zip-856f1b.zip",
                 "reference": "1880ae7eb5b088c607ca1fc298b55be6e230a0c7",
-                "shasum": ""
+                "shasum": "b0589a2fe249d32b3c311deb4a5bc8d7d2b0d2db"
             },
             "require": {
                 "php": ">=5.3.0"
@@ -1380,9 +1380,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kaltura/KalturaGeneratedAPIClientsPHP53/zipball/1710f9b2aed7665977cbceeb1d5571e2e625de93",
+                "url": "https://composer.tiki.org/dist/kaltura/api-client-library/kaltura-api-client-library-1710f9b2aed7665977cbceeb1d5571e2e625de93-zip-84a4ef.zip",
                 "reference": "1710f9b2aed7665977cbceeb1d5571e2e625de93",
-                "shasum": ""
+                "shasum": "fc37599e0246dbb5f2df9275576b7a446db5e263"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -1484,9 +1484,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/path-converter/zipball/08551ec1b156e923c242a10ab484bd4d6ead6631",
+                "url": "https://composer.tiki.org/dist/matthiasmullie/path-converter/matthiasmullie-path-converter-08551ec1b156e923c242a10ab484bd4d6ead6631-zip-8b1a1b.zip",
                 "reference": "08551ec1b156e923c242a10ab484bd4d6ead6631",
-                "shasum": ""
+                "shasum": "b18d9045ce02e82e42754bee1b851ac14178b9a3"
             },
             "require": {
                 "ext-pcre": "*",
@@ -1625,17 +1625,17 @@
         },
         {
             "name": "mottie/tablesorter",
-            "version": "v2.28.15",
+            "version": "v2.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Mottie/tablesorter.git",
-                "reference": "c1c55c56886b20d774f2007338d85fb2535d3148"
+                "reference": "b6647faba58594c51ea9dc840ea6211e186c42ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/mottie/tablesorter/mottie-tablesorter-c1c55c56886b20d774f2007338d85fb2535d3148-zip-a32317.zip",
-                "reference": "c1c55c56886b20d774f2007338d85fb2535d3148",
-                "shasum": "07ab19c68cf9e4e98276880b5487fd2e31dc76a8"
+                "url": "https://composer.tiki.org/dist/mottie/tablesorter/mottie-tablesorter-b6647faba58594c51ea9dc840ea6211e186c42ff-zip-7ee5aa.zip",
+                "reference": "b6647faba58594c51ea9dc840ea6211e186c42ff",
+                "shasum": "4bdbbd86af4aae0db338cb20c57092a815e7f7ad"
             },
             "require": {
                 "components/jquery": ">=1.2.6"
@@ -1672,7 +1672,7 @@
                 "sorting",
                 "table"
             ],
-            "time": "2017-07-04T17:56:45+00:00"
+            "time": "2017-09-28T02:09:50+00:00"
         },
         {
             "name": "nagarajanchinnasamy/subtotal",
@@ -1862,17 +1862,17 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.10",
+            "version": "v2.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d"
+                "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/paragonie/random_compat/paragonie-random_compat-634bae8e911eefa89c1abfbf1b66da679ac8f54d-zip-1d5453.zip",
-                "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d",
-                "shasum": "b2423205b74177a0ef97331fdc59f656cb08bf58"
+                "url": "https://composer.tiki.org/dist/paragonie/random_compat/paragonie-random_compat-5da4d3c796c275c55f057af5a643ae297d96b4d8-zip-49868f.zip",
+                "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8",
+                "shasum": "eb3e042747780fda66ffe1894231583c7a90905f"
             },
             "require": {
                 "php": ">=5.2.0"
@@ -1906,7 +1906,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2017-03-13T16:27:32+00:00"
+            "time": "2017-09-27T21:40:39+00:00"
         },
         {
             "name": "pclzip/pclzip",
@@ -1918,9 +1918,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ivanlanin/pclzip/zipball/19dd1de9d3f5fc4d7d70175b4c344dee329f45fd",
+                "url": "https://composer.tiki.org/dist/pclzip/pclzip/pclzip-pclzip-19dd1de9d3f5fc4d7d70175b4c344dee329f45fd-zip-533d91.zip",
                 "reference": "19dd1de9d3f5fc4d7d70175b4c344dee329f45fd",
-                "shasum": ""
+                "shasum": "30357ef42f1962a1c66e38b7961131fa6f96b77c"
             },
             "type": "library",
             "autoload": {
@@ -1955,9 +1955,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/Archive_Tar/zipball/43455c960da70e655c6bdf8ea2bc8cc1a6034afb",
+                "url": "https://composer.tiki.org/dist/pear/archive_tar/pear-archive_tar-43455c960da70e655c6bdf8ea2bc8cc1a6034afb-zip-75f51c.zip",
                 "reference": "43455c960da70e655c6bdf8ea2bc8cc1a6034afb",
-                "shasum": ""
+                "shasum": "3609005742711e01937d5f70492abc65bdfae6e9"
             },
             "require": {
                 "pear/pear-core-minimal": "^1.10.0alpha2",
@@ -2021,9 +2021,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/Console_Getopt/zipball/82f05cd1aa3edf34e19aa7c8ca312ce13a6a577f",
+                "url": "https://composer.tiki.org/dist/pear/console_getopt/pear-console_getopt-82f05cd1aa3edf34e19aa7c8ca312ce13a6a577f-zip-03e6fc.zip",
                 "reference": "82f05cd1aa3edf34e19aa7c8ca312ce13a6a577f",
-                "shasum": ""
+                "shasum": "7d3dc41f35e00ec550425b9e249585ae7f35cf7e"
             },
             "type": "library",
             "autoload": {
@@ -2079,9 +2079,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/Net_Socket/zipball/f31d75ac352d49908f8987bbb1496c02a409812a",
+                "url": "https://composer.tiki.org/dist/pear/net_socket/pear-net_socket-f31d75ac352d49908f8987bbb1496c02a409812a-zip-bdd7f4.zip",
                 "reference": "f31d75ac352d49908f8987bbb1496c02a409812a",
-                "shasum": ""
+                "shasum": "cbc31c595b68f0d1a959cf70c37886c601d78d58"
             },
             "require": {
                 "pear/pear_exception": "@stable",
@@ -2228,9 +2228,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/PEAR_Exception/zipball/8c18719fdae000b690e3912be401c76e406dd13b",
+                "url": "https://composer.tiki.org/dist/pear/pear_exception/pear-pear_exception-8c18719fdae000b690e3912be401c76e406dd13b-zip-a9e2b4.zip",
                 "reference": "8c18719fdae000b690e3912be401c76e406dd13b",
-                "shasum": ""
+                "shasum": "5f5960a6b081e5e7efb9748860d4d02d5ca5f990"
             },
             "require": {
                 "php": ">=4.4.0"
@@ -2283,9 +2283,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/Structures_Graph/zipball/608fdc835a62fb238e61bd1cf0aaf6c7a4420b5c",
+                "url": "https://composer.tiki.org/dist/pear/structures_graph/pear-structures_graph-608fdc835a62fb238e61bd1cf0aaf6c7a4420b5c-zip-c895af.zip",
                 "reference": "608fdc835a62fb238e61bd1cf0aaf6c7a4420b5c",
-                "shasum": ""
+                "shasum": "ad4081ee801e4f18a5ac8f69b791df363d6fc299"
             },
             "type": "library",
             "autoload": {
@@ -2331,9 +2331,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/XML_Parser/zipball/c9fc042d3a168c440c84ab1fed187ec784b3aac0",
+                "url": "https://composer.tiki.org/dist/pear/xml_parser/pear-xml_parser-c9fc042d3a168c440c84ab1fed187ec784b3aac0-zip-23f7d1.zip",
                 "reference": "c9fc042d3a168c440c84ab1fed187ec784b3aac0",
-                "shasum": ""
+                "shasum": "f4ec359b71fcae0534f492101ae74edcd3d096a7"
             },
             "require": {
                 "pear/pear-core-minimal": "*"
@@ -2400,9 +2400,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/XML_Util/zipball/c74278d925be9c2f7d39955cdce45d8275571a1d",
+                "url": "https://composer.tiki.org/dist/pear/xml_util/pear-xml_util-c74278d925be9c2f7d39955cdce45d8275571a1d-zip-b7d7ee.zip",
                 "reference": "c74278d925be9c2f7d39955cdce45d8275571a1d",
-                "shasum": ""
+                "shasum": "9940cdde74a916da71fa6ab7d10bc2e3f900fc1a"
             },
             "require": {
                 "pear/pear-core-minimal": "^1.10.1",
@@ -5151,9 +5151,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/ZendService_ReCaptcha/zipball/6c6877c07c8ac73b187911ea5d264a640b234361",
+                "url": "https://composer.tiki.org/dist/zendframework/zendservice-recaptcha/zendframework-zendservice-recaptcha-6c6877c07c8ac73b187911ea5d264a640b234361-zip-9d3c6f.zip",
                 "reference": "6c6877c07c8ac73b187911ea5d264a640b234361",
-                "shasum": ""
+                "shasum": "6f1e81afb14a367948a5180b50290f0362cba920"
             },
             "require": {
                 "php": "^5.6 || ^7.0",
@@ -6066,17 +6066,17 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.21",
+            "version": "5.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "3b91adfb64264ddec5a2dee9851f354aa66327db"
+                "reference": "10df877596c9906d4110b5b905313829043f2ada"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/phpunit/phpunit/phpunit-phpunit-3b91adfb64264ddec5a2dee9851f354aa66327db-zip-82ed9b.zip",
-                "reference": "3b91adfb64264ddec5a2dee9851f354aa66327db",
-                "shasum": "ba16e27932384add4f233a021e00b72b1af4f1e4"
+                "url": "https://composer.tiki.org/dist/phpunit/phpunit/phpunit-phpunit-10df877596c9906d4110b5b905313829043f2ada-zip-327751.zip",
+                "reference": "10df877596c9906d4110b5b905313829043f2ada",
+                "shasum": "248484ab9f73b78544555cb1dc2fe813043160dc"
             },
             "require": {
                 "ext-dom": "*",
@@ -6144,7 +6144,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-06-21T08:11:54+00:00"
+            "time": "2017-09-24T07:23:38+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
