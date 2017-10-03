@@ -342,7 +342,12 @@ if ( $prefs['feature_quick_object_perms'] == 'y' ) {
 			$newPermissions->add('Admins', 'tiki_p_admin');
 		}
 		$permissionApplier->apply($newPermissions);
-		$access->redirect($_SERVER['REQUEST_URI']);
+		$url = $_SERVER['REQUEST_URI'];
+		$query = array_filter(array_intersect_key($_REQUEST, array_flip(['objectType', 'objectId', 'permType', 'objectName'])));
+		if ($query) {
+			$url .= '?' . http_build_query($query, null, '&');
+		}
+		$access->redirect($url);
 	}
 }
 
