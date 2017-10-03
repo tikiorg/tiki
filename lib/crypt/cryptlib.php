@@ -309,12 +309,12 @@ class CryptLib extends TikiLib
 		$domains = explode(',', $domainsText);
 
 		// Trim whitespace from names
-		foreach($domains as &$dom) {
+		foreach ($domains as &$dom) {
 			$dom = trim($dom);
 		}
 
 		// Add prefix
-		if($use_prefix) {
+		if ($use_prefix) {
 			foreach($domains as &$dom) {
 				$dom = $this->prefprefix.'.'.$dom;
 			}
@@ -330,7 +330,7 @@ class CryptLib extends TikiLib
 	// Return encrypted data, or false on error
 	private function encryptData($cleartextData)
 	{
-		if(empty($cleartextData)) {
+		if (empty($cleartextData)) {
 			return false;
 		}
 
@@ -347,7 +347,7 @@ class CryptLib extends TikiLib
 
 		// Encrypt the data
 		$cryptData = $this->encrypt($cleartextData);
-		if(empty($cryptData)) {
+		if (empty($cryptData)) {
 			return false;
 		}
 
@@ -360,7 +360,7 @@ class CryptLib extends TikiLib
 	// Return cleartext data, or false on error
 	private function decryptData($cryptData64)
 	{
-		if(empty($cryptData64)) {
+		if (empty($cryptData64)) {
 			return false;
 		}
 
@@ -400,7 +400,7 @@ class CryptLib extends TikiLib
 		$domains = $this->getPasswordDomains();
 
 		// Rehash encrypted preferences
-		foreach($domains as $userprefKey) {
+		foreach ($domains as $userprefKey) {
 			$rc = $this->changeUserPassword($userprefKey, md5($user.$oldCleartextPwd), md5($user.$newCleartextPwd));
 
 			// Also update the username, if defined

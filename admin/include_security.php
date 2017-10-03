@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 TikiLib::lib('smarty')->assign('openssl_available', extension_loaded('openssl'));
 
-if($prefs['feature_user_encryption'] == 'y') {
+if ($prefs['feature_user_encryption'] == 'y') {
 	$cryptlib = TikiLib::lib('crypt');
 	$smarty->assign('show_user_encyption_stats', 'y');
 	$smarty->assign('user_encryption_stat_mcrypt', $cryptlib->getUserCryptDataStats('mcrypt'));

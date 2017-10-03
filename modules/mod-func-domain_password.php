@@ -171,9 +171,9 @@ function module_domain_password($mod_reference, $module_params)
 			// Saved the credentials
 			/////////////////////////////////
 			if (($dompwdCount == $cntModule) && $isSaving && $hasDomain && isset($_REQUEST['domPassword'])) {
-				if(empty($_REQUEST['domPassword'])) {
+				if (empty($_REQUEST['domPassword'])) {
 					$errors[$cntModule][] = tra('No password specified');
-				} elseif(!$use_currentuser[$cntModule] && empty($_REQUEST['domUsername'])) {
+				} elseif (!$use_currentuser[$cntModule] && empty($_REQUEST['domUsername'])) {
 					$errors[$cntModule][] = tra('No username specified');
 				} else {
 					$domUsername = $use_currentuser[$cntModule] === 'y' ? $user : $_REQUEST['domUsername'];
