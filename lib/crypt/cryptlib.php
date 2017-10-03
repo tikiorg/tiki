@@ -28,7 +28,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * Before Tiki 18, CryptLib used the mcrypt library, which is being deprecated in PHP 7.1 and removed from the standard installation starting with PHP 7.2.
  * See http://php.net/manual/en/migration71.deprecated.php for details.
  * In order to convert existing, encrypted data, the mcrypt must be used.
- * Thus CryptLib still may attempt to use mcrypt if such data is found. The mcrypt reference may be completely removed, once it is sure that no mcrypt encrypted data exist.
+ * Thus CryptLib still may attempt to use mcrypt if such data is found. 
  *
  * The method setUserData encrypts the value and stores a user preference
  * getUserData reads it back into cleartext
