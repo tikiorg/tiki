@@ -2858,7 +2858,7 @@ class FileGalLib extends TikiLib
 	function get_files($offset, $maxRecords, $sort_mode, $find = null, $galleryId=-1, $with_archive=false, $with_subgals=false,
 						$with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true,
 						$recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false, $with_backlink=false, $filter='',
-						$wiki_syntax = '', $previousResults = [])
+						$wiki_syntax = '')
 	{
 
 		global $user, $tiki_p_admin, $tiki_p_admin_file_galleries, $prefs;
@@ -3044,7 +3044,7 @@ class FileGalLib extends TikiLib
 			$g_group_by = '';
 
 			$join = '';
-			$select = 'SQL_CALC_FOUND_ROWS tab.*';
+			$select = 'tab.*';
 
 			if ( $with_files_count ) {
 				$g_join = ' LEFT JOIN `tiki_files` tfc ON (tfg.`galleryId` = tfc.`galleryId`)';
@@ -3120,12 +3120,10 @@ class FileGalLib extends TikiLib
 		} elseif ( $orderby != '' ) {
 			$query .= ' ORDER BY '.$orderby;
 		}
-		$result = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
-		$originalCount = count($result);
-		$totalCount = $this->getOne('SELECT FOUND_ROWS()');
-		$ret = $previousResults;
+		$result = $this->fetchAll($query, $bindvars);
+		$ret = array();
 		$gal_size_order = array();
-		$cant = count($ret);
+		$cant = 0;
 		$n = -1;
 		$need_everything = ( $with_subgals_size && ( $sort_mode == 'size_asc' || $sort_mode == 'filesize_asc' ) );
 		$cachelib = TikiLib::lib('cache');
@@ -3222,7 +3220,7 @@ class FileGalLib extends TikiLib
 			}
 
 			$n++;
-			if ( ! $need_everything && $offset != -1 && $n < $offset && empty($previousResults)) continue;
+			if ( ! $need_everything && $offset != -1 && $n < $offset ) continue;
 
 			if ( $need_everything || $maxRecords == -1 || $cant < $maxRecords ) {
 				$ret[$cant] = $res;
@@ -3274,18 +3272,7 @@ class FileGalLib extends TikiLib
 			}
 		}
 
-		// if we didn't get maxRecords and there are more to be had, try again
-		if ($maxRecords > -1 && count($ret) < $maxRecords && $maxRecords < $totalCount) {
-			// go again
-			$more = $this->get_files($originalCount, $maxRecords, $sort_mode, $find, $galleryId, $with_archive, $with_subgals,
-									$with_subgals_size, $with_files, $with_files_data, $with_parent_name, $with_files_count,
-									$recursive, $my_user='', $keep_subgals_together, $parent_is_file, $with_backlink, $filter,
-									$wiki_syntax, $ret );
-
-			$ret = array_merge($previousResults, $more['data']);
-
-		}
-		return ['data' => $ret, 'cant' => $cant];
+		return array('data' => $ret, 'cant' => $cant);
 	}
 	
 	/**
