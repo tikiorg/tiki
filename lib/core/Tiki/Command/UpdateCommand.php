@@ -40,6 +40,13 @@ class UpdateCommand extends Command
 			foreach (array_keys(\Patch::getPatches([\Patch::NEWLY_APPLIED])) as $patch) {
 				$output->writeln("<info>Installed: $patch</info>");
 			}
+			foreach (array_keys(\Patch::getPatches([\Patch::NOT_APPLIED])) as $patch) {
+				$output->writeln("<info>Failed: $patch</info>");
+
+				if ($autoRegister) {
+					$installer->recordPatch($patch);
+				}
+			}
 
 			if ( count($installer->executed) ) {
 				foreach ( $installer->executed as $script ) {
