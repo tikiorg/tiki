@@ -503,8 +503,6 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 				);
 				// decode & and = chars
 				return str_replace(array('%26','%3D'), array('&','='), $link);
-			} else if ($this->getOption('linkToItem') && $this->getOption('displayFieldsListType') !== 'table') {
-				return smarty_function_object_link(array('type' => 'trackeritem',	'id' => $item,	'title' => $label), $smarty);
 			} else {
 				return parent::renderOutput($context);
 			}
