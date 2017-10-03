@@ -387,7 +387,7 @@ class CryptLib extends TikiLib
 		// Store the pass phrase in a session variable
 		$_SESSION['cryptphrase'] = $phraseMD5;
 
-		$this->convertOldData($user, $cleartextPwd);
+		$this->convertMCryptDataToOpenSSL($user, $cleartextPwd);
 	}
 
 	// User has changed the password
@@ -536,7 +536,7 @@ class CryptLib extends TikiLib
 		return $cleartext;
 	}
 
-	private function convertOldData($login, $cleartextPwd)
+	private function convertMCryptDataToOpenSSL($login, $cleartextPwd)
 	{
 		$this->init();
 
