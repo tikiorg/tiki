@@ -122,7 +122,7 @@ function smarty_function_jscalendar($params, $smarty)
 	$headerlib->add_jq_onready('$("input[name=tzoffset]").val((new Date()).getTimezoneOffset());');
 	if( isset($params['isutc']) && $params['isutc'] )
 		$headerlib->add_jq_onready('$("#' . $params['id'] . '").val(' . intval($params['date']) . ' + (new Date()).getTimezoneOffset()*60);');
-	$html .= '<input type="text" style="width:225px" class="form-control isDatepicker" id="' . $params['id'] . '_dptxt" value="">';	// text version of datepicker date
+	$html .= '<input type="text" class="form-control isDatepicker" id="' . $params['id'] . '_dptxt" value="">';	// text version of datepicker date
 	$headerlib->add_jq_onready('$("#' . $params['id'] . '_dptxt").change(function(e){' .
 		'var inst = $.datepicker._getInst(this);'.
 		'$.datepickerAdjustAltField("'.( !isset($params['showtime']) || $params['showtime'] === 'n' ? 'datepicker' : 'datetimepicker' ).'", inst);'.
@@ -150,6 +150,7 @@ function smarty_function_jscalendar($params, $smarty)
 			'$("#' . $params['id'] . '_dptxt").val(' . $js_val . ').tiki("' .
 			$command . '", "jscalendar", ' . $datepicker_options . ');'
 		);
+		$timeclass = '';
 
 	} else {
 		// add timezone info if showing the time
@@ -170,13 +171,15 @@ var tm = { hour: dt.getHours(), minute: dt.getMinutes(), second: dt.getSeconds()
 			$js_val1 . '$("#' . $params['id'] . '_dptxt").val(' . $js_val2 . ').tiki("' . 
 			$command . '", "jscalendar", ' . $datepicker_options . ');'
 		);
+
+		$timeclass = ' datetime';
 	}
 
 	$smarty->loadPlugin('smarty_function_icon');
 	$icon = smarty_function_icon(['name' => 'calendar'], $smarty);
 	$headerlib->add_jq_onready("$('#" . $params['id'] . "').closest('div.jscal').find(' button.ui-datepicker-trigger').empty().append('$icon').addClass('btn btn-sm btn-link').css({'padding' : '0px', 'font-size': '16px'});");
 
-	return '<div class="jscal" style="margin-bottom:10px">' . $html . '</div>';
+	return '<div class="jscal' . $timeclass . '" style="margin-bottom:10px">' . $html . '</div>';
 }
 
 function smarty_function_jscalendar_tra($str)

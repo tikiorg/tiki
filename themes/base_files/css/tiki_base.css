@@ -1062,6 +1062,10 @@ span.btn-link {
   display: inline-block;
   margin-right: 2px;
 }
+.jscal.datetime input[type=text] {
+  /* shows the timezone too */
+  width: 50%;
+}
 select.form-control.date {
   padding: 0;
   margin-left: 0;
