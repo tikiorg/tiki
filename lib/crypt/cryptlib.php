@@ -61,7 +61,7 @@ class CryptLib extends TikiLib
 	private $mcrypt_prefprefix = 'dp';		// prefix for user pref keys: 'test' => 'dp.test'
 
 	// OpenSSL attributes
-	private $hasOpenSLL = false;
+	private $hasOpenSSL = false;
 	private $cryptMethod = 'aes-256-ctr';
 	private $key;					// crypt key
 	private $prefprefix = 'ds';		// prefix for user pref keys: 'test' => 'ds.test'
@@ -92,7 +92,7 @@ class CryptLib extends TikiLib
 	function initSeed($phraseMD5)
 	{
 		if (extension_loaded('openssl')) {
-			$this->hasOpenSLL = true;
+			$this->hasOpenSSL = true;
 			$this->key = $phraseMD5;
 		}
 
@@ -110,7 +110,7 @@ class CryptLib extends TikiLib
 
 	function release()
 	{
-		if ($this->hasOpenSLL){
+		if ($this->hasOpenSSL){
 			$this->key = null;
 		}
 		if ($this->mcrypt != null) {
@@ -128,7 +128,7 @@ class CryptLib extends TikiLib
 	// Check if encryption is used (and not Base64)
 	function hasCrypt()
 	{
-		return $this->hasOpenSLL;
+		return $this->hasOpenSSL;
 	}
 
 	// Check if MCrypt module is available in case a conversion is needed
