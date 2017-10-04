@@ -90,7 +90,7 @@
 					{tr}Comma separated list of password domains, e.g.: Company ABC,Company XYZ{/tr}<br>
 					{tr}The user can add passwords for a registered password domain.{/tr}
 					{preference name=feature_password_domains}
-					{if $show_user_encyption_stats eq 'y'}
+					{if $prefs.feature_user_encryption eq 'y' and $show_user_encyption_stats eq 'y'}
 						{tr}Statistics for existing data:{/tr}
 						<ul>
 							<li>OpenSSL: {$user_encryption_stat_openssl}</li>
