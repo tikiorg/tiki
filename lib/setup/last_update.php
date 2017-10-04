@@ -9,6 +9,11 @@ if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
 	die('This script may only be included.');
 }
 
+if ($svn = $cachelib->getSerialized('svninfo')) {
+	$smarty->assign('svnrev', $svn['svnrev']);
+	$smarty->assign('lastup', $svn['lastup']);
+}
+
 if (is_readable('.svn')) {
 	$svn = array();
 	if (is_readable('.svn/entries')) {
@@ -54,6 +59,11 @@ if (is_readable('.svn')) {
 
 				// Release/Unlock the database afterwards
 				$handle->close();
+
+				$cachelib->cacheItem('svninfo', serialize([
+					'svnrev' => $svnrev,
+					'lastup' => $strDT
+				]));
 			}
 		}
 	}
