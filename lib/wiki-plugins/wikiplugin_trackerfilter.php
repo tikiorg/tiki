@@ -614,6 +614,9 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, array $listfields=ar
 		}
 		$fieldId = $field['fieldId'];
 		$res = array();
+		if (empty($formats)) {
+			$formats = array();
+		}
 		if (empty($formats[$fieldId])) { // default format depends on field type
 			switch ($field['type']){
 			case 'e':// category
