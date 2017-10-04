@@ -143,6 +143,10 @@
 		});
 	$( "#{{$id}}-div .checkbox_objects" ).on( "click", countChecked );
 	countChecked();
+	$('#listexecute-{{$iListExecute}}').submit(function(){
+		feedback(tr('Action is being executed, please wait.'));
+		$(this).tikiModal(" ");
+	});
 })();
 {/jq}
 {/if}
