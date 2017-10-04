@@ -112,3 +112,5 @@
 </div>
 
 <div id="pivotdetails_modal"></div>
+
+<input type="hidden" name="ticket" id="ticket" value="{$ticket}">
