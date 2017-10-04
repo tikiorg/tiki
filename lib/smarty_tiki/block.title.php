@@ -46,7 +46,11 @@ function smarty_block_title($params, $content, $template, &$repeat)
 	$current = current_object();
 
 	if ( ! isset($params['url']) ) {
-		$params['url'] = smarty_modifier_sefurl($current['object'], $current['type']);
+		if ($current) {
+			$params['url'] = smarty_modifier_sefurl($current['object'], $current['type']);
+		} else {
+			$params['url'] = $_SERVER['REQUEST_URI'];
+		}
 	}
 
 	$params['url'] = str_replace('"', '', $params['url']);
