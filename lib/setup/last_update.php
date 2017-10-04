@@ -12,6 +12,7 @@ if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
 if ($svn = $cachelib->getSerialized('svninfo')) {
 	$smarty->assign('svnrev', $svn['svnrev']);
 	$smarty->assign('lastup', $svn['lastup']);
+	return;
 }
 
 if (is_readable('.svn')) {
