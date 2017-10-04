@@ -790,7 +790,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, array $listfields=ar
 					$list1 = $handler->getItemList();
 					foreach ($list1 as $id => $option) {
 						$opt['id'] = $id;
-						$opt['name'] = $option;
+						$opt['name'] = html_entity_decode($option); // this will be escaped by smarty but already escaped from ItemLink
 						if (!empty($_REQUEST['f_'.$fieldId]) &&
 								((!is_array($_REQUEST['f_'.$fieldId]) &&
 										urldecode($_REQUEST['f_'.$fieldId]) == $id) ||
