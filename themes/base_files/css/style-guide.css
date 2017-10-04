@@ -184,19 +184,8 @@ Style guide
   display: inline-block;
   width: 85px;
 }
-.style-guide .forms .col-md-9 input,
-.style-guide .forms .col-md-9 > textarea,
-.style-guide .forms .col-md-9 > select {
-  width: 100%;
-  margin: 0 0 20px 0;
-}
 .style-guide .forms .col-md-9 label {
   display: block;
-}
-.style-guide .forms .col-md-9 input[type="checkbox"],
-.style-guide .forms .col-md-9 input[type="radio"] {
-  width: 18px;
-  margin: 0 5px 0 0;
 }
 .style-guide .forms .col-md-9 .has-error input {
   margin: 0;
@@ -210,6 +199,9 @@ Style guide
 .style-guide .forms .input .error:after {
   text-align: right;
   padding-right: 35px;
+}
+.style-guide .forms .input p:last-child input {
+  width: 200px;
 }
 .style-guide .lists .input input {
   width: 200px;
