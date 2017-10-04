@@ -3632,11 +3632,14 @@ class TrackerLib extends TikiLib
 		$query = "select tif.`value` from `tiki_tracker_item_fields` tif, `tiki_tracker_items` i, `tiki_tracker_fields` tf where i.`itemId`=? and i.`itemId`=tif.`itemId` and tf.`fieldId`=tif.`fieldId` and tf.`isMain`=? ORDER BY tf.`position`";
 		$result = $this->getOne($query, array( (int) $itemId, "y"));
 
-		if (is_numeric($result) && $this->get_main_field_type($trackerId) == 'r') {
+		$main_field_type = $this->get_main_field_type($trackerId);
+
+		if (in_array($main_field_type, ['r','q'])) {	// for ItemLink and AutoIncrement fields use the proper output method
 			$definition = Tracker_Definition::get($trackerId);
 			$field = $definition->getField($this->get_main_field($trackerId));
-			$handler = $this->get_field_handler($field);
-			$result = $handler->getItemLabel($result);
+			$item = $this->get_tracker_item($itemId);
+			$handler = $this->get_field_handler($field, $item);
+			$result = $handler->renderOutput(['list_mode' => 'csv']);
 		}
 
 		if (strlen($result) && $result{0} === '{') {
@@ -4928,7 +4931,7 @@ class TrackerLib extends TikiLib
 	 * );
 	 * </pre 
 	 * @param array $item - array('itemId1' => value1, 'itemid2' => value2)
-	 * @return class $tracker_field_handler - i.e. Tracker_Field_Text
+	 * @return Tracker_Field_Abstract $tracker_field_handler - i.e. Tracker_Field_Text
 	 */
 	public function get_field_handler($field, $item = array())
 	{
