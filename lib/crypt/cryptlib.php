@@ -540,26 +540,30 @@ class CryptLib extends TikiLib
 	{
 		$this->init();
 
-		$query = 'SELECT `prefName` , `value` FROM `tiki_user_preferences` WHERE `prefName` like \'dp.%\' and  `user` = ?';
-		$result = $this->query($query, array($login));
+		// Convert encrypted data, if OpenSSL is installed
+		if ($this->hasCrypt()) {
 
-		while ( $row = $result->fetchRow() ) {
-			$orgPrefName = $row['prefName'];
-			$storedPwdMCrypt64 = $row['value'];
+			$query = 'SELECT `prefName` , `value` FROM `tiki_user_preferences` WHERE `prefName` like \'dp.%\' and  `user` = ?';
+			$result = $this->query($query, array($login));
 
-			if ($this->hasMCrypt()) {
-				$cleartext = $this->decryptMcrypt($storedPwdMCrypt64);
+			while ( $row = $result->fetchRow() ) {
+				$orgPrefName = $row['prefName'];
+				$storedPwdMCrypt64 = $row['value'];
 
-				// Strip dp. from prefName
-				$prefName = str_replace('dp.', '', $orgPrefName);
+				if ($this->hasMCrypt()) {
+					$cleartext = $this->decryptMcrypt($storedPwdMCrypt64);
 
-				// Add new OpenSSL coded user data
-				$this->setUserData($prefName, $cleartext);
+					// Strip dp. from prefName
+					$prefName = str_replace('dp.', '', $orgPrefName);
+
+					// Add new OpenSSL coded user data
+					$this->setUserData($prefName, $cleartext);
+				}
+
+				// Delete old Mcrypt coded user data
+				$userPreferences = $this->table('tiki_user_preferences');
+				$userPreferences->delete(array('user' => $login, 'prefName' => $orgPrefName));
 			}
-
-			// Delete old Mcrypt coded user data
-			$userPreferences = $this->table('tiki_user_preferences');
-			$userPreferences->delete(array('user' => $login, 'prefName' => $orgPrefName));
 		}
 	}
 }
