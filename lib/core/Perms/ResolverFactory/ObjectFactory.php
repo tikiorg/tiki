@@ -24,8 +24,14 @@ class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 
 	function getHash( array $context )
 	{
-		if ( isset( $context['type'], $context['object'] ) ) {
-			return 'object:' . $context['type'] . $this->parent . ':' . $this->cleanObject($context['object']);
+		if (isset($context['type'], $context['object'])) {
+			// parent permissions of trackeritems should all go in one hash key, so they share the cache
+			// they are essentially the same for all trackeritems since they are tracker permissions
+			if ($context['type'] === 'trackeritem' && $this->parent && isset($context['parentId'])) {
+				return 'object:tracker:' . $this->cleanObject($context['parentId']);
+			} else {
+				return 'object:' . $context['type'] . $this->parent . ':' . $this->cleanObject($context['object']);
+			}
 		} else {
 			return '';
 		}
@@ -46,7 +52,7 @@ class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 		$hashes = array();
 
 		// Limit the amount of hashes preserved to reduce memory consumption
-		if (count($this->known) > 128) {
+		if (count($this->known) > 1024) {
 			$this->known = array();
 		}
 

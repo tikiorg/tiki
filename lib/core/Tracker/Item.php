@@ -206,7 +206,7 @@ class Tracker_Item
 	{
 		if (! $this->isNew()) {
 			$itemId = $this->info['itemId'];
-			return Perms::get('trackeritem', $itemId);
+			return Perms::get('trackeritem', $itemId, $this->info['trackerId']);
 		}
 	}
 

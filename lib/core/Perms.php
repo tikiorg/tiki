@@ -121,6 +121,7 @@ class Perms
 			$context = array(
 				'type' => $args[0],
 				'object' => $args[1],
+				'parentId' => isset($args[2]) ? $args[2] : null,
 			);
 		}
 
@@ -351,7 +352,7 @@ class Perms
 		}
 
 		// Limit the amount of hashes preserved to reduce memory consumption
-		if (count($this->hashes) > 128) {
+		if (count($this->hashes) > 1024) {
 			$this->hashes = array();
 		}
 

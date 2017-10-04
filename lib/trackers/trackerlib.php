@@ -993,29 +993,27 @@ class TrackerLib extends TikiLib
 			}
 			$query = "select ttif.`itemId` , ttif.`value` FROM `tiki_tracker_items` tti,`tiki_tracker_item_fields` ttif $join ";
 			$query.= " WHERE $mid and tti.`itemId` = ttif.`itemId` order by ".$this->convertSortMode($sort_mode);
-			$ret = $this->fetchAll($query, $bindvars);
+			$items = $this->fetchAll($query, $bindvars);
+			Perms::bulk(array('type' => 'trackeritem', 'parentId' => $trackerId), 'object', array_map(function($res){return $res['itemId'];}, $items));
+			$ret = array();
+			foreach ($items as $res) {
+				$itemId = $res['itemId'];
+				$itemObject = Tracker_Item::fromId($itemId);
+				if (! $itemObject) {
+					Feedback::error(tr('TrackerLib::get_all_items: No item for itemId %0', $itemId), 'session');
+				} else if ($itemObject->canView()) {
+					$ret[] = $res;
+				}
+			}
 			$cachelib->cacheItem($cacheKey, serialize($ret));
 		}
 
 		$ret2 = array();
 		foreach ($ret as $res) {
 			$itemId = $res['itemId'];
-
-			$itemObject = Tracker_Item::fromId($itemId);
-
-			if (! $itemObject) {
-
-				Feedback::error(tr('TrackerLib::get_all_items: No item for itemId %0', $itemId), 'session');
-
-			} else if ($itemObject->canView()) {
-
-				$field['value'] = $res['value'];
-
-				$rendered = $this->field_render_value(array('field' => $field, 'process' => 'y'));
-
-				$ret2[$itemId] = trim(strip_tags($rendered), " \t\n\r\0\x0B\xC2\xA0");
-			}
-
+			$field['value'] = $res['value'];
+			$rendered = $this->field_render_value(array('field' => $field, 'process' => 'y'));
+			$ret2[$itemId] = trim(strip_tags($rendered), " \t\n\r\0\x0B\xC2\xA0");
 		}
 		return $ret2;
 	}
