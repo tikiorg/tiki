@@ -480,7 +480,7 @@ function wikiplugin_pivottable($data, $params)
 				$cols[] = $colName;
 			}
 		}
-	} elseif( !empty($fields) ) {
+	} elseif( !empty($fields) && empty($params['rows']) ) {
 		$cols[] = $fields[0]['name'];
 	}
 	
