@@ -67,7 +67,7 @@ function wikiplugin_listexecute($data, $params)
 		$query->setOrder($_REQUEST[$paginationArguments['sort_arg']]);
 	}
 
-	if (is_array($_POST['objects'])) {
+	if (isset($_POST['objects']) && is_array($_POST['objects'])) {
 		$searchQuery = clone $query;
 		if (in_array('ALL', $_POST['objects'])) {
 			// unified search needs a hard limit and we want to apply the action to as many items as possible
