@@ -204,6 +204,9 @@ $('select[name=type]').change(function () {
 							{icon name="warning"} {tr}Changing the field type may cause irretrievable data loss - use with caution!{/tr}
 						</div>
 					{/if}
+					<div class="alert alert-info">
+						{icon name="information"} {tr}Make sure you rebuild search index if you change field type.{/tr}
+					</div>
 				</div>
 			{/if}
 		{/accordion_group}

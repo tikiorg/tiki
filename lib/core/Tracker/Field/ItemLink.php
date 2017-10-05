@@ -1157,6 +1157,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			$filter .= '&tracker_status='.(implode(' OR ', str_split($status)));
 		}
 
+		$tx = $trklib->begin();
 		$data = $trklib->fetchAll("SELECT tti.`itemId`, ttif.`value`
 			FROM `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif
 			WHERE tti.`trackerId` = ?
@@ -1178,6 +1179,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 				$relationlib->add_relation($relation, 'trackeritem', $itemId, 'trackeritem', $id);
 			}
 		}
+		$tx->commit();
 		return array(
 			'relation' => $relation,
 			'filter' => $filter,
