@@ -237,7 +237,7 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 		}
 		if ($params['relation'] != $this->getOption(self::OPT_RELATION)) {
 			$relationlib = TikiLib::lib('relation');
-			if ($relationlib->relation_exists($params['relation'])) {
+			if ($relationlib->relation_exists($params['relation'], 'trackeritem')) {
 				throw new Exception(tr("Relation %0 already exists", $params['relation']));
 			}
 		}
