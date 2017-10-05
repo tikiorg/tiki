@@ -74,6 +74,7 @@ $smarty->assign_by_ref('trackers', $trackers["data"]);
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 include_once ('tiki-section_options.php');
+$smarty->assign('title', tr('Trackers'));
 
 // Display the template
 $smarty->display("tiki-list_trackers.tpl");

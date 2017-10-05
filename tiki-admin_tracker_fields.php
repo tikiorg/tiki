@@ -46,6 +46,7 @@ $auto_query_args = array(
 	'find',
 	'max'
 );
+$tracker_info['pagetitle'] = tr('Tracker Fields %0', $tracker_info['name']);
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
 $smarty->assign('tracker_info', $tracker_info);
 

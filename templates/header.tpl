@@ -119,6 +119,8 @@
 				{$categ_info.name|escape}
 			{elseif !empty($userinfo.login)}
 				{$userinfo.login|username}
+			{elseif !empty($tracker_info.pagetitle)}
+				{$tracker_info.pagetitle|escape}
 			{elseif !empty($tracker_info.name)}
 				{$tracker_info.name|escape}
 			{elseif !empty($headtitle)}
