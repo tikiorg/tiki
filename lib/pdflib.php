@@ -733,8 +733,8 @@ class PdfGenerator
 	     
 		   if(file_exists("temp/#".$tid."_".session_id().".txt"))
            {
-			   $content=file_get_contents("temp/#".$tid."_".session_id().".txt");
-			   //formating content
+				$content=mb_convert_encoding(file_get_contents("temp/#".$tid."_".session_id().".txt"),'HTML-ENTITIES', 'UTF-8');
+				//formating content
 			   $tableTag="<".$tag;
 			      if ($table->hasAttributes()) {
                        foreach ($table->attributes as $attr) {
