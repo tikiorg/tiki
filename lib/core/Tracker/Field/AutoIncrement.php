@@ -55,6 +55,15 @@ class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract implements Trac
 						),
 						'legacy_index' => 3,
 					),
+					'update' => array(
+						'name' => tr('Update Empty'),
+						'description' => tr("Add auto-increment numbers to items in this tracker that don't have one one. ********** N.B. This modifies data and there is no undo **********"),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('No'),
+							1 => tr('Yes'),
+						),
+					),
 				),
 			),
 		);
@@ -176,6 +185,63 @@ class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract implements Trac
 			"{$baseKey}_text" => $typeFactory->sortable($prepend.$item.$append),
 		);
 		return $out;
+	}
+
+	// if we need to update after field save then do it here
+	function handleFieldSave($data)
+	{
+		if ($this->getOption('update')) {
+
+			$trklib = TikiLib::lib('trk');
+			$searchlib = TikiLib::lib('unifiedsearch');
+
+			$trackerId = $this->getConfiguration('trackerId');
+			$fieldId = $this->getConfiguration('fieldId');
+
+			$tiki_tracker_items = TikiDb::get()->table('tiki_tracker_items');
+			$tiki_tracker_item_fields = TikiDb::get()->table('tiki_tracker_item_fields');
+
+			$options = json_decode($data['options'], true);	// get the start index, might have been updated in the field save
+			$value = empty($options['start']) ? 1 : $options['start'];
+			$count = 0;
+
+			$itemIds = $tiki_tracker_items->fetchColumn(
+				'itemId',
+				['trackerId' => $trackerId],
+				-1,
+				0,
+				['created' => 'ASC']
+			);
+			$autoIncValues = $tiki_tracker_item_fields->fetchMap(
+				'itemId',
+				'value',
+				['fieldId' => $fieldId]
+			);
+
+			$tx = TikiDb::get()->begin();
+
+			foreach ($itemIds as $itemId) {
+				if (empty($autoIncValues[$itemId])) {
+					while (array_search($value, $autoIncValues) !== false) {
+						// this value already exists
+						$value++;
+					}
+
+					$trklib->modify_field($itemId, $fieldId, $value);
+					$searchlib->invalidateObject('trackeritem', $itemId);
+
+					$value++;
+					$count++;
+				}
+			}
+
+			$tx->commit();
+
+			if ($count) {
+				Feedback::warning(tr('Note: %0 auto-increment item values updated', $count), 'session');
+			}
+
+		}
 	}
 }
 

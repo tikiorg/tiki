@@ -376,26 +376,34 @@ class Services_Tracker_Controller
 				$type = $field['type'];
 			}
 
+			$data = [
+				'name' => $input->name->text(),
+				'description' => $input->description->text(),
+				'descriptionIsParsed' => $input->description_parse->int() ? 'y' : 'n',
+				'options' => $options,
+				'validation' => $input->validation_type->word(),
+				'validationParam' => $input->validation_parameter->none(),
+				'validationMessage' => $input->validation_message->text(),
+				'isMultilingual' => $input->multilingual->int() ? 'y' : 'n',
+				'visibleBy' => array_filter(array_map('trim', $visibleBy)),
+				'editableBy' => array_filter(array_map('trim', $editableBy)),
+				'isHidden' => $input->visibility->alpha(),
+				'errorMsg' => $input->error_message->text(),
+				'permName' => $permName,
+				'type' => $type,
+			];
+
 			$this->utilities->updateField(
 				$trackerId,
 				$fieldId,
-				array(
-					'name' => $input->name->text(),
-					'description' => $input->description->text(),
-					'descriptionIsParsed' => $input->description_parse->int() ? 'y' : 'n',
-					'options' => $options,
-					'validation' => $input->validation_type->word(),
-					'validationParam' => $input->validation_parameter->none(),
-					'validationMessage' => $input->validation_message->text(),
-					'isMultilingual' => $input->multilingual->int() ? 'y' : 'n',
-					'visibleBy' => array_filter(array_map('trim', $visibleBy)),
-					'editableBy' => array_filter(array_map('trim', $editableBy)),
-					'isHidden' => $input->visibility->alpha(),
-					'errorMsg' => $input->error_message->text(),
-					'permName' => $permName,
-					'type' => $type,
-				)
+				$data
 			);
+
+			// run field specific post save function
+			$handler = TikiLib::lib('trk')->get_field_handler($field);
+			if ($handler && method_exists($handler, 'handleFieldSave')) {
+				$handler->handleFieldSave($data);
+			}
 		}
 
 		array_walk($typeInfo['params'], function (& $param) {
