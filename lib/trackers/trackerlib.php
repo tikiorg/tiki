@@ -5003,10 +5003,10 @@ class TrackerLib extends TikiLib
 			if ( $simpleEmail == "n" ) {
 				$mail_main_value_fieldId = $this->get_main_field($trackerId);
 				$mail_main_value_field = $tracker_definition->getField($mail_main_value_fieldId);
-				if ($mail_main_value_field['type'] == 'r') {
-					// Item Link is special case as field value is not the displayed text. There might be other such field types.
+				if (in_array($mail_main_value_field['type'], ['r', 'q'])) {
+					// Item Link & auto-inc are special cases as field value is not the displayed text. There might be other such field types.
 					$handler = $this->get_field_handler($mail_main_value_field);
-					$desc = $handler->getItemLabel($this->get_item_value($trackerId, $itemId, $mail_main_value_fieldId));
+					$desc = $handler->renderOutput(['list_mode' => 'csv']);
 				} else {
 					$desc = $this->get_item_value($trackerId, $itemId, $mail_main_value_fieldId);
 				}
