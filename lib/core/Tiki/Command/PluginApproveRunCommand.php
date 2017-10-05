@@ -23,17 +23,17 @@ class PluginApproveRunCommand extends Command
 	{
 		$this
 			->setName('plugin:approve')
-			->setDescription('Approve a list of plugins')
+			->setDescription(tr('Approve a list of plugin invocations/calls'))
 			->addArgument(
 				'pluginFingerprints',
 				InputArgument::OPTIONAL,
-				'List fingerprints of the plugins to approve separated by comma'
+				tr('List fingerprints of the plugin invocations/calls to approve separated by commas')
 			)
 			->addOption(
 				'all',
 				null,
 				InputOption::VALUE_NONE,
-				'Approve all pending plugins'
+				tr('Approve all plugin invocations/calls')
 			);
 	}
 
@@ -46,15 +46,15 @@ class PluginApproveRunCommand extends Command
 		$all = $input->getOption('all');
 
 		if ($all) {
-			$logger->info(tra('Approving all pending plugins'));
+			$logger->info(tr('Approving all pending plugins'));
 			$parserLib->approve_all_pending_plugins();
 		} elseif ($pluginFingerprints) {
-			$logger->info(tra('Approving an list of plugins'));
+			$logger->info(tr('Approving a list of plugins'));
 			foreach (explode(',', $pluginFingerprints) as $fingerprint) {
 				$logger->debug(tr('Approving plugin %0', $fingerprint));
 				$parserLib->approve_selected_pending_plugings($fingerprint);
 			}
 		}
-		$logger->info(tra('Plugins approved with success'));
+		$logger->info(tr('Plugins approved with success'));
 	}
 }

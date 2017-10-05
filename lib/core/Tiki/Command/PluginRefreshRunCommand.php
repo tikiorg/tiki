@@ -21,7 +21,7 @@ class PluginRefreshRunCommand extends Command
 	{
 		$this
 			->setName('plugin:refresh')
-			->setDescription('Parses all the pages to refresh the list of plugins');
+			->setDescription(tr('Parses all the pages to refresh the list of plugin invocations/calls'));
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
@@ -29,8 +29,8 @@ class PluginRefreshRunCommand extends Command
 		$logger = new ConsoleLogger($output);
 
 		$parserLib = \TikiLib::lib('parser');
-		$parserLib->plugin_refresh();
+		$parserLib->pluginRefresh($logger);
 
-		$logger->info(tra('Plugin list refreshed with success'));
+		$logger->info(tr('Plugin list refreshed with success'));
 	}
 }

@@ -895,20 +895,20 @@ if ( \$('#$id') ) {
 	/**
 	 * Return a list of plugins by status
 	 *
-	 * @param string|array $status
+	 * @param string|array $statuses
 	 * @return array
 	 */
-	function list_plugins_by_status($status)
+	public function listPluginsByStatus($statuses)
 	{
-		if (! empty($status) && ! is_array($status)) {
-			$status = [$status];
+		if (! empty($statuses) && ! is_array($statuses)) {
+			$statuses = [$statuses];
 		}
 
 		$tikiLib = TikiLib::lib('tiki');
 		$pluginSecurity = $tikiLib->table('tiki_plugin_security');
 		return $pluginSecurity->fetchAll(
 			['fingerprint', 'added_by', 'last_update', 'last_objectType', 'last_objectId', 'status'],
-			['status' => $pluginSecurity->in($status)],
+			['status' => $pluginSecurity->in($statuses)],
 			-1,
 			-1,
 			['last_update' => 'DESC']
@@ -3718,11 +3718,13 @@ if ( \$('#$id') ) {
 
 	/**
 	 * Refresh the list of plugins that might require validation
+	 *
+	 * @param \Psr\Log\LoggerInterface|null $logger
 	 */
-	public function plugin_refresh()
+	public function pluginRefresh($logger = null)
 	{
 		$headerLib = \TikiLib::lib('header');
-		$tempHeaderLib = serialize($headerLib);	// cache headerlib so we can remove all js etc added by plugins
+		$tempHeaderLib = serialize($headerLib);    // cache headerlib so we can remove all js etc added by plugins
 
 		$access = \TikiLib::lib('access');
 		$access->check_feature('wiki_validate_plugin');
@@ -3737,6 +3739,9 @@ if ( \$('#$id') ) {
 
 		$pages = $tikiLib->list_pages();
 		foreach ($pages['data'] as $apage) {
+			if ($logger instanceof Psr\Log\LoggerInterface) {
+				$logger->debug(tr('Processing page: %0, is_html: %1', $apage['pageName'], $apage['is_html']));
+			}
 			$page = $apage['pageName'];
 			$parserLib->setOptions(
 				array(

@@ -22,12 +22,12 @@ class PluginListRunCommand extends Command
 	{
 		$this
 			->setName('plugin:list')
-			->setDescription('List all plugins usages approved/requiring approval')
+			->setDescription(tr('List all plugin invocations/calls'))
 			->addOption(
 				'pending',
 				null,
 				InputOption::VALUE_NONE,
-				'Shows only pending approval'
+				tr('Shows only invocations/calls pending approval')
 			);
 
 	}
@@ -40,7 +40,7 @@ class PluginListRunCommand extends Command
 
 		$parserLib = \TikiLib::lib('parser');
 
-		$pluginList = $parserLib->list_plugins_by_status($status);
+		$pluginList = $parserLib->listPluginsByStatus($status);
 		$pluginTotal = count($pluginList);
 
 		$table = new Table($output);
@@ -49,9 +49,14 @@ class PluginListRunCommand extends Command
 
 		if ($pluginTotal > 0) {
 			foreach ($pluginList as $plugin) {
+				$location = '';
+				if (! empty($plugin['last_objectType'])) {
+					$location = ucfirst($plugin['last_objectType']) . ": ";
+				}
+				$location .= $plugin['last_objectId'];
 				$rows[] = array(
 					$plugin['fingerprint'],
-					ucfirst($plugin['last_objectType']).(empty($plugin['last_objectType']) ? "" : ": ").$plugin['last_objectId'],
+					$location,
 					$plugin['added_by'],
 					$plugin['status'],
 				);

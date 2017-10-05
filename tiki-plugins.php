@@ -38,7 +38,7 @@ if (isset($_REQUEST['refresh'])) {
 	$old_max_execution_time = ini_get('max_execution_time');
 	$time_limit = new Tiki_TimeLimit(0);
 
-	$parserlib->plugin_refresh();
+	$parserlib->pluginRefresh();
 
 	ini_set('max_execution_time', $old_max_execution_time);
 }
