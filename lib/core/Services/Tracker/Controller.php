@@ -343,6 +343,17 @@ class Services_Tracker_Controller
 								unset($params[$param]);
 							}
 						}
+						// convert underneath data if field type supports it
+						$trklib = TikiLib::lib('trk');
+						$handler = $trklib->get_field_handler($field);
+						if (!$handler) {
+							throw new Services_Exception(tr('Field handler not found'), 400);
+						}
+						if (method_exists($handler, 'convertFieldTo')) {
+							$convertedOptions = $handler->convertFieldTo($type);
+							$params = array_merge($params, $convertedOptions);
+						}
+						// prepare options
 						$options = json_encode($params);
 					} else {
 						// clear options for unsupported field type changes

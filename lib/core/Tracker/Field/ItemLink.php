@@ -28,6 +28,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 				'prefs' => array('trackerfield_itemlink'),
 				'tags' => array('advanced'),
 				'default' => 'y',
+				'supported_changes' => array('REL'),
 				'params' => array(
 					'trackerId' => array(
 						'name' => tr('Tracker ID'),
@@ -290,39 +291,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			$status = implode(' OR ', str_split($this->getOption('status', 'opc'), 1));
 			$value = $value ? "trackeritem:$value" : null;
 
-			// the labels on the select will not necessarily be the title field, so offer the object_selector the correct format string
-			$displayFieldsListArray = $this->getDisplayFieldsListArray();
-			$definition = Tracker_Definition::get($this->getOption('trackerId'));
-			if (! $definition) {
-				$message = tr('ItemLink: Tracker %0 not found for field "%1"', $this->getOption('trackerId'), $this->getConfiguration('permName'));
-				return '<div class="alert alert-danger">' . $message . '</div>';	// display config errors instead of the field
-			}
-			if ($displayFieldsListArray) {
-				array_walk($displayFieldsListArray, function(& $field) use ($definition) {
-					$fieldArray = $definition->getField($field);
-					if (! $fieldArray) {
-						$message = tr('ItemLink: Field %0 not found for field "%1"', $field, $this->getConfiguration('permName'));
-						$field = '<div class="alert alert-danger">' . $message . '</div>';
-					} else {
-						$field = '{tracker_field_' . $this->getFieldReference($fieldArray) . '}';
-					}
-				});
-				if ($format = $this->getOption('displayFieldsListFormat')) {
-					$format = tra($format, '', false, $displayFieldsListArray);
-
-				} else {
-					$format = implode(' ', $displayFieldsListArray);
-				}
-			} else {
-				$fieldArray = $definition->getField($this->getOption('fieldId'));
-				if (! $fieldArray) {
-					$message = tr('ItemLink: Field %0 not found for field "%1"', $this->getOption('fieldId'), $this->getConfiguration('permName'));
-					$format = '<div class="alert alert-danger">' . $message . '</div>';
-				} else if (! $format = $this->getOption('displayFieldsListFormat')) {
-					$format = '{tracker_field_' . $this->getFieldReference($fieldArray) . '} (itemId:{object_id})';
-				}
-			}
-
+			$format = $this->formatForObjectSelector();
 
 			$template = $this->renderTemplate('trackerinput/itemlink_selector.tpl', $context, [
 				'placeholder' => $placeholder,
@@ -453,6 +422,44 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		}
 		
 		return $this->renderTemplate('trackerinput/itemlink.tpl', $context, $data);
+	}
+
+	/**
+	 * the labels on the select will not necessarily be the title field, so offer the object_selector the correct format string
+	 * also used to format the proper string for Relations field conversion which again uses object_selector
+	 */
+	private function formatForObjectSelector() {
+		$displayFieldsListArray = $this->getDisplayFieldsListArray();
+		$definition = Tracker_Definition::get($this->getOption('trackerId'));
+		if (! $definition) {
+			Feedback::error(tr('ItemLink: Tracker %0 not found for field "%1"', $this->getOption('trackerId'), $this->getConfiguration('permName')));
+			return '';
+		}
+		if ($displayFieldsListArray) {
+			array_walk($displayFieldsListArray, function(& $field) use ($definition) {
+				$fieldArray = $definition->getField($field);
+				if (! $fieldArray) {
+					$message = tr('ItemLink: Field %0 not found for field "%1"', $field, $this->getConfiguration('permName'));
+					$field = '<div class="alert alert-danger">' . $message . '</div>';
+				} else {
+					$field = '{tracker_field_' . $this->getFieldReference($fieldArray) . '}';
+				}
+			});
+			if ($format = $this->getOption('displayFieldsListFormat')) {
+				$format = tra($format, '', false, $displayFieldsListArray);
+			} else {
+				$format = implode(' ', $displayFieldsListArray);
+			}
+		} else {
+			$fieldArray = $definition->getField($this->getOption('fieldId'));
+			if (! $fieldArray) {
+				$message = tr('ItemLink: Field %0 not found for field "%1"', $this->getOption('fieldId'), $this->getConfiguration('permName'));
+				$format = '<div class="alert alert-danger">' . $message . '</div>';
+			} else if (! $format = $this->getOption('displayFieldsListFormat')) {
+				$format = '{tracker_field_' . $this->getFieldReference($fieldArray) . '} (itemId:{object_id})';
+			}
+		}
+		return $format;
 	}
 
 	/**
@@ -1107,6 +1114,75 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		}
 
 		return $collection;
+	}
+
+	/**
+	 * Convert all items data to the only supported field type: Relations
+	 * This needs to be quick as it can run on potentially huge dataset, thus the raw db layer.
+	 * Also converts the relevant field options which are:
+	 *  - relation = trackername.fieldpermname.items
+	 *  - filter = ItemLink trackerId, trackeritem object type and status filter if different than all
+	 *  - format = converts multiple fields and format (if any) or uses the selected display field
+	 *
+	 * @param string $type - the field type to convert to
+	 * @return array - converted field options
+	 * @throws Exception
+	 */
+	public function convertFieldTo($type) {
+		if ($type !== 'REL') {
+			throw new Exception(tr("Unsupported field conversion type: from %0 to %1", $this->getConfiguration('type'), $type));
+		}
+
+		$trklib = TikiLib::lib('trk');
+		$relationlib = TikiLib::lib('relation');
+
+		$trackerId = $this->getConfiguration('trackerId');
+		$fieldId = $this->getConfiguration('fieldId');
+
+		$tracker = $trklib->get_tracker($trackerId);
+
+		$relation = preg_replace("/[^a-z0-9]/", "", strtolower($tracker['name']));
+		$relation .= '.' . strtolower($this->getConfiguration('permName'));
+		$relation .= '.' . 'items';
+
+		$suffix = 1;
+		while ($relationlib->get_relation_count($relation, 'trackeritem') || $relationlib->get_relation_count($relation, 'trackeritem', null, true)) {
+			$relation = rtrim($relation, '0..9').($suffix++);
+		}
+
+		$format = $this->formatForObjectSelector();
+		$filter = 'tracker_id='.$trackerId.'&object_type=trackeritem';
+		$status = $this->getOption('status');
+		if ($status != 'opc') {
+			$filter .= '&tracker_status='.(implode(' OR ', str_split($status)));
+		}
+
+		$data = $trklib->fetchAll("SELECT tti.`itemId`, ttif.`value`
+			FROM `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif
+			WHERE tti.`trackerId` = ?
+				AND tti.`itemId` = ttif.`itemId`
+				AND ttif.`fieldId` = ?", array($trackerId, $fieldId));
+		foreach ($data as $row) {
+			$itemId = $row['itemId'];
+			$remoteIds = array_filter(explode(',', trim($row['value'])));
+			$value = implode("\n",
+				array_map(function($v){
+					return "trackeritem:".trim($v);
+				}, $remoteIds)
+			);
+			$trklib->table('tiki_tracker_item_fields')->update(
+				array('value' => $value),
+				array('itemId' => $itemId, 'fieldId' => $fieldId)
+			);
+			foreach ($remoteIds as $id) {
+				$relationlib->add_relation($relation, 'trackeritem', $itemId, 'trackeritem', $id);
+			}
+		}
+		return array(
+			'relation' => $relation,
+			'filter' => $filter,
+			'format' => $format
+		);
 	}
 
 	/**

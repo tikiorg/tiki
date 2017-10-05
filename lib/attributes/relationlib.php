@@ -217,7 +217,7 @@ class RelationLib extends TikiDb_Bridge
 	 * @param $get_invert default=false
 	 * @return int
 	 */
-	function get_relation_count($relation, $type, $object, $get_invert=false )
+	function get_relation_count($relation, $type, $object = null, $get_invert=false )
 	{
 		$relation = TikiFilter::get('attribute_type')->filter($relation);
 
@@ -227,19 +227,19 @@ class RelationLib extends TikiDb_Bridge
 
 		if ( $get_invert ) {
 			$count = $this->table->fetchCount(
-				array(
+				array_filter(array(
 					'relation' => $relation,
 					'source_type' => $type,
 					'source_itemId' => $object,
-				)
+				))
 			);
 		} else {
 			$count = $this->table->fetchCount(
-				array(
+				array_filter(array(
 					'relation' => $relation,
 					'target_type' => $type,
 					'target_itemId' => $object,
-				)
+				))
 			);
 		}
 		return $count;
