@@ -3656,12 +3656,12 @@ class TrackerLib extends TikiLib
 
 	public function get_main_field_type($trackerId)
 	{
-		return $this->fields()->fetchOne('type', array('isMain' => 'y', 'trackerId' => $trackerId));
+		return $this->fields()->fetchOne('type', ['isMain' => 'y', 'trackerId' => $trackerId], ['position' => 'ASC']);
 	}
 
 	public function get_main_field($trackerId)
 	{
-		return $this->fields()->fetchOne('fieldId', array('isMain' => 'y', 'trackerId' => $trackerId));
+		return $this->fields()->fetchOne('fieldId', ['isMain' => 'y', 'trackerId' => $trackerId], ['position' => 'ASC']);
 	}
 
 	public function categorized_item($trackerId, $itemId, $mainfield, $ins_categs, $parent_categs_only = array(), $override_perms = false, $managed_fields = null)
