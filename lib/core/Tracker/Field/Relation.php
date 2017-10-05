@@ -224,6 +224,49 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 	{
 	}
 
+	/**
+	 * Restrict some field option changes that can have potentially bad side effects.
+	 * E.g. changing relation to an already existing one.
+	 *
+	 * @param $params - array of field options
+	 * @throws Services_Exception
+	 */
+	public function validateFieldOptions($params) {
+		if (empty($params['relation'])) {
+			return;
+		}
+		if ($params['relation'] != $this->getOption(self::OPT_RELATION)) {
+			$relationlib = TikiLib::lib('relation');
+			if ($relationlib->relation_exists($params['relation'])) {
+				throw new Exception(tr("Relation %0 already exists", $params['relation']));
+			}
+		}
+	}
+
+	/**
+	 * Update existing data in relations table when changing the relation name.
+	 * Used when updating field options.
+	 *
+	 * @param $params - array of field options
+	 */
+	public function convertFieldOptions($params) {
+		if (empty($params['relation'])) {
+			return;
+		}
+		if ($params['relation'] != $this->getOption(self::OPT_RELATION)) {
+			$relationlib = TikiLib::lib('relation');
+			$relationlib->update_relation($this->getOption(self::OPT_RELATION), $params['relation']);
+		}
+	}
+
+	/**
+	 * When Relation field is removed, clean up the relations table.
+	 */
+	public function handleFieldRemove() {
+		$relationlib = TikiLib::lib('relation');
+		$relationlib->remove_relation_type($this->getOption(self::OPT_RELATION));
+	}
+
 	private function prepareRefreshRelated($target)
 	{
 		$itemId = $this->getItemId();

@@ -326,6 +326,20 @@ class Services_Tracker_Controller
 
 			$options = $this->utilities->buildOptions($input->option, $typeInfo);
 
+			$trklib = TikiLib::lib('trk');
+			$handler = $trklib->get_field_handler($field);
+			if (!$handler) {
+				throw new Services_Exception(tr('Field handler not found'), 400);
+			}
+			if (method_exists($handler, 'validateFieldOptions')) {
+				try {
+					$params = $this->utilities->parseOptions($options, $typeInfo);
+					$handler->validateFieldOptions($params);
+				} catch(Exception $e) {
+					throw new Services_Exception($e->getMessage(), 400);
+				}
+			}
+
 			if (!empty($types)) {
 				$type = $input->type->text();
 				if ($field['type'] !== $type) {
@@ -344,11 +358,6 @@ class Services_Tracker_Controller
 							}
 						}
 						// convert underneath data if field type supports it
-						$trklib = TikiLib::lib('trk');
-						$handler = $trklib->get_field_handler($field);
-						if (!$handler) {
-							throw new Services_Exception(tr('Field handler not found'), 400);
-						}
 						if (method_exists($handler, 'convertFieldTo')) {
 							$convertedOptions = $handler->convertFieldTo($type);
 							$params = array_merge($params, $convertedOptions);
@@ -359,6 +368,9 @@ class Services_Tracker_Controller
 						// clear options for unsupported field type changes
 						$options = json_encode(array());
 					}
+				} elseif (method_exists($handler, 'convertFieldOptions')) {
+					$params = $this->utilities->parseOptions($options, $typeInfo);
+					$handler->convertFieldOptions($params);
 				}
 			} else {
 				$type = $field['type'];

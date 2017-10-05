@@ -1146,7 +1146,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		$relation .= '.' . 'items';
 
 		$suffix = 1;
-		while ($relationlib->get_relation_count($relation, 'trackeritem') || $relationlib->get_relation_count($relation, 'trackeritem', null, true)) {
+		while ($relationlib->relation_exists($relation, 'trackeritem')) {
 			$relation = rtrim($relation, '0..9').($suffix++);
 		}
 
