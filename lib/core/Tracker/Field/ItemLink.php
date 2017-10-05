@@ -517,7 +517,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		}
 	}
 
-	function renderInnerOutput($context = []) {
+	protected function renderInnerOutput($context = []) {
 
 		$item = $this->getValue();
 
