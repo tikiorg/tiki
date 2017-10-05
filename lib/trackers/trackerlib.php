@@ -5033,6 +5033,19 @@ class TrackerLib extends TikiLib
 				}
 				$smarty->assign('mail_machine_raw', $this->httpPrefix(true). implode('/', $parts));
 				$smarty->assign_by_ref('status', $new_values['status']);
+				$smarty->assign_by_ref('status_old', $old_values['status']);
+				// expose the pretty tracker fields to the email tpls
+				foreach ($tracker_definition->getFields() as $field) {
+					$fieldId = $field['fieldId'];
+					$old_value = isset($old_values[$fieldId]) ? $old_values[$fieldId] : '';
+					$new_value = isset($new_values[$fieldId]) ? $new_values[$fieldId] : '';
+					$smarty->assign('f_' . $fieldId, $new_value);
+					$smarty->assign('f_' . $field['permName'], $new_value);
+					$smarty->assign('f_old_' . $fieldId, $old_value);
+					$smarty->assign('f_old_' . $field['permName'], $old_value);
+					$smarty->assign('f_name_' . $fieldId, $field['name']);
+					$smarty->assign('f_name_' . $field['permName'], $field['name']);
+				}
 				foreach ($watchers as $watcher) {
 					$watcher['language'] = $this->get_user_preference($watcher['user'], 'language', $prefs['site_language']);
 					$label = $itemId ? tra('Item Modification', $watcher['language']) : tra('Item creation', $watcher['language']);
