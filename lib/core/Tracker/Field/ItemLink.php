@@ -1138,6 +1138,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 		$trackerId = $this->getConfiguration('trackerId');
 		$fieldId = $this->getConfiguration('fieldId');
+		$remoteTrackerId = $this->getOption('trackerId');
 
 		$tracker = $trklib->get_tracker($trackerId);
 
@@ -1151,7 +1152,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		}
 
 		$format = $this->formatForObjectSelector();
-		$filter = 'tracker_id='.$trackerId.'&object_type=trackeritem';
+		$filter = 'tracker_id='.$remoteTrackerId.'&object_type=trackeritem';
 		$status = $this->getOption('status');
 		if ($status != 'opc') {
 			$filter .= '&tracker_status='.(implode(' OR ', str_split($status)));
