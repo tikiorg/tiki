@@ -1,10 +1,16 @@
+{$showdescriptions = false}
+{foreach from=$data.files item=file}
+	{if not empty($file.description|escape)}
+		{$showdescriptions = true}
+	{/if}
+{/foreach}
 <div id="display_f{$field.fieldId|escape}" class="files display_f{$field.fieldId|escape}">
 	<table class="table table-striped table-hover">
 		<thead>
 		<tr>
 			<th>{tr}File{/tr}</th>
 			<th>{tr}Date{/tr}</th>
-			<th>{tr}Description{/tr}</th>
+			{if $showdescriptions}<th>{tr}Description{/tr}</th>{/if}
 		</tr>
 		</thead>
 		<tbody>
@@ -15,7 +21,7 @@
 					{object_link type="file" id=$file.fileId title=$file.name}
 				</td>
 				<td>{$file.lastModif|tiki_short_datetime}</td>
-				<td>{$file.description|escape}</td>
+				{if $showdescriptions}<td>{$file.description|escape}</td>{/if}
 			</tr>
 		{/foreach}
 		</tbody>
