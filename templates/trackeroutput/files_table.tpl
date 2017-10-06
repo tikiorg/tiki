@@ -4,7 +4,7 @@
 		{$showdescriptions = true}
 	{/if}
 {/foreach}
-<div id="display_f{$field.fieldId|escape}" class="files display_f{$field.fieldId|escape}">
+<div id="display_f{$field.fieldId|escape}" class="files-field display_f{$field.fieldId|escape}">
 	<table class="table table-striped table-hover">
 		<thead>
 		<tr>
