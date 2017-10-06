@@ -97,7 +97,7 @@
 				$field.input_csv('add', ',', fileId);
 
 				li.prepend($.fileTypeIcon(fileId, { type: type, name: name }));
-				li.append($('<label class="file-delete-icon">{{icon name='delete'}}</label>'));
+				li.append($('<a class="file-delete-icon">{{icon name='delete'}}</a>'));
 
 				if (replaceFile && $self.data('firstfile') > 0) {
 					li.prev('li').remove();
@@ -166,6 +166,7 @@
 					$field.change();
 					toggleWarning();
 				}
+				return false;
 			});
 
 			$url.keypress(function (e) {
