@@ -138,6 +138,7 @@ function smarty_function_user_registration($params, $smarty)
 							'outputwiki' => $outputwiki,
 							'outputtowiki' => $outputtowiki,
 							'chosenGroup' => $chosenGroup,
+							'skipUserCreation' => 'y',
 						));
 				} else {
 					$userTrackerData = wikiplugin_tracker('',
@@ -154,6 +155,7 @@ function smarty_function_user_registration($params, $smarty)
 							'outputwiki' => $outputwiki,
 							'outputtowiki' => $outputtowiki,
 							'chosenGroup' => $chosenGroup,
+							'skipUserCreation' => 'y',
 						));
 				}
 			} else {
@@ -168,6 +170,7 @@ function smarty_function_user_registration($params, $smarty)
 						'registration' => 'y',
 						'userField' => $re['usersFieldId'],
 						'chosenGroup' => $chosenGroup,
+						'skipUserCreation' => 'y',
 					)
 				);
 			}

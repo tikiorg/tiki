@@ -1149,7 +1149,8 @@ function wikiplugin_tracker($data, $params)
 									'registration' => $registration, 'registrationTrackerId' => $registrationTrackerId,
 									'validateusers' => $validateusers, 'status' => $status,
 									'ins_fields' => $ins_fields, 'itemId' => $itemId,
-									'ins_categs' => $ins_categs, 'newItemRate' => $newItemRate
+									'ins_categs' => $ins_categs, 'newItemRate' => $newItemRate,
+									'skipUserCreation' => !empty($skipUserCreation) && $skipUserCreation == 'y',
 									);
 				//-- check if we are in a transaction
 				if (isset($transactionName)) {
@@ -2118,7 +2119,7 @@ function wikiplugin_tracker_save($trackerSavedState)
 	}
 	
 	/* ---------------- check registration and create new user if requested ---------------- */
-	if (isset($registration) && $registration == 'y' && isset($request['register'])) {
+	if (isset($registration) && $registration == 'y' && isset($request['register']) && empty($skipUserCreation)) {
 		$registrationlib = TikiLib::lib('registration');
 		$req = $request;
 		// if $chosenGroup was empty, we could try to guess it
