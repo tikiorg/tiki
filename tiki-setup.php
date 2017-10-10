@@ -772,8 +772,8 @@ if ($prefs['print_pdf_from_url'] != 'none') {
 	$headerlib->add_jsfile('lib/jquery_tiki/pdf.js');
 }
 
-if (file_exists('storage/lib/setup/custom.php')) {
-	include_once('storage/lib/setup/custom.php');
+if (file_exists('_custom/lib/setup/custom.php')) {
+	include_once('_custom/lib/setup/custom.php');
 }
 
 // any furher $headerlib->add_js() call not using rank = 'external' will be put into rank 'late'
