@@ -7012,9 +7012,13 @@ input:focus {
   color: #ffffff;
   opacity: 1;
 }
+.alert a:not(.close),
 .alert .alert-link {
   color: #ffffff;
   text-decoration: underline;
+}
+.alert .close {
+  color: #ffffff;
 }
 .progress {
   height: 10px;
