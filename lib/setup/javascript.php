@@ -158,67 +158,69 @@ if (inArray(m, allTimeZoneCodes)) {
 ', 2
 );
 
-	$js = '
-// JS Object to hold prefs for jq
-var jqueryTiki = new Object();
-jqueryTiki.ui = '.($prefs['feature_jquery_ui'] == 'y' ? 'true' : 'false') . ';
-jqueryTiki.ui_theme = "'.$prefs['feature_jquery_ui_theme'].'";
-jqueryTiki.tooltips = '.($prefs['feature_jquery_tooltips'] == 'y' ? 'true' : 'false') . ';
-jqueryTiki.autocomplete = '.($prefs['feature_jquery_autocomplete'] == 'y' ? 'true' : 'false') . ';
-jqueryTiki.superfish = '.($prefs['feature_jquery_superfish'] == 'y' ? 'true' : 'false') . ';
-jqueryTiki.reflection = '.($prefs['feature_jquery_reflection'] == 'y' ? 'true' : 'false') . ';
-jqueryTiki.tablesorter = '.($prefs['feature_jquery_tablesorter'] == 'y' ? 'true' : 'false') . ';
-jqueryTiki.colorbox = '.($prefs['feature_shadowbox'] == 'y' ? 'true' : 'false') . ';
-jqueryTiki.cboxCurrent = "{current} / {total}";
-jqueryTiki.sheet = '.($prefs['feature_sheet'] == 'y' ? 'true' : 'false') . ';
-jqueryTiki.carousel = '.($prefs['feature_jquery_carousel'] == 'y' ? 'true' : 'false') . ';
-jqueryTiki.validate = '.($prefs['feature_jquery_validation'] == 'y' ? 'true' : 'false') . ';
-jqueryTiki.zoom = '.($prefs['feature_jquery_zoom'] == 'y' ? 'true' : 'false') . ';
+	$jqueryTiki['ui'] = $prefs['feature_jquery_ui'] === 'y' ? true : false;
+	$jqueryTiki['ui_theme'] = $prefs['feature_jquery_ui_theme'];
+	$jqueryTiki['tooltips'] = $prefs['feature_jquery_tooltips'] === 'y' ? true : false;
+	$jqueryTiki['autocomplete'] = $prefs['feature_jquery_autocomplete'] === 'y' ? true : false;
+	$jqueryTiki['superfish'] = $prefs['feature_jquery_superfish'] === 'y' ? true : false;
+	$jqueryTiki['reflection'] = $prefs['feature_jquery_reflection'] === 'y' ? true : false;
+	$jqueryTiki['tablesorter'] = $prefs['feature_jquery_tablesorter'] === 'y' ? true : false;
+	$jqueryTiki['colorbox'] = $prefs['feature_shadowbox'] === 'y' ? true : false;
+	$jqueryTiki['cboxCurrent'] = "{current} / {total}";
+	$jqueryTiki['sheet'] = $prefs['feature_sheet'] === 'y' ? true : false;
+	$jqueryTiki['carousel'] = $prefs['feature_jquery_carousel'] === 'y' ? true : false;
+	$jqueryTiki['validate'] = $prefs['feature_jquery_validation'] === 'y' ? true : false;
+	$jqueryTiki['zoom'] = $prefs['feature_jquery_zoom'] === 'y' ? true : false;
 
-jqueryTiki.effect = "'.$prefs['jquery_effect'].'";				// Default effect
-jqueryTiki.effect_direction = "'.$prefs['jquery_effect_direction'].'";	// "horizontal" | "vertical" etc
-jqueryTiki.effect_speed = '.($prefs['jquery_effect_speed'] == 'normal' ? '400' : '"'.$prefs['jquery_effect_speed'].'"').';	// "slow" | "normal" | "fast" | milliseconds (int) ]
-jqueryTiki.effect_tabs = "'.$prefs['jquery_effect_tabs'].'";		// Different effect for tabs
-jqueryTiki.effect_tabs_direction = "'.$prefs['jquery_effect_tabs_direction'].'";
-jqueryTiki.effect_tabs_speed = '.($prefs['jquery_effect_tabs_speed'] == 'normal' ? '400' : '"'.$prefs['jquery_effect_tabs_speed'].'"').';
-jqueryTiki.home_file_gallery = "'.$prefs['home_file_gallery'].'";
+	// Default effect
+	$jqueryTiki['effect'] = $prefs['jquery_effect'];
+	// "horizontal" | "vertical" etc
+	$jqueryTiki['effect_direction'] = $prefs['jquery_effect_direction'];
+	// "slow" | "normal" | "fast" | milliseconds (int) ]
+	$jqueryTiki['effect_speed'] = $prefs['jquery_effect_speed'] === 'normal' ? '400' : $prefs['jquery_effect_speed'];
+	$jqueryTiki['effect_tabs'] = $prefs['jquery_effect_tabs'];		// Different effect for tabs
+	$jqueryTiki['effect_tabs_direction'] = $prefs['jquery_effect_tabs_direction'];
+	$jqueryTiki['effect_tabs_speed'] = $prefs['jquery_effect_tabs_speed'] === 'normal' ? '400' : $prefs['jquery_effect_tabs_speed'];
+	$jqueryTiki['home_file_gallery'] = $prefs['home_file_gallery'];
 
-jqueryTiki.autosave = '.($prefs['ajax_autosave'] == 'y' ? 'true' : 'false') . ';
-jqueryTiki.sefurl = '.($prefs['feature_sefurl'] == 'y' ? 'true' : 'false') . ';
-jqueryTiki.ajax = '.($prefs['feature_ajax'] == 'y' ? 'true' : 'false') . ';
-jqueryTiki.syntaxHighlighter = '.($prefs['feature_syntax_highlighter'] == 'y' ? 'true' : 'false') . ';
-jqueryTiki.chosen = '.($prefs['jquery_ui_chosen'] == 'y' ? 'true' : 'false') . ';
-jqueryTiki.mapTileSets = ' . json_encode($tikilib->get_preference('geo_tilesets', array('openstreetmap'), true)) . ';
-jqueryTiki.infoboxTypes = ' . json_encode(Services_Object_Controller::supported()) . ';
-jqueryTiki.googleStreetView = '.($prefs['geo_google_streetview'] == 'y' ? 'true' : 'false') . ';
-jqueryTiki.googleStreetViewOverlay = '.($prefs['geo_google_streetview_overlay'] == 'y' ? 'true' : 'false') . ';
-jqueryTiki.structurePageRepeat = '.($prefs['page_n_times_in_a_structure'] == 'y' ? 'true' : 'false') . ';
-jqueryTiki.mobile = '.((isset($prefs['mobile_mode']) && $prefs['mobile_mode'] == 'y') ? 'true' : 'false') . ';
-jqueryTiki.no_cookie = false;
-jqueryTiki.language = "' . $prefs['language'] . '";
-jqueryTiki.useInlineComment = '.($prefs['feature_inline_comments'] === 'y' ? 'true' : 'false') . ';
-jqueryTiki.helpurl = "' . ($prefs['feature_help'] === 'y' ? $prefs['helpurl'] : '') . '";
-jqueryTiki.shortDateFormat = "'.$prefs['short_date_format_js'].'";
-jqueryTiki.shortTimeFormat = "'.$prefs['short_time_format_js'].'";
-jqueryTiki.username = ' . json_encode($user) . ';
-jqueryTiki.userRealName = ' . json_encode(TikiLib::lib('user')->clean_user($user)) . ';
-jqueryTiki.userAvatar = "' . $base_url . TikiLib::lib('userprefs')->get_public_avatar_path($user) . '";
-jqueryTiki.autoToc_inline = ' . (($prefs['wiki_inline_auto_toc'] == 'y') ? 'true' : 'false') . ';
-jqueryTiki.autoToc_pos = "' . $prefs['wiki_toc_pos'] . '";
-jqueryTiki.autoToc_offset = ' . (!empty($prefs['wiki_toc_offset']) ? $prefs['wiki_toc_offset'] : 10) . ';
-';
+	$jqueryTiki['autosave'] = $prefs['ajax_autosave'] === 'y' ? true : false;
+	$jqueryTiki['sefurl'] = $prefs['feature_sefurl'] === 'y' ? true : false;
+	$jqueryTiki['ajax'] = $prefs['feature_ajax'] === 'y' ? true : false;
+	$jqueryTiki['syntaxHighlighter'] = $prefs['feature_syntax_highlighter'] === 'y' ? true : false;
+	$jqueryTiki['chosen'] = $prefs['jquery_ui_chosen'] === 'y' ? true : false;
+	$jqueryTiki['mapTileSets'] = $tikilib->get_preference('geo_tilesets', array('openstreetmap'), true);
+	$jqueryTiki['infoboxTypes'] = Services_Object_Controller::supported();
+	$jqueryTiki['googleStreetView'] = $prefs['geo_google_streetview'] === 'y' ? true : false;
+	$jqueryTiki['googleStreetViewOverlay'] = $prefs['geo_google_streetview_overlay'] === 'y' ? true : false;
+	$jqueryTiki['structurePageRepeat'] = $prefs['page_n_times_in_a_structure'] === 'y' ? true : false;
+	$jqueryTiki['mobile'] = $prefs['mobile_mode'] === 'y' ? true : false;
+	$jqueryTiki['no_cookie'] = false;
+	$jqueryTiki['language'] = $prefs['language'];
+	$jqueryTiki['useInlineComment'] = $prefs['feature_inline_comments'] === 'y' ? true : false;
+	$jqueryTiki['helpurl'] = $prefs['feature_help'] === 'y' ? $prefs['helpurl'] : '';
+	$jqueryTiki['shortDateFormat'] = $prefs['short_date_format_js'];
+	$jqueryTiki['shortTimeFormat'] = $prefs['short_time_format_js'];
+	$jqueryTiki['username'] = $user;
+	$jqueryTiki['userRealName'] = TikiLib::lib('user')->clean_user($user);
+	$jqueryTiki['userAvatar'] = $base_url . TikiLib::lib('userprefs')->get_public_avatar_path($user);
+	$jqueryTiki['autoToc_inline'] = $prefs['wiki_inline_auto_toc'] === 'y' ? true : false;
+	$jqueryTiki['autoToc_pos'] = $prefs['wiki_toc_pos'];
+	$jqueryTiki['autoToc_offset'] = $prefs['wiki_toc_offset'];
 
 	if (empty($object)) {
 		$object = current_object();
 	}
-	$js .= "jqueryTiki.current_object = " . json_encode($object) . ";\n";
+	$jqueryTiki['current_object'] = $object;
 
 
 	if ($prefs['feature_calendar'] === 'y') {
 		$calendarlib = TikiLib::lib('calendar');
-		$firstDayofWeek = $calendarlib->firstDayofWeek();
-		$js .= "jqueryTiki.firstDayofWeek = $firstDayofWeek;\n";
+		$jqueryTiki['firstDayofWeek'] = $calendarlib->firstDayofWeek();
 	}
+
+	$js = '
+// JS Object to hold prefs for jq
+var jqueryTiki = ' . json_encode($jqueryTiki) . "\n";
 
 	if ($prefs['feature_syntax_highlighter'] !== 'y') {
 		// add a dummy syntaxHighlighter object as it seems to be used all over the place without checking for the feature
