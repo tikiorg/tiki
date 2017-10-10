@@ -7,7 +7,7 @@
 
 require_once('tiki-setup.php');
 
-global $base_host, $prefs, $tikipath;
+global $base_url, $prefs, $tikipath;
 
 $access->check_permission('tiki_p_admin');
 $access->check_feature('sitemap_enable');
@@ -16,14 +16,14 @@ $sitemap = new Tiki\Sitemap\Generator();
 
 if (isset($_REQUEST['rebuild'])) {
 
-	$sitemap->generate($base_host);
+	$sitemap->generate($base_url);
 
 	Feedback::success(tr('New sitemap created!'), 'session');
 	$access->redirect('tiki-admin_sitemap.php');
 }
 
 $smarty->assign('title', tr('Sitemap'));
-$smarty->assign('url', $base_host . '/' . $sitemap->getSitemapPath());
+$smarty->assign('url', $base_url . $sitemap->getSitemapPath());
 $smarty->assign('sitemapAvailable', file_exists($sitemap->getSitemapPath(false)));
 $smarty->assign('mid', 'tiki-admin_sitemap.tpl');
 $smarty->display('tiki.tpl');
