@@ -57,10 +57,15 @@ class Generator
 	 */
 	public function generate($baseUrl)
 	{
+		global $user;
+
 		/** @var \Perms $perms */
 		$perms = Perms::getInstance();
 		$oldGroups = $perms->getGroups();
+		$loggedUser = $user;
+
 		$perms->setGroups(['Anonymous']); // ensure that permissions are processed as Anonymous
+		$user = null;
 
 		$sitemap = new Sitemap($baseUrl);
 		$sitemap->setPath($this->basePath . self::RELATIVE_PATH);
@@ -95,7 +100,9 @@ class Generator
 
 		$sitemap->createSitemapIndex($baseUrl . '/' . self::RELATIVE_PATH, date('Y-m-d'));
 
-		$perms->setGroups($oldGroups); // restore the group configuration for permissions
+		$user = $loggedUser; // restore the configuration for permissions
+		$perms->setGroups($oldGroups);
+
 	}
 
 	/**
