@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2017 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -12,13 +12,11 @@ function prefs_layout_list()
 			'name' => tra('Layout width'),
 			'description' => tra('Constrains the width of the content area of the site.'),
 			'type' => 'text',
-			'units' => tra('pixels'),
 			'hint' => tra('for example, 960px'),
 			'dependencies' => array(
 				'feature_fixed_width',
 			),
-			'default' => '1170',
-			'filter' => 'digits',
+			'default' => '1170px',
 		),
 		'layout_tabs_optional' => array(
 			'name' => tra('Tabs optional'),
