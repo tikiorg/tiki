@@ -205,7 +205,7 @@ $('select[name=type]').change(function () {
 						</div>
 					{/if}
 					<div class="alert alert-info">
-						{icon name="information"} {tr}Make sure you rebuild search index if you change field type.{/tr}
+						{icon name="information"} {tr}Make sure you rebuild the search index if you change field type.{/tr}
 					</div>
 				</div>
 			{/if}
