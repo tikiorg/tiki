@@ -61,6 +61,8 @@ if (is_readable('.svn')) {
 				// Release/Unlock the database afterwards
 				$handle->close();
 
+				// Cache findings and reuse to prevent considerable performance degradation in some environments (e.g. Windows host on a virtual machine)
+				// Cache is invalidated upon full cache clear which is a normal procedure after updating svn source
 				$cachelib->cacheItem('svninfo', serialize([
 					'svnrev' => $svnrev,
 					'lastup' => $strDT
