@@ -92,7 +92,8 @@ class LanguageTranslationsTest extends TikiTestCase
 		TikiDb::get()->query('DELETE FROM `tiki_language` WHERE `lang` = ? AND `source` = ?', array($this->lang, 'New string'));
 	}
 
-	public function testUpdateTransShouldNotUpdateTranslation()
+	/* tiki_language.change seems unused, so this is superfluous as of 2017-10-06
+	 public function testUpdateTransShouldNotUpdateTranslation()
 	{
 		global ${"lang_$this->lang"};
 		${"lang_$this->lang"}['Not changed'] = 'Translation not changed';
@@ -100,7 +101,7 @@ class LanguageTranslationsTest extends TikiTestCase
 		$this->assertEquals(null, $this->obj->updateTrans('Not changed', 'Translation not changed'));
 		$result = TikiDb::get()->getOne('SELECT `changed` FROM `tiki_language` WHERE `lang` = ? AND binary `source` = ?', array($this->lang, 'Not changed'));
 		$this->assertEquals(null, $result);
-	}
+	}*/
 
 	public function testUpdateTransShouldDeleteTranslation()
 	{
