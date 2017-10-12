@@ -82,8 +82,7 @@ function wikiplugin_footnote($data, $params)
 
 	if (isset($params['scheme']))
 		setScheme($params['scheme']);
-	$list = '.def.';                            // Set the default to illegal class name to prevent conflicts
-
+	
 	$data = trim($data);
 	if (! empty($data)) {
 		$footnotes['count']++;                      // keep a record of how many times footones is called to generate unique id's
@@ -94,6 +93,7 @@ function wikiplugin_footnote($data, $params)
 			$classes[] ='footnest'.$footnotes['nest'];
 
 		//set the current list to create
+		$list = '.def.';                            // Set the default to illegal class name to prevent conflicts
 		foreach ($classes as $class) {
 			if (isset($footnotes['lists'][$class])) {
 				$list = $class;                         // set list the the first occurrence, if there happens to be multiplies.
@@ -136,7 +136,7 @@ function wikiplugin_footnote($data, $params)
 		if (isset($sameas)) {
 			if (isset($footnotes['tag'][$sameas])) {
 				$listNum =$footnotes['tag'][$sameas]['num'];
-				$uniqueId = $sameas . '-' .(@count($footnotes['lists'][$footnotes['tag'][$sameas]['class']]['entry'][$listNum]['sameas'])+1);
+				$uniqueId = $sameas . '-' .(@count($footnotes['lists'][ $footnotes['tag'][$sameas]['class'] ]['entry'][$listNum]['sameas'])+1);
 				$footnotes['lists'][$footnotes['tag'][$sameas]['class']]['entry'][$listNum]['sameas'][] = $uniqueId;
 				$smarty->assign('listNum',$listNum);
 				$smarty->assign('uniqueId', $uniqueId);
