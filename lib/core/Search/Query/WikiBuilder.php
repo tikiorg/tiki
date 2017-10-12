@@ -482,7 +482,7 @@ class Search_Query_WikiBuilder
 							$from = substr($filter, 2) / 1000;
 							$to = 'now';
 						} else if (strpos($filter, '<=') === 0) {
-							$from = '0000-00-00';
+							$from = '1970-01-01';
 							$to = substr($filter, 2) / 1000;
 						}
 						if ($from && $to) {
