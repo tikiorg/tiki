@@ -152,15 +152,17 @@
 									<textarea id="tran_{$smarty.foreach.translations.index}" name="tran_{$smarty.foreach.translations.index}" class="form-control" rows="2">{$item.tran|escape}</textarea>
 								</td>
 								<td class="col-md-3 text-center">
-									{if $prefs.lang_control_contribution eq 'y' and isset($item.id)}{* Only translations in the database have an id. *}
-									<label for="scope_{$smarty.foreach.translations.index}">
-										{tr}Contribute:{/tr}
-									</label>
-									<select name="scope_{$smarty.foreach.translations.index}" id="scope_{$smarty.foreach.translations.index}">
-										<option {if ! isset($item.general)}selected {/if}value="">{tr}Undecided{/tr}</option>
-										<option {if $item.general === true}selected {/if}value="general">{tr}Yes{/tr}</option>
-										<option {if $item.general === false}selected {/if}value="local">{tr}No{/tr}</option>
-									</select>
+									{if $prefs.lang_control_contribution eq 'y'}
+										<label for="scope_{$smarty.foreach.translations.index}"
+											{if ! isset($item.id)}style="display: none"{/if}{* Only translations in the database have an id. *}
+											>
+											{tr}Contribute:{/tr}
+											<select name="scope_{$smarty.foreach.translations.index}" id="scope_{$smarty.foreach.translations.index}">
+												<option {if ! isset($item.general)}selected {/if}value="">{tr}Undecided{/tr}</option>
+												<option {if $item.general === true}selected {/if}value="general">{tr}Yes{/tr}</option>
+												<option {if $item.general === false}selected {/if}value="local">{tr}No{/tr}</option>
+											</select>
+										</label>
 									{/if}
 									<div>
 										<button type="submit" class="btn btn-primary btn-sm tips" name="edit_tran_{$smarty.foreach.translations.index}" title=":{tr}Save translation in the database{/tr}">
@@ -203,6 +205,11 @@
 					jQuery('select[name^="scope_"]').tooltip(
 						{title: "{tr}For translations specific to this Tiki instance, select No. If this translation can be contributed to the Tiki community, select Yes.{/tr}"}
 						);
+					
+					// Allow setting scope of database translations
+					jQuery('textarea[name^="tran_"]').change(function() {
+							jQuery(this).closest('tr').find("label[for^='scope_']").show();
+						});
 				{/jq}
 				<div class="text-center">
 					{pagination_links cant=$total step=$maxRecords offset=$offset _ajax='n'}{strip}
