@@ -45,7 +45,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 				'params' => array(
 					'options' => array(
 						'name' => tr('Option'),
-						'description' => tr('If an option contains an equal sign, the part before the equal sign will be used as the value, and the second part as the label. You need to add an "other" option (in lowercase, or with "other=Other").'),
+						'description' => tr('If an option contains an equal sign, the part before the equal sign will be used as the value, and the second part as the label.') . ' ' . tr('To change the label of the "Other" option, use "other=Label".'),
 						'filter' => 'text',
 						'count' => '*',
 						'legacy_index' => 0,
