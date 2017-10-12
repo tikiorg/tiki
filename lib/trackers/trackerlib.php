@@ -493,6 +493,13 @@ class TrackerLib extends TikiLib
 	public function get_item_value($trackerId,$itemId,$fieldId)
 	{
 		global $prefs;
+		
+		static $cache = array();
+		$cacheKey = "$fieldId.$itemId";
+		if (isset($cache[$cacheKey])) {
+			return $cache[$cacheKey];
+		}
+
 		$value = $this->itemFields()->fetchOne('value', array('fieldId' => (int) $fieldId, 'itemId' => (int) $itemId));
 
 		if ($this->is_multilingual($fieldId) == 'y') {
@@ -501,6 +508,11 @@ class TrackerLib extends TikiLib
 				return $list[$prefs['language']];
 			}
 		}
+
+		if (TikiLib::lib('tiki')->get_memory_avail() < 1048576 * 10) {
+			$cache = array();
+		}
+		$cache[$cacheKey] = $value;
 
 		return $value;
 	}
@@ -688,6 +700,14 @@ class TrackerLib extends TikiLib
 	/* experimental shared */
 	public function get_items_list($trackerId, $fieldId, $value, $status='o', $multiple = false, $sortFieldIds = null)
 	{
+		static $cache = array();
+		$cacheKey = implode('.', array(
+			$trackerId, $fieldId, $value, $status, $multiple,
+			is_array($sortFieldIds) ? implode($sortFieldIds) : $sortFieldIds
+		));
+		if (isset($cache[$cacheKey])) {
+			return $cache[$cacheKey];
+		}
 		$query = "select distinct tti.`itemId`, tti.`itemId` i from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif ";
 		$bindvars = array();
 		if (is_string($sortFieldIds)) {
@@ -721,12 +741,17 @@ class TrackerLib extends TikiLib
 			);
 		}
 		$items = $this->fetchAll($query, $bindvars);
-		return array_map(
+		$items = array_map(
 			function($row){
 				return $row['itemId'];
 			},
 			$items
 		);
+		if (TikiLib::lib('tiki')->get_memory_avail() < 1048576 * 10) {
+			$cache = array();
+		}
+		$cache[$cacheKey] = $items;
+		return $items;
 	}
 
 	public function get_tracker($trackerId)
@@ -3444,6 +3469,10 @@ class TrackerLib extends TikiLib
 
 	public function get_tracker_field($fieldIdOrPermName)
 	{
+		static $cache = array();
+		if (isset($cache[$fieldIdOrPermName])) {
+			return $cache[$fieldIdOrPermName];
+		}
 		if (intval($fieldIdOrPermName) > 0) {
 			$res = $this->fields()->fetchFullRow(array('fieldId' => intval($fieldIdOrPermName)));
 		} else {
@@ -3456,6 +3485,10 @@ class TrackerLib extends TikiLib
 			$res['itemChoices'] = ! empty($res['itemChoices']) ? unserialize($res['itemChoices']) : array();
 			$res['visibleBy'] = ! empty($res['visibleBy']) ? unserialize($res['visibleBy']) : array();
 			$res['editableBy'] = ! empty($res['editableBy']) ? unserialize($res['editableBy']) : array();
+			if (TikiLib::lib('tiki')->get_memory_avail() < 1048576 * 10) {
+				$cache = array();
+			}
+			$cache[$fieldIdOrPermName] = $res;
 			return $res;
 		}
 	}
