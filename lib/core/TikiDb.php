@@ -5,6 +5,10 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+/**
+ * Class TikiDb
+ * Implemented by TikiDb_Pdo and TikiDb_Adodb
+ */
 abstract class TikiDb
 {
 	const ERR_DIRECT = true;
@@ -51,6 +55,14 @@ abstract class TikiDb
 
 	abstract function qstr($str);
 
+	/**
+	 * @param null $query
+	 * @param null $values
+	 * @param int $numrows
+	 * @param int $offset
+	 * @param bool $reporterrors
+	 * @return TikiDb_Pdo_Result
+	 */
 	abstract function query($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = self::ERR_DIRECT);
 
 	function lastInsertId() // {{{
