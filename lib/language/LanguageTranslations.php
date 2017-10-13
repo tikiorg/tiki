@@ -69,10 +69,8 @@ class LanguageTranslations extends TikiDb_Bridge
 	/**
 	 * Update a translation
 	 * If $originalStr is not found, a new entry is added. Otherwise,
-	 * if $translatedStr is empty the entry is deleted, if $translatedStr
-	 * is not empty but is equal to the actual translation nothing is done or if
-	 * $translatedStr is not empty and different from the actual translation
-	 * the entry is updated with the new translation.
+	 * if $translatedStr is empty the entry is deleted,
+	 * or if $translatedStr is not empty the entry is updated with the new translation (if needed).
 	 *
 	 * @param string $originalStr the original string
 	 * @param string $translatedStr the translated string
@@ -111,6 +109,27 @@ class LanguageTranslations extends TikiDb_Bridge
 		// don't change anything if $originalStr and $translatedStr are equal
 		if ($originalStr == $translatedStr) {
 			return;
+		}
+		
+		// If the translation is not in the database and the new translation is the same as the translation defined by the filesystem, ignore it (do not insert in the database)
+		if (isset(${"lang_$this->lang"}[$originalStr]) && ${"lang_$this->lang"}[$originalStr] == $translatedStr) {
+			{
+				static $initialDatabaseTranslations = array();
+
+				// Build $initialDatabaseTranslations for the given language
+				if (! isset($initialDatabaseTranslations[$this->lang])) {
+					$initialDatabaseTranslationsForThisLanguage = [];
+					$resultSet = $this->query('SELECT `source`, `tran` FROM `tiki_language` WHERE lang=?', [$this->lang]);
+					while ($row = $resultSet->fetchRow()) {
+						$initialDatabaseTranslationsForThisLanguage[$row['source']] = $row['tran'];
+					}
+					$initialDatabaseTranslations[$this->lang] = $initialDatabaseTranslationsForThisLanguage;
+				}
+			}
+			
+			if (! isset($initialDatabaseTranslations[$this->lang][$originalStr])) {
+				return;
+			}
 		}
 
 		$query = 'select * from `tiki_language` where `lang`=? and binary `source` = ?';
