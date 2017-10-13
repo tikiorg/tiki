@@ -165,8 +165,7 @@ class LanguageTranslations extends TikiDb_Bridge
 			} else {
 				$translationsFilter = '';
 			}
-			$dbTrans = $this->_getDbTranslations('source_asc', -1, 0, false, $translationsFilter);
-			array_walk($dbTrans, array('LanguageTranslations', 'PHPEscape'));
+			$dbTrans = self::PHPEscape($this->_getDbTranslations('source_asc', -1, 0, false, $translationsFilter));
 			$stats = array('modif' => 0, 'new' => 0);
 
 			// add new strings to the language.php
@@ -294,15 +293,17 @@ class LanguageTranslations extends TikiDb_Bridge
 	}
 
 	/**
-	 * Escapes strings for usage in a double-quoted PHP string
-	 * @param string $value Initial value is an array defining a translation, set to escaped target string
-	 * @param string $key Initial value ignored, set to escaped original string  
-	 * @return void
+	 * Escapes strings for usage in double-quoted PHP strings
+	 * @param string[] $strings Associative array defining translations
+	 * @return string[] The initial array with its key and value strings escaped
 	 */
-	protected static function PHPEscape(&$value, &$key)
+	protected static function PHPEscape($strings)
 	{
-		$key = Language::addPhpSlashes($value['source']);
-		$value = Language::addPhpSlashes($value['tran']);
+		$final = [];
+		foreach ($strings as $key => $value) {
+			$final[Language::addPhpSlashes($value['source'])] = Language::addPhpSlashes($value['tran']);
+		}
+		return $final;
 	}
 
 	/**
@@ -338,8 +339,7 @@ class LanguageTranslations extends TikiDb_Bridge
 	 */
 	public function createCustomFile()
 	{
-		$strings = $this->_getDbTranslations();
-		array_walk($strings, 'self::PHPEscape');
+		$strings = self::PHPEscape($this->_getDbTranslations());
 		$data = "<?php\n\$lang=";
 		$data .= $this->_removeSpaces(var_export($strings, true));
 		$data .= ";\n?>\n";
