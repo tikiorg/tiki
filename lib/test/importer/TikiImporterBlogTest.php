@@ -21,19 +21,25 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 	
 	public function testImportShouldCallMethodsToStartImportProcess()
 	{
+		ob_start();
+
 		$obj = $this->getMockBuilder('TikiImporter_Blog')
 			->setMethods( array('parseData', 'insertData', 'setupTiki'))
 			->getMock();
 		$obj->expects($this->once())->method('parseData');
 		$obj->expects($this->once())->method('insertData');
 		$obj->expects($this->once())->method('setupTiki');
-		
-		$this->expectOutputString("\nImportation completed!\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>");
+
 		$obj->import();
+
+		$output = ob_get_clean();
+		$this->assertEquals("\nImportation completed!\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>", $output);
 	}
 
 	public function testImportShouldSetSessionVariables()
 	{
+		ob_start();
+
 		$expectedImportFeedback = array('importedPages' => 10, 'totalPages' => '13');
 		$obj = $this->getMockBuilder('TikiImporter_Blog')
 			->setMethods( array('parseData', 'insertData', 'saveAndDisplayLog', 'setupTiki'))
@@ -45,13 +51,17 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 		
 		$obj->log = 'some log string';
 		$obj->import();
-		
+
 		$this->assertEquals($expectedImportFeedback, $_SESSION['tiki_importer_feedback']);
 		$this->assertEquals('some log string', $_SESSION['tiki_importer_log']);
+
+		ob_get_clean();
 	}
 
     public function testInsertData_shouldCallInsertItemSixTimes()
     {
+		ob_start();
+
         $obj = $this->getMockBuilder('TikiImporter_Blog')
 			->setMethods( array('insertItem', 'createBlog'))
 			->getMock();
@@ -76,10 +86,14 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 		);
 		
         $obj->insertData();
+
+        ob_get_clean();
     }
 
     public function testInsertData_shouldNotCallInsertItem()
     {
+		ob_start();
+
         $obj = $this->getMockBuilder('TikiImporter_Blog')
 			->setMethods( array('insertItem'))
 			->getMock();
@@ -91,10 +105,14 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
         	'categories' => array(),
         );
         $obj->insertData();
+
+        ob_get_clean();
     }
 
 	public function testInsertData_shouldReturnCountData()
 	{
+		ob_start();
+
 		$obj = $this->getMockBuilder('TikiImporter_Blog')
 			->setMethods( array('insertItem', 'createBlog'))
 			->getMock();
@@ -122,10 +140,14 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
         $expectedResult = array('importedPages' => 1, 'importedPosts' => 4, 'importedTags' => 0, 'importedCategories' => 0);
 
         $this->assertEquals($expectedResult, $countData);
+
+        ob_get_clean();
 	}
 
 	public function testInsertData_shouldNotCreateBlogIfNoPosts()
 	{
+		ob_start();
+
 		$obj = $this->getMockBuilder('TikiImporter_Blog')
 			->setMethods( array('insertItem', 'createTags', 'createCategories', 'createBlog'))
 			->getMock();
@@ -145,6 +167,8 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
         $expectedResult = array('importedPages' => 0, 'importedPosts' => 0, 'importedTags' => 0, 'importedCategories' => 0);
 
         $this->assertEquals($expectedResult, $countData);
+
+        ob_get_clean();
 	}
 		
 	public function testInsertItem_shouldCallInsertCommentsForPage()
@@ -177,6 +201,8 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 	
 	public function testInsertItem_shouldReturnObjId()
 	{
+		ob_start();
+
 		$obj = $this->getMockBuilder('TikiImporter_Blog')
 			->setMethods( array('insertComments', 'insertPost'))
 			->getMock();
@@ -187,10 +213,14 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 
         $objId = $obj->insertItem($post);
 		$this->assertEquals(22, $objId);
+
+		ob_get_clean();
 	}
 	
 	public function testInsertItem_shoudReturnNull()
 	{
+		ob_start();
+
 		$obj = $this->getMockBuilder('TikiImporter_Blog')
 			->setMethods( array('insertComments', 'insertPost'))
 			->getMock();
@@ -201,6 +231,8 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 
         $objId = $obj->insertItem($post);
 		$this->assertEquals(null, $objId);
+
+		ob_get_clean();
 	}
 	
 	public function testInsertComments()

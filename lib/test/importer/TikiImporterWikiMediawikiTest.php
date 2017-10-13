@@ -22,6 +22,8 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
 
     public function testImport()
     {
+        ob_start();
+
         $parsedData = 'Some text';
 
         $obj = $this->getMockBuilder('TikiImporter_Wiki_Mediawiki')
@@ -32,11 +34,13 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $obj->expects($this->once())->method('insertData')->with($parsedData);
         $obj->expects($this->once())->method('configureParser');
 
-        $this->expectOutputString("Loading and validating the XML file\n\nImportation completed!\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>");
         $obj->import(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
 
         $this->assertTrue($obj->dom instanceof DOMDocument);
         $this->assertTrue($obj->dom->hasChildNodes());
+
+        $output = ob_get_clean();
+        $this->assertEquals("Loading and validating the XML file\n\nImportation completed!\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>", $output);
     }
 
     public function testImportWithoutInternalMocking()
@@ -61,6 +65,8 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
 
     public function testImportShouldHandleAttachments()
     {
+        ob_start();
+
         $parsedData = 'Some text';
 
         $obj = $this->getMockBuilder('TikiImporter_Wiki_Mediawiki')
@@ -77,6 +83,8 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $obj->import(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
         
         unset($_POST['importAttachments']);
+
+        ob_get_clean();
     }
 
     public function testImportShouldRaiseExceptionForInvalidMimeType()
@@ -134,14 +142,19 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
 
 	public function testParseData()
 	{
+        ob_start();
+
         $obj = $this->getMockBuilder('TikiImporter_Wiki_Mediawiki')
 			->setMethods( array('extractInfo', 'downloadAttachment'))
 			->getMock();
         $obj->dom = new DOMDocument;
         $obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
         $obj->expects($this->exactly(4))->method('extractInfo')->will($this->returnValue(array()));
-        $this->expectOutputString("\nParsing pages:\n");
+
         $this->assertEquals(4, count($obj->parseData()));
+
+        $output = ob_get_clean();
+        $this->assertEquals("\nParsing pages:\n", $output);
 	}
 
 	public function testParseDataShouldPrintMessageIfErrorToParseAPageWhenExtractInfoReturnException()
@@ -173,6 +186,8 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
 
 	public function testDownloadAttachment()
 	{
+        ob_start();
+
         $this->obj->attachmentsDestDir = dirname(__FILE__) . '/fixtures/';
 
         $sourceAttachments = array('sourceTest.jpg', 'sourceTest2.jpg');
@@ -190,8 +205,6 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
         $this->obj->downloadAttachments();
 
-        $this->expectOutputString("\n\nImporting attachments:\nFile test2.jpg successfully imported!\nFile test.jpg successfully imported!\n");
-
         $i = count($sourceAttachments) - 1;
         while ($i >= 0) {
             $filePath = $this->obj->attachmentsDestDir . $destAttachments[$i];
@@ -201,10 +214,15 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
             $i--;
         }
         chdir($cwd);
+
+        $output = ob_get_clean();
+        $this->assertEquals("\n\nImporting attachments:\nFile test2.jpg successfully imported!\nFile test.jpg successfully imported!\n", $output);
 	}
 
     public function testDownloadAttachmentShouldNotImportIfFileAlreadyExist()
     {
+        ob_start();
+
         $this->obj->attachmentsDestDir = dirname(__FILE__) . '/fixtures/';
         $this->obj->dom = new DOMDocument;
         $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
@@ -216,40 +234,49 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         }
 
         $this->obj->downloadAttachments();
-        $this->expectOutputString("\n\nImporting attachments:\nFile test2.jpg is not being imported because there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\nFile test.jpg is not being imported because there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\n");
        
         foreach ($attachments as $attachment) {
             $filePath = $this->obj->attachmentsDestDir . $attachment;
             unlink($filePath);
         }
+
+        $output = ob_get_clean();
+        $this->assertEquals("\n\nImporting attachments:\nFile test2.jpg is not being imported because there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\nFile test.jpg is not being imported because there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\n", $output);
     }
 
     public function testDownloadAttachmentsShouldDisplayMessageIfNoAttachments()
     {
+        ob_start();
+
         $this->obj->dom = new DOMDocument;
-        $this->expectOutputString("\n\nNo attachments were found to import. Be sure to create the XML file with the dumpDump.php script and with the option --uploads. This is the only way to import attachments.\n");
-        $this->obj->downloadAttachments(); 
+        $this->obj->downloadAttachments();
+
+        $output = ob_get_clean();
+        $this->assertEquals("\n\nNo attachments were found to import. Be sure to create the XML file with the dumpDump.php script and with the option --uploads. This is the only way to import attachments.\n", $output);
     }
 
     public function testDownloadAttachmentsShouldDisplayMessageIfUnableToDownloadFile()
     {
+        ob_start();
+
         $this->obj->attachmentsDestDir = dirname(__FILE__) . '/fixtures/';
         $this->obj->dom = new DOMDocument;
         $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_invalid_upload.xml');
         $this->obj->downloadAttachments();
 
-        $this->expectOutputString("\n\nImporting attachments:\nUnable to download file Qlandkartegt-0.11.1.tar.gz. File not found.\nUnable to download file Passelivre.jpg. File not found.\n");
+        $output = ob_get_clean();
+        $this->assertEquals("\n\nImporting attachments:\nUnable to download file Qlandkartegt-0.11.1.tar.gz. File not found.\nUnable to download file Passelivre.jpg. File not found.\n", $output);
     }
 
     public function testExtractInfo()
     {
+        ob_start();
+
         $dom = new DOMDocument;
         $dom->load(dirname(__FILE__) . '/fixtures/mediawiki_page.xml');
         $expectedNames = array('Redes de ensino', 'Academia Colarossi');
 
         $pages = $dom->getElementsByTagName('page');
-
-        $this->expectOutputString("Page \"Redes de ensino\" successfully parsed with 8 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" successfully parsed with 2 revisions (from a total of 2 revisions).\n");
 
         $i = 0;
         foreach ($pages as $page) {
@@ -263,18 +290,21 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
             $this->assertEquals($expectedNames[$i++], $return['name']);
             $this->assertGreaterThan(1, count($return['revisions']));
         }
+
+        $output = ob_get_clean();
+        $this->assertEquals("Page \"Redes de ensino\" successfully parsed with 8 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" successfully parsed with 2 revisions (from a total of 2 revisions).\n", $output);
     }
 
     public function testExtractInfoShouldNotParseMoreThanFiveRevisions()
     {
+        ob_start();
+
         $dom = new DOMDocument;
         $dom->load(dirname(__FILE__) . '/fixtures/mediawiki_page.xml');
         $expectedNames = array('Redes de ensino', 'Academia Colarossi');
         $expectedCalls = array(5, 2);
 
         $pages = $dom->getElementsByTagName('page');
-
-        $this->expectOutputString("Page \"Redes de ensino\" successfully parsed with 5 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" successfully parsed with 2 revisions (from a total of 2 revisions).\n");
 
         $i = 0;
         foreach ($pages as $page) {
@@ -289,18 +319,21 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
             $this->assertEquals($expectedCalls[$i], count($return['revisions']));
             $i++;
         }
+
+		$output = ob_get_clean();
+        $this->assertEquals("Page \"Redes de ensino\" successfully parsed with 5 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" successfully parsed with 2 revisions (from a total of 2 revisions).\n", $output);
     }
 
     public function testExtractInfoShouldParseAllRevisions()
     {
+        ob_start();
+
         $dom = new DOMDocument;
         $dom->load(dirname(__FILE__) . '/fixtures/mediawiki_page.xml');
         $expectedNames = array('Redes de ensino', 'Academia Colarossi');
         $expectedCalls = array(8, 2);
 
         $pages = $dom->getElementsByTagName('page');
-
-        $this->expectOutputString("Page \"Redes de ensino\" successfully parsed with 8 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" successfully parsed with 2 revisions (from a total of 2 revisions).\n");
 
         $i = 0;
         foreach ($pages as $page) {
@@ -315,18 +348,21 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
             $this->assertEquals($expectedCalls[$i], count($return['revisions']));
             $i++;
         }
+
+        $output = ob_get_clean();
+        $this->assertEquals("Page \"Redes de ensino\" successfully parsed with 8 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" successfully parsed with 2 revisions (from a total of 2 revisions).\n", $output);
     }
 
     public function testExtractInfoShouldAlsoParseAllRevisions()
     {
+        ob_start();
+
         $dom = new DOMDocument;
         $dom->load(dirname(__FILE__) . '/fixtures/mediawiki_page.xml');
         $expectedNames = array('Redes de ensino', 'Academia Colarossi');
         $expectedCalls = array(8, 2);
 
         $pages = $dom->getElementsByTagName('page');
-
-        $this->expectOutputString("Page \"Redes de ensino\" successfully parsed with 8 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" successfully parsed with 2 revisions (from a total of 2 revisions).\n");
 
         $i = 0;
         foreach ($pages as $page) {
@@ -341,10 +377,15 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
             $this->assertEquals($expectedCalls[$i], count($return['revisions']));
             $i++;
         }
+
+        $output = ob_get_clean();
+        $this->assertEquals("Page \"Redes de ensino\" successfully parsed with 8 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" successfully parsed with 2 revisions (from a total of 2 revisions).\n", $output);
     }
 
     public function testExtractInfoShouldPrintErrorMessageIfProblemWithRevision()
     {
+        ob_start();
+
         $obj = $this->getMockBuilder('TikiImporter_Wiki_Mediawiki')
 			->setMethods( array('extractRevision'))
 			->getMock();
@@ -355,11 +396,12 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $dom->load(dirname(__FILE__) . '/fixtures/mediawiki_page.xml');
         $pages = $dom->getElementsByTagName('page');
 
-        $this->expectOutputString("Error while parsing revision 3 of the page \"Redes de ensino\". There could be a problem in the page syntax or in the Text_Wiki parser used by the importer.\nPage \"Redes de ensino\" successfully parsed with 7 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" successfully parsed with 2 revisions (from a total of 2 revisions).\n");
-
         foreach ($pages as $page) {
             $obj->extractInfo($page);
         }
+
+        $output = ob_get_clean();
+        $this->assertEquals("Error while parsing revision 3 of the page \"Redes de ensino\". There could be a problem in the page syntax or in the Text_Wiki parser used by the importer.\nPage \"Redes de ensino\" successfully parsed with 7 revisions (from a total of 8 revisions).\nPage \"Academia Colarossi\" successfully parsed with 2 revisions (from a total of 2 revisions).\n", $output);
     }
 
     public function testExtractInfoShouldThrowExceptionIfUnableToParseAllRevisionsOfPage()

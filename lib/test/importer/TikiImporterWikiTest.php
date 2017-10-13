@@ -17,6 +17,7 @@ class TikiImporter_Wiki_Test extends TikiImporter_TestCase
 	
 	public function testImportShouldCallMethodsToStartImportProcess()
 	{
+		ob_start();
 	   $obj = $this->getMockBuilder('TikiImporter_Wiki')
 		   ->setMethods( array('validateInput', 'parseData', 'insertData'))
 		   ->getMock();
@@ -24,12 +25,16 @@ class TikiImporter_Wiki_Test extends TikiImporter_TestCase
 	   $obj->expects($this->once())->method('parseData');
 	   $obj->expects($this->once())->method('insertData');
 
-	   $this->expectOutputString("\nImportation completed!\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>");
 	   $obj->import();
+
+	   $output = ob_get_clean();
+	   $this->assertEquals("\nImportation completed!\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>", $output);
 	}
 
 	public function testImportShouldSetInstanceProperties()
 	{
+	   ob_start();
+
 	   $obj = $this->getMockBuilder('TikiImporter_Wiki')
 		   ->setMethods( array('validateInput', 'parseData', 'insertData'))
 		   ->getMock();
@@ -47,10 +52,14 @@ class TikiImporter_Wiki_Test extends TikiImporter_TestCase
 
 	   $this->assertEquals(0, $obj->revisionsNumber);
 	   $this->assertEquals('doNotImport', $obj->alreadyExistentPageName);
+
+	   ob_get_clean();
 	}
 
 	public function testImportShouldSetSessionVariables()
 	{
+	   ob_start();
+
 	   $expectedImportFeedback = array('importedPages' => 10, 'totalPages' => '13');
 	   $obj = $this->getMockBuilder('TikiImporter_Wiki')
 		   ->setMethods( array('validateInput', 'parseData', 'insertData', 'saveAndDisplayLog'))
@@ -65,40 +74,56 @@ class TikiImporter_Wiki_Test extends TikiImporter_TestCase
 
 	   $this->assertEquals($expectedImportFeedback, $_SESSION['tiki_importer_feedback']);
 	   $this->assertEquals('some log string', $_SESSION['tiki_importer_log']);
+
+	   ob_get_clean();
 	}
 
 	public function testInsertDataCallInsertPageFourTimes()
 	{
+	   ob_start();
+
 	   $obj = $this->getMockBuilder('TikiImporter_Wiki')
 		   ->setMethods( array('insertPage'))
 		   ->getMock();
 	   $obj->expects($this->exactly(4))->method('insertPage');
 	   $parsedData = [['name' => '1'],['name' => '2'],['name' => '3'],['name' => '4'],];
 	   $obj->insertData($parsedData);
+
+	   ob_get_clean();
 	}
 
 	public function testInsertDataCallInsertPageOnceWithProperParam()
 	{
+	   ob_start();
+
 	   $obj = $this->getMockBuilder('TikiImporter_Wiki')
 		   ->setMethods( array('insertPage'))
 		   ->getMock();
 	   $obj->expects($this->once())->method('insertPage')->with(['name' => '1']);
 	   $parsedData = [['name' => '1'],];
 	   $obj->insertData($parsedData);
+
+	   ob_get_clean();
 	}
 
 	public function testInsertDataShouldNotCallInsertPage()
 	{
+	   ob_start();
+
 	   $obj = $this->getMockBuilder('TikiImporter_Wiki')
 		   ->setMethods( array('insertPage'))
 		   ->getMock();
 	   $obj->expects($this->never())->method('insertPage');
 	   $parsedData = array();
 	   $obj->insertData($parsedData);
+
+	   ob_get_clean();
 	}
 
 	public function testInsertDataShouldReturnCountData()
 	{
+	   ob_start();
+
 	   $obj = $this->getMockBuilder('TikiImporter_Wiki')
 		   ->setMethods( array('insertPage'))
 		   ->getMock();
@@ -109,6 +134,8 @@ class TikiImporter_Wiki_Test extends TikiImporter_TestCase
 	   $expectedResult = array('totalPages' => 6, 'importedPages' => 4);
 
 	   $this->assertEquals($expectedResult, $countData);
+
+	   ob_get_clean();
 	}
 }
 

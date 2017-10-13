@@ -30,6 +30,8 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 
 	public function testImport()
 	{
+        ob_start();
+
         $obj = $this->getMockBuilder('TikiImporter_Blog_Wordpress')
 			->setMethods( array('validateInput', 'extractBlogInfo', 'parseData', 'insertData', 'setupTiki', 'extractPermalinks'))
 			->getMock();
@@ -40,18 +42,22 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
         $obj->expects($this->once())->method('setupTiki');
         $obj->expects($this->once())->method('extractPermalinks');
 
-        $this->expectOutputString("Loading and validating the XML file\n\nImportation completed!\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>");
         $_FILES['importFile']['type'] = 'text/xml';
         $obj->import(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
         unset($_FILES['importFile']);
 
         $this->assertTrue($obj->dom instanceof DOMDocument);
         $this->assertTrue($obj->dom->hasChildNodes());
+
+        $output = ob_get_clean();
+        $this->assertEquals("Loading and validating the XML file\n\nImportation completed!\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>", $output);
 	}
 
 	public function testImportShouldHandleAttachments()
 	{
-        $obj = $this->getMockBuilder('TikiImporter_Blog_Wordpress')
+        ob_start();
+
+		$obj = $this->getMockBuilder('TikiImporter_Blog_Wordpress')
 			->setMethods( array('validateInput', 'extractBlogInfo', 'parseData', 'insertData', 'downloadAttachments', 'setupTiki', 'extractPermalinks'))
 			->getMock();
         $obj->expects($this->once())->method('validateInput');
@@ -66,17 +72,23 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
         $obj->import(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
 
         unset($_POST['importAttachments']);
+
+        ob_get_clean();
 	}
 
 	public function testParseData()
 	{
+        ob_start();
+
         $obj = $this->getMockBuilder('TikiImporter_Blog_Wordpress')
 			->setMethods( array('extractItems', 'extractTags', 'extractCategories'))
 			->getMock();
         $obj->expects($this->once())->method('extractItems')->will($this->returnValue(array('posts' => array(), 'pages' => array())));
-		$this->expectOutputString("\nExtracting data from XML file:\n");
 		$obj->parseData();
         $this->assertEquals(4, count($obj->parsedData));
+
+        $output = ob_get_clean();
+		$this->assertEquals("\nExtracting data from XML file:\n", $output);
 	}
 
 	public function testExtractPermalinks()
@@ -209,6 +221,8 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 
 	public function testExtractInfoPost()
 	{
+		ob_start();
+
 		$obj = $this->getMockBuilder('TikiImporter_Blog_Wordpress')
 			->setMethods( array('extractComment', 'parseContent', 'identifyInternalLinks'))
 			->getMock();
@@ -249,10 +263,14 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 		$data = $obj->extractInfo($obj->dom->getElementsByTagName('item')->item(0));
 
 		$this->assertEquals($expectedResult, $data);
+
+		ob_get_clean();
 	}
 
 	public function testExtractInfoPage()
 	{
+		ob_start();
+
 		$obj = $this->getMockBuilder('TikiImporter_Blog_Wordpress')
 			->setMethods( array('extractComment', 'parseContent', 'identifyInternalLinks'))
 			->getMock();
@@ -300,6 +318,8 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 		$data = $obj->extractInfo($obj->dom->getElementsByTagName('item')->item(0));
 
 		$this->assertEquals($expectedResult, $data);
+
+		ob_get_clean();
 	}
 
 	public function testExtractCommentShouldReturnFalseForSpamOrTrashOrPingback()
@@ -442,6 +462,8 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 
 	public function testDownloadAttachmentsShouldDisplayMessageIfNoAttachments()
 	{
+		ob_start();
+
 		$filegallib = TikiLib::lib('filegal');
 
 		$filegallib = $this->getMockBuilder('FileGalLib')
@@ -450,8 +472,10 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		$filegallib->expects($this->exactly(0))->method('insert_file')->will($this->returnValue(1));
 
 		$this->obj->dom = new DOMDocument;
-		$this->expectOutputString("\n\nNo attachments found to import!\n");
 		$this->obj->downloadAttachments();
+
+		$output = ob_get_clean();
+		$this->assertEquals("\n\nNo attachments found to import!\n", $output);
 	}
 
 	function testCreateFileGallery()
@@ -466,6 +490,8 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 
 	public function testDownloadAttachment()
 	{
+		ob_start();
+
 		$last_id = TikiDb::get()->getOne('SELECT max(fileId) FROM tiki_files');
 		$adapter = new Zend\Http\Client\Adapter\Test();
 
@@ -487,8 +513,6 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		$obj->expects($this->once())->method('createFileGallery')->will($this->returnValue(1));
         $obj->dom = new DOMDocument;
         $obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_attachments.xml');
-
-        $this->expectOutputString("\n\nImporting attachments:\nAttachment tadv2.jpg successfully imported!\nAttachment 1881232-hostelaria-las-torres-0.jpg successfully imported!\nAttachment 1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg successfully imported!\n3 attachments imported and 0 errors.\n");
 
         $obj->downloadAttachments();
 
@@ -544,10 +568,15 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
         );
 
         $this->assertEquals($expectedResult, $obj->newFiles);
+
+        $output = ob_get_clean();
+        $this->assertEquals("\n\nImporting attachments:\nAttachment tadv2.jpg successfully imported!\nAttachment 1881232-hostelaria-las-torres-0.jpg successfully imported!\nAttachment 1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg successfully imported!\n3 attachments imported and 0 errors.\n", $output);
 	}
 
 	public function testDownloadAttachmentShouldNotCallInsertFileWhenZendHttpClientFails()
 	{
+		ob_start();
+
 		$filegallib = TikiLib::lib('filegal');
 
 		$filegallib = $this->getMockBuilder('FileGalLib')
@@ -572,10 +601,14 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
         $obj->downloadAttachments();
 
         $this->assertEquals(array(), $obj->newFiles);
+
+        ob_get_clean();
 	}
 
 	public function testDownloadAttachmentShouldNotCallInsertFileWhen404()
 	{
+		ob_start();
+
 		$filegallib = TikiLib::lib('filegal');
 
 		$filegallib = $this->getMockBuilder('FileGalLib')
@@ -603,11 +636,12 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
         $obj->dom = new DOMDocument;
         $obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_attachments.xml');
 
-        $this->expectOutputString("\n\nImporting attachments:\nUnable to download attachment tadv2.jpg. Error message was: 404 NOT FOUND\nUnable to download attachment 1881232-hostelaria-las-torres-0.jpg. Error message was: 404 NOT FOUND\nUnable to download attachment 1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg. Error message was: 404 NOT FOUND\n0 attachments imported and 3 errors.\n");
-
         $obj->downloadAttachments();
 
         $this->assertEquals(array(), $obj->newFiles);
+
+        $output = ob_get_clean();
+        $this->assertEquals("\n\nImporting attachments:\nUnable to download attachment tadv2.jpg. Error message was: 404 NOT FOUND\nUnable to download attachment 1881232-hostelaria-las-torres-0.jpg. Error message was: 404 NOT FOUND\nUnable to download attachment 1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg. Error message was: 404 NOT FOUND\n0 attachments imported and 3 errors.\n", $output);
 	}
 
 	public function testParseContentAttachmentsUrl()
@@ -791,6 +825,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 
 	public function testInsertData_shouldSetObjIdOnItemsArray()
 	{
+		ob_start();
 		$_POST['replaceInternalLinks'] = 'on';
 
         $obj = $this->getMockBuilder('TikiImporter_Blog_Wordpress')
@@ -822,10 +857,13 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
         $obj->insertData();
 
 		unset($_POST['replaceInternalLinks']);
+
+		ob_get_clean();
 	}
 
 	public function testInsertData_shouldNotCallReplaceInternalLinks()
 	{
+		ob_start();
 		$obj = $this->getMockBuilder('TikiImporter_Blog_Wordpress')
 			->setMethods( array('insertItem', 'createBlog', 'replaceInternalLinks'))
 			->getMock();
@@ -845,6 +883,8 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		);
 
         $obj->insertData();
+
+        ob_get_clean();
 	}
 
 	public function testReplaceInternalLinks()
