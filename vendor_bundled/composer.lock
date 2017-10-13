@@ -1416,17 +1416,17 @@
         },
         {
             "name": "matthiasmullie/minify",
-            "version": "1.3.52",
+            "version": "1.3.53",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/minify.git",
-                "reference": "134b25a63d83a80ae128aedc9a99987e064b4382"
+                "reference": "7d79f1188e749ad09a075b0487aa58b11bac86d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/matthiasmullie/minify/matthiasmullie-minify-134b25a63d83a80ae128aedc9a99987e064b4382-zip-487827.zip",
-                "reference": "134b25a63d83a80ae128aedc9a99987e064b4382",
-                "shasum": "db6b19d53d6fef17bac6330c0085cdb6d008ba88"
+                "url": "https://composer.tiki.org/dist/matthiasmullie/minify/matthiasmullie-minify-7d79f1188e749ad09a075b0487aa58b11bac86d8-zip-113156.zip",
+                "reference": "7d79f1188e749ad09a075b0487aa58b11bac86d8",
+                "shasum": "f2426b092e2f90c27ef6b66cd9bbb8e911d524be"
             },
             "require": {
                 "ext-pcre": "*",
@@ -1434,7 +1434,7 @@
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "~1.0",
+                "friendsofphp/php-cs-fixer": "~2.0",
                 "matthiasmullie/scrapbook": "~1.0",
                 "phpunit/phpunit": "~4.8"
             },
@@ -1463,7 +1463,7 @@
                     "role": "Developer"
                 }
             ],
-            "description": "CSS & JS minifier",
+            "description": "CSS & JavaScript minifier, in PHP. Removes whitespace, strips comments, combines files (incl. @import statements and small assets in CSS files), and optimizes/shortens a few common programming patterns.",
             "homepage": "http://www.minifier.org",
             "keywords": [
                 "JS",
@@ -1472,7 +1472,7 @@
                 "minifier",
                 "minify"
             ],
-            "time": "2017-09-15T13:02:11+00:00"
+            "time": "2017-10-13T15:44:30+00:00"
         },
         {
             "name": "matthiasmullie/path-converter",
@@ -3968,35 +3968,35 @@
         },
         {
             "name": "zendframework/zend-http",
-            "version": "2.6.0",
+            "version": "2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-http.git",
-                "reference": "09f4d279f46d86be63171ff62ee0f79eca878678"
+                "reference": "78aa510c0ea64bfb2aa234f50c4f232c9531acfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/zendframework/zend-http/zendframework-zend-http-09f4d279f46d86be63171ff62ee0f79eca878678-zip-84815e.zip",
-                "reference": "09f4d279f46d86be63171ff62ee0f79eca878678",
-                "shasum": "31128e419cb4f82feaa1aee7038e17dd12df8559"
+                "url": "https://composer.tiki.org/dist/zendframework/zend-http/zendframework-zend-http-78aa510c0ea64bfb2aa234f50c4f232c9531acfa-zip-8e02e2.zip",
+                "reference": "78aa510c0ea64bfb2aa234f50c4f232c9531acfa",
+                "shasum": "7361561465fcea7681b2e99fe2c97314251a5278"
             },
             "require": {
-                "php": "^5.5 || ^7.0",
-                "zendframework/zend-loader": "^2.5",
-                "zendframework/zend-stdlib": "^2.5 || ^3.0",
-                "zendframework/zend-uri": "^2.5",
-                "zendframework/zend-validator": "^2.5"
+                "php": "^5.6 || ^7.0",
+                "zendframework/zend-loader": "^2.5.1",
+                "zendframework/zend-stdlib": "^3.1 || ^2.7.7",
+                "zendframework/zend-uri": "^2.5.2",
+                "zendframework/zend-validator": "^2.10.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.0",
+                "phpunit/phpunit": "^6.4.1 || ^5.7.15",
                 "zendframework/zend-coding-standard": "~1.0.0",
-                "zendframework/zend-config": "^2.5"
+                "zendframework/zend-config": "^3.1 || ^2.6"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev",
-                    "dev-develop": "2.7-dev"
+                    "dev-master": "2.7-dev",
+                    "dev-develop": "2.8-dev"
                 }
             },
             "autoload": {
@@ -4011,10 +4011,13 @@
             "description": "provides an easy interface for performing Hyper-Text Transfer Protocol (HTTP) requests",
             "homepage": "https://github.com/zendframework/zend-http",
             "keywords": [
+                "ZendFramework",
                 "http",
-                "zf2"
+                "http client",
+                "zend",
+                "zf"
             ],
-            "time": "2017-01-31T14:41:02+00:00"
+            "time": "2017-10-13T12:06:24+00:00"
         },
         {
             "name": "zendframework/zend-hydrator",
