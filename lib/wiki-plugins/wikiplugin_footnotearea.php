@@ -25,15 +25,6 @@ function wikiplugin_footnotearea_info()
 				'filter' => 'alnum',
 				'accepted' => tra('Valid CSS class'),
 			),
-			'sameasstyle' => array(
-				'required' => false,
-				'name' => tra('SameAs Style'),
-				'description' => tra('Numbering style for sameas referencing.'),
-				'since' => '17.0',
-				'default' => 'disc',
-				'filter' => 'text',
-				'accepted' => tra('Valid Tiki ((Number Style))'),
-			),
 		),
 	);
 }
@@ -42,10 +33,6 @@ function wikiplugin_footnotearea($data, $params)
 {	global $footnotes;
 	$smarty = TikiLib::lib('smarty');
 
-	if (isset($params['sameasstyle']))
-		$smarty->assign('sameType',$params['sameasstyle']);
-	else
-		$smarty->assign('sameType','disc');
 	$html = '';
 	if (isset($params['class'])) {                                       // if class was given
 		if (isset($footnotes['lists'][$params['class']])){        // if the class exists
@@ -80,7 +67,6 @@ function genFootnoteArea ($listName, $list){
 	else
 		$smarty->assign('listName',' '.$listName);                // if we are in a list, fix spacing up nice
 	$smarty->assign('footnotes',$list['entry']);
-	$smarty->assign('listType',$list['listType']);
 
 	return $smarty->fetch('templates/wiki-plugins/wikiplugin_footnotearea.tpl');
 
