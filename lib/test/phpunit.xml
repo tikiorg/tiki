@@ -16,6 +16,11 @@
 	<php>
 		<ini name="memory_limit" value="-1" />
 	</php>
+	<testsuites>
+		<testsuite name="default">
+			<directory>.</directory>
+		</testsuite>
+	</testsuites>
 	<!--
 		uncomment the logging node below if you need xml coverage info, for IDEs that support phpunit
 		Info from http://www.phpunit.de/manual/3.3/en/phpunit-book.html#appendixes.configuration
