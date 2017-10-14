@@ -81,7 +81,8 @@ class LanguageTranslations extends TikiDb_Bridge
 	public function updateTrans($originalStr, $translatedStr, $optionalParameters = [])
 	{
 		global ${"lang_$this->lang"}, $user, $tikilib;
-		
+
+		$general = null; // default value
 		foreach ($optionalParameters as $name => $value) {
 			switch ($name) {
 				case 'general':
