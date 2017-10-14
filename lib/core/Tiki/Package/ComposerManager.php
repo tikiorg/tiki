@@ -227,7 +227,7 @@ class ComposerManager
 		}
 		try {
 			$yamlContent = Yaml::parse(file_get_contents($this->packagesConfigFile));
-			if (!$yamlContent) {
+			if (! $yamlContent || ! is_array($yamlContent)) {
 				return [];
 			}
 		} catch (ParseException $e) {
