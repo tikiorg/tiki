@@ -60,9 +60,10 @@ if ($request->hasProperty('outputFiles')) {
 $excludeDirs = array(
 	'dump' , 'img', 'lang', 'addons', 'bin', 'installer/schema',
 	'vendor_bundled', 'vendor', 'vendor_extra', 'vendor_custom',
-	 'lib/test',	'temp', 'permissioncheck',
+	 'lib/test',	'temp', 'whelp', 'permissioncheck',
 	'storage',	'tiki_tests', 'doc', 'db','lib/openlayers','tests', 'modules/cache'
 );
+$excludeDirs = array_filter($excludeDirs, 'is_dir'); // only keep in the exclude list if the dir exists
 
 // Files are processed after the base directory, so adding a file here allows to scan it even if its directory was excluded.
 $includeFiles = array(
