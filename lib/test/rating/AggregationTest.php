@@ -56,6 +56,20 @@ class Rating_AggregationTest extends TikiTestCase
 		$this->assertEquals(9.0, $lib->collect('test', 111, 'sum'));
 	}
 
+	function testGetGlobalSumSingleVote()
+	{
+		global $prefs;
+		$prefs['rating_allow_multi_votes'] = '';
+
+		$lib = new RatingLib;
+		$lib->record_user_vote('abc', 'test', 111, 4, time() - 3000); // overridden
+		$lib->record_user_vote('abc', 'test', 111, 2, time() - 2000);
+		$lib->record_user_vote('abc', 'test', 112, 3, time() - 1000);
+		$lib->record_anonymous_vote('deadbeef01234567', 'test', 111, 3, time() - 1000);
+
+		$this->assertEquals(5.0, $lib->collect('test', 111, 'sum'));
+	}
+
 	function testSumWithNoData()
 	{
 		$lib = new RatingLib;
@@ -79,6 +93,20 @@ class Rating_AggregationTest extends TikiTestCase
 		$lib->record_anonymous_vote('deadbeef01234567', 'test', 111, 3, time() - 1000);
 
 		$this->assertEquals(10 / 3, $lib->collect('test', 111, 'avg'), '', 1/1000);
+	}
+
+	function testGetGlobalAverageSingleVote()
+	{
+		global $prefs;
+		$prefs['rating_allow_multi_votes'] = '';
+
+		$lib = new RatingLib;
+		$lib->record_user_vote('abc', 'test', 111, 5, time() - 3000); // overridden
+		$lib->record_user_vote('abc', 'test', 111, 2, time() - 2000);
+		$lib->record_user_vote('abc', 'test', 112, 3, time() - 1000);
+		$lib->record_anonymous_vote('deadbeef01234567', 'test', 111, 3, time() - 1000);
+
+		$this->assertEquals(5 / 2, $lib->collect('test', 111, 'avg'), '', 1/1000);
 	}
 
 	function testBadAggregateFunction()
@@ -114,6 +142,20 @@ class Rating_AggregationTest extends TikiTestCase
 		$this->assertEquals(10.0, $lib->collect('test', 111, 'sum', array('ignore' => 'anonymous')));
 	}
 
+	function testIgnoreAnonymousSingleVote()
+	{
+		global $prefs;
+		$prefs['rating_allow_multi_votes'] = '';
+
+		$lib = new RatingLib;
+		$lib->record_user_vote('abc', 'test', 111, 5, time() - 3000); // overridden
+		$lib->record_user_vote('abc', 'test', 111, 2, time() - 2000); // overridden
+		$lib->record_user_vote('abc', 'test', 111, 3, time() - 1000);
+		$lib->record_anonymous_vote('deadbeef01234567', 'test', 111, 3, time() - 1000);
+
+		$this->assertEquals(3.0, $lib->collect('test', 111, 'sum', array('ignore' => 'anonymous')));
+	}
+
 	function testKeepLatest()
 	{
 		$lib = new RatingLib;
@@ -144,6 +186,24 @@ class Rating_AggregationTest extends TikiTestCase
 		$this->assertEquals(2.0, $lib->collect('test', 111, 'sum', array('keep' => 'oldest', 'range' => 2500,	'ignore' => 'anonymous')));
 	}
 
+	function testKeepOldestSingleVote()
+	{
+		global $prefs;
+		$prefs['rating_allow_multi_votes'] = '';
+
+		$lib = new RatingLib;
+		$lib->record_user_vote('abc', 'test', 111, 5, time() - 3000); // overridden
+		$lib->record_user_vote('abc', 'test', 111, 2, time() - 2000); // overridden
+		$lib->record_user_vote('abc', 'test', 111, 3, time() - 1000);
+		$lib->record_anonymous_vote('deadbeef01234567', 'test', 111, 3, time() - 1000);
+
+		$this->assertEquals(6.0, $lib->collect('test', 111, 'sum', array('keep' => 'oldest')));
+
+		$this->assertEquals(6.0, $lib->collect('test', 111, 'sum', array('keep' => 'oldest', 'range' => 2500)));
+
+		$this->assertEquals(3.0, $lib->collect('test', 111, 'sum', array('keep' => 'oldest', 'range' => 2500,	'ignore' => 'anonymous')));
+	}
+
 	function testConsiderPerPeriod()
 	{
 		$lib = new RatingLib;
@@ -156,6 +216,27 @@ class Rating_AggregationTest extends TikiTestCase
 
 		$this->assertEquals(
 			10 / 3,
+			$lib->collect('test', 111, 'avg', array('keep' => 'oldest', 'revote' => 2500)),
+			'',
+			1 / 1000
+		);
+	}
+
+	function testConsiderPerPeriodSingleVote()
+	{
+		global $prefs;
+		$prefs['rating_allow_multi_votes'] = '';
+
+		$lib = new RatingLib;
+		$lib->record_user_vote('abc', 'test', 111, 5, time() - 3000); // overridden
+		$lib->record_user_vote('abc', 'test', 111, 2, time() - 2000); // overridden
+		$lib->record_user_vote('abc', 'test', 111, 3, time() - 1000); //kept
+		$lib->record_anonymous_vote('deadbeef01234567', 'test', 111, 3, time() - 1000); // kept
+
+		$this->assertEquals(6.0, $lib->collect('test', 111, 'sum', array('keep' => 'oldest', 'revote' => 2500)));
+
+		$this->assertEquals(
+			6 / 2,
 			$lib->collect('test', 111, 'avg', array('keep' => 'oldest', 'revote' => 2500)),
 			'',
 			1 / 1000
