@@ -4,14 +4,14 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-require_once 'lib/rating/ratinglib.php';
-
 class Rating_AggregationTest extends TikiTestCase
 {
+	protected $ratingDefaultOptions;
+	protected $ratingAllowMultipleVotes;
+
 	function setUp()
 	{
-		global $user, $testhelpers;
+		global $user, $testhelpers, $prefs;
 
 		$user = null;
 
@@ -25,15 +25,24 @@ class Rating_AggregationTest extends TikiTestCase
 		TikiDb::get()->query('DELETE FROM `tiki_user_votings` WHERE `id` LIKE ?', array('test.%'));
 
 		$testhelpers = new TestHelpers();
+
+		$ratinglib = TikiLib::lib('rating');
+
+		$this->ratingDefaultOptions = $prefs['rating_default_options'];
+		$prefs['rating_default_options'] = '0,1,2,3,4,5';
+		$this->ratingAllowMultipleVotes = $prefs['rating_allow_multi_votes'];
+		$prefs['rating_allow_multi_votes'] = 'y';
 	}
 
 	function tearDown()
 	{
-		global $testhelpers, $user; $user = null;
+		global $testhelpers, $user, $prefs; $user = null;
 		parent::tearDown();
 		TikiDb::get()->query('DELETE FROM `tiki_user_votings` WHERE `id` LIKE ?', array('test.%'));
 
         $testhelpers->reset_all();
+		$prefs['rating_default_options'] = $this->ratingDefaultOptions;
+		$prefs['rating_allow_multi_votes'] = $this->ratingAllowMultipleVotes;
 	}
 
 	function testGetGlobalSum()
