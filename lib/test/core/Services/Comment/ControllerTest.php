@@ -73,8 +73,15 @@ class Services_Comment_ControllerTest extends PHPUnit_Framework_TestCase
 
 	public function testPostMultipleCommentsAndEnsureSingleWatch()
 	{
-		global $user;
+		global $user, $prefs;
 		$user = 'tester@example.org';
+
+		/** @var \UsersLib $userLib */
+		$userLib = TikiLib::lib('user');
+		if( ! $userLib->user_exists($user) ) {
+			$userLib->add_user($user, $user, $user); // ensure user exists
+		}
+
 		$input = new JitFilter(array_merge(
 			$this->commentInput(),
 			array(
