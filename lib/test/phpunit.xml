@@ -12,8 +12,7 @@
 		convertNoticesToExceptions="true"
 		convertWarningsToExceptions="true"
 		stopOnFailure="false"
-        backupGlobals="false"
-        verbose="true">
+		backupGlobals="false">
 	<php>
 		<ini name="memory_limit" value="-1" />
 	</php>
