@@ -94,6 +94,16 @@ function prefs_rating_list()
 			'type' => 'text',
 			'default' => "0,1,2,3,4",
 		),
+		'rating_allow_multi_votes' => array(
+			'name' => tra('Multiple votes per users'),
+			'description' => tra('Allow the user to cast multiple votes for the same object.'),
+			'type' => 'flag',
+			'options' => array(
+				'' => tr('Disabled'),
+				'y' => tr('Enabled'),
+			),
+			'default' => ''
+		),
 	);
 }
 

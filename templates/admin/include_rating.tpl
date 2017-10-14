@@ -16,6 +16,7 @@
 			{preference name=rating_recalculation_count}
 		</div>
 		{preference name=ip_can_be_checked}
+		{preference name=rating_allow_multi_votes}
 	</fieldset>
 
 	<fieldset>

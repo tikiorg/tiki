@@ -156,7 +156,7 @@ class RatingLib extends TikiDb_Bridge
 			return false;
 		}
 
-		if (!empty($user)) {
+		if (! empty($user) && (empty($prefs['rating_allow_multi_votes']) || $prefs['rating_allow_multi_votes'] !== 'y')) {
 			$this->query(
 				'DELETE FROM `tiki_user_votings` WHERE `user` = ? AND `id` = ?',
 				array($user, $token)
