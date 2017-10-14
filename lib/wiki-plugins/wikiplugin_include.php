@@ -190,10 +190,12 @@ function wikiplugin_include($dataIn, $params)
 		$smarty->loadPlugin('smarty_block_ajax_href');
 		$smarty->loadPlugin('smarty_function_icon');
 		$tip = tra('Include Plugin'). ' | ' . tra('Edit the included page:').' &quot;' . $page . '&quot;';
-		if (empty($_REQUEST['display']) || $_REQUEST['display'] != 'pdf')
-		$text .= '<a class="editplugin tips" '.	// ironically smarty_block_self_link doesn't work for this! ;)
-				smarty_block_ajax_href(array('template' => 'tiki-editpage.tpl'), 'tiki-editpage.php?page='.urlencode($page).'&returnto='.urlencode($GLOBALS['page']), $smarty, $tmp = false) . '>' .
+		$returnto = !empty($GLOBALS['page']) ? $GLOBALS['page'] : (!empty($GLOBALS['_SERVER']['QUERY_STRING']) ? $GLOBALS['_SERVER']['URL'].'?'.$GLOBALS['_SERVER']['QUERY_STRING'] : $GLOBALS['_SERVER']['URL']);
+		if (empty($_REQUEST['display']) || $_REQUEST['display'] != 'pdf') {
+			$text .= '<a class="editplugin tips" '.	// ironically smarty_block_self_link doesn't work for this! ;)
+				smarty_block_ajax_href(array('template' => 'tiki-editpage.tpl'), 'tiki-editpage.php?page='.urlencode($page).'&returnto='.urlencode($returnto), $smarty, $tmp = false) . '>' .
 				smarty_function_icon(array( '_id' => 'page_edit', 'title' => $tip, 'class' => 'icon tips'), $smarty) . '</a>';
+		}
 	}
 	}
 	return $text;
