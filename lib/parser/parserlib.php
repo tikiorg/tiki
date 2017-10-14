@@ -1788,10 +1788,13 @@ if ( \$('#$id') ) {
 	 */
 	private function colorAttrEscape($matches)
 	{
+		$matches[1] = trim($matches[1]);
+		$matches[3] = trim($matches[3]);
+
 		$esc = new Zend\Escaper\Escaper();
-		$color = !empty($matches[1]) ? 'color:' . $esc->escapeHtmlAttr($matches[1]): '';
-		$background = !empty($matches[3]) ? 'background-color:' . $esc->escapeHtmlAttr($matches[3]) : '';
-		$semi = !empty($color) && !empty($background) ? ';' : '';
+		$color = !empty($matches[1]) ? 'color:' . str_replace('&#x23;','#', $esc->escapeHtmlAttr($matches[1])): '';
+		$background = !empty($matches[3]) ? 'background-color:' . str_replace('&#x23;','#', $esc->escapeHtmlAttr($matches[3])) : '';
+		$semi = !empty($color) && !empty($background) ? '; ' : '';
 		$text = !empty($matches[4]) ? $matches[4] : '';
 		return '<span style="' . $color . $semi . $background . '">' . $text . '</span>';
 	}
@@ -3071,7 +3074,10 @@ if ( \$('#$id') ) {
 						}
 
 						if ( $prefs['feature_wiki_show_hide_before'] == 'y' ) {
-							$line = $button.'<h'.($hdrlevel).$style.' class="showhide_heading" id="'.$thisid.'">'.$aclose.' '.$title_text.$headingLink.'</h'.($hdrlevel).'>'.$aclose2;
+							if (! empty($aclose)) {
+								$aclose .= ' ';
+							}
+							$line = $button . '<h' . ($hdrlevel) . $style . ' class="showhide_heading" id="' . $thisid . '">' . $aclose . $title_text . $headingLink . '</h' . ($hdrlevel) . '>' . $aclose2;
 						} else {
 							$line = $button.'<h'.($hdrlevel).$style.' class="showhide_heading" id="'.$thisid.'">'.$title_text.$headingLink.'</h'.($hdrlevel).'>'.$aclose.$aclose2;
 						}

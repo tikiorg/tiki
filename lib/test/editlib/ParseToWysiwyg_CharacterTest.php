@@ -142,15 +142,15 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 	function testColor()
 	{
 		$inData = '~~#112233:text~~';
-		$exp = '<span style="color:#112233; background-color:">text</span>';
+		$exp = '<span style="color:#112233">text</span>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertContains($exp, $out);			
 				
 		$inData = '~~ ,#112233:text~~';
-		$exp = '<span style="color: ; background-color:#112233">text</span>';
+		$exp = '<span style="background-color:#112233">text</span>';
 		$out = trim($this->el->parseToWysiwyg($inData));
-		$this->assertContains($exp, $out);			
-				
+		$this->assertContains($exp, $out);
+
 		$inData = '~~#AABBCC,#112233:text~~';
 		$exp = '<span style="color:#AABBCC; background-color:#112233">text</span>';
 		$out = trim($this->el->parseToWysiwyg($inData));
