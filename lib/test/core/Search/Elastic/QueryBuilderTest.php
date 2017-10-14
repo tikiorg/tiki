@@ -16,6 +16,21 @@ use Search_Expr_MoreLikeThis as MoreLikeThis;
 
 class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 {
+	protected $prefErrorMissingField;
+
+	public function setUp()
+	{
+		global $prefs;
+		$this->prefErrorMissingField = $prefs['search_error_missing_field'];
+		$prefs['search_error_missing_field'] = 'n';
+	}
+
+	public function tearDown()
+	{
+		global $prefs;
+		$prefs['search_error_missing_field'] = $this->prefErrorMissingField;
+	}
+
 	function testSimpleQuery()
 	{
 		$builder = new QueryBuilder;

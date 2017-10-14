@@ -85,7 +85,7 @@ class Services_Comment_ControllerTest extends PHPUnit_Framework_TestCase
 		$threads = array($result['threadId']);
 		
 		$input['title'] = 'This is a reply';
-		$input['data'] = 'Test reply';
+		$input['data'] = 'Test reply ' . uniqid("", true);
 		$input['parentId'] = $result['threadId'];
 		$result = $this->subject->action_post($input);
 		$threads[] = $result['threadId'];
@@ -112,7 +112,7 @@ class Services_Comment_ControllerTest extends PHPUnit_Framework_TestCase
 			'objectId' => 1,
 			'parentId' => 0,
 			'title' => 'Simple comment',
-			'data' => 'This is a test',
+			'data' => 'This is a test ' . uniqid("", true),
 		);
 	}
 }

@@ -31,9 +31,19 @@ class Language_CollectFilesTest extends TikiTestCase
 
 	public function testSetExcludeDirs_shouldRaiseExceptionForInvalidDir()
 	{
-		$dirs = array('invalidDir');
-		$this->expectException('Language_Exception');
-		$this->obj->setExcludeDirs($dirs);
+		$errorLevel = error_reporting();
+		error_reporting($errorLevel & ! E_USER_NOTICE); // code is emitting a user notice
+		try {
+
+			$dirs = array('invalidDir');
+			$this->expectException('Language_Exception');
+			$this->obj->setExcludeDirs($dirs);
+
+		} catch (\Exception $e) {
+			error_reporting($errorLevel);
+			throw $e;
+		}
+		error_reporting($errorLevel);
 	}
 
 	public function testSetExcludeDirsAndGetExcludeDir_shouldSetProperty()

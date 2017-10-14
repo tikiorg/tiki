@@ -21,9 +21,14 @@ abstract class TikiDatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
  	{
  		require(dirname(__FILE__) . '/local.php');
 
+ 		$dbType = $db_tiki;
+ 		if ($dbType == 'mysqli' || $dbType = 'mysqlpo' || $dbType = 'mysqlt') {
+			$dbType = 'mysql'; // force the db type as mysql, all these are AdoDB drivers for mysql
+		}
+
  		if ($this->conn === null) {
  			if (self::$pdo === null) {
- 				self::$pdo = new PDO("$db_tiki:host=$host_tiki;dbname=$dbs_tiki", $user_tiki, $pass_tiki);
+ 				self::$pdo = new PDO("$dbType:host=$host_tiki;dbname=$dbs_tiki", $user_tiki, $pass_tiki);
  			}
  			$this->conn = $this->createDefaultDBConnection(self::$pdo);
  		}
