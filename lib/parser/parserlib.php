@@ -3074,10 +3074,7 @@ if ( \$('#$id') ) {
 						}
 
 						if ( $prefs['feature_wiki_show_hide_before'] == 'y' ) {
-							if (! empty($aclose)) {
-								$aclose .= ' ';
-							}
-							$line = $button . '<h' . ($hdrlevel) . $style . ' class="showhide_heading" id="' . $thisid . '">' . $aclose . $title_text . $headingLink . '</h' . ($hdrlevel) . '>' . $aclose2;
+							$line = $button.'<h'.($hdrlevel).$style.' class="showhide_heading" id="'.$thisid.'">'.$aclose.' '.$title_text.$headingLink.'</h'.($hdrlevel).'>'.$aclose2;
 						} else {
 							$line = $button.'<h'.($hdrlevel).$style.' class="showhide_heading" id="'.$thisid.'">'.$title_text.$headingLink.'</h'.($hdrlevel).'>'.$aclose.$aclose2;
 						}
