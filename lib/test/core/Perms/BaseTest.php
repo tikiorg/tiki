@@ -43,7 +43,7 @@ class Perms_BaseTest extends TikiTestCase
 
 	function testWithoutArrayContext()
 	{
-		$expect = Perms::get(array('type' => 'wiki page', 'object' => 'HomePage'));
+		$expect = Perms::get(array('type' => 'wiki page', 'object' => 'HomePage', 'parentId' => null));
 		$accessor = Perms::get('wiki page', 'HomePage');
 
 		$this->assertEquals($expect, $accessor);

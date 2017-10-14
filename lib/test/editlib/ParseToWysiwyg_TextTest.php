@@ -146,7 +146,8 @@ class EditLib_ParseToWysiwyg_TextTest extends TikiTestCase
 		#
 		# unnumbered
 		#
-		$prefs['feature_use_three_colon_centertag'] = 'n';		
+		$prefs['feature_use_three_colon_centertag'] = 'n';
+		$prefs['wiki_heading_links'] = 'n';
 		$inData = '!::Heading::';
 		$ex = '<h1 style="text-align: center;" class="showhide_heading" id="Heading">Heading</h1>';
 		$out = trim($this->el->parseToWysiwyg($inData));
