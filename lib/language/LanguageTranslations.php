@@ -137,9 +137,6 @@ class LanguageTranslations extends TikiDb_Bridge
 		$result = $this->query($query, array($this->lang, $originalStr));
 
 		if (!$result->numRows()) {
-			if (! $generalDefinedByCaller) {
-				$general = null; // Default
-			}
 			$query = 'insert into `tiki_language` (`source`, `lang`, `tran`, `changed`, `general`, `userId`, `lastModif`) values (?, ?, ?, ?, ?, ?, ?)';
 			$result = $this->query($query, array($originalStr, $this->lang, $translatedStr, 1, $general, $userId, $tikilib->now));
 		} else {
