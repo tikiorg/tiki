@@ -1783,6 +1783,7 @@
 		"sebastian/recursion-context": ">=1.0.2",
 		"sebastian/resource-operations": ">=1.0.0",
 		"sebastian/version": ">=1.0.6",
+		"squizlabs/php_codesniffer": "^3.1",
 		"enygma/expose": "^3.0",
 		"monolog/monolog": "~1.4",
 		"twig/twig": "1.*|2.*",
