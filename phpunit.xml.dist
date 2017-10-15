@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Note: When backupGlobals is set to true, phpunit ends up trying to restore
+   the DB connection to its initial state, i.e. an unconnected state.
+
+   This causes some mysqli errors, because Tiki libraries never expect
+   to have to reconnect to the DB.
+-->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:noNamespaceSchemaLocation="./vendor_bundled/vendor/phpunit/phpunit/phpunit.xsd"
+		 bootstrap="lib/test/bootstrap.php"
+		 colors="true"
+		 convertErrorsToExceptions="true"
+		 convertNoticesToExceptions="true"
+		 convertWarningsToExceptions="true"
+		 stopOnFailure="false"
+		 backupGlobals="false">
+
+	<testsuites>
+		<testsuite name="Tiki test suite">
+			<directory>./lib/test</directory>
+		</testsuite>
+	</testsuites>
+
+	<groups>
+		<exclude>
+			<group>disable</group>
+		</exclude>
+	</groups>
+
+	<php>
+		<ini name="memory_limit" value="-1"/>
+		<ini name="date.timezone" value="UTC"/>
+	</php>
+
+	<filter>
+		<whitelist addUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">./lib</directory>
+			<exclude>
+				<directory suffix=".php">lib/test</directory>
+			</exclude>
+		</whitelist>
+	</filter>
+
+	<!--
+		uncomment the logging node below if you need xml coverage info, for IDEs that support phpunit
+		Info from http://www.phpunit.de/manual/3.3/en/phpunit-book.html#appendixes.configuration
+	<logging>
+		<log type="coverage-clover" target="lib/test/clover.xml" />
+	</logging>
+	-->
+
+</phpunit>
