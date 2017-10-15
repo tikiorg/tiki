@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<ruleset name="Tiki Coding Standard">
+	<description>Tiki Coding Standard</description>
+
+	<!-- Paths to check -->
+	<file>.</file>
+
+	<!-- Exclude libraries and other folders that should not contain code -->
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/vendor_bundled/*</exclude-pattern>
+	<exclude-pattern>*/vendor_custom/*</exclude-pattern>
+	<exclude-pattern>*/vendor_extra/*</exclude-pattern>
+	<exclude-pattern>*/lib/sheet/ole/*</exclude-pattern>
+	<exclude-pattern>*/lib/sheet/include/*</exclude-pattern>
+	<exclude-pattern>*/lib/webmail/*</exclude-pattern>
+	<exclude-pattern>*/lib/equation/*</exclude-pattern>
+	<exclude-pattern>*/lib/ical/*</exclude-pattern>
+	<exclude-pattern>*/lib/swfobject/src/swfobject.js</exclude-pattern>
+	<exclude-pattern>*/\.*/*</exclude-pattern>
+	<!-- <exclude-pattern>*/doc/*</exclude-pattern> -->
+	<exclude-pattern>*/dump/*</exclude-pattern>
+	<exclude-pattern>*/img/*</exclude-pattern>
+	<exclude-pattern>*/storage/*</exclude-pattern>
+	<exclude-pattern>*/temp/*</exclude-pattern>
+
+	<!-- display progress -->
+	<arg value="p"/>
+	<arg name="colors"/>
+
+	<!-- Include the whole PSR-2 standard -->
+	<rule ref="PSR2"/>
+
+	<!-- Tiki uses tabs for indentation -->
+	<arg name="tab-width" value="4"/>
+	<rule ref="PSR2">
+		<exclude name="Generic.WhiteSpace.DisallowTabIndent"/>
+	</rule>
+	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
+	<rule ref="Generic.WhiteSpace.ScopeIndent">
+		<properties>
+			<property name="indent" value="4"/>
+			<property name="tabIndent" value="true"/>
+		</properties>
+	</rule>
+
+	<!-- Exceptions to PSR-2 -->
+	<!-- Avoid warnings in the lang files that normally have really long lines -->
+	<rule ref="Generic.Files.LineLength">
+		<exclude-pattern>*/lang/*/language.php</exclude-pattern>
+	</rule>
+
+	<!-- Relax some PRS1/PSR2 Rules to match current status -->
+
+	<!-- Relax PSR1 -->
+	<!-- A file SHOULD declare new symbols (classes, functions, constants, etc.) and cause no other side effects, or it SHOULD execute logic with side effects, but SHOULD NOT do both. -->
+	<rule ref="PSR1.Files.SideEffects">
+		<severity>0</severity>
+	</rule>
+	<!-- Namespaces and classes MUST follow PSR-0.
+		This means each class is in a file by itself, and is in a namespace of at least one level: a top-level vendor name. -->
+	<rule ref="PSR1.Classes.ClassDeclaration">
+		<severity>0</severity>
+	</rule>
+	<!-- Class names MUST be declared in StudlyCaps. -->
+	<rule ref="Squiz.Classes.ValidClassName">
+		<severity>0</severity>
+	</rule>
+	<!-- Method names MUST be declared in camelCase(). -->
+	<rule ref="PSR1.Methods.CamelCapsMethodName">
+		<severity>0</severity>
+	</rule>
+	<!-- ~ PSR1 -->
+
+	<!-- Relax PSR 2 -->
+	<!-- Visibility MUST be declared on all properties.
+		The var keyword MUST NOT be used to declare a property.
+		There MUST NOT be more than one property declared per statement.
+		Property names SHOULD NOT be prefixed with a single underscore to indicate protected or private visibility. -->
+	<rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
+		<severity>0</severity>
+	</rule>
+	<!-- Method names SHOULD NOT be prefixed with a single underscore to indicate protected or private visibility. -->
+	<rule ref="PSR2.Methods.MethodDeclaration.Underscore">
+		<severity>0</severity>
+	</rule>
+	<!-- ~ PSR 2 -->
+
+	<!-- Extra rules to improve code quality and avoid deprecated code -->
+	<rule ref="Generic.PHP.DeprecatedFunctions"/>
+	<!--
+	<rule ref="Generic.Classes.DuplicateClassName"/>
+	<rule ref="Generic.Files.OneClassPerFile"/>
+	<rule ref="Generic.Files.OneInterfacePerFile"/>
+	<rule ref="Generic.Files.OneTraitPerFile"/>
+	<rule ref="Generic.PHP.BacktickOperator"/>
+	-->
+
+</ruleset>
