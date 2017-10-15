@@ -1740,7 +1740,7 @@ class LogsLib extends TikiLib
 		$mid .= " and `user` IS NOT NULL"; // just to avoid those strange null entries
 		$query = "select *, max(`lastModif`) as `lastViewed` " .
 						" from `tiki_actionlog` where $mid " .
-						" group by `user`, `object`, `objectType`, `comment` order by `lastViewed` desc"
+						" group by `user`, `object`, `objectType`, `comment`, `actionId`, `action`, `ip`, `categId`, `client`, `lastModif` order by `lastViewed` desc"
 						;
 
 		$ret = $this->fetchAll($query, $bindvars);

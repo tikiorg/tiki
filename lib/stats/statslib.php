@@ -541,7 +541,7 @@ class StatsLib extends TikiLib
 	{
 		$bindvars = $this->period2dates($when);
 		$bindvars[1] = $type;
-		$query = "select sum(`hits`)from `tiki_stats` where `day` >=? and `type`=?";
+		$query = "select sum(`hits`) from `tiki_stats` where `day` >=? and `type`=?";
 		$count = $this->getOne($query, $bindvars);
 		if ($count == '') {
 			$count = 0;

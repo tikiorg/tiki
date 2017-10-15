@@ -1207,7 +1207,7 @@ class FreetagLib extends ObjectLib
 						. ' INNER JOIN `tiki_freetagged_objects` o2 ON ( o1.`objectId` = o2.`objectId` )'
 						. ' INNER JOIN `tiki_freetags` t2 ON ( t2.`tagId` = o2.`tagId` )'
 						. ' WHERE t2.`tag` = ? AND t1.`tag` <> ?'
-						. ' GROUP BY o1.`tagId`'
+						. ' GROUP BY t1.`tagId`, t1.`tag`'
 						. ' ORDER BY quantity DESC'
 						;
 
@@ -1640,7 +1640,7 @@ class FreetagLib extends ObjectLib
      */
     function get_cloud()
 	{
-		$query = "SELECT tag title, COUNT(*) weight, f.tagId FROM tiki_freetags f INNER JOIN tiki_freetagged_objects fo ON f.tagId = fo.tagId GROUP BY f.tagId";
+		$query = "SELECT tag title, COUNT(*) weight, f.tagId FROM tiki_freetags f INNER JOIN tiki_freetagged_objects fo ON f.tagId = fo.tagId GROUP BY f.tagId, tag";
 		$result = $this->fetchAll($query);
 
 		foreach ($result as &$row) {

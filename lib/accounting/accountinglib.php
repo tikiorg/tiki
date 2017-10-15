@@ -242,7 +242,8 @@ class AccountingLib extends LogsLib
 						" FROM `tiki_acct_journal` INNER JOIN `tiki_acct_item`" .
 						" ON (`tiki_acct_journal`.`journalBookId`=`tiki_acct_item`.`itemBookId`" .
 						" AND `tiki_acct_journal`.`journalId`=`tiki_acct_item`.`itemJournalId`)" .
-						" WHERE `journalBookId`=? AND `itemAccountId` LIKE ?";
+						" WHERE `journalBookId`=? AND `itemAccountId` LIKE ?" .
+						" GROUP BY `itemAccountId`";
 
 		$res = $this->query($query, array($bookId, $accountId));
 		$totals = $res->fetchRow();
