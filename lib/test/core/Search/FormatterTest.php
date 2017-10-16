@@ -263,7 +263,7 @@ OUT;
 
 		$expect = <<<OUT
 * ~np~<a href="HomePage" class="" title="Home" data-type="wiki page" data-object="HomePage">Home</a>~/np~
-* ~np~<a href="Some+Page" class="" title="Test" data-type="wiki page" data-object="Some Page">Test</a>~/np~
+* ~np~<a href="Some Page" class="" title="Test" data-type="wiki page" data-object="Some Page">Test</a>~/np~
 
 OUT;
 		$this->assertEquals($expect, $output);
