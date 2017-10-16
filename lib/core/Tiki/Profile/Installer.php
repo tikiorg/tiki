@@ -5,6 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+use Tiki\Yaml\Directives as YamlDirectives;
+use Tiki\Yaml\Filter\ReplaceUserData as YamlReplaceUserData;
+
 class Tiki_Profile_Installer
 {
 	public static function exportGroup(Tiki_Profile_Writer $writer, $group, $categories = false, $objects = false) // {{{
@@ -364,7 +367,7 @@ class Tiki_Profile_Installer
 		try {
 
 			// Apply directives, note Directives should be and are a runtime thing
-			$yamlDirectives = new Yaml_Directives(new Yaml_Filter_ReplaceUserData($profile, $this->userData), $profile->getPath());
+			$yamlDirectives = new YamlDirectives(new YamlReplaceUserData($profile, $this->userData), $profile->getPath());
 			$data = $profile->getData();
 			$yamlDirectives->process($data);
 			$profile->setData($data);

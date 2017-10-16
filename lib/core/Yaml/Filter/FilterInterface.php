@@ -5,7 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-interface Yaml_Filter_FilterInterface
+namespace Tiki\Yaml\Filter;
+
+interface FilterInterface
 {
 	public function filter(&$value);
-} 
+}

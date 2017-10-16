@@ -5,12 +5,16 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-use Symfony\Component\Yaml\Yaml;
+namespace Tiki\Tests\Yaml;
 
-class Yaml_DirectivesTest extends PHPUnit_Framework_TestCase
+use PHPUnit_Framework_TestCase;
+use Symfony\Component\Yaml\Yaml;
+use Tiki\Yaml\Directives as Directives;
+
+class DirectivesTest extends PHPUnit_Framework_TestCase
 {
 	/**
-	 * @var Yaml_Directives
+	 * @var Directives
 	 */
 	protected $directives;
 	protected $fixtures;
@@ -18,7 +22,7 @@ class Yaml_DirectivesTest extends PHPUnit_Framework_TestCase
 	public function setUp()
 	{
 		$this->fixtures = __DIR__ . '/Fixtures/';
-		$this->directives = new Yaml_Directives(null, $this->fixtures);
+		$this->directives = new Directives(null, $this->fixtures);
 	}
 
 	public function testNoChangeIfNoDirective()

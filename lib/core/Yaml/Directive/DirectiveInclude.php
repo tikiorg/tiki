@@ -5,9 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+namespace Tiki\Yaml\Directive;
+
 use Symfony\Component\Yaml\Yaml;
 
-class Yaml_Directive_Include
+class DirectiveInclude
 {
 	protected $props;
 
@@ -91,4 +93,4 @@ class Yaml_Directive_Include
 				return false;
 		}
 	}
-} 
+}

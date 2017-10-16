@@ -5,12 +5,16 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Yaml_Directives
+namespace Tiki\Yaml;
+
+use Tiki\Yaml\Filter\FilterInterface;
+
+class Directives
 {
 	protected $path;
 	protected $filter;
 
-	public function __construct(Yaml_Filter_FilterInterface $filter = null, $path = null)
+	public function __construct(FilterInterface $filter = null, $path = null)
 	{
 		if (is_null($path)) {
 			$this->path = TIKI_PATH;
@@ -33,8 +37,8 @@ class Yaml_Directives
 
 	protected function applyDirective($directive, &$value, $key)
 	{
-		$class = "Yaml_Directive_" . ucfirst($directive);
-		if (!class_exists($class, true)) {
+		$class = "\\Tiki\\Yaml\\Directive\\Directive" . ucfirst($directive);
+		if (! class_exists($class, true)) {
 			return;
 		}
 		$directive = new $class();
@@ -53,18 +57,19 @@ class Yaml_Directives
 	protected function valueIsDirective($value)
 	{
 		$testValue = $value;
-		if (is_array($value) &&  !empty($value)) {
+		if (is_array($value) && ! empty($value)) {
 			$testValue = array_values($value)[0];
 		}
 
 		if (is_string($testValue) && (strncmp('!', $testValue, 1) == 0)) {
-			// Wiki syntax can often start with ! for titles and so the following checks are needed to reduce conflict possibility with YAML user-defined data type extensions syntax
-			if (!ctype_lower(substr($testValue, 1, 1))) {
+			// Wiki syntax can often start with ! for titles and so the following checks are needed to reduce
+			// conflict possibility with YAML user-defined data type extensions syntax
+			if (! ctype_lower(substr($testValue, 1, 1))) {
 				return false;
 			}
-	
-			$class = "Yaml_Directive_" . ucfirst($this->directiveFromValue($testValue)); 
-			if (!class_exists($class)) {
+
+			$class = "\\Tiki\\Yaml\\Directive\\Directive" . ucfirst($this->directiveFromValue($testValue));
+			if (! class_exists($class)) {
 				return false;
 			}
 
@@ -77,7 +82,7 @@ class Yaml_Directives
 	protected function map(&$value, $key)
 	{
 		if ($this->valueIsDirective($value)) {
-			if ($this->filter instanceof Yaml_Filter_FilterInterface) {
+			if ($this->filter instanceof FilterInterface) {
 				$this->filter->filter($value);
 			}
 			$this->applyDirective($this->directiveFromValue($value), $value, $key);

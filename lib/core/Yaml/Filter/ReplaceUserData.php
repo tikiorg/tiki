@@ -5,7 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Yaml_Filter_ReplaceUserData implements Yaml_Filter_FilterInterface
+namespace Tiki\Yaml\Filter;
+
+use Tiki_Profile;
+
+class ReplaceUserData implements FilterInterface
 {
 	protected $profile;
 	protected $userData;
@@ -20,4 +24,4 @@ class Yaml_Filter_ReplaceUserData implements Yaml_Filter_FilterInterface
 	{
 		$this->profile->replaceReferences($value, $this->userData);
 	}
-} 
+}
