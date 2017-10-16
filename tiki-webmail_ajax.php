@@ -10,6 +10,7 @@
 
 require_once ('tiki-setup.php');
 $headerlib = TikiLib::lib('header');
+$access = TikiLib::lib('access');
 
 $access->check_feature(array('feature_webmail', 'feature_ajax' ));	// AJAX_TODO
 $access->check_permission_either(array('tiki_p_use_webmail', 'tiki_p_use_group_webmail'));
