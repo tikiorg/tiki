@@ -88,10 +88,10 @@ function prefs_unified_list()
 			'description' => tra('Use OR or AND as the default search operator.'),
 			'type' => 'list',
 			'filter' => 'int',
-			'default' => 0,
+			'default' => 1,
 			'options' => array(
-				0 => tra('OR'),
 				1 => tra('AND'),
+				0 => tra('OR'),
 			),
 		),
 		'unified_lucene_merge_factor' => array(
@@ -328,4 +328,3 @@ function prefs_unified_list()
 		),
 	);
 }
-
