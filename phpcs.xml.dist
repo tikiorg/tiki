@@ -43,47 +43,42 @@
 		</properties>
 	</rule>
 
+	<!-- Change severity to be able to filter if too many lines over 120 using cli option warning-severity=5 -->
+	<rule ref="Generic.Files.LineLength">
+		<severity>4</severity>
+	</rule>
+
 	<!-- Exceptions to PSR-2 -->
 	<!-- Avoid warnings in the lang files that normally have really long lines -->
 	<rule ref="Generic.Files.LineLength">
 		<exclude-pattern>*/lang/*/language.php</exclude-pattern>
 	</rule>
 
-	<!-- Relax some PRS1/PSR2 Rules to match current status -->
+	<!-- Relax some PRS-1/PSR-2 Rules to match current status.
+		Instead of error, these rules will return warning, and the severity is 6 so you can
+		display only these warning using the cli option warning-severity=6 -->
 
-	<!-- Relax PSR1 -->
-	<!-- A file SHOULD declare new symbols (classes, functions, constants, etc.) and cause no other side effects, or it SHOULD execute logic with side effects, but SHOULD NOT do both. -->
-	<rule ref="PSR1.Files.SideEffects">
-		<severity>0</severity>
-	</rule>
+	<!-- Relax PSR-1 -->
 	<!-- Namespaces and classes MUST follow PSR-0.
 		This means each class is in a file by itself, and is in a namespace of at least one level: a top-level vendor name. -->
-	<rule ref="PSR1.Classes.ClassDeclaration">
-		<severity>0</severity>
+	<rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+		<message>Tiki PSR1 Relaxed: Each %s must be in a namespace of at least one level (a top-level vendor name)</message>
+		<type>warning</type>
+		<severity>6</severity>
 	</rule>
 	<!-- Class names MUST be declared in StudlyCaps. -->
-	<rule ref="Squiz.Classes.ValidClassName">
-		<severity>0</severity>
+	<rule ref="Squiz.Classes.ValidClassName.NotCamelCaps">
+		<message>Tiki PSR1 Relaxed: %s name "%s" is not in camel caps format</message>
+		<type>warning</type>
+		<severity>6</severity>
 	</rule>
 	<!-- Method names MUST be declared in camelCase(). -->
-	<rule ref="PSR1.Methods.CamelCapsMethodName">
-		<severity>0</severity>
+	<rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
+		<message>Tiki PSR1 Relaxed: Method name "%s" is not in camel caps format</message>
+		<type>warning</type>
+		<severity>6</severity>
 	</rule>
-	<!-- ~ PSR1 -->
-
-	<!-- Relax PSR 2 -->
-	<!-- Visibility MUST be declared on all properties.
-		The var keyword MUST NOT be used to declare a property.
-		There MUST NOT be more than one property declared per statement.
-		Property names SHOULD NOT be prefixed with a single underscore to indicate protected or private visibility. -->
-	<rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
-		<severity>0</severity>
-	</rule>
-	<!-- Method names SHOULD NOT be prefixed with a single underscore to indicate protected or private visibility. -->
-	<rule ref="PSR2.Methods.MethodDeclaration.Underscore">
-		<severity>0</severity>
-	</rule>
-	<!-- ~ PSR 2 -->
+	<!-- ~ PSR-1 -->
 
 	<!-- Extra rules to improve code quality and avoid deprecated code -->
 	<rule ref="Generic.PHP.DeprecatedFunctions"/>
