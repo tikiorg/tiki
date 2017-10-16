@@ -1282,7 +1282,7 @@ class WikiLib extends TikiLib
 
 		$pages = TikiDb::get()->table('tiki_pages');
 		$page = $pages->fetchOne('pageSlug', ['pageName' => $page]) ?: $page;
-		$href = "$script_name?page=" . urlencode($page);
+		$href = "$script_name?page=" . $page;
 
 		if (isset($prefs['feature_wiki_use_date_links']) && $prefs['feature_wiki_use_date_links'] == 'y') {
 			if (isset($_REQUEST['date'])) {
