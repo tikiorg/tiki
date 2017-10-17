@@ -4117,7 +4117,7 @@ class TrackerLib extends TikiLib
 	/* return all the emails that are locally watching an item */
 	public function get_local_notifications($itemId, $status='', $oldStatus='')
 	{
-		global $user_preferences, $prefs;
+		global $user_preferences, $prefs, $user;
 		$tikilib = TikiLib::lib('tiki');
 		$userlib = TikiLib::lib('user');
 		$emails = array();
@@ -4126,11 +4126,12 @@ class TrackerLib extends TikiLib
 		if (is_array($res)) {
 			foreach ($res as $f) {
 				if (isset($f['options_map']['notify']) && $f['options_map']['notify'] != 0 && !empty($f['value'])) {
-					if ($f['options_map']['notify'] == 2 && array_key_exists($f['value'], $user_preferences)) {
+					$fieldUsers = $this->parse_user_field($f['value']);
+					if ($f['options_map']['notify'] == 2 && in_array($user, $fieldUsers)) {
 						// Don't send email to oneself
 						continue;
 					}
-					foreach( $this->parse_user_field($f['value']) as $fieldUser ) {
+					foreach ($fieldUsers as $fieldUser) {
 						$email = $userlib->get_user_email($fieldUser);
 						if( !empty($fieldUser) && !empty($email) ) {
 							$tikilib->get_user_preferences($fieldUser, array('email', 'user', 'language', 'mailCharset'));
