@@ -27,8 +27,28 @@
 	<arg value="p"/>
 	<arg name="colors"/>
 
-	<!-- Include the whole PSR-2 standard -->
+	<!-- Tiki uses the Zend Coding Standards
+		reference: https://github.com/zendframework/zend-coding-standard/blob/master/ruleset.xml -->
 	<rule ref="PSR2"/>
+	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+	<rule ref="Generic.Formatting.SpaceAfterNot"/>
+	<rule ref="Squiz.WhiteSpace.OperatorSpacing">
+		<properties>
+			<property name="ignoreNewlines" value="true"/>
+		</properties>
+	</rule>
+	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
+		<properties>
+			<property name="ignoreBlankLines" value="false"/>
+		</properties>
+	</rule>
+
+	<!--  Other rules to enforce the ZF standards -->
+	<rule ref="Squiz.Strings.ConcatenationSpacing">
+		<properties>
+			<property name="spacing" value="1"/>
+		</properties>
+	</rule>
 
 	<!-- Tiki uses tabs for indentation -->
 	<arg name="tab-width" value="4"/>
@@ -79,6 +99,15 @@
 		<severity>6</severity>
 	</rule>
 	<!-- ~ PSR-1 -->
+
+	<!-- Relax PSR-1 -->
+	<rule ref="Generic.Arrays.DisallowLongArraySyntax">
+			<message>Tiki ZF CS Relaxed: Short array syntax must be used to define arrays</message>
+			<type>warning</type>
+			<severity>6</severity>
+	</rule>
+	<!-- ~ ZF Coding Standards -->
+
 
 	<!-- Extra rules to improve code quality and avoid deprecated code -->
 	<rule ref="Generic.PHP.DeprecatedFunctions"/>
