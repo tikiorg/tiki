@@ -283,11 +283,14 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		if (empty($value)) {
 			return '';
 		} else {
+			if (!is_array($value)) {
+				$value = TikiLib::lib('trk')->parse_user_field($value);
+			}
 			if ($this->getOption('showRealname')) {
 				TikiLib::lib('smarty')->loadPlugin('smarty_modifier_username');
-				return implode(', ', array_map('smarty_modifier_username', TikiLib::lib('trk')->parse_user_field($value)));
+				return implode(', ', array_map('smarty_modifier_username', $value));
 			} else {
-				return implode(', ', TikiLib::lib('trk')->parse_user_field($value));
+				return implode(', ', $value);
 			}
 		}
 	}
@@ -332,21 +335,33 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		return $info;
 	}
 
+	/**
+	 * Search index fields:
+	 * - permName: identifier for exact match if single-user field OR multivalue if multiple-user field 
+	 * - permName_text: sortable text search for Real Name (if enabled) or user identifiers
+	 */
 	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
 		$baseKey = $this->getBaseKey();
 
 		$value = $this->getValue();
+		$parsedValue = TikiLib::lib('trk')->parse_user_field($value);
 
 		if ($this->getOption('showRealname')) {
 			TikiLib::lib('smarty')->loadPlugin('smarty_modifier_username');
-			$realName = implode(', ', array_map('smarty_modifier_username', TikiLib::lib('trk')->parse_user_field($value)));
+			$realName = implode(', ', array_map('smarty_modifier_username', $parsedValue));
 		} else {
-			$realName = implode(', ', TikiLib::lib('trk')->parse_user_field($value));	// add the _text option even if not using showRealname so we don't need to check
+			$realName = implode(', ', $parsedValue);	// add the _text option even if not using showRealname so we don't need to check
+		}
+
+		if ($this->getOption('multiple')) {
+			$baseValue = $typeFactory->multivalue($parsedValue);
+		} else {
+			$baseValue = $typeFactory->identifier($value);
 		}
 
 		return array(
-			$baseKey => $typeFactory->identifier($this->getValue()),
+			$baseKey => $baseValue,
 			"{$baseKey}_text" => $typeFactory->sortable($realName),
 		);
 
@@ -564,7 +579,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 							if ($v === '-Blank (no data)-') {
 								$sub->filterIdentifier('', $baseKey.'_text');
 							} elseif ($v) {
-								$sub->filterContent((string) $v, $baseKey);
+								$sub->filterMultivalue((string) $v, $baseKey);
 							}
 						}
 					}
