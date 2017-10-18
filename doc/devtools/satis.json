@@ -373,6 +373,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "fezvrasta/popper.js",
+				"version": "1.12.5",
+				"dist": {
+					"url": "https://github.com/FezVrasta/popper.js/archive/v1.12.5.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "nicolaskruchten/pivottable",
 				"version": "v2.7.0",
 				"dist": {
