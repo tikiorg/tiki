@@ -276,6 +276,9 @@ else
 	elif [ "$UNAME" = "Darwin" ]; then
 		AUSER=_www
 		AGROUP=_www
+	elif [ "$UNAME" = "FreeBS" ]; then
+		AUSER=www
+		AGROUP=www
 	fi
 fi
 }
