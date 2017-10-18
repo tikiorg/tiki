@@ -135,7 +135,7 @@ if (!empty($_REQUEST['action'])) {
 	switch ($_REQUEST['action']) {	// placeholder: more to do
 		default:
 			$access->output_serialized(refreshWebmail($_REQUEST['destDiv']));
-			die();
+			return;
 	}
 }
 
