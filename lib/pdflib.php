@@ -451,6 +451,7 @@ class PdfGenerator
 				}
 			}
 		//checking preferences
+		$pdfSettings['print_pdf_mpdf_printfriendly']=$prefs['print_pdf_mpdf_printfriendly']!=''?$prefs['print_pdf_mpdf_printfriendly']:'';
 		$pdfSettings['orientation']=$prefs['print_pdf_mpdf_orientation']!=''?$prefs['print_pdf_mpdf_orientation']:'P';
 		$pdfSettings['pagesize']=$prefs['print_pdf_mpdf_pagesize']!=''?$prefs['print_pdf_mpdf_pagesize']:'Letter';
 		//custom size needs to be passed for Tabloid
