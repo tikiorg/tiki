@@ -246,7 +246,7 @@ function wikiplugin_datachannel( $data, $params )
 					return trim($element);
 				}
 				$element = array_map(trim, $element);
-				return '[' . implode(', ', $element) . ']';
+				return implode(',', $element);
 			};
 
 			$input = array_map($trimAndMapArraysAsYaml, $input);
@@ -363,16 +363,37 @@ function wikiplugin_datachannel( $data, $params )
 			}
 
 			if (empty($params['debug']) || $params['debug'] != 'y') {
+
 				if (isset($params['quietReturn']) && $params['quietReturn'] == 'y') {
+
 					return true;
+
+				} else if (! empty($installer) && ! empty($profile)) {
+					if ($target = $profile->getInstructionPage()) {
+
+						$profilefeedback = $installer->getFeedback();
+
+						foreach ($profilefeedback as $feedback) {
+							if (strpos($feedback, tra('An error occurred: ')) === 0) {
+								Feedback::error($feedback, 'session');
+							}
+						}
+
+						$wikilib = TikiLib::lib('wiki');
+						$target = $wikilib->sefurl($target);
+						header('Location: ' . $target);
+						exit;
+					}
+
 				} else {
 					$url = $success ? $params['returnURI'] : $params['returnErrorURI'];
 					$url = str_replace(array_keys($arguments), array_values($arguments), $url);
 					$access = TikiLib::lib('access');
 					$access->redirect($url);
 				}
+			} else {
+				Feedback::note(['mes' => array_merge($installer->getFeedback(), $profile->getFeedback())]);
 			}
-			Feedback::note(['mes' => array_merge($installer->getFeedback(), $profile->getFeedback())]);
 		}
 
 		$smarty->assign('datachannel_inputfields', $inputfields);
@@ -387,11 +408,11 @@ function wikiplugin_datachannel( $data, $params )
 			$smarty->assign('datachannel_form_onsubmit', '');
 		}
 
-    if (empty($params['template'])){
-      return '~np~' . $smarty->fetch('wiki-plugins/wikiplugin_datachannel.tpl') . '~/np~';
-    } else {
-      return '~np~' . $smarty->fetch($params['template']) . '~/np~';
-    }
+		if (empty($params['template'])){
+		  return '~np~' . $smarty->fetch('wiki-plugins/wikiplugin_datachannel.tpl') . '~/np~';
+		} else {
+		  return '~np~' . $smarty->fetch($params['template']) . '~/np~';
+		}
 	}
 }
 
