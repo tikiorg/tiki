@@ -182,6 +182,7 @@ class FilegalBatchLib extends FileGalLib
 					foreach($dirs as $dir) {
 						$foundDir = false;
 
+						$subgals = $this->getSubGalleries($destinationGalleryId, false,'batch_upload_file_dir');
 						foreach($subgals['data'] as $subgal) {
 							if ($subgal['parentId'] == $destinationGalleryId && $subgal['name'] == $dir) {
 								$destinationGalleryId = (int) $subgal['id'];
