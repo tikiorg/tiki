@@ -1496,9 +1496,6 @@ function prefs_feature_list($partial = false)
 			'description' => tra('make the search box visible'),
 			'type' => 'flag',
 			'default' => 'y',
-			'dependencies' => array(
-				'feature_search_fulltext',
-			),
 		),
 		'feature_search_show_visit_count' => array(
 			'name' => tra('Visits'),
