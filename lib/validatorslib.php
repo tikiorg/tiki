@@ -108,6 +108,8 @@ class Validators
 						$validationjs .= 'return $("#area_'.$field_value['fieldId'].'").val(); ';
 					} elseif ( $prefix == 'ins_' && $field_value['type'] == 'k') {
 						$validationjs .= 'return $("#page_selector_'.$field_value['fieldId'].'").val(); ';
+					} elseif ( $prefix == 'ins_' && $field_value['type'] == 'u') {
+						$validationjs .= 'return $("#user_selector_'.$field_value['fieldId'].'").val(); ';
 					} else {
 						if ( $field_value['type'] == 'g' or $field_value['type'] == 'e' or $field_value['type'] == 'y' or $field_value['type'] == 'd' or $field_value['type'] == 'D' ) {
 							// Let's handle drop-down style fields
