@@ -484,7 +484,7 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 		'setting' => 'OPcache',
 		'message' => tra('OPcache is being used as the ByteCode Cache, which increases performance if correctly configured. See Admin->Performance in the Tiki for more details.')
 	);
-} elseif ( function_exists('wincache_ocache_fileinfo') && ( ini_get('wincache.ocenabled') == '1') ) {
+} elseif ( function_exists('wincache_fcache_fileinfo') && ( ini_get('wincache.fcenabled') == '1') ) {
 	$sapi_type = php_sapi_name();
 	if ($sapi_type == 'cgi-fcgi') {
 		$php_properties['ByteCode Cache'] = array(

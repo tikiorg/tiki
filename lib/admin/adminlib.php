@@ -587,7 +587,7 @@ class AdminLib extends TikiLib
 			}
 			$opcode_stats['opcode_cache'] = 'XCache';
 
-		} elseif (function_exists('wincache_ocache_fileinfo') && (ini_get('wincache.ocenabled') == '1')) {
+		} elseif (function_exists('wincache_fcache_fileinfo') && (ini_get('wincache.fcenabled') == '1')) {
 			$opcode_stats = array(
 				'opcode_cache' => 'WinCache',
 				'stat_flag' => 'wincache.ocenabled',
@@ -600,12 +600,12 @@ class AdminLib extends TikiLib
 				'type' => 'wincache',
 			);
 
-			$info = wincache_ocache_fileinfo();
+			$info = wincache_fcache_fileinfo();
 			$opcode_stats['hit_hit'] = $info['total_hit_count'];
 			$opcode_stats['hit_miss'] = $info['total_miss_count'];
 			$opcode_stats['hit_total'] = $info['total_hit_count'] + $info['total_miss_count'];
 
-			$memory = wincache_ocache_meminfo();
+			$memory = wincache_fcache_meminfo();
 			$opcode_stats['memory_avail'] = $memory['memory_free'];
 			$opcode_stats['memory_total'] = $memory['memory_total'];
 			$opcode_stats['memory_used'] = $memory['memory_total'] - $memory['memory_free'];
