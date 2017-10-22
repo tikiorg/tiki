@@ -1897,6 +1897,9 @@ class FileGalLib extends TikiLib
 		}
 
 		if ( $permission != '' ) {
+			if (! is_array($return['data'])) {
+				$return['data'] = [];
+			}
 			$return['data'] = Perms::filter(array('type' => 'file gallery'), 'object', $return['data'], array('object'=>'id'), $permission);
 		}
 
