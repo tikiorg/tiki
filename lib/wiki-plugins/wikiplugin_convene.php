@@ -152,15 +152,17 @@ function wikiplugin_convene($data, $params)
 
 	//start date header
 	$dateHeader = "";
-	$deleteicon = smarty_function_icon(['name' => 'delete', 'iclass' => 'tips', 'ititle' => ':' . tr('Delete Date')],
-		$smarty);
+	$deleteicon = smarty_function_icon(['name' => 'delete', 'iclass' => 'tips', 'ititle' => ':' . tr('Delete Date')], $smarty);
+	$tikiDate = new TikiDate();
+	$gmformat = str_replace($tikiDate->search, $tikiDate->replace, $tikilib->get_short_datetime_format());
 	foreach ($votes as $stamp => $totals) {
-		$dateHeader .= '<td class="conveneHeader">';
+		$dateHeader .= '<td class="conveneHeader"><span class="tips" title="' . tr('UTC date time: %0', gmdate($gmformat, $stamp)) . '">';
 		if (!empty($dateformat) && $dateformat == "long") {
 			$dateHeader .= $tikilib->get_long_datetime($stamp);
 		} else {
 			$dateHeader .= $tikilib->get_short_datetime($stamp);
 		}
+		$dateHeader .= '</span>';
 		$dateHeader .= ($perms->edit ? " <button class='conveneDeleteDate$i icon btn btn-default btn-xs' data-date='$stamp'>$deleteicon</button>" : ""). "</td>";
 	}
 	$result .= "<tr class='conveneHeaderRow'>";
