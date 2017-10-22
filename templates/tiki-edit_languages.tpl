@@ -39,7 +39,7 @@
 				</a>
 				<a class="btn btn-link tips" href="{bootstrap_modal controller=language action=write_to_language_php language={$edit_language}}" title="{tr}Write to language.php{/tr}:{tr}Translations in the database will be merged with the other translations in language.php for the selected language.{/tr}">
 					{icon name="flash"}
-				</a>				
+				</a>
 			</div>
 		</div>
 	</div>
@@ -118,12 +118,14 @@
 					{tr}Untranslated strings{/tr}
 				{/if}
 			</div>
-			{* Forms cannot embed forms. <div class="col-md-8">
-				{include file='find.tpl' find_show_num_rows='y'}
-			</div>*}
 			<div class="panel-body">
 				<table class="table table-condensed table-hover" id="edit_translations">
 					<thead>
+						<tr>
+							<div class="col-md-8">
+								{include file='find.tpl' find_show_num_rows='y'}
+							</div>
+						</tr>					
 						<tr>
 							<th>
 								{tr}Original string{/tr}
