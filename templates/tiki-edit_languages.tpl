@@ -6,7 +6,7 @@
 	{else}
 		{button href="tiki-interactive_trans.php?interactive_translation_mode=on" _text="{tr}Turn on interactive translation{/tr}" _ajax="n"}
 	{/if}
-	<a class="btn btn-link tips" href="{service controller=language action=manage_custom_php_translations}" title="{tr}Customized String Translation{/tr}:{tr}Manage local translations in a custom.php file{/tr}">
+	<a class="btn btn-link tips" href="{service controller=language action=manage_custom_translations}" title="{tr}Customized String Translation{/tr}:{tr}Manage local translations in a custom.php file{/tr}">
 		{icon name="file-code-o"} {tr}Custom Translations{/tr}
 	</a>
 	<a class="btn btn-link tips" href="{service controller=language action=upload language={$edit_language}}" title="{tr}Upload Translations{/tr}:{tr}Upload a file with translations for the selected language.{/tr}">
