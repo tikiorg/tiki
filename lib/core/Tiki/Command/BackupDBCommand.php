@@ -79,11 +79,21 @@ class BackupDBCommand extends Command
 		if ($numTables === '0') {
 			$args[] = "--single-transaction";
 		} else {
-			$args[] = "--lock-tables";
+			$dbOpenFilesLimit = 0;
+			$result = $db->fetchAll('SHOW GLOBAL VARIABLES LIKE "open_files_limit"');
+			if (count($result)>0){
+				$dbOpenFilesLimit = (int)$result[0]['Value'];
+			}
+			if ($dbOpenFilesLimit > 0 && $dbOpenFilesLimit < 2000){
+				// some distributions bring a lower limit of open files, so lock all tables during backup might fail the backup
+				$output->writeln('<info>Mysql database has open_files_limit='.$dbOpenFilesLimit.', skipping lock tables to avoid failing the backup</info>');
+			} else {
+				$args[] = "--lock-tables";
+			}
 		}
 
 		$args[] = $dbs_tiki;
-	
+
 		$args = implode( ' ', $args );
 		$outputFile = $path . '/' . $dbs_tiki . '_' . date($dateFormat) . '.sql.gz';
 		$command = "mysqldump --quick --create-options --extended-insert $args | gzip -5 > " . escapeshellarg( $outputFile );
