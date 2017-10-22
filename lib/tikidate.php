@@ -281,8 +281,8 @@ class TikiDate
     function setTZbyID($tz_id)
 	{
         global $prefs;
-        if (!self::TimezoneIsValidId($tz_id) && isset($prefs['timezone_offset']) && !empty($prefs['timezone_offset'])) {
-            $tz_id = timezone_name_from_abbr($tz_id, $prefs['timezone_offset'] * 3600);
+        if (! self::TimezoneIsValidId($tz_id) && (! empty($prefs['timezone_offset']) || $prefs['timezone_offset'] == 0)) {	// timezone_offset in seconds
+            $tz_id = timezone_name_from_abbr($tz_id, $prefs['timezone_offset']);
         }
 		$dtz = null;
 		while (!$dtz) {
