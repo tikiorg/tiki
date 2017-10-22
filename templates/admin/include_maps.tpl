@@ -10,26 +10,32 @@
 	<fieldset>
 		<legend>{tr}Settings{/tr}</legend>
 
-		{preference name=geo_openlayers_version}
+		{preference name=geo_enabled visible="always"}
 
-		{preference name=geo_tilesets}
-		{preference name=geo_google_streetview}
-		<div class="adminoptionboxchild" id="geo_google_streetview_childcontainer">
-			{preference name=geo_google_streetview_overlay}
-		</div>
+		{if $prefs.geo_enabled eq 'y'}
 
-		{preference name=geo_locate_blogpost}
-		{preference name=geo_locate_wiki}
-		{preference name=gmap_page_list}
-		{preference name=geo_locate_article}
-		{preference name=gmap_article_list}
-		{preference name=wikiplugin_map}
-		{preference name=trackerfield_location}
+			{preference name=geo_openlayers_version}
 
-		{preference name=geo_always_load_openlayers}
+			{preference name=geo_tilesets}
+			{preference name=geo_google_streetview}
+			<div class="adminoptionboxchild" id="geo_google_streetview_childcontainer">
+				{preference name=geo_google_streetview_overlay}
+			</div>
 
-		{preference name=gmap_key}
-		{preference name=geo_zoomlevel_to_found_location}
+			{preference name=geo_locate_blogpost}
+			{preference name=geo_locate_wiki}
+			{preference name=gmap_page_list}
+			{preference name=geo_locate_article}
+			{preference name=gmap_article_list}
+			{preference name=wikiplugin_map}
+			{preference name=trackerfield_location}
+
+			{preference name=geo_always_load_openlayers}
+
+			{preference name=gmap_key}
+			{preference name=geo_zoomlevel_to_found_location}
+
+		{/if}
 
 	</fieldset>
 

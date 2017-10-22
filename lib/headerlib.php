@@ -1117,6 +1117,10 @@ class HeaderLib
 	{
 		global $prefs;
 
+		if ($prefs['geo_enabled'] != 'y') {
+			return;
+		}
+
 		$tikilib = TikiLib::lib('tiki');
 		$enabled = $tikilib->get_preference('geo_tilesets', array('openstreetmap'), true);
 

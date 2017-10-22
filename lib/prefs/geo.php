@@ -8,27 +8,37 @@
 function prefs_geo_list()
 {
 	return array(
+		'geo_enabled' => array(
+			'name' => tr('Maps & Location Enabled'),
+			'type' => 'flag',
+			'description' => tr('Provide controls to load map and location libraries.'),
+			'default' => 'n',
+		),
 		'geo_locate_wiki' => array(
 			'name' => tra('Geolocate wiki pages'),
 			'description' => tra('Provide controls to indicate a geographic location of wiki pages in the edit form.'),
+			'dependencies' => array('geo_enabled'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'geo_locate_article' => array(
 			'name' => tra('Geolocate articles'),
 			'description' => tra('Provide controls to indicate a geographic location in the article edit form.'),
+			'dependencies' => array('geo_enabled'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'geo_locate_blogpost' => array(
 			'name' => tra('Geolocate blog posts'),
 			'description' => tra('Provide controls to indicate a geographic location in the blog post edit form.'),
+			'dependencies' => array('geo_enabled'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'geo_tilesets' => array(
 			'name' => tra('Available tile layers on maps'),
 			'description' => tra('Enables replacement of the default OpenStreetMap tiles with tiles from other mapping services, such as Google or Bing.'),
+			'dependencies' => array('geo_enabled'),
 			'hint' => tr(
 				'Valid options are: %0',
 				implode(
@@ -62,7 +72,7 @@ function prefs_geo_list()
 		'geo_google_streetview' => array(
 			'name' => tr('Google Street View'),
 			'description' => tr('Open Google Street View in a new window to see the visible coordinates.'),
-			'dependencies' => array('gmap_key'),
+			'dependencies' => array('gmap_key', 'geo_enabled'),
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic', 'experimental'),
@@ -79,12 +89,14 @@ function prefs_geo_list()
 		'geo_always_load_openlayers' => array(
 			'name' => tr('Always load OpenLayers'),
 			'description' => tr('Load the OpenLayers library even if no map is explicitly included in the page'),
+			'dependencies' => array('geo_enabled'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'geo_zoomlevel_to_found_location' => array(
 			'name' => tr('Zoom level for the found location'),
 			'description' => tr('Zoom level when a searched-for location is found'),
+			'dependencies' => array('geo_enabled'),
 			'type' => 'list',
 			'options' => array(
 					'street' => tra('Street'),
@@ -99,12 +111,14 @@ function prefs_geo_list()
 		'geo_openlayers_version' => array(
 			'name' => tr('OpenLayers version'),
 			'type' => 'list',
+			'dependencies' => array('geo_enabled'),
 			'options' => array(
 					'ol2' => tra('OpenLayers 2.x (for use up to at least 15.x)'),
 					'ol3' => tra('OpenLayers 3.x (experimental)'),
 				),
 			'default' => 'ol2',
 		),
+		
 	);
 }
 
