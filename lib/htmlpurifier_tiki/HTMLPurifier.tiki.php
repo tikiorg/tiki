@@ -49,6 +49,8 @@ function getHTMLPurifierTikiConfig()
 	if (!is_dir($d)) {
 		if (!mkdir($d)) {
 			$d = $tikipath.'temp/cache';
+		} else {
+			chmod($d, (int) $prefs['smarty_cache_perms']);
 		}
 	}
 	$conf = HTMLPurifier_Config::createDefault();
