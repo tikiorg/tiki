@@ -1043,7 +1043,7 @@ class ImageGalsLib extends TikiLib
 		TikiLib::events()->trigger('tiki.image.create',
 			array(
 				'type' => 'image',
-				'object' => $id,
+				'object' => $imageId,
 				'user' => $user,
 			)
 		);
@@ -2239,7 +2239,7 @@ class ImageGalsLib extends TikiLib
 			TikiLib::events()->trigger('tiki.imagegallery.create',
 				array(
 					'type' => 'imagegallery',
-					'object' => $id,
+					'object' => $galleryId,
 					'user' => $user,
 				)
 			);
