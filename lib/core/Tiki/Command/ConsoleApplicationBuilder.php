@@ -83,6 +83,7 @@ class ConsoleApplicationBuilder
 					new GalleryMigrateCommand,
 					new GoalCheckCommand,
 					new FilesBatchuploadCommand,
+					new FilesCheckCommand,
 					new FilesCopyCommand,
 					new FilesDeleteoldCommand,
 					new FilesMoveCommand,

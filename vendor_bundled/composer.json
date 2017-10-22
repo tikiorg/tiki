@@ -165,7 +165,7 @@
 			"H5P" : "../lib/core/"
 		},
 		"psr-4": {
-			"Tiki\\Yaml\\": "../lib/core/Yaml"
+			"Tiki\\": "../lib/core/"
 		},
 		"classmap": [
 			"../vendor_extra/pear/",

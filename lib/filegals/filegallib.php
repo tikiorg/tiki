@@ -18,6 +18,8 @@ class FileGalLib extends TikiLib
 {
 	private $wikiupMoved = [];
 
+	static protected $getGalleriesParentIdsCache = null;
+
 	function isPodCastGallery($galleryId, $gal_info=null)
 	{
 		if (empty($gal_info))
@@ -1762,15 +1764,28 @@ class FileGalLib extends TikiLib
 		return $info;
 	}
 
+	/**
+	 * Return a flat list with the gallery id and the parent id, keeping a cached version
+	 *
+	 * @return array
+	 */
 	function getGalleriesParentIds()
 	{
-		static $return = null;
-
-		if ( $return === null ) {
-			$return = $this->table('tiki_file_galleries')->fetchAll(array('galleryId', 'parentId'), array());
+		if ( self::$getGalleriesParentIdsCache === null ) {
+			self::$getGalleriesParentIdsCache = $this->table('tiki_file_galleries')->fetchAll(array('galleryId', 'parentId'), array());
 		}
 
-		return $return;
+		return self::$getGalleriesParentIdsCache;
+	}
+
+	/**
+	 * Enables to clear the cache for the gallery parent ids
+	 *
+	 * @return void
+	 */
+	function cleanGalleriesParentIdsCache()
+	{
+		self::$getGalleriesParentIdsCache = null;
 	}
 
 	/**

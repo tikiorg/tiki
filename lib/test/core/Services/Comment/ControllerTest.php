@@ -11,7 +11,9 @@ class Services_Comment_ControllerTest extends PHPUnit_Framework_TestCase
 
 	protected function setUp()
 	{
-		global $prefs;
+		global $prefs, $user;
+		$user='';
+
 		$prefs['feature_article_comments'] = 'y';
 		$prefs['feature_antibot'] = 'n';
 		$prefs['feature_user_watches'] = 'y';
