@@ -538,7 +538,7 @@
 			{/if}
 			<tr>
 				<th>{tr}Date{/tr}</th>
-				<td>{$headers.timestamp|tiki_short_datetime}</td>
+				<td>{$headers.timestamp|tiki_short_datetime:'':'n'}</td>
 			</tr>
 		{/if}
 		{if $fullheaders eq 'y'}

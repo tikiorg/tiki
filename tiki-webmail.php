@@ -259,7 +259,7 @@ if ($_REQUEST['locSection'] == 'read') {
 				$aux['replyto'] = $to_addresses;
 			}
 			if (!isset($aux['Delivery-Date'])) {
-				$aux['delivery-date'] = $aux['Date'];
+				$aux['Delivery-Date'] = $aux['Date'];
 			}
 			$aux['timestamp'] = strtotime($aux['Delivery-Date']);
 
@@ -270,7 +270,7 @@ if ($_REQUEST['locSection'] == 'read') {
 			$aux['cc'] = isset($aux['Cc']) ? utf8_encode($aux['Cc']) : '';
 			$aux['date'] = isset($aux['Date']) ? utf8_encode($aux['Date']) : '';
 
-			unset($aux['Subject'], $aux['From'], $aux['To'], $aux['Cc'], $aux['Date']);
+			unset($aux['Subject'], $aux['From'], $aux['To'], $aux['Cc'], $aux['Date'], $aux['Delivery-Date']);
 
 			$smarty->assign('headers', $aux);
 
