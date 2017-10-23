@@ -1,0 +1,189 @@
+/* Solar theme newsletter stylesheet */
+.margin-bottom-xs {
+  margin-bottom: 5px;
+}
+.margin-bottom-sm {
+  margin-bottom: 10px;
+}
+.margin-bottom-md {
+  margin-bottom: 20px;
+}
+.margin-bottom-lg {
+  margin-bottom: 40px;
+}
+body {
+  background: #002b36;
+  color: #839496;
+  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding: 15px;
+}
+a,
+a:visited {
+  color: #2aa198;
+  text-decoration: underline;
+}
+a:hover {
+  color: #2aa198;
+  text-decoration: underline;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: inherit;
+  font-weight: 500;
+  color: inherit;
+}
+.panel {
+  margin-bottom: 20px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+.panel-body {
+  padding: 15px;
+}
+.panel-heading {
+  padding: 10px 15px;
+  border-bottom: 1px solid transparent;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+.panel-title {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  color: inherit;
+}
+.panel-title > a,
+.panel-title > small,
+.panel-title > .small,
+.panel-title > small > a,
+.panel-title > .small > a {
+  color: inherit;
+}
+.panel-footer {
+  padding: 10px 15px;
+  background-color: #073642;
+  border-top: 1px solid #073642;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.panel-default {
+  border-color: #073642;
+}
+.panel-default > .panel-heading {
+  color: #ffffff;
+  background-color: #073642;
+  border-color: #073642;
+}
+.panel-default > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #073642;
+}
+.panel-default > .panel-heading .badge {
+  color: #073642;
+  background-color: #ffffff;
+}
+.panel-default > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #073642;
+}
+.panel-primary {
+  border-color: #b58900;
+}
+.panel-primary > .panel-heading {
+  color: #ffffff;
+  background-color: #b58900;
+  border-color: #b58900;
+}
+.panel-primary > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #b58900;
+}
+.panel-primary > .panel-heading .badge {
+  color: #b58900;
+  background-color: #ffffff;
+}
+.panel-primary > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #b58900;
+}
+.panel-success {
+  border-color: #2aa198;
+}
+.panel-success > .panel-heading {
+  color: #ffffff;
+  background-color: #2aa198;
+  border-color: #2aa198;
+}
+.panel-success > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #2aa198;
+}
+.panel-success > .panel-heading .badge {
+  color: #2aa198;
+  background-color: #ffffff;
+}
+.panel-success > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #2aa198;
+}
+.panel-info {
+  border-color: #268bd2;
+}
+.panel-info > .panel-heading {
+  color: #ffffff;
+  background-color: #268bd2;
+  border-color: #268bd2;
+}
+.panel-info > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #268bd2;
+}
+.panel-info > .panel-heading .badge {
+  color: #268bd2;
+  background-color: #ffffff;
+}
+.panel-info > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #268bd2;
+}
+.panel-warning {
+  border-color: #cb4b16;
+}
+.panel-warning > .panel-heading {
+  color: #ffffff;
+  background-color: #cb4b16;
+  border-color: #cb4b16;
+}
+.panel-warning > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #cb4b16;
+}
+.panel-warning > .panel-heading .badge {
+  color: #cb4b16;
+  background-color: #ffffff;
+}
+.panel-warning > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #cb4b16;
+}
+.panel-danger {
+  border-color: #d33682;
+}
+.panel-danger > .panel-heading {
+  color: #ffffff;
+  background-color: #d33682;
+  border-color: #d33682;
+}
+.panel-danger > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #d33682;
+}
+.panel-danger > .panel-heading .badge {
+  color: #d33682;
+  background-color: #ffffff;
+}
+.panel-danger > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #d33682;
+}
