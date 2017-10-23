@@ -13,29 +13,37 @@
 class AttributeLib extends TikiDb_Bridge
 {
 	private $attributes;
+	private $cache;
 
-    /**
-     *
-     */
-    function __construct()
+	/**
+	 *
+	 */
+	function __construct()
 	{
 		$this->attributes = $this->table('tiki_object_attributes');
+		$this->cache = array();
 	}
 
-    /**
+	/**
 	 * Get all attributes for an object
 	 *
-     * @param $type string      One of \ObjectLib::get_supported_types()
-     * @param $objectId mixed   Object id (or name for wiki pages)
-     * @return array            Array [attribute => value]
-     */
-    function get_attributes( $type, $objectId )
+	 * @param $type string      One of \ObjectLib::get_supported_types()
+	 * @param $objectId mixed   Object id (or name for wiki pages)
+	 * @return array            Array [attribute => value]
+	 */
+	function get_attributes( $type, $objectId )
 	{
-		return $this->attributes->fetchMap(
-			'attribute',
-			'value',
-			array('type' => $type,'itemId' => $objectId,)
-		);
+		if (count($this->cache) > 2048) {
+			$this->cache = array();
+		}
+		if (!isset($this->cache[$type.$objectId])) {
+			$this->cache[$type.$objectId] = $this->attributes->fetchMap(
+				'attribute',
+				'value',
+				array('type' => $type,'itemId' => $objectId,)
+			);
+		}
+		return $this->cache[$type.$objectId];
 	}
 
 	/**
@@ -92,22 +100,22 @@ class AttributeLib extends TikiDb_Bridge
 		return true;
 	}
 
-    /**
-     * @param $name
-     * @return mixed
-     */
-    private function get_valid( $name )
+		/**
+		 * @param $name
+		 * @return mixed
+		 */
+		private function get_valid( $name )
 	{
 		$filter = TikiFilter::get('attribute_type');
 		return $filter->filter($name);
 	}
 
-    /**
-     * @param $attribute
-     * @param $value
-     * @return mixed
-     */
-    function find_objects_with($attribute, $value)
+		/**
+		 * @param $attribute
+		 * @param $value
+		 * @return mixed
+		 */
+		function find_objects_with($attribute, $value)
 	{
 		$attribute = $this->get_valid($attribute);
 
