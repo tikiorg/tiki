@@ -445,9 +445,9 @@ if ( $prefs['feature_jquery_ui'] == 'y' ) {
 		$headerlib->add_jsfile_cdn("$url_scheme://code.jquery.com/ui/$headerlib->jqueryui_version/jquery-ui.min.js");
 	} else {
 		if ( $prefs['tiki_minify_javascript'] === 'y' ) {
-			$headerlib->add_jsfile_dependancy("vendor_bundled/vendor/jquery/jquery-ui/jquery-ui.min.js", true);
+			$headerlib->add_jsfile_dependancy("vendor_bundled/vendor/components/jqueryui/jquery-ui.min.js", true);
 		} else {
-			$headerlib->add_jsfile_dependancy("vendor_bundled/vendor/jquery/jquery-ui/jquery-ui.js");
+			$headerlib->add_jsfile_dependancy("vendor_bundled/vendor/components/jqueryui/jquery-ui.js");
 		}
 	}
 
@@ -464,7 +464,7 @@ if (typeof $.fn.button.noConflict === "function") {
 		// cdn for css not working - this is the only css from a cdn anyway - so use local version 
 		//if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {			
 			// $headerlib->add_cssfile("$url_scheme://code.jquery.com/ui/$headerlib->jqueryui_version/themes/{$prefs['feature_jquery_ui_theme']}/jquery-ui.css");
-			$headerlib->add_cssfile('vendor_bundled/vendor/jquery/jquery-ui-themes/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css');
+			$headerlib->add_cssfile('vendor_bundled/vendor/components/jqueryui/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css');
 	//	} else {
 	//		$headerlib->add_cssfile('vendor_bundled/vendor/jquery/jquery-ui-themes/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css');
 	//	}
@@ -526,9 +526,9 @@ if ( $prefs['wikiplugin_flash'] == 'y' ) {
 	$headerlib->add_jsfile('lib/swfobject/swfobject.js');
 }
 if ($prefs['jquery_timeago'] === 'y') {
-	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/timeago/jquery.timeago.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/rmm5t/jquery-timeago/jquery.timeago.js');
 	$language_short = substr($prefs['language'], 0, 2);
-	$timeago_locale = "vendor_bundled/vendor/jquery/plugins/timeago/locales/jquery.timeago.{$language_short}.js";
+	$timeago_locale = "vendor_bundled/vendor/rmm5t/jquery-timeago/locales/jquery.timeago.{$language_short}.js";
 	if (is_readable($timeago_locale)) {
 		$headerlib->add_jsfile($timeago_locale);	// TODO handle zh-CN and zh-TW
 	}
