@@ -490,8 +490,6 @@ END;
 			$aux = $filtered[$i];
 		} else {
 			$aux = $webmail_list[$i-1];
-			// Lets decode the Subject before going to list it... otherwise it returns garbage for non-ascii subjects
-			$aux['subject'] = mb_decode_mimeheader($aux['subject']);
 			$webmaillib->replace_webmail_message($current['accountId'], $user, $aux['realmsgid']);
 			list($aux['isRead'], $aux['isFlagged'], $aux['isReplied']) = $webmaillib->get_mail_flags($current['accountId'], $user, $aux['realmsgid']);
 		}
