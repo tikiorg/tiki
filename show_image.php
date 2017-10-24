@@ -7,7 +7,7 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-  
+
 if (! isset($_REQUEST["nocache"])) {
 	session_cache_limiter('private_no_expire');
 }
@@ -25,7 +25,7 @@ if ($prefs['feature_file_galleries'] == 'y' && $prefs['file_galleries_redirect_f
 }
 
 // show_image.php
-// application to display an image from the database with 
+// application to display an image from the database with
 // option to resize the image dynamically creating a thumbnail on the fly.
 // If a gallery ID is specified gallery's representative image is displayed.
 // you have to check if the user has permission to see this gallery
@@ -87,13 +87,13 @@ if ($imagegallib->get_etag($id, $itype, $scalesize) !== false) {
 
 #if the client sends the HTTP_IF_NONE_MATCH header(because it received the etag for this image the first time he saw it) we check that the received etag is the same as the actual etag (this is, the image haven't changed) and if it's equal, we send the "Not modified" header(304)
 	if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $imagegallib->etag) {
-		   header("HTTP/1.0 304 Not Modified");
-		 exit();
+		header("HTTP/1.0 304 Not Modified");
+		exit();
 	}
 }
 
 $imagegallib->get_image($id, $itype, $scalesize);
-	
+
 if (! isset($imagegallib->image)) {
 	// cannot scale image. Get original
 	$imagegallib->get_image($id, 'o');
