@@ -29,8 +29,9 @@ function wikiplugin_googledoc_info()
 				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Document'), 'value' => 'document'),
-					array('text' => tra('Presentation'), 'value' => 'presentation'),
-					array('text' => tra('Spreadsheet'), 'value' => 'spreadsheet')
+					array('text' => tra('Slides'), 'value' => 'slides'),
+					array('text' => tra('Spreadsheet'), 'value' => 'spreadsheet'),
+					array('text' => tra('Forms'), 'value' => 'forms')
 				)
 			),
 			'key' => array(
@@ -179,17 +180,24 @@ function wikiplugin_googledoc($data, $params)
 	}
 
 	if ($type =="sheet" or $type=="spreadsheet") {
-		$srcUrl="\"https://docs.google.com/spreadsheet/pub?key=$key &output=html&widget=true\"";
-		$editSrcUrl="\"https://docs.google.com/spreadsheet/ccc?key=$key &output=html&widget=true\"";
+		$srcUrl="\"https://docs.google.com/spreadsheets/d/$key\"";
+		$editSrcUrl="\"https://docs.google.com/spreadsheets/d/$key/edit#gid=0\"";
 		$editHtml=" <p><a href=$editSrcUrl target=\"$frameName\">Edit this Google Document</a></p>";
 	}
 	if ($type =="doc" or $type=="document") {
-		$srcUrl="\"http://docs.google.com/View?docid=$key\"";
-		$editHtml="";
+		$srcUrl="\"https://docs.google.com/document/d/$key\"";
+		$editSrcUrl="\"https://docs.google.com/document/d/$key/edit\"";
+		$editHtml=" <p><a href=$editSrcUrl target=\"$frameName\">Edit this Google Document</a></p>";
 	}
-	if ($type =="pres" or $type=="presentation") {
-		$srcUrl="\"http://docs.google.com/EmbedSlideshow?docid=$key\"";
-		$editHtml="";
+	if ($type =="presentation" or $type=="slides") {
+		$srcUrl="\"https://docs.google.com/presentation/d/$key\"";
+		$editSrcUrl="\"https://docs.google.presentation/d/$key/edit\"";
+		$editHtml=" <p><a href=$editSrcUrl target=\"$frameName\">Edit this Google Document</a></p>";
+	}
+	if ($type =="forms" or $type=="forms") {
+		$srcUrl="\"https://docs.google.com/forms/d/$key\"";
+		$editSrcUrl="\"https://docs.google.com/forms/d/$key/edit\"";
+		$editHtml=" <p><a href=$editSrcUrl target=\"$frameName\">Edit this Google Document</a></p>";
 	}
 
 	$ret = "";
