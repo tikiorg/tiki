@@ -878,7 +878,9 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		// if selectMultipleValues is enabled, convert the array
 		// of options to string before saving the field value in the db
 		if ($this->getOption('selectMultipleValues') || $this->getOption('displayFieldsListType') === 'table') {
-			$value = implode(',', $value);
+			if (is_array($value)) {
+				$value = implode(',', $value);
+			}
 		} else {
 			$value = (int) $value;
 		}
