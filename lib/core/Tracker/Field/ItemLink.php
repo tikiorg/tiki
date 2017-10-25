@@ -584,8 +584,10 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 				$handler = $factory->getHandler($field, $item);
 
 				foreach ($handler->getDocumentPart($typeFactory) as $key => $field) {
-					$key = $baseKey . substr($key, strlen('tracker_field'));
-					$out[$key] = $field;
+					if (strpos($key, 'tracker_field') === 0) {
+						$key = $baseKey . substr($key, strlen('tracker_field'));
+						$out[$key] = $field;
+					}
 				}
 			}
 		}
