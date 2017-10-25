@@ -64,6 +64,8 @@ class Tiki_Profile_InstallHandler_User extends Tiki_Profile_InstallHandler
 	
 	function _install()
 	{
+		global $prefs;
+
 		if ($this->canInstall()) {
 			$userlib = TikiLib::lib('user');
 			$tikilib = TikiLib::lib('tiki');
@@ -72,16 +74,38 @@ class Tiki_Profile_InstallHandler_User extends Tiki_Profile_InstallHandler
 			$retpass = false;
 				
 			if (!$userlib->user_exists($user['name'])) {
-// if pass parameter has not been set use the name parameter as the password as well	
+				// if pass parameter has not been set use the name parameter as the password as well
 				$pass = isset($user['pass']) ? $user['pass'] : $user['name'];
-// for the special case where pass has been set to 'generate' then generate a random password				
+				// for the special case where pass has been set to 'generate' then generate a random password
 				if ($pass == 'generate') {
 					$pass = $tikilib->genPass();
 					$retpass = true;
 				}				
 				$email = isset($user['email']) ? $user['email'] : '';
+				if (empty($email) && $prefs['login_is_email'] === 'y') {
+					$email = $user['name'];
+				}
+
 				if (isset($user['change']) && $user['change'] === false) {
+
 					$user['name'] = $userlib->add_user($user['name'], $pass, $email);
+
+				} else if ($prefs['validateUsers'] == 'y') {	// add user in the right way (needs provpass, pass_first_login and valid set)
+
+					$user['name'] = $userlib->add_user($user['name'], $pass, $email, $pass, true, $pass, null, 'u');
+
+					// and then send the notification
+					$userlib->send_validation_email(
+						$user['name'],
+						$pass,
+						$email,
+						'',
+						'',
+						'',
+						'user_creation_validation_mail',
+						''
+					);
+
 				} else {
 					$user['name'] = $userlib->add_user($user['name'], $pass, $email, $pass, true);
 				}
