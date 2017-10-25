@@ -37,17 +37,19 @@
 			<property name="ignoreNewlines" value="true"/>
 		</properties>
 	</rule>
+	<!-- Moved as override to the end of the rule set -->
+	<!--
 	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
 		<properties>
 			<property name="ignoreBlankLines" value="false"/>
 		</properties>
 	</rule>
+	-->
 
 	<!--  Other rules to enforce the ZF standards -->
 	<rule ref="Squiz.Strings.ConcatenationSpacing">
 		<properties>
 			<property name="spacing" value="1"/>
-			<property name="ignoreNewlines" value="true"/>
 		</properties>
 	</rule>
 
@@ -61,6 +63,7 @@
 		<properties>
 			<property name="indent" value="4"/>
 			<property name="tabIndent" value="true"/>
+			<property name="exact" value="true" />
 		</properties>
 	</rule>
 
@@ -101,14 +104,13 @@
 	</rule>
 	<!-- ~ PSR-1 -->
 
-	<!-- Relax PSR-1 -->
+	<!-- Relax ZF Coding Standards -->
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax">
-			<message>Tiki ZF CS Relaxed: Short array syntax must be used to define arrays</message>
-			<type>warning</type>
-			<severity>6</severity>
+		<message>Tiki ZF CS Relaxed: Short array syntax must be used to define arrays</message>
+		<type>warning</type>
+		<severity>6</severity>
 	</rule>
 	<!-- ~ ZF Coding Standards -->
-
 
 	<!-- Extra rules to improve code quality and avoid deprecated code -->
 	<rule ref="Generic.PHP.DeprecatedFunctions"/>
@@ -120,4 +122,11 @@
 	<rule ref="Generic.PHP.BacktickOperator"/>
 	-->
 
+	<!-- Overrides - at the end to make sure they are applied -->
+	<!-- From ZF Standards -->
+	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
+		<properties>
+			<property name="ignoreBlankLines" value="false"/>
+		</properties>
+	</rule>
 </ruleset>
