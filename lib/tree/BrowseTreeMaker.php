@@ -29,7 +29,7 @@ class BrowseTreeMaker extends TreeMaker
 		$r .= $this->make_tree_r($rootid, $ar) . "</ul>\n";
 
 		// java script block that opens the nodes as remembered in cookies
-		$headerlib->add_jq_onready('$(".tree.root:not(.init)").browse_tree().addClass("init")');
+		$headerlib->add_jq_onready('setTimeout(function () {$(".tree.root:not(.init)").browse_tree().addClass("init")}, 100);');
 
 		// return tree
 		return $r;
