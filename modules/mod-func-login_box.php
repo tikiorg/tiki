@@ -56,6 +56,11 @@ function module_login_box_info()
 				'description' => tra('Show the user name when in popup mode') . ' (y/n)',
 				'filter' => 'alpha',
 			),
+			'menu_id' => array(
+				'name' => tra('Menu ID'),
+				'description' => tra('Menu to use as the dropdown in "popup" mode. Defaults to a built in menu with only "My Account" and "Logout"'),
+				'filter' => 'int',
+			),
 		)
 	);
 }

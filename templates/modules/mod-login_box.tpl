@@ -94,14 +94,18 @@ if (jqueryTiki.no_cookie) {
 					<span class="caret"></span>
 					<span class="sr-only">{tr}Toggle Dropdown{/tr}</span>
 				</button>
-				<ul class="dropdown-menu">
+				{if empty($module_params.menu_id)}
+					<ul class="dropdown-menu">
+							<li>
+							<a href="tiki-user_information.php" title="{tr}My Account{/tr}">{if isset($module_params.show_user_name) && $module_params.show_user_name eq 'y'}{tr}My Account{/tr}{else}{tr}{$user|username|escape:"html"}{/tr}{/if}</a>
+							</li>
 						<li>
-						<a href="tiki-user_information.php" title="{tr}My Account{/tr}">{if isset($module_params.show_user_name) && $module_params.show_user_name eq 'y'}{tr}My Account{/tr}{else}{tr}{$user|username|escape:"html"}{/tr}{/if}</a>
+							<a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a>
 						</li>
-					<li>
-						<a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a>
-					</li>
-				</ul>
+					</ul>
+				{else}
+					{menu id=$module_params.menu_id bootstrap='y' menu_class='dropdown-menu'}
+				{/if}
 			</div>
 		{/if}
 		{if $prefs.auth_method eq 'openid' and $openid_userlist|@count gt 1}
