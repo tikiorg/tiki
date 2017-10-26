@@ -1,4 +1,4 @@
-<ul class="nav">
+<ul class="{if $menu_class}{$menu_class}{else}nav{/if}">
 	{foreach from=$list item=item}
 		{if !empty($item.children)}
 			<li class="{$item.class|escape|default:null}{if !empty($item.selected)} active{/if}">

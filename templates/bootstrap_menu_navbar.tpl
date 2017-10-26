@@ -1,4 +1,4 @@
-<ul class="nav navbar-nav">
+<ul class="{if $menu_class}{$menu_class}{else}nav navbar-nav{/if}">
 	{foreach from=$list item=item}
 		{if $item.children|default:null|count}
 			<li class="dropdown{if $item.selected|default:null} active{/if} {$item.class|escape}">

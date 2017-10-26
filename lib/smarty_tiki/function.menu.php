@@ -18,6 +18,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * - id = menu ID (mandatory)
  * - translate = y|n , n means no option translation (default y)
  * - menu_cookie=y|n (default y) n, it will automatically open the submenu the url is in
+ * - menu_class='' custom class for the top level menu element
  * - sectionLevel: displays from this level only
  * - toLevel : displays to this level only
  * - drilldown ??
@@ -52,6 +53,11 @@ function smarty_function_menu($params, $smarty)
 		$menu_cookie = 'y';
 	}
 	$smarty->assignByRef('menu_cookie', $menu_cookie);
+
+	if (empty($menu_class)) {
+		$menu_class = '';
+	}
+	$smarty->assignByRef('menu_class', $menu_class);
 
 	list($menu_info, $channels) = get_menu_with_selections($params);
 	$smarty->assign('menu_channels', $channels['data']);
