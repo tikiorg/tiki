@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "49528b759a7af0ba99e3b37b7f6e2db5",
+    "content-hash": "fd9ba21b5aac8795d81de3ffad4eaee0",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -1561,17 +1561,17 @@
         },
         {
             "name": "matthiasmullie/minify",
-            "version": "1.3.53",
+            "version": "1.3.55",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/minify.git",
-                "reference": "7d79f1188e749ad09a075b0487aa58b11bac86d8"
+                "reference": "21084eb9e6c117f5236969532d00ed2750cd1617"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/matthiasmullie/minify/matthiasmullie-minify-7d79f1188e749ad09a075b0487aa58b11bac86d8-zip-113156.zip",
-                "reference": "7d79f1188e749ad09a075b0487aa58b11bac86d8",
-                "shasum": "f2426b092e2f90c27ef6b66cd9bbb8e911d524be"
+                "url": "https://composer.tiki.org/dist/matthiasmullie/minify/matthiasmullie-minify-21084eb9e6c117f5236969532d00ed2750cd1617-zip-65c3b6.zip",
+                "reference": "21084eb9e6c117f5236969532d00ed2750cd1617",
+                "shasum": "a9daea807476d1fef661a2529581242e265184b7"
             },
             "require": {
                 "ext-pcre": "*",
@@ -1617,7 +1617,7 @@
                 "minifier",
                 "minify"
             ],
-            "time": "2017-10-13T15:44:30+00:00"
+            "time": "2017-10-25T11:13:12+00:00"
         },
         {
             "name": "matthiasmullie/path-converter",
@@ -2626,17 +2626,17 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "2.0.6",
+            "version": "2.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "34a7699e6f31b1ef4035ee36444407cecf9f56aa"
+                "reference": "f4b6a522dfa1fd1e477c9cfe5909d5b31f098c0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/phpseclib/phpseclib/phpseclib-phpseclib-34a7699e6f31b1ef4035ee36444407cecf9f56aa-zip-af2c37.zip",
-                "reference": "34a7699e6f31b1ef4035ee36444407cecf9f56aa",
-                "shasum": "0fedcda5105aea746610117e43b642a00398e98c"
+                "url": "https://composer.tiki.org/dist/phpseclib/phpseclib/phpseclib-phpseclib-f4b6a522dfa1fd1e477c9cfe5909d5b31f098c0b-zip-9b7aa9.zip",
+                "reference": "f4b6a522dfa1fd1e477c9cfe5909d5b31f098c0b",
+                "shasum": "14910a8673316aa800dec74f68999f54dfa3e667"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -2714,7 +2714,7 @@
                 "x.509",
                 "x509"
             ],
-            "time": "2017-06-05T06:31:10+00:00"
+            "time": "2017-10-23T05:04:54+00:00"
         },
         {
             "name": "player/flv",
