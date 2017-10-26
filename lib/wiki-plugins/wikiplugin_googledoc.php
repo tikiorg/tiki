@@ -179,22 +179,22 @@ function wikiplugin_googledoc($data, $params)
 		return tra('Required parameter "key" missing');
 	}
 
-	if ($type =="sheet" or $type=="spreadsheet") {
+	if ($type=="spreadsheet") {
 		$srcUrl="\"https://docs.google.com/spreadsheets/d/$key\"";
 		$editSrcUrl="\"https://docs.google.com/spreadsheets/d/$key/edit#gid=0\"";
 		$editHtml=" <p><a href=$editSrcUrl target=\"$frameName\">Edit this Google Document</a></p>";
 	}
-	if ($type =="doc" or $type=="document") {
+	if ($type=="document") {
 		$srcUrl="\"https://docs.google.com/document/d/$key\"";
 		$editSrcUrl="\"https://docs.google.com/document/d/$key/edit\"";
 		$editHtml=" <p><a href=$editSrcUrl target=\"$frameName\">Edit this Google Document</a></p>";
 	}
-	if ($type =="presentation" or $type=="slides") {
+	if ($type=="slides") {
 		$srcUrl="\"https://docs.google.com/presentation/d/$key\"";
 		$editSrcUrl="\"https://docs.google.presentation/d/$key/edit\"";
 		$editHtml=" <p><a href=$editSrcUrl target=\"$frameName\">Edit this Google Document</a></p>";
 	}
-	if ($type =="forms" or $type=="forms") {
+	if ($type=="forms") {
 		$srcUrl="\"https://docs.google.com/forms/d/$key\"";
 		$editSrcUrl="\"https://docs.google.com/forms/d/$key/edit\"";
 		$editHtml=" <p><a href=$editSrcUrl target=\"$frameName\">Edit this Google Document</a></p>";
