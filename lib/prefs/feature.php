@@ -2750,7 +2750,13 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 			'help' => 'Inline+comments',
-			'tags' => ['experimental'], // Anchoring absolutely not robust. Positioning is based on the tiki.comments.ranges attribute, which is not updated when wiki pages change, so it breaks when annotated text changes. Chealer 2017-09-20
+			
+			/*
+			 * Anchoring absolutely not robust. Positioning is verified with the tiki.comments.ranges attribute, which is not updated when wiki pages change. When annotated text changes, the annotation stops displaying (unless the range is unchanged). Chealer 2017-09-20
+			 * Annotating is offered when selecting text in a WYSIWYG zone (WYSIWYG plugin) in edition mode. Chealer 2017-10-26 
+			 */
+			'tags' => ['experimental'],
+			
 			'keywords' => 'annotation annotatorjs',
 		),
 		'feature_equal_height_rows_js' => array(
