@@ -217,7 +217,7 @@
 
 		{tab name="{tr}Tools{/tr}"}
 			<br>
-			<a href="tiki-report_string_in_db.php">{tr}Report all occurrences of a string in any table{/tr}</a><br>
+            {include file='tiki-report_string_in_db.tpl'}
 		{/tab}
 
 	{/tabset}

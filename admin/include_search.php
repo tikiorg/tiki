@@ -144,6 +144,21 @@ if ($tiki_p_admin == 'y' && $access->ticketMatch()) {
 		refresh_index('tracker_items');
 		$smarty->assign('refresh_tracker_index_now', $_REQUEST['refresh_tracker_index_now']);
 	}
+
+	if (!empty($_POST['string_in_db_search'])) {
+		// Needed in order to avoid redirection which would prevent results from showing
+		$_REQUEST['redirect'] = 0;
+
+		require_once ('lib/search/report_string_in_db.php');
+		$smarty->assign('searchString', $_REQUEST['string_in_db_search']);
+	}
+
+	if (!empty($_POST['query'])) {
+		// Needed in order to avoid redirection which would prevent results from showing
+		$_REQUEST['redirect'] = 0;
+
+		require_once ('lib/search/report_string_in_db.php');
+	}
 }
 
 $lastLogItem = $unifiedsearchlib->getLastLogItem();
