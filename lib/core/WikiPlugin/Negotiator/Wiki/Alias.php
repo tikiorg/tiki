@@ -116,7 +116,7 @@ class WikiPlugin_Negotiator_Wiki_Alias
 		}
 	}
 
-	public function getDetails($details = array())
+	static public function getDetails($details = array())
 	{
 		if (self::findImplementation($details['name'], $details['body'], $details['args'])) {
 			return $details;

@@ -153,7 +153,7 @@ class WikiPlugin_Negotiator_Wiki
 
 
 		//alias start
-		$newDetails = $this->alias->getDetails(self::$pluginDetails[$this->key]);
+		$newDetails = WikiPlugin_Negotiator_Wiki_Alias::getDetails(self::$pluginDetails[$this->key]);
 		if ($newDetails != false) {
 			$this->setDetails($newDetails);
 			return $this->execute();
