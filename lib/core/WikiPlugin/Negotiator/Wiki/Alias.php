@@ -137,7 +137,7 @@ class WikiPlugin_Negotiator_Wiki_Alias
 					$data = isset($info['body']['default']) ? $info['body']['default'] : '';
 
 				if ( isset($info['body']['params']) )
-					$data = $this->replaceArgs($data, $info['body']['params'], $args);
+					$data = self::replaceArgs($data, $info['body']['params'], $args);
 			} else {
 				$data = '';
 			}
@@ -147,7 +147,7 @@ class WikiPlugin_Negotiator_Wiki_Alias
 			if ( isset($info['params']) ) {
 				foreach ( $info['params'] as $key => $value ) {
 					if ( is_array($value) && isset($value['pattern']) && isset($value['params']) ) {
-						$params[$key] = $this->replaceArgs($value['pattern'], $value['params'], $args);
+						$params[$key] = self::replaceArgs($value['pattern'], $value['params'], $args);
 					} else {
 						// Handle simple values
 						if ( isset($args[$key]) )
@@ -169,7 +169,7 @@ class WikiPlugin_Negotiator_Wiki_Alias
 		return false;
 	}
 
-	function replaceArgs( $content, $rules, $args )
+	static function replaceArgs( $content, $rules, $args )
 	{
 		$patterns = array();
 		$replacements = array();
