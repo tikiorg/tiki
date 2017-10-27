@@ -10,9 +10,11 @@ if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
 }
 
 if ($svn = $cachelib->getSerialized('svninfo')) {
-	$smarty->assign('svnrev', $svn['svnrev']);
-	$smarty->assign('lastup', $svn['lastup']);
-	return;
+	if (! empty($svn['cached']) && $svn['cached'] > time()-3600 ) {
+		$smarty->assign('svnrev', $svn['svnrev']);
+		$smarty->assign('lastup', $svn['lastup']);
+		return;
+	}
 }
 
 if (is_readable('.svn')) {
@@ -62,10 +64,11 @@ if (is_readable('.svn')) {
 				$handle->close();
 
 				// Cache findings and reuse to prevent considerable performance degradation in some environments (e.g. Windows host on a virtual machine)
-				// Cache is invalidated upon full cache clear which is a normal procedure after updating svn source
+				// Cache is invalidated upon full cache clear or once an hour
 				$cachelib->cacheItem('svninfo', serialize([
 					'svnrev' => $svnrev,
-					'lastup' => $strDT
+					'lastup' => $strDT,
+					'cached' => time()
 				]));
 			}
 		}
