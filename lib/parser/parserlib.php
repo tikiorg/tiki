@@ -56,8 +56,6 @@ class ParserLib extends TikiDb_Bridge
 
 	public $option = array();
 
-	static $pluginInstances = array();
-
 	function setOptions($option = array())
 	{
 		global $page;
