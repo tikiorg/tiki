@@ -26,7 +26,7 @@
 
 class ParserLib extends TikiDb_Bridge
 {
-	private $makeTocCount = 0;
+	// private $makeTocCount = 0; Unused since Tiki 12 or earlier
 	private $pre_handlers = array();
 	private $pos_handlers = array();
 	private $postedit_handlers = array();
@@ -2639,7 +2639,7 @@ if ( \$('#$id') ) {
 		global $prefs;
 		$tikilib = TikiLib::lib('tiki');
 
-		$this->makeTocCount++;
+		// $this->makeTocCount++; Unused since Tiki 12 or earlier
 
 		if ( $this->option['ck_editor'] ) {
 			$need_maketoc = false ;
