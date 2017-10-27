@@ -27,14 +27,11 @@
 class ParserLib extends TikiDb_Bridge
 {
 	// private $makeTocCount = 0; Unused since Tiki 12 or earlier
-	private $pre_handlers = array();
-	private $pos_handlers = array();
-	private $postedit_handlers = array();
 
 	public $isHtmlPurifying = false;
 	public $isEditMode = false;
 
-	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
+	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process. Can be replaced with a const starting with PHP 7
 	public $specialChars = array(
 		'≤REAL_LT≥' => array(
 			'html'=>		'<',
@@ -105,43 +102,6 @@ class ParserLib extends TikiDb_Bridge
 	{
 		$data = $this->parse_data($data);
 		$data = str_replace("tiki-index", "tiki-index_raw", $data);
-		return $data;
-	}
-
-	//*
-	function add_pre_handler($name)
-	{
-		if (!in_array($name, $this->pre_handlers)) {
-			$this->pre_handlers[] = $name;
-		}
-	}
-
-	//*
-	function add_pos_handler($name)
-	{
-		if (!in_array($name, $this->pos_handlers)) {
-			$this->pos_handlers[] = $name;
-		}
-	}
-
-	// add a post edit filter which is called when a wiki page is edited and before
-	// it is committed to the database (see tiki-handlers.php on its usage)
-	//*
-	function add_postedit_handler($name)
-	{
-		if (!in_array($name, $this->postedit_handlers)) {
-			$this->postedit_handlers[]=$name;
-		}
-	}
-
-	// apply all the post edit handlers to the wiki page data
-	//*
-	function apply_postedit_handlers($data)
-	{
-		// Process editpage_handlers here
-		foreach ($this->postedit_handlers as $handler) {
-			$data = $handler($data);
-		}
 		return $data;
 	}
 
@@ -1606,13 +1566,6 @@ if ( \$('#$id') ) {
 		//   It can't be done in the sanitizer, that can't know if the input will be wiki parsed or not
 		$data = preg_replace('/(\{img [^\}]+li)<x>(nk[^\}]+\})/i', '\\1\\2', $data);
 
-		// Process pre_handlers here
-		if (is_array($this->pre_handlers)) {
-			foreach ($this->pre_handlers as $handler) {
-				$data = $handler($data);
-			}
-		}
-
 		// Handle pre- and no-parse sections and plugins
 		$preparsed = array('data'=>array(),'key'=>array());
 		$noparsed = array('data'=>array(),'key'=>array());
@@ -1766,10 +1719,6 @@ if ( \$('#$id') ) {
 			$data = typography($data, $this->option['language']);
 		}
 
-		// Process pos_handlers here
-		foreach ($this->pos_handlers as $handler) {
-			$data = $handler($data);
-		}
 		if ($old_wysiwyg_parsing !== null) {
 			$headerlib->wysiwyg_parsing = $old_wysiwyg_parsing;
 		}
