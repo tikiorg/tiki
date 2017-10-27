@@ -29,7 +29,6 @@ class WikiPlugin_Negotiator_Wiki
 	private $argParser;
 	private $page;
 	private $prefs;
-	private $alias;
 
 	public static $standardRelativePath = 'lib/wiki-plugins/wikiplugin_';
 	public static $zendRelativePath = 'vendor_bundled/vendor/zendframework/zendframework1/library/';
@@ -49,7 +48,6 @@ class WikiPlugin_Negotiator_Wiki
 		$this->prefs = & $parser->prefs;
 		$this->parserOption = & $parser->option;
 		$this->argParser = new WikiParser_PluginArgumentParser;
-		$this->alias = new WikiPlugin_Negotiator_Wiki_Alias();
 	}
 
 	public function inject($plugin)
