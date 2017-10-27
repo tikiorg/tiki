@@ -30,7 +30,6 @@ class ParserLib extends TikiDb_Bridge
 	private $pre_handlers = array();
 	private $pos_handlers = array();
 	private $postedit_handlers = array();
-	private $alias;
 
 	public $isHtmlPurifying = false;
 	public $isEditMode = false;
@@ -100,7 +99,6 @@ class ParserLib extends TikiDb_Bridge
 	function __construct()
 	{
 		$this->setOptions();
-		$this->alias = new WikiPlugin_Negotiator_Wiki_Alias();
 	}
 	//*
 	function parse_data_raw($data)
@@ -1071,7 +1069,7 @@ if ( \$('#$id') ) {
 			} else {
 				return $plugin_result;
 			}
-		} elseif ( $this->alias->findImplementation($name, $data, $args) ) {
+		} elseif ( WikiPlugin_Negotiator_Wiki_Alias::findImplementation($name, $data, $args) ) {
 			return $this->plugin_execute($name, $data, $args, $offset, $validationPerformed);
 		}
 	}

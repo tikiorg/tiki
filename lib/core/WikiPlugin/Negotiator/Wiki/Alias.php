@@ -118,14 +118,14 @@ class WikiPlugin_Negotiator_Wiki_Alias
 
 	public function getDetails($details = array())
 	{
-		if ($this->findImplementation($details['name'], $details['body'], $details['args'])) {
+		if (self::findImplementation($details['name'], $details['body'], $details['args'])) {
 			return $details;
 		} else {
 			return false;
 		}
 	}
 
-	public function findImplementation( & $implementation, & $data, & $args )
+	static public function findImplementation( & $implementation, & $data, & $args )
 	{
 		if ( $info = self::info($implementation) ) {
 			$implementation = $info['implementation'];
@@ -161,7 +161,7 @@ class WikiPlugin_Negotiator_Wiki_Alias
 			$args = $params;
 
 			// Attempt to find recursively
-			$this->findImplementation($implementation, $data, $args);
+			self::findImplementation($implementation, $data, $args);
 
 			return true;
 		}
