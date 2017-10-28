@@ -86,7 +86,7 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler
 		}
 
 		$spec = $modlib->get_module_info($info['name']);
-		TikiLib::parse_str($info['params'], $module_params);
+		parse_str($info['params'], $module_params);
 
 		foreach ($module_params as $param => & $value) {
 			if (isset($spec['params'][$param])) {

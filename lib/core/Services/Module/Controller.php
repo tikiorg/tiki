@@ -25,7 +25,7 @@ class Services_Module_Controller
 
 			if ($moduleId) {
 				$module_reference = $modlib->get_assigned_module($moduleId);
-				TikiLib::parse_str($module_reference['params'], $module_reference['params']);
+				parse_str($module_reference['params'], $module_reference['params']);
 				$module_reference['params'] = array_merge($params, $module_reference['params']);
 			} else {
 				$module_reference = array(

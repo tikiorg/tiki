@@ -39,7 +39,7 @@ function module_user_bookmarks($mod_reference, $module_params)
 	$setup_parsed_uri = parse_url($_SERVER["REQUEST_URI"]);
 	
 	if (isset($setup_parsed_uri["query"])) {
-		TikiLib::parse_str($setup_parsed_uri["query"], $setup_query_data);
+		parse_str($setup_parsed_uri["query"], $setup_query_data);
 	} else {
 		$setup_query_data = array();
 	}

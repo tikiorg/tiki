@@ -5896,26 +5896,6 @@ JS;
 		}
 	}
 
-	// Tiki version of parse_str, that:
-	//  - uses a workaround for a bug in PHP 5.2.0
-	/**
-	 * @param $str
-	 * @param $arr
-	 */
-	static function parse_str($str, &$arr)
-	{
-		parse_str($str, $arr);
-
-		/* From PHP Manual comments (quoting Vladimir Kornea):
-		 *   parse_str() contained a bug (#39763) in PHP 5.2.0 that caused it to apply magic quotes twice.
-		 * This bug was marked as fixed in the release notes of PHP 5.2.1, but there were apparently some
-		 * issues with getting the fix through CVS on time, as our install of PHP 5.2.1 was still affected by it.
-		 */
-		if ( version_compare(PHP_VERSION, '5.2.0', '>=') && version_compare(PHP_VERSION, '5.2.1', '<') ) {
-			$arr = array_map('stripslashes', $arr);
-		}
-	}
-
 	/**
 	 * @param bool $descendants The default is to get all descendents of the jailed categories, but for unified search
 	 *                          we only need the "root" jailed categories as the search does a deep_categories search on them

@@ -130,7 +130,7 @@ if (!isset($comments_parsed["query"])) {
 	$comments_parsed["query"] = '';
 }
 
-TikiLib::parse_str($comments_parsed["query"], $comments_query);
+parse_str($comments_parsed["query"], $comments_query);
 $comments_father = $comments_parsed["path"];
 
 $comments_complete_father = $comments_father . $comments_t_query;

@@ -143,7 +143,7 @@ function _refererhi()
 	if (empty($referer['query'])) {
 		return '';
 	}
-	TikiLib::parse_str($referer['query'], $vars);
+	parse_str($referer['query'], $vars);
 	if (isset($vars['q'])) {
 		return $vars['q'];
 	} else if (isset($vars['p'])) {

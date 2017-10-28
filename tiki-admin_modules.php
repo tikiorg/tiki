@@ -205,7 +205,7 @@ if (isset($_REQUEST['preview'])) {
 	$smarty->assign('preview', 'y');
 	$smarty->assign_by_ref('assign_name', $_REQUEST['assign_name']);
 	if (!is_array($_REQUEST['assign_params'])) {
-		TikiLib::parse_str($_REQUEST['assign_params'], $module_params);
+		parse_str($_REQUEST['assign_params'], $module_params);
 	} else {
 		$module_params=$_REQUEST['assign_params'];
 	}

@@ -159,7 +159,7 @@ class XmlLib extends TikiLib
 						$path = $_SERVER['HTTP_HOST'].$tikiroot.$args['src'];
 					}
 					$img = $this->httprequest($path);
-					$this->parse_str($m[1], $p);
+					parse_str($m[1], $p);
 
 					if (isset($p['name']) && isset($p['galleryId']))
 						$id = $imagegallib->get_imageid_byname($p['name'], $p['galleryId']);
@@ -183,7 +183,7 @@ class XmlLib extends TikiLib
 					}
 
 					$img = $this->httprequest($path);
-					$this->parse_str($m[1], $p);
+					parse_str($m[1], $p);
 					$image = array('where' => 'fgal', 'zip'=>"$dir/images/fgal/".$p['fileId'], 'wiki'=>$args['src']);
 
 					if (!$this->zip->addFromString($image['zip'], $img)) {

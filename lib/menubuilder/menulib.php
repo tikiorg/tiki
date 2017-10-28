@@ -265,7 +265,7 @@ class MenuLib extends TikiLib
 		while ( $res = $result->fetchRow() ) {
 			$p = parse_url($res['url']);
 			if ( $p['path'] == 'tiki-index.php' ) {
-				$this->parse_str($p['query'], $p);
+				parse_str($p['query'], $p);
 				if ( $p['page'] == $oldName ) {
 					$url = str_replace($oldName, $newName, $res['url']);
 					$this->query($query, array($url, $res['optionId']));

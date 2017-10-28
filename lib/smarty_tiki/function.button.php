@@ -154,7 +154,7 @@ function smarty_function_button($params, $smarty)
 			// Handle script and URL arguments
 			if ( ( $pos = strpos($params['href'], '?') ) !== false ) {
 				$params['_script'] = substr($params['href'], 0, $pos);
-				TikiLib::parse_str($tikilib->htmldecode(substr($params['href'], $pos+1)), $url_args);
+				parse_str($tikilib->htmldecode(substr($params['href'], $pos+1)), $url_args);
 				$params = array_merge($params, $url_args);
 			} else {
 				$params['_script'] = $params['href'];

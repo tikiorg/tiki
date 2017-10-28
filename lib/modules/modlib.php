@@ -426,7 +426,7 @@ class ModLib extends TikiLib
 	{
 		global $prefs;
 
-		TikiLib::parse_str($module['params'], $module_params);
+		parse_str($module['params'], $module_params);
 		$default_params = array(
 			'decorations' => 'y',
 			'overflow' => 'n',
@@ -1265,7 +1265,7 @@ class ModLib extends TikiLib
     function dispatchValues( $input, & $params )
 	{
 		if ( is_string($input) ) {
-			TikiLib::parse_str($input, $module_params);
+			parse_str($input, $module_params);
 		} else {
 			$module_params = $input;
 		}
@@ -1435,7 +1435,7 @@ class ModLib extends TikiLib
 				$modtogo['data'] = array();
 
 				$modtogo['data']['name'] = $module['name'];
-				TikiLib::parse_str($module['params'], $modtogo['data']['params']);
+				parse_str($module['params'], $modtogo['data']['params']);
 				$modtogo['data']['groups'] = unserialize($module['groups']);
 				$modtogo['data']['order'] = $module['ord'];
 
