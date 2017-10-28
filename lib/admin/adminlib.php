@@ -587,33 +587,60 @@ class AdminLib extends TikiLib
 			}
 			$opcode_stats['opcode_cache'] = 'XCache';
 
-		} elseif (function_exists('wincache_fcache_fileinfo') && (ini_get('wincache.fcenabled') == '1')) {
-			$opcode_stats = array(
-				'opcode_cache' => 'WinCache',
-				'stat_flag' => 'wincache.ocenabled',
-				'memory_used' => 0,
-				'memory_avail' => 0,
-				'memory_total' => 0,
-				'hit_hit' => 0,
-				'hit_miss' => 0,
-				'hit_total' => 0,
-				'type' => 'wincache',
-			);
+		} elseif (function_exists('wincache_fcache_fileinfo')) {
+			// Wincache is installed
 
-			$info = wincache_fcache_fileinfo();
-			$opcode_stats['hit_hit'] = $info['total_hit_count'];
-			$opcode_stats['hit_miss'] = $info['total_miss_count'];
-			$opcode_stats['hit_total'] = $info['total_hit_count'] + $info['total_miss_count'];
+			// Determine if version 1 or 2 is used. Version 2 does not support ocache
 
-			$memory = wincache_fcache_meminfo();
-			$opcode_stats['memory_avail'] = $memory['memory_free'];
-			$opcode_stats['memory_total'] = $memory['memory_total'];
-			$opcode_stats['memory_used'] = $memory['memory_total'] - $memory['memory_free'];
+			if (function_exists('wincache_ocache_fileinfo')) {
+				// Wincache version 1
+				if (ini_get('wincache.ocenabled') == '1') {
+					$opcode_stats = array(
+						'opcode_cache' => 'WinCache',
+						'stat_flag' => 'wincache.ocenabled',
+						'memory_used' => 0,
+						'memory_avail' => 0,
+						'memory_total' => 0,
+						'hit_hit' => 0,
+						'hit_miss' => 0,
+						'hit_total' => 0,
+						'type' => 'wincache',
+					);
 
-			$opcode_stats['memory_used'] /= $opcode_stats['memory_total'];
-			$opcode_stats['memory_avail'] /= $opcode_stats['memory_total'];
-			$opcode_stats['hit_hit'] /= $opcode_stats['hit_total'];
-			$opcode_stats['hit_miss'] /= $opcode_stats['hit_total'];
+					$info = wincache_ocache_fileinfo();
+				}
+			} else {
+				// Wincache version 2 or higher
+				if (ini_get('wincache.fcenabled') == '1') {
+					$opcode_stats = array(
+						'opcode_cache' => 'WinCache',
+						'stat_flag' => 'wincache.fcenabled',
+						'memory_used' => 0,
+						'memory_avail' => 0,
+						'memory_total' => 0,
+						'hit_hit' => 0,
+						'hit_miss' => 0,
+						'hit_total' => 0,
+						'type' => 'wincache',
+					);
+					$info = wincache_fcache_fileinfo();
+				}
+			}
+			if (!empty($opcode_stats['stat_flag'])) {
+				$opcode_stats['hit_hit'] = $info['total_hit_count'];
+				$opcode_stats['hit_miss'] = $info['total_miss_count'];
+				$opcode_stats['hit_total'] = $info['total_hit_count'] + $info['total_miss_count'];
+
+				$memory = wincache_fcache_meminfo();
+				$opcode_stats['memory_avail'] = $memory['memory_free'];
+				$opcode_stats['memory_total'] = $memory['memory_total'];
+				$opcode_stats['memory_used'] = $memory['memory_total'] - $memory['memory_free'];
+
+				$opcode_stats['memory_used'] /= $opcode_stats['memory_total'];
+				$opcode_stats['memory_avail'] /= $opcode_stats['memory_total'];
+				$opcode_stats['hit_hit'] /= $opcode_stats['hit_total'];
+				$opcode_stats['hit_miss'] /= $opcode_stats['hit_total'];
+			}
 		} elseif (function_exists('opcache_get_status') && ini_get('opcache.enable') == '1') {
 			$opcode_stats['opcode_cache'] = 'OpCache';
 			$status = opcache_get_status();

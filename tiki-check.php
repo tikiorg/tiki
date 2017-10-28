@@ -484,36 +484,55 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 		'setting' => 'OPcache',
 		'message' => tra('OPcache is being used as the ByteCode Cache, which increases performance if correctly configured. See Admin->Performance in the Tiki for more details.')
 	);
-} elseif ( function_exists('wincache_fcache_fileinfo') && ( ini_get('wincache.fcenabled') == '1') ) {
-	$sapi_type = php_sapi_name();
-	if ($sapi_type == 'cgi-fcgi') {
-		$php_properties['ByteCode Cache'] = array(
-			'fitness' => tra('good'),
-			'setting' => 'WinCache',
-			'message' => tra('WinCache is being used as the ByteCode Cache, which increases performance if correctly configured. See Admin->Performance in the Tiki for more details.')
-		);
+} elseif ( function_exists('wincache_fcache_fileinfo')) {
+
+	// Determine if version 1 or 2 is used. Version 2 does not support ocache
+
+	if (function_exists('wincache_ocache_fileinfo')) {
+		// Wincache version 1
+		if (ini_get('wincache.ocenabled') == '1') {
+			$sapi_type = php_sapi_name();
+			if ($sapi_type == 'cgi-fcgi') {
+				$php_properties['ByteCode Cache'] = array(
+					'fitness' => tra('good'),
+					'setting' => 'WinCache',
+					'message' => tra('WinCache is being used as the ByteCode Cache, which increases performance if correctly configured. See Admin->Performance in the Tiki for more details.')
+				);
+			} else {
+				$php_properties['ByteCode Cache'] = array(
+					'fitness' => tra('ugly'),
+					'setting' => 'WinCache',
+					'message' => tra('WinCache is being used as the ByteCode Cache, but the required CGI/FastCGI server API is apparently not being used.')
+				);
+			}
+		} else {
+			no_cache_found();
+		}
 	} else {
-		$php_properties['ByteCode Cache'] = array(
-			'fitness' => tra('ugly'),
-			'setting' => 'WinCache',
-			'message' => tra('WinCache is being used as the ByteCode Cache, but the required CGI/FastCGI server API is apparently not being used.')
-		);
+		// Wincache version 2 or higher
+		if (ini_get('wincache.fcenabled') == '1') {
+			$sapi_type = php_sapi_name();
+			if ($sapi_type == 'cgi-fcgi') {
+				$php_properties['ByteCode Cache'] = array(
+					'fitness' => tra('info'),
+					'setting' => 'WinCache',
+					'message' => tra('WinCache version 2 or higher is being used as the FileCache. It does not support a ByteCode Cache.').' '.tra('It is recommended to use Zend opcode cache as the ByteCode Cache.')
+				);
+			} else {
+				$php_properties['ByteCode Cache'] = array(
+					'fitness' => tra('ugly'),
+					'setting' => 'WinCache',
+					'message' => tra('WinCache version 2 or higher is being used as the FileCache, but the required CGI/FastCGI server API is apparently not being used.').' '.tra('It is recommended to use Zend opcode cache as the ByteCode Cache.')
+				);
+			}
+		} else {
+			no_cache_found();
+		}
 	}
 } else {
-	if (check_isIIS()) {
-		$php_properties['ByteCode Cache'] = array(
-			'fitness' => tra('info'),
-			'setting' => 'N/A',
-			'message' => tra('Neither APC, WinCache nor xCache is being used as the ByteCode Cache; if one of these were used and correctly configured, performance would be increased. See Admin->Performance in the Tiki for more details.')
-		);
-	} else {
-		$php_properties['ByteCode Cache'] = array(
-			'fitness' => tra('info'),
-			'setting' => 'N/A',
-			'message' => tra('Neither APC, xCache, nor OPcache is being used as the ByteCode Cache; if one of these were used and correctly configured, performance would be increased. See Admin->Performance in the Tiki for more details.')
-		);
-	}
+	no_cache_found();
 }
+
 
 // memory_limit
 $memory_limit = ini_get('memory_limit');
@@ -2487,4 +2506,23 @@ function tikiButton ()
 {
 	return '<img alt="tikibutton" src="data:image/png;base64,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%3D%3D"';
 
+}
+
+function no_cache_found()
+{
+	global $php_properties;
+
+	if (check_isIIS()) {
+		$php_properties['ByteCode Cache'] = array(
+			'fitness' => tra('info'),
+			'setting' => 'N/A',
+			'message' => tra('Neither APC, WinCache nor xCache is being used as the ByteCode Cache; if one of these were used and correctly configured, performance would be increased. See Admin->Performance in the Tiki for more details.')
+		);
+	} else {
+		$php_properties['ByteCode Cache'] = array(
+			'fitness' => tra('info'),
+			'setting' => 'N/A',
+			'message' => tra('Neither APC, xCache, nor OPcache is being used as the ByteCode Cache; if one of these were used and correctly configured, performance would be increased. See Admin->Performance in the Tiki for more details.')
+		);
+	}
 }
