@@ -1391,7 +1391,7 @@ function wikiplugin_tracker($data, $params)
 				$fl = $fields;
 				for ($j = 0, $count_fl = count($fl); $j < $count_fl; $j++) {
 					for ($i = 0, $count_flds = count($flds['data']); $i < $count_flds; $i++) {
-						if ($flds['data'][$i]['fieldId'] == $fl[$j]) { 
+						if ($flds['data'][$i]['fieldId'] == $fl[$j] && isset($values[$j])) { 
 							$flds['data'][$i]['value'] = $values[$j];
 						}	
 					}
