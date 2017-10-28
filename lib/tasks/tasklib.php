@@ -27,11 +27,13 @@ class TaskLib extends TikiLib
 			$query .= "`t_head`.`taskId` = `t_history`.`belongs_to` AND";
 			if ($task_version == null) {
 				$query .= "`t_history`.`task_version` = `t_head`.`last_version` AND ";
+				$query .= "`t_head`.`taskId`= ? ";
+				$value = array((int) $taskId, );
 			} else {
-				$query .= "`t_history`.`task_version` = $task_version AND ";
+				$query .= "`t_history`.`task_version` = ? AND ";
+				$query .= "`t_head`.`taskId`= ? ";
+				$value = array((int) $task_version, (int) $taskId, );
 			}
-			$query .= "`t_head`.`taskId`= ? ";
-			$value = array((int) $taskId);
 		} else {
 			$query  = "select distinct `t_head`.*, `t_history`.* FROM ";
 			$query .= "`tiki_user_tasks_history` AS `t_history`, `tiki_user_tasks` AS `t_head`, ";
@@ -40,15 +42,19 @@ class TaskLib extends TikiLib
 			$query .= "`t_head`.`taskId` = `t_history`.`belongs_to` AND";
 			if ($task_version == null) {
 				$query .= "`t_history`.`task_version` = `t_head`.`last_version` AND ";
+				$query .= "`t_head`.`taskId`= ? AND ";
+				$query .= "((`t_head`.`user`=? or `t_head`.`creator` = ? ) or ";
+				$query .= "(`users_users`.`login` = ? and ";
+				$value = array((int) $taskId, $user, $user, $user);
 			} else {
-				$query .= "`t_history`.`task_version` = $task_version AND ";
+				$query .= "`t_history`.`task_version` = ? AND ";
+				$query .= "`t_head`.`taskId`= ? AND ";
+				$query .= "((`t_head`.`user`=? or `t_head`.`creator` = ? ) or ";
+				$query .= "(`users_users`.`login` = ? and ";
+				$value = array((int) $task_version, (int) $taskId, $user, $user, $user);
 			}
-			$query .= "`t_head`.`taskId`= ? AND ";
-			$query .= "((`t_head`.`user`=? or `t_head`.`creator` = ? ) or ";
-			$query .= "(`users_users`.`login` = ? and ";
 			$query .= "`users_users`.`userId` = `users_usergroups`.`userId`  and ";
 			$query .= "`users_usergroups`.`groupName` = `t_head`.`public_for_group`))";
-			$value = array((int) $taskId, $user, $user, $user);
 		}
 
 		$result = $this->query($query, $value);

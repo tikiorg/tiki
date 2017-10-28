@@ -6,6 +6,11 @@
 // $Id$
 
 $section = 'mytiki';
+$inputConfiguration =	[[
+	'staticKeyFilters'	=> [
+		'show_history'	=> 'digits',
+	],
+]];
 require_once ('tiki-setup.php');
 include_once ('lib/tasks/tasklib.php');
 $messulib = TikiLib::lib('message');
