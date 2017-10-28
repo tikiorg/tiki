@@ -63,11 +63,11 @@
 					$other = $('input[name="other_{{$field.ins_id|escape}}"]');
 				{{if !isset($field.possibilities[$field.value]) && $field.value}}
 				if (!$('> [selected]', $select).length) {
-					$select.val('{tr}other{/tr}').trigger('chosen:updated');
+					$select.val('other').trigger('chosen:updated');
 				}
 				{{/if}}
 				$select.change(function() {
-					if ($select.val() != '{tr}other{/tr}') {
+					if ($select.val() != 'other') {
 						$other.data('tiki_never_visited', '');
 						$other.val('').parent().hide();
 					} else {
