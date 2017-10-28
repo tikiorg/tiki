@@ -255,19 +255,7 @@ $userlib = TikiLib::lib('user');
 require_once ('lib/breadcrumblib.php');
 // ------------------------------------------------------
 // DEAL WITH XSS-TYPE ATTACKS AND OTHER REQUEST ISSUES
-/**
- * @param $var
- */
-function remove_gpc(&$var)
-{
-	if (is_array($var)) {
-		foreach ($var as $key => $val) {
-			remove_gpc($var[$key]);
-		}
-	} else {
-		$var = stripslashes($var);
-	}
-}
+
 // parameter type definitions. prepend a + if variable may not be empty, e.g. '+int'
 $vartype['id'] = '+int';
 $vartype['forumId'] = '+int';
@@ -407,15 +395,6 @@ if (!empty($_REQUEST['highlight'])) {
 }
 // ---------------------------------------------------------------------
 
-/*
- * Clean variables past in _GET & _POST & _COOKIE
- */
-$magic_quotes_gpc = get_magic_quotes_gpc();
-if ($magic_quotes_gpc) {
-	remove_gpc($_GET);
-	remove_gpc($_POST);
-	remove_gpc($_COOKIE);
-}
 
 global $base_uri;
 if (!empty($base_uri) && is_object($smarty)) {

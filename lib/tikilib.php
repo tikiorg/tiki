@@ -5898,7 +5898,6 @@ JS;
 
 	// Tiki version of parse_str, that:
 	//  - uses a workaround for a bug in PHP 5.2.0
-	//  - Handle the value of magic_quotes_gpc to stripslashes when needed (as already done for GET/POST/... in tiki-setup_base.php)
 	/**
 	 * @param $str
 	 * @param $arr
@@ -5915,10 +5914,6 @@ JS;
 		if ( version_compare(PHP_VERSION, '5.2.0', '>=') && version_compare(PHP_VERSION, '5.2.1', '<') ) {
 			$arr = array_map('stripslashes', $arr);
 		}
-
-		// parse_str's behavior also depends on magic_quotes_gpc...
-		global $magic_quotes_gpc;
-		if ( $magic_quotes_gpc ) remove_gpc($arr);
 	}
 
 	/**
