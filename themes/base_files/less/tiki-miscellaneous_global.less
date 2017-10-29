@@ -428,3 +428,34 @@ div.categbar {
 	text-align: right;
 	clear: both;
 }
+
+// For page with full-width content:
+// This uses a "Full_width_content" class (assumes a Tiki category of the same name is created) on the body element placed by activating "use class name as body tag"
+.cat_Full_width_content,
+.cat_full_width_content {
+	& > .container,
+	.middle.container,
+	.layout_social > .container {
+		width: 100%;
+		padding-left: 0;
+		padding-right: 0;
+	}
+	#row-middle.row {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	#col1 {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.content-area {
+		padding: 0;
+	}
+	.catblock,
+	.wikitopline,
+	.wikiactions_wrapper,
+	#page-bar {
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+}

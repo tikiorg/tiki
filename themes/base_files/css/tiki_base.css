@@ -1284,6 +1284,41 @@ div.categbar {
   text-align: right;
   clear: both;
 }
+.cat_Full_width_content > .container,
+.cat_full_width_content > .container,
+.cat_Full_width_content .middle.container,
+.cat_full_width_content .middle.container,
+.cat_Full_width_content .layout_social > .container,
+.cat_full_width_content .layout_social > .container {
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+.cat_Full_width_content #row-middle.row,
+.cat_full_width_content #row-middle.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+.cat_Full_width_content #col1,
+.cat_full_width_content #col1 {
+  padding-left: 0;
+  padding-right: 0;
+}
+.cat_Full_width_content .content-area,
+.cat_full_width_content .content-area {
+  padding: 0;
+}
+.cat_Full_width_content .catblock,
+.cat_full_width_content .catblock,
+.cat_Full_width_content .wikitopline,
+.cat_full_width_content .wikitopline,
+.cat_Full_width_content .wikiactions_wrapper,
+.cat_full_width_content .wikiactions_wrapper,
+.cat_Full_width_content #page-bar,
+.cat_full_width_content #page-bar {
+  padding-left: 15px;
+  padding-right: 15px;
+}
 .box-quickadmin li {
   font-size: 0.9em;
 }
