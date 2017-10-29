@@ -42,12 +42,14 @@
 					{$label|tr_if|escape}
 				</option>
 			{/foreach}
-			{if ! isset($otherLabel)}
-				{assign var=otherLabel value="{tr}Other{/tr}"}
+			{if $field.type eq 'D'}
+				{if ! isset($otherLabel)}
+					{assign var=otherLabel value="{tr}Other{/tr}"}
+				{/if}
+				<option value="other" style="font-style: italic">
+					{$otherLabel}
+				</option>
 			{/if}
-			<option value="other" style="font-style: italic">
-				{$otherLabel}
-			</option>
 		</select>
 
 		{if $field.type eq 'D'}
