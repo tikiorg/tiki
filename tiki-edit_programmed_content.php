@@ -34,6 +34,7 @@ if (isset($_REQUEST["remove"])) {
 }
 
 $smarty->assign('data', '');
+$tikilib = TikiLib::lib('tiki');
 $smarty->assign('publishDate', $tikilib->now);
 //Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
 $userprefslib = TikiLib::lib('userprefs');
@@ -53,7 +54,7 @@ if (isset($_REQUEST["save"])) {
 	if (!empty($_REQUEST['Time_Meridian'])) {
 		$_REQUEST['Time_Hour'] = date('H', strtotime($_REQUEST['Time_Hour'] . ':00 ' . $_REQUEST['Time_Meridian']));
 	}
-	$publishDate = TikiLib::make_time(
+	$publishDate = $tikilib->make_time(
 		$_REQUEST["Time_Hour"],
 		$_REQUEST["Time_Minute"],
 		0,
