@@ -39,9 +39,14 @@
 					{/if}
 				</ul>
 			</div>
+			{if $prefs.tracker_tabular_enabled eq 'y'}
+				<a class="btn btn-default" href="{service controller=tabular action=manage}">
+					{icon name="list"} {tr}Manage Tabular Formats{/tr}
+				</a>
+			{/if}
 			{if $prefs.tracker_remote_sync eq 'y'}
 				<a class="btn btn-default" href="{service controller=tracker_sync action=clone_remote}">
-				{icon name="copy"} {tr}Clone remote{/tr}
+					{icon name="copy"} {tr}Clone remote{/tr}
 				</a>
 			{/if}
 		</div>
