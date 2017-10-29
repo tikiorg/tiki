@@ -230,6 +230,8 @@ class Tracker_Field_Wiki extends Tracker_Field_Text implements Tracker_Field_Exp
 			if (!empty($requestData[$ins_id])) {
 				$page_data = $requestData[$ins_id];
 			}
+			// re-clean the page name here incase it comes from legacy data, i.e. from a partial import
+			$page_name = $this->cleanPageName($page_name);
 			$edit_comment = 'Created by Tracker Field ' . $fieldId;
 			TikiLib::lib('tiki')->create_page($page_name, 0, $page_data, TikiLib::lib('tiki')->now, $edit_comment, $user, TikiLib::lib('tiki')->get_ip_address(), '', '', $is_html, null, $this->getOption('wysiwyg'));
 		}
@@ -419,6 +421,8 @@ class Tracker_Field_Wiki extends Tracker_Field_Text implements Tracker_Field_Exp
 	}
 
 	/**
+	 * Gets the full page name including the namespace and separator
+	 *
 	 * @param $short_name
 	 * @return string
 	 */
@@ -441,6 +445,7 @@ class Tracker_Field_Wiki extends Tracker_Field_Text implements Tracker_Field_Exp
 	}
 
 	/**
+	 * Gets and cleans the specified page name (i.e. the fieldIdForPagename field value with or without the namespace)
 	 * @param $page_name
 	 * @return string
 	 */
@@ -451,6 +456,9 @@ class Tracker_Field_Wiki extends Tracker_Field_Text implements Tracker_Field_Exp
 			$bad_chars = $wikilib->get_badchars();
 			$page_name = preg_replace('/[' . preg_quote($bad_chars, '/') . ']/', ' ', $page_name);
 			$page_name = trim(preg_replace('/\s+/', ' ', $page_name));
+		}
+		if (strlen($page_name) > 160) {
+			$page_name = substr($page_name, 0, 160);
 		}
 		return $page_name;
 	}
