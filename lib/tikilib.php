@@ -3995,7 +3995,7 @@ class TikiLib extends TikiDb_Bridge
 
 		if ($this->page_exists($name))
         {
-            $tracer->trace('tikilib.create_page', "** Page \$name already exists. Exiting...");
+            Feedback::error(tr('TikiLib::create_page: Cannot create page "%0", it already exists.)', $name));
             return false;
         }
 
