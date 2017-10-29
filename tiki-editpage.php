@@ -953,8 +953,6 @@ $smarty->assign('pagedata', $parsed);
 
 // apply the optional post edit filters before preview
 if (isset($_REQUEST["preview"])) {
-	$parsed = $parserlib->apply_postedit_handlers($parsed);
-
 	if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y') {
 		$parsed = $editlib->partialParseWysiwygToWiki($parsed);
 		$parsed = $parserlib->parse_data($parsed, array('absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'preview_mode'=>true, 'is_html' => $is_html));
@@ -1084,9 +1082,6 @@ if (
 	$edit = $_REQUEST["edit"];
 	// Parse $edit and eliminate image references to external URIs (make them internal)
 	$edit = $imagegallib->capture_images($edit);
-	// apply the optional page edit filters before data storage
-	$parserlib = $parserlib;
-	$edit = $parserlib->apply_postedit_handlers($edit);
 
 	// add permisions here otherwise return error!
 	if (

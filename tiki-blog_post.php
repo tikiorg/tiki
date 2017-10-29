@@ -180,8 +180,7 @@ if (isset($_REQUEST["blogpriv"]) && $_REQUEST["blogpriv"] == 'on') {
 if (isset($_REQUEST["preview"])) {
 	$post_info = array();
 	$parserlib = TikiLib::lib('parser');
-	$parsed_data = $parserlib->apply_postedit_handlers($edit_data);
-	$parsed_data = TikiLib::lib('parser')->parse_data($parsed_data, array('is_html' => $is_wysiwyg));
+	$parsed_data = TikiLib::lib('parser')->parse_data($edit_data, array('is_html' => $is_wysiwyg));
 	$smarty->assign('data', $edit_data);
 	$post_info['parsed_data'] = $parsed_data;
 
