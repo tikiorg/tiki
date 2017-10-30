@@ -4,7 +4,8 @@
 	<BR>
 	<h3 class="panel-title">{tr}This page is no longer functional. Please use the Search feature in control panel.{/tr}</h3>
 {else}
-	<input type="text" name="string_in_db_search" size="60" /> <input type="submit" class="btn btn-default btn-sm" value="Search" />
+	<input type="text" name="string_in_db_search" size="60" /> <input type="submit" class="btn btn-default btn-sm" value="Search" onClick="document.getElementById('redirect').value='0';"/>
+	<input type="hidden" id="redirect" name="redirect" value="1">
 {/if}
 
 <hr/>
@@ -32,7 +33,7 @@
 			<td>{$res['column']|escape}</td>
 			<td>{$res['occurrences']|escape}</td>
 			<td>
-				<input type="submit" class="btn btn-default" value="View" onClick="document.getElementById('table').value='{$res['table']}'; document.getElementById('column').value='{$res['column']}';">
+				<input type="submit" class="btn btn-default" value="View" onClick="document.getElementById('table').value='{$res['table']}'; document.getElementById('column').value='{$res['column']}'; document.getElementById('redirect').value='0';">
 			</td>
 			</tr>
 		{/foreach}
