@@ -241,11 +241,7 @@
 {/strip}" name="twitter:title">
 {* --- SocialNetwork:type --- *}
 {if $prefs.feature_canonical_url eq 'y' and isset($mid)}
-	{if $mid eq 'tiki-view_blog.tpl'}
-		<meta content="blog" property="og:type">
-	{elseif $mid eq 'tiki-view_blog_post.tpl'}
-		<meta content="blog" property="og:type">
-	{elseif $mid eq 'tiki-read_article.tpl'}
+	{if $mid eq 'tiki-view_blog.tpl' or $mid eq 'tiki-view_blog_post.tpl' or $mid eq 'tiki-read_article.tpl'}
 		<meta content="article" property="og:type">
 	{else}
 		<meta content="website" property="og:type">
