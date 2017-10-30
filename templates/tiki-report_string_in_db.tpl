@@ -52,7 +52,7 @@
 			<tr>
 			{foreach from=$row key=column item=val}
 				{if $tableName=='tiki_pages' && $column=='pageName'}
-					<td><a href=tiki-index.php?page={$val|escape} class="link tips" title="{$val|escape}:View page">{$val|escape}</a></td>
+					<td><a href=tiki-index.php?page={$val|escape} class="link tips" title="{$val|escape}:{tr}View page{/tr}">{$val|escape}</a></td>
 				{else}
 					<td>{$val|escape}</td>
 				{/if}
