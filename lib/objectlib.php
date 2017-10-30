@@ -548,7 +548,8 @@ class ObjectLib extends TikiLib
 							}
 						}, $format);
 					});
-					$title = array_shift($result->getArrayCopy());
+					$titles = $result->getArrayCopy();
+					$title = array_shift($titles);
 				} else {
 					$title = TikiLib::lib('trk')->get_isMain_value(null, $id);
 				}
