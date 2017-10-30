@@ -414,7 +414,6 @@ $('#customsearch_$id').submit(function() {
 });
 
 window.customsearch_$id = customsearch;
-$(document).trigger('formSearchReady');
 ";
 
 	$parser = new WikiParser_PluginArgumentParser;
@@ -539,7 +538,9 @@ customsearch.offset = $offset;
 customsearch.maxRecords = $maxRecords;
 customsearch.store_query ='';
 customsearch.init();
-$iconinsert";
+$iconinsert;
+$(document).trigger('formSearchReady');
+";
 
 	TikiLib::lib('header')->add_jq_onready($script);
 
