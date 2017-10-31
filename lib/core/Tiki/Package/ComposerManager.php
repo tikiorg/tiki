@@ -98,12 +98,14 @@ class ComposerManager
 
 		$keyLookup = [];
 		foreach ($packageDefinitions as $package) {
-			$keyLookup[$package['name']] = $package['key'];
+			$packageName = $this->normalizePackageName($package['name']);
+			$keyLookup[$packageName] = $package['key'];
 		}
 		if ($installedPackages !== false) {
 			foreach ($installedPackages as &$package) {
-				if (isset($keyLookup[$package['name']])) {
-					$package['key'] = $keyLookup[$package['name']];
+				$packageName = $this->normalizePackageName($package['name']);
+				if (isset($keyLookup[$packageName])) {
+					$package['key'] = $keyLookup[$packageName];
 				} else {
 					$package['key'] = '';
 				}
@@ -152,7 +154,8 @@ class ComposerManager
 			if ($installed !== false) {
 				foreach ($installed as $pkg) {
 					if ($pkg['status'] == self::STATUS_INSTALLED) {
-						$installedPackages[$pkg['name']] = $pkg['name'];
+						$packageName = $this->normalizePackageName($pkg['name']);
+						$installedPackages[$packageName] = $packageName;
 					}
 				}
 			}
@@ -208,6 +211,17 @@ class ComposerManager
 	}
 
 	/**
+	 * Normalize the package name
+	 *
+	 * @param string $packageName
+	 * @return string
+	 */
+	protected function normalizePackageName($packageName)
+	{
+		return $this->composerWrapper->normalizePackageName($packageName);
+	}
+
+	/**
 	 * Manage YAML configuration file. Read the file and iterate throuth it, with a specific action
 	 *  If action is 'list' then it will return the complete list of external packages of configuration
 	 *  If action is 'search' then it will search for a specific package and return the object
@@ -217,7 +231,7 @@ class ComposerManager
 	 * @param $packageKey
 	 * @return ExternalPackage|array
 	 */
-	public function manageYaml($packageAction, $installedPackages = [], $packageKey = null)
+	protected function manageYaml($packageAction, $installedPackages = [], $packageKey = null)
 	{
 		$packageKey = $this->sanitizePackageKey($packageKey);
 
@@ -254,7 +268,8 @@ class ComposerManager
 						return $externalPackage;
 					} else {
 						if ($packageAction == 'list') {
-							if (array_key_exists($externalPackage->getName(), $installedPackages)) {
+							$packageName = $this->normalizePackageName($externalPackage->getName());
+							if (array_key_exists($packageName, $installedPackages)) {
 								continue;
 							}
 							$availablePackages[] = $externalPackage->getAsArray();

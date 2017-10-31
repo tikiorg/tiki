@@ -254,6 +254,43 @@ class Tiki_Package_ComposerManagerTest extends TikiTestCase
 
 	}
 
+	function testGetInstalledCaseMismatch()
+	{
+		$composerCli = $this->getMockBuilder('Tiki\Package\ComposerCli')
+			->setMethods(['getListOfPackagesFromConfig'])
+			->setConstructorArgs([$this->rootPath])
+			->getMock();
+
+		$composerCli
+			->expects($this->once())
+			->method('getListOfPackagesFromConfig')
+			->willReturn(
+				[
+					[
+						'name' => 'JEROME-BRETON/casperjs-installer',
+						'status' => 'installed',
+						'required' => '^1.0.0',
+						'installed' => '1.2.3',
+					],
+				]
+			);
+
+		$composerManager = new ComposerManager(
+			$this->rootPath,
+			null,
+			$composerCli,
+			__DIR__ . DIRECTORY_SEPARATOR . 'Fixtures' . DIRECTORY_SEPARATOR . 'ComposerPackages.yml'
+		);
+
+		$response = $composerManager->getInstalled();
+
+		$this->assertCount(1, $response);
+
+		$this->assertEquals('CasperJS', $response[0]['key']);
+		$this->assertEquals('JEROME-BRETON/casperjs-installer', $response[0]['name']);
+
+	}
+
 	function testRemoveUnknownPackageFails()
 	{
 		$composerCli = $this->getMockBuilder('Tiki\Package\ComposerCli')

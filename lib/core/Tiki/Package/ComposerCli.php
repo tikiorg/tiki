@@ -282,14 +282,14 @@ class ComposerCli
 		$installedPackages = [];
 		if (isset($composerShow['installed']) && is_array($composerShow['installed'])) {
 			foreach ($composerShow['installed'] as $package) {
-				$installedPackages[strtolower($package['name'])] = $package;
+				$installedPackages[$this->normalizePackageName($package['name'])] = $package;
 			}
 		}
 
 		$result = [];
 		if (isset($content['require']) && is_array($content['require'])) {
 			foreach ($content['require'] as $name => $version) {
-				if (isset($installedPackages[strtolower($name)])) {
+				if (isset($installedPackages[$this->normalizePackageName($name)])) {
 					$result[] = [
 						'name' => $name,
 						'status' => ComposerManager::STATUS_INSTALLED,
@@ -456,5 +456,16 @@ class ComposerCli
 		}
 
 		return $composerJson;
+	}
+
+	/**
+	 * Normalize the package name
+	 *
+	 * @param string $packageName
+	 * @return string
+	 */
+	public function normalizePackageName($packageName)
+	{
+		return strtolower($packageName);
 	}
 }
