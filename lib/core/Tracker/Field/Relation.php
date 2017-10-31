@@ -126,11 +126,11 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 		$labels = array();
 		foreach ($this->getConfiguration('relations') as $rel) {
 			list($type, $id) = explode(':', $rel, 2);
-			$labels[$rel] = TikiLib::lib('object')->get_title($type, $id);
+			$labels[$rel] = TikiLib::lib('object')->get_title($type, $id, $this->getOption('format'));
 		}
 		foreach ($this->getConfiguration('inverts') as $rel) {
 			list($type, $id) = explode(':', $rel, 2);
-			$labels[$rel] = TikiLib::lib('object')->get_title($type, $id);
+			$labels[$rel] = TikiLib::lib('object')->get_title($type, $id, $this->getOption('format'));
 		}
 
 		$filter = $this->buildFilter();
