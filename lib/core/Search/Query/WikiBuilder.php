@@ -95,6 +95,25 @@ class Search_Query_WikiBuilder
 		}
 	}
 
+	/**
+	 * Handle return only the list of results defined by the user
+	 *
+	 * @param $query
+	 * @param $value
+	 * @param array $arguments
+	 * @return void
+	 */
+	protected function wpquery_sort_return_only($query, $value, $arguments)
+	{
+		$returnOnlyResultList = [];
+		if (! empty($arguments['return_only'])) {
+			$returnOnlyResultList = array_map('trim', explode(',', $arguments['return_only']));
+		}
+		if (! empty($returnOnlyResultList)) {
+			$query->setReturnOnlyResultList($returnOnlyResultList);
+		}
+	}
+
 	function wpquery_filter_type($query, $value)
 	{
 		$value = explode(',', $value);

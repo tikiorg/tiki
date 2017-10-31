@@ -20,6 +20,7 @@ class Search_Query implements Search_Query_Interface
 	private $facets = [];
 	private $foreignQueries = [];
 	private $transformations = [];
+	private $returnOnlyResultList = [];
 
 	function __construct($query = null)
 	{
@@ -350,6 +351,8 @@ class Search_Query implements Search_Query_Interface
 			});
 		}
 
+		$resultset = $this->processReturnOnlyResultsFromList($resultset);
+
 		return $resultset;
 	}
 
@@ -511,5 +514,47 @@ class Search_Query implements Search_Query_Interface
 	function getForeignQueries()
 	{
 		return $this->foreignQueries;
+	}
+
+	/**
+	 * Set list of results to return
+	 *
+	 * @param array $returnOnlyResultList
+	 * @return void
+	 */
+	public function setReturnOnlyResultList($returnOnlyResultList)
+	{
+		$this->returnOnlyResultList = $returnOnlyResultList;
+	}
+
+	/**
+	 * Get list of results to return
+	 *
+	 * @return array
+	 */
+	public function getReturnOnlyResultList()
+	{
+		return $this->returnOnlyResultList;
+	}
+
+	/**
+	 * Filter the results of the query
+	 *
+	 * @param Search_ResultSet $resultSet
+	 * @return Search_ResultSet
+	 */
+	protected function processReturnOnlyResultsFromList($resultSet)
+	{
+		if (! empty($this->getReturnOnlyResultList())) {
+			$tmpResults = [];
+			foreach ($this->getReturnOnlyResultList() as $resultPosition) {
+				$arrayKey = $resultPosition - 1;
+				if (isset($resultSet[$arrayKey])) {
+					$tmpResults[] = $resultSet[$arrayKey];
+				}
+			}
+			$resultSet = Search_ResultSet::create($tmpResults);
+		}
+		return $resultSet;
 	}
 }

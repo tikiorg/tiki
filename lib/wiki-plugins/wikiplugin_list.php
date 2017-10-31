@@ -55,22 +55,6 @@ function wikiplugin_list($data, $params)
 
 	$matches = WikiParser_PluginMatcher::match($data);
 
-	$returnOnlyResultList = [];
-	if($matches) {
-		$argumentParser = new WikiParser_PluginArgumentParser;
-		foreach ($matches as $match) {
-			if ($match->getName() != 'sort') {
-				continue;
-			}
-			$arguments = $argumentParser->parse($match->getArguments());
-			if (!empty($arguments['return_only'])){
-				$argument = $arguments['return_only'];
-				$valueList = explode(',', $argument);
-				$returnOnlyResultList=array_map('trim', $valueList);
-			}
-		}
-	}
-
 	$builder = new Search_Query_WikiBuilder($query);
 	$builder->enableAggregate();
 	$builder->apply($matches);
@@ -93,19 +77,7 @@ function wikiplugin_list($data, $params)
 
 	$result = $query->search($index);
 
-	if (! empty($returnOnlyResultList)) {
-		$tmpResults = [];
-		foreach ($returnOnlyResultList as $resultPosition) {
-			$arrayKey = $resultPosition - 1;
-			if (isset($result[$arrayKey])) {
-				$tmpResults[] = $result[$arrayKey];
-			}
-		}
-		$result = Search_ResultSet::create($tmpResults);
-	}
-
 	$result->setId('wplist-' . $i);
-
 
 	$resultBuilder = new Search_ResultSet_WikiBuilder($result);
 	$resultBuilder->setPaginationArguments($paginationArguments);

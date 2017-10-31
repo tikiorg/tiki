@@ -66,6 +66,38 @@ abstract class Search_Index_SortTest extends PHPUnit_Framework_TestCase
 		$this->assertOrderIs('BA', $results);
 	}
 
+	function returnOnlyCases()
+	{
+		return [
+			[[1, 2, 3, 4, 5, 6], 'ACB'],
+			[[1, 2, 3], 'ACB'],
+			[[], 'ACB'],
+			[[1, 3], 'AB'],
+			[[3, 2, 1], 'BCA'],
+			[[3], 'B'],
+			[[3, 1], 'BA'],
+			[[4, 5, 6], ''],
+		];
+	}
+
+	/**
+	 * @dataProvider returnOnlyCases
+	 *
+	 * @param array $returnOnlyValue
+	 * @param string $expected
+	 */
+	function testReturnOnly($returnOnlyValue, $expected)
+	{
+		$query = new Search_Query;
+		$query->filterType('wiki page');
+		$query->setOrder('numeric_field_nasc');
+		$query->setReturnOnlyResultList($returnOnlyValue);
+
+		$results = $query->search($this->index);
+
+		$this->assertOrderIs($expected, $results);
+	}
+
 	private function assertOrderIs($expected, $results)
 	{
 		$str = '';
