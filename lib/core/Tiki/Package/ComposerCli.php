@@ -282,14 +282,14 @@ class ComposerCli
 		$installedPackages = [];
 		if (isset($composerShow['installed']) && is_array($composerShow['installed'])) {
 			foreach ($composerShow['installed'] as $package) {
-				$installedPackages[$package['name']] = $package;
+				$installedPackages[strtolower($package['name'])] = $package;
 			}
 		}
 
 		$result = [];
 		if (isset($content['require']) && is_array($content['require'])) {
 			foreach ($content['require'] as $name => $version) {
-				if (isset($installedPackages[$name])) {
+				if (isset($installedPackages[strtolower($name)])) {
 					$result[] = [
 						'name' => $name,
 						'status' => ComposerManager::STATUS_INSTALLED,

@@ -233,6 +233,29 @@ class Tiki_Package_ComposerCliTest extends TikiTestCase
 					],
 				],
 			],
+			[ // all packages installed, case mismatch
+				self::SAMPLE_COMPOSER_BIG,
+				[
+					'installed' => [
+						['name' => 'FOO/BAR', 'version' => '1.2.3'],
+						['name' => 'TesT/UniT', 'version' => '1.4.5'],
+					],
+				],
+				[
+					[
+						'name' => 'foo/bar',
+						'status' => 'installed',
+						'required' => '^1.0.0',
+						'installed' => '1.2.3',
+					],
+					[
+						'name' => 'test/unit',
+						'status' => 'installed',
+						'required' => '^1.0.0',
+						'installed' => '1.4.5',
+					],
+				],
+			],
 		];
 	}
 
