@@ -56,6 +56,10 @@ function module_login_box_info()
 				'description' => tra('Show the user name when in popup mode') . ' (y/n)',
 				'filter' => 'alpha',
 			),
+			'groups' => array(
+				'name' => tra('Groups for switch user listing'),
+				'description' => tra('List of groupIds from which to show users in switch user drop-down. Multiple groupIds are separated by |'),
+			),
 			'menu_id' => array(
 				'name' => tra('Menu ID'),
 				'description' => tra('Menu to use as the dropdown in "popup" mode. Defaults to a built in menu with only "My Account" and "Logout"'),
