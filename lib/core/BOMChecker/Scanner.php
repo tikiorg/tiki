@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
+//
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 class BOMChecker_Scanner
 {
@@ -12,10 +17,10 @@ class BOMChecker_Scanner
 	);
 
 	// The number of files scanned.
-	public $scannedFiles = 0;
+	protected $scannedFiles = 0;
 
 	// The list of files detected with BOM
-	public $bomFiles = array();
+	protected $bomFiles = array();
 
 	/**
 	 * @param string $scanDir
@@ -41,10 +46,16 @@ class BOMChecker_Scanner
 	 */
 	public function scan()
 	{
-		self::checkDir($this->sourceDir);
+		$this->checkDir($this->sourceDir);
 		return $this->bomFiles;
 	}
 
+	/**
+	 * Check directory path
+	 *
+	 * @param string $sourceDir
+	 * @return void
+	 */
 	protected function checkDir($sourceDir)
 	{
 		$sourceDir = $this->fixDirSlash($sourceDir);
@@ -60,12 +71,12 @@ class BOMChecker_Scanner
 			$sourcefilePath = $sourceDir . $file;
 
 			if (is_dir($sourcefilePath)) {
-				self::checkDir($sourcefilePath);
+				$this->checkDir($sourcefilePath);
 			}
 
 			if (!is_file($sourcefilePath)
-				|| !in_array(self::getFileExtension($sourcefilePath), $this->scanExtensions)
-				|| !self::checkUtf8Bom($sourcefilePath)
+				|| !in_array($this->getFileExtension($sourcefilePath), $this->scanExtensions)
+				|| !$this->checkUtf8Bom($sourcefilePath)
 			) {
 				continue;
 			}
@@ -73,7 +84,13 @@ class BOMChecker_Scanner
 		}
 	}
 
-	private function fixDirSlash($dirPath)
+	/**
+	 * Check and change slash directory path
+	 *
+	 * @param string $dirPath
+	 * @return string
+	 */
+	protected function fixDirSlash($dirPath)
 	{
 		$dirPath = str_replace('\\', '/', $dirPath);
 
@@ -83,13 +100,25 @@ class BOMChecker_Scanner
 		return $dirPath;
 	}
 
-	private function getFileExtension($filePath)
+	/**
+	 * Get file extension
+	 *
+	 * @param string $filePath
+	 * @return string
+	 */
+	protected function getFileExtension($filePath)
 	{
 		$info = pathinfo($filePath);
 		return isset($info['extension'])?$info['extension']:'';
 	}
 
-	public function checkUtf8Bom($filePath)
+	/**
+	 * Check if UTF-8 BOM codification file
+	 *
+	 * @param string $filePath
+	 * @return bool
+	 */
+	protected function checkUtf8Bom($filePath)
 	{
 		$file = fopen($filePath, 'r');
 		$data = fgets($file, 10);
@@ -100,4 +129,21 @@ class BOMChecker_Scanner
 		return (substr($data, 0, 3) == "\xEF\xBB\xBF");
 	}
 
+	/**
+	 * Get the number of files scanned.
+	 * 
+	 * @return int
+	 */
+	public function getScannedFiles() {
+		return $this->scannedFiles;
+	}
+
+	/**
+	 * Get the list of files detected with BOM.
+	 * 
+	 * @return array
+	 */
+	public function getBomFiles() {
+		return $this->bomFiles;
+	}
 }

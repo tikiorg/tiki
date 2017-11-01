@@ -2241,9 +2241,15 @@ if ($standalone && !$nagios) {
 	$smarty->assign('fmap', $fmap);
 
 	if(class_exists('BOMChecker_Scanner')){
+		$timeoutLimit = ini_get('max_execution_time');
+		if ($timeoutLimit < 120) {
+			set_time_limit(120);
+		}
+
 		$BOMScanner = new BOMChecker_Scanner();
 		$BOMFiles = $BOMScanner->scan();
-		$BOMTotalScannedFiles = $BOMScanner->scannedFiles;
+		$BOMTotalScannedFiles = $BOMScanner->getScannedFiles();
+
 		$smarty->assign('bom_total_files_scanned', $BOMTotalScannedFiles);
 		$smarty->assign('bom_detected_files', $BOMFiles);
 	}
