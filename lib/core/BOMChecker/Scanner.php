@@ -10,27 +10,25 @@ class BOMChecker_Scanner
 
 	// Tiki source folder
 	protected $sourceDir = __DIR__ . '/../../../';
-	
-	protected $scanExtensions = array(
+
+	protected $scanExtensions = [
 		'php',
 		'tpl'
-	);
+	];
 
 	// The number of files scanned.
 	protected $scannedFiles = 0;
 
 	// The list of files detected with BOM
-	protected $bomFiles = array();
+	protected $bomFiles = [];
 
 	/**
-	 * @param string $scanDir
-	 *    The file directory to scan.
-	 * @param array $scanExtensions
-	 *    An array with the file extensions to scan for BOM.
+	 * @param string $scanDir The file directory to scan.
+	 * @param array $scanExtensions An array with the file extensions to scan for BOM.
 	 */
-	public function __construct($scanDir = null, $scanExtensions = array())
+	public function __construct($scanDir = null, $scanExtensions = [])
 	{
-		if (!empty($scanDir) && is_dir($scanDir)) {
+		if (! empty($scanDir) && is_dir($scanDir)) {
 			$this->sourceDir = $scanDir;
 		}
 
@@ -65,8 +63,9 @@ class BOMChecker_Scanner
 
 		while ($file = readdir($sourceDirHandler)) {
 			// Skip ".", ".." and hidden fields (Unix).
-			if (substr($file, 0, 1) == '.')
+			if (substr($file, 0, 1) == '.') {
 				continue;
+			}
 
 			$sourcefilePath = $sourceDir . $file;
 
@@ -74,13 +73,13 @@ class BOMChecker_Scanner
 				$this->checkDir($sourcefilePath);
 			}
 
-			if (!is_file($sourcefilePath)
-				|| !in_array($this->getFileExtension($sourcefilePath), $this->scanExtensions)
-				|| !$this->checkUtf8Bom($sourcefilePath)
+			if (! is_file($sourcefilePath)
+				|| ! in_array($this->getFileExtension($sourcefilePath), $this->scanExtensions)
+				|| ! $this->checkUtf8Bom($sourcefilePath)
 			) {
 				continue;
 			}
-			$this->bomFiles[] = str_replace($this->sourceDir, '',$sourcefilePath);
+			$this->bomFiles[] = str_replace($this->sourceDir, '', $sourcefilePath);
 		}
 	}
 
@@ -94,8 +93,9 @@ class BOMChecker_Scanner
 	{
 		$dirPath = str_replace('\\', '/', $dirPath);
 
-		if (substr($dirPath, -1, 1) != '/')
+		if (substr($dirPath, -1, 1) != '/') {
 			$dirPath .= '/';
+		}
 
 		return $dirPath;
 	}
@@ -109,7 +109,7 @@ class BOMChecker_Scanner
 	protected function getFileExtension($filePath)
 	{
 		$info = pathinfo($filePath);
-		return isset($info['extension'])?$info['extension']:'';
+		return isset($info['extension']) ? $info['extension'] : '';
 	}
 
 	/**
@@ -131,19 +131,21 @@ class BOMChecker_Scanner
 
 	/**
 	 * Get the number of files scanned.
-	 * 
+	 *
 	 * @return int
 	 */
-	public function getScannedFiles() {
+	public function getScannedFiles()
+	{
 		return $this->scannedFiles;
 	}
 
 	/**
 	 * Get the list of files detected with BOM.
-	 * 
+	 *
 	 * @return array
 	 */
-	public function getBomFiles() {
+	public function getBomFiles()
+	{
 		return $this->bomFiles;
 	}
 }
