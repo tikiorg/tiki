@@ -1319,6 +1319,21 @@ div.categbar {
   padding-left: 15px;
   padding-right: 15px;
 }
+.uol ol {
+  counter-reset: item;
+}
+.uol li {
+  display: block;
+  text-indent: -1rem;
+}
+.uol li:before {
+  content: counters(item, ".") ".\0000a0";
+  counter-increment: item;
+}
+.uol li li:before {
+  content: counters(item, ".") "\0000a0";
+  counter-increment: item;
+}
 .box-quickadmin li {
   font-size: 0.9em;
 }

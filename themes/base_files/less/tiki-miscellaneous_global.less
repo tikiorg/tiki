@@ -459,3 +459,12 @@ div.categbar {
 		padding-right: 15px;
 	}
 }
+
+// Auto unique-numbered ordered lists (for ordered lists wrapped in class="uol" wrapper to generate unique "chapter like" numbering X.Y.Z)
+.uol ol { 
+    counter-reset: item;
+}
+.uol li { display: block; text-indent: -1rem } // negative text-indent here simulates the common ol rendering indentation
+.uol li:before { content: counters(item, ".") ".\0000a0"; counter-increment: item } // \0000a0 is nbsp Unicode escaped
+.uol li li:before { content: counters(item, ".") "\0000a0"; counter-increment: item } // here we remove the last dot (looks better?)
+
