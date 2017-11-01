@@ -166,7 +166,7 @@ function refreshWebmail($destDiv = 'mod-webmail_inbox', $inStart = 0, $inReload 
 		$_SESSION['webmailinbox'][$destDiv]['start'] = $inStart;
 	}
 
-	include('lib/wiki-plugins/wikiplugin_module.php');
+	include_once('lib/wiki-plugins/wikiplugin_module.php');
 	$data = wikiplugin_module('', $module_params);
 //	$objResponse = new xajaxResponse();
 //	$objResponse->script('setTimeout("initWebmail()",1000)');
