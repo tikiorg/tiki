@@ -180,6 +180,7 @@
 			"vendor/adodb/adodb-php/",
 			"vendor/h5p/h5p-core",
 			"vendor/h5p/h5p-editor",
+			"vendor/pear/xml_rpc",
 			"vendor/smarty/smarty/libs/sysplugins/smarty_security.php"
 		]
 	},
