@@ -9,70 +9,65 @@ if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
 	die('This script may only be included.');
 }
 
-if ($svn = $cachelib->getSerialized('svninfo')) {
-	if (! empty($svn['cached']) && $svn['cached'] > time()-3600 ) {
-		$smarty->assign('svnrev', $svn['svnrev']);
-		$smarty->assign('lastup', $svn['lastup']);
-		return;
-	}
-}
+function svn_last_update() {
+	static $cache = array();
 
-if (is_readable('.svn')) {
-	$svn = array();
-	if (is_readable('.svn/entries')) {
-		$fp = fopen('.svn/entries', 'r');
-		for ($i = 0; 10 > $i && $line = fgets($fp, 80); ++$i) {
-			$svn[] = $line;
+	if ($cache) {
+		return $cache;
+	}
+
+	if (is_readable('.svn')) {
+		$svn = array();
+		if (is_readable('.svn/entries')) {
+			$fp = fopen('.svn/entries', 'r');
+			for ($i = 0; 10 > $i && $line = fgets($fp, 80); ++$i) {
+				$svn[] = $line;
+			}
+			fclose($fp);
 		}
-		fclose($fp);
-	}
 
-	if (count($svn) > 2) {
-		// Standard SVN client
-		$smarty->assign('svnrev', $svn[3]);
-		$smarty->assign('lastup', strtotime($svn[9]));
-	} else {
-		// Check for Tortoise 1.7+ SVN client, if sqlite3 is present
-		if (extension_loaded('sqlite3')) {
-			$location = '.svn/wc.db';
-			if (is_file($location)) {
-				$handle = new SQLite3($location);
+		if (count($svn) > 2) {
+			// Standard SVN client
+			$cache['svnrev'] = $svn[3];
+			$cache['lastup'] = strtotime($svn[9]);
+		} else {
+			// Check for Tortoise 1.7+ SVN client, if sqlite3 is present
+			if (extension_loaded('sqlite3')) {
+				$location = '.svn/wc.db';
+				if (is_file($location)) {
+					$handle = new SQLite3($location);
 
-				// Assign svnrev
-				$query = "select max(changed_revision) as svnrev from nodes";
-				$result = $handle->query($query);
-				$svnrev = $lastupTime = $strDT = '';
-				if ($result) {
-					$resx = $result->fetchArray(SQLITE3_ASSOC);
-					$svnrev = $resx['svnrev'];
-					$smarty->assign('svnrev', $svnrev);
+					// Assign svnrev
+					$query = "select max(changed_revision) as svnrev from nodes";
+					$result = $handle->query($query);
+					$svnrev = $lastupTime = $strDT = '';
+					if ($result) {
+						$resx = $result->fetchArray(SQLITE3_ASSOC);
+						$cache['svnrev'] = $resx['svnrev'];
+					}
+
+					// Assign lastup
+					$query = "select max(changed_date)/1000000 as lastup from nodes";
+					$result = $handle->query($query);
+					if ($result) {
+						$resx = $result->fetchArray(SQLITE3_ASSOC);
+						$lastupTime = intval($resx['lastup']);
+						$dt = new DateTime();
+						$dt->setTimestamp($lastupTime);
+						$cache['lastup'] = $dt->format(DateTime::ISO8601);
+					}
+
+					// Release/Unlock the database afterwards
+					$handle->close();
 				}
-
-				// Assign lastup
-				$query = "select max(changed_date)/1000000 as lastup from nodes";
-				$result = $handle->query($query);
-				if ($result) {
-					$resx = $result->fetchArray(SQLITE3_ASSOC);
-					$lastupTime = intval($resx['lastup']);
-					$dt = new DateTime();
-					$dt->setTimestamp($lastupTime);
-					$strDT = $dt->format(DateTime::ISO8601);
-					$smarty->assign('lastup', $strDT);
-				}
-
-				// Release/Unlock the database afterwards
-				$handle->close();
-
-				// Cache findings and reuse to prevent considerable performance degradation in some environments (e.g. Windows host on a virtual machine)
-				// Cache is invalidated upon full cache clear or once an hour
-				$cachelib->cacheItem('svninfo', serialize([
-					'svnrev' => $svnrev,
-					'lastup' => $strDT,
-					'cached' => time()
-				]));
 			}
 		}
 	}
+
+	if (! $cache) {
+		$cache['lastup'] = null;
+		$cache['svnrev'] = null;
+	}
+
+	return $cache;
 }
-
-

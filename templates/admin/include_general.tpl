@@ -14,6 +14,8 @@
 			<fieldset>
 				<legend>{tr}Release check{/tr}</legend>
 				{remarksbox type="info" title="{tr}Tiki version{/tr}" close="n"}
+					{capture assign="lastup"}{svn_lastup}{/capture}
+					{capture assign="svnrev"}{svn_rev}{/capture}
 					{if !empty($lastup)}
 						{tr}Last update from SVN{/tr} ({$tiki_version}): {$lastup|tiki_long_datetime}
 					{else}
