@@ -75,8 +75,8 @@
 <meta content="{if not empty($prefs.socialnetworks_twitter_site)}{$prefs.socialnetworks_twitter_site}{else}{$prefs.browsertitle|tr_if|escape}{/if}" name="twitter:site">
 {* --- SocialNetwork: fb:app_id ---*}
 {if not empty($prefs.socialnetworks_facebook_application_id)}<meta content="{$prefs.socialnetworks_facebook_application_id}" property="fb:app_id">{/if}
-{* --- tiki block --- *}
-<title>{strip}
+
+{capture assign='header_title'}{strip}
 {if !empty($sswindowtitle)}
 	{if $sswindowtitle eq 'none'}
 		&nbsp;
@@ -133,112 +133,14 @@
 	{/if}
 	{if $prefs.site_title_location eq 'after'} {$prefs.site_nav_seper} {$prefs.browsertitle|tr_if|escape}{/if}
 {/if}
-{/strip}</title>
+{/strip}{/capture}
+{* --- tiki block --- *}
+<title>{$header_title}</title>
 {* --- SocialNetwork:title --- *}
 {* Facebook *}
-<meta content="{strip}
-	{if !empty($sswindowtitle)}
-		{if $sswindowtitle eq 'none'}
-			&nbsp;
-		{else}
-			{$sswindowtitle|escape}
-		{/if}
-	{else}
-		{if $prefs.site_title_location eq 'before'}{$prefs.browsertitle|tr_if|escape} {$prefs.site_nav_seper} {/if}
-		{capture assign="page_description_title"}
-			{if ($prefs.feature_breadcrumbs eq 'y' or $prefs.site_title_breadcrumb eq "desc") && isset($trail)}
-				{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
-			{/if}
-		{/capture}
-		{if isset($structure) and $structure eq 'y'} {* get the alias name if item is a wiki page and it is in a structure *}
-			{section loop=$structure_path name=ix}
-				{assign var="aliasname" value={$structure_path[ix].page_alias}}
-			{/section}
-		{/if}
-		{if !empty($page_description_title)}
-			{$page_description_title}
-		{else}
-			{if !empty($tracker_item_main_value)}
-				{$tracker_item_main_value|truncate:255|escape}
-			{elseif !empty($title) and !is_array($title)}
-				{$title|escape}
-			{elseif !empty($aliasname)}
-				{$aliasname|escape}
-			{elseif !empty($page)}
-				{$page|escape}
-			{elseif !empty($description)}{$description|escape}
-				{* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
-			{elseif !empty($arttitle)}
-				{$arttitle|escape}
-			{elseif !empty($thread_info.title)}
-				{$thread_info.title|escape}
-			{elseif !empty($forum_info.name)}
-				{$forum_info.name|escape}
-			{elseif !empty($categ_info.name)}
-				{$categ_info.name|escape}
-			{elseif !empty($userinfo.login)}
-				{$userinfo.login|username}
-			{elseif !empty($tracker_info.name)}
-				{$tracker_info.name|escape}
-			{elseif !empty($headtitle)}
-				{$headtitle|stringfix:"&nbsp;"|escape}{* use $headtitle last if feature specific title not found *}
-			{/if}
-		{/if}
-		{if $prefs.site_title_location eq 'after'} {$prefs.site_nav_seper} {$prefs.browsertitle|tr_if|escape}{/if}
-	{/if}
-{/strip}" property="og:title">
+<meta property="og:title" content="{$header_title}">
 {* Twitter *}
-<meta content="{strip}
-	{if !empty($sswindowtitle)}
-		{if $sswindowtitle eq 'none'}
-			&nbsp;
-		{else}
-			{$sswindowtitle|escape}
-		{/if}
-	{else}
-		{if $prefs.site_title_location eq 'before'}{$prefs.browsertitle|tr_if|escape} {$prefs.site_nav_seper} {/if}
-		{capture assign="page_description_title"}
-			{if ($prefs.feature_breadcrumbs eq 'y' or $prefs.site_title_breadcrumb eq "desc") && isset($trail)}
-				{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
-			{/if}
-		{/capture}
-		{if isset($structure) and $structure eq 'y'} {* get the alias name if item is a wiki page and it is in a structure *}
-			{section loop=$structure_path name=ix}
-				{assign var="aliasname" value={$structure_path[ix].page_alias}}
-			{/section}
-		{/if}
-		{if !empty($page_description_title)}
-			{$page_description_title}
-		{else}
-			{if !empty($tracker_item_main_value)}
-				{$tracker_item_main_value|truncate:255|escape}
-			{elseif !empty($title) and !is_array($title)}
-				{$title|escape}
-			{elseif !empty($aliasname)}
-				{$aliasname|escape}
-			{elseif !empty($page)}
-				{$page|escape}
-			{elseif !empty($description)}{$description|escape}
-				{* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
-			{elseif !empty($arttitle)}
-				{$arttitle|escape}
-			{elseif !empty($thread_info.title)}
-				{$thread_info.title|escape}
-			{elseif !empty($forum_info.name)}
-				{$forum_info.name|escape}
-			{elseif !empty($categ_info.name)}
-				{$categ_info.name|escape}
-			{elseif !empty($userinfo.login)}
-				{$userinfo.login|username}
-			{elseif !empty($tracker_info.name)}
-				{$tracker_info.name|escape}
-			{elseif !empty($headtitle)}
-				{$headtitle|stringfix:"&nbsp;"|escape}{* use $headtitle last if feature specific title not found *}
-			{/if}
-		{/if}
-		{if $prefs.site_title_location eq 'after'} {$prefs.site_nav_seper} {$prefs.browsertitle|tr_if|escape}{/if}
-	{/if}
-{/strip}" name="twitter:title">
+<meta name="twitter:title" content="{$header_title}">
 {* --- SocialNetwork:type --- *}
 {if $prefs.feature_canonical_url eq 'y' and isset($mid)}
 	{if $mid eq 'tiki-view_blog.tpl' or $mid eq 'tiki-view_blog_post.tpl' or $mid eq 'tiki-read_article.tpl'}
