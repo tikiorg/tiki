@@ -104,7 +104,7 @@ if (jqueryTiki.no_cookie) {
 						</li>
 					</ul>
 				{else}
-					{menu id=$module_params.menu_id bootstrap='y' menu_class='dropdown-menu'}
+					{menu id=$module_params.menu_id bootstrap='y' bs_menu_class='dropdown-menu'}
 				{/if}
 			</div>
 		{/if}
