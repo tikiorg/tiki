@@ -1735,8 +1735,8 @@ $fcts = array(
 		),
 		array (
 			'function' => 'passthru',
-			'risky' => tra('Passthru is similar to exec.').' '.tra('Tiki does not need it; perhaps it should be disabled.'),
-			'safe' =>  tra('Passthru is similar to exec.').' '.tra('Tiki does not need it; it is good that it is disabled.')
+			'risky' => tra('Passthru is similar to exec.').' '.tra('Tiki does not need it; perhaps it should be disabled. However, Composer may need it (If Tiki is being run from SVN).'),
+			'safe' =>  tra('Passthru is similar to exec.').' '.tra('Tiki does not need it; it is good that it is disabled. However, Composer may need it (If Tiki is being run from SVN).')
 		),
 		array (
 			'function' => 'shell_exec',
