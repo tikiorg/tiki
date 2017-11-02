@@ -534,7 +534,7 @@ function prefs_auth_list()
 	global $prefs;
 
 	// Check if package onelogin/php-saml is installed and enabled
-	if (!class_exists('OneLogin_Saml2_Auth') || (isset($prefs['saml_auth_enabled']) && $prefs['saml_auth_enabled'] != 'y')) {
+	if (!class_exists('OneLogin_Saml2_Auth') || (!isset($prefs['saml_auth_enabled']) || $prefs['saml_auth_enabled'] != 'y')) {
 		unset($list['auth_method']['options']['saml']);
 	}
 
