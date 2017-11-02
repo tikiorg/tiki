@@ -233,6 +233,20 @@ function wikiplugin_img_info()
 					array('text' => tra('No'), 'value' => 'n'),
 				),
 			),
+			'featured' => array(
+				'required' => false,
+				'name' => tra('Featured Image'),
+				'filter' => 'alpha',
+				'description' => tr('Set the image as a featured image which will be presented as the images to use for social network sites etc.'),
+				'since' => '18.0',
+				'doctype' => '????',
+				'advanced' => false,
+				'default' => 'n',
+				'options' => array(
+					array('text' => tra('No'), 'value' => 'n'),
+					array('text' => tra('Yes'), 'value' => 'y'),
+				),
+			),
 
 			///// advanced parameters ///////
 
@@ -1086,6 +1100,16 @@ function wikiplugin_img( $data, $params )
 	////////////////////////////////////////// Create the HTML img tag //////////////////////////////////////////////
 	//Start tag with src and dimensions
 	$src = filter_out_sefurl($src);
+
+	if ($params['featured'] === 'y') {
+		$full_url = TikiLib::tikiUrl($src);
+		$header_featured_images = $smarty->getTemplateVars('header_featured_images');
+		if (! is_array($header_featured_images)) {
+			$header_featured_images = [];
+		}
+		$header_featured_images[] = $full_url;
+		$smarty->assign('header_featured_images', $header_featured_images);
+	}
 
 	$tagName = '';
 	if (!empty($dbinfo['filetype'])  && !empty($mimetypes['svg']) && $dbinfo['filetype'] == $mimetypes['svg']) {
