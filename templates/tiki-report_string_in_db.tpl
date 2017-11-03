@@ -53,47 +53,47 @@
 			<tr>
 			{foreach from=$row key=column item=val}
 				{if $tableName=='tiki_pages' && ($column=='pageName' || $column=='pageSlug' || $column=='data' || $column=='description')}
-					<td><a href=/tiki-index.php?page={$row['pageSlug']|escape} class="link tips" title="{$row['pageName']|escape}:{tr}View page{/tr}" target="_blank">{$val|escape}</a></td>
+					<td><a href=tiki-index.php?page={$row['pageSlug']|escape} class="link tips" title="{$row['pageName']|escape}:{tr}View page{/tr}" target="_blank">{$val|escape}</a></td>
 				{elseif $tableName=='tiki_blog_posts' && ($column=='data' || $column=='title')}
-					<td><a href=/tiki-view_blog_post.php?postId={$row['postId']} class="link tips" title="{$row['title']|escape}:{tr}View blog post{/tr}" target="_blank">{$val|escape}</a></td>
+					<td><a href=tiki-view_blog_post.php?postId={$row['postId']} class="link tips" title="{$row['title']|escape}:{tr}View blog post{/tr}" target="_blank">{$val|escape}</a></td>
 				{elseif $tableName=='tiki_files' && ($column=='name' || $column=='description' || $column=='filename')}
-					<td><a href=/tiki-download_file.php?fileId={$row['fileId']}&display class="link tips" title="{$row['name']|escape}:{tr}View file{/tr}" target="_blank">{$val|escape}</a></td>
+					<td><a href=tiki-download_file.php?fileId={$row['fileId']}&display class="link tips" title="{$row['name']|escape}:{tr}View file{/tr}" target="_blank">{$val|escape}</a></td>
 				{elseif $tableName=='tiki_file_galleries' && $column=='name'}
-					<td><a href=/tiki-list_file_gallery.php?galleryId={$row['galleryId']} class="link tips" title="{$val|escape}:{tr}View gallery{/tr}" target="_blank">{$val|escape}</a></td>
+					<td><a href=tiki-list_file_gallery.php?galleryId={$row['galleryId']} class="link tips" title="{$val|escape}:{tr}View gallery{/tr}" target="_blank">{$val|escape}</a></td>
 				{elseif $tableName=='tiki_categories' && ($column=='name'|| $column=='description')}
-					<td><a href=/tiki-admin_categories.php?parentId={$row['parentId']}&categId={$row['categId']} class="link tips" title="{$row['name']|escape}:{tr}View category{/tr}" target="_blank">{$val|escape}</a></td>
+					<td><a href=tiki-admin_categories.php?parentId={$row['parentId']}&categId={$row['categId']} class="link tips" title="{$row['name']|escape}:{tr}View category{/tr}" target="_blank">{$val|escape}</a></td>
 				{elseif $tableName=='tiki_articles' && ($column=='title'|| $column=='heading')}
-					<td><a href=/tiki-read_article.php?articleId={$row['articleId']} class="link tips" title="{$row['title']|escape}:{tr}View article{/tr}" target="_blank">{$val|escape}</a></td>
+					<td><a href=tiki-read_article.php?articleId={$row['articleId']} class="link tips" title="{$row['title']|escape}:{tr}View article{/tr}" target="_blank">{$val|escape}</a></td>
 				{elseif $tableName=='tiki_forums' && ($column=='name'|| $column=='description')}
-					<td><a href=/tiki-view_forum.php?forumId={$row['forumId']} class="link tips" title="{$row['name']|escape}:{tr}View forum{/tr}" target="_blank">{$val|escape}</a></td>
+					<td><a href=tiki-view_forum.php?forumId={$row['forumId']} class="link tips" title="{$row['name']|escape}:{tr}View forum{/tr}" target="_blank">{$val|escape}</a></td>
 				{elseif $tableName=='tiki_calendars' && ($column=='name'|| $column=='description')}
-					<td><a href=/tiki-calendar.php?calIds[]={$row['calendarId']} class="link tips" title="{$row['name']|escape}:{tr}View calendar{/tr}" target="_blank">{$val|escape}</a></td>
+					<td><a href=tiki-calendar.php?calIds[]={$row['calendarId']} class="link tips" title="{$row['name']|escape}:{tr}View calendar{/tr}" target="_blank">{$val|escape}</a></td>
 				{elseif $tableName=='tiki_calendar_items' && ($column=='name'|| $column=='description')}
-					<td><a href=/tiki-calendar_edit_item.php?viewcalitemId={$row['calitemId']} class="link tips" title="{$row['name']|escape}:{tr}View calendar item{/tr}" target="_blank">{$val|escape}</a></td>
+					<td><a href=tiki-calendar_edit_item.php?viewcalitemId={$row['calitemId']} class="link tips" title="{$row['name']|escape}:{tr}View calendar item{/tr}" target="_blank">{$val|escape}</a></td>
 				{elseif $tableName=='tiki_trackers' && ($column=='name'|| $column=='description')}
-					<td><a href=/tiki-view_tracker.php?trackerId={$row['trackerId']} class="link tips" title="{$row['name']|escape}:{tr}View tracker{/tr}" target="_blank">{$val|escape}</a></td>
+					<td><a href=tiki-view_tracker.php?trackerId={$row['trackerId']} class="link tips" title="{$row['name']|escape}:{tr}View tracker{/tr}" target="_blank">{$val|escape}</a></td>
 				{elseif $tableName=='tiki_tracker_item_fields' && $column=='value'}
-					<td><a href=/tiki-view_tracker_item.php?itemId={$row['itemId']} class="link tips" title="{$row['name']|escape}:{tr}View tracker item{/tr}" target="_blank">{$val|escape}</a></td>
+					<td><a href=tiki-view_tracker_item.php?itemId={$row['itemId']} class="link tips" title="{$row['value']|escape}:{tr}View tracker item{/tr}" target="_blank">{$val|escape}</a></td>
 				{elseif $tableName=='tiki_comments'}
 					{if $row['objectType']=='blog post'}
 						{if ($column=='objectType' || $column=='data')}
-							<td><a href=/tiki-view_blog_post.php?postId={$row['object']} class="link tips" title="{$row['data']|escape}:{tr}View blog post{/tr}" target="_blank">{$val|escape}</a></td>
+							<td><a href=tiki-view_blog_post.php?postId={$row['object']} class="link tips" title="{$row['data']|escape}:{tr}View blog post{/tr}" target="_blank">{$val|escape}</a></td>
 						{else}
 							<td>{$val|escape}</td>
 						{/if}
 					{elseif $row['objectType']=='forum'}
 						{if ($column=='objectType' || $column=='data' || $column=='title')}
 							{if $row['parentId']==0}
-								<td><a href=/tiki-view_forum_thread.php?forumId={$row['object']}&comments_parentId={$row['threadId']}#threadId{$row['threadId']} class="link tips" title="{$row['data']|escape}:{tr}View forum comment{/tr}" target="_blank">{$val|escape}</a></td>
+								<td><a href=tiki-view_forum_thread.php?forumId={$row['object']}&comments_parentId={$row['threadId']}#threadId{$row['threadId']} class="link tips" title="{$row['data']|escape}:{tr}View forum comment{/tr}" target="_blank">{$val|escape}</a></td>
 							{else}
-								<td><a href=/tiki-view_forum_thread.php?comments_parentId={$row['parentId']}#threadId{$row['threadId']} class="link tips" title="{$row['data']|escape}:{tr}View forum comment{/tr}" target="_blank">{$val|escape}</a></td>
+								<td><a href=tiki-view_forum_thread.php?comments_parentId={$row['parentId']}#threadId{$row['threadId']} class="link tips" title="{$row['data']|escape}:{tr}View forum comment{/tr}" target="_blank">{$val|escape}</a></td>
 							{/if}
 						{else}
 							<td>{$val|escape}</td>
 						{/if}
 					{elseif $row['objectType']=='article'}
 						{if ($column=='objectType' || $column=='data')}
-							<td><a href=/tiki-read_article.php?articleId={$row['object']} class="link tips" title="{$row['data']|escape}:{tr}View article{/tr}" target="_blank">{$val|escape}</a></td>
+							<td><a href=tiki-read_article.php?articleId={$row['object']} class="link tips" title="{$row['data']|escape}:{tr}View article{/tr}" target="_blank">{$val|escape}</a></td>
 						{else}
 							<td>{$val|escape}</td>
 						{/if}
