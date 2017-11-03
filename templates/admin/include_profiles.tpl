@@ -1,240 +1,6 @@
 {* $Id$ *}
-{jq notonready=true}
-	var baseURI = '{$smarty.server.REQUEST_URI}&ticket={{$ticket|escape:url}}&daconfirm=y';
-	{literal}
-		function refreshCache( entry ) { // {{{
-			var datespan = document.getElementById( 'profile-date-' + entry );
-
-			if($('profile-status-' + entry + ' > span.icon-status-pending').is(':visible')) {
-				return;
-			}
-
-			$('#profile-status-' + entry + ' > span.icon-status-pending').show();
-			$('#profile-status-' + entry + ' > span.icon-status-open').hide();
-			$('#profile-status-' + entry + ' > span.icon-status-closed').hide();
-
-			var req = getHttpRequest( 'POST', baseURI + '&refresh=' + escape(entry), true );
-			req.onreadystatechange = function (aEvt) {
-				if (req.readyState == 4) {
-					if(req.status == 200) {
-						if (req.responseText.slice(0,1) !== '<') {
-							var data = eval( "(" + req.responseText + ")" );
-							$.each(['open', 'pending', 'closed'], function (key, value) {
-								if (value == data.status) {
-									$('#profile-status-' + entry + ' > span.icon-status-' + value).show();
-								} else {
-									$('#profile-status-' + entry + ' > span.icon-status-' + value).hide();
-								}
-							});
-							datespan.innerHTML = data.lastupdate;
-						} else {
-							feedback(tr('Error loading page'), 'error');
-						}
-					} else {
-						feedback(tr('Error loading page'), 'error');
-					}
-				}
-			};
-			req.send('');
-		} // }}}
-
-		function showDetails( id, domain, profile ) { // {{{
-
-			var nid = id + "-sub";
-			var infoId = id + "-info";
-			var prev = document.getElementById( id );
-			var obj = document.getElementById( nid );
-
-			if( obj )
-			{
-				obj.id = null;
-				obj.parentNode.removeChild( obj );
-				return;
-			}
-
-			var infoOb = document.getElementById( infoId );
-			if (!infoOb) {
-				infoOb = document.createElement('span');
-				infoOb.innerHTML = "";
-				infoOb.style.fontStyle = "italic";
-				infoOb.id = infoId;
-				prev.getElementsByTagName("td")[0].appendChild( infoOb );
-			}
-			infoOb.innerHTML = " {/literal}{tr}Loading profile{/tr}{literal}...";
-
-			var req = getHttpRequest( 'POST', baseURI + '&getinfo&pd=' + escape(domain) + '&pp=' + escape(profile), true );
-			req.onreadystatechange = function (aEvt) {
-
-				if (infoOb) {
-					infoOb.innerHTML = " ";
-
-				}
-				if (req.readyState == 4) {
-					if(req.status == 200) {
-						var data = eval( "(" + req.responseText + ")" );
-
-						var row = document.createElement( 'tr' );
-						var cell = document.createElement( 'td' );
-						var body = document.createElement( 'div' );
-						var ul = document.createElement( 'ul' );
-
-						row.appendChild( cell );
-						cell.colSpan = 3;
-
-						if( data.installable || data.already ) {
-
-							var pStep = document.createElement('p');
-							pStep.style.fontWeight = 'bold';
-							if( data.installable ) {
-								pStep.innerHTML = "Click on Apply Now to apply Profile";
-							} else if ( data.already ) {
-								pStep.innerHTML = "A version of this profile is already applied.";
-							}
-
-							var form = document.createElement( 'form' );
-							var p = document.createElement('p');
-							var submit = document.createElement('input');
-							var pd = document.createElement('input');
-							var pp = document.createElement('input');
-							form.method = 'post';
-							form.action = document.location.href;
-
-							var iTable = document.createElement('table');
-							iTable.className = 'normal';
-
-							var rowNum = 0;
-							for( i in data.userInput ) {
-								if( typeof(data.userInput[i]) != 'string' )
-									continue;
-
-								var iRow = iTable.insertRow( rowNum++ );
-								var iLabel = iRow.insertCell( 0 );
-								var iField = iRow.insertCell( 1 );
-
-								iRow.className = 'formcolor';
-
-								iLabel.appendChild( document.createTextNode( i ) );
-								var iInput = document.createElement( 'input' );
-								iInput.type = 'text';
-								iInput.name = i;
-								iInput.value = data.userInput[i];
-
-								iField.appendChild( iInput );
-							}
-
-							if( rowNum > 0 )
-								form.appendChild( iTable );
-
-							form.appendChild(p);
-
-							submit.type = 'submit';
-							if( data.installable ) {
-								submit.name = 'install';
-								submit.value = 'Apply Now';
-								form.setAttribute ( "onsubmit", 'return confirm(\"{/literal}{tr}Are you sure you want to apply the profile{/tr}{literal} ' + profile + '?\");' );
-								submit.setAttribute ( "class", "btn btn-primary");
-							} else if ( data.already ) {
-								submit.name = 'forget';
-								submit.value = 'Forget and Re-apply';
-								form.setAttribute ( "onsubmit", 'return confirm(\"{/literal}{tr}Are you sure you want to re-apply the profile{/tr}{literal} ' + profile + '?\");' );
-								submit.setAttribute ( "class", "btn btn-primary");
-							}
-
-							p.appendChild(submit);
-							pd.type = 'hidden';
-							pd.name = 'pd';
-							pd.value = domain;
-							p.appendChild(pd);
-							p.appendChild(pStep);
-							pp.type = 'hidden';
-							pp.name = 'pp';
-							pp.value = profile;
-							p.appendChild(pp);
-
-							cell.appendChild(form);
-						}
-						else if( data.error )
-						{
-							var p = document.createElement('p');
-							p.style.fontWeight = 'bold';
-							p.className = 'text-danger';
-							p.innerHTML = tr("An error occurred during the profile validation. This profile cannot be applied.<br>Message: ") + data.error;
-							cell.appendChild(p);
-						}
-						else
-						{
-							var p = document.createElement('p');
-							p.style.fontWeight = 'bold';
-							p.innerHTML = "An error occurred during the profile validation. This profile cannot be applied.";
-							cell.appendChild(p);
-						}
-
-						if( data.dependencies.length > 1 )
-						{
-							for( k in data.dependencies )
-							{
-								if( typeof(data.dependencies[k]) != 'string')
-									continue;
-
-								var li = document.createElement( 'li' );
-								var a = document.createElement( 'a' );
-								a.href = data.dependencies[k];
-								a.innerHTML = data.dependencies[k];
-
-								li.appendChild( a );
-								ul.appendChild( li );
-							}
-
-							var p = document.createElement( 'p' );
-							p.innerHTML = 'These profiles will be applied:';
-							cell.appendChild( p );
-							cell.appendChild( ul );
-						}
-
-						body.innerHTML = data.content;
-						body.style.height = '200px';
-						body.style.overflow = 'auto';
-						body.style.borderStyle = 'solid';
-						body.style.borderWidth = '2px';
-						body.style.borderColor = 'black';
-						body.style.padding = '8px';
-						body.style.resize = 'both';
-						body.style.overflow = 'auto';
-
-
-						cell.appendChild( body );
-
-						row.id = nid;
-						prev.parentNode.insertBefore( row, prev.nextSibling );
-
-						if (data.feedback.length) {
-							alert("Profile issues: \n" + data.feedback);
-						}
-
-					}
-				} else { // readyState not 4 (complete)
-
-					switch (req.readyState) {
-						case 1: {
-							infoOb.innerHTML = " {/literal}{tr}Loading profile{/tr}{literal}...";
-							break;
-						}
-						case 2: {
-							infoOb.innerHTML = " {/literal}{tr}Sending{/tr}{literal}...";
-							break;
-						}
-						case 3: {
-							infoOb.innerHTML = " {/literal}{tr}Waiting{/tr}{literal}...";
-							break;
-						}
-					}
-
-				}
-			}
-			req.send('');
-		} // }}}
-	{/literal}
-{/jq}
+{assign var="baseURI" value="{$smarty.server.REQUEST_URI}&ticket={{$ticket|escape:url}}&daconfirm=y"}
+{$headerlib->add_jsfile("lib/jquery_tiki/tiki-profile.js")}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
 	<a class="alert-link" href="http://profiles.tiki.org">{tr}Tiki Configuration Profiles{/tr}</a>
@@ -293,22 +59,6 @@
 						</div>
 						<input type="hidden" name="page" value="profiles">
 						<input type="hidden" name="redirect" value=0>
-								{jq}
-										if ($("#profile-0").length > 0) {
-											$(".quickmode_notes").hide();
-											$(window).scrollTop($("#step2").offset().top);
-										} else {
-											$(".quickmode_notes").show();
-										}
-										$("#repository, #categories").change(function(){
-											if ($(this).val()) {
-												$(".quickmode_notes").hide(400);
-											} else {
-												$(".quickmode_notes").show(400);
-											}
-										});
-									{/jq}
-
 						<div class="form-group text-center">
 							<input type="submit" class="btn btn-primary timeout" name="list" value="{tr}Find{/tr}" />
 						</div>
@@ -351,7 +101,7 @@
 			{if isset($result) && $result|@count != '0'}
 				<h4>{tr}Select and apply profile <small>Click on a configuration profile name below to review it and apply it on your site</small>{/tr}</h4>
 				<div class="table-responsive">
-					<table class="table">
+					<table class="table table-condensed table-hover table-striped">
 						<tr>
 							<th>{tr}Profile name{/tr}</th>
 							<th>{tr}Repository{/tr}</th>
@@ -365,7 +115,7 @@
 									{assign var="show_details_for_domain" value=$profile.domain|escape}
 									<td>{$profile.name|escape}: {tr}See profile info below (may take a few seconds to load){/tr}.</td>
 								{else}
-									<td><a href="javascript:showDetails( 'profile-{$k}', '{$profile.domain|escape}', '{$profile.name|escape}' )">{$profile.name|escape}</a>{if $profile.installed} <em>{tr}applied{/tr}</em>{/if}</td>
+									<td><a href="javascript:$.profilesShowDetails( '{$baseURI}', 'profile-{$k}', '{$profile.domain|escape}', '{$profile.name|escape}' )">{$profile.name|escape}</a>{if $profile.installed} <em>{tr}applied{/tr}</em>{/if}</td>
 								{/if}
 
 								<td>{$profile.domain}</td>
@@ -377,7 +127,7 @@
 						{/if}
 					</table>
 					{if isset($show_details_for_profile_num) && $show_details_for_profile_num != ""}
-						{jq}showDetails('profile-{{$show_details_for_profile_num}}', '{{$show_details_for_domain}}', '{{$show_details_for_fullname}}');{/jq}
+						{jq}$.profilesShowDetails('profile-{{$show_details_for_profile_num}}', '{{$show_details_for_domain}}', '{{$show_details_for_fullname}}');{/jq}
 					{/if}
 				</div>
 			{/if}
@@ -468,18 +218,6 @@
 							</li>
 						{/foreach}
 					</ul>
-					{jq}
-						$("#select_all_prefs_to_export").click( function () {
-							$("input[name^=prefs_to_export]:visible,input[name^=modules_to_export]:visible").click();
-						});
-						$("#export_show_added").click( function () {
-							$(this)[0].form.submit();
-						});
-						$("#export_type").change(function(){
-							$(".profile_export_list").hide();
-							$("#" + $(this).val() + "_to_export_list").show();
-						});
-					{/jq}
 					<div class="text-center submit input_submit_container">
 						<input type="submit" class="btn btn-primary timeout" name="export" value="{tr}Export{/tr}" />
 					</div>
@@ -516,7 +254,7 @@
 								{icon name='status-closed' istyle='display:none' iclass='tips' ititle="{tr}Status{/tr}:{tr}Closed{/tr}"}
 							{/if}
 						</td>
-						<td><span id="profile-date-{$k}">{$entry.formatted}</span> <a href="javascript:refreshCache({$k})" title="{tr}Refresh{/tr}">{icon name="refresh" iclass='tips' ititle=":{tr}Refresh{/tr}"}</a></td>
+						<td><span id="profile-date-{$k}">{$entry.formatted}</span> <a href='javascript:$.profilesRefreshCache("{$baseURI}", "{$k}")' title="{tr}Refresh{/tr}">{icon name="refresh" iclass='tips' ititle=":{tr}Refresh{/tr}"}</a></td>
 					</tr>
 				{/foreach}
 			</table>
@@ -568,7 +306,7 @@
 {/tabset}
 
 {jq}
-	{{foreach item=k from=$oldSources}
-		refreshCache({$k});
+        {{foreach item=k from=$oldSources}
+                $.profilesRefreshCache("{$baseURI}", "{$k}");
 	{/foreach}}
 {/jq}

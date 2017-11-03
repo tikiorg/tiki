@@ -87,6 +87,10 @@ if ($access->ticketMatch()) {
 			if (($profile != null) && ($target = $profile->getInstructionPage())) {
 				$wikilib = TikiLib::lib('wiki');
 				$target = $wikilib->sefurl($target);
+				$profilefeedback = $installer->getFeedback();
+				if (count($profilefeedback) > 0) {
+					Feedback::note(['mes' => $profilefeedback, 'title' => tra('The following list of changes has been applied:')], 'session');
+				}
 				header('Location: ' . $target);
 				exit;
 			} else {
