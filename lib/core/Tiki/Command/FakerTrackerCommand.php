@@ -109,16 +109,12 @@ class FakerTrackerCommand extends Command
 
 		$fieldFakerMap = [];
 		foreach ($trackerFields as $field) {
-
 			if (isset($fieldFakerOverride[$field['fieldId']])) { // override by fieldId
 				$fakerForField = $fieldFakerOverride[$field['fieldId']];
-
 			} elseif (isset($fieldFakerOverride[$field['permName']])) { // override by permName
 				$fakerForField = $fieldFakerOverride[$field['permName']];
-
 			} elseif (isset($fakerFieldTypes[$field['type']])) { // default for field type
 				$fakerForField = $fakerFieldTypes[$field['type']];
-
 			} else { // if not defined, empty
 				$fakerForField = '';
 			}
@@ -145,7 +141,7 @@ class FakerTrackerCommand extends Command
 					if (! is_array($fakerArguments)) {
 						$fakerArguments = [$fakerArguments];
 					}
-					$value = call_user_func_array(array($faker, $fakerAction), $fakerArguments);
+					$value = call_user_func_array([$faker, $fakerAction], $fakerArguments);
 				} elseif (! empty($fieldFaker['faker'])) {
 					$fakerAction = $fieldFaker['faker'];
 					$value = $faker->$fakerAction;
@@ -168,7 +164,7 @@ class FakerTrackerCommand extends Command
 	 */
 	protected function mapTrackerItems()
 	{
-		$map = array(
+		$map = [
 			//'e' => '', // Category - lookup on the valid values for category
 			//'c' => '', // Checkbox - lookup on the valid values for the checkbox
 			'y' => 'country', // Country Selector (improvement if uses the list from Tiki directly)
@@ -219,7 +215,7 @@ class FakerTrackerCommand extends Command
 			//'p' => '', // User Preference - Not Supported
 			//'U' => '', // User Subscription
 			'W' => '', // Webservice - empty
-		);
+		];
 
 		return $map;
 	}
