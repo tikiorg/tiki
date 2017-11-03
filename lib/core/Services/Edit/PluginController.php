@@ -320,13 +320,10 @@ class Services_Edit_PluginController
 					$tikilib->get_ip_address()
 				);
 				Feedback::success(tr('Plugin %0 on page %1 successfully edited.', $plugin, $page), 'session');
-
-				break;
+				return [];
 			}
 		}
-
-		return [];
-
+		throw new Exception('Plugin edition failed');
 	}
 
 	/**
