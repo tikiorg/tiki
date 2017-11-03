@@ -1928,7 +1928,7 @@ class TrackerLib extends TikiLib
 
 			$value = isset($array["value"]) ? $array["value"] : null;
 
-			if ($array['type']=='p' && ($user == $trackersync_user || $tiki_p_admin_users == 'y')) {
+			if (isset($array['type']) && $array['type']=='p' && ($user == $trackersync_user || $tiki_p_admin_users == 'y')) {
 				if ($array['options_array'][0] == 'password') {
 					if (!empty($array['value']) && $prefs['change_password'] == 'y' && ($e = $userlib->check_password_policy($array['value'])) == '') {
 						$userlib->change_user_password($trackersync_user, $array['value']);
@@ -1955,7 +1955,7 @@ class TrackerLib extends TikiLib
 				$value = '';
 				$fil[$fieldId] = $value;
 				$this->modify_field($currentItemId, $array['fieldId'], $value);
-			} elseif ($array['type'] == 'k') { //page selector
+			} elseif (isset($array['type']) && $array['type'] == 'k') { //page selector
 				if ($array['value'] != '') {
 					$this->modify_field($currentItemId, $array['fieldId'], $value);
 					if ($itemId) {
@@ -1973,7 +1973,7 @@ class TrackerLib extends TikiLib
 					}
 				}
 			} else {
-				$is_date = in_array($array["type"], array('f', 'j'));
+				$is_date = isset($array['type']) ? in_array($array["type"], array('f', 'j')) : false;
 
 				if ($currentItemId || $array['type'] !== 'q') {	// autoincrement
 					$this->modify_field($currentItemId, $fieldId, $value);
@@ -4979,6 +4979,10 @@ class TrackerLib extends TikiLib
 	 */
 	public function get_field_handler($field, $item = array())
 	{
+		if (!isset($field['trackerId'])) {
+			return false;
+		}
+
 		$trackerId = (int) $field['trackerId'];
 		$definition = Tracker_Definition::get($trackerId);
 
@@ -5563,15 +5567,19 @@ class TrackerLib extends TikiLib
 		$cachelib = TikiLib::lib('cache');
 		$cachelib->invalidate('trackerItemLabel'.$itemId);
 
-		$fields = array_merge(array_keys($args['values']), array_keys($args['old_values']));
-		$fields = array_unique($fields);
+		if (isset($args['values']) && isset($args['old_values'])) {
+			$fields = array_merge(array_keys($args['values']), array_keys($args['old_values']));
+			$fields = array_unique($fields);
+		}
 
-		foreach ($fields as $fieldId) {
-			$old = isset($args['old_values'][$fieldId]) ? $args['old_values'][$fieldId] : null;
-			$new = isset($args['values'][$fieldId]) ? $args['values'][$fieldId] : null;
+		if (!empty($fields)) {
+			foreach ($fields as $fieldId) {
+				$old = isset($args['old_values'][$fieldId]) ? $args['old_values'][$fieldId] : null;
+				$new = isset($args['values'][$fieldId]) ? $args['values'][$fieldId] : null;
 
-			if ($old !== $new) {
-				$this->invalidate_field_cache($fieldId);
+				if ($old !== $new) {
+					$this->invalidate_field_cache($fieldId);
+				}
 			}
 		}
 	}
