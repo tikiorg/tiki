@@ -58,7 +58,7 @@ function module_login_box_info()
 			),
 			'groups' => array(
 				'name' => tra('Groups for switch user listing'),
-				'description' => tra('List of groupIds from which to show users in the switch user drop-down. Multiple groupIds are separated by "|" and users from all listed groups will be shown. Leave empty to show all users.'),
+				'description' => tra('List of group IDs from which to show users in the switch user drop-down. Multiple group IDs are separated by "|" and users from all listed groups will be shown. Leave empty to show all users.'),
 			),
 			'menu_id' => array(
 				'name' => tra('Menu ID'),
