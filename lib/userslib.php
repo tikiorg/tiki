@@ -2979,6 +2979,10 @@ class UsersLib extends TikiLib
 	 */
 	function get_group_users($group, $offset = 0, $max = -1, $what = 'login', $sort_mode = 'login_asc')
 	{
+		if (empty($group)){
+			return [];
+		}
+
 		$w = $what=='*'? 'uu.*, ug.`created`, ug.`expire` ': "uu.`$what`";
 
 		if (strpos($sort_mode, 'created_') !== false) {
