@@ -302,7 +302,9 @@ class Services_Edit_PluginController
 
 			if ($index === $count) {
 				// by using content of "~same~", it will not replace the body that is there
-				$content = ($content == "~same~" ? $match->getBody() : $content);
+				if ($content == "~same~") {
+					$content = $match->getBody();
+				}
 
 				if (! $params) {
 					$params = $match->getArguments();
