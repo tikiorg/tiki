@@ -1,0 +1,7 @@
+Putting any file here which has the same name as a template file in the root templates directory will make this file be used by Tiki instead of the file in the root templates directory.
+This helps you customise your templates without conflicts with the files you get from Tiki on upgrades.
+
+If you want to customize templates for a single theme or theme option, do it in themes/themename/templates/ or themes/themename/options/optionname/templates/
+
+After modifications in template files, you need to clear caches from Tiki or in command line:
+php console.php cache:clear
