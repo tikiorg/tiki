@@ -323,7 +323,7 @@ class Services_Edit_PluginController
 				return [];
 			}
 		}
-		throw new Exception('Plugin edition failed');
+		throw new Exception('Plugin edit failed');
 	}
 
 	/**
