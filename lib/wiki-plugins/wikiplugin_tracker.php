@@ -960,12 +960,12 @@ function wikiplugin_tracker($data, $params)
 					$fill_flds['data'][] = $tmp;
 					if (isset($fill_defaults[$k])) {
 						$fill_flds_defaults[] = $fill_defaults[$k];
-				} else {
+					} else {
 						$fill_flds_defaults[] = '';
 					}
 					$fieldsfillnames[] = $tmp['name'];
-						}
-					}
+				}
+			}
 			$fill_line_cant = count($fill_flds['data']);
 			if ($fieldsfillseparator == '') {
 				$fieldsfillseparator = '|';
@@ -984,7 +984,7 @@ function wikiplugin_tracker($data, $params)
 				foreach ($autosavefields as $i=>$f) {
 					if (!$ff = $trklib->get_field($f, $flds['data'])) {
 						continue;
-						}
+					}
 					if (preg_match('/categories\(([0-9]+)\)/', $autosavevalues[$i], $matches)) {
 						if (ctype_digit($matches[1]) && $matches[1] > 0) {
 							$filter = array('identifier'=>$matches[1], 'type'=>'descendants');
@@ -1151,6 +1151,8 @@ function wikiplugin_tracker($data, $params)
 									'ins_fields' => $ins_fields, 'itemId' => $itemId,
 									'ins_categs' => $ins_categs, 'newItemRate' => $newItemRate,
 									'skipUserCreation' => !empty($skipUserCreation) && $skipUserCreation == 'y',
+									'fieldsfill' => $fieldsfill, 'fieldsfillseparator' => $fieldsfillseparator, 'fill_line_cant' => $fill_line_cant,
+									'fill_flds' => $fill_flds, 'fill_flds_defaults' => $fill_flds_defaults,
 									);
 				//-- check if we are in a transaction
 				if (isset($transactionName)) {
@@ -1873,18 +1875,17 @@ function wikiplugin_tracker($data, $params)
 		}
 
 		if ( isset($params['fieldsfill']) && !empty($params['fieldsfill']) && empty($itemId) ) {
-			// $back.= '<tr><td><label for="ins_fill">' . tra("Create multiple items (one per line).") . '</label>';
-			$back.= '<div class="form-group"><label class="col-md-3" for="ins_fill">' . tra("Insert one item per line:") // <tr><td><label for="ins_fill">
+			$back.= '<div class="form-group"><label class="col-md-3 control-label" for="ins_fill">' . tra("Insert one item per line:") 
 				. '<br />'
 				. '<br />'
 				. '<br />'
 				. '</label>';
 			$back.= <<<FILL
-// </td><td>
+<div class="col-md-9 tracker_input_value" >
 <input type="hidden" value="" name="mode_wysiwyg"/>
 <input type="hidden" value="" name="mode_normal"/>
 <div class="edit-zone">
-<textarea id="ins_fill" class="wikiedit class="form-control" data-syntax="" data-codemirror="" onkeyup="" rows="15" name="ins_fill" >
+<textarea id="ins_fill" name="ins_fill" class="wikiedit form-control" data-syntax="" data-codemirror="" onkeyup="" rows="15" >
 </textarea>
 </div>
 <input type="hidden" value="n" name="wysiwyg"/>
@@ -1893,7 +1894,7 @@ FILL;
 			$back.= sprintf(tra('Each line is a list of %d field values separated with: %s'), $fill_line_cant, htmlspecialchars($fieldsfillseparator));
 			$back .= '</div><div name="ins_fill_desc2" class="trackerplugindesc" >' . htmlspecialchars(implode($fieldsfillseparator, $fieldsfillnames));
 			$back .= '</div>';
-		//	$back .= '</td></tr>';
+			$back .= '</div>';
 		}
 		if ( $prefs['feature_antibot'] == 'y' && (empty($user) || (!empty($user) && isset($_REQUEST['error']) && $_REQUEST['error'] == 'y')) ) {
 			$smarty->assign('showantibot', true);
@@ -2149,7 +2150,7 @@ function wikiplugin_tracker_save($trackerSavedState)
 			if (trim($fill_line) == '') {	// Ignore blank lines
 				continue;
 			}
-			$fill_line_item = explode($fieldsfillseparator, $fill_line, $fill_line_cant);	// Extra fields are merged with the last field. this avoids data loss and permits a last text field with commas
+			$fill_line_item = explode($fieldsfillseparator, $fill_line, $fill_line_cant);	// Extra fields are merged with the last field. this avoids data loss and permits a last text field with commas or whichever separator is chosen
 			$rid = $trklib->replace_item($trackerId, $itemId, $ins_fields, $status, $ins_categs);
 			for ($i=0;$i<$fill_line_cant;$i++) {
 				if ($fill_line_item[$i] != '') {
