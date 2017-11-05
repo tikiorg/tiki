@@ -10,19 +10,30 @@
  */
 class PdfGenerator
 {
+	const WEBKIT = 'webkit';
+	const WEASYPRINT = 'weasyprint';
+	const WEBSERVICE = 'webservice';
+	const MPDF = 'mpdf';
+
+	public $error;
+
 	private $mode;
 	private $location;
 
     /**
-     *
+     * @param string $printMode allow to force a given print mode
      */
-	function __construct()
+	function __construct($printMode = '')
 	{
 		global $prefs;
 		$this->mode = 'none';
 		$this->error = false;
 
-		if ( $prefs['print_pdf_from_url'] == 'webkit' ) {
+		if (empty($printMode)) {
+			$printMode = $prefs['print_pdf_from_url'];
+		}
+
+		if ( $printMode == self::WEBKIT ) {
 			$path = $prefs['print_pdf_webkit_path'];
 			if (!empty($path) && is_executable($path)) {
 				$this->mode = 'webkit';
@@ -34,7 +45,7 @@ class PdfGenerator
 					$this->error = tr('The PDF webkit path has not been set.');
 				}
 			}
-		} else if ($prefs['print_pdf_from_url'] == 'weasyprint') {
+		} else if ($printMode == self::WEASYPRINT) {
 			$path = $prefs['print_pdf_weasyprint_path'];
 			if (!empty($path) && is_executable($path)) {
 				$this->mode = 'weasyprint';
@@ -46,7 +57,7 @@ class PdfGenerator
 					$this->error = tr('The PDF WeasyPrint path has not been set.');
 				}
 			}
-		} elseif ( $prefs['print_pdf_from_url'] == 'webservice' ) {
+		} elseif ( $printMode == self::WEBSERVICE ) {
 			$path = $prefs['path'];
 			if ( ! empty($path) ) {
 				$this->mode = 'webservice';
@@ -58,7 +69,7 @@ class PdfGenerator
 					$this->error = tr('The PDF webservice URL has not been set.');
 				}
 			}
-		} elseif ( $prefs['print_pdf_from_url'] == 'mpdf' ) {
+		} elseif ( $printMode == self::MPDF ) {
 			self::setupMPDFPathConstants();
 			$path = $prefs['print_pdf_mpdf_path'];
 			if (class_exists('mPDF')){ // Autoload will take care of loading the mpdf file
@@ -293,6 +304,7 @@ class PdfGenerator
        $this->_getImages($html,$tempImgArr);
        
 	   $this->_parseHTML($html);
+
 	   self::setupMPDFPathConstants();
 
 	  	$mpdf=new mPDF('utf-8',$pdfSettings['pagesize'],'','',$pdfSettings['margin_left'],$pdfSettings['margin_right'] , $pdfSettings['margin_top'] , $pdfSettings['margin_bottom'] , $pdfSettings['margin_header'] , $pdfSettings['margin_footer'] ,$pdfSettings['orientation']);
@@ -452,7 +464,8 @@ class PdfGenerator
 			}
 		//checking preferences
 		$pdfSettings['print_pdf_mpdf_printfriendly']=$prefs['print_pdf_mpdf_printfriendly']!=''?$prefs['print_pdf_mpdf_printfriendly']:'';
-		$pdfSettings['orientation']=$prefs['print_pdf_mpdf_orientation']!=''?$prefs['print_pdf_mpdf_orientation']:'P';
+		$orientation = !empty($params['orientation']) ? $params['orientation'] : $prefs['print_pdf_mpdf_orientation'];
+		$pdfSettings['orientation']=$orientation!=''?$orientation:'P';
 		$pdfSettings['pagesize']=$prefs['print_pdf_mpdf_pagesize']!=''?$prefs['print_pdf_mpdf_pagesize']:'Letter';
 		//custom size needs to be passed for Tabloid
 		if($prefs['print_pdf_mpdf_size']=="Tabloid")
@@ -808,6 +821,25 @@ $(".convert-mailto").removeClass("convert-mailto").each(function () {
 			return str_replace("anchor","a",$content);
 			
 		}// End of processHyperlinks
+
+	/**
+	 * Returns the current error
+	 * @return string
+	 */
+	public function getError()
+	{
+		return $this->error;
+	}
+
+	/**
+	 * Returns the current mode
+	 * @return string|bool
+	 */
+	public function getMode()
+	{
+		return $this->mode;
+	}
+
 } //END OF PDF CLASS
 
 
