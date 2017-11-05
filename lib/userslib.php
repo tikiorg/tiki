@@ -2979,7 +2979,7 @@ class UsersLib extends TikiLib
 	 */
 	function get_group_users($group, $offset = 0, $max = -1, $what = 'login', $sort_mode = 'login_asc')
 	{
-		if (empty($group)){
+		if (empty($group)) {
 			return [];
 		}
 
