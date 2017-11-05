@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "95d366ab8a3d3f5cbe984e7a57347e5e",
+    "content-hash": "b0e5d21894817bb04a7586b225889e97",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -758,47 +758,6 @@
                 "twitter"
             ],
             "time": "2015-12-01T23:35:57+00:00"
-        },
-        {
-            "name": "dompdf/dompdf",
-            "version": "v0.6.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dompdf/dompdf.git",
-                "reference": "cc06008f75262510ee135b8cbb14e333a309f651"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/dompdf/dompdf/dompdf-dompdf-cc06008f75262510ee135b8cbb14e333a309f651-zip-c632c0.zip",
-                "reference": "cc06008f75262510ee135b8cbb14e333a309f651",
-                "shasum": "5fe1b1ff62efe19c0bfd7d0d4eb5a2b74641c4f5"
-            },
-            "require": {
-                "phenx/php-font-lib": "0.2.*"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "include/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Ménager",
-                    "email": "fabien.menager@gmail.com"
-                },
-                {
-                    "name": "Brian Sweeney",
-                    "email": "eclecticgeek@gmail.com"
-                }
-            ],
-            "description": "DOMPDF is a CSS 2.1 compliant HTML to PDF converter",
-            "homepage": "https://github.com/dompdf/dompdf",
-            "time": "2015-12-07T04:07:13+00:00"
         },
         {
             "name": "evert/sitemap-php",
@@ -2589,40 +2548,6 @@
             "description": "Methods to work with XML documents",
             "homepage": "http://pear.php.net/package/XML_Util",
             "time": "2017-06-28T19:21:19+00:00"
-        },
-        {
-            "name": "phenx/php-font-lib",
-            "version": "0.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/PhenX/php-font-lib.git",
-                "reference": "c30c7fc00a6b0d863e9bb4c5d5dd015298b2dc82"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/phenx/php-font-lib/phenx-php-font-lib-c30c7fc00a6b0d863e9bb4c5d5dd015298b2dc82-zip-44e847.zip",
-                "reference": "c30c7fc00a6b0d863e9bb4c5d5dd015298b2dc82",
-                "shasum": "a33642fbc768ec03bcb338704957e459e1a81701"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "classes/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Ménager",
-                    "email": "fabien.menager@gmail.com"
-                }
-            ],
-            "description": "A library to read, parse, export and make subsets of different types of font files.",
-            "homepage": "https://github.com/PhenX/php-font-lib",
-            "time": "2014-02-01T15:22:28+00:00"
         },
         {
             "name": "phpseclib/phpseclib",
@@ -5590,7 +5515,7 @@
                 "testing",
                 "unit"
             ],
-            "time": "2016-03-14T11:52:02+00:00"
+            "time": "2016-03-14 11:52:02"
         },
         {
             "name": "doctrine/instantiator",

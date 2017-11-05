@@ -39,31 +39,35 @@ if (isset($_REQUEST['pdf'])) {
 
 	$_POST["html"] = urldecode($_POST["html"]);
 
-	if ( isset( $_POST["html"] ) ) {
+	if (isset($_POST["html"])) {
 
-		require_once 'lib/pdflib.php';
-		PdfGenerator::setupMPDFPathConstants(); // reuse mPDF settings
-		if (class_exists('mPDF')) { // use mPDF if available
-			$orientation =  isset($_REQUEST['landscape']) ? "L" : "P";
-			$mpdf = new mPDF(null, "letter-" . $orientation);
-			$mpdf->WriteHTML(preg_replace('/%u([a-fA-F0-9]{4})/', '&#x\\1;',$_POST["html"]));
-			$mpdf->Output();
-			exit(0);
+		$generator = new PdfGenerator(PdfGenerator::MPDF);
+		if (! empty($generator->getError())) {
+			Feedback::error(
+				tr('Exporting slideshow as PDF requires a working installation of mPDF.')
+				. "<br \>"
+				. tr('Export to PDF error: %0', $generator->getError()),
+				'session'
+			);
+			$access = Tikilib::lib('access');
+			$access->redirect(str_replace('tiki-slideshow.php?', 'tiki-index.php?', $_SERVER['HTTP_REFERER']));
 		}
 
-		define("DOMPDF_ENABLE_REMOTE", true);
-		define('DOMPDF_ENABLE_AUTOLOAD', false);
+		$params = [
+			'orientation' => isset($_REQUEST['landscape']) ? 'L' : 'P',
+		];
+		$filename = TikiLib::lib('tiki')->remove_non_word_characters_and_accents($_REQUEST['page']);
 
-		require_once("vendor_bundled/vendor/dompdf/dompdf/dompdf_config.inc.php");
+		$pdf = $generator->getPdf($filename, $params, preg_replace('/%u([a-fA-F0-9]{4})/', '&#x\\1;', $_POST['html']));
 
-		// fallback to DOMPDF
-		$dompdf = new DOMPDF();
-
-		$dompdf->load_html($_POST["html"]);
-		$dompdf->set_paper("letter", (isset($_REQUEST['landscape']) ? "landscape" : "portrait"));
-		$dompdf->render();
-
-		$dompdf->stream("dompdf_out.pdf", array("Attachment" => false));
+		$length = strlen($pdf);
+		header('Cache-Control: private, must-revalidate');
+		header('Pragma: private');
+		header('Content-disposition: inline; filename="' . $filename . '.pdf"');
+		header("Content-Type: application/pdf");
+		header("Content-Transfer-Encoding: binary");
+		header('Content-Length: ' . $length);
+		echo $pdf;
 
 		exit(0);
 	}
