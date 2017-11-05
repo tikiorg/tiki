@@ -216,7 +216,6 @@ class CleanVendors
 				'js/widgets/widget-resizable.js',       //in jquery.tablesorter.combined.js
 				'js/widgets/widget-saveSort.js',        //in jquery.tablesorter.combined.js
 				'js/widgets/widget-scroller.js',
-				'js/widgets/widget-sort2Hash.js',
 				'js/widgets/widget-sortTbodies.js',
 				'js/widgets/widget-staticRow.js',
 				'js/widgets/widget-stickyHeaders.js',   //in jquery.tablesorter.combined.js

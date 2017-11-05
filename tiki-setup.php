@@ -510,6 +510,7 @@ if ( $prefs['feature_jquery_tablesorter'] == 'y' ) {
 	$headerlib->add_jsfile('vendor_bundled/vendor/mottie/tablesorter/js/widgets/widget-columnSelector.js');
 	$headerlib->add_jsfile('vendor_bundled/vendor/mottie/tablesorter/js/parsers/parser-input-select.js');
 	$headerlib->add_jsfile('vendor_bundled/vendor/mottie/tablesorter/js/widgets/widget-math.js');
+	$headerlib->add_jsfile('vendor_bundled/vendor/mottie/tablesorter/js/widgets/widget-sort2Hash.js');
 	$headerlib->add_jsfile('lib/jquery_tiki/tablesorter.js');
 }
 
