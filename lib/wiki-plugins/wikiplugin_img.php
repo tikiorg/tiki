@@ -237,7 +237,7 @@ function wikiplugin_img_info()
 				'required' => false,
 				'name' => tra('Featured Image'),
 				'filter' => 'alpha',
-				'description' => tr('Set the image as a featured image which will be presented as the images to use for social network sites etc.'),
+				'description' => tr('Set the image to be used for a thumbnail image on referencing social network sites or for other special purpose'),
 				'since' => '18.0',
 				'doctype' => '????',
 				'advanced' => false,
