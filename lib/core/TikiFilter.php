@@ -56,7 +56,7 @@ class TikiFilter
 				return new Zend\Filter\PregReplace('/[^\p{N}:]*/', '');
 			case 'digitscommas':
 				// Removes everything except digits and commas, e.g., for comma-separated ID numbers.
-				// Only characters matched, not patterns - eg 'x75,,xx44,' will return 'x75,,44,'
+				// Only characters matched, not patterns - eg 'x75,,xx44,' will return '75,,44,'
 				return new Zend\Filter\PregReplace('/[^\p{N},]*/', '');
 			case 'digitspipes':
 				// Removes everything except digits and pipes, e.g., for pipe-separated ID numbers.
