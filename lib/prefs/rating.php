@@ -95,7 +95,7 @@ function prefs_rating_list()
 			'default' => "0,1,2,3,4",
 		),
 		'rating_allow_multi_votes' => array(
-			'name' => tra('Multiple votes per users'),
+			'name' => tra('Multiple votes per user'),
 			'description' => tra('Allow the user to cast multiple votes for the same object.'),
 			'type' => 'flag',
 			'options' => array(
