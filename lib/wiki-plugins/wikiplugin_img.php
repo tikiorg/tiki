@@ -1139,9 +1139,13 @@ function wikiplugin_img( $data, $params )
 		if ($sizes) {
 			$replimg .= 'sizes="' . $sizes . '" ';
 		}
-		if ($imgdata['responsive'] == 'y') {
-			$imgdata['class'] .= ' regImage img-responsive pluginImg' . $imgdata['fileId'];
-		} else {
+		if ($imgdata['responsive'] == 'y' && $imgdata['featured'] == 'y') {
+            $imgdata['class'] .= ' regImage img-responsive featured pluginImg' . $imgdata['fileId'];
+        } elseif ($imgdata['responsive'] == 'y') {
+            $imgdata['class'] .= ' regImage img-responsive pluginImg' . $imgdata['fileId'];
+        } elseif ($imgdata['featured'] == 'y') {
+            $imgdata['class'] .= ' regImage featured pluginImg' . $imgdata['fileId'];
+        } else {
 			$imgdata['class'] .= ' regImage pluginImg' . $imgdata['fileId'];
 		}
 		$imgdata['class'] = trim($imgdata['class']);
