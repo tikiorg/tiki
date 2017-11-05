@@ -458,7 +458,7 @@
 											<label for="dbEnginge">{tr}Select database engine{/tr}</label>
 											<select name="useInnoDB" id="dbEnginge" class="form-control">
 												<option value="0">{tr}MyISAM{/tr}</option>
-												<option value="1">{tr}InnoDB{/tr}</option>
+												<option selected="selected" value="1">{tr}InnoDB{/tr}</option>
 											</select>
 										{else}
 											<input type="hidden" name="useInnoDB" value="0">

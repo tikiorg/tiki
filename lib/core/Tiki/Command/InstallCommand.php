@@ -19,12 +19,19 @@ class InstallCommand extends Command
 	{
 		$this
 			->setName('database:install')
-			->setDescription('Clean Tiki install')
+			->setDescription(tr('Clean Tiki install'))
 			->addOption(
 				'force',
 				null,
 				InputOption::VALUE_NONE,
-				'Force installation. Overwrite any current database.'
+				tr('Force installation. Overwrite any current database.')
+			)
+			->addOption(
+				'useInnoDB',
+				i,
+				InputOption::VALUE_REQUIRED,
+				tr('Use InnoDb as storage engine: 1 - InnoDb, 0 - MyISAM.'),
+				1
 			);
 	}
 
@@ -34,16 +41,21 @@ class InstallCommand extends Command
 		$installer = new \Installer;
 		$installed = $installer->tableExists('users_users');
 
+		$optionUseInnoDB = $input->getOption('useInnoDB');
+		if ($optionUseInnoDB !== null) {
+			$installer->useInnoDB = ($optionUseInnoDB == 1) ? true : false;
+		}
+
 		if (! $installed || $force) {
 			$installer->cleanInstall();
-			$output->writeln('Installation completed.');
-			$output->writeln('<info>Queries executed successfully: ' . count($installer->queries['successful']) . '</info>');
+			$output->writeln(tr('Installation completed.'));
+			$output->writeln('<info>' . tr('Queries executed successfully: %0', count($installer->queries['successful'])) . '</info>');
 
-			if ( count($installer->queries['failed']) ) {
-				foreach ( $installer->queries['failed'] as $key => $error ) {
-					list( $query, $message, $patch ) = $error;
+			if (count($installer->queries['failed'])) {
+				foreach ($installer->queries['failed'] as $key => $error) {
+					list($query, $message, $patch) = $error;
 
-					$output->writeln("<error>Error $key in $patch\n\t$query\n\t$message</error>");
+					$output->writeln("<error>" . tr('Error %0 in', $key) . " $patch\n\t$query\n\t$message</error>");
 				}
 			}
 
@@ -53,7 +65,7 @@ class InstallCommand extends Command
 			\TikiLib::lib('unifiedsearch')->rebuild();
 			\TikiLib::lib('prefs')->rebuildIndex();
 		} else {
-			$output->writeln('<error>Database already exists.</error>');
+			$output->writeln('<error>' . tr('Database already exists.') . '</error>');
 		}
 	}
 }

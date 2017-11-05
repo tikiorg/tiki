@@ -27,7 +27,7 @@ class Installer extends TikiDb_Bridge
 
 	public $queries = array('successful' => [], 'failed' => []);
 
-	public $useInnoDB = false;
+	public $useInnoDB = true;
 
     /**
      * TODO: make private to enforce Singleton

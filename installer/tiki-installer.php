@@ -947,11 +947,13 @@ if (
 		}
 	}
 }
-// Mark that InnoDB is to be used, if selected
+// Mark what db type to use if selected
 if (isset($_POST['useInnoDB'])) {
-	if (intval($_POST['useInnoDB']) > 0) {
-		if ($installer != null) {
+	if ($installer != null) {
+		if (intval($_POST['useInnoDB']) > 0) {
 			$installer->useInnoDB = true;
+		} else {
+			$installer->useInnoDB = false;
 		}
 	}
 }
