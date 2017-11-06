@@ -16,6 +16,7 @@ function prefs_sitemap_list()
 			'default' => 'n',
 			'since' => '18',
 			'tags' => array('advanced'),
+			'admin' => 'tiki-admin_sitemap.php',
 		),
 	);
 }
