@@ -88,7 +88,7 @@ abstract class AbstractType
 		foreach ($entries['data'] as $entry) {
 
 			$url = sprintf($urlTemplate, urlencode($entry[$idField]));
-			if (function_exists('filter_our_sefurl')) {
+			if (function_exists('filter_out_sefurl')) {
 				$url = filter_out_sefurl($url, $entryType, (empty($titleField) || empty($entryType[$titleField])) ? '' : $entry[$titleField]);
 			}
 
