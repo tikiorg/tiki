@@ -222,7 +222,11 @@ class SvnUpCommand extends Command{
 		$raw = shell_exec('svn info 2>&1');
 		$output->writeln($raw,OutputInterface::VERBOSITY_DEBUG);
 		preg_match('/Revision: (\d+)/',$raw,$startRev);
-		$startRev = $startRev[1];
+		if ($startRev) {
+			$startRev = $startRev[1];
+		} else {
+			$startRev = ' unknown';
+		}
 
 		// Set this before, so if 'abort' is used, it can be chagned to a valid option later
 		$svnConflict = $input->getOption('conflict');
@@ -287,7 +291,11 @@ class SvnUpCommand extends Command{
 		$raw = shell_exec('svn info  2>&1');
 		$output->writeln($raw,OutputInterface::VERBOSITY_DEBUG);
 		preg_match('/Revision: (\d+)/',$raw,$endRev);
-		$endRev = $endRev[1];
+		if ($endRev) {
+			$endRev = $endRev[1];
+		} else {
+			$endRev = ' unknown';
+		}
 
 		if (!$input->getOption('no-db')) {
 			$progress->setMessage('Clearing all caches');
