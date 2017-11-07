@@ -30,9 +30,9 @@
 		<table id="plugins_help_table" width="95%" class="formcolor">
 			<tr><th>{tr}Description{/tr}</th></tr>
 
-			{section name=i loop=$plugins} {* To modify the template of below: tiki-plugin_help.tpl *}
+			{section name=i loop=$plugins}
 				<tr>
-					<td>
+					<td>{* $plugins[i].help is generated using the tiki-plugin_help.tpl template *}
 						{if $plugins[i].help eq ''}
 							{tr}No description available{/tr}
 						{else}
