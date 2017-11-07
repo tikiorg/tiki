@@ -576,13 +576,13 @@ if ($s != 'files') {
 	$php_properties['session.save_handler'] = array(
 		'fitness' => tra('bad'),
 		'setting' => $s,
-		'message' => tra('The session.save_handler must be set to \'files\'.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
+		'message' => tra('The session.save_handler should be set to \'files\'.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 } else {
 	$php_properties['session.save_handler'] = array(
 		'fitness' => tra('good'),
 		'setting' => $s,
-		'message' => tra('Correctly set! The default setting of \'files\' is needed for Tiki.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
+		'message' => tra('Well set! The default setting of \'files\' is recommended for Tiki.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
 }
 
