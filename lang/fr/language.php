@@ -14946,7 +14946,7 @@ $lang = array(
 "Note that plugin arguments can be enclosed with double quotes (&quot;); this allows them to contain , or = or &gt;" => "Notez que les arguments des plugiciels peuvent être encadrés par des guillemets (\") ; Ceci leur permet de comporter des virgules (,), des signes comme \"égal\" (=) ou \"supérieur à\" (>)",
 "More help here" => "Plus d'aide ici",
 "Wiki plugins extend the function of wiki syntax with more specialized commands" => "Les plugiciels Wiki étendent la syntaxe wiki avec des commandes plus spécialisées",
-"Activate/deactivate plugins" => "Activater/désactiver des plugiciels",
+"Activate/deactivate plugins" => "Activer/désactiver des plugiciels",
 "No description available" => "Aucune description disponible",
 "For more information, please see" => "Pour plus d'onformations, merci de voir",
 "WYSIWYG Editor" => "Editeur Wysiwyg",
