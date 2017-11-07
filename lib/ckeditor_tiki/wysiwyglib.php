@@ -17,6 +17,9 @@ class WYSIWYGLib
 	{
 		global $tikiroot, $prefs, $user;
 
+		if ($prefs['javascript_enabled'] != 'y') {
+			return;
+		}
 		// Validate user permissions
 		$tikilib = TikiLib::lib('tiki');
 		if (!$tikilib->user_has_perm_on_object($user, $pageName, 'wiki page', 'edit')) {
@@ -68,12 +71,14 @@ class WYSIWYGLib
 
 		$smarty->loadPlugin('smarty_function_toolbars');
 		$cktools = smarty_function_toolbars($params, $smarty);
-		$cktools[0][count($cktools[0]) - 1][] = 'inlinesave';
-		$cktools[0][count($cktools[0]) - 1][] = 'inlinecancel';
-		$cktools = json_encode($cktools);
-		$cktools = substr($cktools, 1, strlen($cktools) - 2); // remove surrouding [ & ]
-		$cktools = str_replace(']],[[', '],"/",[', $cktools); // add new row chars - done here so as not to break existing f/ck
-		require_once('lib/toolbars/toolbarslib.php');
+		if ($cktools) {
+			$cktools[0][count($cktools[0]) - 1][] = 'inlinesave';
+			$cktools[0][count($cktools[0]) - 1][] = 'inlinecancel';
+			$cktools = json_encode($cktools);
+			$cktools = substr($cktools, 1, strlen($cktools) - 2); // remove surrouding [ & ]
+			$cktools = str_replace(']],[[', '],"/",[', $cktools); // add new row chars - done here so as not to break existing f/ck
+			require_once('lib/toolbars/toolbarslib.php');
+		}
 		$ckeformattags = ToolbarCombos::getFormatTags($info['is_html'] ? 'html' : 'wiki');
 
 
