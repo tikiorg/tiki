@@ -63,7 +63,7 @@ function smarty_function_menu($params, $smarty)
 	$smarty->assign('menu_channels', $channels['data']);
 	$smarty->assign('menu_info', $menu_info);
 
-	if (isset($params['bootstrap']) && $params['bootstrap'] !== 'n') {
+	if (isset($params['bootstrap']) && $params['bootstrap'] !== 'n' && $prefs['javascript_enabled'] === 'y') {
 		$structured = array();
 		$activeSection = null;
 		foreach ($channels['data'] as $element) {
