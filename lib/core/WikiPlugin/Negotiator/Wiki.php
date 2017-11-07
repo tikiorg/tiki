@@ -395,7 +395,6 @@ class WikiPlugin_Negotiator_Wiki
 	static public function getList( $includeReal = true, $includeAlias = true )
 	{
 		$real = array();
-		$alias = array();
 
 		foreach ( glob('lib/wiki-plugins/wikiplugin_*.php') as $file ) {
 			$base = basename($file);
@@ -411,7 +410,7 @@ class WikiPlugin_Negotiator_Wiki
 		} elseif ( $includeAlias ) {
 			$plugins = WikiPlugin_Negotiator_Wiki_Alias::getList();
 		} else {
-			$plugins = array();
+			$plugins = array(); // Should probably throw an exception
 		}
 		$plugins = array_filter($plugins);
 		sort($plugins);
