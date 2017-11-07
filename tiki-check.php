@@ -574,7 +574,7 @@ if ($s >= 160 * 1024 * 1024) {
 $s = ini_get('session.save_handler');
 if ($s != 'files') {
 	$php_properties['session.save_handler'] = array(
-		'fitness' => tra('bad'),
+		'fitness' => tra('ugly'),
 		'setting' => $s,
 		'message' => tra('The session.save_handler should be set to \'files\'.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 	);
