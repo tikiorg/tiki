@@ -14948,7 +14948,7 @@ $lang = array(
 "Wiki plugins extend the function of wiki syntax with more specialized commands" => "Les plugiciels Wiki étendent la syntaxe wiki avec des commandes plus spécialisées",
 "Activate/deactivate plugins" => "Activer/désactiver des plugiciels",
 "No description available" => "Aucune description disponible",
-"For more information, please see" => "Pour plus d'onformations, merci de voir",
+"For more information, please see" => "Pour plus d'information, voir",
 "WYSIWYG Editor" => "Editeur Wysiwyg",
 "More help on WYSIWYG editing" => "Davantage d'aide sur l'édition en wysiwyg",
 // "The WYSIWYG editor in Tiki is <a href=\"http://ckeditor.com\">CKEditor</a>" => "The WYSIWYG editor in Tiki is <a href=\"http://ckeditor.com\">CKEditor</a>",
