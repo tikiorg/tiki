@@ -55,6 +55,14 @@ $_SERVER['SCRIPT_NAME'] = str_replace($unallowed_uri_chars, $unallowed_uri_chars
 // Note: need to substitute \ for / for Windows.
 $tikiroot = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
 
+// remove beginning dot if it is a relative path on the filesystem
+if (php_sapi_name() == 'cli') {
+	$tikiroot = preg_replace('/^\.\//', '/', $tikiroot);
+	if ($tikiroot == '.') {
+		$tikiroot = '';
+	}
+}
+
 if ($dir_level > 0) {
 	$tikiroot = preg_replace('#(/[^/]+){'.$dir_level.'}$#', '', $tikiroot);
 	chdir($tikipath);
