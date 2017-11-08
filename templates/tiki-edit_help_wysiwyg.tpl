@@ -14,7 +14,7 @@
 
 <hr>
 <p>
-	{icon name="star"} {tr}The WYSIWYG editor in Tiki is <a href="http://ckeditor.com">CKEditor</a>{/tr}
+	{icon name="star"} {tr}The WYSIWYG editor in Tiki is <a href="http://ckeditor.com">CKEditor</a>.{/tr}
 </p>
 <p>
 	{tr}To switch modes between WYSIWYG and Wiki edit modes click the {icon name="pencil_go"} button on the toolbar.{/tr}
@@ -39,7 +39,7 @@
 			<table align="center" width="80%">
 				<tr><td>
 					<div class='cbox ' style=' background:#fffff0'><div class='cbox-data' style=" background:#fffff0">
-						{tr}This is the text in the box which is justified; the box has a cream background, takes 80% of the screen width and is centred.{/tr}
+						{tr}This is text in a box which is justified. The box has a cream background, takes 80% of the window width and is centered.{/tr}
 					</div></div>
 				</td></tr>
 			</table>
