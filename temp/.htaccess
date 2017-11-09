@@ -16,6 +16,42 @@
 	  allow from all
 	</IfModule>
 </FilesMatch>
+<FilesMatch "\.html$">
+	<IfModule mod_authz_core.c>
+		Require all granted
+	</IfModule>
+	<IfModule !mod_authz_core.c>
+	  order deny,allow
+	  allow from all
+	</IfModule>
+</FilesMatch>
+<FilesMatch "\.js$">
+	<IfModule mod_authz_core.c>
+		Require all granted
+	</IfModule>
+	<IfModule !mod_authz_core.c>
+	  order deny,allow
+	  allow from all
+	</IfModule>
+</FilesMatch>
+<FilesMatch "\.css$">
+	<IfModule mod_authz_core.c>
+		Require all granted
+	</IfModule>
+	<IfModule !mod_authz_core.c>
+	  order deny,allow
+	  allow from all
+	</IfModule>
+</FilesMatch>
+<FilesMatch "\.pdf$">
+	<IfModule mod_authz_core.c>
+		Require all granted
+	</IfModule>
+	<IfModule !mod_authz_core.c>
+	  order deny,allow
+	  allow from all
+	</IfModule>
+</FilesMatch>
 
 # -- Prevent Directory Browsing -- #
 Options -Indexes
