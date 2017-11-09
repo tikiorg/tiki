@@ -39,7 +39,7 @@ function prefs_wysiwyg_list()
 		// TODO: wysiwyg_wiki_semi_parsed depends on wysiwyg_wiki_parsed. These 2 booleans should be replaced by a select with 3 options, but we would need to indicate that one of the options is experimental. Chealer
 		'wysiwyg_wiki_parsed' => array(
 			'name' => tra("Support Tiki's \"wiki syntax\""),
-			'description' => tra('This allows a mixture of wiki syntax and HTML in the code of a text field in WYSIWYG mode. All wiki syntax is parsed.'),
+			'description' => tra('This allows a mixture of wiki syntax and HTML in the code of a text field in WYSIWYG mode.'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_wysiwyg',
@@ -58,6 +58,16 @@ function prefs_wysiwyg_list()
 			'tags' => array('experimental'),
 		),
 		
+		'wysiwyg_htmltowiki' => array(
+			'name' => tra('Use Wiki syntax in WYSIWYG'),
+			'description' => tra('Allow keeping wiki syntax with the WYSIWYG editor. Sometimes referred to as a "visual wiki".'),
+			'hint' => tra('Using wiki syntax in WYSIWYG mode will limit toolbar to wiki tools'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_wysiwyg',
+			),
+			'default' => 'y',
+		),
 		'wysiwyg_toolbar_skin' => array(
 			'name' => tra('Full WYSIWYG editor skin'),
 			'type' => 'list',
@@ -69,16 +79,6 @@ function prefs_wysiwyg_list()
 				'office2013' => tra('Office 2013'),
 			),
 			'default' => 'moono',
-		),
-		'wysiwyg_htmltowiki' => array(
-			'name' => tra('Use Wiki syntax in WYSIWYG'),
-			'description' => tra('Allow keeping wiki syntax with the WYSIWYG editor. Sometimes referred to as a "visual wiki".'),
-			'hint' => tra('Using wiki syntax in WYSIWYG mode will limit toolbar to wiki tools'),
-			'type' => 'flag',
-			'dependencies' => array(
-				'feature_wysiwyg',
-			),
-			'default' => 'y',
 		),
 		'wysiwyg_fonts' => array(
 			'name' => tra('Font names'),
