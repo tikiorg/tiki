@@ -399,8 +399,9 @@ function wikiplugin_rr($data, $params) {
 	$style = '';
 	$ws = '';
 
+	$trklib = TikiLib::lib('trk');
+
 	if (isset($_REQUEST['itemId'])) {
-		global $trklib; require_once('lib/trackers/trackerlib.php');
 		$atts = $trklib->list_item_attachments($_REQUEST['itemId'], 0, -1, 'created_desc', '');
 		if (!empty($atts['data'][0]['attId'])) {
 			$params['attId'] = $atts['data'][0]['attId'];
@@ -410,7 +411,6 @@ function wikiplugin_rr($data, $params) {
 	}
 
 	if (isset($_REQUEST['itemId'])) {
-		global $trklib; require_once('lib/trackers/trackerlib.php');
 
 		// This fetches the whole row from the mysql tables for that tracker item
 		$item_info = $trklib->get_item_info($_REQUEST['itemId']);
@@ -536,7 +536,6 @@ function wikiplugin_rr($data, $params) {
 	$r_html = $r_dir . DIRECTORY_SEPARATOR . $userinfilename . $sha1 . ".html";
 
 	if(isset($params["attId"]) ) {
-		global $trklib; require_once('lib/trackers/trackerlib.php');
 
 		$info = $trklib->get_item_attachment($params["attId"]);
 
