@@ -1,18 +1,20 @@
 <?php
+// (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id: wikiplugin_rr.php 59285 2016-07-27 11:58:36Z xavidp $
+// 
+// Initial inspiration from the R Extension for Mediawiki (2006- Sigbert Klinke (sigbert@wiwi.hu-berlin.de), Markus Cozowicz, Michael Cassin)
+// Fully rewritten by the Tiki community for LGPL licencing compliance
+//
+
 // Parses R code (r-project.org) and shows the output in a wiki page.
 // Corresponding author: Xavier de Pedro. <xavier.depedro (a) vhir.org> 
 // Contributors: Rodrigo Sampaio, Lukáš Mašek, Louis-Philippe Huberdau, Sylvie Greverend, Jean-Marc Libs, Robert Plummer
 // Usage:
 // {R()}R code{R}. See documentation: https://doc.tiki.org/PluginR 
-//	
-// $Id: wikiplugin_rr.php 59285 2016-07-27 11:58:36Z xavidp $
-/* 
-From the R Extension for Mediawiki
-(C) 2006- Sigbert Klinke (sigbert@wiwi.hu-berlin.de), Markus Cozowicz, Michael Cassin
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA 
-*/
+//
 
 function wikiplugin_rr_info() {
 	return array(
