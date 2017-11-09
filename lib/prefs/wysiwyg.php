@@ -81,8 +81,8 @@ function prefs_wysiwyg_list()
 			'default' => 'moono',
 		),
 		'wysiwyg_fonts' => array(
-			'name' => tra('Font names'),
-			'description' => tra('List of font names separated by;'),
+			'name' => tra('Typefaces'),
+			'description' => tra('List of font names separated by semi-colons (";")'),
 			'type' => 'textarea',
 			'size' => '3',
 			'default' => 'sans serif;serif;monospace;Arial;Century Gothic;Comic Sans MS;Courier New;Tahoma;Times New Roman;Verdana',
