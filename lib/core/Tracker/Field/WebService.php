@@ -70,7 +70,7 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 
 	function renderInput($context = array())
 	{
-		$this->renderOutput($context);	// read only
+		return '<div class="text-muted">' . tr('Read only') . '</div>';
 	}
 
 	function renderOutput($context = array())
@@ -95,13 +95,15 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 		}
 
 		$oldValue = $this->getValue();
-		if (is_string($oldValue)) {
-			$oldData = json_decode($oldValue, true);
+		$decoded = json_decode($oldValue, true);
+		if ($decoded !== null) {
+			$oldData = $decoded;
 		} else {
 			$oldData = [];
 		}
+
 		$cacheSeconds = $this->getOption('cacheSeconds');
-		$lastRefreshed = empty($oldData) ? 0 : strtotime($oldData['tiki_updated']);
+		$lastRefreshed = empty($oldData['tiki_updated']) ? 0 : strtotime($oldData['tiki_updated']);
 		unset($oldData['tiki_updated']);
 		$itemId = 0;	// itemId once saved after updating data
 
@@ -252,7 +254,7 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 				if ($newData != $oldData) {
 
 					$thisField = $definition->getField($this->getConfiguration('fieldId'));
-					$thisField['value']['tiki_updated'] = gmdate('c');
+					$newData['tiki_updated'] = gmdate('c');
 					$thisField['value'] = json_encode($newData);
 
 					$itemId = TikiLib::lib('trk')->replace_item(
