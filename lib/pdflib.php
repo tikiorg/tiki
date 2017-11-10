@@ -353,20 +353,6 @@ class PdfGenerator
 		}
 		
 		$pdfPages=$this->getPDFPages($html,$pdfSettings);
-		$ind=1;
-		foreach($pdfPages as $pdfPage) {
-			$bgColor='';$backgroundImage='';
-			$pdfPage['orientation']=="L"?$orientation='landscape':$orientation='portrait';
-			if($pdfPage['background_image']!='') {
-				$backgroundImage='background-image:url(\''.$pdfPage['background_image'].'\');background-repeat:no-repeat;background-position:center center; ';
-			}
-			if($pdfPage['background']!='') {
-				$bgColor='background-color:'.$pdfPage['background'].';  ';
-			}
-			$pageCSS.='@page page'.$ind.'{size:'.$orientation.';'.$backgroundImage.$bgColor.'} ';
-			$ind++;
-		}
-		
 		$cssStyles=str_replace(array(".tiki","opacity: 0;"),array("","fill: #fff;opacity:0.3;stroke:black"),'<style>'.$basecss.$themecss.$printcss.$pageCSS.$extcss.$this->bootstrapReplace().'</style>'); //adding css styles with first page content
 		//cover page checking
 		if($pdfSettings['coverpage_text_settings']!='' || ($pdfSettings['coverpage_image_settings']!='' && $pdfSettings['coverpage_image_settings']!='off')) {
@@ -408,13 +394,17 @@ class PdfGenerator
 				$footer=$pdfPage['footer'];	
 			}
 			$mpdf->SetHeader(str_ireplace("{PAGETITLE}",$params['page'],$header));
-			$mpdf->AddPage($pdfPage['orientation'],'','','','',$pdfPage['margin_left'],$pdfPage['margin_right'] , $pdfPage['margin_top'] , $pdfPage['margin_bottom'] , $pdfPage['margin_header'] , $pdfPage['margin_footer'],'','','','','','','','','page'.$pageNo,$pdfPage['pagesize']);
+			$mpdf->AddPage($pdfPage['orientation'],'','','','',$pdfPage['margin_left'],$pdfPage['margin_right'] , $pdfPage['margin_top'] , $pdfPage['margin_bottom'] , $pdfPage['margin_header'] , $pdfPage['margin_footer'],'','','','','','','','','',$pdfPage['pagesize']);
 			$mpdf->SetFooter(str_ireplace("{PAGETITLE}",$params['page'],$footer)); //footer needs to be reset after page content is added
 		
 			//checking watermark on page
 			$mpdf->SetWatermarkText($pdfPage['watermark']);
 			$mpdf->showWatermarkText = true;
 			$mpdf->SetWatermarkImage($pdfPage['watermark_image'], 0.15, '');
+			if($pdfPage['background_image']){
+				$mpdf->SetWatermarkImage($pdfPage['background_image'],1);
+				$mpdf->watermarkImgBehind=true;
+			}
 			$mpdf->showWatermarkImage = true;
 			//hyperlink check
 			if($pdfPage['hyperlinks']!="") {
