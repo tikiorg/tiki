@@ -94,7 +94,6 @@ if (isset($_REQUEST['templateId']) && $_REQUEST['templateId'] > 0) {
 	}
 }
 
-$smarty->assign('allowhtml', '');
 $publishDate = $tikilib->now;
 $cur_time = explode(',', $tikilib->date_format('%Y,%m,%d,%H,%M,%S', $publishDate));
 $expireDate = $tikilib->make_time(
@@ -227,8 +226,8 @@ if (isset($_REQUEST['allowhtml'])) {
 	} else {
 		$smarty->assign('allowhtml', 'n');
 	}
-} else if ($_SESSION['wysiwyg'] === 'y' && $artlib->is_html($article_data)) {
-	$smarty->assign('allowhtml', 'y');
+} else {
+	$smarty->assign('allowhtml', ($_SESSION['wysiwyg'] === 'y' && $artlib->is_html($article_data)) ? 'y' : 'n');
 }
 
 if (isset($_REQUEST['ispublished'])) {

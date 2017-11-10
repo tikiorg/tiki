@@ -72,7 +72,6 @@ if (isset($_REQUEST['templateId']) && $_REQUEST['templateId'] > 0) {
 	}
 }
 
-$smarty->assign('allowhtml', '');
 $publishDate = $tikilib->now;
 $expireDate = $tikilib->make_time(0, 0, 0, $tikilib->date_format("%m"), $tikilib->date_format("%d"), $tikilib->date_format("%Y") + 1);
 
@@ -179,8 +178,8 @@ if (isset($_REQUEST['allowhtml'])) {
 	} else {
 		$smarty->assign('allowhtml', 'n');
 	}
-} else if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y') {
-	$smarty->assign('allowhtml', 'y');
+} else {
+	$smarty->assign('allowhtml', ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y') ? 'y' : 'n');
 }
 
 if ((isset($_REQUEST["save"]) || isset($_REQUEST["submitarticle"]))
