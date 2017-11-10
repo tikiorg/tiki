@@ -248,6 +248,8 @@ if ($prefs['feature_wysiwyg'] == 'y') {
 		$_SESSION['wysiwyg'] = 'n';
 	}
 	$smarty->assign_by_ref('wysiwyg', $_SESSION['wysiwyg']);
+} else {
+	$smarty->assign('wysiwyg', 'n');
 }
 
 
