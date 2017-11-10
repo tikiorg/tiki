@@ -499,10 +499,8 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline)
 	}
 	
 	$back = "<div class='rbox-data' style='font-size:10px;border:1px solid'>";
-	$back.= "<b>PHP (".PHP_VERSION.") " . $type . " ($err[$errno]):</b><br />";
-	$back.= "<b style='font-family: monospace'>File:</b> $errfile<br />";
-	$back.= "<b style='font-family: monospace'>Line:</b> $errline<br />";
-	$back.= "<b style='font-family: monospace'>Type:</b> $errstr";
+	$back.= $type . " ($err[$errno]): <b>" . $errstr . "</b><br />";
+	$back.= "At line $errline in $errfile"; // $errfile comes after $errline to ease selection for copy-pasting.
 	$back.= "</div>";
 	
 	$phpErrors[] = $back;
