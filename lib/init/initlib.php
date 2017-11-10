@@ -480,34 +480,32 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline)
 	case E_COMPILE_WARNING:
 	case E_PARSE:
 	case E_RECOVERABLE_ERROR:
-		$back = "<div class='rbox-data' style='font-size:10px;border:1px solid'>";
-		$back.= "<b>PHP (".PHP_VERSION.") ERROR (".$err[$errno]."):</b><br />";
-		$back.= "<b style='font-family: monospace'>File:</b> $errfile<br />";
-		$back.= "<b style='font-family: monospace'>Line:</b> $errline<br />";
-		$back.= "<b style='font-family: monospace'>Type:</b> $errstr";
-		$back.= "</div>";
-		$phpErrors[] = $back;
-    	break;
+		$type = 'ERROR';
+		break;
 	case E_STRICT:
 	case E_NOTICE:
 	case E_USER_NOTICE:
 	case E_DEPRECATED:
 	case E_USER_DEPRECATED:
 		if (!  defined('THIRD_PARTY_LIBS_PATTERN') ||  ! preg_match(THIRD_PARTY_LIBS_PATTERN, $errfile) ) {
-			if ( ! empty($prefs['smarty_notice_reporting']) && $prefs['smarty_notice_reporting'] != 'y' && strstr($errfile, '.tpl.php'))
-				break;
-			$back = "<div class='rbox-data' style='font-size:10px;border:1px solid'>";
-			$back.= "<b>PHP (".PHP_VERSION.") NOTICE ($err[$errno]):</b><br />";
-			$back.= "<b style='font-family: monospace'>File:</b> $errfile<br />";
-			$back.= "<b style='font-family: monospace'>Line:</b> $errline<br />";
-			$back.= "<b style='font-family: monospace'>Type:</b> $errstr";
-			$back.= "</div>";
-			$phpErrors[] = $back;
+			if ( ! empty($prefs['smarty_notice_reporting']) && $prefs['smarty_notice_reporting'] != 'y' && strstr($errfile, '.tpl.php')) {
+				return;
+			}
+			$type = 'NOTICE';
 		}
 		break;
 	default:
-    	break;
+    	return;
 	}
+	
+	$back = "<div class='rbox-data' style='font-size:10px;border:1px solid'>";
+	$back.= "<b>PHP (".PHP_VERSION.") " . $type . " ($err[$errno]):</b><br />";
+	$back.= "<b style='font-family: monospace'>File:</b> $errfile<br />";
+	$back.= "<b style='font-family: monospace'>Line:</b> $errline<br />";
+	$back.= "<b style='font-family: monospace'>Type:</b> $errstr";
+	$back.= "</div>";
+	
+	$phpErrors[] = $back;
 }
 
 // Patch missing $_SERVER['REQUEST_URI'] on IIS6
