@@ -126,6 +126,11 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 					return array(
 						"type" => "object",
 					);
+				} elseif ($entry instanceof Search_Type_Json) {
+					return array(
+						"type" => "object",
+						"enabled" => false,
+					);
 				} elseif ($entry instanceof Search_Type_Nested) {
 					return array(
 						"type" => "nested",

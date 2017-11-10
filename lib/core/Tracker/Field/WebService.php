@@ -309,9 +309,7 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 							implode(' ', array_filter($value, 'is_string'))
 					)
 			),
-			"{$baseKey}_json" => $typeFactory->plaintext(
-					json_encode($value)
-			),
+			"{$baseKey}_json" => $typeFactory->json($value),
 		);
 	}
 

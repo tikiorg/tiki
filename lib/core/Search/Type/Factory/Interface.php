@@ -27,4 +27,6 @@ interface Search_Type_Factory_Interface
 	function sortable($value);
 	// tokenized - indexed - unstored in database (?)
 	function geopoint($value);
+	// like object but - not indexed - not mapped
+	function json($value);
 }

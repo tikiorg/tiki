@@ -56,5 +56,10 @@ class Search_Type_Factory_Direct implements Search_Type_Factory_Interface
 	{
 		return new Search_Type_Whole($value);
 	}
+
+	function json($value)
+	{
+		return new Search_Type_PlainText($value);
+	}
 }
 

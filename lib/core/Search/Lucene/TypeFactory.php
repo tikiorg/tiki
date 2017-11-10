@@ -63,5 +63,10 @@ class Search_Lucene_TypeFactory implements Search_Type_Factory_Interface
 	{
 		return new Search_Type_ShortText($value);
 	}
+
+	function json($value)
+	{
+		return new Search_Type_PlainText($value);
+	}
 }
 
