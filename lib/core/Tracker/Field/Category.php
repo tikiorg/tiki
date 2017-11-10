@@ -155,9 +155,17 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 
 	public function renderInput($context = array())
 	{
-		$perms = Perms::get(array('type' => 'trackeritem', 'object' => $this->getItemId()));
-		if( !$perms->modify_object_categories ) {
-			return $this->renderOutput($context);
+		$itemId = $this->getItemId();
+		if ($itemId) {
+			$perms = Perms::get(array('type' => 'trackeritem', 'object' => $itemId));
+			if (! $perms->modify_object_categories) {
+				return $this->renderOutput($context);
+			}
+		} else {	// check perms on the parent tracker if creating a new item
+			$perms = Perms::get(array('type' => 'tracker', 'object' => $this->getConfiguration('trackerId')));
+			if (! $perms->modify_object_categories) {
+				return $this->renderOutput($context);
+			}
 		}
 
 		$smarty = TikiLib::lib('smarty');
