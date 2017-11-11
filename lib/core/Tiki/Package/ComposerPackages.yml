@@ -39,3 +39,10 @@ PHPSaml:
   requiredBy:
     - saml_auth_enabled
   requiredVersion: ^2.10
+MediaAlchemyst:
+  licence: MIT
+  licenceUrl: "https://github.com/alchemy-fr/Media-Alchemyst/blob/master/LICENSE"
+  name: media-alchemyst/media-alchemyst
+  requiredBy:
+    - wikiplugin_preview
+  requiredVersion: ^0.5.1

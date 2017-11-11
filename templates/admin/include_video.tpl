@@ -84,6 +84,16 @@
 			</fieldset>
 		{/tab}
 
+	    {tab name="{tr}Alchemy{/tr}" key=alchemy}
+			<br>
+			<fieldset class="table clearfix featurelist">
+				<legend> {tr}Settings for Alchemy{/tr} </legend>
+				{preference name=alchemy_ffmpeg_path}
+				{preference name=alchemy_ffprobe_path}
+				{preference name=alchemy_imagine_driver}
+			</fieldset>
+		{/tab}
+
 	{/tabset}
 	{include file='admin/include_apply_bottom.tpl'}
 </form>
