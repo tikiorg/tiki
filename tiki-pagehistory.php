@@ -462,6 +462,11 @@ $smarty->assign('page_user', $info['user']);
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 include_once ('tiki-section_options.php');
+if ($prefs['feature_theme_control'] == 'y') {
+	$cat_type = 'wiki page';
+	$cat_objid = $_REQUEST['page'];
+	include('tiki-tc.php');
+}
 // Display the template
 $smarty->assign('mid', 'tiki-pagehistory.tpl');
 $smarty->display("tiki.tpl");
