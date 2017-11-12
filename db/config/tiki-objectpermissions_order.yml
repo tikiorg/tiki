@@ -1,0 +1,348 @@
+---
+accounting:
+    - acct_create_book
+    - acct_manage_accounts
+    - acct_book
+    - acct_view
+    - acct_book_stack
+    - acct_book_import
+    - acct_manage_template
+articles:
+    - admin_cms
+    - approve_submission
+    - articles_admin_topics
+    - articles_admin_types
+    - articles_read_heading
+    - autoapprove_submission
+    - edit_article
+    - edit_article_user
+    - edit_submission
+    - read_article
+    - remove_article
+    - remove_submission
+    - submit_article
+    - rate_article
+    - topic_read
+bigbluebutton:
+    - bigbluebutton_view_rec
+    - bigbluebutton_join
+    - bigbluebutton_moderate
+    - bigbluebutton_create
+xmpp:
+    - xmpp_chat
+blogs:
+    - blog_admin
+    - assign_perm_blog
+    - blog_post
+    - create_blogs
+    - read_blog
+    - blog_post_view_ref
+    - blog_view_ref
+calendar:
+    - admin_calendar
+    - add_events
+    - change_events
+    - view_calendar
+    - view_events
+    - calendar_add_my_particip
+    - calendar_add_guest_particip
+    - view_tiki_calendar
+category:
+    - admin_categories
+    - view_category
+    - add_object
+    - remove_object
+    - assign_perm_category
+chat:
+    - admin_chat
+    - chat
+comm:
+    - admin_received_articles
+    - admin_received_pages
+    - send_articles
+    - sendme_articles
+    - sendme_pages
+    - send_pages
+comments:
+    - post_comments
+    - read_comments
+    - admin_comments
+    - edit_comments
+    - remove_comments
+    - vote_comments
+'content templates':
+    - admin_content_templates
+    - edit_content_templates
+    - lock_content_templates
+    - use_content_templates
+contribution:
+    - admin_contribution
+directory:
+    - admin_directory
+    - admin_directory_cats
+    - admin_directory_sites
+    - autosubmit_link
+    - submit_link
+    - validate_links
+    - view_directory
+dsn:
+    - dsn_query
+faqs:
+    - admin_faqs
+    - suggest_faq
+    - view_faqs
+'file galleries':
+    - download_files
+    - upload_files
+    - list_file_galleries
+    - view_file_gallery
+    - admin_file_galleries
+    - assign_perm_file_gallery
+    - batch_upload_file_dir
+    - batch_upload_files
+    - create_file_galleries
+    - edit_gallery_file
+    - remove_files
+    - view_fgal_explorer
+    - view_fgal_path
+forums:
+    - admin_forum
+    - forum_attach
+    - forum_autoapp
+    - forum_edit_own_posts
+    - forum_post
+    - forum_post_topic
+    - forum_read
+    - forums_report
+    - forum_vote
+freetags:
+    - view_freetags
+    - admin_freetags
+    - freetags_tag
+    - unassign_freetags
+group:
+    - subscribe_groups
+    - invite_to_my_groups
+    - group_view
+    - group_view_members
+    - group_add_member
+    - group_remove_member
+    - group_join
+    - broadcast
+h5p:
+    - h5p_view
+    - h5p_edit
+    - h5p_admin
+'html pages':
+    - edit_html_pages
+    - view_html_pages
+'image galleries':
+    - admin_galleries
+    - assign_perm_image_gallery
+    - batch_upload_image_dir
+    - batch_upload_images
+    - create_galleries
+    - list_image_galleries
+    - upload_images
+    - view_image_gallery
+media:
+    - admin_kaltura
+    - upload_videos
+    - edit_videos
+    - delete_videos
+    - download_videos
+    - list_videos
+    - view_videos
+messages:
+    - broadcast_all
+    - messages
+newsletters:
+    - admin_newsletters
+    - batch_subscribe_email
+    - send_newsletters
+    - subscribe_email
+    - subscribe_newsletters
+    - view_newsletter
+    - list_newsletters
+payment:
+    - payment_admin
+    - payment_view
+    - payment_manual
+    - payment_request
+perspective:
+    - perspective_view
+    - perspective_edit
+    - perspective_create
+    - perspective_admin
+polls:
+    - admin_polls
+    - view_poll_results
+    - view_poll_choices
+    - vote_poll
+    - view_poll_voters
+quizzes:
+    - admin_quizzes
+    - take_quiz
+    - view_quiz_stats
+    - view_user_results
+sheet:
+    - admin_sheet
+    - edit_sheet
+    - view_sheet
+    - view_sheet_history
+shoutbox:
+    - admin_shoutbox
+    - post_shoutbox
+    - view_shoutbox
+socialnetworks:
+    - socialnetworks
+    - admin_socialnetworks
+support:
+    - live_support_admin
+    - live_support
+surveys:
+    - admin_surveys
+    - take_survey
+    - view_survey_stats
+tikitests:
+    - admin_tikitests
+    - edit_tikitests
+    - play_tikitests
+trackers:
+    - admin_trackers
+    - attach_trackers
+    - tracker_view_attachments
+    - comment_tracker_items
+    - tracker_view_comments
+    - create_tracker_items
+    - list_trackers
+    - modify_tracker_items
+    - modify_tracker_items_pending
+    - modify_tracker_items_closed
+    - remove_tracker_items
+    - remove_tracker_items_pending
+    - remove_tracker_items_closed
+    - tracker_view_ratings
+    - tracker_vote_ratings
+    - tracker_revote_ratings
+    - view_trackers
+    - view_trackers_closed
+    - view_trackers_pending
+    - watch_trackers
+    - export_tracker
+    - tracker_dump
+tabular:
+    - tabular_admin
+    - tabular_list
+    - tabular_export
+    - tabular_import
+transition:
+    - trigger_transition
+user:
+    - admin_users
+    - cache_bookmarks
+    - configure_modules
+    - create_bookmarks
+    - minical
+    - notepad
+    - tasks_admin
+    - tasks
+    - tasks_receive
+    - tasks_send
+    - userfiles
+    - usermenu
+    - list_users
+    - invite
+    - delete_account
+webmail:
+    - use_webmail
+    - use_group_webmail
+    - admin_group_webmail
+    - use_personal_webmail
+    - admin_personal_webmail
+wiki:
+    - view
+    - edit
+    - edit_inline
+    - wiki_view_history
+    - admin_wiki
+    - assign_perm_wiki_page
+    - edit_copyrights
+    - edit_dynvar
+    - export_wiki
+    - lock
+    - minor
+    - remove
+    - rename
+    - rollback
+    - upload_picture
+    - use_as_template
+    - wiki_view_ref
+    - wiki_admin_attachments
+    - wiki_admin_ratings
+    - wiki_attach_files
+    - wiki_view_attachments
+    - wiki_view_comments
+    - wiki_view_ratings
+    - wiki_view_source
+    - wiki_vote_ratings
+    - wiki_view_similar
+    - view_backlink
+    - wiki_view_latest
+    - wiki_approve
+    - page_contribution_view
+    - use_references
+    - edit_references
+'wiki structure':
+    - admin_structures
+    - edit_structures
+    - lock_structures
+    - watch_structure
+tiki:
+    - admin
+    - access_closed_site
+    - admin_banners
+    - admin_banning
+    - admin_dynamic
+    - admin_integrator
+    - send_mailin
+    - admin_mailin
+    - admin_objects
+    - admin_rssmodules
+    - clean_cache
+    - create_css
+    - detach_translation
+    - edit_cookies
+    - edit_languages
+    - edit_menu
+    - edit_menu_option
+    - edit_templates
+    - search
+    - site_report
+    - tell_a_friend
+    - share
+    - use_HTML
+    - view_actionlog
+    - view_actionlog_owngroups
+    - view_integrator
+    - ratings_view_results
+    - view_referer_stats
+    - view_stats
+    - view_templates
+    - view_webservices
+    - admin_webservices
+    - admin_toolbars
+    - trust_input
+    - plugin_viewdetail
+    - plugin_preview
+    - plugin_approve
+    - admin_notifications
+    - admin_importer
+    - modify_object_categories
+    - admin_modules
+    - edit_switch_mode
+workspace:
+    - workspace_instantiate
+goal:
+    - goal_admin
+    - goal_modify_eligible
