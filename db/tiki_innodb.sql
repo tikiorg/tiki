@@ -3,4 +3,5 @@
 -- $Id$
 
 -- Force Tiki fulltext search off, when InnoDB is run
-insert into tiki_preferences (name, value) values ('feature_search_fulltext', 'n');
+insert into tiki_preferences (name, value) values ('feature_search_fulltext', 'n') 
+ ON DUPLICATE KEY UPDATE value = 'n';
