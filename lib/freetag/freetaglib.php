@@ -1539,9 +1539,11 @@ class FreetagLib extends ObjectLib
 
 		if ( empty( $content ) )
 			return;
-		if ( !$this->is_valid_language($srcLang)
-			|| !$this->is_valid_language($dstLang) )
+
+		$langLib = TikiLib::lib('language');
+		if (! $langLib->is_valid_language($srcLang) || ! $langLib->is_valid_language($dstLang)) {
 			return;
+		}
 
 		$tagId = $this->find_or_create_tag($content, $dstLang, false);
 
