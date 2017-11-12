@@ -204,6 +204,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		}
 		if ($autoassign == 0 || $this->canChangeValue()) {
 			$groupIds = $this->getOption('groupIds', '');
+			$groupIds = $this->checkGroupsExist($groupIds);
 
 			if ($prefs['user_selector_realnames_tracker'] === 'y' && $this->getOption('showRealname')) {
 				$smarty->loadPlugin('smarty_modifier_username');
@@ -272,9 +273,29 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 				$out = implode(', ', array_map('smarty_modifier_username', $value));
 			} else {
 				$out = implode(', ', $value);
-			}	
+			}
 			return $out . '<input type="hidden" name="' . $this->getInsertId() . '" value="' . htmlspecialchars(TikiLib::lib('tiki')->str_putcsv($value)) . '">';
 		}
+	}
+
+	/**
+	 * Check that groups exist in the database
+	 * 
+	 * @param array $groupIds
+	 * @return array
+	 */
+	function checkGroupsExist($groupIds){
+		$userslib = TikiLib::lib('user');
+
+		$groups = [];
+		foreach($groupIds as $group){
+			$info = $userslib->get_groupId_info($group);
+			if($info['id']){
+				$groups[] = $group;
+			}
+		}
+
+		return $groups;
 	}
 
 	function renderInnerOutput($context = array())
