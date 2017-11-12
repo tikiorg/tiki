@@ -56,6 +56,11 @@
 				{/if}
 			{/capture}
 			{$smarty.capture.notices}
+			<br/>
+
+			<label for="show_disabled_features2">{tr}Show permissions for disabled features{/tr}</label>
+			<input type="checkbox" name="show_disabled_features" id="show_disabled_features2" {if isset($show_disabled_features) and $show_disabled_features eq 'y'}checked="checked"{/if} onchange="this.form.submit();">
+
 			<hr>
 			<h2>{if $objectType eq 'global'}{tr}Assign global permissions{/tr}{elseif $objectType eq 'category'}{tr}Assign permissions to this category{/tr}{else}{tr}Assign permissions to this object{/tr}{/if} {icon name="cog" id="perms_busy" style="vertical-align:top; display:none;"}</h2>
 
@@ -65,7 +70,6 @@
 				<input type="hidden" name="objectType" value="{$objectType|escape}">
 				<input type="hidden" name="objectId" value="{$objectId|escape}">
 				<input type="hidden" name="permType" value="{$permType|escape}">
-				<input type="hidden" name="show_disabled_features" value="{$show_disabled_features}">
 
 				<div class="input_submit_container" style="text-align: center">
 					<input type="submit" class="btn btn-primary btn-sm" name="assign" value="{tr}Assign{/tr}">

@@ -415,6 +415,15 @@ if (isset($_REQUEST['show_disabled_features']) && ($_REQUEST['show_disabled_feat
 } else {
 	$show_disabled_features = 'n';
 }
+
+if($show_disabled_features == 'y'){
+	$_REQUEST['permType'] = 'global';
+}
+
+if($show_disabled_features == 'n'){
+	$_REQUEST['permType'] = 'trackers';
+}
+
 $smarty->assign('show_disabled_features', $show_disabled_features);
 
 // get "master" list of all perms
