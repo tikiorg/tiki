@@ -15,8 +15,8 @@
 	<input type="hidden" name="objId" value="{$objId|escape}">
 	<input type="hidden" name="offset" value="{$freetags_offset|escape}">
 {jq}
-function show_cleartra_checkboxes()
-{
+$('#scblink').click(function(e){
+	e.preventDefault();
 	var table = document.getElementById( 'tagtranslationtable' );
 	var list = table.getElementsByTagName( 'input' );
 	for( key in list )
@@ -28,7 +28,9 @@ function show_cleartra_checkboxes()
 	}
 
 	document.getElementById('scblink').style.display = 'none';
-}
+
+	return false;
+});
 {/jq}
 	<nav>
 		<ul class="pager">
@@ -40,7 +42,7 @@ function show_cleartra_checkboxes()
 				{/if}
 			</li>
 			<li>
-				{button _onclick="javascript:show_cleartra_checkboxes()" id="scblink" _text="{tr}Show checkboxes{/tr}"}
+				{button  _id="scblink" _text="{tr}Show checkboxes{/tr}"}
 			</li>
 			<li class="next">
 				<a class="neatlink" href="{$next|escape}">
