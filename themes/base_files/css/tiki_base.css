@@ -5994,4 +5994,7 @@ fieldset[disabled] .tiki #conversejs #controlbox .fancy-dropdown.focus {
 .tiki #conversejs .chatroom .box-flyout .chatroom-body .room-invite .invited-contact {
   border-color: #cccccc;
 }
+.to-translate {
+  color: red !important;
+}
 /* End of file */
