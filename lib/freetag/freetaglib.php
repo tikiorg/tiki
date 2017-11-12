@@ -1413,6 +1413,9 @@ class FreetagLib extends ObjectLib
 			if ( $row['traId'] ) {
 				foreach ( $tags[ $row['traId'] ] as $tag ) {
 					$ret[$group][$tag['lang']] = $tag;
+					if ($row['tagId'] == $tag['tagId']) {
+						$ret[$group][$tag['lang']]['tagset'] = $row['tagset']; // restore tagset information
+					}
 					$encountered[ $tag['tagId'] ] = true;
 				}
 			}
