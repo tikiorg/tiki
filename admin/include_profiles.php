@@ -82,7 +82,14 @@ if ($access->ticketMatch()) {
 			$installer = new Tiki_Profile_Installer;
 			$installer->setUserData($data);
 			$profile = Tiki_Profile::fromNames($_POST['pd'], $_POST['pp']);
-			$installer->install($profile);
+			$dryRun = isset($_POST['dryrun']) ? true : false;
+			$installer->install($profile, 'all', $dryRun);
+
+			if ($dryRun && isset($_POST['ajax'])) {
+				$smarty->assign('track_profile_changes', $installer->getTrackProfileChanges());
+				$smarty->display("admin/include_profiles_preview.tpl");
+				exit;
+			}
 
 			if (($profile != null) && ($target = $profile->getInstructionPage())) {
 				$wikilib = TikiLib::lib('wiki');

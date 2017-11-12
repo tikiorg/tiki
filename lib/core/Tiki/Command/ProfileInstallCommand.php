@@ -23,19 +23,25 @@ class ProfileInstallCommand extends Command
 			->addArgument(
 				'profile',
 				InputArgument::REQUIRED,
-				'Profile name'
+				tr('Profile name')
 			)
 			->addArgument(
 				'repository',
 				InputArgument::OPTIONAL,
 				'Repository',
-				'profiles.tiki.org'
+				tr('profiles.tiki.org')
 			)
 			->addOption(
 				'force',
 				null,
 				InputOption::VALUE_NONE,
-				'Re-apply profiles when already applied.'
+				tr('Re-apply profiles when already applied.')
+			)
+			->addOption(
+				'dry-run',
+				null,
+				InputOption::VALUE_NONE,
+				tr('Return to the user information about what is going to be applied')
 			);
 	}
 
@@ -44,6 +50,7 @@ class ProfileInstallCommand extends Command
 		$profileName = $input->getArgument('profile');
 		$repository = $input->getArgument('repository');
 		$force = $input->getOption('force');
+		$dryRun = $input->getOption('dry-run');
 
 		$profile = \Tiki_Profile::fromNames($repository, $profileName);
 
@@ -53,7 +60,7 @@ class ProfileInstallCommand extends Command
 		}
 
 		if (!$profile->validateNamedObjectsReferences()){ // sanity check on the Named Objects references
-			$output->writeln('<error>Some of the named object references in the profile are invalid</error>');
+			$output->writeln('<error>' . tr('Some of the named object references in the profile are invalid') . '</error>');
 			return;
 		}
 
@@ -69,18 +76,75 @@ class ProfileInstallCommand extends Command
 
 		if (! $isInstalled) {
 			$transaction = $tikilib->begin();
-			if ($installer->install($profile)) {
+			if ($installer->install($profile, 'all', $dryRun) && ! $dryRun) {
 				$transaction->commit();
-				$output->writeln('Profile applied.');
+				$output->writeln(tr('Profile applied.'));
 			} else {
-				$output->writeln("<error>Installation failed:</error>");
+				if (! $dryRun) {
+					$output->writeln("<error>" . tr('Installation failed:') . "</error>");
 
-				foreach ($installer->getFeedback() as $error) {
-					$output->writeln("<error>$error</error>");
+					foreach ($installer->getFeedback() as $error) {
+						$output->writeln("<error>$error</error>");
+					}
+				} else {
+					$output->writeln(tr('Dry-run for profile: ') . $profile->profile);
+
+					foreach ($installer->getTrackProfileChanges() as $profileChanges) {
+
+						if (is_array($profileChanges)) {
+
+							$type = $profileChanges['type'];
+							$newValue = ! empty($profileChanges['new']) ? $profileChanges['new'] : 'n';
+							$oldValue = ! empty($profileChanges['old']) ? $profileChanges['old'] : 'n';
+							$description = ! empty($profileChanges['description']) ? $profileChanges['description'] : '';
+
+							switch ($type) {
+								case 'permission' :
+									$msg = tr('Permission removed: ') . $description[0];
+
+									if ($newValue == 'y') {
+										$msg = tr('Permission added: ') . $description[0];
+									}
+
+									$output->writeln($msg);
+									break;
+
+								case 'user' :
+									$msg = tr('User modified: ') . $description;
+
+									if ($oldValue == 'n') {
+										$msg = tr('User added: ') . $description;
+									}
+
+									$output->writeln($msg);
+									break;
+
+								case 'group' :
+									$msg = tr('Group modified: ') . $description;
+
+									if ($oldValue == 'n') {
+										$msg = tr('Group added: ') . $description;
+									}
+
+									$output->writeln($msg);
+									break;
+
+								case 'preference' :
+									$output->writeln(tr('Preference set: %0= %1 old value= %2', $description, $newValue, $oldValue));
+									break;
+
+								case 'installer' :
+									$output->writeln(tr('Installer added: ') . $description);
+									break;
+							}
+						} else {
+							$output->writeln($profileChanges);
+						}
+					}
 				}
 			}
 		} else {
-			$output->writeln('<info>Profile was already applied. Nothing happened.</info>');
+			$output->writeln('<info>' . tr('Profile was already applied. Nothing happened.') . '</info>');
 		}
 	}
 }
