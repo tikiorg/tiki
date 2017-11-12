@@ -122,4 +122,22 @@ class Tiki_Profile_InstallHandler_Category extends Tiki_Profile_InstallHandler
 		
 		return true;
 	}
+
+	/**
+	 * Remove category
+	 *
+	 * @param string $category
+	 * @return bool
+	 */
+	function remove($category)
+	{
+		if (! empty($category)) {
+			$categlib = TikiLib::lib('categ');
+			$categoryId = $categlib->get_category_id($category);
+			if (! empty($categoryId) && $categlib->remove_category($categoryId)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

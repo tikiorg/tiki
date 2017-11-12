@@ -91,6 +91,13 @@ if ($access->ticketMatch()) {
 				exit;
 			}
 
+			if (! $dryRun && ! empty($installer->getTrackProfileChanges())) {
+				$logChanges = $installer->getTrackProfileChanges();
+				$logChanges['domain'] = $_POST['pd'];
+				$logslib = TikiLib::lib('logs');
+				$logslib->add_action('profile apply', $_POST['pp'], 'system', tra('profile applied'), '', '', '', '', '', '', $logChanges);
+			}
+
 			if (($profile != null) && ($target = $profile->getInstructionPage())) {
 				$wikilib = TikiLib::lib('wiki');
 				$target = $wikilib->sefurl($target);
@@ -141,6 +148,18 @@ if ($access->ticketMatch()) {
 				}
 			}
 		} // }}}
+
+		if (! empty($_POST['pp']) && ! empty($_POST["revertInfo"])) {
+			$installer = new Tiki_Profile_Installer;
+			$domain = ! empty($_POST["revertInfo"]['domain']) ? $_POST["revertInfo"]['domain'] : '';
+			if (! empty($domain)) {
+				$transaction = $tikilib->begin();
+				$profile = Tiki_Profile::fromNames($domain, $_POST['pp']);
+				$installer->revert($profile, $_POST["revertInfo"]);
+				$installer->forget($profile);
+				$transaction->commit();
+			}
+		}
 
 		if (isset($_GET['refresh'])) {
 			$toRefresh = (int) $_GET['refresh'];

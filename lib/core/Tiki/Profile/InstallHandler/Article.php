@@ -132,4 +132,26 @@ class Tiki_Profile_InstallHandler_Article extends Tiki_Profile_InstallHandler
 
 		return true;
 	}
+
+	/**
+	 * Remove article
+	 *
+	 * @param string $article
+	 * @return bool
+	 */
+	function remove($article)
+	{
+		if (! empty($article)) {
+			$artlib = TikiLib::lib('art');
+			$article = $artlib->list_articles(0, -1, 'articleId_desc', $article);
+			$count = isset($article['cant']) ? $article['cant'] : 0;
+			if ($count == 1
+				&& ! empty($article['data'][0]['articleId'])
+				&& $artlib->remove_article($article['data'][0]['articleId'])
+			) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

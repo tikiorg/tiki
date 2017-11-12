@@ -117,4 +117,22 @@ class Tiki_Profile_InstallHandler_Calendar extends Tiki_Profile_InstallHandler
 			'customstatus'
 		);
 	}
+
+	/**
+	 * Remove calendar
+	 *
+	 * @param string $calendar
+	 * @return bool
+	 */
+	function remove($calendar)
+	{
+		if (! empty($calendar)) {
+			$calendarlib = TikiLib::lib('calendar');
+			$calendarId = $calendarlib->get_calendarId_from_name($calendar);
+			if (! empty($calendarId) && $calendarlib->drop_calendar($calendarId)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

@@ -298,5 +298,22 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 
 		return true;
 	}
-}
 
+	/**
+	 * Remove wiki page
+	 *
+	 * @param string $pageName
+	 * @return bool
+	 */
+	function remove($pageName)
+	{
+		if (! empty($pageName)) {
+			$tikilib = \TikiLib::lib('tiki');
+			if ($tikilib->remove_all_versions($pageName)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+}

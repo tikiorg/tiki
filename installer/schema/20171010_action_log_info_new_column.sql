@@ -1,0 +1,1 @@
+ALTER TABLE `tiki_actionlog` ADD COLUMN `log` TEXT NULL DEFAULT NULL AFTER `client`;

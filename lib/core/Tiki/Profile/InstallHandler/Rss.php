@@ -90,4 +90,22 @@ class Tiki_Profile_InstallHandler_Rss extends Tiki_Profile_InstallHandler
 		
 		return true;
 	}
+
+	/**
+	 * Remove rss module
+	 *
+	 * @param string $rssModule
+	 * @return bool
+	 */
+	function remove($rssModule)
+	{
+		if (! empty($rssModule)) {
+			$rsslib = TikiLib::lib('rss');
+			$rssId = $rsslib->get_rss_module_id($rssModule);
+			if (! empty($rssId) && $rsslib->remove_rss_module($rssId)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

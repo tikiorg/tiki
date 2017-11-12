@@ -55,4 +55,22 @@ class Tiki_Profile_InstallHandler_ArticleTopic extends Tiki_Profile_InstallHandl
 
 		return false;
 	}
+
+	/**
+	 * Remove article topic
+	 *
+	 * @param string $articleTopic
+	 * @return bool
+	 */
+	function remove($articleTopic)
+	{
+		if (! empty($articleTopic)) {
+			$artlib = TikiLib::lib('art');
+			$articleTopicId = $artlib->get_topicId($articleTopic);
+			if (! empty($articleTopicId) && $artlib->remove_topic($articleTopicId)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

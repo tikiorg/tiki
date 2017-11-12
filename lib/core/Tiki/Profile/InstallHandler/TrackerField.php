@@ -281,4 +281,28 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 
 		return true;
 	}
+
+	/**
+	 * Remove tracker field
+	 * @param string $trackerField
+	 * @return bool
+	 */
+	function remove($trackerField)
+	{
+		if (! empty($trackerField)) {
+			$trklib = TikiLib::lib('trk');
+			$trackerFields = $trklib
+				->table('tiki_tracker_fields')
+				->fetchAll(array('fieldId', 'trackerId'), array('name' => $trackerField));
+			if (count($trackerFields) == 1) {
+				$trackerFieldId = ! empty($trackerFields[0]['fieldId']) ? $trackerFields[0]['fieldId'] : 0;
+				$trackerId = ! empty($trackerFields[0]['trackerId']) ? $trackerFields[0]['trackerId'] : 0;
+				if ($trklib->remove_tracker_field($trackerFieldId, $trackerId)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
 }

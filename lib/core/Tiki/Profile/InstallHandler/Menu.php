@@ -206,4 +206,24 @@ class Tiki_Profile_InstallHandler_Menu extends Tiki_Profile_InstallHandler
 
 		return true;
 	}
+
+	/**
+	 * Remove menu
+	 *
+	 * @param string $menu
+	 * @return bool
+	 */
+	function remove($menu)
+	{
+		if (! empty($menu)) {
+			$menulib = TikiLib::lib('menu');
+			$menus = $menulib->list_menus(0, -1, 'menuId_desc', $menu);
+			$menuId = ! empty($menus['data'][0]['menuId']) ? $menus['data'][0]['menuId'] : null;
+
+			if ($menuId && $menulib->remove_menu($menuId)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

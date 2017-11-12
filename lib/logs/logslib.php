@@ -138,7 +138,7 @@ class LogsLib extends TikiLib
 			}
 		}
 	}
-	function add_action($action, $object, $objectType='wiki page', $param='', $who='', $ip='', $client='', $date='', $contributions='', $hash='')
+	function add_action($action, $object, $objectType='wiki page', $param='', $who='', $ip='', $client='', $date='', $contributions='', $hash='', $log='')
 	{
 		global $user, $prefs;
 
@@ -197,6 +197,10 @@ class LogsLib extends TikiLib
 			}
 		}
 
+		if (!empty($log)) {
+			$log = serialize($log);
+		}
+
 		$actions = array();
 		$nottostore = array(
 			'auth_ldap_adminpass',
@@ -217,20 +221,20 @@ class LogsLib extends TikiLib
 			if ($logCateg && count($categs) > 0) {
 				foreach ($categs as $categ) {
 					$query = "insert into `tiki_actionlog` " .
-									" (`action`, `object`, `lastModif`, `user`, `ip`, `comment`, `objectType`, `categId`, `client`) " .
-									" values(?,?,?,?,?,?,?,?,?)"
+									" (`action`, `object`, `lastModif`, `user`, `ip`, `comment`, `objectType`, `categId`, `client`, `log`) " .
+									" values(?,?,?,?,?,?,?,?,?,?)"
 									;
 
-					$this->query($query, array($action, $object, (int)$date, $who, $ip, $param, $objectType, $categ, $client));
+					$this->query($query, array($action, $object, (int)$date, $who, $ip, $param, $objectType, $categ, $client, $log));
 					$actions[] = $this->lastInsertId();
 				}
 			} elseif ( ! in_array($object, $nottostore)) {
 				$query = "insert into `tiki_actionlog`" .
-								" (`action`, `object`, `lastModif`, `user`, `ip`, `comment`, `objectType`, `client`)" .
-								" values(?,?,?,?,?,?,?,?)"
+								" (`action`, `object`, `lastModif`, `user`, `ip`, `comment`, `objectType`, `client`, `log`)" .
+								" values(?,?,?,?,?,?,?,?,?)"
 								;
 
-				$this->query($query, array($action, $object, (int)$date, $who, $ip, $param, $objectType, $client));
+				$this->query($query, array($action, $object, (int)$date, $who, $ip, $param, $objectType, $client, $log));
 				$actions[] = $this->lastInsertId();
 			}
 		}

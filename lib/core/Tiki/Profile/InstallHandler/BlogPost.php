@@ -65,4 +65,22 @@ class Tiki_Profile_InstallHandler_BlogPost extends Tiki_Profile_InstallHandler
 
 		return $entryId;
 	}
+
+	/**
+	 * Remove blog post
+	 *
+	 * @param string $blogPost
+	 * @return bool
+	 */
+	function remove($blogPost)
+	{
+		if (! empty($blogPost)) {
+			$bloglib = TikiLib::lib('blog');
+			$post = $bloglib->table('tiki_blog_posts')->fetchAll(array('postId'), array('title' => $blogPost));
+			if (count($post) == 1 && ! empty($post[0]['postId']) && $bloglib->remove_post($post[0]['postId'])) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

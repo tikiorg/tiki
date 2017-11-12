@@ -247,4 +247,24 @@ class Tiki_Profile_InstallHandler_Forum extends Tiki_Profile_InstallHandler
 
 		return true;
 	}
+
+	/**
+	 * Remove forum
+	 *
+	 * @param string $forumName
+	 * @return bool
+	 */
+	function remove($forumName)
+	{
+		if (! empty($forumName)) {
+			$comments = TikiLib::lib('comments');
+			$forum = $comments->list_forums(0, 1, 'forumId_desc', $forumName);
+			$forumId = ! empty($forum['data'][0]['forumId']) ? $forum['data'][0]['forumId'] : null;
+			if ($forumId && $comments->remove_forum($forumId)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 }

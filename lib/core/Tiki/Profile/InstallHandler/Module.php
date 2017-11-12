@@ -126,4 +126,21 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler
 
 		return $value;
 	}
+
+	/**
+	 * Remove module
+	 *
+	 * @param string $module
+	 * @return bool
+	 */
+	function remove($module)
+	{
+		if (! empty($module)) {
+			$modlib = TikiLib::lib('mod');
+			if ($modlib->remove_user_module($module)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

@@ -129,4 +129,20 @@ class Tiki_Profile_InstallHandler_User extends Tiki_Profile_InstallHandler
 			}
 		}
 	}
+
+	/**
+	 * Remove user
+	 *
+	 * @param string $user
+	 * @return bool
+	 */
+	function remove($user)
+	{
+		$userlib = TikiLib::lib('user');
+		if ($userlib->user_exists($user) && $userlib->remove_user($user)) {
+			return true;
+		}
+
+		return false;
+	}
 }

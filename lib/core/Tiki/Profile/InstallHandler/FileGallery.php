@@ -308,4 +308,24 @@ class Tiki_Profile_InstallHandler_FileGallery extends Tiki_Profile_InstallHandle
 
 		return true;
 	}
+
+	/**
+	 * Remove file gallery
+	 *
+	 * @param string $fileGallery
+	 * @return bool
+	 */
+	function remove($fileGallery)
+	{
+		if (! empty($fileGallery)) {
+			$filegallib = TikiLib::lib('filegal');
+			$galleryId = $filegallib
+				->table('tiki_file_galleries')
+				->fetchOne('galleryId', array('name' => $fileGallery));
+			if (! empty($galleryId) && $filegallib->remove_file_gallery($galleryId)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

@@ -66,4 +66,22 @@ class Tiki_Profile_InstallHandler_Blog extends Tiki_Profile_InstallHandler
 
 		return $blogId;
 	}
+
+	/**
+	 * Remove blog
+	 *
+	 * @param string $blog
+	 * @return bool
+	 */
+	function remove($blog)
+	{
+		if (! empty($blog)) {
+			$bloglib = TikiLib::lib('blog');
+			$blog = $bloglib->get_blog_by_title($blog);
+			if (! empty($blog['blogId']) && $bloglib->remove_blog($blog['blogId'])) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

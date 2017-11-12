@@ -254,4 +254,22 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 		return $writer->dump();
 	} // }}}
 
+	/**
+	 * Remove tracker
+	 *
+	 * @param string $tracker
+	 * @return bool
+	 */
+	function remove($tracker)
+	{
+		if (! empty($tracker)) {
+			$trklib = TikiLib::lib('trk');
+			$trackerId = $trklib->get_tracker_by_name($tracker);
+			if (! empty($trackerId) && $trklib->remove_tracker($trackerId)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 }

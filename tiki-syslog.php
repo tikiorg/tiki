@@ -11,8 +11,24 @@
 require_once ('tiki-setup.php');
 
 $access->check_permission('tiki_p_admin');
+$access->check_authenticity('', false);
 
 $auto_query_args = array('offset', 'numrows', 'maxRecords', 'find', 'sort_mode');
+if (isset($_POST["actionId"]) && !empty($_POST["page"])) {
+	$prefslib = TikiLib::lib('prefs');
+	$adminPage = $_POST["page"];
+	$logResult = $logslib->get_info_action($_POST["actionId"]);
+	if (!empty($logResult['log']) && !empty($logResult['object'])) {
+		$_POST['pp'] = $logResult['object'];
+		$_POST["revertInfo"] = unserialize($logResult['log']);
+		if (file_exists("admin/include_$adminPage.php")) {
+			include_once ("admin/include_$adminPage.php");
+		}
+	} else {
+		Feedback::error(['mes' => tr('Invalid System Log ID')]);
+	}
+}
+
 if (isset($_REQUEST["clean"])) {
 	$access->check_authenticity();
 	$date = strtotime("-" . $_REQUEST["months"] . " months");

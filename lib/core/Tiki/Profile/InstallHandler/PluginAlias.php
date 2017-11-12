@@ -55,4 +55,21 @@ class Tiki_Profile_InstallHandler_PluginAlias extends Tiki_Profile_InstallHandle
 
 		return $name;
 	}
+
+	/**
+	 * Remove plugin alias
+	 *
+	 * @param string $pluginAlias
+	 * @return bool
+	 */
+	function remove($pluginAlias)
+	{
+		if (! empty($pluginAlias)) {
+			$parserlib = TikiLib::lib('parser');
+			if ($parserlib->plugin_alias_delete($pluginAlias)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

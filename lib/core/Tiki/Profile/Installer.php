@@ -529,6 +529,94 @@ class Tiki_Profile_Installer
 		tiki_setup_events();
 	} // }}}
 
+	/**
+	 * Revert a profile
+	 *
+	 * @param Tiki_Profile $profile Profile object
+	 * @param array $changes
+	 * @param string $empty_cache
+	 * @return void
+	 */
+	public function revert($profile, $changes, $empty_cache = 'all')
+	{
+		$userlib = TikiLib::lib('user');
+		$preferences = [];
+		foreach ($changes as $change) {
+			if (! empty($change['description'])) {
+				if ($change['type'] == 'preference') {
+					$preferences[$change['description']] = $change['old'];
+				} elseif (in_array($change['type'], ['installer', 'user']) && ! empty($change['description'])) {
+					$description = explode(' ', $change['description']);
+					if (array_key_exists($description[0], $this->handlers)) {
+						$handlersName = $change['description'];
+						$pos = strpos($change['description'], $handlersName);
+						if ($pos !== false) {
+							$handlersName = substr_replace($change['description'], '', $pos, strlen($description[0]));
+							$handlersName = str_replace('"', "", trim($handlersName));
+						}
+						$handle = $this->handlers[$description[0]];
+						if (method_exists($handle, 'remove')) {
+							$handle::remove($handlersName);
+						}
+					}
+				} elseif ($change['type'] == 'group') {
+					if (empty($change['old']) && ! empty($change['new'])) {
+						$userlib->remove_group($change['description']);
+					} else {
+						$info = $change['old'];
+						$userlib->change_group(
+							$info['groupName'],
+							$change['description'],
+							$info['groupDesc'],
+							$info['groupHome'],
+							$info['usersTrackerId'],
+							$info['groupTrackerId'],
+							$info['usersFieldId'],
+							$info['groupFieldId'],
+							implode(':', $info['registrationUsersFieldIds']),
+							$info['userChoice'],
+							$info['groupDefCat'],
+							$info['groupTheme'],
+							$info['isExternal'],
+							$info['expireAfter'],
+							$info['emailPattern'],
+							$info['anniversary'],
+							$info['prorateInterval'],
+							$info['groupColor']
+						);
+					}
+				} elseif ($change['type'] == 'permission' && ! empty($change['description'][0]) && ! empty($change['description'][1])) {
+					$permission = $change['description'][0];
+					$groupName = $change['description'][1];
+
+					if ($groupName == 'Admins' && $permission == 'tiki_p_admin') {
+						return false;
+					}
+
+					if (empty($change['old'])) {
+						if (! empty($change['description'][2])) {
+							$data = $change['description'][2];
+							$userlib->remove_object_permission($groupName, $data['id'], $data['type'], $permission);
+						} else {
+							$userlib->remove_permission_from_group($permission, $groupName);
+						}
+					} else {
+						if (! empty($change['description'][2])) {
+							$data = $change['description'][2];
+							$userlib->assign_object_permission($groupName, $data['id'], $data['type'], $permission);
+						} else {
+							$userlib->assign_permission_to_group($permission, $groupName);
+						}
+					}
+				}
+			}
+		}
+
+		$leftovers = $this->applyPreferences($profile, $preferences, true);
+		$this->applyPreferences($profile, $leftovers);
+		tiki_setup_events();
+	}
+
 	private function applyPreferences($profile, $preferences, $leaveUnknown = false, $dryRun = false)
 	{
 		global $prefs;
@@ -640,8 +728,10 @@ class Tiki_Profile_Installer
 		foreach ( $permissions as $perm => $v ) {
 			if ($v == 'y') {
 				$userlib->assign_permission_to_group($perm, $groupName);
+				$this->setTrackProfileChanges('permission', $v, false, [$perm, $groupName]);
 			} else {
 				$userlib->remove_permission_from_group($perm, $groupName);
+				$this->setTrackProfileChanges('permission', false, $v, [$perm, $groupName]);
 			}
 			$this->setFeedback(sprintf(tra('Modified permission %s for %s'), $perm, $groupName));
 		}
@@ -653,10 +743,10 @@ class Tiki_Profile_Installer
 				$data['id'] = Tiki_Profile_Installer::convertObject($data['type'], $data['id'], array('groupMap' => $groupMap));
 
 				if ($v == 'y') {
-					$this->setTrackProfileChanges('permission', $v, false, array($perm, $groupName));
+					$this->setTrackProfileChanges('permission', $data, false, [$perm, $groupName, $data]);
 					$userlib->assign_object_permission($groupName, $data['id'], $data['type'], $perm);
 				} else {
-					$this->setTrackProfileChanges('permission', false, $v, array($perm, $groupName));
+					$this->setTrackProfileChanges('permission', false, $data, [$perm, $groupName, $data]);
 					$userlib->remove_object_permission($groupName, $data['id'], $data['type'], $perm);
 				}
 				$this->setFeedback(
