@@ -4456,6 +4456,12 @@ class TikiLib extends TikiDb_Bridge
 			$html = 1;
 		}
 
+		// Code related to Include wiki plugin
+		// Remove all include relations. 
+		// All relations will be recreated by wikiplugin_include_rewrite
+		$relationlib = TikiLib::lib('relation');
+		$relationlib->remove_relations_from('wiki page', $pageName, 'tiki.wiki.include');
+
 		$edit_data = $parserlib->process_save_plugins(
 			$edit_data,
 			array(

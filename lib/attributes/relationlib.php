@@ -305,6 +305,23 @@ class RelationLib extends TikiDb_Bridge
 		);
 	}
 
+    /**
+	 * Remove all relations of a type for single object
+	 * @param $fromType - object type
+	 * @param $fromId - object itemId
+	 * @param $relationType - relation type originating from that object
+	 */
+	public function remove_relations_from($fromType, $fromId, $relationType) {
+		return $this->table->deleteMultiple(
+			array(
+				'relation' => $relationType,
+				'source_type' => $fromType,
+				'source_itemId' => $fromId
+			)
+		); 
+		$this->remove_relation_type($relationType);
+	}
+
 	/**
 	 * Changes to relation name should update existing relation table entries
 	 *

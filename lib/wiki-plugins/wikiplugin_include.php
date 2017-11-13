@@ -200,3 +200,12 @@ function wikiplugin_include($dataIn, $params)
 	}
 	return $text;
 }
+
+function wikiplugin_include_rewrite($data, $params, $context) {
+	$page = $params['page'];
+
+	$relationlib = TikiLib::lib('relation');
+	$relationlib->add_relation('tiki.wiki.include', $context['type'], $context['itemId'], 'wiki page', $params['page']);
+ 
+	return false;
+}
