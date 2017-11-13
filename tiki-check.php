@@ -586,20 +586,37 @@ if ($s != 'files') {
 	);
 }
 
-// session.save_handler
+// session.save_path
 $s = ini_get('session.save_path');
-if (empty($s) || ! is_writable($s)) {
-	$php_properties['session.save_path'] = array(
-		'fitness' => tra('bad'),
-		'setting' => $s,
-		'message' => tra('The session.save_path must writable.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
-	);
+if ($php_properties['session.save_handler']['setting'] == 'files') {
+	if (empty($s) || ! is_writable($s)) {
+		$php_properties['session.save_path'] = array(
+			'fitness' => tra('bad'),
+			'setting' => $s,
+			'message' => tra('The session.save_path must writable.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
+		);
+	} else {
+		$php_properties['session.save_path'] = array(
+			'fitness' => tra('good'),
+			'setting' => $s,
+			'message' => tra('The session.save_path is writable.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
+		);
+	}
 } else {
-	$php_properties['session.save_path'] = array(
-		'fitness' => tra('good'),
-		'setting' => $s,
-		'message' => tra('The session.save_path is writable.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
-	);
+	if (empty($s) || ! is_writable($s)) {
+		$php_properties['session.save_path'] = array(
+			'fitness' => tra('ugly'),
+			'setting' => $s,
+			'message' => tra('If you would be using the recommended session.save_handler setting of \'files\', the session.save_path would have to be writable. Currently it is not.') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
+		);
+	} else {
+		$php_properties['session.save_path'] = array(
+			'fitness' => tra('info'),
+			'setting' => $s,
+			'message' => tra('The session.save_path is writable.') . tra('It doesn\'t matter though, since your session.save_handler isn not set to \'files\'') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
+		);
+	}
+
 }
 
 // test session work
