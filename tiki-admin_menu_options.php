@@ -84,27 +84,7 @@ if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
 	$maxPos = $menulib->get_max_option($_REQUEST['menuId']);
 	$smarty->assign('position', $maxPos + 10);
 }
-if (isset($_REQUEST["save"])) {
-	if (!isset($_REQUEST['groupname'])) $_REQUEST['groupname'] = '';
-	elseif (is_array($_REQUEST['groupname'])) $_REQUEST['groupname'] = implode(',', $_REQUEST['groupname']);
-	if (!isset($_REQUEST['level'])) $_REQUEST['level'] = 0;
-	$modlib = TikiLib::lib('mod');
-	check_ticket('admin-menu-options');
-	$menulib->replace_menu_option($_REQUEST["menuId"], $_REQUEST["optionId"], $_REQUEST["name"], $_REQUEST["url"], $_REQUEST["type"], $_REQUEST["position"], $_REQUEST["section"], $_REQUEST["perm"], $_REQUEST["groupname"], $_REQUEST['level'], $_REQUEST['icon'], $_REQUEST['class']);
-	$modlib->clear_cache();
-	$smarty->assign('position', $_REQUEST["position"] + 10);
-	$smarty->assign('name', '');
-	$smarty->assign('optionId', 0);
-	$smarty->assign('url', '');
-	$smarty->assign('section', '');
-	$smarty->assign('perm', '');
-	$smarty->assign('groupname', '');
-	$smarty->assign('userlevel', 0);
-	$smarty->assign('type', 'o');
-	$smarty->assign('icon', '');
-	$smarty->assign('class', '');
-	$cookietab = 1;
-}
+
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'position_asc';
 } else {
@@ -142,19 +122,15 @@ $headerlib->add_js('var prefNames = ' . json_encode($feature_prefs) . ';');
 
 $smarty->assign_by_ref('maxRecords', $maxRecords);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-$allchannels = $menulib->list_menu_options($_REQUEST["menuId"], 0, -1, $sort_mode, $find);
-$allchannels = $menulib->sort_menu_options($allchannels);
-$channels = $menulib->list_menu_options($_REQUEST["menuId"], $offset, $maxRecords, $sort_mode, $find, true, 0, true);
-$channels = $menulib->describe_menu_types($channels);
-$smarty->assign_by_ref('cant_pages', $channels["cant"]);
-$smarty->assign_by_ref('channels', $channels["data"]);
-$smarty->assign_by_ref('allchannels', $allchannels["data"]);
+$options = $menulib->list_menu_options($_REQUEST["menuId"], $offset, $maxRecords, $sort_mode, $find, true, 0, true);
+$options = $menulib->describe_menu_types($options);
+$smarty->assign_by_ref('cant_pages', $options["cant"]);
+$smarty->assign_by_ref('options', $options["data"]);
 if (isset($info['groupname']) && !is_array($info['groupname'])) $info['groupname'] = explode(',', $info['groupname']);
 $all_groups = $userlib->list_all_groups();
 if (is_array($all_groups)) foreach ($all_groups as $g) $option_groups[$g] = (is_array($info['groupname']) && in_array($g, $info['groupname'])) ? 'selected="selected"' : '';
 $smarty->assign_by_ref('option_groups', $option_groups);
 
-ask_ticket('admin-menu-options');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template

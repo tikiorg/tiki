@@ -758,17 +758,5 @@ class MenuLib extends TikiLib
 		$data = preg_replace('/<ol>\s*<\/ol>/', '', $data);
 		return '<nav class="role_navigation">' . $data . '</nav>';
 	}
-	
-	// helper function to get menuId from an optionId
-	public function get_menuId_from_optionId($optionId)
-	{
-		$query = 'SELECT `menuId` FROM `tiki_menu_options` WHERE `optionId` = ?';
-		$menuId = $this->getOne($query, array($optionId));
-		if (empty($menuId)) {
-			return FALSE;
-		} else {
-			settype($menuId, "integer");
-			return $menuId;
-		}
-	}
+
 }

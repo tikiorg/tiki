@@ -73,7 +73,7 @@ if ($tiki_p_admin_forum == 'y' || $prefs['feature_forum_quickjump'] == 'y') {
 
 	$temp_max = count($all_forums["data"]);
 	for ($i = 0; $i < $temp_max; $i++) {
-		$forumperms = Perms::get(array( 'type' => 'forum', 'object' => $channels['data'][$i]['forumId'] ));
+		$forumperms = Perms::get(array( 'type' => 'forum', 'object' => $options['data'][$i]['forumId'] ));
 		$all_forums["data"][$i]["can_read"] = $forumperms->forum_read ? 'y' : 'n';
 	}
 

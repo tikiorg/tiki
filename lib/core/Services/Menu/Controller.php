@@ -30,8 +30,7 @@ class Services_Menu_Controller
 		$symbol = Tiki_Profile::getObjectSymbolDetails('menu', $menuId);
 			
 		//execute menu insert/update
-		$confirm = $input->confirm->int();
-		if ($confirm && $util->access->ticketMatch()) {
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && $input->confirm->int() && $util->access->ticketMatch()) {
 			$menuId = $input->menuId->int();
 			$name = $input->name->text();
 			$description = $input->description->text();
@@ -81,67 +80,81 @@ class Services_Menu_Controller
 			'symbol' => $symbol,
 		);
 	}
-	
-	function action_list_menu_options ($input) //TODO finish, not used yet
-	{
-		//check permissions
-		$perms = Perms::get('menu');
-		if (! $perms->tiki_p_edit_menu_options) {
-			throw new Services_Exception_Denied(tr('Permission denied'));
-		}
-		
-		//prepare basic data
-		$menuId = $input->menuId->int();
-		$menuLib = TikiLib::lib('menu');
-		$data = $menuLib->list_menu_options($menuId);
-		$channels = $menuLib->describe_menu_types($data);
-			
-		//information for the list menu options screen
-		return array(
-			'menuId' => $menuId,
-			'channels' => $channels["data"],
-			'optionCount' => $channels["cant"],
-		);
-	}
 
 	/**
+	 * Display menu option edit form and process replace
+	 *
 	 * @param JitFilter $input
 	 * @return array
 	 * @throws Services_Exception_Denied
 	 * @throws Services_Exception_MissingValue
+	 * @throws Services_Exception_NotFound
 	 */
-	function action_manage_option ($input) //TODO finish, not used yet
+	function action_manage_option ($input)
 	{
+		global $prefs;
+
+		$menuLib = TikiLib::lib('menu');
+		$userLib = TikiLib::lib('user');
+		$headerlib = TikiLib::lib('header');
+
+		//prepare basic data
+		$optionId = $input->optionId->int();
+		if ($optionId) {
+			$optionInfo = $menuLib->get_menu_option($optionId);
+
+			if (! $optionInfo) {
+				throw new Services_Exception_NotFound(tr('Menu option %0 not found', $optionId));
+			}
+		} else {
+			$optionInfo = [];
+		}
+		
+		//get menu information
+		$menuId = $input->menuId->int();
+
+		if (! $menuId && isset($optionInfo['menuId'])) {
+			$menuId = $optionInfo['menuId'];
+		}
+
 		//check permissions
-		$perms = Perms::get('menu');
+		$perms = Perms::get('menu', $menuId);
 		if (! $perms->tiki_p_edit_menu_options) {
 			throw new Services_Exception_Denied(tr('Permission denied'));
 		}
-		
-		//prepare basic data
-		$optionId = $input->optionId->int();
-		$menuLib = TikiLib::lib('menu');
-		$optionInfo = $menuLib->get_menu_option($optionId);
-		
-		//get menu information
-		if ($optionId) {
-			$menuId = $menuLib->get_menuId_from_optionId($optionId);
-		}
-		else {
-			$menuId = $input->menuId->int();
-		}	
+
 		$menuDetails = $this->get_menu_details($menuId);
-		
+
+		if (! $menuDetails) {
+			throw new Services_Exception_NotFound(tr('Menu %0 notfound', $menuId));
+		}
+
 		//get usergroup information
-		if (isset($optionInfo['groupname']) && !is_array($optionInfo['groupname'])) $optionInfo['groupname'] = explode(',', $optionInfo['groupname']);
-		$userLib = TikiLib::lib('user');
+		if (! empty($optionInfo['groupname'])) {
+			if (! is_array($optionInfo['groupname'])) {
+				$optionInfo['groupname'] = explode(',', $optionInfo['groupname']);
+			}
+		} else {
+			$optionInfo['groupname'] = [];
+		}
+
+
+		// groups info
 		$all_groups = $userLib->list_all_groups();
-		if (is_array($all_groups)) foreach ($all_groups as $g) $option_groups[$g] = (is_array($optionInfo['groupname']) && in_array($g, $optionInfo['groupname'])) ? 'selected="selected"' : '';
+		$option_groups = [];
+
+		if (is_array($all_groups)) {
+			foreach ($all_groups as $g) {
+				if (in_array($g, $optionInfo['groupname'])) {
+					$option_groups[$g] = 'selected="selected"';
+				} else {
+					$option_groups[$g] = '';
+				}
+			}
+		}
 		
 		//get preference information
-		$headerlib = TikiLib::lib('header');
-		$feature_prefs = array();
-		global $prefs;
+		$feature_prefs = [];
 		foreach ($prefs as $k => $v) {	// attempt to filter out non-feature prefs (still finds 133!)
 			if (strpos($k, 'feature') !== false && preg_match_all('/_/m', $k, $m) === 1) {
 				$feature_prefs[] = $k;
@@ -151,27 +164,17 @@ class Services_Menu_Controller
 
 		//get permission information		
 		$headerlib->add_js('var permNames = ' . json_encode($userLib->get_permission_names_for('all')) . ';');		
-		unset($userLib);
-		
+
+		$util = new Services_Utilities();
+		$util->checkTicket();
+
 		//perform insert or update
-		$confirm = $input->confirm->int();
-		if ($confirm) {
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && $input->confirm->int() && $util->access->ticketMatch()) {
 			//check necessary permissions
-			if (! $perms = Perms::get()->tiki_p_edit_menu_option) {
+			if (! Perms::get('menu', $menuId)->tiki_p_edit_menu_option) {
 				throw new Services_Exception_Denied(tr("You don't have permission to edit menu options (tiki_p_edit_menu_option)"));
 			}
-		
-			//prepare data and check conditions
-			$menuId = $input->menuId->int();
-			if (! $menuId) {
-				throw new Services_Exception_MissingValue('menuId');
-			}
-			
-			$optionId = $input->optionId->int();
-			if (! $optionId) {
-				throw new Services_Exception_MissingValue('optionId');
-			}
-			
+
 			$name = $input->name->text();
 			if (! $name) {
 				throw new Services_Exception_MissingValue('name');
@@ -184,38 +187,25 @@ class Services_Menu_Controller
 			$perm = $input->perm->text();
 			$groupname = $input->asArray('groupname');
 			$groupname = implode(',', $groupname);
-			$level = $input->userlevel->text();
+			$level = $input->level->text();
 			$icon = $input->icon->text();
-			
+			$class = $input->class->text();
+
 			//execute insert/update
 			$menuLib = TikiLib::lib('menu');
-			$menuLib->replace_menu_option($menuId, $optionId, $name, $url, $type, $position, $section, $perm, $groupname, $level, $icon);
-			unset($menuLib);
-			
-			//post functions
-				//$modlib->clear_cache();
-			//fire event
+			$menuLib->replace_menu_option($menuId, $optionId, $name, $url, $type, $position, $section, $perm, $groupname, $level, $icon, $class);
 		}
 		
 		//information for the menu option screen
-		return array(
+		return [
 			'title' => $optionId ? tr('Menu Option %0', $optionInfo["optionId"]) : tr('Create Menu Option'),
 			'optionId' => $optionId,
 			'menuId' => $menuId,
 			'menuInfo' => $menuDetails["info"],
 			'menuSymbol' => $menuDetails["symbol"],
-			'data' => $optionInfo,
-			'name' => $optionInfo["name"],
-			'url' => $optionInfo["url"],
-			'type' => $optionInfo["type"],
-			'position' => $optionInfo["position"],
-			'section' => $optionInfo["section"],
-			'perm' => $optionInfo["perm"],
+			'info' => $optionInfo,
 			'option_groups' => $option_groups,
-			'level' => $optionInfo["userlevel"],
-			'icon' => $optionInfo["icon"],
-			'perms' => $perms,
-		);
+		];
 	}
 	
 	function action_export_menu_options ($input)
