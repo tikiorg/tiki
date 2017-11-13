@@ -892,32 +892,25 @@ class Tiki_Profile
 			return self::getProfileKeyfor($this->domain, $this->withPrefix($this->profile));
 		}
 	} // }}}
-	
-	function getObjectSymbolDetails($type, $value) // Based on an objectType (eg: menu) and an objectId (eg: Id of a menu) query tiki_profile_symbols table and return domain, profile and object information
+
+	/**
+	 * Based on an objectType (eg: menu) and an objectId (eg: Id of a menu) query tiki_profile_symbols table and return domain, profile and object information
+	 *
+	 * @param string $objectType     Object type
+	 * @param mixed $objectId        Name or ID of object
+	 * @return array
+	 */
+	static function getObjectSymbolDetails($objectType, $objectId)
 	{
-		global $tikilib;
-				
-		if (!$type) {
-			return false;
+		$result = [];
+
+		if ($objectType && $objectId) {
+			$result = TikiDb::get()->table('tiki_profile_symbols')->fetchRow(
+				['domain', 'profile', 'object'],
+				['type' => $objectType, 'value' => $objectId]
+			);
 		}
-		elseif (!$value) {
-			return false;
-		}
-		else {
-			$query = 'select * from `tiki_profile_symbols` where `type`=? and `value`=?';
-			$result = $tikilib->fetchAll($query, array($type, $value));
-		
-			if (empty ($result)) {
-				return null;
-			} else {
-				$symbolDetails = array (
-					'domain' => $result["0"]["domain"],
-					'profile' => $result["0"]["profile"],
-					'object' => $result["0"]["object"],
-					);
-				return $symbolDetails;
-			}
-		}
+		return $result;
 	}
 
 	function getPath()
