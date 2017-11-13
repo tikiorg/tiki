@@ -73,12 +73,13 @@ class MenuLib extends TikiLib
 		return true;
 	}
 
-	public function clone_menu($menuId)
+	public function clone_menu($menuId, $name, $description='')
 	{
 		$menus = $this->table('tiki_menus');
 		$row = $menus->fetchFullRow(array(	 'menuId' => $menuId ));
 		$row['menuId'] = null;
-		$row['name'] = $row['name'] . ' ' . tra('(copy)');
+		$row['name'] = $name;
+		$row['description'] = $description;
 		$newId = $menus->insert($row);
 
 		$menuoptions = $this->table('tiki_menu_options');

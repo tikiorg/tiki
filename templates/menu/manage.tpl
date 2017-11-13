@@ -9,14 +9,14 @@
 			{tr}Id{/tr}:{$info.menuId|escape}
 		{/if}
 		{if $symbol}
-			<a class="btn btn-link btn-sm tips" title="{tr}Symbol Information{/tr}:{$symbol.object} ({tr}Profile Name{/tr}:{$symbol.profile}, {tr}Profile Source{/tr}:{$symbol.domain})">
+			<a class="btn btn-link btn-sm tips" title="{tr}Symbol Information{/tr}|{tr}Symbol{/tr}: <strong>{$symbol.object}</strong><br>{tr}Profile Name{/tr}: <strong>{$symbol.profile}</strong><br>{tr}Profile Source{/tr}: <strong>{$symbol.domain}</strong>">
 				{icon name="information"}
 			</a>
 		{/if}	
 	</small>
 {/block}
 {block name="content"}
-	<form action="{service controller=menu action=manage_menu}" method="post" role="form" class="form">
+	<form action="{service controller=menu action=manage}" method="post" role="form" class="form">
 		{ticket}
 		<div class="form-group">
 			<label for="menus_name" class="control-label">

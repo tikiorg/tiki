@@ -6,7 +6,7 @@
 		{icon name="list"} {tr}List Menus{/tr}
 	</a>
 	{if $tiki_p_edit_menu eq 'y'}
-		<a class="btn btn-default" href="{bootstrap_modal controller=menu action=manage_menu menuId=$menuId}">
+		<a class="btn btn-default" href="{bootstrap_modal controller=menu action=manage menuId=$menuId}">
 			{icon name="edit"} {tr}Edit This Menu{/tr}
 		</a>
 		<a class="btn btn-default" href="{bootstrap_modal controller=menu action=export_menu_options menuId=$menuId}"

@@ -5,31 +5,31 @@
 {/block}
 
 {block name="content"}
-	<form action="{service controller=menu action=clone_menu}" method="post" role="form" class="form-horizontal">
-		<div class="well well-sm">
-			<div class="form-group">
-				<label for="menus_name" class="control-label col-sm-2">
-					{tr}Name{/tr}
-				</label>
-				<div class="form-control-static col-sm-10">
-					{$info.name|escape}
-					<span class="help-block">
-						{if $info.menuId}
-							{tr}Id{/tr}: {$info.menuId|escape}
-						{/if}
-						{if $symbol}
-							{tr}Symbol{/tr}:{$symbol.object} ({tr}Profile Name{/tr}:{$symbol.profile}, {tr}Profile Source{/tr}:{$symbol.domain})
-						{/if}	
-					</span>
+	<form action="{service controller=menu action=clone_menu}" method="post" role="form">
+		<div class="form-group">
+			<label for="name" class="control-label">
+				{tr}Name{/tr}
+			</label>
+			<div class="">
+				<input class="form-control" name="name" id="name" value="{tr _0=$info.name|escape}%0 Copy{/tr}">
+				<div class="small">
+					{if $info.menuId}
+						{tr}Clone of Menu Id{/tr}: {$info.menuId|escape}
+					{/if}
+					{if $symbol}
+						<a class="btn btn-link btn-sm tips" title="{tr}Symbol Information{/tr}|{tr}Symbol{/tr}: <strong>{$symbol.object}</strong><br>{tr}Profile Name{/tr}: <strong>{$symbol.profile}</strong><br>{tr}Profile Source{/tr}: <strong>{$symbol.domain}</strong>">
+							{icon name="information"}
+						</a>
+					{/if}
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="menus_desc" class="control-label col-sm-2">
-					{tr}Description{/tr}
-				</label>
-				<div class="form-control-static col-sm-10">
-					{$info.description|escape}
-				</div>
+		</div>
+		<div class="form-group">
+			<label for="description" class="control-label">
+				{tr}Description{/tr}
+			</label>
+			<div class="">
+				<textarea name="description" id="description" class="form-control">{$info.description|escape}</textarea>
 			</div>
 		</div>
 

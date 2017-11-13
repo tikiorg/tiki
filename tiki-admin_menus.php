@@ -61,11 +61,6 @@ if (isset($_REQUEST['save'])) {
 	);
 }
 
-if (isset($_REQUEST['clone']) && $_REQUEST['menuId'] > 0) {
-	check_ticket('admin-menus');
-	$menulib->clone_menu($_REQUEST['menuId']);
-}
-
 if (isset($_REQUEST['reset'])) {
 	$access->check_authenticity(tra('Are you sure you want to reset the Application Menu to the current system default?'));
 	$menulib->reset_app_menu();

@@ -14,7 +14,7 @@ class Services_Menu_Controller
 		return TikiLib::lib('menu')->get_menu($menuId);
 	}
 
-	function action_manage_menu ($input)
+	function action_manage ($input)
 	{
 		//check permissions
 		$perms = Perms::get('menu');
@@ -62,17 +62,18 @@ class Services_Menu_Controller
 			throw new Services_Exception_Denied(tr('Permission denied'));
 		}
 		
-		//prepare basic data
 		$menuId = $input->menuId->int();
+
+		//execute menu cloning
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && $input->confirm->int()) {
+			TikiLib::lib('menu')->clone_menu($menuId, $input->name->text(), $input->description->text());
+			return [];
+		}
+
+		//prepare basic data
 		$info = TikiLib::lib('menu')->get_menu($menuId);
 		$symbol = Tiki_Profile::getObjectSymbolDetails('menu', $menuId);
-	
-		//execute menu cloning
-		$confirm = $input->confirm->int();
-		if ($confirm) {
-			TikiLib::lib('menu')->clone_menu($menuId);
-		}
-		
+
 		//information for the clone menu screen
 		return array(
 			'title' => tr('Clone this menu and its options'),
@@ -109,7 +110,7 @@ class Services_Menu_Controller
 	 * @throws Services_Exception_Denied
 	 * @throws Services_Exception_MissingValue
 	 */
-	function action_manage_menu_option ($input) //TODO finish, not used yet
+	function action_manage_option ($input) //TODO finish, not used yet
 	{
 		//check permissions
 		$perms = Perms::get('menu');
