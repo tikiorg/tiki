@@ -1874,6 +1874,17 @@ function wikiplugin_tracker($data, $params)
 			$back .= smarty_function_js_insert_icon(array('type'=>"jscalendar"), $smarty);
 		}
 
+		if (!empty($tpl)) {
+			$smarty->security = true;
+			$back .= $smarty->fetch($tpl);
+		} elseif (!empty($wiki)) {
+			$smarty->security = true;
+			if ($tikilib->page_exists($wiki)) {
+			$back .= $smarty->fetch('wiki:'.$wiki);
+			} else {
+				$back .= '<span class="alert-warning">' . tr('Missing wiki template page "%0"', htmlspecialchars($wiki)) . '</span>';
+			}
+		}
 		if ( isset($params['fieldsfill']) && !empty($params['fieldsfill']) && empty($itemId) ) {
 			$back.= '<div class="form-group"><label class="col-md-3 control-label" for="ins_fill">' . tra("Insert one item per line:") 
 				. '<br />'
@@ -1898,17 +1909,6 @@ FILL;
 		}
 		if ( $prefs['feature_antibot'] == 'y' && (empty($user) || (!empty($user) && isset($_REQUEST['error']) && $_REQUEST['error'] == 'y')) ) {
 			$smarty->assign('showantibot', true);
-		}
-		if (!empty($tpl)) {
-			$smarty->security = true;
-			$back .= $smarty->fetch($tpl);
-		} elseif (!empty($wiki)) {
-			$smarty->security = true;
-			if ($tikilib->page_exists($wiki)) {
-			$back .= $smarty->fetch('wiki:'.$wiki);
-			} else {
-				$back .= '<span class="alert-warning">' . tr('Missing wiki template page "%0"', htmlspecialchars($wiki)) . '</span>';
-			}
 		}
 
 		$smarty->assign('showmandatory', $showmandatory);
