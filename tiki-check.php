@@ -2009,6 +2009,12 @@ if (!empty($sensitiveDataDetectedFiles)) {
 	);
 }
 
+if(isset($_REQUEST['benchmark'])) {
+	$benchmark = BenchmarkPhp::run();
+}else{
+	$benchmark = '';
+}
+
 if ($standalone && !$nagios) {
 	$render .= '<style type="text/css">td, th { border: 1px solid #000000; vertical-align: baseline; padding: .5em; }</style>';
 //	$render .= '<h1>Tiki Server Compatibility</h1>';
@@ -2129,6 +2135,13 @@ if ($standalone && !$nagios) {
 	} else {
 		$render .= '<a href="'.$_SERVER['SCRIPT_NAME'].'?'.$_SERVER['QUERY_STRING'].'&phpinfo=y">Append phpinfo();</a>';
 	}
+
+	$render .= '<h2>Benchmark PHP/MySQL</h2>';
+	$render .= '<a href="tiki-check.php?benchmark=run" style="margin-bottom: 10px;">Check</a>';
+	if (!empty($benchmark)){
+		renderTable($benchmark);
+	}
+
 	createPage('Tiki Server Compatibility', $render);
 } elseif ($nagios) {
 //  0	OK
@@ -2335,9 +2348,228 @@ if ($standalone && !$nagios) {
 
 	$smarty->assign('sensitive_data_detected_files', $sensitiveDataDetectedFiles);
 
+	$smarty->assign('benchmark', $benchmark);
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 	$smarty->assign('mid', 'tiki-check.tpl');
 	$smarty->display('tiki.tpl');
+}
+
+/**
+ * Script to benchmark PHP and MySQL
+ * @see https://github.com/odan/benchmark-php
+ */
+class BenchmarkPhp
+{
+	/**
+	 * Executes the benchmark and returns an array in the format expected by renderTable
+	 * @return array Benchmark results
+	 */
+	public static function run()
+	{
+		set_time_limit(120); // 2 minutes
+
+		global $host_tiki, $dbs_tiki, $user_tiki, $pass_tiki;
+
+		$options = [];
+
+		$options['db.host'] = $host_tiki;
+		$options['db.user'] = $user_tiki;
+		$options['db.pw'] = $pass_tiki;
+		$options['db.name'] = $dbs_tiki;
+
+		$benchmarkResult = self::test_benchmark($options);
+
+		$benchmark = $benchmarkResult['benchmark'];
+		if (isset($benchmark['mysql'])) {
+			foreach ($benchmark['mysql'] as $k => $v) {
+				$benchmark['mysql.' . $k] = $v;
+			}
+			unset($benchmark['mysql']);
+		}
+		$benchmark['total'] = $benchmarkResult['total'];
+		$benchmark = array_map(
+			function ($v) {
+				return ['value' => $v];
+			},
+			$benchmark
+		);
+
+		return $benchmark;
+	}
+
+	/**
+	 * Execute the benchmark
+	 * @param $settings database connection settings
+	 * @return array Benchmark results
+	 */
+	protected static function test_benchmark($settings)
+	{
+		$timeStart = microtime(true);
+
+		$result = [];
+		$result['version'] = '1.1';
+		$result['sysinfo']['time'] = date("Y-m-d H:i:s");
+		$result['sysinfo']['php_version'] = PHP_VERSION;
+		$result['sysinfo']['platform'] = PHP_OS;
+		$result['sysinfo']['server_name'] = $_SERVER['SERVER_NAME'];
+		$result['sysinfo']['server_addr'] = $_SERVER['SERVER_ADDR'];
+
+		self::test_math($result);
+		self::test_string($result);
+		self::test_loops($result);
+		self::test_ifelse($result);
+		if (isset($settings['db.host']) && function_exists('mysqli_connect')) {
+			self::test_mysql($result, $settings);
+		}
+
+		$result['total'] = self::timer_diff($timeStart);
+		return $result;
+	}
+
+	/**
+	 * Benchmark the execution of multiple math functions
+	 * @param $result Benchmark results
+	 * @param int $count Number of iterations
+	 */
+	protected static function test_math(&$result, $count = 99999)
+	{
+		$timeStart = microtime(true);
+
+		$mathFunctions = [
+			"abs",
+			"acos",
+			"asin",
+			"atan",
+			"bindec",
+			"floor",
+			"exp",
+			"sin",
+			"tan",
+			"pi",
+			"is_finite",
+			"is_nan",
+			"sqrt",
+		];
+		for ($i = 0; $i < $count; $i++) {
+			foreach ($mathFunctions as $function) {
+				call_user_func_array($function, [$i]);
+			}
+		}
+		$result['benchmark']['math'] = self::timer_diff($timeStart);
+	}
+
+	/**
+	 * Benchmark the execution of multiple string functions
+	 * @param $result Benchmark results
+	 * @param int $count Number of iterations
+	 */
+	protected static function test_string(&$result, $count = 99999)
+	{
+		$timeStart = microtime(true);
+		$stringFunctions = [
+			"addslashes",
+			"chunk_split",
+			"metaphone",
+			"strip_tags",
+			"md5",
+			"sha1",
+			"strtoupper",
+			"strtolower",
+			"strrev",
+			"strlen",
+			"soundex",
+			"ord",
+		];
+
+		$string = 'the quick brown fox jumps over the lazy dog';
+		for ($i = 0; $i < $count; $i++) {
+			foreach ($stringFunctions as $function) {
+				call_user_func_array($function, [$string]);
+			}
+		}
+		$result['benchmark']['string'] = self::timer_diff($timeStart);
+	}
+
+	/**
+	 * Benchmark the execution of loops
+	 * @param $result Benchmark results
+	 * @param int $count Number of iterations
+	 */
+	protected static function test_loops(&$result, $count = 999999)
+	{
+		$timeStart = microtime(true);
+		for ($i = 0; $i < $count; ++$i) {
+
+		}
+		$i = 0;
+		while ($i < $count) {
+			++$i;
+		}
+		$result['benchmark']['loops'] = self::timer_diff($timeStart);
+	}
+
+	/**
+	 * Benchmark the execution of conditional operators
+	 * @param $result Benchmark results
+	 * @param int $count Number of iterations
+	 */
+	protected static function test_ifelse(&$result, $count = 999999)
+	{
+		$timeStart = microtime(true);
+		for ($i = 0; $i < $count; $i++) {
+			if ($i == -1) {
+
+			} elseif ($i == -2) {
+
+			} else {
+				if ($i == -3) {
+
+				}
+			}
+		}
+		$result['benchmark']['ifelse'] = self::timer_diff($timeStart);
+	}
+
+	/**
+	 * Benchmark MySQL operations
+	 * @param $result Benchmark results
+	 * @param $settings MySQL connection information
+	 * @return array
+	 */
+	protected static function test_mysql(&$result, $settings)
+	{
+		$timeStart = microtime(true);
+
+		$link = mysqli_connect($settings['db.host'], $settings['db.user'], $settings['db.pw']);
+		$result['benchmark']['mysql']['connect'] = self::timer_diff($timeStart);
+
+		mysqli_select_db($link, $settings['db.name']);
+		$result['benchmark']['mysql']['select_db'] = self::timer_diff($timeStart);
+
+		$dbResult = mysqli_query($link, 'SELECT VERSION() as version;');
+		$arr_row = mysqli_fetch_array($dbResult);
+		$result['sysinfo']['mysql_version'] = $arr_row['version'];
+		$result['benchmark']['mysql']['query_version'] = self::timer_diff($timeStart);
+
+		$query = "SELECT BENCHMARK(1000000,ENCODE('hello',RAND()));";
+		$dbResult = mysqli_query($link, $query);
+		$result['benchmark']['mysql']['query_benchmark'] = self::timer_diff($timeStart);
+
+		mysqli_close($link);
+
+		$result['benchmark']['mysql']['total'] = self::timer_diff($timeStart);
+		return $result;
+	}
+
+	/**
+	 * Helper to calculate time elapsed
+	 * @param $timeStart time to compare against now
+	 * @return string time elapsed
+	 */
+	protected static function timer_diff($timeStart)
+	{
+		return number_format(microtime(true) - $timeStart, 3);
+	}
 }
 
 /**

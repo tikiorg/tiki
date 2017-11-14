@@ -366,6 +366,27 @@
 <h2>{tr}PHP Info{/tr}</h2>
 {tr}For more detailed information about your PHP installation see <a href="tiki-phpinfo.php">Admin->phpinfo</a>{/tr}.
 
+<h2>{tr}Benchmark PHP/MySQL{/tr}</h2>
+<a href="tiki-check.php?benchmark=run" class="btn btn-primary btn-sm" style="margin-bottom: 10px;">{tr}Check{/tr}</a>
+{if !empty($benchmark)}
+	<br />
+	<div class="table-responsive">
+		<table class="table table-striped table-hover">
+			<tr>
+				<th>{tr}Property{/tr}</th>
+				<th>{tr}Value{/tr}</th>
+			</tr>
+
+			{foreach from=$benchmark key=key item=item}
+				<tr>
+					<td class="text">{$key}</td>
+					<td class="text">{$item.value}</td>
+				</tr>
+			{/foreach}
+		</table>
+	</div>
+{/if}
+
 <h2>{tr}BOM Detected Files{/tr}</h2>
 <p>{tr}Scanned files:{/tr} {$bom_total_files_scanned}</p>
 <p>{tr}BOM files detected:{/tr}</p>
