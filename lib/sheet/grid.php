@@ -465,7 +465,9 @@ class TikiSheet
 		{
 			foreach( $row as $info )
 			{
-				$total = $rowIndex + $info['height'];
+				if (isset($info['height'])) {
+					$total = $rowIndex + $info['height'];
+				}
 
 				if ( $total > $maxRow ) {
 					$maxRow = $total;
@@ -562,7 +564,9 @@ class TikiSheet
 	function import( &$handler )
 	{
 		$this->name = $handler->name();
-		$this->id = $handler->id;
+		if (isset($handler->id)) {
+			$this->id = $handler->id;
+		}
 		$this->type = $handler->type;
 		$this->cssName = $handler->cssName;
 		$this->rowCount = (isset($handler->rowCount) ? $handler->rowCount : $this->rowCount);

@@ -159,11 +159,6 @@ function tiki_setup_events()
 		$events->bind('tiki.file.delete', $defer('h5p', 'handle_fileDelete'));
 	}
 
-	if ($prefs['feature_futurelinkprotocol'] == 'y') {
-		$events->bind("tiki.wiki.view", $defer('wlte', 'tiki_wiki_view_pastlink'));
-		$events->bind("tiki.wiki.save", $defer('wlte', 'tiki_wiki_save_pastlink'));
-	}
-
 	if ($prefs['goal_enabled'] == 'y') {
 		TikiLib::lib('goalevent')->bindEvents($events);
 	}

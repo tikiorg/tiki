@@ -132,6 +132,21 @@ function wikiplugin_report( $data, $params )
 		"
 			);
 
+		$access = TikiLib::lib('access');
+		$access->checkAuthenticity();
+		$ticket = $access->getTicket();
+
+		if ($ticket) {
+			$tiki_token = "<input type='hidden' name='ticket' value='" . $ticket . "' />
+				<input type='hidden' name='daconfirm' value='y'>";
+		} else {
+			$tiki_token = "";
+		}
+
+		if (! isset($label)) {
+			$label = '';
+		}
+
 		$result .= "
 			<form class='reportWikiPlugin' data-index='$reportI' method='post' action='tiki-wikiplugin_edit.php'>
 				<input type='hidden' name='page' value='$page'/>
@@ -140,6 +155,7 @@ function wikiplugin_report( $data, $params )
 				<input type='hidden' name='type' value='report' />
 				<input type='hidden' name='params[name]' value='$name' />
 				<input type='hidden' name='params[view]' value='$view' />
+				" . $tiki_token . "
 			</form>
 			<span title='".tr('Edit Report')."' style='cursor: pointer;' onclick='return editReport$reportI(this);'>
 				<img src='img/icons/page_edit.png' alt='$label' width='16' height='16' title='$label' class='icon' />

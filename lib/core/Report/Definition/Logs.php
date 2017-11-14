@@ -146,11 +146,17 @@ class Report_Definition_Logs
 	{
 		global $tikilib,$user;
 
-		$qry = TikiLib::lib("logsqry")
-			->type($values['logs']['value'])
-			->action($values['logs']['action']['value'])
-			->start(strtotime($values['logs']['start']['value']))
-			->end(strtotime($values['logs']['end']['value']));
+		$qry = TikiLib::lib("logsqry")->type($values['logs']['value']);
+
+		if (isset($values['logs']['action']) && isset($values['logs']['action']['value'])) {
+			$qry->action($values['logs']['action']['value']);
+		}
+		if (isset($values['logs']['start']) && isset($values['logs']['start']['value'])) {
+			$qry->start(strtotime($values['logs']['start']['value']));
+		}
+		if (isset($values['logs']['end']) && isset($values['logs']['end']['value'])) {
+			$qry->end(strtotime($values['logs']['end']['value']));
+		}
 
 		$usersItems = array();//user items need to be choosable as to what type
 		foreach ($tikilib->fetchAll(

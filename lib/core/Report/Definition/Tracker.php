@@ -138,11 +138,17 @@ class Report_Definition_Tracker
 	{
 		$tracker = $values['tracker'];
 
-		$qry = Tracker_Query::tracker($tracker['value'])
-			->start($tracker['start']['value'])
-			->end($tracker['end']['value'])
-			->itemId($tracker['itemId']['value'])
-			->excludeDetails();
+		$qry = Tracker_Query::tracker($tracker['value']);
+		if (isset($tracker['start']) && isset($tracker['start']['value'])) {
+			$qry->start($tracker['start']['value']);
+		}
+		if (isset($tracker['end']) && isset($tracker['end']['value'])) {
+			$qry->end($tracker['end']['value']);
+		}
+		if (isset($tracker['itemId']) && isset($tracker['itemId']['value'])) {
+			$qry->itemId($tracker['itemId']['value']);
+		}
+		$qry->excludeDetails();
 
 		if (!empty($tracker['status'])) {
 			$allStatus = '';
@@ -186,8 +192,10 @@ class Report_Definition_Tracker
 			unset($newResult);
 		}
 
-		foreach ($tracker['join'] as $join) {
-			$result = $this->innerJoin($result, $this->query($join), $join['left']['value'], $join['right']['value']);
+		if (isset($tracker['join'])) {
+			foreach ($tracker['join'] as $join) {
+				$result = $this->innerJoin($result, $this->query($join), $join['left']['value'], $join['right']['value']);
+			}
 		}
 
 		return $result;
