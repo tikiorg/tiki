@@ -450,7 +450,7 @@ class WikiLib extends TikiLib
 
             if ($modified) {
                 $data = $matches->getText();
-                if ($type == 'wiki_page') {
+                if ($type == 'wiki page') {
                     $query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
                     $this->query($query, array( $data,(int) strlen($data), $page));
                     $this->invalidate_cache($page);
