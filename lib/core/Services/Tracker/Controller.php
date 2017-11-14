@@ -274,6 +274,14 @@ class Services_Tracker_Controller
 		);
 	}
 
+	/**
+	 * @param JitFilter $input
+	 * @return array
+	 * @throws Services_Exception
+	 * @throws Services_Exception_Denied
+	 * @throws Services_Exception_DuplicateValue
+	 * @throws Services_Exception_NotFound
+	 */
 	function action_edit_field($input)
 	{
 		global $prefs;
@@ -324,7 +332,7 @@ class Services_Tracker_Controller
 			$visibleBy = $input->asArray('visible_by', ',');
 			$editableBy = $input->asArray('editable_by', ',');
 
-			$options = $this->utilities->buildOptions($input->option, $typeInfo);
+			$options = $this->utilities->buildOptions(new JitFilter($input->option), $typeInfo);
 
 			$trklib = TikiLib::lib('trk');
 			$handler = $trklib->get_field_handler($field);
@@ -350,7 +358,7 @@ class Services_Tracker_Controller
 					$typeInfo = $types[$type];
 					if( !empty($oldTypeInfo['supported_changes']) && in_array($type, $oldTypeInfo['supported_changes']) ) {
 						// changing supported types should not clear all options but only the ones that are not available in the new type
-						$options = Tracker_Options::fromInput($input->option, $oldTypeInfo);
+						$options = Tracker_Options::fromInput(new JitFilter($input->option), $oldTypeInfo);
 						$params = $options->getAllParameters();
 						foreach( array_keys($params) as $param ) {
 							if( empty($typeInfo['params'][$param]) ) {
