@@ -33,7 +33,10 @@ class Services_Search_CustomSearchController
 		$cachelib = TikiLib::lib('cache');
 		$definition = $input->definition->word();
 		if (empty($definition) || ! $definition = $cachelib->getSerialized($definition, 'customsearch')) {
-			throw new Services_Exception(tra('Unfortunately, the search cache has expired. Please reload the page to start over.'));
+			$smarty = \TikiLib::lib('smarty');
+			$smarty->assign('url', $_SERVER['HTTP_REFERER']);
+			$value = $smarty->fetch('search_customsearch/cache_expired.tpl');
+			return array('html' => $value);
 		}
 
 		/** @var Search_Query $query */
