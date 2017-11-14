@@ -498,7 +498,12 @@ class Services_Comment_Controller
 			// canPost() requires also view access frontend/template wise. 
 			// So we return also true if post ($perms->comment_tracker_items) is enabled. 
 			case 'trackeritem':
-				return ($perms->tracker_view_comments || $perms->comment_tracker_items);
+				$item = Tracker_Item::fromId($objectId);
+				if ($item) {
+					return $item->canViewComments();
+				} else {
+					return ($perms->tracker_view_comments || $perms->comment_tracker_items);
+				}
 				break;
 				
 			
@@ -532,7 +537,12 @@ class Services_Comment_Controller
 			// requires also view access from the front/template part
 			// so we add $perms->comment_tracker_items also to canView()
 			case 'trackeritem':
-				return $perms->comment_tracker_items;
+				$item = Tracker_Item::fromId($objectId);
+				if ($item) {
+					return $item->canPostComments();
+				} else {
+					return $perms->comment_tracker_items;
+				}
 				break;
 		
 			// @TODO which $types do use / or should use these permissions?

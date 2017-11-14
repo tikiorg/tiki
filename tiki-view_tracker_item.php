@@ -626,6 +626,7 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 if ($tracker_info['useComments'] == 'y') {
 	$comCount = $trklib->get_item_nb_comments($itemId);
 	$smarty->assign("comCount", $comCount);
+	$smarty->assign("canViewComments", $itemObject->canViewComments());
 }
 
 if ($tracker_info["useAttachments"] == 'y') {

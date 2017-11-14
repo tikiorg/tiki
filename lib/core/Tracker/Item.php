@@ -135,6 +135,30 @@ class Tracker_Item
 			return $this->perms->remove_tracker_items;
 		}
 	}
+
+	public function canViewComments() {
+		if ($this->perms->tracker_view_comments || $this->perms->comment_tracker_items) {
+			return true;
+		}
+		if ($this->canSeeOwn()) {
+			return true;
+		}
+		return false;
+	}
+
+	public function canPostComments() {
+		if ($this->perms->comment_tracker_items) {
+			return true;
+		}
+		if ($this->canSeeOwn()) {
+			return true;
+		}
+		if ($this->canFromSpecialPermissions('Modify')) {
+			return true;
+		}
+		return false;
+	}
+
 	public function getSpecialPermissionUsers($itemId, $operation)
 	{
 		$users = array();
