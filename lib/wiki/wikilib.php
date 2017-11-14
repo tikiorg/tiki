@@ -394,6 +394,27 @@ class WikiLib extends TikiLib
 			$this->invalidate_cache($page);
 		}
 
+		// correct toPage and fromPage in tiki_links
+		// before update, manage to avoid duplicating index(es) when B is renamed to C while page(s) points to both C (not created yet) and B
+		$query = 'select `fromPage` from `tiki_links` where `toPage`=?';
+		$result = $this->query($query, array( $newName ));
+		$linksToNew = array();
+
+		while ($res = $result->fetchRow()) {
+			$linksToNew[] = $res['fromPage'];
+		}
+
+		if ($extra = array_intersect($linksToOld, $linksToNew)) {
+			$query = 'delete from `tiki_links` where `fromPage` in (' . implode(',', array_fill(0, count($extra), '?')) . ') and `toPage`=?';
+			$this->query($query, array_merge($extra, array($oldName)));
+		}
+
+		$query = 'update `tiki_links` set `fromPage`=? where `fromPage`=?';
+		$this->query($query, array( $newName, $oldName));
+
+		$query = 'update `tiki_links` set `toPage`=? where `toPage`=?';
+		$this->query($query, array( $newName, $oldName));
+
         // Modify pages including the old page with Include plugin,
         // so that they include the new name
         $relationlib = TikiLib::lib('relation');
@@ -426,27 +447,6 @@ class WikiLib extends TikiLib
                 
             }
         }
-
-		// correct toPage and fromPage in tiki_links
-		// before update, manage to avoid duplicating index(es) when B is renamed to C while page(s) points to both C (not created yet) and B
-		$query = 'select `fromPage` from `tiki_links` where `toPage`=?';
-		$result = $this->query($query, array( $newName ));
-		$linksToNew = array();
-
-		while ($res = $result->fetchRow()) {
-			$linksToNew[] = $res['fromPage'];
-		}
-
-		if ($extra = array_intersect($linksToOld, $linksToNew)) {
-			$query = 'delete from `tiki_links` where `fromPage` in (' . implode(',', array_fill(0, count($extra), '?')) . ') and `toPage`=?';
-			$this->query($query, array_merge($extra, array($oldName)));
-		}
-
-		$query = 'update `tiki_links` set `fromPage`=? where `fromPage`=?';
-		$this->query($query, array( $newName, $oldName));
-
-		$query = 'update `tiki_links` set `toPage`=? where `toPage`=?';
-		$this->query($query, array( $newName, $oldName));
 
 		// tiki_footnotes change pageName
 		$query = 'update `tiki_page_footnotes` set `pageName`=? where `pageName`=?';
