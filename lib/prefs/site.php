@@ -118,6 +118,23 @@ Use the Message to display to specify the message that visitors will see when at
 				'wikiplugin_googleanalytics',
 			),
 		),
+		'site_google_analytics_gtag' => [
+			'name' => tr('Google Global Site Tag Mode'),
+			'description' => tra('Use the newer Google Global Site Tag (gtag.js) as opposed to the previous ga.js.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => [
+				'site_google_analytics_account',
+			],
+		],
+		'site_google_credentials' => [
+			'name' => tra('Google authentication credentials file'),
+			'description' => tr('Path to your Google Service Account credentials JSON file.'),
+			'type' => 'text',
+			'size' => 30,
+			'default' => '',
+			'warning' => 'Must be kept private and not accessible on the internet directly',
+		],
 		'site_layout' => array(
 			'name' => tr('Site layout'),
 			'description' => tr('Changes the template for the overall site layout'),
@@ -172,14 +189,6 @@ Use the Message to display to specify the message that visitors will see when at
 			'dependencies' => array(
 				'site_piwik_analytics_server_url',
 			),
-		),
-		'site_google_credentials' => array(
-			'name' => tra('Google authentication credentials file'),
-			'description' => tr('Path to you Google Service Account credentials JSON file.'),
-			'type' => 'text',
-			'size' => 30,
-			'default' => '',
-			'warning' => 'Must be kept private and not accessible on the internet directly',
 		),
 	);
 }

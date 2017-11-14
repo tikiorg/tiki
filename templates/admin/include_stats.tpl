@@ -24,6 +24,7 @@
 			<br>
 			<fieldset>
 				{preference name=site_google_analytics_account}
+				{preference name=site_google_analytics_gtag}
 				{preference name=site_google_credentials}
 			</fieldset>
 		{/tab}

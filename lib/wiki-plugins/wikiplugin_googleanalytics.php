@@ -31,7 +31,7 @@ function wikiplugin_googleanalytics_info()
 
 function wikiplugin_googleanalytics($data, $params)
 {
-	global $feature_no_cookie;	// set according to cookie_consent_feature pref in tiki-setup.php
+	global $feature_no_cookie, $prefs;	// set according to cookie_consent_feature pref in tiki-setup.php
 
 	extract($params, EXTR_SKIP);
 	if (empty($account)) {
@@ -40,7 +40,8 @@ function wikiplugin_googleanalytics($data, $params)
 	if ($feature_no_cookie) {
 		return '';
 	}
-	$ret = <<<JS
+	if ($prefs['site_google_analytics_gtag'] !== 'y') {
+		$ret = <<<HTML
 <script>
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -51,7 +52,21 @@ ga('create', 'UA-$account', 'auto');  // Replace with your property ID.
 ga('send', 'pageview');
 
 </script>
-JS
-;
+HTML;
+
+	} else {
+		$ret = <<<HTML
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-$account"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-$account');
+</script>
+HTML;
+
+	}
 	return $ret;
 }
