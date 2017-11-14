@@ -2700,6 +2700,41 @@ class Comments extends TikiLib
 	}
 
     /**
+     * Call wikiplugin_*_rewrite function on wiki plugins used in a post
+     *
+     * @param $data
+     * @param $objectType
+     * @param $threadId
+     */
+    function process_save_plugins($data, $objectType, $threadId)
+    {
+		if ($objectType == 'forum') {
+			$type = 'forum post'; // this must correspond to that used in tiki_objects
+		} else {
+			$type = $objectType . ' comment'; // comment types are not used in tiki_objects yet but maybe in future
+		}
+        
+		// Code related to Include wiki plugin
+		// Remove all wiki page include relations from this comment
+		// All relations will be recreated by wikiplugin_include_rewrite
+		$relationlib = TikiLib::lib('relation');
+		$relationlib->remove_relations_from($type, $threadId, 'tiki.wiki.include');
+
+		$parserlib = TikiLib::lib('parser');
+		$newData = $parserlib->process_save_plugins(
+			$data,
+			array(
+				'type' => $type,
+				'itemId' => $threadId
+			)
+		);
+
+        if ($data != $newData) {
+            $this->table('tiki_comments')->update(array('data' => $newData), array('threadId' => $threadId));
+        }
+    }
+
+    /**
      * @param $threadId
      * @param $title
      * @param $comment_rating
@@ -2758,6 +2793,7 @@ class Comments extends TikiLib
 			}
 
 			$this->update_comment_links($data, $comment['objectType'], $threadId);
+			$this->process_save_plugins($data, $comment['objectType'], $threadId);
 			$type = $this->update_index($comment['objectType'], $threadId);
 			if ($type == 'forum post') {
 				TikiLib::events()->trigger(
@@ -2987,6 +3023,7 @@ class Comments extends TikiLib
 		}
 
 		$this->update_comment_links($data, $object[0], $threadId);
+		$this->process_save_plugins($data, $object[0], $threadId);
 		$tx = $this->begin();
 		$type = $this->update_index($object[0], $threadId, $parentId);
 		$finalEvent = 'tiki.comment.post';
