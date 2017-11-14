@@ -536,6 +536,42 @@ class WikiLib extends TikiLib
 		return true;
 	}
 
+    /**
+     * Checks all pages that include $page and parses its contents to
+     * get a list of all Plugin Include calls.
+     *
+     * @param string $page
+     * @return array list of associative arrays with (page, arguments, body) keys
+     */
+    public function get_external_includes($page)
+    {
+        $relationlib = TikiLib::lib('relation');
+        $relations = $relationlib->get_relations_to('wiki page', $page, 'tiki.wiki.include');
+
+        $result = array();
+
+        foreach ($relations as $relation) {
+            if ($relation['type'] == 'wiki page') {
+                $page = $relation['itemId'];
+                $info = $this->get_page_info($page);
+                $data = $info['data'];
+                $matches = WikiParser_PluginMatcher::match($data);
+                $argParser = new WikiParser_PluginArgumentParser();
+                foreach ( $matches as $match ) {
+                    if ( $match->getName() == 'include' ) {
+                        $result[] = array(
+                            'page' => $page,
+                            'arguments' => $argParser->parse($match->getArguments()),
+                            'body' => $match->getBody()
+                        );
+                    }
+                }
+            }
+        }
+
+        return $result;
+    }
+
 	public function set_page_cache($page,$cache)
 	{
 		$query = 'update `tiki_pages` set `wiki_cache`=? where `pageName`=?';

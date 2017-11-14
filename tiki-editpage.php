@@ -368,6 +368,18 @@ if ($prefs['feature_warn_on_edit'] === 'y') {
 		die;
 	}
 }
+$included_by = [];
+foreach ($wikilib->get_external_includes($page) as $inc) {
+    $included_by[] = array(
+        'page' => $inc['page'],
+        'start' => $inc['arguments']['start'],
+        'end' => $inc['arguments']['end']
+    );
+}
+if (sizeof($included_by) > 0) {
+    $smarty->assign_by_ref('included_by', $included_by);
+}
+  
 $category_needed = false;
 $contribution_needed = false;
 if (isset($_REQUEST['lock_it']) && $_REQUEST['lock_it'] === 'on') {
