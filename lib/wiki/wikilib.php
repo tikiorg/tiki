@@ -394,6 +394,39 @@ class WikiLib extends TikiLib
 			$this->invalidate_cache($page);
 		}
 
+        // Modify pages including the old page with Include plugin,
+        // so that they include the new name
+        $relationlib = TikiLib::lib('relation');
+        $relations = $relationlib->get_relations_to('wiki page', $oldName, 'tiki.wiki.include');
+
+        foreach ($relations as $relation) {
+            if ($relation['type'] == 'wiki page') {
+                $page = $relation['itemId'];
+                $info = $this->get_page_info($page);
+                $data = $info['data'];
+                $matches = WikiParser_PluginMatcher::match($data);
+                $argParser = new WikiParser_PluginArgumentParser();
+                $modified = false;
+                foreach ( $matches as $match ) {
+                    if ( $match->getName() == 'include' ) {
+                        $arguments = $argParser->parse($match->getArguments());
+                        if ($arguments['page'] == $oldName) {
+                            $arguments['page'] = $newName;
+                            $match->replaceWithPlugin($match->getName(), $arguments, $match->getBody());
+                            $modified = true;
+                        }
+                    }
+                }
+                if ($modified) {
+                    $data = $matches->getText();
+                    $query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
+                    $this->query($query, array( $data,(int) strlen($data), $page));
+                    $this->invalidate_cache($page);
+                }
+                
+            }
+        }
+
 		// correct toPage and fromPage in tiki_links
 		// before update, manage to avoid duplicating index(es) when B is renamed to C while page(s) points to both C (not created yet) and B
 		$query = 'select `fromPage` from `tiki_links` where `toPage`=?';
