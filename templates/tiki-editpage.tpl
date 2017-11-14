@@ -62,11 +62,12 @@
 	{/if}
         {if isset($included_by)}
 		{remarksbox type='Warning' title="{tr}Warning{/tr}"}
-			{tr}The following page(s) include this one with Plugin Include and might be affected by these changes. Renaming sections can break those includes{/tr}
+			{tr}The following item(s) include this one with Plugin Include and might be affected by these changes. Renaming sections can break related item(s).{/tr}
                         <ul>
                           {foreach from=$included_by item=include}
                           <li>
-                            {$include.page}
+                            {$include.type|capitalize}:
+                            <a href="{$include.href}" target="_blank">{$include.title}</a>
                             {if $include.start || $include.end} - {/if}
                             {if $include.start}
                             {tr}from{/tr} "{$include.start}"

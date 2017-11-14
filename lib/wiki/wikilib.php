@@ -421,30 +421,43 @@ class WikiLib extends TikiLib
         $relations = $relationlib->get_relations_to('wiki page', $oldName, 'tiki.wiki.include');
 
         foreach ($relations as $relation) {
-            if ($relation['type'] == 'wiki page') {
+            $type = $relation['type'];
+            if ($type == 'wiki page') {
                 $page = $relation['itemId'];
                 $info = $this->get_page_info($page);
                 $data = $info['data'];
-                $matches = WikiParser_PluginMatcher::match($data);
-                $argParser = new WikiParser_PluginArgumentParser();
-                $modified = false;
-                foreach ( $matches as $match ) {
-                    if ( $match->getName() == 'include' ) {
-                        $arguments = $argParser->parse($match->getArguments());
-                        if ($arguments['page'] == $oldName) {
-                            $arguments['page'] = $newName;
-                            $match->replaceWithPlugin($match->getName(), $arguments, $match->getBody());
-                            $modified = true;
-                        }
+            }  elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
+                $objectId = (int)$relation['itemId'];
+                $comment_info = TikiLib::lib('comments')->get_comment($objectId);
+                $data = $comment_info['data'];
+            } else {
+                continue;
+            }
+
+            $matches = WikiParser_PluginMatcher::match($data);
+            $argParser = new WikiParser_PluginArgumentParser();
+            $modified = false;
+            foreach ( $matches as $match ) {
+                if ( $match->getName() == 'include' ) {
+                    $arguments = $argParser->parse($match->getArguments());
+                    if ($arguments['page'] == $oldName) {
+                        $arguments['page'] = $newName;
+                        $match->replaceWithPlugin($match->getName(), $arguments, $match->getBody());
+                        $modified = true;
                     }
                 }
-                if ($modified) {
-                    $data = $matches->getText();
+            }
+
+            if ($modified) {
+                $data = $matches->getText();
+                if ($type == 'wiki_page') {
                     $query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
                     $this->query($query, array( $data,(int) strlen($data), $page));
                     $this->invalidate_cache($page);
+                }  elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
+                    $query = "update `tiki_comments` set `data`=? where `threadId`=?";
+                    $this->query($query, array( $data, $objectId));
                 }
-                
             }
         }
 
@@ -551,20 +564,38 @@ class WikiLib extends TikiLib
         $result = array();
 
         foreach ($relations as $relation) {
-            if ($relation['type'] == 'wiki page') {
+            $type = $relation['type'];
+            if ($type == 'wiki page') {
                 $page = $relation['itemId'];
+                $href = 'tiki-index.php?page=' . urlencode($page);
                 $info = $this->get_page_info($page);
                 $data = $info['data'];
-                $matches = WikiParser_PluginMatcher::match($data);
-                $argParser = new WikiParser_PluginArgumentParser();
-                foreach ( $matches as $match ) {
-                    if ( $match->getName() == 'include' ) {
-                        $result[] = array(
-                            'page' => $page,
-                            'arguments' => $argParser->parse($match->getArguments()),
-                            'body' => $match->getBody()
-                        );
-                    }
+            }  elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
+                $objectId = (int)$relation['itemId'];
+                $href = 'tiki-view_forum_thread.php?threadId=' . $objectId;
+                $comment_info = TikiLib::lib('comments')->get_comment($objectId);
+                $data = $comment_info['data'];
+            } else {
+                continue;
+            }
+                
+            $matches = WikiParser_PluginMatcher::match($data);
+            $argParser = new WikiParser_PluginArgumentParser();
+
+            $objectlib = TikiLib::lib('object');
+            
+            foreach ( $matches as $match ) {
+                $info = $objectlib->get_info($type, $relation['itemId']);
+                $arguments = $argParser->parse($match->getArguments());
+                if ( $match->getName() == 'include' ) {
+                    $result[] = array(
+                        'type' => $type,
+                        'itemId' => $relation['itemId'],
+                        'href' => $href,
+                        'title' => $info['title'],
+                        'start' => $arguments['start'],
+                        'end' => $arguments['end']
+                    );
                 }
             }
         }

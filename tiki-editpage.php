@@ -368,14 +368,7 @@ if ($prefs['feature_warn_on_edit'] === 'y') {
 		die;
 	}
 }
-$included_by = [];
-foreach ($wikilib->get_external_includes($page) as $inc) {
-    $included_by[] = array(
-        'page' => $inc['page'],
-        'start' => $inc['arguments']['start'],
-        'end' => $inc['arguments']['end']
-    );
-}
+$included_by = $wikilib->get_external_includes($page);
 if (sizeof($included_by) > 0) {
     $smarty->assign_by_ref('included_by', $included_by);
 }
