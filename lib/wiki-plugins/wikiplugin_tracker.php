@@ -1886,25 +1886,26 @@ function wikiplugin_tracker($data, $params)
 			}
 		}
 		if ( isset($params['fieldsfill']) && !empty($params['fieldsfill']) && empty($itemId) ) {
-			$back.= '<div class="form-group"><label class="col-md-3 control-label" for="ins_fill">' . tra("Insert one item per line:") 
+			$back.= '<div class="form-group ins_fill"><label class="col-md-3 control-label" for="ins_fill">' . tra("Insert one item per line:") 
 				. '<br />'
 				. '<br />'
 				. '<br />'
 				. '</label>';
 			$back.= <<<FILL
 <div class="col-md-9 tracker_input_value" >
-<input type="hidden" value="" name="mode_wysiwyg"/>
-<input type="hidden" value="" name="mode_normal"/>
-<div class="edit-zone">
-<textarea id="ins_fill" name="ins_fill" class="wikiedit form-control" data-syntax="" data-codemirror="" onkeyup="" rows="15" >
-</textarea>
-</div>
-<input type="hidden" value="n" name="wysiwyg"/>
-<div name="ins_fill_desc" class="trackerplugindesc" >
+	<input type="hidden" value="" name="mode_wysiwyg"/>
+	<input type="hidden" value="" name="mode_normal"/>
+	<div class="edit-zone">
+		<textarea id="ins_fill" name="ins_fill" class="wikiedit form-control" data-syntax="" data-codemirror="" onkeyup="" rows="15" >
+		</textarea>
+	</div>
+	<input type="hidden" value="n" name="wysiwyg"/>
+	<div name="ins_fill_desc" class="trackerplugindesc" >
 FILL;
 			$back.= sprintf(tra('Each line is a list of %d field values separated with: %s'), $fill_line_cant, htmlspecialchars($fieldsfillseparator));
-			$back .= '</div><div name="ins_fill_desc2" class="trackerplugindesc" >' . htmlspecialchars(implode($fieldsfillseparator, $fieldsfillnames));
-			$back .= '</div>';
+			$back .= '	</div>';
+			$back .= '	<div name="ins_fill_desc2" class="trackerplugindesc" >' . htmlspecialchars(implode($fieldsfillseparator, $fieldsfillnames));
+			$back .= '	</div>';
 			$back .= '</div>';
 		}
 		if ( $prefs['feature_antibot'] == 'y' && (empty($user) || (!empty($user) && isset($_REQUEST['error']) && $_REQUEST['error'] == 'y')) ) {
