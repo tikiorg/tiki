@@ -1239,6 +1239,8 @@ function wikiplugin_trackerlist($data, $params)
 							//use substr to leave off milliseconds since date is stored in seconds in the database
 							$exactvalue[$i] = 'greaterequal(@' . substr($datefilter[0], 0, 10) . ')';
 							$exactvalue[$i + 1] = 'lessequal(@' . substr($datefilter[1], 0, 10) . ')';
+							$filtervalue[$i] = '';
+							$filtervalue[$i + 1] = '';
 						} else {
 							//use substr to leave off milliseconds since date is stored in seconds in the database
 							$stamp = '(@' . substr($datefilter[0], 2, 10) . ')';
@@ -1249,6 +1251,7 @@ function wikiplugin_trackerlist($data, $params)
 								$compare = 'greaterequal';
 							}
 							$exactvalue[$i] = $compare . $stamp;
+							$filtervalue[$i] = '';
 						}
 					} else {
 						$filterfield[$i] = $id;
@@ -1258,6 +1261,7 @@ function wikiplugin_trackerlist($data, $params)
 							$ajaxfilter = $categlib->get_category_id($ajaxfilter);
 						}
 						$filtervalue[$i] = $ajaxfilter;
+						$exactvalue[$i] = '';
 					}
 					$i++;
 				}
@@ -1789,34 +1793,52 @@ function wikiplugin_trackerlist($data, $params)
 			}
 		}
 		if ($tiki_p_admin_trackers != 'y' && $perms['tiki_p_view_trackers'] != 'y' && ($definition->isEnabled('writerCanModify') or $definition->isEnabled('userCanSeeOwn')) && $user && $userCreatorFieldIds) { //patch this should be in list_items
-			if (is_array($filterfield))
+			if (is_array($filterfield)) {
 				$filterfield[] = array('usersearch' => $userCreatorFieldIds);
-			elseif (empty($filterfield))
+			} elseif (empty($filterfield)) {
 				$filterfield = array(array('usersearch' => $userCreatorFieldIds));
-			else
+			} else {
 				$filterfield = array($filterfield, array('usersearch' => $userCreatorFieldIds));
-			if (is_array($exactvalue))
+			}
+			if (is_array($exactvalue)) {
 				$exactvalue[] = $user;
-			elseif (empty($exactvalue))
+			} elseif (empty($exactvalue)) {
 				$exactvalue = array($user);
-			else
+			} else {
 				$exactvalue = array($exactvalue, $user);
+			}
+			if (is_array($filtervalue)) {
+				$filtervalue[] = '';
+			} elseif (empty($filtervalue)) {
+				$filtervalue = array('');
+			} else {
+				$filtervalue = array($filtervalue, '');
+			}
 		}
 		if ($tiki_p_admin_trackers != 'y' && $perms['tiki_p_view_trackers'] != 'y' && $user && $groupCreatorFieldId) {
 			if ($filterfield != $groupCreatorFieldId || (is_array($filterfield) && !in_array($groupCreatorFieldId, $filterfield))) {
 				$groups = $userlib->get_user_groups($user);
-				if (is_array($filterfield))
+				if (is_array($filterfield)) {
 					$filterfield[] = $groupCreatorFieldId;
-				elseif (empty($filterfield))
-					$filterfield = $groupCreatorFieldId;
-				else
-					$filterfield = array($filterfield, $fieldId);
-				if (is_array($exactvalue))
-					$exactvalue[] = array_merge($exactvalue, $groups);
-				elseif (empty($exactvalue))
-					$exactvalue = $groups;
-				else
-					$exactvalue = array_merge(array($exactvalue), $groups);
+				} elseif (empty($filterfield)) {
+					$filterfield = array($groupCreatorFieldId);
+				} else {
+					$filterfield = array($filterfield, $groupCreatorFieldId);
+				}
+				if (is_array($exactvalue)) {
+					$exactvalue[] = $groups;
+				} elseif (empty($exactvalue)) {
+					$exactvalue = array($groups);
+				} else {
+					$exactvalue = array($exactvalue, $groups);
+				}
+				if (is_array($filtervalue)) {
+					$filtervalue[] = '';
+				} elseif (empty($filtervalue)) {
+					$filtervalue = array('');
+				} else {
+					$filtervalue = array($filtervalue, '');
+				}
 				global $group;// awful trick - but the filter garantee that the group is ok
 				$smarty->assign_by_ref('ours', $group);
 				$perms = array_merge($perms, $trklib->get_special_group_tracker_perm($tracker_info));
@@ -1852,6 +1874,7 @@ function wikiplugin_trackerlist($data, $params)
 			if ($allfields["data"][$i]['name'] == 'page' && empty($filterfield) && empty($displayList) && !empty($view) && $view == 'page') {
 				$filterfield = $allfields["data"][$i]['fieldId'];
 				$filtervalue = $_REQUEST['page'];
+				$exactvalue = '';
 			}
 			if ($definition->isEnabled('useRatings')
 					and $allfields["data"][$i]['type'] == 's' and $allfields["data"][$i]['name'] == 'Rating') {
