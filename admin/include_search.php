@@ -148,10 +148,13 @@ if ($tiki_p_admin == 'y' && $access->ticketMatch()) {
 	if (!empty($_POST['string_in_db_search'])) {
 		require_once ('lib/search/report_string_in_db.php');
 		$smarty->assign('searchString', $_REQUEST['string_in_db_search']);
+		$smarty->assign('searchStringAgain', $_REQUEST['string_in_db_search']);
 	}
 
 	if (!empty($_POST['query'])) {
 		require_once ('lib/search/report_string_in_db.php');
+		$smarty->assign('searchStringAgain', $_REQUEST['query']);
+		$smarty->assign('tableName', $_REQUEST['table']);
 	}
 }
 

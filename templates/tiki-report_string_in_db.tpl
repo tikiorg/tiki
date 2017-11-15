@@ -4,7 +4,7 @@
 	<BR>
 	<h3 class="panel-title">{tr}This page is no longer functional. Please use the Search feature in control panel.{/tr}</h3>
 {else}
-	<input type="text" name="string_in_db_search" size="60" /> <input type="submit" class="btn btn-default btn-sm" value="Search" onClick="document.getElementById('redirect').value='0';"/>
+	<input type="text" id="string_in_db_search" name="string_in_db_search" size="60" value="{$searchStringAgain}" /> <input type="submit" class="btn btn-default btn-sm" value="Search" onClick="document.getElementById('redirect').value='0';"/>
 	<input type="hidden" id="redirect" name="redirect" value="1">
 {/if}
 
@@ -13,7 +13,7 @@
 	<span id="error">{$errorMsg}</span>
 {else}
 	{if isset($searchString)}
-		{remarksbox}{tr}Results for: {/tr}<b>{$searchString|escape}</b>{/remarksbox}{$searchString|escape}
+		{remarksbox}{tr}Results for {/tr}<b>{$searchString|escape}</b> {tr}in all tables:{/tr}{/remarksbox}
 		<p>
 
 		<input type="hidden" name="query" value="{$searchString}">
@@ -33,13 +33,18 @@
 			<td>{$res['column']|escape}</td>
 			<td>{$res['occurrences']|escape}</td>
 			<td>
-				<input type="submit" class="btn btn-default" value="View" onClick="document.getElementById('table').value='{$res['table']}'; document.getElementById('column').value='{$res['column']}'; document.getElementById('redirect').value='0';">
+				<input type="submit" class="btn btn-default" value="View" onClick="document.getElementById('table').value='{$res['table']}'; document.getElementById('column').value='{$res['column']}'; document.getElementById('redirect').value='0'; document.getElementById('string_in_db_search').value='';">
 			</td>
 			</tr>
 		{/foreach}
 		</table>
 		</p>
 	{/if}
+
+	{if isset($searchStringAgain)}
+		{remarksbox}{tr}Results for {/tr}<b>{$searchStringAgain|escape}</b> {tr}in table {/tr} <b>{$tableName}</b>:{/remarksbox}
+	{/if}
+
 
 	{if isset($tableHeaders)}
 	<table class="table">
@@ -52,8 +57,9 @@
 		{foreach from=$tableData item=row}
 			<tr>
 			{foreach from=$row key=column item=val}
-				{if $tableName=='tiki_pages' && ($column=='pageName' || $column=='pageSlug' || $column=='data' || $column=='description')}
-					<td><a href=tiki-index.php?page={$row['pageSlug']|escape} class="link tips" title="{$row['pageName']|escape}:{tr}View page{/tr}" target="_blank">{$val|escape}</a></td>
+				{if $tableName=='tiki_pages' && ($column=='pageName' || $column=='pageSlug' || $column=='data' || $column=='description') && $val}
+					<td><a href=tiki-index.php?page={$row['pageName']|escape}  title="{tr}View page{/tr}" target="_blank">{$val|escape}</a></td>
+					<!-- TODO:<td>{object_link type='wiki page' id={$row['pageName']|escape} class="link tips" title="{$val|escape}:{tr}View page{/tr}"}</td> -->
 				{elseif $tableName=='tiki_blog_posts' && ($column=='data' || $column=='title')}
 					<td><a href=tiki-view_blog_post.php?postId={$row['postId']} class="link tips" title="{$row['title']|escape}:{tr}View blog post{/tr}" target="_blank">{$val|escape}</a></td>
 				{elseif $tableName=='tiki_files' && ($column=='name' || $column=='description' || $column=='filename')}
@@ -84,9 +90,9 @@
 					{elseif $row['objectType']=='forum'}
 						{if ($column=='objectType' || $column=='data' || $column=='title')}
 							{if $row['parentId']==0}
-								<td><a href=tiki-view_forum_thread.php?forumId={$row['object']}&comments_parentId={$row['threadId']}#threadId{$row['threadId']} class="link tips" title="{$row['data']|escape}:{tr}View forum comment{/tr}" target="_blank">{$val|escape}</a></td>
+								<td><a href=tiki-view_forum_thread.php?forumId={$row['object']}&comments_parentId={$row['threadId']}#threadId{$row['threadId']} class="link tips" title="{$row['title']|escape:'htmlall'}:{tr}View forum comment{/tr}" target="_blank">{$val|escape}</a></td>
 							{else}
-								<td><a href=tiki-view_forum_thread.php?comments_parentId={$row['parentId']}#threadId{$row['threadId']} class="link tips" title="{$row['data']|escape}:{tr}View forum comment{/tr}" target="_blank">{$val|escape}</a></td>
+								<td><a href=tiki-view_forum_thread.php?comments_parentId={$row['parentId']}#threadId{$row['threadId']} class="link tips" title="{$row['title']|escape:'htmlall'}:{tr}View forum comment{/tr}" target="_blank">{$val|escape}</a></td>
 							{/if}
 						{else}
 							<td>{$val|escape}</td>
