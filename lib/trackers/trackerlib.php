@@ -759,6 +759,11 @@ class TrackerLib extends TikiLib
 		return $this->table('tiki_trackers')->fetchFullRow(array('trackerId' => (int) $trackerId));
 	}
 
+    public function get_field_info($fieldId)
+    {
+        return $this->table('tiki_tracker_fields')->fetchFullRow(array('fieldId' => (int) $fieldId));
+    }
+
 	/**
 	 * Marks fields as empty
 	 * @param array $fields
@@ -3165,7 +3170,11 @@ class TrackerLib extends TikiLib
 
 		$logOption = null;
 
+        $wikilib = TikiLib::lib('wiki');
+        $wikiParsed = $descriptionIsParsed == 'y';
+
 		if ($fieldId) {
+            $data['description'] = $wikilib->process_save_plugins($description, 'trackerfield', $fieldId, $wikiParsed);
 			// -------------------------------------
 			// remove images when needed
 			$old_field = $this->get_tracker_field($fieldId);
@@ -3193,6 +3202,14 @@ class TrackerLib extends TikiLib
 				// Apply a default value to perm name when not specified
 				$fields->update(array('permName' => 'f_' . $fieldId), array('fieldId' => $fieldId));
 			}
+
+            $newDesc = $wikilib->process_save_plugins($description, 'trackerfield', $fieldId, $wikiParsed);
+            if ($newDesc != $description) {
+                $fields->update(
+                    array('description' => $newDesc),
+                    array('fieldId' => (int) $fieldId)
+                );
+            }
 
 			$itemFields = $this->itemFields();
 			foreach ($this->get_all_tracker_items($trackerId) as $itemId) {

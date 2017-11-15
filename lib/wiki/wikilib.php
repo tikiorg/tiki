@@ -392,6 +392,8 @@ class WikiLib extends TikiLib
 				$this->query($query, array( $data, $objectId));
 			} else {
                 // TODO check tracker descriptions, tracker field description, tracker item textarea fields
+                // This should be refactored, so that both links and Plugin Include are renamed in every object
+                // that supports wiki syntax.
             }
 			$this->invalidate_cache($page);
 		}
@@ -436,6 +438,10 @@ class WikiLib extends TikiLib
                 $objectId = (int)$relation['itemId'];
                 $tracker_info = TikiLib::lib('trk')->get_tracker($objectId);
                 $data = $tracker_info['description'];
+            } elseif ($type == 'trackerfield') {
+                $objectId = (int)$relation['itemId'];
+                $field_info = TikiLib::lib('trk')->get_field_info($objectId);
+                $data = $field_info['description'];
             } else {
                 continue;
             }
@@ -460,11 +466,14 @@ class WikiLib extends TikiLib
                     $query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
                     $this->query($query, array( $data,(int) strlen($data), $page));
                     $this->invalidate_cache($page);
-                }  elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
-                    $query = "update `tiki_comments` set `data`=? where `threadId`=?";
-                    $this->query($query, array( $data, $objectId));
-                } elseif ($type == 'tracker') {
-                    $query = "update `tiki_trackers` set `description`=? where `trackerId`=?";
+                }  else {
+                    if ($type == 'forum post' || substr($type, -7) == 'comment') {
+                        $query = "update `tiki_comments` set `data`=? where `threadId`=?";
+                    } elseif ($type == 'tracker') {
+                        $query = "update `tiki_trackers` set `description`=? where `trackerId`=?";
+                    } elseif ($type == 'trackerfield') {
+                        $query = "update `tiki_tracker_fields` set `description`=? where `fieldId`=?";
+                    }
                     $this->query($query, array( $data, $objectId));
                 }
             }
