@@ -117,6 +117,14 @@ class Services_Wiki_Controller
 				$msg = tr('Delete %0 the following %1?', $vdesc, $pdesc);
 				//provide redirect if js is not enabled
 				$referer = Services_Utilities::noJsPath();
+				$included_by = array();
+				$wikilib = TikiLib::lib('wiki');
+				foreach ($items as $page) {
+					$included_by = array_merge($included_by, $wikilib->get_external_includes($page));
+				}
+				if (sizeof($included_by) == 0) {
+					$included_by = null;
+				}
 				return [
 					'title' => tra('Please confirm'),
 					'confirmAction' => $input->action->word(),
@@ -128,6 +136,7 @@ class Services_Wiki_Controller
 					'ticket' => $check['ticket'],
 					'confirm' => 'y',
 					'modal' => '1',
+					'included_by' => $included_by,
 				];
 			} else {
 				if (count($items) > 0) {

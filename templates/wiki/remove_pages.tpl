@@ -12,6 +12,12 @@
 		{$iname = 'last'}
 		{$idesc = 'last version only'}
 	{/if}
+        {if isset($included_by)}
+                {remarksbox type='Warning' title="{tr}Warning{/tr}"}
+                        {tr}The following item(s) include page(s) being deleted and will break.{/tr}
+		        {include file='tiki-edit-page-included_by.tpl'}
+                {/remarksbox}
+        {/if}
 	<form id='confirm-action' class='confirm-action' action="{service controller="$confirmController" action="$confirmAction"}" method="post">
 		{$div_checkbox_redirect_display = 'block'}
 		{if !empty($iname) && !$extra.one}
