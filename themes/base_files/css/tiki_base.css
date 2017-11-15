@@ -1319,7 +1319,8 @@ div.categbar {
   padding-left: 15px;
   padding-right: 15px;
 }
-.uol ol {
+.uol ol,
+ol.uol {
   counter-reset: item;
 }
 .uol li {
@@ -5993,8 +5994,5 @@ fieldset[disabled] .tiki #conversejs #controlbox .fancy-dropdown.focus {
 .tiki #converse-embedded-chat .chatroom .box-flyout .chatroom-body .room-invite .invited-contact,
 .tiki #conversejs .chatroom .box-flyout .chatroom-body .room-invite .invited-contact {
   border-color: #cccccc;
-}
-.to-translate {
-  color: red !important;
 }
 /* End of file */

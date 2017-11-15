@@ -2778,6 +2778,11 @@ if ( \$('#$id') ) {
 						if (substr(current($listbeg), 0, 5) != '</li>') $liclose = '';
 					} elseif ($listlevel > count($listbeg)) {
 						$listyle = '';
+						if ( $prefs['wiki_make_ordered_list_items_display_unique_numbers'] === 'y' ) {
+							$liclass = ' class="uol"'; // add the class to display the sub-items like 1.2, 1.3, etc.
+						} else {
+							$liclass = '';
+						}
 						while ($listlevel != count($listbeg)) {
 							array_unshift($listbeg, ($litype == '*' ? '</ul>' : '</ol>'));
 							if ($listlevel == count($listbeg)) {
@@ -2791,7 +2796,7 @@ if ( \$('#$id') ) {
 									$addremove = 1;
 								}
 							}
-							$data.=($litype=='*'?"<ul$listyle>":"<ol$listyle>");
+							$data.=($litype=='*'?"<ul$listyle>":"<ol$listyle$liclass>");
 						}
 						$liclose='';
 					}
