@@ -161,7 +161,8 @@
 			"Tracker": "../lib/core/",
 			"Type": "../lib/core/",
 			"WikiParser": "../lib/core/",
-			"WikiPlugin": "../lib/core/"
+			"WikiPlugin": "../lib/core/",
+			"Text": "vendor/pear/text_wiki_mediawiki/"
 		},
 		"psr-4": {
 			"Tiki\\": "../lib/core/",
@@ -183,6 +184,16 @@
 			"vendor/h5p/h5p-editor",
 			"vendor/pear/xml_rpc",
 			"vendor/smarty/smarty/libs/sysplugins/smarty_security.php"
+		],
+		"exclude-from-classmap" : [
+			"../lib/openpgp/OpenPGP_Zend_Mail_Transport_Smtp.php",
+			"vendor/adodb/adodb-php/adodb-active-recordx.inc.php",
+			"vendor/adodb/adodb-php/adodb-xmlschema03.inc.php",
+			"vendor/adodb/adodb-php/drivers/adodb-ado5.inc.php",
+			"vendor/adodb/adodb-php/drivers/adodb-db2ora.inc.php",
+			"vendor/adodb/adodb-php/drivers/adodb-mysqlt.inc.php",
+			"vendor/adodb/adodb-php/session/adodb-session2.php",
+			"vendor/adodb/adodb-php/session/old/crypt.inc.php"
 		]
 	},
 	"autoload-dev": {
@@ -190,6 +201,9 @@
 			"../lib/test/"
 		]
 	},
+	"include-path": [
+		"vendor/pear/text_wiki_mediawiki/"
+	],
 	"scripts": {
 		"post-install-cmd": [
 			"Tiki\\Composer\\ThemeInstaller::setup",
