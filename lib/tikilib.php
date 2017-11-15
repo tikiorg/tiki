@@ -4001,14 +4001,8 @@ class TikiLib extends TikiDb_Bridge
 
         $tracer->trace('tikilib.create_page', "** TikiLib::lib...");
         $tracer->trace('tikilib.create_page', "** invoking process_save_plugins, \$parserlib=".get_class($parserlib));
-		$data = $parserlib->process_save_plugins(
-			$data,
-			array(
-				'type' => 'wiki page',
-				'itemId' => $name,
-				'user' => $user,
-			)
-		);
+		$wikilib = TikiLib::lib('wiki');
+        $data = $wikilib->process_save_plugins($data, 'wiki page', $name, true, array('user' => $user));
 
 		$html=$is_html?1:0;
 		if ($html && $prefs['feature_purifier'] != 'n') {
@@ -4076,7 +4070,6 @@ class TikiLib extends TikiDb_Bridge
 		$page_id = $pages->insert($insertData);
 
 		//update status, page storage was updated in tiki 9 to be non html encoded
-		$wikilib = TikiLib::lib('wiki');
 		$converter = new convertToTiki9();
 		$converter->saveObjectStatus($page_id, 'tiki_pages');
 
@@ -4456,20 +4449,8 @@ class TikiLib extends TikiDb_Bridge
 			$html = 1;
 		}
 
-		// Code related to Include wiki plugin
-		// Remove all include relations. 
-		// All relations will be recreated by wikiplugin_include_rewrite
-		$relationlib = TikiLib::lib('relation');
-		$relationlib->remove_relations_from('wiki page', $pageName, 'tiki.wiki.include');
-
-		$edit_data = $parserlib->process_save_plugins(
-			$edit_data,
-			array(
-				'type' => 'wiki page',
-				'itemId' => $pageName,
-				'user' => $user,
-			)
-		);
+		$wikilib = TikiLib::lib('wiki');
+        $edit_data = $wikilib->process_save_plugins($edit_data, 'wiki page', $pageName, true, array('user' => $user));
 
 		if ($html == 1 && $prefs['feature_purifier'] != 'n') {
 			$parserlib->isHtmlPurifying = true;
@@ -4542,7 +4523,6 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		//update status, page storage was updated in tiki 9 to be non html encoded
-		$wikilib = TikiLib::lib('wiki');
 		$converter = new convertToTiki9();
 		$converter->saveObjectStatus($this->getOne("SELECT page_id FROM tiki_pages WHERE pageName = ?", array($pageName)), 'tiki_pages');
 

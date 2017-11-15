@@ -3024,8 +3024,12 @@ class TrackerLib extends TikiLib
 			'lastModif' => $this->now,
 		);
 
+        $wikilib = TikiLib::lib('wiki');
+        $wikiParsed = $descriptionIsParsed == 'y';
+
 		$logOption = 'Updated';
 		if ($trackerId) {
+            $data['description'] = $wikilib->process_save_plugins($description, 'tracker', $trackerId, $wikiParsed);
 			$finalEvent = 'tiki.tracker.update';
 			$conditions = array('trackerId' => (int) $trackerId);
 			if ($trackers->fetchCount($conditions)) {
@@ -3041,6 +3045,13 @@ class TrackerLib extends TikiLib
 			$finalEvent = 'tiki.tracker.create';
 			$data['created'] = $this->now;
 			$trackerId = $trackers->insert($data);
+            $newDesc = $wikilib->process_save_plugins($description, 'tracker', $trackerId, $wikiParsed);
+            if ($newDesc != $description) {
+                $trackers->update(
+                    array('description' => $newDesc),
+                    array('trackerId' => (int) $trackerId)
+                );
+            }
 		}
 
 		$optionTable = $this->options();

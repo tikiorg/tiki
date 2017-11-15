@@ -390,7 +390,9 @@ class WikiLib extends TikiLib
 			} elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
 				$query = "update `tiki_comments` set `data`=? where `threadId`=?";
 				$this->query($query, array( $data, $objectId));
-			}
+			} else {
+                // TODO check tracker descriptions, tracker field description, tracker item textarea fields
+            }
 			$this->invalidate_cache($page);
 		}
 
@@ -430,6 +432,10 @@ class WikiLib extends TikiLib
                 $objectId = (int)$relation['itemId'];
                 $comment_info = TikiLib::lib('comments')->get_comment($objectId);
                 $data = $comment_info['data'];
+            } elseif ($type == 'tracker') {
+                $objectId = (int)$relation['itemId'];
+                $tracker_info = TikiLib::lib('trk')->get_tracker($objectId);
+                $data = $tracker_info['description'];
             } else {
                 continue;
             }
@@ -456,6 +462,9 @@ class WikiLib extends TikiLib
                     $this->invalidate_cache($page);
                 }  elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
                     $query = "update `tiki_comments` set `data`=? where `threadId`=?";
+                    $this->query($query, array( $data, $objectId));
+                } elseif ($type == 'tracker') {
+                    $query = "update `tiki_trackers` set `description`=? where `trackerId`=?";
                     $this->query($query, array( $data, $objectId));
                 }
             }
@@ -550,6 +559,45 @@ class WikiLib extends TikiLib
 	}
 
     /**
+     * Gets a wiki parsed content that has just been sent by the user to be created/updated,
+     * properly rewrite plugins that needs rewriting (ex: sign), handle relations from 
+     * those plugin usages and returns a new content that should be saved in database instead.
+     *
+     * If content is optionally wiki parsed, this function must be called even if content is not
+     * to be parsed in this case.
+     *
+     * @param string $data wiki parsed content
+     * @param string $objectType
+     * @param string/int $itemId
+     * @param boolean $wikiParsed Indicates if content is wiki parsed.
+     * @param array $extraContext Any extra context to be passed to parserlib
+     * @return string new content that should be saved instead of original $data
+     */
+    public function process_save_plugins($data, $objectType, $itemId, $wikiParsed=true, $extraContext=array())
+    {
+		// Code related to Include wiki plugin
+		// Remove all wiki page include relations from this comment
+		// All relations will be recreated by wikiplugin_include_rewrite
+		$relationlib = TikiLib::lib('relation');
+		$relationlib->remove_relations_from($objectType, $itemId, 'tiki.wiki.include');
+
+        if (!$wikiParsed)
+            return $data;
+
+        $context = array_merge(
+            $extraContext,
+			array(
+				'type' => $objectType,
+				'itemId' => $itemId
+			)
+        );
+
+		$parserlib = TikiLib::lib('parser');
+        $newData = $parserlib->process_save_plugins($data, $context);
+        return $newData;
+    }
+
+    /**
      * Checks all pages that include $page and parses its contents to
      * get a list of all Plugin Include calls.
      *
@@ -570,11 +618,19 @@ class WikiLib extends TikiLib
                 $href = 'tiki-index.php?page=' . urlencode($page);
                 $info = $this->get_page_info($page);
                 $data = $info['data'];
-            }  elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
+            }  elseif ($type == 'forum post') {
                 $objectId = (int)$relation['itemId'];
                 $href = 'tiki-view_forum_thread.php?threadId=' . $objectId;
                 $comment_info = TikiLib::lib('comments')->get_comment($objectId);
                 $data = $comment_info['data'];
+            } elseif ($type == 'tracker') {
+                $objectId = (int)$relation['itemId'];
+                $href = 'tiki-view_tracker.php?trackerId=' . $objectId;
+                $tracker_info = TikiLib::lib('trk')->get_tracker($objectId);
+                $data = $tracker_info['description'];
+            } elseif (substr($type, -7) == 'comment') {
+                // TODO, depends on item type
+                continue;
             } else {
                 continue;
             }

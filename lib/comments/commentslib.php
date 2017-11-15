@@ -2708,27 +2708,19 @@ class Comments extends TikiLib
      */
     function process_save_plugins($data, $objectType, $threadId)
     {
+        global $prefs;
 		if ($objectType == 'forum') {
 			$type = 'forum post'; // this must correspond to that used in tiki_objects
+            $wiki_parsed = $prefs['feature_forum_parse'] == 'y' || $prefs['section_comments_parse'] == 'y';
+
 		} else {
 			$type = $objectType . ' comment'; // comment types are not used in tiki_objects yet but maybe in future
+            $wiki_parsed = $prefs['section_comments_parse'] == 'y';
 		}
+
+        $wikilib = TikiLib::lib('wiki');
+        $newData = $wikilib->process_save_plugins($data, $type, $threadId, $wiki_parsed);
         
-		// Code related to Include wiki plugin
-		// Remove all wiki page include relations from this comment
-		// All relations will be recreated by wikiplugin_include_rewrite
-		$relationlib = TikiLib::lib('relation');
-		$relationlib->remove_relations_from($type, $threadId, 'tiki.wiki.include');
-
-		$parserlib = TikiLib::lib('parser');
-		$newData = $parserlib->process_save_plugins(
-			$data,
-			array(
-				'type' => $type,
-				'itemId' => $threadId
-			)
-		);
-
         if ($data != $newData) {
             $this->table('tiki_comments')->update(array('data' => $newData), array('threadId' => $threadId));
         }
