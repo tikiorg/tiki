@@ -1513,8 +1513,19 @@
 					"type": "zip"
 				}
 			}
-	  },
-	  {
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "pear/text_wiki",
+				"version": "dev-master",
+				"dist": {
+					"url": "https://github.com/pear/Text_Wiki/archive/master.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
 			"type": "package",
 			"package": {
 				"name": "pear/text_wiki_mediawiki",
@@ -1705,7 +1716,8 @@
 		"pear/pear": "^1.10",
 		"pear/pear_exception": ">=v1.0.0",
 		"pear/structures_graph": ">=v1.1.1",
-		"pear/text_wiki_mediawiki": "0.2.0",
+		"pear/text_wiki": "dev-master",
+		"pear/text_wiki_mediawiki": "0.2.0 || dev-master",
 		"pear/xml_parser": "^1.3",
 		"pear/xml_rpc": "1.5.1",
 		"pear/xml_util": ">=1.4.3",
