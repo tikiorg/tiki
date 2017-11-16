@@ -179,6 +179,7 @@ function wikiplugin_mediaplayer($data, $params)
 	$access = TikiLib::lib('access');
 	static $iMEDIAPLAYER = 0;
 	$id = 'mediaplayer'.++$iMEDIAPLAYER;
+	$params['type'] = strtolower($params['type']);
 
 	if (empty($params['mp3']) && empty($params['flv']) && empty($params['src'])) {
 		return '';
