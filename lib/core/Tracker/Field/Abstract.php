@@ -315,6 +315,11 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		return 'filter_' . $this->definition['fieldId'];
 	}
 
+    protected function getFieldId()
+    {
+        return $this->definition['fieldId'];
+    }
+
 	/**
 	 * Gets data from the field's configuration
 	 *

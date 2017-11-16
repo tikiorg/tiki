@@ -1137,6 +1137,28 @@ if ( \$('#$id') ) {
 		return 	$ret;
 	}
 
+    function find_plugins($data, $name=null) {
+        $parserlib = TikiLib::lib('parser');
+		$argumentParser = new WikiParser_PluginArgumentParser;
+		$matches = WikiParser_PluginMatcher::match($data);
+        $occurrences = array();
+		foreach ($matches as $match) {
+            $plugin = array(
+                'name' => $match->getName(),
+                'arguments' => $argumentParser->parse($match->getArguments()),
+                'body' => $match->getBody(),
+            );
+
+			$dummy_output = '';
+			if ($parserlib->plugin_enabled($plugin['name'], $dummy_output)) {
+                if ($name === null || $plugin['name'] == $name) {
+                    $occurrences[] = $plugin;
+                }
+            }
+        }
+        return $occurrences;
+    }
+
 	function process_save_plugins($data, array $context)
 	{
         $parserlib = TikiLib::lib('parser');

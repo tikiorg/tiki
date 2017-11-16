@@ -568,42 +568,32 @@ class WikiLib extends TikiLib
 	}
 
     /**
-     * Gets a wiki parsed content that has just been sent by the user to be created/updated,
-     * properly rewrite plugins that needs rewriting (ex: sign), handle relations from 
-     * those plugin usages and returns a new content that should be saved in database instead.
-     *
+     * Gets a wiki content that has just been saved, parses it and stores relations
+     * with wiki pages that will created from this content.
+     * 
      * If content is optionally wiki parsed, this function must be called even if content is not
-     * to be parsed in this case.
+     * to be parsed in this case, so that relations can be cleared.
      *
      * @param string $data wiki parsed content
      * @param string $objectType
      * @param string/int $itemId
      * @param boolean $wikiParsed Indicates if content is wiki parsed.
-     * @param array $extraContext Any extra context to be passed to parserlib
-     * @return string new content that should be saved instead of original $data
      */
-    public function process_save_plugins($data, $objectType, $itemId, $wikiParsed=true, $extraContext=array())
-    {
-		// Code related to Include wiki plugin
-		// Remove all wiki page include relations from this comment
-		// All relations will be recreated by wikiplugin_include_rewrite
+    public function update_wikicontent_relations($data, $objectType, $itemId, $wikiParsed=true) {
+        $parserlib = TikiLib::lib('parser');
 		$relationlib = TikiLib::lib('relation');
+
 		$relationlib->remove_relations_from($objectType, $itemId, 'tiki.wiki.include');
 
         if (!$wikiParsed)
-            return $data;
+            return;
+        
+        $includes = $parserlib->find_plugins($data, 'include');
 
-        $context = array_merge(
-            $extraContext,
-			array(
-				'type' => $objectType,
-				'itemId' => $itemId
-			)
-        );
-
-		$parserlib = TikiLib::lib('parser');
-        $newData = $parserlib->process_save_plugins($data, $context);
-        return $newData;
+        foreach ($includes as $include) {
+            $page = $include['arguments']['page'];
+            $relationlib->add_relation('tiki.wiki.include', $objectType, $itemId, 'wiki page', $page);            
+        }
     }
 
     /**

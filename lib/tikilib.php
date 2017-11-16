@@ -4001,8 +4001,14 @@ class TikiLib extends TikiDb_Bridge
 
         $tracer->trace('tikilib.create_page', "** TikiLib::lib...");
         $tracer->trace('tikilib.create_page', "** invoking process_save_plugins, \$parserlib=".get_class($parserlib));
-		$wikilib = TikiLib::lib('wiki');
-        $data = $wikilib->process_save_plugins($data, 'wiki page', $name, true, array('user' => $user));
+		$data = $parserlib->process_save_plugins(
+			$data,
+			array(
+				'type' => 'wiki page',
+				'itemId' => $name,
+				'user' => $user,
+			)
+		);
 
 		$html=$is_html?1:0;
 		if ($html && $prefs['feature_purifier'] != 'n') {
@@ -4070,6 +4076,7 @@ class TikiLib extends TikiDb_Bridge
 		$page_id = $pages->insert($insertData);
 
 		//update status, page storage was updated in tiki 9 to be non html encoded
+		$wikilib = TikiLib::lib('wiki');
 		$converter = new convertToTiki9();
 		$converter->saveObjectStatus($page_id, 'tiki_pages');
 
@@ -4081,6 +4088,8 @@ class TikiLib extends TikiDb_Bridge
 		foreach ($pointedPages as $pointedPage => $types) {
 			$this->replace_link($name, $pointedPage, $types);
 		}
+
+		$wikilib->update_wikicontent_relations($data, 'wiki page', $name);
 
 		// Update the log
 		if (strtolower($name) != 'sandbox') {
@@ -4449,9 +4458,15 @@ class TikiLib extends TikiDb_Bridge
 			$html = 1;
 		}
 
-		$wikilib = TikiLib::lib('wiki');
-        $edit_data = $wikilib->process_save_plugins($edit_data, 'wiki page', $pageName, true, array('user' => $user));
-
+		$edit_data = $parserlib->process_save_plugins(
+			$edit_data,
+			array(
+				'type' => 'wiki page',
+				'itemId' => $pageName,
+				'user' => $user,
+			)
+		);
+		
 		if ($html == 1 && $prefs['feature_purifier'] != 'n') {
 			$parserlib->isHtmlPurifying = true;
 			$parserlib->isEditMode = true;
@@ -4523,6 +4538,7 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		//update status, page storage was updated in tiki 9 to be non html encoded
+		$wikilib = TikiLib::lib('wiki');
 		$converter = new convertToTiki9();
 		$converter->saveObjectStatus($this->getOne("SELECT page_id FROM tiki_pages WHERE pageName = ?", array($pageName)), 'tiki_pages');
 
@@ -4533,6 +4549,8 @@ class TikiLib extends TikiDb_Bridge
 		foreach ($pages as $page => $types) {
 			$this->replace_link($pageName, $page, $types);
 		}
+
+		$wikilib->update_wikicontent_relations($edit_data, 'wiki page', $pageName);		
 
 		if (strtolower($pageName) != 'sandbox' && !$edit_minor) {
 			$maxversions = $prefs['maxVersions'];

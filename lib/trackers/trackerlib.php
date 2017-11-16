@@ -449,7 +449,6 @@ class TrackerLib extends TikiLib
 		foreach ($fields as $id => $value) {
 			$res[$id] = $value;
 		}
-
 		return $res;
 	}
 
@@ -1897,6 +1896,7 @@ class TrackerLib extends TikiLib
 		}
 
 		$final = array();
+        $postSave = array();
 		$suppliedFields = array();
 
 		foreach ($ins_fields["data"] as $i => $array) {
@@ -1907,7 +1907,19 @@ class TrackerLib extends TikiLib
 
 			$handler = $this->get_field_handler($array, array_merge($item_info, $fil));
 
+            if (method_exists($handler, 'postSaveHook')) {
+                // postSaveHook will be called with final value saved
+                // after saving all item fields
+                $postSave[] = array(
+                    'fieldId' => $fieldId,
+                    'handler' => $handler,
+                );
+            }
+
 			if (method_exists($handler, 'handleFinalSave')) {
+                // handleFinalSave will be called after all other fields are saved, and
+                // will get as parameter all other field data (other than ones that also
+                // use finalSave).
 				$final[] = array(
 					'field' => $array,
 					'handler' => $handler,
@@ -2021,10 +2033,15 @@ class TrackerLib extends TikiLib
 
 			foreach ($final as $job) {
 				$value = $job['handler']->handleFinalSave($data);
-				$data[$job['field']['permName']] = $value;
-				$this->modify_field($currentItemId, $job['field']['fieldId'], $value);
+                $data[$job['field']['permName']] = $value;
+                $this->modify_field($currentItemId, $job['field']['fieldId'], $value);
 			}
 		}
+
+        foreach ($postSave as $job) {
+            $value = $fil[$job['fieldId']];
+            $job['handler']->postSaveHook($value);                
+        }
 
 		$values_by_permname = array();
 		$old_values_by_permname = array();
@@ -3022,6 +3039,17 @@ class TrackerLib extends TikiLib
 	{
 		$trackers = $this->trackers();
 
+        if ($descriptionIsParsed == 'y') {
+            $parserlib = TikiLib::lib('parser');
+            $description = $parserlib->process_save_plugins(
+                $description,
+                array(
+                    'type' => 'tracker',
+                    'itemId' => $trackerId,
+                )
+            );
+        }
+        
 		$data = array(
 			'name' => $name,
 			'description' => $description,
@@ -3029,12 +3057,8 @@ class TrackerLib extends TikiLib
 			'lastModif' => $this->now,
 		);
 
-        $wikilib = TikiLib::lib('wiki');
-        $wikiParsed = $descriptionIsParsed == 'y';
-
 		$logOption = 'Updated';
 		if ($trackerId) {
-            $data['description'] = $wikilib->process_save_plugins($description, 'tracker', $trackerId, $wikiParsed);
 			$finalEvent = 'tiki.tracker.update';
 			$conditions = array('trackerId' => (int) $trackerId);
 			if ($trackers->fetchCount($conditions)) {
@@ -3050,14 +3074,10 @@ class TrackerLib extends TikiLib
 			$finalEvent = 'tiki.tracker.create';
 			$data['created'] = $this->now;
 			$trackerId = $trackers->insert($data);
-            $newDesc = $wikilib->process_save_plugins($description, 'tracker', $trackerId, $wikiParsed);
-            if ($newDesc != $description) {
-                $trackers->update(
-                    array('description' => $newDesc),
-                    array('trackerId' => (int) $trackerId)
-                );
-            }
 		}
+
+        $wikiParsed = $descriptionIsParsed == 'y';
+        TikiLib::lib('wiki')->update_wikicontent_relations($description, 'tracker', (int)$trackerId, $wikiParsed);
 
 		$optionTable = $this->options();
 		$optionTable->deleteMultiple(array('trackerId' => (int) $trackerId));
@@ -3141,6 +3161,16 @@ class TrackerLib extends TikiLib
 		} else {
 			$editableBy = '';
 		}
+        if ($descriptionIsParsed == 'y') {
+            $parserlib = TikiLib::lib('parser');
+            $description = $parserlib->process_save_plugins(
+                $description,
+                array(
+                    'type' => 'trackerfield',
+                    'itemId' => $fieldId,
+                )
+            );
+        }
 
 		$fields = $this->fields();
 
@@ -3170,11 +3200,7 @@ class TrackerLib extends TikiLib
 
 		$logOption = null;
 
-        $wikilib = TikiLib::lib('wiki');
-        $wikiParsed = $descriptionIsParsed == 'y';
-
 		if ($fieldId) {
-            $data['description'] = $wikilib->process_save_plugins($description, 'trackerfield', $fieldId, $wikiParsed);
 			// -------------------------------------
 			// remove images when needed
 			$old_field = $this->get_tracker_field($fieldId);
@@ -3203,20 +3229,15 @@ class TrackerLib extends TikiLib
 				$fields->update(array('permName' => 'f_' . $fieldId), array('fieldId' => $fieldId));
 			}
 
-            $newDesc = $wikilib->process_save_plugins($description, 'trackerfield', $fieldId, $wikiParsed);
-            if ($newDesc != $description) {
-                $fields->update(
-                    array('description' => $newDesc),
-                    array('fieldId' => (int) $fieldId)
-                );
-            }
-
 			$itemFields = $this->itemFields();
 			foreach ($this->get_all_tracker_items($trackerId) as $itemId) {
 				$itemFields->deleteMultiple(array('itemId' => (int) $itemId, 'fieldId' => $fieldId));
 				$itemFields->insert(array('itemId' => (int) $itemId, 'fieldId' => (int) $fieldId, 'value' => ''));
 			}
 		}
+
+        $wikiParsed = $descriptionIsParsed == 'y';
+        TikiLib::lib('wiki')->update_wikicontent_relations($description, 'trackerfield', (int)$fieldId, $wikiParsed);
 
 		if ($logOption) {
 			$logslib = TikiLib::lib('logs');

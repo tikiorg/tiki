@@ -103,6 +103,14 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 		);
 	}
 
+    function postSaveHook($value) {
+        $itemId = (int)$this->getItemId();
+        $fieldId = (int)$this->getFieldId();
+        $permName = $this->getConfiguration('permName');
+        $wikilib = TikiLib::lib('wiki');
+        $wikilib->update_wikicontent_relations($value, 'trackeritemfield', sprintf("%d:%d", $itemId, $fieldId));
+    }
+
 	function getFieldData(array $requestData = array())
 	{
 		$ins_id = $this->getInsertId();

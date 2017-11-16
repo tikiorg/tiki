@@ -2697,6 +2697,8 @@ class Comments extends TikiLib
 		foreach ($pages as $a_page) {
 			$this->replace_link($linkhandle, $a_page);
 		}
+        
+        TikiLib::lib('wiki')->update_wikicontent_relations($data, $type, (int)$threadId);
 	}
 
     /**
@@ -2706,7 +2708,7 @@ class Comments extends TikiLib
      * @param $objectType
      * @param $threadId
      */
-    function process_save_plugins($data, $objectType, $threadId)
+    function process_save_plugins($data, $objectType, $threadId=null)
     {
         global $prefs;
 		if ($objectType == 'forum') {
@@ -2718,12 +2720,12 @@ class Comments extends TikiLib
             $wiki_parsed = $prefs['section_comments_parse'] == 'y';
 		}
 
-        $wikilib = TikiLib::lib('wiki');
-        $newData = $wikilib->process_save_plugins($data, $type, $threadId, $wiki_parsed);
-        
-        if ($data != $newData) {
-            $this->table('tiki_comments')->update(array('data' => $newData), array('threadId' => $threadId));
+        $context = array('type' => $type);
+        if ($threadId !== null) {
+            $context['itemId'] = $threadId;
         }
+        $parserlib = TikiLib::lib('parser');
+        return $parserlib->process_save_plugins($data, $context);
     }
 
     /**
@@ -2751,12 +2753,13 @@ class Comments extends TikiLib
 		global $prefs;
 
 		$comments = $this->table('tiki_comments');
+        $comment = $this->get_comment($threadId);
+        $data = $this->process_save_plugins($data, $comment['objectType'], $threadId);
 		$hash = md5($title . $data);
 		$existingThread = $comments->fetchColumn('threadId', array('hash' => $hash));
 
 		// if exactly same title and data comment does not already exist, and is not the current thread
 		if (empty($existingThread) || in_array($threadId, $existingThread)) {
-			$comment = $this->get_comment($threadId);
 			if ($prefs['feature_actionlog'] == 'y') {
 				include_once('lib/diff/difflib.php');
 				$bytes = diff2($comment['data'], $data, 'bytes');
@@ -2785,7 +2788,6 @@ class Comments extends TikiLib
 			}
 
 			$this->update_comment_links($data, $comment['objectType'], $threadId);
-			$this->process_save_plugins($data, $comment['objectType'], $threadId);
 			$type = $this->update_index($comment['objectType'], $threadId);
 			if ($type == 'forum post') {
 				TikiLib::events()->trigger(
@@ -2911,6 +2913,11 @@ class Comments extends TikiLib
 			$postings->update(array('level' => $level), array('user' => $userName));
 		}
 
+		// Break out the type and object parameters.
+		$object = explode(":", $objectId, 2);
+
+		$data = $this->process_save_plugins($data, $object[0]);
+
 		$hash = md5($title . $data);
 
 		// Check if we were passed a message-id.
@@ -2923,8 +2930,6 @@ class Comments extends TikiLib
 				"@" . $_SERVER["SERVER_NAME"];
 		}
 
-		// Break out the type and object parameters.
-		$object = explode(":", $objectId, 2);
 		// Handle comments moderation (this should not affect forums and user with admin rights on comments)
 		$approved = $this->determine_initial_approval(
 			array(
@@ -3015,7 +3020,6 @@ class Comments extends TikiLib
 		}
 
 		$this->update_comment_links($data, $object[0], $threadId);
-		$this->process_save_plugins($data, $object[0], $threadId);
 		$tx = $this->begin();
 		$type = $this->update_index($object[0], $threadId, $parentId);
 		$finalEvent = 'tiki.comment.post';
