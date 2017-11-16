@@ -580,6 +580,23 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, array $listfields=ar
 		$trackerId = $field['trackerId'];
 	}
 
+	if ($listfields) {
+		$newListFields = [];
+		foreach ($listfields as $id => $field) {
+			/** @var TrackerLib $trklib */
+			$info = $trklib->get_field_info($field);
+			if (! is_numeric($field) || ($info && $info['trackerId'] == $trackerId)) {
+				$newListFields[] = $field;
+			}
+		}
+		if (count($listfields) != count($newListFields)) {
+			$listfields = $newListFields;
+			if ($tiki_p_admin_trackers == "y") {
+				Feedback::error(tr('TrackerFields: Unknown tracker field used in the parameter "filters"'));
+			}
+		}
+	}
+
 	$fields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, empty($listfields)?'': array('fieldId'=>$listfields));
 	if (empty($listfields)) {
 		foreach ($fields['data'] as $field) {
