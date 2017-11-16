@@ -112,11 +112,11 @@
 								<label>
 									<input {if $filter.format eq "c"}type="checkbox"{else}type="radio"{/if}
 										name="f_{$filter.fieldId}{if $filter.format eq "c"}[]{/if}"
-										value="{$filter.opts[io].id|escape:url}"
+										value="{$filter.opts[io].id|regex_replace:"/=.*/":""|escape:url}"
 										{if $filter.opts[io].selected eq "y"} checked="checked"{/if}
 									>
 								</label>
-								{$filter.opts[io].name|tr_if}
+								{$filter.opts[io].name|regex_replace:"/^[^=]*=/":""|tr_if}
 								{if !isset($line) || $line ne 'y'}<br>{/if}
 							{/section}
 						{/if}
