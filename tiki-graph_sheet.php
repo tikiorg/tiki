@@ -8,29 +8,31 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 $sheetlib = TikiLib::lib('sheet');
 
-require_once ('lib/graph-engine/gd.php');
-require_once ('lib/graph-engine/pdflib.php');
-require_once ('lib/graph-engine/ps.php');
-require_once ('lib/graph-engine/graph.pie.php');
-require_once ('lib/graph-engine/graph.bar.php');
-require_once ('lib/graph-engine/graph.multiline.php');
+require_once('lib/graph-engine/gd.php');
+require_once('lib/graph-engine/pdflib.php');
+require_once('lib/graph-engine/ps.php');
+require_once('lib/graph-engine/graph.pie.php');
+require_once('lib/graph-engine/graph.bar.php');
+require_once('lib/graph-engine/graph.multiline.php');
 
 /**
  * @param $serie
  * @param $sheet
  * @return array
  */
-function handle_series( $serie, &$sheet )
+function handle_series($serie, &$sheet)
 {
-	if ( !$range = $sheet->getRange($serie) )
+	if (! $range = $sheet->getRange($serie)) {
 		$range = array_map('trim', explode(',', $serie));
+	}
 
-	if ( !is_array($range) )
-		return array();
+	if (! is_array($range)) {
+		return [];
+	}
 
 	return $range;
 }
@@ -48,21 +50,21 @@ if (empty($info)) {
 }
 
 $objectperms = Perms::get('sheet', $_REQUEST['sheetId']);
-if ($tiki_p_admin != 'y' && !$objectperms->view_sheet && !($user && $info['author'] == $user)) {
+if ($tiki_p_admin != 'y' && ! $objectperms->view_sheet && ! ($user && $info['author'] == $user)) {
 	$smarty->assign('msg', tra('Permission denied'));
 	$smarty->display('error.tpl');
 	die;
 }
 
 // This condition will be removed when a php-based renderer will be written
-if ( !function_exists('pdf_new') && !function_exists('imagepng') ) {
+if (! function_exists('pdf_new') && ! function_exists('imagepng')) {
 	$smarty->assign('msg', tra('No valid renderer found. GD or PDFLib required.'));
 
 	$smarty->display('error.tpl');
 	die;
 }
 
-if (!isset( $_REQUEST['sheetId'] )) {
+if (! isset($_REQUEST['sheetId'])) {
 	$smarty->assign('msg', tra('No sheet specified.'));
 
 	$smarty->display('error.tpl');
@@ -70,15 +72,15 @@ if (!isset( $_REQUEST['sheetId'] )) {
 }
 // }}}1
 
-$valid_graphs = array( 'PieChartGraphic', 'MultilineGraphic', 'MultibarGraphic', 'BarStackGraphic' );
-$valid_renderers = array( 'PNG', 'JPEG', 'PDF', 'PS' );
+$valid_graphs = [ 'PieChartGraphic', 'MultilineGraphic', 'MultibarGraphic', 'BarStackGraphic' ];
+$valid_renderers = [ 'PNG', 'JPEG', 'PDF', 'PS' ];
 
-if ( ! empty($_REQUEST['graphic']) && ! in_array($_REQUEST['graphic'], $valid_graphs) ) {
+if (! empty($_REQUEST['graphic']) && ! in_array($_REQUEST['graphic'], $valid_graphs)) {
 	$smarty->assign('msg', tra('Unknown Graphic.'));
 	$smarty->display('error.tpl');
 	die;
 }
-if ( ! empty($_REQUEST['renderer']) && ! in_array($_REQUEST['renderer'], $valid_renderers) ) {
+if (! empty($_REQUEST['renderer']) && ! in_array($_REQUEST['renderer'], $valid_renderers)) {
 	$smarty->assign('msg', tra('Unknown Renderer.'));
 	$smarty->display('error.tpl');
 	die;
@@ -95,12 +97,10 @@ $smarty->assign('page_mode', 'form');
 
 $sheetId = $_REQUEST['sheetId'];
 
-if ( isset($_REQUEST['title']) ) {
-
+if (isset($_REQUEST['title'])) {
 	$cache_file = 'temp/cache/tsge_' . md5($_SERVER['REQUEST_URI']);
 
-	switch( $_REQUEST['renderer'] )
-	{
+	switch ($_REQUEST['renderer']) {
 		case 'PNG':
 			$renderer = new GD_GRenderer($_REQUEST['width'], $_REQUEST['height'], 'png');
 			$ext = 'png';
@@ -127,7 +127,7 @@ if ( isset($_REQUEST['title']) ) {
 			die;
 	}
 
-	if ( file_exists($cache_file) && time() - filemtime($cache_file) < 3600 ) {
+	if (file_exists($cache_file) && time() - filemtime($cache_file) < 3600) {
 		$renderer->httpHeaders("graph.$ext");
 		readfile($cache_file);
 		exit;
@@ -141,25 +141,28 @@ if ( isset($_REQUEST['title']) ) {
 	$graph = new $graph;
 
 	// Create Output
-	$series = array();
-	foreach ( $_REQUEST['series'] as $key => $value )
-		if (!empty( $value) ) {
+	$series = [];
+	foreach ($_REQUEST['series'] as $key => $value) {
+		if (! empty($value)) {
 			$s = handle_series($value, $grid);
-			if ( count($s) > 0 )
+			if (count($s) > 0) {
 				$series[$key] = $s;
+			}
 		}
+	}
 
-	if ( !$graph->setData($series) ) {
+	if (! $graph->setData($series)) {
 		$smarty->assign('msg', tra('Invalid Series for current graphic.'));
 
 		$smarty->display('error.tpl');
 		die;
 	}
 
-	if ( !empty($_REQUEST['title']) )
+	if (! empty($_REQUEST['title'])) {
 		$graph->setTitle($_REQUEST['title']);
+	}
 
-	if ( isset($_REQUEST['independant']) ) {
+	if (isset($_REQUEST['independant'])) {
 		$graph->setParam('grid-independant-location', $_REQUEST['independant']);
 		$graph->setParam('grid-vertical-position', $_REQUEST['vertical']);
 		$graph->setParam('grid-horizontal-position', $_REQUEST['horizontal']);
@@ -176,19 +179,21 @@ if ( isset($_REQUEST['title']) ) {
 
 	exit;
 } else {
-	if ( isset($_GET['graphic']) && in_array($_GET['graphic'], $valid_graphs) ) {
+	if (isset($_GET['graphic']) && in_array($_GET['graphic'], $valid_graphs)) {
 		$graph = $_GET['graphic'];
 		$g = new $graph;
-		$series = array();
-		foreach ( array_keys($g->getRequiredSeries()) as $s )
-			if ( $s == 'y0' ) {
+		$series = [];
+		foreach (array_keys($g->getRequiredSeries()) as $s) {
+			if ($s == 'y0') {
 				$series[] = 'y0';
 				$series[] = 'y1';
 				$series[] = 'y2';
 				$series[] = 'y3';
 				$series[] = 'y4';
-			} else
+			} else {
 				$series[] = $s;
+			}
+		}
 
 		$smarty->assign('mode', 'param');
 		$smarty->assign('series', $series);
@@ -201,7 +206,7 @@ if ( isset($_REQUEST['title']) ) {
 
 		$dataGrid = $grid->getTableHtml(true);
 
-		require_once ('lib/sheet/grid.php');
+		require_once('lib/sheet/grid.php');
 		$sheetlib->setup_jquery_sheet();
 		$headerlib->add_jq_onready(
 			'$("div.tiki_sheet").sheet($.extend($.sheet.tikiOptions, {editable: false}));'
@@ -209,18 +214,19 @@ if ( isset($_REQUEST['title']) ) {
 
 		$smarty->assign('dataGrid', $dataGrid);
 
-		if ( function_exists('pdf_new') ) {
+		if (function_exists('pdf_new')) {
 			$smarty->assign('format', $_GET['format']);
 			$smarty->assign('orientation', $_GET['orientation']);
 		}
 
-		if ( function_exists('imagepng') ) {
+		if (function_exists('imagepng')) {
 			$smarty->assign('im_width', $_GET['width']);
 			$smarty->assign('im_height', $_GET['height']);
 		}
 
-		if ( is_a($g, 'GridBasedGraphic') )
+		if (is_a($g, 'GridBasedGraphic')) {
 			$smarty->assign('showgridparam', true);
+		}
 	} else {
 		$smarty->assign('mode', 'graph');
 		$smarty->assign('hasgd', function_exists('imagepng') && function_exists('imagejpeg'));

@@ -3,26 +3,26 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'faqs';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $faqlib = TikiLib::lib('faq');
-$auto_query_args = array('offset', 'find', 'sort_mode', 'faqId');
+$auto_query_args = ['offset', 'find', 'sort_mode', 'faqId'];
 $access->check_feature('feature_faqs');
 $access->check_permission('tiki_p_view_faqs');
 //get_strings tra('Admin FAQs')
-if (!isset($_REQUEST["faqId"])) {
+if (! isset($_REQUEST["faqId"])) {
 	$_REQUEST["faqId"] = 0;
 }
 $smarty->assign('faqId', $_REQUEST["faqId"]);
 if ($_REQUEST["faqId"]) {
 	$info = $faqlib->get_faq($_REQUEST["faqId"]);
 } else {
-	$info = array();
+	$info = [];
 	$info["title"] = '';
 	$info["description"] = '';
 	$info["canSuggest"] = 'n';
@@ -53,18 +53,18 @@ if (isset($_REQUEST["save"])) {
 	$cat_desc = substr($_REQUEST["description"], 0, 200);
 	$cat_name = $_REQUEST["title"];
 	$cat_href = "tiki-view_faq.php?faqId=" . $cat_objid;
-	include_once ("categorize.php");
+	include_once("categorize.php");
 	$smarty->assign('faqId', 0);
 	$smarty->assign('title', '');
 	$smarty->assign('description', '');
 	$smarty->assign('canSuggest', '');
 }
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'title_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
@@ -82,8 +82,8 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 $smarty->assign_by_ref('cant', $channels["cant"]);
 $cat_type = 'faq';
 $cat_objid = $_REQUEST["faqId"];
-include_once ("categorize_list.php");
-include_once ('tiki-section_options.php');
+include_once("categorize_list.php");
+include_once('tiki-section_options.php');
 ask_ticket('list-faqs');
 // Display the template
 $smarty->assign('mid', 'tiki-list_faqs.tpl');

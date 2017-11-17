@@ -1,17 +1,19 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'calendar';
-require_once ('tiki-setup.php');
-include_once ('lib/minical/minicallib.php');
+require_once('tiki-setup.php');
+include_once('lib/minical/minicallib.php');
 $access->check_feature('feature_minical');
 $access->check_user($user);
 $access->check_permission('tiki_p_minical');
-if (!isset($_REQUEST["eventId"])) $_REQUEST["eventId"] = 0;
+if (! isset($_REQUEST["eventId"])) {
+	$_REQUEST["eventId"] = 0;
+}
 if (isset($_REQUEST['remove'])) {
 	$access->check_authenticity();
 	$minicallib->minical_remove_event($user, $_REQUEST['remove']);
@@ -54,7 +56,7 @@ if ($_REQUEST["eventId"]) {
 	$ev_pdate = $info['start'];
 	$ev_pdate_h = $info['start'];
 } else {
-	$info = array();
+	$info = [];
 	$info['title'] = '';
 	$info['topicId'] = 0;
 	$info['description'] = '';
@@ -67,12 +69,12 @@ $smarty->assign('ev_pdate_h', $ev_pdate_h);
 if (isset($_REQUEST['save'])) {
 	check_ticket('minical');
 	//Convert 12-hour clock hours to 24-hour scale to compute time
-	if (!empty($_REQUEST['Time_Meridian'])) {
+	if (! empty($_REQUEST['Time_Meridian'])) {
 		$_REQUEST['Time_Hour'] = date('H', strtotime($_REQUEST['Time_Hour'] . ':00 ' . $_REQUEST['Time_Meridian']));
 	}
 	$start = mktime($_REQUEST['Time_Hour'], $_REQUEST['Time_Minute'], 0, $_REQUEST['Date_Month'], $_REQUEST['Date_Day'], $_REQUEST['Date_Year']);
 	$minicallib->minical_replace_event($user, $_REQUEST["eventId"], $_REQUEST["title"], $_REQUEST["description"], $start, ($_REQUEST['duration_hours'] * 60 * 60) + ($_REQUEST['duration_minutes'] * 60), $_REQUEST['topicId']);
-	$info = array();
+	$info = [];
 	$info['title'] = '';
 	$info['topicId'] = 0;
 	$info['description'] = '';
@@ -83,7 +85,7 @@ if (isset($_REQUEST['save'])) {
 $smarty->assign('eventId', $_REQUEST["eventId"]);
 $smarty->assign('info', $info);
 //Check here the interval for the calendar
-if (!isset($_REQUEST['view'])) {
+if (! isset($_REQUEST['view'])) {
 	$_REQUEST['view'] = 'daily';
 }
 $smarty->assign('view', $_REQUEST['view']);
@@ -104,7 +106,9 @@ if ($_REQUEST['view'] == 'weekly') {
 	$interval = 24 * 60 * 60;
 	// Determine weekday
 	$wd = date('w', $pdate);
-	if ($wd == 0) $wd = 7;
+	if ($wd == 0) {
+		$wd = 7;
+	}
 	$wd = $wd - 1;
 	// Now get the number of days to substract
 	$week_start = $pdate - ($wd * 60 * 60 * 24);
@@ -126,12 +130,12 @@ if ($_REQUEST['view'] == 'daily' || $_REQUEST['view'] == 'weekly') {
 }
 // List view
 if ($_REQUEST['view'] == 'list') {
-	if (!isset($_REQUEST["sort_mode"])) {
+	if (! isset($_REQUEST["sort_mode"])) {
 		$sort_mode = 'start_asc';
 	} else {
 		$sort_mode = $_REQUEST["sort_mode"];
 	}
-	if (!isset($_REQUEST["offset"])) {
+	if (! isset($_REQUEST["offset"])) {
 		$offset = 0;
 	} else {
 		$offset = $_REQUEST["offset"];
@@ -169,8 +173,8 @@ $smarty->assign('duration_hours', $duration_hours);
 $smarty->assign('duration_minutes', $duration_minutes);
 $topics = $minicallib->minical_list_topics($user, 0, -1, 'name_asc', '');
 $smarty->assign('topics', $topics['data']);
-include_once ('tiki-section_options.php');
-include_once ('tiki-mytiki_shared.php');
+include_once('tiki-section_options.php');
+include_once('tiki-mytiki_shared.php');
 ask_ticket('minical');
 $smarty->assign('mid', 'tiki-minical.tpl');
 $smarty->display("tiki.tpl");

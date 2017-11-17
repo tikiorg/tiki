@@ -3,38 +3,38 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-$inputConfiguration = array(
-	array( 'staticKeyFilters' => array(
+$inputConfiguration = [
+	[ 'staticKeyFilters' => [
 		'user' => 'text',
-	) )
-);
+	] ]
+];
 
-require_once ('tiki-setup.php');
-$access->check_feature(array('validateUsers','validateRegistration'), '', 'login', true);
+require_once('tiki-setup.php');
+$access->check_feature(['validateUsers','validateRegistration'], '', 'login', true);
 $isvalid = false;
 if (isset($_REQUEST["user"])) {
 	if (isset($_REQUEST["pass"])) {
 		if (empty($_REQUEST['pass']) && $tiki_p_admin_users === 'y') {// case: user invalidated his account with wrong password- no email was sent - admin must reactivate
-			$userlib->change_user_waiting($_REQUEST['user'], NULL);
+			$userlib->change_user_waiting($_REQUEST['user'], null);
 			$userlib->set_unsuccessful_logins($_REQUEST['user'], 0);
 			$smarty->assign('msg', tra("Account validated successfully."));
 			$smarty->assign('mid', 'tiki-information.tpl');
 			$smarty->display("tiki.tpl");
 			die;
-		} elseif (!empty($_SESSION['last_validation'])) {
+		} elseif (! empty($_SESSION['last_validation'])) {
 			if ($_SESSION['last_validation']['actpass'] == $_REQUEST["pass"] && $_SESSION['last_validation']['user'] == $_REQUEST["user"]) {
 				list($isvalid, $_REQUEST["user"], $error) = $userlib->validate_user($_REQUEST["user"], $_SESSION['last_validation']['actpass'], true);
 			} else {
 				$_SESSION['last_validation'] = null;
 			}
 		}
-		if (!$isvalid) {
+		if (! $isvalid) {
 			list($isvalid, $_REQUEST["user"], $error) = $userlib->validate_user($_REQUEST["user"], $_REQUEST["pass"], true);
-			$_SESSION['last_validation'] = $isvalid ? array('user' => $_REQUEST["user"], 'actpass' => $_REQUEST["pass"]) : null;
+			$_SESSION['last_validation'] = $isvalid ? ['user' => $_REQUEST["user"], 'actpass' => $_REQUEST["pass"]] : null;
 		}
 	} else {
 		$error = PASSWORD_INCORRECT;
@@ -45,7 +45,7 @@ if (isset($_REQUEST["user"])) {
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-$userAutoLoggedIn = FALSE;
+$userAutoLoggedIn = false;
 if ($isvalid) {
 	$wasAdminValidation = false;
 	$info = $userlib->get_user_info($_REQUEST['user']);
@@ -63,19 +63,19 @@ if ($isvalid) {
 		$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
 		$smarty->assign('mail_user', $_REQUEST['user']);
 		$email = $userlib->get_user_email($_REQUEST['user']);
-		include_once ("lib/webmail/tikimaillib.php");
+		include_once("lib/webmail/tikimaillib.php");
 		$mail = new TikiMail();
 		$mail->setText($smarty->fetch('mail/moderate_activation_mail.tpl'));
 		$mail->setSubject($smarty->fetch('mail/moderate_activation_mail_subject.tpl'));
-		$mail->send(array($email));
+		$mail->send([$email]);
 		$logslib->add_log('register', 'validated account ' . $_REQUEST['user']);
 	} elseif (empty($user)) {
 		$userlib->confirm_user($_REQUEST['user']);
 		if ($info['pass_confirm'] == 0) {
-			if (!empty($info['provpass'])) {
+			if (! empty($info['provpass'])) {
 				$_SESSION['last_validation']['pass'] = $info['provpass'];
 			}
-			if (!empty($_SESSION['last_validation']['pass'])) {
+			if (! empty($_SESSION['last_validation']['pass'])) {
 				$smarty->assign('oldpass', $_SESSION['last_validation']['pass']);
 			}
 			$smarty->assign('new_user_validation', 'y');
@@ -90,7 +90,7 @@ if ($isvalid) {
 			die;
 		} else {
 			$user = $_REQUEST['user'];
-			$userAutoLoggedIn = TRUE;
+			$userAutoLoggedIn = true;
 			$_SESSION["$user_cookie_site"] = $user;
 			TikiLib::lib('menu')->empty_menu_cache();
 		}
@@ -100,10 +100,10 @@ if ($isvalid) {
 		setLanguage($language);
 	}
 
-	if (!empty($prefs['url_after_validation']) && !$wasAdminValidation) {
+	if (! empty($prefs['url_after_validation']) && ! $wasAdminValidation) {
 		$target = $prefs['url_after_validation'];
 		$access->redirect($target);
-	} elseif ($userAutoLoggedIn == TRUE) {
+	} elseif ($userAutoLoggedIn == true) {
 		$access->redirect($prefs['tikiIndex'], tra("Account validated successfully."));
 	} else {
 		$smarty->assign('msg', tra("Account validated successfully."));
@@ -112,13 +112,21 @@ if ($isvalid) {
 		die;
 	}
 } else {
-	if ($error == PASSWORD_INCORRECT) $error = tra("Invalid username or password");
-	else if ($error == USER_NOT_FOUND) $error = tra("Invalid username or password");
-	else if ($error == ACCOUNT_DISABLED) $error = tra("Account requires administrator approval");
-	else if ($error == USER_AMBIGOUS) $error = tra("You must use the right case for your username");
-	else if ($error == USER_PREVIOUSLY_VALIDATED) $error = tra('You have already validated your account. Please log in.');
-	else if ($error == EMAIL_AMBIGUOUS) $error = tra("There is more than one user account with this email. Please contact the administrator.");
-	else $error = tra('Invalid username or password');
+	if ($error == PASSWORD_INCORRECT) {
+		$error = tra("Invalid username or password");
+	} elseif ($error == USER_NOT_FOUND) {
+		$error = tra("Invalid username or password");
+	} elseif ($error == ACCOUNT_DISABLED) {
+		$error = tra("Account requires administrator approval");
+	} elseif ($error == USER_AMBIGOUS) {
+		$error = tra("You must use the right case for your username");
+	} elseif ($error == USER_PREVIOUSLY_VALIDATED) {
+		$error = tra('You have already validated your account. Please log in.');
+	} elseif ($error == EMAIL_AMBIGUOUS) {
+		$error = tra("There is more than one user account with this email. Please contact the administrator.");
+	} else {
+		$error = tra('Invalid username or password');
+	}
 	$smarty->assign('errortype', 'no_redirect_login');
 	$smarty->assign('msg', $error);
 	$smarty->display("error.tpl");

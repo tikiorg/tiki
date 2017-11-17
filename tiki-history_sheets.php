@@ -6,15 +6,15 @@
 // $Id$
 
 $tiki_sheet_div_style = '';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 $sheetlib = TikiLib::lib("sheet");
 
-$auto_query_args = array(
+$auto_query_args = [
 	'sheetId',
 	'idx_0',
 	'idx_1'
-);
+];
 $access->check_feature('feature_sheet');
 
 $info = $sheetlib->get_sheet_info($_REQUEST['sheetId']);
@@ -25,7 +25,7 @@ if (empty($info)) {
 }
 
 $objectperms = Perms::get('sheet', $_REQUEST['sheetId']);
-if ($tiki_p_admin != 'y' && !$objectperms->view_sheet && !($user && $info['author'] == $user)) {
+if ($tiki_p_admin != 'y' && ! $objectperms->view_sheet && ! ($user && $info['author'] == $user)) {
 	$smarty->assign('msg', tra('Permission denied'));
 	$smarty->display('error.tpl');
 	die;
@@ -39,13 +39,13 @@ $smarty->assign('page_mode', 'view');
 $history = $sheetlib->sheet_history($_REQUEST['sheetId']);
 $smarty->assign_by_ref('history', $history);
 
-$sheetIndexes = array();
-if ( isset($_REQUEST['idx_0']) ) {
+$sheetIndexes = [];
+if (isset($_REQUEST['idx_0'])) {
 	$sheetIndexes[0] = $_REQUEST['idx_0'];
 } else {
 	$sheetIndexes[0] = 1; //this sets defalut for initial page load
 }
-if ( isset($_REQUEST['idx_1']) ) {
+if (isset($_REQUEST['idx_1'])) {
 	$sheetIndexes[1] = $_REQUEST['idx_1'];
 } else {
 	$sheetIndexes[1] = 0; //this sets defalut for initial page load
@@ -53,7 +53,7 @@ if ( isset($_REQUEST['idx_1']) ) {
 
 $smarty->assign_by_ref('sheetIndexes', $sheetIndexes);
 $smarty->assign('ver_cant', count($history));
-$smarty->assign('grid_content', $sheetlib->diff_sheets_as_html($_REQUEST["sheetId"], array($history[$sheetIndexes[0]]['stamp'], $history[$sheetIndexes[1]]['stamp'])));
+$smarty->assign('grid_content', $sheetlib->diff_sheets_as_html($_REQUEST["sheetId"], [$history[$sheetIndexes[0]]['stamp'], $history[$sheetIndexes[1]]['stamp']]));
 
 $cookietab = 1;
 
@@ -76,14 +76,15 @@ $headerlib->add_jq_onready(
 	}, function() {
 		$.sheet.dualFullScreenHelper($('#tiki_sheet_container').parent(), true);
 	});
-", 500
+",
+	500
 );
 
-if ( $tiki_sheet_div_style) {
+if ($tiki_sheet_div_style) {
 	$smarty->assign('tiki_sheet_div_style', $tiki_sheet_div_style);
 }
 
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 ask_ticket('sheet');
 
 $smarty->assign('lock', true);

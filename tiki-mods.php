@@ -3,38 +3,38 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
-include_once ('lib/mods/modslib.php');
+require_once('tiki-setup.php');
+include_once('lib/mods/modslib.php');
 $access->check_permission('tiki_p_admin');
-if (!is_dir($prefs['mods_dir'])) {
+if (! is_dir($prefs['mods_dir'])) {
 	@mkdir($prefs['mods_dir'], 02777);
 }
-if (!is_writable($prefs['mods_dir'])) {
+if (! is_writable($prefs['mods_dir'])) {
 	$smarty->assign('msg', tra("You need to run setup.sh :<br />./setup.sh \$APACHEUSER all<br />Common Apache users are www-data, apache or nobody"));
 	$smarty->display("error.tpl");
 	die;
 }
-if (!is_writable('tiki-index.php')) {
+if (! is_writable('tiki-index.php')) {
 	$iswritable = false;
 } else {
 	$iswritable = true;
 }
 $smarty->assign('iswritable', $iswritable);
-if (!is_dir($prefs['mods_dir'] . "/Packages")) {
+if (! is_dir($prefs['mods_dir'] . "/Packages")) {
 	mkdir($prefs['mods_dir'] . "/Packages", 02777);
 }
-if (!is_dir($prefs['mods_dir'] . "/Installed")) {
+if (! is_dir($prefs['mods_dir'] . "/Installed")) {
 	mkdir($prefs['mods_dir'] . "/Installed", 02777);
 }
-if (!is_dir($prefs['mods_dir'] . "/Cache")) {
+if (! is_dir($prefs['mods_dir'] . "/Cache")) {
 	mkdir($prefs['mods_dir'] . "/Cache", 02777);
 }
-$feedback = array();
+$feedback = [];
 /**
  * @param $num
  * @param $err
@@ -42,7 +42,7 @@ $feedback = array();
 function tikimods_feedback_listener($num, $err)
 {
 	global $feedback;
-	$feedback[] = array('num' => $num, 'mes' => $err);
+	$feedback[] = ['num' => $num, 'mes' => $err];
 }
 $modslib->add_feedback_listener('tikimods_feedback_listener');
 if (isset($_REQUEST['find']) and trim($_REQUEST['find'])) {
@@ -71,26 +71,26 @@ if (isset($_REQUEST['version']) and trim($_REQUEST['version'])) {
 $smarty->assign('versionarg', $versionarg);
 $smarty->assign('version', $version);
 if ($prefs['feature_mods_provider'] == 'y') {
-	if (!is_dir($prefs['mods_dir'] . "/Dist")) {
+	if (! is_dir($prefs['mods_dir'] . "/Dist")) {
 		mkdir($prefs['mods_dir'] . "/Dist", 02777);
 	}
-	if (!is_file($prefs['mods_dir'] . "/Packages/00_list.public.txt")) {
+	if (! is_file($prefs['mods_dir'] . "/Packages/00_list.public.txt")) {
 		touch($prefs['mods_dir'] . "/Packages/00_list.public.txt");
 	}
 	$public = $modslib->read_list($prefs['mods_dir'] . "/Packages/00_list.public.txt", 'remote', $type, $find, false);
 	if (isset($_REQUEST['republish'])) {
-		$modslib->unpublish($prefs['mods_dir'], array($_REQUEST['republish']));
-		$modslib->publish($prefs['mods_dir'], array($_REQUEST['republish']));
+		$modslib->unpublish($prefs['mods_dir'], [$_REQUEST['republish']]);
+		$modslib->publish($prefs['mods_dir'], [$_REQUEST['republish']]);
 	} elseif (isset($_REQUEST['republishall'])) {
 		$items = $modslib->read_list($prefs['mods_dir'] . "/Packages/00_list.txt", 'local', $type, $find, true);
 		$modslib->unpublish($prefs['mods_dir'], $items);
 		$modslib->publish($prefs['mods_dir'], $items);
 	} elseif (isset($_REQUEST['publish'])) {
-		$modslib->publish($prefs['mods_dir'], array($_REQUEST['publish']));
+		$modslib->publish($prefs['mods_dir'], [$_REQUEST['publish']]);
 	} elseif (isset($_REQUEST['publishall'])) {
 		$modslib->publish($prefs['mods_dir'], $modslib->read_list($prefs['mods_dir'] . "/Packages/00_list.txt", 'local', $type, $find, true));
 	} elseif (isset($_REQUEST['unpublish'])) {
-		$modslib->unpublish($prefs['mods_dir'], array($_REQUEST['unpublish']));
+		$modslib->unpublish($prefs['mods_dir'], [$_REQUEST['unpublish']]);
 	} elseif (isset($_REQUEST['unpublishall'])) {
 		$items = $modslib->read_list($prefs['mods_dir'] . "/Packages/00_list.public.txt", 'public', $type, $find, true);
 		$modslib->unpublish($prefs['mods_dir'], $items);
@@ -98,7 +98,7 @@ if ($prefs['feature_mods_provider'] == 'y') {
 	$smarty->assign('public', $public);
 }
 if (isset($_REQUEST['dl'])) {
-	if (!function_exists("gzinflate")) {
+	if (! function_exists("gzinflate")) {
 		$smarty->assign('msg', tra("Your PHP installation does not have zlib enabled."));
 		$smarty->display('error.tpl');
 		die;
@@ -106,12 +106,12 @@ if (isset($_REQUEST['dl'])) {
 	$modslib->dl_remote($prefs['mods_server'], $_REQUEST['dl'], $prefs['mods_dir']);
 	$modslib->rebuild_list($prefs['mods_dir'] . "/Packages");
 }
-if (!is_file($prefs['mods_dir'] . "/Packages/00_list.txt") or isset($_REQUEST['rebuild'])) {
+if (! is_file($prefs['mods_dir'] . "/Packages/00_list.txt") or isset($_REQUEST['rebuild'])) {
 	$modslib->rebuild_list($prefs['mods_dir'] . "/Packages");
 	$modslib->rebuild_list($prefs['mods_dir'] . "/Installed");
 }
 if ($prefs['mods_server']) {
-	if (!is_file($prefs['mods_dir'] . "/Packages/00_list." . urlencode($prefs['mods_server']) . ".txt")) {
+	if (! is_file($prefs['mods_dir'] . "/Packages/00_list." . urlencode($prefs['mods_server']) . ".txt")) {
 		touch($prefs['mods_dir'] . "/Packages/00_list." . urlencode($prefs['mods_server']) . ".txt");
 		$_REQUEST['reload'] = true;
 	}
@@ -132,10 +132,10 @@ if (isset($_REQUEST['action']) and isset($package) and $iswritable) {
 		$_REQUEST['action'] = 'upgrade';
 	}
 	if ($_REQUEST['action'] == 'remove') {
-		$deps = $modslib->find_deps_remove($prefs['mods_dir'], $prefs['mods_server'], array($packtype . '-' . $package));
+		$deps = $modslib->find_deps_remove($prefs['mods_dir'], $prefs['mods_server'], [$packtype . '-' . $package]);
 		$smarty->assign('installask', $deps);
 	} elseif (($_REQUEST['action'] == 'install') || ($_REQUEST['action'] == 'upgrade')) {
-		$deps = $modslib->find_deps($prefs['mods_dir'], $prefs['mods_server'], array($packtype . '-' . $package));
+		$deps = $modslib->find_deps($prefs['mods_dir'], $prefs['mods_server'], [$packtype . '-' . $package]);
 		$smarty->assign('installask', $deps);
 	}
 } elseif (isset($_REQUEST['button-check'])) {
@@ -163,10 +163,14 @@ if ($prefs['feature_mods_provider'] == 'y') {
 }
 $types = $modslib->types;
 $versions = $modslib->versions;
-$display = array();
+$display = [];
 if ($type) {
-	if (!isset($local[$type])) $local[$type] = array();
-	if (!isset($remote[$type])) $remote[$type] = array();
+	if (! isset($local[$type])) {
+		$local[$type] = [];
+	}
+	if (! isset($remote[$type])) {
+		$remote[$type] = [];
+	}
 	$display[$type] = array_merge($local[$type], $remote[$type]);
 } else {
 	foreach ($types as $t => $tt) {
@@ -181,11 +185,11 @@ if ($type) {
 		}
 	}
 }
-if (!empty($version)) { // filter out other versions
-	$filtered = array();
+if (! empty($version)) { // filter out other versions
+	$filtered = [];
 	if ($version == - 1) {
 		foreach ($display as $t => $ms) {
-			$filtmod = array();
+			$filtmod = [];
 			foreach ($ms as $k => $m) {
 				if (empty($m->version[0])) {
 					$filtmod[$k] = $m;
@@ -198,59 +202,48 @@ if (!empty($version)) { // filter out other versions
 	} else {
 		$v = floatval($version);
 		foreach ($display as $t => $ms) {
-			$filtmod = array();
+			$filtmod = [];
 			foreach ($ms as $k => $m) {
 				$mv = floatval($m->version[0]);
 				// TODO - fix the data, but for the mean time...
 				if (strpos($m->version[0], '1.10') !== false || strpos($m->version[0], ' 2 ') !== false) {
 					$mv = 2.0; // 1.10 was renumbered 2.0 - or version= "Compatible with TikiWiki 2 releases."
-					
 				}
 				if (strpos($m->version[0], ' 3 ') !== false || strpos($m->version[0], ' 3+') !== false) {
 					$mv = 3.0; // e.g. version= "Compatible with TikiWiki 3 releases." or "3+"
-					
 				}
 				if (strpos($m->version[0], ' 4 ') !== false || strpos($m->version[0], ' 4+') !== false) {
 					$mv = 4.0; // e.g. version= "Compatible with TikiWiki 4 releases." or "4+"
-					
 				}
 				if (strpos($m->version[0], ' 5 ') !== false || strpos($m->version[0], ' 5+') !== false) {
 					$mv = 5.0; // e.g. version= "Compatible with TikiWiki 5 releases." or "5+"
-					
 				}
 				if (strpos($m->version[0], ' 6 ') !== false || strpos($m->version[0], ' 6+') !== false) {
 					$mv = 6.0; // e.g. version= "Compatible with Tiki 6 releases." or "6+"
-					
 				}
-				
+
 				if (strpos($m->version[0], ' 7 ') !== false || strpos($m->version[0], ' 7+') !== false) {
 					$mv = 7.0; // e.g. version= "Compatible with Tiki 7 releases." or "7+"
-					
 				}
 
 				if (strpos($m->version[0], ' 8 ') !== false || strpos($m->version[0], ' 8+') !== false) {
 					$mv = 8.0; // e.g. version= "Compatible with Tiki 8 releases." or "8+"
-					
-				}				
+				}
 
 				if (strpos($m->version[0], ' 9 ') !== false || strpos($m->version[0], ' 9+') !== false) {
 					$mv = 9.0; // e.g. version= "Compatible with Tiki 9 releases." or "9+"
-
 				}
 
 				if (strpos($m->version[0], ' 10 ') !== false || strpos($m->version[0], ' 10+') !== false) {
 					$mv = 10.0; // e.g. version= "Compatible with Tiki 10 releases." or "10+"
-
 				}
 
 				if (strpos($m->version[0], ' 11 ') !== false || strpos($m->version[0], ' 11+') !== false) {
 					$mv = 11.0; // e.g. version= "Compatible with Tiki 11 releases." or "11+"
-
 				}
 
 				if (strpos($m->version[0], ' 12 ') !== false || strpos($m->version[0], ' 12+') !== false) {
 					$mv = 12.0; // e.g. version= "Compatible with Tiki 12 releases." or "12+"
-
 				}
 
 				if ($mv >= $v) {
@@ -269,10 +262,12 @@ if (isset($_REQUEST['focus'])) {
 	$focus = $_REQUEST['focus'];
 	$more = new TikiModInfo($focus);
 	$err = $more->readinfo($prefs['mods_dir'] . '/Packages/' . $focus . '.info.txt');
-	if ($err !== false) die($err);
+	if ($err !== false) {
+		die($err);
+	}
 } else {
 	$focus = false;
-	$more = array();
+	$more = [];
 }
 $smarty->assign('focus', $focus);
 $smarty->assign('more', $more);

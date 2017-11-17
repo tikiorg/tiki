@@ -7,13 +7,13 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 $access->check_feature('bigbluebutton_feature');
 
 $bigbluebuttonlib = TikiLib::lib('bigbluebutton');
 $loglib = TikiLib::lib('logs');
-$user_count = $users = $rooms = $join_log = $total_log = $log_out = $log_in = array();
+$user_count = $users = $rooms = $join_log = $total_log = $log_out = $log_in = [];
 $total_log = $loglib->get_log_count("bigbluebutton", "Joined Room");
 foreach ($total_log as $row) {
 	$join_log[$row['action']][$row['object']][] = $row;

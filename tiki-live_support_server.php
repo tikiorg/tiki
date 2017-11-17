@@ -3,7 +3,7 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -24,7 +24,7 @@ header('Content-Type: text/xml');
 if ($prefs['feature_live_support'] != 'y') {
 	die;
 }
-include_once ('lib/live_support/lslib.php');
+include_once('lib/live_support/lslib.php');
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); // always modified
 header("Cache-Control: no-store, no-cache, must-revalidate"); // HTTP/1.1
@@ -64,7 +64,7 @@ if (isset($_REQUEST['write'])) {
 	if ($_REQUEST['role'] == 'observer') {
 		$color = 'grey';
 	}
-	if (!strstr($_REQUEST['msg'], 'has left')) {
+	if (! strstr($_REQUEST['msg'], 'has left')) {
 		$_REQUEST['msg'] = '<span style="color:' . $color . ';">(' . $_REQUEST['name'] . ')' . ' ' . $_REQUEST['msg'] . '</span>';
 	}
 	$lslib->put_message($_REQUEST['write'], $_REQUEST['msg'], $_REQUEST['senderId']);

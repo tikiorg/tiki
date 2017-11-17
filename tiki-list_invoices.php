@@ -3,7 +3,7 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -29,7 +29,7 @@ foreach ($Invoices as $I => $Invoice) {
 	$Amount = 0;
 	$Paid = 0;
 	$Status = "";
-	
+
 	if (is_array($Invoice["Item Amounts"])) {
 		foreach ($Invoice["Item Amounts"] as $Key => $sum) {
 			$Amount += $Invoice["Item Amounts"][$Key] * $Invoice["Item Quantities"][$Key];
@@ -37,9 +37,9 @@ foreach ($Invoices as $I => $Invoice) {
 	} else {
 		$Amount = $Invoice["Item Amounts"] * $Invoice["Item Quantities"];
 	}
-	
+
 	$Invoices[$I]["Amount"] = $Amount;
-	
+
 	if (is_array($Invoice["Amounts Paid"])) {
 		foreach ($Invoice["Amounts Paid"] as $Sum) {
 			$Paid += $Sum;
@@ -47,15 +47,15 @@ foreach ($Invoices as $I => $Invoice) {
 	} else {
 		$Paid = $Invoice["Amounts Paid"];
 	}
-	
+
 	$Invoices[$I]["Paid"] = $Paid;
-	
-	if ($Amount == $Paid) {	
+
+	if ($Amount == $Paid) {
 		$Status = "Paid";
 	} else {
 		$Status = "Open";
 	}
-	
+
 	$Invoices[$I]["Status"] = $Status;
 }
 

@@ -3,25 +3,25 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'poll';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $access->check_feature('feature_polls');
 $access->check_permission('tiki_p_view_poll_results');
 $polllib = TikiLib::lib('poll');
-$auto_query_args = array('offset', 'pollId', 'maxRecords', 'scoresort_desc', 'scoresort_asc', 'sort_mode', 'list', 'vote_from_date', 'vote_to_date', 'which_date', 'from_Day', 'from_Month', 'from_Year', 'to_Day', 'to_Month', 'to_Year');
+$auto_query_args = ['offset', 'pollId', 'maxRecords', 'scoresort_desc', 'scoresort_asc', 'sort_mode', 'list', 'vote_from_date', 'vote_to_date', 'which_date', 'from_Day', 'from_Month', 'from_Year', 'to_Day', 'to_Month', 'to_Year'];
 $smarty->assign('auto_args', implode(',', $auto_query_args));
-if (!empty($_REQUEST['maxRecords'])) {
+if (! empty($_REQUEST['maxRecords'])) {
 	$_REQUEST['maxRecords'] = $_REQUEST['maxRecords'];
 	$smarty->assign('maxRecords', $_REQUEST['maxRecords']);
 } else {
 	$_REQUEST['maxRecords'] = - 1;
 }
-if (!isset($_REQUEST['find'])) {
+if (! isset($_REQUEST['find'])) {
 	$_REQUEST['find'] = '';
 }
 $smarty->assign_by_ref('find', $_REQUEST['find']);
@@ -29,12 +29,12 @@ $now = $vote_from_date = $vote_to_date = $tikilib->now;
 if (isset($_REQUEST['which_date'])) {
 	$which_date = $_REQUEST['which_date'];
 	if ($which_date == 'between') {
-		if (!empty($_REQUEST['vote_from_date'])) {
+		if (! empty($_REQUEST['vote_from_date'])) {
 			$vote_from_date = $_REQUEST['vote_from_date'];
 		} else {
 			$vote_from_date = TikiLib::make_time(0, 0, 0, $_REQUEST['from_Month'], $_REQUEST['from_Day'], $_REQUEST['from_Year']);
 		}
-		if (!empty($_REQUEST['vote_to_date'])) {
+		if (! empty($_REQUEST['vote_to_date'])) {
 			$vote_to_date = $_REQUEST['vote_to_date'];
 		} else {
 			$vote_to_date = TikiLib::make_time(23, 59, 59, $_REQUEST['to_Month'], $_REQUEST['to_Day'], $_REQUEST['to_Year']);
@@ -44,24 +44,25 @@ if (isset($_REQUEST['which_date'])) {
 } else {
 	$which_date = '';
 }
-if ($tiki_p_admin == 'y' && !empty($_REQUEST['deletevote']) && !empty($_REQUEST['optionId'])) {
+if ($tiki_p_admin == 'y' && ! empty($_REQUEST['deletevote']) && ! empty($_REQUEST['optionId'])) {
 	$polllib->delete_vote($_REQUEST['pollId'], $_REQUEST['user'], $_REQUEST['ip'], $_REQUEST['optionId']);
 }
 
-$pollIds = array();
-if (!empty($_REQUEST['pollId'])) {
+$pollIds = [];
+if (! empty($_REQUEST['pollId'])) {
 	$pollIds[] = $_REQUEST['pollId'];
 	$smarty->assign_by_ref('pollId', $_REQUEST['pollId']);
 	$previous = $polllib->get_user_vote('poll' . $_REQUEST['pollId'], $user);
-	if (!empty($previous))
+	if (! empty($previous)) {
 		$smarty->assign('msg', 'You have voted');
+	}
 } else {
 	$polls = $polllib->list_active_polls(0, $_REQUEST['maxRecords'], 'votes_desc', $_REQUEST['find']);
 	foreach ($polls['data'] as $pId) {
 		$pollIds[] = $pId['pollId'];
 	}
 }
-$poll_info_arr = array();
+$poll_info_arr = [];
 $start_year = date('Y', $now);
 foreach ($pollIds as $pK => $pId) { // iterate each poll
 	$poll_info = $polllib->get_poll($pId);
@@ -126,16 +127,18 @@ if (isset($_REQUEST['scoresort_desc'])) {
 if (isset($_REQUEST['scoresort']) || isset($_REQUEST['scoresort_desc'])) {
 	$t_arr = $poll_info_arr;
 	$sort_ok = usort($t_arr, 'scoresort');
-	if ($sort_ok) $poll_info_arr = $t_arr;
+	if ($sort_ok) {
+		$poll_info_arr = $t_arr;
+	}
 }
-	
-if ($tiki_p_view_poll_voters == 'y' && !empty($_REQUEST['list']) && isset($_REQUEST['pollId'])) {
+
+if ($tiki_p_view_poll_voters == 'y' && ! empty($_REQUEST['list']) && isset($_REQUEST['pollId'])) {
 	$smarty->assign_by_ref('list', $_REQUEST['list']);
 	if (empty($_REQUEST['sort_mode'])) {
 		$_REQUEST['sort_mode'] = 'user_asc';
 	}
 	$smarty->assign_by_ref('sort_mode', $_REQUEST['sort_mode']);
-	if (!isset($_REQUEST['offset'])) {
+	if (! isset($_REQUEST['offset'])) {
 		$_REQUEST['offset'] = 0;
 	}
 	$smarty->assign_by_ref('offset', $_REQUEST['offset']);

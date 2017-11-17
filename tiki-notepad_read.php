@@ -3,18 +3,18 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'mytiki';
-require_once ('tiki-setup.php');
-include_once ('lib/notepad/notepadlib.php');
+require_once('tiki-setup.php');
+include_once('lib/notepad/notepadlib.php');
 $access->check_feature('feature_notepad');
 $access->check_user($user);
 $access->check_permission('tiki_p_notepad');
-if (!isset($_REQUEST["noteId"])) {
+if (! isset($_REQUEST["noteId"])) {
 	$smarty->assign('msg', tra("No note indicated"));
 	$smarty->display("error.tpl");
 	die;
@@ -26,7 +26,7 @@ if (isset($_REQUEST["remove"])) {
 	die;
 }
 $info = $notepadlib->get_note($user, $_REQUEST["noteId"]);
-if (!$info) {
+if (! $info) {
 	$smarty->assign('msg', tra("Note not found"));
 	$smarty->display("error.tpl");
 	die;
@@ -81,12 +81,12 @@ if ($info['parse_mode'] == 'raw') {
 	$smarty->assign('wysiwyg', 'n');
 } else {
 	include 'lib/setup/editmode.php';
-	$info['parsed'] = TikiLib::lib('parser')->parse_data($info['data'], array('is_html' => $is_html));
+	$info['parsed'] = TikiLib::lib('parser')->parse_data($info['data'], ['is_html' => $is_html]);
 }
 $smarty->assign('noteId', $_REQUEST["noteId"]);
 $smarty->assign('info', $info);
-include_once ('tiki-section_options.php');
-include_once ('tiki-mytiki_shared.php');
+include_once('tiki-section_options.php');
+include_once('tiki-mytiki_shared.php');
 ask_ticket('notepad-read');
 $smarty->assign('mid', 'tiki-notepad_read.tpl');
 $smarty->display("tiki.tpl");

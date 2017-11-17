@@ -14,8 +14,8 @@ $access->check_feature('feature_kaltura');
 
 try {
 	$kentryType = '';
-	$videoId = array();
-	if (!empty($_REQUEST['mixId'])) {
+	$videoId = [];
+	if (! empty($_REQUEST['mixId'])) {
 		if (is_array($_REQUEST['mixId'])) {
 			$videoId = $_REQUEST['mixId'];
 		} else {
@@ -24,7 +24,7 @@ try {
 		$kentryType = 'mix';
 	}
 
-	if (!empty($_REQUEST['mediaId'])) {
+	if (! empty($_REQUEST['mediaId'])) {
 		if (is_array($_REQUEST['mediaId'])) {
 			$videoId = $_REQUEST['mediaId'];
 		} else {
@@ -34,16 +34,15 @@ try {
 	}
 
 	$mode = null;
-	if (!empty($videoId) && isset($_REQUEST['action'])) {
+	if (! empty($videoId) && isset($_REQUEST['action'])) {
 		$mode = $_REQUEST['action'];
 		$smarty->assign('kmode', $mode);
 		$smarty->assign('entryType', $kentryType);
 
 		switch ($mode) {
-
 			case 'dupl':
 				//TODO there must be a way to make this work with non remix type. If not, to remove.
-				$access->check_permission(array('tiki_p_upload_videos'));
+				$access->check_permission(['tiki_p_upload_videos']);
 				if ($kentryType == 'mix') {
 					$kalturalib = TikiLib::lib('kalturauser');
 					$knewmixEntry = $kalturalib->cloneMix($videoId[0]);
@@ -52,17 +51,17 @@ try {
 				exit;
 
 			case 'delete':
-				$access->check_permission(array('tiki_p_delete_videos'));
+				$access->check_permission(['tiki_p_delete_videos']);
 				$access->check_authenticity();
 				if ($kentryType == 'media') {
 					$kalturalib = TikiLib::lib('kalturauser');
-					foreach ( $videoId as $vi ) {
+					foreach ($videoId as $vi) {
 						$kalturalib->deleteMedia($vi);
 					}
 				}
 				if ($kentryType == 'mix') {
 					$kalturalib = TikiLib::lib('kalturauser');
-					foreach ( $videoId as $vi ) {
+					foreach ($videoId as $vi) {
 						$kalturalib->deleteMix($vi);
 					}
 				}
@@ -70,7 +69,7 @@ try {
 				exit;
 
 			case 'download':
-				$access->check_permission(array('tiki_p_download_videos'));
+				$access->check_permission(['tiki_p_download_videos']);
 				$kalturalib = TikiLib::lib('kalturauser');
 				$kres = $kalturalib->flattenVideo($videoId[0]);
 
@@ -78,7 +77,7 @@ try {
 				exit;
 
 			case 'edit':
-				$access->check_permission(array('tiki_p_edit_videos'));
+				$access->check_permission(['tiki_p_edit_videos']);
 				$kalturaadminlib = TikiLib::lib('kalturaadmin');
 
 				if ($kentryType == 'mix') {
@@ -86,13 +85,13 @@ try {
 					if ($_REQUEST['update']) {
 						$knewentry = $kalturaadminlib->updateMix(
 							$videoId[0],
-							array(
+							[
 								'name' => $_REQUEST['name'],
 								'description' => $_REQUEST['description'],
 								'tags' => $_REQUEST['tags'],
 								'editorType' => $_REQUEST['editor'] === 'kse' ? 1 : 2,
 								'adminTags' => $_REQUEST['adminTags'],
-							)
+							]
 						);
 					}
 				}
@@ -100,12 +99,13 @@ try {
 					$kentry = $kalturaadminlib->getMedia($videoId[0]);
 					if ($_REQUEST['update']) {
 						$knewentry = $kalturaadminlib->updateMedia(
-							$videoId[0], array(
+							$videoId[0],
+							[
 								'name' => $_REQUEST['name'],
 								'description' => $_REQUEST['description'],
 								'tags' => $_REQUEST['tags'],
 								'adminTags' => $_REQUEST['adminTags'],
-							)
+							]
 						);
 					}
 				}
@@ -123,10 +123,9 @@ try {
 				$smarty->display('error.tpl');
 				exit;
 		}
-
 	} else {
 		if (isset($videoId[0])) {
-			$access->check_permission(array('tiki_p_view_videos'));
+			$access->check_permission(['tiki_p_view_videos']);
 			$smarty->assign('kmode', 'view');
 			$kalturalib = TikiLib::lib('kalturauser');
 
@@ -144,7 +143,7 @@ try {
 		$smarty->assign('entryType', $kentryType);
 	}
 
-	if ($mode == 'edit' && !empty($prefs['kaltura_kdpEditUIConf'])) {
+	if ($mode == 'edit' && ! empty($prefs['kaltura_kdpEditUIConf'])) {
 		$kaltura_kdpId = $prefs['kaltura_kdpEditUIConf'];
 	} else {
 		$kaltura_kdpId = $prefs['kaltura_kdpUIConf'];
@@ -154,8 +153,7 @@ try {
 	// Display the template
 	$smarty->assign('mid', 'tiki-kaltura_video.tpl');
 	$smarty->display('tiki.tpl');
-
-} catch( Exception $e ) {
+} catch (Exception $e) {
 	$access->display_error(
 		'',
 		tr('Communication error'),

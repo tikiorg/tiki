@@ -3,25 +3,29 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
-include_once ('lib/live_support/lsadminlib.php');
-include_once ('lib/live_support/lslib.php');
+require_once('tiki-setup.php');
+include_once('lib/live_support/lsadminlib.php');
+include_once('lib/live_support/lslib.php');
 $access->check_feature('feature_live_support');
-if ($tiki_p_live_support_admin != 'y' && !$lsadminlib->user_is_operator($user)) {
+if ($tiki_p_live_support_admin != 'y' && ! $lsadminlib->user_is_operator($user)) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
 }
 $where = '';
-$wheres = array();
-if (!isset($_REQUEST['filter_name'])) $_REQUEST['filter_user'] = '';
-if (!isset($_REQUEST['filter_operator'])) $_REQUEST['filter_operator'] = '';
+$wheres = [];
+if (! isset($_REQUEST['filter_name'])) {
+	$_REQUEST['filter_user'] = '';
+}
+if (! isset($_REQUEST['filter_operator'])) {
+	$_REQUEST['filter_operator'] = '';
+}
 if (($_REQUEST['filter_user'])) {
 	$wheres[] = " tiki_user='" . $_REQUEST['filter_name'] . "'";
 }
@@ -32,12 +36,12 @@ $where = implode('and', $wheres);
 if (isset($_REQUEST['where'])) {
 	$where = $_REQUEST['where'];
 }
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'chat_started_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];

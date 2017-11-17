@@ -11,7 +11,7 @@
 // As a side note beyond the standard heading. Most of the code in this file was taken
 // directly from the OpenID library example files. The code was modified to suit the
 // specific needs.
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 require_once "vendor_extra/pear/Auth/OpenID/HMAC.php";
 require_once "vendor_extra/pear/Auth/OpenID/Consumer.php";
 require_once "vendor_extra/pear/Auth/OpenID/FileStore.php";
@@ -34,16 +34,21 @@ function setupFromAddress() // {{{
 {
 	global $url_scheme, $url_host, $url_port, $base_url;
 	// Remember where the page was requested from (from tiki-login.php)
-	if (!isset($_SESSION['loginfrom'])) {
+	if (! isset($_SESSION['loginfrom'])) {
 		$_SESSION['loginfrom'] = (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $prefs['tikiIndex']);
-		if (!preg_match('/^http/', $_SESSION['loginfrom'])) {
+		if (! preg_match('/^http/', $_SESSION['loginfrom'])) {
 			if ($_SESSION['loginfrom'] {
 				0
-			} == '/') $_SESSION['loginfrom'] = $url_scheme . '://' . $url_host . (($url_port != '') ? ":$url_port" : '') . $_SESSION['loginfrom'];
-			else $_SESSION['loginfrom'] = $base_url . $_SESSION['loginfrom'];
+			} == '/') {
+				$_SESSION['loginfrom'] = $url_scheme . '://' . $url_host . (($url_port != '') ? ":$url_port" : '') . $_SESSION['loginfrom'];
+			} else {
+				$_SESSION['loginfrom'] = $base_url . $_SESSION['loginfrom'];
+			}
 		}
 	}
-	if (strpos($_SESSION['loginfrom'], 'openid') !== false) $_SESSION['loginfrom'] = $base_url;
+	if (strpos($_SESSION['loginfrom'], 'openid') !== false) {
+		$_SESSION['loginfrom'] = $base_url;
+	}
 } // }}}
 /**
  * @param $identifier
@@ -52,9 +57,11 @@ function setupFromAddress() // {{{
 function getAccountsMatchingIdentifier($identifier) // {{{
 {
 	global $tikilib;
-	$result = $tikilib->query("SELECT login FROM users_users WHERE openid_url = ?", array($identifier));
-	$userlist = array();
-	while ($row = $result->fetchRow()) $userlist[] = $row['login'];
+	$result = $tikilib->query("SELECT login FROM users_users WHERE openid_url = ?", [$identifier]);
+	$userlist = [];
+	while ($row = $result->fetchRow()) {
+		$userlist[] = $row['login'];
+	}
 	return $userlist;
 } // }}}
 /**
@@ -78,7 +85,7 @@ function loginUser($identifier) // {{{
 function filterExistingInformation(&$data, &$messages) // {{{
 {
 	global $tikilib;
-	$result = $tikilib->query("SELECT COUNT(*) FROM users_users WHERE login = ?", array($data['nickname']));
+	$result = $tikilib->query("SELECT COUNT(*) FROM users_users WHERE login = ?", [$data['nickname']]);
 	$count = reset($result->fetchRow());
 	if ($count > 0) {
 		$data['nickname'] = '';
@@ -108,7 +115,7 @@ function displayRegisatrationForms($data, $messages) // {{{
 	// Changing some system values to get the login box to display properly in the context
 	$smarty->assign('rememberme', 'disabled');
 	$smarty->assign('forgotPass', 'n');
-	$smarty->assign('allowRegister', ($prefs['allowRegister'] != 'y' || ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster']))) ? 'n' : 'y');
+	$smarty->assign('allowRegister', ($prefs['allowRegister'] != 'y' || ($prefs['feature_intertiki'] == 'y' && ! empty($prefs['feature_intertiki_mymaster']))) ? 'n' : 'y');
 	$smarty->assign('change_password', 'n');
 	$smarty->assign('auth_method', 'tiki');
 	$smarty->assign('feature_switch_ssl_mode', 'n');
@@ -120,7 +127,9 @@ function displayRegisatrationForms($data, $messages) // {{{
 		if ($gr['registrationChoice'] == 'y') {
 			++$nbChoiceGroups;
 			$theChoiceGroup = $gr['groupName'];
-			if ($gr['groupName'] == 'Registered') $mandatoryChoiceGroups = false;
+			if ($gr['groupName'] == 'Registered') {
+				$mandatoryChoiceGroups = false;
+			}
 		}
 	}
 	if ($nbChoiceGroups) {
@@ -153,7 +162,8 @@ function displaySelectionList($data, $messages) // {{{
  * @param $message
  */
 function displayError($message)
-{ // {{{
+{
+ // {{{
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('msg', tra("Failure:") . " " . $message);
 	$smarty->assign('errortype', 'login');
@@ -164,9 +174,10 @@ function displayError($message)
  * @return Auth_OpenID_FileStore
  */
 function getStore()
-{ // {{{
+{
+ // {{{
 	$store_path = "temp/openid_consumer";
-	if (!file_exists($store_path) && !mkdir($store_path)) {
+	if (! file_exists($store_path) && ! mkdir($store_path)) {
 		print "Could not create the FileStore directory '$store_path'. " . " Please check the effective permissions.";
 		exit(0);
 	}
@@ -176,7 +187,8 @@ function getStore()
  * @return Auth_OpenID_Consumer
  */
 function getConsumer()
-{ // {{{
+{
+ // {{{
 
 	/**
 	 * Create a consumer object using the store object created
@@ -186,7 +198,8 @@ function getConsumer()
 	return new Auth_OpenID_Consumer($store);
 } // }}}
 function getOpenIDURL()
-{ // {{{
+{
+ // {{{
 	// Render a default page if we got a submission without an openid
 	// value.
 	if (empty($_GET['openid_url'])) {
@@ -198,10 +211,11 @@ function getOpenIDURL()
  * @return string
  */
 function getScheme()
-{ // {{{
+{
+ // {{{
 	$scheme = 'http';
 	if (isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] == 'on') {
-		$scheme.= 's';
+		$scheme .= 's';
 	}
 	return $scheme;
 } // }}}
@@ -209,35 +223,40 @@ function getScheme()
  * @return string
  */
 function getReturnTo()
-{ // {{{
+{
+ // {{{
 	$path = str_replace('\\', '/', dirname($_SERVER['PHP_SELF']));
 	$string = sprintf("%s://%s:%s%s/tiki-login_openid.php?action=return", getScheme(), $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT'], $path == '/' ? '' : $path);
-	if (isset($_GET['action']) && $_GET['action'] == 'force') $string.= '&force=true';
+	if (isset($_GET['action']) && $_GET['action'] == 'force') {
+		$string .= '&force=true';
+	}
 	return $string;
 } // }}}
 /**
  * @return string
  */
 function getTrustRoot()
-{ // {{{
+{
+ // {{{
 	return sprintf("%s://%s:%s%s", getScheme(), $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT'], str_replace('\\', '/', dirname($_SERVER['PHP_SELF'])));
 } // }}}
 function runAuth()
-{ // {{{
+{
+ // {{{
 	setupFromAddress();
 	$openid = getOpenIDURL();
 	$consumer = getConsumer();
 	// Begin the OpenID authentication process.
 	$auth_request = $consumer->begin($openid);
 	// No auth request means we can't begin OpenID. Usually this is because the OpenID is invalid. Sometimes this is because the OpenID server's certificate isn't trusted.
-	if (!$auth_request) {
+	if (! $auth_request) {
 		displayError(tra("Authentication error; probably not a valid OpenID."));
 	}
 	$sreg_request = Auth_OpenID_SRegRequest::build(
 		// Required
-		array(),
+		[],
 		// Optional
-		array('nickname', 'email')
+		['nickname', 'email']
 	);
 	if ($sreg_request) {
 		$auth_request->addExtension($sreg_request);
@@ -260,7 +279,7 @@ function runAuth()
 	} else {
 		// Generate form markup and render it.
 		$form_id = 'openid_message';
-		$form_html = $auth_request->htmlMarkup(getTrustRoot(), getReturnTo(), false, array('id' => $form_id));
+		$form_html = $auth_request->htmlMarkup(getTrustRoot(), getReturnTo(), false, ['id' => $form_id]);
 		// Display an error if the form markup couldn't be generated;
 		// otherwise, render the HTML.
 		if (Auth_OpenID::isFailure($form_html)) {
@@ -271,7 +290,8 @@ function runAuth()
 	}
 } // }}}
 function runFinish()
-{ // {{{
+{
+ // {{{
 	$smarty = TikiLib::lib('smarty');
 	$consumer = getConsumer();
 	// Complete the authentication process using the server's
@@ -281,26 +301,32 @@ function runFinish()
 	if ($response->status == Auth_OpenID_CANCEL) {
 		// This means the authentication was cancelled.
 		displayError(tra('Verification cancelled.'));
-	} else if ($response->status == Auth_OpenID_FAILURE) {
+	} elseif ($response->status == Auth_OpenID_FAILURE) {
 		// Authentication failed; display the error message.
 		displayError(tra("OpenID authentication failed: ") . $response->message);
-	} else if ($response->status == Auth_OpenID_SUCCESS) {
+	} elseif ($response->status == Auth_OpenID_SUCCESS) {
 		// This means the authentication succeeded; extract the
 		// identity URL and Simple Registration data (if it was
 		// returned).
-		$data = array('identifier' => $response->identity_url, 'email' => '', 'fullname' => '', 'nickname' => '',);
+		$data = ['identifier' => $response->identity_url, 'email' => '', 'fullname' => '', 'nickname' => '',];
 		$sreg_resp = Auth_OpenID_SRegResponse::fromSuccessResponse($response);
 		$sreg = $sreg_resp->contents();
 		// Sanitize identifier. Just consider slashes at the end are never good.
-		if (substr($data['identifier'], -1) == '/') $data['identifier'] = substr($data['identifier'], 0, -1);
-		if (@$sreg['email']) $data['email'] = $sreg['email'];
-		if (@$sreg['nickname']) $data['nickname'] = $sreg['nickname'];
+		if (substr($data['identifier'], -1) == '/') {
+			$data['identifier'] = substr($data['identifier'], 0, -1);
+		}
+		if (@$sreg['email']) {
+			$data['email'] = $sreg['email'];
+		}
+		if (@$sreg['nickname']) {
+			$data['nickname'] = $sreg['nickname'];
+		}
 		$_SESSION['openid_url'] = $data['identifier'];
 		// If OpenID identifier exists in the database
 		$list = getAccountsMatchingIdentifier($data['identifier']);
 		$_SESSION['openid_userlist'] = $list;
 		$smarty->assign('openid_userlist', $list);
-		if (count($list) > 0 && !isset($_GET['force'])) {
+		if (count($list) > 0 && ! isset($_GET['force'])) {
 			// If Single account
 			if (count($list) == 1) {
 				// Login the user
@@ -311,7 +337,7 @@ function runFinish()
 				displaySelectionList($list);
 			}
 		} else {
-			$messages = array();
+			$messages = [];
 			// Check for entries that already exist in the database and filter them out
 			filterExistingInformation($data, $messages);
 			// Display register and attach forms
@@ -323,12 +349,22 @@ function runSelect() // {{{
 {
 	setupFromAddress();
 	$user = $_GET['select'];
-	if (in_array($user, $_SESSION['openid_userlist'])) loginUser($user);
-	else displayError(tra('The selected account is not associated with your identity.'));
+	if (in_array($user, $_SESSION['openid_userlist'])) {
+		loginUser($user);
+	} else {
+		displayError(tra('The selected account is not associated with your identity.'));
+	}
 } // }}}
 if (isset($_GET['action'])) {
-	if ($_GET['action'] == 'return') runFinish();
-	elseif ($_GET['action'] == 'select' && isset($_GET['select'])) runSelect();
-	elseif ($_GET['action'] == 'force') runAuth();
-	else displayError(tra('unknown action'));
-} else runAuth();
+	if ($_GET['action'] == 'return') {
+		runFinish();
+	} elseif ($_GET['action'] == 'select' && isset($_GET['select'])) {
+		runSelect();
+	} elseif ($_GET['action'] == 'force') {
+		runAuth();
+	} else {
+		displayError(tra('unknown action'));
+	}
+} else {
+	runAuth();
+}

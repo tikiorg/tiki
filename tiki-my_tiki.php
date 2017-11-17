@@ -3,15 +3,15 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'mytiki';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $wikilib = TikiLib::lib('wiki');
-include_once ('lib/tasks/tasklib.php');
+include_once('lib/tasks/tasklib.php');
 //get_strings tra('My Account Home');
 $access->check_user($user);
 $userwatch = $user;
@@ -29,7 +29,7 @@ if (isset($_REQUEST["view_user"])) {
 	}
 }
 $smarty->assign('userwatch', $userwatch);
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'pageName_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
@@ -92,7 +92,7 @@ if ($prefs['feature_forums'] == 'y') {
 if ($prefs['feature_tasks'] == 'y') {
 	$mytiki_tasks = $tikilib->get_user_preference($user, 'mytiki_tasks', 'y');
 	if ($mytiki_tasks == 'y') {
-		$tasks = $tasklib->list_tasks($user, 0, 20, NULL, 'priority_asc', true, false, true);
+		$tasks = $tasklib->list_tasks($user, 0, 20, null, 'priority_asc', true, false, true);
 		$smarty->assign_by_ref('tasks', $tasks['data']);
 		$smarty->assign('mytiki_tasks', 'y');
 	}
@@ -116,6 +116,6 @@ if ($prefs['feature_articles'] == 'y') {
 		$smarty->assign('mytiki_articles', 'y');
 	}
 }
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 $smarty->assign('mid', 'tiki-my_tiki.tpl');
 $smarty->display("tiki.tpl");

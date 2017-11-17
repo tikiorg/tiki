@@ -1,14 +1,14 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
-include_once ('lib/newsletters/nllib.php');
+require_once('tiki-setup.php');
+include_once('lib/newsletters/nllib.php');
 $access->check_feature('feature_newsletters');
-if (!empty($_REQUEST['nlId'])) {
+if (! empty($_REQUEST['nlId'])) {
 	$smarty->assign('nlId', $_REQUEST["nlId"]);
 	$nl_info = $nllib->get_newsletter($_REQUEST["nlId"]);
 	if (empty($nl_info)) {
@@ -20,10 +20,10 @@ if (!empty($_REQUEST['nlId'])) {
 }
 
 $access->check_feature('feature_newsletters');
-$access->check_permission_either(array('tiki_p_view_newsletter'));
+$access->check_permission_either(['tiki_p_view_newsletter']);
 
-if (isset($_REQUEST['remove']) && !empty($_REQUEST['nlId'])) {
-	if (!$tikilib->user_has_perm_on_object($user, $_REQUEST['nlId'], 'newsletter', 'tiki_p_admin_newsletters')) {
+if (isset($_REQUEST['remove']) && ! empty($_REQUEST['nlId'])) {
+	if (! $tikilib->user_has_perm_on_object($user, $_REQUEST['nlId'], 'newsletter', 'tiki_p_admin_newsletters')) {
 		$smarty->assign('msg', tra("You do not have permission to use this feature"));
 		$smarty->display("error.tpl");
 		die;
@@ -31,21 +31,21 @@ if (isset($_REQUEST['remove']) && !empty($_REQUEST['nlId'])) {
 	$access->check_authenticity();
 	$nllib->remove_edition($_REQUEST["nlId"], $_REQUEST["remove"]);
 }
-if (!empty($_REQUEST['error'])) {
+if (! empty($_REQUEST['error'])) {
 	$edition_errors = $nllib->get_edition_errors($_REQUEST['error']);
 	$edition_info = $nllib->get_edition($_REQUEST['error']);
 	$smarty->assign_by_ref('edition_errors', $edition_errors);
 	$smarty->assign_by_ref('edition_info', $edition_info);
 }
-if (!empty($_REQUEST['deleteError'])) {
+if (! empty($_REQUEST['deleteError'])) {
 	$edition_errors = $nllib->remove_edition_errors($_REQUEST['deleteError']);
 }
-if (!isset($_REQUEST["ed_sort_mode"])) {
+if (! isset($_REQUEST["ed_sort_mode"])) {
 	$ed_sort_mode = 'sent_desc';
 } else {
 	$ed_sort_mode = $_REQUEST["ed_sort_mode"];
 }
-if (!isset($_REQUEST["ed_offset"])) {
+if (! isset($_REQUEST["ed_offset"])) {
 	$ed_offset = 0;
 } else {
 	$ed_offset = $_REQUEST["ed_offset"];
@@ -83,7 +83,7 @@ if (isset($_REQUEST['editionId'])) {
 	foreach ($channels['data'] as $edition) {
 		if ($edition['editionId'] == $_REQUEST['editionId']) {
 			$is_html = $edition['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y'; // parse as html if wysiwyg and not htmltowiki
-			$edition["dataparsed"] = TikiLib::lib('parser')->parse_data($edition["data"], array('is_html' => $is_html));
+			$edition["dataparsed"] = TikiLib::lib('parser')->parse_data($edition["data"], ['is_html' => $is_html]);
 			$smarty->assign_by_ref('edition', $edition);
 			break;
 		}
@@ -91,7 +91,7 @@ if (isset($_REQUEST['editionId'])) {
 }
 ask_ticket('newsletters');
 $section = 'newsletters';
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 // Display the template
 $smarty->assign('mid', 'tiki-newsletter_archives.tpl');
 $smarty->display("tiki.tpl");

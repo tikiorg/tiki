@@ -10,16 +10,16 @@
 
 require_once 'tiki-setup.php';
 $access->check_feature('feature_kaltura');
-$access->check_permission(array('tiki_p_list_videos'));
+$access->check_permission(['tiki_p_list_videos']);
 //get_strings tra('List Media')
 
 $mediaTypeAsString['2'] = 'Image';
 $mediaTypeAsString['1'] = 'Video';
 $mediaTypeAsString['5'] = 'Audio';
 
-$statusAsString  = array(
+$statusAsString  = [
 	-2 => tra('Error importing'),
- 	-1 => tra('Error converting'),
+	 -1 => tra('Error converting'),
 	0 => tra('Importing'),
 	1 => tra('Processing'),
 	2 => tra('Ready'),
@@ -27,19 +27,19 @@ $statusAsString  = array(
 	4 => tra('Pending'),
 	5 => tra('Pending moderation'),
 	6 => tra('Blocked'),
-);
+];
 
 
 
-if (!isset($_REQUEST['list'])) {
-	$_REQUEST['list'] = 'media'; // default media since mix is relegated	
+if (! isset($_REQUEST['list'])) {
+	$_REQUEST['list'] = 'media'; // default media since mix is relegated
 }
 
 try {
 	if (isset($_REQUEST['action'])) {
-		$videoId = array();
+		$videoId = [];
 
-		if (!empty($_REQUEST['mixId'])) {	
+		if (! empty($_REQUEST['mixId'])) {
 			if (is_array($_REQUEST['mixId'])) {
 				$videoId = $_REQUEST['mixId'];
 			} else {
@@ -48,7 +48,7 @@ try {
 			$kentryType = 'mix';
 		}
 
-		if (!empty($_REQUEST['mediaId'])) {	
+		if (! empty($_REQUEST['mediaId'])) {
 			if (is_array($_REQUEST['mediaId'])) {
 				$videoId = $_REQUEST['mediaId'];
 			} else {
@@ -59,24 +59,23 @@ try {
 		$entryType = $_REQUEST['list'];
 
 		switch ($_REQUEST['action']) {
-
 			case tra('Delete'):
-				$access->check_permission(array('tiki_p_delete_videos'));
+				$access->check_permission(['tiki_p_delete_videos']);
 				$access->check_authenticity();
 				$kalturalib = TikiLib::lib('kalturauser');
 
 				if ($kentryType == 'media') {
-					foreach ( $videoId as $vi ) {
+					foreach ($videoId as $vi) {
 						$kalturalib->deleteMedia($vi);
 					}
 					header('Location: tiki-list_kaltura_entries.php?list=media');
 					die;
 				}
-					
+
 				if ($kentryType == 'mix') {
-					foreach ( $videoId as $vi ) {
+					foreach ($videoId as $vi) {
 						$kalturalib->deleteMix($vi);
-					}					
+					}
 					header('Location: tiki-list_kaltura_entries.php?list=mix');
 					die;
 				}
@@ -100,14 +99,14 @@ try {
 
 	$page_size = $jitRequest->maxRecords->int() ?: $prefs['maxRecords'];
 	$offset = max(0, $jitRequest->offset->int());
-	$page = ($offset/$page_size) + 1;
+	$page = ($offset / $page_size) + 1;
 
-	if ( $_REQUEST['list'] == 'mix' or !isset($_REQUEST['list']) ) {
+	if ($_REQUEST['list'] == 'mix' or ! isset($_REQUEST['list'])) {
 		if ($_REQUEST['view'] != 'browse') {
 			$kalturaadminlib = TikiLib::lib('kalturaadmin');
 			$kmixlist = $kalturaadminlib->listMix($sort_mode, $page, $page_size, $find);
 
-			for ($i =0 ; $i < $kmixlist->totalCount; $i++) {
+			for ($i = 0; $i < $kmixlist->totalCount; $i++) {
 				$kmixlist->objects[$i]->createdAt = date('d M Y h:i A', $kmixlist->objects[$i]->createdAt);
 				$domdoc = new DOMDocument;
 				$domdoc->loadXML($kmixlist->objects[$i]->dataContent);
@@ -128,7 +127,6 @@ try {
 					}
 				}
 			}
-
 		} else {
 			$kmixlist = $kalturaadminlib->listMix($sort_mode, $page, $page_size, $find);
 		}
@@ -142,12 +140,11 @@ try {
 	}
 
 	if ($_REQUEST['list'] == 'media') {
-
 		$kalturaadminlib = TikiLib::lib('kalturaadmin');
 		if ($jitRequest->view->alpha() != 'browse') {
 			$kmedialist = $kalturaadminlib->listMedia($sort_mode, $page, $page_size, $find);
 
-			for ($i =0 ; $i < $kmedialist->totalCount; $i++) {
+			for ($i = 0; $i < $kmedialist->totalCount; $i++) {
 				$kmedialist->objects[$i]->mediaType = $mediaTypeAsString[$kmedialist->objects[$i]->mediaType];
 				$kmedialist->objects[$i]->statusString = $statusAsString[$kmedialist->objects[$i]->status];
 			}
@@ -165,7 +162,6 @@ try {
 	// Display the template
 	$smarty->assign('mid', 'tiki-list_kaltura_entries.tpl');
 	$smarty->display('tiki.tpl');
-} catch( Exception $e ) {
+} catch (Exception $e) {
 	$access->display_error('', tra('Communication error'), 500, true, tra('Invalid response provided by the Kaltura server. Please retry.') . '<br /><em>' . $e->getMessage() . '</em>');
 }
-

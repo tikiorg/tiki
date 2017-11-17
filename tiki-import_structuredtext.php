@@ -3,12 +3,12 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $access->check_feature('feature_wiki');
 $access->check_permission('tiki_p_admin');
 
@@ -21,12 +21,12 @@ function parse_st($dump)
 	$bodysep  = '>>>>>>>>>>>>>>>>>>>>>>>>';
 	$titlesep = '>>>>>>>>>>--------------';
 	$pages = preg_split("/$bodysep/", $dump);
-	$res = array();
+	$res = [];
 	array_shift($pages);
 	foreach ($pages as $p) {
 		$ret['pagename'] = trim(substr($p, 0, strpos($p, ">")));
 		$ret['pagename'] = str_replace(' ', '', ucwords(str_replace('_', ' ', $ret['pagename'])));
-		$ret['body'] = substr($p, strpos($p, $titlesep)+strlen($titlesep));
+		$ret['body'] = substr($p, strpos($p, $titlesep) + strlen($titlesep));
 		$res[] = $ret;
 	}
 	return $res;
@@ -37,7 +37,7 @@ $smarty->assign('result', 'n');
 if (isset($_REQUEST["import"])) {
 	check_ticket('import-st');
 
-	$path = 'dump/'.$tikidomain.'/'.$_REQUEST["path"];
+	$path = 'dump/' . $tikidomain . '/' . $_REQUEST["path"];
 
 	if (is_file($path)) {
 		$fp = fopen($path, "r");
@@ -48,7 +48,6 @@ if (isset($_REQUEST["import"])) {
 		$parts = parse_st($full);
 
 		foreach ($parts as $part) {
-
 			$part["body"] = preg_replace_callback('/\[([^\]]*)\]/', function ($match) {
 				return str_replace(' ', '', ucwords('((' . $match[1] . '))'));
 			}, $part["body"]);
@@ -58,13 +57,13 @@ if (isset($_REQUEST["import"])) {
 			}, $part["body"]);
 
 			$part["body"] = preg_replace("/( |\n|^)(http:\/\/[^ ]+)( |\n)/", "$1[$2]$3", $part["body"]);
-			
+
 			// "A link to Google":http://google.com
 			$part["body"] = preg_replace("~\"([^\"]*)\":(((ht|f)tps?://|mailto:)[^\s]*)~", "[$2|$1]", $part["body"]);
 
 			// internal labelled links
 			$part["body"] = preg_replace("~\"([^\"]+)\":([^\s]+)~", "(($2|$1))", $part["body"]);
-			
+
 			// html links
 			$part["body"] = preg_replace("~<a href=\"([^\"]*)\">([^<]*)</a>~", "[$1|$2]", $part["body"]);
 
@@ -74,18 +73,18 @@ if (isset($_REQUEST["import"])) {
 		 // manage lists
 			$part["body"] = preg_replace("/\n \*/", "\n**", $part["body"]);
 			$part["body"] = preg_replace("/\n  \*/", "\n***", $part["body"]);
-		 
+
 			// change <b>..</b>
 			$part["body"] = preg_replace("/ _([^_]*)_ /", " ===$1=== ", $part["body"]);
 			$part["body"] = preg_replace("/\*\*([^\*\n]+)\*\*/", "__$1__", $part["body"]);
 			$part["body"] = preg_replace("~<b>([^<]*)</b>~", "__$1__", $part["body"]);
 			$part["body"] = preg_replace("/\*([^\*\n]+)\*/", "''$1''", $part["body"]);
 			$part["body"] = preg_replace("~<i>([^<]*)</i>~", "''$1''", $part["body"]);
-			
+
 			// change <hr>
 			$part["body"] = preg_replace("/<hr(\s*\/)?>(\r?\n)?/", "---\n", $part["body"]);
 
-     // manage formatting
+	 // manage formatting
 			$part["body"] = preg_replace("/^(\n*)([^\n]+)(\n\n) /", "!$2$3", $part["body"]);
 			$part["body"] = preg_replace("/(\n\n)([^\n]{1,200})(\n\n) /", "$1!!$2$3", $part["body"]);
 			$part["body"] = preg_replace("/\n +/", "\n", $part["body"]);
@@ -100,10 +99,10 @@ if (isset($_REQUEST["import"])) {
 
 			if ($tikilib->page_exists($pagename)) {
 				if (isset($_REQUEST["crunch"]) and $_REQUEST["crunch"] == 'y') {
-					$msg = '<b>' . tra('overwriting old page'). '</b>';
+					$msg = '<b>' . tra('overwriting old page') . '</b>';
 					$tikilib->update_page($pagename, $part["body"], tra('updated from structured text import'), 'System', '0.0.0.0', '');
 				} else {
-					$msg = '<b>' . tra('page not added (Exists)'). '</b>';
+					$msg = '<b>' . tra('page not added (Exists)') . '</b>';
 				}
 			} else {
 				$msg = tra('page created');

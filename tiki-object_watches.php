@@ -3,24 +3,24 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-include_once ('tiki-setup.php');
+include_once('tiki-setup.php');
 $categlib = TikiLib::lib('categ');
 $access->check_feature('feature_group_watches');
-$access->check_permission(array('tiki_p_admin_users'));
-if (!isset($_REQUEST['objectId']) || !isset($_REQUEST['watch_event'])) {
+$access->check_permission(['tiki_p_admin_users']);
+if (! isset($_REQUEST['objectId']) || ! isset($_REQUEST['watch_event'])) {
 	$smarty->assign('msg', tra('Not enough information to display this page'));
 	$smarty->display('error.tpl');
 	die;
 }
 
-$objectType = isset($_REQUEST['objectType']) ? $_REQUEST['objectType'] : null; 
+$objectType = isset($_REQUEST['objectType']) ? $_REQUEST['objectType'] : null;
 
-$auto_query_args = array('objectId', 'objectType', 'objectName', 'watch_event', 'referer', 'objectHref');
+$auto_query_args = ['objectId', 'objectType', 'objectName', 'watch_event', 'referer', 'objectHref'];
 $all_groups = $userlib->list_all_groups();
 $smarty->assign_by_ref('all_groups', $all_groups);
 if ($objectType == 'Category') {
@@ -39,7 +39,7 @@ if ($objectType == 'Category') {
 	}
 }
 
-if (!isset($_REQUEST['referer']) && isset($_SERVER['HTTP_REFERER'])) {
+if (! isset($_REQUEST['referer']) && isset($_SERVER['HTTP_REFERER'])) {
 	$_REQUEST['referer'] = $_SERVER['HTTP_REFERER'];
 }
 if (isset($_REQUEST['referer'])) {
@@ -47,18 +47,20 @@ if (isset($_REQUEST['referer'])) {
 }
 
 if (isset($_REQUEST['assign'])) {
-	$objectName = isset($_REQUEST['objectName']) ? $_REQUEST['objectName'] : NULL;
-	$objectHref = isset($_REQUEST['objectHref']) ? $_REQUEST['objectHref'] : NULL;
-	$addedGroups = array();
-	$deletedGroups = array();
-	if (!isset($_REQUEST['checked'])) $_REQUEST['checked'] = array();
+	$objectName = isset($_REQUEST['objectName']) ? $_REQUEST['objectName'] : null;
+	$objectHref = isset($_REQUEST['objectHref']) ? $_REQUEST['objectHref'] : null;
+	$addedGroups = [];
+	$deletedGroups = [];
+	if (! isset($_REQUEST['checked'])) {
+		$_REQUEST['checked'] = [];
+	}
 	$old_watches = $tikilib->get_groups_watching($_REQUEST['objectId'], $_REQUEST['watch_event'], $objectType);
 	check_ticket('object_watches');
 	foreach ($all_groups as $g) {
-		if (in_array($g, $_REQUEST['checked']) && !in_array($g, $old_watches)) {
+		if (in_array($g, $_REQUEST['checked']) && ! in_array($g, $old_watches)) {
 			$tikilib->add_group_watch($g, $_REQUEST['watch_event'], $_REQUEST['objectId'], $objectType, $objectName, $objectHref);
 			$addedGroups[] = $g;
-		} elseif (!in_array($g, $_REQUEST['checked']) && in_array($g, $old_watches)) {
+		} elseif (! in_array($g, $_REQUEST['checked']) && in_array($g, $old_watches)) {
 			$tikilib->remove_group_watch($g, $_REQUEST['watch_event'], $_REQUEST['objectId'], $objectType);
 			$deletedGroups[] = $g;
 		}
@@ -67,9 +69,9 @@ if (isset($_REQUEST['assign'])) {
 		$group_watches = $_REQUEST['checked'];
 	}
 	if ($objectType == 'Category') {
-		$addedGroupsDesc = array();
-		$deletedGroupsDesc = array();
-		$catTreeNodes = array();
+		$addedGroupsDesc = [];
+		$deletedGroupsDesc = [];
+		$catTreeNodes = [];
 		foreach ($all_groups as $g) {
 			if (isset($_REQUEST[$g]) && $_REQUEST[$g] == 'cat_add_desc') {
 				$categlib->group_watch_category_and_descendants($g, $_REQUEST['objectId'], $objectName, false);
@@ -86,15 +88,15 @@ if (isset($_REQUEST['assign'])) {
 		}
 		$smarty->assign_by_ref('addedGroupsDesc', $addedGroupsDesc);
 		$smarty->assign_by_ref('deletedGroupsDesc', $deletedGroupsDesc);
-		
-		if (!empty($addedGroupsDesc) || !empty($deletedGroupsDesc)) {
+
+		if (! empty($addedGroupsDesc) || ! empty($deletedGroupsDesc)) {
 			foreach ($extendedTargets as $d) {
 				$catinfo = $categlib->get_category($d);
-				$catTreeNodes[] = array(
+				$catTreeNodes[] = [
 					'id' => $catinfo['categId'],
 					'parent' => $catinfo['parentId'],
-					'data' => $catinfo['name'], 
-				);
+					'data' => $catinfo['name'],
+				];
 			}
 			include_once('lib/tree/BrowseTreeMaker.php');
 			$tm = new BrowseTreeMaker('categ');

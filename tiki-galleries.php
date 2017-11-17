@@ -6,7 +6,7 @@
 // $Id$
 
 $section = 'galleries';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 $imagegallib = TikiLib::lib('imagegal');
 $categlib = TikiLib::lib('categ');
@@ -21,7 +21,7 @@ if (isset($_REQUEST['find'])) {
 
 $smarty->assign('find', $find);
 
-if (!isset($_REQUEST['galleryId'])) {
+if (! isset($_REQUEST['galleryId'])) {
 	$_REQUEST['galleryId'] = 0;
 }
 
@@ -45,25 +45,55 @@ if (isset($_REQUEST['migrate_images_to_fgal'])) {
 
 $foo = parse_url($_SERVER['REQUEST_URI']);
 $foo['path'] = str_replace('tiki-galleries', 'tiki-browse_gallery', $foo['path']);
-$smarty->assign('url', $tikilib->httpPrefix(). $foo['path']);
+$smarty->assign('url', $tikilib->httpPrefix() . $foo['path']);
 
-if (!isset($_REQUEST['maxRows']))			$_REQUEST['maxRows'] = $prefs['maxRowsGalleries'];
-if (!isset($_REQUEST['rowImages']))		$_REQUEST['rowImages'] = $prefs['rowImagesGalleries'];
-if (!isset($_REQUEST['thumbSizeX']))	$_REQUEST['thumbSizeX'] = $prefs['thumbSizeXGalleries'];
-if (!isset($_REQUEST['thumbSizeY']))	$_REQUEST['thumbSizeY'] = $prefs['thumbSizeYGalleries'];
-if (!isset($_REQUEST['scaleSize']))		$_REQUEST['scaleSize'] = $prefs['scaleSizeGalleries'];
+if (! isset($_REQUEST['maxRows'])) {
+	$_REQUEST['maxRows'] = $prefs['maxRowsGalleries'];
+}
+if (! isset($_REQUEST['rowImages'])) {
+	$_REQUEST['rowImages'] = $prefs['rowImagesGalleries'];
+}
+if (! isset($_REQUEST['thumbSizeX'])) {
+	$_REQUEST['thumbSizeX'] = $prefs['thumbSizeXGalleries'];
+}
+if (! isset($_REQUEST['thumbSizeY'])) {
+	$_REQUEST['thumbSizeY'] = $prefs['thumbSizeYGalleries'];
+}
+if (! isset($_REQUEST['scaleSize'])) {
+	$_REQUEST['scaleSize'] = $prefs['scaleSizeGalleries'];
+}
 
 if (isset($_REQUEST['edit']) || isset($_REQUEST['preview']) || $_REQUEST['galleryId'] == 0) {
-	if (!isset($_REQUEST['description']))		$_REQUEST['description'] = '';
-	if (!isset($_REQUEST['maxRows']))				$_REQUEST['maxRows'] = 10;
-	if (!isset($_REQUEST['rowImages']))			$_REQUEST['rowImages'] = 6;
-	if (!isset($_REQUEST['thumbSizeX']))		$_REQUEST['thumbSizeX'] = 80;
-	if (!isset($_REQUEST['thumbSizeY']))		$_REQUEST['thumbSizeY'] = 80;
-	if (!isset($_REQUEST['sortorder']))			$_REQUEST['sortorder'] = 'created';
-	if (!isset($_REQUEST['sortdirection'])) $_REQUEST['sortdirection'] = 'desc';
-	if (!isset($_REQUEST['galleryimage']))	$_REQUEST['galleryimage'] = 'first';
-	if (!isset($_REQUEST['parentgallery'])) $_REQUEST['parentgallery'] = -1;
-	if (!isset($_REQUEST['defaultscale']))	$_REQUEST['defaultscale'] = 'o';
+	if (! isset($_REQUEST['description'])) {
+		$_REQUEST['description'] = '';
+	}
+	if (! isset($_REQUEST['maxRows'])) {
+		$_REQUEST['maxRows'] = 10;
+	}
+	if (! isset($_REQUEST['rowImages'])) {
+		$_REQUEST['rowImages'] = 6;
+	}
+	if (! isset($_REQUEST['thumbSizeX'])) {
+		$_REQUEST['thumbSizeX'] = 80;
+	}
+	if (! isset($_REQUEST['thumbSizeY'])) {
+		$_REQUEST['thumbSizeY'] = 80;
+	}
+	if (! isset($_REQUEST['sortorder'])) {
+		$_REQUEST['sortorder'] = 'created';
+	}
+	if (! isset($_REQUEST['sortdirection'])) {
+		$_REQUEST['sortdirection'] = 'desc';
+	}
+	if (! isset($_REQUEST['galleryimage'])) {
+		$_REQUEST['galleryimage'] = 'first';
+	}
+	if (! isset($_REQUEST['parentgallery'])) {
+		$_REQUEST['parentgallery'] = -1;
+	}
+	if (! isset($_REQUEST['defaultscale'])) {
+		$_REQUEST['defaultscale'] = 'o';
+	}
 }
 
 
@@ -84,14 +114,14 @@ $smarty->assign('owner', $user);
 $smarty->assign('geographic', 'n');
 $smarty->assign('edit_mode', 'n');
 
-$options_sortorder = array(
+$options_sortorder = [
 		tra('id') => 'imageId',
 		tra('Name') => 'name',
 		tra('Creation Date') => 'created',
 		tra('Owner') => 'user',
 		tra('Hits') => 'hits',
 		tra('Size') => 'filesize'
-);
+];
 
 $smarty->assign_by_ref('options_sortorder', $options_sortorder);
 $smarty->assign('sortorder', 'imageId');
@@ -108,20 +138,20 @@ $smarty->assign('showxysize', 'n');
 $smarty->assign('showfilesize', 'n');
 $smarty->assign('showfilename', 'n');
 
-$options_galleryimage = array(
+$options_galleryimage = [
 		tra('first uploaded image') => 'firstu',
 		tra('last uploaded image') => 'lastu',
 		tra('first image') => 'first',
 		tra('last image') => 'last',
 		tra('random image') => 'random'
-);
+];
 
 $smarty->assign_by_ref('options_galleryimage', $options_galleryimage);
 $smarty->assign('galleryimage', 'first');
-$galleries_list=$imagegallib->list_galleries(0, -1, 'name_desc', $user);
+$galleries_list = $imagegallib->list_galleries(0, -1, 'name_desc', $user);
 $smarty->assign_by_ref('galleries_list', $galleries_list['data']);
 $smarty->assign('defaultscale', 'o');
-$smarty->assign('scaleinfo', array());
+$smarty->assign('scaleinfo', []);
 $smarty->assign('parentgallery', -1);
 
 // If we are editing an existing gallery prepare smarty variables
@@ -158,7 +188,8 @@ if (isset($_REQUEST['edit_mode']) && $_REQUEST['edit_mode']) {
 			$smarty->assign('parentgallery', $info['parentgallery']);
 			$smarty->assign('showname', $info['showname']);
 			$smarty->assign('showimageid', $info['showimageid']);
-			$smarty->assign('showcategories', $info['showcategories']);;
+			$smarty->assign('showcategories', $info['showcategories']);
+			;
 			$smarty->assign('showdescription', $info['showdescription']);
 			$smarty->assign('showcreated', $info['showcreated']);
 			$smarty->assign('showuser', $info['showuser']);
@@ -199,7 +230,7 @@ if (isset($_REQUEST['edit'])
 		if ($_REQUEST['galleryId'] > 0) {
 			$info = $imagegallib->get_gallery_info($_REQUEST['galleryId']);
 
-			if (!$user || $info['user'] != $user) {
+			if (! $user || $info['user'] != $user) {
 				$smarty->assign('errortype', 401);
 				$smarty->assign('msg', tra('You do not have permission to edit this gallery'));
 
@@ -225,7 +256,7 @@ if (isset($_REQUEST['edit'])
 	$smarty->assign('parentgallery', $_REQUEST['parentgallery']);
 	$smarty->assign('defaultscale', $_REQUEST['defaultscale']);
 
-	$auxarray = array(
+	$auxarray = [
 			'showname',
 			'showimageid',
 			'showdescription',
@@ -236,10 +267,10 @@ if (isset($_REQUEST['edit'])
 			'showfilesize',
 			'showfilename',
 			'showcategories'
-	);
+	];
 
 	foreach ($auxarray as $key => $item) {
-		if (!isset($_REQUEST[$item])) {
+		if (! isset($_REQUEST[$item])) {
 			$_REQUEST[$item] = 'n';
 		}
 		$smarty->assign($item, $_REQUEST[$item]);
@@ -325,8 +356,8 @@ if (isset($_REQUEST['edit'])
 	$cat_desc = substr($_REQUEST['description'], 0, 200);
 	$cat_name = $_REQUEST['name'];
 	$cat_href = 'tiki-browse_gallery.php?galleryId=' . $cat_objid;
-	include_once ('categorize.php');
-	include_once ('freetag_apply.php');
+	include_once('categorize.php');
+	include_once('freetag_apply.php');
 
 	$smarty->assign('edit_mode', 'n');
 	$smarty->assign('galleryId', '');
@@ -346,7 +377,7 @@ if ($category_needed == 'y') {
 	$smarty->assign('parentgallery', $_REQUEST['parentgallery']);
 	$smarty->assign('defaultscale', $_REQUEST['defaultscale']);
 
-	$auxarray = array(
+	$auxarray = [
 			'showname',
 			'showimageid',
 			'showdescription',
@@ -357,11 +388,11 @@ if ($category_needed == 'y') {
 			'showfilesize',
 			'showfilename',
 			'showcategories'
-			);
+			];
 
 	foreach ($auxarray as $key => $item) {
-		if (!isset($_REQUEST[$item])) {
-			$_REQUEST[$item]='n';
+		if (! isset($_REQUEST[$item])) {
+			$_REQUEST[$item] = 'n';
 		}
 		$smarty->assign($item, $_REQUEST[$item]);
 	}
@@ -393,7 +424,7 @@ if (isset($_REQUEST['removegal'])) {
 	if ($tiki_p_admin_galleries != 'y') {
 		$info = $imagegallib->get_gallery_info($_REQUEST['removegal']);
 
-		if (!$user || $info['user'] != $user) {
+		if (! $user || $info['user'] != $user) {
 			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra('You do not have permission to remove this gallery'));
 
@@ -406,7 +437,7 @@ if (isset($_REQUEST['removegal'])) {
 }
 $smarty->assign('category_needed', $category_needed);
 
-if (!isset($_REQUEST['sort_mode'])) {
+if (! isset($_REQUEST['sort_mode'])) {
 	$sort_mode = 'name_asc';
 } else {
 	$sort_mode = $_REQUEST['sort_mode'];
@@ -414,7 +445,7 @@ if (!isset($_REQUEST['sort_mode'])) {
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
-if (!isset($_REQUEST['offset'])) {
+if (! isset($_REQUEST['offset'])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST['offset'];
@@ -426,20 +457,21 @@ $smarty->assign_by_ref('offset', $offset);
 $imagegallib = TikiLib::lib('imagegal');
 
 $galleries = $imagegallib->list_galleries($offset, $maxRecords, $sort_mode, 'admin', $find);
-Perms::bulk(array( 'type' => 'image gallery' ), 'object', $galleries, 'galleryId');
+Perms::bulk([ 'type' => 'image gallery' ], 'object', $galleries, 'galleryId');
 
 $smarty->assign('filter', '');
-if (!empty($_REQUEST['filter']))
-$smarty->assign('filter', $_REQUEST['filter']);
+if (! empty($_REQUEST['filter'])) {
+	$smarty->assign('filter', $_REQUEST['filter']);
+}
 
 
 $temp_max = count($galleries['data']);
 for ($i = 0; $i < $temp_max; $i++) {
 	$galperms = Perms::get(
-		array(
+		[
 			'type' => 'image gallery',
 			'object' => $galleries['data'][$i]['galleryId']
-		)
+		]
 	);
 
 	// check if top gallery (has no parents)
@@ -477,12 +509,12 @@ $smarty->assign_by_ref('cant', $galleries['cant']);
 
 $cat_type = 'image gallery';
 $cat_objid = $_REQUEST['galleryId'];
-include_once ('categorize_list.php');
-include_once ('freetag_list.php');
+include_once('categorize_list.php');
+include_once('freetag_list.php');
 
 $defaultRows = 5;
 
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 ask_ticket('galleries');
 
 $perms = Perms::get();

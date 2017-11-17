@@ -31,12 +31,12 @@ if (Perms::get()->admin) {
 
 $show_columns = array_fill_keys(array_keys($modules), 'n');
 
-$modnames = array();
-foreach ( $modules as $zone => & $moduleList ) {
+$modnames = [];
+foreach ($modules as $zone => & $moduleList) {
 	if ($prefs['feature_fullscreen'] != 'y' || empty($_SESSION['fullscreen']) || $_SESSION['fullscreen'] != 'y' ||
 			strpos($zone, 'page') === 0) {	// pagetop and pagebottom zones appear in fullscreen
 
-		foreach ( $moduleList as & $mod_reference ) {
+		foreach ($moduleList as & $mod_reference) {
 			$show_columns[$zone] = 'y';
 
 			$ref = (array) $mod_reference;
@@ -66,9 +66,7 @@ if (count($cssadd > 0)) {
 $smarty->assign('show_columns', $show_columns);
 $smarty->assign('module_zones', $modules);
 
-$module_nodecorations = array('decorations' => 'n');
-$module_isflippable = array('flip' => 'y');
+$module_nodecorations = ['decorations' => 'n'];
+$module_isflippable = ['flip' => 'y'];
 $smarty->assign('module_nodecorations', $module_nodecorations);
 $smarty->assign('module_isflippable', $module_isflippable);
-
-

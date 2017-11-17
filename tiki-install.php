@@ -1,10 +1,10 @@
 <?php
 /**
  * Tiki's Installation script.
- * 
+ *
  * Used to install a fresh Tiki instance, to upgrade an existing Tiki to a newer version and to test sendmail.
  *
- * @package TikiWiki 
+ * @package TikiWiki
  * @copyright (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
  */
@@ -12,9 +12,15 @@
 
 $in_installer = 1;
 define('TIKI_IN_INSTALLER', 1);
-if (!isset($title)) $title = 'Tiki Installer';
-if (!isset($content)) $content = 'No content specified. Something went wrong.<br/>Please tell your administrator.<br/>If you are the administrator, you may want to check for / file a bug report.';
-if (!isset($dberror)) $dberror = false;
+if (! isset($title)) {
+	$title = 'Tiki Installer';
+}
+if (! isset($content)) {
+	$content = 'No content specified. Something went wrong.<br/>Please tell your administrator.<br/>If you are the administrator, you may want to check for / file a bug report.';
+}
+if (! isset($dberror)) {
+	$dberror = false;
+}
 
 // Show all errors
 error_reporting(-1);
@@ -24,7 +30,7 @@ ini_set('display_errors', 1);
 
 if (version_compare(PHP_VERSION, '5.6.0', '<')) {
 	$title = 'PHP 5.6 is required';
-	$content = '<p>Please contact your system administrator ( if you are not the one ;) ). Your version: '.PHP_VERSION.' <br /> <br /> '.'Please also visit <a href="tiki-check.php">Server Check</a>'.'</p>';
+	$content = '<p>Please contact your system administrator ( if you are not the one ;) ). Your version: ' . PHP_VERSION . ' <br /> <br /> ' . 'Please also visit <a href="tiki-check.php">Server Check</a>' . '</p>';
 	createPage($title, $content);
 }
 
@@ -34,18 +40,18 @@ TikiInit::appendIncludePath($tikipath);
 
 require_once('db/tiki-db.php');	// to set up multitiki etc if there
 
-$lockFile = 'db/'.$tikidomainslash.'lock';
+$lockFile = 'db/' . $tikidomainslash . 'lock';
 
 // if tiki installer is locked (probably after previous installation) display notice
 if (file_exists($lockFile)) {
 	$title = 'Tiki Installer Disabled';
-	$td = empty($tikidomain)? '': '/'.$tikidomain;
+	$td = empty($tikidomain) ? '' : '/' . $tikidomain;
 	$content = '
 							<p>As a security precaution, the Tiki Installer has been disabled. To re-enable the installer:</p>
 							<div style="border: solid 1px #ccc; margin: 1em auto; width: 40%;">
 								<ol style="text-align: left">
-									<li>Use your file manager application to find the directory where you have unpacked your Tiki and remove the <strong><code>lock</code></strong> file which was created in the <strong><code>db'.$td.'</code></strong> folder.</li>
-									<li>Re-run <strong><a href="tiki-install.php'.(empty($tikidomain)?'':"?multi=$tikidomain").'" title="Tiki Installer">tiki-install.php'.(empty($tikidomain)?'':"?multi=$tikidomain").'</a></strong>.</li>
+									<li>Use your file manager application to find the directory where you have unpacked your Tiki and remove the <strong><code>lock</code></strong> file which was created in the <strong><code>db' . $td . '</code></strong> folder.</li>
+									<li>Re-run <strong><a href="tiki-install.php' . (empty($tikidomain) ? '' : "?multi=$tikidomain") . '" title="Tiki Installer">tiki-install.php' . (empty($tikidomain) ? '' : "?multi=$tikidomain") . '</a></strong>.</li>
 								</ol>
 							</div>';
 	createPage($title, $content);
@@ -59,22 +65,22 @@ session_start();
 
 $rootcheck = empty($tikiroot) || $tikiroot === '/' ? '' : $tikiroot;
 $refered = isset($_SERVER['HTTP_REFERER']) ? strpos($_SERVER['HTTP_REFERER'], $rootcheck . '/tiki-install.php') : false;
-if (!$refered || ($refered && !isset($_POST['install_step']))) {
-	unset ($_SESSION['accessible']);
+if (! $refered || ($refered && ! isset($_POST['install_step']))) {
+	unset($_SESSION['accessible']);
 }
 // Were database details defined before? If so, load them
-if (file_exists('db/'.$tikidomainslash.'local.php')) {
-	include 'db/'.$tikidomainslash.'local.php';
+if (file_exists('db/' . $tikidomainslash . 'local.php')) {
+	include 'db/' . $tikidomainslash . 'local.php';
 
 	// In case of replication, ignore it during installer.
-	unset( $shadow_dbs, $shadow_user, $shadow_pass, $shadow_host );
+	unset($shadow_dbs, $shadow_user, $shadow_pass, $shadow_host);
 
 	// check for provided login details and check against the old, saved details that they're correct
 	if (isset($_POST['dbuser'], $_POST['dbpass'])) {
 		if (($_POST['dbuser'] == $user_tiki) && ($_POST['dbpass'] == $pass_tiki)) {
 			$_SESSION['accessible'] = true;
-			unset ($_POST['dbuser']);
-			unset ($_POST['dbpass']);
+			unset($_POST['dbuser']);
+			unset($_POST['dbpass']);
 		} else {
 			$_SESSION['installer_auth_failure'] = isset($_SESSION['installer_auth_failure']) ? $_SESSION['installer_auth_failure'] + 1 : 1;
 
@@ -115,9 +121,9 @@ if (isset($_SESSION['accessible'])) {
 
 /**
  * creates the HTML page to be displayed.
- * 
- * Tiki may not have been installed when we reach here, so we can't use our templating system yet. 
- * 
+ *
+ * Tiki may not have been installed when we reach here, so we can't use our templating system yet.
+ *
  * @param string $title   page Title
  * @param mixed  $content page Content
  */

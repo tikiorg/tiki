@@ -3,14 +3,14 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
-$auto_query_args = array('types_section', 'types', 'show_types', 'sort_mode', 'offset', 'find', 'findfilter_approved');
+$auto_query_args = ['types_section', 'types', 'show_types', 'sort_mode', 'offset', 'find', 'findfilter_approved'];
 
 if (isset($_REQUEST['blogId'])) {
 	$bloglib = TikiLib::lib('blog');
@@ -30,11 +30,11 @@ if (isset($_REQUEST['blogId'])) {
 
 $commentslib = TikiLib::lib('comments');
 $title = tra('Comments');
-$sections_keys = array('objectType' => 'commentsFeature', 'itemObjectType' => 'itemCommentsFeature');
+$sections_keys = ['objectType' => 'commentsFeature', 'itemObjectType' => 'itemCommentsFeature'];
 
 if (isset($blogId)) {
 	$title .= ' - ' . $bloglib->get_title($blogId);
-} else if (isset($_REQUEST['types_section']) && isset($sections_enabled[$_REQUEST['types_section']])) {
+} elseif (isset($_REQUEST['types_section']) && isset($sections_enabled[$_REQUEST['types_section']])) {
 	// types_section is used to limit the user to only one section (e.g. 'blogs')
 	$title = $title . ' - ' . tra(ucwords($_REQUEST['types_section']));
 	$smarty->assign_by_ref('types_section', $_REQUEST['types_section']);
@@ -44,15 +44,17 @@ if (isset($_REQUEST['types'])) {
 	$requested_types = $_REQUEST['types'];
 	$default_list_value = 'n';
 } else {
-	$requested_types = array();
+	$requested_types = [];
 	$default_list_value = 'y';
 }
 $smarty->assign_by_ref('title', $title);
 
-$show_types = array();
-$selected_types = array();
+$show_types = [];
+$selected_types = [];
 foreach ($sections_enabled as $k => $info) {
-	if (isset($_REQUEST['types_section']) && $k != $_REQUEST['types_section']) continue;
+	if (isset($_REQUEST['types_section']) && $k != $_REQUEST['types_section']) {
+		continue;
+	}
 	// The logic below obviously does not work for tracker comments, so let's handle them in a way that is simpler to understand
 	if ($k == 'trackers' && $prefs['feature_trackers'] == 'y') {
 		$show_types['trackeritem'] = 'Tracker Item';
@@ -73,10 +75,12 @@ foreach ($sections_enabled as $k => $info) {
 }
 
 // No need to show types choices if there is only one choice that is already choosed
-if (count($show_types) == 1 && count($selected_types) == 1) $show_types = array();
+if (count($show_types) == 1 && count($selected_types) == 1) {
+	$show_types = [];
+}
 
-$headers = array('title' => 'Title', 'objectType' => 'Type', 'object' => 'Object', 'userName' => 'Author', 'commentDate' => 'Date', 'data' => 'Comment',);
-$more_info_headers = array('user_ip' => tra('IP'), 'email' => tra('Email'), 'website' => tra('Website'));
+$headers = ['title' => 'Title', 'objectType' => 'Type', 'object' => 'Object', 'userName' => 'Author', 'commentDate' => 'Date', 'data' => 'Comment',];
+$more_info_headers = ['user_ip' => tra('IP'), 'email' => tra('Email'), 'website' => tra('Website')];
 
 if (count($selected_types) == 1) {
 	unset($headers['objectType']);
@@ -91,7 +95,7 @@ $smarty->assign_by_ref('more_info_headers', $more_info_headers);
 // Handle actions
 if (isset($_REQUEST['checked'])) {
 	check_ticket('list_comments');
-	$checked = is_array($_REQUEST['checked']) ? $_REQUEST['checked'] : array($_REQUEST['checked']);
+	$checked = is_array($_REQUEST['checked']) ? $_REQUEST['checked'] : [$_REQUEST['checked']];
 	if (isset($_REQUEST['action'])) {
 		// Delete comment(s)
 		if ($_REQUEST['action'] === 'remove') {
@@ -141,7 +145,6 @@ if (isset($_REQUEST['checked'])) {
 			}
 		}
 	}
-
 }
 if (isset($_REQUEST["sort_mode"])) {
 	$sort_mode = $_REQUEST["sort_mode"];
@@ -161,21 +164,23 @@ if (isset($_REQUEST["find"])) {
 	$find = '';
 }
 $smarty->assign_by_ref('find', $find);
-if (!isset($_REQUEST['findfilter_approved'])) $_REQUEST['findfilter_approved'] = '';
+if (! isset($_REQUEST['findfilter_approved'])) {
+	$_REQUEST['findfilter_approved'] = '';
+}
 if ($prefs['feature_comments_moderation'] == 'y') {
-	$filter_values = array('approved' => $_REQUEST['findfilter_approved']);
-	$filter_names = array('approved' => tra('Approved Status'));
-	$filters = array('approved' => array('n' => tra('Queued'), 'y' => tra('Approved'), 'r' => tra('Rejected')));
+	$filter_values = ['approved' => $_REQUEST['findfilter_approved']];
+	$filter_names = ['approved' => tra('Approved Status')];
+	$filters = ['approved' => ['n' => tra('Queued'), 'y' => tra('Approved'), 'r' => tra('Rejected')]];
 	asort($filters['approved']);
 } else {
-	$filters = $filter_names = $filter_values = array();
+	$filters = $filter_names = $filter_values = [];
 }
 
 $objectsIds = '';
 
 if (isset($blogId)) {
 	$objectsIds = $bloglib->get_blog_posts_ids($blogId);
-	
+
 	if (empty($objectsIds)) {
 		$smarty->assign('msg', tra('This blog has no posts.'));
 		$smarty->display('error.tpl');

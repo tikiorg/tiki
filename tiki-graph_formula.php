@@ -14,7 +14,7 @@ require_once('lib/graph-engine/gd.php');
 require_once('lib/graph-engine/pdflib.php');
 
 // List of valid functions
-$valid = array(
+$valid = [
 	'abs',
 	'acos',
 	'acosh',
@@ -46,25 +46,27 @@ $valid = array(
 	'sqrt',
 	'tan',
 	'tanh'
-);
+];
 
 /**
  * @param $formula
  * @return string
  */
-function convert_formula( $formula )
+function convert_formula($formula)
 {
 	global $valid;
 
 	// Stripping all quotes
-	$chars = array( '`', "'", '"', '&', '[', ']', '$', '{', '}' );
+	$chars = [ '`', "'", '"', '&', '[', ']', '$', '{', '}' ];
 	$formula = str_replace($chars, array_fill(0, count($chars), ''), $formula);
 
 	// Make sure only valid functions are used
 	preg_match_all('/([a-z0-9_]+)/i', $formula, $out, PREG_PATTERN_ORDER);
-	foreach ( $out[0] as $match )
-		if ( !is_numeric($match) && !in_array(strtolower($match), $valid) && $match !== 'x' )
-			die( "Invalid function call {$match}" );
+	foreach ($out[0] as $match) {
+		if (! is_numeric($match) && ! in_array(strtolower($match), $valid) && $match !== 'x') {
+			die("Invalid function call {$match}");
+		}
+	}
 
 	// Replace spaces for commas
 	$formula = preg_replace('/\s+/', ', ', $formula);
@@ -76,7 +78,7 @@ function convert_formula( $formula )
 
 $access->check_permission('feature_sheet');
 
-if ( !( is_numeric($_GET['w'])
+if (! ( is_numeric($_GET['w'])
 	&& is_numeric($_GET['h'])
 	&& is_numeric($_GET['s'])
 	&& $_GET['s'] <= 500 && $_GET['s'] > 0
@@ -86,10 +88,11 @@ if ( !( is_numeric($_GET['w'])
 	&& $_GET['min'] < $_GET['max']
 	&& $_GET['w'] >= 100
 	&& $_GET['h'] >= 100 )
-)
+) {
 	die;
+}
 
-switch ( $_GET['t'] ) {
+switch ($_GET['t']) {
 	case 'png':
 		$renderer = new GD_GRenderer($_GET['w'], $_GET['h']);
 		break;
@@ -105,16 +108,16 @@ $graph->setTitle($_GET['title']);
 
 $size = ($_GET['max'] - $_GET['min']) / $_GET['s'];
 
-$data = array();
-foreach ( array_values($_GET['f']) as $key=>$formula) {
+$data = [];
+foreach (array_values($_GET['f']) as $key => $formula) {
 	$formula = convert_formula($formula);
 
-	$data['x'] = array();
-	$data['y'.$key] = array();
+	$data['x'] = [];
+	$data['y' . $key] = [];
 
-	for ( $x = $_GET['min']; $_GET['max'] > $x; $x += $size ) {
+	for ($x = $_GET['min']; $_GET['max'] > $x; $x += $size) {
 		$data['x'][] = $x;
-		$data['y'.$key][] = $formula($x);
+		$data['y' . $key][] = $formula($x);
 	}
 }
 

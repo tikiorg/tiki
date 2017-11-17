@@ -3,13 +3,13 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
-$auto_query_args = array('sort_mode', 'offset', 'find');
+require_once('tiki-setup.php');
+$auto_query_args = ['sort_mode', 'offset', 'find'];
 //get_strings tra('Dynamic content')
 $access->check_feature('feature_dynamic_content');
 $access->check_permission('tiki_p_admin_dynamic');
@@ -36,7 +36,7 @@ if (isset($_REQUEST["edit"])) {
 	$smarty->assign('description', $info["description"]);
 	$smarty->assign('contentLabel', $info["contentLabel"]);
 }
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'contentId_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
@@ -44,7 +44,7 @@ if (!isset($_REQUEST["sort_mode"])) {
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 // If offset is set use it if not then use offset =0
 // use the maxRecords php variable to set the limit
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];

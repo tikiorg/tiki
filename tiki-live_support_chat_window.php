@@ -3,14 +3,14 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'livesupport';
-require_once ('tiki-setup.php');
-include_once ('lib/live_support/lslib.php');
+require_once('tiki-setup.php');
+include_once('lib/live_support/lslib.php');
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); // always modified
 header("Cache-Control: no-store, no-cache, must-revalidate"); // HTTP/1.1
@@ -36,7 +36,7 @@ $smarty->assign('role', $_REQUEST['role']);
 $smarty->assign('req_info', $lslib->get_request($_REQUEST['reqId']));
 $smarty->assign('reqId', $_REQUEST['reqId']);
 $smarty->assign('IP', $tikilib->get_ip_address());
-if (!isset($user)) {
+if (! isset($user)) {
 	$smarty->assign('username', 'anonymous');
 } else {
 	$smarty->assign('username', $user);

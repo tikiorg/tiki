@@ -3,7 +3,7 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -23,28 +23,28 @@ if ($prefs['feature_categories'] == 'y') {
 $access->check_feature('feature_wiki');
 
 // Create the HomePage if it doesn't exist
-if (!$tikilib->page_exists($prefs['wikiHomePage'])) {
+if (! $tikilib->page_exists($prefs['wikiHomePage'])) {
 	$tikilib->create_page($prefs['wikiHomePage'], 0, '', $tikilib->now, 'Tiki initialization');
 }
 
-if (!isset($_SESSION["thedate"])) {
+if (! isset($_SESSION["thedate"])) {
 	$thedate = $tikilib->now;
 } else {
 	$thedate = $_SESSION["thedate"];
 }
 
 // Get the page from the request var or default it to HomePage
-if (!isset($_REQUEST["page"])) {
+if (! isset($_REQUEST["page"])) {
 	$_REQUEST["page"] = $wikilib->get_default_wiki_page();
 }
 $page = $_REQUEST['page'];
 $smarty->assign('page', $page);
 
-if (!$tikilib->page_exists($prefs['wikiHomePage'])) {
+if (! $tikilib->page_exists($prefs['wikiHomePage'])) {
 	$tikilib->create_page($prefs['wikiHomePage'], 0, '', $tikilib->now, 'Tiki initialization');
 }
 
-if (!($info = $tikilib->get_page_info($page))) {
+if (! ($info = $tikilib->get_page_info($page))) {
 	$smarty->assign('msg', tra('Page cannot be found'));
 	$smarty->display('error.tpl');
 	die;
@@ -63,11 +63,11 @@ $access->check_permission('tiki_p_view', '', 'wiki page', $page);
 // BreadCrumbNavigation here
 // Remember to reverse the array when posting the array
 
-if (!isset($_SESSION["breadCrumb"])) {
-	$_SESSION["breadCrumb"] = array();
+if (! isset($_SESSION["breadCrumb"])) {
+	$_SESSION["breadCrumb"] = [];
 }
 
-if (!in_array($page, $_SESSION["breadCrumb"])) {
+if (! in_array($page, $_SESSION["breadCrumb"])) {
 	if (count($_SESSION["breadCrumb"]) > $prefs['userbreadCrumb']) {
 		array_shift($_SESSION["breadCrumb"]);
 	}
@@ -132,24 +132,25 @@ if (isset($_REQUEST['refresh'])) {
 // get cache information
 // if cache is valid then pdata is cache
 // else
-// pdata is parse_data 
+// pdata is parse_data
 //   if using cache then update the cache
 // assign_by_ref
 $smarty->assign('cached_page', 'n');
 
 // Get ~pp~, ~np~ and <pre> out of the way. --rlpowell, 24 May 2004
-$preparsed = array();
-$noparsed = array();
+$preparsed = [];
+$noparsed = [];
 $parserlib->parse_first($info["data"], $preparsed, $noparsed);
 
 $pdata = $wikilib->get_parse($page, $canBeRefreshed);
 
 $pdata = str_replace('tiki-index.php', 'tiki-index_p.php', $pdata);
 
-if (!isset($_REQUEST['pagenum']))
+if (! isset($_REQUEST['pagenum'])) {
 	$_REQUEST['pagenum'] = 1;
+}
 
-if ( isset( $_REQUEST['pagenum'] ) && $_REQUEST['pagenum'] > 0 ) {
+if (isset($_REQUEST['pagenum']) && $_REQUEST['pagenum'] > 0) {
 	$pageRenderer->setPageNumber((int) $_REQUEST['pagenum']);
 }
 
