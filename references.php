@@ -8,18 +8,18 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 global $dbTiki;
 
-if (!isset($prefs['feature_references']) && !$prefs['feature_references'] === 'y') {
+if (! isset($prefs['feature_references']) && ! $prefs['feature_references'] === 'y') {
 	header('location: index.php');
 	exit;
 }
 
 $referenceslib = TikiLib::lib('references');
 
-if (!isset($_REQUEST['page'])) {
+if (! isset($_REQUEST['page'])) {
 	$smarty->assign('msg', tra('No page indicated'));
 	$smarty->display('error.tpl');
 	die;
@@ -28,7 +28,7 @@ if (!isset($_REQUEST['page'])) {
 $smarty->assign('page', $_REQUEST['page']);
 $page = $_REQUEST['page'];
 
-$perms = Perms::get(array('wiki page', $page));
+$perms = Perms::get(['wiki page', $page]);
 
 $page_id = TikiLib::lib('tiki')->get_page_id_from_name($_REQUEST['page']);
 
@@ -46,32 +46,32 @@ $ref_year = $_REQUEST['ref_year'];
 $ref_style = $_REQUEST['ref_style'];
 $ref_template = $_REQUEST['ref_template'];
 
-if (isset($_REQUEST['addreference']) && $action='a_ref') {
+if (isset($_REQUEST['addreference']) && $action = 'a_ref') {
 	if (! $perms->edit_references) {
 		echo json_encode(
-			array(
-				'result'=>tra('failure'),
-				'message'=>tra('You do not have sufficient permissions to perform this action.')
-			)
+			[
+				'result' => tra('failure'),
+				'message' => tra('You do not have sufficient permissions to perform this action.')
+			]
 		);
 		exit;
 	}
 
 
-	$errors = array();
+	$errors = [];
 
 	if (intval($page_id)) {
-		if ($ref_biblio_code=='') {
+		if ($ref_biblio_code == '') {
 			$errors[] = tra('Please enter Biblio Code.');
 		}
-		if (strlen($ref_biblio_code)>50) {
+		if (strlen($ref_biblio_code) > 50) {
 			$errors[] = tra('Biblio code must not exceed 50 characters.');
 		}
 
-		if (count($errors)<1) {
+		if (count($errors) < 1) {
 			$exists = $referenceslib->check_existence($page_id, $ref_biblio_code);
 			if ($exists > 0) {
-				echo json_encode(array('result'=>tra('failure'), 'id'=>-1));
+				echo json_encode(['result' => tra('failure'), 'id' => -1]);
 			} else {
 				$is_library = $referenceslib->check_lib_existence($ref_biblio_code);
 				$id = $referenceslib->add_reference(
@@ -88,31 +88,30 @@ if (isset($_REQUEST['addreference']) && $action='a_ref') {
 					$ref_publisher,
 					$ref_location
 				);
-				echo json_encode(array('result'=>tra('success'), 'id'=>$id, 'is_library'=>$is_library));
+				echo json_encode(['result' => tra('success'), 'id' => $id, 'is_library' => $is_library]);
 			}
 			exit;
 		} else {
 			foreach ($errors as $error) {
-				echo json_encode(array('result'=>$error, 'id'=>''));
+				echo json_encode(['result' => $error, 'id' => '']);
 				exit;
 			}
 		}
 	} else {
 		$error = tra('Page not found. Please save the page first.');
-		echo json_encode(array('result'=>$error, 'id'=>''));
+		echo json_encode(['result' => $error, 'id' => '']);
 		exit;
 	}
 }
 
 if (isset($_REQUEST['addlibreference']) && $action = 'a_lib') {
-
-	$errors = array();
+	$errors = [];
 	if (! $perms->use_references) {
 		echo json_encode(
-			array(
-				'result'=>tra('failure'),
-				'message'=>tra('You do not have sufficient permissions to perform this action.')
-			)
+			[
+				'result' => tra('failure'),
+				'message' => tra('You do not have sufficient permissions to perform this action.')
+			]
 		);
 		exit;
 	}
@@ -128,11 +127,11 @@ if (isset($_REQUEST['addlibreference']) && $action = 'a_lib') {
 		$exists = $referenceslib->check_lib_existence($ref_biblio_code);
 		if ($exists > 0) {
 			echo json_encode(
-				array(
-					'result'=>tra('failure'),
-					'message'=>tra('This reference already exists in the library.'),
-					'is_library'=>$exists
-				)
+				[
+					'result' => tra('failure'),
+					'message' => tra('This reference already exists in the library.'),
+					'is_library' => $exists
+				]
 			);
 		} else {
 			$id = $referenceslib->add_reference(
@@ -149,18 +148,18 @@ if (isset($_REQUEST['addlibreference']) && $action = 'a_lib') {
 				$ref_location
 			);
 			echo json_encode(
-				array(
-					'result'=>tra('success'),
-					'message'=>tra('Reference added to library.'),
-					'id'=>$id,
-					'is_library'=>$exists
-				)
+				[
+					'result' => tra('success'),
+					'message' => tra('Reference added to library.'),
+					'id' => $id,
+					'is_library' => $exists
+				]
 			);
 		}
 		exit;
 	} else {
 		foreach ($errors as $error) {
-			echo json_encode(array('result'=>$error, 'message'=>$error));
+			echo json_encode(['result' => $error, 'message' => $error]);
 			exit;
 		}
 	}
@@ -169,16 +168,16 @@ if (isset($_REQUEST['addlibreference']) && $action = 'a_lib') {
 if (isset($_REQUEST['editreference'])) {
 	if (! $perms->edit_references) {
 		echo json_encode(
-			array(
-				'result'=>tra('failure'),
-				'message'=>tra('You do not have sufficient permissions to perform this action.')
-			)
+			[
+				'result' => tra('failure'),
+				'message' => tra('You do not have sufficient permissions to perform this action.')
+			]
 		);
 		exit;
 	}
 
 
-	$errors = array();
+	$errors = [];
 
 	if ($ref_biblio_code == '') {
 		$errors[] = tra('Please enter Biblio Code.');
@@ -196,7 +195,7 @@ if (isset($_REQUEST['editreference'])) {
 		}
 	}
 
-	if (count($errors)<1) {
+	if (count($errors) < 1) {
 		$referenceslib->edit_reference(
 			$ref_id,
 			$ref_biblio_code,
@@ -213,16 +212,16 @@ if (isset($_REQUEST['editreference'])) {
 		);
 		$exists = $referenceslib->check_lib_existence($ref_biblio_code);
 		echo json_encode(
-			array(
-				'result'=>tra('success'),
-				'message'=>tra('Bibliography saved.'),
-				'is_library'=>$exists
-			)
+			[
+				'result' => tra('success'),
+				'message' => tra('Bibliography saved.'),
+				'is_library' => $exists
+			]
 		);
 		exit;
 	} else {
 		foreach ($errors as $error) {
-			echo json_encode(array('result'=>tra('failure'), 'message'=>$error));
+			echo json_encode(['result' => tra('failure'), 'message' => $error]);
 		}
 		exit;
 	}
@@ -231,10 +230,10 @@ if (isset($_REQUEST['editreference'])) {
 if (isset($_REQUEST['action']) && isset($ref_id)) {
 	if (! $perms->use_references) {
 		echo json_encode(
-			array(
-				'result'=>tra('failure'),
-				'message'=>tra('You do not have sufficient permissions to perform this action.')
-			)
+			[
+				'result' => tra('failure'),
+				'message' => tra('You do not have sufficient permissions to perform this action.')
+			]
 		);
 		exit;
 	}
@@ -243,34 +242,34 @@ if (isset($_REQUEST['action']) && isset($ref_id)) {
 		$exists = $referenceslib->check_existence($page_id, $ref_biblio_code);
 		$id = $referenceslib->add_lib_ref_to_page($ref_id, $page_id);
 		if ($id == -1) {
-			echo json_encode(array('result'=>tra('failure'), 'message'=>tra('Reference already exists.'), 'id'=>$id));
+			echo json_encode(['result' => tra('failure'), 'message' => tra('Reference already exists.'), 'id' => $id]);
 		} else {
 			$details = $referenceslib->get_reference_from_id($id);
-			foreach ($details['data'][0] as $key=>$data) {
-				if ($details['data'][0][$key] == NULL) {
-					if (!$details['data'][0][$key]) {
+			foreach ($details['data'][0] as $key => $data) {
+				if ($details['data'][0][$key] == null) {
+					if (! $details['data'][0][$key]) {
 						$details['data'][0][$key] = '';
 					}
 				}
 			}
 
 			echo json_encode(
-				array(
-					'result'=>tra('success'),
-					'message'=>tra('Reference added.'),
-					'id'=>$id,
-					'ref_biblio_code'=>$details['data'][0]['biblio_code'],
-					'ref_author'=>$details['data'][0]['author'],
-					'ref_title'=>$details['data'][0]['title'],
-					'ref_year'=>$details['data'][0]['year'],
-					'ref_part'=>$details['data'][0]['part'],
-					'ref_uri'=>$details['data'][0]['uri'],
-					'ref_code'=>$details['data'][0]['code'],
-					'ref_publisher'=>$details['data'][0]['publisher'],
-					'ref_location'=>$details['data'][0]['location'],
-					'ref_style'=>$details['data'][0]['style'],
-					'ref_template'=>$details['data'][0]['template']
-				)
+				[
+					'result' => tra('success'),
+					'message' => tra('Reference added.'),
+					'id' => $id,
+					'ref_biblio_code' => $details['data'][0]['biblio_code'],
+					'ref_author' => $details['data'][0]['author'],
+					'ref_title' => $details['data'][0]['title'],
+					'ref_year' => $details['data'][0]['year'],
+					'ref_part' => $details['data'][0]['part'],
+					'ref_uri' => $details['data'][0]['uri'],
+					'ref_code' => $details['data'][0]['code'],
+					'ref_publisher' => $details['data'][0]['publisher'],
+					'ref_location' => $details['data'][0]['location'],
+					'ref_style' => $details['data'][0]['style'],
+					'ref_template' => $details['data'][0]['template']
+				]
 			);
 		}
 		exit;
@@ -280,10 +279,10 @@ if (isset($_REQUEST['action']) && isset($ref_id)) {
 if (isset($_REQUEST['action']) && isset($ref_id)) {
 	if (! $perms->edit_references) {
 		echo json_encode(
-			array(
-				'result'=>tra('failure'),
-				'message'=>tra('You do not have sufficient permissions to perform this action.')
-			)
+			[
+				'result' => tra('failure'),
+				'message' => tra('You do not have sufficient permissions to perform this action.')
+			]
 		);
 		exit;
 	}

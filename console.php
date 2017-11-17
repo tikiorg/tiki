@@ -35,7 +35,7 @@ require_once 'lib/setup/twversion.class.php';
 
 $input = new ArgvInput;
 
-if (false !== $site = $input->getParameterOption(array('--site'))) {
+if (false !== $site = $input->getParameterOption(['--site'])) {
 	$_SERVER['TIKI_VIRTUAL'] = $site;
 }
 
@@ -61,7 +61,7 @@ if ($isInstalled) {
 		$exceptionToRender = $e;
 	}
 
-	if (! $asUser = $input->getParameterOption(array('--as-user'))) {
+	if (! $asUser = $input->getParameterOption(['--as-user'])) {
 		$asUser = 'admin';
 	}
 
@@ -73,7 +73,7 @@ if ($isInstalled) {
 $consoleBuilder = new Tiki\Command\ConsoleApplicationBuilder($site);
 $console = $consoleBuilder->create();
 
-if ($exceptionToRender instanceof Exception){
+if ($exceptionToRender instanceof Exception) {
 	$console->renderException($exceptionToRender, new \Symfony\Component\Console\Output\ConsoleOutput());
 }
 

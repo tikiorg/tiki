@@ -3,17 +3,17 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $trklib = TikiLib::lib('trk');
 
 $access->check_feature('feature_trackers');
 
-if (!isset($_REQUEST['trackerId'])) {
+if (! isset($_REQUEST['trackerId'])) {
 	$smarty->assign('msg', tra('No tracker indicated'));
 	$smarty->display('error.tpl');
 	die;
@@ -24,12 +24,12 @@ if ($tracker_info = $trklib->get_tracker($_REQUEST['trackerId'])) {
 	}
 } else {
 	$smarty->assign('msg', tra('Incorrect param'));
-	$smarty->display('error.tpl');				
+	$smarty->display('error.tpl');
 	die;
 }
 
 $admin_perm = $tiki_p_admin_trackers;
-if ($tiki_p_admin_trackers != 'y' && !empty($_REQUEST['trackerId'])) {
+if ($tiki_p_admin_trackers != 'y' && ! empty($_REQUEST['trackerId'])) {
 	$perms = $tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker', $info);
 	$admin_perm = $perms['tiki_p_admin_trackers'];
 }
@@ -39,13 +39,13 @@ if ($admin_perm != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-$auto_query_args = array(
+$auto_query_args = [
 	'trackerId',
 	'offset',
 	'sort_mode',
 	'find',
 	'max'
-);
+];
 $tracker_info['pagetitle'] = tr('Tracker Fields %0', $tracker_info['name']);
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
 $smarty->assign('tracker_info', $tracker_info);

@@ -15,7 +15,6 @@ $access->check_feature('sitemap_enable');
 $sitemap = new Tiki\Sitemap\Generator();
 
 if (isset($_REQUEST['rebuild'])) {
-
 	$sitemap->generate($base_url);
 
 	Feedback::success(tr('New sitemap created!'), 'session');

@@ -9,7 +9,7 @@
 // $Id$
 
 $section = 'user_messages';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $messulib = TikiLib::lib('message');
 $access->check_user($user);
 $access->check_feature('feature_messages');
@@ -28,25 +28,39 @@ if (($prefs['messu_sent_size'] > 0) && ($messulib->count_messages($user, 'sent')
 	$smarty->display("error.tpl");
 	die;
 }
-if (!isset($_REQUEST['to'])) $_REQUEST['to'] = '';
-if (!isset($_REQUEST['cc'])) $_REQUEST['cc'] = '';
-if (!isset($_REQUEST['bcc'])) $_REQUEST['bcc'] = '';
-if (!isset($_REQUEST['subject'])) $_REQUEST['subject'] = '';
-if (!isset($_REQUEST['body'])) $_REQUEST['body'] = '';
-if (!isset($_REQUEST['replyto_hash'])) $_REQUEST['replyto_hash'] = '';
-if (!isset($_REQUEST['priority'])) $_REQUEST['priority'] = 3;
+if (! isset($_REQUEST['to'])) {
+	$_REQUEST['to'] = '';
+}
+if (! isset($_REQUEST['cc'])) {
+	$_REQUEST['cc'] = '';
+}
+if (! isset($_REQUEST['bcc'])) {
+	$_REQUEST['bcc'] = '';
+}
+if (! isset($_REQUEST['subject'])) {
+	$_REQUEST['subject'] = '';
+}
+if (! isset($_REQUEST['body'])) {
+	$_REQUEST['body'] = '';
+}
+if (! isset($_REQUEST['replyto_hash'])) {
+	$_REQUEST['replyto_hash'] = '';
+}
+if (! isset($_REQUEST['priority'])) {
+	$_REQUEST['priority'] = 3;
+}
 // Strip Re:Re:Re: from subject
-if (!empty($_REQUEST['reply']) || !empty($_REQUEST['replyall'])) {
+if (! empty($_REQUEST['reply']) || ! empty($_REQUEST['replyall'])) {
 	$_REQUEST['subject'] = tra("Re:") . preg_replace('/^(' . tra('Re:') . ')+/', '', $_REQUEST['subject']);
 	$smarty->assign('reply', 'y');
 }
-foreach (array(
+foreach ([
 	'to',
 	'cc',
 	'bcc'
-			  ) as $dest) {
+			  ] as $dest) {
 	if (is_array($_REQUEST[$dest])) {
-		$sep = strstr(implode('', $_REQUEST[$dest]), ',') === false?', ': '; ';
+		$sep = strstr(implode('', $_REQUEST[$dest]), ',') === false ? ', ' : '; ';
 		$_REQUEST[$dest] = implode($sep, $_REQUEST[$dest]);
 	}
 }
@@ -80,9 +94,9 @@ if (isset($_REQUEST['send']) && $access->ticketMatch()) {
 		$arr_bcc = $userlib->find_best_user($arr_bcc, $groups);
 	}
 	// Remove invalid users from the to, cc and bcc fields
-	$users = array();
+	$users = [];
 	foreach ($arr_to as $a_user) {
-		if (!empty($a_user)) {
+		if (! empty($a_user)) {
 			$a_user = str_replace('\\;', ';', $a_user);
 			if ($userlib->user_exists($a_user)) {
 				// mail only to users with activated message feature
@@ -91,18 +105,18 @@ if (isset($_REQUEST['send']) && $access->ticketMatch()) {
 					if (($messulib->count_messages($a_user) < $prefs['messu_mailbox_size']) || ($prefs['messu_mailbox_size'] == 0)) {
 						$users[] = $a_user;
 					} else {
-						$message.= sprintf(tra("User %s can not receive messages, mailbox is full"), htmlspecialchars($a_user)) . "<br />";
+						$message .= sprintf(tra("User %s can not receive messages, mailbox is full"), htmlspecialchars($a_user)) . "<br />";
 					}
 				} else {
-					$message.= sprintf(tra("User %s can not receive messages"), htmlspecialchars($a_user)) . "<br />";
+					$message .= sprintf(tra("User %s can not receive messages"), htmlspecialchars($a_user)) . "<br />";
 				}
 			} else {
-				$message.= sprintf(tra("Invalid user: %s"), htmlspecialchars($a_user)) . "<br />";
+				$message .= sprintf(tra("Invalid user: %s"), htmlspecialchars($a_user)) . "<br />";
 			}
 		}
 	}
 	foreach ($arr_cc as $a_user) {
-		if (!empty($a_user)) {
+		if (! empty($a_user)) {
 			$a_user = str_replace('\\;', ';', $a_user);
 			if ($userlib->user_exists($a_user)) {
 				// mail only to users with activated message feature
@@ -111,18 +125,18 @@ if (isset($_REQUEST['send']) && $access->ticketMatch()) {
 					if (($messulib->count_messages($a_user) < $prefs['messu_mailbox_size']) || ($prefs['messu_mailbox_size'] == 0)) {
 						$users[] = $a_user;
 					} else {
-						$message.= sprintf(tra("User %s can not receive messages, mailbox is full"), htmlspecialchars($a_user)) . "<br />";
+						$message .= sprintf(tra("User %s can not receive messages, mailbox is full"), htmlspecialchars($a_user)) . "<br />";
 					}
 				} else {
-					$message.= sprintf(tra("User %s can not receive messages"), htmlspecialchars($a_user)) . "<br />";
+					$message .= sprintf(tra("User %s can not receive messages"), htmlspecialchars($a_user)) . "<br />";
 				}
 			} else {
-				$message.= sprintf(tra("Invalid user: %s"), htmlspecialchars($a_user)) . "<br />";
+				$message .= sprintf(tra("Invalid user: %s"), htmlspecialchars($a_user)) . "<br />";
 			}
 		}
 	}
 	foreach ($arr_bcc as $a_user) {
-		if (!empty($a_user)) {
+		if (! empty($a_user)) {
 			$a_user = str_replace('\\;', ';', $a_user);
 			if ($userlib->user_exists($a_user)) {
 				// mail only to users with activated message feature
@@ -131,28 +145,29 @@ if (isset($_REQUEST['send']) && $access->ticketMatch()) {
 					if (($messulib->count_messages($a_user) < $prefs['messu_mailbox_size']) || ($prefs['messu_mailbox_size'] == 0)) {
 						$users[] = $a_user;
 					} else {
-						$message.= sprintf(tra("User %s can not receive messages, mailbox is full"), htmlspecialchars($a_user)) . "<br />";
+						$message .= sprintf(tra("User %s can not receive messages, mailbox is full"), htmlspecialchars($a_user)) . "<br />";
 					}
 				} else {
-					$message.= sprintf(tra("User %s can not receive messages"), htmlspecialchars($a_user)) . "<br />";
+					$message .= sprintf(tra("User %s can not receive messages"), htmlspecialchars($a_user)) . "<br />";
 				}
 			} else {
-				$message.= sprintf(tra("Invalid user: %s"), htmlspecialchars($a_user)) . "<br />";
+				$message .= sprintf(tra("Invalid user: %s"), htmlspecialchars($a_user)) . "<br />";
 			}
 		}
 	}
 	$users = array_unique($users);
 	// Validation: either to, cc or bcc must have a valid user
 	if (count($users) > 0) {
-		$users_formatted = array();
-		foreach ($users as $rawuser)
+		$users_formatted = [];
+		foreach ($users as $rawuser) {
 			if ($prefs['user_selector_realnames_messu'] == 'y') {
-					$rawuser = $userlib->clean_user($rawuser, ! $check_user_show_realnames, $login_fallback);
-				}
+				$rawuser = $userlib->clean_user($rawuser, ! $check_user_show_realnames, $login_fallback);
+			}
+		}
 			$users_formatted[] = htmlspecialchars($rawuser);
-        $message.= tra("Message has been sent to: ") . implode(',  ', $users) . "<br />";
+		$message .= tra("Message has been sent to: ") . implode(',  ', $users) . "<br />";
 	} else {
-		$message.= tra('ERROR: No valid users to send the message');
+		$message .= tra('ERROR: No valid users to send the message');
 		$smarty->assign('message', $message);
 		$smarty->display("tiki.tpl");
 		die;
@@ -194,7 +209,8 @@ if (isset($_REQUEST['send']) && $access->ticketMatch()) {
 				$user_armor, // NOTE THIS!
 				$_REQUEST['priority'],
 				$_REQUEST['replyto_hash'],
-				isset($_REQUEST['replytome']) ? 'y' : '', isset($_REQUEST['bccme']) ? 'y' : ''
+				isset($_REQUEST['replytome']) ? 'y' : '',
+				isset($_REQUEST['bccme']) ? 'y' : ''
 			);
 		} else {
 			// USE ORIGINAL TIKI MAIL VERSION
@@ -207,18 +223,20 @@ if (isset($_REQUEST['send']) && $access->ticketMatch()) {
 				$_REQUEST['body'],
 				$_REQUEST['priority'],
 				$_REQUEST['replyto_hash'],
-				isset($_REQUEST['replytome']) ? 'y' : '', isset($_REQUEST['bccme']) ? 'y' : ''
+				isset($_REQUEST['replytome']) ? 'y' : '',
+				isset($_REQUEST['bccme']) ? 'y' : ''
 			);
 		}
 		// 										//
 		//////////////////////////////////////////////////////////////////////////////////
 		if ($result) {
-			TikiLib::events()->trigger('tiki.user.message',
-				array(
+			TikiLib::events()->trigger(
+				'tiki.user.message',
+				[
 					'type' => 'user',
 					'object' => $a_user,
 					'user' => $user,
-				)
+				]
 			);
 			// if this is a reply flag the original messages replied to
 			if ($_REQUEST['replyto_hash'] <> '') {
@@ -241,6 +259,6 @@ if (isset($_REQUEST['send']) && $access->ticketMatch()) {
 }
 $allowMsgs = $prefs['allowmsg_is_optional'] != 'y' || $tikilib->get_user_preference($user, 'allowMsgs', 'y');
 $smarty->assign('allowMsgs', $allowMsgs);
-include_once ('tiki-section_options.php');
-include_once ('tiki-mytiki_shared.php');
+include_once('tiki-section_options.php');
+include_once('tiki-mytiki_shared.php');
 $smarty->display("tiki.tpl");

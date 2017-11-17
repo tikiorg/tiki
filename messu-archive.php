@@ -3,13 +3,13 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'user_messages';
-$inputConfiguration =	[[
+$inputConfiguration = [[
 	'staticKeyFilters' => [
 		'delete'	=> 'alpha',
 		'download'	=> 'alpha',
@@ -26,7 +26,7 @@ $inputConfiguration =	[[
 	'catchAllUnset' => null,
 ]];
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $messulib = TikiLib::lib('message');
 $access->check_user($user);
 $access->check_feature('feature_messages');
@@ -102,8 +102,17 @@ $smarty->assign_by_ref('offset', $offset);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $smarty->assign('find', $find);
 // What are we paginating: items
-$items = $messulib->list_user_messages($user, $offset, $maxRecords, $sort_mode, $find, $flag, $flagval, $priority,
-	'archive');
+$items = $messulib->list_user_messages(
+	$user,
+	$offset,
+	$maxRecords,
+	$sort_mode,
+	$find,
+	$flag,
+	$flagval,
+	$priority,
+	'archive'
+);
 $smarty->assign_by_ref('cant_pages', $items["cant"]);
 $smarty->assign_by_ref('items', $items["data"]);
 $cellsize = 200;
@@ -114,13 +123,17 @@ if ($prefs['messu_archive_size'] > 0) {
 	$smarty->assign('messu_archive_size', $prefs['messu_archive_size']);
 	$percentage = ($current_number / $prefs['messu_archive_size']) * 100;
 	$cellsize = round($percentage / 100 * 200);
-	if ($current_number > $prefs['messu_archive_size']) $cellsize = 200;
-	if ($cellsize < 1) $cellsize = 1;
+	if ($current_number > $prefs['messu_archive_size']) {
+		$cellsize = 200;
+	}
+	if ($cellsize < 1) {
+		$cellsize = 1;
+	}
 	$percentage = round($percentage);
 }
 $smarty->assign('cellsize', $cellsize);
 $smarty->assign('percentage', $percentage);
-include_once ('tiki-section_options.php');
-include_once ('tiki-mytiki_shared.php');
+include_once('tiki-section_options.php');
+include_once('tiki-mytiki_shared.php');
 $smarty->assign('mid', 'messu-archive.tpl');
 $smarty->display("tiki.tpl");

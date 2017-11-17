@@ -9,28 +9,28 @@
 // $Id$
 
 $section = 'accounting';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 $access->checkAuthenticity();
 
 
 // Feature available?
-if ($prefs['feature_accounting'] !='y') {
+if ($prefs['feature_accounting'] != 'y') {
 	$smarty->assign('msg', tra('This feature is disabled') . ': feature_accounting');
 	$smarty->display('error.tpl');
 	die;
 }
 
 $globalperms = Perms::get();
-$objectperms = Perms::get(array( 'type' => 'accounting book', 'object' => $bookId ));
+$objectperms = Perms::get([ 'type' => 'accounting book', 'object' => $bookId ]);
 
-if (!($globalperms->acct_book or $objectperms->acct_book)) {
+if (! ($globalperms->acct_book or $objectperms->acct_book)) {
 	$smarty->assign('msg', tra('You do not have the right to book'));
 	$smarty->display('error.tpl');
 	die;
 }
 
-if (!isset($_REQUEST['bookId'])) {
+if (! isset($_REQUEST['bookId'])) {
 	$smarty->assign('msg', tra('Missing book id'));
 	$smarty->display('error.tpl');
 	die;
@@ -89,12 +89,12 @@ if (is_array($result)) {
 		$smarty->assign('statementId', $_REQUEST['statementId']);
 	}
 } else {
-	$smarty->assign('debitAccount', array(''));
-	$smarty->assign('creditAccount', array(''));
-	$smarty->assign('debitAmount', array(''));
-	$smarty->assign('creditAmount', array(''));
-	$smarty->assign('debitText', array(''));
-	$smarty->assign('creditText', array(''));
+	$smarty->assign('debitAccount', ['']);
+	$smarty->assign('creditAccount', ['']);
+	$smarty->assign('debitAmount', ['']);
+	$smarty->assign('creditAmount', ['']);
+	$smarty->assign('debitText', ['']);
+	$smarty->assign('creditText', ['']);
 }
 
 $journal = $accountinglib->getJournal($bookId, '%', '`journalId` DESC', 5);

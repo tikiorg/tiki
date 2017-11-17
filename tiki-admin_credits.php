@@ -18,7 +18,7 @@ if ($tiki_p_admin_users != 'y') {
 	die;
 }
 
-if ( isset( $_REQUEST['use_credit'] ) && $use_credit_userid = $tikilib->get_user_id($_POST['userfilter']) ) {
+if (isset($_REQUEST['use_credit']) && $use_credit_userid = $tikilib->get_user_id($_POST['userfilter'])) {
 	$creditslib->useCredits(
 		$use_credit_userid,
 		$_POST['use_credit_type'],
@@ -29,7 +29,7 @@ if ( isset( $_REQUEST['use_credit'] ) && $use_credit_userid = $tikilib->get_user
 	exit;
 }
 
-if ( isset( $_REQUEST['restore_credit'] ) && $restore_credit_userid = $tikilib->get_user_id($_POST['userfilter']) ) {
+if (isset($_REQUEST['restore_credit']) && $restore_credit_userid = $tikilib->get_user_id($_POST['userfilter'])) {
 	$creditslib->restoreCredits(
 		$restore_credit_userid,
 		$_POST['restore_credit_type'],
@@ -40,14 +40,14 @@ if ( isset( $_REQUEST['restore_credit'] ) && $restore_credit_userid = $tikilib->
 	exit;
 }
 
-if ( isset( $_REQUEST['purge_credits'] ) ) {
+if (isset($_REQUEST['purge_credits'])) {
 	$creditslib->purgeCredits();
 	header('Location: tiki-admin_credits.php');
 	exit;
 }
 
-if ( isset( $_REQUEST['update_types'] ) ) {
-	foreach ( $_POST['credit_types'] as $key => $values ) {
+if (isset($_REQUEST['update_types'])) {
+	foreach ($_POST['credit_types'] as $key => $values) {
 		$creditslib->updateCreditType(
 			$values['credit_type'],
 			$values['display_text'],
@@ -57,7 +57,7 @@ if ( isset( $_REQUEST['update_types'] ) ) {
 		);
 	}
 
-	if ( !empty($_POST['new_credit_type']) ) {
+	if (! empty($_POST['new_credit_type'])) {
 		$creditslib->updateCreditType(
 			$_POST['new_credit_type'],
 			$_POST['display_text'],
@@ -73,13 +73,13 @@ $staticCreditTypes = $creditslib->getCreditTypes(true);
 $smarty->assign('credit_types', $creditTypes);
 $smarty->assign('static_credit_types', $staticCreditTypes);
 
-if ( isset($_REQUEST['userfilter']) ) {
+if (isset($_REQUEST['userfilter'])) {
 	$smarty->assign('userfilter', $_REQUEST['userfilter']);
 
 	$editing = $userlib->get_user_info($_REQUEST['userfilter']);
 
-	if ( $editing ) {
-		$userPlans = array();
+	if ($editing) {
+		$userPlans = [];
 		foreach ($creditTypes as $ct => $v) {
 			$userPlans[$ct]['nextbegin'] = $creditslib->getNextPlanBegin($editing['userId'], $ct);
 			$userPlans[$ct]['currentbegin'] = $creditslib->getLatestPlanBegin($editing['userId'], $ct);
@@ -119,20 +119,22 @@ if ( isset($_REQUEST['userfilter']) ) {
 		$consumption_data = $creditslib->getCreditsUsage($editing['userId'], $req_type, $start_date, $end_date);
 		$smarty->assign('consumption_data', $consumption_data);
 
-		if ( isset( $_POST['save'], $_POST['credits'] ) ) {
-			foreach ( $_POST['credits'] as $key => $values ) {
-				if ( ! isset( $credits[$key] ) )
+		if (isset($_POST['save'], $_POST['credits'])) {
+			foreach ($_POST['credits'] as $key => $values) {
+				if (! isset($credits[$key])) {
 					die('Mismatch');
+				}
 
 				$same = true;
 				$current = $credits[$key];
-				foreach ( $current as $field => $value )
-					if ( $field != 'creditId' && $value != $values[$field] ) {
+				foreach ($current as $field => $value) {
+					if ($field != 'creditId' && $value != $values[$field]) {
 						$same = false;
 						break;
 					}
+				}
 
-				if ( ! $same ) {
+				if (! $same) {
 					$creditslib->replaceCredit(
 						$key,
 						$values['credit_type'],
@@ -144,8 +146,8 @@ if ( isset($_REQUEST['userfilter']) ) {
 				}
 			}
 
-			if ( !empty($_POST['credit_type'])
-						&& !empty( $_POST['total_amount'])
+			if (! empty($_POST['credit_type'])
+						&& ! empty($_POST['total_amount'])
 						&& in_array($_POST['credit_type'], array_keys($creditTypes))
 			) {
 				$creditslib->addCredits(
@@ -161,7 +163,7 @@ if ( isset($_REQUEST['userfilter']) ) {
 			exit;
 		}
 
-		if ( !empty($_POST['credit_type']) && !empty($_POST['total_amount']) ) {
+		if (! empty($_POST['credit_type']) && ! empty($_POST['total_amount'])) {
 			$creditslib->addCredits(
 				$editing['userId'],
 				$_POST['credit_type'],
@@ -174,10 +176,12 @@ if ( isset($_REQUEST['userfilter']) ) {
 			exit;
 		}
 
-		if ( isset($_POST['confirm'], $_POST['delete']) ) {
-			foreach ( $_POST['delete'] as $creditId )
-				if ( isset($credits[$creditId]) )
+		if (isset($_POST['confirm'], $_POST['delete'])) {
+			foreach ($_POST['delete'] as $creditId) {
+				if (isset($credits[$creditId])) {
 					$creditslib->removeCreditBlock($creditId);
+				}
+			}
 
 			header('Location: tiki-admin_credits.php?userfilter=' . urlencode($_REQUEST['userfilter']));
 			exit;

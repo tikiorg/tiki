@@ -3,24 +3,24 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'wiki page';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $structlib = TikiLib::lib('struct');
 $categlib = TikiLib::lib('categ');
-include_once ("lib/ziplib.php");
-$access->check_feature(array('feature_wiki', 'feature_wiki_structure'));
+include_once("lib/ziplib.php");
+$access->check_feature(['feature_wiki', 'feature_wiki_structure']);
 $access->check_permission('tiki_p_view');
 
 // start security hardened section
 if ($tiki_p_edit_structures == 'y') {
 	if (isset($_REQUEST['rremove'])) {
 		$structure_info = $structlib->s_get_structure_info($_REQUEST['rremove']);
-		if (!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit')) {
+		if (! $tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit')) {
 			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("You do not have permission to edit this page."));
 			$smarty->display("error.tpl");
@@ -31,7 +31,7 @@ if ($tiki_p_edit_structures == 'y') {
 	}
 	if (isset($_REQUEST['rremovex'])) {
 		$structure_info = $structlib->s_get_structure_info($_REQUEST['rremovex']);
-		if (!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit')) {
+		if (! $tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit')) {
 			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("You do not have permission to edit this page."));
 			$smarty->display("error.tpl");
@@ -43,7 +43,7 @@ if ($tiki_p_edit_structures == 'y') {
 	if (isset($_REQUEST['export'])) {
 		check_ticket('admin-structures');
 		$structure_info = $structlib->s_get_structure_info($_REQUEST['export']);
-		if ($prefs['feature_wiki_export'] != 'y' || $tiki_p_admin_wiki != 'y' || !$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_view')) {
+		if ($prefs['feature_wiki_export'] != 'y' || $tiki_p_admin_wiki != 'y' || ! $tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_view')) {
 			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra('You do not have permission to view this page.'));
 			$smarty->display("error.tpl");
@@ -53,12 +53,12 @@ if ($tiki_p_edit_structures == 'y') {
 	}
 	if (isset($_REQUEST['zip']) && $tiki_p_admin == 'y') {
 		check_ticket('admin-structures');
-		include_once ('lib/wiki/xmllib.php');
+		include_once('lib/wiki/xmllib.php');
 		$xmllib = new XmlLib;
 		$zipFile = 'dump/xml.zip';
 		$config['debug'] = false;
 		if ($xmllib->export_pages(null, $_REQUEST['zip'], $zipFile, $config)) {
-			if (!$config['debug']) {
+			if (! $config['debug']) {
 				header("location: $zipFile");
 				die;
 			}
@@ -69,7 +69,7 @@ if ($tiki_p_edit_structures == 'y') {
 	if (isset($_REQUEST['export_tree'])) {
 		check_ticket('admin-structures');
 		$structure_info = $structlib->s_get_structure_info($_REQUEST['export_tree']);
-		if (!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_view')) {
+		if (! $tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_view')) {
 			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra('You do not have permission to view this page.'));
 			$smarty->display("error.tpl");
@@ -83,7 +83,7 @@ if ($tiki_p_edit_structures == 'y') {
 		check_ticket('admin-structures');
 		foreach ($_REQUEST['action'] as $batchid) {
 			$structure_info = $structlib->s_get_structure_info($batchid);
-			if (!$tikilib->user_has_perm_on_object($user, $structure_info['pageName'], 'wiki page', 'tiki_p_edit')) {
+			if (! $tikilib->user_has_perm_on_object($user, $structure_info['pageName'], 'wiki page', 'tiki_p_edit')) {
 				continue;
 			}
 			if ($_REQUEST['batchaction'] == 'delete') {
@@ -97,7 +97,7 @@ if ($tiki_p_edit_structures == 'y') {
 	if (isset($_REQUEST['remove'])) {
 		check_ticket('admin-structures');
 		$structure_info = $structlib->s_get_structure_info($_REQUEST['remove']);
-		if (!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit')) {
+		if (! $tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit')) {
 			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("You do not have permission to edit this page."));
 			$smarty->display("error.tpl");
@@ -107,10 +107,10 @@ if ($tiki_p_edit_structures == 'y') {
 		$smarty->assign('removename', $structure_info["pageName"]);
 		$smarty->assign('remove', $_REQUEST['remove']);
 	}
-	$alert_in_st = array();
-	$alert_categorized = array();
-	$alert_to_remove_cats = array();
-	$alert_to_remove_extra_cats = array();
+	$alert_in_st = [];
+	$alert_categorized = [];
+	$alert_to_remove_cats = [];
+	$alert_to_remove_extra_cats = [];
 	$cat_type = 'wiki page';
 	$cat_objid = '';
 	$smarty->assign('just_created', 'n');
@@ -124,7 +124,7 @@ if ($tiki_p_edit_structures == 'y') {
 		//try to add a new structure
 		$structure_id = $structlib->s_create_page(null, null, $_REQUEST['name'], $_REQUEST['alias'], null);
 		//Cannot create a structure if a structure already exists
-		if (!isset($structure_id)) {
+		if (! isset($structure_id)) {
 			$smarty->assign('msg', $_REQUEST['name'] . " " . tra("page not added (Exists)"));
 			$smarty->display("error.tpl");
 			die;
@@ -134,15 +134,15 @@ if ($tiki_p_edit_structures == 'y') {
 		$cat_href = "tiki-index.php?page=" . urlencode($cat_name);
 		$cat_desc = '';
 		$cat_type = 'wiki page';
-		include_once ("categorize.php");
-		$categories = array(); // needed to prevent double entering (the first time when page is being categorized in categorize.php)
-		include_once ("categorize_list.php"); // needs to be up here to avoid picking up selection of cats from other existing sub-pages
+		include_once("categorize.php");
+		$categories = []; // needed to prevent double entering (the first time when page is being categorized in categorize.php)
+		include_once("categorize_list.php"); // needs to be up here to avoid picking up selection of cats from other existing sub-pages
 		$smarty->assign('just_created', $structure_id);
 		$smarty->assign('just_created_name', $_REQUEST['name']);
 
 		// Locking: only needed on new structures, ajax locks existing ones
 		if ($prefs['lock_wiki_structures'] === 'y') {
-			if (!empty($_REQUEST['locked'])) {
+			if (! empty($_REQUEST['locked'])) {
 				TikiLib::lib('attribute')->set_attribute('wiki structure', $_REQUEST['name'], 'tiki.object.lock', $_REQUEST['locked']);
 			}
 		}
@@ -165,7 +165,7 @@ if ($tiki_p_edit_structures == 'y') {
 					$last_page = null;
 				}
 				$alias = '';
-				if (!empty($names[1])) {
+				if (! empty($names[1])) {
 					$alias = $names[1];
 				}
 				if ($tikilib->page_exists(trim($line))) {
@@ -182,7 +182,7 @@ if ($tiki_p_edit_structures == 'y') {
 					$cat_objid = $cat_name;
 					$cat_href = "tiki-index.php?page=" . urlencode($cat_name);
 					$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
-					if ($prefs['feature_wiki_categorize_structure'] == 'y' && !$catObjectId) {
+					if ($prefs['feature_wiki_categorize_structure'] == 'y' && ! $catObjectId) {
 						// page that is added is not categorized -> categorize it if necessary
 						if (isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on' && isset($_REQUEST["cat_categories"])) {
 							$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
@@ -193,7 +193,7 @@ if ($tiki_p_edit_structures == 'y') {
 						}
 					} elseif ($prefs['feature_wiki_categorize_structure'] == 'y') {
 						// page that is added is categorized
-						if (!isset($_REQUEST["cat_categories"]) || !isset($_REQUEST["cat_categorize"]) || isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] != 'on') {
+						if (! isset($_REQUEST["cat_categories"]) || ! isset($_REQUEST["cat_categorize"]) || isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] != 'on') {
 							// alert that current pages are categorized
 							$alert_to_remove_cats[] = $cat_name;
 						} else {
@@ -202,9 +202,9 @@ if ($tiki_p_edit_structures == 'y') {
 							$numberofcats = count($cats);
 							$alert_categorized[] = $cat_name;
 							foreach ($_REQUEST["cat_categories"] as $cat_acat) {
-								if (!in_array($cat_acat, $cats, true)) {
+								if (! in_array($cat_acat, $cats, true)) {
 									$categlib->categorize($catObjectId, $cat_acat);
-									$numberofcats+= 1;
+									$numberofcats += 1;
 								}
 							}
 							if ($numberofcats > count($_REQUEST["cat_categories"])) {
@@ -222,14 +222,14 @@ if ($tiki_p_edit_structures == 'y') {
 	$smarty->assign('alert_to_remove_extra_cats', $alert_to_remove_extra_cats);
 } // end of security hardening
 if ($prefs['feature_categories'] == 'y') {
-	include_once ("categorize_list.php");
+	include_once("categorize_list.php");
 }
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'pageName_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
@@ -247,11 +247,11 @@ if (isset($_REQUEST['maxRecords'])) {
 	$maxRecords = $_REQUEST['maxRecords'];
 }
 $filter = '';
-if (!empty($_REQUEST['lang'])) {
+if (! empty($_REQUEST['lang'])) {
 	$filter['lang'] = $_REQUEST['lang'];
 	$smarty->assign_by_ref('find_lang', $_REQUEST['lang']);
 }
-if (!empty($_REQUEST['categId'])) {
+if (! empty($_REQUEST['categId'])) {
 	$filter['categId'] = $_REQUEST['categId'];
 	$smarty->assign_by_ref('find_categId', $_REQUEST['categId']);
 }
@@ -263,7 +263,7 @@ if (isset($_REQUEST["exact_match"])) {
 	$smarty->assign('exact_match', 'n');
 }
 if ($prefs['feature_multilingual'] == 'y') {
-	$languages = array();
+	$languages = [];
 	$langLib = TikiLib::lib('language');
 	$languages = $langLib->list_languages(false, 'y');
 	$smarty->assign_by_ref('languages', $languages);
@@ -272,7 +272,7 @@ $channels = $structlib->list_structures($offset, $maxRecords, $sort_mode, $find,
 $smarty->assign('cant', $channels["cant"]);
 $smarty->assign_by_ref('channels', $channels["data"]);
 ask_ticket('admin-structures');
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('pdf_export', ($prefs['print_pdf_from_url'] != 'none') ? 'y' : 'n');

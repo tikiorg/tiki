@@ -3,20 +3,20 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'user_messages';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $messulib = TikiLib::lib('message');
 $access->check_user($user);
 $access->check_feature('feature_messages');
 $access->check_permission('tiki_p_messages');
 $access->checkAuthenticity();
 
-if (!isset($_REQUEST['msgId']) || $_REQUEST['msgId'] == 0) {
+if (! isset($_REQUEST['msgId']) || $_REQUEST['msgId'] == 0) {
 	$smarty->assign('legend', tra("No more messages"));
 	$smarty->assign('mid', 'messu-read_archive.tpl');
 	$smarty->display("tiki.tpl");
@@ -29,7 +29,8 @@ if ($access->ticketMatch()) {
 	}
 	if (isset($_REQUEST["delete"])) {
 		$messulib->delete_message($user, $_REQUEST['msgdel'], 'archive');
-	}}
+	}
+}
 
 $smarty->assign('sort_mode', $_REQUEST['sort_mode']);
 $smarty->assign('find', $_REQUEST['find']);
@@ -50,7 +51,7 @@ $messulib->flag_message($user, $_REQUEST['msgId'], 'isRead', 'y', 'archive');
 // Get the message and assign its data to template vars
 $msg = $messulib->get_message($user, $_REQUEST['msgId'], 'archive');
 $smarty->assign('msg', $msg);
-include_once ('tiki-section_options.php');
-include_once ('tiki-mytiki_shared.php');
+include_once('tiki-section_options.php');
+include_once('tiki-mytiki_shared.php');
 $smarty->assign('mid', 'messu-read_archive.tpl');
 $smarty->display("tiki.tpl");

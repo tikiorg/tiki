@@ -9,21 +9,22 @@
 // $Id$
 
 $section = 'newsletters';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $access->check_feature('feature_newsletters');
 
-global $nllib; include_once ('lib/newsletters/nllib.php');
-$auto_query_args = array(
+global $nllib;
+include_once('lib/newsletters/nllib.php');
+$auto_query_args = [
 	'nlId',
 	'offset',
 	'sort_mode',
 	'find'
-);
-if (!isset($_REQUEST["nlId"])) {
+];
+if (! isset($_REQUEST["nlId"])) {
 	$_REQUEST["nlId"] = 0;
 }
 $smarty->assign('nlId', $_REQUEST["nlId"]);
-$perms = Perms::get(array('type'=>'newsletter', 'object'=>$_REQUEST['nlId']));
+$perms = Perms::get(['type' => 'newsletter', 'object' => $_REQUEST['nlId']]);
 
 if ($perms->admin_newsletters != 'y') {
 	$smarty->assign('errortype', 401);
@@ -43,7 +44,7 @@ if ($_REQUEST["nlId"]) {
 	$info["articleClipTypes"] = unserialize($info["articleClipTypes"]);
 	$info["articleClipRangeDays"] = $info["articleClipRange"] / 3600 / 24;
 } else {
-	$info = array(
+	$info = [
 		'nlId' => 0,
 		'name' => '',
 		'description' => '',
@@ -57,8 +58,8 @@ if ($_REQUEST["nlId"]) {
 		'emptyClipBlocksSend' => 'n',
 		'articleClipRange' => $defaultArticleClipRange,
 		'articleClipRangeDays' => $defaultArticleClipRange / 3600 / 24,
-		'articleClipTypes' => array()
-	);
+		'articleClipTypes' => []
+	];
 	$update = "y";
 }
 $smarty->assign('info', $info);
@@ -113,12 +114,14 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$articleClipRange = $defaultArticleClipRange; // default to 1 day
 	}
-	if (!empty($_REQUEST["articleClipTypes"])) {
+	if (! empty($_REQUEST["articleClipTypes"])) {
 		$articleClipTypes = serialize($_REQUEST["articleClipTypes"]);
 	} else {
 		$articleClipTypes = '';
 	}
-	if (!isset($_REQUEST['frequency'])) $_REQUEST['frequency'] = 0;
+	if (! isset($_REQUEST['frequency'])) {
+		$_REQUEST['frequency'] = 0;
+	}
 	$sid = $nllib->replace_newsletter(
 		$_REQUEST["nlId"],
 		$_REQUEST["name"],
@@ -137,7 +140,7 @@ if (isset($_REQUEST["save"])) {
 		$_REQUEST["emptyClipBlocksSend"]
 	);
 
-	$info = array(
+	$info = [
 		'nlId' => 0,
 		'name' => '',
 		'description' => '',
@@ -146,17 +149,17 @@ if (isset($_REQUEST["save"])) {
 		'unsubMsg' => 'y',
 		'validateAddr' => 'y',
 		'allowTxt' => 'n'
-	);
+	];
 	$smarty->assign('nlId', 0);
 	$smarty->assign('info', $info);
 	$cookietab = 1;
 }
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
@@ -175,13 +178,13 @@ $channels = $nllib->list_newsletters(
 	$sort_mode,
 	$find,
 	$update,
-	array(
+	[
 		'tiki_p_admin_newsletters'
-	)
+	]
 );
 
 // get Article types for clippings feature
-$articleTypes = array();
+$articleTypes = [];
 if ($prefs["feature_articles"] == 'y') {
 	$artlib = TikiLib::lib('art');
 	$allTypes = $artlib->list_types();
@@ -193,7 +196,7 @@ $smarty->assign('articleTypes', $articleTypes);
 
 $smarty->assign_by_ref('cant_pages', $channels["cant"]);
 $smarty->assign_by_ref('channels', $channels["data"]);
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 ask_ticket('admin-nl');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

@@ -9,17 +9,17 @@
 // $Id$
 
 include_once("tiki-setup.php");
-include_once ('lib/commcenter/commlib.php');
+include_once('lib/commcenter/commlib.php');
 
 if ($tikilib->get_preference("feature_comm", 'n') != 'y') {
 	die;
 }
 
-$map = array(
-	"sendPage" => array("function" => "sendPage"),
-	"sendStructurePage" => array("function" => "sendStructurePage"),
-	"sendArticle" => array("function" => "sendArticle")
-);
+$map = [
+	"sendPage" => ["function" => "sendPage"],
+	"sendStructurePage" => ["function" => "sendStructurePage"],
+	"sendArticle" => ["function" => "sendArticle"]
+];
 
 $s = new XML_RPC_Server($map);
 
@@ -34,29 +34,40 @@ function sendStructurePage($params)
 	$tikilib = TikiLib::lib('tiki');
 	$structlib = TikiLib::lib('struct');
 
-	$site = $params->getParam(0); $site = $site->scalarval();
-	$user = $params->getParam(1); $user = $user->scalarval();
-	$pass = $params->getParam(2); $pass = $pass->scalarval();
-	$sName = $params->getParam(3); $sName = $sName->scalarval();
-	$pName = $params->getParam(4); $pName = $pName->scalarval();
-	$name = $params->getParam(5); $name = $name->scalarval();
-	$data = $params->getParam(6); $data = $data->scalarval();
-	$comm = $params->getParam(7); $comm = $comm->scalarval();
-	$desc = $params->getParam(8); $desc = $desc->scalarval();
-	$pos = $params->getParam(9); $pos = $pos->scalarval();
-	$alias = $params->getParam(10); $alias = $alias->scalarval();
+	$site = $params->getParam(0);
+	$site = $site->scalarval();
+	$user = $params->getParam(1);
+	$user = $user->scalarval();
+	$pass = $params->getParam(2);
+	$pass = $pass->scalarval();
+	$sName = $params->getParam(3);
+	$sName = $sName->scalarval();
+	$pName = $params->getParam(4);
+	$pName = $pName->scalarval();
+	$name = $params->getParam(5);
+	$name = $name->scalarval();
+	$data = $params->getParam(6);
+	$data = $data->scalarval();
+	$comm = $params->getParam(7);
+	$comm = $comm->scalarval();
+	$desc = $params->getParam(8);
+	$desc = $desc->scalarval();
+	$pos = $params->getParam(9);
+	$pos = $pos->scalarval();
+	$alias = $params->getParam(10);
+	$alias = $alias->scalarval();
 
-	if ($user != 'admin' && $prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster'])) {
+	if ($user != 'admin' && $prefs['feature_intertiki'] == 'y' && ! empty($prefs['feature_intertiki_mymaster'])) {
 		$ok = $userlib->intervalidate($prefs['interlist'][$prefs['feature_intertiki_mymaster']], $user, $pass, false);
 	} else {
 		list($ok, $user, $error) = $userlib->validate_user($user, $pass, '', '');
 	}
-	if (!$ok) {
+	if (! $ok) {
 		return new XML_RPC_Response(0, 101, "Invalid username or password");
 	}
 
 	// Verify if the user has tiki_p_sendme_pages
-	if (!$userlib->user_has_permission($user, 'tiki_p_sendme_pages')) {
+	if (! $userlib->user_has_permission($user, 'tiki_p_sendme_pages')) {
 		return new XML_RPC_Response(0, 101, "Permissions denied user $user cannot send pages to this site");
 	}
 
@@ -94,17 +105,17 @@ function sendPage($params)
 	$pp = $params->getParam(6);
 	$description = $pp->scalarval();
 
-	if ($username != 'admin' && $prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster'])) {
+	if ($username != 'admin' && $prefs['feature_intertiki'] == 'y' && ! empty($prefs['feature_intertiki_mymaster'])) {
 		$ok = $userlib->intervalidate($prefs['interlist'][$prefs['feature_intertiki_mymaster']], $username, $password, false);
 	} else {
 		list($ok, $username, $error) = $userlib->validate_user($username, $password, '', '');
 	}
-	if (!$ok) {
+	if (! $ok) {
 		return new XML_RPC_Response(0, 101, "Invalid username or password");
 	}
 
 	// Verify if the user has tiki_p_sendme_pages
-	if (!$userlib->user_has_permission($username, 'tiki_p_sendme_pages')) {
+	if (! $userlib->user_has_permission($username, 'tiki_p_sendme_pages')) {
 		return new XML_RPC_Response(0, 101, "Permissions denied user $username cannot send pages to this site");
 	}
 
@@ -170,17 +181,17 @@ function sendArticle($params)
 	$pp = $params->getParam(21);
 	$rating = $pp->scalarval();
 
-	if ($username != 'admin' && $prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster'])) {
+	if ($username != 'admin' && $prefs['feature_intertiki'] == 'y' && ! empty($prefs['feature_intertiki_mymaster'])) {
 		$ok = $userlib->intervalidate($prefs['interlist'][$prefs['feature_intertiki_mymaster']], $username, $password, false);
 	} else {
 		list($ok, $username, $error) = $userlib->validate_user($username, $password, '', '');
 	}
-	if (!$ok) {
+	if (! $ok) {
 		return new XML_RPC_Response(0, 101, "Invalid username or password");
 	}
 
 	// Verify if the user has tiki_p_sendme_pages
-	if (!$userlib->user_has_permission($username, 'tiki_p_sendme_articles')) {
+	if (! $userlib->user_has_permission($username, 'tiki_p_sendme_articles')) {
 		return new XML_RPC_Response(0, 101, "Permissions denied user $username cannot send articles to this site");
 	}
 

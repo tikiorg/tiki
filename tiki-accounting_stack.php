@@ -9,27 +9,27 @@
 // $Id$
 
 $section = 'accounting';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 $access->checkAuthenticity();
 
 // Feature available?
-if ($prefs['feature_accounting'] !='y') {
+if ($prefs['feature_accounting'] != 'y') {
 	$smarty->assign('msg', tra('This feature is disabled') . ': feature_accounting');
 	$smarty->display('error.tpl');
 	die;
 }
 
 $globalperms = Perms::get();
-$objectperms = Perms::get(array( 'type' => 'accounting book', 'object' => $bookId ));
+$objectperms = Perms::get([ 'type' => 'accounting book', 'object' => $bookId ]);
 
-if (!($globalperms->acct_book or $objectperms->acct_book_stack)) {
+if (! ($globalperms->acct_book or $objectperms->acct_book_stack)) {
 	$smarty->assign('msg', tra('You do not have the right to book into the stack'));
 	$smarty->display('error.tpl');
 	die;
 }
 
-if (!isset($_REQUEST['bookId'])) {
+if (! isset($_REQUEST['bookId'])) {
 	$smarty->assign('msg', tra('Missing book id'));
 	$smarty->display('error.tpl');
 	die;
@@ -37,7 +37,7 @@ if (!isset($_REQUEST['bookId'])) {
 $bookId = $_REQUEST['bookId'];
 $smarty->assign('bookId', $bookId);
 
-if (!isset($_REQUEST['stackId'])) {
+if (! isset($_REQUEST['stackId'])) {
 	$stackId = 0;
 } else {
 	$stackId = $_REQUEST['stackId'];
@@ -130,28 +130,27 @@ if (is_array($result)) {
 	if (isset($_REQUEST['statementId'])) {
 		$smarty->assign('statementId', $_REQUEST['statementId']);
 	}
-
 } else {
-	if ($stackId!=0) {
+	if ($stackId != 0) {
 		$stackEntry = $accountinglib->getStackTransaction($bookId, $_REQUEST['stackId']);
 		$smarty->assign('stackId', $stackId);
 		$smarty->assign('stackDate', $stackEntry['stackDate']);
 		$smarty->assign('stackDescription', $stackEntry['stackDescription']);
-		$debitAccount = array();
-		$debitAmount = array();
-		$debitText = array();
+		$debitAccount = [];
+		$debitAmount = [];
+		$debitText = [];
 
-		for ($i=0, $iCountStackEntryDebit = count($stackEntry['debit']); $i<$iCountStackEntryDebit; $i++) {
+		for ($i = 0, $iCountStackEntryDebit = count($stackEntry['debit']); $i < $iCountStackEntryDebit; $i++) {
 			$debitAccount[] = $stackEntry['debit'][$i]['stackItemAccountId'];
 			$debitAmount[] = $stackEntry['debit'][$i]['stackItemAmount'];
 			$debitText[] = $stackEntry['debit'][$i]['stackItemText'];
 		}
 
-		$creditAccount = array();
-		$creditAmount = array();
-		$creditText = array();
+		$creditAccount = [];
+		$creditAmount = [];
+		$creditText = [];
 
-		for ($i=0, $iCountStackEntryCredit = count($stackEntry['credit']); $i < $iCountStackEntryCredit; $i++) {
+		for ($i = 0, $iCountStackEntryCredit = count($stackEntry['credit']); $i < $iCountStackEntryCredit; $i++) {
 			$creditAccount[] = $stackEntry['credit'][$i]['stackItemAccountId'];
 			$creditAmount[] = $stackEntry['credit'][$i]['stackItemAmount'];
 			$creditText[] = $stackEntry['credit'][$i]['stackItemText'];
@@ -165,12 +164,12 @@ if (is_array($result)) {
 		$smarty->assign('creditText', $creditText);
 	} else {
 		$smarty->assign('stackId', $stackId);
-		$smarty->assign('debitAccount', array(''));
-		$smarty->assign('creditAccount', array(''));
-		$smarty->assign('debitAmount', array(''));
-		$smarty->assign('creditAmount', array(''));
-		$smarty->assign('debitText', array(''));
-		$smarty->assign('creditText', array(''));
+		$smarty->assign('debitAccount', ['']);
+		$smarty->assign('creditAccount', ['']);
+		$smarty->assign('debitAmount', ['']);
+		$smarty->assign('creditAmount', ['']);
+		$smarty->assign('debitText', ['']);
+		$smarty->assign('creditText', ['']);
 	}
 }
 
@@ -180,7 +179,7 @@ if ($globalperms->acct_book or $objectperms->acct_book) {
 	$smarty->assign('canBook', false);
 }
 
-$stack=$accountinglib->getStack($bookId);
+$stack = $accountinglib->getStack($bookId);
 $smarty->assign('stack', $stack);
 $smarty->assign('req_url', $_SERVER['REQUEST_URI']);
 $smarty->assign('mid', 'tiki-accounting_stack.tpl');

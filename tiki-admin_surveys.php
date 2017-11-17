@@ -3,24 +3,24 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'surveys';
-require_once ('tiki-setup.php');
-include_once ('lib/surveys/surveylib.php');
+require_once('tiki-setup.php');
+include_once('lib/surveys/surveylib.php');
 $access->check_feature('feature_surveys');
 
-$auto_query_args = array(
+$auto_query_args = [
 	'surveyId',
 	'offset',
 	'sort_mode',
 	'find'
-);
+];
 
-if (!isset($_REQUEST["surveyId"])) {
+if (! isset($_REQUEST["surveyId"])) {
 	$_REQUEST["surveyId"] = 0;
 }
 $smarty->assign('surveyId', $_REQUEST["surveyId"]);
@@ -34,15 +34,15 @@ if (isset($_REQUEST["save"])) {
 	$cat_desc = substr($_REQUEST["description"], 0, 200);
 	$cat_name = $_REQUEST["name"];
 	$cat_href = "tiki-take_survey.php?surveyId=" . $cat_objid;
-	include_once ("categorize.php");
+	include_once("categorize.php");
 	$cookietab = 1;
 	$_REQUEST["surveyId"] = 0;
 }
-if (!empty($_REQUEST["surveyId"])) {
+if (! empty($_REQUEST["surveyId"])) {
 	$info = $srvlib->get_survey($_REQUEST["surveyId"]);
 	$cookietab = 2;
 } else {
-	$info = array();
+	$info = [];
 	$info["name"] = '';
 	$info["description"] = '';
 	$info["status"] = 'o'; //check to see if survey is open
@@ -53,12 +53,12 @@ if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();
 	$srvlib->remove_survey($_REQUEST["remove"]);
 }
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
@@ -98,25 +98,34 @@ for ($i = 0; $i < $temp_max; $i++) {
 $smarty->assign_by_ref('cant_pages', $channels["cant"]);
 $smarty->assign_by_ref('channels', $channels["data"]);
 // Fill array with possible number of questions per page (qpp)
-$qpp = array(
+$qpp = [
 	1,
 	2,
 	3,
 	4
-);
-for ($i = 5; $i < 50; $i+= 5) $qpp[] = $i;
-$hrs = array();
-for ($i = 0; $i < 10; $i++) $hrs[] = $i;
-$mins = array();
-for ($i = 1; $i < 120; $i++) $mins[] = $i;
+];
+for ($i = 5; $i < 50;
+$i += 5) {
+	$qpp[] = $i;
+}
+$hrs = [];
+for ($i = 0; $i < 10;
+$i++) {
+	$hrs[] = $i;
+}
+$mins = [];
+for ($i = 1; $i < 120;
+$i++) {
+	$mins[] = $i;
+}
 $smarty->assign('qpp', $qpp);
 $smarty->assign('hrs', $hrs);
 $smarty->assign('mins', $mins);
 $cat_type = 'survey';
 $cat_objid = $_REQUEST["surveyId"];
-include_once ("categorize_list.php");
+include_once("categorize_list.php");
 $section = 'surveys';
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 ask_ticket('admin-surveys');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

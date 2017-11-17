@@ -16,10 +16,9 @@
 require_once('tiki-setup.php');
 
 // Reindex the file for search
-if ( ($id = (int)$_GET['id']) > 0 ) {
-
+if (($id = (int)$_GET['id']) > 0) {
 	// Check feature
-	if ( $prefs['feature_file_galleries'] == 'y'
+	if ($prefs['feature_file_galleries'] == 'y'
 		&& $prefs['feature_search'] == 'y'
 		&& $prefs['feature_search_fulltext'] != 'y'
 		&& $prefs['search_refresh_index_mode'] == 'normal'
@@ -30,13 +29,13 @@ if ( ($id = (int)$_GET['id']) > 0 ) {
 
 		$info = $filegallib->get_file_info($id);
 
-		if ( $info['galleryId'] > 0 ) {
+		if ($info['galleryId'] > 0) {
 			$gal_info = $filegallib->get_file_gallery($info['galleryId']);
 
 			// Check perms
 			$tikilib->get_perm_object($info['galleryId'], 'file gallery', $gal_info, true);
 
-			if ( $tiki_p_admin_file_galleries == 'y'
+			if ($tiki_p_admin_file_galleries == 'y'
 				|| ( ( empty($fileInfo['lockedby']) || $fileInfo['lockedby'] == $user ) && $tiki_p_edit_gallery_file == 'y' )
 			) { // must be the owner or the locker or have the perms
 				error_reporting(0);

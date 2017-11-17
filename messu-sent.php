@@ -3,13 +3,13 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'user_messages';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $messulib = TikiLib::lib('message');
 $access->check_user($user);
 $access->check_feature('feature_messages');
@@ -62,19 +62,23 @@ if (isset($_REQUEST['filter'])) {
 		$_REQUEST['flagval'] = $parts[1];
 	}
 }
-if (!isset($_REQUEST["priority"])) $_REQUEST["priority"] = '';
-if (!isset($_REQUEST["flag"])) $_REQUEST["flag"] = '';
-if (!isset($_REQUEST["flagval"])) {
+if (! isset($_REQUEST["priority"])) {
+	$_REQUEST["priority"] = '';
+}
+if (! isset($_REQUEST["flag"])) {
+	$_REQUEST["flag"] = '';
+}
+if (! isset($_REQUEST["flagval"])) {
 	$_REQUEST["flagval"] = '';
 } else {
 	$_REQUEST["flagval"] = $_REQUEST["flagval"] === 'y' ? 'y' : 'n';
 }
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'date_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
@@ -102,13 +106,17 @@ if ($prefs['messu_sent_size'] > 0) {
 	$smarty->assign('messu_sent_size', $prefs['messu_sent_size']);
 	$percentage = ($current_number / $prefs['messu_sent_size']) * 100;
 	$cellsize = round($percentage / 100 * 200);
-	if ($current_number > $prefs['messu_sent_size']) $cellsize = 200;
-	if ($cellsize < 1) $cellsize = 1;
+	if ($current_number > $prefs['messu_sent_size']) {
+		$cellsize = 200;
+	}
+	if ($cellsize < 1) {
+		$cellsize = 1;
+	}
 	$percentage = round($percentage);
 }
 $smarty->assign('cellsize', $cellsize);
 $smarty->assign('percentage', $percentage);
-include_once ('tiki-section_options.php');
-include_once ('tiki-mytiki_shared.php');
+include_once('tiki-section_options.php');
+include_once('tiki-mytiki_shared.php');
 $smarty->assign('mid', 'messu-sent.tpl');
 $smarty->display("tiki.tpl");

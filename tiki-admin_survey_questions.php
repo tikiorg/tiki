@@ -3,24 +3,24 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
-include_once ('lib/surveys/surveylib.php');
-$auto_query_args = array(
+require_once('tiki-setup.php');
+include_once('lib/surveys/surveylib.php');
+$auto_query_args = [
 	'surveyId',
 	'questionId',
 	'offset',
 	'find',
 	'sort_mode',
 	'maxRecords'
-);
+];
 $access->check_feature('feature_surveys');
 
-if (!isset($_REQUEST["surveyId"])) {
+if (! isset($_REQUEST["surveyId"])) {
 	$smarty->assign('msg', tra("No survey indicated"));
 	$smarty->display("error.tpl");
 	die;
@@ -32,7 +32,7 @@ $access->check_permission('tiki_p_admin_surveys');
 
 $survey_info = $srvlib->get_survey($_REQUEST["surveyId"]);
 $smarty->assign('survey_info', $survey_info);
-if (!isset($_REQUEST["questionId"])) {
+if (! isset($_REQUEST["questionId"])) {
 	$_REQUEST["questionId"] = 0;
 }
 $smarty->assign('questionId', $_REQUEST["questionId"]);
@@ -40,7 +40,7 @@ if ($_REQUEST["questionId"]) {
 	$info = $srvlib->get_survey_question($_REQUEST["questionId"]);
 	$cookietab = 2;
 } else {
-	$info = array();
+	$info = [];
 	$info["question"] = '';
 	$info["type"] = '';
 	$info["position"] = '';
@@ -61,22 +61,22 @@ if (isset($_REQUEST["save"])) {
 	$info["type"] = '';
 	$info["position"] = '';
 	$info["options"] = '';
-	$info["mandatory"] = !empty($_REQUEST['mandatory']) ? 'y' : '';
+	$info["mandatory"] = ! empty($_REQUEST['mandatory']) ? 'y' : '';
 	$info["min_answers"] = '';
 	$info["max_answers"] = '';
 	$smarty->assign('questionId', 0);
 	$cookietab = 1;
 }
-if (!empty($_REQUEST['questionIds']) && !empty($_REQUEST['surveyId'])) {
+if (! empty($_REQUEST['questionIds']) && ! empty($_REQUEST['surveyId'])) {
 	$ids = explode(',', $_REQUEST['questionIds']);
 	$srvlib->reorderQuestions($_REQUEST['surveyId'], $ids);
 }
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'position_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
@@ -101,8 +101,11 @@ $smarty->assign_by_ref('info', $info);
 $smarty->assign_by_ref('cant_pages', $channels["cant"]);
 $smarty->assign_by_ref('channels', $channels["data"]);
 // Fill array with possible number of questions per page
-$positions = array();
-for ($i = 1; $i < 100; $i++) $positions[] = $i;
+$positions = [];
+for ($i = 1; $i < 100;
+$i++) {
+	$positions[] = $i;
+}
 $smarty->assign('positions', $positions);
 ask_ticket('admin-survey-questions');
 // disallow robots to index page:

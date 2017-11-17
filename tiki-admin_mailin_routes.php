@@ -5,11 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 //check if feature is on
 $access->check_feature('feature_mailin');
-$access->check_permission(array('tiki_p_admin_mailin'));
+$access->check_permission(['tiki_p_admin_mailin']);
 
 $structlib = TikiLib::lib('struct');
 $usermailinlib = TikiLib::lib('usermailin');

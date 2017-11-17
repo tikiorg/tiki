@@ -9,72 +9,72 @@
 // $Id$
 
 $section = 'accounting';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 $access->checkAuthenticity();
 
 // Feature available?
-if ($prefs['feature_accounting'] !='y') {
+if ($prefs['feature_accounting'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled") . ": feature_accounting");
 	$smarty->display("error.tpl");
 	die;
 }
 
-if (!isset($_REQUEST['bookId'])) {
+if (! isset($_REQUEST['bookId'])) {
 	$smarty->assign('msg', tra("Missing book id"));
 	$smarty->display("error.tpl");
 	die;
 }
-$bookId=$_REQUEST['bookId'];
+$bookId = $_REQUEST['bookId'];
 $smarty->assign('bookId', $bookId);
 
 $accountinglib = TikiLib::lib('accounting');
-$book=$accountinglib->getBook($bookId);
+$book = $accountinglib->getBook($bookId);
 $smarty->assign('book', $book);
 
 $globalperms = Perms::get();
-$objectperms = Perms::get(array( 'type' => 'accounting book', 'object' => $bookId ));
+$objectperms = Perms::get([ 'type' => 'accounting book', 'object' => $bookId ]);
 
-if (!isset($_REQUEST['action'])) {
-	$_REQUEST['action']='';
+if (! isset($_REQUEST['action'])) {
+	$_REQUEST['action'] = '';
 }
 
-if ($_REQUEST['action'] != 'new' and !isset($_REQUEST['accountId'])) {
+if ($_REQUEST['action'] != 'new' and ! isset($_REQUEST['accountId'])) {
 	$smarty->assign('msg', tra("Missing account id"));
 	$smarty->display("error.tpl");
 	die;
 }
 
 $smarty->assign('action', $_REQUEST['action']);
-if ($_REQUEST['action']=='' or $_REQUEST['action']=='view') {
-	if (!($globalperms->acct_view or $objectperms->acct_view or
+if ($_REQUEST['action'] == '' or $_REQUEST['action'] == 'view') {
+	if (! ($globalperms->acct_view or $objectperms->acct_view or
 		  $globalperms->acct_book or $objectperms->acct_book)) {
 		$smarty->assign('msg', tra("You do not have the rights to view this account"));
 		$smarty->display("error.tpl");
 		die;
 	}
 } else {
-	if (!($globalperms->acct_manage_accounts or $objectperms->acct_manage_accounts)) {
+	if (! ($globalperms->acct_manage_accounts or $objectperms->acct_manage_accounts)) {
 		$smarty->assign('msg', tra("You do not have the rights to manage accounts"));
 		$smarty->display("error.tpl");
 		die;
 	}
 }
-$accountId=$_REQUEST['accountId'];
+$accountId = $_REQUEST['accountId'];
 $smarty->assign('accountId', $accountId);
 
-$journal=$accountinglib->getJournal($bookId, $accountId);
+$journal = $accountinglib->getJournal($bookId, $accountId);
 $smarty->assign('journal', $journal);
 
 if ($access->ticketMatch()) {
 	switch ($_REQUEST['action']) {
-		case 'edit' :
-			$template="tiki-accounting_account_form.tpl";
+		case 'edit':
+			$template = "tiki-accounting_account_form.tpl";
 			if (isset($_REQUEST['accountName'])) {
-				if (!isset($_REQUEST['newAccountId'])) {
-					$_REQUEST['newAccountId']=$accountId;
+				if (! isset($_REQUEST['newAccountId'])) {
+					$_REQUEST['newAccountId'] = $accountId;
 				}
-				$result=$accountinglib->updateAccount(
+				$result = $accountinglib->updateAccount(
 					$bookId,
 					$accountId,
 					$_REQUEST['newAccountId'],
@@ -84,32 +84,35 @@ if ($access->ticketMatch()) {
 					$_REQUEST['accountLocked'],
 					0 /*$_REQUEST['accountTax'] */
 				);
-				if ($result!==true) {
+				if ($result !== true) {
 					$smarty->assign('errors', $result);
 				} else {
 					$smarty->assign('action', 'view');
-					$template="tiki-accounting_account_view.tpl";
+					$template = "tiki-accounting_account_view.tpl";
 				}
 			}
-			$account=$accountinglib->getAccount($bookId, $accountId, true);
+			$account = $accountinglib->getAccount($bookId, $accountId, true);
 			$smarty->assign('account', $account);
 			break;
-		case 'new' :
-			$template="tiki-accounting_account_form.tpl";
+		case 'new':
+			$template = "tiki-accounting_account_form.tpl";
 			if (isset($_REQUEST['accountName'])) {
-				$result=$accountinglib->createAccount(
+				$result = $accountinglib->createAccount(
 					$bookId,
-					$_REQUEST['newAccountId'], $_REQUEST['accountName'],
-					$_REQUEST['accountNotes'], $_REQUEST['accountBudget'],
-					$_REQUEST['accountLocked'], 0 /*$_REQUEST['accountTax'] */
+					$_REQUEST['newAccountId'],
+					$_REQUEST['accountName'],
+					$_REQUEST['accountNotes'],
+					$_REQUEST['accountBudget'],
+					$_REQUEST['accountLocked'],
+					0 /*$_REQUEST['accountTax'] */
 				);
-				if ($result!==true) {
+				if ($result !== true) {
 					$smarty->assign('errors', $result);
 				} else {
 					$smarty->assign('action', 'view');
-					$template="tiki-accounting_account_view.tpl";
+					$template = "tiki-accounting_account_view.tpl";
 				}
-				$account=array(
+				$account = [
 					'accountBookId' => $bookId,
 					'accountId' => $_REQUEST['newAccountId'],
 					'accountName' => $_REQUEST['accountName'],
@@ -118,37 +121,37 @@ if ($access->ticketMatch()) {
 					'accountLocked' => $_REQUEST['accountLocked'],
 					'accountTax' => $_REQUEST['accountTax'],
 					'changeable' => true
-				);
+				];
 			} else {
-				$account=array('changeable' => true);
+				$account = ['changeable' => true];
 			}
 			$smarty->assign('account', $account);
 			break;
 		case 'lock':
 			$accountinglib->changeAccountLock($bookId, $accountId);
-			$account=$accountinglib->getAccount($bookId, $accountId, true);
+			$account = $accountinglib->getAccount($bookId, $accountId, true);
 			$smarty->assign('account', $account);
-			$template="tiki-accounting_account_view.tpl";
+			$template = "tiki-accounting_account_view.tpl";
 			break;
-		case 'delete' :
-			$account=$accountinglib->getAccount($bookId, $accountId, true);
+		case 'delete':
+			$account = $accountinglib->getAccount($bookId, $accountId, true);
 			$smarty->assign('account', $account);
-			$result=$accountinglib->deleteAccount($bookId, $accountId);
-			if ($result===true) {
-				$template="tiki-accounting_account_deleted.tpl";
+			$result = $accountinglib->deleteAccount($bookId, $accountId);
+			if ($result === true) {
+				$template = "tiki-accounting_account_deleted.tpl";
 			} else {
 				$smarty->assign('errors', $result);
-				$account=$accountinglib->getAccount($bookId, $accountId, true);
+				$account = $accountinglib->getAccount($bookId, $accountId, true);
 				$smarty->assign('account', $account);
-				$template="tiki-accounting_account_form.tpl";
+				$template = "tiki-accounting_account_form.tpl";
 			}
 			break;
 	}
 }
-$account=$accountinglib->getAccount($bookId, $accountId, true);
+$account = $accountinglib->getAccount($bookId, $accountId, true);
 $smarty->assign('account', $account);
-if (!$template) {
-	$template="tiki-accounting_account_view.tpl";
+if (! $template) {
+	$template = "tiki-accounting_account_view.tpl";
 }
 $smarty->assign('mid', $template);
 $smarty->display("tiki.tpl");

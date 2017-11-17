@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-@ignore_user_abort(TRUE); // Allow execution to continue even if the request gets canceled.
+@ignore_user_abort(true); // Allow execution to continue even if the request gets canceled.
 
 try {
 	require_once 'tiki-setup.php';
@@ -30,7 +30,7 @@ if ($webcron_enabled != 'y') {
 // Validate if the Token to run the Web Cron matches the stored token
 $cron_token = $tikilib->get_preference('webcron_token');
 
-if (!isset($_REQUEST['token']) || $_REQUEST['token'] !== $cron_token) {
+if (! isset($_REQUEST['token']) || $_REQUEST['token'] !== $cron_token) {
 	return;
 }
 

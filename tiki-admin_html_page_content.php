@@ -3,29 +3,29 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
-include_once ('lib/htmlpages/htmlpageslib.php');
+require_once('tiki-setup.php');
+include_once('lib/htmlpages/htmlpageslib.php');
 $access->check_feature('feature_html_pages');
 $access->check_permission('tiki_p_edit_html_pages');
 
-if (!isset($_REQUEST["pageName"])) {
+if (! isset($_REQUEST["pageName"])) {
 	$smarty->assign('msg', tra("No page indicated"));
 	$smarty->display("error.tpl");
 	die;
 }
-$auto_query_args = array(
+$auto_query_args = [
 	'find',
 	'offset',
 	'pageName',
 	'sort_mode'
-);
+];
 $smarty->assign('pageName', $_REQUEST["pageName"]);
-if (!isset($_REQUEST["zone"])) {
+if (! isset($_REQUEST["zone"])) {
 	$_REQUEST["zone"] = '';
 }
 $smarty->assign('zone', $_REQUEST["zone"]);
@@ -33,7 +33,7 @@ $page_info = $htmlpageslib->get_html_page($_REQUEST["pageName"]);
 if ($_REQUEST["zone"]) {
 	$info = $htmlpageslib->get_html_page_content($_REQUEST["pageName"], $_REQUEST["zone"]);
 } else {
-	$info = array();
+	$info = [];
 	$info["content"] = '';
 	$info["type"] = '';
 }
@@ -55,12 +55,12 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('zone', '');
 	$smarty->assign('content', '');
 }
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'zone_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];

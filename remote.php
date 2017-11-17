@@ -13,7 +13,6 @@ $version = '0.2';
 include 'tiki-setup.php';
 
 if ($prefs['feature_intertiki'] != 'y' || $prefs['feature_intertiki_server'] != 'y' || $prefs['feature_intertiki_mymaster']) {
-
 	echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<methodResponse><fault><value><struct><member><name>faultCode</name><value><int>403</int></value></member>";
 	echo "<member><name>faultString</name><value><string>Server is not configured</string></value></member></struct></value></fault></methodResponse>";
 	exit;
@@ -48,16 +47,16 @@ define('INTERTIKI_OK', 200);
 define('INTERTIKI_BADKEY', 401);
 define('INTERTIKI_BADUSER', 404);
 
-$map = array(
-		'intertiki.validate' => array('function'=>'validate'),
-		'intertiki.setUserInfo' => array('function' => 'set_user_info'),
-		'intertiki.logout' => array('function'=>'logout'),
-		'intertiki.cookiecheck' => array('function'=>'cookie_check'),
-		'intertiki.version' => array('function'=>'get_version'),
-		'intertiki.getUserInfo' => array('function' => 'get_user_info'),
-		'intertiki.getRegistrationPrefs' => array('function' => 'get_registration_prefs'),
-		'intertiki.registerUser' => array('function' => 'register_user')
-);
+$map = [
+		'intertiki.validate' => ['function' => 'validate'],
+		'intertiki.setUserInfo' => ['function' => 'set_user_info'],
+		'intertiki.logout' => ['function' => 'logout'],
+		'intertiki.cookiecheck' => ['function' => 'cookie_check'],
+		'intertiki.version' => ['function' => 'get_version'],
+		'intertiki.getUserInfo' => ['function' => 'get_user_info'],
+		'intertiki.getRegistrationPrefs' => ['function' => 'get_registration_prefs'],
+		'intertiki.registerUser' => ['function' => 'register_user']
+];
 
 $s = new XML_RPC_Server($map);
 
@@ -73,25 +72,26 @@ function validate($params)
 	$logslib = TikiLib::lib('logs');
 
 	$key = $params->getParam(0);
-	$key = $key->scalarval(); 
+	$key = $key->scalarval();
 
-	$login = $params->getParam(1); 
-	$login = $login->scalarval(); 
-	
-	$pass = $params->getParam(2); 
-	$pass = $pass->scalarval(); 
-	
-	$slave = $params->getParam(3); 
+	$login = $params->getParam(1);
+	$login = $login->scalarval();
+
+	$pass = $params->getParam(2);
+	$pass = $pass->scalarval();
+
+	$slave = $params->getParam(3);
 	$slave = $slave->scalarval();
-	
-	$hashkey = $params->getParam(4); 
+
+	$hashkey = $params->getParam(4);
 	$hashkey = $hashkey->scalarval();
 
-	if (!isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $tikilib->get_ip_address()) {
+	if (! isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $tikilib->get_ip_address()) {
 		$msg = tra('Invalid server key');
 
-		if (!empty($prefs['intertiki_errfile']))
+		if (! empty($prefs['intertiki_errfile'])) {
 			logit($prefs['intertiki_errfile'], $msg, $key, INTERTIKI_BADKEY, $prefs['known_hosts'][$key]['name']);
+		}
 
 		$logslib->add_log('intertiki', $msg . ' from ' . $prefs['known_hosts'][$key]['name'], $login);
 		return new XML_RPC_Response(0, 101, $msg);
@@ -99,15 +99,16 @@ function validate($params)
 
 	list($isvalid, $dummy, $error) = $userlib->validate_user($login, $pass);
 
-	if (!$isvalid) {
+	if (! $isvalid) {
 		$msg = tra('Invalid username or password');
 
-		if ($prefs['intertiki_errfile'])
+		if ($prefs['intertiki_errfile']) {
 			logit($prefs['intertiki_errfile'], $msg, $login, INTERTIKI_BADUSER, $prefs['known_hosts'][$key]['name']);
+		}
 
 		$logslib->add_log('intertiki', $msg . ' from ' . $prefs['known_hosts'][$key]['name'], $login);
 
-		if (!$userlib->user_exists($login)) {
+		if (! $userlib->user_exists($login)) {
 			// slave client is supposed to disguise 102 code as 101 not to show
 			// crackers that user does not exists. 102 is required for telling slave
 			// to delete user there
@@ -115,10 +116,11 @@ function validate($params)
 		} else {
 			return new XML_RPC_Response(0, 101, $msg);
 		}
-	} 
+	}
 
-	if ($prefs['intertiki_logfile']) 
+	if ($prefs['intertiki_logfile']) {
 		logit($prefs['intertiki_logfile'], 'logged', $login, INTERTIKI_OK, $prefs['known_hosts'][$key]['name']);
+	}
 
 	$userInfo = $userlib->get_user_info($login);
 	$userlib->create_user_cookie($userInfo['userId'], $hashkey);
@@ -130,7 +132,7 @@ function validate($params)
 		$user_info = $userlib->get_user_info($login);
 		$ret['avatarData'] = new XML_RPC_Value($user_info['avatarData'], 'base64');
 		$ret['user_details'] = new XML_RPC_Value(serialize($user_details), 'string');
-		
+
 		return new XML_RPC_Response(new XML_RPC_Value($ret, 'struct'));
 	} else {
 		$logslib->add_log('intertiki', 'auth granted from ' . $prefs['known_hosts'][$key]['name'], $login);
@@ -152,14 +154,17 @@ function set_user_info($params)
 		return new XML_RPC_Response(new XML_RPC_Value(1, 'boolean'));
 	}
 
-	$key = $params->getParam(0); $key = $key->scalarval(); 
-	$login = $params->getParam(1); $login = $login->scalarval();
+	$key = $params->getParam(0);
+	$key = $key->scalarval();
+	$login = $params->getParam(1);
+	$login = $login->scalarval();
 
-	if (!isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $tikilib->get_ip_address()) {
+	if (! isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $tikilib->get_ip_address()) {
 		$msg = tra('Invalid server key');
 
-		if ($prefs['intertiki_errfile'])
+		if ($prefs['intertiki_errfile']) {
 			logit($prefs['intertiki_errfile'], $msg, $key, INTERTIKI_BADKEY, $prefs['known_hosts'][$key]['name']);
+		}
 
 		TikiLib::lib('logs')->add_log('intertiki', $msg . ' from ' . $prefs['known_hosts'][$key]['name'], $login);
 		return new XML_RPC_Response(0, 101, $msg);
@@ -181,17 +186,18 @@ function logout($params)
 	$tikilib = TikiLib::lib('tiki');
 	$logslib = TikiLib::lib('logs');
 
-	$key = $params->getParam(0); 
+	$key = $params->getParam(0);
 	$key = $key->scalarval();
 
-	$login = $params->getParam(1); 
+	$login = $params->getParam(1);
 	$login = $login->scalarval();
 
-	if (!isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $tikilib->get_ip_address()) {
+	if (! isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $tikilib->get_ip_address()) {
 		$msg = tra('Invalid server key');
 
-		if ($prefs['intertiki_errfile'])
+		if ($prefs['intertiki_errfile']) {
 			logit($prefs['intertiki_errfile'], $msg, $key, INTERTIKI_BADKEY, $prefs['known_hosts'][$key]['name']);
+		}
 
 		$logslib->add_log('intertiki', $msg . ' from ' . $prefs['known_hosts'][$key]['name'], $login);
 
@@ -202,8 +208,9 @@ function logout($params)
 	$userInfo = $this->get_user_info($login);
 	$userlib->delete_user_cookie($userInfo['userId']);
 
-	if ($prefs['intertiki_logfile'])
+	if ($prefs['intertiki_logfile']) {
 		logit($prefs['intertiki_logfile'], 'logout', $login, INTERTIKI_OK, $prefs['known_hosts'][$key]['name']);
+	}
 
 	$logslib->add_log('intertiki', 'auth revoked from ' . $prefs['known_hosts'][$key]['name'], $login);
 	return new XML_RPC_Response(new XML_RPC_Value(1, 'boolean'));
@@ -219,16 +226,17 @@ function cookie_check($params)
 	$userlib = TikiLib::lib('user');
 	$tikilib = TikiLib::lib('tiki');
 
-	$key = $params->getParam(0); 
+	$key = $params->getParam(0);
 	$key = $key->scalarval();
 	$hash = $params->getParam(1);
 	$hash = $hash->scalarval();
 
-	if (!isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $tikilib->get_ip_address()) {
+	if (! isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $tikilib->get_ip_address()) {
 		$msg = tra('Invalid server key');
 
-		if ($prefs['intertiki_errfile']) 
+		if ($prefs['intertiki_errfile']) {
 			logit($prefs['intertiki_errfile'], $msg, $key, INTERTIKI_BADKEY, $prefs['known_hosts'][$key]['name']);
+		}
 
 		$hash = substr($hash, strpos($hash, '.'));
 		TikiLib::lib('logs')->add_log('intertiki', $msg . ' from ' . $prefs['known_hosts'][$key]['name'], $hash);
@@ -265,22 +273,25 @@ function get_user_info($params)
 	$tikilib = TikiLib::lib('tiki');
 
 	$key = $params->getParam(0);
-	$key = $key->scalarval(); 
-	$login = $params->getParam(1); $login = $login->scalarval();
+	$key = $key->scalarval();
+	$login = $params->getParam(1);
+	$login = $login->scalarval();
 
-	if (!isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $tikilib->get_ip_address()) {
+	if (! isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $tikilib->get_ip_address()) {
 		$msg = tra('Invalid server key');
 
-		if ($prefs['intertiki_errfile']) 
+		if ($prefs['intertiki_errfile']) {
 			logit($prefs['intertiki_errfile'], $msg, $key, INTERTIKI_BADKEY, $prefs['known_hosts'][$key]['name']);
+		}
 
 		TikiLib::lib('logs')->add_log('intertiki', $msg . ' from ' . $prefs['known_hosts'][$key]['name'], $login);
 		return new XML_RPC_Response(0, 101, $msg);
 	}
-	$email = $params->getParam(2); $email = $email->scalarval();
+	$email = $params->getParam(2);
+	$email = $email->scalarval();
 
 	if (empty($login)) {
-		$login = empty($email)?'': $userlib->get_user_by_email($email);
+		$login = empty($email) ? '' : $userlib->get_user_by_email($email);
 	}
 
 	if (empty($login)) {
@@ -310,22 +321,25 @@ function get_registration_prefs($params)
 
 	$key = $params->getParam(0);
 	$key = $key->scalarval();
-	$login = $params->getParam(1); $login = $login->scalarval();
+	$login = $params->getParam(1);
+	$login = $login->scalarval();
 
-	if (!isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $tikilib->get_ip_address()) {
+	if (! isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $tikilib->get_ip_address()) {
 		$msg = tra('Invalid server key');
 
-		if ($prefs['intertiki_errfile'])
+		if ($prefs['intertiki_errfile']) {
 			logit($prefs['intertiki_errfile'], $msg, $key, INTERTIKI_BADKEY, $prefs['known_hosts'][$key]['name']);
+		}
 
 		$logslib->add_log('intertiki', $msg . ' from ' . $prefs['known_hosts'][$key]['name'], $login);
 		return new XML_RPC_Response(0, 101, $msg);
 	}
 
-	if ( !isset($prefs['known_hosts'][$key]['allowusersregister']) 
+	if (! isset($prefs['known_hosts'][$key]['allowusersregister'])
 				|| ($prefs['known_hosts'][$key]['allowusersregister'] != 'y')
-	)
+	) {
 		return new XML_RPC_Response(0, 101, 'Users are not allowed to register via intertiki on this master.');
+	}
 
 	return new XML_RPC_Response(XML_RPC_encode($registrationlib->merged_prefs));
 }
@@ -342,26 +356,28 @@ function register_user($params)
 	$registrationlib = TikiLib::lib('registration');
 
 	$key = $params->getParam(0);
-	$key = $key->scalarval(); 
-	$login = $params->getParam(1); $login = $login->scalarval();
+	$key = $key->scalarval();
+	$login = $params->getParam(1);
+	$login = $login->scalarval();
 
-	if (!isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $tikilib->get_ip_address()) {
+	if (! isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $tikilib->get_ip_address()) {
 		$msg = tra('Invalid server key');
 
-		if ($prefs['intertiki_errfile'])
+		if ($prefs['intertiki_errfile']) {
 			logit($prefs['intertiki_errfile'], $msg, $key, INTERTIKI_BADKEY, $prefs['known_hosts'][$key]['name']);
+		}
 
 		$logslib->add_log('intertiki', $msg . ' from ' . $prefs['known_hosts'][$key]['name'], $login);
 		return new XML_RPC_Response(0, 101, $msg);
 	}
 
-	if ( !isset($prefs['known_hosts'][$key]['allowusersregister']) 
+	if (! isset($prefs['known_hosts'][$key]['allowusersregister'])
 			|| ($prefs['known_hosts'][$key]['allowusersregister'] != 'y')
-	)
+	) {
 		return new XML_RPC_Response(0, 101, 'Users are not allowed to register via intertiki on this master.');
+	}
 
-	$result=$registrationlib->register_new_user_from_intertiki(XML_RPC_decode($params->getParam(1)));
+	$result = $registrationlib->register_new_user_from_intertiki(XML_RPC_decode($params->getParam(1)));
 
 	return new XML_RPC_Response(XML_RPC_encode($result));
 }
-

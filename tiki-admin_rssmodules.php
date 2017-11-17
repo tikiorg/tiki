@@ -8,16 +8,16 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $rsslib = TikiLib::lib('rss');
 //get_strings tra('External Feeds')
-$auto_query_args = array(
+$auto_query_args = [
 	'rssId',
 	'offset',
 	'maxRecords',
 	'sort_mode',
 	'find'
-);
+];
 
 $access->check_permission('tiki_p_admin_rssmodules');
 
@@ -30,13 +30,13 @@ if (isset($_REQUEST["view"])) {
 	$smarty->assign('preview', 'y');
 	$data = $rsslib->get_rss_module($_REQUEST["view"]);
 
-	if ( $data['sitetitle'] ) {
+	if ($data['sitetitle']) {
 		$smarty->assign(
 			'feedtitle',
-			array(
+			[
 				'title' => $data['sitetitle'],
 				'link' => $data['siteurl']
-			)
+			]
 		);
 	}
 
@@ -45,7 +45,7 @@ if (isset($_REQUEST["view"])) {
 if (isset($_REQUEST["rssId"])) {
 	$info = $rsslib->get_rss_module($_REQUEST["rssId"]);
 } else {
-	$info = array();
+	$info = [];
 	// default for new rss feed:
 	$info["name"] = '';
 	$info["description"] = '';
@@ -71,12 +71,12 @@ if (isset($_REQUEST["remove"])) {
 	$rsslib->remove_rss_module($_REQUEST["remove"]);
 }
 
-if ( isset($_REQUEST['article']) && $prefs['feature_articles'] == 'y' ) {
-	if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+if (isset($_REQUEST['article']) && $prefs['feature_articles'] == 'y') {
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$rsslib->set_article_generator(
 			$_REQUEST['article'],
-			array(
-				'active' => isset( $_POST['enable'] ),
+			[
+				'active' => isset($_POST['enable']),
 				'expiry' => $jitPost->expiry->int(),
 				'atype' => $jitPost->type->text(),
 				'custom_atype' => $jitPost->asArray('custom_atype'),
@@ -86,10 +86,10 @@ if ( isset($_REQUEST['article']) && $prefs['feature_articles'] == 'y' ) {
 				'categories' => (array) $jitPost->cat_categories->int(),
 				'rating' => $jitPost->rating->int(),
 				'custom_rating' => $jitPost->asArray('custom_rating'),
-				'submission' => isset( $_POST['submission'] ),
+				'submission' => isset($_POST['submission']),
 				'custom_priority' => $jitPost->asArray('custom_priority'),
 				'a_lang' => $jitPost->a_lang->word(),
-			)
+			]
 		);
 		$cookietab = 1;
 	} else {
@@ -142,12 +142,12 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('showPubDate', 'n');
 	$cookietab = 1;
 }
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'name_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
@@ -159,7 +159,7 @@ if (isset($_REQUEST["find"])) {
 	$find = '';
 }
 if ($prefs['feature_multilingual'] == 'y') {
-	$languages = array();
+	$languages = [];
 	$langLib = TikiLib::lib('language');
 	$languages = $langLib->list_languages();
 	$smarty->assign_by_ref('languages', $languages);

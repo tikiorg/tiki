@@ -12,44 +12,44 @@ require_once 'tiki-setup.php';
 $categlib = TikiLib::lib('categ');
 require_once 'lib/transitionlib.php';
 
-$auto_query_args = array();
+$auto_query_args = [];
 
 $access->check_permission('tiki_p_admin');
 
 // Init
-if ( isset( $_SESSION['transition'] ) ) {
+if (isset($_SESSION['transition'])) {
 	$transition_mode = $_SESSION['transition']['mode'];
 	$available_states = $_SESSION['transition']['states'];
 } else {
 	$transition_mode = 'category';
-	$available_states = array();
+	$available_states = [];
 }
 
 $selected_transition = null;
-$to_add = array();
+$to_add = [];
 
 // Action handling
 
-switch( $jitRequest->action->alpha() ) {
+switch ($jitRequest->action->alpha()) {
 	case 'subset':
 		$transition_mode = $_REQUEST['transition_mode'];
 
-		if ( $transition_mode == 'category' ) {
+		if ($transition_mode == 'category') {
 			$jitPost->replaceFilter('cat_categories', 'int');
-			if ( $selection = $jitPost->asArray('cat_categories') ) {
+			if ($selection = $jitPost->asArray('cat_categories')) {
 				$available_states = array_combine(
 					$selection,
-					array_map(array( $categlib, 'get_category_name' ), $selection)
+					array_map([ $categlib, 'get_category_name' ], $selection)
 				);
 			} else {
-				$available_states = array();
+				$available_states = [];
 			}
 		} else {
 			$jitPost->replaceFilter('groups', 'groupname');
-			if ( $selection = $jitPost->asArray('groups') ) {
+			if ($selection = $jitPost->asArray('groups')) {
 				$available_states = array_combine($selection, $selection);
 			} else {
-				$available_states = array();
+				$available_states = [];
 			}
 		}
 		break;
@@ -65,7 +65,7 @@ switch( $jitRequest->action->alpha() ) {
 	case 'edit':
 		$transitionlib = new TransitionLib($transition_mode);
 
-		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$transitionlib->updateTransition(
 				$_REQUEST['transitionId'],
 				$_REQUEST['from'],
@@ -81,12 +81,12 @@ switch( $jitRequest->action->alpha() ) {
 		$transitionlib = new TransitionLib($transition_mode);
 		$selected_transition = $transitionlib->getTransition((int) $_REQUEST['transitionId']);
 
-		if ( $selection = $jitPost->asArray('states') ) {
-			$selected_transition['guards'][] = array(
+		if ($selection = $jitPost->asArray('states')) {
+			$selected_transition['guards'][] = [
 						$_REQUEST['type'],
 						(int) $_REQUEST['count'],
 						$selection,
-			);
+			];
 			$transitionlib->updateGuards((int) $selected_transition['transitionId'], $selected_transition['guards']);
 		}
 		break;
@@ -94,7 +94,7 @@ switch( $jitRequest->action->alpha() ) {
 		$transitionlib = new TransitionLib($transition_mode);
 		$selected_transition = $transitionlib->getTransition((int) $_REQUEST['transitionId']);
 
-		unset( $selected_transition['guards'][ (int) $_REQUEST['guard'] ] );
+		unset($selected_transition['guards'][ (int) $_REQUEST['guard'] ]);
 		$selected_transition['guards'] = array_values($selected_transition['guards']);
 		$transitionlib->updateGuards((int) $selected_transition['transitionId'], $selected_transition['guards']);
 		break;
@@ -113,38 +113,38 @@ $cat_tree = $categlib->generate_cat_tree($categories, true, array_keys($availabl
 $transitionlib = new TransitionLib($transition_mode);
 $transitions = $transitionlib->listTransitions(array_keys($available_states));
 
-if ( $selected_transition ) {
+if ($selected_transition) {
 	// When a transition is selected, make sure all of its endpoints are listed in the edit panel
-	$to_add = array( $selected_transition['from'], $selected_transition['to'] );
+	$to_add = [ $selected_transition['from'], $selected_transition['to'] ];
 
-	foreach ( $selected_transition['guards'] as $guard ) {
+	foreach ($selected_transition['guards'] as $guard) {
 		$to_add = array_merge($to_add, $guard[2]);
 	}
 }
 
-foreach ( $transitions as & $trans ) {
+foreach ($transitions as & $trans) {
 	$trans['from_label'] = transition_label_finder($trans['from']);
 	$trans['to_label'] = transition_label_finder($trans['to']);
 }
 
 // Setup Smarty & Session
-$_SESSION['transition'] = array(
+$_SESSION['transition'] = [
 				'mode' => $transition_mode,
 				'states' => $available_states,
-);
+];
 
-foreach ( $to_add as $v ) {
+foreach ($to_add as $v) {
 	$available_states[ $v ] = transition_label_finder($v);
 }
 
-$guards = array();
-if ( $selected_transition ) {
-	foreach ( $selected_transition['guards'] as $guard ) {
-		$guards[] = array(
+$guards = [];
+if ($selected_transition) {
+	foreach ($selected_transition['guards'] as $guard) {
+		$guards[] = [
 						'type' => $guard[0],
 						'count' => $guard[1],
 						'members' => array_map('transition_label_finder', $guard[2]),
-		);
+		];
 	}
 }
 
@@ -157,15 +157,15 @@ $smarty->assign('selected_transition', $selected_transition);
 $smarty->assign('cat_tree', $cat_tree);
 
 // Graph setup
-if ( count($available_states) > 0 ) {
-	$edges = array();
-	foreach ( $transitions as $tr ) {
-		$edges[] = array(
+if (count($available_states) > 0) {
+	$edges = [];
+	foreach ($transitions as $tr) {
+		$edges[] = [
 						'from' => $tr['from_label'],
 						'to' => $tr['to_label'],
 						'label' => $tr['name'],
 						'preserve' => (bool) $tr['preserve']
-		);
+		];
 	}
 
 	$smarty->assign('graph_nodes', json_encode(array_values($available_states)));
@@ -179,17 +179,16 @@ $smarty->display('tiki.tpl');
  * @param $state
  * @return mixed|string
  */
-function transition_label_finder( $state )
+function transition_label_finder($state)
 {
 	global $available_states, $transition_mode;
 	$categlib = TikiLib::lib('categ');
 
-	if ( isset($available_states[$state]) ) {
+	if (isset($available_states[$state])) {
 		return $available_states[$state];
-	} elseif ( $transition_mode == 'category' ) {
+	} elseif ($transition_mode == 'category') {
 		return $categlib->get_category_name($state);
 	} else {
 		return $state;
 	}
 }
-

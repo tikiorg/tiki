@@ -9,18 +9,18 @@
 // $Id$
 
 $section = 'accounting';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 $access->checkAuthenticity();
 
 // Feature available?
-if ($prefs['feature_accounting'] !='y') {
+if ($prefs['feature_accounting'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled") . ": feature_accounting");
 	$smarty->display("error.tpl");
 	die;
 }
-if (!isset($_REQUEST['action'])) {
-	$_REQUEST['action']='';
+if (! isset($_REQUEST['action'])) {
+	$_REQUEST['action'] = '';
 }
 
 $globalperms = Perms::get();
@@ -44,23 +44,29 @@ if ($_REQUEST['book_end_Year']) {
 }
 if ($access->ticketMatch()) {
 	switch ($_REQUEST['action']) {
-		case 'create' :
-			if (!$globalperms->acct_create_book) {
+		case 'create':
+			if (! $globalperms->acct_create_book) {
 				$smarty->assign('msg', tra("You do not have permissions to create a book") . ": feature_accounting");
 				$smarty->display("error.tpl");
 				die;
 			}
-			$bookId=$accountinglib->createBook(
-				$_REQUEST['bookName'], 'n',
-				date_format($bookStartDate, 'Y-m-d H:i:s'), date_format($bookEndDate, 'Y-m-d H:i:s'),
-				$_REQUEST['bookCurrency'], $_REQUEST['bookCurrencyPos'],
-				$_REQUEST['bookDecimals'], $_REQUEST['bookDecPoint'],
-				$_REQUEST['bookThousand'], $_REQUEST['exportSeparator'],
-				$_REQUEST['exportEOL'], $_REQUEST['exportQuote'],
+			$bookId = $accountinglib->createBook(
+				$_REQUEST['bookName'],
+				'n',
+				date_format($bookStartDate, 'Y-m-d H:i:s'),
+				date_format($bookEndDate, 'Y-m-d H:i:s'),
+				$_REQUEST['bookCurrency'],
+				$_REQUEST['bookCurrencyPos'],
+				$_REQUEST['bookDecimals'],
+				$_REQUEST['bookDecPoint'],
+				$_REQUEST['bookThousand'],
+				$_REQUEST['exportSeparator'],
+				$_REQUEST['exportEOL'],
+				$_REQUEST['exportQuote'],
 				$_REQUEST['bookAutoTax']
 			);
-			if (!is_numeric($bookId)) {
-				$errors[]=tra($bookId);
+			if (! is_numeric($bookId)) {
+				$errors[] = tra($bookId);
 				Feedback::error(implode("\n", $errors));
 				$smarty->assign('bookName', $_REQUEST['bookName']);
 				$smarty->assign('bookStartDate', $bookStartDate);
@@ -76,25 +82,25 @@ if ($access->ticketMatch()) {
 				$smarty->assign('bookAutoTax', $_REQUEST['bookAutoTax']);
 			}
 			break;
-		case 'close'  :
-			if (!$globalperms->acct_create_book) {
+		case 'close':
+			if (! $globalperms->acct_create_book) {
 				$smarty->assign('msg', tra("You do not have permissions to close this book") . ": feature_accounting");
 				$smarty->display("error.tpl");
 				die;
 			}
 			$accountinglib->closeBook($_REQUEST['bookId']);
 			break;
-		case 'view'   :
+		case 'view':
 			break;
-		default ://list
+		default://list
 	}
 }
-$books=$accountinglib->listBooks();
+$books = $accountinglib->listBooks();
 $filtered = Perms::filter(
-	array( 'type' => 'accounting book'),
+	[ 'type' => 'accounting book'],
 	'object',
 	$books,
-	array( 'object' => 'bookName' ),
+	[ 'object' => 'bookName' ],
 	'acct_view'
 );
 $smarty->assign('books', $books);

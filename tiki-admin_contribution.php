@@ -3,16 +3,16 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $access->check_feature('feature_contribution');
 
 $contributionlib = TikiLib::lib('contribution');
-$access->check_permission(array('tiki_p_admin_contribution'));
+$access->check_permission(['tiki_p_admin_contribution']);
 
 if (isset($_REQUEST['setting'])) {
 	check_ticket('admin_contribution');

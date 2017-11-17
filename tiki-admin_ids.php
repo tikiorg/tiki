@@ -15,7 +15,6 @@ $access->check_permission('tiki_p_admin');
 $access->checkAuthenticity();
 
 if (isset($_POST['new_rule']) && $access->ticketMatch()) {
-
 	$id = $_POST['rule_id'];
 	$rule = new IDS_Rule($id);
 
@@ -40,9 +39,7 @@ if (isset($_POST['new_rule']) && $access->ticketMatch()) {
 			'error' => 1,
 		];
 	}
-
-} else if (isset($_POST['editrule']) && isset($_POST['rule_id']) && $access->ticketMatch()) {
-
+} elseif (isset($_POST['editrule']) && isset($_POST['rule_id']) && $access->ticketMatch()) {
 	$rule = IDS_Rule::getRule($_POST['rule_id']);
 
 	$rule->setRegex($_POST['rule_regex']);
@@ -52,12 +49,10 @@ if (isset($_POST['new_rule']) && $access->ticketMatch()) {
 	$rule->save();
 
 	$cookietab = '1';
-
-} else if (isset($_REQUEST['rule']) && $_REQUEST['rule']) {
-
+} elseif (isset($_REQUEST['rule']) && $_REQUEST['rule']) {
 	$rule = IDS_Rule::getRule($_REQUEST['rule']);
 
-	if (!empty($rule)) {
+	if (! empty($rule)) {
 		$ruleinfo = [
 			'id' => $rule->getId(),
 			'regex' => $rule->getRegex(),

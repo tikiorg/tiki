@@ -3,17 +3,17 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $polllib = TikiLib::lib('poll');
 $access->check_feature('feature_polls');
 $access->check_permission('tiki_p_admin_polls');
 
-if (!isset($_REQUEST["pollId"])) {
+if (! isset($_REQUEST["pollId"])) {
 	$smarty->assign('msg', tra("No poll indicated"));
 	$smarty->display("error.tpl");
 	die;
@@ -21,7 +21,7 @@ if (!isset($_REQUEST["pollId"])) {
 $smarty->assign('pollId', $_REQUEST["pollId"]);
 $menu_info = $polllib->get_poll($_REQUEST["pollId"]);
 $smarty->assign('menu_info', $menu_info);
-if (!isset($_REQUEST["optionId"])) {
+if (! isset($_REQUEST["optionId"])) {
 	$_REQUEST["optionId"] = 0;
 }
 if (isset($_REQUEST["remove"])) {
@@ -37,7 +37,7 @@ $smarty->assign('optionId', $_REQUEST["optionId"]);
 if ($_REQUEST["optionId"]) {
 	$info = $polllib->get_poll_option($_REQUEST["optionId"]);
 } else {
-	$info = array();
+	$info = [];
 	$info["title"] = '';
 	$info["votes"] = 0;
 	$info["position"] = '';

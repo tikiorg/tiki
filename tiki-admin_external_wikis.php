@@ -3,29 +3,29 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $adminlib = TikiLib::lib('admin');
 
 $access->check_permission('tiki_p_admin');
 
-if (!isset($_REQUEST["extwikiId"])) {
+if (! isset($_REQUEST["extwikiId"])) {
 	$_REQUEST["extwikiId"] = 0;
 }
 $smarty->assign('extwikiId', $_REQUEST["extwikiId"]);
 if ($_REQUEST["extwikiId"]) {
 	$info = $adminlib->get_extwiki($_REQUEST["extwikiId"]);
 } else {
-	$info = array(
+	$info = [
 		'name' => '',
 		'extwiki' => '',
 		'indexname' => '',
 		'groups' => [],
-	);
+	];
 }
 $smarty->assign('info', $info);
 if (isset($_REQUEST["remove"])) {
@@ -36,24 +36,26 @@ if (isset($_REQUEST["save"])) {
 	check_ticket('admin-external-wikis');
 	$selector = TikiLib::lib('objectselector');
 	$items = $selector->readMultipleSimple('group', $jitRequest->groups->text(), ';');
-	$items = array_map(function ($i) { return $i['id']; }, $items);
+	$items = array_map(function ($i) {
+		return $i['id'];
+	}, $items);
 
 	$adminlib->replace_extwiki($_REQUEST["extwikiId"], $_REQUEST["extwiki"], $_REQUEST['name'], $jitRequest->indexname->word(), $items);
-	$info = array(
+	$info = [
 		'name' => '',
 		'extwiki' => '',
 		'indexname' => '',
 		'groups' => [],
-	);
+	];
 	$smarty->assign('info', $info);
 	$smarty->assign('name', '');
 }
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'extwikiId_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];

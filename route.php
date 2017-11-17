@@ -27,7 +27,7 @@ function tiki_route($path)
 	*/
 
 
-	$simple = array(
+	$simple = [
 		'articles' => 'tiki-view_articles.php',
 		'blogs' => 'tiki-list_blogs.php',
 		'calendar' => 'tiki-calendar.php',
@@ -51,7 +51,7 @@ function tiki_route($path)
 		'trackers' => 'tiki-list_trackers.php',
 		'users' => 'tiki-list_users.php',
 		'tiki-check' => 'tiki-check.php',
-	);
+	];
 
 	foreach ($simple as $key => $file) {
 		tiki_route_attempt("|^$key$|", $file);
@@ -79,7 +79,7 @@ function tiki_route($path)
 		function ($parts) {
 			$ids = explode(',', $parts[1]);
 			$ids = array_filter($ids);
-			return array('calIds' => $ids);
+			return ['calIds' => $ids];
 		}
 	);
 
@@ -97,41 +97,43 @@ function tiki_route($path)
 		'|^imagescale(\d+)/(\d+)$|',
 		'show_image.php',
 		function ($parts) {
-			return array(
+			return [
 				'id' => $parts[1],
 				'scalesize' => $parts[2],
-			);
+			];
 		}
 	);
 	tiki_route_attempt_prefix('int', 'tiki-integrator.php', 'repID');
 	tiki_route_attempt_prefix('item', 'tiki-view_tracker_item.php', 'itemId');
-	tiki_route_attempt_prefix('newsletter', 'tiki-newsletters.php', 'nlId', array('info' => '1'));
-	tiki_route_attempt_prefix('nl', 'tiki-newsletters.php', 'nlId', array('info' => '1'));
+	tiki_route_attempt_prefix('newsletter', 'tiki-newsletters.php', 'nlId', ['info' => '1']);
+	tiki_route_attempt_prefix('nl', 'tiki-newsletters.php', 'nlId', ['info' => '1']);
 	tiki_route_attempt_prefix('poll', 'tiki-poll_form.php', 'pollId');
 	tiki_route_attempt_prefix('quiz', 'tiki-take_quiz.php', 'quizId');
 	tiki_route_attempt_prefix('survey', 'tiki-take_survey.php', 'surveyId');
 	tiki_route_attempt_prefix('tracker', 'tiki-view_tracker.php', 'trackerId');
 	tiki_route_attempt_prefix('sheet', 'tiki-view_sheets.php', 'sheetId');
 	tiki_route_attempt_prefix('user', 'tiki-user_information.php', 'userId');
-	tiki_route_attempt('|^userinfo$|', 'tiki-view_tracker_item.php', function () { return array('view' => ' user'); });
+	tiki_route_attempt('|^userinfo$|', 'tiki-view_tracker_item.php', function () {
+		return ['view' => ' user'];
+	});
 
 	tiki_route_attempt_prefix('dl', 'tiki-download_file.php', 'fileId');
-	tiki_route_attempt_prefix('thumbnail', 'tiki-download_file.php', 'fileId', array('thumbnail' => ''));
-	tiki_route_attempt_prefix('display', 'tiki-download_file.php', 'fileId', array('display' => ''));
-	tiki_route_attempt_prefix('preview', 'tiki-download_file.php', 'fileId', array('preview' => ''));
+	tiki_route_attempt_prefix('thumbnail', 'tiki-download_file.php', 'fileId', ['thumbnail' => '']);
+	tiki_route_attempt_prefix('display', 'tiki-download_file.php', 'fileId', ['display' => '']);
+	tiki_route_attempt_prefix('preview', 'tiki-download_file.php', 'fileId', ['preview' => '']);
 
 	tiki_route_attempt(
 		'/^(wiki|page)\-(.+)$/',
 		'tiki-index.php',
 		function ($parts) {
-			return array('page' => $parts[2]);
+			return ['page' => $parts[2]];
 		}
 	);
 	tiki_route_attempt(
 		'/^show:(.+)$/',
 		'tiki-slideshow.php',
 		function ($parts) {
-			return array('page' => urldecode($parts[1]));
+			return ['page' => urldecode($parts[1])];
 		}
 	);
 
@@ -140,14 +142,14 @@ function tiki_route($path)
 		'tiki-ajax_services.php',
 		function ($parts) {
 			if ($parts[2] == 'x') {
-				return array(
+				return [
 					'controller' => $parts[1],
-				);
+				];
 			} else {
-				return array(
+				return [
 					'controller' => $parts[1],
 					'action' => $parts[2],
-				);
+				];
 			}
 		}
 	);
@@ -155,7 +157,7 @@ function tiki_route($path)
 	if (false !== $dot = strrpos($path, '.')) {
 		// Prevent things that look like filenames from being considered for wiki page names
 		$extension = substr($path, $dot + 1);
-		if (in_array($extension, array('css', 'gif', 'jpg', 'png', 'php', 'html', 'js', 'htm', 'shtml', 'cgi', 'sql', 'phtml', 'txt', 'ihtml'))) {
+		if (in_array($extension, ['css', 'gif', 'jpg', 'png', 'php', 'html', 'js', 'htm', 'shtml', 'cgi', 'sql', 'phtml', 'txt', 'ihtml'])) {
 			return;
 		}
 	}
@@ -164,12 +166,12 @@ function tiki_route($path)
 		'|.*|',
 		'tiki-index.php',
 		function ($parts) {
-			return array('page' => urldecode($parts[0]));
+			return ['page' => urldecode($parts[0])];
 		}
 	);
 }
 
-function tiki_route_attempt($pattern, $file, $callback = null, $extra = array())
+function tiki_route_attempt($pattern, $file, $callback = null, $extra = [])
 {
 	global $path, $inclusion, $base, $full;
 
@@ -188,7 +190,7 @@ function tiki_route_attempt($pattern, $file, $callback = null, $extra = array())
 	}
 }
 
-function tiki_route_attempt_prefix($prefix, $file, $key, $extra = array())
+function tiki_route_attempt_prefix($prefix, $file, $key, $extra = [])
 {
 	tiki_route_attempt("|^$prefix(\d+)$|", $file, tiki_route_single(1, $key), $extra);
 }
@@ -196,7 +198,7 @@ function tiki_route_attempt_prefix($prefix, $file, $key, $extra = array())
 function tiki_route_single($index, $name)
 {
 	return function ($parts) use ($index, $name) {
-		return array($name => $parts[$index]);
+		return [$name => $parts[$index]];
 	};
 }
 
@@ -208,37 +210,36 @@ $inclusion = null;
 // This portion may need to vary depending on the webserver/configuration
 
 switch ($sapi) {
-case 'apache2handler':
-default:
-
-	// Fix $_SERVER['REQUEST_URI', which is ASCII encoded on IIS
-	//	Convert the SERVER variable itself, to fix $_SERVER['REQUEST_URI'] access everywhere
-	//	route.php comes first in the processing.  Avoid dependencies.
-	if (isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'],'IIS') !== false) {
-		if (mb_detect_encoding($_SERVER['REQUEST_URI'], 'UTF-8', true) == false) {
-			$_SERVER['REQUEST_URI'] = utf8_encode($_SERVER['REQUEST_URI']);
+	case 'apache2handler':
+	default:
+		// Fix $_SERVER['REQUEST_URI', which is ASCII encoded on IIS
+		//	Convert the SERVER variable itself, to fix $_SERVER['REQUEST_URI'] access everywhere
+		//	route.php comes first in the processing.  Avoid dependencies.
+		if (isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'IIS') !== false) {
+			if (mb_detect_encoding($_SERVER['REQUEST_URI'], 'UTF-8', true) == false) {
+				$_SERVER['REQUEST_URI'] = utf8_encode($_SERVER['REQUEST_URI']);
+			}
 		}
-	}
 
-	if (isset($_SERVER['SCRIPT_URL'])) {
-		$full = $_SERVER['SCRIPT_URL'];
-	} elseif (isset($_SERVER['REQUEST_URI'])) {
-		$full = $_SERVER['REQUEST_URI'];
-		if (strpos($full, '?') !== false) {
-			$full = substr($full, 0, strpos($full, '?'));
+		if (isset($_SERVER['SCRIPT_URL'])) {
+			$full = $_SERVER['SCRIPT_URL'];
+		} elseif (isset($_SERVER['REQUEST_URI'])) {
+			$full = $_SERVER['REQUEST_URI'];
+			if (strpos($full, '?') !== false) {
+				$full = substr($full, 0, strpos($full, '?'));
+			}
+		} elseif (isset($_SERVER['REDIRECT_URL'])) {
+			$full = $_SERVER['REDIRECT_URL'];
+		} elseif (isset($_SERVER['UNENCODED_URL'])) {	// For IIS
+			$full = $_SERVER['UNENCODED_URL'];
+		} else {
+			break;
 		}
-	} elseif (isset($_SERVER['REDIRECT_URL'])) {
-		$full = $_SERVER['REDIRECT_URL'];
-	} elseif (isset($_SERVER['UNENCODED_URL'])) {	// For IIS
-		$full = $_SERVER['UNENCODED_URL'];
-	} else {
+
+		$file = basename(__FILE__);
+		$base = substr($_SERVER['PHP_SELF'], 0, -strlen($file));
+		$path = substr($full, strlen($base));
 		break;
-	}
-
-	$file = basename(__FILE__);
-	$base = substr($_SERVER['PHP_SELF'], 0, -strlen($file));
-	$path = substr($full, strlen($base));
-	break;
 }
 
 // Global check
@@ -263,7 +264,7 @@ if ($inclusion) {
 	// Route to the "no-route" URL, if found
 	require_once('lib/init/initlib.php');
 	$local_php = TikiInit::getCredentialsFile();
-	if ( file_exists($local_php) ) {
+	if (file_exists($local_php)) {
 		include($local_php);
 	}
 	if (empty($noroute_url)) {
@@ -273,8 +274,7 @@ if ($inclusion) {
 
 		echo "No route found. Please see http://dev.tiki.org/URL+Rewriting+Revamp";
 	} else {
-		header('Location: '.$noroute_url);
+		header('Location: ' . $noroute_url);
 	}
 	exit;
 }
-

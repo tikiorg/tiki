@@ -3,20 +3,20 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $access->check_feature('wiki_feature_copyrights');
-$access->check_permission(array('tiki_p_edit_copyrights'), tra("Copyright management"));
+$access->check_permission(['tiki_p_edit_copyrights'], tra("Copyright management"));
 
-include_once ("lib/copyrights/copyrightslib.php");
+include_once("lib/copyrights/copyrightslib.php");
 global $dbTiki;
 $copyrightslib = new CopyrightsLib;
 
-if (!isset($_REQUEST["page"])) {
+if (! isset($_REQUEST["page"])) {
 	$smarty->assign('msg', tra("No page indicated"));
 	$smarty->display("error.tpl");
 	die;
@@ -27,7 +27,7 @@ $page = $_REQUEST["page"];
 
 if (isset($_REQUEST['addcopyright'])) {
 	if ($prefs['wiki_feature_copyrights'] == 'y' && isset($_REQUEST['copyrightTitle']) && isset($_REQUEST['copyrightYear'])
-		&& isset($_REQUEST['copyrightAuthors']) && !empty($_REQUEST['copyrightYear']) && !empty($_REQUEST['copyrightTitle'])) {
+		&& isset($_REQUEST['copyrightAuthors']) && ! empty($_REQUEST['copyrightYear']) && ! empty($_REQUEST['copyrightTitle'])) {
 		$copyrightYear = $_REQUEST['copyrightYear'];
 
 		$copyrightTitle = $_REQUEST['copyrightTitle'];
@@ -42,7 +42,7 @@ if (isset($_REQUEST['addcopyright'])) {
 
 if (isset($_REQUEST['editcopyright'])) {
 	if ($prefs['wiki_feature_copyrights'] == 'y' && isset($_REQUEST['copyrightTitle']) && isset($_REQUEST['copyrightYear']) && isset($_REQUEST['copyrightHolder'])
-		&& isset($_REQUEST['copyrightAuthors']) && !empty($_REQUEST['copyrightYear']) && !empty($_REQUEST['copyrightTitle'])) {
+		&& isset($_REQUEST['copyrightAuthors']) && ! empty($_REQUEST['copyrightYear']) && ! empty($_REQUEST['copyrightTitle'])) {
 		$copyrightId = $_REQUEST['copyrightId'];
 
 		$copyrightYear = $_REQUEST['copyrightYear'];

@@ -3,17 +3,17 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
-include_once ('lib/ban/banlib.php');
+require_once('tiki-setup.php');
+include_once('lib/ban/banlib.php');
 $access->check_feature('feature_banning');
 $access->check_permission('tiki_p_admin_banning');
 
-$auto_query_args = array( 'banId' );
+$auto_query_args = [ 'banId' ];
 
 if (isset($_REQUEST['remove'])) {
 	$access->check_authenticity();
@@ -44,14 +44,13 @@ if (isset($_REQUEST['save'])) {
 	check_ticket('admin-banning');
 	if ($_REQUEST['mode'] === 'user' && empty($_REQUEST['userreg'])) {
 		Feedback::error(tra("Not saved:") . ' ' . tra("Username pattern empty"));
-	} else if ($_REQUEST['mode'] === 'ip' && $_REQUEST['ip1'] == 255 && $_REQUEST['ip2'] == 255 && $_REQUEST['ip3'] == 255 && $_REQUEST['ip4'] == 255) {
+	} elseif ($_REQUEST['mode'] === 'ip' && $_REQUEST['ip1'] == 255 && $_REQUEST['ip2'] == 255 && $_REQUEST['ip3'] == 255 && $_REQUEST['ip4'] == 255) {
 		Feedback::error(tra("Not saved:") . ' ' . tra("Default IP pattern still set"));
 	} else {
-
 		$_REQUEST['use_dates'] = isset($_REQUEST['use_dates']) ? 'y' : 'n';
 		$_REQUEST['date_from'] = $tikilib->make_time(0, 0, 0, $_REQUEST['date_fromMonth'], $_REQUEST['date_fromDay'], $_REQUEST['date_fromYear']);
 		$_REQUEST['date_to'] = $tikilib->make_time(0, 0, 0, $_REQUEST['date_toMonth'], $_REQUEST['date_toDay'], $_REQUEST['date_toYear']);
-		$sections = isset($_REQUEST['section']) ? array_keys($_REQUEST['section']) : array();
+		$sections = isset($_REQUEST['section']) ? array_keys($_REQUEST['section']) : [];
 		// Handle case when many IPs are banned
 		if ($_REQUEST['mode'] == 'mass_ban_ip') {
 			foreach ($_REQUEST['multi_banned_ip'] as $ip => $value) {
@@ -61,7 +60,7 @@ if (isset($_REQUEST['save'])) {
 		} else {
 			$banlib->replace_rule($_REQUEST['banId'], $_REQUEST['mode'], $_REQUEST['title'], $_REQUEST['ip1'], $_REQUEST['ip2'], $_REQUEST['ip3'], $_REQUEST['ip4'], $_REQUEST['userreg'], $_REQUEST['date_from'], $_REQUEST['date_to'], $_REQUEST['use_dates'], $_REQUEST['message'], $sections);
 		}
-		$info['sections'] = array();
+		$info['sections'] = [];
 		$info['title'] = '';
 		$info['mode'] = 'user';
 		$info['ip1'] = 255;
@@ -77,7 +76,7 @@ if (isset($_REQUEST['save'])) {
 	}
 }
 
-if ( !empty($_REQUEST['export']) ) {
+if (! empty($_REQUEST['export'])) {
 	$maxRecords = -1;
 } elseif (isset($_REQUEST['max'])) {
 	$maxRecords = $_REQUEST['max'];
@@ -85,11 +84,11 @@ if ( !empty($_REQUEST['export']) ) {
 	$maxRecords = $prefs['maxRecords'];
 }
 
-if (!empty($_REQUEST['banId'])) {
+if (! empty($_REQUEST['banId'])) {
 	$info = $banlib->get_rule($_REQUEST['banId']);
 } else {
 	$_REQUEST['banId'] = 0;
-	$info['sections'] = array();
+	$info['sections'] = [];
 	$info['title'] = '';
 	$info['mode'] = 'user';
 	$info['user'] = '';
@@ -104,7 +103,7 @@ if (!empty($_REQUEST['banId'])) {
 }
 
 // Handle case when coming from tiki-list_comments with a list of IPs to ban
-if (!empty($_REQUEST['mass_ban_ip'])) {
+if (! empty($_REQUEST['mass_ban_ip'])) {
 	check_ticket('admin-banning');
 	$commentslib = TikiLib::lib('comments');
 	$smarty->assign('mass_ban_ip', $_REQUEST['mass_ban_ip']);
@@ -114,14 +113,14 @@ if (!empty($_REQUEST['mass_ban_ip'])) {
 	$info['date_to'] = $tikilib->now + 365 * 24 * 3600;
 	$banId_list = explode('|', $_REQUEST['mass_ban_ip']);
 	// Handle case when coming from tiki-list_comments with a list of IPs to ban and also delete the related comments
-	if ( !empty($_REQUEST['mass_remove']) ) {
+	if (! empty($_REQUEST['mass_remove'])) {
 		$access->check_authenticity(tra('Delete comments then set banning rules'));
 	}
 	foreach ($banId_list as $id) {
-		$ban_comment=$commentslib->get_comment($id);
+		$ban_comment = $commentslib->get_comment($id);
 		$ban_comments_list[$ban_comment['user_ip']][$id]['userName'] = $ban_comment['userName'];
 		$ban_comments_list[$ban_comment['user_ip']][$id]['title'] = $ban_comment['title'];
-		if ( !empty($_REQUEST['mass_remove']) ) {
+		if (! empty($_REQUEST['mass_remove'])) {
 			$commentslib->remove_comment($id);
 		}
 	}
@@ -129,7 +128,7 @@ if (!empty($_REQUEST['mass_ban_ip'])) {
 }
 
 // Handle case when coming from tiki-admin_actionlog with a list of IPs to ban
-if (!empty($_REQUEST['mass_ban_ip_actionlog'])) {
+if (! empty($_REQUEST['mass_ban_ip_actionlog'])) {
 	check_ticket('admin-banning');
 	$logslib = TikiLib::lib('logs');
 	$smarty->assign('mass_ban_ip', $_REQUEST['mass_ban_ip_actionlog']);
@@ -139,14 +138,14 @@ if (!empty($_REQUEST['mass_ban_ip_actionlog'])) {
 	$info['date_to'] = $tikilib->now + 365 * 24 * 3600;
 	$banId_list = explode('|', $_REQUEST['mass_ban_ip_actionlog']);
 	foreach ($banId_list as $id) {
-		$ban_actions=$logslib->get_info_action($id);
+		$ban_actions = $logslib->get_info_action($id);
 		$ban_comments_list[$ban_actions['ip']][$id]['userName'] = $ban_actions['user'];
 	}
 	$smarty->assign_by_ref('ban_comments_list', $ban_comments_list);
 }
 
 // Handle case when coming from tiki-adminusers with a list of IPs to ban
-if (!empty($_REQUEST['mass_ban_ip_users'])) {
+if (! empty($_REQUEST['mass_ban_ip_users'])) {
 	check_ticket('admin-banning');
 	$logslib = TikiLib::lib('logs');
 	$smarty->assign('mass_ban_ip', $_REQUEST['mass_ban_ip_users']);
@@ -156,7 +155,7 @@ if (!empty($_REQUEST['mass_ban_ip_users'])) {
 	$info['date_to'] = $tikilib->now + 365 * 24 * 3600;
 	$banUsers_list = explode('|', $_REQUEST['mass_ban_ip_users']);
 	foreach ($banUsers_list as $banUser) {
-		$ban_actions=$logslib->get_user_registration_action($banUser);
+		$ban_actions = $logslib->get_user_registration_action($banUser);
 		$ban_comments_list[$ban_actions['ip']][$banUser]['userName'] = $banUser;
 	}
 	$smarty->assign_by_ref('ban_comments_list', $ban_comments_list);
@@ -165,12 +164,12 @@ if (!empty($_REQUEST['mass_ban_ip_users'])) {
 $smarty->assign('banId', $_REQUEST['banId']);
 $smarty->assign_by_ref('info', $info);
 
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];

@@ -9,7 +9,7 @@
 // $Id$
 
 $section = 'user_messages';
-$inputConfiguration =	[[
+$inputConfiguration = [[
 	'staticKeyFilters'	=> [
 		'body'			=> 'text',
 		'groupbr'		=> 'groupname',
@@ -21,17 +21,25 @@ $inputConfiguration =	[[
 	],
 	'catchAllUnset' => null,
 ]];
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $messulib = TikiLib::lib('message');
 $access->check_user($user);
 $access->check_feature('feature_messages');
 $access->checkAuthenticity();
-$auto_query_args = array('subject', 'body', 'priority', 'replyto_hash', 'groupbr');
+$auto_query_args = ['subject', 'body', 'priority', 'replyto_hash', 'groupbr'];
 
-if (!isset($_POST['subject'])) $_POST['subject'] = '';
-if (!isset($_POST['body'])) $_POST['body'] = '';
-if (!isset($_POST['priority'])) $_POST['priority'] = 3;
-if (!isset($_POST['replyto_hash'])) $_POST['replyto_hash'] = '';
+if (! isset($_POST['subject'])) {
+	$_POST['subject'] = '';
+}
+if (! isset($_POST['body'])) {
+	$_POST['body'] = '';
+}
+if (! isset($_POST['priority'])) {
+	$_POST['priority'] = 3;
+}
+if (! isset($_POST['replyto_hash'])) {
+	$_POST['replyto_hash'] = '';
+}
 $smarty->assign('subject', $_POST['subject']);
 $smarty->assign('body', $_POST['body']);
 $smarty->assign('priority', $_POST['priority']);
@@ -41,14 +49,13 @@ $smarty->assign('sent', 0);
 perm_broadcast_check($access, $userlib);
 $groups = $userlib->get_user_groups($user);
 
-if (in_array('Admins', $groups)){
-    //admins can write to members of all groups
-    $groups = $userlib->list_all_groups();
-    $groups = array_diff($groups, array('Registered', 'Anonymous'));
-}
-else {
-    //registered users can write to members of groups they belong to
-    $groups = array_diff($groups, array('Registered', 'Anonymous'));
+if (in_array('Admins', $groups)) {
+	//admins can write to members of all groups
+	$groups = $userlib->list_all_groups();
+	$groups = array_diff($groups, ['Registered', 'Anonymous']);
+} else {
+	//registered users can write to members of groups they belong to
+	$groups = array_diff($groups, ['Registered', 'Anonymous']);
 }
 
 $smarty->assign('groups', $groups);
@@ -64,46 +71,46 @@ if ((isset($_POST['send']) || isset($_POST['preview'])) && $access->ticketMatch(
 		if (isset($_POST['groupbr'])) {
 			if ($_POST['groupbr'] == 'all' && $tiki_p_broadcast_all == 'y') {
 				$a_all_users = $userlib->get_users(0, -1, 'login_desc', '');
-				$all_users = array();
+				$all_users = [];
 				foreach ($a_all_users['data'] as $a_user) {
 					$all_users[] = $a_user['user'];
 				}
 			} elseif (in_array($_POST['groupbr'], $groups)) {
 				$all_users = $userlib->get_group_users($_POST['groupbr']);
 			} else {
-				$access->display_error('', tra("You do not have permission to use this feature").": ". $permission, '403', false);
+				$access->display_error('', tra("You do not have permission to use this feature") . ": " . $permission, '403', false);
 			}
 			$smarty->assign('groupbr', $_POST['groupbr']);
 		}
 
-		$users = array();
+		$users = [];
 		asort($all_users);
 		foreach ($all_users as $a_user) {
-			if (!empty($a_user)) {
+			if (! empty($a_user)) {
 				if ($userlib->user_exists($a_user)) {
-					if (!$userlib->user_has_permission($a_user, 'tiki_p_messages')) {
-						$message .= sprintf(tra('User %s does not have the permission'), htmlspecialchars($a_user)). "<br />" ;
+					if (! $userlib->user_has_permission($a_user, 'tiki_p_messages')) {
+						$message .= sprintf(tra('User %s does not have the permission'), htmlspecialchars($a_user)) . "<br />" ;
 					} elseif ($tikilib->get_user_preference($a_user, 'allowMsgs', 'y') == 'y') {
 						$users[] = $a_user;
 					} else {
-						$message.= sprintf(tra("User %s does not want to receive messages"), htmlspecialchars($a_user)). "<br />" ;
+						$message .= sprintf(tra("User %s does not want to receive messages"), htmlspecialchars($a_user)) . "<br />" ;
 					}
 				} else {
-					$message.= tra("Invalid user") . "$a_user<br />";
+					$message .= tra("Invalid user") . "$a_user<br />";
 				}
 			}
 		}
 		$users = array_unique($users);
 		// Validation: either to, cc or bcc must have a valid user
 		if (count($users) > 0) {
-			$users_formatted = array();
+			$users_formatted = [];
 			foreach ($users as $rawuser) {
 				$users_formatted[] = htmlspecialchars($rawuser);
 			}
 			if (isset($_POST['send'])) {
-				$message .= tra('The message has been sent to:').' ';
+				$message .= tra('The message has been sent to:') . ' ';
 			} else {
-				$message .= tra('The message will be sent to:').' ';
+				$message .= tra('The message will be sent to:') . ' ';
 			}
 			$message .= implode(',', $users_formatted) . "<br />";
 			if (isset($_POST['send'])) {
@@ -131,24 +138,25 @@ if ((isset($_POST['send']) || isset($_POST['preview'])) && $access->ticketMatch(
 	}
 	$smarty->assign('message', $message);
 }
-include_once ('tiki-section_options.php');
-include_once ('tiki-mytiki_shared.php');
+include_once('tiki-section_options.php');
+include_once('tiki-mytiki_shared.php');
 $smarty->display("tiki.tpl");
 
-function perm_broadcast_check($access, $userlib){
+function perm_broadcast_check($access, $userlib)
+{
 //check permissions
-    $groups_perm= $userlib->list_all_groups();
-    $groups_perm = array_diff($groups_perm, array('Anonymous'));
-    $groups_perm = array_filter(
-        $groups_perm,
-        function ($groupName) {
-            $perms = Perms::get('group', $groupName);
-            return $perms->broadcast;
-        }
-    );
+	$groups_perm = $userlib->list_all_groups();
+	$groups_perm = array_diff($groups_perm, ['Anonymous']);
+	$groups_perm = array_filter(
+		$groups_perm,
+		function ($groupName) {
+			$perms = Perms::get('group', $groupName);
+			return $perms->broadcast;
+		}
+	);
 
-    if (empty($groups_perm)) {
-        $access->display_error('', tra("You do not have permission to use this feature").": ". $permission, '403', false);
-        exit;
-    }
+	if (empty($groups_perm)) {
+		$access->display_error('', tra("You do not have permission to use this feature") . ": " . $permission, '403', false);
+		exit;
+	}
 }

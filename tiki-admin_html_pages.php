@@ -3,23 +3,23 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
-include_once ('lib/htmlpages/htmlpageslib.php');
+require_once('tiki-setup.php');
+include_once('lib/htmlpages/htmlpageslib.php');
 $access->check_feature('feature_html_pages');
 $access->check_permission('tiki_p_edit_html_pages');
-if (!isset($_REQUEST["pageName"])) {
+if (! isset($_REQUEST["pageName"])) {
 	$_REQUEST["pageName"] = '';
 }
 $smarty->assign('pageName', $_REQUEST["pageName"]);
 if ($_REQUEST["pageName"]) {
 	$info = $htmlpageslib->get_html_page($_REQUEST["pageName"]);
 } else {
-	$info = array();
+	$info = [];
 	$info["pageName"] = '';
 	$info["content"] = '';
 	$info["refresh"] = 0;
@@ -47,7 +47,7 @@ if (isset($_REQUEST["preview"])) {
 	$info["type"] = $_REQUEST["type"];
 	$smarty->assign('info', $info);
 }
-if (isset($_REQUEST["save"]) && !empty($_REQUEST["pageName"])) {
+if (isset($_REQUEST["save"]) && ! empty($_REQUEST["pageName"])) {
 	check_ticket('admin-html-pages');
 	$tid = $htmlpageslib->replace_html_page($_REQUEST["pageName"], $_REQUEST["type"], $_REQUEST["content"], $_REQUEST["refresh"]);
 	$smarty->assign("pageName", '');
@@ -57,12 +57,12 @@ if (isset($_REQUEST["save"]) && !empty($_REQUEST["pageName"])) {
 	$info["type"] = 's';
 	$smarty->assign('info', $info);
 }
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];

@@ -10,7 +10,7 @@
 
 /**
  * Update lang/xx/language.php files
- * 
+ *
  * Scans a directory (its files) and a set of (individual) files
  * By default, the directory scanned is the Tiki root, excluding $excludeDirs. By default, the individual files scanned are files in these otherwise excluded directories.
  *
@@ -24,7 +24,7 @@
  * Command line examples:
  * 		- php get_strings.php
  * 		- php get_strings.php lang=pt-br outputFiles=true
- * 
+ *
  * 		Only scan lib/, and only part of lib/ (exclude lib/core/Zend and lib/captcha), but still include captchalib.php and index.php
  * 		This FAILS as of 2017-09-15, since the language files (for output) are looked for in baseDir.
  * 		- php get_strings.php baseDir=lib/ excludeDirs=lib/core/Zend,lib/captcha includeFiles=captchalib.php,index.php fileName=language_r.php
@@ -45,7 +45,7 @@ require_once('lib/setup/timer.class.php');
 $timer = new timer();
 $timer->start();
 
-$options = array();
+$options = [];
 
 $request = new Tiki_Request();
 
@@ -57,18 +57,18 @@ if ($request->hasProperty('outputFiles')) {
 	$options['outputFiles'] = $request->getProperty('outputFiles');
 }
 
-$excludeDirs = array(
+$excludeDirs = [
 	'dump' , 'img', 'lang', 'addons', 'bin', 'installer/schema',
 	'vendor_bundled', 'vendor', 'vendor_extra', 'vendor_custom',
 	 'lib/test',	'temp', 'whelp', 'permissioncheck',
 	'storage',	'tiki_tests', 'doc', 'db','lib/openlayers','tests', 'modules/cache'
-);
+];
 $excludeDirs = array_filter($excludeDirs, 'is_dir'); // only keep in the exclude list if the dir exists
 
 // Files are processed after the base directory, so adding a file here allows to scan it even if its directory was excluded.
-$includeFiles = array(
+$includeFiles = [
 	'./lang/langmapping.php', './img/flags/flagnames.php'
-);
+];
 
 // command-line only options
 if (php_sapi_name() == 'cli') {
@@ -76,8 +76,8 @@ if (php_sapi_name() == 'cli') {
 		$options['baseDir'] = $request->getProperty('baseDir');
 
 		// when a custom base dir is set, default $includeFiles and $excludeDirs are not used
-		$includeFiles = array();
-		$excludeDirs = array();
+		$includeFiles = [];
+		$excludeDirs = [];
 	}
 
 	if ($request->hasProperty('excludeDirs')) {
