@@ -1,7 +1,7 @@
-/* 
+/*
  * Javascript translation definition
  * Example to help translation of some English strings in some js files
- * 
+ *
  * $Id$
  */
 
@@ -30,7 +30,7 @@ lang = {
 //	"Removing the field will result in data loss. Are you sure?" : "Removing the field will result in data loss. Are you sure?",
 //	"Save" : "Save",
 //	"Cancel" : "Cancel",
-//	"Delete" : "Delete",	
+//  "Delete" : "Delete",
 //	"Unassign module" : "Unassign module",
 //	"Edit module" : "Edit module",
 //	"Edit module:" : "Edit module:",

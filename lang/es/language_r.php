@@ -1,10 +1,10 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-$lang_mod = array(
+$lang_mod = [
 "RR (R syntax also)" => "RR (Sintaxis R también)",
 "Same as PluginR, but allowing the execution of potentially dangerous commands once the admin has validated the plugin call" => "Igual que PluginR, pero permite la ejecución de comandos potentialmente peligrosos tras la validación de la llamada del plugin por parte del administrador",
 "R Code" => "Código R",
@@ -48,4 +48,4 @@ $lang_mod = array(
 "Use Plugin RR instead and validate your plugin call, or contact a site admin to have the plugin call validated for you" => "Usa el Plugin RR en su lugar y valida tu llamada al plugin, o contacta un administrador del sitio para que la valide por ti",
 "R syntax" => "R syntax",
 "Parses R syntax and shows the output either from the code introduced between the plugin tags or from the file attached to a tracker item sent through PluginTracker. It can also be combined with Pretty Trackers to edit params from the script through web forms" => "Parsea (procesa) la sintaxis R y muestra la salida del código introducido entre las marcas de plugin o del archivo adjunto a un ítem de tracker enviado a través de PluginTracker. Se puede combinar también con Pretty Trackers para editar parámetros del script desde formularios web",
-);
+];

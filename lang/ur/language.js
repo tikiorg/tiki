@@ -1,7 +1,7 @@
-/* 
+/*
  * Javascript translation definition
  * Example to help translation of some English strings in some js files
- * 
+ *
  * $Id$
  */
 

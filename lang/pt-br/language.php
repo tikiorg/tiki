@@ -21,7 +21,7 @@
 // Note: the difference is invisible but " :" has an UTF-8 non-breaking-space, not a regular space, but the UTF-8 equivalent of the HTML &nbsp;.
 // This allows correctly displaying emails and JavaScript messages, not only web pages as would happen with &nbsp;.
 
-$lang = array(
+$lang = [
 "Welsh" => "Galês",
 "Slovene" => "Esloveno",
 "Arabic" => "Arábico",
@@ -18939,4 +18939,4 @@ $lang = array(
 "Last pages" => "Páginas recentes",
 // "Note, deprecated file tiki-wikiplugin_edit.php, code moved to service plugin->replace" => "Note, deprecated file tiki-wikiplugin_edit.php, code moved to service plugin->replace",
 // "New in Tiki 12 (LTS)" => "New in Tiki 12 (LTS)",
-);
+];

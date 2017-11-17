@@ -1,17 +1,17 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Note for translators about translation of text ending with punctuation
-// 
+//
 // The concerned punctuation signs can be found in tra_impl() (in 'lib/init/tra.php').
 // As of 2016-12-04, these are: ':', '!', ';', '.', ',', '?'.
 // For clarity, we explain here only for colons (':'), but it is the same for the rest.
-// 
+//
 // Short version: it is not a problem that string "Login:" has no translation. Only "Login" needs to be translated.
-// 
+//
 // Technical justification:
 // If a string ending with colon needs translating (like "{tr}Login:{/tr}")
 // then Tiki tries to translate 'Login' and ':' separately.
@@ -21,7 +21,7 @@
 // Note: the difference is invisible but " :" has an UTF-8 non-breaking-space, not a regular space, but the UTF-8 equivalent of the HTML &nbsp;.
 // This allows correctly displaying emails and JavaScript messages, not only web pages as would happen with &nbsp;.
 
-$lang = array(
+$lang = [
 // "Welsh" => "Welsh",
 // "Slovene" => "Slovene",
 // "Arabic" => "Arabic",
@@ -18887,4 +18887,4 @@ $lang = array(
 "Last pages" => "Last pages",
 // "Note, deprecated file tiki-wikiplugin_edit.php, code moved to service plugin->replace" => "Note, deprecated file tiki-wikiplugin_edit.php, code moved to service plugin->replace",
 // "New in Tiki 12 (LTS)" => "New in Tiki 12 (LTS)",
-);
+];

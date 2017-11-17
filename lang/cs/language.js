@@ -1,7 +1,7 @@
-/* 
+/*
  * Javascript translation definition
  * Example to help translation of some English strings in some js files
- * 
+ *
  * $Id$
  */
 
@@ -25,6 +25,6 @@ lang = {
 //	"Do not match" : "Do not match",
 //	"Advanced options" : "Advanced options",
 //	"Pick a file." : "Pick a file.",
-        "Editable" : "Editovatelné",
-        "Blank" : "Prázdné"
+	"Editable" : "Editovatelné",
+	"Blank" : "Prázdné"
 };

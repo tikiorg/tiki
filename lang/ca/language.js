@@ -1,7 +1,7 @@
-/* 
+/*
  * Javascript translation definition
  * Example in Catalan
- * 
+ *
  * $Id$
  */
 
@@ -31,7 +31,7 @@ lang = {
 	"Removing the field will result in data loss. Are you sure?" : "La supressió del camp comportarà supressió de dades. N'estàs segur/a?",
 	"Save" : "Desa-ho",
 	"Cancel" : "Cancel·la-ho",
-	"Delete" : "Suprimeix-ho",	
+	"Delete" : "Suprimeix-ho",
 	"Unassign module" : "Deassigna el mòdul",
 	"Edit module" : "Modifica el mòdul",
 	"Edit module:" : "Modifica el mòdul:",
@@ -47,5 +47,5 @@ lang = {
 	"StreetView is not available at this specific point on the map. Zoom in as needed and make sure to click on a blue line." : "La funció StreetView hi és disponible en aquest punt específic sobre el mapa. Aproxima't amb el zoom el que et calgui i assegura't de fer clic sobre una línia blava.",
 	"Browse Files" : "Obre la llista d'arxius",
 	// remember the IE does not support ending comma on last item
-	 "Bogus entry" : "bogus entry"
+	"Bogus entry" : "bogus entry"
 };
