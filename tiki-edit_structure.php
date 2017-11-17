@@ -3,18 +3,18 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'wiki page';
-$auto_query_args = array('page_ref_id');
-require_once ('tiki-setup.php');
+$auto_query_args = ['page_ref_id'];
+require_once('tiki-setup.php');
 
 $structlib = TikiLib::lib('struct');
-$access->check_feature(array('feature_wiki','feature_wiki_structure'));
-if (!isset($_REQUEST["page_ref_id"])) {
+$access->check_feature(['feature_wiki','feature_wiki_structure']);
+if (! isset($_REQUEST["page_ref_id"])) {
 	$smarty->assign('msg', tra("No structure indicated"));
 	$smarty->display("error.tpl");
 	die;
@@ -35,10 +35,10 @@ $smarty->assign('page_ref_id', $_REQUEST["page_ref_id"]);
 $smarty->assign('structure_id', $structure_info["page_ref_id"]);
 $smarty->assign('structure_name', $structure_info["pageName"]);
 
-$perms = Perms::get((array('type' => 'wiki page', 'object' => $structure_info["pageName"])));
+$perms = Perms::get((['type' => 'wiki page', 'object' => $structure_info["pageName"]]));
 $tikilib->get_perm_object($structure_info["pageName"], 'wiki page', $page_info);	// global perms still needed for logic in categorize.tpl
 
-if ( ! $perms->view ) {
+if (! $perms->view) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('You do not have permission to view this page.'));
 	$smarty->display("error.tpl");
@@ -53,7 +53,6 @@ if ($perms->edit_structures) {
 		} else {
 			$editable = 'n';
 		}
-
 	} else {
 		$editable = 'y';
 	}
@@ -61,22 +60,22 @@ if ($perms->edit_structures) {
 	$editable = 'n';
 }
 $smarty->assign('editable', $editable);
-	
 
-$alert_categorized = array();
-$alert_in_st = array();
-$alert_to_remove_cats = array();
-$alert_to_remove_extra_cats = array();
+
+$alert_categorized = [];
+$alert_in_st = [];
+$alert_to_remove_cats = [];
+$alert_to_remove_extra_cats = [];
 
 // start security hardened section
 if ($editable === 'y') {
 	$smarty->assign('remove', 'n');
-	
+
 	if (isset($_REQUEST["remove"])) {
 		check_ticket('edit-structure');
 		$smarty->assign('remove', 'y');
 		$remove_info = $structlib->s_get_page_info($_REQUEST["remove"]);
-	  	$structs = $structlib->get_page_structures($remove_info['pageName'], $structure);
+		  $structs = $structlib->get_page_structures($remove_info['pageName'], $structure);
 		//If page is member of more than one structure, do not give option to remove page
 		$single_struct = (count($structs) == 1);
 		if ($single_struct && $perms->remove) {
@@ -87,10 +86,10 @@ if ($editable === 'y') {
 		$smarty->assign('removepage', $_REQUEST["remove"]);
 		$smarty->assign('removePageName', $remove_info["pageName"]);
 	}
-	
+
 	if (isset($_REQUEST["rremove"])) {
 		$access->check_authenticity();
-		$structlib->s_remove_page($_REQUEST["rremove"], false, empty($_REQUEST['page'])? '': $_REQUEST['page']);
+		$structlib->s_remove_page($_REQUEST["rremove"], false, empty($_REQUEST['page']) ? '' : $_REQUEST['page']);
 		$_REQUEST["page_ref_id"] = $page_info["parent_id"];
 	}
 	# TODO : Case where the index page of the structure is removed seems to be unexpected, leaving a corrupted structure
@@ -98,59 +97,59 @@ if ($editable === 'y') {
 		$access->check_authenticity();
 		$page = $page_info["pageName"];
 		$delete = $tikilib->user_has_perm_on_object($user, $page_info['pageName'], 'wiki page', 'tiki_p_remove');
-		$structlib->s_remove_page($_REQUEST["sremove"], $delete, empty($_REQUEST['page'])? '': $_REQUEST['page']);
+		$structlib->s_remove_page($_REQUEST["sremove"], $delete, empty($_REQUEST['page']) ? '' : $_REQUEST['page']);
 		$_REQUEST["page_ref_id"] = $page_info["parent_id"];
 	}
-	
-	if ($prefs['feature_user_watches'] == 'y' && $tiki_p_watch_structure == 'y' && $user && !empty($_REQUEST['watch_object']) && !empty($_REQUEST['watch_action'])) {
+
+	if ($prefs['feature_user_watches'] == 'y' && $tiki_p_watch_structure == 'y' && $user && ! empty($_REQUEST['watch_object']) && ! empty($_REQUEST['watch_action'])) {
 		check_ticket('edit-structure');
-		if ($_REQUEST['watch_action'] == 'add' && !empty($_REQUEST['page'])) {
-			$tikilib->add_user_watch($user, 'structure_changed', $_REQUEST['watch_object'], 'structure', $page, "tiki-index.php?page_ref_id=".$_REQUEST['watch_object']);
+		if ($_REQUEST['watch_action'] == 'add' && ! empty($_REQUEST['page'])) {
+			$tikilib->add_user_watch($user, 'structure_changed', $_REQUEST['watch_object'], 'structure', $page, "tiki-index.php?page_ref_id=" . $_REQUEST['watch_object']);
 		} elseif ($_REQUEST['watch_action'] == 'remove') {
 			$tikilib->remove_user_watch($user, 'structure_changed', $_REQUEST['watch_object'], 'structure');
 		}
 	}
-	
-	if (!isset($structure_info) or !isset($page_info) ) {
+
+	if (! isset($structure_info) or ! isset($page_info)) {
 		$smarty->assign('msg', tra("Invalid structure_id or page_ref_id"));
-	
+
 		$smarty->display("error.tpl");
 		die;
 	}
-	
+
 	$smarty->assign('alert_exists', 'n');
 	if (isset($_REQUEST["create"])) {
 		check_ticket('edit-structure');
 		if (isset($_REQUEST["pageAlias"])) {
 			$structlib->set_page_alias($_REQUEST["page_ref_id"], $_REQUEST["pageAlias"]);
 		}
-	  
+
 		$after = null;
 		if (isset($_REQUEST['after_ref_id'])) {
 			$after = $_REQUEST['after_ref_id'];
 		}
-		if (!(empty($_REQUEST['name']))) {
+		if (! (empty($_REQUEST['name']))) {
 			if ($tikilib->page_exists($_REQUEST["name"])) {
 				$smarty->assign('alert_exists', 'y');
 			}
 			$structlib->s_create_page($_REQUEST['page_ref_id'], $after, $_REQUEST['name'], '', $structure_info['page_ref_id']);
 			$userlib->copy_object_permissions($page_info["pageName"], $_REQUEST["name"], 'wiki page');
-		} elseif (!empty($_REQUEST['name2'])) {
+		} elseif (! empty($_REQUEST['name2'])) {
 			foreach ($_REQUEST['name2'] as $name) {
 				$new_page_ref_id = $structlib->s_create_page($_REQUEST['page_ref_id'], $after, $name, '', $structure_info['page_ref_id']);
-	      	$after = $new_page_ref_id;      
-			}	
+				$after = $new_page_ref_id;
+			}
 		}
 
 		if ($prefs['feature_wiki_categorize_structure'] == 'y') {
 			$categlib = TikiLib::lib('categ');
-			$pages_added = array();
-			if (!(empty($_REQUEST['name']))) {
+			$pages_added = [];
+			if (! (empty($_REQUEST['name']))) {
 				$pages_added[] = $_REQUEST['name'];
-			} elseif (!empty($_REQUEST['name2'])) {
-	  			foreach ($_REQUEST['name2'] as $name) {
+			} elseif (! empty($_REQUEST['name2'])) {
+				foreach ($_REQUEST['name2'] as $name) {
 					$pages_added[] = $name;
-	  			}
+				}
 			}
 			$cat_type = 'wiki page';
 			foreach ($pages_added as $name) {
@@ -158,7 +157,7 @@ if ($editable === 'y') {
 			}
 		}
 	}
-	
+
 	if (isset($_REQUEST["move_node"])) {
 		if ($_REQUEST["move_node"] == '1') {
 			$structlib->promote_node($_REQUEST["page_ref_id"]);
@@ -170,7 +169,6 @@ if ($editable === 'y') {
 			$structlib->demote_node($_REQUEST["page_ref_id"]);
 		}
 	}
-
 } // end of security hardening
 
 $page_info = $structlib->s_get_page_info($_REQUEST["page_ref_id"]);
@@ -182,8 +180,8 @@ $subpages = $structlib->s_get_pages($_REQUEST["page_ref_id"]);
 $max = count($subpages);
 $smarty->assign_by_ref('subpages', $subpages);
 if ($max != 0) {
-  $last_child = $subpages[$max - 1];
-  $smarty->assign('insert_after', $last_child["page_ref_id"]);
+	$last_child = $subpages[$max - 1];
+	$smarty->assign('insert_after', $last_child["page_ref_id"]);
 }
 if (isset($_REQUEST["find_objects"])) {
 	$find_objects = $_REQUEST["find_objects"];
@@ -194,7 +192,7 @@ if (isset($_REQUEST["find_objects"])) {
 $smarty->assign('find_objects', $find_objects);
 
 $filter = '';
-if (!empty($_REQUEST['categId'])) {
+if (! empty($_REQUEST['categId'])) {
 	$filter['categId'] = $_REQUEST['categId'];
 	$smarty->assign('find_categId', $_REQUEST['categId']);
 } else {
@@ -211,7 +209,7 @@ $structures_filtered = array_filter($structures['data'], function ($struct) {
 $smarty->assign_by_ref('structures', $structures_filtered);
 
 $subtree = $structlib->get_subtree($structure_info["page_ref_id"]);
-foreach ($subtree as $i=>$s) { // dammed recursivite - acn not do a left join
+foreach ($subtree as $i => $s) { // dammed recursivite - acn not do a left join
 	if ($tikilib->user_watches($user, 'structure_changed', $s['page_ref_id'], 'structure')) {
 		$subtree[$i]['event'] = true;
 	}
@@ -230,9 +228,9 @@ if ($editable === 'y') {
 	foreach ($subtree as $k => $st) {
 		if ($st['editable'] != 'y' && $k > 0) {
 			$all_editable = 'n';
- 			break;
+			 break;
 		}
-	}	
+	}
 } else {
 	$all_editable = 'n';
 }
@@ -241,37 +239,37 @@ $smarty->assign('all_editable', $all_editable);
 if (isset($_REQUEST["recategorize"]) && $prefs['feature_wiki_categorize_structure'] == 'y' && $all_editable == 'y') {
 	$cat_name = $structure_info["pageName"];
 	$cat_objid = $cat_name;
-	$cat_href="tiki-index.php?page=" . urlencode($cat_name);
- 	$cat_desc = '';
- 	$cat_type='wiki page';
+	$cat_href = "tiki-index.php?page=" . urlencode($cat_name);
+	 $cat_desc = '';
+	 $cat_type = 'wiki page';
 	include_once("categorize.php");
-	$categories = array(); // needed to prevent double entering (the first time when page is being categorized in categorize.php)
-	//include_once("categorize_list.php"); // needs to be up here to avoid picking up selection of cats from other existing sub-pages	
+	$categories = []; // needed to prevent double entering (the first time when page is being categorized in categorize.php)
+	//include_once("categorize_list.php"); // needs to be up here to avoid picking up selection of cats from other existing sub-pages
 	//get array of pages in structure
-	$othobjid = $structlib->s_get_structure_pages($structure_info["page_ref_id"]);	
-	foreach ($othobjid as $othobjs) {	
-		if ($othobjs["parent_id"] > 0) {				
+	$othobjid = $structlib->s_get_structure_pages($structure_info["page_ref_id"]);
+	foreach ($othobjid as $othobjs) {
+		if ($othobjs["parent_id"] > 0) {
 			// check for page being in other structure.
 			$strucs = $structlib->get_page_structures($othobjs["pageName"]);
 			if (count($strucs) > 1) {
 				$alert_in_st[] = $othobjs["pageName"];
-			}								
+			}
 			$cat_objid = $othobjs["pageName"];
 			$cat_name = $cat_objid;
-			$cat_href = "tiki-index.php?page=".urlencode($cat_objid);
-			
-			$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);		
-			if (!$catObjectId) {
-	    		// page that is added is not categorized -> categorize it if necessary
+			$cat_href = "tiki-index.php?page=" . urlencode($cat_objid);
+
+			$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
+			if (! $catObjectId) {
+				// page that is added is not categorized -> categorize it if necessary
 				if (isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on' && isset($_REQUEST["cat_categories"])) {
-					$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);			
-					foreach ($_REQUEST["cat_categories"] as $cat_acat) {						
+					$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
+					foreach ($_REQUEST["cat_categories"] as $cat_acat) {
 						$categlib->categorize($catObjectId, $cat_acat);
 					}
 				}
 			} else {
 				// page that is added is categorized
-				if (!isset($_REQUEST["cat_categories"]) || !isset($_REQUEST["cat_categorize"]) || isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] != 'on') {
+				if (! isset($_REQUEST["cat_categories"]) || ! isset($_REQUEST["cat_categorize"]) || isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] != 'on') {
 					if ($_REQUEST["cat_override"] == "on") {
 						$categlib->uncategorize_object($cat_type, $cat_objid);
 					} else {
@@ -282,28 +280,28 @@ if (isset($_REQUEST["recategorize"]) && $prefs['feature_wiki_categorize_structur
 						$categlib->uncategorize_object($cat_type, $cat_objid);
 						foreach ($_REQUEST["cat_categories"] as $cat_acat) {
 							$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
-							if (!$catObjectId) {
-								// The object is not categorized  
+							if (! $catObjectId) {
+								// The object is not categorized
 								$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
-							}						
+							}
 							$categlib->categorize($catObjectId, $cat_acat);
 						}
 					} else {
-						$cats = $categlib->get_object_categories($cat_type, $cat_objid);						
+						$cats = $categlib->get_object_categories($cat_type, $cat_objid);
 						$numberofcats = count($cats);
 						foreach ($_REQUEST["cat_categories"] as $cat_acat) {
-							if (!in_array($cat_acat, $cats, true)) {
+							if (! in_array($cat_acat, $cats, true)) {
 								$categlib->categorize($catObjectId, $cat_acat);
-								$numberofcats += 1;							
+								$numberofcats += 1;
 							}
 						}
 						if ($numberofcats > count($_REQUEST["cat_categories"])) {
 							$alert_to_remove_extra_cats[] = $cat_name;
-						}	
+						}
 					}
 				}
 			}
-		}	    
+		}
 	}
 }
 $smarty->assign('alert_in_st', $alert_in_st);
@@ -314,9 +312,9 @@ $smarty->assign('alert_to_remove_extra_cats', $alert_to_remove_extra_cats);
 if ($prefs['feature_wiki_categorize_structure'] == 'y' && $all_editable == 'y') {
 	$cat_name = $structure_info["pageName"];
 	$cat_objid = $cat_name;
-	$cat_href="tiki-index.php?page=" . urlencode($cat_name);
- 	$cat_desc = '';
- 	$cat_type='wiki page'; 		
+	$cat_href = "tiki-index.php?page=" . urlencode($cat_name);
+	 $cat_desc = '';
+	 $cat_type = 'wiki page';
 	include_once("categorize_list.php");
 } elseif ($prefs['feature_categories'] == 'y') {
 	$categlib = TikiLib::lib('categ');
@@ -326,7 +324,7 @@ if ($prefs['feature_wiki_categorize_structure'] == 'y' && $all_editable == 'y') 
 
 ask_ticket('edit-structure');
 
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 
 if ($prefs['feature_jquery_ui'] === 'y') {
 	$headerlib->add_jsfile('lib/structures/tiki-edit_structure.js');
@@ -334,7 +332,7 @@ if ($prefs['feature_jquery_ui'] === 'y') {
 	$structlib = TikiLib::lib('struct');
 
 	$structure_id = $structure_info['structure_id'];
-	if (!$structure_id) {
+	if (! $structure_id) {
 		$structure_id = $structure_info['page_ref_id'];
 	}
 	$smarty->assign('nodelist', $structlib->get_toc($structure_id, 'asc', false, false, '', 'admin', $page_info['page_ref_id'], 0, 0, 'struct', ''));

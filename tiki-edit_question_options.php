@@ -3,18 +3,18 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $quizlib = TikiLib::lib('quiz');
 
-$auto_query_args = array('sort_mode', 'offset', 'find', 'questionId', 'quizId', 'optionId');
+$auto_query_args = ['sort_mode', 'offset', 'find', 'questionId', 'quizId', 'optionId'];
 $access->check_feature('feature_quizzes');
 
-if (!isset($_REQUEST["questionId"])) {
+if (! isset($_REQUEST["questionId"])) {
 	$smarty->assign('msg', tra("No question indicated"));
 
 	$smarty->display("error.tpl");
@@ -33,7 +33,7 @@ $tikilib->get_perm_object($_REQUEST["quizId"], 'quiz');
 
 $access->check_permission('tiki_p_admin_quizzes');
 
-if (!isset($_REQUEST["optionId"])) {
+if (! isset($_REQUEST["optionId"])) {
 	$_REQUEST["optionId"] = 0;
 }
 
@@ -42,7 +42,7 @@ $smarty->assign('optionId', $_REQUEST["optionId"]);
 if ($_REQUEST["optionId"]) {
 	$info = $quizlib->get_quiz_question_option($_REQUEST["optionId"]);
 } else {
-	$info = array();
+	$info = [];
 
 	$info["optionText"] = '';
 	$info["points"] = '';
@@ -64,13 +64,13 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('optionId', 0);
 }
 
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'optionText_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
 
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];

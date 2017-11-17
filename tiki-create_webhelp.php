@@ -8,7 +8,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $structlib = TikiLib::lib('struct');
 
 /**
@@ -16,19 +16,20 @@ $structlib = TikiLib::lib('struct');
  * @param $dest
  * @return int
  */
-function copys($source,$dest)
+function copys($source, $dest)
 {
-	if (!is_dir($source))
+	if (! is_dir($source)) {
 		return 0;
-	
-	if (!is_dir($dest)) {
+	}
+
+	if (! is_dir($dest)) {
 		mkdir($dest);
 	}
-	
+
 	$h = @dir($source);
-	while (@($entry=$h->read()) !== false) {
+	while (@($entry = $h->read()) !== false) {
 		if (($entry != '.') && ($entry != '..')) {
-			if (is_dir("$source/$entry")&&$dest!=="$source/$entry") {
+			if (is_dir("$source/$entry")&&$dest !== "$source/$entry") {
 				copys("$source/$entry", "$dest/$entry");
 			} else {
 				@copy("$source/$entry", "$dest/$entry");
@@ -61,7 +62,7 @@ $access->check_permission('tiki_p_edit_structures');
 $struct_info = $structlib->s_get_structure_info($_REQUEST['struct']);
 $smarty->assign_by_ref('struct_info', $struct_info);
 
-if (!$tikilib->user_has_perm_on_object($user, $struct_info['pageName'], 'wiki page', 'tiki_p_view')) {
+if (! $tikilib->user_has_perm_on_object($user, $struct_info['pageName'], 'wiki page', 'tiki_p_view')) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('You do not have permission to view this page.'));
 	$smarty->display('error.tpl');
@@ -81,20 +82,20 @@ if (isset($_REQUEST['create'])) {
 	$output .= '<li>' . tr("Directory: <strong>%0</strong>", $dir) . '</li></ul>';
 	$base = "whelp/$dir";
 
-	if (!is_dir("whelp")) {
-		if (!mkdir("whelp")){
+	if (! is_dir("whelp")) {
+		if (! mkdir("whelp")) {
 			$smarty->assign('msg', tra("Unable to create directory Run <code>sh setup.sh</code> from the command line to fix."));
 			$smarty->display('error.tpl');
 			die;
 		}
 	}
-	if (!is_writeable('whelp')) {
+	if (! is_writeable('whelp')) {
 		$smarty->assign('msg', tra("You need to change chmod 'whelp' manually to 777"));
 		$smarty->display('error.tpl');
 		die;
 	}
 
-	if (!is_dir("whelp/$dir")) {
+	if (! is_dir("whelp/$dir")) {
 		$output .= '<p>' . tr("Creating directory structure in <strong>%0</strong>.", $base) . '</p>';
 		mkdir("whelp/$dir");
 		mkdir("$base/js");
@@ -114,7 +115,7 @@ if (isset($_REQUEST['create'])) {
 	deldirfiles("$base/pages/img/wiki_up");
 	// Copy base files to the webhelp directory
 	copys('lib/tikihelp', "$base/");
-    copys('img/tikihelp', "$base/icons");
+	copys('img/tikihelp', "$base/icons");
 
 	$structlib->structure_to_webhelp($struct, $dir, $top);
 	$smarty->assign('generated', 'y');

@@ -8,45 +8,45 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $rsslib = TikiLib::lib('rss');
 
 $access->check_feature('feature_articles');
 
 if ($prefs['feed_articles'] != 'y') {
-	$errmsg=tra("rss feed disabled");
-	require_once ('tiki-rss_error.php');
+	$errmsg = tra("rss feed disabled");
+	require_once('tiki-rss_error.php');
 }
 
-$res=$access->authorize_rss(array('tiki_p_read_article','tiki_p_admin_cms', 'tiki_p_articles_read_heading'));
+$res = $access->authorize_rss(['tiki_p_read_article','tiki_p_admin_cms', 'tiki_p_articles_read_heading']);
 if ($res) {
 	if ($res['header'] == 'y') {
-		header('WWW-Authenticate: Basic realm="'.$tikidomain.'"');
+		header('WWW-Authenticate: Basic realm="' . $tikidomain . '"');
 		header('HTTP/1.0 401 Unauthorized');
 	}
-	$errmsg=$res['msg'];
-	require_once ('tiki-rss_error.php');
+	$errmsg = $res['msg'];
+	require_once('tiki-rss_error.php');
 }
 
 $feed = "articles";
 if (isset($_REQUEST["topic"])) {
-    $topic = $_REQUEST["topic"];
-    $uniqueid = $feed.".".$topic;
-    $topic = (int) preg_replace('/[^0-9]/', '', $topic);
+	$topic = $_REQUEST["topic"];
+	$uniqueid = $feed . "." . $topic;
+	$topic = (int) preg_replace('/[^0-9]/', '', $topic);
 } elseif (isset($_REQUEST['topicname'])) {
 	$artlib = TikiLib::lib('art');
 	$topic = $artlib->fetchtopicId($_REQUEST['topicname']);
-	$uniqueid = $feed.".".$topic;
+	$uniqueid = $feed . "." . $topic;
 } else {
-    $uniqueid = $feed;
-    $topic = "";
+	$uniqueid = $feed;
+	$topic = "";
 }
 
 if (isset($_REQUEST["type"])) {
-        $type = $_REQUEST["type"];
-        $uniqueid .= '-'.$type;
+		$type = $_REQUEST["type"];
+		$uniqueid .= '-' . $type;
 } else {
-        $type = '';
+		$type = '';
 }
 
 if (isset($_REQUEST['lang'])) {
@@ -55,45 +55,47 @@ if (isset($_REQUEST['lang'])) {
 } else {
 	$articleLang = '';
 }
-$uniqueid .= '/'.$articleLang;
+$uniqueid .= '/' . $articleLang;
 
 $categId = '';
 if (isset($_REQUEST["category"])) {
 	$categlib = TikiLib::lib('categ');
-	if (is_array($_REQUEST["category"]) ) {
-		foreach ( $_REQUEST["category"] as $categname ) {
+	if (is_array($_REQUEST["category"])) {
+		foreach ($_REQUEST["category"] as $categname) {
 			$categIds[] = $categlib->get_category_id($categname);
 		}
 		sort($categIds);
-		$categId = array('AND'=>$categIds);
-		$uniqueid .= '-' . implode('-', $categIds);;
+		$categId = ['AND' => $categIds];
+		$uniqueid .= '-' . implode('-', $categIds);
+		;
 	} else {
 		$categId = $categlib->get_category_id($_REQUEST["category"]);
-		$uniqueid .= '-'.$categId;
+		$uniqueid .= '-' . $categId;
 	}
 }
 // Specifying categories by ID takes precedence, as it is more reliable
 if (isset($_REQUEST["categId"])) {
-	if (is_array($_REQUEST["categId"]) ) {
+	if (is_array($_REQUEST["categId"])) {
 		sort($_REQUEST["categId"]);
 		$categId = (int) $_REQUEST["categId"];
-		$categId = array('AND'=>$_REQUEST["categId"]);
-		$uniqueid .= '-' . implode('-', $_REQUEST["categId"]);;
+		$categId = ['AND' => $_REQUEST["categId"]];
+		$uniqueid .= '-' . implode('-', $_REQUEST["categId"]);
+		;
 	} else {
 		$categId = (int) $_REQUEST["categId"];
-		$uniqueid .= '-'.$categId;
+		$uniqueid .= '-' . $categId;
 	}
 }
 
-if ($topic and !$tikilib->user_has_perm_on_object($user, $topic, 'topic', 'tiki_p_topic_read')) {
+if ($topic and ! $tikilib->user_has_perm_on_object($user, $topic, 'topic', 'tiki_p_topic_read')) {
 	$smarty->assign('errortype', 401);
-	$errmsg=tra("You do not have permission to view this section");
-	require_once ('tiki-rss_error.php');
+	$errmsg = tra("You do not have permission to view this section");
+	require_once('tiki-rss_error.php');
 }
 
 $output = $rsslib->get_from_cache($uniqueid);
 
-if ($output["data"]=="EMPTY") {
+if ($output["data"] == "EMPTY") {
 	$title = $prefs['feed_articles_title'];
 	$desc = $prefs['feed_articles_desc'];
 	$id = "articleId";
@@ -103,21 +105,21 @@ if ($output["data"]=="EMPTY") {
 	$authorId = "author";
 	$readrepl = "tiki-read_article.php?$id=%s";
 
-	$tmp = $prefs['feed__'.$feed.'_title'];
-	if ($tmp<>'') {
+	$tmp = $prefs['feed__' . $feed . '_title'];
+	if ($tmp <> '') {
 		$title = $tmp;
 	}
-	$tmp = $prefs['feed_'.$feed.'_desc'];
-	if ($desc<>'') {
+	$tmp = $prefs['feed_' . $feed . '_desc'];
+	if ($desc <> '') {
 		$desc = $tmp;
 	}
 
 	$artlib = TikiLib::lib('art');
-	$changes = $artlib->list_articles(0, $prefs['feed_articles_max'], $dateId.'_desc', '', 0, $tikilib->now, $user, $type, $topic, 'y', '', $categId, '', '', $articleLang, '', '', false, 'y');
-	$tmp = array();
+	$changes = $artlib->list_articles(0, $prefs['feed_articles_max'], $dateId . '_desc', '', 0, $tikilib->now, $user, $type, $topic, 'y', '', $categId, '', '', $articleLang, '', '', false, 'y');
+	$tmp = [];
 	include_once('tiki-sefurl.php');
 	foreach ($changes["data"] as $data) {
-		$data["$descId"] = TikiLib::lib('parser')->parse_data($data[$descId], array('print'=>true));
+		$data["$descId"] = TikiLib::lib('parser')->parse_data($data[$descId], ['print' => true]);
 		$data["body"] = null;
 		$data['sefurl'] = filter_out_sefurl(sprintf($readrepl, $data['articleId']), 'article', $data['title']);
 		$tmp[] = $data;
@@ -126,5 +128,5 @@ if ($output["data"]=="EMPTY") {
 	$tmp = null;
 	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 }
-header("Content-type: ".$output["content-type"]);
+header("Content-type: " . $output["content-type"]);
 print $output["data"];

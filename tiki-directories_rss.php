@@ -8,21 +8,21 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $rsslib = TikiLib::lib('rss');
 if ($prefs['feed_directories'] != 'y') {
 	$errmsg = tra("rss feed disabled");
-	require_once ('tiki-rss_error.php');
+	require_once('tiki-rss_error.php');
 }
 if ($prefs['feature_directory'] != 'y') {
 	$errmsg = tra("This feature is disabled") . ": feature_directory";
-	require_once ('tiki-rss_error.php');
+	require_once('tiki-rss_error.php');
 }
 $res = $access->authorize_rss(
-	array(
+	[
 		'tiki_p_view_directory',
 		'tiki_p_admin_directory'
-	)
+	]
 );
 if ($res) {
 	if ($res['header'] == 'y') {
@@ -30,7 +30,7 @@ if ($res) {
 		header('HTTP/1.0 401 Unauthorized');
 	}
 	$errmsg = $res['msg'];
-	require_once ('tiki-rss_error.php');
+	require_once('tiki-rss_error.php');
 }
 $feed = "directories";
 $uniqueid = $feed;

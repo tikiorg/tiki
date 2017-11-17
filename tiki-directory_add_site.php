@@ -3,21 +3,25 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'directory';
-require_once ('tiki-setup.php');
-include_once ('lib/directory/dirlib.php');
+require_once('tiki-setup.php');
+include_once('lib/directory/dirlib.php');
 $access->check_feature('feature_directory');
 $access->check_permission('tiki_p_submit_link');
 //get_strings tra('Submit a new link')
 // If no parent category then the parent category is 0
-if (!isset($_REQUEST["parent"])) $_REQUEST["parent"] = 0;
+if (! isset($_REQUEST["parent"])) {
+	$_REQUEST["parent"] = 0;
+}
 // If no site category then the site category is -1
-if (!isset($_REQUEST["addtocat"])) $_REQUEST["addtocat"] = - 1;
+if (! isset($_REQUEST["addtocat"])) {
+	$_REQUEST["addtocat"] = - 1;
+}
 $smarty->assign('parent', $_REQUEST["parent"]);
 $smarty->assign('addtocat', $_REQUEST["addtocat"]); // tells directory_add_site which category to select in menu list
 $all = 0;
@@ -46,7 +50,7 @@ $smarty->assign('siteId', $_REQUEST["siteId"]);
 if ($_REQUEST["siteId"]) {
 	$info = $dirlib->dir_get_site($_REQUEST["siteId"]);
 } else {
-	$info = array();
+	$info = [];
 	$info["name"] = '';
 	$info["description"] = '';
 	$info["url"] = '';
@@ -59,33 +63,36 @@ $smarty->assign('save', 'n');
 if (isset($_REQUEST["save"])) {
 	check_ticket('dir-add-site');
 	$msg = "";
-	if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
-		$msg.= $captchalib->getErrors();
+	if (empty($user) && $prefs['feature_antibot'] == 'y' && ! $captchalib->validate()) {
+		$msg .= $captchalib->getErrors();
 	}
 	if (empty($_REQUEST["name"])) {
-		$msg.= tra("Must enter a name to add a site. ");
+		$msg .= tra("Must enter a name to add a site. ");
 	}
 	if (empty($_REQUEST["url"])) {
-		$msg.= tra("Must enter a url to add a site. ");
+		$msg .= tra("Must enter a url to add a site. ");
 	} else {
 		if (substr($_REQUEST["url"], 0, 7) <> 'http://' && substr($_REQUEST["url"], 0, 8) <> 'https://') {
 			$_REQUEST["url"] = 'http://' . $_REQUEST["url"];
 		}
 		if ($dirlib->dir_url_exists($_REQUEST['url'])) {
-			$msg.= tra("URL already added to the directory. Duplicate site? ");
+			$msg .= tra("URL already added to the directory. Duplicate site? ");
 		}
 		if ($prefs['directory_validate_urls'] == 'y') {
 			@$fsh = fopen($_REQUEST['url'], 'r');
-			if (!$fsh) {
-				$msg.= tra("URL cannot be accessed wrong URL or site is offline and cannot be added to the directory. ");
+			if (! $fsh) {
+				$msg .= tra("URL cannot be accessed wrong URL or site is offline and cannot be added to the directory. ");
 			}
 		}
 	}
-	if (!isset($_REQUEST["siteCats"]) || count($_REQUEST["siteCats"]) == 0) {
-		$msg.= tra("Must select a category. ");
+	if (! isset($_REQUEST["siteCats"]) || count($_REQUEST["siteCats"]) == 0) {
+		$msg .= tra("Must select a category. ");
 	}
-	if (isset($_REQUEST["isValid"]) && $_REQUEST["isValid"] == 'on') $_REQUEST["isValid"] = 'y';
-	else $_REQUEST["isValid"] = 'n';
+	if (isset($_REQUEST["isValid"]) && $_REQUEST["isValid"] == 'on') {
+		$_REQUEST["isValid"] = 'y';
+	} else {
+		$_REQUEST["isValid"] = 'n';
+	}
 	if ($tiki_p_autosubmit_link == 'y') {
 		$_REQUEST["isValid"] = 'y';
 	}
@@ -101,7 +108,7 @@ if (isset($_REQUEST["save"])) {
 		$info["isValid"] = 'n';
 		Feedback::warning($msg);
 	}
-	$info = array();
+	$info = [];
 	$info["name"] = $_REQUEST['name'];
 	$info["description"] = $_REQUEST['description'];
 	$info["url"] = $_REQUEST['url'];
@@ -110,12 +117,12 @@ if (isset($_REQUEST["save"])) {
 }
 // Listing: categories in the parent category
 // Pagination resolution
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
@@ -153,7 +160,9 @@ if (isset($_REQUEST["save"]) && $msg != "" && isset($_REQUEST["siteCats"])) { //
 	$temp_max = count($categs);
 	foreach ($_REQUEST["siteCats"] as $acat) {
 		for ($ix = 0; $ix < $temp_max; ++$ix) {
-			if ($categs[$ix]["categId"] == $acat) $categs[$ix]["belongs"] = 'y';
+			if ($categs[$ix]["categId"] == $acat) {
+				$categs[$ix]["belongs"] = 'y';
+			}
 		}
 	}
 }
@@ -162,7 +171,7 @@ $countries = $tikilib->get_flags();
 usort($countries, 'country_sort');
 $smarty->assign_by_ref('countries', $countries);
 // This page should be displayed with Directory section options
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 ask_ticket('dir-add-site');
 // Display the template
 $smarty->assign('mid', 'tiki-directory_add_site.tpl');

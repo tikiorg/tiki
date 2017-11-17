@@ -1,16 +1,18 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
-include_once ('lib/directory/dirlib.php');
+require_once('tiki-setup.php');
+include_once('lib/directory/dirlib.php');
 $access->check_feature('feature_directory');
 
 // If no parent category then the parent category is 0
-if (!isset($_REQUEST["parent"])) $_REQUEST["parent"] = 0;
+if (! isset($_REQUEST["parent"])) {
+	$_REQUEST["parent"] = 0;
+}
 $smarty->assign('parent', $_REQUEST["parent"]);
 $all = 0;
 if ($_REQUEST["parent"] == 0) {
@@ -32,14 +34,16 @@ $access->check_permission('tiki_p_admin_directory_sites');
 $path = $dirlib->dir_get_category_path_admin($_REQUEST["parent"]);
 $smarty->assign_by_ref('path', $path);
 // If no site is being edited set it to zero
-if (!isset($_REQUEST["siteId"])) $_REQUEST["siteId"] = 0;
+if (! isset($_REQUEST["siteId"])) {
+	$_REQUEST["siteId"] = 0;
+}
 $smarty->assign('siteId', $_REQUEST["siteId"]);
 // If we are editing an existing category then get the category information
 // If not initialize the information to zero
 if ($_REQUEST["siteId"]) {
 	$info = $dirlib->dir_get_site($_REQUEST["siteId"]);
 } else {
-	$info = array();
+	$info = [];
 	$info["name"] = '';
 	$info["description"] = '';
 	$info["url"] = '';
@@ -75,19 +79,22 @@ if (isset($_REQUEST["save"])) {
 	if ((substr($_REQUEST["url"], 0, 7) <> 'http://') && (substr($_REQUEST["url"], 0, 8) <> 'https://') && (substr($_REQUEST["url"], 0, 6) <> 'ftp://')) {
 		$_REQUEST["url"] = 'http://' . $_REQUEST["url"];
 	}
-	if (!isset($_REQUEST["siteCats"]) || count($_REQUEST["siteCats"]) == 0) {
+	if (! isset($_REQUEST["siteCats"]) || count($_REQUEST["siteCats"]) == 0) {
 		$smarty->assign('msg', tra("Must select a category"));
 		$smarty->display("error.tpl");
 		die;
 	}
-	if (isset($_REQUEST["isValid"]) && $_REQUEST["isValid"] == 'on') $_REQUEST["isValid"] = 'y';
-	else $_REQUEST["isValid"] = 'n';
+	if (isset($_REQUEST["isValid"]) && $_REQUEST["isValid"] == 'on') {
+		$_REQUEST["isValid"] = 'y';
+	} else {
+		$_REQUEST["isValid"] = 'n';
+	}
 	$siteId = $dirlib->dir_replace_site($_REQUEST["siteId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["url"], $_REQUEST["country"], $_REQUEST["isValid"]);
 	$dirlib->remove_site_from_categories($siteId);
 	foreach ($_REQUEST["siteCats"] as $acat) {
 		$dirlib->dir_add_site_to_category($siteId, $acat);
 	}
-	$info = array();
+	$info = [];
 	$info["name"] = '';
 	$info["description"] = '';
 	$info["url"] = '';
@@ -97,12 +104,12 @@ if (isset($_REQUEST["save"])) {
 }
 // Listing: categories in the parent category
 // Pagination resolution
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
@@ -130,7 +137,7 @@ sort($countries);
 $smarty->assign_by_ref('countries', $countries);
 // This page should be displayed with Directory section options
 $section = 'directory';
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 ask_ticket('dir-admin-sites');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

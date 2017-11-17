@@ -8,14 +8,14 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $rsslib = TikiLib::lib('rss');
 
 $access->check_feature('feature_file_galleries');
 
 if ($prefs['feed_file_galleries'] != 'y') {
-        $errmsg=tra("rss feed disabled");
-        require_once ('tiki-rss_error.php');
+		$errmsg = tra("rss feed disabled");
+		require_once('tiki-rss_error.php');
 }
 
 $filegallib = TikiLib::lib('filegal');
@@ -24,7 +24,7 @@ $feed = "filegals";
 $uniqueid = $feed;
 $output = $rsslib->get_from_cache($uniqueid);
 
-if ($output["data"]=="EMPTY") {
+if ($output["data"] == "EMPTY") {
 	$title = $prefs['feed_file_galleries_title'];
 	$desc = $prefs['feed_file_galleries_desc'];
 	$id = "fileId";
@@ -34,8 +34,8 @@ if ($output["data"]=="EMPTY") {
 	$titleId = "filename";
 	$readrepl = "tiki-download_file.php?$id=%s";
 
-	$changes = $filegallib->list_files(0, $prefs['feed_file_galleries_max'], $dateId.'_desc', '');
+	$changes = $filegallib->list_files(0, $prefs['feed_file_galleries_max'], $dateId . '_desc', '');
 	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 }
-header("Content-type: ".$output["content-type"]);
+header("Content-type: " . $output["content-type"]);
 print $output["data"];

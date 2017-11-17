@@ -6,11 +6,11 @@
 // $Id$
 
 $section = 'forums';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $access->check_feature('feature_forums');
 
 // forumId must be received
-if (!isset($_REQUEST["forumId"])) {
+if (! isset($_REQUEST["forumId"])) {
 	$smarty->assign('msg', tra("No forum indicated"));
 	$smarty->display("error.tpl");
 	die;
@@ -52,12 +52,12 @@ if ($user) {
 
 $access->check_permission('tiki_p_admin_forum');
 $smarty->assign_by_ref('forum_info', $forum_info);
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 
 if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'forum';
 	$cat_objid = $_REQUEST["forumId"];
-	include ('tiki-tc.php');
+	include('tiki-tc.php');
 }
 
 if (isset($_REQUEST['qId'])) {
@@ -77,23 +77,29 @@ if (isset($_REQUEST['qId'])) {
 		check_ticket('forum-queue');
 		$smarty->assign('form', 'n');
 
-		if (!isset($_REQUEST['summary']))
+		if (! isset($_REQUEST['summary'])) {
 			$_REQUEST['summary'] = $msg_info['summary'];
+		}
 
-		if (!isset($_REQUEST['topic_smiley']))
+		if (! isset($_REQUEST['topic_smiley'])) {
 			$_REQUEST['topic_smiley'] = $msg_info['topic_smiley'];
+		}
 
-		if (!isset($_REQUEST['type']))
+		if (! isset($_REQUEST['type'])) {
 			$_REQUEST['type'] = $msg_info['type'];
+		}
 
-		if (!isset($_REQUEST['topic_title']))
+		if (! isset($_REQUEST['topic_title'])) {
 			$_REQUEST['topic_title'] = $msg_info['topic_title'];
+		}
 
-		if (!isset($_REQUEST['in_reply_to']))
+		if (! isset($_REQUEST['in_reply_to'])) {
 			$_REQUEST['in_reply_to'] = $msg_info['in_reply_to'];
+		}
 
-		if (!isset($_REQUEST['parentId']))
+		if (! isset($_REQUEST['parentId'])) {
 			$_REQUEST['parentId'] = $msg_info['parentId'];
+		}
 
 		if ($_REQUEST['parentId'] > 0) {
 			$p_info = $commentslib->get_comment($_REQUEST['parentId']);
@@ -115,9 +121,10 @@ if (isset($_REQUEST['qId'])) {
 			$_REQUEST['topic_title'],
 			$_REQUEST['in_reply_to']
 		);
-		if ( isset($_REQUEST['saveapp']) )
+		if (isset($_REQUEST['saveapp'])) {
 			$commentslib->approve_queued($_REQUEST['qId']);
-		unset ($_REQUEST['qId']);
+		}
+		unset($_REQUEST['qId']);
 	}
 
 	if (isset($_REQUEST['remove'])) {
@@ -127,24 +134,29 @@ if (isset($_REQUEST['qId'])) {
 	}
 
 	if (isset($_REQUEST['topicize'])) {
-	check_ticket('forum-queue');
+		check_ticket('forum-queue');
 		$smarty->assign('form', 'n');
 
 		// Convert to a topic
-		if (!isset($_REQUEST['summary']))
+		if (! isset($_REQUEST['summary'])) {
 			$_REQUEST['summary'] = '';
+		}
 
-		if (!isset($_REQUEST['type']))
+		if (! isset($_REQUEST['type'])) {
 			$_REQUEST['type'] = '';
+		}
 
-		if (!isset($_REQUEST['topic_smiley']))
+		if (! isset($_REQUEST['topic_smiley'])) {
 			$_REQUEST['topic_smiley'] = '';
+		}
 
-		if (!isset($_REQUEST['topic_title']))
+		if (! isset($_REQUEST['topic_title'])) {
 			$_REQUEST['topic_title'] = '';
+		}
 
-		if (!isset($_REQUEST['in_reply_to']))
+		if (! isset($_REQUEST['in_reply_to'])) {
 			$_REQUEST['in_reply_to'] = '';
+		}
 
 		$_REQUEST['parentId'] = 0;
 		$_REQUEST['type'] = 'n';
@@ -162,20 +174,20 @@ if (isset($_REQUEST['qId'])) {
 			$_REQUEST['topic_title'],
 			$_REQUEST['in_reply_to']
 		);
-		unset ($_REQUEST['qId']);
+		unset($_REQUEST['qId']);
 	}
 }
 
 if (isset($_REQUEST['rej']) && isset($_REQUEST['msg'])) {
 	check_ticket('forum-queue');
-	foreach (array_keys($_REQUEST['msg'])as $msg) {
+	foreach (array_keys($_REQUEST['msg']) as $msg) {
 		$commentslib->remove_queued($msg);
 	}
 }
 
 if (isset($_REQUEST['app']) && isset($_REQUEST['msg'])) {
 	check_ticket('forum-queue');
-	foreach (array_keys($_REQUEST['msg'])as $msg) {
+	foreach (array_keys($_REQUEST['msg']) as $msg) {
 		$commentslib->approve_queued($msg);
 	}
 }
@@ -183,11 +195,11 @@ if (isset($_REQUEST['app']) && isset($_REQUEST['msg'])) {
 // Quickjumpt to other forums
 if ($tiki_p_admin_forum == 'y' || $prefs['feature_forum_quickjump'] == 'y') {
 	$all_forums = $commentslib->list_forums(0, -1, 'name_asc', '');
-	Perms::bulk(array( 'type' => 'forum' ), 'object', $all_forums['data'], 'forumId');
+	Perms::bulk([ 'type' => 'forum' ], 'object', $all_forums['data'], 'forumId');
 
 	$temp_max = count($all_forums["data"]);
 	for ($i = 0; $i < $temp_max; $i++) {
-		$forumperms = Perms::get(array( 'type' => 'forum', 'object' => $all_forums['data'][$i]['forumId'] ));
+		$forumperms = Perms::get([ 'type' => 'forum', 'object' => $all_forums['data'][$i]['forumId'] ]);
 		$all_forums["data"][$i]["can_read"] = $forumperms->forum_read ? 'y' : 'n';
 	}
 
@@ -200,13 +212,13 @@ if ($tiki_p_admin_forum == 'y') {
 }
 
 // Items will contain messages
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'timestamp_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
 
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];

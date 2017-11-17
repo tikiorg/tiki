@@ -3,33 +3,33 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-$inputConfiguration = array(
-	array( 'staticKeyFilters' => array(
+$inputConfiguration = [
+	[ 'staticKeyFilters' => [
 	'data' => 'none',
-	)),
-);
+	]],
+];
 
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 $access->check_feature('feature_view_tpl');
 
 // you have to have the perm view and edit to continue:
-      // if view perm is set: continue
-if ( ($tiki_p_view_templates != 'y') ||
-      // if edit perm is set: continue, else quit if user tries save/delete
-      ($tiki_p_edit_templates != 'y' &&
-        (isset($_REQUEST["save"]) ||
-         isset($_REQUEST['saveTheme']) ||
-         isset($_REQUEST['delete'])
-        )
-      )
-    ) { 
+	  // if view perm is set: continue
+if (($tiki_p_view_templates != 'y') ||
+	  // if edit perm is set: continue, else quit if user tries save/delete
+	  ($tiki_p_edit_templates != 'y' &&
+		(isset($_REQUEST["save"]) ||
+		 isset($_REQUEST['saveTheme']) ||
+		 isset($_REQUEST['delete'])
+		)
+	  )
+	) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You don't have permission to use this feature"));
 
@@ -37,7 +37,7 @@ if ( ($tiki_p_view_templates != 'y') ||
 	die;
 }
 
-if (!isset($_REQUEST["mode"])) {
+if (! isset($_REQUEST["mode"])) {
 	$mode = 'listing';
 } else {
 	$mode = $_REQUEST['mode'];
@@ -54,25 +54,25 @@ if (isset($_REQUEST["template"])) {
 	}
 }
 
-$relativeDirectories = array('', 'mail/', 'map/', 'modules/', 'styles/'.str_replace('.css', '', $prefs['style']).'/');
+$relativeDirectories = ['', 'mail/', 'map/', 'modules/', 'styles/' . str_replace('.css', '', $prefs['style']) . '/'];
 
 // do editing stuff only if you have the permission to:
 if ($tiki_p_edit_templates == 'y') {
-	if ((isset($_REQUEST["save"]) || isset($_REQUEST['saveTheme'])) && !empty($_REQUEST['template'])) {
+	if ((isset($_REQUEST["save"]) || isset($_REQUEST['saveTheme'])) && ! empty($_REQUEST['template'])) {
 		$access->check_feature('feature_edit_templates');
 		check_ticket('edit-templates');
 		if (isset($_REQUEST['saveTheme'])) {
 			$domainStyleTemplatesDirectory = $smarty->main_template_dir;
-			if (!empty($tikidomain)) {
-				$domainStyleTemplatesDirectory .= '/'.$tikidomain;
+			if (! empty($tikidomain)) {
+				$domainStyleTemplatesDirectory .= '/' . $tikidomain;
 			}
 			$domainStyleTemplatesDirectory .= '/styles/' . $style_base;
-			if (!is_dir($domainStyleTemplatesDirectory)) {
+			if (! is_dir($domainStyleTemplatesDirectory)) {
 				mkdir($domainStyleTemplatesDirectory);
 			}
 			$file = $domainStyleTemplatesDirectory . '/' . $_REQUEST['template'];
 			$relativeDirectory = dirname($_REQUEST['template']);
-			if ($relativeDirectory && !is_dir($domainStyleTemplatesDirectory . '/' . $relativeDirectory)) {
+			if ($relativeDirectory && ! is_dir($domainStyleTemplatesDirectory . '/' . $relativeDirectory)) {
 				if (in_array($relativeDirectory . '/', $relativeDirectories)) {
 					mkdir($domainStyleTemplatesDirectory . '/' . $relativeDirectory);
 				} else {
@@ -84,9 +84,9 @@ if ($tiki_p_edit_templates == 'y') {
 			$file = $smarty->get_filename($_REQUEST['template']);
 		}
 		@$fp = fopen($file, 'w');
-		if (!$fp) {
+		if (! $fp) {
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("You do not have permission to write the template:").' '.$file);
+			$smarty->assign('msg', tra("You do not have permission to write the template:") . ' ' . $file);
 			$smarty->display('error.tpl');
 			die;
 		}
@@ -94,8 +94,8 @@ if ($tiki_p_edit_templates == 'y') {
 		fwrite($fp, $_REQUEST["data"]);
 		fclose($fp);
 	}
-	
-	if (isset($_REQUEST['delete']) && !empty($_REQUEST['template'])) {
+
+	if (isset($_REQUEST['delete']) && ! empty($_REQUEST['template'])) {
 		$access->check_authenticity();
 		$file = $smarty->get_filename($_REQUEST['template']);
 		unlink($file);
@@ -106,12 +106,13 @@ if ($tiki_p_edit_templates == 'y') {
 if (isset($_REQUEST["template"])) {
 	$mode = 'editing';
 	$file = $smarty->get_filename($_REQUEST["template"]);
-	if (strstr($file, '/styles/'))
+	if (strstr($file, '/styles/')) {
 		$style_local = 'y';
-	else
+	} else {
 		$style_local = 'n';
+	}
 	$fp = fopen($file, 'r');
-	if (!$fp) {
+	if (! $fp) {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("You do not have permission to read the template"));
 		$smarty->display("error.tpl");
@@ -126,7 +127,7 @@ if (isset($_REQUEST["template"])) {
 
 if ($mode == 'listing') {
 	// Get templates from the templates directory
-	$files = array();
+	$files = [];
 	chdir($smarty->main_template_dir);
 	foreach ($relativeDirectories as $relativeDirectory) {
 		$files = array_merge($files, glob($relativeDirectory . '*.tpl'));

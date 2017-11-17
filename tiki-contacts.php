@@ -3,62 +3,62 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'mytiki';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 $access->check_feature('feature_contacts');
 $contactlib = TikiLib::lib('contact');
 
-$auto_query_args = array(
-    'contactId',
+$auto_query_args = [
+	'contactId',
 	'view',
 	'find',
 	'sort_mode',
 	'offset',
 	'initial'
-);
+];
 
-if (!isset($_REQUEST["contactId"])) {
+if (! isset($_REQUEST["contactId"])) {
 	$_REQUEST["contactId"] = 0;
 }
 $smarty->assign('contactId', $_REQUEST["contactId"]);
 
-$exts=$contactlib->get_ext_list($user);
-$traducted_exts=array();
+$exts = $contactlib->get_ext_list($user);
+$traducted_exts = [];
 foreach ($exts as $ext) {
-	$traducted_exts[$ext['fieldId']] = array(
-    	'tra' => tra($ext['fieldname']),
+	$traducted_exts[$ext['fieldId']] = [
+		'tra' => tra($ext['fieldname']),
 		'art' => $ext['fieldname'],
 		'id' => $ext['fieldId'],
 		'show' => $ext['show'],
 		'public' => $ext['flagsPublic']
-	);
+	];
 }
 
 if ($_REQUEST["contactId"]) {
 	$info = $contactlib->get_contact($_REQUEST["contactId"], $user);
 	foreach ($info['ext'] as $k => $v) {
-	    if (!in_array($k, array_keys($exts))) {
+		if (! in_array($k, array_keys($exts))) {
 			// okay, we need to grab the name from exts[], where fieldId = $k
- 			$ext = $contactlib->get_ext($k);
+			 $ext = $contactlib->get_ext($k);
 			$traducted_exts[$k]['tra'] = $ext['fieldname'];
 			$traducted_exts[$k]['art'] = $ext['fieldname'];
 			$traducted_exts[$k]['id'] = $k;
 			$traducted_exts[$k]['public'] = $ext['flagsPublic'];
-	    }
+		}
 	}
 } else {
-	$info = array();
+	$info = [];
 	$info["firstName"] = '';
 	$info["lastName"] = '';
 	$info["email"] = '';
 	$info["nickname"] = '';
-	$info["groups"] = array();
+	$info["groups"] = [];
 }
 $smarty->assign('info', $info);
 $smarty->assign('exts', $traducted_exts);
@@ -72,27 +72,28 @@ if (isset($_REQUEST["remove"])) {
 if (isset($_REQUEST["save"])) {
 	$access->check_user($user);
 	check_ticket('webmail-contact');
-	$ext_result=array();
-	foreach ($exts as $ext)
-		$ext_result[$ext['fieldId']] = isset($_REQUEST['ext_'.$ext['fieldId']]) ? $_REQUEST['ext_'.$ext['fieldId']] : '';
+	$ext_result = [];
+	foreach ($exts as $ext) {
+		$ext_result[$ext['fieldId']] = isset($_REQUEST['ext_' . $ext['fieldId']]) ? $_REQUEST['ext_' . $ext['fieldId']] : '';
+	}
 	$contactlib->replace_contact($_REQUEST["contactId"], $_REQUEST["firstName"], $_REQUEST["lastName"], $_REQUEST["email"], $_REQUEST["nickname"], $user, $_REQUEST['groups'], $ext_result);
 	$info["firstName"] = '';
 	$info["lastName"] = '';
 	$info["email"] = '';
 	$info["nickname"] = '';
-	$info["groups"] = array();
+	$info["groups"] = [];
 	$smarty->assign('info', $info);
 	$smarty->assign('contactId', 0);
 }
 
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'email_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
@@ -111,44 +112,45 @@ $maxRecords = 20;
 
 $contacts = $contactlib->list_contacts($user, $offset, $maxRecords, $sort_mode, $find, true, $_REQUEST["initial"]);
 
-if ( isset($_REQUEST['view']) ) $_SESSION['UserContactsView'] = $_REQUEST['view'];
-elseif ( ! isset($_SESSION['UserContactsView']) ) $_SESSION['UserContactsView'] = $userlib->get_user_preference($user, 'user_contacts_default_view');
+if (isset($_REQUEST['view'])) {
+	$_SESSION['UserContactsView'] = $_REQUEST['view'];
+} elseif (! isset($_SESSION['UserContactsView'])) {
+	$_SESSION['UserContactsView'] = $userlib->get_user_preference($user, 'user_contacts_default_view');
+}
 $smarty->assign('view', $_SESSION['UserContactsView']);
 
-if ( is_array($contacts) ) {
-
-	if ( $_SESSION['UserContactsView'] == 'list' ) {
-		$smarty->assign('all', array($contacts));
+if (is_array($contacts)) {
+	if ($_SESSION['UserContactsView'] == 'list') {
+		$smarty->assign('all', [$contacts]);
 		$cant = count($contacts);
 	} else {
 		// ordering contacts by groups
-		$all=array();
-		$all_personnal=array();
+		$all = [];
+		$all_personnal = [];
 		$cant = 0;
 
-		foreach ( $contacts as $c ) {
-			if ( is_array($c['groups']) ) {
-				foreach ( $c['groups'] as $g ) {
+		foreach ($contacts as $c) {
+			if (is_array($c['groups'])) {
+				foreach ($c['groups'] as $g) {
 					$all[$g][] = $c;
 					$cant++;
 				}
 			}
 
-			if ( $c['user'] == $user ) {
+			if ($c['user'] == $user) {
 				$all_personnal[] = $c;
 				$cant++;
 			}
 		}
-	
+
 		// sort contacts by group name
 		ksort($all);
-	
+
 		// this group needs to be the last one
 		$all['user_personal_contacts'] =& $all_personnal;
 
 		$smarty->assign('all', $all);
 	}
-
 }
 
 $groups = $userlib->get_user_groups($user);
@@ -170,7 +172,7 @@ if ($offset > 0) {
 	$smarty->assign('prev_offset', -1);
 }
 
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 
 ask_ticket('contacts');
 $smarty->assign('myurl', 'tiki-contacts.php');

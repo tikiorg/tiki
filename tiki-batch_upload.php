@@ -1,26 +1,26 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'galleries';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $categlib = TikiLib::lib('categ');
 $imagegallib = TikiLib::lib('imagegal');
-$access->check_feature(array('feature_galleries', 'feature_gal_batch'));
+$access->check_feature(['feature_galleries', 'feature_gal_batch']);
 
 // Now check permissions to access this page
 $access->check_permission('tiki_p_batch_upload_image_dir');
 
 // check directory path
-if (!isset($prefs['gal_batch_dir']) or !is_dir($prefs['gal_batch_dir'])) {
+if (! isset($prefs['gal_batch_dir']) or ! is_dir($prefs['gal_batch_dir'])) {
 	$msg = tra("Incorrect directory chosen for batch upload of images.") . "<br />";
 	if ($tiki_p_admin == 'y') {
-		$msg.= tra("Please setup that dir on ") . '<a href="tiki-admin.php?page=gal">' . tra('Image Galleries Configuration Panel') . '</a>.';
+		$msg .= tra("Please setup that dir on ") . '<a href="tiki-admin.php?page=gal">' . tra('Image Galleries Configuration Panel') . '</a>.';
 	} else {
-		$msg.= tra("Please contact the website administrator.");
+		$msg .= tra("Please contact the website administrator.");
 	}
 	$smarty->assign('msg', $msg);
 	$smarty->display("error.tpl");
@@ -29,14 +29,14 @@ if (!isset($prefs['gal_batch_dir']) or !is_dir($prefs['gal_batch_dir'])) {
 	$imgdir = $prefs['gal_batch_dir'];
 }
 $smarty->assign('imgdir', $imgdir);
-$a_img = $imgstring = $feedback = array();
-$a_path = array();
-$allowed_types = array(
+$a_img = $imgstring = $feedback = [];
+$a_path = [];
+$allowed_types = [
 	'.png',
 	'.jpg',
 	'.jpeg',
 	'.gif'
-); // list of filetypes you want to show
+]; // list of filetypes you want to show
 // recursively get all images from all subdirectories
 /**
  * @param $sub
@@ -48,10 +48,12 @@ function getDirContent($sub)
 	global $a_img;
 	global $a_path;
 	global $imgdir;
-	$allimg = array();
+	$allimg = [];
 	$tmp = $imgdir;
-	if ($sub <> "") $tmp.= '/' . $sub;
-	if (!@($dimg = opendir($tmp))) {
+	if ($sub <> "") {
+		$tmp .= '/' . $sub;
+	}
+	if (! @($dimg = opendir($tmp))) {
 		$msg = tra("Invalid directory name");
 		$smarty->assign('msg', $msg);
 		$smarty->display("error.tpl");
@@ -66,7 +68,7 @@ function getDirContent($sub)
 	foreach ($allimg as $imgfile) {
 		if (is_dir($tmp . "/" . $imgfile)) {
 			if ((substr($sub, -1) <> "/") && (substr($sub, -1) <> "\\")) {
-				$sub.= '/';
+				$sub .= '/';
 			}
 			getDirContent($sub . $imgfile);
 		} elseif (in_array(strtolower(substr($imgfile, -(strlen($imgfile) - strrpos($imgfile, ".")))), $allowed_types)) {
@@ -77,7 +79,7 @@ function getDirContent($sub)
 	closedir($dimg);
 }
 // build a complete list of all images on filesystem including all necessary image info
-function buildImageList() 
+function buildImageList()
 {
 	global $a_img;
 	global $a_path;
@@ -89,25 +91,33 @@ function buildImageList()
 	// build image data array
 	for ($x = 0; $x < $totimg; $x++) {
 		// get root dir
-		while (substr($imgdir, -1) == '/') $imgdir = substr($imgdir, 0, -1);
+		while (substr($imgdir, -1) == '/') {
+			$imgdir = substr($imgdir, 0, -1);
+		}
 		$tmp = $imgdir;
 		// add any subdir names
-		if ($a_path[$x] <> "") $tmp.= $a_path[$x];
+		if ($a_path[$x] <> "") {
+			$tmp .= $a_path[$x];
+		}
 		// get image information
 		$size = @getimagesize($tmp . '/' . $a_img[$x]);
 		$filesize = @filesize($tmp . '/' . $a_img[$x]);
 		$halfwidth = ceil($size[0] / 2);
 		$halfheight = ceil($size[1] / 2);
 		$imgstring[$x][0] = $a_img[$x];
-		if ($a_path[$x] <> "") $imgstring[$x][0] = $a_path[$x] . '/' . $a_img[$x];
+		if ($a_path[$x] <> "") {
+			$imgstring[$x][0] = $a_path[$x] . '/' . $a_img[$x];
+		}
 		$imgstring[$x][1] = $size[0];
 		$imgstring[$x][2] = $size[1];
 		$imgstring[$x][3] = $filesize;
 		// type is string after last dot
 		$tmp = strtolower(substr($a_img[$x], -(strlen($a_img[$x]) - 1 - strrpos($a_img[$x], "."))));
-		if ($tmp == "jpeg") $tmp = "jpg";
+		if ($tmp == "jpeg") {
+			$tmp = "jpg";
+		}
 		$imgstring[$x][4] = $tmp;
-		$totalsize+= $filesize;
+		$totalsize += $filesize;
 	}
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('totimg', $totimg);
@@ -128,14 +138,14 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['imgs']) and is_array($
 		}
 	}
 	// for subdirToSubgal we need all existing sub galleries for the current gallery
-	$subgals = array();
+	$subgals = [];
 	if (isset($_REQUEST["subdirTosubgal"])) {
 		$subgals = $imagegallib->get_subgalleries(0, 9999, "name_asc", '', $_REQUEST["galleryId"]);
 	}
 	// cycle through all images to upload
 	for ($x = 0; $x < $totimgs; $x++) {
 		if ($imgPathArray[$x] <> "") {
-			$imgPathArray[$x].= '/';
+			$imgPathArray[$x] .= '/';
 		} else {
 			// if there is a path in image name, move it to the path array
 			if (strrpos($imgArray[$x], "/") > 0) {
@@ -148,14 +158,16 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['imgs']) and is_array($
 		$filesize = @filesize($filepath);
 		// type is string after last dot
 		$type = strtolower(substr($imgArray[$x], -(strlen($imgArray[$x]) - 1 - strrpos($imgArray[$x], "."))));
-		if ($type == "jpeg") $type = "jpg";
+		if ($type == "jpeg") {
+			$type = "jpg";
+		}
 		$data = '';
 		$fp = @fopen($filepath, 'r');
-		if (!$fp) {
+		if (! $fp) {
 			$feedback[] = "!!!" . sprintf(tra('Could not read image %s.'), $filepath);
 		} else {
-			while (!feof($fp)) {
-				$data.= @fread($fp, 1024);
+			while (! feof($fp)) {
+				$data .= @fread($fp, 1024);
 			}
 			@fclose($fp);
 			// replace \ with /
@@ -163,8 +175,12 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['imgs']) and is_array($
 			$imgPathArray[$x] = strtr($imgPathArray[$x], "\\", "/");
 			// get path, maybe needed as subgallery name
 			$tmppath = $imgPathArray[$x];
-			if (substr($tmppath, 0, 1) == "/") $tmppath = substr($tmppath, 1, 999);
-			if (substr($tmppath, -1) == "/") $tmppath = substr($tmppath, 0, -1);
+			if (substr($tmppath, 0, 1) == "/") {
+				$tmppath = substr($tmppath, 1, 999);
+			}
+			if (substr($tmppath, -1) == "/") {
+				$tmppath = substr($tmppath, 0, -1);
+			}
 			// fix image name:
 			$tmpName = '/' . $imgArray[$x];
 			// remove possible path from filename
@@ -183,17 +199,24 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['imgs']) and is_array($
 				if ($tmppath <> "") {
 					$tmpGalName = $tmppath;
 					// get last subdir 'last' from 'some/path/last'
-					if (strpos($tmpGalName, "/") > 0) $tmpGalName = substr($tmpGalName, strrpos($tmpGalName, "/") + 1, 999);
+					if (strpos($tmpGalName, "/") > 0) {
+						$tmpGalName = substr($tmpGalName, strrpos($tmpGalName, "/") + 1, 999);
+					}
 					$tmpGalId = @$imagegallib->replace_gallery(0, $tmpGalName, '', '', $user, $parent["maxRows"], $parent["rowImages"], $parent["thumbSizeX"], $parent["thumbSizeY"], $parent["public"], $parent["visible"], $parent['sortorder'], $parent['sortdirection'], $parent['galleryimage'], $_REQUEST["galleryId"], $parent['showname'], $parent['showimageid'], $parent['showdescription'], $parent['showcreated'], $parent['showuser'], $parent['showhits'], $parent['showxysize'], $parent['showfilesize'], $parent['showfilename'], $parent['defaultscale']);
-					if ($tmpGalId == 0) $tmpGalId = $_REQUEST["galleryId"];
+					if ($tmpGalId == 0) {
+						$tmpGalId = $_REQUEST["galleryId"];
+					}
 				}
 			}
 			// if subToDesc is set, set description:
-			if (isset($_REQUEST["subToDesc"])) $tmpDesc = $tmppath;
-			else $tmpDesc = '';
+			if (isset($_REQUEST["subToDesc"])) {
+				$tmpDesc = $tmppath;
+			} else {
+				$tmpDesc = '';
+			}
 			// add image to gallery
 			$imageId = $imagegallib->insert_image($tmpGalId, $tmpName, $tmpDesc, $imgArray[$x], $type, $data, $filesize, $size[0], $size[1], $user, '', '');
-			if (!$imageId) {
+			if (! $imageId) {
 				$feedback[] = "!!!" . sprintf(tra('Image %s upload failed.'), $imgArray[$x]);
 			} else {
 				$feedback[] = sprintf(tra('Image %s uploaded successfully.'), $imgArray[$x]);
@@ -206,8 +229,8 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['imgs']) and is_array($
 		}
 	}
 }
-$a_img = array();
-$a_path = array();
+$a_img = [];
+$a_path = [];
 buildImageList();
 $smarty->assign('feedback', $feedback);
 if (isset($_REQUEST["galleryId"])) {
@@ -237,7 +260,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 	}
 }
 $smarty->assign_by_ref('galleries', $galleries["data"]);
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template

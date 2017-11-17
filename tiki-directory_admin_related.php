@@ -3,17 +3,19 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
-include_once ('lib/directory/dirlib.php');
+require_once('tiki-setup.php');
+include_once('lib/directory/dirlib.php');
 $access->check_feature('feature_directory');
 $access->check_permission('tiki_p_admin_directory_cats');
 // If no parent category then the parent category is 0
-if (!isset($_REQUEST["parent"])) $_REQUEST["parent"] = 0;
+if (! isset($_REQUEST["parent"])) {
+	$_REQUEST["parent"] = 0;
+}
 $smarty->assign('parent', $_REQUEST["parent"]);
 if ($_REQUEST["parent"] == 0) {
 	$parent_name = 'Top';
@@ -46,12 +48,12 @@ if (isset($_REQUEST["add"])) {
 }
 // Listing: categories in the parent category
 // Pagination resolution
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
@@ -73,7 +75,7 @@ $all_categs = $dirlib->dir_get_all_categories(0, -1, 'name_asc', $find);
 $smarty->assign('all_categs', $all_categs);
 // This page should be displayed with Directory section options
 $section = 'directory';
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 ask_ticket('dir-admin-related');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

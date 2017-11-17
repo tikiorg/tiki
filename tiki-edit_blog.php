@@ -9,7 +9,7 @@
 // $Id$
 
 $section = 'blogs';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $bloglib = TikiLib::lib('blog');
 
 $access->check_feature('feature_blogs');
@@ -45,13 +45,13 @@ $smarty->assign('use_excerpt', 'n');
 $smarty->assign('creator', $user);
 
 
-if (!isset($created)) {
-	$created=time();
+if (! isset($created)) {
+	$created = time();
 	$smarty->assign('created', $created);
 }
 
-if (!isset($lastModif)) {
-	$lastModif=time();
+if (! isset($lastModif)) {
+	$lastModif = time();
 	$smarty->assign('lastModif', $lastModif);
 }
 
@@ -59,7 +59,7 @@ if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 	// Check permission
 	$data = $bloglib->get_blog($_REQUEST["blogId"]);
 
-	if ($data["user"] != $user || !$user) {
+	if ($data["user"] != $user || ! $user) {
 		if ($tiki_p_blog_admin != 'y') {
 			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("You do not have permission to edit this blog"));
@@ -87,15 +87,14 @@ if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 	$smarty->assign('use_excerpt', $data["use_excerpt"]);
 	$smarty->assign('creator', $data["user"]);
 	$smarty->assign('alwaysOwner', $data["always_owner"]);
-
 }
 
 if (isset($_REQUEST["heading"]) and $tiki_p_edit_templates == 'y') {
 	// Sanitization cleanup
 	$heading = preg_replace('/st<x>yle="[^"]*"/', 'style_dangerous', $_REQUEST["heading"]);
-} elseif (!isset($data["heading"])) {
+} elseif (! isset($data["heading"])) {
 	$heading = file_get_contents($smarty->get_filename('blog_heading.tpl'));
-	if (!$heading) {
+	if (! $heading) {
 		$heading = '';
 	}
 } else {
@@ -105,9 +104,9 @@ if (isset($_REQUEST["heading"]) and $tiki_p_edit_templates == 'y') {
 if (isset($_REQUEST["post_heading"]) and $tiki_p_edit_templates == 'y') {
 	// Sanitization cleanup
 	$post_heading = preg_replace('/st<x>yle="[^"]*"/', 'style_dangerous', $_REQUEST["post_heading"]);
-} elseif (!isset($data["post_heading"])) {
+} elseif (! isset($data["post_heading"])) {
 	$post_heading = file_get_contents($smarty->get_filename('blog_post_heading.tpl'));
-	if (!$post_heading) {
+	if (! $post_heading) {
 		$post_heading = '';
 	}
 } else {
@@ -120,7 +119,7 @@ $users = $userlib->list_all_users();
 $smarty->assign_by_ref('users', $users);
 
 $category_needed = false;
-if (isset($_REQUEST["save"]) && $prefs['feature_categories'] == 'y' && $prefs['feature_blog_mandatory_category'] >=0 && (empty($_REQUEST['cat_categories']) || count($_REQUEST['cat_categories']) <= 0)) {
+if (isset($_REQUEST["save"]) && $prefs['feature_categories'] == 'y' && $prefs['feature_blog_mandatory_category'] >= 0 && (empty($_REQUEST['cat_categories']) || count($_REQUEST['cat_categories']) <= 0)) {
 		$category_needed = true;
 		$smarty->assign('category_needed', 'y');
 } elseif (isset($_REQUEST["save"]) || isset($_REQUEST['preview'])) {
@@ -148,10 +147,26 @@ if (isset($_REQUEST["save"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 	if (isset($_REQUEST["save"])) {
 		$bid = $bloglib->replace_blog(
 			$_REQUEST["title"],
-			$_REQUEST["description"], $_REQUEST["creator"], $public,
-			$_REQUEST["maxPosts"], $_REQUEST["blogId"],
-			$heading, $use_title, $use_title_in_post, $use_description, $use_breadcrumbs, $use_author, $add_date, $use_find,
-			$allow_comments, $show_avatar, $alwaysOwner, $post_heading, $show_related, $related_max, $use_excerpt
+			$_REQUEST["description"],
+			$_REQUEST["creator"],
+			$public,
+			$_REQUEST["maxPosts"],
+			$_REQUEST["blogId"],
+			$heading,
+			$use_title,
+			$use_title_in_post,
+			$use_description,
+			$use_breadcrumbs,
+			$use_author,
+			$add_date,
+			$use_find,
+			$allow_comments,
+			$show_avatar,
+			$alwaysOwner,
+			$post_heading,
+			$show_related,
+			$related_max,
+			$use_excerpt
 		);
 
 		$cat_type = 'blog';
@@ -159,7 +174,7 @@ if (isset($_REQUEST["save"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 		$cat_desc = substr($_REQUEST["description"], 0, 200);
 		$cat_name = $_REQUEST["title"];
 		$cat_href = "tiki-view_blog.php?blogId=" . $cat_objid;
-		include_once ("categorize.php");
+		include_once("categorize.php");
 
 		header("location: tiki-list_blogs.php?blogId=$bid");
 		die;
@@ -188,7 +203,8 @@ if (isset($_REQUEST['preview']) || $category_needed) {
 	$smarty->assign('creator', $_REQUEST["creator"]);
 
 	$smarty->assign(
-		'blog_data', array(
+		'blog_data',
+		[
 			'title' => $_REQUEST["title"],
 			'description' => $_REQUEST["description"],
 			'creator' => $_REQUEST["creator"],
@@ -210,7 +226,7 @@ if (isset($_REQUEST['preview']) || $category_needed) {
 			'show_related' => $show_related,
 			'related_max' => $related_max,
 			'use_excerpt' => $use_excerpt
-		)
+		]
 	);
 
 	// display heading preview
@@ -223,13 +239,13 @@ if (isset($_REQUEST['preview']) || $category_needed) {
 
 $cat_type = 'blog';
 $cat_objid = $blogId;
-include_once ("categorize_list.php");
+include_once("categorize_list.php");
 
 $defaultRows = 5;
 
 ask_ticket('edit-blog');
 
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

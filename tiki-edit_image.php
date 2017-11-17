@@ -3,12 +3,12 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 $imagegallib = TikiLib::lib('imagegal');
 
@@ -19,7 +19,7 @@ if ($prefs['feature_categories'] == 'y') {
 $access->check_feature('feature_galleries');
 
 // Sanity anyone?
-if (!$_REQUEST['edit'] or !$_REQUEST['galleryId']) {
+if (! $_REQUEST['edit'] or ! $_REQUEST['galleryId']) {
 	$smarty->assign('msg', tra('Invalid request to edit an image'));
 
 	$smarty->display('error.tpl');
@@ -34,14 +34,16 @@ $imageId = $_REQUEST['edit'];
 $foo = parse_url($_SERVER['REQUEST_URI']);
 $foo1 = str_replace('tiki-edit_image', 'tiki-browse_image', $foo['path']);
 $foo2 = str_replace('tiki-edit_image', 'show_image', $foo['path']);
-$smarty->assign('url_browse', $tikilib->httpPrefix(). $foo1);
-$smarty->assign('url_show', $tikilib->httpPrefix(). $foo2);
+$smarty->assign('url_browse', $tikilib->httpPrefix() . $foo1);
+$smarty->assign('url_show', $tikilib->httpPrefix() . $foo2);
 
 $gal_info = $imagegallib->get_gallery($_REQUEST['galleryId']);
 
-if (!isset($_REQUEST['sort_mode'])) {
-	$sort_mode = $gal_info['sortorder'].'_'.$gal_info['sortdirection'];
-} else $sort_mode = $_REQUEST['sort_mode'];
+if (! isset($_REQUEST['sort_mode'])) {
+	$sort_mode = $gal_info['sortorder'] . '_' . $gal_info['sortdirection'];
+} else {
+	$sort_mode = $_REQUEST['sort_mode'];
+}
 $smarty->assign('sort_mode', $sort_mode);
 
 if (isset($_REQUEST['editimage']) || isset($_REQUEST['editimage_andgonext'])) {
@@ -49,14 +51,16 @@ if (isset($_REQUEST['editimage']) || isset($_REQUEST['editimage_andgonext'])) {
 
 	$access->check_permission('tiki_p_upload_images');
 
-	if ($gal_info['thumbSizeX'] == 0)
+	if ($gal_info['thumbSizeX'] == 0) {
 		$gal_info['thumbSizeX'] = 80;
+	}
 
-	if ($gal_info['thumbSizeY'] == 0)
+	if ($gal_info['thumbSizeY'] == 0) {
 		$gal_info['thumbSizeY'] = 80;
+	}
 
 	// Check the user to be admin or owner or the gallery is public
-	if ($tiki_p_admin_galleries != 'y' && (!$user || $user != $gal_info['user']) && $gal_info['public'] != 'y') {
+	if ($tiki_p_admin_galleries != 'y' && (! $user || $user != $gal_info['user']) && $gal_info['public'] != 'y') {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra('You have permission to edit images but not in this gallery'));
 
@@ -66,9 +70,9 @@ if (isset($_REQUEST['editimage']) || isset($_REQUEST['editimage_andgonext'])) {
 
 	$error_msg = '';
 
-	if (!empty($_FILES['userfile']) && !empty($_FILES['userfile']['name'])) {
-		if ((!empty($prefs['gal_match_regex']) && !preg_match('/' . $prefs['gal_match_regex'] . '/', $_FILES['userfile']['name'], $reqs))
-			|| (!empty($prefs['gal_nmatch_regex']) && preg_match('/' . $prefs['gal_nmatch_regex'] . '/', $_FILES['userfile']['name'], $reqs))
+	if (! empty($_FILES['userfile']) && ! empty($_FILES['userfile']['name'])) {
+		if ((! empty($prefs['gal_match_regex']) && ! preg_match('/' . $prefs['gal_match_regex'] . '/', $_FILES['userfile']['name'], $reqs))
+			|| (! empty($prefs['gal_nmatch_regex']) && preg_match('/' . $prefs['gal_nmatch_regex'] . '/', $_FILES['userfile']['name'], $reqs))
 		) {
 			$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
 			$smarty->display('error.tpl');
@@ -88,11 +92,11 @@ if (isset($_REQUEST['editimage']) || isset($_REQUEST['editimage_andgonext'])) {
 		include_once('categorize.php');
 
 		if (isset($_REQUEST['editimage_andgonext'])) {
-			$prevnext = $imagegallib->get_prev_and_next_image($sort_mode, NULL, $imageId, $_REQUEST['galleryId']);
-			if ($prevnext['next']) 
+			$prevnext = $imagegallib->get_prev_and_next_image($sort_mode, null, $imageId, $_REQUEST['galleryId']);
+			if ($prevnext['next']) {
 				$imageId = $prevnext['next'];
+			}
 		}
-
 	} else {
 		$smarty->assign('msg', tra('Failed to edit the image'));
 
@@ -113,7 +117,7 @@ $smarty->assign_by_ref('gal_info', $gal_info);
 
 $cat_type = 'image';
 $cat_objid = $imageId;
-include_once ('categorize_list.php');
+include_once('categorize_list.php');
 
 ask_ticket('edit-image');
 

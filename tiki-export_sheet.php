@@ -3,19 +3,19 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'sheet';
-require_once ('tiki-setup.php');
-require_once ('lib/sheet/grid.php');
+require_once('tiki-setup.php');
+require_once('lib/sheet/grid.php');
 $sheetlib = TikiLib::lib('sheet');
-$auto_query_args = array(
+$auto_query_args = [
 	'sheetId',
 	'readdate',
-);
+];
 
 $access->check_feature('feature_sheet');
 
@@ -27,7 +27,7 @@ if (empty($info)) {
 }
 
 $objectperms = Perms::get('sheet', $_REQUEST['sheetId']);
-if ($tiki_p_admin != 'y' && !$objectperms->view_sheet && !($user && $info['author'] == $user)) {
+if ($tiki_p_admin != 'y' && ! $objectperms->view_sheet && ! ($user && $info['author'] == $user)) {
 	$smarty->assign('msg', tra('Permission denied'));
 	$smarty->display('error.tpl');
 	die;
@@ -49,21 +49,21 @@ $grid = new TikiSheet;
 $history = $sheetlib->sheet_history($_REQUEST['sheetId']);
 $smarty->assign_by_ref('history', $history);
 
-if ( isset($_REQUEST['encoding']) ) {
+if (isset($_REQUEST['encoding'])) {
 	$smarty->assign('page_mode', 'submit');
 
 	$handler = new TikiSheetDatabaseHandler($_REQUEST['sheetId'], $_REQUEST['readdate']);
 	$grid->import($handler);
 
 	$handler = $_REQUEST['handler'];
-	
-	if ( !in_array($handler, TikiSheet::getHandlerList()) ) {
+
+	if (! in_array($handler, TikiSheet::getHandlerList())) {
 		$smarty->assign('msg', "Handler is not allowed.");
 		$smarty->display("error.tpl");
 		die;
 	}
 
-	$handler = new $handler("php://stdout" , 'UTF-8', $_REQUEST['encoding']);
+	$handler = new $handler("php://stdout", 'UTF-8', $_REQUEST['encoding']);
 	$grid->export($handler);
 
 	header("Content-type: text/comma-separated-values");
@@ -75,20 +75,21 @@ if ( isset($_REQUEST['encoding']) ) {
 	echo $handler->output;
 	exit;
 } else {
-	$list = array();
+	$list = [];
 
 	$handlers = TikiSheet::getHandlerList();
-	
-	foreach ( $handlers as $key=>$handler ) {
-		$temp = new $handler;
-		if ( !$temp->supports(TIKISHEET_SAVE_DATA | TIKISHEET_SAVE_CALC) )
-			continue;
 
-		$list[$key] = array(
+	foreach ($handlers as $key => $handler) {
+		$temp = new $handler;
+		if (! $temp->supports(TIKISHEET_SAVE_DATA | TIKISHEET_SAVE_CALC)) {
+			continue;
+		}
+
+		$list[$key] = [
 			"name" => $temp->name(),
 			"version" => $temp->version(),
 			"class" => $handler
-		);
+		];
 	}
 
 	$smarty->assign_by_ref("handlers", $list);
@@ -96,9 +97,9 @@ if ( isset($_REQUEST['encoding']) ) {
 
 $cat_type = 'sheet';
 $cat_objid = $_REQUEST["sheetId"];
-include_once ("categorize_list.php");
+include_once("categorize_list.php");
 
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 ask_ticket('sheet');
 // Display the template
 $smarty->assign('mid', 'tiki-export-sheets.tpl');

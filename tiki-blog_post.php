@@ -9,7 +9,7 @@
 // $Id$
 
 $section = 'blogs';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $categlib = TikiLib::lib('categ');
 $bloglib = TikiLib::lib('blog');
 $editlib = TikiLib::lib('edit');
@@ -49,15 +49,15 @@ if ($postId > 0) {
 
 	// If the blog is public and the user has posting permissions then he can edit
 	// If the user owns the weblog then he can edit
-	if (!$user || ($data["user"] != $user && $user != $blog_data["user"] && !($blog_data['public'] == 'y' && $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post')))) {
-		if ($tiki_p_blog_admin != 'y' && !$tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_admin')) {
+	if (! $user || ($data["user"] != $user && $user != $blog_data["user"] && ! ($blog_data['public'] == 'y' && $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post')))) {
+		if ($tiki_p_blog_admin != 'y' && ! $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_admin')) {
 			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("You do not have permission to edit this post"));
 			$smarty->display("error.tpl");
 			die;
 		}
 	}
-	if (isset($data['wysiwyg']) && !isset($_REQUEST['wysiwyg'])) {
+	if (isset($data['wysiwyg']) && ! isset($_REQUEST['wysiwyg'])) {
 		$_REQUEST['wysiwyg'] = $data['wysiwyg'];
 	}
 }
@@ -71,7 +71,7 @@ $smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
 if (isset($_REQUEST["publish_Hour"])) {
 	//Convert 12-hour clock hours to 24-hour scale to compute time
-	if (!empty($_REQUEST['publish_Meridian'])) {
+	if (! empty($_REQUEST['publish_Meridian'])) {
 		$_REQUEST['publish_Hour'] = date('H', strtotime($_REQUEST['publish_Hour'] . ':00 ' . $_REQUEST['publish_Meridian']));
 	}
 	$publishDate = $tikilib->make_time($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"], 0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]);
@@ -83,7 +83,7 @@ if ($prefs['feature_freetags'] == 'y') {
 	$freetaglib = TikiLib::lib('freetag');
 
 	if ($prefs['feature_multilingual'] == 'y') {
-		$languages = array();
+		$languages = [];
 		$langLib = TikiLib::lib('language');
 		$languages = $langLib->list_languages();
 		$smarty->assign_by_ref('languages', $languages);
@@ -97,14 +97,14 @@ if (isset($_REQUEST['cancel'])) {
 }
 
 // Exit edit mode (with javascript)
-$smarty->assign('referer', !empty($_REQUEST['referer']) ? $_REQUEST['referer'] : (empty($_SERVER['HTTP_REFERER']) ? 'tiki-view_blog.php?blogId=' . $blogId : $_SERVER['HTTP_REFERER']));
+$smarty->assign('referer', ! empty($_REQUEST['referer']) ? $_REQUEST['referer'] : (empty($_SERVER['HTTP_REFERER']) ? 'tiki-view_blog.php?blogId=' . $blogId : $_SERVER['HTTP_REFERER']));
 
 if (isset($_REQUEST['remove_image']) && $access->checkOrigin()) {
 	$access->check_authenticity();
 	$bloglib->remove_post_image($_REQUEST['remove_image']);
 }
 
-if ($prefs['feature_wysiwyg'] == 'y' && ($prefs['wysiwyg_default'] == 'y' && !isset($_REQUEST['wysiwyg'])) || (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y')) {
+if ($prefs['feature_wysiwyg'] == 'y' && ($prefs['wysiwyg_default'] == 'y' && ! isset($_REQUEST['wysiwyg'])) || (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y')) {
 	$smarty->assign('wysiwyg', 'y');
 	$is_wysiwyg = true;
 } else {
@@ -119,7 +119,7 @@ if ($postId > 0) {
 
 	$smarty->assign('post_info', $data);
 	$smarty->assign('data', $data['data']);
-	$smarty->assign('parsed_data', TikiLib::lib('parser')->parse_data($data['data'], array('is_html' => $is_wysiwyg)));
+	$smarty->assign('parsed_data', TikiLib::lib('parser')->parse_data($data['data'], ['is_html' => $is_wysiwyg]));
 	$smarty->assign('blogpriv', $data['priv']);
 
 	check_ticket('blog');
@@ -131,9 +131,8 @@ if ($postId > 0) {
 	if (isset($_REQUEST['lang'])) {
 		$cat_lang = $_REQUEST['lang'];
 	}
-
 }
-include_once ('freetag_list.php');
+include_once('freetag_list.php');
 
 $smarty->assign('preview', 'n');
 if ($tiki_p_admin != 'y') {
@@ -160,12 +159,12 @@ if (isset($_REQUEST["data"])) {
 }
 
 // Handles switching editor modes
-if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal']=='y') {
+if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal'] == 'y') {
 	// Parsing page data as first time seeing html page in normal editor
 	$smarty->assign('msg', "Parsing html to wiki");
 	$parsed = $editlib->parseToWiki($edit_data);
 	$smarty->assign('data', $parsed);
-} elseif (isset($_REQUEST['mode_wysiwyg']) && $_REQUEST['mode_wysiwyg']=='y') {
+} elseif (isset($_REQUEST['mode_wysiwyg']) && $_REQUEST['mode_wysiwyg'] == 'y') {
 	// Parsing page data as first time seeing wiki page in wysiwyg editor
 	$smarty->assign('msg', "Parsing wiki to html");
 	$parsed = $editlib->parseToWysiwyg($edit_data);
@@ -178,9 +177,9 @@ if (isset($_REQUEST["blogpriv"]) && $_REQUEST["blogpriv"] == 'on') {
 }
 
 if (isset($_REQUEST["preview"])) {
-	$post_info = array();
+	$post_info = [];
 	$parserlib = TikiLib::lib('parser');
-	$parsed_data = TikiLib::lib('parser')->parse_data($edit_data, array('is_html' => $is_wysiwyg));
+	$parsed_data = TikiLib::lib('parser')->parse_data($edit_data, ['is_html' => $is_wysiwyg]);
 	$smarty->assign('data', $edit_data);
 	$post_info['parsed_data'] = $parsed_data;
 
@@ -209,7 +208,7 @@ if (isset($_REQUEST['save']) && $prefs['feature_contribution'] == 'y' && $prefs[
 	$contribution_needed = false;
 }
 
-if (isset($_REQUEST['save']) && !$contribution_needed && $access->checkOrigin()) {
+if (isset($_REQUEST['save']) && ! $contribution_needed && $access->checkOrigin()) {
 	$imagegallib = TikiLib::lib('imagegal');
 	$smarty->assign('individual', 'n');
 
@@ -239,8 +238,8 @@ if (isset($_REQUEST['save']) && !$contribution_needed && $access->checkOrigin())
 	$cat_name = $title;
 	$cat_href = "tiki-view_blog_post.php?postId=" . urlencode($postId);
 	$cat_lang = $_REQUEST['lang'];
-	include_once ("freetag_apply.php");
-	include_once ("categorize.php");
+	include_once("freetag_apply.php");
+	include_once("categorize.php");
 
 	require_once('tiki-sefurl.php');
 	$smarty->loadPlugin('smarty_modifier_sefurl');
@@ -251,7 +250,7 @@ if (isset($_REQUEST['save']) && !$contribution_needed && $access->checkOrigin())
 
 if ($contribution_needed) {
 	$smarty->assign('title', $_REQUEST["title"]);
-	$smarty->assign('parsed_data', TikiLib::lib('parser')->parse_data($_REQUEST['data'], array('is_html' => $is_wysiwyg)));
+	$smarty->assign('parsed_data', TikiLib::lib('parser')->parse_data($_REQUEST['data'], ['is_html' => $is_wysiwyg]));
 	$smarty->assign('data', $_REQUEST['data']);
 	if ($prefs['feature_freetags'] == 'y') {
 		$smarty->assign('taglist', $_REQUEST["freetag_string"]);
@@ -260,16 +259,16 @@ if ($contribution_needed) {
 
 $cat_type = 'blog post';
 $cat_objid = $postId;
-include_once ("categorize_list.php");
+include_once("categorize_list.php");
 
-if ( $prefs['geo_locate_blogpost'] == 'y' ) {
+if ($prefs['geo_locate_blogpost'] == 'y') {
 	$smarty->assign('geolocation_string', TikiLib::lib('geo')->get_coordinates_string('blog post', $postId));
 }
 
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 
 if ($prefs['feature_contribution'] == 'y') {
-	include_once ('contribution.php');
+	include_once('contribution.php');
 }
 
 ask_ticket('blog');

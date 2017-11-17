@@ -9,12 +9,12 @@
 // $Id$
 
 $section = 'cms';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $artlib = TikiLib::lib('art');
 $access->check_feature('feature_articles');
 
 // PERMISSIONS: NEEDS p_admin or tiki_p_articles_admin_types
-$access->check_permission(array('tiki_p_articles_admin_types'));
+$access->check_permission(['tiki_p_articles_admin_types']);
 
 if (isset($_REQUEST["add_type"])) {
 	$artlib->add_type($_REQUEST["new_type"]);
@@ -23,24 +23,60 @@ if (isset($_REQUEST["add_type"])) {
 	$artlib->remove_type($_REQUEST["remove_type"]);
 } elseif (isset($_REQUEST["update_type"])) {
 	foreach (array_keys($_REQUEST["type_array"]) as $this_type) {
-		if (!isset($_REQUEST["use_ratings"][$this_type]))								$_REQUEST["use_ratings"][$this_type] = 'n';
-		if (!isset($_REQUEST["show_pre_publ"][$this_type]))							$_REQUEST["show_pre_publ"][$this_type] = 'n';
-		if (!isset($_REQUEST["show_post_expire"][$this_type]))					$_REQUEST["show_post_expire"][$this_type] = 'n';
-		if (!isset($_REQUEST["heading_only"][$this_type]))							$_REQUEST["heading_only"][$this_type] = 'n';
-		if (!isset($_REQUEST["allow_comments"][$this_type]))						$_REQUEST["allow_comments"][$this_type] = 'n';
-		if (!isset($_REQUEST["comment_can_rate_article"][$this_type]))	$_REQUEST["comment_can_rate_article"][$this_type] = 'n';
-		if (!isset($_REQUEST["show_image"][$this_type]))								$_REQUEST["show_image"][$this_type] = 'n';
-		if (!isset($_REQUEST["show_avatar"][$this_type]))								$_REQUEST["show_avatar"][$this_type] = 'n';
-		if (!isset($_REQUEST["show_author"][$this_type]))								$_REQUEST["show_author"][$this_type] = 'n';
-		if (!isset($_REQUEST["show_pubdate"][$this_type]))							$_REQUEST["show_pubdate"][$this_type] = 'n';
-		if (!isset($_REQUEST["show_expdate"][$this_type]))							$_REQUEST["show_expdate"][$this_type] = 'n';
-		if (!isset($_REQUEST["show_reads"][$this_type]))								$_REQUEST["show_reads"][$this_type] = 'n';
-		if (!isset($_REQUEST["show_size"][$this_type]))									$_REQUEST["show_size"][$this_type] = 'n';
-		if (!isset($_REQUEST["show_topline"][$this_type]))							$_REQUEST["show_topline"][$this_type] = 'n';
-		if (!isset($_REQUEST["show_subtitle"][$this_type]))							$_REQUEST["show_subtitle"][$this_type] = 'n';
-		if (!isset($_REQUEST["show_image_caption"][$this_type]))				$_REQUEST["show_image_caption"][$this_type] = 'n';
-		if (!isset($_REQUEST["show_linkto"][$this_type]))								$_REQUEST["show_linkto"][$this_type] = 'n';
-		if (!isset($_REQUEST["creator_edit"][$this_type]))							$_REQUEST["creator_edit"][$this_type] = 'n';
+		if (! isset($_REQUEST["use_ratings"][$this_type])) {
+			$_REQUEST["use_ratings"][$this_type] = 'n';
+		}
+		if (! isset($_REQUEST["show_pre_publ"][$this_type])) {
+			$_REQUEST["show_pre_publ"][$this_type] = 'n';
+		}
+		if (! isset($_REQUEST["show_post_expire"][$this_type])) {
+			$_REQUEST["show_post_expire"][$this_type] = 'n';
+		}
+		if (! isset($_REQUEST["heading_only"][$this_type])) {
+			$_REQUEST["heading_only"][$this_type] = 'n';
+		}
+		if (! isset($_REQUEST["allow_comments"][$this_type])) {
+			$_REQUEST["allow_comments"][$this_type] = 'n';
+		}
+		if (! isset($_REQUEST["comment_can_rate_article"][$this_type])) {
+			$_REQUEST["comment_can_rate_article"][$this_type] = 'n';
+		}
+		if (! isset($_REQUEST["show_image"][$this_type])) {
+			$_REQUEST["show_image"][$this_type] = 'n';
+		}
+		if (! isset($_REQUEST["show_avatar"][$this_type])) {
+			$_REQUEST["show_avatar"][$this_type] = 'n';
+		}
+		if (! isset($_REQUEST["show_author"][$this_type])) {
+			$_REQUEST["show_author"][$this_type] = 'n';
+		}
+		if (! isset($_REQUEST["show_pubdate"][$this_type])) {
+			$_REQUEST["show_pubdate"][$this_type] = 'n';
+		}
+		if (! isset($_REQUEST["show_expdate"][$this_type])) {
+			$_REQUEST["show_expdate"][$this_type] = 'n';
+		}
+		if (! isset($_REQUEST["show_reads"][$this_type])) {
+			$_REQUEST["show_reads"][$this_type] = 'n';
+		}
+		if (! isset($_REQUEST["show_size"][$this_type])) {
+			$_REQUEST["show_size"][$this_type] = 'n';
+		}
+		if (! isset($_REQUEST["show_topline"][$this_type])) {
+			$_REQUEST["show_topline"][$this_type] = 'n';
+		}
+		if (! isset($_REQUEST["show_subtitle"][$this_type])) {
+			$_REQUEST["show_subtitle"][$this_type] = 'n';
+		}
+		if (! isset($_REQUEST["show_image_caption"][$this_type])) {
+			$_REQUEST["show_image_caption"][$this_type] = 'n';
+		}
+		if (! isset($_REQUEST["show_linkto"][$this_type])) {
+			$_REQUEST["show_linkto"][$this_type] = 'n';
+		}
+		if (! isset($_REQUEST["creator_edit"][$this_type])) {
+			$_REQUEST["creator_edit"][$this_type] = 'n';
+		}
 
 		$artlib->edit_type(
 			$this_type,
@@ -65,9 +101,9 @@ if (isset($_REQUEST["add_type"])) {
 		);
 
 		// Add custom attributes
-		if ($prefs["article_custom_attributes"] == 'y' && !empty($_REQUEST["new_attribute"][$this_type])) {
+		if ($prefs["article_custom_attributes"] == 'y' && ! empty($_REQUEST["new_attribute"][$this_type])) {
 			$ok = $artlib->add_article_type_attribute($this_type, $_REQUEST["new_attribute"][$this_type]);
-			if (!$ok) {
+			if (! $ok) {
 				$smarty->assign('msg', tra("Failed to add attribute"));
 				$smarty->display("error.tpl");
 				die;
@@ -89,7 +125,7 @@ if ($prefs["article_custom_attributes"] == 'y') {
 
 $smarty->assign('types', $types);
 
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 
 // the strings below are used to localize the article types in the template file
 //get_strings tr('Article') tr('Review') tr('Event') tr('Classified')

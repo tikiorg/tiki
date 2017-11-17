@@ -3,17 +3,17 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $wikilib = TikiLib::lib('wiki');
-$access->check_feature(array('feature_wiki', 'feature_backlinks'));
+$access->check_feature(['feature_wiki', 'feature_backlinks']);
 
 // Get the page from the request var or default it to HomePage
-if (!isset($_REQUEST["page"])) {
+if (! isset($_REQUEST["page"])) {
 	$smarty->assign('msg', tra("No page indicated"));
 	$smarty->display("error.tpl");
 	die;
@@ -21,7 +21,7 @@ if (!isset($_REQUEST["page"])) {
 	$page = $_REQUEST["page"];
 	$smarty->assign_by_ref('page', $_REQUEST["page"]);
 }
-if (!($info = $tikilib->get_page_info($page))) {
+if (! ($info = $tikilib->get_page_info($page))) {
 	$smarty->assign('msg', tra('Page cannot be found'));
 	$smarty->display('error.tpl');
 	die;
@@ -31,7 +31,7 @@ $tikilib->get_perm_object($page, 'wiki page', $info);
 $access->check_permission('tiki_p_view');
 
 // If the page doesn't exist then display an error
-if (!$tikilib->page_exists($page)) {
+if (! $tikilib->page_exists($page)) {
 	$smarty->assign('msg', tra("The page cannot be found"));
 	$smarty->display("error.tpl");
 	die;

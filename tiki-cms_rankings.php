@@ -3,31 +3,31 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'cms';
-require_once ('tiki-setup.php');
-include_once ('lib/rankings/ranklib.php');
-$access->check_feature(array('feature_articles', 'feature_cms_rankings'));
+require_once('tiki-setup.php');
+include_once('lib/rankings/ranklib.php');
+$access->check_feature(['feature_articles', 'feature_cms_rankings']);
 $access->check_permission('tiki_p_read_article');
 
-$allrankings = array(
-	array(
+$allrankings = [
+	[
 	'name' => tra('Top Articles'),
 	'value' => 'cms_ranking_top_articles'
-),
-	array(
+	],
+	[
 	'name' => tra('Top authors'),
 	'value' => 'cms_ranking_top_authors'
-)
-);
+	]
+];
 
 $smarty->assign('allrankings', $allrankings);
 
-if (!isset($_REQUEST["which"])) {
+if (! isset($_REQUEST["which"])) {
 	$which = 'cms_ranking_top_articles';
 } else {
 	$which = $_REQUEST["which"];
@@ -36,7 +36,7 @@ if (!isset($_REQUEST["which"])) {
 $smarty->assign('which', $which);
 
 // Get the page from the request var or default it to HomePage
-if (!isset($_REQUEST["limit"])) {
+if (! isset($_REQUEST["limit"])) {
 	$limit = 10;
 } else {
 	$limit = $_REQUEST["limit"];
@@ -48,7 +48,7 @@ $smarty->assign_by_ref('limit', $limit);
 // Top Pages
 // Last pages
 // Top Authors
-$rankings = array();
+$rankings = [];
 
 $rk = $ranklib->$which($limit);
 $rank["data"] = $rk["data"];
@@ -60,7 +60,7 @@ $rankings[] = $rank;
 $smarty->assign_by_ref('rankings', $rankings);
 $smarty->assign('rpage', 'tiki-cms_rankings.php');
 
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 
 ask_ticket('cms_rankings');
 

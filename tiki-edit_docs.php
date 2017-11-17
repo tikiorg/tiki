@@ -9,15 +9,15 @@
 // $Id$
 $section = 'docs';
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $filegallib = TikiLib::lib('filegal');
-include_once ('lib/mime/mimetypes.php');
+include_once('lib/mime/mimetypes.php');
 global $mimetypes;
 
-$auto_query_args = array(
+$auto_query_args = [
 	'fileId',
 	'edit'
-);
+];
 
 $access->check_feature('feature_docs');
 $access->check_feature('feature_file_galleries');
@@ -30,11 +30,11 @@ $smarty->assign('fileId', $fileId);
 if ($fileId > 0) {
 	$fileInfo = $filegallib->get_file_info($fileId);
 } else {
-	$fileInfo = array();
+	$fileInfo = [];
 }
 
 //This allows the document to be edited, but only the most recent of that group if it is an archive
-if (!empty($fileInfo['archiveId']) && $fileInfo['archiveId'] > 0) {
+if (! empty($fileInfo['archiveId']) && $fileInfo['archiveId'] > 0) {
 	$fileId = $fileInfo['archiveId'];
 	$fileInfo = $filegallib->get_file_info($fileId);
 }
@@ -42,14 +42,14 @@ if (!empty($fileInfo['archiveId']) && $fileInfo['archiveId'] > 0) {
 $cat_type = 'file';
 $cat_objid = (int) $fileId;
 $cat_object_exists = ! empty($fileInfo);
-include_once ('categorize_list.php');
-include_once ('tiki-section_options.php');
+include_once('categorize_list.php');
+include_once('tiki-section_options.php');
 
 $gal_info = $filegallib->get_file_gallery($_REQUEST['galleryId']);
 
 $fileType = reset(explode(';', $fileInfo['filetype']));
 $extension = end(explode('.', $fileInfo['filename']));
-$supportedExtensions = array('odt', 'ods', 'odp');
+$supportedExtensions = ['odt', 'ods', 'odp'];
 $supportedTypes = array_map(
 	function ($type) use ($mimetypes) {
 		return $mimetypes[$type];
@@ -63,18 +63,18 @@ if (! in_array($extension, $supportedExtensions) && ! in_array($fileType, $suppo
 	die;
 }
 
-$globalperms = Perms::get(array( 'type' => 'file galleries', 'object' => $fileInfo['galleryId'] ));
+$globalperms = Perms::get([ 'type' => 'file galleries', 'object' => $fileInfo['galleryId'] ]);
 
 //check permissions
-if (!($globalperms->admin_file_galleries == 'y' || $globalperms->view_file_gallery == 'y')) {
+if (! ($globalperms->admin_file_galleries == 'y' || $globalperms->view_file_gallery == 'y')) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('You do not have permission to view/edit this file'));
 	$smarty->display('error.tpl');
 	die;
 }
 
-if (!empty($_REQUEST['name']) || !empty($fileInfo['name'])) {
-	$_REQUEST['name'] = (!empty($_REQUEST['name']) ? $_REQUEST['name'] : $fileInfo['name']);
+if (! empty($_REQUEST['name']) || ! empty($fileInfo['name'])) {
+	$_REQUEST['name'] = (! empty($_REQUEST['name']) ? $_REQUEST['name'] : $fileInfo['name']);
 } else {
 	$_REQUEST['name'] = 'New Doc';
 }
@@ -137,7 +137,7 @@ $headerlib->add_jsfile('vendor_extra/webodf/webodf.js');
 $savingText = json_encode(tr('Saving...'));
 
 $headerlib->add_jq_onready(
-    "window.odfcanvas = new odf.OdfCanvas($('#tiki_doc')[0]);
+	"window.odfcanvas = new odf.OdfCanvas($('#tiki_doc')[0]);
 	odfcanvas.load('tiki-download_file.php?fileId=' + $('#fileId').val());
 
 	//make editable

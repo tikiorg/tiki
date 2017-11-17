@@ -47,27 +47,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	//end invoice
 
 	//start invoice items
-	$invoiceItems = array();
+	$invoiceItems = [];
 
 	$_TEMP = $_REQUEST;
-	$itemsToDelete = array();
+	$itemsToDelete = [];
 	foreach (explode(',', $_REQUEST['InvoiceItemIds']) as $itemId) {
 		$itemsToDelete[$itemId] = $itemId;
 	}
 
-	$_TEMP['InvoiceId'] = array();
+	$_TEMP['InvoiceId'] = [];
 	for ($i = 0, $count_InvoiceItemId = count($_REQUEST['InvoiceItemId']); $i < $count_InvoiceItemId; $i++) {
 		$_TEMP['InvoiceId'][$i] = $_REQUEST['InvoiceId'];
 
 		$invoiceItem = $trklib->replaceItemFromRequestValues(
 			$trklib->get_tracker_by_name("Invoice Items"),
-			array(
+			[
 				"Invoice Id",
 				"Amount",
 				"Quantity",
 				"Work Description",
 				"Taxable",
-			),
+			],
 			$_TEMP,
 			$_REQUEST['InvoiceItemId'][$i],
 			$i
@@ -87,12 +87,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 	//end delete
 
-	header('Location: tiki-view_invoice.php?InvoiceId='.$_REQUEST['InvoiceId']);
+	header('Location: tiki-view_invoice.php?InvoiceId=' . $_REQUEST['InvoiceId']);
 	die;
 }
 
-$invoiceItems = array();
-if (!empty($_REQUEST['InvoiceId'])) {
+$invoiceItems = [];
+if (! empty($_REQUEST['InvoiceId'])) {
 	$invoice = Tracker_Query::tracker("Invoices")
 		->byName()
 		->equals($_REQUEST['InvoiceId'])
@@ -103,8 +103,8 @@ if (!empty($_REQUEST['InvoiceId'])) {
 
 	$invoiceItems = Tracker_Query::tracker("Invoice Items")
 		->byName()
-		->fields(array("Invoice Id"))
-		->search(array($_REQUEST['InvoiceId']))
+		->fields(["Invoice Id"])
+		->search([$_REQUEST['InvoiceId']])
 		->query();
 } else {
 	$_REQUEST['InvoiceId'] = 0;
@@ -128,17 +128,17 @@ $smarty->assign("setting", Tracker_Query::tracker("Invoice Settings")->byName()-
 
 //we add an extra item to the end of invoiceItems, so we can duplicate it on the page
 if (count($invoiceItems) < 1) {
-	$invoiceItems[] = array(
+	$invoiceItems[] = [
 		"Quantity" => "",
 		"Work Description" => "",
 		"Taxable" => "",
 		"Amount" => "",
-	);
+	];
 }
 $smarty->assign("invoiceItems", $invoiceItems);
 
 $headerlib->add_jq_onready(
-    "function setupTotal() {
+	"function setupTotal() {
 		$('#InvoiceForm :input')
 			.off('change')
 			.change(function() {

@@ -3,7 +3,7 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -17,7 +17,7 @@ This page is only meant to be called from the browser's XMLHttpRequest
 classes. All it does is grab the parameters and store them in the
 session.
 
-The parameters in the session will be stored under 
+The parameters in the session will be stored under
 $_SESSION['tiki_cookie_jar'][ $parameter_name ]
 */
 $tikiroot = dirname($_SERVER['PHP_SELF']);
@@ -27,6 +27,8 @@ unset($session_params);
 
 session_start();
 
-if ( isset( $_GET ) )
-	foreach ( $_GET as $key=>$value )
+if (isset($_GET)) {
+	foreach ($_GET as $key => $value) {
 		$_SESSION['tiki_cookie_jar'][$key] = $value;
+	}
+}

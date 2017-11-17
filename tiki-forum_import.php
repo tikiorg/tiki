@@ -46,9 +46,9 @@
 
 // Initialization
 
-$inputConfiguration = array(
-	array( 'staticKeyFilters' =>
-		array(
+$inputConfiguration = [
+	[ 'staticKeyFilters' =>
+		[
 			'step1' => 'word',
 			'step2' => 'word',
 			'step3' => 'word',
@@ -58,16 +58,16 @@ $inputConfiguration = array(
 			'ftype' => 'word',
 			'prefix' => 'word',
 			'server' => 'striptags',
-		)
-	)
-);
+		]
+	]
+];
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 $access->check_feature('feature_forums');
 $access->check_permission('tiki_p_admin_forum');
 
-include_once ('lib/importerlib.php');
+include_once('lib/importerlib.php');
 $import = new Importer($dbTiki);
 
 global $prefs;
@@ -78,11 +78,11 @@ global $prefs;
 // Step 2 - Select Forum to Import From/To
 // Step 3 - Migration Complete - Do Again?
 if (isset($_POST["step4"])) {
-} else if (isset($_POST["step3"])) {
+} elseif (isset($_POST["step3"])) {
 	if ($_POST["import"] == 'same') {			// Same db and server
-	} else if ($_POST["import"] == 'other') {	// Different db & server
-	} else if ($_POST["import"] == 'sql') {		// Import from SQL file
-		if (!$_POST["fForumid"] || !$_POST["tForumid"]) {
+	} elseif ($_POST["import"] == 'other') {	// Different db & server
+	} elseif ($_POST["import"] == 'sql') {		// Import from SQL file
+		if (! $_POST["fForumid"] || ! $_POST["tForumid"]) {
 			$smarty->assign('failed', 'true');
 		} else {
 			$moo = $import->importSQLForum(
@@ -108,10 +108,10 @@ if (isset($_POST["step4"])) {
 	$smarty->assign('tomove', $moo);
 	$smarty->assign('fF', $_POST["fForumid"]);
 	$smarty->assign('tF', $_POST["tForumid"]);
-} else if (isset($_POST["step2"])) {
+} elseif (isset($_POST["step2"])) {
 	if ($_POST["import"] == 'same') {			// Same db and server
-	} else if ($_POST["import"] == 'other') {	// Different db & server
-	} else if ($_POST["import"] == 'sql') {		// Import from SQL file
+	} elseif ($_POST["import"] == 'other') {	// Different db & server
+	} elseif ($_POST["import"] == 'sql') {		// Import from SQL file
 		//read sql file to create forum list
 		$sqlForums = $import->parseForumList(
 			$_POST["ftype"],
@@ -143,14 +143,14 @@ if (isset($_POST["step4"])) {
 	$smarty->assign('fi_type', $_POST["ftype"]);
 	$smarty->assign('fi_prefix', $_POST["prefix"]);
 	$smarty->assign('server', $_POST["server"]);
-} else if (isset($_POST["step1"])) {
-	if (!isset($_POST["import"])) {
+} elseif (isset($_POST["step1"])) {
+	if (! isset($_POST["import"])) {
 		$smarty->assign('msg', tra("Form error - no import method selected for some reason."));
 		$smarty->display("error.tpl");
 		die;
-	} else if ($_POST["import"] == 'same') {		// Same db and server
-	} else if ($_POST["import"] == 'other') {	// Different db & server
-	} else if ($_POST["import"] == 'sql') {		// Import from SQL file
+	} elseif ($_POST["import"] == 'same') {		// Same db and server
+	} elseif ($_POST["import"] == 'other') {	// Different db & server
+	} elseif ($_POST["import"] == 'sql') {		// Import from SQL file
 
 		/* Import from the SQL file will only look in $tikiroot/$tmpDir or
 		 * $tikiroot/img/wiki_up for the speficied file.  Any path is
@@ -160,7 +160,7 @@ if (isset($_POST["step4"])) {
 		 * being imported.  The relevant data is stored in /tmp in two
 		 * temporary flatfiles.
 		 */
-		if (!isset($_REQUEST["server"])) {
+		if (! isset($_REQUEST["server"])) {
 			$smarty->assign('msg', tra("Form error - no server-side filename entered for selected import method."));
 			$smarty->display("error.tpl");
 			die;
@@ -171,11 +171,11 @@ if (isset($_POST["step4"])) {
 			$smarty->assign('passed', 'false');
 			$smarty->assign('filecheck', '');
 			$smarty->assign('server', '');
-		} else if (file_exists($prefs['tmpDir'] . '/' . $server)) {
+		} elseif (file_exists($prefs['tmpDir'] . '/' . $server)) {
 			$smarty->assign('filecheck', $prefs['tmpDir']);
 			$smarty->assign('passed', 'true');
 			$smarty->assign('server', $prefs['tmpDir'] . '/' . $server);
-		} else if (file_exists('img/wiki_up/' . $server)) {
+		} elseif (file_exists('img/wiki_up/' . $server)) {
 			$smarty->assign('filecheck', "img/wiki_up");
 			$smarty->assign('passed', 'true');
 			$smarty->assign('server', "img/wiki_up" . $server);

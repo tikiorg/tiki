@@ -14,38 +14,38 @@ if (empty($prefs['login_autologin_group'])) {
 	die;
 }
 
-if (!empty($_REQUEST['uname'])) {
+if (! empty($_REQUEST['uname'])) {
 	$uname = $_REQUEST['uname'];
 } else {
 	$access->display_error('', tra('User name needs to be specified'), "400");
 	die;
 }
 
-if (!empty($_REQUEST['email'])) {
+if (! empty($_REQUEST['email'])) {
 	$email = $_REQUEST['email'];
 } else {
 	$email = '';
 }
 
-if (!empty($_REQUEST['realName'])) {
+if (! empty($_REQUEST['realName'])) {
 	$realName = $_REQUEST['realName'];
 } else {
 	$realName = '';
 }
 
-if (!empty($_REQUEST['groups'])) {
+if (! empty($_REQUEST['groups'])) {
 	$groups = $_REQUEST['groups'];
 } else {
-	$groups = array();
+	$groups = [];
 }
 
-if (!empty($_REQUEST['page'])) {
+if (! empty($_REQUEST['page'])) {
 	$page = $_REQUEST['page'];
 } else {
 	$page = '';
 }
 
-if (!empty($_REQUEST['base_url'])) {
+if (! empty($_REQUEST['base_url'])) {
 	$autologin_base_url = $_REQUEST['base_url'];
 } else {
 	$access->display_error('', tra('Base URL not received from remote system'), "500");
@@ -54,33 +54,33 @@ if (!empty($_REQUEST['base_url'])) {
 
 if ($user == $prefs['login_autologin_user']) {
 	// Attempted server-side login
-	if (!empty($prefs['login_autologin_allowedgroups'])) {
-		$allowedgroups =  array_map('trim', explode(',', $prefs['login_autologin_allowedgroups']));
-		if (!array_intersect($allowedgroups, $groups)) {
+	if (! empty($prefs['login_autologin_allowedgroups'])) {
+		$allowedgroups = array_map('trim', explode(',', $prefs['login_autologin_allowedgroups']));
+		if (! array_intersect($allowedgroups, $groups)) {
 			$access->display_error('', tra('Permission denied'), "401");
 			die;
 		}
 	}
-	if ($prefs['login_autologin_createnew'] == 'y' && !TikiLib::lib('user')->user_exists($uname)) {
+	if ($prefs['login_autologin_createnew'] == 'y' && ! TikiLib::lib('user')->user_exists($uname)) {
 		$randompass = TikiLib::lib('user')->genPass();
 		if (empty($email)) {
 			$access->display_error('', tra('Email needs to be specified'), "400");
 			die;
 		}
 		TikiLib::lib('user')->add_user($uname, $randompass, $email);
-	} elseif (!TikiLib::lib('user')->user_exists($uname)) {
+	} elseif (! TikiLib::lib('user')->user_exists($uname)) {
 		$access->display_error('', tra('Permission denied'), "401");
 		die;
-	} elseif (!empty($email) && ($prefs['user_unique_email'] != 'y' || !TikiLib::lib('user')->other_user_has_email($uname, $email))) {
+	} elseif (! empty($email) && ($prefs['user_unique_email'] != 'y' || ! TikiLib::lib('user')->other_user_has_email($uname, $email))) {
 		TikiLib::lib('user')->change_user_email($uname, $email);
 	}
-	if (!empty($realName)) {
+	if (! empty($realName)) {
 		TikiLib::lib('tiki')->set_user_preference($uname, 'realName', $realName);
 	}
-	if (!empty($prefs['login_autologin_syncgroups']) && !empty($groups)) {
-		$syncgroups =  array_map('trim', explode(',', $prefs['login_autologin_syncgroups']));
+	if (! empty($prefs['login_autologin_syncgroups']) && ! empty($groups)) {
+		$syncgroups = array_map('trim', explode(',', $prefs['login_autologin_syncgroups']));
 		foreach ($syncgroups as $g) {
-			if (!in_array($g, $groups) && TikiLib::lib('user')->group_exists($g)) {
+			if (! in_array($g, $groups) && TikiLib::lib('user')->group_exists($g)) {
 				TikiLib::lib('user')->remove_user_from_group($uname, $g);
 			}
 		}
@@ -92,26 +92,26 @@ if ($user == $prefs['login_autologin_user']) {
 	}
 	// Generate token url to log the user in for real
 	require_once 'lib/auth/tokens.php';
-	$tokenlib = AuthTokens::build( $prefs );
+	$tokenlib = AuthTokens::build($prefs);
 	$params['uname'] = $uname;
 	$params['page'] = $page;
 	$params['base_url'] = $autologin_base_url;
-	$url = $base_url . 'tiki-autologin.php' . '?' . http_build_query( $params, '', '&' );
-	$url = $tokenlib->includeToken( $url, array($prefs['login_autologin_group']), '', 30, 1);
+	$url = $base_url . 'tiki-autologin.php' . '?' . http_build_query($params, '', '&');
+	$url = $tokenlib->includeToken($url, [$prefs['login_autologin_group']], '', 30, 1);
 	echo $url;
 } else {
 	// Actual user attempt via token
-	if (!in_array($prefs['login_autologin_group'], Perms::get()->getGroups())) {
+	if (! in_array($prefs['login_autologin_group'], Perms::get()->getGroups())) {
 		$access->display_error('', tra('Permission denied'), "401");
 		die;
 	}
 	if ($user || TikiLib::lib('user')->autologin_user($uname)) {
-		if (!empty($autologin_base_url)) {
+		if (! empty($autologin_base_url)) {
 			$_SESSION['autologin_base_url'] = $autologin_base_url;
 		}
-		if (!empty($_SESSION['loginfrom'])) {
+		if (! empty($_SESSION['loginfrom'])) {
 			TikiLib::lib('access')->redirect($_SESSION['loginfrom']);
-		} elseif (!empty($page)) {
+		} elseif (! empty($page)) {
 			$sefurl = TikiLib::lib('wiki')->sefurl($page);
 			TikiLib::lib('access')->redirect($sefurl);
 		} else {

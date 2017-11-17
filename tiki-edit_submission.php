@@ -9,7 +9,7 @@
 // $Id$
 
 $section = 'cms';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $artlib = TikiLib::lib('art');
 
 if ($prefs['feature_freetags'] == 'y') {
@@ -20,7 +20,7 @@ $access->check_feature('feature_submissions');
 $access->check_permission('tiki_p_submit_article');
 $errors = false;
 
-$auto_query_args = array('subId');
+$auto_query_args = ['subId'];
 
 if ($tiki_p_admin != 'y') {
 	if ($tiki_p_use_HTML != 'y') {
@@ -34,13 +34,13 @@ if (isset($_REQUEST['subId'])) {
 	$subId = 0;
 }
 
-if (!empty($_REQUEST['topicId'])) {
+if (! empty($_REQUEST['topicId'])) {
 	$topicId = $_REQUEST['topicId'];
 } else {
 	$topicId = '';
 }
 
-if (!empty($_REQUEST['type'])) {
+if (! empty($_REQUEST['type'])) {
 	$type = $_REQUEST['type'];
 } else {
 	$type = '';
@@ -58,7 +58,7 @@ $smarty->assign('articleId', $subId);
 $smarty->assign('previewId', $previewId);
 $smarty->assign(
 	'imageIsChanged',
-	(isset($_REQUEST['imageIsChanged']) && $_REQUEST['imageIsChanged']=='y') ? 'y' : 'n'
+	(isset($_REQUEST['imageIsChanged']) && $_REQUEST['imageIsChanged'] == 'y') ? 'y' : 'n'
 );
 
 $templateslib = TikiLib::lib('template');
@@ -153,10 +153,10 @@ if (isset($_REQUEST['subId'])) {
 
 	$body = $article_data['body'];
 	$heading = $article_data['heading'];
-	$smarty->assign('parsed_body', $parserlib->parse_data($body, array('is_html' => 'y')));
-	$smarty->assign('parsed_heading', $parserlib->parse_data($heading), array('is_html' => 'y'));
+	$smarty->assign('parsed_body', $parserlib->parse_data($body, ['is_html' => 'y']));
+	$smarty->assign('parsed_heading', $parserlib->parse_data($heading), ['is_html' => 'y']);
 }
-if (!empty($_REQUEST['translationOf'])) {
+if (! empty($_REQUEST['translationOf'])) {
 	$translationOf = $_REQUEST['translationOf'];
 	$smarty->assign('translationOf', $translationOf);
 }
@@ -185,7 +185,7 @@ if (isset($_REQUEST['allowhtml'])) {
 if ((isset($_REQUEST["save"]) || isset($_REQUEST["submitarticle"]))
 			&& empty($user)
 			&& $prefs['feature_antibot'] == 'y'
-			&& !$captchalib->validate()
+			&& ! $captchalib->validate()
 ) {
 	Feedback::error(['mes' => $captchalib->getErrors()]);
 	$errors = true;
@@ -197,15 +197,15 @@ $smarty->assign_by_ref('topics', $topics);
 $smarty->assign('preview', 0);
 
 // If we are in preview mode then preview it!
-if (isset($_REQUEST['preview']) || !empty($errors)) {
+if (isset($_REQUEST['preview']) || ! empty($errors)) {
 	check_ticket('edit-submission');
 # convert from the displayed 'site' time to 'server' time
 
 	//Convert 12-hour clock hours to 24-hour scale to compute time
-	if (!empty($_REQUEST['publish_Meridian'])) {
+	if (! empty($_REQUEST['publish_Meridian'])) {
 		$_REQUEST['publish_Hour'] = date('H', strtotime($_REQUEST['publish_Hour'] . ':00 ' . $_REQUEST['publish_Meridian']));
 	}
-	if (!empty($_REQUEST['expire_Meridian'])) {
+	if (! empty($_REQUEST['expire_Meridian'])) {
 		$_REQUEST['expire_Hour'] = date('H', strtotime($_REQUEST['expire_Hour'] . ':00 ' . $_REQUEST['expire_Meridian']));
 	}
 
@@ -228,7 +228,9 @@ if (isset($_REQUEST['preview']) || !empty($errors)) {
 	);
 
 	$smarty->assign('reads', '0');
-	if (isset($_REQUEST['preview'])) $smarty->assign('preview', 1);
+	if (isset($_REQUEST['preview'])) {
+		$smarty->assign('preview', 1);
+	}
 	$smarty->assign('edit_data', 'y');
 	$smarty->assign('arttitle', $_REQUEST['title']);
 	$smarty->assign('authorName', $_REQUEST['authorName']);
@@ -268,11 +270,21 @@ if (isset($_REQUEST['preview']) || !empty($errors)) {
 	$smarty->assign('show_linkto', $type["show_linkto"]);
 	$smarty->assign('use_ratings', $type["use_ratings"]);
 
-	if (!isset($_REQUEST['topline'])) $_REQUEST['topline'] = '';
-	if (!isset($_REQUEST['subtitle'])) $_REQUEST['subtitle'] = '';
-	if (!isset($_REQUEST['linkto'])) $_REQUEST['linkto'] = '';
-	if (!isset($_REQUEST['image_caption'])) $_REQUEST['image_caption'] = '';
-	if (!isset($_REQUEST['lang'])) $_REQUEST['lang'] = '';
+	if (! isset($_REQUEST['topline'])) {
+		$_REQUEST['topline'] = '';
+	}
+	if (! isset($_REQUEST['subtitle'])) {
+		$_REQUEST['subtitle'] = '';
+	}
+	if (! isset($_REQUEST['linkto'])) {
+		$_REQUEST['linkto'] = '';
+	}
+	if (! isset($_REQUEST['image_caption'])) {
+		$_REQUEST['image_caption'] = '';
+	}
+	if (! isset($_REQUEST['lang'])) {
+		$_REQUEST['lang'] = '';
+	}
 
 	$smarty->assign('topline', $_REQUEST['topline']);
 	$smarty->assign('subtitle', $_REQUEST['subtitle']);
@@ -294,7 +306,6 @@ if (isset($_REQUEST['preview']) || !empty($errors)) {
 
 	// Parse the information of an uploaded file and use it for the preview
 	if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-
 		$file_name = $_FILES['userfile1']['name'];
 		// Simple check if it's an image file
 		if (preg_match('/\.(gif|png|jpe?g)$/i', $file_name)) {
@@ -316,10 +327,10 @@ if (isset($_REQUEST['preview']) || !empty($errors)) {
 			$cachefile = $prefs['tmpDir'];
 
 			if ($tikidomain) {
-				$cachefile.= "/$tikidomain";
+				$cachefile .= "/$tikidomain";
 			}
 
-			$cachefile.= '/article_preview.' . $previewId;
+			$cachefile .= '/article_preview.' . $previewId;
 
 			if (move_uploaded_file($_FILES['userfile1']['tmp_name'], $cachefile)) {
 				$smarty->assign('imageIsChanged', 'y');
@@ -343,8 +354,8 @@ if (isset($_REQUEST['preview']) || !empty($errors)) {
 
 	$smarty->assign('size', strlen($body));
 
-	$parsed_body = $parserlib->parse_data($body, array('is_html' => 'y'));
-	$parsed_heading = $parserlib->parse_data($heading, array('is_html' => 'y'));
+	$parsed_body = $parserlib->parse_data($body, ['is_html' => 'y']);
+	$parsed_heading = $parserlib->parse_data($heading, ['is_html' => 'y']);
 
 	$smarty->assign('parsed_body', $parsed_body);
 	$smarty->assign('parsed_heading', $parsed_heading);
@@ -360,11 +371,11 @@ if ((isset($_REQUEST['save']) || isset($_REQUEST['submitarticle'])) && empty($er
 
 	# convert from the displayed 'site' time to UTC time
 	//Convert 12-hour clock hours to 24-hour scale to compute time
-	if (!empty($_REQUEST['publish_Meridian'])) {
+	if (! empty($_REQUEST['publish_Meridian'])) {
 		$_REQUEST['publish_Hour'] = date('H', strtotime($_REQUEST['publish_Hour'] . ':00 ' . $_REQUEST['publish_Meridian']));
 	}
 
-	if (!empty($_REQUEST['expire_Meridian'])) {
+	if (! empty($_REQUEST['expire_Meridian'])) {
 		$_REQUEST['expire_Hour'] = date('H', strtotime($_REQUEST['expire_Hour'] . ':00 ' . $_REQUEST['expire_Meridian']));
 	}
 
@@ -433,17 +444,27 @@ if ((isset($_REQUEST['save']) || isset($_REQUEST['submitarticle'])) && empty($er
 	$heading = $imagegallib->capture_images($heading);
 
 	// If page exists
-	if (!isset($_REQUEST['topicId'])) {
+	if (! isset($_REQUEST['topicId'])) {
 		$smarty->assign('msg', tra('You have to create a topic first'));
 
 		$smarty->display('error.tpl');
 		die;
 	}
-	if (!isset($_REQUEST['topline'])) $_REQUEST['topline'] = '';
-	if (!isset($_REQUEST['subtitle'])) $_REQUEST['subtitle'] = '';
-	if (!isset($_REQUEST['linkto'])) $_REQUEST['linkto'] = '';
-	if (!isset($_REQUEST['image_caption'])) $_REQUEST['image_caption'] = '';
-	if (!isset($_REQUEST['lang'])) $_REQUEST['lang'] = '';
+	if (! isset($_REQUEST['topline'])) {
+		$_REQUEST['topline'] = '';
+	}
+	if (! isset($_REQUEST['subtitle'])) {
+		$_REQUEST['subtitle'] = '';
+	}
+	if (! isset($_REQUEST['linkto'])) {
+		$_REQUEST['linkto'] = '';
+	}
+	if (! isset($_REQUEST['image_caption'])) {
+		$_REQUEST['image_caption'] = '';
+	}
+	if (! isset($_REQUEST['lang'])) {
+		$_REQUEST['lang'] = '';
+	}
 
 	$subid = $artlib->replace_submission(
 		strip_tags($_REQUEST['title'], '<a><pre><p><img><hr><b><i>'),
@@ -478,13 +499,13 @@ if ((isset($_REQUEST['save']) || isset($_REQUEST['submitarticle'])) && empty($er
 	$cat_name = $_REQUEST['title'];
 	$cat_href = 'tiki-edit_submission.php?subId=' . $cat_objid;
 
-	include_once ('categorize.php');
-	include_once ('freetag_apply.php');
+	include_once('categorize.php');
+	include_once('freetag_apply.php');
 
 	// Add attributes
 	if ($prefs['article_custom_attributes'] == 'y') {
 		$valid_att = $artlib->get_article_type_attributes($_REQUEST['type']);
-		$attributeArray = array();
+		$attributeArray = [];
 		foreach ($valid_att as $att) {
 			// need to convert . to _ for matching
 			$toMatch = str_replace('.', '_', $att['itemId']);
@@ -500,7 +521,7 @@ if ((isset($_REQUEST['save']) || isset($_REQUEST['submitarticle'])) && empty($er
 	// Remove preview cache because it won't be used any more
 	@$artlib->delete_image_cache('preview', $previewId);
 
-	if ( isset($_REQUEST['save']) && $tiki_p_autoapprove_submission == 'y' ) {
+	if (isset($_REQUEST['save']) && $tiki_p_autoapprove_submission == 'y') {
 		$artlib->approve_submission($subid);
 		header('location: tiki-view_articles.php');
 		die;
@@ -529,7 +550,7 @@ if (empty($article_data) && empty($_REQUEST['type'])) {
 if ($prefs['article_custom_attributes'] == 'y') {
 	$article_attributes = $artlib->get_article_attributes($subId, true);
 	$smarty->assign('article_attributes', $article_attributes);
-	$all_attributes = array();
+	$all_attributes = [];
 	$js_string = '';
 
 	foreach ($types as &$t) {
@@ -554,7 +575,7 @@ if ($prefs['feature_cms_templates'] == 'y') {
 $smarty->assign_by_ref('templates', $templates['data']);
 
 if ($prefs['feature_multilingual'] == 'y') {
-	$languages = array();
+	$languages = [];
 	$langLib = TikiLib::lib('language');
 	$languages = $langLib->list_languages();
 	$smarty->assign_by_ref('languages', $languages);
@@ -562,10 +583,10 @@ if ($prefs['feature_multilingual'] == 'y') {
 
 $cat_type = 'submission';
 $cat_objid = $subId;
-include_once ('categorize_list.php');
+include_once('categorize_list.php');
 
 if ($prefs['feature_freetags'] == 'y') {
-	include_once ('freetag_list.php');
+	include_once('freetag_list.php');
 	if (isset($_REQUEST['preview'])) {
 		$smarty->assign('taglist', $_REQUEST['freetag_string']);
 	}
@@ -584,7 +605,7 @@ $smarty->assign('qtcycle', '');
 ask_ticket('edit-submission');
 
 $smarty->assign('section', $section);
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

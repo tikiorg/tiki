@@ -3,13 +3,13 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = "galleries";
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $imagegallib = TikiLib::lib('imagegal');
 $statslib = TikiLib::lib('stats');
 
@@ -19,7 +19,7 @@ if ($prefs['feature_categories'] == 'y') {
 	$categlib = TikiLib::lib('categ');
 }
 
-if (!isset($_REQUEST['imageId'])) {
+if (! isset($_REQUEST['imageId'])) {
 	$smarty->assign('msg', tra("No image indicated"));
 	$smarty->display("error.tpl");
 	die;
@@ -28,7 +28,7 @@ $imageId = $_REQUEST['imageId'];
 // always get gallery from image so no user can fake the galleryid
 // and get an image that is truly in another (forbidden) gallery
 $galleryId = $imagegallib->get_gallery_from_image($imageId);
-if (!$galleryId) {
+if (! $galleryId) {
 	$smarty->assign('msg', tra("picture not found"));
 	$smarty->display("error.tpl");
 	die;
@@ -48,9 +48,9 @@ if (isset($_REQUEST["scalesize"])) {
 }
 $arrscales = $imagegallib->get_gallery_scale_info($galleryId);
 // adjust scale size to existing ones
-if ($scalesize && !$prefs['preset_galleries_info'] == 'y') {
+if ($scalesize && ! $prefs['preset_galleries_info'] == 'y') {
 	$testscale = 0;
-	foreach ( $arrscales as $arrscale ) {
+	foreach ($arrscales as $arrscale) {
 		if ($scalesize <= $arrscale['scale']) {
 			$testscale = $arrscale['scale'];
 			break;
@@ -60,7 +60,7 @@ if ($scalesize && !$prefs['preset_galleries_info'] == 'y') {
 }
 $smarty->assign_by_ref('scalesize', $scalesize);
 $smarty->assign('same_scale', "&amp;scalesize={$scalesize}");
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$_REQUEST["sort_mode"] = $gal_info['sortorder'] . '_' . $gal_info['sortdirection'];
 }
 $sort_mode = $_REQUEST["sort_mode"];
@@ -100,7 +100,7 @@ if ($prefs['feature_gal_slideshow'] != 'n') {
 // Everybody can browse images
 if (isset($_REQUEST["move_image"])) {
 	check_ticket('browse-image');
-	if ($tiki_p_admin_galleries != 'y' && (!$user || $user != $gal_info["user"])) {
+	if ($tiki_p_admin_galleries != 'y' && (! $user || $user != $gal_info["user"])) {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("You do not have permission to move images from this gallery"));
 		$smarty->display("error.tpl");
@@ -147,8 +147,8 @@ if ($winy < 200) {
 	$winy = 200;
 }
 // Give it some more pixels for the links and a little margin
-$winx+= 40;
-$winy+= 80;
+$winx += 40;
+$winy += 80;
 // Now get'em to the template
 $smarty->assign('winx', $winx);
 $smarty->assign('winy', $winy);
@@ -180,11 +180,11 @@ if ($resultscale) {
 	$smarty->assign('ysize_scaled', $info["ysize"]);
 }
 $smarty->assign_by_ref('scaleinfo', $scaleinfo);
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'image gallery';
 	$cat_objid = $galleryId;
-	include ('tiki-tc.php');
+	include('tiki-tc.php');
 }
 // now set it if needed
 if ($popup) {

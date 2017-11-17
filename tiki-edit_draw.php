@@ -8,14 +8,16 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-$inputConfiguration = array(
-	array( 'staticKeyFilters' => array(
-		'data' => 'none',
-	))
-);
+$inputConfiguration = [
+	[
+		'staticKeyFilters' => [
+			'data' => 'none',
+		],
+	],
+];
 
 $section = "draw";
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 global $drawFullscreen, $prefs;
 $headerlib = TikiLib::lib('header');
 
@@ -24,9 +26,9 @@ $filegallib = TikiLib::lib('filegal');
 $access->check_feature('feature_draw');
 $access->check_feature('feature_file_galleries');
 
-include_once ("categorize_list.php");
-include_once ('tiki-section_options.php');
-include_once ('lib/mime/mimetypes.php');
+include_once("categorize_list.php");
+include_once('tiki-section_options.php');
+include_once('lib/mime/mimetypes.php');
 global $mimetypes;
 
 ask_ticket('draw');
@@ -40,42 +42,41 @@ if ($_REQUEST['fileId'] > 0) {
 		$_REQUEST['galleryId'] = $fileInfo['galleryId'];
 	}
 } else {
-	$fileInfo = array();
+	$fileInfo = [];
 }
 
 //This allows the document to be edited, but only the most recent of that group if it is an archive
-if (!empty($fileInfo['archiveId']) && $fileInfo['archiveId'] > 0) {
+if (! empty($fileInfo['archiveId']) && $fileInfo['archiveId'] > 0) {
 	$_REQUEST['fileId'] = $fileInfo['archiveId'];
 	$fileInfo = $filegallib->get_file_info($_REQUEST['fileId']);
 }
 
 $gal_info = $filegallib->get_file_gallery($_REQUEST['galleryId']);
 
-if (
-	!(
+if (! (
 		($fileInfo['filetype'] == $mimetypes["svg"]) ||
 		($fileInfo['filetype'] == $mimetypes["gif"]) ||
 		($fileInfo['filetype'] == $mimetypes["jpg"]) ||
 		($fileInfo['filetype'] == $mimetypes["png"]) ||
 		($fileInfo['filetype'] == $mimetypes["tiff"])
-	) && $_REQUEST['fileId'] > 0 ) {
+	) && $_REQUEST['fileId'] > 0) {
 	$smarty->assign('msg', tr("Wrong file type, expected %0", $mimetypes["svg"]));
 	$smarty->display("error.tpl");
 	die;
 }
 
-$perms = TikiLib::lib('tiki')->get_perm_object( $gal_info['galleryId'], 'file gallery', $gal_info );
+$perms = TikiLib::lib('tiki')->get_perm_object($gal_info['galleryId'], 'file gallery', $gal_info);
 
 //check permissions
-if ($perms['tiki_p_upload_files'] !== 'y' ) {
+if ($perms['tiki_p_upload_files'] !== 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to view/edit this file"));
 	$smarty->display("error.tpl");
 	die;
 }
 
-if (!empty($_REQUEST['name']) || !empty($fileInfo['name'])) {
-	$_REQUEST['name'] = (!empty($_REQUEST['name']) ? $_REQUEST['name'] : $fileInfo['name']);
+if (! empty($_REQUEST['name']) || ! empty($fileInfo['name'])) {
+	$_REQUEST['name'] = (! empty($_REQUEST['name']) ? $_REQUEST['name'] : $fileInfo['name']);
 } else {
 	$_REQUEST['name'] = (isset($_REQUEST['page']) ? $_REQUEST['page'] : tr("New Svg Image"));
 }
@@ -97,8 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 	$isConversion = $fileInfo['filetype'] != $mimetypes["svg"];
 
 	if (empty($_REQUEST["fileId"]) == false && $_REQUEST["fileId"] > 0 &&
-			($prefs['feature_draw_separate_base_image'] !== 'y' || !$isConversion)) {
-
+		($prefs['feature_draw_separate_base_image'] !== 'y' || ! $isConversion)) {
 		//existing file
 		$fileId = $filegallib->save_archive(
 			$_REQUEST["fileId"],
@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 			0,
 			$_REQUEST['name'],
 			$fileInfo['description'],
-			$_REQUEST['name'].".svg",
+			$_REQUEST['name'] . ".svg",
 			$_REQUEST['data'],
 			strlen($_REQUEST['data']),
 			$type,
@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 				FROM tiki_files
 				WHERE archiveId = ?
 				ORDER BY lastModif DESC',
-				array($fileId)
+				[$fileId]
 			);
 
 			$newFileInfo['data'] = str_replace(
@@ -134,10 +134,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 			);
 			$fileId = $filegallib->save_archive(
 				$newFileInfo["fileId"],
-				$newFileInfo['galleryId'], 0,
+				$newFileInfo['galleryId'],
+				0,
 				$newFileInfo['filename'],
 				$newFileInfo['description'],
-				$newFileInfo['name'].".svg",
+				$newFileInfo['name'] . ".svg",
 				$newFileInfo['data'],
 				strlen($newFileInfo['data']),
 				$type,
@@ -150,7 +151,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 	} else {
 		//new file
 		if ($isConversion) {
-			$_REQUEST['name'] = preg_replace('/\.(:?jpg|gif|png|tif[f]?)$/', '', $_REQUEST['name']) . tra(' drawing');	// strip extension
+			$_REQUEST['name'] = preg_replace('/\.(:?jpg|gif|png|tif[f]?)$/', '', $_REQUEST['name']) . tra(
+				' drawing'
+			);    // strip extension
 		}
 		$galleryId = $_REQUEST["galleryId"];
 		if ($prefs['feature_draw_in_userfiles'] === 'y') {
@@ -160,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 			$galleryId,
 			$_REQUEST['name'],
 			$_REQUEST['description'],
-			$_REQUEST['name'].".svg",
+			$_REQUEST['name'] . ".svg",
 			$_REQUEST['data'],
 			strlen($_REQUEST['data']),
 			$type,
@@ -169,16 +172,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 		);
 	}
 
-	if (!empty($_REQUEST['fromItemId'])) {		// a tracker item, so update the item field
+	if (! empty($_REQUEST['fromItemId'])) {        // a tracker item, so update the item field
 		$item = Tracker_Item::fromId($_REQUEST['fromItemId']);
 		if ($item->canModifyField($_REQUEST['fromFieldId'])) {
 			$definition = $item->getDefinition();
 			$field = $definition->getField($_REQUEST['fromFieldId']);
-			$trackerInput = $item->prepareFieldInput($field, array($_REQUEST['fromFieldId'] -> $fileId));
+			$trackerInput = $item->prepareFieldInput($field, [$_REQUEST['fromFieldId']->$fileId]);
 			$fileIds = explode(',', $trackerInput['value']);
-			if (!in_array($fileId, $fileIds)) {
-				if (!empty($_REQUEST['fileId']) && $fileId != $_REQUEST['fileId']) {
-					$old_index = array_search($_REQUEST['fileId'], $fileIds);			// replacement (id changed when drawn on)
+			if (! in_array($fileId, $fileIds)) {
+				if (! empty($_REQUEST['fileId']) && $fileId != $_REQUEST['fileId']) {
+					$old_index = array_search(
+						$_REQUEST['fileId'],
+						$fileIds
+					);            // replacement (id changed when drawn on)
 				} else {
 					$old_index = false;
 				}
@@ -190,9 +196,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 			}
 			$trackerInput['value'] = implode(',', $fileIds);
 
-			TikiLib::lib('trk')->replace_item($field['trackerId'], $_REQUEST['fromItemId'], array('data' => array($trackerInput)));
+			TikiLib::lib('trk')->replace_item(
+				$field['trackerId'],
+				$_REQUEST['fromItemId'],
+				['data' => [$trackerInput]]
+			);
 		}
-
 	}
 
 	echo $fileId;
@@ -203,7 +212,7 @@ if ($fileInfo['filetype'] == $mimetypes["svg"]) {
 	$data = $fileInfo["data"];
 } else { //we already confirmed that this is an image, here we make it compatible with svg
 	$src = $tikilib->tikiUrl() . 'tiki-download_file.php?fileId=' . $fileInfo['fileId'];
-	$w = @imagesx($src);		// can't see how this can ever work - imagesx param is a resource not a string url (jb)
+	$w = @imagesx($src);        // can't see how this can ever work - imagesx param is a resource not a string url (jb)
 	$h = @imagesy($src);
 
 	if (empty($w) || empty($h)) { //go ahead and download the image, it may exist off-site, copywrited content
@@ -229,8 +238,12 @@ if ($fileInfo['filetype'] == $mimetypes["svg"]) {
 //echo $data;die;
 $smarty->assign("data", $data);
 //Obtain fileId, DO NOT LET ANYTHING OTHER THAN NUMBERS BY (for injection free code)
-if (is_numeric($_REQUEST['fileId']) == false) $_REQUEST['fileId'] = 0;
-if (is_numeric($_REQUEST['galleryId']) == false) $_REQUEST['galleryId'] = 0;
+if (is_numeric($_REQUEST['fileId']) == false) {
+	$_REQUEST['fileId'] = 0;
+}
+if (is_numeric($_REQUEST['galleryId']) == false) {
+	$_REQUEST['galleryId'] = 0;
+}
 
 $fileId = htmlspecialchars($_REQUEST['fileId']);
 $galleryId = htmlspecialchars($_REQUEST['galleryId']);
@@ -274,7 +287,7 @@ if (isset($_REQUEST['raw'])) {
 	$prefs['feature_draw_hide_buttons'] = addslashes(htmlentities($prefs['feature_draw_hide_buttons']));
 
 	$jsFunctionality =
-	"$('#drawFullscreen')
+		"$('#drawFullscreen')
 		.click(function() {
 			$('#tiki_draw').drawFullscreen();
 		})
@@ -297,8 +310,7 @@ if (isset($_REQUEST['raw'])) {
 	});";
 }
 
-if (
-	isset($_REQUEST['index']) &&
+if (isset($_REQUEST['index']) &&
 	isset($_REQUEST['page']) &&
 	isset($_REQUEST['label'])
 ) {

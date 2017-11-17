@@ -10,8 +10,8 @@
 
 $errors = [];
 
-$inputConfiguration = array(
-	array( 'staticKeyFilters' => array(
+$inputConfiguration = [
+	[ 'staticKeyFilters' => [
 				'offset' => 'int',
 				'numrows' => 'int',
 				'find' => 'text',
@@ -19,17 +19,17 @@ $inputConfiguration = array(
 				'sort_mode' => 'alnumdash',
 				'initial' => 'alpha',
 				'filterGroup' => 'text',
-			)
-		)
-);
+			]
+		]
+];
 
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 // temporary patch: tiki_p_admin includes tiki_p_admin_users but if you don't
 // clean the temp/cache each time you sqlupgrade the perms setting is not
 // synchronous with the cache
 $access = TikiLib::lib('access');
-$access->check_permission(array('tiki_p_admin_users'));
+$access->check_permission(['tiki_p_admin_users']);
 //so far only used for $_REQUEST['batch']
 $access->checkAuthenticity();
 
@@ -38,7 +38,7 @@ if ($tiki_p_admin != 'y') {
 	$userGroups = $userlib->get_user_groups_inclusion($user);
 	$smarty->assign_by_ref('userGroups', $userGroups);
 } else {
-	$userGroups = array();
+	$userGroups = [];
 }
 
 /**
@@ -65,21 +65,23 @@ function batchImportUsers()
 	$fhandle = fopen($fname, 'r');
 	$fields = fgetcsv($fhandle, 1000);
 
-	if (!$fields[0]) {
+	if (! $fields[0]) {
 		$errors[] = tra('The file has incorrect syntax or is not a CSV file');
 	}
-	if (!in_array('login', $fields) || !in_array('email', $fields) || !in_array('password', $fields)) {
+	if (! in_array('login', $fields) || ! in_array('email', $fields) || ! in_array('password', $fields)) {
 		$errors[] = tra('The file does not have the required header:') . ' login, password, email';
 	}
-	if (!empty($errors)) {
+	if (! empty($errors)) {
 		Feedback::error(['mes' => $errors], 'session');
 		$access->redirect('tiki-adminusers.php');
 		die;
 	}
 
-	while (!feof($fhandle)) {
+	while (! feof($fhandle)) {
 		$data = fgetcsv($fhandle, 1000);
-		if (empty($data)) continue;
+		if (empty($data)) {
+			continue;
+		}
 		$temp_max = count($fields);
 		for ($i = 0; $i < $temp_max; $i++) {
 			if ($fields[$i] == 'login'
@@ -94,7 +96,7 @@ function batchImportUsers()
 	}
 	fclose($fhandle);
 
-	if (empty($userrecs) or !is_array($userrecs)) {
+	if (empty($userrecs) or ! is_array($userrecs)) {
 		Feedback::error(tra('No records were found. Check the file please!'), 'session');
 		$access->redirect('tiki-adminusers.php');
 		die;
@@ -103,14 +105,14 @@ function batchImportUsers()
 	$pass_first_login = (isset($_REQUEST['forcePasswordChange']) && $_REQUEST['forcePasswordChange'] == 'on');
 
 	$added = 0;
-	$errors = array();
-	$discarded = array();
+	$errors = [];
+	$discarded = [];
 
 	foreach ($userrecs as $u) {
-		$local = array();
+		$local = [];
 		$exist = false;
 
-		if ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster'])) {
+		if ($prefs['feature_intertiki'] == 'y' && ! empty($prefs['feature_intertiki_mymaster'])) {
 			if (empty($u['login']) && empty($u['email'])) {
 				$local[] = discardUser($u, tra('User login or email is required'));
 			} else { // pick up the info on the master
@@ -141,7 +143,7 @@ function batchImportUsers()
 			}
 		}
 
-		if (!empty($local)) {
+		if (! empty($local)) {
 			$discarded = array_merge($discarded, $local);
 			continue;
 		}
@@ -155,8 +157,8 @@ function batchImportUsers()
 			continue;
 		}
 
-		if (!$exist) {
-			if (!empty($_REQUEST['notification'])) {
+		if (! $exist) {
+			if (! empty($_REQUEST['notification'])) {
 				$apass = md5($tikilib->genPass());
 			} else {
 				$apass = '';
@@ -169,13 +171,13 @@ function batchImportUsers()
 				$pass_first_login ? $u['password'] : '',
 				$pass_first_login,
 				$apass,
-				NULL,
-				(!empty($_REQUEST['notification']) ? 'u' : NULL)
+				null,
+				(! empty($_REQUEST['notification']) ? 'u' : null)
 			);
 
 			global $user;
 			$logslib->add_log('adminusers', sprintf(tra('Created account %s <%s>'), $u['login'], $u['email']), $user);
-			if (!empty($_REQUEST['notification'])) {
+			if (! empty($_REQUEST['notification'])) {
 				$realpass = $pass_first_login ? '' : $u['password'];
 				$userlib->send_validation_email($u['login'], $apass, $u['email'], '', '', '', 'user_creation_validation_mail', $realpass);
 			}
@@ -186,24 +188,28 @@ function batchImportUsers()
 			$userlib->remove_user_from_all_groups($u['login']);
 		}
 
-		if (!empty($u['groups'])) {
+		if (! empty($u['groups'])) {
 			$grps = preg_split('/(?<!,),(?!,)/', $u['groups']);
 			foreach ($grps as $grp) {
 				$grp = preg_replace('/,,/', ',', preg_replace('/^ *(.*) *$/u', "$1", $grp));
 				$existg = false;
 				if ($userlib->group_exists($grp)) {
 					$existg = true;
-				} elseif (!empty($_REQUEST['createGroup']) && $userlib->add_group($grp)) {
+				} elseif (! empty($_REQUEST['createGroup']) && $userlib->add_group($grp)) {
 					$existg = true;
 				}
 
-				if (!$existg) {
+				if (! $existg) {
 					$err = tra('Unknown') . ": $grp";
-					if (!in_array($err, $errors)) $errors[] = $err;
-				} elseif ($tiki_p_admin != 'y' && !array_key_exists($grp, $userGroups)) {
+					if (! in_array($err, $errors)) {
+						$errors[] = $err;
+					}
+				} elseif ($tiki_p_admin != 'y' && ! array_key_exists($grp, $userGroups)) {
 					$smarty->assign('errortype', 401);
 					$err = tra('Permission denied') . ": $grp";
-					if (!in_array($err, $errors)) $errors[] = $err;
+					if (! in_array($err, $errors)) {
+						$errors[] = $err;
+					}
 				} else {
 					$userlib->assign_user_to_group($u['login'], $grp);
 					$logslib->add_log('perms', sprintf(tra('Assigned %s in group %s'), $u['login'], $grp), $user);
@@ -211,11 +217,11 @@ function batchImportUsers()
 			}
 		}
 
-		if (!empty($u['default_group'])) {
+		if (! empty($u['default_group'])) {
 			$userlib->set_default_group($u['login'], $u['default_group']);
 		}
 
-		if (!empty($u['realName'])) {
+		if (! empty($u['realName'])) {
 			$tikilib->set_user_preference($u['login'], 'realName', $u['realName']);
 		}
 		$added++;
@@ -224,9 +230,9 @@ function batchImportUsers()
 
 	if (count($discarded)) {
 		foreach ($discarded as $key => $value) {
-			$df[] = $discarded[$key]['login'] . ' (' .  $discarded[$key]['reason'] . ')';
+			$df[] = $discarded[$key]['login'] . ' (' . $discarded[$key]['reason'] . ')';
 		}
-		Feedback::warning(['mes' => $df, 'title' =>  tr('%0 users not added', count($discarded))]);
+		Feedback::warning(['mes' => $df, 'title' => tr('%0 users not added', count($discarded))]);
 	}
 
 	if (count($errors)) {
@@ -235,7 +241,7 @@ function batchImportUsers()
 	}
 }
 
-$auto_query_args = array(
+$auto_query_args = [
 	'offset',
 	'numrows',
 	'find',
@@ -243,26 +249,26 @@ $auto_query_args = array(
 	'sort_mode',
 	'initial',
 	'filterGroup'
-);
+];
 if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']) && $access->ticketMatch()) {
 	batchImportUsers();
 	// Process the form to add a user here
-
 } elseif (isset($_REQUEST['newuser'])) {
-	$AddUser= true;;
+	$AddUser = true;
+	;
 	$access->check_authenticity(tra('Are you sure you want to add this new user?'));
 	// if email validation set check if email addr is set
 	if ($prefs['login_is_email'] != 'y' && isset($_REQUEST['need_email_validation']) &&
 		 empty($_REQUEST['email'])) {
 		$errors[] = tra('Email validation requested but email address not set');
-		$AddUser=false;
+		$AddUser = false;
 	}
 	if ($_REQUEST['pass'] != $_REQUEST['passAgain']) {
 		$errors[] = tra('The passwords do not match');
-		$AddUser=false;
+		$AddUser = false;
 	} elseif (empty($_REQUEST['pass']) && empty($_REQUEST['genepass'])) {
 		$errors[] = tra('Password not set');
-		$AddUser=false;
+		$AddUser = false;
 	}
 
 	$newPass = $_POST['pass'] ? $_POST['pass'] : $_POST['genepass'];
@@ -270,13 +276,13 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 
 	if ($userlib->user_exists($_REQUEST['login'])) {
 		$errors[] = sprintf(tra('User %s already exists'), $_REQUEST['login']);
-		$AddUser=false;
+		$AddUser = false;
 	}
-	if ($prefs['login_is_email'] == 'y' && !validate_email($_REQUEST['login'])) {
+	if ($prefs['login_is_email'] == 'y' && ! validate_email($_REQUEST['login'])) {
 		$errors[] = tra('Invalid email') . ' ' . $_REQUEST['login'];
-		$AddUser=false;
+		$AddUser = false;
 	}
-	if (!empty($prefs['username_pattern']) && !preg_match($prefs['username_pattern'], $_REQUEST['login'])) {
+	if (! empty($prefs['username_pattern']) && ! preg_match($prefs['username_pattern'], $_REQUEST['login'])) {
 		$errors[] = tra('User login contains invalid characters.');
 		$AddUser = false;
 	}
@@ -284,71 +290,74 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 	if ($AddUser) {
 		$pass_first_login = (isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on');
 		$polerr = $userlib->check_password_policy($newPass);
-			if (strlen($polerr) > 0) {
-				Feedback::error(['mes' => $polerr], 'session');
-				$access->redirect('tiki-adminusers.php');
-				die;
-			}
+		if (strlen($polerr) > 0) {
+			Feedback::error(['mes' => $polerr], 'session');
+			$access->redirect('tiki-adminusers.php');
+			die;
+		}
 
-			if ($prefs['login_is_email'] == 'y' and empty($_REQUEST['email']))
-				$_REQUEST['email'] = $_REQUEST['login'];
+		if ($prefs['login_is_email'] == 'y' and empty($_REQUEST['email'])) {
+			$_REQUEST['email'] = $_REQUEST['login'];
+		}
 
 			$send_validation_email = false;
 
-			if (isset($_REQUEST['need_email_validation']) && $_REQUEST['need_email_validation'] == 'on') {
-				$send_validation_email = true;
-				$apass = md5($tikilib->genPass());
-			} else {
-				$apass = '';
+		if (isset($_REQUEST['need_email_validation']) && $_REQUEST['need_email_validation'] == 'on') {
+			$send_validation_email = true;
+			$apass = md5($tikilib->genPass());
+		} else {
+			$apass = '';
+		}
+
+		if ($_REQUEST['login'] = $userlib->add_user(
+			$_REQUEST['login'],
+			$newPass,
+			$_REQUEST['email'],
+			$pass_first_login ? $newPass : '',
+			$pass_first_login,
+			$apass,
+			null,
+			($send_validation_email ? 'u' : null)
+		)) {
+			$feedback = sprintf(tra('New user created with username %s.'), $_REQUEST['login']);
+			Feedback::success($feedback, 'session');
+			$logslib->add_log('adminusers', $feedback, $user);
+
+			if ($send_validation_email) {
+				// No need to send credentials in mail if the user is forced to choose a new password after validation
+				$realpass = $pass_first_login ? '' : $newPass;
+				$userlib->send_validation_email(
+					$_REQUEST['login'],
+					$apass,
+					$_REQUEST['email'],
+					'',
+					'',
+					'',
+					'user_creation_validation_mail',
+					$realpass
+				);
 			}
 
-			if ($_REQUEST['login'] = $userlib->add_user(
-				$_REQUEST['login'],
-				$newPass,
-				$_REQUEST['email'],
-				$pass_first_login ? $newPass : '',
-				$pass_first_login,
-				$apass,
-				NULL,
-				($send_validation_email ? 'u' : NULL)
-			)) {
-				$feedback = sprintf(tra('New user created with username %s.'), $_REQUEST['login']);
-				Feedback::success($feedback, 'session');
-				$logslib->add_log('adminusers', $feedback, $user);
-
-				if ($send_validation_email) {
-					// No need to send credentials in mail if the user is forced to choose a new password after validation
-					$realpass = $pass_first_login ? '' : $newPass;
-					$userlib->send_validation_email(
-						$_REQUEST['login'],
-						$apass,
-						$_REQUEST['email'],
-						'',
-						'',
-						'',
-						'user_creation_validation_mail',
-						$realpass
-					);
-				}
-
-				if ($prefs['userTracker'] === 'y' && !empty($_REQUEST['insert_user_tracker_item'])) {
-					TikiLib::lib('header')->add_jq_onready('setTimeout(function () { $(".insert-usertracker").click(); });');
-					$_REQUEST['user'] = $userlib->get_user_id($_REQUEST['login']);
-					$cookietab = '2';
-				} else {
-					$cookietab = '1';
-					$_REQUEST['find'] = $_REQUEST['login'];
-				}
+			if ($prefs['userTracker'] === 'y' && ! empty($_REQUEST['insert_user_tracker_item'])) {
+				TikiLib::lib('header')->add_jq_onready('setTimeout(function () { $(".insert-usertracker").click(); });');
+				$_REQUEST['user'] = $userlib->get_user_id($_REQUEST['login']);
+				$cookietab = '2';
 			} else {
-				$errors[] = sprintf(tra('Impossible to create new %s with %s %s.'), tra('user'), tra('username'), 
-					$_REQUEST['login']);
+				$cookietab = '1';
+				$_REQUEST['find'] = $_REQUEST['login'];
 			}
+		} else {
+			$errors[] = sprintf(
+				tra('Impossible to create new %s with %s %s.'),
+				tra('user'),
+				tra('username'),
+				$_REQUEST['login']
+			);
+		}
 	}
 
 	$cookietab = 1;
-
 } elseif (isset($_REQUEST['action'])) {
-
 	if ($_REQUEST['action'] == 'email_due' && isset($_REQUEST['user'])) {
 		$access->check_authenticity(tra('Are you sure you want to reset email due for this user?'));
 		$userlib->reset_email_due($_REQUEST['user']);
@@ -362,7 +371,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 	$_REQUEST['user'] = '';
 }
 
-if (!isset($_REQUEST['sort_mode'])) {
+if (! isset($_REQUEST['sort_mode'])) {
 	$sort_mode = 'login_asc';
 } else {
 	$sort_mode = $_REQUEST['sort_mode'];
@@ -411,32 +420,37 @@ if (isset($_REQUEST['filterEmail'])) {
 }
 $smarty->assign('filterEmail', $filterEmail);
 
-list($username, $usermail, $usersTrackerId, $chlogin) = array('', '', '',	false);
+list($username, $usermail, $usersTrackerId, $chlogin) = ['', '', '',	false];
 $trklib = TikiLib::lib('trk');
 
 if (isset($_REQUEST['user']) and $_REQUEST['user']) {
-	if (!is_numeric($_REQUEST['user'])) {
+	if (! is_numeric($_REQUEST['user'])) {
 		$_REQUEST['user'] = $userlib->get_user_id($_REQUEST['user']);
 	}
 	$userinfo = $userlib->get_userid_info($_REQUEST["user"]);
 	$cookietab = '2';
 
 	// If login is e-mail, email field needs to be the same as name (and is generally not send)
-	if ($prefs['login_is_email'] == 'y' && isset($_POST['login']))
+	if ($prefs['login_is_email'] == 'y' && isset($_POST['login'])) {
 		$_POST['email'] = $_POST['login'];
+	}
 
 	if (isset($_POST['edituser']) and isset($_POST['login']) and isset($_POST['email'])) {
 		$access->check_authenticity(tra("Are you sure you want to modify this user's data?"));
 
-		if (!empty($_POST['login'])) {
+		if (! empty($_POST['login'])) {
 			if ($userinfo['login'] != $_POST['login'] && $userinfo['login'] != 'admin') {
 				if ($userlib->user_exists($_POST['login'])) {
 					$errors[] = tra('User already exists');
-				} elseif (!empty($prefs['username_pattern']) && !preg_match($prefs['username_pattern'], $_POST['login'])) {
+				} elseif (! empty($prefs['username_pattern']) && ! preg_match($prefs['username_pattern'], $_POST['login'])) {
 					$errors[] = tra('User login contains invalid characters.');
 				} elseif ($userlib->change_login($userinfo['login'], $_POST['login'])) {
-					Feedback::success(sprintf(tra('%s changed from %s to %s'), tra('login'),
-						$userinfo['login'], $_POST['login']), 'session');
+					Feedback::success(sprintf(
+						tra('%s changed from %s to %s'),
+						tra('login'),
+						$userinfo['login'],
+						$_POST['login']
+					), 'session');
 					$logslib->add_log(
 						'adminusers',
 						'changed login for ' . $_POST['login'] . ' from ' . $userinfo['login'] . ' to ' . $_POST['login'],
@@ -445,8 +459,12 @@ if (isset($_REQUEST['user']) and $_REQUEST['user']) {
 
 					$userinfo['login'] = $_POST['login'];
 				} else {
-					$errors[] = sprintf(tra("Impossible to change %s from %s to %s"), tra('login'), $userinfo['login'], 
-						$_POST['login']);
+					$errors[] = sprintf(
+						tra("Impossible to change %s from %s to %s"),
+						tra('login'),
+						$userinfo['login'],
+						$_POST['login']
+					);
 				}
 			}
 		}
@@ -462,7 +480,7 @@ if (isset($_REQUEST['user']) and $_REQUEST['user']) {
 			if ($tiki_p_admin == 'y' || $tiki_p_admin_users == 'y' || $userinfo['login'] == $user) {
 				$newPass = $_POST['pass'] ? $_POST['pass'] : $_POST['genepass'];
 				$polerr = $userlib->check_password_policy($newPass);
-				if (strlen($polerr) > 0 && !$pass_first_login) {
+				if (strlen($polerr) > 0 && ! $pass_first_login) {
 					Feedback::error($polerr, 'session');
 					$access->redirect('tiki-adminusers.php');
 					die;
@@ -480,8 +498,12 @@ if (isset($_REQUEST['user']) and $_REQUEST['user']) {
 		if ($userinfo['email'] != $_POST['email']) {
 			if ($userlib->change_user_email($userinfo['login'], $_POST['email'], '')) {
 				if ($prefs['login_is_email'] != 'y') {
-					Feedback::success(sprintf(tra('%s changed from %s to %s'), tra('email'),
-						$userinfo['email'], $_POST['email']), 'session');
+					Feedback::success(sprintf(
+						tra('%s changed from %s to %s'),
+						tra('email'),
+						$userinfo['email'],
+						$_POST['email']
+					), 'session');
 					$logslib->add_log('adminusers', 'changed email for' . $_POST['login'] . ' from ' . $userinfo['email'] . ' to ' . $_POST['email'], $user);
 				}
 				$userinfo['email'] = $_POST['email'];
@@ -490,7 +512,7 @@ if (isset($_REQUEST['user']) and $_REQUEST['user']) {
 			}
 		}
 		// check need_email_validation
-		if (!empty($_POST['login']) && !empty($_POST['email']) && !empty($_POST['need_email_validation'])) {
+		if (! empty($_POST['login']) && ! empty($_POST['email']) && ! empty($_POST['need_email_validation'])) {
 			$userlib->invalidate_account($_POST['login']);
 			$userinfo = $userlib->get_user_info($_POST['login']);
 			$userlib->send_validation_email($_POST['login'], $userinfo['valid'], $_POST['email'], 'y');
@@ -524,7 +546,7 @@ if (isset($_REQUEST['user']) and $_REQUEST['user']) {
 	}
 
 	if ($prefs['email_due'] > 0) {
-		$userinfo['daysSinceEmailConfirm'] =  floor(($userlib->now - $userinfo['email_confirm']) / (60 * 60 * 24));
+		$userinfo['daysSinceEmailConfirm'] = floor(($userlib->now - $userinfo['email_confirm']) / (60 * 60 * 24));
 	}
 } else {
 	$userinfo['login'] = '';
@@ -555,14 +577,14 @@ $users = $userlib->get_users(
 	true,
 	$filterGroup,
 	$filterEmail,
-	!empty($_REQUEST['filterEmailNotConfirmed']),
-	!empty($_REQUEST['filterNotValidated']),
-	!empty($_REQUEST['filterNeverLoggedIn'])
+	! empty($_REQUEST['filterEmailNotConfirmed']),
+	! empty($_REQUEST['filterNotValidated']),
+	! empty($_REQUEST['filterNeverLoggedIn'])
 );
 if ($prefs['userTracker'] === 'y') {
 	foreach ($users['data'] as & $u) {
 		$userTrackerInfo = $userlib->get_usertracker($u['userId']);
-		if ( $userTrackerInfo && $userTrackerInfo['usersTrackerId'] ) {
+		if ($userTrackerInfo && $userTrackerInfo['usersTrackerId']) {
 			$u['itemId'] = $trklib->get_item_id($userTrackerInfo['usersTrackerId'], $userTrackerInfo['usersFieldId'], $u['login']);
 		}
 	}
@@ -576,7 +598,7 @@ if (isset($_REQUEST['add'])) {
 
 //add tablesorter sorting and filtering
 $ts = Table_Check::setVars('adminusers', true);
-if ($ts['enabled'] && !$ts['ajax']) {
+if ($ts['enabled'] && ! $ts['ajax']) {
 	//delete anonymous out of group list used for dropdown
 	$ts_groups = array_flip($all_groups);
 	unset($ts_groups['Anonymous']);
@@ -584,17 +606,17 @@ if ($ts['enabled'] && !$ts['ajax']) {
 	//set tablesorter code
 	Table_Factory::build(
 		'TikiAdminusers',
-		array(
+		[
 			'id' => $ts['tableid'],
 			'total' => $users['cant'],
-			'columns' => array(
-				'#groups' => array(
-					'filter' => array(
+			'columns' => [
+				'#groups' => [
+					'filter' => [
 						'options' => $ts_groups
-					)
-				)
-			),
-		)
+					]
+				]
+			],
+		]
 	);
 }
 

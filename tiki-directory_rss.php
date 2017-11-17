@@ -8,25 +8,25 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
-require_once ('lib/directory/dirlib.php');
+require_once('tiki-setup.php');
+require_once('lib/directory/dirlib.php');
 $rsslib = TikiLib::lib('rss');
 if ($prefs['feed_directories'] != 'y') {
 	$errmsg = tra("rss feed disabled");
-	require_once ('tiki-rss_error.php');
+	require_once('tiki-rss_error.php');
 }
 if ($prefs['feature_directory'] != 'y') {
 	$errmsg = tr("This feature is disabled: %0", 'feature_directory');
-	require_once ('tiki-rss_error.php');
+	require_once('tiki-rss_error.php');
 }
 if ($tiki_p_view_directory != 'y') {
 	$smarty->assign('errortype', 401);
 	$errmsg = tra("Permission denied");
-	require_once ('tiki-rss_error.php');
+	require_once('tiki-rss_error.php');
 }
-if (!isset($_REQUEST["parent"])) {
+if (! isset($_REQUEST["parent"])) {
 	$errmsg = tra("No parent specified");
-	require_once ('tiki-rss_error.php');
+	require_once('tiki-rss_error.php');
 }
 $feed = "directory";
 $uniqueid = $feed . "?parent=" . $_REQUEST["parent"];

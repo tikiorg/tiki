@@ -3,13 +3,13 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'galleries';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $imagegallib = TikiLib::lib('imagegal');
 $statslib = TikiLib::lib('stats');
 
@@ -25,7 +25,7 @@ if ($_REQUEST["galleryId"] == 0 && $tiki_p_admin_galleries != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-if (!isset($_REQUEST["galleryId"])) {
+if (! isset($_REQUEST["galleryId"])) {
 	$smarty->assign('msg', tra("No gallery indicated"));
 	$smarty->display("error.tpl");
 	die;
@@ -36,13 +36,13 @@ $tikilib->get_perm_object($_REQUEST['galleryId'], 'image gallery');
 
 $access->check_permission('tiki_p_view_image_gallery');
 
-$auto_query_args = array(
+$auto_query_args = [
 	'offset',
 	'galleryId',
 	'sort_mode',
 	'find'
-);
-if (!isset($_REQUEST["galleryId"])) {
+];
+if (! isset($_REQUEST["galleryId"])) {
 	$_REQUEST["galleryId"] = 0;
 }
 if ($_REQUEST["galleryId"] != 0) {
@@ -87,7 +87,7 @@ $imagegallib->add_gallery_hit($_REQUEST["galleryId"]);
 if (isset($_REQUEST["remove"])) {
 	check_ticket('browse-gallery');
 	// To remove an image the user must be the owner or admin
-	if (($tiki_p_admin_galleries != 'y') && (!$user || $user != $gal_info["user"])) {
+	if (($tiki_p_admin_galleries != 'y') && (! $user || $user != $gal_info["user"])) {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("You do not have permission to remove images from this gallery"));
 		$smarty->display("error.tpl");
@@ -99,7 +99,7 @@ if (isset($_REQUEST["remove"])) {
 if (isset($_REQUEST["rebuild"])) {
 	check_ticket('browse-gallery');
 	// To rebuild thumbnails the user must be the owner or admin
-	if (($tiki_p_admin_galleries != 'y') && (!$user || $user != $gal_info["user"])) {
+	if (($tiki_p_admin_galleries != 'y') && (! $user || $user != $gal_info["user"])) {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("You do not have permission to rebuild thumbnails in this gallery"));
 		$smarty->display("error.tpl");
@@ -111,7 +111,7 @@ if (isset($_REQUEST["rebuild"])) {
 if (isset($_REQUEST["rotateright"])) {
 	check_ticket('browse-gallery');
 	// To rotate an image the user must be the owner or admin
-	if (($tiki_p_admin_galleries != 'y') && (!$user || $user != $gal_info["user"])) {
+	if (($tiki_p_admin_galleries != 'y') && (! $user || $user != $gal_info["user"])) {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("You do not have permission to rotate images in this gallery"));
 		$smarty->display("error.tpl");
@@ -122,7 +122,7 @@ if (isset($_REQUEST["rotateright"])) {
 if (isset($_REQUEST["rotateleft"])) {
 	check_ticket('browse-gallery');
 	// To rotate an image the user must be the owner or admin
-	if (($tiki_p_admin_galleries != 'y') && (!$user || $user != $gal_info["user"])) {
+	if (($tiki_p_admin_galleries != 'y') && (! $user || $user != $gal_info["user"])) {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("You do not have permission to rotate images in this gallery"));
 		$smarty->display("error.tpl");
@@ -150,12 +150,12 @@ if ($prefs['feature_user_watches'] == 'y') {
 		$smarty->assign('category_watched', 'n');
 		if (count($watching_categories_temp) > 0) {
 			$smarty->assign('category_watched', 'y');
-			$watching_categories = array();
+			$watching_categories = [];
 			foreach ($watching_categories_temp as $wct) {
-				$watching_categories[] = array(
+				$watching_categories[] = [
 					"categId" => $wct,
 					"name" => $categlib->get_category_name($wct)
-				);
+				];
 			}
 			$smarty->assign('watching_categories', $watching_categories);
 		}
@@ -178,9 +178,13 @@ if ($_REQUEST["galleryId"] == 0) {
 	$info = $imagegallib->get_gallery($_REQUEST["galleryId"]);
 	$nextscaleinfo = $imagegallib->get_gallery_next_scale($_REQUEST["galleryId"]);
 }
-if (empty($info['maxRows']) || $info['maxRows'] < 0) $info['maxRows'] = 10;
-if (empty($info['rowImages']) || $info['rowImages'] < 0) $info['rowImages'] = 5;
-if (!isset($nextscaleinfo['scale'])) {
+if (empty($info['maxRows']) || $info['maxRows'] < 0) {
+	$info['maxRows'] = 10;
+}
+if (empty($info['rowImages']) || $info['rowImages'] < 0) {
+	$info['rowImages'] = 5;
+}
+if (! isset($nextscaleinfo['scale'])) {
 	$nextscaleinfo['scale'] = 0;
 	$nextscaleinfo['scale'] = 0;
 }
@@ -201,7 +205,7 @@ if ($imagegallib->canrotate) {
 } else {
 	$smarty->assign('imagerotate', false);
 }
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	if (isset($info['sortorder'])) {
 		// default sortorder from gallery settings
 		$sort_mode = $info['sortorder'] . '_' . $info['sortdirection'];
@@ -215,7 +219,7 @@ $smarty->assign_by_ref('sort_mode', $sort_mode);
 // If offset is set use it if not then use offset =0
 // use the maxRecords php variable to set the limit
 // if sortMode is not set then use lastModif_desc
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
@@ -231,18 +235,20 @@ $smarty->assign_by_ref('find', $find);
 $subgals = $imagegallib->get_subgalleries($offset, $maxImages, $sort_mode, '', $_REQUEST["galleryId"]);
 $remainingImages = $maxImages - count($subgals['data']);
 $newoffset = $offset - $subgals['cant'];
-if ($newoffset < 0) $newoffset=0;
+if ($newoffset < 0) {
+	$newoffset = 0;
+}
 $images = $imagegallib->get_images($newoffset, $remainingImages, $sort_mode, $find, $_REQUEST["galleryId"]);
 //get categories for each images
 $objectlib = TikiLib::lib('object');
 if ($prefs['feature_categories'] == 'y') {
 	$type = 'image';
-	$arr = array();
-	foreach ( $images['data'] as $index => $imgd ) {
+	$arr = [];
+	foreach ($images['data'] as $index => $imgd) {
 		$img_id = $imgd['imageId'];
 		$arr = $categlib->get_object_categories($type, $img_id);
 		//adding categories to the object
-		foreach ( $arr as $cat_name ) {
+		foreach ($arr as $cat_name) {
 			$images['data'][$index]['categories'][] = $categlib->get_category_name($cat_name);
 		}
 	}
@@ -261,11 +267,11 @@ if ($prefs['gal_image_mouseover'] != 'n') {
 	}
 	$smarty->assign_by_ref('over_info', $over_info);
 }
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'image gallery';
 	$cat_objid = $_REQUEST["galleryId"];
-	include ('tiki-tc.php');
+	include('tiki-tc.php');
 }
 ask_ticket('browse-gallery');
 //add a hit

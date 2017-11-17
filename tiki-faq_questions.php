@@ -3,20 +3,20 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'faqs';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 $faqlib = TikiLib::lib('faq');
 
 $access->check_feature('feature_faqs');
 $access->check_permission('tiki_p_admin_faqs');
 
-if (!isset($_REQUEST["faqId"])) {
+if (! isset($_REQUEST["faqId"])) {
 	$smarty->assign('msg', tra("No questions group indicated"));
 
 	$smarty->display("error.tpl");
@@ -27,7 +27,7 @@ $smarty->assign('faqId', $_REQUEST["faqId"]);
 $faq_info = $faqlib->get_faq($_REQUEST["faqId"]);
 $smarty->assign('faq_info', $faq_info);
 
-if (!isset($_REQUEST["questionId"])) {
+if (! isset($_REQUEST["questionId"])) {
 	$_REQUEST["questionId"] = 0;
 }
 
@@ -36,7 +36,7 @@ $smarty->assign('questionId', $_REQUEST["questionId"]);
 if ($_REQUEST["questionId"]) {
 	$info = $faqlib->get_faq_question($_REQUEST["questionId"]);
 } else {
-	$info = array();
+	$info = [];
 
 	$info["question"] = '';
 	$info["answer"] = '';
@@ -48,7 +48,7 @@ if (isset($_REQUEST["remove"])) {
 	$faqlib->remove_faq_question($_REQUEST["remove"]);
 }
 
-if (!isset($_REQUEST["filter"])) {
+if (! isset($_REQUEST["filter"])) {
 	$_REQUEST["filter"] = '';
 }
 
@@ -76,13 +76,13 @@ if (isset($_REQUEST["save"])) {
 $smarty->assign('question', $info["question"]); // moved from above
 $smarty->assign('answer', $info["answer"]);     // moved from above
 
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'position_asc,questionId_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
 
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
@@ -118,7 +118,7 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 $suggested = $faqlib->list_suggested_questions(0, -1, 'created_desc', '', $_REQUEST["faqId"]);
 $smarty->assign_by_ref('suggested', $suggested["data"]);
 
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 ask_ticket('faq-questions');
 
 

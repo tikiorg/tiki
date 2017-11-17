@@ -11,7 +11,7 @@
 $section = 'wiki page';
 $section_class = "tiki_wiki_page manage";	// This will be body class instead of $section
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $histlib = TikiLib::lib('hist');
 $wikilib = TikiLib::lib('wiki');
 $userlib = TikiLib::lib('user');
@@ -19,7 +19,7 @@ $userlib = TikiLib::lib('user');
 $access->check_feature('feature_wiki');
 
 // Get the page from the request var or default it to HomePage
-if (!isset($_REQUEST["page"])) {
+if (! isset($_REQUEST["page"])) {
 	$smarty->assign('msg', tra("No page indicated"));
 	$smarty->display("error.tpl");
 	die;
@@ -27,14 +27,14 @@ if (!isset($_REQUEST["page"])) {
 	$page = $_REQUEST["page"];
 	$smarty->assign_by_ref('page', $_REQUEST["page"]);
 }
-if (!($info = $tikilib->get_page_info($page))) {
+if (! ($info = $tikilib->get_page_info($page))) {
 	$smarty->assign('msg', tra('Page cannot be found'));
 	$smarty->display('error.tpl');
 	die;
 }
 
 $tikilib->get_perm_object($page, 'wiki page', $info);
-$access->check_permission(array('tiki_p_edit'));
+$access->check_permission(['tiki_p_edit']);
 
 if ($_REQUEST["version"] <> "last") {
 	$smarty->assign_by_ref('version', $_REQUEST["version"]);
@@ -44,7 +44,7 @@ if ($_REQUEST["version"] <> "last") {
 	$version = "last";
 }
 // If the page doesn't exist then display an error
-if (!$tikilib->page_exists($page)) {
+if (! $tikilib->page_exists($page)) {
 	$smarty->assign('msg', tra("Page cannot be found"));
 	$smarty->display("error.tpl");
 	die;
@@ -68,7 +68,7 @@ if (isset($_REQUEST["copy"]) || isset($_REQUEST["confirm"])) {
 	$smarty->assign('newname', $newName);
 	$result = false;
 
-	if (!isset($_REQUEST["confirm"]) && $wikilib->contains_badchars($newName)) {
+	if (! isset($_REQUEST["confirm"]) && $wikilib->contains_badchars($newName)) {
 		$smarty->assign('page_badchars_display', $wikilib->get_badchars());
 	} else {
 		$result = $wikilib->wiki_duplicate_page($page, $newName, $dupCateg, $dupTags);
@@ -76,7 +76,7 @@ if (isset($_REQUEST["copy"]) || isset($_REQUEST["confirm"])) {
 		if ($result) {
 			if ($prefs['feature_sefurl'] == 'y') {
 				include_once('tiki-sefurl.php');
-				header('location: '. urlencode(filter_out_sefurl("tiki-index.php?page=$newName", 'wiki')));
+				header('location: ' . urlencode(filter_out_sefurl("tiki-index.php?page=$newName", 'wiki')));
 			} else {
 				header('location: tiki-index.php?page=' . urlencode($newName));
 			}
@@ -88,7 +88,7 @@ if (isset($_REQUEST["copy"]) || isset($_REQUEST["confirm"])) {
 	}
 }
 ask_ticket('copy-page');
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('mid', 'tiki-copypage.tpl');
