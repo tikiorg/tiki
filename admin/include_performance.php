@@ -13,7 +13,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 $opcode_stats = TikiLib::lib('admin')->getOpcodeCacheStatus();
 $stat_flag = $opcode_stats['stat_flag'];
-if ( $stat_flag ) {
+if ($stat_flag) {
 	$smarty->assign('stat_flag', $stat_flag);
 }
 
@@ -26,13 +26,13 @@ $txtAvailable = tr('Available');
 $smarty->assign(
 	'memory_graph',
 	$tikilib->httpScheme() . '://chart.googleapis.com/chart?' . http_build_query(
-		array(
+		[
 			'cht' => 'p3',
 			'chs' => '250x100',
 			'chd' => "t:{$opcode_stats['memory_used']},{$opcode_stats['memory_avail']}",
-			'chl' => $txtUsed . '|' .$txtAvailable,
+			'chl' => $txtUsed . '|' . $txtAvailable,
 			'chtt' => tr('Memory'),
-		),
+		],
 		'',
 		'&'
 	)
@@ -43,13 +43,13 @@ $txtMiss = tr('Miss');
 $smarty->assign(
 	'hits_graph',
 	$tikilib->httpScheme() . '://chart.googleapis.com/chart?' . http_build_query(
-		array(
+		[
 			'cht' => 'p3',
 			'chs' => '250x100',
 			'chd' => "t:{$opcode_stats['hit_hit']},{$opcode_stats['hit_miss']}",
 			'chl' => $txtHit . '|' . $txtMiss,
 			'chtt' => tr('Cache'),
-		),
+		],
 		'',
 		'&'
 	)

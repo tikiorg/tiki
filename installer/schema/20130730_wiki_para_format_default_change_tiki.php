@@ -22,6 +22,6 @@ function upgrade_20130730_wiki_para_format_default_change_tiki($installer)
 
 	if ($value !== 'y') {	// default values can be empty
 		$preferences = $installer->table('tiki_preferences');
-		$preferences->insertOrUpdate(array('value' => 'n'), array('name' => 'feature_wiki_paragraph_formatting'));
+		$preferences->insertOrUpdate(['value' => 'n'], ['name' => 'feature_wiki_paragraph_formatting']);
 	}
 }

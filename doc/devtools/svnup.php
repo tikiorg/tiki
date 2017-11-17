@@ -21,7 +21,7 @@ use Symfony\Component\Console\Command\HelpCommand;
 if (isset($_SERVER['REQUEST_METHOD'])) {
 	die('Only available through command-line.');
 }
-$tikiBase = realpath(dirname(__FILE__). '/../..');
+$tikiBase = realpath(dirname(__FILE__) . '/../..');
 
 // will output db errors if 'php svnup.php dbcheck' is called
 if (isset($_SERVER['argv'][1]) && $_SERVER['argv'][1] === 'dbcheck') {
@@ -30,13 +30,14 @@ if (isset($_SERVER['argv'][1]) && $_SERVER['argv'][1] === 'dbcheck') {
 }
 
 // if database is unavailable, just autoload. Yo cant call tiki-setup* after autoloading without causing errors.
-$error = shell_exec('php '.escapeshellarg($tikiBase.'/doc/devtools/svnup.php').' dbcheck');
+$error = shell_exec('php ' . escapeshellarg($tikiBase . '/doc/devtools/svnup.php') . ' dbcheck');
 if ($error) {
-	if (strpos($error,'Tiki is not completely installed')) // if tiki didn't install properly, there could be issues initializing autoload, so just die.
-		die ($error);
-	echo shell_exec('php '.escapeshellarg($tikiBase.'/doc/devtools/svnup.php').' dbcheck');
+	if (strpos($error, 'Tiki is not completely installed')) { // if tiki didn't install properly, there could be issues initializing autoload, so just die.
+		die($error);
+	}
+	echo shell_exec('php ' . escapeshellarg($tikiBase . '/doc/devtools/svnup.php') . ' dbcheck');
 	require_once $tikiBase . '/vendor_bundled/vendor/autoload.php';
-}else{
+} else {
 	require_once $tikiBase . '/tiki-setup_base.php';
 }
 
@@ -47,7 +48,8 @@ if ($error) {
  * @package Tiki\Command
  */
 
-class SvnUpCommand extends Command{
+class SvnUpCommand extends Command
+{
 
 	protected function configure()
 	{
@@ -105,13 +107,14 @@ class SvnUpCommand extends Command{
 	 * 													produced, handy as an extra check when output is expected.
 	 * @param bool 	$log				If errors should be logged.
 	 */
-	public function OutputErrors(ConsoleLogger &$logger, $return, $errorMessage = '', $errors=array(),$log = true){
+	public function OutputErrors(ConsoleLogger &$logger, $return, $errorMessage = '', $errors = [], $log = true)
+	{
 
 		$logger->info($return);
 
 		// check for errors.
-		foreach ($errors as $error){
-			if (($error === '' && !$return) || ($error && strpos($return,$error))) {
+		foreach ($errors as $error) {
+			if (($error === '' && ! $return) || ($error && strpos($return, $error))) {
 				$logger->error($errorMessage);
 				if ($log) {
 					$logs = new \LogsLib();
@@ -135,29 +138,30 @@ class SvnUpCommand extends Command{
 		$console->setDefaultCommand('database:update');
 		$input = null;
 		if ($output->getVerbosity() <= OutputInterface::VERBOSITY_VERBOSE) {
-			$input = new ArrayInput(array('-q' => null));
-		}elseif ($output->getVerbosity() == OutputInterface::VERBOSITY_DEBUG) {
-			$input = new ArrayInput(array('-vvv' => null));
+			$input = new ArrayInput(['-q' => null]);
+		} elseif ($output->getVerbosity() == OutputInterface::VERBOSITY_DEBUG) {
+			$input = new ArrayInput(['-vvv' => null]);
 		}
 		$console->run($input);
 	}
 
 
-	protected function execute(InputInterface $input, OutputInterface $output){
-		$tikiBase = realpath(dirname(__FILE__). '/../..');
+	protected function execute(InputInterface $input, OutputInterface $output)
+	{
+		$tikiBase = realpath(dirname(__FILE__) . '/../..');
 
-		$verbosityLevelMap = array(
+		$verbosityLevelMap = [
 			LogLevel::CRITICAL   => OutputInterface::VERBOSITY_NORMAL,
 			LogLevel::ERROR      => OutputInterface::VERBOSITY_NORMAL,
 			LogLevel::NOTICE     => OutputInterface::VERBOSITY_NORMAL,
 			LogLevel::INFO       => OutputInterface::VERBOSITY_VERY_VERBOSE
-		);
+		];
 		$logger = new ConsoleLogger($output, $verbosityLevelMap);
 		$errors = false;
 		$rev = 'HEAD';
 
 		// check that proper options were given, else die with help options.
-		if (!in_array($input->getOption('conflict'), array('abort', 'postpone', 'mine-conflict', 'theirs-conflict'))) {
+		if (! in_array($input->getOption('conflict'), ['abort', 'postpone', 'mine-conflict', 'theirs-conflict'])) {
 			$help = new HelpCommand();
 			$help->setCommand($this);
 			$help->run($input, $output);
@@ -166,19 +170,18 @@ class SvnUpCommand extends Command{
 
 		// check that the --lag option is valid, and complain if its not.
 		if ($input->getOption('lag')) {
-			if ($input->getOption('lag') < 0 || !is_numeric($input->getOption('lag'))) {
+			if ($input->getOption('lag') < 0 || ! is_numeric($input->getOption('lag'))) {
 				$help = new HelpCommand();
 				$help->setCommand($this);
 				$help->run($input, $output);
 				return $logger->notice('Invalid option for --lag, must be a positive integer.');
-
 			}
 			// current time minus number of days specified through lag
 			$rev = date('{"Y-m-d H:i"}', time() - $input->getOption('lag') * 60 * 60 * 24);
 		}
 		// if were using a db, then configure it.
-		if (!$input->getOption('no-db')) {
-			$errors = shell_exec('php '.escapeshellarg($tikiBase.'/doc/devtools/svnup.php').' dbcheck');
+		if (! $input->getOption('no-db')) {
+			$errors = shell_exec('php ' . escapeshellarg($tikiBase . '/doc/devtools/svnup.php') . ' dbcheck');
 		}
 		if ($errors) {
 			$logger->notice('Running in no-db mode, Database errors: ' . $errors . "\n");
@@ -186,14 +189,15 @@ class SvnUpCommand extends Command{
 		}
 
 		// if were using a db, then configure it.
-		if (!$input->getOption('no-db')){
+		if (! $input->getOption('no-db')) {
 			$logslib = new \LogsLib();
 		}
 
 		// die gracefully if shell_exec is not enabled;
-		if (!is_callable('shell_exec')){
-			if (!$input->getOption('no-db'))
+		if (! is_callable('shell_exec')) {
+			if (! $input->getOption('no-db')) {
 				$logslib->add_action('svn update', 'Automatic update failed. Could not execute shell_exec()', 'system');
+			}
 			$logger->critical('Automatic update failed. Could not execute shell_exec()');
 			die();
 		}
@@ -201,16 +205,19 @@ class SvnUpCommand extends Command{
 		$max = 7;
 		if ($input->getOption('no-db')) {
 			$max -= 4;
-		}else{
-			if ($input->getOption('no-secdb'))
+		} else {
+			if ($input->getOption('no-secdb')) {
 				$max --;
-			if ($input->getOption('no-reindex'))
+			}
+			if ($input->getOption('no-reindex')) {
 				$max --;
+			}
 		}
 
 		$progress = new ProgressBar($output, $max);
-		if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE)
+		if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
 			$progress->setOverwrite(false);
+		}
 		$progress->setFormatDefinition('custom', ' %current%/%max% [%bar%] -- %message%');
 		$progress->setFormat('custom');
 
@@ -220,8 +227,8 @@ class SvnUpCommand extends Command{
 
 		// set revision number beginning with.
 		$raw = shell_exec('svn info 2>&1');
-		$output->writeln($raw,OutputInterface::VERBOSITY_DEBUG);
-		preg_match('/Revision: (\d+)/',$raw,$startRev);
+		$output->writeln($raw, OutputInterface::VERBOSITY_DEBUG);
+		preg_match('/Revision: (\d+)/', $raw, $startRev);
 		if ($startRev) {
 			$startRev = $startRev[1];
 		} else {
@@ -232,16 +239,17 @@ class SvnUpCommand extends Command{
 		$svnConflict = $input->getOption('conflict');
 		// start svn conflict checks
 		if ($input->getOption('conflict') === 'abort') {
-
 			$raw = shell_exec("svn merge --dry-run -r BASE:$rev . 2>&1");
-			$output->writeln($raw,OutputInterface::VERBOSITY_DEBUG);
+			$output->writeln($raw, OutputInterface::VERBOSITY_DEBUG);
 
 			if (strpos($raw, 'E155035:')) {
 				$progress->setMessage('Working copy currently conflicted. Update Aborted.');
-				if ($input->getOption('email'))
-					mail($input->getOption('email'),'Svn Up Aborted',wordwrap('Working copy currency conflicted. Update Aborted. '.__FILE__,70,"\r\n"));
-				if (!$input->getOption('no-db'))
+				if ($input->getOption('email')) {
+					mail($input->getOption('email'), 'Svn Up Aborted', wordwrap('Working copy currency conflicted. Update Aborted. ' . __FILE__, 70, "\r\n"));
+				}
+				if (! $input->getOption('no-db')) {
 					$logslib->add_action('svn update', "Working copy currency conflicted. Update Aborted. r$startRev", 'system');
+				}
 				$progress->advance();
 				die("\n");
 			}
@@ -253,27 +261,31 @@ class SvnUpCommand extends Command{
 				$mixedRev = $mixedRev[1];
 
 				// Now that we know the upper revision number, svn up to it.
-				$errors = array('', 'Text conflicts');
-				$this->OutputErrors($logger, shell_exec('svn update --accept postpone --revision ' . $mixedRev .' 2>&1'), 'Problem with svn up, check for conflicts.', $errors, !$input->getOption('no-db'));
+				$errors = ['', 'Text conflicts'];
+				$this->OutputErrors($logger, shell_exec('svn update --accept postpone --revision ' . $mixedRev . ' 2>&1'), 'Problem with svn up, check for conflicts.', $errors, ! $input->getOption('no-db'));
 				if ($logger->hasErrored()) {
 					$progress->setMessage('Preexisting local conflicts exist. Update Aborted.');
-					if ($input->getOption('email'))
-						echo mail($input->getOption('email'),'Svn Up Aborted',wordwrap('Preexisting local conflicts exist. Update Aborted. '.__FILE__,70,"\r\n"));
-					if (!$input->getOption('no-db'))
+					if ($input->getOption('email')) {
+						echo mail($input->getOption('email'), 'Svn Up Aborted', wordwrap('Preexisting local conflicts exist. Update Aborted. ' . __FILE__, 70, "\r\n"));
+					}
+					if (! $input->getOption('no-db')) {
 						$logslib->add_action('svn update', "Preexisting local conflicts exist. Update Aborted. r$startRev", 'system');
+					}
 					$progress->advance();
 					die("\n"); // If custom mixed revision merges were made with local changes, this could happen.... (very unlikely)
 				}
 				// now re-check for conflicts
 				$raw = shell_exec("svn merge --dry-run -r BASE:$rev .  2>&1");
-				$output->writeln($raw,OutputInterface::VERBOSITY_DEBUG);
+				$output->writeln($raw, OutputInterface::VERBOSITY_DEBUG);
 			}
-			if (strpos($raw, "\nC    ")!== false) {
+			if (strpos($raw, "\nC    ") !== false) {
 				$progress->setMessage('Conflicts exist between working copy and repository. Update Aborted.');
-				if ($input->getOption('email'))
-					echo mail($input->getOption('email'),'Svn Up Aborted',wordwrap('Conflicts exist between working copy and repository. Update Aborted. '.__FILE__,70,"\r\n"));
-				if (!$input->getOption('no-db'))
+				if ($input->getOption('email')) {
+					echo mail($input->getOption('email'), 'Svn Up Aborted', wordwrap('Conflicts exist between working copy and repository. Update Aborted. ' . __FILE__, 70, "\r\n"));
+				}
+				if (! $input->getOption('no-db')) {
 					$logslib->add_action('svn update', "Conflicts exist between working copy and repository. Update Aborted. r$startRev", 'system');
+				}
 				$progress->advance();
 				die("\n");
 			}
@@ -284,20 +296,20 @@ class SvnUpCommand extends Command{
 
 		$progress->setMessage('Updating SVN');
 		$progress->advance();
-		$errors = array('','Text conflicts');
-		$this->OutputErrors($logger,shell_exec("svn update --revision $rev --accept $svnConflict 2>&1"),'Problem with svn up, check for conflicts.',$errors,!$input->getOption('no-db'));
+		$errors = ['','Text conflicts'];
+		$this->OutputErrors($logger, shell_exec("svn update --revision $rev --accept $svnConflict 2>&1"), 'Problem with svn up, check for conflicts.', $errors, ! $input->getOption('no-db'));
 
 		// set revision number updated to.
 		$raw = shell_exec('svn info  2>&1');
-		$output->writeln($raw,OutputInterface::VERBOSITY_DEBUG);
-		preg_match('/Revision: (\d+)/',$raw,$endRev);
+		$output->writeln($raw, OutputInterface::VERBOSITY_DEBUG);
+		preg_match('/Revision: (\d+)/', $raw, $endRev);
 		if ($endRev) {
 			$endRev = $endRev[1];
 		} else {
 			$endRev = ' unknown';
 		}
 
-		if (!$input->getOption('no-db')) {
+		if (! $input->getOption('no-db')) {
 			$progress->setMessage('Clearing all caches');
 			$progress->advance();
 			$cache = new \Cachelib();
@@ -306,20 +318,20 @@ class SvnUpCommand extends Command{
 
 		$progress->setMessage('Updating dependencies & setting file permissions');
 		$progress->advance();
-		$errors = array('', 'Please provide an existing command', 'you are behind a proxy', 'Composer failed', 'Wrong PHP version');
-		$this->OutputErrors($logger,shell_exec('sh setup.sh -n fix 2>&1'),'Problem running setup.sh',$errors,!$input->getOption('no-db'));   // 2>&1 suppresses all terminal output, but allows full capturing for logs & verbiage
+		$errors = ['', 'Please provide an existing command', 'you are behind a proxy', 'Composer failed', 'Wrong PHP version'];
+		$this->OutputErrors($logger, shell_exec('sh setup.sh -n fix 2>&1'), 'Problem running setup.sh', $errors, ! $input->getOption('no-db'));   // 2>&1 suppresses all terminal output, but allows full capturing for logs & verbiage
 
-		if (!$input->getOption('no-db')) {
+		if (! $input->getOption('no-db')) {
 			// generate a secbb database so when database:update is run, it also gets updated.
-			if (!$input->getOption('no-secdb')) {
-				require_once ($tikiBase.'/doc/devtools/svntools.php');
+			if (! $input->getOption('no-secdb')) {
+				require_once($tikiBase . '/doc/devtools/svntools.php');
 				if (svn_files_identical($tikiBase)) {
 					$progress->setMessage('<comment>Working copy differs from repository, skipping SecDb Update.</comment>');
 					$progress->advance();
 				} else {
 					$progress->setMessage('Updating secdb');
 					$progress->advance();
-					$errors = array('is not writable', '');
+					$errors = ['is not writable', ''];
 					$this->OutputErrors($logger, shell_exec('php doc/devtools/release.php --only-secdb --no-check-svn'), 'Problem updating secdb', $errors);
 				}
 			}
@@ -331,28 +343,30 @@ class SvnUpCommand extends Command{
 
 
 			// rebuild tiki index. Since this could take a while, make it optional.
-			if (!$input->getOption('no-reindex')) {
+			if (! $input->getOption('no-reindex')) {
 				$progress->setMessage('Rebuilding search index');
 				$progress->advance();
-				$errors = array('', 'Fatal error');
+				$errors = ['', 'Fatal error'];
 				$shellCom = 'php console.php index:rebuild';
-				if ($output->getVerbosity() == OutputInterface::VERBOSITY_DEBUG)
+				if ($output->getVerbosity() == OutputInterface::VERBOSITY_DEBUG) {
 					$shellCom .= ' -vvv';
+				}
 
-				$this->OutputErrors($logger,shell_exec($shellCom.' 2>&1'),'Problem Rebuilding Index',$errors,!$input->getOption('no-db'));   // 2>&1 suppresses all terminal output, but allows full capturing for logs & verbiage
-
+				$this->OutputErrors($logger, shell_exec($shellCom . ' 2>&1'), 'Problem Rebuilding Index', $errors, ! $input->getOption('no-db'));   // 2>&1 suppresses all terminal output, but allows full capturing for logs & verbiage
 			}
 		}
 
 		if ($logger->hasErrored()) {
-			if (!$input->getOption('no-db'))
+			if (! $input->getOption('no-db')) {
 				$logslib->add_action('svn update', "Automatic update completed with errors, r$startRev -> r$endRev, Try again or debug.", 'system');
-			if ($input->getOption('email'))
-				echo mail($input->getOption('email'),'Svn Up Aborted',wordwrap("Automatic update completed with errors, r$startRev -> r$endRev, Try again or debug.".__FILE__,70,"\r\n"));
+			}
+			if ($input->getOption('email')) {
+				echo mail($input->getOption('email'), 'Svn Up Aborted', wordwrap("Automatic update completed with errors, r$startRev -> r$endRev, Try again or debug." . __FILE__, 70, "\r\n"));
+			}
 			$progress->setMessage("Automatic update completed with errors, r$startRev -> r$endRev, Try again or ensure update functioning.");
-		}elseif ($input->getOption('no-db')){
+		} elseif ($input->getOption('no-db')) {
 			$progress->setMessage("<comment>Automatic update completed in no-db mode, r$startRev -> r$endRev, Database not updated.</comment>");
-		}else{
+		} else {
 			$logslib->add_action('svn update', "Automatic update completed, r$startRev -> r$endRev", 'system');
 			$progress->setMessage("<comment>Automatic update completed r$startRev -> r$endRev</comment>");
 		}
@@ -366,5 +380,3 @@ $console = new Application;
 $console->add(new SvnUpCommand);
 $console->setDefaultCommand('svnup');
 $console->run();
-
-

@@ -21,22 +21,21 @@ function upgrade_20150508_perspectives_style_to_theme_tiki($installer)
 	$perspectivePrefs = TikiDb::get()->table('tiki_perspective_preferences');
 
 	$result = $perspectivePrefs->fetchAll(
-		array('perspectiveId' , 'pref' , 'value'),
-		array('pref' => $perspectivePrefs->like('style%'))
+		['perspectiveId' , 'pref' , 'value'],
+		['pref' => $perspectivePrefs->like('style%')]
 	);
 
 	foreach ($result as $row) {
 		$val = unserialize($row['value']);
 		$perspectivePrefs->update(
-			array(
+			[
 				'value' => serialize(str_replace('.css', '', $val)),
 				'perspectiveId' => $row['perspectiveId'],
-				'pref' => str_replace('style', 'theme', $row['pref'])),
-			array(
+				'pref' => str_replace('style', 'theme', $row['pref'])],
+			[
 				'perspectiveId' => $row['perspectiveId'],
 				'pref' => $row['pref']
-			)
+			]
 		);
 	}
 }
-

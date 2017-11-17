@@ -16,7 +16,7 @@
 
 $version = $_SERVER['argv'][1];
 
-rewriteSecdb('tiki-' . $version . '/db/tiki-secdb_'.$version.'_mysql.sql', 'tiki-' . $version, $version);
+rewriteSecdb('tiki-' . $version . '/db/tiki-secdb_' . $version . '_mysql.sql', 'tiki-' . $version, $version);
 
 /**
  * @param $file
@@ -27,15 +27,16 @@ function rewriteSecdb($file, $root, $version)
 {
 	$file_exists = @file_exists($file);
 	$fp = @fopen($file, 'w+') or print("The SecDB file $file is not writable or can't be created.");
-	$queries = array();
+	$queries = [];
 	md5CheckDir($root, $root, $version, $queries);
 
 	if (! empty($queries)) {
 		sort($queries);
 		fwrite($fp, "start transaction;\n");
 		fwrite($fp, "DELETE FROM `tiki_secdb` WHERE `tiki_version` = '$version';\n\n");
-		foreach ($queries as $q)
+		foreach ($queries as $q) {
 			fwrite($fp, "$q\n");
+		}
 		fwrite($fp, "commit;\n");
 	}
 

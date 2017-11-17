@@ -16,7 +16,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function upgrade_20160604_remove_unwanted_files_tiki($installer)
 {
 
-	$files = array(
+	$files = [
 		'vendo/player/mp3/template_default/compileTemplateDefault.bat',
 		'vendor/player/mp3/template_default/compileTemplateDefault.sh',
 		'vendor/player/mp3/template_default/TemplateDefault.as',
@@ -27,13 +27,11 @@ function upgrade_20160604_remove_unwanted_files_tiki($installer)
 		'vendor/player/flv/template_default/rorobong.jpg',
 		'vendor/player/flv/template_default/TemplateDefault.as',
 		'vendor/jcapture-applet/jcapture-applet/applet.php',
-	);
+	];
 
 	foreach ($files as $file) {
 		if (is_writable($file)) {
 			unlink($file);
 		}
 	}
-
 }
-

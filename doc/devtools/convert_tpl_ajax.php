@@ -28,7 +28,7 @@
  */
 
 // just in case
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $access->check_permission('tiki_p_admin');
 $access->check_feature('javascript_enabled');
 
@@ -49,7 +49,7 @@ function replace_with_self_links($original, $template_base)
 	global $count_r;
 
 	preg_match_all('/<a.*?\s*href=[^\.]*\.php[^>]*?>(.*?)<\/a>/mi', $original, $phplinks);
-	$replacements = array();
+	$replacements = [];
 
 	$count_r = count($phplinks[0]);
 	for ($j = 0; $j < $count_r; $j++) {
@@ -58,7 +58,6 @@ function replace_with_self_links($original, $template_base)
 
 		$str = '{self_link ';
 		for ($i = 0, $icount_attrs = count($attrs[1]); $i < $icount_attrs; $i++) {
-
 			if (strtolower($attrs[1][$i]) == 'href') {
 				$query = parse_url(urldecode(str_replace('&amp;', '&', $attrs[2][$i])));
 				if ($query['path'] != $template_base . '.php') {
@@ -76,7 +75,6 @@ function replace_with_self_links($original, $template_base)
 		}
 		$str = trim($str) . '}' . $phplinks[1][$j] . '{/self_link}';
 		$replacements[] = $str;
-
 	}
 	$replaced = str_replace($phplinks[0], $replacements, $original);
 	return $replaced;
@@ -86,18 +84,18 @@ function replace_with_self_links($original, $template_base)
  * @param $var
  * @return string
  */
-function process_value ($var)
+function process_value($var)
 {
 	if (strpos($var, '{$') === 0) {
-		$var =  trim($var, '{}');
+		$var = trim($var, '{}');
 		$q = '';
 	} else {
 		$q = '"';
 	}
 	// comment out if's inside attributes for manual processing
 	$var = preg_replace(
-		array('/\{if\s([^\}]*)\}/i', '/\{else\}/i', '/\{\/if\}/i', '/\{elseif\s([^\}]*)\}/i'),
-		array('{*if $1*}',           '{*else*}',    '{*/if*}',     '/{*elseif $1*}/'),
+		['/\{if\s([^\}]*)\}/i', '/\{else\}/i', '/\{\/if\}/i', '/\{elseif\s([^\}]*)\}/i'],
+		['{*if $1*}',           '{*else*}',    '{*/if*}',     '/{*elseif $1*}/'],
 		$var
 	);
 	$var = "$q" . $var . "$q";
@@ -105,8 +103,8 @@ function process_value ($var)
 }
 
 $markup = file_get_contents('templates/' . $tpl . '.tpl');
-$checked = !empty($_REQUEST['toggle']) ? ' checked=\'checked\'' : '';
-if (!empty($checked)) {
+$checked = ! empty($_REQUEST['toggle']) ? ' checked=\'checked\'' : '';
+if (! empty($checked)) {
 	$markup = replace_with_self_links($markup, $tpl);
 }
 
@@ -146,7 +144,7 @@ JS
 $smarty->assign('source', true);
 $smarty->assign('sourced', htmlentities($markup));
 $smarty->assign('noHistory', true);
-$smarty->assign('info', array('version' => true));
+$smarty->assign('info', ['version' => true]);
 
 // Display the template
 $smarty->assign('mid', 'tiki-pagehistory.tpl');

@@ -6,8 +6,8 @@
 // $Id$
 
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -28,9 +28,8 @@ function upgrade_20110609_batch_update_tracker_item_links_tiki($installer)
 				" INNER JOIN tiki_tracker_item_fields l ON r.value = l.value AND l.fieldId = ?" .
 				" SET r.value = l.itemId" .
 				" WHERE r.fieldId = ?",
-				array($remoteFieldId, $fieldId)
+				[$remoteFieldId, $fieldId]
 			);
 		}
 	}
 }
-

@@ -32,12 +32,12 @@ class ggg_trace
 {
 	var $fp;
 
-    /**
-     * @param string $nameStr
-     */
-    function __construct($nameStr = 'ggg-trace.out')
+	/**
+	 * @param string $nameStr
+	 */
+	function __construct($nameStr = 'ggg-trace.out')
 	{
-		register_shutdown_function(array(&$this, '_ggg_trace')); // the & is important
+		register_shutdown_function([&$this, '_ggg_trace']); // the & is important
 		$this->fp = fopen($nameStr, 'a');
 		fwrite($this->fp, "\n");
 		// e.g. 20031231 17:00:20
@@ -46,27 +46,27 @@ class ggg_trace
 		// print date("Ymd G:i:s<br>",time()); // e.g. 20031231 17:00:20
 	}
 
-    /**
-     * @param string $outStr
-     */
-    function out($outStr = '')
+	/**
+	 * @param string $outStr
+	 */
+	function out($outStr = '')
 	{
 		fwrite($this->fp, "$outStr");
 	}
 
-    /**
-     * @param string $outStr
-     */
-    function outln($outStr = '')
+	/**
+	 * @param string $outStr
+	 */
+	function outln($outStr = '')
 	{
 		fwrite($this->fp, "$outStr\n");
 	}
 
-    /**
-     * @param $var
-     * @param int $indent
-     */
-    function outvar($var, $indent = 0)
+	/**
+	 * @param $var
+	 * @param int $indent
+	 */
+	function outvar($var, $indent = 0)
 	{
 		if ($indent > 8) {
 			fwrite($this->fp, "Too many levels of recursion! \n");
@@ -79,7 +79,7 @@ class ggg_trace
 		if (is_array($var)) {
 			$indent++;
 			$spaces = sprintf('%' . $indent . 's', '');
-			foreach ($var as $key=>$val) {
+			foreach ($var as $key => $val) {
 				if ($key === 'GLOBALS' && is_array($val)) {
 					// In case we are called with $ggg_tracer->outvar($GLOBALS);
 					// and we don't check here, we get an infinite recursion.

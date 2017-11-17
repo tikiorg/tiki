@@ -21,47 +21,47 @@ function pre_20110727_tracker_multilingual_convert_tiki($installer)
 
 	$multilingualFields = $fields->fetchColumn(
 		'fieldId',
-		array(
+		[
 			'isMultilingual' => 'y',
-			'type' => $fields->in(array('t', 'a')),
-		)
+			'type' => $fields->in(['t', 'a']),
+		]
 	);
 
 	$unilingualFields = $fields->fetchColumn(
 		'fieldId',
-		array(
+		[
 			'isMultilingual' => $fields->not('y'),
-			'type' => $fields->in(array('t', 'a')),
-		)
+			'type' => $fields->in(['t', 'a']),
+		]
 	);
 
 	$table = $installer->table('tiki_tracker_item_fields');
 
 	// Clean up data that does not match the field definition
 	$table->deleteMultiple(
-		array(
+		[
 			'fieldId' => $table->in($multilingualFields),
 			'lang' => '',
-		)
+		]
 	);
 
 	$table->deleteMultiple(
-		array(
+		[
 			'fieldId' => $table->in($unilingualFields),
 			'lang' => $table->not(''),
-		)
+		]
 	);
 
 	// Collect the data stored in the multilingual fields
 	$result = $table->fetchAll(
 		$table->all(),
-		array(
+		[
 			'lang' => $table->not(''),
 			'fieldId' => $table->in($multilingualFields),
-		)
+		]
 	);
 
-	$multilingual_tracker_content = array();
+	$multilingual_tracker_content = [];
 	foreach ($result as $row) {
 		$itemId = $row['itemId'];
 		$fieldId = $row['fieldId'];
@@ -75,18 +75,18 @@ function pre_20110727_tracker_multilingual_convert_tiki($installer)
 	foreach ($multilingual_tracker_content as $itemId => $fields) {
 		foreach ($fields as $fieldId => $data) {
 			$table->deleteMultiple(
-				array(
+				[
 					'itemId' => $itemId,
 					'fieldId' => $fieldId,
-				)
+				]
 			);
 		}
 	}
 
 	// Similar treatment on logs, although less corruption is expected
 	$table = $installer->table('tiki_tracker_item_field_logs');
-	$result = $table->fetchAll($table->all(), array('lang' => $table->not(''),));
-	$multilingual_tracker_content_logs = array();
+	$result = $table->fetchAll($table->all(), ['lang' => $table->not(''),]);
+	$multilingual_tracker_content_logs = [];
 
 	foreach ($result as $row) {
 		$version = $row['version'];
@@ -98,7 +98,7 @@ function pre_20110727_tracker_multilingual_convert_tiki($installer)
 		$multilingual_tracker_content_logs[$itemId][$version][$fieldId][$lang] = $value;
 	}
 
-	$table->deleteMultiple(array('lang' => $table->not(''),));
+	$table->deleteMultiple(['lang' => $table->not(''),]);
 }
 
 /**
@@ -114,11 +114,11 @@ function post_20110727_tracker_multilingual_convert_tiki($installer)
 	foreach ($multilingual_tracker_content as $itemId => $fields) {
 		foreach ($fields as $fieldId => $data) {
 			$table->insert(
-				array(
+				[
 					'itemId' => $itemId,
 					'fieldId' => $fieldId,
 					'value' => json_encode($data),
-				)
+				]
 			);
 		}
 	}
@@ -128,12 +128,12 @@ function post_20110727_tracker_multilingual_convert_tiki($installer)
 		foreach ($versions as $version => $fields) {
 			foreach ($fields as $fieldId => $data) {
 				$table->insert(
-					array(
+					[
 						'version' => $version,
 						'itemId' => $itemId,
 						'fieldId' => $fieldId,
 						'value' => json_encode($data),
-					)
+					]
 				);
 			}
 		}
@@ -142,4 +142,3 @@ function post_20110727_tracker_multilingual_convert_tiki($installer)
 	$multilingual_tracker_content = null;
 	$multilingual_tracker_content_logs = null;
 }
-

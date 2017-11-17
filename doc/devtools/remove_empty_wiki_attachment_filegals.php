@@ -26,15 +26,16 @@ function removeEmptyAttachmentGals()
 {
 	$galleryTable = TikiDb::get()->table('tiki_file_galleries');
 	$fileTable = TikiDb::get()->table('tiki_files');
-	$galleriesToDelete = array();
+	$galleriesToDelete = [];
 
 	$attachmentGalleries = $galleryTable->fetchAll(
-		array('galleryId', 'name'),
-		array('type' => 'attachments'));
+		['galleryId', 'name'],
+		['type' => 'attachments']
+	);
 
 	foreach ($attachmentGalleries as $gal) {
-		$files = $fileTable->fetchCount(array('galleryId' => $gal['galleryId']));
-		if (!$files) {
+		$files = $fileTable->fetchCount(['galleryId' => $gal['galleryId']]);
+		if (! $files) {
 			$galleriesToDelete[] = $gal;
 			echo "Attachment gallery: #{$gal['galleryId']} \"{$gal['name']}\" is empty, and will be removed\n";
 			ob_flush();
@@ -42,7 +43,7 @@ function removeEmptyAttachmentGals()
 	}
 	if ($galleriesToDelete) {
 		$prompt = 'Are you sure you want to permanently remove all these (' . count($galleriesToDelete) . ') galleries? There is no undo... (y/n): ';
-		if (readSTDIN($prompt, array('y', 'n')) == 'y') {
+		if (readSTDIN($prompt, ['y', 'n']) == 'y') {
 			echo "\n\n\nDeleting...\n\n";
 			foreach ($galleriesToDelete as $gal) {
 				TikiLib::lib('filegal')->remove_file_gallery($gal['galleryId']);
@@ -59,17 +60,17 @@ function removeEmptyAttachmentGals()
 	ob_flush();
 }
 
-function readSTDIN($prompt, $valid_inputs, $default = '') {
-    while(!isset($input) || (is_array($valid_inputs) && !in_array($input, $valid_inputs)) || ($valid_inputs == 'is_file' && !is_file($input))) {
+function readSTDIN($prompt, $valid_inputs, $default = '')
+{
+	while (! isset($input) || (is_array($valid_inputs) && ! in_array($input, $valid_inputs)) || ($valid_inputs == 'is_file' && ! is_file($input))) {
 		echo $prompt;
 		ob_flush();
-        $input = strtolower(trim(fgets(STDIN)));
-        if(empty($input) && !empty($default)) {
-            $input = $default;
-        }
-    }
-    return $input;
+		$input = strtolower(trim(fgets(STDIN)));
+		if (empty($input) && ! empty($default)) {
+			$input = $default;
+		}
+	}
+	return $input;
 }
 
 removeEmptyAttachmentGals();
-

@@ -21,25 +21,26 @@ function upgrade_optional_20170801_initialize_article_nbreads_tiki($installer)
 		$tikilib = TikiLib::lib('tiki');
 		$minimumAbnormal = $tikilib->getOne('SELECT MIN(articleId) FROM tiki_articles WHERE nbreads IS NULL');
 		$maximumNormal = $tikilib->getOne('SELECT MAX(articleId) FROM tiki_articles WHERE nbreads IS NOT NULL');
-		if (is_null($minimumAbnormal)) {
-			return true;
-		}
-		if (! is_null($maximumNormal) && $minimumAbnormal < $maximumNormal) {
-			throw new Exception('Some articles with a regular counter were created after articles with an irregular counter. Please manually fix the fields if this is expected.');
-		}
-		$tikilib->query('UPDATE tiki_articles SET nbreads=0 WHERE nbreads IS NULL');	$tikilib = TikiLib::lib('tiki');
+	if (is_null($minimumAbnormal)) {
+		return true;
+	}
+	if (! is_null($maximumNormal) && $minimumAbnormal < $maximumNormal) {
+		throw new Exception('Some articles with a regular counter were created after articles with an irregular counter. Please manually fix the fields if this is expected.');
+	}
+		$tikilib->query('UPDATE tiki_articles SET nbreads=0 WHERE nbreads IS NULL');
+	$tikilib = TikiLib::lib('tiki');
 	}
 
 	// Submissions
 	{
 		$minimumAbnormal = $tikilib->getOne('SELECT MIN(subId) FROM tiki_submissions WHERE nbreads IS NULL');
 		$maximumNormal = $tikilib->getOne('SELECT MAX(subId) FROM tiki_submissions WHERE nbreads IS NOT NULL');
-		if (is_null($minimumAbnormal)) {
-			return true;
-		}
-		if (! is_null($maximumNormal) && $minimumAbnormal < $maximumNormal) {
-			throw new Exception('Some article submissions with a regular counter were created after article submissions with an irregular counter. Please manually fix the fields if this is expected.');
-		}
+	if (is_null($minimumAbnormal)) {
+		return true;
+	}
+	if (! is_null($maximumNormal) && $minimumAbnormal < $maximumNormal) {
+		throw new Exception('Some article submissions with a regular counter were created after article submissions with an irregular counter. Please manually fix the fields if this is expected.');
+	}
 		$tikilib->query('UPDATE tiki_submissions SET nbreads=0 WHERE nbreads IS NULL');
 	}
 }

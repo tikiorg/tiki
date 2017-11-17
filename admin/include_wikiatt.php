@@ -12,7 +12,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 }
 
 $wikilib = TikiLib::lib('wiki');
-$auto_query_args = array('sort_mode', 'page');
+$auto_query_args = ['sort_mode', 'page'];
 
 $find = '';
 $offset = 0;
@@ -38,7 +38,7 @@ if ($access->ticketMatch()) {
 	} elseif (isset($_REQUEST['all2file'])) {
 		$attachements = $wikilib->list_all_attachements();
 		for ($i = 0; $i < $attachements['cant']; $i++) {
-			if (!$attachements['data'][$i]['path']) {
+			if (! $attachements['data'][$i]['path']) {
 				$wikilib->db_to_file($attachements['data'][$i]['filename'], $attachements['data'][$i]['attId']);
 			}
 		}

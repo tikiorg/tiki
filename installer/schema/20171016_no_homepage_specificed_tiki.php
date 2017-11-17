@@ -30,5 +30,4 @@ function upgrade_20171016_no_homepage_specificed_tiki($installer)
 
 	// null value prefs (e.g. wikiHomePage) count as being set but have no value, so cause errors.
 	$installer->query('DELETE FROM `tiki_preferences` WHERE ISNULL(`value`);');
-
 }

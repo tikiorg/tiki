@@ -14,7 +14,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 require_once('lib/init/initlib.php');
 
 // Define lang and load translation functions
-if (!empty($_REQUEST['lang'])) {
+if (! empty($_REQUEST['lang'])) {
 	$language = $prefs['site_language'] = $prefs['language'] = $_REQUEST['lang'];
 } else {
 	$language = $prefs['site_language'] = $prefs['language'] = 'en';
@@ -24,7 +24,7 @@ include_once('lib/init/tra.php');
 $local_php = TikiInit::getCredentialsFile();
 global $default_api_tiki, $api_tiki, $db_tiki, $dbversion_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $tikidomain, $tikidomainslash, $dbfail_url;
 $re = false;
-if ( file_exists($local_php) ) {
+if (file_exists($local_php)) {
 	$re = include($local_php);
 }
 
@@ -32,38 +32,37 @@ if (! isset($client_charset)) {
 	$client_charset = 'utf8';
 }
 
-$credentials = array(
+$credentials = [
 	'api_tiki' => empty($api_tiki) ? $default_api_tiki : $api_tiki,
 	'api_tiki_forced' => ! empty($api_tiki),
 	'primary' => false,
 	'shadow' => false,
-);
+];
 
 if ($parts = TikiInit::getEnvironmentCredentials()) {
-
 	$credentials['primary'] = $parts;
 	$re = true;
 } else {
 	if (isset($shadow_host, $shadow_user, $shadow_pass, $shadow_dbs)) {
-		$credentials['shadow'] = array(
+		$credentials['shadow'] = [
 			'host' => $shadow_host,
 			'user' => $shadow_user,
 			'pass' => $shadow_pass,
 			'dbs' => $shadow_dbs,
 			'charset' => $client_charset,
 			'socket' => isset($socket_tiki) ? $socket_tiki : null,
-		);
+		];
 	}
 
 	if (isset($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
-		$credentials['primary'] = array(
+		$credentials['primary'] = [
 			'host' => $host_tiki,
 			'user' => $user_tiki,
 			'pass' => $pass_tiki,
 			'dbs' => $dbs_tiki,
 			'charset' => $client_charset,
 			'socket' => null,
-		);
+		];
 	}
 }
 
@@ -71,13 +70,13 @@ unset($host_map, $db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $shado
 
 global $systemConfiguration;
 $systemConfiguration = new Zend\Config\Config(
-	array(
-		'preference' => array(),
-		'rules' => array(),
-	),
-	array('readOnly' => false)
+	[
+		'preference' => [],
+		'rules' => [],
+	],
+	['readOnly' => false]
 );
-if (isset ($_SERVER['TIKI_INI_FILE'])) {
+if (isset($_SERVER['TIKI_INI_FILE'])) {
 	if (! is_readable($_SERVER['TIKI_INI_FILE'])) {
 		die('Configuration file could not be read.');
 	}
@@ -87,7 +86,7 @@ if (isset ($_SERVER['TIKI_INI_FILE'])) {
 	$configData = $configReader->fromFile($_SERVER['TIKI_INI_FILE']);
 	$systemConfiguration = $systemConfiguration->merge(new Zend\Config\Config($configData));
 }
-if (isset ($system_configuration_file)) {
+if (isset($system_configuration_file)) {
 	if (! is_readable($system_configuration_file)) {
 		die('Configuration file could not be read.');
 	}
@@ -100,12 +99,12 @@ if (isset ($system_configuration_file)) {
 	$systemConfiguration = $systemConfiguration->merge(new Zend\Config\Config($configData));
 }
 
-if ( $re === false ) {
+if ($re === false) {
 	if (! defined('TIKI_IN_INSTALLER')) {
-		if (!isset($_SERVER['REQUEST_METHOD'])) { // if we are running in cli
+		if (! isset($_SERVER['REQUEST_METHOD'])) { // if we are running in cli
 			echo "Cannot initiate database. Tiki is not installed.\n";
-		} elseif (!empty($dbfail_url)) {
-			header('location: '.$dbfail_url);
+		} elseif (! empty($dbfail_url)) {
+			header('location: ' . $dbfail_url);
 		} else {
 			header('location: tiki-install.php');
 		}
@@ -116,7 +115,7 @@ if ( $re === false ) {
 	}
 }
 
-if ( $dbversion_tiki == '1.10' ) {
+if ($dbversion_tiki == '1.10') {
 	$dbversion_tiki = '2.0';
 }
 
@@ -125,18 +124,18 @@ if ( $dbversion_tiki == '1.10' ) {
  */
 class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 {
-    /**
-     * @param TikiDb $db
-     * @param $query
-     * @param $values
-     * @param $result
-     */
-    function handle( TikiDb $db, $query, $values, $result ) // {{{
+	/**
+	 * @param TikiDb $db
+	 * @param $query
+	 * @param $values
+	 * @param $result
+	 */
+	function handle(TikiDb $db, $query, $values, $result) // {{{
 	{
 		global $prefs;
 		$smarty = TikiLib::lib('smarty');
 		$msg = $db->getErrorMessage();
-		$q=$query;
+		$q = $query;
 		if (is_array($values)) {
 			foreach ($values as $v) {
 				if (is_null($v)) {
@@ -172,17 +171,17 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 		header("Cache-Control: no-cache, pre-check=0, post-check=0");
 
 		$smarty->display('database-connection-error.tpl');
-		$this->log($msg.' - '.$q);
+		$this->log($msg . ' - ' . $q);
 		die;
 	} // }}}
-    /**
-     * @param $msg
-     */
-    function log($msg)
+	/**
+	 * @param $msg
+	 */
+	function log($msg)
 	{
 		global $user, $tikilib;
 		$query = 'insert into `tiki_actionlog` (`objectType`,`action`,`object`,`user`,`ip`,`lastModif`, `comment`, `client`) values (?,?,?,?,?,?,?,?)';
-		$result = $tikilib->query($query, array('system', 'db error', 'system', $user, $tikilib->get_ip_address(), $tikilib->now, $msg, substr($_SERVER['HTTP_USER_AGENT'], 0, 200)));
+		$result = $tikilib->query($query, ['system', 'db error', 'system', $user, $tikilib->get_ip_address(), $tikilib->now, $msg, substr($_SERVER['HTTP_USER_AGENT'], 0, 200)]);
 	} // }}}
 }
 
@@ -198,11 +197,11 @@ $initializer->setInitializeCallback(
 			$db->setErrorHandler(new TikiDb_LegacyErrorHandler);
 		}
 
-		if ( isset( $db_table_prefix ) ) {
+		if (isset($db_table_prefix)) {
 			$db->setTablePrefix($db_table_prefix);
 		}
 
-		if ( isset( $common_users_table_prefix ) ) {
+		if (isset($common_users_table_prefix)) {
 			$db->setUsersTablePrefix($common_users_table_prefix);
 		}
 	}
@@ -213,8 +212,8 @@ $db = $initializer->getConnection($credentials['primary']);
 if (! $db && ! defined('TIKI_IN_INSTALLER')) {
 	if (PHP_SAPI === 'cli') {
 		die("\033[31mDid you forget to start MySQL?\033[0m\n");
-	} else if(!empty($dbfail_url)) {
-		header('location: '.$dbfail_url);
+	} elseif (! empty($dbfail_url)) {
+		header('location: ' . $dbfail_url);
 	} else {
 		echo file_get_contents('templates/database_connection_error.html');
 	}
@@ -246,9 +245,9 @@ unset($credentials);
  */
 function mydumpstack($stack)
 {
-	$o='';
+	$o = '';
 	foreach ($stack as $line) {
-		$o.='* '.$line['file']." : ".$line['line']." -> ".$line['function']."(".var_export($line['params'], true).")<br />";
+		$o .= '* ' . $line['file'] . " : " . $line['line'] . " -> " . $line['function'] . "(" . var_export($line['params'], true) . ")<br />";
 	}
 	return $o;
 }

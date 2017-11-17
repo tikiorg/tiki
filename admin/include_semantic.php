@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $access->ticketMatch()) {
 		}
 	}
 	if (isset($_POST['remove'])) {
-		$list = array();
+		$list = [];
 		if (isset($_POST['select'])) {
 			$list = (array) $_POST['select'];
 		}
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $access->ticketMatch()) {
 		}
 	}
 	if (isset($_POST['removeclean'])) {
-		$list = array();
+		$list = [];
 		if (isset($_POST['select'])) {
 			$list = (array) $_POST['select'];
 		}
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $access->ticketMatch()) {
 		}
 	}
 	if (isset($_POST['clean'])) {
-		$list = array();
+		$list = [];
 		if (isset($_POST['select'])) {
 			$list = (array) $_POST['select'];
 		}
@@ -67,8 +67,8 @@ if ($access->ticketMatch()) {
 		$smarty->assign('rename', $_REQUEST['token']);
 	}
 	if (isset($_POST['list'])) {
-		$lists = array();
-		$list = array();
+		$lists = [];
+		$list = [];
 		if (isset($_POST['select'])) {
 			$list = (array) $_POST['select'];
 		}

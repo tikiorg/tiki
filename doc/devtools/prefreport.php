@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -8,7 +8,7 @@
 // Usage: From the command line:
 // php doc/devtools/prefreport.php > prefreport.csv
 //
-// also check out  doc/devtools/securitycheck.php to see in which files are 
+// also check out  doc/devtools/securitycheck.php to see in which files are
 // used each pref (and permission name too)
 //
 
@@ -17,7 +17,7 @@ $prefslib = TikiLib::lib('prefs');
 
 $defaultValues = get_default_prefs();
 
-$fields = array(
+$fields = [
 	'preference' => '',
 	'hard_to_search' => false,
 	'duplicate_name' => 0,
@@ -46,21 +46,22 @@ $fields = array(
 	'shorthint' => '',
 	'perspective' => '',
 	'separator' => '',
-);
+];
 
-$stopWords = array('', 'in', 'and', 'a', 'to', 'be', 'of', 'on', 'the', 'for', 'as', 'it', 'or', 'with', 'by', 'is', 'an');
+$stopWords = ['', 'in', 'and', 'a', 'to', 'be', 'of', 'on', 'the', 'for', 'as', 'it', 'or', 'with', 'by', 'is', 'an'];
 
-$data = array();
-error_reporting(E_ALL);ini_set('display_errors', 'on');
+$data = [];
+error_reporting(E_ALL);
+ini_set('display_errors', 'on');
 
 $data = collect_raw_data($fields);
 remove_fake_descriptions($data);
 set_default_values($data, $defaultValues);
 collect_locations($data);
-$index = array(
+$index = [
 	'name' => index_data($data, 'name'),
 	'description' => index_data($data, 'description'),
-);
+];
 update_search_flag($data, $index, $stopWords);
 
 // Output results
@@ -76,7 +77,7 @@ foreach ($data as $values) {
  */
 function collect_raw_data($fields)
 {
-	$data = array();
+	$data = [];
 
 	foreach (glob('lib/prefs/*.php') as $file) {
 		$name = substr(basename($file), 0, -4);
@@ -97,7 +98,7 @@ function collect_raw_data($fields)
 			$entry['description'] = isset($raw['description']) ? $raw['description'] : '';
 			$entry['filter'] = isset($raw['filter']) ? $raw['filter'] : '';
 			$entry['help'] = isset($raw['help']) ? $raw['help'] : '';
-			$entry['dependencies'] = !empty($raw['dependencies']) ? implode(',', (array) $raw['dependencies']) : '';
+			$entry['dependencies'] = ! empty($raw['dependencies']) ? implode(',', (array) $raw['dependencies']) : '';
 			$entry['type'] = isset($raw['type']) ? $raw['type'] : '';
 			$entry['options'] = isset($raw['options']) ? implode(',', $raw['options']) : '';
 			$entry['admin'] = isset($raw['admin']) ? $raw['admin'] : '';
@@ -155,7 +156,7 @@ function set_default_values(& $data, $prefs)
  */
 function index_data($data, $field)
 {
-	$index = array();
+	$index = [];
 
 	foreach ($data as $row) {
 		$value = strtolower($row[$field]);
@@ -214,4 +215,3 @@ function update_search_flag(& $data, $index, $stopWords)
 		}
 	}
 }
-

@@ -6,8 +6,8 @@
 // $Id$
 
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -23,7 +23,7 @@ function post_20090416_plugin_security_tiki($installer)
 			list($status, $timestamp, $user) = explode('/', $string);
 			$installer->query(
 				"INSERT INTO tiki_plugin_security (fingerprint, status, approval_by, last_update, last_objectType, last_objectId) VALUES(?, ?, ?, ?, '', '')",
-				array($fingerprint, $status, $user, $timestamp)
+				[$fingerprint, $status, $user, $timestamp]
 			);
 		}
 

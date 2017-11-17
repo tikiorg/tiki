@@ -20,17 +20,17 @@ $composerManagerBundled = new ComposerManager($tikipath, $tikipath . DIRECTORY_S
 
 if ($access->ticketMatch()) {
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		if ($_POST['auto-fix-missing-packages']){
+		if ($_POST['auto-fix-missing-packages']) {
 			$smarty->assign('composer_output', $composerManager->fixMissing());
 		}
-		if ($_POST['auto-install-package']){
+		if ($_POST['auto-install-package']) {
 			$smarty->assign('composer_output', $composerManager->installPackage($_POST['auto-install-package']));
 		}
-		if ($_POST['auto-remove-package']){
+		if ($_POST['auto-remove-package']) {
 			$smarty->assign('composer_output', $composerManager->removePackage($_POST['auto-remove-package']));
 		}
-		if ($_POST['auto-run-diagnostics']){
-			if (!$composerManager->composerIsAvailable()){
+		if ($_POST['auto-run-diagnostics']) {
+			if (! $composerManager->composerIsAvailable()) {
 				$smarty->assign('diagnostic_composer_location', '');
 				$smarty->assign('diagnostic_composer_output', '');
 			} else {
@@ -42,7 +42,7 @@ if ($access->ticketMatch()) {
 }
 
 $installableList = $composerManager->getInstalled();
-if ($installableList === false){
+if ($installableList === false) {
 	$packagesMissing = false;
 } else {
 	$packagesMissing = array_reduce(

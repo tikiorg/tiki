@@ -35,14 +35,12 @@ function upgrade_20130807_tracker_files_display_param_change_tiki($installer)
 		}
 
 		$table->update(
-			array(
+			[
 				'options' => json_encode($options),
-			),
-			array(
+			],
+			[
 				'fieldId' => $field['fieldId']
-			)
+			]
 		);
 	}
-
 }
-

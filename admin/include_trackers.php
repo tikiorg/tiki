@@ -46,19 +46,19 @@ if ($access->ticketMatch()) {
 	} elseif (isset($_REQUEST['all2file'])) {
 		$attachements = $trklib->list_all_attachements();
 		for ($i = 0; $i < $attachements['cant']; $i++) {
-			if (!$attachements['data'][$i]['path']) {
+			if (! $attachements['data'][$i]['path']) {
 				$trklib->db_to_file($prefs['t_use_dir'] . md5($attachements['data'][$i]['filename']), $attachements['data'][$i]['attId']);
 			}
 		}
 	}
 
-	if (!empty($_REQUEST['find'])) {
+	if (! empty($_REQUEST['find'])) {
 		$find = $_REQUEST['find'];
 	}
-	if (!empty($_REQUEST['offset'])) {
+	if (! empty($_REQUEST['offset'])) {
 		$offset = $_REQUEST['offset'];
 	}
-	if (!empty($_REQUEST['sort_mode'])) {
+	if (! empty($_REQUEST['sort_mode'])) {
 		$sort_mode = $_REQUEST['sort_mode'];
 	}
 }
@@ -73,11 +73,10 @@ $headerlib->add_cssfile('themes/base_files/feature_css/admin.css');
 $smarty->assign_by_ref('attachements', $attachements['data']);
 
 $factory = new Tracker_Field_Factory(false);
-$fieldPreferences = array();
+$fieldPreferences = [];
 
 foreach ($factory->getFieldTypes() as $type) {
 	$fieldPreferences[] = array_shift($type['prefs']);
 }
 
 $smarty->assign('fieldPreferences', $fieldPreferences);
-

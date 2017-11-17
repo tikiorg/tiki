@@ -9,16 +9,16 @@ if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
 	die('This script may only be included.');
 }
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 if ($access->ticketMatch()) {
 	$tikilib->set_preference('display_timezone', $tikilib->get_preference('server_timezone'));
-	if (!empty($_REQUEST['testMail'])) {
+	if (! empty($_REQUEST['testMail'])) {
 		include_once('lib/webmail/tikimaillib.php');
 		$mail = new TikiMail();
 		$mail->setSubject(tra('Tiki Email Test'));
 		$mail->setText(tra('Tiki Test email from:') . ' ' . $_SERVER['SERVER_NAME']);
-		if (!$mail->send(array($_REQUEST['testMail']))) {
+		if (! $mail->send([$_REQUEST['testMail']])) {
 			$msg = tra('Unable to send mail');
 			if ($tiki_p_admin == 'y') {
 				$mailerrors = print_r($mail->errors, true);
@@ -34,4 +34,3 @@ if ($access->ticketMatch()) {
 $engine_type = getCurrentEngine();
 $smarty->assign('db_engine_type', $engine_type);
 $smarty->assign('now', $tikilib->now);
-

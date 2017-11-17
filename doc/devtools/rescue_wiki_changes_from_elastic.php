@@ -109,7 +109,6 @@ class ESRescueCommand extends Command
 		$transaction = $tikilib->begin();
 
 		foreach ($edits as $edit) {
-
 			$page = $edit['page'];
 			if (! $tikilib->page_exists($page)) {
 				$info = $this->getWikiPage($page);
@@ -281,7 +280,6 @@ class ESRescueCommand extends Command
 			echo $e->getMessage();
 			return null;
 		}
-
 	}
 
 	/**
@@ -331,7 +329,6 @@ class ESRescueCommand extends Command
 			return false;
 		}
 	}
-
 }
 
 // create the application and new console
@@ -342,4 +339,3 @@ $console->setDefaultCommand('rescue');
 
 // run the command
 $console->run();
-

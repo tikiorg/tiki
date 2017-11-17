@@ -6,26 +6,25 @@
 // $Id$
 
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 function upgrade_20140812_convert_tiki_connect_data_to_json_tiki($installer)
 {
 	$tiki_connect = TikiDb::get()->table('tiki_connect');
 
-	$rows = $tiki_connect->fetchAll(array('id', 'created', 'type', 'data', 'guid', 'server'));
+	$rows = $tiki_connect->fetchAll(['id', 'created', 'type', 'data', 'guid', 'server']);
 
 	foreach ($rows as $row) {
-		if (!empty($row['data'])) {
+		if (! empty($row['data'])) {
 			$data = unserialize($row['data']);
 			if ($data) {
 				$tiki_connect->update(
-					array('data' => json_encode($data)),
-					array('id' => $row['id'])
+					['data' => json_encode($data)],
+					['id' => $row['id']]
 				);
 			}
 		}
 	}
-
 }

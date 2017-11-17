@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -19,7 +19,9 @@ function upgrade_20091004_last_tracker_items_modules_merge_tiki($installer)
 	while ($row = $result->fetchRow()) {
 		$params = $row['params'];
 		if (strpos($params, "sort_mode=") === false) {
-			if ($params) $params .= "&";
+			if ($params) {
+				$params .= "&";
+			}
 			$params .= "sort_mode=lastModif_desc";
 		}
 		$installer->query("update tiki_modules set params='" . $params . "', name='last_tracker_items' where moduleId=" . $row['moduleId'] . "; ");

@@ -8,5 +8,4 @@ function upgrade_20160914_extwiki_missing_columns_fix_tiki($installer)
 	if (! $exists->numRows()) {
 		$installer->query("ALTER TABLE `tiki_extwiki` ADD COLUMN `indexname` VARCHAR(20), ADD COLUMN `groups` VARCHAR(1024);");
 	}
-
 }

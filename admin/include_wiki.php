@@ -8,13 +8,13 @@
 if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
 	die('This script may only be included.');
 }
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 global $tikidomain;
 $path = $tikidomain ? "storage/$tikidomain/dump_wiki.tar" : 'storage/dump_wiki.tar';
 
 if ($access->ticketMatch()) {
-	if (!empty($_REQUEST['w_use_dir'])) {
+	if (! empty($_REQUEST['w_use_dir'])) {
 		if (substr($_REQUEST['w_use_dir'], -1) != '\\' && substr($_REQUEST['w_use_dir'], -1) != '/') {
 			$_REQUEST['w_use_dir'] .= '/';
 		}
@@ -22,7 +22,7 @@ if ($access->ticketMatch()) {
 	}
 
 	if (isset($_REQUEST['createdump'])) {
-		include ('lib/tar.class.php');
+		include('lib/tar.class.php');
 		error_reporting(E_ERROR | E_WARNING);
 		$adminlib->dump();
 		if (is_file($path)) {
@@ -32,9 +32,9 @@ if ($access->ticketMatch()) {
 		}
 	}
 
-	if (!empty($_REQUEST['moveWikiUp'])) {
+	if (! empty($_REQUEST['moveWikiUp'])) {
 		$filegallib = TikiLib::lib('filegal');
-		$errorsWikiUp = array();
+		$errorsWikiUp = [];
 		$info = $filegallib->get_file_gallery_info($prefs['home_file_gallery']);
 		if (empty($info)) {
 			Feedback::error(tr('You must set a home file gallery'), 'session');
@@ -55,7 +55,7 @@ if ($access->ticketMatch()) {
 
 	if (isset($_REQUEST['removedump'])) {
 		@unlink($path);
-		if (!is_file($path)) {
+		if (! is_file($path)) {
 			Feedback::success(tr('Dump file %0 removed.', '<em>' . $path . '</em>'), 'session');
 		} else {
 			Feedback::error(tr('Dump file %0 was not removed.', '<em>' . $path . '</em>'), 'session');
@@ -67,14 +67,14 @@ if ($access->ticketMatch()) {
 		// Check existence
 		if ($tikidomain) {
 			$file = "storage/$tikidomain/dump_wiki.tar";
-		}else {
+		} else {
 			$file = "storage/dump_wiki.tar";
 		}
 
 		if (is_file($file)) {
 			header('Content-Description: File Transfer');
 			header('Content-Type: application/octet-stream');
-			header('Content-Disposition: attachment; filename="'.basename($file).'"');
+			header('Content-Disposition: attachment; filename="' . basename($file) . '"');
 			header('Expires: 0');
 			header('Cache-Control: must-revalidate');
 			header('Pragma: public');
@@ -86,7 +86,7 @@ if ($access->ticketMatch()) {
 
 	if (isset($_REQUEST['restoretag'])) {
 		// Check existance
-		if (!$adminlib->tag_exists($_REQUEST['tagname'])) {
+		if (! $adminlib->tag_exists($_REQUEST['tagname'])) {
 			Feedback::error(tr('Tag %0 not found', '<em>' . $_REQUEST['tagname'] . '</em>'), 'session');
 		}
 		$result = $adminlib->restore_tag($_REQUEST['tagname']);

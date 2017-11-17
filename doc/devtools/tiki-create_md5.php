@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -19,7 +19,7 @@
 	 deliver a unshielded script!
  */
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 if ($tiki_p_admin != 'y') {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
@@ -46,7 +46,7 @@ function md5_check_dir($dir, &$result) // save all files in $result
 		} else {
 			if (substr($e, -4, 4) == ".php" && $entry != './tiki-create_md5.php' && $entry != './db/local.php') {
 				// echo "creating sum of $entry <br />\n";
-				$result[$entry]=md5_file($entry);
+				$result[$entry] = md5_file($entry);
 			}
 		}
 	}
@@ -54,13 +54,13 @@ function md5_check_dir($dir, &$result) // save all files in $result
 }
 
 
-$tikimd5 = array();
+$tikimd5 = [];
 $chkdir = isset($_REQUEST['chkdir']) ? $_REQUEST['chkdir'] : '.';
 echo "creating md5 sums for dir $chkdir <br>";
 flush();
 md5_check_dir($chkdir, $tikimd5);
 
-if (isset($_REQUEST['secdb']) && $_REQUEST['secdb']='fs') {
+if (isset($_REQUEST['secdb']) && $_REQUEST['secdb'] = 'fs') {
 	$s = serialize($tikimd5);
 
 	$fp = fopen('lib/admin/secdb.php.inc', 'wb');
@@ -73,20 +73,20 @@ if (isset($_REQUEST['secdb']) && $_REQUEST['secdb']='fs') {
 	global $tikilib;
 	echo "inserting into db table tiki_secdb.<br>";
 	flush();
-	if (!isset($_REQUEST['tikiver'])) {
+	if (! isset($_REQUEST['tikiver'])) {
 		echo "you have to set the tiki version. Example: tiki-create_md5.php?tikiver=1.9";
 		die;
 	}
 
 	// we update a whole revision. so we delete all old values from db!
 	$query = 'delete from `tiki_secdb` where `tiki_version`=?';
-	$tikilib->query($query, array($_REQUEST['tikiver']));
+	$tikilib->query($query, [$_REQUEST['tikiver']]);
 	$query = 'insert into `tiki_secdb`(`md5_value`,`filename`,`tiki_version`,`severity`) values (?,?,?,?)';
-	foreach ($tikimd5 as $filename=>$filemd5) {
+	foreach ($tikimd5 as $filename => $filemd5) {
 		if ($chkdir != '.') {
-			$filename=preg_replace("#^" . preg_quote($chkdir) . "#", ".", $filename);
+			$filename = preg_replace("#^" . preg_quote($chkdir) . "#", ".", $filename);
 		}
-		$tikilib->query($query, array($filemd5, $filename, $_REQUEST['tikiver'], 0));
+		$tikilib->query($query, [$filemd5, $filename, $_REQUEST['tikiver'], 0]);
 	}
 	echo "done. use mysqldump to extract the secdb table and to add it to the release<br>";
 }

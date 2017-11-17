@@ -1,8 +1,8 @@
 <?php
 /**
  * This redirects to the site's root to prevent directory browsing.
- *  
- * @ignore 
+ *
+ * @ignore
  * @package TikiWiki
  * @subpackage dump
  * @copyright (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project

@@ -32,14 +32,14 @@ EOHELP;
 function get_opts()
 {
 	$short_opts = "u:c:h::";
-	$long_opts = array(
+	$long_opts = [
 		"bccwarn:",
 		"bcccrit:",
 		"sirwarn:",
 		"sircrit:",
 		"user:",
 		"pass:",
-	);
+	];
 	$options = getopt($short_opts, $long_opts);
 	return($options);
 }
@@ -51,7 +51,7 @@ function get_data($options)
 	curl_setopt($crl, CURLOPT_URL, $options['u']);
 	curl_setopt($crl, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($crl, CURLOPT_CONNECTTIMEOUT, $timeout);
-	if (!empty($options['user'])) {
+	if (! empty($options['user'])) {
 		curl_setopt($crl, CURLOPT_USERPWD, $options['user'] . ":" . $options['pass']);
 	}
 	$ret = curl_exec($crl);
@@ -75,27 +75,27 @@ function update_err_state($new_state, $new_message)
 function report()
 {
 	global $message, $err_state;
-	switch($err_state) {
+	switch ($err_state) {
 		case 0:
-			$message = "TIKI OK - " .$message;
+			$message = "TIKI OK - " . $message;
 			break;
 		case 1:
-			$message = "TIKI WARNING - " .$message;
+			$message = "TIKI WARNING - " . $message;
 			break;
 		case 2:
-			$message = "TIKI CRITICAL - " .$message;
+			$message = "TIKI CRITICAL - " . $message;
 			break;
 		case 3:
-			$message = "TIKI UNKNOWN - " .$message;
+			$message = "TIKI UNKNOWN - " . $message;
 			break;
 	}
-	fwrite(STDOUT, $message.PHP_EOL);
+	fwrite(STDOUT, $message . PHP_EOL);
 	exit($err_state);
 }
 
 function displayError($message)
 {
-	echo $message.PHP_EOL;
+	echo $message . PHP_EOL;
 	exit(3);
 }
 function check_bcc($data, $options)
@@ -106,7 +106,7 @@ function check_bcc($data, $options)
 	}
 	$warn = $options['bccwarn'];
 	$crit = $options['bcccrit'];
-	if ( $warn > $crit ) {
+	if ($warn > $crit) {
 		displayError("--bcccrit needs to be bigger than --bccwarn");
 	}
 	$OPCodeCache = $data['OPCodeCache'];
@@ -143,7 +143,7 @@ function check_searchindex($data, $options)
 	}
 	$warn = $options['sirwarn'];
 	$crit = $options['sircrit'];
-	if ( $warn > $crit ) {
+	if ($warn > $crit) {
 		displayError("--sircrit needs to be bigger than --sirwarn");
 	}
 	$iCurrentEpoch = date('U');
@@ -151,11 +151,11 @@ function check_searchindex($data, $options)
 	if (empty($data['SearchIndexRebuildLast'])) {
 		update_err_state(3, "Search Index never built");
 	} elseif ($data['SearchIndexRebuildLast'] < ($iCurrentEpoch - $crit)) {
-		update_err_state(1, "Search Index older than $crit sec|time=".$iDiffEpoch."s;;;0");
+		update_err_state(1, "Search Index older than $crit sec|time=" . $iDiffEpoch . "s;;;0");
 	} elseif ($data['SearchIndexRebuildLast'] < ($iCurrentEpoch - $warn)) {
-		update_err_state(1, "Search Index older than $warn sec|time=".$iDiffEpoch."s;;;0");
+		update_err_state(1, "Search Index older than $warn sec|time=" . $iDiffEpoch . "s;;;0");
 	} elseif ($data['SearchIndexRebuildLast'] > ($iCurrentEpoch - $warn)) {
-		update_err_state(0, "Search Index is fresh|time=".$iDiffEpoch."s;;;0");
+		update_err_state(0, "Search Index is fresh|time=" . $iDiffEpoch . "s;;;0");
 	} else {
 		update_err_state(3, "Search index state unknown");
 	}
@@ -169,7 +169,7 @@ if (empty($options) or isset($options['h'])) {
 
 $data = get_data($options);
 if (isset($options['c'])) {
-	$check = 'check_'.$options['c'];
+	$check = 'check_' . $options['c'];
 	$check($data, $options);
 } else {
 	check_bcc($data, $options);

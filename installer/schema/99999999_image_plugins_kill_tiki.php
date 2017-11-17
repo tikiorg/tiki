@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 // ABOUT THE NUMBERING:
@@ -24,13 +24,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function upgrade_99999999_image_plugins_kill_tiki($installer)
 {
 	global $prefs, $tikiroot, $user_overrider_prefs, $tiki_p_trust_input, $local_php;	// globals are required here for tiki-setup_base.php
-	require_once ('lib/tikilib.php');
+	require_once('lib/tikilib.php');
 
 	$access = TikiLib::lib('access');
 	$tikilib = TikiLib::lib('tiki');
 	$smarty = TikiLib::lib('smarty');
 
-	require_once ('db/tiki-db.php');
+	require_once('db/tiki-db.php');
 
 	$tikilib = new TikiLib;
 
@@ -123,12 +123,12 @@ objects:
     thumb: mouseover
 {CODE}
 PLUGINTEXT;
-	
+
 	$profile_installer = new Tiki_Profile_Installer;
 	$profile = Tiki_Profile::fromString($plugstring, 'THUMB');
 	$profile->removeSymbols();
 	$profile_installer->install($profile);
-	
+
 	// ********************************  IMAGE plugin
 	$plugstring = <<<PLUGINTEXT
 {CODE(caption=>YAML,wrap=1)}
@@ -348,12 +348,12 @@ objects:
     imalign: center  
 {CODE}
 PLUGINTEXT;
-	
+
 	$profile_installer = new Tiki_Profile_Installer;
 	$profile = Tiki_Profile::fromString($plugstring, 'IMAGE');
 	$profile->removeSymbols();
 	$profile_installer->install($profile);
-	
+
 	// ********************************  PICTURE plugin
 	$plugstring = <<<PLUGINTEXT
 {CODE(caption=>YAML,wrap=1)}
@@ -382,11 +382,9 @@ objects:
        token: file
 {CODE}
 PLUGINTEXT;
-	
+
 	$profile_installer = new Tiki_Profile_Installer;
 	$profile = Tiki_Profile::fromString($plugstring, 'PICTURE');
 	$profile->removeSymbols();
 	$profile_installer->install($profile);
-	
 }
-

@@ -8,7 +8,7 @@
 if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
 	die('This script may only be included.');
 }
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 if (isset($_REQUEST['feature_sefurl_paths']) && $access->ticketMatch()) {
 	$_REQUEST['feature_sefurl_paths'] = preg_split('/ *[,\/] */', $_REQUEST['feature_sefurl_paths']);
@@ -45,7 +45,7 @@ if (isset($enabledFileName)) {
 			}
 			$referenceIdLine = fgets($referenceFile);
 			$enabledIdLine = fgets($enabledFile);
-			if (!strstr($enabledIdLine, 'This line is used to check that this configuration file is up to date.')) {
+			if (! strstr($enabledIdLine, 'This line is used to check that this configuration file is up to date.')) {
 				$configurationFile = 'unexpected';
 			} elseif ($referenceIdLine == $enabledIdLine) { // Do not warn if the Id line of each file is identical. Id lines contain configuration file revision.
 				$configurationFile = 'current';

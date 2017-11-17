@@ -28,22 +28,22 @@ if ($prefs['fgal_use_db'] == 'y') {
 }
 $fg_dir = $prefs['fgal_use_dir'];
 if (is_dir($fg_dir) == false) {
-	echo "Files directory: ".$fg_dir." does not exist\n";
+	echo "Files directory: " . $fg_dir . " does not exist\n";
 	exit;
 }
-echo "Files directory: ".$fg_dir."\n";
+echo "Files directory: " . $fg_dir . "\n";
 
 // Load db files
 $table = $tikilib->table('tiki_files');
 $result = $table->fetchAll();
-$db_files = array();
+$db_files = [];
 foreach ($result as $r) {
 	$db_files[] = $r['path'];
 }
-echo "Found ".count($db_files)." files in DB\n";
+echo "Found " . count($db_files) . " files in DB\n";
 
 // Load directory files
-$dir_files = array();
+$dir_files = [];
 $dir = dir($fg_dir);
 while (($file = $dir->read()) !== false) {
 	if (is_dir($file) == false) {
@@ -51,14 +51,14 @@ while (($file = $dir->read()) !== false) {
 	}
 }
 $dir->close();
-echo "Found ".count($dir_files)." files in directory\n";
+echo "Found " . count($dir_files) . " files in directory\n";
 
 
 // Verify that all tiki_files rows point to an existing file in the directory
 $dir_errors = 0;
 foreach ($db_files as $file) {
 	if (in_array($file, $dir_files) == false) {
-		echo "File missing in directory: ".$file."\n";
+		echo "File missing in directory: " . $file . "\n";
 		$dir_errors++;
 	}
 }
@@ -71,7 +71,7 @@ echo "\n";
 $db_errors = 0;
 foreach ($dir_files as $file) {
 	if (in_array($file, $db_files) == false) {
-		echo "File missing in database: ".$file."\n";
+		echo "File missing in database: " . $file . "\n";
 		$db_errors++;
 	}
 }

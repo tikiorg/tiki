@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -26,7 +26,6 @@ function upgrade_20100207_repair_file_galleries_tiki($installer)
 		} else {
 			$result = $installer->query('INSERT INTO `tiki_preferences` (`name`, `value`) VALUES (\'fgal_root_id\', ? );', $sysId);
 		}
-		$result = $installer->query('UPDATE `tiki_file_galleries` SET `parentId` = ? WHERE `parentId` = -1 and `type` <> \'system\'', array($sysId));
+		$result = $installer->query('UPDATE `tiki_file_galleries` SET `parentId` = ? WHERE `parentId` = -1 and `type` <> \'system\'', [$sysId]);
 	}
 }
-

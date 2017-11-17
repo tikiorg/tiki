@@ -28,7 +28,6 @@ function upgrade_2017mmdd_migrate_image_galleries_tiki($installer)
 	$galleryIdMap = [];
 
 	if ($tikiImages->fetchCount([])) {
-
 		$rootFileGalleryId = $filegallib->replace_file_gallery([
 			'name' => tra('Migrated Image Galleries'),
 			'description' => tra('Converted image galleries from version created by Tiki 17'),
@@ -53,7 +52,7 @@ function upgrade_2017mmdd_migrate_image_galleries_tiki($installer)
 
 			if ($gallery['show_name'] === 'y' && $gallery['show_filename'] === 'y') {
 				$gallery['show_name'] = 'a';
-			} else if ($gallery['show_filename'] === 'y') {
+			} elseif ($gallery['show_filename'] === 'y') {
 				$gallery['show_name'] = 'f';
 			} else {
 				$gallery['show_name'] = 'n';
@@ -88,7 +87,6 @@ function upgrade_2017mmdd_migrate_image_galleries_tiki($installer)
 
 			$images = $tikiImages->fetchAll([], ['galleryId' => $oldGalleryId]);
 			foreach ($images as $image) {
-
 				$imageData = $tikiImagesData->fetchAll([], [
 					'type' => 'o',                            // not thumbnails
 					'imageId' => $image['imageId'],
@@ -123,11 +121,11 @@ function upgrade_2017mmdd_migrate_image_galleries_tiki($installer)
 					[
 						'lon' => $image['lon'],
 						'lat' => $image['lat'],
-					]);
+					]
+				);
 
 				// add the old imageId as an attribute for future use in the img plugin
 				$attributelib->set_attribute('file', $fileId, 'tiki.file.imageid', $image['imageId']);
-
 			}
 		}
 	}

@@ -31,15 +31,15 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function upgrade_20110115_create_bottom_modules_tiki($installer)
 {
 
-	$prefs = array();
-	$result = $installer->table('tiki_preferences')->fetchAll(array('name', 'value'), array());
+	$prefs = [];
+	$result = $installer->table('tiki_preferences')->fetchAll(['name', 'value'], []);
 	foreach ($result as $res) {
 		$prefs[$res['name']] = $res['value'];
 	}
 
 	// merge in relevant defaults from 6.x as they are no longer defined in 7.x+
 	$prefs = array_merge(
-		array(
+		[
 			'feature_site_report' => 'n',
 			'feature_site_send_link' => 'n',
 			'feature_tell_a_friend' => 'n',
@@ -51,15 +51,15 @@ function upgrade_20110115_create_bottom_modules_tiki($installer)
 			'feature_babelfish' => 'n',
 			'feature_babelfish_logo' => 'n',
 			'feature_bot_bar_debug' => 'n',
-		),
+		],
 		$prefs
 	);
 
 	// add site report
 	if ($prefs['feature_site_report'] === 'y' || ($prefs['feature_site_send_link'] === 'y' && $prefs['feature_tell_a_friend'] === 'y')) {
 		$params = '';
-		$params .= $prefs['feature_site_report'] !== 'y'	? '&report=n' : '';
-		$params .= $prefs['feature_share'] !== 'y'		 	? '&share=n' : '';
+		$params .= $prefs['feature_site_report'] !== 'y' ? '&report=n' : '';
+		$params .= $prefs['feature_share'] !== 'y' ? '&share=n' : '';
 		$params .= $prefs['feature_site_send_link'] !== 'y'	? '&email=n' : '';
 
 		$installer->query(
@@ -71,9 +71,9 @@ function upgrade_20110115_create_bottom_modules_tiki($installer)
 	// add poweredby
 	if ($prefs['feature_bot_bar_power_by_tw'] !== 'n' || $prefs['feature_bot_bar_icons'] === 'y') {
 		$params = '';
-		$params .= $prefs['feature_bot_bar_power_by_tw'] !== 'y'	? '&tiki=n' : '';
-		$params .= $prefs['feature_bot_bar_icons'] !== 'y'		 	? '&icons=n' : '';
-		$params .= $prefs['feature_topbar_version'] !== 'y'			? '&version=n' : '';
+		$params .= $prefs['feature_bot_bar_power_by_tw'] !== 'y' ? '&tiki=n' : '';
+		$params .= $prefs['feature_bot_bar_icons'] !== 'y' ? '&icons=n' : '';
+		$params .= $prefs['feature_topbar_version'] !== 'y' ? '&version=n' : '';
 
 		$installer->query(
 			"INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES " .
@@ -125,6 +125,4 @@ function upgrade_20110115_create_bottom_modules_tiki($installer)
 	//	$installer->query("DELETE FROM `tiki_preferences` WHERE `name` IN ".
 	//							"('feature_site_report','feature_site_send_link','feature_tell_a_friend','feature_bot_bar_power_by_tw','feature_topbar_version',
 	//                            'feature_bot_bar_icons','feature_bot_bar_rss','feature_babelfish','feature_babelfish_logo','feature_bot_bar_debug');");
-
-
 }

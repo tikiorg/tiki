@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -79,41 +79,40 @@ function upgrade_20091103_upgrade_categperm_tiki($installer)
 	$test = 'SELECT COUNT(*) FROM `users_objectpermissions` WHERE `permName` = ? AND `groupName`=? AND `objectType`=? AND `objectId`=?';
 
 	// replace the perm tiki_p_view_categorized with the adequate set of perms for the objects
-	$result = $installer->query($query, array('tiki_p_view_categorized'));
+	$result = $installer->query($query, ['tiki_p_view_categorized']);
 	while ($res = $result->fetchRow()) {
 		foreach ($view as $perm) {
-			if (!$installer->getOne($test, array($perm, $res['groupName'], $res['objectType'], $res['objectId']))) {
-				$installer->query($insert, array($perm, $res['groupName'], $res['objectType'], $res['objectId']));
+			if (! $installer->getOne($test, [$perm, $res['groupName'], $res['objectType'], $res['objectId']])) {
+				$installer->query($insert, [$perm, $res['groupName'], $res['objectType'], $res['objectId']]);
 			}
 		}
 	}
 
-	// replace the perm tiki_p_edit_categorized with the adequate set of perms for the objects 
-	$result = $installer->query($query, array('tiki_p_edit_categorized'));
+	// replace the perm tiki_p_edit_categorized with the adequate set of perms for the objects
+	$result = $installer->query($query, ['tiki_p_edit_categorized']);
 	while ($res = $result->fetchRow()) {
 		foreach ($edit as $perm) {
-			if (!$installer->getOne($test, array($perm, $res['groupName'], $res['objectType'], $res['objectId']))) {
-				$installer->query($insert, array($perm, $res['groupName'], $res['objectType'], $res['objectId']));
+			if (! $installer->getOne($test, [$perm, $res['groupName'], $res['objectType'], $res['objectId']])) {
+				$installer->query($insert, [$perm, $res['groupName'], $res['objectType'], $res['objectId']]);
 			}
 		}
 	}
 
 	//rename tiki_p_view_categories to tiki_p_view_category
 	$query = 'UPDATE IGNORE  `users_grouppermissions` SET `permName`=? WHERE `permName`=?';
-	$installer->query($query, array('tiki_p_view_category', 'tiki_p_view_categories'));
+	$installer->query($query, ['tiki_p_view_category', 'tiki_p_view_categories']);
 	$query = 'UPDATE IGNORE  `users_objectpermissions` SET `permName`=? WHERE `permName`=?';
-	$installer->query($query, array('tiki_p_view_category', 'tiki_p_view_categories'));
+	$installer->query($query, ['tiki_p_view_category', 'tiki_p_view_categories']);
 	$query = 'UPDATE IGNORE  `tiki_menu_options` SET `perm`=? WHERE `perm`=?';
-	$installer->query($query, array('tiki_p_view_category', 'tiki_p_view_categories'));
+	$installer->query($query, ['tiki_p_view_category', 'tiki_p_view_categories']);
 
 	$query = 'UPDATE IGNORE  `users_grouppermissions` SET `permName`=? WHERE `permName`=?';
-	$installer->query($query, array('tiki_p_modify_object_categories', 'tiki_p_edit_categorized'));
+	$installer->query($query, ['tiki_p_modify_object_categories', 'tiki_p_edit_categorized']);
 	$query = 'UPDATE IGNORE  `users_objectpermissions` SET `permName`=? WHERE `permName`=?';
-	$installer->query($query, array('tiki_p_modify_object_categories', 'tiki_p_edit_categorized'));
+	$installer->query($query, ['tiki_p_modify_object_categories', 'tiki_p_edit_categorized']);
 	$query = 'UPDATE IGNORE  `tiki_menu_options` SET `perm`=? WHERE `perm`=?';
-	$installer->query($query, array('tiki_p_modify_object_categories', 'tiki_p_edit_categorized'));
+	$installer->query($query, ['tiki_p_modify_object_categories', 'tiki_p_edit_categorized']);
 
 	// FINALLY: remove tiki_p_view_categorized and tiki_p_edit_categorized
 	// Not done yet - before we are sure with have all the mapping
-
 }

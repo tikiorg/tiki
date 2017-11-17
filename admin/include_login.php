@@ -12,16 +12,16 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 }
 if ($access->ticketMatch()) {
 	if (empty($_REQUEST['registration_choices'])) {
-		$_REQUEST['registration_choices'] = array();
+		$_REQUEST['registration_choices'] = [];
 	}
 	$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
-	$in = array();
-	$out = array();
+	$in = [];
+	$out = [];
 	foreach ($listgroups['data'] as $gr) {
 		if ($gr['groupName'] == 'Anonymous') {
 			continue;
 		}
-		if ($gr['registrationChoice'] == 'y' && !in_array($gr['groupName'], $_REQUEST['registration_choices'])) {
+		if ($gr['registrationChoice'] == 'y' && ! in_array($gr['groupName'], $_REQUEST['registration_choices'])) {
 			// deselect
 			$out[] = $gr['groupName'];
 		} elseif ($gr['registrationChoice'] != 'y' && in_array($gr['groupName'], $_REQUEST['registration_choices'])) {
@@ -38,7 +38,7 @@ if ($access->ticketMatch()) {
 	if (count($in) || count($out)) {
 		add_feedback('registration_choices', tra('registration choices'), 2);
 	}
-	if (!empty($_REQUEST['refresh_email_group'])) {
+	if (! empty($_REQUEST['refresh_email_group'])) {
 		$nb = $userlib->refresh_set_email_group();
 		if ($nb > 0) {
 			Feedback::success(tra(sprintf(tra("%d users were assigned to groups based on user emails matching the patterns defined for the groups."), $nb)));
@@ -61,7 +61,6 @@ if ($prefs['feature_antibot'] === 'y' && $prefs['captcha_questions_active'] !== 
 		Feedback::error(tr('This method of captcha is not supported by your server, please select another or upgrade.')
 			. ' ' . $e->getMessage());
 	}
-
 }
 
 $listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
@@ -79,18 +78,18 @@ if ($prefs['pass_chr_special'] === 'y') {
 $length = $prefs['min_pass_length'];
 
 if ($access->ticketMatch()) {
-	if (isset($_POST['uploadIndex'])){
-		if ($_FILES['passwordlist']['error'] === 4) Feedback::error(tr('You need to select a file to upload.'));
-		else if ($_FILES['passwordlist']['error']) Feedback::error(tr('File Upload Error: ' . $_FILES['passwordlist']['error']));
-		else{  // if file has been uploaded, and there are no errors, then index the file in the database.
+	if (isset($_POST['uploadIndex'])) {
+		if ($_FILES['passwordlist']['error'] === 4) {
+			Feedback::error(tr('You need to select a file to upload.'));
+		} elseif ($_FILES['passwordlist']['error']) {
+			Feedback::error(tr('File Upload Error: ' . $_FILES['passwordlist']['error']));
+		} else {  // if file has been uploaded, and there are no errors, then index the file in the database.
 			$blackL->deletePassIndex();
 			$blackL->createPassIndex();
-			$blackL->loadPassIndex($_FILES['passwordlist']['tmp_name'],$_POST['loaddata']);
+			$blackL->loadPassIndex($_FILES['passwordlist']['tmp_name'], $_POST['loaddata']);
 			Feedback::success(tra('Uploaded file has been populated into database and indexed. Ready to generate password lists.'));
 		}
 	} elseif (isset($_POST['saveblacklist']) || isset($_POST['viewblacklist'])) {
-
-
 		// if creating a blacklist, use selected values instead of defaults
 		$charnum = 0;
 		$special = 0;
@@ -112,22 +111,22 @@ if ($access->ticketMatch()) {
 		}
 		// else if save blacklist chosen
 		if ($blackL->generatePassList(true)) {
-			$filename = dirname($_SERVER['SCRIPT_FILENAME']).'/'.$blackL->generateBlacklistName();
+			$filename = dirname($_SERVER['SCRIPT_FILENAME']) . '/' . $blackL->generateBlacklistName();
 			$blackL->set_preference('pass_blacklist_file', $blackL->generateBlacklistName(false));
 			$blackL->loadBlacklist($filename);
-		}else Feedback::error(tr('Unable to Write Password File to Disk'));
-
-	}elseif (isset($_POST['deleteIndex'])){
-
+		} else {
+			Feedback::error(tr('Unable to Write Password File to Disk'));
+		}
+	} elseif (isset($_POST['deleteIndex'])) {
 		$blackL->deletePassIndex();
 	}
 }
 
 
-$smarty->assign('file_using',$blackL->whatFileUsing());
-$smarty->assign('length',$length);
-$smarty->assign('charnum',$charnum);
-$smarty->assign('special',$special);
-$smarty->assign('limit',$blackL->limit);
+$smarty->assign('file_using', $blackL->whatFileUsing());
+$smarty->assign('length', $length);
+$smarty->assign('charnum', $charnum);
+$smarty->assign('special', $special);
+$smarty->assign('limit', $blackL->limit);
 
-$smarty->assign('num_indexed',$blackL->passIndexNum());
+$smarty->assign('num_indexed', $blackL->passIndexNum());

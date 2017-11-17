@@ -19,7 +19,7 @@ $parserlib = TikiLib::lib('parser');
 
 $show_details_for = "";
 if (isset($_REQUEST['show_details_for'])) {
-    $show_details_for = $_REQUEST['show_details_for'];
+	$show_details_for = $_REQUEST['show_details_for'];
 }
 $smarty->assign('show_details_for', $show_details_for);
 
@@ -32,7 +32,7 @@ if ($access->ticketMatch()) {
 		if (isset($_POST['forget'], $_POST['pp'], $_POST['pd'])) {
 			$profile = Tiki_Profile::fromNames($_POST['pd'], $_POST['pp']);
 			$profile->removeSymbols();
-			$data = array();
+			$data = [];
 
 			foreach ($_POST as $key => $value) {
 				if ($key != 'url' && $key != 'forget') {
@@ -50,7 +50,6 @@ if ($access->ticketMatch()) {
 			$profilefeedback = $installer->getFeedback();
 
 			if ($target = $profile->getInstructionPage()) {
-
 				foreach ($profilefeedback as $feedback) {
 					if (strpos($feedback, tra('An error occurred: ')) === 0) {
 						Feedback::error($feedback, 'session');
@@ -71,7 +70,7 @@ if ($access->ticketMatch()) {
 		}
 
 		if (isset($_POST['install'], $_POST['pd'], $_POST['pp'])) {
-			$data = array();
+			$data = [];
 
 			foreach ($_POST as $key => $value) {
 				if ($key != 'url' && $key != 'install') {
@@ -165,10 +164,10 @@ if ($access->ticketMatch()) {
 			$toRefresh = (int) $_GET['refresh'];
 			if (isset($sources[$toRefresh])) {
 				echo json_encode(
-					array(
+					[
 						'status' => $list->refreshCache($sources[$toRefresh]['url']) ? 'open' : 'closed',
 						'lastupdate' => date('Y-m-d H:i:s') ,
-					)
+					]
 				);
 			} else {
 				echo '{}';
@@ -184,9 +183,8 @@ if ($access->ticketMatch()) {
 			// Check if profile is available.
 			// This will not be the case for a misconfigured profile server
 			if (empty($profile)) {
-				$error = "Profile is not available: ".$_GET['pd'].", ". $_GET['pp'];
+				$error = "Profile is not available: " . $_GET['pd'] . ", " . $_GET['pp'];
 			} else {
-
 				$profileData = $profile->getData();
 
 				if (! empty($profileData['error'])) {
@@ -196,9 +194,9 @@ if ($access->ticketMatch()) {
 
 
 			try {
-				if (!empty($error)) {
+				if (! empty($error)) {
 					$sequencable = false;
-				} else if (!$deps = $installer->getInstallOrder($profile)) {
+				} elseif (! $deps = $installer->getInstallOrder($profile)) {
 					$deps = $profile->getRequiredProfiles(true);
 					$deps[] = $profile;
 					$sequencable = false;
@@ -210,8 +208,8 @@ if ($access->ticketMatch()) {
 				$sequencable = false;
 			}
 
-			$dependencies = array();
-			$userInput = array();
+			$dependencies = [];
+			$userInput = [];
 			$installed = false;
 			$url = '';
 			$feedback = '';
@@ -225,11 +223,11 @@ if ($access->ticketMatch()) {
 				$parsed = $parserlib->parse_data($profile->pageContent);
 				$installed = $installer->isInstalled($profile);
 
-				$url =  $profile->url;
+				$url = $profile->url;
 				$feedback = $profile->getFeedback();
 			}
 			echo json_encode(
-				array(
+				[
 					'dependencies' => $dependencies,
 					'userInput' => $userInput,
 					'installable' => $sequencable,
@@ -238,21 +236,19 @@ if ($access->ticketMatch()) {
 					'already' => $installed,
 					'url' => $url,
 					'feedback' => $feedback,
-				)
+				]
 			);
 			exit;
 		} // }}}
-
 	}
-
 }
 if (isset($_GET['list'])) {
 	$params = array_merge(
-		array(
+		[
 			'repository' => '',
 			'categories' => '',
 			'profile' => ''
-		),
+		],
 		$_GET
 	);
 
@@ -277,7 +273,7 @@ if (isset($_GET['list'])) {
 	$smarty->assign('category_list', $category_list);
 }
 $threshhold = time() - 1800;
-$oldSources = array();
+$oldSources = [];
 
 foreach ($sources as $key => $source) {
 	if ($source['lastupdate'] < $threshhold) {
@@ -305,14 +301,14 @@ if ($openSources == count($sources)) {
 $smarty->assign('tikiMajorVersion', substr($TWV->version, 0, 2));
 
 $modlib = TikiLib::lib('mod');
-$modified = $prefslib->getModifiedPrefsForExport(!empty($_REQUEST['export_show_added']) ? true : false);
+$modified = $prefslib->getModifiedPrefsForExport(! empty($_REQUEST['export_show_added']) ? true : false);
 $smarty->assign('modified_list', $modified);
 
 $assigned_modules_for_export = $modlib->getModulesForExport();
 $smarty->assign('modules_for_export', $assigned_modules_for_export);
 
 if ($access->ticketMatch()) {
-	if (!isset($_REQUEST['export_type'])) {
+	if (! isset($_REQUEST['export_type'])) {
 		$_REQUEST['export_type'] = 'prefs';
 	}
 	$smarty->assign('export_type', $_REQUEST['export_type']);
@@ -320,17 +316,21 @@ if ($access->ticketMatch()) {
 	if (isset($_REQUEST['export'])) {
 		if ($_REQUEST['export_type'] === 'prefs') {
 			$export_yaml = Yaml::dump(
-				array( 'preferences' => $_REQUEST['prefs_to_export'] ),
-				20, 1, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK
+				[ 'preferences' => $_REQUEST['prefs_to_export'] ],
+				20,
+				1,
+				Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK
 			);
-		} else if ($_REQUEST['export_type'] === 'modules') {
-			$modules_to_export = array();
+		} elseif ($_REQUEST['export_type'] === 'modules') {
+			$modules_to_export = [];
 			foreach ($_REQUEST['modules_to_export'] as $k => $v) {
 				$modules_to_export[] = $assigned_modules_for_export[$k];
 			}
 			$export_yaml = Yaml::dump(
-				array( 'objects' => $modules_to_export),
-				20, 1, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK
+				[ 'objects' => $modules_to_export],
+				20,
+				1,
+				Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK
 			);
 		} else {
 			$export_yaml = '';		// something went wrong?
@@ -340,7 +340,7 @@ if ($access->ticketMatch()) {
 		$export_yaml = "{CODE(caption=>YAML,wrap=>0)}\n" . $export_yaml . "{CODE}\n";
 
 		include_once 'lib/wiki-plugins/wikiplugin_code.php';
-		$export_yaml = wikiplugin_code($export_yaml, array('caption' => 'Wiki markup', 'colors' => 'tiki' ), null, array());
+		$export_yaml = wikiplugin_code($export_yaml, ['caption' => 'Wiki markup', 'colors' => 'tiki' ], null, []);
 		$export_yaml = preg_replace('/~[\/]?np~/', '', $export_yaml);
 
 		$smarty->assign('export_yaml', $export_yaml);

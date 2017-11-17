@@ -18,11 +18,11 @@ function post_20120904_category_root_tiki($installer)
 	// Finds the root category on all existing categories
 	$categs = $installer->table('tiki_categories');
 
-	$roots = array();
+	$roots = [];
 
-	$map = $categs->fetchMap('categId', 'parentId', array());
+	$map = $categs->fetchMap('categId', 'parentId', []);
 
-	$findRoot = function ($category, $cb) use($map) {
+	$findRoot = function ($category, $cb) use ($map) {
 		if (! empty($map[$category])) {
 			return $cb($map[$category], $cb);
 		} else {
@@ -35,13 +35,13 @@ function post_20120904_category_root_tiki($installer)
 
 		if ($root != $categId) {
 			$categs->update(
-				array(
+				[
 					'rootId' => $root,
-				), array(
+				],
+				[
 					'categId' => $categId,
-				)
+				]
 			);
 		}
 	}
 }
-

@@ -30,18 +30,18 @@ if ($tiki_p_admin != 'y') {
 
 header("Content-Type: text/plain; charset=utf-8");
 $query = "select `pageName` from `tiki_pages`";
-$result = $tikilib->query($query, array());
+$result = $tikilib->query($query, []);
 while ($res = $result->fetchRow()) {
 	$resnew = str_replace(" ", '+', $res); // Must do this since
-					       // TGBrowser will get confused
+						   // TGBrowser will get confused
 	$put = "";
 	$query2 = "select `toPage`, `fromPage` from `tiki_links` where `fromPage`='" .
-		$res["pageName"]."'";
-	$result2 = $tikilib->query($query2, array());
+		$res["pageName"] . "'";
+	$result2 = $tikilib->query($query2, []);
 	$put = $put . $resnew["pageName"] . " ";
 	while ($res2 = $result2->fetchRow()) {
 		$res2 = str_replace(" ", '+', $res2);
 		$put = $put . $res2["toPage"] . " ";
 	}
-	echo $put."\n";
+	echo $put . "\n";
 }

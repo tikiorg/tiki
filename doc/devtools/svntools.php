@@ -33,7 +33,7 @@ function short($full)
  */
 function color($string, $color)
 {
-	$avail = array(
+	$avail = [
 		'red' => 31,
 		'green' => 32,
 		'yellow' => 33,
@@ -41,10 +41,11 @@ function color($string, $color)
 		'purple' => 35,
 		'cyan' => 36,
 		'gray' => 37,
-	);
+	];
 
-	if (!isset($avail[$color]))
+	if (! isset($avail[$color])) {
 		return $string;
+	}
 
 	return "\033[{$avail[$color]}m$string\033[0m";
 }
@@ -109,11 +110,13 @@ function is_valid_merge_destination($url)
  */
 function is_valid_merge_source($destination, $source)
 {
-	if (is_trunk($destination))
+	if (is_trunk($destination)) {
 		return is_stable($source);
+	}
 
-	if (is_experimental($destination))
+	if (is_experimental($destination)) {
 		return is_trunk($source);
+	}
 
 	return false;
 }
@@ -171,7 +174,7 @@ function update_working_copy($localPath, $ignore_externals = false)
  *
  * @param $localPath string Path of the checkout
  * @return bool true if at least 1 versioned file has been modified, added or removed, false otherwise
- * 
+ *
  * @see Similar function svn_files_identical()
  */
 function has_uncommited_changes($localPath)
@@ -192,7 +195,7 @@ function has_uncommited_changes($localPath)
  *
  * @param $localPath string Path of the checkout
  * @return int The number of files that differ (additions, removals and modifications) from the repository
- * 
+ *
  * @see Similar function has_uncommited_changes()
  */
 function svn_files_identical($localPath)
@@ -233,10 +236,10 @@ function find_last_merge($path, $source)
 	$short = preg_quote(short($source), '/');
 	$pattern = "/^\\[(MRG|BRANCH)\\].*$short'?\s+\d+\s+to\s+(\d+)/";
 
-	$descriptorspec = array(
-		0 => array('pipe', 'r'),
-		1 => array('pipe', 'w'),
-	);
+	$descriptorspec = [
+		0 => ['pipe', 'r'],
+		1 => ['pipe', 'w'],
+	];
 
 	$ePath = escapeshellarg($path);
 
@@ -297,8 +300,9 @@ function commit($msg, $displaySuccess = true, $dieOnRemainingChanges = true)
 	$msg = escapeshellarg($msg);
 	`svn ci -m $msg`;
 
-	if ($dieOnRemainingChanges && has_uncommited_changes('.'))
+	if ($dieOnRemainingChanges && has_uncommited_changes('.')) {
 		error("Commit seems to have failed. Uncommited changes exist in the working folder.\n");
+	}
 
 	return (int) get_info('.')->entry->commit['revision'];
 }
@@ -344,7 +348,9 @@ function branch($source, $branch, $revision)
  */
 function get_logs($localPath, $minRevision, $maxRevision = 'HEAD')
 {
-	if (empty($minRevision) || empty($maxRevision)) return false;
+	if (empty($minRevision) || empty($maxRevision)) {
+		return false;
+	}
 	$logs = `LANG=C svn log -r$maxRevision:$minRevision $localPath`;
 	return $logs;
 }

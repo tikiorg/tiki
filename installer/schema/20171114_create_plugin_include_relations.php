@@ -15,57 +15,57 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function upgrade_20171114_create_plugin_include_relations($installer)
 {
-    global $prefs;
-    $prefs['wikiplugin_maximum_passes'] = 500;
-    
-    $argParser = new WikiParser_PluginArgumentParser();
+	global $prefs;
+	$prefs['wikiplugin_maximum_passes'] = 500;
 
-    $tiki_pages = $installer->table('tiki_pages');
-    $pages = $tiki_pages->fetchAll();
+		$argParser = new WikiParser_PluginArgumentParser();
 
-    foreach ( $pages as $page ) {
-        $matches = WikiParser_PluginMatcher::match($page['data']);
-        foreach ( $matches as $match ) {
-            if ( $match->getName() == 'include' ) {        
-                $params = $argParser->parse($match->getArguments());
-                $installer->query(
-                    'INSERT INTO tiki_object_relations (relation, source_type, source_itemId, target_type, target_itemId) VALUES(?, ?, ?, ?, ?)',
-                    array(
-                        'tiki.wiki.include',
-                        'wiki page',
-                        $page['pageName'],
-                        'wiki page',
-                        $params['page'],
-                    )
-                );
-            }
-        }
-    }
+	$tiki_pages = $installer->table('tiki_pages');
+	$pages = $tiki_pages->fetchAll();
 
-    $tiki_comments = $installer->table('tiki_comments');
-    $comments = $tiki_comments->fetchAll();
+	foreach ($pages as $page) {
+		$matches = WikiParser_PluginMatcher::match($page['data']);
+		foreach ($matches as $match) {
+			if ($match->getName() == 'include') {
+				$params = $argParser->parse($match->getArguments());
+				$installer->query(
+					'INSERT INTO tiki_object_relations (relation, source_type, source_itemId, target_type, target_itemId) VALUES(?, ?, ?, ?, ?)',
+					[
+						'tiki.wiki.include',
+						'wiki page',
+						$page['pageName'],
+						'wiki page',
+						$params['page'],
+					]
+				);
+			}
+		}
+	}
 
-    foreach ( $comments as $comment ) {
-        if ( $comment['objectType'] == 'forum' ) {
-            $type = 'forum post';
-        } else {
-            $type = $comment['objectType'] . ' comment';
-        }
-        $matches = WikiParser_PluginMatcher::match($comment['data']);
-        foreach ( $matches as $match ) {
-            if ( $match->getName() == 'include' ) {        
-                $params = $argParser->parse($match->getArguments());
-                $installer->query(
-                    'INSERT INTO tiki_object_relations (relation, source_type, source_itemId, target_type, target_itemId) VALUES(?, ?, ?, ?, ?)',
-                    array(
-                        'tiki.wiki.include',
-                        $type,
-                        $comment['threadId'],
-                        'wiki page',
-                        $params['page'],
-                    )
-                );
-            }
-        }
-    }
+	$tiki_comments = $installer->table('tiki_comments');
+	$comments = $tiki_comments->fetchAll();
+
+	foreach ($comments as $comment) {
+		if ($comment['objectType'] == 'forum') {
+			$type = 'forum post';
+		} else {
+			$type = $comment['objectType'] . ' comment';
+		}
+		$matches = WikiParser_PluginMatcher::match($comment['data']);
+		foreach ($matches as $match) {
+			if ($match->getName() == 'include') {
+				$params = $argParser->parse($match->getArguments());
+				$installer->query(
+					'INSERT INTO tiki_object_relations (relation, source_type, source_itemId, target_type, target_itemId) VALUES(?, ?, ?, ?, ?)',
+					[
+						'tiki.wiki.include',
+						$type,
+						$comment['threadId'],
+						'wiki page',
+						$params['page'],
+					]
+				);
+			}
+		}
+	}
 }

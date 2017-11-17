@@ -19,7 +19,7 @@ $a_theme = $prefs['theme'];
 if ($access->ticketMatch()) {
 	if (isset($_REQUEST['looksetup'])) {
 		if (isset($_REQUEST['theme'])) {
-			if (!isset($_REQUEST['theme_option']) || $_REQUEST['theme_option'] = '') {
+			if (! isset($_REQUEST['theme_option']) || $_REQUEST['theme_option'] = '') {
 				// theme has no options
 				$_REQUEST['theme_option'] = '';
 			}
@@ -32,7 +32,7 @@ if ($access->ticketMatch()) {
 	}
 }
 
-$themes = $themelib->list_themes();	
+$themes = $themelib->list_themes();
 $smarty->assign_by_ref('themes', $themes);
 $theme_options = $themelib->list_theme_options($a_theme);
 $smarty->assign('theme_options', $theme_options);
@@ -51,20 +51,20 @@ $smarty->assign('thumbfile', $thumbfile);
 if ($prefs['feature_jquery'] == 'y') {
 	$js = 'var theme_options = {';
 	foreach ($themes as $theme => $value) {
-		$js.= "\n'$theme':['" . $themelib->get_thumbnail_file($theme, '') . '\',{';
+		$js .= "\n'$theme':['" . $themelib->get_thumbnail_file($theme, '') . '\',{';
 		$options = $themelib->list_theme_options($theme);
 		if ($options) {
 			foreach ($options as $option) {
-				$js.= "'$option':'" . $themelib->get_thumbnail_file($theme, $option) . '\',';
+				$js .= "'$option':'" . $themelib->get_thumbnail_file($theme, $option) . '\',';
 			}
 			$js = substr($js, 0, strlen($js) - 1) . '}';
 		} else {
-			$js.= '}';
+			$js .= '}';
 		}
-		$js.= '],';
+		$js .= '],';
 	}
 	$js = substr($js, 0, strlen($js) - 1);
-	$js.= '};';
+	$js .= '};';
 
 	//Setup theme layouts array matching themes and theme:options with their respective layouts
 	$js .= 'var theme_layouts = ';
@@ -73,7 +73,7 @@ if ($prefs['feature_jquery'] == 'y') {
 		$options = $themelib->list_theme_options($theme);
 		if ($options) {
 			foreach ($options as $option) {
-				$theme_layouts[$theme.':'.$option] = $csslib->list_user_selectable_layouts($theme,$option);
+				$theme_layouts[$theme . ':' . $option] = $csslib->list_user_selectable_layouts($theme, $option);
 			}
 		}
 	}
@@ -85,7 +85,7 @@ if ($prefs['feature_jquery'] == 'y') {
 	// the var (theme_options) has to be declared in the same block for AJAX call scope
 	$none = json_encode(tr('None'));
 	$headerlib->add_js(
-<<<JS
+		<<<JS
 $js
 
 \$(document).ready( function() {

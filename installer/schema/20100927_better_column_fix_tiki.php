@@ -31,7 +31,7 @@ function upgrade_20100927_better_column_fix_tiki($installer)
 	$result = $installer->getOne(
 		"SELECT COUNT(*) FROM information_schema.COLUMNS" .
 		" WHERE COLUMN_NAME='tweetId' AND TABLE_NAME='tiki_shoutbox' AND TABLE_SCHEMA='" .
-		$dbs_tiki."';"
+		$dbs_tiki . "';"
 	);
 
 	if ($result == 0) {

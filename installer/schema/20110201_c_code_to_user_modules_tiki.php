@@ -6,8 +6,8 @@
 // $Id$
 
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /*
@@ -37,8 +37,8 @@ function upgrade_20110201_c_code_to_user_modules_tiki($installer)
 </div>
 {/if}';
 
-	$prefs = array();
-	$result = $installer->table('tiki_preferences')->fetchAll(array('name', 'value'), array());
+	$prefs = [];
+	$result = $installer->table('tiki_preferences')->fetchAll(['name', 'value'], []);
 
 	foreach ($result as $res) {
 		$prefs[$res['name']] = $res['value'];
@@ -46,7 +46,7 @@ function upgrade_20110201_c_code_to_user_modules_tiki($installer)
 
 	// merge in relevant defaults from 6.x as they are no longer defined in 7.x+
 	$prefs = array_merge(
-		array(
+		[
 			'feature_sitemycode' => 'y',
 			'sitemycode' => $defaultsitemycode,
 			'sitemycode_publish' => 'n',
@@ -56,7 +56,7 @@ function upgrade_20110201_c_code_to_user_modules_tiki($installer)
 			'feature_custom_center_column_header' => '',
 			'bot_logo_code' => '',
 			'feature_bot_logo' => 'n',
-		),
+		],
 		$prefs
 	);
 
@@ -68,34 +68,34 @@ function upgrade_20110201_c_code_to_user_modules_tiki($installer)
 
 			$installer->query(
 				"INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
-				array(
+				[
 					'sitemycode',
 					'',
 					$custom_code,
-					NULL
-				)
+					null
+				]
 			);
 
 			if ($prefs['sitemycode_publish'] === 'y') {
 				$installer->query(
-					"INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
+					"INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES " .
 					"('sitemycode','t',1,7200,'nobox=y','a:0:{}');"
 				);
 			}
 		}
 	}
 
-	if (!empty($prefs['feature_secondary_sitemenu_custom_code'])) {
+	if (! empty($prefs['feature_secondary_sitemenu_custom_code'])) {
 		$custom_code = $prefs['feature_secondary_sitemenu_custom_code'];
 
 		$installer->query(
 			"INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
-			array(
+			[
 				'secondary_sitemenu_custom_code',
 				'',
 				$custom_code,
-				NULL
-			)
+				null
+			]
 		);
 
 		$installer->query(
@@ -104,17 +104,17 @@ function upgrade_20110201_c_code_to_user_modules_tiki($installer)
 		);
 	}
 
-	if (!empty($prefs['feature_sitemenu_custom_code'])) {
+	if (! empty($prefs['feature_sitemenu_custom_code'])) {
 		$custom_code = $prefs['feature_sitemenu_custom_code'];
 
 		$installer->query(
 			"INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
-			array(
+			[
 				'sitemenu_custom_code',
 				'',
 				$custom_code,
-				NULL
-			)
+				null
+			]
 		);
 
 		$installer->query(
@@ -123,17 +123,17 @@ function upgrade_20110201_c_code_to_user_modules_tiki($installer)
 		);
 	}
 
-	if (!empty($prefs['feature_topbar_custom_code'])) {
+	if (! empty($prefs['feature_topbar_custom_code'])) {
 		$custom_code = $prefs['feature_topbar_custom_code'];
 
 		$installer->query(
 			"INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
-			array(
+			[
 				'topbar_custom_code',
 				'',
 				$custom_code,
-				NULL
-			)
+				null
+			]
 		);
 
 		$installer->query(
@@ -142,16 +142,16 @@ function upgrade_20110201_c_code_to_user_modules_tiki($installer)
 		);
 	}
 
-	if (!empty($prefs['feature_custom_center_column_header'])) {
+	if (! empty($prefs['feature_custom_center_column_header'])) {
 		$custom_code = $prefs['feature_custom_center_column_header'];
 
 		$installer->query(
 			"INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
-			array(
+			[
 				'custom_center_column_header',
 				'',
-				$custom_code, NULL
-			)
+				$custom_code, null
+			]
 		);
 
 		$installer->query(
@@ -160,16 +160,16 @@ function upgrade_20110201_c_code_to_user_modules_tiki($installer)
 		);
 	}
 
-	if (!empty($prefs['bot_logo_code'])) {
+	if (! empty($prefs['bot_logo_code'])) {
 		$custom_code = $prefs['bot_logo_code'];
 
 		$installer->query(
 			"INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
-			array(
+			[
 				'bot_logo_code', '',
 				$custom_code,
-				NULL
-			)
+				null
+			]
 		);
 
 		if ($prefs['feature_bot_logo'] === 'y') {
@@ -187,5 +187,4 @@ function upgrade_20110201_c_code_to_user_modules_tiki($installer)
 //						"('feature_sitemycode','sitemycode', 'sitemycode_publish', 'feature_secondary_sitemenu_custom_code',
 //							'feature_sitemenu_custom_code', 'feature_custom_center_column_header',
 //							'bot_logo_code', 'feature_bot_logo', 'feature_topbar_custom_code');");
-
 }

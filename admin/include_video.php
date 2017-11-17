@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -15,7 +15,6 @@ if ($prefs['feature_kaltura'] === 'y') {
 	$kalturaadminlib = TikiLib::lib('kalturaadmin');
 
 	if ($kalturaadminlib->getSessionKey()) {
-
 		// make sure service url ends in a slash
 		if (substr($prefs['kaltura_kServiceUrl'], -1) != '/') {
 			$prefs['kaltura_kServiceUrl'] = $prefs['kaltura_kServiceUrl'] . '/';
@@ -24,7 +23,7 @@ if ($prefs['feature_kaltura'] === 'y') {
 
 		// contribution wizard
 		$kcwDefault = $prefs['kaltura_kcwUIConf'];
-		if (empty($kcwDefault) || !empty($_REQUEST['kcw_rebuild'])) {
+		if (empty($kcwDefault) || ! empty($_REQUEST['kcw_rebuild'])) {
 			$kcwDefault = $kalturaadminlib->updateStandardTikiKcw();
 			$cachelib->invalidate($kalturaadminlib::CONFIGURATION_LIST);
 			$playerList = $kalturaadminlib->getPlayersUiConfs();
@@ -56,4 +55,4 @@ if ($prefs['feature_kaltura'] === 'y') {
 	$kplayerlist = "<div class='adminoptionbox error'>Kaltura feature disabled</div>";
 }
 $smarty->assign('kcwText', $kcwText);
-$smarty->assign('kplayerlist', $kplayerlist); 
+$smarty->assign('kplayerlist', $kplayerlist);

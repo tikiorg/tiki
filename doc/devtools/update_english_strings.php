@@ -36,7 +36,7 @@ while (($dir = readdir($dirHandle)) !== false) {
 	if (is_dir($dir)) {
 		$filePath = $dir . '/language.php';
 
-		if (!file_exists($filePath)) {
+		if (! file_exists($filePath)) {
 			continue;
 		}
 

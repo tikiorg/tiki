@@ -21,11 +21,11 @@ if (isset($_SERVER['REQUEST_METHOD'])) {
 }
 
 // Add the imported libraries located in lib/
-$thirdpartyLibs = array(
+$thirdpartyLibs = [
 	'\./lib.*', /* as per NKO 4:18 19-MAY-09 */
 				/* jb 110715 Tiki 7.1 - so everything in lib is protected by the .htaccess file, right? */
 
-);
+];
 
 /*
 The following need to be added as features
@@ -41,7 +41,7 @@ needs to be changed to accept access->check_permissions() so that also that it l
 
 */
 
-$safePaths = array(
+$safePaths = [
 
 	/* Not in build */
 	'\./doc/devtools/.*',
@@ -55,30 +55,30 @@ $safePaths = array(
 	'\./tiki-install.php',  // does its own check
 	'\./tiki-live_support_chat_frame.php',
 	'\./tiki-login_scr.php',
-	'\./tiki-channel.php',			// does its own checks
+	'\./tiki-channel.php',            // does its own checks
 
 	/* This file is just comments */
 	'./about.php',
 
 	/* The following need to be refactored to a lib */
 	'\./tiki-testGD.php',
-);
+];
 
-if (!file_exists('tiki-setup.php')) {
+if (! file_exists('tiki-setup.php')) {
 	die("Please run this script from tiki root.\n");
 }
 
-include_once ('lib/setup/twversion.class.php');
+include_once('lib/setup/twversion.class.php');
 $TWV = new TWVersion();
 
-if (!$TWV->version) {
+if (! $TWV->version) {
 	die("Could not find version information.\n");
 }
 
 $ver = explode('.', $TWV->version);
-$major = (count($ver) >= 1) ? $ver[0]:'?';
-$minor = (count($ver) >= 2) ? $ver[1]: '?';
-$revision = (count($ver) >= 3) ?  $ver[2]: '?';
+$major = (count($ver) >= 1) ? $ver[0] : '?';
+$minor = (count($ver) >= 2) ? $ver[1] : '?';
+$revision = (count($ver) >= 3) ? $ver[2] : '?';
 
 /**
  * @param $filename
@@ -107,7 +107,7 @@ function feature_pattern(&$featureNameIndex) // {{{
 	$featureName = "((feature_\w+)|lang_use_db|allowRegister|validateUsers|cachepages)";
 	$q = "[\"']";
 	if ($major == 1 && $minor == 9) {
-		$featureNameIndex = array(2, 7);
+		$featureNameIndex = [2, 7];
 		$tl = '\\$tikilib->get_preference';
 		return "/(\\\${$featureName}\s*(!=|==)=?\s*$q(y|n)[\"'])|($tl\s*\(\s*$q{$featureName}$q\s*(,\s*{$q}n?$q)?\s*\)\s*(==|!=)=?\s*$q(y|n)$q)/";
 	} elseif (($major == 1 && $minor == 10) || $major >= 2) {
@@ -176,7 +176,7 @@ function scanfiles($folder, &$files) // {{{
 {
 	global $filesHash;
 	$handle = opendir($folder);
-	if (!$handle) {
+	if (! $handle) {
 		printf("Could not open folder: %s\n", $folder);
 		return;
 	}
@@ -205,13 +205,13 @@ function scanfiles($folder, &$files) // {{{
  * @param $regex_possibles
  * @return bool
  */
-function regex_match ($path, $regex_possibles)
+function regex_match($path, $regex_possibles)
 {
 	foreach ($regex_possibles as $possible) {
 		//    print "Matching $path against $possible\n";
-		if (preg_match('%'.$possible.'%', $path)) {
+		if (preg_match('%' . $possible . '%', $path)) {
 			//print "Matches $possible\n\n";
-			print "<!-- Found $path in ".join($regex_possibles, ",")."-->\n";
+			print "<!-- Found $path in " . join($regex_possibles, ",") . "-->\n";
 			return true;
 		}
 	}
@@ -260,34 +260,34 @@ function analyse_file_path($path) // {{{
 		} else {
 			$type = "include";
 		}
-	}
-	elseif (in_array($extension, array('txt', 'png', 'jpg', 'html', 'css', 'sql', 'gif', 'afm', 'js')))
+	} elseif (in_array($extension, ['txt', 'png', 'jpg', 'html', 'css', 'sql', 'gif', 'afm', 'js'])) {
 		$type = 'static';
-	elseif (strpos($path, './doc/devtools/') === 0)
+	} elseif (strpos($path, './doc/devtools/') === 0) {
 		$type = 'script';
-	elseif (strpos($path, './files/') === 0)
+	} elseif (strpos($path, './files/') === 0) {
 		$type = 'user';
-	elseif ($extension == 'sh')
+	} elseif ($extension == 'sh') {
 		$type = 'system';
-	elseif (strpos($path, '_htaccess') !== false)
+	} elseif (strpos($path, '_htaccess') !== false) {
 		$type = 'system';
-	elseif (in_array(basename($path), array('INSTALL', 'README')))
+	} elseif (in_array(basename($path), ['INSTALL', 'README'])) {
 		$type = 'doc';
-	elseif ($extension == 'tpl')
+	} elseif ($extension == 'tpl') {
 		$type = 'template';
+	}
 
-	return array(
+	return [
 		'filename' => basename($path),
 		'path' => $path,
 		'type' => $type,
 		'extension' => $extension,
-		'features' => array(),
-		'permissions' => array(),
+		'features' => [],
+		'permissions' => [],
 		'includeonce' => false,
 		'noweb' => false,
 		'tikisetup' => false,
 		'unsafeextract' => false,
-	);
+	];
 } // }}}
 
 /**
@@ -297,14 +297,14 @@ function analyse_file_path($path) // {{{
 function perform_feature_check(&$file) // {{{
 {
 	global $features;
-	$index = array();
+	$index = [];
 	$feature_pattern = feature_pattern($index);
-	$index = (array) $index;
-	$path =  $file['path'] ;
+	$index = (array)$index;
+	$path = $file['path'];
 
 	preg_match_all($feature_pattern, get_content($path), $parts);
 
-	$featuresInFile = array();
+	$featuresInFile = [];
 	foreach ($index as $i) {
 		$featuresInFile = array_merge($features, $parts[$i]);
 	}
@@ -431,7 +431,6 @@ function perform_extract_skip_check(&$file) // {{{
 			$file['unsafeextract'] = true;
 		}
 	}
-
 } // }}}
 
 /**
@@ -444,13 +443,13 @@ function access_check_call($file, $type) // {{{
 	$content = get_content($file);
 	$tokens = token_get_all($content);
 
-	$checks = array();
+	$checks = [];
 
 	foreach ($tokens as $key => $token) {
 		if (is_array($token)) {
 			if ($token[0] == T_VARIABLE && $token[1] == '$access') {
-				if ($tokens[$key+1][0] == T_OBJECT_OPERATOR
-					&& $tokens[$key+2][0] == T_STRING && $tokens[$key+2][1] == $type) {
+				if ($tokens[$key + 1][0] == T_OBJECT_OPERATOR
+					&& $tokens[$key + 2][0] == T_STRING && $tokens[$key + 2][1] == $type) {
 					$checks = array_merge($checks, access_checks($tokens, $key + 2));
 				}
 			}
@@ -469,7 +468,7 @@ function access_checks($tokens, $from) // {{{
 {
 	$end = count($tokens);
 
-	$features = array();
+	$features = [];
 
 	for ($i = $from; $end > $i; ++$i) {
 		$token = $tokens[$i];
@@ -494,7 +493,7 @@ function permission_check_accessors($file) // {{{
 {
 	$tokens = token_get_all(get_content($file));
 
-	$perms = array();
+	$perms = [];
 
 	foreach ($tokens as $key => $token) {
 		if (is_array($token) && ($token[0] == T_IF || $token[0] == T_ELSEIF)) {
@@ -513,7 +512,7 @@ function permission_check_accessors($file) // {{{
  */
 function tokenizer_get_subset($tokens, $from) // {{{
 {
-	$out = array();
+	$out = [];
 
 	$started = false;
 	$count = 0;
@@ -543,13 +542,13 @@ function tokenizer_get_subset($tokens, $from) // {{{
  */
 function permission_check_condition($tokens) // {{{
 {
-	$permissions = array();
+	$permissions = [];
 
 	foreach ($tokens as $i => $t) {
 		if ($t[0] == T_VARIABLE) {
 			if ('perms' == substr($t[1], -5)) {
-				if ($tokens[$i+1][0] == T_OBJECT_OPERATOR && $tokens[$i+2][0] == T_STRING) {
-					$perm = $tokens[$i+2][1];
+				if ($tokens[$i + 1][0] == T_OBJECT_OPERATOR && $tokens[$i + 2][0] == T_STRING) {
+					$perm = $tokens[$i + 2][1];
 
 					if ('tiki_p_' != substr($perm, 0, 7)) {
 						$perm = 'tiki_p_' . $perm;
@@ -566,20 +565,20 @@ function permission_check_condition($tokens) // {{{
 
 /* Build Files structures */
 // a hash of filenames, each element is a hash of attributes of that file
-$filesHash = array();
+$filesHash = [];
 
 // a hash of features, each element is a hash of filenames that use that feature
-$features = array();
+$features = [];
 
 // note: the files[0..N] is intended to be replaced by the above hash.
-$files = array();
+$files = [];
 
 // build these two files structures
 scanfiles('.', $files);
 error_reporting(E_ALL);
 
 /* Iterate each file, and perform checks */
-$unsafe = array();
+$unsafe = [];
 foreach ($files as $key => $dummy) {
 	$file = &$files[$key];
 
@@ -604,7 +603,10 @@ foreach ($files as $key => $dummy) {
 			perform_noweb_check($file);
 			perform_tikisetup_check($file);
 
-			if (! $file['noweb'] && ! $file['includeonly'] && ! count($file['features']) && ! count($file['permissions'])) {
+			if (! $file['noweb']
+				&& ! $file['includeonly']
+				&& ! count($file['features']) && ! count($file['permissions'])
+			) {
 				$unsafe[] = $file;
 			}
 
@@ -633,63 +635,93 @@ usort($unsafe, 'sort_cb');
 <p>Audit Date: <?php echo date('Y-m-d H:i:s') ?></p>
 <h1>Potentially unsafe files</h1>
 <p>
-To be safe, files must have either an include only check, block web access, have a feature check or have a permission check.
-</p>
+	To be safe, files must have either an include only check, block web access, have a feature check or have a
+	permission check. </p>
 <ol>
-	<?php foreach ($unsafe as $unsafeUrlAndFile):
-	  $pathname = $unsafeUrlAndFile['path'];
+	<?php foreach ($unsafe as $unsafeUrlAndFile) :
+		$pathname = $unsafeUrlAndFile['path'];
 		$url = substr($unsafeUrlAndFile['path'], 2);
 		$fileRecord = $filesHash[$pathname];
 		$fileType = $fileRecord['type'];
-	  ?>
-	<li> <?php echo $fileType; ?> <a href="<?php echo htmlentities($url) ?>"><?php echo htmlentities($pathname) ?></a></li>
+		?>
+		<li>
+			<?php echo $fileType; ?>
+			<a href="<?php echo htmlentities($url) ?>"><?php echo htmlentities($pathname) ?></a>
+		</li>
 	<?php endforeach; ?>
 </ol>
 <h1>All files</h1>
 <table border="1">
 	<thead>
-		<tr style="font-size:x-small">
-			<th>File</th>
-			<th>Include only check</th>
-			<th>Not web accessible</th>
-			<th>Includes tiki-setup</th>
-			<th>Unsafe extract</th>
-			<th>Permissions checked</th>
-			<th>Features checked</th>
-		</tr>
+	<tr style="font-size:x-small">
+		<th>File</th>
+		<th>Include only check</th>
+		<th>Not web accessible</th>
+		<th>Includes tiki-setup</th>
+		<th>Unsafe extract</th>
+		<th>Permissions checked</th>
+		<th>Features checked</th>
+	</tr>
 	</thead>
 	<tbody>
-		<?php foreach ($files as $file)
-			if (in_array($file['type'], array('script', 'module', 'include', 'public', 'lib', '3rdparty', 'wikiplugin'))): ?>
-		<tr>
-			<td><a href="<?php echo htmlentities(substr($file['path'], 2)) ?>"><?php echo htmlentities($file['path']) ?></a></td>
-			<td><?php if (isset($file['includeonly']) && $file['includeonly']) echo 'X' ?></td>
-			<td><?php if ($file['noweb']) echo 'X' ?></td>
-			<td><?php if ($file['tikisetup']) echo 'X' ?></td>
-			<td><?php if ($file['unsafeextract']) echo 'X' ?></td>
-			<td>
-				<?php foreach  ($file['permissions'] as $perm): ?>
-				<div><?php echo $perm ?></div>
-				<?php endforeach; ?>
-			</td>
-			<td>
-				<?php foreach ($file['features'] as $feature): ?>
-				<div><?php echo $feature ?></div>
-				<?php endforeach; ?>
-			</td>
-		</tr>
-		<?php endif; ?>
+	<?php
+	foreach ($files as $file) {
+		if (in_array($file['type'], ['script', 'module', 'include', 'public', 'lib', '3rdparty', 'wikiplugin'])) : ?>
+			<tr>
+				<td><a href="<?php echo htmlentities(substr($file['path'], 2)) ?>"><?php echo htmlentities($file['path']) ?></a></td>
+				<td>
+					<?php
+					if (isset($file['includeonly']) && $file['includeonly']) {
+						echo 'X';
+					}
+					?>
+				</td>
+				<td>
+					<?php
+					if ($file['noweb']) {
+						echo 'X';
+					}
+					?>
+				</td>
+				<td>
+					<?php
+					if ($file['tikisetup']) {
+						echo 'X';
+					}
+					?>
+				</td>
+				<td>
+					<?php
+					if ($file['unsafeextract']) {
+						echo 'X';
+					}
+					?>
+				</td>
+				<td>
+					<?php foreach ($file['permissions'] as $perm) : ?>
+						<div><?php echo $perm ?></div>
+					<?php endforeach; ?>
+				</td>
+				<td>
+					<?php foreach ($file['features'] as $feature) : ?>
+						<div><?php echo $feature ?></div>
+					<?php endforeach; ?>
+				</td>
+			</tr>
+		<?php endif;
+	};
+	?>
 	</tbody>
 </table>
 
-	<?php
-		foreach ($features as $featureKey => $featureValue) {
-			print "$featureKey :\n";
-			foreach ($featureValue as $file) {
-				print "<li>$file</li>";
-			}
-			print "<br/><br/>\n";
-		} ?>
+<?php
+foreach ($features as $featureKey => $featureValue) {
+	print "$featureKey :\n";
+	foreach ($featureValue as $file) {
+		print "<li>$file</li>";
+	}
+	print "<br/><br/>\n";
+} ?>
 
 </body>
 </html>

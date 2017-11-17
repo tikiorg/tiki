@@ -32,7 +32,7 @@ define('LICENSE_FILENAME', 'license.txt');
 define('ERROR_REPORTING_LEVEL', E_ALL | E_STRICT);
 error_reporting(ERROR_REPORTING_LEVEL);
 
-chdir(ROOT .'/');
+chdir(ROOT . '/');
 
 require_once ROOT . '/lib/setup/third_party.php';
 require_once TOOLS . '/svntools.php';
@@ -85,9 +85,9 @@ if ($isPre) {
 $splitedversion = explode('.', $version);
 $mainversion = $splitedversion[0];
 
-$check_version = $version.$subrelease;
+$check_version = $version . $subrelease;
 if ($TWV->version != $check_version) {
-	error("The version in the code ".strtolower($TWV->version)." differs from the version provided to the script $check_version.\nThe version should be modified in lib/setup/twversion.class.php to match the released version.");
+	error("The version in the code " . strtolower($TWV->version) . " differs from the version provided to the script $check_version.\nThe version should be modified in lib/setup/twversion.class.php to match the released version.");
 }
 
 echo color("\nTiki release process started for version '$version" . ($subrelease ? " $subrelease" : '') . "'\n", 'cyan');
@@ -186,8 +186,9 @@ if (! $options['no-check-smarty'] && important_step("Check syntax of all Smarty 
 }
 
 if (! $options['no-secdb'] && important_step("Update SecDB file(s) 'db/tiki-secdb_{$version}_mysql.sql'")) {
-	if(updateSecdb($TWV->version))
+	if (updateSecdb($TWV->version)) {
 		important_step("Commit SecDB file changes", true, "[REL] SecDB for $secdbVersion");
+	}
 }
 
 if ($isPre) {
@@ -198,8 +199,6 @@ if ($isPre) {
 		echo color("This was the last step.\n", 'cyan');
 	}
 } else {
-
-
 	if (! $options['no-tagging']) {
 		$fb = full($branch);
 		$ft = full($tag);
@@ -255,22 +254,22 @@ function updateSecdb($version)
 	$svn = preg_match('/svn$/', $version);
 
 	// if we are not creating a release skip deleting old files.
-	if (!$svn) {
-	$files = glob(ROOT . '/db/tiki-secdb_*_mysql.sql');
-	foreach ($files as $file) {
+	if (! $svn) {
+		$files = glob(ROOT . '/db/tiki-secdb_*_mysql.sql');
+		foreach ($files as $file) {
 			$file = escapeshellarg($file);
 			`svn delete $file --force`;
 		}
-		echo (' Removed '.count($files).' old secdb files.');
+		echo (' Removed ' . count($files) . ' old secdb files.');
 	}
 
 	$file = "/db/tiki-secdb_{$version}_mysql.sql";
 
-	if (!$fp = @fopen(ROOT.$file, 'w')){
-		error('The SecDB file "' . ROOT.$file . '" is not writable or can\'t be created.');
+	if (! $fp = @fopen(ROOT . $file, 'w')) {
+		error('The SecDB file "' . ROOT . $file . '" is not writable or can\'t be created.');
 		return false;
 	}
-	$queries = array();
+	$queries = [];
 	md5_check_dir(ROOT, $version, $queries);
 
 	if (! empty($queries)) {
@@ -285,8 +284,8 @@ function updateSecdb($version)
 	fclose($fp);
 
 	echo (" $file was generated.\n");
-	if (!$svn) {
-		$file = escapeshellarg(ROOT.$file); // escape file name for use in command line.
+	if (! $svn) {
+		$file = escapeshellarg(ROOT . $file); // escape file name for use in command line.
 		`svn add $file`;
 	}
 	return true;
@@ -313,8 +312,8 @@ function md5_check_dir($dir, $version, &$queries)
 			if (preg_match('/\.(sql|css|tpl|js|php)$/', $e) && realpath($entry) != __FILE__ && $entry != './db/local.php') {
 				$file = '.' . substr($entry, strlen(ROOT));
 
-				// Escape filename. Since this requires a connection to MySQL (due to the charset), do so conditionally to reduce the risk of connection failure. 
-				if (! preg_match('/^[a-zA-Z0-9\/ _+.-]+$/', $file) ) {
+				// Escape filename. Since this requires a connection to MySQL (due to the charset), do so conditionally to reduce the risk of connection failure.
+				if (! preg_match('/^[a-zA-Z0-9\/ _+.-]+$/', $file)) {
 					if (! $link) {
 						$link = mysqli_connect();
 
@@ -329,7 +328,7 @@ function md5_check_dir($dir, $version, &$queries)
 							);
 						}
 					}
-					$file = @mysqli_real_escape_string($link,$file);
+					$file = @mysqli_real_escape_string($link, $file);
 				}
 
 				if (is_readable($entry)) {
@@ -350,25 +349,27 @@ function md5_check_dir($dir, $version, &$queries)
  * @return string|bool returns the filename that an error occurred in, false otherwise
  */
 
-function rrmdir($dir) {
+function rrmdir($dir)
+{
 	if (is_dir($dir)) {
 		$objects = scandir($dir);
 		foreach ($objects as $object) {
 			if ($object != "." && $object != "..") {
-				@chmod($dir."/".$object,0777);
-				if (filetype($dir."/".$object) === 'dir'){
-					$error = rrmdir($dir."/".$object);
-					if ($error)
+				@chmod($dir . "/" . $object, 0777);
+				if (filetype($dir . "/" . $object) === 'dir') {
+					$error = rrmdir($dir . "/" . $object);
+					if ($error) {
 						return $error;
-				}else
-					if (!@unlink($dir."/".$object))
-						return 'Could not delete '.$dir."/".$object."\n";
+					}
+				} elseif (! @unlink($dir . "/" . $object)) {
+						return 'Could not delete ' . $dir . "/" . $object . "\n";
+				}
 			}
 		}
 		reset($objects);
-		@unlink($dir.'/.DS_store');
-		if (!@rmdir($dir)){
-			return 'Could not delete '.$dir."\n";
+		@unlink($dir . '/.DS_store');
+		if (! @rmdir($dir)) {
+			return 'Could not delete ' . $dir . "\n";
 		}
 	}
 	return false;
@@ -383,26 +384,27 @@ function rrmdir($dir) {
  * @param array $files An array of file names to delete.
  */
 
-function removeFiles($src,$files) {
+function removeFiles($src, $files)
+{
 	$dir = opendir($src);
-	while(false !== ( $file = readdir($dir)) ) {
+	while (false !== ( $file = readdir($dir))) {
 		if (( $file != '.' ) && ( $file != '..' )) {
 			$full = $src . '/' . $file;
-			if ( is_dir($full) ) {
+			if (is_dir($full)) {
 				$flag = false;
 
 				foreach ($files as $delfile) {
 					if (basename($full) === $delfile) {
 						rrmdir($full);
-						$flag =true;
+						$flag = true;
 						break;
 					}
 				}
-				if (!$flag)
+				if (! $flag) {
 					removeFiles($full, $files);
-
-			}else {
-				foreach($files as $delfile) {
+				}
+			} else {
+				foreach ($files as $delfile) {
 					if (basename($full) === $delfile) {
 						@chmod($full, 0777);
 						unlink($full);
@@ -423,19 +425,17 @@ function removeFiles($src,$files) {
  * @param string $src The directory to set permissions for
  */
 
-function setPermissions($src) {
+function setPermissions($src)
+{
 	$dir = opendir($src);
-	while(false !== ( $file = readdir($dir)) ) {
+	while (false !== ( $file = readdir($dir))) {
 		if (( $file != '.' ) && ( $file != '..' )) {
 			$full = $src . '/' . $file;
-			if ( is_dir($full) ) {
+			if (is_dir($full)) {
 				setPermissions($full);
-				chmod($full,0755
-				);
-			}
-			else {
-				chmod($full,0664);
-
+				chmod($full, 0755);
+			} else {
+				chmod($full, 0664);
 			}
 		}
 	}
@@ -454,15 +454,15 @@ function build_packages($releaseVersion)
 {
 	global $options;
 
-	$workDir = $_SERVER['HOME']."/tikipack";
+	$workDir = $_SERVER['HOME'] . "/tikipack";
 	$fileName = 'tiki-' . $releaseVersion;
 	$relDir = $workDir . '/' . $releaseVersion;	// where the tiki dir and tarballs go
 	$sourceDir = $relDir . '/' . $fileName;		// the svn export
 
 	echo  "Seting up $workDir directory\n";
-	if (!is_dir($workDir)) {
-		if (!mkdir($workDir)) {
-			error('Cant make ' . $workDir."\n");
+	if (! is_dir($workDir)) {
+		if (! mkdir($workDir)) {
+			error('Cant make ' . $workDir . "\n");
 			die();
 		}
 	}
@@ -472,76 +472,85 @@ function build_packages($releaseVersion)
 		echo "Removing previous files\n";
 		$shellout = rrmdir($relDir);
 		if ($shellout) {
-			die ($shellout . "\n");
+			die($shellout . "\n");
 		}
 	}
-	if (!mkdir($relDir)) {
-		error('Cant make ' . $relDir."\n");
+	if (! mkdir($relDir)) {
+		error('Cant make ' . $relDir . "\n");
 		die();
 	}
 
 	// create a export in tikipack to work with
 	echo "Creating SVN export from working copy\n";
-	$shellout = shell_exec('svn export '.escapeshellarg(ROOT).' '.escapeshellarg($sourceDir . '/.').' 2>&1');
-	if ($options['debug-packaging'])
-		echo $shellout."\n";
+	$shellout = shell_exec('svn export ' . escapeshellarg(ROOT) . ' ' . escapeshellarg($sourceDir . '/.') . ' 2>&1');
+	if ($options['debug-packaging']) {
+		echo $shellout . "\n";
+	}
 
 
-	if (!is_file($sourceDir.'/vendor_bundled/composer.json')){
-		echo 'composer.json not found. Aborting.'."\n";
+	if (! is_file($sourceDir . '/vendor_bundled/composer.json')) {
+		echo 'composer.json not found. Aborting.' . "\n";
 		die();
 	}
 
-	if (is_file($workDir.'/composer.phar')){
-		if (!unlink($workDir.'/composer.phar')){
-			echo "Can't delete tikipack/composer.phar. Aborting."."\n";
+	if (is_file($workDir . '/composer.phar')) {
+		if (! unlink($workDir . '/composer.phar')) {
+			echo "Can't delete tikipack/composer.phar. Aborting." . "\n";
 			die();
 		}
 	}
 
-	echo "Downloading composer.phar"."\n";
-	if (!file_put_contents($workDir.'/composer.phar', file_get_contents('http://getcomposer.org/composer.phar'))){
-		echo "Can't create tikipack/composer.phar. Aborting."."\n";
+	echo "Downloading composer.phar" . "\n";
+	if (! file_put_contents($workDir . '/composer.phar', file_get_contents('http://getcomposer.org/composer.phar'))) {
+		echo "Can't create tikipack/composer.phar. Aborting." . "\n";
 		die();
 	}
 
-	echo 'Installing dependencies through composer'."\n";
-	$shellout =  shell_exec('php '.escapeshellarg($workDir.'/composer.phar').' install -d '.escapeshellarg($sourceDir.'/vendor_bundled').' --prefer-dist --no-dev 2>&1');
-	if ($options['debug-packaging'])
-		echo $shellout."\n";
+	echo 'Installing dependencies through composer' . "\n";
+	$shellout = shell_exec('php ' . escapeshellarg($workDir . '/composer.phar') . ' install -d ' . escapeshellarg($sourceDir . '/vendor_bundled') . ' --prefer-dist --no-dev 2>&1');
+	if ($options['debug-packaging']) {
+		echo $shellout . "\n";
+	}
 
-	if (strpos($shellout,'Fatal error:') || strpos($shellout,'Installation failed,')){
-		echo 'Composer Instillation Failed. Exiting'."\n";
+	if (strpos($shellout, 'Fatal error:') || strpos($shellout, 'Installation failed,')) {
+		echo 'Composer Instillation Failed. Exiting' . "\n";
 		die();
 	}
-	if ($options['debug-packaging'])
-		echo $shellout."\n";
+	if ($options['debug-packaging']) {
+		echo $shellout . "\n";
+	}
 
 	echo "Removing development files\n";
-	$shellout = rrmdir($sourceDir.'/tests');
-	if ($shellout)
-		die ($shellout."\n");
+	$shellout = rrmdir($sourceDir . '/tests');
+	if ($shellout) {
+		die($shellout . "\n");
+	}
 
-	$shellout = rrmdir($sourceDir.'/db/convertscripts');
-	if ($shellout)
-		die ($shellout."\n");
+	$shellout = rrmdir($sourceDir . '/db/convertscripts');
+	if ($shellout) {
+		die($shellout . "\n");
+	}
 
-	$shellout = rrmdir($sourceDir.'/doc/devtools');
-	if ($shellout)
-		die ($shellout."\n");
+	$shellout = rrmdir($sourceDir . '/doc/devtools');
+	if ($shellout) {
+		die($shellout . "\n");
+	}
 
-	$shellout = rrmdir($sourceDir.'/bin');
-	if ($shellout)
-		die ($shellout."\n");
+	$shellout = rrmdir($sourceDir . '/bin');
+	if ($shellout) {
+		die($shellout . "\n");
+	}
 
-	removeFiles($sourceDir,array('.gitignore'));
+	removeFiles($sourceDir, ['.gitignore']);
 
 	echo "Removing language file comments\n";
-	foreach (scandir($sourceDir.'/lang') as $strip) {
-		if (is_file($sourceDir . '/lang/' .$strip.'/language.php'))
-			$shellout = shell_exec('php '.escapeshellarg(dirname(__FILE__).'/stripcomments.php').' '. escapeshellarg($sourceDir . '/lang/' .$strip.'/language.php').' 2>&1');
-		if ($shellout)
-			die ($shellout."\n");
+	foreach (scandir($sourceDir . '/lang') as $strip) {
+		if (is_file($sourceDir . '/lang/' . $strip . '/language.php')) {
+			$shellout = shell_exec('php ' . escapeshellarg(dirname(__FILE__) . '/stripcomments.php') . ' ' . escapeshellarg($sourceDir . '/lang/' . $strip . '/language.php') . ' 2>&1');
+		}
+		if ($shellout) {
+			die($shellout . "\n");
+		}
 	}
 
 	echo "Setting file permissions\n";
@@ -550,26 +559,31 @@ function build_packages($releaseVersion)
 	$relDir = escapeshellarg($relDir);
 
 	echo "Creating $fileName.tar.gz\n";
-	$shellout =  shell_exec("cd $relDir; tar -pczf ".escapeshellarg($fileName.".tar.gz")." --exclude '*.DS_Store' ".escapeshellarg($fileName).' 2>&1');
-	if ($options['debug-packaging'])
-		echo $shellout."\n";
+	$shellout = shell_exec("cd $relDir; tar -pczf " . escapeshellarg($fileName . ".tar.gz") . " --exclude '*.DS_Store' " . escapeshellarg($fileName) . ' 2>&1');
+	if ($options['debug-packaging']) {
+		echo $shellout . "\n";
+	}
 
 	echo "Creating $fileName.bz2\n";
-	$shellout =  shell_exec("cd $relDir; tar -pcjf ".escapeshellarg($fileName.".tar.bz2")." --exclude '*.DS_Store' ".escapeshellarg($fileName).' 2>&1');
-	if ($options['debug-packaging'])
-		echo $shellout."\n";
+	$shellout = shell_exec("cd $relDir; tar -pcjf " . escapeshellarg($fileName . ".tar.bz2") . " --exclude '*.DS_Store' " . escapeshellarg($fileName) . ' 2>&1');
+	if ($options['debug-packaging']) {
+		echo $shellout . "\n";
+	}
 
 	echo "Creating $fileName.zip\n";
-	$shellout =  shell_exec("cd $relDir; zip -r ".escapeshellarg($fileName.".zip").' '.escapeshellarg($fileName).' -x "*.DS_Store" -9 2>&1');
-	if ($options['debug-packaging'])
-		echo $shellout."\n";
+	$shellout = shell_exec("cd $relDir; zip -r " . escapeshellarg($fileName . ".zip") . ' ' . escapeshellarg($fileName) . ' -x "*.DS_Store" -9 2>&1');
+	if ($options['debug-packaging']) {
+		echo $shellout . "\n";
+	}
 
 	echo "Creating $fileName.7z\n";
-	$shellout =  shell_exec("cd $relDir; 7za a ".escapeshellarg($fileName.".7z").' '.escapeshellarg($fileName).' 2>&1');
-	if (strpos($shellout, 'command not found'))
+	$shellout = shell_exec("cd $relDir; 7za a " . escapeshellarg($fileName . ".7z") . ' ' . escapeshellarg($fileName) . ' 2>&1');
+	if (strpos($shellout, 'command not found')) {
 		error("7za not installed. Archive creation failed.\n");
-	if ($options['debug-packaging'])
-		echo $shellout."\n";
+	}
+	if ($options['debug-packaging']) {
+		echo $shellout . "\n";
+	}
 
 	echo color("\nTo upload the 'tarballs', copy-paste and execute the following line (and change '\$SF_LOGIN' by your SF.net login):\n", 'yellow');
 	echo color("    cd $relDir; scp $fileName.* \$SF_LOGIN@frs.sourceforge.net:uploads\n", 'yellow');
@@ -617,7 +631,8 @@ function display_progress_percentage($alreadyDone, $toDo, $message)
 	}
 }
 
-function zone_is_empty() {
+function zone_is_empty()
+{
 	// dummy function to keep smarty happy
 }
 
@@ -629,12 +644,12 @@ function check_smarty_syntax(&$error_msg)
 	global $tikidomain, $prefs;
 	$tikidomain = '';
 	// Initialize $prefs with some variables needed by the tra() function and smarty autosave plugin
-	$prefs = array(
+	$prefs = [
 		'lang_use_db' => 'n',
 		'language' => 'en',
 		'site_language' => 'en',
 		'feature_ajax' => 'n'
-	);
+	];
 
 	// Load Tiki Smarty
 	$prefs['smarty_compilation'] = 'always';
@@ -657,7 +672,7 @@ function check_smarty_syntax(&$error_msg)
 	$templates_dir = TIKI_PATH . '/templates';
 
 	$errors_found = false;
-	$entries = array();
+	$entries = [];
 	get_files_list($templates_dir, $entries, '/\.tpl$/');
 
 	$nbEntries = count($entries);
@@ -665,7 +680,6 @@ function check_smarty_syntax(&$error_msg)
 		display_progress_percentage($i, $nbEntries, '%d%% of files passed the Smarty syntax check');
 
 		if (strpos($entries[$i], 'tiki-mods.tpl') === false) {
-
 			$template_file = substr($entries[$i], strlen($templates_dir) + 1);
 
 			try {
@@ -675,7 +689,6 @@ function check_smarty_syntax(&$error_msg)
 				echo color("\nError: " . $e->getMessage(), 'red') . "\n";
 				$errors_found = true;
 			}
-
 		}
 	}
 	restore_error_handler();
@@ -695,7 +708,7 @@ function check_smarty_syntax(&$error_msg)
  * @param int $errline
  * @param array $errcontext
  */
-function check_smarty_syntax_error_handler($errno, $errstr, $errfile = '', $errline = 0, $errcontext = array())
+function check_smarty_syntax_error_handler($errno, $errstr, $errfile = '', $errline = 0, $errcontext = [])
 {
 	if (strpos($errstr, 'filemtime(): stat failed for') === false) {	// smarty seems to emit these for every file
 		echo "\n" . color($errstr, 'red') . "\n";
@@ -714,7 +727,7 @@ function check_php_syntax(&$dir, &$error_msg, $hide_php_warnings)
 	global $phpCommand;
 	$checkPhpCommand = $phpCommand . (ERROR_REPORTING_LEVEL > 0 ? ' -d error_reporting=' . (int) ERROR_REPORTING_LEVEL : '');
 
-	$entries = array();
+	$entries = [];
 	get_files_list($dir, $entries, '/\.php$/');
 
 	$nbEntries = count($entries);
@@ -764,8 +777,8 @@ function get_options()
 		return false;
 	}
 
-	$argv = array();
-	$options = array(
+	$argv = [];
+	$options = [
 		'howto' => false,
 		'help' => false,
 		'http-proxy' => false,
@@ -786,12 +799,12 @@ function get_options()
 		'force-yes' => false,
 		'debug-packaging' => false,
 		'only-secdb' => false,
-	);
+	];
 
 	// Environment variables provide default values for parameter options. e.g. export TIKI_NO_SECDB=true
 	$prefix = "TIKI-";
 	foreach ($options as $option => $optValue) {
-		$envOption = $prefix.$option;
+		$envOption = $prefix . $option;
 		$envOption = str_replace("-", "_", $envOption);
 		if (isset($_ENV[$envOption])) {
 			$envValue = $_ENV[$envOption];
@@ -806,12 +819,12 @@ function get_options()
 			} elseif (substr($arg, 2, 11) == 'http-proxy=') {
 				if (($proxy = substr($arg, 13)) != '') {
 					$options[substr($arg, 2, 10)] = stream_context_create(
-						array(
-							'http' => array(
+						[
+							'http' => [
 								'proxy' => 'tcp://' . $proxy,
 								'request_fulluri' => true
-							)
-						)
+							]
+						]
 					);
 				} else {
 					$options[substr($arg, 2, 10)] = true;
@@ -883,7 +896,8 @@ function important_step($msg, $increment_step = true, $commit_msg = false)
 		}
 
 		switch (strtolower($c)) {
-			case 'y': case '':
+			case 'y':
+			case '':
 				$do_step = true;
 				break;
 			case 'n':
@@ -925,8 +939,8 @@ function update_changelog_file($newVersion)
 	$lastReleaseMajorNumber = -1;
 	$lastReleaseNumber = '';
 	$minRevision = $currentParsedRevision = 0;
-	$lastReleaseLogs = array();
-	$versionMatches = array();
+	$lastReleaseLogs = [];
+	$versionMatches = [];
 	$newChangelog = '';
 	$newChangelogEnd = '';
 
@@ -938,7 +952,7 @@ function update_changelog_file($newVersion)
 			}
 
 			if (preg_match('/^Version (\d+)\.(\d+)/', $buffer, $versionMatches)) {
-				$lastReleaseNumber = $versionMatches[1].'.'.$versionMatches[2];
+				$lastReleaseNumber = $versionMatches[1] . '.' . $versionMatches[2];
 				if ($lastReleaseNumber == $newVersion) {
 					// The changelog file already contains log for the same final version
 					$sameFinalVersion = true;
@@ -947,7 +961,7 @@ function update_changelog_file($newVersion)
 				$parseLogs = true;
 				$lastReleaseMajorNumber = $versionMatches[1];
 			} elseif ($parseLogs) {
-				$matches = array();
+				$matches = [];
 				if (preg_match('/^r(\d+) \|/', $buffer, $matches)) {
 					$skipBuffer = false;
 					if ($minRevision == 0) {
@@ -964,8 +978,8 @@ function update_changelog_file($newVersion)
 			}
 			if ($lastReleaseMajorNumber != -1 && $lastReleaseMajorNumber < $majorVersion) {
 				$newChangelogEnd .= generate_changelog_version_header($lastReleaseNumber);
-				$newChangelogEnd .= "Changelog for Tiki version ".$lastReleaseNumber.", or older, available at:\n";
-				$newChangelogEnd .= "https://sourceforge.net/p/tikiwiki/code/HEAD/tree/tags/".$lastReleaseNumber."/changelog.txt\n\n";
+				$newChangelogEnd .= "Changelog for Tiki version " . $lastReleaseNumber . ", or older, available at:\n";
+				$newChangelogEnd .= "https://sourceforge.net/p/tikiwiki/code/HEAD/tree/tags/" . $lastReleaseNumber . "/changelog.txt\n\n";
 				break; // truncate the rest of the file
 			}
 			if (! $skipBuffer) {
@@ -981,12 +995,11 @@ function update_changelog_file($newVersion)
 
 	$newChangelog .= generate_changelog_version_header($newVersion);
 
-	$return = array('nbCommits' => 0, 'sameFinalVersion' => $sameFinalVersion);
-	$matches = array();
+	$return = ['nbCommits' => 0, 'sameFinalVersion' => $sameFinalVersion];
+	$matches = [];
 	if ($minRevision > 0) {
 		if (preg_match_all('/^r(\d+) \|.*\n\n(.*)\-{46}/Ums', get_logs('.', $minRevision), $matches, PREG_SET_ORDER)) {
 			foreach ($matches as $logEntry) {
-
 				// Do not keep merges and release-related logs
 				$commitFlag = substr(trim($logEntry[2]), 0, 5);
 				if ($commitFlag == '[MRG]' || $commitFlag == '[REL]') {
@@ -994,10 +1007,10 @@ function update_changelog_file($newVersion)
 				}
 
 				// Add log entries only if they were not already listed (same revision number or same log message) in the previous version
-				if (! isset($lastReleaseLogs[$logEntry[1]]) && ! in_array("\n".$logEntry[2], $lastReleaseLogs)) {
-					$newChangelog .= $logEntry[0]."\n";
+				if (! isset($lastReleaseLogs[$logEntry[1]]) && ! in_array("\n" . $logEntry[2], $lastReleaseLogs)) {
+					$newChangelog .= $logEntry[0] . "\n";
 
-					$lastReleaseLogs[] = "\n".$logEntry[2];
+					$lastReleaseLogs[] = "\n" . $logEntry[2];
 					if ($return['nbCommits'] == 0) {
 						$return['firstRevision'] = $logEntry[1];
 					}
@@ -1043,7 +1056,7 @@ function update_copyright_file($newVersion)
 	}
 	global $nbCommiters, $options;
 	$nbCommiters = 0;
-	$contributors = array();
+	$contributors = [];
 
 	$repositoryUri = empty($options['svn-mirror-uri']) ? TIKISVN : $options['svn-mirror-uri'];
 	if (strpos($repositoryUri, '/') === 0) {
@@ -1090,7 +1103,7 @@ the list provides a general idea.
 
 EOS;
 
-	$return = array('newCommits' => 0, 'newContributors' => 0);
+	$return = ['newCommits' => 0, 'newContributors' => 0];
 	foreach ($contributors as $author => $infos) {
 		if (isset($oldContributors[$author])) {
 			if ($oldContributors[$author] != $infos) {
@@ -1111,7 +1124,7 @@ EOS;
 			$return['newContributors']++;
 		}
 		$copyrights .= "\nNickname: $author";
-		$orderedKeys = array('Name', 'First Commit', 'Last Commit', 'Number of Commits', 'SF Role');
+		$orderedKeys = ['Name', 'First Commit', 'Last Commit', 'Number of Commits', 'SF Role'];
 		foreach ($orderedKeys as $k) {
 			if (empty($infos[$k]) || ($k == 'Name' && $infos[$k] == $author)) {
 				continue;
@@ -1133,7 +1146,7 @@ function parse_copyrights()
 		return false;
 	}
 
-	$return = array();
+	$return = [];
 	$curNickname = '';
 
 	foreach ($copyrights as $line) {
@@ -1142,7 +1155,7 @@ function parse_copyrights()
 		}
 		if (substr($line, 0, 10) == 'Nickname: ') {
 			$curNickname = rtrim(substr($line, 10));
-			$return[$curNickname] = array();
+			$return[$curNickname] = [];
 		} elseif ($curNickname != '' && ($pos = strpos($line, ':')) !== false) {
 			$return[$curNickname][substr($line, 0, $pos)] = rtrim(substr($line, $pos + 2));
 		}
@@ -1174,7 +1187,7 @@ function get_contributors_data($path, &$contributors, $minRevision, $maxRevision
 	$logs = get_logs($path, $minByStep, $maxRevision);
 	if (preg_match_all('/^r(\d+) \|\s([^\|]+)\s\|\s(\d+-\d+-\d+)\s.*\n\n(.*)\-+\n/Ums', $logs, $matches, PREG_SET_ORDER)) {
 		foreach ($matches as $logEntry) {
-			$mycommits[$logEntry[1]] = array($logEntry[2],$logEntry[3]);
+			$mycommits[$logEntry[1]] = [$logEntry[2],$logEntry[3]];
 		}
 		krsort($mycommits);
 
@@ -1192,8 +1205,8 @@ function get_contributors_data($path, &$contributors, $minRevision, $maxRevision
 				continue;
 			}
 
-			if (!isset($contributors[$author])) {
-				$contributors[$author] = array();
+			if (! isset($contributors[$author])) {
+				$contributors[$author] = [];
 			}
 
 			$contributors[$author]['Author'] = $commitinfo[0];
@@ -1222,7 +1235,7 @@ function get_contributors_data($path, &$contributors, $minRevision, $maxRevision
 function get_contributors_sf_data(&$contributors)
 {
 	global $options;
-	$matches = array();
+	$matches = [];
 
 	if (! function_exists('iconv')) {
 		error("PHP 'iconv' function is not available on this system. Impossible to get SF.net data.");
@@ -1230,19 +1243,19 @@ function get_contributors_sf_data(&$contributors)
 
 	$html = $options['http-proxy'] ? file_get_contents(SF_TW_MEMBERS_URL, 0, $options['http-proxy']) : file_get_contents(SF_TW_MEMBERS_URL);
 
-	if (!empty($html) && preg_match('/(<table.*<\/\s*table>)/sim', $html, $matches)) {
-		$usersInfo = array();
-		if (preg_match_all('/<tr[^>]*>' . str_repeat('\s*<td[^>]*>(.*)<\/td>\s*', 3).'<\/\s*tr>/Usim', $matches[0], $usersInfo, PREG_SET_ORDER)) {
+	if (! empty($html) && preg_match('/(<table.*<\/\s*table>)/sim', $html, $matches)) {
+		$usersInfo = [];
+		if (preg_match_all('/<tr[^>]*>' . str_repeat('\s*<td[^>]*>(.*)<\/td>\s*', 3) . '<\/\s*tr>/Usim', $matches[0], $usersInfo, PREG_SET_ORDER)) {
 			foreach ($usersInfo as $k => $userInfo) {
 				$userInfo = array_map('trim', array_map('strip_tags', $userInfo));
 				$user = strtolower($userInfo['2']);
 				if (empty($user)) {
 					continue;
 				}
-				$contributors[$user] = array(
+				$contributors[$user] = [
 					'Name' => html_entity_decode(iconv("ISO-8859-15", "UTF-8", $userInfo['1']), ENT_COMPAT, 'UTF-8'),
 					'SF Role' => $userInfo['3']
-				);
+				];
 			}
 		}
 	} else {

@@ -10,15 +10,15 @@
 $relationIn = 'correspondencein.crincrou.items';
 $relationOut = 'correspondenceout.croucrin.items';
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 $relationlib = TikiLib::lib('relation');
 $tx = $relationlib->begin();
 
-$result = $relationlib->fetchAll("select * from tiki_object_relations where relation = ?", array($relationOut));
+$result = $relationlib->fetchAll("select * from tiki_object_relations where relation = ?", [$relationOut]);
 foreach ($result as $row) {
 	$relationlib->add_relation($relationIn, $row['target_type'], $row['target_itemId'], $row['source_type'], $row['source_itemId'], true);
-	$relationlib->table('tiki_object_relations')->delete(array('relationId' => $row['relationId']));
+	$relationlib->table('tiki_object_relations')->delete(['relationId' => $row['relationId']]);
 }
 $tx->commit();
 

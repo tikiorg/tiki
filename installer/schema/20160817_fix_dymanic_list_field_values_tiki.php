@@ -35,8 +35,7 @@ function upgrade_20160817_fix_dymanic_list_field_values_tiki($installer)
 		$fieldFactory = $definition->getFieldFactory();
 
 
-		foreach($itemFields as $itemField) {
-
+		foreach ($itemFields as $itemField) {
 			$item_info = $trklib->get_tracker_item($itemField['itemId']);
 			$handler = $fieldFactory->getHandler($field, $item_info);
 
@@ -56,10 +55,6 @@ function upgrade_20160817_fix_dymanic_list_field_values_tiki($installer)
 					]
 				);
 			}
-
 		}
-
 	}
-
 }
-

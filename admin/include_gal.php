@@ -44,7 +44,7 @@ if ($access->ticketMatch()) {
 			$mvresult = $imagegallib->move_gallery_store($_REQUEST['move_gallery'], $_REQUEST['mvimg']);
 			$mvmsg = sprintf(tra('moved %d images, %d errors occurred.'), $mvresult['moved_images'], $mvresult['errors']);
 			if ($mvresult['timeout']) {
-				$mvmsg.= ' ' . tra('a timeout occurred. Hit the reload button to move the rest');
+				$mvmsg .= ' ' . tra('a timeout occurred. Hit the reload button to move the rest');
 			}
 			Feedback::note($mvmsg, 'session');
 		}
