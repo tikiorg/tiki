@@ -1,7 +1,7 @@
 <ul>
   {foreach from=$included_by item=include}
   <li>
-    {$include.type|capitalize}:
+    {$include.verboseType|capitalize}:
     <a href="{$include.href}" target="_blank">{$include.title}</a>
     {if $include.start || $include.end} - {/if}
     {if $include.start}

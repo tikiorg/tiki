@@ -618,28 +618,50 @@ class WikiLib extends TikiLib
 
         foreach ($relations as $relation) {
             $type = $relation['type'];
+            $vtype = $type;
             if ($type == 'wiki page') {
                 $page = $relation['itemId'];
                 $href = 'tiki-index.php?page=' . urlencode($page);
                 $info = $this->get_page_info($page);
+                $title = $info['pageName'];
                 $data = $info['data'];
             }  elseif ($type == 'forum post') {
                 $objectId = (int)$relation['itemId'];
                 $href = 'tiki-view_forum_thread.php?threadId=' . $objectId;
                 $comment_info = TikiLib::lib('comments')->get_comment($objectId);
+                $title = $comment_info['title'];
                 $data = $comment_info['data'];
             } elseif ($type == 'tracker') {
                 $objectId = (int)$relation['itemId'];
                 $href = 'tiki-view_tracker.php?trackerId=' . $objectId;
                 $tracker_info = TikiLib::lib('trk')->get_tracker($objectId);
+                $title = $comment_info['name'];
                 $data = $tracker_info['description'];
+            } elseif ($type == 'trackerfield') {
+                $vtype = 'tracker field';
+                $objectId = (int)$relation['itemId'];
+                $field_info = TikiLib::lib('trk')->get_field_info($objectId);
+                $href = 'tiki-view_tracer_fields.php?trackerId=' . $field_info['trackerId'];
+                $title = $field_info['name'];
+                $data = $field_info['description'];
+            } elseif ($type == 'trackeritemfield') {
+                $vtype = 'tracker item field';
+                $objectId = explode(':', $relation['itemId']);
+                $itemId = (int)$objectId[0];
+                $fieldId = (int)$objectId[1];
+                $href = 'tiki-view_tracker_item.php?itemId=' . $itemId;
+                $trackerlib = TikiLib::lib('trk');
+                $item_info = $trackerlib->get_tracker_item($itemId);
+                $field_info = $trackerlib->get_field_info($fieldId);
+                $title = sprintf(tra("item %d field %s"), $itemId, $field_info['name']);
+                $data = $item_info[$fieldId];
             } elseif (substr($type, -7) == 'comment') {
                 // TODO, depends on item type
                 continue;
             } else {
                 continue;
             }
-                
+
             $matches = WikiParser_PluginMatcher::match($data);
             $argParser = new WikiParser_PluginArgumentParser();
 
@@ -653,7 +675,8 @@ class WikiLib extends TikiLib
                         'type' => $type,
                         'itemId' => $relation['itemId'],
                         'href' => $href,
-                        'title' => $info['title'],
+                        'verboseType' => $vtype,
+                        'title' => $title,
                         'start' => $arguments['start'],
                         'end' => $arguments['end']
                     );
