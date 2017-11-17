@@ -13,19 +13,19 @@ $categlib = TikiLib::lib('categ');
 
 $access->check_feature('feature_print_indexed');
 
-$inputConfiguration = array(
-	array('staticKeyFilters' => array(
+$inputConfiguration = [
+	['staticKeyFilters' => [
 		'list' => 'alpha',
 		'comments' => 'alpha',
-	) ),
-	array('staticKeyFiltersForArrays' => array(
+	] ],
+	['staticKeyFiltersForArrays' => [
 		'languages' => 'alpha',
 		'categId' => 'digits',
-	) ),
-	array( 'catchAllUnset' => null ),
-);
+	] ],
+	[ 'catchAllUnset' => null ],
+];
 
-if (! isset($_GET['list']) || ! in_array($_GET['list'], array('categorylist', 'glossary'))) {
+if (! isset($_GET['list']) || ! in_array($_GET['list'], ['categorylist', 'glossary'])) {
 	$access->display_error('tiki-print_indexed.php', tra('Missing object list type argument'));
 }
 
@@ -37,29 +37,29 @@ if (! isset($_GET['list']) || ! in_array($_GET['list'], array('categorylist', 'g
 class ObjectList // {{{
 {
 	private $lastIndex = 0;
-	private $customIndexes = array();
-	private $renderers = array();
+	private $customIndexes = [];
+	private $renderers = [];
 
-    /**
-     * @param $indexKey
-     */
-    function addCustomIndex($indexKey)
+	/**
+	 * @param $indexKey
+	 */
+	function addCustomIndex($indexKey)
 	{
-		$this->customIndexes[ $indexKey ] = array();
+		$this->customIndexes[ $indexKey ] = [];
 	}
 
-    /**
-     * @param $type
-     * @param $object
-     * @param $options
-     */
-    function add( $type, $object, $options )
+	/**
+	 * @param $type
+	 * @param $object
+	 * @param $options
+	 */
+	function add($type, $object, $options)
 	{
 		if (! isset($dataIndex[$type])) {
-			$this->dataIndex[$type] = array();
+			$this->dataIndex[$type] = [];
 		}
 
-		switch($type) {
+		switch ($type) {
 			case 'wiki page':
 				if (array_key_exists('languages', $options)) {
 					$renderer = new ObjectRenderer_MultilingualWiki($type, $object, $options);
@@ -67,11 +67,11 @@ class ObjectList // {{{
 					$renderer = new ObjectRenderer_Wiki($type, $object, $options);
 				}
 
-			    break;
+				break;
 
 			default:
 				$renderer = new ObjectRenderer_TrackerItem($type, $object, $options);
-			    break;
+				break;
 		}
 
 		if ($renderer && $renderer->isValid()) {
@@ -85,7 +85,7 @@ class ObjectList // {{{
 					if (isset($data[$prop])) {
 						$data[$prop][] = $index;
 					} else {
-						$data[$prop] = array( $index );
+						$data[$prop] = [ $index ];
 					}
 				}
 			}
@@ -99,12 +99,12 @@ class ObjectList // {{{
 		}
 	}
 
-    /**
-     * @param $smarty
-     * @param $key
-     * @param $options
-     */
-    function render($smarty, $key, $options)
+	/**
+	 * @param $smarty
+	 * @param $key
+	 * @param $options
+	 */
+	function render($smarty, $key, $options)
 	{
 		if (is_null($key)) {
 			foreach ($this->renderers as $index => $renderer) {
@@ -133,47 +133,47 @@ abstract class ObjectRenderer // {{{
 	protected $objectType;
 	protected $objectId;
 
-    /**
-     * @param $objectType
-     * @param $objectId
-     */
-    function __construct($objectType, $objectId)
+	/**
+	 * @param $objectType
+	 * @param $objectId
+	 */
+	function __construct($objectType, $objectId)
 	{
 		$this->objectType = $objectType;
 		$this->objectId = $objectId;
 	}
 
-    /**
-     * @param $smarty
-     * @param $options
-     */
-    function render($smarty, $options)
+	/**
+	 * @param $smarty
+	 * @param $options
+	 */
+	function render($smarty, $options)
 	{
 		$options['decorator_template'] = 'print/print-decorator_' . $options['decorator'] . '.tpl';
 		$smarty->assign('body', $this->_render($smarty, $options));
 		$smarty->display($options['decorator_template']);
 	}
 
-    /**
-     * @return bool
-     */
-    function isValid()
+	/**
+	 * @return bool
+	 */
+	function isValid()
 	{
 		return true;
 	}
 
-    /**
-     * @param $smarty
-     * @param $template
-     * @return mixed
-     */
-    abstract function _render($smarty, $template);
+	/**
+	 * @param $smarty
+	 * @param $template
+	 * @return mixed
+	 */
+	abstract function _render($smarty, $template);
 
-    /**
-     * @param $key
-     * @return mixed
-     */
-    abstract function getIndexValue($key);
+	/**
+	 * @param $key
+	 * @return mixed
+	 */
+	abstract function getIndexValue($key);
 } // }}}
 
 /**
@@ -181,17 +181,17 @@ abstract class ObjectRenderer // {{{
  */
 class ObjectRenderer_TrackerItem extends ObjectRenderer // {{{
 {
-	private static $trackers = array();
+	private static $trackers = [];
 	private $valid = false;
 	private $tracker;
 	private $info;
 
-    /**
-     * @param $type
-     * @param $object
-     * @param array $options
-     */
-    function __construct($type, $object, $options = array())
+	/**
+	 * @param $type
+	 * @param $object
+	 * @param array $options
+	 */
+	function __construct($type, $object, $options = [])
 	{
 		parent::__construct($type, $object, $options);
 
@@ -220,20 +220,20 @@ class ObjectRenderer_TrackerItem extends ObjectRenderer // {{{
 		}
 	}
 
-    /**
-     * @return bool
-     */
-    function isValid()
+	/**
+	 * @return bool
+	 */
+	function isValid()
 	{
 		return $this->valid;
 	}
 
-    /**
-     * @param $smarty
-     * @param $options
-     * @return mixed
-     */
-    function _render($smarty, $options)
+	/**
+	 * @param $smarty
+	 * @param $options
+	 * @return mixed
+	 */
+	function _render($smarty, $options)
 	{
 		$smarty->assign('title', $this->getTitle());
 		$smarty->assign('tracker', $this->tracker);
@@ -243,22 +243,22 @@ class ObjectRenderer_TrackerItem extends ObjectRenderer // {{{
 		return $smarty->fetch($options['display_template']);
 	}
 
-    /**
-     * @param $key
-     * @return mixed
-     */
-    function getIndexValue($key)
+	/**
+	 * @param $key
+	 * @return mixed
+	 */
+	function getIndexValue($key)
 	{
-		switch( $key ) {
+		switch ($key) {
 			case 'title':
 				return $this->getTitle();
 		}
 	}
 
-    /**
-     * @return mixed
-     */
-    function getTitle()
+	/**
+	 * @return mixed
+	 */
+	function getTitle()
 	{
 		foreach ($this->tracker['fields'] as $field) {
 			if ($field['isMain'] == 'y') {
@@ -275,11 +275,11 @@ class ObjectRenderer_Wiki extends ObjectRenderer // {{{
 {
 	private $info;
 
-    /**
-     * @param $objectType
-     * @param $objectId
-     */
-    function __construct($objectType, $objectId)
+	/**
+	 * @param $objectType
+	 * @param $objectId
+	 */
+	function __construct($objectType, $objectId)
 	{
 		parent::__construct($objectType, $objectId);
 		global $tikilib;
@@ -288,21 +288,21 @@ class ObjectRenderer_Wiki extends ObjectRenderer // {{{
 
 		$info['parsed'] = TikiLib::lib('parser')->parse_data(
 			$info['data'],
-			array(
+			[
 				'is_html' => $info['is_html'],
 				'print' => 'y',
-			)
+			]
 		);
 
 		$this->info = $info;
 	}
 
-    /**
-     * @param $smarty
-     * @param $options
-     * @return mixed
-     */
-    function _render($smarty, $options)
+	/**
+	 * @param $smarty
+	 * @param $options
+	 * @return mixed
+	 */
+	function _render($smarty, $options)
 	{
 		$options['display_template'] = 'print/print-' . $options['display'] . '_wiki.tpl';
 		$smarty->assign('info', $this->info);
@@ -310,11 +310,11 @@ class ObjectRenderer_Wiki extends ObjectRenderer // {{{
 		return $smarty->fetch($options['display_template']);
 	}
 
-    /**
-     * @param $key
-     * @return mixed
-     */
-    function getIndexValue($key)
+	/**
+	 * @param $key
+	 * @return mixed
+	 */
+	function getIndexValue($key)
 	{
 		switch ($key) {
 			case 'title':
@@ -328,14 +328,14 @@ class ObjectRenderer_Wiki extends ObjectRenderer // {{{
  */
 class ObjectRenderer_MultilingualWiki extends ObjectRenderer // {{{
 {
-	private $renderers = array();
+	private $renderers = [];
 
-    /**
-     * @param $type
-     * @param $object
-     * @param array $options
-     */
-    function __construct($type, $object, $options = array())
+	/**
+	 * @param $type
+	 * @param $object
+	 * @param array $options
+	 */
+	function __construct($type, $object, $options = [])
 	{
 		parent::__construct($type, $object, $options);
 		$multilinguallib = TikiLib::lib('multilingual');
@@ -345,7 +345,7 @@ class ObjectRenderer_MultilingualWiki extends ObjectRenderer // {{{
 		$this->renderers = array_fill_keys($languages, null);
 
 		if ($trads = $multilinguallib->getTrads($type, $tikilib->get_page_id_from_name($object))) {
-			foreach ( $trads as $trad ) {
+			foreach ($trads as $trad) {
 				if (in_array($trad['lang'], $languages)) {
 					$this->renderers[ $trad['lang'] ] = new ObjectRenderer_Wiki($type, $tikilib->get_page_name_from_id($trad['objId']), $options);
 				}
@@ -355,17 +355,17 @@ class ObjectRenderer_MultilingualWiki extends ObjectRenderer // {{{
 		}
 	}
 
-    /**
-     * @param $smarty
-     * @param $options
-     * @return string
-     */
-    function _render($smarty, $options)
+	/**
+	 * @param $smarty
+	 * @param $options
+	 * @return string
+	 */
+	function _render($smarty, $options)
 	{
 		$out = '';
 
 		$languages = array_keys($this->renderers);
-		if (isset( $options['languages'])) {
+		if (isset($options['languages'])) {
 			$languages = $options['languages'];
 		}
 
@@ -378,16 +378,16 @@ class ObjectRenderer_MultilingualWiki extends ObjectRenderer // {{{
 		return $out;
 	}
 
-    /**
-     * @param $key
-     * @return mixed
-     */
-    function getIndexValue($key)
+	/**
+	 * @param $key
+	 * @return mixed
+	 */
+	function getIndexValue($key)
 	{
 		if (strpos($key, 'lang_') === 0) {
 			list( $key, $lang ) = explode('_', substr($key, 5), 2);
 
-			if ( isset( $this->renderers[$lang] ) && $this->renderers[$lang] ) {
+			if (isset($this->renderers[$lang]) && $this->renderers[$lang]) {
 				return $this->renderers[$lang]->getIndexValue($key);
 			}
 
@@ -402,38 +402,38 @@ class ObjectRenderer_MultilingualWiki extends ObjectRenderer // {{{
 
 $objectList = new ObjectList;
 $objectList->addCustomIndex('title');
-$indexPages = array();
+$indexPages = [];
 
 switch ($_GET['list']) {
 	case 'categorylist':
 		$access->check_feature('feature_categories');
 
-		if ( isset( $_GET['categId'] ) ) {
+		if (isset($_GET['categId'])) {
 			$categId = (int) $_GET['categId'];
 			$objects = $categlib->list_category_objects($categId, 0, -1, 'name_asc', '', '', true, false);
 
-			$indexPages[] = array(
+			$indexPages[] = [
 					'key' => 'title',
 					'indextitle' => tra('Index'),
-					'options' => array(
+					'options' => [
 							'decorator' => 'indexrow',
 							'display' => 'title',
-					),
-			);
+					],
+			];
 
-			foreach ( $objects['data'] as $index => $values ) {
+			foreach ($objects['data'] as $index => $values) {
 				$type = $values['type'];
 				$item = $values['itemId'];
-				$objectList->add($type, $item, array());
+				$objectList->add($type, $item, []);
 			}
 		}
 		break;
 
 	case 'glossary':
-		if ( isset( $_REQUEST['languages'] ) ) {
+		if (isset($_REQUEST['languages'])) {
 			$languages = (array)$_REQUEST['languages'];
 		} else {
-			$languages = array($prefs['language']);
+			$languages = [$prefs['language']];
 		}
 
 		$filterLang = reset($languages);
@@ -446,18 +446,18 @@ switch ($_GET['list']) {
 				$key = 'title';
 			}
 
-			$indexPages[] = array(
+			$indexPages[] = [
 				'key' => $key,
 				'indextitle' => tr('Index (%0)', $code),
-				'options' => array(
+				'options' => [
 					'decorator' => 'indexrow',
 					'display' => 'title',
-					'languages' => array($code),
-				),
-			);
+					'languages' => [$code],
+				],
+			];
 		}
 
-		$filter = array( 'lang' => $filterLang );
+		$filter = [ 'lang' => $filterLang ];
 
 		if (isset($_GET['categId'])) {
 			$access->check_feature('feature_categories');
@@ -467,7 +467,7 @@ switch ($_GET['list']) {
 		$pages = $tikilib->list_pages(0, -1, 'pageName_asc', '', '', true, true, false, false, $filter);
 
 		foreach ($pages['data'] as $info) {
-			$objectList->add('wiki page', $info['pageName'], array('languages' => $languages));
+			$objectList->add('wiki page', $info['pageName'], ['languages' => $languages]);
 		}
 
 		break;
@@ -489,13 +489,12 @@ foreach ($indexPages as $page) {
 $objectList->render(
 	$smarty,
 	null,
-	array(
+	[
 		'decorator' => 'indexed',
 		'display' => 'object',
 		'comments' => $_REQUEST['comments'] == 'y',
-	)
+	]
 );
 
 $smarty->display('print/print-page_footer.tpl');
 $smarty->display('footer.tpl');
-

@@ -10,11 +10,11 @@
 
 $section = 'sheet';
 $tiki_sheet_div_style = '';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 $sheetlib = TikiLib::lib('sheet');
 
-$auto_query_args = array(
+$auto_query_args = [
 	'sheetId',
 	'readdate',
 	'parse',
@@ -23,14 +23,14 @@ $auto_query_args = array(
 	'file',
 	'fileId',
 	'page',
-);
+];
 
 $access->check_feature('feature_sheet');
 $access->check_feature('feature_jquery_ui');
 
 $info = $sheetlib->get_sheet_info($_REQUEST['sheetId']);
 
-if (empty($info) && !isset( $_REQUEST['file']) && !isset($_REQUEST['fileId'])) {
+if (empty($info) && ! isset($_REQUEST['file']) && ! isset($_REQUEST['fileId'])) {
 	$smarty->assign('Incorrect parameter');
 	$smarty->display('error.tpl');
 	die;
@@ -44,7 +44,7 @@ if ($user && $user == $info['author']) {
 	$objectperms->tiki_p_edit_sheet = 1;
 }
 
-if (!$sheetlib->user_can_view($_REQUEST['sheetId'])) {
+if (! $sheetlib->user_can_view($_REQUEST['sheetId'])) {
 	$smarty->assign('msg', tra('Permission denied'));
 	$smarty->display('error.tpl');
 	die;
@@ -54,15 +54,15 @@ $smarty->assign('page', isset($_REQUEST['page']) ? $_REQUEST['page'] : '');
 $smarty->assign('objectperms', $objectperms);
 
 if (isset($_REQUEST['height'])) {
-	 $tiki_sheet_div_style .= 'height:'.$_REQUEST['height'].';';
+	 $tiki_sheet_div_style .= 'height:' . $_REQUEST['height'] . ';';
 }
 
-if ( $tiki_sheet_div_style) {
+if ($tiki_sheet_div_style) {
 	$smarty->assign('tiki_sheet_div_style', $tiki_sheet_div_style);
 }
 
 //here we make sure parse is set so we don't have to keep checking using isset
-if (!isset($_REQUEST['parse'])) {
+if (! isset($_REQUEST['parse'])) {
 	$_REQUEST['parse'] = 'y';
 }
 
@@ -74,14 +74,14 @@ $smarty->assign('title', $info['title']);
 $smarty->assign('description', $info['description']);
 
 // Start permissions
-if ( $_REQUEST['parse'] == 'edit' && !$sheetlib->user_can_edit($_REQUEST['sheetId']) ) {
+if ($_REQUEST['parse'] == 'edit' && ! $sheetlib->user_can_edit($_REQUEST['sheetId'])) {
 	$smarty->assign('msg', tra('Permission denied') . ': feature_sheet');
 	$smarty->display('error.tpl');
 	die;
 }
 
 //check to see if we are to do something other than view a file, which is not allowed
-if ( $_REQUEST['parse'] != 'y' && ( isset($_REQUEST['file']) || isset($_REQUEST['fileId']) ) ) {
+if ($_REQUEST['parse'] != 'y' && ( isset($_REQUEST['file']) || isset($_REQUEST['fileId']) )) {
 	$smarty->assign('msg', tra('Files are read only at this time'));
 	$smarty->display('error.tpl');
 	die;
@@ -89,20 +89,20 @@ if ( $_REQUEST['parse'] != 'y' && ( isset($_REQUEST['file']) || isset($_REQUEST[
 
 if ($prefs['feature_contribution'] == 'y') {
 	$contributionItemId = $_REQUEST['sheetId'];
-	include_once ('contribution.php');
+	include_once('contribution.php');
 }
 //End permissions
 
 //Save
-if (isset($_REQUEST['s']) && !empty($_REQUEST['s']) ) { //save
-	if ( $_REQUEST['sheetId'] ) {
+if (isset($_REQUEST['s']) && ! empty($_REQUEST['s'])) { //save
+	if ($_REQUEST['sheetId']) {
 		$result = $sheetlib->save_sheet($_REQUEST['s'], $_REQUEST['sheetId'], $_REQUEST);
 	}
 	die($result);
 
 //Clone
-} elseif ( $_REQUEST['parse'] == 'clone' ) {
-	if ( !$sheetlib->user_can_edit($_REQUEST['sheetId']) ) {
+} elseif ($_REQUEST['parse'] == 'clone') {
+	if (! $sheetlib->user_can_edit($_REQUEST['sheetId'])) {
 		$smarty->assign('msg', tra('Permission denied'));
 		die;
 	}
@@ -115,8 +115,8 @@ if (isset($_REQUEST['s']) && !empty($_REQUEST['s']) ) { //save
 	}
 
 //Rollback
-} elseif ($_REQUEST['parse'] == 'rollback' && !empty($_REQUEST['readdate'])) {
-	if ( !$sheetlib->user_can_edit($_REQUEST['sheetId']) ) {
+} elseif ($_REQUEST['parse'] == 'rollback' && ! empty($_REQUEST['readdate'])) {
+	if (! $sheetlib->user_can_edit($_REQUEST['sheetId'])) {
 		$smarty->assign('msg', tra('Permission denied'));
 		die;
 	}
@@ -130,31 +130,31 @@ if (isset($_REQUEST['s']) && !empty($_REQUEST['s']) ) { //save
 }
 
 //Edit & View
-if ( isset($_REQUEST['relate']) && isset($_REQUEST['trackerId']) ) {
-	if ( $_REQUEST['relate'] == 'add' ) {
+if (isset($_REQUEST['relate']) && isset($_REQUEST['trackerId'])) {
+	if ($_REQUEST['relate'] == 'add') {
 		$sheetlib->add_related_tracker($_REQUEST['sheetId'], $_REQUEST['trackerId']);
 		$smarty->assign('msg', tra('Tracker Added To Spreadsheet'));
-	} elseif ( $_REQUEST['relate'] == 'remove' ) {
+	} elseif ($_REQUEST['relate'] == 'remove') {
 		$sheetlib->remove_related_tracker($_REQUEST['sheetId'], $_REQUEST['trackerId']);
 		$smarty->assign('msg', tra('Tracker Removed From Spreadsheet'));
 	}
-} elseif ( isset($_REQUEST['relate']) && isset($_REQUEST['childSheetId']) ) {
-	if ( $_REQUEST['relate'] == 'add' ) {
+} elseif (isset($_REQUEST['relate']) && isset($_REQUEST['childSheetId'])) {
+	if ($_REQUEST['relate'] == 'add') {
 		$sheetlib->add_related_sheet($_REQUEST['sheetId'], $_REQUEST['childSheetId']);
 		$smarty->assign('msg', tra('Spreadsheet added'));
-	} elseif ( $_REQUEST['relate'] == 'remove' ) {
+	} elseif ($_REQUEST['relate'] == 'remove') {
 		$sheetlib->remove_related_sheet($_REQUEST['sheetId'], $_REQUEST['childSheetId']);
 		$smarty->assign('msg', tra('Spreadsheet removed'));
 	}
-} elseif ( isset($_REQUEST['relate']) && isset($_REQUEST['fileId']) ) {
-	if ( $_REQUEST['relate'] == 'add' ) {
+} elseif (isset($_REQUEST['relate']) && isset($_REQUEST['fileId'])) {
+	if ($_REQUEST['relate'] == 'add') {
 		$sheetlib->add_related_file($_REQUEST['sheetId'], $_REQUEST['fileId']);
 		$smarty->assign('msg', tra('File added'));
-	} elseif ( $_REQUEST['relate'] == 'remove' ) {
+	} elseif ($_REQUEST['relate'] == 'remove') {
 		$sheetlib->remove_related_file($_REQUEST['sheetId'], $_REQUEST['fileId']);
 		$smarty->assign('msg', tra('File removed'));
 	}
-} elseif ( isset($_REQUEST['fileId']) ) {
+} elseif (isset($_REQUEST['fileId'])) {
 	$filegallib = TikiLib::lib('filegal');
 	$access->check_feature('feature_file_galleries');
 	$fileInfo = $filegallib->get_file_info($_REQUEST['fileId']);
@@ -164,13 +164,14 @@ if ( isset($_REQUEST['relate']) && isset($_REQUEST['trackerId']) ) {
 	$tableHtml[0] = $grid->getTableHtml();
 	$smarty->assign('notEditable', 'true');
 
-	if ($handler->truncated) $smarty->assign('msg', tra('Spreadsheet truncated'));
-
+	if ($handler->truncated) {
+		$smarty->assign('msg', tra('Spreadsheet truncated'));
+	}
 } else {
 	//Database sheet
 	$handler = new TikiSheetDatabaseHandler($_REQUEST['sheetId']);
 	//We make sheet able to look at other date save
-	if (isset($_REQUEST['readdate']) && !empty($_REQUEST['readdate'])) {
+	if (isset($_REQUEST['readdate']) && ! empty($_REQUEST['readdate'])) {
 		$smarty->assign('read_date', $_REQUEST['readdate']);
 		$handler->setReadDate($_REQUEST['readdate']);
 	}
@@ -189,13 +190,13 @@ if ( isset($_REQUEST['relate']) && isset($_REQUEST['trackerId']) ) {
 
 	$tableHtml[0] = $grid->getTableHtml(true, isset($_REQUEST['readdate']) ? $_REQUEST['readdate'] : null);
 
-	if (!empty($relatedTrackersAsHtml)) {
+	if (! empty($relatedTrackersAsHtml)) {
 		$tableHtml[0] .= $relatedTrackersAsHtml;
 	}
 }
 
 if (isset($_REQUEST['sheetonly']) && $_REQUEST['sheetonly'] == 'y') {
-	foreach ( $tableHtml as $table ) {
+	foreach ($tableHtml as $table) {
 		echo $table;
 	}
 	die;
@@ -205,7 +206,7 @@ $smarty->assign('grid_content', $tableHtml);
 $smarty->assign('menu', $smarty->fetch('tiki-view_sheets_menu.tpl'));
 
 $sheetlib->setup_jquery_sheet();
-if (!empty($_REQUEST['parse']) && $_REQUEST['parse'] == 'edit') {
+if (! empty($_REQUEST['parse']) && $_REQUEST['parse'] == 'edit') {
 	$headerlib->add_jq_onready('$.sheet.tikiOptions.editable = true;');
 } else {
 	$headerlib->add_jq_onready('$.sheet.tikiOptions.editable = false;');
@@ -221,7 +222,7 @@ $headerlib->add_jq_onready(
 					.sheet($.sheet.tikiOptions);
 
 				jST.id = "' . ($_REQUEST['sheetId'] * 1) . '";
-				jST.file = "' . ( isset($fileInfo) ? 'true' : 'false' ) .'";
+				jST.file = "' . ( isset($fileInfo) ? 'true' : 'false' ) . '";
 
 				$.sheet.link.setupUI();
 				$.sheet.readyState();
@@ -282,8 +283,8 @@ $smarty->assign('editconflict', $editconflict);
 
 $cat_type = 'sheet';
 $cat_objid = $_REQUEST['sheetId'];
-include_once ('categorize_list.php');
-include_once ('tiki-section_options.php');
+include_once('categorize_list.php');
+include_once('tiki-section_options.php');
 ask_ticket('sheet');
 
 // Display the template

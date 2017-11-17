@@ -9,7 +9,7 @@
 // $Id$
 
 $section = 'forums';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 if ($prefs['feature_categories'] == 'y') {
 	$categlib = TikiLib::lib('categ');
 }
@@ -19,7 +19,7 @@ if ($prefs['feature_freetags'] == 'y') {
 
 $access->check_feature('feature_forums');
 
-$auto_query_args = array(
+$auto_query_args = [
 	'forumId',
 	'comment_threadId',
 	'comment_offset',
@@ -30,11 +30,11 @@ $auto_query_args = array(
 	'poster',
 	'filter_type',
 	'reply_state'
-);
+];
 
 $commentslib = TikiLib::lib('comments');
 
-if (!isset($_REQUEST['forumId']) || !($forum_info = $commentslib->get_forum($_REQUEST['forumId']))) {
+if (! isset($_REQUEST['forumId']) || ! ($forum_info = $commentslib->get_forum($_REQUEST['forumId']))) {
 	$smarty->assign('errortype', 'no_redirect_login');
 	$smarty->assign('msg', tra('No forum indicated'));
 	$smarty->display('error.tpl');
@@ -57,8 +57,7 @@ $tikilib->get_perm_object($_REQUEST['forumId'], 'forum', $forum_info, true);
 
 // Now if the user is the moderator then give him forum admin privs -. SHOULD BE IN get_perm_object
 if ($tiki_p_admin_forum != 'y' && $user) {
-	if ($commentslib->admin_forum($_REQUEST['forumId']))
-	{
+	if ($commentslib->admin_forum($_REQUEST['forumId'])) {
 		$tiki_p_admin_forum = 'y';
 	}
 
@@ -75,12 +74,12 @@ if ($tiki_p_admin_forum != 'y' && $user) {
 	}
 }
 
-$access->check_permission(array('tiki_p_forum_read'), '', 'forum', $_REQUEST['forumId']);
+$access->check_permission(['tiki_p_forum_read'], '', 'forum', $_REQUEST['forumId']);
 
 //add tablesorter sorting and filtering
 $ts = Table_Check::setVars('viewforum' . $_REQUEST['forumId'] . '-', true);
 
-if (!$ts['enabled'] || ($ts['enabled'] && $ts['ajax'])) {
+if (! $ts['enabled'] || ($ts['enabled'] && $ts['ajax'])) {
 	$commentslib->forum_add_hit($_REQUEST["forumId"]);
 }
 
@@ -111,30 +110,30 @@ if ($tiki_p_admin_forum == 'y') {
 $smarty->assign_by_ref('forum_info', $forum_info);
 $comments_per_page = $forum_info['topicsPerPage'];
 $thread_sort_mode = $forum_info['topicOrdering'];
-$comments_vars = array('forumId');
+$comments_vars = ['forumId'];
 
 $comments_prefix_var = 'forum:';
 $comments_object_var = 'forumId';
 
-if (isset($forum_info['inbound_pop_server']) && !empty($forum_info['inbound_pop_server'])) {
+if (isset($forum_info['inbound_pop_server']) && ! empty($forum_info['inbound_pop_server'])) {
 	$commentslib->process_inbound_mail($_REQUEST['forumId']);
 }
 
-if (!isset($_REQUEST['comments_threshold'])) {
+if (! isset($_REQUEST['comments_threshold'])) {
 	$_REQUEST['comments_threshold'] = 0;
 }
 
 $smarty->assign('comments_threshold', $_REQUEST['comments_threshold']);
-if (!isset($_REQUEST['comments_threadId'])) {
+if (! isset($_REQUEST['comments_threadId'])) {
 	$_REQUEST['comments_threadId'] = 0;
 }
 
 $smarty->assign('comments_threadId', $_REQUEST['comments_threadId']);
-if (!isset($comments_prefix_var)) {
+if (! isset($comments_prefix_var)) {
 	$comments_prefix_var = '';
 }
 
-if (!isset($comments_object_var) || (!$comments_object_var) || !isset($_REQUEST[$comments_object_var])) {
+if (! isset($comments_object_var) || (! $comments_object_var) || ! isset($_REQUEST[$comments_object_var])) {
 	die('the comments_object_var variable is not set or cannot be found as a REQUEST variable');
 }
 
@@ -154,18 +153,18 @@ if ($tiki_p_forum_post_topic == 'n'
 //Here we either post to a forum or create a new thread
 if (isset($_REQUEST['comments_postComment'])) {
 	check_ticket('view-forum');
-	$errors = array();
-	$feedbacks = array();
+	$errors = [];
+	$feedbacks = [];
 	$threadId = $commentslib->post_in_forum($forum_info, $_REQUEST, $feedbacks, $errors);
 	if ($threadId && $prefs['feature_freetags'] == 'y') {
 		$cat_type = 'forum post';
 		$cat_objid = $threadId;
-		include_once ('freetag_apply.php');
+		include_once('freetag_apply.php');
 	}
-	if (!empty($errors)) {
+	if (! empty($errors)) {
 		Feedback::error(['mes' => $errors]);
 	}
-	if (!empty($feedbacks)) {
+	if (! empty($feedbacks)) {
 		Feedback::success(['mes' => $feedbacks]);
 	}
 }
@@ -252,24 +251,28 @@ if (isset($_REQUEST['comments_previewComment'])) {
 	$smarty->assign('comment_title', $_REQUEST['comments_title']);
 	$smarty->assign('comment_data', $_REQUEST['comments_data']);
 	$smarty->assign('comment_topictype', $_REQUEST['comment_topictype']);
-	if ($forum_info['topic_summary'] == 'y') $smarty->assign('comment_topicsummary', $_REQUEST['comment_topicsummary']);
-	if ($forum_info['topic_smileys'] == 'y') $smarty->assign('comment_topicsmiley', $_REQUEST['comment_topicsmiley']);
+	if ($forum_info['topic_summary'] == 'y') {
+		$smarty->assign('comment_topicsummary', $_REQUEST['comment_topicsummary']);
+	}
+	if ($forum_info['topic_smileys'] == 'y') {
+		$smarty->assign('comment_topicsmiley', $_REQUEST['comment_topicsmiley']);
+	}
 	$smarty->assign('openpost', 'y');
 	$smarty->assign('comment_preview', 'y');
 }
 
 // Check for settings
-if (!isset($_REQUEST['comments_per_page'])) {
+if (! isset($_REQUEST['comments_per_page'])) {
 	$_REQUEST['comments_per_page'] = $comments_per_page;
 }
 
-if (!isset($_REQUEST['thread_sort_mode'])) {
+if (! isset($_REQUEST['thread_sort_mode'])) {
 	$_REQUEST['thread_sort_mode'] = $thread_sort_mode;
 } else {
 	$comments_show = 'y';
 }
 
-if (!isset($_REQUEST['comments_commentFind'])) {
+if (! isset($_REQUEST['comments_commentFind'])) {
 	$_REQUEST['comments_commentFind'] = '';
 } else {
 	$comments_show = 'y';
@@ -280,7 +283,7 @@ $smarty->assign('thread_sort_mode', $_REQUEST['thread_sort_mode']);
 $smarty->assign('comments_commentFind', $_REQUEST['comments_commentFind']);
 
 // Offset setting for the list of comments
-if (!isset($_REQUEST['comments_offset'])) {
+if (! isset($_REQUEST['comments_offset'])) {
 	$comments_offset = 0;
 } else {
 	$comments_offset = $_REQUEST['comments_offset'];
@@ -288,12 +291,12 @@ if (!isset($_REQUEST['comments_offset'])) {
 
 $smarty->assign('comments_offset', $comments_offset);
 // Now check if we are displaying top-level comments or a specific comment
-if (!isset($_REQUEST['comments_parentId'])) {
+if (! isset($_REQUEST['comments_parentId'])) {
 	$_REQUEST['comments_parentId'] = 0;
 }
 
 $smarty->assign('comments_parentId', $_REQUEST['comments_parentId']);
-if (!isset($_REQUEST['time_control'])) {
+if (! isset($_REQUEST['time_control'])) {
 	$_REQUEST['time_control'] = 0;
 }
 
@@ -302,22 +305,25 @@ $show_archived = isset($_REQUEST['show_archived']);
 $smarty->assign('show_archived', $show_archived);
 $view_archived_topics = ($show_archived == 'y' && ($tiki_p_admin_forum == 'y' || $prefs['feature_forum_topics_archiving'] == 'n'));
 
-if (!isset($_REQUEST['poster']) || $_REQUEST['poster'] == '')
+if (! isset($_REQUEST['poster']) || $_REQUEST['poster'] == '') {
 	$user_param = '';
-elseif ($_REQUEST['poster'] == '_me')
+} elseif ($_REQUEST['poster'] == '_me') {
 	$user_param = $user;
-else
+} else {
 	$user_param = $_REQUEST['poster'];
+}
 
-if (!isset($_REQUEST['filter_type']))
+if (! isset($_REQUEST['filter_type'])) {
 	$type_param = '';
-else
+} else {
 	$type_param = $_REQUEST['filter_type'];
+}
 
-if (!isset($_REQUEST['reply_state']))
+if (! isset($_REQUEST['reply_state'])) {
 	$reply_state = '';
-else
+} else {
 	$reply_state = $_REQUEST['reply_state'];
+}
 
 $comments_coms = $commentslib->get_forum_topics(
 	$_REQUEST['forumId'],
@@ -352,7 +358,7 @@ $smarty->assign_by_ref('comments_coms', $comments_coms);
 $cat_type = 'forum';
 $cat_objid = $_REQUEST["forumId"];
 
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 
 if ($prefs['feature_user_watches'] == 'y') {
 	if ($user && isset($_REQUEST['watch_event'])) {
@@ -389,12 +395,12 @@ if ($prefs['feature_user_watches'] == 'y') {
 		$smarty->assign('category_watched', 'n');
 		if (count($watching_categories_temp) > 0) {
 			$smarty->assign('category_watched', 'y');
-			$watching_categories = array();
+			$watching_categories = [];
 			foreach ($watching_categories_temp as $wct) {
-				$watching_categories[] = array(
+				$watching_categories[] = [
 					"categId" => $wct,
 					"name" => $categlib->get_category_name($wct)
-				);
+				];
 			}
 			$smarty->assign('watching_categories', $watching_categories);
 		}
@@ -435,7 +441,7 @@ if ($prefs['feature_freetags'] == 'y') {
 	$cat_type = 'forum post';
 	$cat_objid = $_REQUEST['comments_threadId'];
 	$cat_lang = $forum_info['forumLanguage'];
-	include_once ("freetag_list.php");
+	include_once("freetag_list.php");
 	//If in preview mode get the tags from the form and not from database
 	if (isset($_REQUEST['comments_previewComment'])) {
 		$smarty->assign('taglist', $_REQUEST["freetag_string"]);
@@ -446,7 +452,7 @@ $defaultRows = $prefs['default_rows_textarea_forum'];
 
 if ($prefs['feature_contribution'] == 'y') {
 	$contributionItemId = $_REQUEST['comments_threadId'];
-	include_once ('contribution.php');
+	include_once('contribution.php');
 }
 
 if ($prefs['feature_forum_parse'] == 'y') {
@@ -456,22 +462,22 @@ if ($prefs['feature_forum_parse'] == 'y') {
 }
 
 //initialize tablesorter
-if ($ts['enabled'] && !$ts['ajax']) {
+if ($ts['enabled'] && ! $ts['ajax']) {
 	//set tablesorter code
 	Table_Factory::build(
 		'TikiViewforum',
-		array(
+		[
 			'id' => $ts['tableid'],
 			'total' => $comments_cant,
-			'pager' => array(
+			'pager' => [
 				'max' => $_REQUEST['comments_per_page'],
-			),
-			'ajax' => array(
-				'requiredparams' => array(
+			],
+			'ajax' => [
+				'requiredparams' => [
 					'forumId' => $_REQUEST['forumId'],
-				),
-			),
-		)
+				],
+			],
+		]
 	);
 }
 

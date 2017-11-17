@@ -3,13 +3,13 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'trackers';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 $access->check_feature('feature_trackers');
 
@@ -21,7 +21,7 @@ $notificationlib = TikiLib::lib('notification');
 if ($prefs['feature_categories'] == 'y') {
 	$categlib = TikiLib::lib('categ');
 }
-$auto_query_args = array(
+$auto_query_args = [
 	'offset',
 	'trackerId',
 	'reloff',
@@ -32,11 +32,13 @@ $auto_query_args = array(
 	'initial',
 	'filterfield',
 	'filtervalue'
-);
-if (!empty($_REQUEST['itemId'])) $ratedItemId = $_REQUEST['itemId'];
+];
+if (! empty($_REQUEST['itemId'])) {
+	$ratedItemId = $_REQUEST['itemId'];
+}
 $_REQUEST["itemId"] = 0;
 $smarty->assign('itemId', $_REQUEST["itemId"]);
-if (!isset($_REQUEST["trackerId"])) {
+if (! isset($_REQUEST["trackerId"])) {
 	$smarty->assign('msg', tra("No tracker indicated"));
 	$smarty->display("error.tpl");
 	die;
@@ -49,24 +51,26 @@ if (! $trackerDefinition) {
 }
 
 $tracker_info = $trackerDefinition->getInformation();
-$fields['data'] = array();
+$fields['data'] = [];
 
 $tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker', $tracker_info);
-if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'view') {
+if (! empty($_REQUEST['show']) && $_REQUEST['show'] == 'view') {
 	$cookietab = '1';
-} elseif (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
+} elseif (! empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
 	$cookietab = '2';
 } elseif (empty($_REQUEST['cookietab'])) {
 	if ((isset($tracker_info['writerCanModify']) && $tracker_info['writerCanModify'] == 'y' && $user) or
-		(isset($tracker_info['userCanSeeOwn']) && $tracker_info['userCanSeeOwn'] == 'y' && $user)) $cookietab = '1';
-	elseif (!($tiki_p_view_trackers == 'y' || $tiki_p_admin == 'y' || $tiki_p_admin_trackers == 'y') && $tiki_p_create_tracker_items == 'y') $cookietab = "2";
-	else if (!isset($cookietab)) {
+		(isset($tracker_info['userCanSeeOwn']) && $tracker_info['userCanSeeOwn'] == 'y' && $user)) {
+		$cookietab = '1';
+	} elseif (! ($tiki_p_view_trackers == 'y' || $tiki_p_admin == 'y' || $tiki_p_admin_trackers == 'y') && $tiki_p_create_tracker_items == 'y') {
+		$cookietab = "2";
+	} elseif (! isset($cookietab)) {
 		$cookietab = '1';
 	}
 } else {
 	$cookietab = $_REQUEST['cookietab'];
 }
-$defaultvalues = array();
+$defaultvalues = [];
 if (isset($_REQUEST['vals']) and is_array($_REQUEST['vals'])) {
 	$defaultvalues = $_REQUEST['vals'];
 	$cookietab = "2";
@@ -89,20 +93,20 @@ if (isset($_REQUEST['my'])) {
 		$ours = $group;
 	}
 }
-if ($tiki_p_create_tracker_items == 'y' && !empty($t['start'])) {
+if ($tiki_p_create_tracker_items == 'y' && ! empty($t['start'])) {
 	if ($tikilib->now < $t['start']) {
 		$tiki_p_create_tracker_items = 'n';
 		$smarty->assign('tiki_p_create_tracker_items', 'n');
 	}
 }
-if ($tiki_p_create_tracker_items == 'y' && !empty($t['end'])) {
+if ($tiki_p_create_tracker_items == 'y' && ! empty($t['end'])) {
 	if ($tikilib->now > $t['end']) {
 		$tiki_p_create_tracker_items = 'n';
 		$smarty->assign('tiki_p_create_tracker_items', 'n');
 	}
 }
 
-$access->check_permission_either(array('tiki_p_view_trackers', 'tiki_p_create_tracker_items'), tra('Create or view tracker'), 'tracker', $_REQUEST["trackerId"]);
+$access->check_permission_either(['tiki_p_view_trackers', 'tiki_p_create_tracker_items'], tra('Create or view tracker'), 'tracker', $_REQUEST["trackerId"]);
 $tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker', $tracker_info);
 
 if ($tracker_info['adminOnlyViewEditItem'] === 'y') {
@@ -112,11 +116,11 @@ if ($tracker_info['adminOnlyViewEditItem'] === 'y') {
 if ($tiki_p_view_trackers != 'y') {
 	$userCreatorFieldId = $trackerDefinition->getWriterField();
 	$groupCreatorFieldId = $trackerDefinition->getWriterGroupField();
-	if ($user && !$my and ( (isset($tracker_info['writerCanModify']) and $tracker_info['writerCanModify'] == 'y') or
+	if ($user && ! $my and ( (isset($tracker_info['writerCanModify']) and $tracker_info['writerCanModify'] == 'y') or
 							(isset($tracker_info['userCanSeeOwn']) and $tracker_info['userCanSeeOwn'] == 'y'))
-							 and !empty($userCreatorFieldId)) {
+							 and ! empty($userCreatorFieldId)) {
 		$my = $user;
-	} elseif ($user && !$ours and isset($tracker_info['writerGroupCanModify']) and $tracker_info['writerGroupCanModify'] == 'y' and !empty($groupCreatorFieldId)) {
+	} elseif ($user && ! $ours and isset($tracker_info['writerGroupCanModify']) and $tracker_info['writerGroupCanModify'] == 'y' and ! empty($groupCreatorFieldId)) {
 		$ours = $group;
 	}
 }
@@ -132,7 +136,7 @@ if ($prefs['feature_groupalert'] == 'y') {
 	$smarty->assign_by_ref('groupforalert', $groupforalert);
 	$smarty->assign_by_ref('showeachuser', $showeachuser);
 }
-$status_types = array();
+$status_types = [];
 $status_raw = $trklib->status_types();
 if (isset($_REQUEST['status'])) {
 	$sts = preg_split('//', $_REQUEST['status'], -1, PREG_SPLIT_NO_EMPTY);
@@ -140,9 +144,9 @@ if (isset($_REQUEST['status'])) {
 	$sts = preg_split('//', $tracker_info["defaultStatus"], -1, PREG_SPLIT_NO_EMPTY);
 	$_REQUEST['status'] = $tracker_info["defaultStatus"];
 } else {
-	$sts = array(
+	$sts = [
 		'o'
-	);
+	];
 	$_REQUEST['status'] = 'o';
 }
 foreach ($status_raw as $let => $sta) {
@@ -161,22 +165,25 @@ $smarty->assign('status_types', $status_types);
 if (count($status_types) == 0) {
 	$tracker_info["showStatus"] = 'n';
 }
-$filterFields = array('isSearchable'=>'y', 'isTblVisible'=>'y', 'type'=>array('q','u','g','I','C','n','j','f'));
+$filterFields = ['isSearchable' => 'y', 'isTblVisible' => 'y', 'type' => ['q','u','g','I','C','n','j','f']];
 $sort_field = 0;
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	if (isset($tracker_info['defaultOrderKey'])) {
-		if ($tracker_info['defaultOrderKey'] == - 1) $sort_mode = 'lastModif';
-		elseif ($tracker_info['defaultOrderKey'] == - 2) $sort_mode = 'created';
-		elseif ($tracker_info['defaultOrderKey'] == - 3) $sort_mode = 'itemId';
-		else {
+		if ($tracker_info['defaultOrderKey'] == - 1) {
+			$sort_mode = 'lastModif';
+		} elseif ($tracker_info['defaultOrderKey'] == - 2) {
+			$sort_mode = 'created';
+		} elseif ($tracker_info['defaultOrderKey'] == - 3) {
+			$sort_mode = 'itemId';
+		} else {
 			$sort_field = $tracker_info['defaultOrderKey'];
 			$sort_mode = 'f_' . $tracker_info['defaultOrderKey'];
 			$filterFields['fieldId'] = $tracker_info['defaultOrderKey'];
 		}
 		if (isset($tracker_info['defaultOrderDir'])) {
-			$sort_mode.= "_" . $tracker_info['defaultOrderDir'];
+			$sort_mode .= "_" . $tracker_info['defaultOrderDir'];
 		} else {
-			$sort_mode.= "_asc";
+			$sort_mode .= "_asc";
 		}
 	} else {
 		$sort_mode = '';
@@ -190,7 +197,7 @@ if (!isset($_REQUEST["sort_mode"])) {
 }
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 //get field settings (no values)
-$xfields = array('data' => $trackerDefinition->getFields());
+$xfields = ['data' => $trackerDefinition->getFields()];
 
 $popupFields = $trackerDefinition->getPopupFields();
 $smarty->assign_by_ref('popupFields', $popupFields);
@@ -198,7 +205,7 @@ $smarty->assign_by_ref('popupFields', $popupFields);
 $smarty->assign('tracker_sync', $trackerDefinition->getSyncInformation());
 
 $orderkey = false;
-$listfields = array();
+$listfields = [];
 $usecategs = false;
 $textarea_options = false;
 $all_descends = false;
@@ -207,7 +214,7 @@ $fieldFactory = $trackerDefinition->getFieldFactory();
 
 $itemObject = Tracker_Item::newItem($_REQUEST['trackerId']);
 
-$ins_fields = array('data' => array());
+$ins_fields = ['data' => []];
 
 foreach ($xfields['data'] as $i => $current_field) {
 	$current_field_ins = null;
@@ -218,7 +225,7 @@ foreach ($xfields['data'] as $i => $current_field) {
 	$current_field["id"] = $fid;
 	$filter_id = 'filter_' . $fid;
 	$current_field["filter_id"] = $filter_id;
-	if (!empty($sort_field) and $sort_field == $fid) {
+	if (! empty($sort_field) and $sort_field == $fid) {
 		$orderkey = true;
 	}
 
@@ -257,7 +264,7 @@ foreach ($xfields['data'] as $i => $current_field) {
 // Collect information from the provided fields
 $newItemRateField = null;
 $newItemRate = null;
-if (!empty($ins_fields['data'])) {
+if (! empty($ins_fields['data'])) {
 	foreach ($ins_fields['data'] as $current_field) {
 		if ($current_field['type'] == 's' && $current_field['name'] == 'Rating') {
 			$newItemRateField = $current_field;
@@ -266,17 +273,17 @@ if (!empty($ins_fields['data'])) {
 	}
 }
 
-if (!$orderkey && $sort_mode == '') {
+if (! $orderkey && $sort_mode == '') {
 	$sort_mode = 'lastModif_asc';
 }
-if (!empty($_REQUEST['remove'])) {
+if (! empty($_REQUEST['remove'])) {
 	$item_info = $trklib->get_item_info($_REQUEST['remove']);
 	$actionObject = Tracker_Item::fromInfo($item_info);
 	if ($actionObject->canRemove()) {
 		//bypass the question to confirm delete or not
 		if (empty($_REQUEST['force'])) {
 			$access->check_authenticity();
-		$trklib->remove_tracker_item($_REQUEST['remove']);
+			$trklib->remove_tracker_item($_REQUEST['remove']);
 		}
 	}
 } elseif (isset($_REQUEST["batchaction"]) and $_REQUEST["batchaction"] == 'delete') {
@@ -293,7 +300,6 @@ if (!empty($_REQUEST['remove'])) {
 	}
 
 	$transaction->commit();
-	
 } elseif (isset($_REQUEST['batchaction']) and ($_REQUEST['batchaction'] == 'o' || $_REQUEST['batchaction'] == 'p' || $_REQUEST['batchaction'] == 'c')) {
 	check_ticket('view-trackers');
 	$transaction = $tikilib->begin();
@@ -302,7 +308,7 @@ if (!empty($_REQUEST['remove'])) {
 		$item_info = $trklib->get_item_info($batchid);
 		$actionObject = Tracker_Item::fromInfo($item_info);
 		if ($actionObject->canModify()) {
-			$trklib->replace_item($_REQUEST['trackerId'], $batchid, array('data' => ''), $_REQUEST['batchaction']);
+			$trklib->replace_item($_REQUEST['trackerId'], $batchid, ['data' => ''], $_REQUEST['batchaction']);
 		}
 	}
 
@@ -330,12 +336,12 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 		$smarty->assign('category_watched', 'n');
 		if (count($watching_categories_temp) > 0) {
 			$smarty->assign('category_watched', 'y');
-			$watching_categories = array();
+			$watching_categories = [];
 			foreach ($watching_categories_temp as $wct) {
-				$watching_categories[] = array(
+				$watching_categories[] = [
 					"categId" => $wct,
 					"name" => $categlib->get_category_name($wct)
-				);
+				];
 			}
 			$smarty->assign('watching_categories', $watching_categories);
 		}
@@ -345,24 +351,24 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 if (isset($_REQUEST["save"])) {
 	if ($itemObject->canModify()) {
 		$captchalib = TikiLib::lib('captcha');
-		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
+		if (empty($user) && $prefs['feature_antibot'] == 'y' && ! $captchalib->validate()) {
 			$smarty->assign('msg', $captchalib->getErrors());
 			$smarty->assign('errortype', 'no_redirect_login');
 			$smarty->display("error.tpl");
 			die;
 		}
 		// Check field values for each type and presence of mandatory ones
-		$mandatory_missing = array();
-		$err_fields = array();
+		$mandatory_missing = [];
+		$err_fields = [];
 		$categorized_fields = $trackerDefinition->getCategorizedFields();
-		$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields, $_REQUEST['trackerId'], empty($_REQUEST['itemId'])?'':$_REQUEST['itemId']);
+		$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields, $_REQUEST['trackerId'], empty($_REQUEST['itemId']) ? '' : $_REQUEST['itemId']);
 		$smarty->assign('err_mandatory', $field_errors['err_mandatory']);
 		$smarty->assign('err_value', $field_errors['err_value']);
 		// values are OK, then lets add a new item
 		if (count($field_errors['err_mandatory']) == 0 && count($field_errors['err_value']) == 0) {
 			$smarty->assign('input_err', '0'); // no warning to display
 			check_ticket('view-trackers');
-			if (!isset($_REQUEST["status"]) or ($tracker_info["showStatus"] != 'y' and $tiki_p_admin_trackers != 'y')) {
+			if (! isset($_REQUEST["status"]) or ($tracker_info["showStatus"] != 'y' and $tiki_p_admin_trackers != 'y')) {
 				$_REQUEST["status"] = '';
 			}
 			if (empty($_REQUEST["itemId"]) && $tracker_info['oneUserItem'] == 'y') { // test if one item per user
@@ -391,7 +397,6 @@ if (isset($_REQUEST["save"])) {
 		} else {
 			$cookietab = "2";
 			$smarty->assign('input_err', '1'); // warning to display
-			
 		}
 		if (isset($newItemRate)) {
 			$trackerId = $_REQUEST["trackerId"];
@@ -399,13 +404,13 @@ if (isset($_REQUEST["save"])) {
 		}
 	}
 }
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
 }
 $smarty->assign_by_ref('offset', $offset);
-if (!empty($_REQUEST["maxRecords"])) {
+if (! empty($_REQUEST["maxRecords"])) {
 	$maxRecords = $_REQUEST['maxRecords'];
 }
 if (isset($_REQUEST["initial"])) {
@@ -440,19 +445,20 @@ if ($my and $writerfield) {
 } else {
 	if (isset($_REQUEST["filtervalue"]) and is_array($_REQUEST["filtervalue"]) and isset($_REQUEST["filtervalue"]["$filterfield"])) {
 		$filtervalue = $_REQUEST["filtervalue"]["$filterfield"];
-	} else if (isset($_REQUEST["filtervalue"])) {
+	} elseif (isset($_REQUEST["filtervalue"])) {
 		$filtervalue = $_REQUEST["filtervalue"];
 	} else {
 		$filtervalue = '';
 	}
-	if (!empty($_REQUEST['filtervalue_other'])) {
+	if (! empty($_REQUEST['filtervalue_other'])) {
 		$filtervalue = $_REQUEST['filtervalue_other'];
 	}
 	$field = $trackerDefinition->getField($filterfield);
-	if( $field && in_array($field['type'], array('d', 'D', 'R')) )
+	if ($field && in_array($field['type'], ['d', 'D', 'R'])) {
 		$exactvalue = $filtervalue;
-	else
+	} else {
 		$exactvalue = '';
+	}
 }
 $smarty->assign('filtervalue', $filtervalue);
 if (is_array($filtervalue)) {
@@ -465,7 +471,7 @@ $smarty->assign('status', $_REQUEST["status"]);
 if (isset($_REQUEST["trackerId"])) {
 	$trackerId = $_REQUEST["trackerId"];
 }
-if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' and $user and $tiki_p_tracker_vote_ratings == 'y' and !empty($_REQUEST['trackerId']) and !empty($ratedItemId) and isset($newItemRate) and ($newItemRate == 'NULL' || in_array($newItemRate, explode(',', $tracker_info['ratingOptions'])))) {
+if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' and $user and $tiki_p_tracker_vote_ratings == 'y' and ! empty($_REQUEST['trackerId']) and ! empty($ratedItemId) and isset($newItemRate) and ($newItemRate == 'NULL' || in_array($newItemRate, explode(',', $tracker_info['ratingOptions'])))) {
 	$trklib->replace_rating($_REQUEST['trackerId'], $ratedItemId, $newItemRateField, $user, $newItemRate);
 }
 $items = $trklib->list_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"], $initial, $exactvalue, '', $xfields);
@@ -490,7 +496,7 @@ if ($tracker_info['useComments'] == 'y' && ($tracker_info['showComments'] == 'y'
 		}
 		if (isset($tracker_info['showLastComment']) && $tracker_info['showLastComment'] == 'y') {
 			$l = $trklib->list_last_comments($items['data'][$itkey]['trackerId'], $items['data'][$itkey]['itemId'], 0, 1);
-			$items['data'][$itkey]['lastComment'] = !empty($l['cant']) ? $l['data'][0] : '';
+			$items['data'][$itkey]['lastComment'] = ! empty($l['cant']) ? $l['data'][0] : '';
 		}
 	}
 }
@@ -503,7 +509,7 @@ if ($tracker_info['useAttachments'] == 'y' && $tracker_info['showAttachments'] =
 }
 foreach ($fields['data'] as $fd) {	// add field info for searchable fields not shown in the list
 	$fid = $fd["fieldId"];
-	if ($fd['isSearchable'] == 'y' and !isset($listfields[$fid]) and $itemObject->canViewField($fid)) {
+	if ($fd['isSearchable'] == 'y' and ! isset($listfields[$fid]) and $itemObject->canViewField($fid)) {
 		$listfields[$fid] = $fd;
 	}
 }
@@ -520,11 +526,11 @@ $smarty->assign_by_ref('users', $users);
 if ($tiki_p_export_tracker == 'y') {
 	$trackers = $trklib->list_trackers();
 	$smarty->assign_by_ref('trackers', $trackers['data']);
-	include_once ('lib/wiki-plugins/wikiplugin_trackerfilter.php');
+	include_once('lib/wiki-plugins/wikiplugin_trackerfilter.php');
 	$formats = '';
-	$filters = wikiplugin_trackerFilter_get_filters($_REQUEST['trackerId'], array(), $formats);
+	$filters = wikiplugin_trackerFilter_get_filters($_REQUEST['trackerId'], [], $formats);
 	$smarty->assign_by_ref('filters', $filters);
-	if (!empty($_REQUEST['displayedFields'])) {
+	if (! empty($_REQUEST['displayedFields'])) {
 		if (is_string($_REQUEST['displayedFields'])) {
 			$smarty->assign('displayedFields', preg_split('/[:,]/', $_REQUEST['displayedFields']));
 		} else {
@@ -534,7 +540,7 @@ if ($tiki_p_export_tracker == 'y') {
 	$smarty->assign('recordsMax', $items['cant']);
 	$smarty->assign('recordsOffset', 1);
 }
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 
 $smarty->assign('show_filters', 'n');
 if (count($fields['data']) > 0) {

@@ -3,20 +3,20 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'mytiki';
-require_once ('tiki-setup.php');
-include_once ('lib/bookmarks/bookmarklib.php');
+require_once('tiki-setup.php');
+include_once('lib/bookmarks/bookmarklib.php');
 
 $access->check_feature('feature_user_bookmarks', '', 'community');
 $access->check_user($user);
 $access->check_permission('tiki_p_create_bookmarks');
 
-if (!isset($_REQUEST["parentId"])) {
+if (! isset($_REQUEST["parentId"])) {
 	$_REQUEST["parentId"] = 0;
 }
 if ($_REQUEST["parentId"]) {
@@ -84,15 +84,15 @@ if (isset($_REQUEST["removeurl"])) {
 $urls = $bookmarklib->list_folder($_REQUEST["parentId"], 0, -1, 'name_asc', '', $user);
 $smarty->assign('urls', $urls["data"]);
 $folders = $bookmarklib->get_child_folders($_REQUEST["parentId"], $user);
-$pf = array("name" => "..", "folderId" => $father, "parentId" => 0, "user" => $user);
-$pfs = array($pf);
+$pf = ["name" => "..", "folderId" => $father, "parentId" => 0, "user" => $user];
+$pfs = [$pf];
 if ($_REQUEST["parentId"]) {
 	$folders = array_merge($pfs, $folders);
 }
 $smarty->assign('folders', $folders);
-include_once ('tiki-mytiki_shared.php');
+include_once('tiki-mytiki_shared.php');
 ask_ticket('user-bookmarks');
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 // Display the template
 $smarty->assign('mid', 'tiki-user_bookmarks.tpl');
 $smarty->display("tiki.tpl");

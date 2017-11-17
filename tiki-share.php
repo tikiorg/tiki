@@ -12,7 +12,7 @@
 //<a href="tiki-share.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Share this page{/tr}</a>
 
 $section = 'share';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 if (empty($_REQUEST['report'])) {
 	$access->check_feature('feature_share');
 	$access->check_permission('tiki_p_share');
@@ -25,12 +25,11 @@ if (empty($_REQUEST['report'])) {
 
 // email related:
 
-$smarty->assign('do_email', (isset($_REQUEST['do_email'])?$_REQUEST['do_email']:true));
+$smarty->assign('do_email', (isset($_REQUEST['do_email']) ? $_REQUEST['do_email'] : true));
 if (empty($_REQUEST['report']) || $_REQUEST['report'] != 'y') {
 	// twitter/facebook related
 	if (isset($prefs['feature_socialnetworks']) and $prefs['feature_socialnetworks'] == 'y') {
-
-		require_once ('lib/socialnetworkslib.php');
+		require_once('lib/socialnetworkslib.php');
 		$smarty->assign('twitterRegistered', $socialnetworkslib->twitterRegistered());
 		$smarty->assign('facebookRegistered', $socialnetworkslib->facebookRegistered());
 
@@ -53,8 +52,8 @@ if (empty($_REQUEST['report']) || $_REQUEST['report'] != 'y') {
 	if (isset($prefs['feature_messages']) and $prefs['feature_messages'] == 'y') {
 		$logslib = TikiLib::lib('logs');
 
-		$smarty->assign('priority', (isset($_REQUEST['priority'])?$_REQUEST['priority']:3));
-		$smarty->assign('do_message', (isset($_REQUEST['do_message'])?$_REQUEST['do_message']:true));
+		$smarty->assign('priority', (isset($_REQUEST['priority']) ? $_REQUEST['priority'] : 3));
+		$smarty->assign('do_message', (isset($_REQUEST['do_message']) ? $_REQUEST['do_message'] : true));
 		$send_msg = ($tiki_p_messages == 'y');
 
 		if ($prefs['allowmsg_is_optional'] == 'y') {
@@ -71,30 +70,30 @@ if (empty($_REQUEST['report']) || $_REQUEST['report'] != 'y') {
 		$commentslib = TikiLib::lib('comments'); // not done in commentslib
 		$sort_mode = $prefs['forums_ordering'];
 		$channels = $commentslib->list_forums(0, -1, $sort_mode, '');
-		Perms::bulk(array( 'type' => 'forum' ), 'object', $channels['data'], 'forumId');
-		$forums = array();
+		Perms::bulk([ 'type' => 'forum' ], 'object', $channels['data'], 'forumId');
+		$forums = [];
 		$temp_max = count($channels['data']);
 		for ($i = 0; $i < $temp_max; $i++) {
-			$forumperms = Perms::get(array( 'type' => 'forum', 'object' => $channels['data'][$i]['forumId'] ));
+			$forumperms = Perms::get([ 'type' => 'forum', 'object' => $channels['data'][$i]['forumId'] ]);
 			if (($forumperms->forum_post and $forumperms->forum_post_topic) or $forumperms->admin_forum) {
 				$forums[] = $channels['data'][$i];
 			}
 		}
 		$smarty->assign('forumId', (isset($_REQUEST['forumId']) ? $_REQUEST['forumId'] : 0));
 	} else {
-		$forums = array();
+		$forums = [];
 	}
 	$smarty->assign('forums', $forums);
-	$report='n';
+	$report = 'n';
 } else {
-	$report='y';
+	$report = 'y';
 }
 $smarty->assign('report', isset($_REQUEST['report']) ? $_REQUEST['report'] : '');
 
-$errors = array();
+$errors = [];
 $ok = true;
 
-if (empty($_REQUEST['url']) && !empty($_SERVER['HTTP_REFERER'])) {
+if (empty($_REQUEST['url']) && ! empty($_SERVER['HTTP_REFERER'])) {
 	$u = parse_url($_SERVER['HTTP_REFERER']);
 
 	if ($u['host'] != $_SERVER['SERVER_NAME']) {
@@ -141,7 +140,7 @@ $smarty->assign('prefix', $tikilib->httpPrefix(true));
 $smarty->assign_by_ref('url_for_friend', $url_for_friend);
 $smarty->assign('back_url', isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '');
 
-if (!empty($_REQUEST['subject'])) {
+if (! empty($_REQUEST['subject'])) {
 	$subject = $_REQUEST['subject'];
 	$smarty->assign('subject', $subject);
 } else {
@@ -156,25 +155,24 @@ if (!empty($_REQUEST['subject'])) {
 $smarty->assign('subject', $subject);
 
 if (isset($_REQUEST['send'])) {
-
-	if (!empty($_REQUEST['comment'])) {
+	if (! empty($_REQUEST['comment'])) {
 		$smarty->assign('comment', $_REQUEST['comment']);
 	}
 
-	if (!empty($_REQUEST['share_token_notification'])) {
+	if (! empty($_REQUEST['share_token_notification'])) {
 		$smarty->assign('share_token_notification', $_REQUEST['share_token_notification']);
 	}
 
-	if (!empty($_REQUEST['how_much_time_access'])) {
+	if (! empty($_REQUEST['how_much_time_access'])) {
 		$smarty->assign('how_much_time_access', $_REQUEST['how_much_time_access']);
 	}
 
 	check_ticket('share');
-	if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
+	if (empty($user) && $prefs['feature_antibot'] == 'y' && ! $captchalib->validate()) {
 		$errors[] = $captchalib->getErrors();
 	} else {
 		if ($report == 'y') {
-			$email = !empty($prefs['feature_site_report_email']) ? $prefs['feature_site_report_email'] : (!empty($prefs['sender_email']) ? $prefs['sender_email'] : '');
+			$email = ! empty($prefs['feature_site_report_email']) ? $prefs['feature_site_report_email'] : (! empty($prefs['sender_email']) ? $prefs['sender_email'] : '');
 			if (empty($email)) {
 				$errors[] = tra("The mail can't be sent. Contact the administrator");
 			}
@@ -182,7 +180,7 @@ if (isset($_REQUEST['send'])) {
 			$_REQUEST['do_email'] = 1;
 		}
 
-		if (isset ($_REQUEST['do_email']) and $_REQUEST['do_email'] == 1) {
+		if (isset($_REQUEST['do_email']) and $_REQUEST['do_email'] == 1) {
 			// send
 
 			// Fix for multi adresses with autocomplete funtionnality
@@ -204,7 +202,6 @@ if (isset($_REQUEST['send'])) {
 				if (strpos($_REQUEST['url'], 'tiki-upload_file')) {
 					$prefs['auth_token_access_maxhits'] = $prefs['auth_token_access_maxhits'] * 2 + 1;
 				}
-
 			}
 
 			if ($_REQUEST['share_token_notification'] == 'y') {
@@ -218,8 +215,8 @@ if (isset($_REQUEST['send'])) {
 						// if preference share_contact_add_non_existant_contact the add auomaticly to contact
 						if ($prefs['share_contact_add_non_existant_contact'] == 'y' && $prefs['feature_contacts'] == 'y') {
 							// check if email exist for at least one contact in
-							if (!$contactlib->exist_contact($adresse, $user)) {
-								$contacts = array(array('email'=>$adresse));
+							if (! $contactlib->exist_contact($adresse, $user)) {
+								$contacts = [['email' => $adresse]];
 								$contactlib->add_contacts($contacts, $user);
 							}
 						}
@@ -229,18 +226,17 @@ if (isset($_REQUEST['send'])) {
 				$smarty->assign('share_access', true);
 
 				if (is_array($tokenlist)) {
-					foreach ($tokenlist as $i=>$data) {
+					foreach ($tokenlist as $i => $data) {
 						$query = parse_url($data);
-						parse_str($query['query'],$query_vars);
+						parse_str($query['query'], $query_vars);
 						$detailtoken = $tokenlib->getToken($query_vars['TOKEN']);
 						// Delete old user watch if it's necessary => avoid bad mails
 						$tikilib->remove_user_watch_object('auth_token_called', $detailtoken['tokenId'], 'security');
 						$tikilib->add_user_watch($user, 'auth_token_called', $detailtoken['tokenId'], 'security', tra('Token called'), $data);
 					}
 				}
-
 			} else {
-				if ( $prefs['auth_token_share'] == 'y' && ($prefs['auth_token_access'] == 'y' || isset($_POST['share_access']))) {
+				if ($prefs['auth_token_share'] == 'y' && ($prefs['auth_token_access'] == 'y' || isset($_POST['share_access']))) {
 					$tokenlib = AuthTokens::build($prefs);
 					$url_for_friend = $tokenlib->includeToken($url_for_friend, $globalperms->getGroups(), $_REQUEST['addresses']);
 					$smarty->assign('share_access', true);
@@ -250,11 +246,11 @@ if (isset($_REQUEST['send'])) {
 
 			$smarty->assign_by_ref('email', $_REQUEST['email']);
 
-			if (!empty($_REQUEST['addresses'])) {
+			if (! empty($_REQUEST['addresses'])) {
 				$smarty->assign('addresses', $_REQUEST['addresses']);
 			}
 
-			if (!empty($_REQUEST['name'])) {
+			if (! empty($_REQUEST['name'])) {
 				$smarty->assign('name', $_REQUEST['name']);
 			}
 			$emailSent = sendMail($_REQUEST['email'], $_REQUEST['addresses'], $subject, $tokenlist);
@@ -263,7 +259,7 @@ if (isset($_REQUEST['send'])) {
 		} // do_email
 
 		if ($report != 'y') {
-			if (isset ($_REQUEST['do_tweet']) and $_REQUEST['do_tweet'] == 1) {
+			if (isset($_REQUEST['do_tweet']) and $_REQUEST['do_tweet'] == 1) {
 				$tweet = substr($_REQUEST['tweet'], 0, 140);
 				if (strlen($tweet) == 0) {
 					$ok = false;
@@ -274,12 +270,12 @@ if (isset($_REQUEST['send'])) {
 						$smarty->assign('tweetId', $tweetId);
 					} else {
 						$ok = false;
-						$tweetId =- $tweetId;
+						$tweetId = - $tweetId;
 						$errors[] = tra('Error sending tweet:') . " $tweetId";
 					}
 				}
 			} // do_tweet
-			if (isset ($_REQUEST['do_fb']) and $_REQUEST['do_fb']==1) {
+			if (isset($_REQUEST['do_fb']) and $_REQUEST['do_fb'] == 1) {
 				$msg = $_REQUEST['comment'];
 				$linktitle = $_REQUEST['fblinktitle'];
 				$facebookId = $socialnetworkslib->facebookWallPublish($user, $msg, $url_for_friend, $linktitle, $_REQUEST['subject']);
@@ -298,7 +294,7 @@ if (isset($_REQUEST['send'])) {
 				$smarty->assign('messageSent', $messageSent);
 				$ok = $ok || $messageSent;
 				if ($messageSent) {
-					$errors = array();
+					$errors = [];
 				}
 			} // do_message
 
@@ -341,9 +337,9 @@ function checkAddresses($recipients, $error = true)
 	$registrationlib = TikiLib::lib('registration');
 	$logslib = TikiLib::lib('logs');
 
-	$e = array();
+	$e = [];
 
-	if (!is_array($recipients)) {
+	if (! is_array($recipients)) {
 		$recipients = preg_split('/(,|;)/', $recipients);
 	}
 
@@ -357,7 +353,7 @@ function checkAddresses($recipients, $error = true)
 			$ret = $registrationlib->SnowCheckMail($recipient, '', 'mini');
 			$ok = $ret[0];
 		}
-		if ( $error && !$ok) {
+		if ($error && ! $ok) {
 			$e[] = tra('One of the email addresses that was input is invalid:') . '&nbsp;' . $recipient;
 			$logslib->add_log('share', tra('One of the email addresses that was input is invalid:') . ' ' . $recipient . ' ' . tra('by') . ' ' . $user);
 		}
@@ -381,7 +377,7 @@ function checkAddresses($recipients, $error = true)
  * @internal param string $url_for_friend URL to share
  * @return bool                        true on success / false if the supplied parameters were incorrect/missing or an error occurred sending the mail
  */
-function sendMail($sender, $recipients, $subject, $tokenlist = array())
+function sendMail($sender, $recipients, $subject, $tokenlist = [])
 {
 	global $errors, $prefs, $user;
 	$userlib = TikiLib::lib('user');
@@ -402,25 +398,25 @@ function sendMail($sender, $recipients, $subject, $tokenlist = array())
 	}
 
 	if ($ok) {
-		$from = str_replace(array("\r", "\n"), '', $sender);
+		$from = str_replace(["\r", "\n"], '', $sender);
 	} else {
 		$errors[] = tra('Invalid email') . ': ' . $_REQUEST['email'];
 		return false;
 	}
 
-	$recipients=checkAddresses($recipients);
+	$recipients = checkAddresses($recipients);
 
 	if ($recipients === false) {
 		return false;
 	}
 
-	include_once ('lib/webmail/tikimaillib.php');
+	include_once('lib/webmail/tikimaillib.php');
 	$smarty->assign_by_ref('mail_site', $_SERVER['SERVER_NAME']);
 
-	$applyFrom = (!empty($user) && $from == $userlib->get_user_email($user));
+	$applyFrom = (! empty($user) && $from == $userlib->get_user_email($user));
 
 	$ok = true;
-	foreach ($recipients as $i=>$recipient) {
+	foreach ($recipients as $i => $recipient) {
 		$mail = new TikiMail();
 
 		$mail->setSubject($subject);
@@ -439,12 +435,12 @@ function sendMail($sender, $recipients, $subject, $tokenlist = array())
 		$txt = $smarty->fetch('mail/share.tpl');
 		// Rebuild email message texte
 		$mail->setText($txt);
-		$mailsent = $mail->send(array($recipient));
-		if (!$mailsent) {
-			$errors[] = tra('Error sending mail to'). " $recipient";
-			$logslib->add_log('share', tra('Error sending mail to'). " $recipient "  . tra('by') .' ' . $user);
+		$mailsent = $mail->send([$recipient]);
+		if (! $mailsent) {
+			$errors[] = tra('Error sending mail to') . " $recipient";
+			$logslib->add_log('share', tra('Error sending mail to') . " $recipient " . tra('by') . ' ' . $user);
 		} else {
-			$logslib->add_log('share', tra('Share page').': '.$url_for_friend.' '.tra('to').' '.$recipient.' '.tra('by').' '.$user);
+			$logslib->add_log('share', tra('Share page') . ': ' . $url_for_friend . ' ' . tra('to') . ' ' . $recipient . ' ' . tra('by') . ' ' . $user);
 		}
 		$ok = $ok && $mailsent;
 	}
@@ -467,20 +463,20 @@ function sendMessage($recipients, $subject)
 	$logslib = TikiLib::lib('logs');
 
 	$ok = true;
-	if (!is_array($recipients)) {
+	if (! is_array($recipients)) {
 		$arr_to = preg_split('/\s*(?<!\\\)[;,]\s*/', $recipients);
 	} else {
 		$arr_to = $recipients;
 	}
-    if ($prefs['user_selector_realnames_messu'] == 'y') {
-        $groups = '';
-        $arr_to = $userlib->find_best_user($arr_to, $groups, 'login');
-    }
+	if ($prefs['user_selector_realnames_messu'] == 'y') {
+		$groups = '';
+		$arr_to = $userlib->find_best_user($arr_to, $groups, 'login');
+	}
 
-	$users = array();
+	$users = [];
 
 	foreach ($arr_to as $a_user) {
-		if (!empty($a_user)) {
+		if (! empty($a_user)) {
 			$a_user = str_replace('\\;', ';', $a_user);
 			if ($userlib->user_exists($a_user)) {
 				// mail only to users with activated message feature
@@ -518,12 +514,13 @@ function sendMessage($recipients, $subject)
 			isset($_REQUEST['replyto_hash']) ? $_REQUEST['replyto_hash'] : ''
 		);
 
-		TikiLib::events()->trigger('tiki.user.message',
-			array(
+		TikiLib::events()->trigger(
+			'tiki.user.message',
+			[
 				'type' => 'user',
 				'object' => $a_user,
 				'user' => $user,
-			)
+			]
 		);
 	}
 
@@ -539,9 +536,9 @@ function sendMessage($recipients, $subject)
 		isset($_REQUEST['replyto_hash']) ? $_REQUEST['replyto_hash'] : ''
 	);
 
-    // Assign users e-mail was sent to a SMARTY variable to be displayed:
-    $users_string = implode(',  ', $users);
-    $smarty->assign('messageSentTo', $users_string);
+	// Assign users e-mail was sent to a SMARTY variable to be displayed:
+	$users_string = implode(',  ', $users);
+	$smarty->assign('messageSentTo', $users_string);
 
 	if ($prefs['feature_actionlog'] == 'y') {
 		$logslib->add_action('Posted', '', 'message', 'add=' . strlen($_REQUEST['body']));
@@ -565,9 +562,9 @@ function postForum($forumId, $subject)
 	$commentslib = TikiLib::lib('comments');
 
 	$forum_info = $commentslib->get_forum($forumId);
-	$forumperms = Perms::get(array( 'type' => 'forum', 'object' => $forumId ));
+	$forumperms = Perms::get([ 'type' => 'forum', 'object' => $forumId ]);
 
-	if (!($forumperms->forum_post and $forumperms->forum_post_topic) or !$forumperms->admin_forum) {
+	if (! ($forumperms->forum_post and $forumperms->forum_post_topic) or ! $forumperms->admin_forum) {
 		$errors[] = tra("You don't have permission to post in this forum");
 		return 0;
 	}
@@ -578,21 +575,21 @@ function postForum($forumId, $subject)
 		return 0;
 	}
 
-	$postErrors = array();
-	$feedbacks = array();
+	$postErrors = [];
+	$feedbacks = [];
 	$txt = $smarty->fetch('mail/share.tpl');
 
-	$data = array(
+	$data = [
 				'comments_title' => $subject,
 				'comments_data' => $txt,
 				'password' => $_REQUEST['forum_password'],
 				'comments_threadId' => 0,
 				'forumId' => $forumId,
-	);
+	];
 
 	$threadId = $commentslib->post_in_forum($forum_info, $data, $feedbacks, $postErrors);
 
-	if (count($postErrors)>0) {
+	if (count($postErrors) > 0) {
 		$errors = array_merge($errors, $postErrors);
 	}
 

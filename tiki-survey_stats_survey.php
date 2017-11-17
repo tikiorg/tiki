@@ -1,20 +1,20 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'surveys';
-require_once ('tiki-setup.php');
-include_once ('lib/surveys/surveylib.php');
+require_once('tiki-setup.php');
+include_once('lib/surveys/surveylib.php');
 
 $access->check_feature('feature_surveys');
 
 $tikilib->get_perm_object($_REQUEST['surveyId'], 'survey');
 $access->check_permission('view_survey_stats', 'View Survey Statistics', 'survey', $_REQUEST['surveyId']);
 
-if (!isset($_REQUEST["surveyId"])) {
+if (! isset($_REQUEST["surveyId"])) {
 	$smarty->assign('msg', tra("No survey indicated"));
 	$smarty->display("error.tpl");
 	die;
@@ -26,12 +26,12 @@ if (isset($_REQUEST["clear"]) && $tiki_p_admin_surveys == 'y') {
 	$access->check_authenticity(tra('Are you sure you want to clear all statistics and data for this survey?'));
 	$srvlib->clear_survey_stats($_REQUEST["clear"]);
 }
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'position_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
@@ -44,7 +44,7 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-if (!empty($_REQUEST["uservoted"])) {
+if (! empty($_REQUEST["uservoted"])) {
 	$uservoted = $_REQUEST["uservoted"];
 } else {
 	$uservoted = '';
@@ -69,7 +69,7 @@ if ($offset > 0) {
 	$smarty->assign('prev_offset', -1);
 }
 $smarty->assign_by_ref('channels', $channels["data"]);
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 ask_ticket('survey-stats-survey');
 // Display the template
 $smarty->assign('mid', 'tiki-survey_stats_survey.tpl');

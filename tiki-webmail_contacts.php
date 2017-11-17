@@ -1,19 +1,19 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
-include_once ('lib/webmail/webmaillib.php');
+require_once('tiki-setup.php');
+include_once('lib/webmail/webmaillib.php');
 $contactlib = TikiLib::lib('contact');
 
 $access->check_feature('feature_webmail');
 
 $smarty->assign('element', $_REQUEST["element"]);
 
-if (!isset($_REQUEST["contactId"])) {
+if (! isset($_REQUEST["contactId"])) {
 	$_REQUEST["contactId"] = 0;
 }
 
@@ -22,7 +22,7 @@ $smarty->assign('contactId', $_REQUEST["contactId"]);
 if ($_REQUEST["contactId"]) {
 	$info = $contactlib->get_contact($_REQUEST["contactId"], $user);
 } else {
-	$info = array();
+	$info = [];
 
 	$info["firstName"] = '';
 	$info["lastName"] = '';
@@ -49,13 +49,13 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('contactId', 0);
 }
 
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'email_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
 
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
@@ -73,7 +73,7 @@ $smarty->assign('find', $find);
 $maxRecords = 20;
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
-if (!isset($_REQUEST["initial"])) {
+if (! isset($_REQUEST["initial"])) {
 	$contacts = $contactlib->list_contacts($user, $offset, $maxRecords, $sort_mode, $find, true);
 } else {
 	$contacts = $contactlib->list_contacts_by_letter($user, $offset, $maxRecords, $sort_mode, $_REQUEST["initial"]);

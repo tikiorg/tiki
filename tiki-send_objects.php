@@ -5,12 +5,12 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $structlib = TikiLib::lib('struct');
 
 //get_strings tra("Send Pages");
 $access->check_feature('feature_comm');
-$access->check_permission_either(array('tiki_p_send_pages', 'tiki_p_send_articles'));
+$access->check_permission_either(['tiki_p_send_pages', 'tiki_p_send_articles']);
 
 if ($tiki_p_send_pages != 'y' && $tiki_p_send_articles != 'y') {
 	$smarty->assign('errortype', 401);
@@ -19,36 +19,36 @@ if ($tiki_p_send_pages != 'y' && $tiki_p_send_articles != 'y') {
 	die;
 }
 
-if (!isset($_REQUEST['username'])) {
+if (! isset($_REQUEST['username'])) {
 	$_REQUEST['username'] = $user;
 }
 
-if (!isset($_REQUEST['path'])) {
+if (! isset($_REQUEST['path'])) {
 	$_REQUEST['path'] = '/tiki/commxmlrpc.php';
 }
 
-if (!isset($_REQUEST['site'])) {
+if (! isset($_REQUEST['site'])) {
 	$_REQUEST['site'] = '';
 }
 
-if (!isset($_REQUEST['password'])) {
+if (! isset($_REQUEST['password'])) {
 	$_REQUEST['password'] = '';
 }
 
-if (!isset($_REQUEST['sendpages'])) {
-	$sendpages = array();
+if (! isset($_REQUEST['sendpages'])) {
+	$sendpages = [];
 } else {
 	$sendpages = json_decode(urldecode($_REQUEST['sendpages']));
 }
 
-if (!isset($_REQUEST['sendstructures'])) {
-	$sendstructures = array();
+if (! isset($_REQUEST['sendstructures'])) {
+	$sendstructures = [];
 } else {
 	$sendstructures = json_decode(urldecode($_REQUEST['sendstructures']));
 }
 
-if (!isset($_REQUEST['sendarticles'])) {
-	$sendarticles = array();
+if (! isset($_REQUEST['sendarticles'])) {
+	$sendarticles = [];
 } else {
 	$sendarticles = json_decode(urldecode($_REQUEST['sendarticles']));
 }
@@ -71,33 +71,33 @@ if (isset($_REQUEST['find'])) {
 $smarty->assign('find', $find);
 
 if (isset($_REQUEST['addpage'])) {
-	if (!in_array($_REQUEST['pageName'], $sendpages)) {
+	if (! in_array($_REQUEST['pageName'], $sendpages)) {
 		$sendpages[] = $_REQUEST['pageName'];
 	}
 }
 
 if (isset($_REQUEST['clearpages'])) {
-	$sendpages = array();
+	$sendpages = [];
 }
 
 if (isset($_REQUEST['addstructure'])) {
-	if (!in_array($_REQUEST['structure'], $sendstructures)) {
+	if (! in_array($_REQUEST['structure'], $sendstructures)) {
 		$sendstructures[] = $_REQUEST['structure'];
 	}
 }
 
 if (isset($_REQUEST['clearstructures'])) {
-	$sendstructures = array();
+	$sendstructures = [];
 }
 
 if (isset($_REQUEST['addarticle'])) {
-	if (!in_array($_REQUEST['articleId'], $sendarticles)) {
+	if (! in_array($_REQUEST['articleId'], $sendarticles)) {
 		$sendarticles[] = $_REQUEST['articleId'];
 	}
 }
 
 if (isset($_REQUEST['cleararticles'])) {
-	$sendarticles = array();
+	$sendarticles = [];
 }
 $structures = $structlib->list_structures(0, -1, 'pageName_asc', $find);
 $smarty->assign_by_ref('structures', $structures['data']);
@@ -117,7 +117,7 @@ if (isset($_REQUEST['send'])) {
 			$pos++;
 			$searchMsg = new XML_RPC_Message(
 				'sendStructurePage',
-				array(
+				[
 					new XML_RPC_Value($_SERVER['SERVER_NAME'], 'string'),
 					new XML_RPC_Value($_REQUEST['username'], 'string'),
 					new XML_RPC_Value($_REQUEST['password'], 'string'),
@@ -129,19 +129,19 @@ if (isset($_REQUEST['send'])) {
 					new XML_RPC_Value($page_info['description'], 'string'),
 					new XML_RPC_Value($pos, 'string'),
 					new XML_RPC_Value($spage['page_alias'], 'string')
-				)
+				]
 			);
 			$result = $client->send($searchMsg);
-			if (!$result) {
+			if (! $result) {
 				$errorMsg = tra('Cannot login to server maybe the server is down');
-				$msg.= $errorMsg;
+				$msg .= $errorMsg;
 			} else {
-				if (!$result->faultCode()) {
-					$msg.= tra('Page') . ': ' . $spage['pageName'] . ' ' . tra('successfully sent') . '<br />';
+				if (! $result->faultCode()) {
+					$msg .= tra('Page') . ': ' . $spage['pageName'] . ' ' . tra('successfully sent') . '<br />';
 				} else {
 					$errorMsg = $result->faultString();
-					$msg.= tra('Page') . ': ' . $spage['pageName'] . ' ' . tra('not sent') . '!' . '<br />';
-					$msg.= tra('Error: ') . $result->faultCode() . '-' . tra($errorMsg) . '<br />';
+					$msg .= tra('Page') . ': ' . $spage['pageName'] . ' ' . tra('not sent') . '!' . '<br />';
+					$msg .= tra('Error: ') . $result->faultCode() . '-' . tra($errorMsg) . '<br />';
 				}
 			}
 		}
@@ -152,7 +152,7 @@ if (isset($_REQUEST['send'])) {
 		if ($page_info) {
 			$searchMsg = new XML_RPC_Message(
 				'sendPage',
-				array(
+				[
 					new XML_RPC_Value($_SERVER['SERVER_NAME'], 'string'),
 					new XML_RPC_Value($_REQUEST['username'], 'string'),
 					new XML_RPC_Value($_REQUEST['password'], 'string'),
@@ -160,19 +160,19 @@ if (isset($_REQUEST['send'])) {
 					new XML_RPC_Value(base64_encode($page_info['data']), 'string'),
 					new XML_RPC_Value($page_info['comment'], 'string'),
 					new XML_RPC_Value($page_info['description'], 'string'),
-				)
+				]
 			);
 			$result = $client->send($searchMsg);
-			if (!$result) {
+			if (! $result) {
 				$errorMsg = tra('Cannot login to server maybe the server is down');
-				$msg.= $errorMsg;
+				$msg .= $errorMsg;
 			} else {
-				if (!$result->faultCode()) {
-					$msg.= tra('Page') . ': ' . $page . ' ' . tra('successfully sent') . '<br />';
+				if (! $result->faultCode()) {
+					$msg .= tra('Page') . ': ' . $page . ' ' . tra('successfully sent') . '<br />';
 				} else {
 					$errorMsg = $result->faultString();
-					$msg.= tra('Page') . ': ' . $page . ' ' . tra('not sent') . '!' . '<br />';
-					$msg.= tra('Error: ') . $result->faultCode() . '-' . tra($errorMsg) . '<br />';
+					$msg .= tra('Page') . ': ' . $page . ' ' . tra('not sent') . '!' . '<br />';
+					$msg .= tra('Error: ') . $result->faultCode() . '-' . tra($errorMsg) . '<br />';
 				}
 			}
 		}
@@ -183,7 +183,7 @@ if (isset($_REQUEST['send'])) {
 		if ($page_info) {
 			$searchMsg = new XML_RPC_Message(
 				'sendArticle',
-				array(
+				[
 					new XML_RPC_Value($_SERVER['SERVER_NAME'], 'string'),
 					new XML_RPC_Value($_REQUEST['username'], 'string'),
 					new XML_RPC_Value($_REQUEST['password'], 'string'),
@@ -206,19 +206,19 @@ if (isset($_REQUEST['send'])) {
 					new XML_RPC_Value($page_info['author'], 'string'),
 					new XML_RPC_Value($page_info['type'], 'string'),
 					new XML_RPC_Value($page_info['rating'], 'string')
-				)
+				]
 			);
 			$result = $client->send($searchMsg);
-			if (!$result) {
+			if (! $result) {
 				$errorMsg = tra('Cannot login to server maybe the server is down');
-				$msg.= $errorMsg;
+				$msg .= $errorMsg;
 			} else {
-				if (!$result->faultCode()) {
-					$msg.= tra('Article:') . ' ' . $page_info['title'] . ' ' . tra('successfully sent') . '<br />';
+				if (! $result->faultCode()) {
+					$msg .= tra('Article:') . ' ' . $page_info['title'] . ' ' . tra('successfully sent') . '<br />';
 				} else {
 					$errorMsg = $result->faultString();
-					$msg.= tra('Article:') . ' ' . $page_info['title'] . ' ' . tra('not sent') . '!' . '<br />';
-					$msg.= tra('Error: ') . $result->faultCode() . '-' . tra($errorMsg) . '<br />';
+					$msg .= tra('Article:') . ' ' . $page_info['title'] . ' ' . tra('not sent') . '!' . '<br />';
+					$msg .= tra('Error: ') . $result->faultCode() . '-' . tra($errorMsg) . '<br />';
 				}
 			}
 		}
@@ -226,7 +226,7 @@ if (isset($_REQUEST['send'])) {
 }
 $smarty->assign('msg', $msg);
 $smarty->assign('sendpages', $sendpages);
-$sendstructures_names = array();
+$sendstructures_names = [];
 foreach ($sendstructures as $key => $id) {
 	foreach ($structures['data'] as $structure) {
 		if ($structure['page_ref_id'] == $id) {
@@ -245,7 +245,7 @@ $smarty->assign('form_sendarticles', $form_sendarticles);
 $pages = $tikilib->list_pageNames(0, -1, 'pageName_asc', $find);
 $smarty->assign('pages', $pages['data']);
 
-if ( $prefs['feature_articles'] == 'y' ) {
+if ($prefs['feature_articles'] == 'y') {
 	$artlib = TikiLib::lib('art');
 	$articles = $artlib->list_articles(0, -1, 'publishDate_desc', $find, 0, $tikilib->now, $user);
 	$smarty->assign('articles', $articles['data']);

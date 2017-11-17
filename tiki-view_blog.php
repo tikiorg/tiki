@@ -9,12 +9,12 @@
 // $Id$
 
 $section = 'blogs';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $bloglib = TikiLib::lib('blog');
 
-$auto_query_args = array(
+$auto_query_args = [
 	'blogId'
-);
+];
 
 if ($prefs['feature_freetags'] == 'y') {
 	$freetaglib = TikiLib::lib('freetag');
@@ -28,11 +28,11 @@ $access->check_feature('feature_blogs');
 
 if (isset($_REQUEST["blogTitle"])) {
 	$blog_data = $bloglib->get_blog_by_title(trim(trim($_REQUEST["blogTitle"]), "\x22\x27"));
-	if ((!empty($blog_data)) && (!empty($blog_data["blogId"]))) {
+	if ((! empty($blog_data)) && (! empty($blog_data["blogId"]))) {
 		$_REQUEST["blogId"] = $blog_data["blogId"];
 	}
 }
-if (!isset($_REQUEST["blogId"])) {
+if (! isset($_REQUEST["blogId"])) {
 	$smarty->assign('msg', tra("No blog indicated"));
 	$smarty->display("error.tpl");
 	die;
@@ -48,19 +48,19 @@ if ($user && $user == $blog_data["user"]) {
 	$ownsblog = 'y';
 }
 $smarty->assign('ownsblog', $ownsblog);
-if (!$blog_data) {
+if (! $blog_data) {
 	$smarty->assign('msg', tra("Blog not found"));
 	$smarty->display("error.tpl");
 	die;
 }
 
 // We need to figure out in which section and theme we are before any call to tiki-modules.php
-// which needs $tc_theme for deciding on the visible modules everywhere in the page 
-include_once ('tiki-section_options.php');
+// which needs $tc_theme for deciding on the visible modules everywhere in the page
+include_once('tiki-section_options.php');
 if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'blog';
 	$cat_objid = $_REQUEST['blogId'];
-	include ('tiki-tc.php');
+	include('tiki-tc.php');
 }
 
 $bloglib->add_blog_hit($_REQUEST["blogId"]);
@@ -91,7 +91,7 @@ if (isset($_REQUEST["remove"])) {
 		$data["user"] = $user;
 	}
 	if ($ownsblog == 'n') {
-		if (!$user || $data["user"] != $user) {
+		if (! $user || $data["user"] != $user) {
 			$access->check_permission('tiki_p_blog_admin');
 		}
 	}
@@ -102,7 +102,7 @@ if (isset($_REQUEST["remove"])) {
 // for the information as the number of
 // days to get in the log 1,3,4,etc
 // it will default to 1 recovering information for today
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
@@ -111,7 +111,7 @@ $smarty->assign_by_ref('sort_mode', $sort_mode);
 // If offset is set use it if not then use offset =0
 // use the maxRecords php variable to set the limit
 // if sortMode is not set then use lastModif_desc
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
@@ -159,12 +159,12 @@ if ($prefs['feature_user_watches'] == 'y') {
 		$smarty->assign('category_watched', 'n');
 		if (count($watching_categories_temp) > 0) {
 			$smarty->assign('category_watched', 'y');
-			$watching_categories = array();
+			$watching_categories = [];
 			foreach ($watching_categories_temp as $wct) {
-				$watching_categories[] = array(
+				$watching_categories[] = [
 					"categId" => $wct,
 					"name" => $categlib->get_category_name($wct)
-				);
+				];
 			}
 			$smarty->assign('watching_categories', $watching_categories);
 		}

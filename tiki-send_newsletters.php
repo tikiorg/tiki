@@ -3,27 +3,27 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'newsletters';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 @ini_set('max_execution_time', 0); //will not work if safe_mode is on
 $prefs['feature_wiki_protect_email'] = 'n'; //not to alter the email
-include_once ('lib/newsletters/nllib.php');
-$auto_query_args = array('sort_mode', 'offset', 'find', 'nlId', 'cookietab', 'editionId');
+include_once('lib/newsletters/nllib.php');
+$auto_query_args = ['sort_mode', 'offset', 'find', 'nlId', 'cookietab', 'editionId'];
 
 $access->check_feature('feature_newsletters');
 $access->check_permission('tiki_p_send_newsletters');
 
-if (!isset($_REQUEST["nlId"])) {
+if (! isset($_REQUEST["nlId"])) {
 	$_REQUEST["nlId"] = 0;
 }
 $smarty->assign('nlId', $_REQUEST["nlId"]);
-$newsletters = $nllib->list_newsletters(0, -1, 'created_desc', '', '', array("tiki_p_admin_newsletters", "tiki_p_send_newsletters"), 'n');
-if (!$newsletters['cant']) {
+$newsletters = $nllib->list_newsletters(0, -1, 'created_desc', '', '', ["tiki_p_admin_newsletters", "tiki_p_send_newsletters"], 'n');
+if (! $newsletters['cant']) {
 	$smarty->assign('msg', tra("No newsletters available."));
 	$smarty->display("error.tpl");
 	die;
@@ -32,12 +32,12 @@ if (isset($_REQUEST['cancel'])) {
 	unset($_REQUEST['editionId']);
 }
 
-if ( empty($_REQUEST["sendingUniqId"]) ) {
+if (empty($_REQUEST["sendingUniqId"])) {
 	$sendingUniqId = $tikilib->genRandomString();
 	$smarty->assign('sendingUniqId', $sendingUniqId);
 }
 
-if (!isset($_REQUEST['cookietab']) || isset($_REQUEST['editionId'])) {
+if (! isset($_REQUEST['cookietab']) || isset($_REQUEST['editionId'])) {
 	$_REQUEST['cookietab'] = 1;
 }
 $cookietab = $_REQUEST['cookietab'];
@@ -45,13 +45,15 @@ $smarty->assign('newsletters', $newsletters["data"]);
 $smarty->assign('absurl', 'y');
 if ($_REQUEST["nlId"]) {
 	$nl_info = $nllib->get_newsletter($_REQUEST["nlId"]);
-	if (!isset($_REQUEST["editionId"])) $_REQUEST["editionId"] = 0;
+	if (! isset($_REQUEST["editionId"])) {
+		$_REQUEST["editionId"] = 0;
+	}
 	$smarty->assign('allowTxt', $nl_info['allowTxt']);
 	$smarty->assign('allowArticleClip', $nl_info['allowArticleClip']);
 
 	if ($prefs['newsletter_external_client'] == 'y') {
 		$subscribers = $nllib->get_all_subscribers($_REQUEST["nlId"], "");
-		$email_list = array();
+		$email_list = [];
 		foreach ($subscribers as $subscriber) {
 			$email_list[] = $subscriber['email'];
 		}
@@ -65,16 +67,16 @@ if ($_REQUEST["nlId"]) {
 }
 if ($_REQUEST["editionId"]) {
 	$info = $nllib->get_edition($_REQUEST["editionId"]);
-	if (!empty($_REQUEST['resend'])) {
+	if (! empty($_REQUEST['resend'])) {
 		$info['editionId'] = 0;
 	}
 } else {
-	$info = array();
+	$info = [];
 	$info["data"] = '';
 	$info["datatxt"] = '';
 	$info["subject"] = '';
 	$info["editionId"] = 0;
-	$info["files"] = array();
+	$info["files"] = [];
 	$info['wysiwyg'] = $prefs['wysiwyg_default'];
 	$info['is_html'] = ($info['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y');
 }
@@ -90,20 +92,20 @@ $showBoxCheck = "
 	var allowArticleClip = new Array();
 	";
 for ($i = 0, $tmp_count = count($newsletters['data']); $i < $tmp_count; $i++) {
-$showBoxCheck .= "allowTxt[$i] = '" . $newsletters['data'][$i]['allowTxt'] . "';
+	$showBoxCheck .= "allowTxt[$i] = '" . $newsletters['data'][$i]['allowTxt'] . "';
 	allowArticleClip[$i] = '" . $newsletters['data'][$i]['allowArticleClip'] . "';
 	";
 }
 // allowTxt
 $showBoxCheck .= "	if (document.getElementById('txtcol1').style.display=='none' && allowTxt[nlIndex] == 'y'){";
 if (preg_match("/gecko/i", $_SERVER['HTTP_USER_AGENT'])) {
-	$showBoxCheck.= "document.getElementById('txtcol1').style.display='table-cell';";
-	$showBoxCheck.= "document.getElementById('txtcol2').style.display='table-cell';";
+	$showBoxCheck .= "document.getElementById('txtcol1').style.display='table-cell';";
+	$showBoxCheck .= "document.getElementById('txtcol2').style.display='table-cell';";
 } else {
-	$showBoxCheck.= "document.getElementById('txtcol1').style.display='inline';	";
-	$showBoxCheck.= "document.getElementById('txtcol2').style.display='inline';";
+	$showBoxCheck .= "document.getElementById('txtcol1').style.display='inline';	";
+	$showBoxCheck .= "document.getElementById('txtcol2').style.display='inline';";
 };
-$showBoxCheck.= "
+$showBoxCheck .= "
     	}else if (allowTxt[nlIndex] == 'n') {
 	document.getElementById('txtcol1').style.display='none';
 	document.getElementById('txtcol2').style.display='none';
@@ -111,13 +113,13 @@ $showBoxCheck.= "
 // allowArticleClip
 $showBoxCheck .= "	if (document.getElementById('clipcol1').style.display=='none' && allowArticleClip[nlIndex] == 'y'){";
 if (preg_match("/gecko/i", $_SERVER['HTTP_USER_AGENT'])) {
-	$showBoxCheck.= "document.getElementById('clipcol1').style.display='table-cell';";
-	$showBoxCheck.= "document.getElementById('clipcol2').style.display='table-cell';";
+	$showBoxCheck .= "document.getElementById('clipcol1').style.display='table-cell';";
+	$showBoxCheck .= "document.getElementById('clipcol2').style.display='table-cell';";
 } else {
-	$showBoxCheck.= "document.getElementById('clipcol1').style.display='inline';	";
-	$showBoxCheck.= "document.getElementById('clipcol2').style.display='inline';";
+	$showBoxCheck .= "document.getElementById('clipcol1').style.display='inline';	";
+	$showBoxCheck .= "document.getElementById('clipcol2').style.display='inline';";
 };
-$showBoxCheck.= "
+$showBoxCheck .= "
     	}else if (allowArticleClip[nlIndex] == 'n') {
 	document.getElementById('clipcol1').style.display='none';
 	document.getElementById('clipcol2').style.display='none';
@@ -136,10 +138,10 @@ if (isset($_REQUEST["remove"])) {
 
 $editlib = TikiLib::lib('edit');
 // wysiwyg decision
-include_once ('lib/setup/editmode.php');
+include_once('lib/setup/editmode.php');
 
 // Handles switching editor modes
-if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal']=='y') {
+if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal'] == 'y') {
 	if ($_REQUEST['wikiparse'] == 'on') {
 		// Parsing page data as first time seeing html page in normal editor
 		$smarty->assign('msg', "Parsing html to wiki");
@@ -152,8 +154,7 @@ if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal']=='y') {
 	unset($_REQUEST['is_html']);
 	$_REQUEST['preview'] = 'y';
 	$_REQUEST["data"] = $info["data"];
-
-} elseif (isset($_REQUEST['mode_wysiwyg']) && $_REQUEST['mode_wysiwyg']=='y') {
+} elseif (isset($_REQUEST['mode_wysiwyg']) && $_REQUEST['mode_wysiwyg'] == 'y') {
 	// Parsing page data as first time seeing wiki page in wysiwyg editor
 	$smarty->assign('msg', "Parsing wiki to html");
 	$info["data"] = $editlib->parseToWysiwyg($_REQUEST["data"]);
@@ -163,38 +164,38 @@ if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal']=='y') {
 }
 
 if (isset($_REQUEST['is_html'])) {
-	$info['is_html'] = !empty($_REQUEST['is_html']);
+	$info['is_html'] = ! empty($_REQUEST['is_html']);
 	$_REQUEST['is_html'] = 'on';
 } else {	// guess html based on wysiwyg mode
-	$info['is_html'] =  $info['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y';
+	$info['is_html'] = $info['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y';
 	$_REQUEST['is_html'] = $info['is_html'] ? 'on' : '';
 }
 
 $parserlib = TikiLib::lib('parser');
-if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && (!isset($_REQUEST['previousTemplateId']) || $_REQUEST['previousTemplateId'] != $_REQUEST['templateId'])) {
+if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && (! isset($_REQUEST['previousTemplateId']) || $_REQUEST['previousTemplateId'] != $_REQUEST['templateId'])) {
 	$template_data = TikiLib::lib('template')->get_template($_REQUEST["templateId"]);
 	$_REQUEST["data"] = $template_data["content"];
-	if (TikiLib::lib('template')->template_is_in_section($_REQUEST['templateId'], 'wiki_html') ) {
+	if (TikiLib::lib('template')->template_is_in_section($_REQUEST['templateId'], 'wiki_html')) {
 		$_REQUEST['is_html'] = 'on';
-		$_REQUEST['wysiwyg'] ='y';
+		$_REQUEST['wysiwyg'] = 'y';
 	}
 	if (isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] == 'y' || $_REQUEST['wysiwyg'] === 'y') {
-		$_REQUEST['data'] = $parserlib->parse_data($_REQUEST['data'], array('is_html'=>$info['is_html'], 'absolute_links' => true, 'suppress_icons' => true));
+		$_REQUEST['data'] = $parserlib->parse_data($_REQUEST['data'], ['is_html' => $info['is_html'], 'absolute_links' => true, 'suppress_icons' => true]);
 	}
 	$_REQUEST["preview"] = 1;
 	$smarty->assign("templateId", $_REQUEST["templateId"]);
 }
-$newsletterfiles = array();
+$newsletterfiles = [];
 if (isset($_REQUEST['newsletterfile'])) {
-	$newsletterfiles_post = isset($_REQUEST['newsletterfile']) && is_array($_REQUEST['newsletterfile']) ? $_REQUEST['newsletterfile'] : array();
+	$newsletterfiles_post = isset($_REQUEST['newsletterfile']) && is_array($_REQUEST['newsletterfile']) ? $_REQUEST['newsletterfile'] : [];
 	foreach ($newsletterfiles_post as $k => $id) {
-		$f = array();
+		$f = [];
 		if ((strlen($id) == 32) && preg_match('/^[0-9a-f]{32}$/', $id)) { // this is a valid md5 hash, so the file was just saved at preview time
 			$fpath = $prefs['tmpDir'] . '/newsletterfile-' . $id;
 			$f = unserialize(file_get_contents($fpath . '.infos'));
 			$f['path'] = $fpath;
 			$newsletterfiles[] = $f;
-		} else if ((int)$_REQUEST['nlId'] > 0) {
+		} elseif ((int)$_REQUEST['nlId'] > 0) {
 			foreach ($info['files'] as $f) {
 				if ($f['id'] == (int)$id) {
 					$newsletterfiles[] = $f;
@@ -206,22 +207,24 @@ if (isset($_REQUEST['newsletterfile'])) {
 } else {
 	$newsletterfiles = $info['files'];
 }
-if (!empty($_FILES) && !empty($_FILES['newsletterfile'])) {
+if (! empty($_FILES) && ! empty($_FILES['newsletterfile'])) {
 	foreach ($_FILES['newsletterfile']['name'] as $i => $v) {
 		if ($_FILES['newsletterfile']['error'][$i] == UPLOAD_ERR_OK) {
-			$newsletterfiles[] = array(
+			$newsletterfiles[] = [
 				'name' => $_FILES['newsletterfile']['name'][$i],
 				'type' => $_FILES['newsletterfile']['type'][$i],
 				'path' => $_FILES['newsletterfile']['tmp_name'][$i],
 				'error' => $_FILES['newsletterfile']['error'][$i],
 				'size' => $_FILES['newsletterfile']['size'][$i],
 				'savestate' => 'phptmp',
-			);
+			];
 		} else {
 			$error['title'] = tra('A problem occurred during file uploading');
 			$error['mes'] = tra('File causing trouble was at rank') . ' ' . ($i + 1);
-			$error['mes'] = tr('The error was %0', 
-				$tikilib->uploaded_file_error($_FILES['newsletterfile']['error'][$i]));
+			$error['mes'] = tr(
+				'The error was %0',
+				$tikilib->uploaded_file_error($_FILES['newsletterfile']['error'][$i])
+			);
 			Feedback::error($error);
 		}
 	}
@@ -254,17 +257,20 @@ if (isset($_REQUEST["preview"])) {
 	} else {
 		$info["data"] = '';
 	}
-	if (isset($_REQUEST['wikiparse']) && $_REQUEST['wikiparse'] == 'on') $info['wikiparse'] = 'y';
-	else $info['wikiparse'] = 'n';
-	if (!empty($_REQUEST["datatxt"])) {
+	if (isset($_REQUEST['wikiparse']) && $_REQUEST['wikiparse'] == 'on') {
+		$info['wikiparse'] = 'y';
+	} else {
+		$info['wikiparse'] = 'n';
+	}
+	if (! empty($_REQUEST["datatxt"])) {
 		$info["datatxt"] = $_REQUEST["datatxt"];
 		//For the hidden input
 		$smarty->assign('datatxt', $_REQUEST["datatxt"]);
 	} else {
 		$info["datatxt"] = '';
 	}
-	if (!empty($_REQUEST["usedTpl"])) {
-		$smarty->assign('dataparsed', (($info['wikiparse'] == 'y') ? $parserlib->parse_data($info["data"], array('absolute_links' => true, 'suppress_icons' => true)) : $info['data']));
+	if (! empty($_REQUEST["usedTpl"])) {
+		$smarty->assign('dataparsed', (($info['wikiparse'] == 'y') ? $parserlib->parse_data($info["data"], ['absolute_links' => true, 'suppress_icons' => true]) : $info['data']));
 		$smarty->assign('subject', $info["subject"]);
 		$info["dataparsed"] = $smarty->fetch("newsletters/" . $_REQUEST["usedTpl"]);
 		if (stristr($info['dataparsed'], "<body") === false) {
@@ -275,7 +281,7 @@ if (isset($_REQUEST["preview"])) {
 		$info['dataparsed'] = '<html><body>';
 		if ($info['wikiparse'] === 'y') {
 			$data = $info['data'];
-			$info['dataparsed'] .= $parserlib->parse_data($data, array('absolute_links' => true, 'suppress_icons' => true,'is_html' => $info['is_html']));
+			$info['dataparsed'] .= $parserlib->parse_data($data, ['absolute_links' => true, 'suppress_icons' => true,'is_html' => $info['is_html']]);
 			if (empty($info['data'])) {
 				$info['data'] = $data;		// somehow on massive pages this gets reset somewhere inside parse_data
 			}
@@ -284,10 +290,10 @@ if (isset($_REQUEST["preview"])) {
 		}
 		$info['dataparsed'] .= '</body></html>';
 	}
-	if (!empty($_REQUEST['replyto'])) {
+	if (! empty($_REQUEST['replyto'])) {
 		$smarty->assign('replyto', $_REQUEST['replyto']);
 	}
-	if (!empty($_REQUEST['sendfrom'])) {
+	if (! empty($_REQUEST['sendfrom'])) {
 		$smarty->assign('sendfrom', $_REQUEST['sendfrom']);
 	}
 	$previewdata = $info['dataparsed'];
@@ -324,16 +330,16 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$wikiparse = 'n';
 	}
-	$info['is_html'] = !empty($_REQUEST['is_html']);
+	$info['is_html'] = ! empty($_REQUEST['is_html']);
 	$tikilib = TikiLib::lib('tiki');
-	if (!empty($_REQUEST["usedTpl"])) {
-		$smarty->assign('dataparsed', (($wikiparse == 'y') ? $parserlib->parse_data($_REQUEST["data"], array('absolute_links' => true, 'suppress_icons' => true)) : $_REQUEST['data']));
+	if (! empty($_REQUEST["usedTpl"])) {
+		$smarty->assign('dataparsed', (($wikiparse == 'y') ? $parserlib->parse_data($_REQUEST["data"], ['absolute_links' => true, 'suppress_icons' => true]) : $_REQUEST['data']));
 		$smarty->assign('subject', $_REQUEST["subject"]);
 		$parsed = $smarty->fetch("newsletters/" . $_REQUEST["usedTpl"]);
 	} else {
-		$parsed = ($wikiparse == 'y') ? $parserlib->parse_data($_REQUEST["data"], array('is_html' => $info['is_html'], 'absolute_links' => true, 'suppress_icons' => true)) : $_REQUEST['data'];
+		$parsed = ($wikiparse == 'y') ? $parserlib->parse_data($_REQUEST["data"], ['is_html' => $info['is_html'], 'absolute_links' => true, 'suppress_icons' => true]) : $_REQUEST['data'];
 	}
-	if (empty($parsed) && !empty($_REQUEST['datatxt'])) {
+	if (empty($parsed) && ! empty($_REQUEST['datatxt'])) {
 		$parsed = $_REQUEST['datatxt'];
 	}
 	if (stristr($parsed, "<body") === false) {
@@ -354,32 +360,32 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('subscribers', $cant);
 	$smarty->assign_by_ref('subscribers_list', $subscribers);
 	$smarty->assign_by_ref('info', $info);
-	if (!empty($_REQUEST['replyto'])) {
+	if (! empty($_REQUEST['replyto'])) {
 		$smarty->assign('replyto', $_REQUEST['replyto']);
 	}
-	if (!empty($_REQUEST['sendfrom'])) {
+	if (! empty($_REQUEST['sendfrom'])) {
 		$smarty->assign('sendfrom', $_REQUEST['sendfrom']);
 	}
 }
 $smarty->assign('emited', 'n');
-if (!empty($_REQUEST['datatxt'])) { 
-	$txt = $_REQUEST['datatxt']; 
+if (! empty($_REQUEST['datatxt'])) {
+	$txt = $_REQUEST['datatxt'];
 }
-if (empty($txt) && !empty($_REQUEST["data"])) {
+if (empty($txt) && ! empty($_REQUEST["data"])) {
 	//No txt message is explicitely provided -> Create one with the html Version & remove Wiki tags
 	$txt = $_REQUEST["data"];
 	$txt = $nllib->generateTxtVersion($txt, $parsed);
 	$info["datatxt"] = $txt;
 	$smarty->assign('datatxt', $txt);
 	if ($nl_info["allowArticleClip"] == 'y' && $nl_info["autoArticleClip"] == 'y') {
-		if (!isset($txtArticleClip)) {
+		if (! isset($txtArticleClip)) {
 			$articleClip = $nllib->clip_articles($_REQUEST["nlId"]);
 			$txtArticleClip = $nllib->generateTxtVersion($articleClip);
 		}
 		$info['datatxt'] = str_replace("~~~articleclip~~~", $txtArticleClip, $info['datatxt']);
 	}
 }
-if (!empty($_REQUEST['resendEditionId'])) {
+if (! empty($_REQUEST['resendEditionId'])) {
 	if (($info = $nllib->get_edition($_REQUEST['resendEditionId'])) !== false && $info['nlId'] == $_REQUEST['nlId'] && ($_REQUEST['editionId'] = $nllib->replace_edition($info['nlId'], $info['subject'], $info['data'], 0, 0, false, $info['datatxt'], $info['files'], $info['wysiwyg']))) {
 		$_REQUEST['data'] = $info['data'];
 		$_REQUEST['subject'] = $info['subject'];
@@ -398,15 +404,16 @@ if (!empty($_REQUEST['resendEditionId'])) {
 	$resend = 'n';
 }
 
-if ( isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) || $resend == 'y' ) {
+if (isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) || $resend == 'y') {
 	check_ticket('send-newsletter');
 	@set_time_limit(0);
 
 	if ($resend != 'y') {
-		if ( ! is_array($_SESSION["sendingUniqIds"]) )
-			$_SESSION["sendingUniqIds"] = array();
+		if (! is_array($_SESSION["sendingUniqIds"])) {
+			$_SESSION["sendingUniqIds"] = [];
+		}
 
-		if ( isset( $_SESSION["sendingUniqIds"][ $_REQUEST["sendingUniqId"] ] ) ) {
+		if (isset($_SESSION["sendingUniqIds"][ $_REQUEST["sendingUniqId"] ])) {
 		// Avoid sending the same newsletter again if the user reload the page
 			print tra('Error: You can\'t send the same newsletter by refreshing this frame content.');
 			die;
@@ -414,32 +421,32 @@ if ( isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) || $resend 
 			$_SESSION["sendingUniqIds"][ $_REQUEST["sendingUniqId"] ] = 1;
 		}
 	}
-	
+
 	$_REQUEST['begin'] = true;
 	$nllib->send($nl_info, $_REQUEST, true, $sent, $errors, $logFileName);
 
 	// use lib function to close the frame with the completion info
 	$nllib->closesendframe($sent, $errors, $logFileName);
-	
+
 	exit; // Stop here since we are in an iframe and don't want to use smarty display
 }
 
 if (isset($_REQUEST['resume'])) {
 	// for this throttle resume case the editionId, sendfrom and replyto addresses (if used) are added to the tiki-send_newsletter.php URL in the .tpl
 	$edition_info = $nllib->get_edition($_REQUEST['resume']);
-	// if they are set the replyto and sendfrom parameter contents are added to edition_info  
-	if (!empty($_REQUEST['replyto']) &&  $_REQUEST['replyto'] != "undefined") { 
-		$edition_info['replyto'] = $_REQUEST['replyto'];  
+	// if they are set the replyto and sendfrom parameter contents are added to edition_info
+	if (! empty($_REQUEST['replyto']) &&  $_REQUEST['replyto'] != "undefined") {
+		$edition_info['replyto'] = $_REQUEST['replyto'];
 	}
-	if (!empty($_REQUEST['sendfrom']) &&  $_REQUEST['sendfrom'] != "undefined") { 
-		$edition_info['sendfrom'] = $_REQUEST['sendfrom'];  
+	if (! empty($_REQUEST['sendfrom']) &&  $_REQUEST['sendfrom'] != "undefined") {
+		$edition_info['sendfrom'] = $_REQUEST['sendfrom'];
 	}
 	$nl_info = $nllib->get_newsletter($edition_info['nlId']);
 	$nllib->send($nl_info, $edition_info, true, $sent, $errors, $logFileName);
-	
+
 	// use lib function to close the frame with the completion info
 	$nllib->closesendframe($sent, $errors, $logFileName);
-		
+
 	exit; // Stop here since we are in an iframe and don't want to use smarty display
 }
 
@@ -449,15 +456,15 @@ if (isset($nl_info) && $nl_info["allowArticleClip"] == 'y' && empty($articleClip
 	if ($nl_info["autoArticleClip"] == 'y' || isset($_REQUEST["clipArticles"])) {
 		$articleClip = $nllib->clip_articles($_REQUEST["nlId"]);
 		// prevent clearing of keyed in info if any
-		if (!$info["data"] && isset($_REQUEST["data"])) {
+		if (! $info["data"] && isset($_REQUEST["data"])) {
 			$info["data"] = $_REQUEST["data"];
 		}
-		if (!$info["datatxt"] && isset($_REQUEST["datatxt"])) {
+		if (! $info["datatxt"] && isset($_REQUEST["datatxt"])) {
 			$info["datatxt"] = $_REQUEST["datatxt"];
 		}
-		if (!$info["subject"] && isset($_REQUEST["subject"])) {
+		if (! $info["subject"] && isset($_REQUEST["subject"])) {
 			$info["subject"] = $_REQUEST["subject"];
-		}		
+		}
 	} elseif (isset($_REQUEST["articleClip"]) && $_REQUEST["articleClip"]) {
 		$articleClip = $_REQUEST["articleClip"];
 	}
@@ -465,7 +472,9 @@ if (isset($nl_info) && $nl_info["allowArticleClip"] == 'y' && empty($articleClip
 $smarty->assign('articleClip', $articleClip);
 
 if (isset($_REQUEST["save_only"])) {
-	if (!isset($txt) || empty($_REQUEST['datatxt'])) $txt = "";
+	if (! isset($txt) || empty($_REQUEST['datatxt'])) {
+		$txt = "";
+	}
 	$smarty->assign('nlId', $_REQUEST['nlId']);
 	$editionId = $nllib->replace_edition($_REQUEST['nlId'], $_REQUEST['subject'], $_REQUEST['data'], -1, $_REQUEST['editionId'], true, $txt, $info['files'], $_REQUEST['wysiwyg']);
 	foreach ($info['files'] as $k => $f) {
@@ -478,7 +487,7 @@ if (isset($_REQUEST["save_only"])) {
 	$smarty->assign_by_ref('info', $info);
 	$cookietab = 2;
 }
-if (!isset($_REQUEST['ed_sort_mode']) && !isset($_REQUEST['dr_sort_mode'])) {
+if (! isset($_REQUEST['ed_sort_mode']) && ! isset($_REQUEST['dr_sort_mode'])) {
 	$ed_sort_mode = $dr_sort_mode = 'sent_desc';
 } else {
 	$ed_sort_mode = $_REQUEST['ed_sort_mode'];
@@ -486,7 +495,7 @@ if (!isset($_REQUEST['ed_sort_mode']) && !isset($_REQUEST['dr_sort_mode'])) {
 }
 $smarty->assign_by_ref('ed_sort_mode', $ed_sort_mode);
 $smarty->assign_by_ref('dr_sort_mode', $dr_sort_mode);
-if (!isset($_REQUEST['ed_offset']) && !isset($_REQUEST['dr_offset'])) {
+if (! isset($_REQUEST['ed_offset']) && ! isset($_REQUEST['dr_offset'])) {
 	$ed_offset = $dr_offset = 0;
 } else {
 	$ed_offset = $_REQUEST['ed_offset'];
@@ -544,7 +553,7 @@ $tpls = $nllib->list_tpls();
 if (count($tpls) > 0) {
 	$smarty->assign_by_ref('tpls', $tpls);
 }
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 
 ask_ticket('send-newsletter');
 $wikilib = TikiLib::lib('wiki');
@@ -555,4 +564,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-send_newsletters.tpl');
 $smarty->display("tiki.tpl");
-

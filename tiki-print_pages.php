@@ -3,28 +3,28 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'wiki page';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $structlib = TikiLib::lib('struct');
-$auto_query_args = array('page_ref_id', 'page', 'find', 'pageName', 'structureId', 'offset', 'printpages', 'printstructures');
+$auto_query_args = ['page_ref_id', 'page', 'find', 'pageName', 'structureId', 'offset', 'printpages', 'printstructures'];
 
 $access->check_feature('feature_wiki_multiprint');
 $access->check_permission('tiki_p_view');
 //get_strings tra('Multiple Print');
-if (!isset($cookietab)) {
+if (! isset($cookietab)) {
 	$cookietab = '1';
 }
-if (!isset($_REQUEST['printpages']) && !isset($_REQUEST['printstructures'])) {
-	$printpages = array();
-	$printstructures = array();
+if (! isset($_REQUEST['printpages']) && ! isset($_REQUEST['printstructures'])) {
+	$printpages = [];
+	$printstructures = [];
 	if (isset($_REQUEST["page_ref_id"])) {
 		$info = $structlib->s_get_page_info($_REQUEST['page_ref_id']);
-		if (!empty($info)) {
+		if (! empty($info)) {
 			$printstructures[] = $_REQUEST['page_ref_id'];
 		}
 	} elseif (isset($_REQUEST["page"]) && $tikilib->page_exists($_REQUEST["page"])) {
@@ -41,7 +41,7 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 if (isset($_REQUEST["addpage"])) {
-	if (!in_array($_REQUEST["pageName"], $printpages)) {
+	if (! in_array($_REQUEST["pageName"], $printpages)) {
 		foreach ($_REQUEST['pageName'] as $value) {
 			$printpages[] = $value;
 		}
@@ -49,31 +49,33 @@ if (isset($_REQUEST["addpage"])) {
 	$cookietab = 2;
 }
 if (isset($_REQUEST["removepage"])) {
-		foreach ($_REQUEST['selectedpages'] as $value) {
-			unset($printpages[$value]);
-		}
+	foreach ($_REQUEST['selectedpages'] as $value) {
+		unset($printpages[$value]);
+	}
 		$printpages = array_merge($printpages);
 	$cookietab = 2;
 }
 if (isset($_REQUEST["clearpages"])) {
-	$printpages = array();
+	$printpages = [];
 	$cookietab = 2;
 }
 if (isset($_REQUEST["clearstructures"])) {
-	$printstructures = array();
+	$printstructures = [];
 }
 if (isset($_REQUEST['addstructurepages'])) {
 	$struct = $structlib->get_subtree($_REQUEST["structureId"]);
 	foreach ($struct as $struct_page) {
 		// Handle dummy last entry
-		if ($struct_page["pos"] != '' && $struct_page["last"] == 1) continue;
+		if ($struct_page["pos"] != '' && $struct_page["last"] == 1) {
+			continue;
+		}
 		$printpages[] = $struct_page["pageName"];
 	}
 	$cookietab = 2;
 }
 if (isset($_REQUEST['addstructure'])) {
 	$info = $structlib->s_get_page_info($_REQUEST['structureId']);
-	if (!empty($info)) {
+	if (! empty($info)) {
 		$printstructures[] = $_REQUEST['structureId'];
 	}
 }
@@ -97,7 +99,7 @@ foreach ($printstructures as $page_ref_id) {
 }
 $smarty->assign_by_ref('printnamestructures', $printnamestructures);
 
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 ask_ticket('print-pages');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

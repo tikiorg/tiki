@@ -9,7 +9,7 @@
 // $Id$
 
 $section = 'trackers';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 $access->check_feature('feature_trackers');
 
@@ -22,7 +22,7 @@ $notificationlib = TikiLib::lib('notification');
 if ($prefs['feature_groupalert'] == 'y') {
 	$groupalertlib = TikiLib::lib('groupalert');
 }
-$auto_query_args = array(
+$auto_query_args = [
 	'offset',
 	'trackerId',
 	'reloff',
@@ -35,7 +35,7 @@ $auto_query_args = array(
 	'filtervalue',
 	'view',
 	'exactvalue'
-);
+];
 if (isset($_REQUEST['trackerId'])) {
 	$trackerId = $_REQUEST['trackerId'];
 }
@@ -43,7 +43,7 @@ if (isset($_REQUEST['itemId'])) {
 	$itemId = $_REQUEST['itemId'];
 }
 $special = false;
-if (!isset($trackerId) && $prefs['userTracker'] == 'y' && !isset($_REQUEST['user'])) {
+if (! isset($trackerId) && $prefs['userTracker'] == 'y' && ! isset($_REQUEST['user'])) {
 	if (isset($_REQUEST['view']) and $_REQUEST['view'] == ' user') {
 		if (empty($user)) {
 			$smarty->assign('msg', tra("You are not logged in"));
@@ -55,31 +55,31 @@ if (!isset($trackerId) && $prefs['userTracker'] == 'y' && !isset($_REQUEST['user
 		if (isset($utid['usersTrackerId'])) {
 			$trackerId = $utid['usersTrackerId'];
 			$itemId = $trklib->get_item_id($trackerId, $utid['usersFieldId'], $user);
-			if ($itemId == NULL) {
-				$addit = array();
-				$addit[] = array(
+			if ($itemId == null) {
+				$addit = [];
+				$addit[] = [
 					'fieldId' => $utid['usersFieldId'],
 					'type' => 'u',
 					'value' => $user,
-				);
+				];
 				$definition = Tracker_Definition::get($trackerId);
 				if ($definition && $f = $definition->getUserField()) {
 					if ($f != $utid['usersFieldId']) {
-						$addit[] = array(
+						$addit[] = [
 							'fieldId' => $f,
 							'type' => 'u',
 							'value' => $user,
-						);
+						];
 					}
 				}
 				if ($definition && $f = $definition->getWriterGroupField()) {
-					$addit[] = array(
+					$addit[] = [
 						'fieldId' => $f,
 						'type' => 'g',
 						'value' => $group,
-					);
+					];
 				}
-				$itemId = $trklib->replace_item($trackerId, 0, array('data' => $addit), 'o');
+				$itemId = $trklib->replace_item($trackerId, 0, ['data' => $addit], 'o');
 			}
 			$special = 'user';
 		}
@@ -91,18 +91,18 @@ if (!isset($trackerId) && $prefs['userTracker'] == 'y' && !isset($_REQUEST['user
 		}
 	}
 }
-if (!isset($trackerId) && $prefs['groupTracker'] == 'y') {
+if (! isset($trackerId) && $prefs['groupTracker'] == 'y') {
 	if (isset($_REQUEST['view']) and $_REQUEST['view'] == ' group') {
 		$gtid = $userlib->get_grouptrackerid($group);
 		if (isset($gtid['groupTrackerId'])) {
 			$trackerId = $gtid['groupTrackerId'];
 			$itemId = $trklib->get_item_id($trackerId, $gtid['groupFieldId'], $group);
-			if ($itemId == NULL) {
-				$addit = array('data' => array(
+			if ($itemId == null) {
+				$addit = ['data' => [
 					'fieldId' => $gtid['groupFieldId'],
 					'type' => 'g',
 					'value' => $group,
-				));
+				]];
 				$itemId = $trklib->replace_item($trackerId, 0, $addit, 'o');
 			}
 			$special = 'group';
@@ -117,14 +117,14 @@ if (!isset($trackerId) && $prefs['groupTracker'] == 'y') {
 }
 $smarty->assign_by_ref('special', $special);
 //url to a user user tracker tiki-view_tracker_item.php?user=yyyyy&view=+user or tiki-view_tracker_item.php?greoup=yyy&user=yyyyy&view=+user or tiki-view_tracker_item.php?trackerId=xxx&user=yyyyy&view=+user
-if ($prefs['userTracker'] == 'y' && isset($_REQUEST['view']) && $_REQUEST['view'] = ' user' && !empty($_REQUEST['user'])) {
+if ($prefs['userTracker'] == 'y' && isset($_REQUEST['view']) && $_REQUEST['view'] = ' user' && ! empty($_REQUEST['user'])) {
 	if (empty($trackerId)) {
 		if (empty($_REQUEST['group'])) {
 			$_REQUEST['group'] = $userlib->get_user_default_group($_REQUEST['user']);
 		}
-		if (!empty($_REQUEST['group'])) {
+		if (! empty($_REQUEST['group'])) {
 			$utid = $userlib->get_usertrackerid($_REQUEST['group']);
-			if (!empty($utid['usersTrackerId']) && !empty($utid['usersFieldId'])) {
+			if (! empty($utid['usersTrackerId']) && ! empty($utid['usersFieldId'])) {
 				$trackerId = $utid['usersTrackerId'];
 				$fieldId = $utid['usersFieldId'];
 			}
@@ -142,9 +142,7 @@ if ($prefs['userTracker'] == 'y' && isset($_REQUEST['view']) && $_REQUEST['view'
 			if (! $itemId) {
 				$smarty->assign(
 					'msg',
-					tra("You don't have a personal tracker item yet. Click here to make one:") .
-						'<br /><a href="tiki-view_tracker.php?trackerId=' . $trackerId. '&cookietab=2">' .
-					tra('Create tracker item') . '</a>'
+					tra("You don't have a personal tracker item yet. Click here to make one:") . '<br /><a href="tiki-view_tracker.php?trackerId=' . $trackerId . '&cookietab=2">' . tra('Create tracker item') . '</a>'
 				);
 				$smarty->display("error.tpl");
 				die;
@@ -152,7 +150,7 @@ if ($prefs['userTracker'] == 'y' && isset($_REQUEST['view']) && $_REQUEST['view'
 		}
 	}
 }
-if ((!isset($trackerId) || ! $trackerId) && isset($itemId)) {
+if ((! isset($trackerId) || ! $trackerId) && isset($itemId)) {
 	$item_info = $trklib->get_tracker_item($itemId);
 	$trackerId = $item_info['trackerId'];
 }
@@ -161,7 +159,7 @@ if (! isset($trackerId) || ! $trackerId) {
 	$smarty->display("error.tpl");
 	die;
 }
-if (!isset($utid) and !isset($gtid) and (!isset($itemId) or ! $itemId) and !isset($_REQUEST["offset"])) {
+if (! isset($utid) and ! isset($gtid) and (! isset($itemId) or ! $itemId) and ! isset($_REQUEST["offset"])) {
 	$smarty->assign('msg', tra("No item indicated"));
 	$smarty->display("error.tpl");
 	die;
@@ -170,13 +168,14 @@ if (!isset($utid) and !isset($gtid) and (!isset($itemId) or ! $itemId) and !isse
 if (isset($itemId)) {
 	$item_info = $trklib->get_tracker_item($itemId);
 
-	TikiLib::events()->trigger('tiki.trackeritem.view',
-		array(
+	TikiLib::events()->trigger(
+		'tiki.trackeritem.view',
+		[
 			'type' => 'trackeritem',
 			'object' => $itemId,
 			'owner' => $item_info['createdBy'],
 			'user' => $GLOBALS['user'],
-		)
+		]
 	);
 }
 
@@ -194,13 +193,13 @@ if ($prefs['feature_groupalert'] == 'y') {
 	$smarty->assign_by_ref('groupforalert', $groupforalert);
 	$smarty->assign_by_ref('showeachuser', $showeachuser);
 }
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
@@ -213,14 +212,14 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 // ************* previous/next **************
-foreach (array(
+foreach ([
 	'status',
 	'filterfield',
 	'filtervalue',
 	'initial',
 	'exactvalue',
 	'reloff'
-) as $reqfld) {
+] as $reqfld) {
 	$trynam = 'try' . $reqfld;
 	if (isset($_REQUEST[$reqfld])) {
 		$$trynam = $_REQUEST[$reqfld];
@@ -243,26 +242,26 @@ if (isset($_REQUEST['reloff'])) {
 	if (isset($_REQUEST['move'])) {
 		switch ($_REQUEST['move']) {
 			case 'prev':
-				$tryreloff+= - 1;
-    			break;
+				$tryreloff += - 1;
+				break;
 
 			case 'next':
-				$tryreloff+= 1;
-    			break;
+				$tryreloff += 1;
+				break;
 
 			default:
 				$tryreloff = (int)$_REQUEST['move'];
 		}
 	}
 	$cant = 0;
-	$listfields = array();
+	$listfields = [];
 	if (substr($sort_mode, 0, 2) == 'f_') { //look at the field in case the field needs some processing to find the sort
 		list($a, $i, $o) = explode('_', $sort_mode);
 		foreach ($fieldDefinitions as $f) {
 			if ($f['fieldId'] == $i) {
-				$listfields = array(
+				$listfields = [
 					$i => $f
-				);
+				];
 				break;
 			}
 		}
@@ -287,7 +286,7 @@ if (isset($_REQUEST['reloff'])) {
 }
 //*********** that's all for prev/next *****************
 $smarty->assign('itemId', $itemId);
-if (!isset($item_info)) {
+if (! isset($item_info)) {
 	$item_info = $trklib->get_tracker_item($itemId);
 	if (empty($item_info)) {
 		$smarty->assign('msg', tra("No item indicated"));
@@ -297,20 +296,20 @@ if (!isset($item_info)) {
 }
 $item_info['logs'] = ['cant' => $trklib->item_has_history($item_info['itemId'])];	// only used to show history links, no need to load everything
 $smarty->assign_by_ref('item_info', $item_info);
-$smarty->assign('item', array('itemId' => $itemId, 'trackerId' => $trackerId));
+$smarty->assign('item', ['itemId' => $itemId, 'trackerId' => $trackerId]);
 $cat_objid = $itemId;
 $cat_type = 'trackeritem';
 
 $tracker_info = $definition->getInformation();
 $itemObject = Tracker_Item::fromInfo($item_info);
 
-if (!isset($tracker_info["writerCanModify"]) or (isset($utid) and ($trackerId != $utid['usersTrackerId']))) {
+if (! isset($tracker_info["writerCanModify"]) or (isset($utid) and ($trackerId != $utid['usersTrackerId']))) {
 	$tracker_info["writerCanModify"] = 'n';
 }
-if (!isset($tracker_info["userCanSeeOwn"]) or (isset($utid) and ($trackerId != $utid['usersTrackerId']))) {
+if (! isset($tracker_info["userCanSeeOwn"]) or (isset($utid) and ($trackerId != $utid['usersTrackerId']))) {
 	$tracker_info["userCanSeeOwn"] = 'n';
 }
-if (!isset($tracker_info["writerGroupCanModify"]) or (isset($gtid) and ($trackerId != $gtid['groupTrackerId']))) {
+if (! isset($tracker_info["writerGroupCanModify"]) or (isset($gtid) and ($trackerId != $gtid['groupTrackerId']))) {
 	$tracker_info["writerGroupCanModify"] = 'n';
 }
 $tikilib->get_perm_object($trackerId, 'tracker', $tracker_info);
@@ -336,7 +335,7 @@ if (! empty($_REQUEST['moveto'])) {
 	if ($tiki_p_admin_trackers == 'y' && $perms->create_tracker_items) {
 		// Move item to another tracker. This assumes certain similarities between the 2 trackers.
 		$trklib->move_item($trackerId, $itemId, $_REQUEST['moveto']);
-		header('Location: '.filter_out_sefurl('tiki-view_tracker_item.php?itemId=' . $itemId));
+		header('Location: ' . filter_out_sefurl('tiki-view_tracker_item.php?itemId=' . $itemId));
 		exit;
 	} else {
 		$smarty->assign('errortype', 403);
@@ -356,8 +355,8 @@ if (isset($_REQUEST["removeattach"])) {
 
 $status_types = $trklib->status_types();
 $smarty->assign('status_types', $status_types);
-$fields = array();
-$ins_fields = array();
+$fields = [];
+$ins_fields = [];
 $usecategs = false;
 $cookietab = 1;
 $itemUsers = $trklib->get_item_creators($trackerId, $itemId);
@@ -365,7 +364,7 @@ $smarty->assign_by_ref('itemUsers', $itemUsers);
 $plugins_loaded = false;
 
 if (empty($tracker_info)) {
-	$item_info = array();
+	$item_info = [];
 }
 $fieldFactory = $definition->getFieldFactory();
 
@@ -373,12 +372,12 @@ $rateFieldId = $definition->getRateField();
 if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' and $tiki_p_tracker_vote_ratings == 'y') {
 	if ($user and $tiki_p_tracker_vote_ratings == 'y' and isset($rateFieldId) and isset($_REQUEST['ins_' . $rateFieldId])) {
 		$trklib->replace_rating($trackerId, $itemId, $rateFieldId, $user, $_REQUEST['ins_' . $rateFieldId]);
-		header('Location: tiki-view_tracker_item.php?trackerId=' . $trackerId. '&itemId=' . $itemId);
+		header('Location: tiki-view_tracker_item.php?trackerId=' . $trackerId . '&itemId=' . $itemId);
 		die;
 	}
 }
 
-// Why do we need to define these array elements? Can users not just consult fieldId? Chealer 2017-05-23 
+// Why do we need to define these array elements? Can users not just consult fieldId? Chealer 2017-05-23
 foreach ($fieldDefinitions as &$fieldDefinition) {
 	$fid = $fieldDefinition["fieldId"];
 
@@ -392,22 +391,22 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["save_return"])) {
 		$fid = $current_field["fieldId"];
 		$fieldIsVisible = $itemObject->canViewField($fid);
 		$fieldIsEditable = $itemObject->canModifyField($fid);
-	
+
 		$current_field_ins = null;
 		if ($fieldIsVisible || $fieldIsEditable) {
 			$current_field_ins = $current_field;
-	
+
 			$handler = $fieldFactory->getHandler($current_field, $item_info);
-	
+
 			if ($handler) {
 				$insert_values = $handler->getFieldData($_REQUEST);
-	
+
 				if ($insert_values) {
 					$current_field_ins = array_merge($current_field_ins, $insert_values);
 				}
 			}
 		}
-	
+
 		if (! empty($current_field_ins)) {
 			if ($fieldIsEditable) {
 				$ins_fields['data'][$i] = $current_field_ins;
@@ -420,17 +419,17 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["save_return"])) {
 
 	if ($itemObject->canModify()) {
 		$captchalib = TikiLib::lib('captcha');
-		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
+		if (empty($user) && $prefs['feature_antibot'] == 'y' && ! $captchalib->validate()) {
 			$smarty->assign('msg', $captchalib->getErrors());
 			$smarty->assign('errortype', 'no_redirect_login');
 			$smarty->display("error.tpl");
 			die;
 		}
 		// Check field values for each type and presence of mandatory ones
-		$mandatory_missing = array();
-		$err_fields = array();
+		$mandatory_missing = [];
+		$err_fields = [];
 		$categorized_fields = $definition->getCategorizedFields();
-		$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields, $trackerId, empty($itemId)?'':$itemId);
+		$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields, $trackerId, empty($itemId) ? '' : $itemId);
 		$smarty->assign('err_mandatory', $field_errors['err_mandatory']);
 		$smarty->assign('err_value', $field_errors['err_value']);
 		// values are OK, then lets save the item
@@ -440,7 +439,7 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["save_return"])) {
 				$groupalertlib->Notify(isset($_REQUEST['listtoalert']) ? $_REQUEST['listtoalert'] : '', "tiki-view_tracker_item.php?itemId=" . $itemId);
 			}
 			check_ticket('view-trackers-items');
-			if (!isset($_REQUEST["edstatus"]) or ($tracker_info["showStatus"] != 'y' and $tiki_p_admin_trackers != 'y')) {
+			if (! isset($_REQUEST["edstatus"]) or ($tracker_info["showStatus"] != 'y' and $tiki_p_admin_trackers != 'y')) {
 				$_REQUEST["edstatus"] = $tracker_info["modItemStatus"];
 			}
 			$trklib->replace_item($trackerId, $itemId, $ins_fields, $_REQUEST["edstatus"]);
@@ -448,14 +447,14 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["save_return"])) {
 				$trklib->replace_rating($trackerId, $itemId, $rateFieldId, $user, $_REQUEST["ins_$rateFieldId"]);
 			}
 			$_REQUEST['show'] = 'view';
-			
+
 			// What is this loop for? The value is overriden later for editable fields. Chealer 2017-05-25
 			foreach ($fields["data"] as $i => $array) {
 				if (isset($fields["data"][$i])) {
 					$ins_fields["data"][$i]["value"] = '';
 				}
 			}
-			
+
 			$item_info = $trklib->get_tracker_item($itemId);
 			$item_info['logs'] = $trklib->get_item_history($item_info, 0, '', 0, 1);
 			$smarty->assign('item_info', $item_info);
@@ -484,30 +483,30 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["save_return"])) {
 }
 // remove image from an image field
 if (isset($_REQUEST["removeImage"])) {
-	$img_field = array(
-		'data' => array()
-	);
-	$img_field['data'][] = array(
+	$img_field = [
+		'data' => []
+	];
+	$img_field['data'][] = [
 		'fieldId' => $_REQUEST["fieldId"],
 		'type' => 'i',
 		'name' => $_REQUEST["fieldName"],
 		'value' => 'blank'
-	);
+	];
 	$trklib->replace_item($trackerId, $itemId, $img_field);
 	$_REQUEST['show'] = "mod";
 }
 // ************* return to list ***************************
 if (isset($_REQUEST["returntracker"]) || isset($_REQUEST["save_return"])) {
-	require_once ('lib/smarty_tiki/block.self_link.php');
+	require_once('lib/smarty_tiki/block.self_link.php');
 	header(
 		'Location: ' . smarty_block_self_link(
-			array(
+			[
 				'_script' => 'tiki-view_tracker.php',
 				'_tag' => 'n',
 				'_urlencode' => 'n',
 				'itemId' => 'NULL',
 				'trackerId' => $trackerId
-			),
+			],
 			'',
 			$smarty
 		)
@@ -517,7 +516,7 @@ if (isset($_REQUEST["returntracker"]) || isset($_REQUEST["save_return"])) {
 // ********************************************************
 $info = $trklib->get_tracker_item($itemId);
 $itemObject = Tracker_Item::fromInfo($info);
-if (!isset($info['trackerId'])) {
+if (! isset($info['trackerId'])) {
 	$info['trackerId'] = $trackerId;
 }
 if (! $itemObject->canView()) {
@@ -548,7 +547,6 @@ foreach ($fieldDefinitions as $i => $current_field) {
 				$current_field_ins = array_merge($current_field_ins, $insert_values);
 			}
 		}
-
 	}
 
 	if (! empty($current_field_ins)) {
@@ -611,12 +609,12 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 		$smarty->assign('category_watched', 'n');
 		if (count($watching_categories_temp) > 0) {
 			$smarty->assign('category_watched', 'y');
-			$watching_categories = array();
+			$watching_categories = [];
 			foreach ($watching_categories_temp as $wct) {
-				$watching_categories[] = array(
+				$watching_categories[] = [
 					"categId" => $wct,
 					"name" => $categlib->get_category_name($wct)
-				);
+				];
 			}
 			$smarty->assign('watching_categories', $watching_categories);
 		}
@@ -651,18 +649,18 @@ if ($tracker_info["useAttachments"] == 'y') {
 			if ($prefs['t_use_db'] == 'n') {
 				$fhash = md5($_FILES['userfile1']['name'] . $tikilib->now);
 				$fw = fopen($prefs['t_use_dir'] . $fhash, "wb");
-				if (!$fw) {
+				if (! $fw) {
 					$smarty->assign('msg', tra('Cannot write to this file:') . $fhash);
 					$smarty->display("error.tpl");
 					die;
 				}
 			}
-			while (!feof($fp)) {
+			while (! feof($fp)) {
 				if ($prefs['t_use_db'] == 'n') {
 					$data = fread($fp, 8192 * 16);
 					fwrite($fw, $data);
 				} else {
-					$data.= fread($fp, 8192 * 16);
+					$data .= fread($fp, 8192 * 16);
 				}
 			}
 			fclose($fp);
@@ -706,11 +704,17 @@ if (isset($_REQUEST['show'])) {
 		$cookietab = 2;
 	} elseif ($_REQUEST['show'] == "mod") {
 		$cookietab = 2;
-		if ($tracker_info["useAttachments"] == 'y') $cookietab++;
-		if ($tracker_info["useComments"] == 'y' && $tiki_p_tracker_view_comments == 'y') $cookietab++;
+		if ($tracker_info["useAttachments"] == 'y') {
+			$cookietab++;
+		}
+		if ($tracker_info["useComments"] == 'y' && $tiki_p_tracker_view_comments == 'y') {
+			$cookietab++;
+		}
 	} elseif ($_REQUEST['show'] == "att") {
 		$cookietab = 2;
-		if ($tracker_info["useComments"] == 'y' && $tiki_p_tracker_view_comments == 'y') $cookietab = 3;
+		if ($tracker_info["useComments"] == 'y' && $tiki_p_tracker_view_comments == 'y') {
+			$cookietab = 3;
+		}
 	}
 }
 if (isset($_REQUEST['from'])) {
@@ -719,8 +723,10 @@ if (isset($_REQUEST['from'])) {
 	$from = false;
 }
 $smarty->assign('from', $from);
-if (isset($_REQUEST['status'])) $smarty->assign_by_ref('status', $_REQUEST['status']);
-include_once ('tiki-section_options.php');
+if (isset($_REQUEST['status'])) {
+	$smarty->assign_by_ref('status', $_REQUEST['status']);
+}
+include_once('tiki-section_options.php');
 
 ask_ticket('view-trackers-items');
 if ($prefs['feature_actionlog'] == 'y') {
@@ -750,12 +756,12 @@ $smarty->assign('canRemove', $itemObject->canRemove());
 // Note: Override is only allowed if a default template was set already in the tracker.
 
 // View
-$viewItemPretty = array(
+$viewItemPretty = [
 		'override' => false,
 		'value' => $tracker_info['viewItemPretty'],
 		'type' => 'wiki'
-);
-if (!empty($tracker_info['viewItemPretty'])) {
+];
+if (! empty($tracker_info['viewItemPretty'])) {
 	if (isset($_REQUEST['vi_tpl'])) {
 		$viewItemPretty['override'] = true;
 		$viewItemPretty['value'] = $_REQUEST['vi_tpl'];
@@ -767,13 +773,13 @@ if (!empty($tracker_info['viewItemPretty'])) {
 }
 $smarty->assign('viewItemPretty', $viewItemPretty);
 
-// Edit 
-$editItemPretty = array(
+// Edit
+$editItemPretty = [
 	'override' => false,
 	'value' => $tracker_info['editItemPretty'],
 	'type' => 'wiki'
-); 
-if (!empty($tracker_info['editItemPretty'])) {
+];
+if (! empty($tracker_info['editItemPretty'])) {
 	if (isset($_REQUEST['ei_tpl'])) {
 		$editItemPretty['override'] = true;
 		$editItemPretty['value'] = $_REQUEST['ei_tpl'];
@@ -786,8 +792,8 @@ $smarty->assign('editItemPretty', $editItemPretty);
 
 // add referer url to setup the back button in tpl
 // check wether we have been called from a different page than ourselfs to save a link to the referer for a back buttom.
-// this can be a wikipage with the trackerlist item and and view item temlate set using vi_tpl=wiki:mytemplate  
-// if we do anything on the current page (i.e. adding a comment) we need to keep that saved link. 
+// this can be a wikipage with the trackerlist item and and view item temlate set using vi_tpl=wiki:mytemplate
+// if we do anything on the current page (i.e. adding a comment) we need to keep that saved link.
 $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
 $temp = strtolower($referer);
 if (strpos($temp, 'vi_tpl=') || strpos($temp, 'ei_tpl=')) {
@@ -805,30 +811,29 @@ try {
 	if (isset($_REQUEST['print'])) {
 		$smarty->assign('print_page', 'y');
 		$smarty->display('tiki-print.tpl');
-	}
-	else if (isset($_REQUEST['pdf'])) {
+	} elseif (isset($_REQUEST['pdf'])) {
 		$smarty->assign('print_page', 'y');
-		$trackerData=$smarty->fetch('tiki-print.tpl');
+		$trackerData = $smarty->fetch('tiki-print.tpl');
 		//getting comments associated with tracker item
 		$broker = TikiLib::lib('service')->getBroker($addonpackage);
-		$comments=$broker->internalRender("comment", "list", $jitRequest = new JitFilter(array("controller"=>"comment","action"=>"list","type"=>"trackeritem","objectId"=>$itemId)));
+		$comments = $broker->internalRender("comment", "list", $jitRequest = new JitFilter(["controller" => "comment","action" => "list","type" => "trackeritem","objectId" => $itemId]));
 		require_once 'lib/pdflib.php';
 		$generator = new PdfGenerator();
-		if (!empty($generator->error)) {
-		Feedback::error($generator->error, 'session');
-		$access->redirect($page);
-	} else {
-		$pdf = $generator->getPdf('tiki-print.php', array('page' => $tracker_info['name']),str_ireplace("<h3>Attachments</h3>","<h3>Comments</h3>".$comments."<br /><h3>Attachments</h3>",$trackerData));
-		$length = strlen($pdf);
-		header('Cache-Control: private, must-revalidate');
-		header('Pragma: private');
-		header("Content-Description: File Transfer");
-		header('Content-disposition: attachment; filename="'. TikiLib::lib('tiki')->remove_non_word_characters_and_accents($trklib->get_isMain_value($trackerId, $itemId)) . '.pdf"');
-		header("Content-Type: application/pdf");
-		header("Content-Transfer-Encoding: binary");
-		header('Content-Length: '. $length);
-		echo $pdf; 
-	}	
+		if (! empty($generator->error)) {
+			Feedback::error($generator->error, 'session');
+			$access->redirect($page);
+		} else {
+			$pdf = $generator->getPdf('tiki-print.php', ['page' => $tracker_info['name']], str_ireplace("<h3>Attachments</h3>", "<h3>Comments</h3>" . $comments . "<br /><h3>Attachments</h3>", $trackerData));
+			$length = strlen($pdf);
+			header('Cache-Control: private, must-revalidate');
+			header('Pragma: private');
+			header("Content-Description: File Transfer");
+			header('Content-disposition: attachment; filename="' . TikiLib::lib('tiki')->remove_non_word_characters_and_accents($trklib->get_isMain_value($trackerId, $itemId)) . '.pdf"');
+			header("Content-Type: application/pdf");
+			header("Content-Transfer-Encoding: binary");
+			header('Content-Length: ' . $length);
+			echo $pdf;
+		}
 		 //end of pdf
 	} else {
 		$smarty->display('tiki.tpl');

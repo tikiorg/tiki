@@ -3,24 +3,24 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 $access->check_feature('feature_banners');
 
 $bannerlib = TikiLib::lib('banner');
 
-if (!isset($_REQUEST["bannerId"])) {
+if (! isset($_REQUEST["bannerId"])) {
 	$smarty->assign('msg', tra("No banner indicated"));
 	$smarty->display("error.tpl");
 	die;
 }
 $info = $bannerlib->get_banner($_REQUEST["bannerId"]);
-if (!$info) {
+if (! $info) {
 	$smarty->assign('msg', tra("Banner not found"));
 	$smarty->display("error.tpl");
 	die;
@@ -88,8 +88,8 @@ $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1 = str_replace("tiki-view_banner", "display_banner", $foo["path"]);
 $raw = '';
 if ($fp = @fopen($tikilib->httpPrefix() . $foo1 . "?id=$bannerId", "r")) {
-	while (!feof($fp)) {
-		$raw.= fread($fp, 8192);
+	while (! feof($fp)) {
+		$raw .= fread($fp, 8192);
 	}
 	fclose($fp);
 }

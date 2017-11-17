@@ -3,19 +3,19 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'galleries';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $categlib = TikiLib::lib('categ');
 $imagegallib = TikiLib::lib('imagegal');
 
 $access->check_feature('feature_galleries');
 
-if ($tiki_p_upload_images != 'y' and !$tikilib->user_has_perm_on_object($user, $_REQUEST["galleryId"], "image gallery", "tiki_p_upload_images")) {
+if ($tiki_p_upload_images != 'y' and ! $tikilib->user_has_perm_on_object($user, $_REQUEST["galleryId"], "image gallery", "tiki_p_upload_images")) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to upload images"));
 	$smarty->display("error.tpl");
@@ -42,23 +42,27 @@ if (isset($_REQUEST["upload"])) {
 	$access->check_permission('tiki_p_upload_images');
 
 	$gal_info = $imagegallib->get_gallery($_REQUEST["galleryId"]);
-	if ($gal_info["thumbSizeX"] == 0) $gal_info["thumbSizeX"] = 80;
-	if ($gal_info["thumbSizeY"] == 0) $gal_info["thumbSizeY"] = 80;
+	if ($gal_info["thumbSizeX"] == 0) {
+		$gal_info["thumbSizeX"] = 80;
+	}
+	if ($gal_info["thumbSizeY"] == 0) {
+		$gal_info["thumbSizeY"] = 80;
+	}
 	// Check the user to be admin or owner or the gallery is public
-	if ($tiki_p_admin_galleries != 'y' && (!$user || $user != $gal_info["user"]) && $gal_info["public"] != 'y') {
+	if ($tiki_p_admin_galleries != 'y' && (! $user || $user != $gal_info["user"]) && $gal_info["public"] != 'y') {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("You have permission to upload images but not to this gallery"));
 		$smarty->display("error.tpl");
 		die;
 	}
 	$error_msg = '';
-	if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
+	if (empty($user) && $prefs['feature_antibot'] == 'y' && ! $captchalib->validate()) {
 		$error_msg = $captchalib->getErrors();
 		$smarty->assign('errortype', 'no_redirect_login');
 	}
-	if (!empty($_REQUEST["url"])) {
+	if (! empty($_REQUEST["url"])) {
 		// check URL. avoid uploading local files!
-		if (!preg_match('#http[s]?://#i', $_REQUEST["url"])) {
+		if (! preg_match('#http[s]?://#i', $_REQUEST["url"])) {
 			$_REQUEST["url"] = 'http://' . $_REQUEST["url"];
 		}
 		$data = $tikilib->httprequest($_REQUEST["url"]);
@@ -82,17 +86,17 @@ if (isset($_REQUEST["upload"])) {
 		}
 	} else {
 		// We process here file uploads
-		if (isset($_FILES['userfile1']) && !empty($_FILES['userfile1']['name'])) {
+		if (isset($_FILES['userfile1']) && ! empty($_FILES['userfile1']['name'])) {
 			if (is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-				if (!empty($prefs['gal_match_regex'])) {
-					if (!preg_match('/' . $prefs['gal_match_regex'] . '/', $_FILES['userfile1']['name'], $reqs)) {
+				if (! empty($prefs['gal_match_regex'])) {
+					if (! preg_match('/' . $prefs['gal_match_regex'] . '/', $_FILES['userfile1']['name'], $reqs)) {
 						$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
 						$smarty->assign('errortype', 'no_redirect_login');
 						$smarty->display("error.tpl");
 						die;
 					}
 				}
-				if (!empty($prefs['gal_nmatch_regex'])) {
+				if (! empty($prefs['gal_nmatch_regex'])) {
 					if (preg_match('/' . $prefs['gal_nmatch_regex'] . '/', $_FILES['userfile1']['name'], $reqs)) {
 						$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
 						$smarty->assign('errortype', 'no_redirect_login');
@@ -123,9 +127,9 @@ if (isset($_REQUEST["upload"])) {
 				$file_name = $_FILES['userfile1']['name'];
 				$file_tmp_name = $_FILES['userfile1']['tmp_name'];
 				$tmp_dest = $prefs['tmpDir'] . '/' . $file_name . '.tmp'; // add .tmp to not overwrite existing files (like index.php)
-				if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
+				if (! move_uploaded_file($file_tmp_name, $tmp_dest)) {
 					if ($tiki_p_admin == 'y') {
-						$smarty->assign('msg', tra('Errors detected').'. '.tra('Check that these paths exist and are writable by the web server').': '.$file_tmp_name.' '.$tmp_dest);
+						$smarty->assign('msg', tra('Errors detected') . '. ' . tra('Check that these paths exist and are writable by the web server') . ': ' . $file_tmp_name . ' ' . $tmp_dest);
 					} else {
 						$smarty->assign('msg', tra('Errors detected'));
 					}
@@ -138,13 +142,13 @@ if (isset($_REQUEST["upload"])) {
 				fclose($fp);
 				$imginfo = @getimagesize($tmp_dest);
 				unlink($tmp_dest);
-				if (!$data || !$imginfo) { // Not in Image format
+				if (! $data || ! $imginfo) { // Not in Image format
 					$error_msg = tra('The uploaded file is not recognized as a image');
 					$smarty->assign('errortype', 'no_redirect_login');
 				}
 			} else {
 				$error_msg = $tikilib->uploaded_file_error($_FILES['userfile1']['error']);
-				if (!empty($error_msg)) {
+				if (! empty($error_msg)) {
 					$smarty->assign('errortype', 'no_redirect_login');
 				}
 			}
@@ -152,7 +156,7 @@ if (isset($_REQUEST["upload"])) {
 	}
 	$up_thumb = 0;
 	// If the thumbnail was uploaded
-	if (isset($_FILES['userfile2']) && !empty($_FILES['userfile2']['name'])) {
+	if (isset($_FILES['userfile2']) && ! empty($_FILES['userfile2']['name'])) {
 		$thumb_data = $imagegallib->get_one_image_from_disk('userfile2');
 		if (isset($thumb_data['msg'])) {
 			$error_msg = $thumb_data['msg'];
@@ -165,23 +169,26 @@ if (isset($_REQUEST["upload"])) {
 		$smarty->display("error.tpl");
 		die;
 	}
-	if (isset($_REQUEST["name"]) && !empty($_REQUEST["name"])) {
+	if (isset($_REQUEST["name"]) && ! empty($_REQUEST["name"])) {
 		$name = $_REQUEST["name"];
 	} elseif (isset($filename)) {
 		$name = $filename;
 	} else {
 		$name = "";
 	}
-	$lat = NULL;
-	$lon = NULL;
+	$lat = null;
+	$lon = null;
 	if (isset($data)) {
-		if (!$up_thumb) {
-			if (function_exists("ImageCreateFromString") && (!strstr($type, "gif"))) {
+		if (! $up_thumb) {
+			if (function_exists("ImageCreateFromString") && (! strstr($type, "gif"))) {
 				if ($img = @imagecreatefromstring($data)) {
 					$size_x = imagesx($img);
 					$size_y = imagesy($img);
-					if ($size_x > $size_y) $tscale = ((int)$size_x / $gal_info["thumbSizeX"]);
-					else $tscale = ((int)$size_y / $gal_info["thumbSizeY"]);
+					if ($size_x > $size_y) {
+						$tscale = ((int)$size_x / $gal_info["thumbSizeX"]);
+					} else {
+						$tscale = ((int)$size_y / $gal_info["thumbSizeY"]);
+					}
 					$tw = ((int)($size_x / $tscale));
 					$ty = ((int)($size_y / $tscale));
 					if (chkgd2()) {
@@ -214,7 +221,7 @@ if (isset($_REQUEST["upload"])) {
 				$imageId = $imagegallib->insert_image($_REQUEST["galleryId"], $name, $_REQUEST["description"], $filename, $type, $data, $size, $imginfo[0], $imginfo[1], $user, '', '', $lat, $lon, $gal_info);
 			}
 		} else {
-			if (function_exists("ImageCreateFromString") && (!strstr($type, "gif"))) {
+			if (function_exists("ImageCreateFromString") && (! strstr($type, "gif"))) {
 				if ($img = @imagecreatefromstring($data)) {
 					$size_x = imagesx($img);
 					$size_y = imagesy($img);
@@ -230,7 +237,7 @@ if (isset($_REQUEST["upload"])) {
 			}
 			$imageId = $imagegallib->insert_image($_REQUEST["galleryId"], $name, $_REQUEST["description"], $filename, $type, $data, $size, $size_x, $size_y, $user, $thumb_data, $thumb_data['filetype'], $lat, $lon, $gal_info);
 		}
-		if (!$imageId) {
+		if (! $imageId) {
 			$smarty->assign('msg', tra('Upload failed'));
 			$smarty->display("error.tpl");
 			die;
@@ -246,16 +253,18 @@ if (isset($_REQUEST["upload"])) {
 		$cat_desc = substr($_REQUEST["description"], 0, 200);
 		$cat_name = $name;
 		$cat_href = $foo1 . "?imageId=" . $cat_objid;
-		include_once ("categorize.php");
+		include_once("categorize.php");
 	}
 }
-$batchRes = array();
+$batchRes = [];
 for ($i = 3; $i <= 8; $i++) {
-	if (isset($_FILES["userfile$i"]) && !empty($_FILES["userfile$i"]['name'])) {
+	if (isset($_FILES["userfile$i"]) && ! empty($_FILES["userfile$i"]['name'])) {
 		$batchRes[] = $imagegallib->get_one_image_from_disk("userfile$i", $_REQUEST['galleryId'], isset($_REQUEST['name']) ? $_REQUEST['name'] : '', $_REQUEST['description'], $gal_info);
 	}
 }
-if (count($batchRes)) $smarty->assign_by_ref('batchRes', $batchRes);
+if (count($batchRes)) {
+	$smarty->assign_by_ref('batchRes', $batchRes);
+}
 // Get the list of galleries to display the select box in the template
 if (isset($_REQUEST["galleryId"])) {
 	$smarty->assign_by_ref('galleryId', $_REQUEST["galleryId"]);
@@ -298,9 +307,9 @@ for ($i = 0; $i < $temp_max; $i++) {
 $smarty->assign_by_ref('galleries', $galleries["data"]);
 $cat_type = 'image';
 $cat_objid = '0';
-include_once ("categorize_list.php");
-include ('lib/filegals/max_upload_size.php');
-include_once ('tiki-section_options.php');
+include_once("categorize_list.php");
+include('lib/filegals/max_upload_size.php');
+include_once('tiki-section_options.php');
 ask_ticket('upload-image');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

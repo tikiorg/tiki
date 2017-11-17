@@ -6,11 +6,11 @@
 // $Id$
 
 $section = 'blogs';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $bloglib = TikiLib::lib('blog');
 $access->check_feature('feature_blogs');
 
-if (!isset($_REQUEST["postId"])) {
+if (! isset($_REQUEST["postId"])) {
 	$smarty->assign('msg', tra("No post indicated"));
 	$smarty->display("error.tpl");
 	die;
@@ -26,13 +26,13 @@ $access->check_permission('tiki_p_read_blog', '', 'blog', $blogId);
 
 $blog_data = $bloglib->get_blog($blogId);
 
-if (!$blog_data) {
+if (! $blog_data) {
 	$smarty->assign('msg', tra("Blog not found"));
 	$smarty->display("error.tpl");
 	die;
 }
 
-$parsed_data = TikiLib::lib('parser')->parse_data($post_info["data"], array('is_html' => true));
+$parsed_data = TikiLib::lib('parser')->parse_data($post_info["data"], ['is_html' => true]);
 $parsed_data = preg_replace('/\.\.\.page\.\.\./', '<hr />', $parsed_data);
 
 $smarty->assign('blog_data', $blog_data);

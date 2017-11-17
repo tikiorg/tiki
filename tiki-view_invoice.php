@@ -40,7 +40,7 @@ $smarty->assign("amount", $amount);
 $smarty->assign(
 	"client",
 	Tracker_Query::tracker("Invoice Clients")
-	->fields(array("Client Id"))->equals(array($invoice['Client Id']))
+	->fields(["Client Id"])->equals([$invoice['Client Id']])
 	->byName()
 	->getOne()
 );
@@ -53,7 +53,7 @@ $smarty->assign(
 $smarty->assign(
 	"invoiceItems",
 	Tracker_Query::tracker("Invoice Items")
-	->fields(array("Invoice Id"))->equals(array($_REQUEST['InvoiceId']))
+	->fields(["Invoice Id"])->equals([$_REQUEST['InvoiceId']])
 	->byName()
 	->query()
 );

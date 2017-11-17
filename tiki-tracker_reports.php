@@ -11,7 +11,7 @@
 require_once('tiki-setup.php');
 
 if ($tiki_p_admin_trackers != 'y') {
-	$access->display_error('', tra('Permission denied').": ". 'tiki_p_admin_trackers', '403');
+	$access->display_error('', tra('Permission denied') . ": " . 'tiki_p_admin_trackers', '403');
 }
 
 $headerlib->add_jq_onready(

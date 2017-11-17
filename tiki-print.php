@@ -8,20 +8,20 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-$section_class="tiki_wiki_page print";
-require_once ('tiki-setup.php');
+$section_class = "tiki_wiki_page print";
+require_once('tiki-setup.php');
 $wikilib = TikiLib::lib('wiki');
 
-$auto_query_args = array('page');
+$auto_query_args = ['page'];
 
-$access->check_feature(array('feature_wiki', 'feature_wiki_print'));
+$access->check_feature(['feature_wiki', 'feature_wiki_print']);
 
 // Create the HomePage if it doesn't exist
-if (!$tikilib->page_exists($prefs['wikiHomePage'])) {
+if (! $tikilib->page_exists($prefs['wikiHomePage'])) {
 	$tikilib->create_page($prefs['wikiHomePage'], 0, '', $tikilib->now, 'Tiki initialization');
 }
 // Get the page from the request var or default it to HomePage
-if (!isset($_REQUEST["page"])) {
+if (! isset($_REQUEST["page"])) {
 	$page = $prefs['wikiHomePage'];
 	$smarty->assign('page', $prefs['wikiHomePage']);
 } else {
@@ -29,7 +29,7 @@ if (!isset($_REQUEST["page"])) {
 	$smarty->assign_by_ref('page', $_REQUEST["page"]);
 }
 // If the page doesn't exist then display an error
-if (!($info = $tikilib->get_page_info($page))) {
+if (! ($info = $tikilib->get_page_info($page))) {
 	$smarty->assign('msg', tra('Page cannot be found'));
 	$smarty->display('error.tpl');
 	die;
@@ -75,18 +75,18 @@ if ($prefs['feature_wiki_structure'] == 'y') {
 		$structure = 'y';
 		$structure_path = $structlib->get_structure_path($page_ref_id);
 		$smarty->assign('structure_path', $structure_path);
-		if (!empty($page_info['page_alias'])) {
+		if (! empty($page_info['page_alias'])) {
 			$crumbpage = $page_info['page_alias'];
 		} else {
 			$crumbpage = $page;
 		}
 	}
 }
-$pdata = TikiLib::lib('parser')->parse_data($info["data"], array('is_html' => $info["is_html"], 'print' => 'y', 'namespace' => $info["namespace"]));
+$pdata = TikiLib::lib('parser')->parse_data($info["data"], ['is_html' => $info["is_html"], 'print' => 'y', 'namespace' => $info["namespace"]]);
 
 //replacing bootstrap classes for print version.
 
-$pdata=str_replace(array('col-sm','col-md','col-lg'),'col-xs',$pdata);
+$pdata = str_replace(['col-sm','col-md','col-lg'], 'col-xs', $pdata);
 
 $smarty->assign_by_ref('parsed', $pdata);
 $smarty->assign_by_ref('lastModif', $info["lastModif"]);
@@ -95,7 +95,7 @@ if (empty($info["user"])) {
 }
 $smarty->assign_by_ref('lastVersion', $info["version"]);
 $smarty->assign_by_ref('lastUser', $info["user"]);
-$crumbs[] = new Breadcrumb(isset($crumbpage)?$crumbpage:$page, $info["description"], 'tiki-index.php?page=' . urlencode($page), '', '');
+$crumbs[] = new Breadcrumb(isset($crumbpage) ? $crumbpage : $page, $info["description"], 'tiki-index.php?page=' . urlencode($page), '', '');
 ask_ticket('print');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
@@ -110,19 +110,19 @@ $smarty->assign('display', isset($_REQUEST['display']) ? $_REQUEST['display'] : 
 if (isset($_REQUEST['display']) && $_REQUEST['display'] == 'pdf') {
 	require_once 'lib/pdflib.php';
 	$generator = new PdfGenerator();
-	if (!empty($generator->error)) {
+	if (! empty($generator->error)) {
 		Feedback::error($generator->error, 'session');
 		$access->redirect($page);
 	} else {
-		$pdf = $generator->getPdf('tiki-print.php', array('page' => $page),$pdata);
+		$pdf = $generator->getPdf('tiki-print.php', ['page' => $page], $pdata);
 		$length = strlen($pdf);
 		header('Cache-Control: private, must-revalidate');
 		header('Pragma: private');
 		header("Content-Description: File Transfer");
-		header('Content-disposition: attachment; filename="'. TikiLib::lib('tiki')->remove_non_word_characters_and_accents($page) . '.pdf"');
+		header('Content-disposition: attachment; filename="' . TikiLib::lib('tiki')->remove_non_word_characters_and_accents($page) . '.pdf"');
 		header("Content-Type: application/pdf");
 		header("Content-Transfer-Encoding: binary");
-		header('Content-Length: '. $length);
+		header('Content-Length: ' . $length);
 		echo $pdf;
 	}
 } else {

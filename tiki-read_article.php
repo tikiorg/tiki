@@ -9,10 +9,10 @@
 // $Id$
 
 $section = 'cms';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $artlib = TikiLib::lib('art');
 $access->check_feature('feature_articles');
-if (!isset($_REQUEST["articleId"])) {
+if (! isset($_REQUEST["articleId"])) {
 	$smarty->assign('msg', tra("No article indicated"));
 	$smarty->display("error.tpl");
 	die;
@@ -23,13 +23,15 @@ $parserlib = TikiLib::lib('parser');
 $article_data = $artlib->get_article($_REQUEST["articleId"]);
 $tikilib->get_perm_object($_REQUEST['articleId'], 'article');
 if ($article_data === false) {
-	if (!$user) $_SESSION['loginfrom'] = $_SERVER['REQUEST_URI'];
+	if (! $user) {
+		$_SESSION['loginfrom'] = $_SERVER['REQUEST_URI'];
+	}
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('Permission denied'));
 	$smarty->display('error.tpl');
 	die;
 }
-if (!$article_data) {
+if (! $article_data) {
 	$smarty->assign('msg', tra("Article not found"));
 	$smarty->display("error.tpl");
 	die;
@@ -46,7 +48,7 @@ if ($article_data['ispublished'] == 'n' && $tiki_p_edit_article != 'y') {
 	die;
 }
 
-if (isset($_REQUEST['switchlang']) && $_REQUEST['switchlang'] == 'y' && $prefs['feature_multilingual'] == 'y' && $prefs['feature_sync_language'] == 'y' && !empty($article_data["lang"]) && $prefs['language'] != $article_data["lang"]) {
+if (isset($_REQUEST['switchlang']) && $_REQUEST['switchlang'] == 'y' && $prefs['feature_multilingual'] == 'y' && $prefs['feature_sync_language'] == 'y' && ! empty($article_data["lang"]) && $prefs['language'] != $article_data["lang"]) {
 	header('Location: tiki-switch_lang.php?language=' . $article_data['lang']);
 	die;
 }
@@ -64,7 +66,7 @@ if ($prefs['feature_freetags'] == 'y') {
 	} elseif (isset($here['key']) and isset($_REQUEST[$here['key']])) {
 		$tags = $freetaglib->get_tags_on_object($_REQUEST[$here['key']], "article");
 	} else {
-		$tags = array();
+		$tags = [];
 	}
 	$smarty->assign('freetags', $tags);
 }
@@ -113,14 +115,16 @@ if ($article_data['image_x'] > 0) {
 } else {
 	require_once('lib/images/images.php');
 	$img = new Image($article_data['image_x'], false);
-	$smarty->assign('width', $img->get_width()+2);
+	$smarty->assign('width', $img->get_width() + 2);
 }
 $smarty->assign('heading', $article_data["heading"]);
-if ( $prefs['article_paginate'] == 'y' ) {
-	if (!isset($_REQUEST['page'])) $_REQUEST['page'] = 1;
+if ($prefs['article_paginate'] == 'y') {
+	if (! isset($_REQUEST['page'])) {
+		$_REQUEST['page'] = 1;
+	}
 	// Get ~pp~, ~np~ and <pre> out of the way. --rlpowell, 24 May 2004
-	$preparsed = array();
-	$noparsed = array();
+	$preparsed = [];
+	$noparsed = [];
 
 	$parserlib->plugins_remove($article_data["body"], $noparsed);
 	$parserlib->parse_first($article_data["body"], $preparsed, $noparsed);
@@ -146,7 +150,7 @@ if ( $prefs['article_paginate'] == 'y' ) {
 if ($prefs["article_custom_attributes"] == 'y') {
 	$t_article_attributes = $artlib->get_article_attributes($article_data["articleId"]);
 	$type_attributes = $artlib->get_article_type_attributes($article_data["type"], 'relationId ASC');
-	$article_attributes = array();
+	$article_attributes = [];
 	foreach ($type_attributes as $attname => $att) {
 		if (in_array($att["itemId"], array_keys($t_article_attributes))) {
 			$article_attributes[$attname] = $t_article_attributes[$att["itemId"]];
@@ -154,7 +158,7 @@ if ($prefs["article_custom_attributes"] == 'y') {
 	}
 	$smarty->assign('article_attributes', $article_attributes);
 } else {
-	$smarty->assign('article_attributes', array());
+	$smarty->assign('article_attributes', []);
 }
 $smarty->assign('body', $article_data["body"]);
 $smarty->assign('publishDate', $article_data["publishDate"]);
@@ -168,27 +172,27 @@ $heading = $article_data["heading"];
 // We need to figure out in which theme we are before the page parsing
 // in case the page contains pluginModule in which cas the parser triggers tiki-modules.php
 // which needs $tc_theme for deciding on the visible modules everywhere in the page
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'article';
 	$cat_objid = $_REQUEST["articleId"];
-	include ('tiki-tc.php');
+	include('tiki-tc.php');
 }
 
-$smarty->assign('parsed_body', $parserlib->parse_data($body, array('is_html' => $artlib->is_html($article_data))));
+$smarty->assign('parsed_body', $parserlib->parse_data($body, ['is_html' => $artlib->is_html($article_data)]));
 $smarty->assign(
 	'parsed_heading',
 	$parserlib->parse_data(
 		$heading,
-		array(
+		[
 			'min_one_paragraph' => true,
 			'is_html' => $artlib->is_html($article_data, true),
-		)
+		]
 	)
 );
 if ($prefs['article_related_articles'] == 'y') {
 	$article_data['related_articles'] = $artlib->get_related_articles($article_data['articleId']);
-	if (isset($article_data['related_articles']) && !empty($article_data['related_articles'])) {
+	if (isset($article_data['related_articles']) && ! empty($article_data['related_articles'])) {
 		$smarty->assign('related_articles', $article_data['related_articles']);
 	}
 }
@@ -221,7 +225,7 @@ if (isset($is_categorized) && $is_categorized) {
 	}
 	if ($prefs['feature_categories'] == 'y' && $prefs['category_morelikethis_algorithm'] != '') {
 		$freetaglib = TikiLib::lib('freetag');
-		$category_related_objects = $freetaglib->get_similar('article', $_REQUEST['articleId'], empty($prefs['category_morelikethis_mincommon_max'])? $prefs['maxRecords']: $prefs['category_morelikethis_mincommon_max'], null, 'category');
+		$category_related_objects = $freetaglib->get_similar('article', $_REQUEST['articleId'], empty($prefs['category_morelikethis_mincommon_max']) ? $prefs['maxRecords'] : $prefs['category_morelikethis_mincommon_max'], null, 'category');
 		$smarty->assign_by_ref('category_related_objects', $category_related_objects);
 	}
 } else {

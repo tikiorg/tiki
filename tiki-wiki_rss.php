@@ -8,7 +8,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $tikilib = TikiLib::lib('tiki');
 $histlib = TikiLib::lib('hist');
 $wikilib = TikiLib::lib('wiki');
@@ -17,25 +17,25 @@ $rsslib = TikiLib::lib('rss');
 $access->check_feature('feature_wiki');
 
 if ($prefs['feed_wiki'] != 'y') {
-	$errmsg=tra("rss feed disabled");
-	require_once ('tiki-rss_error.php');
+	$errmsg = tra("rss feed disabled");
+	require_once('tiki-rss_error.php');
 }
 
-$res=$access->authorize_rss(array('tiki_p_view', 'tiki_p_wiki_view_ref'));
+$res = $access->authorize_rss(['tiki_p_view', 'tiki_p_wiki_view_ref']);
 if ($res) {
 	if ($res['header'] == 'y') {
-		header('WWW-Authenticate: Basic realm="'.$tikidomain.'"');
+		header('WWW-Authenticate: Basic realm="' . $tikidomain . '"');
 		header('HTTP/1.0 401 Unauthorized');
 	}
-	$errmsg=$res['msg'];
-	require_once ('tiki-rss_error.php');
+	$errmsg = $res['msg'];
+	require_once('tiki-rss_error.php');
 }
 
 $feed = "wiki";
 $uniqueid = $feed;
 $output = $rsslib->get_from_cache($uniqueid);
 
-if ($output["data"]=="EMPTY") {
+if ($output["data"] == "EMPTY") {
 	$title = $prefs['feed_wiki_title'];
 	$desc = $prefs['feed_wiki_desc'];
 	$id = "pageName";
@@ -52,7 +52,7 @@ if ($output["data"]=="EMPTY") {
 	$param = "previous";
 
 	$changes = $tikilib -> list_pages(0, $prefs['feed_wiki_max'], 'lastModif_desc', '', '', true, false, false, false, '', false, 'y');
-	$tmp = array();
+	$tmp = [];
 	foreach ($changes["data"] as $data) {
 		$result = '';
 		if ($tiki_p_view != 'y') {
@@ -64,16 +64,16 @@ if ($output["data"]=="EMPTY") {
 		// get last 2 versions of the page and parse them
 		$curr_page = $tikilib->get_page_info($data["pageName"]);
 		$pageversion = (int) $histlib->get_page_latest_version($data["pageName"]);
-		if ($pageversion==false) {
+		if ($pageversion == false) {
 			$prev_page = $curr_page;
-			$prev_page["data"]="";
+			$prev_page["data"] = "";
 		} else {
 			$prev_page = $histlib->get_page_from_history($data["pageName"], $pageversion, true);
 		}
 		$_REQUEST['redirectpage'] = 'y';//block the redirect interpretation
 		$_REQUEST['page'] = $data["pageName"];
-		$curr_page_p = TikiLib::lib('parser')->parse_data($curr_page[$descId], array('print' => true, 'is_html' => $curr_page['is_html']));
-		$prev_page_p = TikiLib::lib('parser')->parse_data($prev_page[$descId], array('print' => true, 'is_html' => $curr_page['is_html']));
+		$curr_page_p = TikiLib::lib('parser')->parse_data($curr_page[$descId], ['print' => true, 'is_html' => $curr_page['is_html']]);
+		$prev_page_p = TikiLib::lib('parser')->parse_data($prev_page[$descId], ['print' => true, 'is_html' => $curr_page['is_html']]);
 
 		// do a diff between both pages
 		require_once('lib/diff/difflib.php');
@@ -108,5 +108,5 @@ if ($output["data"]=="EMPTY") {
 	$tmp = null;
 	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, $param, $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 }
-header("Content-type: ".$output["content-type"]);
+header("Content-type: " . $output["content-type"]);
 print $output["data"];

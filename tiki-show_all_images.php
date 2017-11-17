@@ -3,13 +3,13 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $fontfile = "/usr/share/fonts/truetype/ttf-bitstream-vera/VeraBd.ttf";
-if (!isset($_REQUEST['view'])) {
+if (! isset($_REQUEST['view'])) {
 	if (isset($_REQUEST['id'])) {
 		$ex = "&amp;id=" . urlencode($_REQUEST['id']);
 	} else {
@@ -17,19 +17,19 @@ if (!isset($_REQUEST['view'])) {
 	}
 	echo "<html><frameset rows='30,*' border='0'><frame src='tiki-show_all_images.php?view=nav$ex'><frame name='meat' src='tiki-show_all_images.php?view=image$ex'></frameset></html>";
 } elseif ($_REQUEST['view'] == 'nav') {
-	include_once ("tiki-setup.php");
+	include_once("tiki-setup.php");
 	echo "<html><body><form target='meat'>";
 	if (isset($_REQUEST['id'])) {
 		echo "<a href='tiki-browse_gallery.php?galleryId=" . urlencode($_REQUEST['id']) . "' target='_top'>Gallery " . $_REQUEST['id'] . "</a> ";
 		$id = $_REQUEST['id'];
 	} else {
 		echo "<a href='tiki-galleries.php' target='_top'>list</a> ";
-		$id = NULL;
+		$id = null;
 	}
 	echo "<input type='hidden' name='view' value='image' />";
 	echo "<select name='id'>";
 	$query = "select `galleryId`,`name` from `tiki_galleries` order by created desc";
-	$res = $tikilib->query($query, array());
+	$res = $tikilib->query($query, []);
 	while ($r = $res->fetchRow()) {
 		echo "<option value='" . $r['galleryId'] . "'";
 		if ($r['galleryId'] == $id) {
@@ -42,7 +42,7 @@ if (!isset($_REQUEST['view'])) {
 	echo "</form></body>";
 	die;
 } elseif ($_REQUEST['view'] == 'image') {
-	include_once ("tiki-setup.php");
+	include_once("tiki-setup.php");
 	$imagegallib = TikiLib::lib('imagegal');
 	if ($prefs['feature_galleries'] != 'y') {
 		header("HTTP/1.0 404 Not Found");
@@ -52,7 +52,7 @@ if (!isset($_REQUEST['view'])) {
 		header("HTTP/1.0 404 Not Found");
 		die;
 	}
-	if (!$_REQUEST['id']) {
+	if (! $_REQUEST['id']) {
 		header("HTTP/1.0 404 Not Found");
 		die;
 	}
@@ -60,7 +60,7 @@ if (!isset($_REQUEST['view'])) {
 	$itype = 't';
 	$scalesize = 0;
 	$query = "select `imageId` from `tiki_images` where `galleryId`=?";
-	$res = $tikilib->query($query, array((int)$galleryId));
+	$res = $tikilib->query($query, [(int)$galleryId]);
 	$numrows = $res->numRows();
 	$numcols = 10;
 	$gap = 4;

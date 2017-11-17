@@ -8,8 +8,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
-include_once ('lib/commcenter/commlib.php');
+require_once('tiki-setup.php');
+include_once('lib/commcenter/commlib.php');
 $access->check_feature('feature_comm');
 $access->check_permission('tiki_p_admin_received_articles');
 //Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
@@ -17,7 +17,7 @@ $artlib = TikiLib::lib('art');
 $userprefslib = TikiLib::lib('userprefs');
 $smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
-if (!isset($_REQUEST["receivedArticleId"])) {
+if (! isset($_REQUEST["receivedArticleId"])) {
 	$_REQUEST["receivedArticleId"] = 0;
 }
 $smarty->assign('receivedArticleId', $_REQUEST["receivedArticleId"]);
@@ -25,7 +25,7 @@ if ($_REQUEST["receivedArticleId"]) {
 	$info = $commlib->get_received_article($_REQUEST["receivedArticleId"]);
 	$info["topic"] = 1;
 } else {
-	$info = array();
+	$info = [];
 	$info["title"] = '';
 	$info["authorName"] = '';
 	$info["size"] = 0;
@@ -58,10 +58,10 @@ if (isset($_REQUEST["accept"])) {
 	check_ticket('received-articles');
 	// CODE TO ACCEPT A PAGE HERE
 	//Convert 12-hour clock hours to 24-hour scale to compute time
-	if (!empty($_REQUEST['Time_Meridian'])) {
+	if (! empty($_REQUEST['Time_Meridian'])) {
 		$_REQUEST['Time_Hour'] = date('H', strtotime($_REQUEST['Time_Hour'] . ':00 ' . $_REQUEST['Time_Meridian']));
 	}
-	if (!empty($_REQUEST['expire_Meridian'])) {
+	if (! empty($_REQUEST['expire_Meridian'])) {
 		$_REQUEST['expire_Hour'] = date('H', strtotime($_REQUEST['expire_Hour'] . ':00 ' . $_REQUEST['expire_Meridian']));
 	}
 	$publishDate = $tikilib->make_time($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"], 0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
@@ -75,10 +75,10 @@ $smarty->assign('preview', 'n');
 $smarty->assign('topic', $info["topic"]);
 if (isset($_REQUEST["preview"])) {
 	$smarty->assign('preview', 'y');
-	if (!empty($_REQUEST['Time_Meridian'])) {
+	if (! empty($_REQUEST['Time_Meridian'])) {
 		$_REQUEST['Time_Hour'] = date('H', strtotime($_REQUEST['Time_Hour'] . ':00 ' . $_REQUEST['Time_Meridian']));
 	}
-	if (!empty($_REQUEST['expire_Meridian'])) {
+	if (! empty($_REQUEST['expire_Meridian'])) {
 		$_REQUEST['expire_Hour'] = date('H', strtotime($_REQUEST['expire_Hour'] . ':00 ' . $_REQUEST['expire_Meridian']));
 	}
 	$info["publishDate"] = $tikilib->make_time($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"], 0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
@@ -118,13 +118,13 @@ $smarty->assign(
 	'parsed_heading',
 	TikiLib::lib('parser')->parse_data(
 		$info["heading"],
-		array(
+		[
 			'min_one_paragraph' => true,
 			'is_html' => $artlib->is_html($info, true),
-		)
+		]
 	)
 );
-$smarty->assign('parsed_body', TikiLib::lib('parser')->parse_data($info["body"], array('is_html' => $artlib->is_html($info))));
+$smarty->assign('parsed_body', TikiLib::lib('parser')->parse_data($info["body"], ['is_html' => $artlib->is_html($info)]));
 if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();
 	$commlib->remove_received_article($_REQUEST["remove"]);
@@ -132,10 +132,10 @@ if (isset($_REQUEST["remove"])) {
 if (isset($_REQUEST["save"])) {
 	check_ticket('received-articles');
 	//Convert 12-hour clock hours to 24-hour scale to compute time
-	if (!empty($_REQUEST['Time_Meridian'])) {
+	if (! empty($_REQUEST['Time_Meridian'])) {
 		$_REQUEST['Time_Hour'] = date('H', strtotime($_REQUEST['Time_Hour'] . ':00 ' . $_REQUEST['Time_Meridian']));
 	}
-	if (!empty($_REQUEST['expire_Meridian'])) {
+	if (! empty($_REQUEST['expire_Meridian'])) {
 		$_REQUEST['expire_Hour'] = date('H', strtotime($_REQUEST['expire_Hour'] . ':00 ' . $_REQUEST['expire_Meridian']));
 	}
 	$publishDate = $tikilib->make_time($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"], 0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
@@ -153,12 +153,12 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('heading', $_REQUEST["heading"]);
 	$smarty->assign('body', $_REQUEST["body"]);
 }
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'receivedDate_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];

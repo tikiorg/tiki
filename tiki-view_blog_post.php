@@ -9,10 +9,10 @@
 // $Id$
 
 $section = 'blogs';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $bloglib = TikiLib::lib('blog');
 
-$auto_query_args = array(
+$auto_query_args = [
 	'postId',
 	'blogId',
 	'offset',
@@ -21,7 +21,7 @@ $auto_query_args = array(
 	'page',
 	'mode',
 	'show_comments'
-);
+];
 
 $access->check_feature('feature_blogs');
 
@@ -34,7 +34,7 @@ if (empty($_REQUEST["postId"])) {
 }
 
 $post_info = $bloglib->get_post($postId);
-if (!$post_info) {
+if (! $post_info) {
 	$smarty->assign('msg', tra("Post not found"));
 	$smarty->display("error.tpl");
 	die;
@@ -47,7 +47,7 @@ $blogId = $post_info['blogId'];
 $_SESSION['blogs_last_viewed_month'] = TikiLib::date_format("%Y-%m", $post_info['created']);
 
 $blog_data = $bloglib->get_blog($blogId);
-if (!$blog_data) {
+if (! $blog_data) {
 	$smarty->assign('msg', tra("Blog not found"));
 	$smarty->display("error.tpl");
 	die;
@@ -85,26 +85,26 @@ if ($ownspost == 'n' && $ownsblog == 'n' && $tiki_p_blog_admin != 'y' && $post_i
 }
 
 $allowprivate = 'n';
-if(($user && $ownsblog == 'y') || $tiki_p_blog_admin == 'y') {
-    $allowprivate = 'y';
+if (($user && $ownsblog == 'y') || $tiki_p_blog_admin == 'y') {
+	$allowprivate = 'y';
 }
-$post_info['adjacent'] = $bloglib->_get_adjacent_posts($blogId, $post_info['created'], $tiki_p_blog_admin == 'y'? null: $tikilib->now, $user, $allowprivate);
+$post_info['adjacent'] = $bloglib->_get_adjacent_posts($blogId, $post_info['created'], $tiki_p_blog_admin == 'y' ? null : $tikilib->now, $user, $allowprivate);
 
 if ($prefs['feature_freetags'] == 'y') {
 	// Get Tags
 	$freetaglib = TikiLib::lib('freetag');
 	$post_info['freetags'] = $freetaglib->get_tags_on_object($postId, "blog post");
 
-	if ($blog_data['show_related'] == 'y' && !empty($post_info['freetags'])) {
+	if ($blog_data['show_related'] == 'y' && ! empty($post_info['freetags'])) {
 		$post_info['related_posts'] = $bloglib->get_related_posts($postId, $blog_data['related_max']);
 	}
 }
 
 // We need to figure out in which section and theme we are before any call to tiki-modules.php
-// which needs $tc_theme for deciding on the visible modules everywhere in the page 
+// which needs $tc_theme for deciding on the visible modules everywhere in the page
 $cat_type = 'blog';
 $cat_objid = $blogId;
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 
 // Blog comment mail
 if ($prefs['feature_user_watches'] == 'y') {
@@ -136,12 +136,12 @@ if ($prefs['feature_user_watches'] == 'y') {
 		$smarty->assign('category_watched', 'n');
 		if (count($watching_categories_temp) > 0) {
 			$smarty->assign('category_watched', 'y');
-			$watching_categories = array();
+			$watching_categories = [];
 			foreach ($watching_categories_temp as $wct) {
-				$watching_categories[] = array(
+				$watching_categories[] = [
 					"categId" => $wct,
 					"name" => $categlib->get_category_name($wct)
-				);
+				];
 			}
 			$smarty->assign('watching_categories', $watching_categories);
 		}
@@ -161,13 +161,13 @@ $smarty->assign('blogId', $blogId);
 $smarty->assign('public', $blog_data['public']);
 $smarty->assign('headtitle', $post_info['title'] . ' : ' . $blog_data['title']);
 $smarty->assign('title', $post_info['title'] . ' : ' . $blog_data['title']);
-if (!isset($_REQUEST['offset'])) {
+if (! isset($_REQUEST['offset'])) {
 	$_REQUEST['offset'] = 0;
 }
-if (!isset($_REQUEST['sort_mode'])) {
+if (! isset($_REQUEST['sort_mode'])) {
 	$_REQUEST['sort_mode'] = 'created_desc';
 }
-if (!isset($_REQUEST['find'])) {
+if (! isset($_REQUEST['find'])) {
 	$_REQUEST['find'] = '';
 }
 $smarty->assign('offset', $_REQUEST["offset"]);
@@ -177,11 +177,11 @@ $offset = $_REQUEST["offset"];
 $sort_mode = $_REQUEST["sort_mode"];
 $find = $_REQUEST["find"];
 if ($post_info['wysiwyg'] == "y") {
-	$parsed_data = TikiLib::lib('parser')->parse_data($post_info["data"], array('is_html' => true));
+	$parsed_data = TikiLib::lib('parser')->parse_data($post_info["data"], ['is_html' => true]);
 } else {
 	$parsed_data = TikiLib::lib('parser')->parse_data($post_info["data"]);
 }
-if (!isset($_REQUEST['page'])) {
+if (! isset($_REQUEST['page'])) {
 	$_REQUEST['page'] = 1;
 }
 $pages = $bloglib->get_number_of_pages($parsed_data);

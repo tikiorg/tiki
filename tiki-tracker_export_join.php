@@ -17,7 +17,7 @@ if (isset($_REQUEST['time']) == true) {
 require_once('tiki-setup.php');
 
 if ($tiki_p_admin_trackers != 'y') {
-	$access->display_error('', tra('Permission denied').": ". 'tiki_p_admin_trackers', '403');
+	$access->display_error('', tra('Permission denied') . ": " . 'tiki_p_admin_trackers', '403');
 }
 
 $trklib = TikiLib::lib("trk");
@@ -95,19 +95,35 @@ splitToTracker('fields');
 splitToTracker('search');
 splitToTracker('q');
 
-if (isset($_REQUEST['status']))				$_REQUEST['status'] = explode(",", $_REQUEST['status']);
-if (isset($_REQUEST['removeFieldIds']))		$_REQUEST['removeFieldIds'] = explode(",", $_REQUEST['removeFieldIds']);
-if (isset($_REQUEST['showFieldIds']))		$_REQUEST['showFieldIds'] = explode(",", $_REQUEST['showFieldIds']);
-if (isset($_REQUEST['sortFieldIds']))		$_REQUEST['sortFieldIds'] = explode(",", $_REQUEST['sortFieldIds']);
-if (isset($_REQUEST['dateFieldIds']))		$_REQUEST['dateFieldIds'] = explode(",", $_REQUEST['dateFieldIds']);
-if (isset($_REQUEST['sortFieldNames']))		$_REQUEST['sortFieldNames'] = explode(",", $_REQUEST['sortFieldNames']);
-if (isset($_REQUEST['start']))				$_REQUEST['start'] = explode(",", $_REQUEST['start']);
-if (isset($_REQUEST['end']))				$_REQUEST['end'] = explode(",", $_REQUEST['end']);
+if (isset($_REQUEST['status'])) {
+	$_REQUEST['status'] = explode(",", $_REQUEST['status']);
+}
+if (isset($_REQUEST['removeFieldIds'])) {
+	$_REQUEST['removeFieldIds'] = explode(",", $_REQUEST['removeFieldIds']);
+}
+if (isset($_REQUEST['showFieldIds'])) {
+	$_REQUEST['showFieldIds'] = explode(",", $_REQUEST['showFieldIds']);
+}
+if (isset($_REQUEST['sortFieldIds'])) {
+	$_REQUEST['sortFieldIds'] = explode(",", $_REQUEST['sortFieldIds']);
+}
+if (isset($_REQUEST['dateFieldIds'])) {
+	$_REQUEST['dateFieldIds'] = explode(",", $_REQUEST['dateFieldIds']);
+}
+if (isset($_REQUEST['sortFieldNames'])) {
+	$_REQUEST['sortFieldNames'] = explode(",", $_REQUEST['sortFieldNames']);
+}
+if (isset($_REQUEST['start'])) {
+	$_REQUEST['start'] = explode(",", $_REQUEST['start']);
+}
+if (isset($_REQUEST['end'])) {
+	$_REQUEST['end'] = explode(",", $_REQUEST['end']);
+}
 
 $_REQUEST['trackerIds'] = explode(",", $_REQUEST['trackerIds']);
 $_REQUEST['itemIdFields'] = explode(",", $_REQUEST['itemIdFields']);
 
-$trackerPrimary = array();
+$trackerPrimary = [];
 if (isset($_REQUEST['trackerIds']) == true) {
 	$i = 0;
 	foreach ($_REQUEST['trackerIds'] as $key => $trackerId) {
@@ -146,8 +162,7 @@ if (isset($_REQUEST['sortFieldIds']) == true) {
 	Tracker_Query::arfsort($trackerPrimary, $_REQUEST['sortFieldIds']);
 }
 
-if (
-		isset($_REQUEST['removeFieldIds']) == true ||
+if (isset($_REQUEST['removeFieldIds']) == true ||
 		isset($_REQUEST['showFieldIds']) == true
 	) {
 	$trackerPrimary = Tracker_Query::filter_fields_from_tracker_query($trackerPrimary, $_REQUEST['removeFieldIds'], $_REQUEST['showFieldIds']);

@@ -8,23 +8,23 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-$inputConfiguration = array(
-  array( 'staticKeyFilters' => array(
-    'date' => 'digits',
-    'maxRecords' => 'digits',
-    'highlight' => 'text',
-    'where' => 'text',
-    'find' => 'text',
-    'searchLang' => 'word',
-    'words' =>'text',
-    'boolean' =>'word',
+$inputConfiguration = [
+  [ 'staticKeyFilters' => [
+	'date' => 'digits',
+	'maxRecords' => 'digits',
+	'highlight' => 'text',
+	'where' => 'text',
+	'find' => 'text',
+	'searchLang' => 'word',
+	'words' => 'text',
+	'boolean' => 'word',
 	'storeAs' => 'int',
-    )
-  )
-);
+	]
+  ]
+];
 
 $section = 'search';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $access->check_feature('feature_search');
 $access->check_permission('tiki_p_search');
 
@@ -32,25 +32,26 @@ $access->check_permission('tiki_p_search');
 //ini_set('display_errors', true);
 //error_reporting(E_ALL);
 
-foreach (array('find', 'highlight', 'where') as $possibleKey) {
-	if (empty($_REQUEST['filter']) && !empty($_REQUEST[$possibleKey])) {
+foreach (['find', 'highlight', 'where'] as $possibleKey) {
+	if (empty($_REQUEST['filter']) && ! empty($_REQUEST[$possibleKey])) {
 		$_REQUEST['filter']['content'] = $_REQUEST[$possibleKey];
 	}
 }
-$filter = isset($_REQUEST['filter']) ? $_REQUEST['filter'] : array();
-$postfilter = isset($_REQUEST['postfilter']) ? $_REQUEST['postfilter'] : array();
-$facets = array();
+$filter = isset($_REQUEST['filter']) ? $_REQUEST['filter'] : [];
+$postfilter = isset($_REQUEST['postfilter']) ? $_REQUEST['postfilter'] : [];
+$facets = [];
 
 if (count($filter) || count($postfilter)) {
 	if (isset($_REQUEST['save_query'])) {
 		$_SESSION['quick_search'][(int) $_REQUEST['save_query']] = $_REQUEST;
 	}
 	$offset = isset($_REQUEST['offset']) ? $_REQUEST['offset'] : 0;
-	$maxRecords = empty($_REQUEST['maxRecords'])?$prefs['maxRecords']: $_REQUEST['maxRecords'];
+	$maxRecords = empty($_REQUEST['maxRecords']) ? $prefs['maxRecords'] : $_REQUEST['maxRecords'];
 
 	if ($access->is_serializable_request(true)) {
 		$jitRequest->replaceFilter('fields', 'word');
-		$fetchFields = array_merge(array('title', 'modification_date', 'url'), $jitRequest->asArray('fields', ','));;
+		$fetchFields = array_merge(['title', 'modification_date', 'url'], $jitRequest->asArray('fields', ','));
+		;
 
 		$results = tiki_searchindex_get_results($filter, $postfilter, $offset, $maxRecords);
 
@@ -63,63 +64,64 @@ if (count($filter) || count($postfilter)) {
 				}
 			}
 			$res['link'] = smarty_function_object_link(
-				array(
+				[
 					'type' => $res['object_type'],
 					'id' => $res['object_id'],
 					'title' => $res['title'],
-				),
+				],
 				$smarty
 			);
 			$res = array_filter(
 				$res,
 				function ($v) {
-					return !is_null($v);
+					return ! is_null($v);
 				}
 			);	// strip out null values
 		}
 		$access->output_serialized(
 			$results,
-			array(
+			[
 				'feedTitle' => tr('%0: Results for "%1"', $prefs['sitetitle'], isset($filter['content']) ? $filter['content'] : ''),
 				'feedDescription' => tr('Search Results'),
 				'entryTitleKey' => 'title',
 				'entryUrlKey' => 'url',
 				'entryModificationKey' => 'modification_date',
-				'entryObjectDescriptors' => array('object_type', 'object_id'),
-			)
+				'entryObjectDescriptors' => ['object_type', 'object_id'],
+			]
 		);
 		exit;
 	} else {
 		$cachelib = TikiLib::lib('cache');
 		$cacheType = 'search';
-		$cacheName = $user.'/'.$offset.'/'.$maxRecords.'/'.serialize($filter);
+		$cacheName = $user . '/' . $offset . '/' . $maxRecords . '/' . serialize($filter);
 		$isCached = false;
-		if (!empty($prefs['unified_user_cache']) && $cachelib->isCached($cacheName, $cacheType)) {
+		if (! empty($prefs['unified_user_cache']) && $cachelib->isCached($cacheName, $cacheType)) {
 			list($date, $html) = $cachelib->getSerialized($cacheName, $cacheType);
 			if ($date > $tikilib->now - $prefs['unified_user_cache'] * 60) {
 				$isCached = true;
 			}
 		}
-		if (!$isCached) {
+		if (! $isCached) {
 			$results = tiki_searchindex_get_results($filter, $postfilter, $offset, $maxRecords);
 			$facets = array_map(
 				function ($facet) {
 					return $facet->getName();
-				}, $results->getFacets()
+				},
+				$results->getFacets()
 			);
 
 			$plugin = new Search_Formatter_Plugin_SmartyTemplate('searchresults-plain.tpl');
 			$plugin->setData(
-				array(
+				[
 					'prefs' => $prefs,
-				)
+				]
 			);
-			$fields = array(
+			$fields = [
 				'title' => null,
 				'url' => null,
 				'modification_date' => null,
 				'highlight' => null,
-			);
+			];
 			if ($prefs['feature_search_show_visit_count'] === 'y') {
 				$fields['visits'] = null;
 			}
@@ -130,12 +132,12 @@ if (count($filter) || count($postfilter)) {
 			$wiki = $formatter->format($results);
 			$html = TikiLib::lib('parser')->parse_data(
 				$wiki,
-				array(
+				[
 					'is_html' => true,
-				)
+				]
 			);
-			if (!empty($prefs['unified_user_cache'])) {
-				$cachelib->cacheItem($cacheName, serialize(array($tikilib->now, $html)), $cacheType);
+			if (! empty($prefs['unified_user_cache'])) {
+				$cachelib->cacheItem($cacheName, serialize([$tikilib->now, $html]), $cacheType);
 			}
 		}
 		$smarty->assign('results', $html);
@@ -229,6 +231,5 @@ function tiki_searchindex_get_results($filter, $postfilter, $offset, $maxRecords
 		Feedback::error($e->getMessage(), 'session');
 	}
 
-	return new Search_ResultSet(array(), 0, 0, -1);
+	return new Search_ResultSet([], 0, 0, -1);
 }
-

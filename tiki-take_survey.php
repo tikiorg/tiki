@@ -3,21 +3,21 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'surveys';
-require_once ('tiki-setup.php');
-include_once ('lib/surveys/surveylib.php');
+require_once('tiki-setup.php');
+include_once('lib/surveys/surveylib.php');
 if ($prefs['feature_categories'] == 'y') {
 	$categlib = TikiLib::lib('categ');
 }
 
 $access->check_feature('feature_surveys');
 
-if (!isset($_REQUEST["surveyId"])) {
+if (! isset($_REQUEST["surveyId"])) {
 	$smarty->assign('msg', tra("No survey indicated"));
 	$smarty->display("error.tpl");
 	die;
@@ -38,8 +38,8 @@ if ($tiki_p_admin != 'y') {
 }
 $questions = $srvlib->list_survey_questions($_REQUEST["surveyId"], 0, -1, 'position_asc', '');
 $smarty->assign('pagination', false);
-foreach($questions['data'] as $question) {
-	if ($question['type'] === 'h' && !empty($question['explode']) && $question['explode'][0] === 'y') {
+foreach ($questions['data'] as $question) {
+	if ($question['type'] === 'h' && ! empty($question['explode']) && $question['explode'][0] === 'y') {
 		$smarty->assign('pagination', true);
 		$headerlib->add_css('.questionblock, .submit {display:none;}')
 			->add_jq_onready('
@@ -125,7 +125,7 @@ if (isset($_REQUEST["ans"])) {
 	check_ticket('take-survey');
 	$srvlib->register_answers($_REQUEST['surveyId'], $questions['data'], $_REQUEST, $error_msg);
 	if (empty($error_msg)) {
-		if (!empty($_REQUEST["vote"])) {
+		if (! empty($_REQUEST["vote"])) {
 			$srvlib->add_survey_hit($_REQUEST["surveyId"]);
 		}
 		header('Location: tiki-list_surveys.php');
@@ -134,11 +134,12 @@ if (isset($_REQUEST["ans"])) {
 }
 
 $showToolBars = false;
-if($prefs['poll_surveys_textarea_hidetoolbar'] != 'y')
+if ($prefs['poll_surveys_textarea_hidetoolbar'] != 'y') {
 	$showToolBars = true;
+}
 $smarty->assign('showToolBars', $showToolBars);
 
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 ask_ticket('take-survey');
 // Display the template
 Feedback::error(['mes' => $error_msg]);

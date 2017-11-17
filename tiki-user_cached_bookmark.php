@@ -3,19 +3,19 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'mytiki';
-require_once ('tiki-setup.php');
-include_once ('lib/bookmarks/bookmarklib.php');
+require_once('tiki-setup.php');
+include_once('lib/bookmarks/bookmarklib.php');
 
 $access->check_feature('feature_user_bookmarks', '', 'community');
 $access->check_user($user);
 
-if (!isset($_REQUEST['urlid'])) {
+if (! isset($_REQUEST['urlid'])) {
 	$smarty->assign('msg', tra('No URL indicated'));
 	$smarty->display('error.tpl');
 	die;

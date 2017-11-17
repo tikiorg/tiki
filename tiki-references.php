@@ -8,9 +8,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $access->check_feature('feature_references');
-$access->check_permission(array('tiki_p_edit_references'), tra('Edit Library References'));
+$access->check_permission(['tiki_p_edit_references'], tra('Edit Library References'));
 
 global $dbTiki;
 $referenceslib = TikiLib::lib('references');
@@ -34,7 +34,7 @@ $ref_style = $_REQUEST['ref_style'];
 $ref_template = $_REQUEST['ref_template'];
 
 if (isset($_REQUEST['addreference'])) {
-	$errors = array();
+	$errors = [];
 
 	if ($ref_biblio_code == '') {
 		$errors[] = 'Please enter Biblio Code.';
@@ -68,8 +68,7 @@ if (isset($_REQUEST['addreference'])) {
 }
 
 if (isset($_REQUEST['editreference'])) {
-
-	$errors = array();
+	$errors = [];
 
 	if ($ref_id == '') {
 		$errors[] = 'Reference not found.';

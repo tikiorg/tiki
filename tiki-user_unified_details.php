@@ -3,12 +3,12 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $messulib = TikiLib::lib('message');
 
 $trklib = TikiLib::lib('trk');
@@ -23,7 +23,7 @@ if (isset($_REQUEST['userId'])) {
 	}
 } elseif (isset($_REQUEST['view_user'])) {
 	$userwatch = $_REQUEST['view_user'];
-	if (!$userlib->user_exists($userwatch)) {
+	if (! $userlib->user_exists($userwatch)) {
 		$smarty->assign('errortype', 'no_redirect_login');
 		$smarty->assign('msg', tra("Unknown user"));
 		$smarty->display("error.tpl");
@@ -37,12 +37,13 @@ if (isset($_REQUEST['userId'])) {
 $smarty->assign('userwatch', $userwatch);
 
 if ($prefs['feature_score'] == 'y' and isset($user) and $user != $userwatch) {
-	TikiLib::events()->trigger('tiki.user.view',
-		array(
+	TikiLib::events()->trigger(
+		'tiki.user.view',
+		[
 			'type' => 'user',
 			'object' => $userwatch,
 			'user' => $user,
-		)
+		]
 	);
 }
 
@@ -58,7 +59,7 @@ $user_info[0]['score'] = TikiLib::lib('score')->get_user_score($userwatch);
 $smarty->assign("userinfo", $user_info[0]);
 
 //user_tracker_infos is a pref that allows you to list certain tracker fields in the user profile, if set.
-if (!empty($prefs['user_tracker_infos'])){
+if (! empty($prefs['user_tracker_infos'])) {
 	$trackerinfo = explode(',', $prefs['user_tracker_infos']);
 	// in user_tracker_infos, the first entry refers to the tracker id of the user tracker
 	$userTrackerId = $trackerinfo[0];
@@ -66,18 +67,18 @@ if (!empty($prefs['user_tracker_infos'])){
 
 	$definition = Tracker_Definition::get($userTrackerId);
 	$fields = $definition->getFields();
-	$template_fields = array();
+	$template_fields = [];
 	// for each field in the tracker, if it's in the user_tracker_infos field, pass it  to template fields,
 	// which will be passed to the tpl
-	foreach ($fields as $field){
+	foreach ($fields as $field) {
 		if (in_array($field['fieldId'], $trackerinfo)) {
-			$template_fields[] = array(
+			$template_fields[] = [
 				'label' => $field['name'],
 				'permName' => $field['permName'],
-			);
+			];
 		}
 	}
-	$smarty->assign("template_fields",$template_fields);
+	$smarty->assign("template_fields", $template_fields);
 }
 ask_ticket('user-information');
 $userprefslib = TikiLib::lib('userprefs');

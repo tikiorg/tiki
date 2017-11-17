@@ -3,23 +3,23 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'mytiki';
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
-if ( $user != '' && $prefs['feature_use_fgal_for_user_files'] == 'y' ) {
+if ($user != '' && $prefs['feature_use_fgal_for_user_files'] == 'y') {
 	$filegallib = TikiLib::lib('filegal');
 	$idGallery = $filegallib->get_user_file_gallery();
 
 	// redirect user in correct gallery
-	header('location: tiki-list_file_gallery.php?galleryId='.$idGallery);
+	header('location: tiki-list_file_gallery.php?galleryId=' . $idGallery);
 }
-include_once ('lib/userfiles/userfileslib.php');
+include_once('lib/userfiles/userfileslib.php');
 
 $access->check_feature('feature_userfiles', '', 'community');
 $access->check_user($user);
@@ -27,7 +27,9 @@ $access->check_permission('tiki_p_userfiles');
 
 $quota = $userfileslib->userfiles_quota($user);
 $limit = $prefs['userfiles_quota'] * 1024 * 1000;
-if ($limit == 0) $limit = 999999999;
+if ($limit == 0) {
+	$limit = 999999999;
+}
 $percentage = ($quota / $limit) * 100;
 $cellsize = round($percentage / 100 * 200);
 $percentage = round($percentage);
@@ -45,15 +47,15 @@ for ($i = 0; $i < 5; $i++) {
 		if ($prefs['uf_use_db'] == 'n') {
 			$fhash = md5(uniqid('.'));
 			$fw = fopen($prefs['uf_use_dir'] . $fhash, "wb");
-			if (!$fw) {
+			if (! $fw) {
 				$smarty->assign('msg', tra('Cannot write to this file:') . $fhash);
 				$smarty->display("error.tpl");
 				die;
 			}
 		}
-		while (!feof($fp)) {
+		while (! feof($fp)) {
 			if ($prefs['uf_use_db'] == 'y') {
-				$data.= fread($fp, 8192 * 16);
+				$data .= fread($fp, 8192 * 16);
 			} else {
 				$data = fread($fp, 8192 * 16);
 				fwrite($fw, $data);
@@ -84,19 +86,23 @@ if (isset($_REQUEST["delete"]) && isset($_REQUEST["userfile"])) {
 }
 $quota = $userfileslib->userfiles_quota($user);
 $limit = $prefs['userfiles_quota'] * 1024 * 1000;
-if ($limit == 0) $limit = 999999999;
+if ($limit == 0) {
+	$limit = 999999999;
+}
 $percentage = $quota / $limit * 100;
 $cellsize = round($percentage / 100 * 200);
 $percentage = round($percentage);
-if ($cellsize == 0) $cellsize = 1;
+if ($cellsize == 0) {
+	$cellsize = 1;
+}
 $smarty->assign('cellsize', $cellsize);
 $smarty->assign('percentage', $percentage);
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
@@ -117,7 +123,7 @@ if (isset($_SESSION['thedate'])) {
 $channels = $userfileslib->list_userfiles($user, $offset, $maxRecords, $sort_mode, $find);
 $smarty->assign_by_ref('cant_pages', $channels["cant"]);
 $smarty->assign_by_ref('channels', $channels["data"]);
-include_once ('tiki-mytiki_shared.php');
+include_once('tiki-mytiki_shared.php');
 ask_ticket('user-files');
 $smarty->assign('mid', 'tiki-userfiles.tpl');
 $smarty->display("tiki.tpl");

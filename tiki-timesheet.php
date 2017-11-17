@@ -9,16 +9,16 @@
 // $Id$
 
 require_once('tiki-setup.php');
-$access->check_feature(array('feature_time_sheet','feature_trackers'));
-$access->check_permission_either(array('tiki_p_view_trackers', 'tiki_p_create_tracker_items'));
+$access->check_feature(['feature_time_sheet','feature_trackers']);
+$access->check_permission_either(['tiki_p_view_trackers', 'tiki_p_create_tracker_items']);
 
 global $user, $prefs, $tiki_p_admin;
-$auto_query_args = array(
+$auto_query_args = [
 	'all',
 	'profile',
 	'page',
 	'list'
-);
+];
 
 $trackerId = (int)TikiLib::lib('trk')->get_tracker_by_name('Time sheet');
 $smarty->assign("tiki_p_admin", $tiki_p_admin);
@@ -37,7 +37,7 @@ if (isset($_REQUEST['all'])) { //all views all sheet items
 
 	$timeSheet = Tracker_Query::tracker("Time sheet")
 		->byName()
-		->filter(array("field" => "Done by", "value" => $user))
+		->filter(["field" => "Done by", "value" => $user])
 		->query();
 }
 

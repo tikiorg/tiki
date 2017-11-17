@@ -1,25 +1,25 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'quizzes';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $quizlib = TikiLib::lib('quiz');
 
-$auto_query_args = array('sort_mode', 'offset', 'find');
+$auto_query_args = ['sort_mode', 'offset', 'find'];
 
 $access->check_feature('feature_quizzes');
 $access->check_permission('tiki_p_view_quiz_stats');
 
-if (!isset($_REQUEST["sort_mode"])) {
+if (! isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'quizName_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
@@ -64,7 +64,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 }
 $smarty->assign_by_ref('cant_pages', $channels["cant"]);
 $smarty->assign_by_ref('channels', $channels["data"]);
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 ask_ticket('quiz-stats');
 
 $smarty->assign('mid', 'tiki-quiz_stats.tpl');

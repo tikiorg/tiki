@@ -25,7 +25,7 @@ It is supposed to use 10 questions for this quiz from the tiki_quiz_questions ta
 If you leave the data field blank, the default is to use all the questions from the table.
 You can also set the same option under the Generl Options section.
 */
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 $access->check_feature('feature_quizzes');
 //Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
@@ -35,7 +35,7 @@ $smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
 // quizId of 0 is used as a placeholder; There should NEVER be a row in the
 //   tiki_quizzes table with an id of zero.
-if (!isset($_REQUEST["quizId"])) {
+if (! isset($_REQUEST["quizId"])) {
 	$_REQUEST["quizId"] = 0;
 }
 
@@ -45,7 +45,7 @@ $access->check_permission('tiki_p_admin_quizzes');
 
 $cat_type = 'quiz';
 $cat_objid = $_REQUEST["quizId"];
-include_once ("categorize_list.php");
+include_once("categorize_list.php");
 if (isset($_REQUEST["preview"]) || isset($_REQUEST["xmlview"]) || isset($_REQUEST["textview"])) {
 	echo "line: " . __LINE__ . "<br>";
 	echo "Sorry, preview, xmlview and textview are not supported in this version.<br>";
@@ -74,7 +74,7 @@ function fetchYNOption(&$quiz, $request, $option)
 function quiz_data_load()
 {
 	global $_REQUEST;
-	$quiz_data = array();
+	$quiz_data = [];
 	foreach ($_REQUEST as $key => $val) {
 		if (preg_match("/^quiz_/", $key)) {
 			$k = preg_replace("/^quiz_([.]*)/", "\$1", $key);
@@ -83,14 +83,14 @@ function quiz_data_load()
 	}
 	if ($quiz_data["online"] == "online") {
 		$quiz_data["online"] = "y";
-	} else if ($quiz_data["online"] == "offline") {
+	} elseif ($quiz_data["online"] == "offline") {
 		$quiz_data["online"] = "n";
 	}
 	//Convert 12-hour clock hours to 24-hour scale to compute time
-	if (!empty($_REQUEST['publish_Meridian'])) {
+	if (! empty($_REQUEST['publish_Meridian'])) {
 		$_REQUEST['publish_Hour'] = date('H', strtotime($_REQUEST['publish_Hour'] . ':00 ' . $_REQUEST['publish_Meridian']));
 	}
-	if (!empty($_REQUEST['expire_Meridian'])) {
+	if (! empty($_REQUEST['expire_Meridian'])) {
 		$_REQUEST['expire_Hour'] = date('H', strtotime($_REQUEST['expire_Hour'] . ':00 ' . $_REQUEST['expire_Meridian']));
 	}
 
@@ -110,7 +110,7 @@ function quiz_data_load()
 		$quiz_data["expire_Day"],
 		$quiz_data["expire_Year"]
 	);
-	$fields = array('nQuestion'
+	$fields = ['nQuestion'
 								, 'shuffleAnswers'
 								, 'shuffleQuestions'
 								, 'multiSession'
@@ -120,10 +120,9 @@ function quiz_data_load()
 								, 'canRepeat'
 								, 'additionalQuestions'
 								, 'forum'
-								);
+								];
 	foreach ($fields as $field) {
 		fetchYNOption($quiz_data, $quiz_data, $field);
-
 	}
 	return $quiz_data;
 }
@@ -138,7 +137,6 @@ if (isset($_REQUEST["save"])) {
 	if ($quiz->id == 0 || ($quizNew != $quiz)) {
 		$quizlib->quiz_store($quizNew);
 		// tell user changes were stored (new quiz stored with id of x or quiz x modified), return to list of admin quizzes
-
 	}
 	die;
 	echo "line: " . __LINE__ . "<br>";
@@ -148,7 +146,7 @@ if (isset($_REQUEST["save"])) {
 		$cat_href = "tiki-quiz.php?quizId=" . $cat_objid;
 		$cat_name = $_REQUEST["name"];
 		$cat_desc = substr($_REQUEST["description"], 0, 200);
-		include_once ("categorize.php");
+		include_once("categorize.php");
 	}
 	die;
 }
@@ -161,25 +159,25 @@ $smarty->assign('quiz', $quiz);
 function setup_options(&$tpl)
 {
 	global $prefs;
-	$tpl['online_choices'] = array('online' => 'Online', 'offline' => 'Offline');
-	$optionsGrading = array();
+	$tpl['online_choices'] = ['online' => 'Online', 'offline' => 'Offline'];
+	$optionsGrading = [];
 	$optionsGrading[] = "machine";
 	$optionsGrading[] = "peer review";
 	$optionsGrading[] = "teacher";
 	$tpl['optionsGrading'] = $optionsGrading;
-	$optionsShowScore = array();
+	$optionsShowScore = [];
 	$optionsShowScore[] = "immediately";
 	$optionsShowScore[] = "after expire date";
 	$optionsShowScore[] = "never";
 	$tpl['optionsShowScore'] = $optionsShowScore;
 	// FIXME - This needs to be limited to the session timeout in php.ini
-	$mins = array();
+	$mins = [];
 	for ($i = 1; $i <= 20; $i++) {
 		$mins[] = $i;
 	}
 	$tpl['mins'] = $mins;
-	$repetitions = array();
-	$qpp = array();
+	$repetitions = [];
+	$qpp = [];
 	for ($i = 1; $i <= 10; $i++) {
 		$qpp[] = $i;
 		$repetitions[] = $i;
@@ -191,7 +189,7 @@ function setup_options(&$tpl)
 	$tpl['siteTimeZone'] = $prefs['display_timezone'];
 }
 
-$tpl = array();
+$tpl = [];
 setup_options($tpl);
 $smarty->assign('tpl', $tpl);
 ask_ticket('edit-quiz-question');

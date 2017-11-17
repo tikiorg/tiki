@@ -6,7 +6,7 @@
 // $Id$
 
 $section = 'mytiki';
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 // Validate that the mail-in feature is activated
 $access->check_feature('feature_mailin');
@@ -15,21 +15,21 @@ $access->check_feature('feature_mailin');
 $access->check_user($user);
 
 // Validate current user's permissions
-$access->check_permission(array('tiki_p_send_mailin'));
+$access->check_permission(['tiki_p_send_mailin']);
 
 $usermailinlib = TikiLib::lib('usermailin');
 
 if ($prefs['feature_wiki_structure'] === 'y') {
 	$structlib = TikiLib::lib('struct');
-	
+
 	// Add a new route
-	if (!empty($_REQUEST['mailinSubjPattNew']) || !empty($_REQUEST['mailinBodyPattNew'])) {
+	if (! empty($_REQUEST['mailinSubjPattNew']) || ! empty($_REQUEST['mailinBodyPattNew'])) {
 		$mailinSubjPattNew = $_REQUEST['mailinSubjPattNew'];
 		$mailinBodyPattNew = $_REQUEST['mailinBodyPattNew'];
 		$mailinNewStruct = $_REQUEST['mailinNewStruct'];
 		$mailinParNew = $_REQUEST['mailinParNew'];
 		$mailinActNew = $_REQUEST['mailinActNew'];
-		
+
 		$subj_pattern = $mailinSubjPattNew;
 		$body_pattern = $mailinBodyPattNew;
 		$structure_id = (int)$mailinNewStruct;
@@ -47,13 +47,13 @@ if ($prefs['feature_wiki_structure'] === 'y') {
 			} else {
 				$is_active = 'n';
 			}
-			
+
 			// Add new structure route
 			$usermailinlib->add_user_mailin_struct($user, $subj_pattern, $body_pattern, $structure_id, $page_id, $is_active);
 			Feedback::success(tr('Added new structure route'));
 		}
 	}
-	
+
 	// Delete a route
 	if (isset($_REQUEST['delete']) && $_REQUEST['delete'] == 'y') {
 		if (isset($_REQUEST['mailin_struct_id']) && (int)$_REQUEST['mailin_struct_id'] > 0) {
@@ -61,44 +61,44 @@ if ($prefs['feature_wiki_structure'] === 'y') {
 			Feedback::success(tr('Deleted structure route'));
 		}
 	}
-	
+
 	// Update changed routes
-	for ($i = 1; ; $i++) {
-		if (!isset($_REQUEST['changed_'.$i])) {
+	for ($i = 1;; $i++) {
+		if (! isset($_REQUEST['changed_' . $i])) {
 			break;
 		}
-		if ($_REQUEST['changed_'.$i] !== 'y') {
+		if ($_REQUEST['changed_' . $i] !== 'y') {
 			continue;
 		}
-		
+
 		// Route updated
-		$mailin_struct_id = $_REQUEST['mailin_struct_id_'.$i];
+		$mailin_struct_id = $_REQUEST['mailin_struct_id_' . $i];
 		if (empty($mailin_struct_id)) {
 			continue;
 		}
 		$mailin_struct_id = (int)$mailin_struct_id;
 		$username = $user;
-		$subj_pattern = $_REQUEST['mailinSubjPatt'.$i];
-		$body_pattern = $_REQUEST['mailinBodyPatt'.$i];
-		$structure_id = (int) $_REQUEST['mailinStruct'.$i];
+		$subj_pattern = $_REQUEST['mailinSubjPatt' . $i];
+		$body_pattern = $_REQUEST['mailinBodyPatt' . $i];
+		$structure_id = (int) $_REQUEST['mailinStruct' . $i];
 
 		$retrieve_data = false;
-		$info = $tikilib->get_page_info($_REQUEST['mailinPar'.$i], $retrieve_data);
+		$info = $tikilib->get_page_info($_REQUEST['mailinPar' . $i], $retrieve_data);
 		if ($info === false) {
 			$page_id = null;
 		} else {
 			$page_id = (int)$info['page_id'];
 		}
 
-		$is_active = ($_REQUEST['mailinAct'.$i] == "on") ? 'y' : 'n';
-		
+		$is_active = ($_REQUEST['mailinAct' . $i] == "on") ? 'y' : 'n';
+
 		$usermailinlib->update_user_mailin_struct($mailin_struct_id, $username, $subj_pattern, $body_pattern, $structure_id, $page_id, $is_active);
 		Feedback::success(tra('Updated structure route'));
 	}
-	
+
 	// Prepare route display
 	$userStructs = $usermailinlib->list_user_mailin_struct($user);
-	
+
 	$offset = 0;
 	$maxRecords = -1;
 	$sort_mode = 'pageName_asc';
@@ -107,7 +107,7 @@ if ($prefs['feature_wiki_structure'] === 'y') {
 	$smarty->assign('structs', $structs['data']);
 	$smarty->assign('userStructs', $userStructs['data']);
 	$smarty->assign('addNewRoute', 'y');
-} 
+}
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

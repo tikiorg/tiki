@@ -3,25 +3,25 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 $access->check_feature('cachepages', '', 'textarea');
 
 if (isset($_REQUEST['url'])) {
 	$id = $tikilib->get_cache_id($_REQUEST['url']);
-	if (!$id) {
+	if (! $id) {
 		$smarty->assign('msg', tra("No cache information available"));
 		$smarty->display("error.tpl");
 		die;
 	}
 	$_REQUEST["cacheId"] = $id;
 }
-if (!isset($_REQUEST["cacheId"])) {
+if (! isset($_REQUEST["cacheId"])) {
 	$smarty->assign('msg', tra("No page indicated"));
 	$smarty->display("error.tpl");
 	die;

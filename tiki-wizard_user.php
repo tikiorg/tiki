@@ -3,7 +3,7 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -24,27 +24,26 @@ $headerlib->add_cssfile('themes/base_files/feature_css/wizards.css');
 // Hide the display of the preference dependencies in the wizard
 $headerlib->add_css('.pref_dependency{display:none !important;}');
 $headerlib->add_css('.pagetitle {display: none;}');
-					
+
 $accesslib = TikiLib::lib('access');
 $accesslib->check_user($user);
 
 // Create the template instances
-$pages = array();
+$pages = [];
 
 /// fetch the itemId for the user tracker ------------------------------------
 global $user, $prefs;
 $userlib = TikiLib::lib('user');
 $tikilib = TikiLib::lib('tiki');
 if ($prefs['userTracker'] === 'y') {
-	
 	$trklib = TikiLib::lib('trk');
-	
+
 	$utid = $userlib->get_tracker_usergroup($user);
 
-			if (isset($utid['usersTrackerId'])) {
-				$_REQUEST['trackerId'] = $utid['usersTrackerId'];
-				$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'], $utid['usersFieldId'], $user);
-			}
+	if (isset($utid['usersTrackerId'])) {
+		$_REQUEST['trackerId'] = $utid['usersTrackerId'];
+		$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'], $utid['usersFieldId'], $user);
+	}
 }
 /// --------------------------------
 
@@ -52,25 +51,25 @@ if ($prefs['userTracker'] === 'y') {
 // BEGIN User Wizard page section
 /////////////////////////////////////
 
-require_once('lib/wizard/pages/user_wizard.php'); 
+require_once('lib/wizard/pages/user_wizard.php');
 $pages[] = new UserWizard();
 
-require_once('lib/wizard/pages/user_preferences_info.php'); 
+require_once('lib/wizard/pages/user_preferences_info.php');
 $pages[] = new UserWizardPreferencesInfo();
 
-require_once('lib/wizard/pages/user_preferences_params.php'); 
+require_once('lib/wizard/pages/user_preferences_params.php');
 $pages[] = new UserWizardPreferencesParams();
 
-require_once('lib/wizard/pages/user_preferences_reports.php'); 
+require_once('lib/wizard/pages/user_preferences_reports.php');
 $pages[] = new UserWizardPreferencesReports();
 
-require_once('lib/wizard/pages/user_preferences_notifications.php'); 
+require_once('lib/wizard/pages/user_preferences_notifications.php');
 $pages[] = new UserWizardPreferencesNotifications();
 
-require_once('lib/wizard/pages/user_tracker.php'); 
+require_once('lib/wizard/pages/user_tracker.php');
 $pages[] = new UserWizardUserTracker();
 
-require_once('lib/wizard/pages/user_wizard_completed.php'); 
+require_once('lib/wizard/pages/user_wizard_completed.php');
 $pages[] = new UserWizardCompleted();
 
 /////////////////////////////////////
@@ -92,26 +91,26 @@ foreach ($pages as $page) {
 	$cssClasses = '';
 
 	// Start the user wizard
-	$url = $base_url.'tiki-wizard_user.php?&amp;stepNr=' . $stepNr . '&amp;url=' . rawurlencode($homepageUrl);
+	$url = $base_url . 'tiki-wizard_user.php?&amp;stepNr=' . $stepNr . '&amp;url=' . rawurlencode($homepageUrl);
 
-	$cnt = 	$stepNr+1;
+	$cnt = $stepNr + 1;
 	if ($cnt <= 9) {
-		$cnt = '&nbsp;&nbsp;'.$cnt;
+		$cnt = '&nbsp;&nbsp;' . $cnt;
 	}
 	$toc .= '<li><a ';
 	$cssClasses .= 'adminWizardTOCItem ';
 	if ($stepNr == $reqStepNr) {
 		$cssClasses .= 'highlight ';
 	}
-	if (!$page->isVisible()) {
+	if (! $page->isVisible()) {
 		$cssClasses .= 'disabledTOCSelection ';
 	}
 	$css = '';
 	if (strlen($cssClasses) > 0) {
-		$css = 'class="'.$cssClasses.'" ';
+		$css = 'class="' . $cssClasses . '" ';
 	}
 	$toc .= $css;
-	$toc .= 'href="'.$url.'">'.$page->pageTitle().'</a></li>';
+	$toc .= 'href="' . $url . '">' . $page->pageTitle() . '</a></li>';
 	$stepNr++;
 }
 $toc .= '</ul>';

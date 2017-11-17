@@ -3,28 +3,28 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-$inputConfiguration = array(
-	array('staticKeyFilters' => array(
+$inputConfiguration = [
+	['staticKeyFilters' => [
 		'email' => 'email',
 		'name' => 'text',
 		'pass' => 'text',
 		'passAgain' => 'text',
-	))
-);
+	]]
+];
 
-$auto_query_args = array();
+$auto_query_args = [];
 
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 
 ask_ticket('register');
 
-if (isset($redirect) && !empty($redirect)) {
-	header('Location: '.$redirect);
+if (isset($redirect) && ! empty($redirect)) {
+	header('Location: ' . $redirect);
 	exit;
 }
 
@@ -36,12 +36,12 @@ if ($prefs['allowRegister'] != 'y') {
 	die;
 }
 
-if (!empty($prefs['registerKey']) && (empty($_GET['key']) || $_GET['key'] !== $prefs['registerKey'])) {
+if (! empty($prefs['registerKey']) && (empty($_GET['key']) || $_GET['key'] !== $prefs['registerKey'])) {
 	$access->redirect('', '', 404);
 }
 
 global $user, $prefs;
-if (!empty($prefs['feature_alternate_registration_page']) && $prefs['feature_alternate_registration_page'] !== 'tiki-register.php') {
+if (! empty($prefs['feature_alternate_registration_page']) && $prefs['feature_alternate_registration_page'] !== 'tiki-register.php') {
 	header("location: " . $prefs['feature_alternate_registration_page']);
 	die;
 }
@@ -49,7 +49,7 @@ $smarty->assign('user_exists', TikiLib::lib('user')->user_exists($user));
 
 $re = $userlib->get_group_info(isset($_REQUEST['chosenGroup']) ? $_REQUEST['chosenGroup'] : 'Registered');
 $tr = TikiLib::lib('trk')->get_tracker($re['usersTrackerId']);
-if (!empty($tr['description'])) {
+if (! empty($tr['description'])) {
 	$smarty->assign('userTrackerHasDescription', true);
 }
 
