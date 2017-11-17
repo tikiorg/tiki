@@ -184,7 +184,7 @@ function wikiplugin_mediaplayer($data, $params)
 	if (empty($params['mp3']) && empty($params['flv']) && empty($params['src'])) {
 		return '';
 	}
-	if (!empty($params['src']) && $params['style'] != 'native') {
+	if (!empty($params['src']) && $params['style'] != 'native') { // FIXME: Too broad - this does not use jQuery Media in all these cases.
 		$access->check_feature('feature_jquery_media');
 	}
 	$defaults_mp3 = array(
@@ -246,23 +246,15 @@ function wikiplugin_mediaplayer($data, $params)
 				} 
 			} );";
 
-		// check for support for PDF or ODF as indicated here http://viewerjs.org
-
-		if ($params['type'] === 'pdf' || $params['type'] === 'odt' || $params['type'] === 'ods' || $params['type'] === 'odp' || $params['type'] === 'viewerjs' ) {
+		if (in_array($params['type'], ['pdf', 'odt', 'ods', 'odp', 'viewerjs'])) { // If the type parameter indicates a format supported by ViewerJS ( http://viewerjs.org ), or if viewerjs was explicitly requested
 			if ($prefs['fgal_viewerjs_feature'] === 'y') {
-
-				$src = TikiLib::lib('access')->absoluteUrl($params['src']);
-				$src = $prefs['fgal_viewerjs_uri'] . '#' . $src;
-
+				$src = $prefs['fgal_viewerjs_uri'] . '#' . TikiLib::lib('access')->absoluteUrl($params['src']);
 				$out = "<iframe width=\"{$params['width']}\" height=\"{$params['height']}\" src=\"{$src}\" allowfullscreen webkitallowfullscreen></iframe>";
-
 				return $out;
-
 			} elseif ($params['type'] === 'pdf') {
-
 				$js = '
 var found = false;
-$.each(navigator.plugins, function(i, plugins) {
+$.each(navigator.plugins, function(i, plugins) { // navigator.plugins is unspecified according to https://developer.mozilla.org/fr/docs/Web/API/NavigatorPlugins/plugins . Something other in NavigatorPlugins may be standard. 
 	$.each(plugins, function(i, plugin) {
 		if (plugin.type === "application/pdf") {
 			found = true;
