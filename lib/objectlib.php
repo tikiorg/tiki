@@ -529,7 +529,16 @@ class ObjectLib extends TikiLib
 	 */
 	function get_title($type, $id, $format = null)
 	{
+        $detail = '';
 		switch ($type) {
+            case 'trackeritemfield':
+                $type = 'trackeritem';
+                $ids = explode(':', $id);
+                $id = (int)$ids[0];
+                $fieldId = (int)$ids[1];
+                $trackerlib = TikiLib::lib('trk');
+                $info = $trackerlib->get_field_info($fieldId);
+                $extra = $info['name'];
 			case 'trackeritem':
 				if ($format) {
 					$lib = TikiLib::lib('unifiedsearch');
@@ -556,6 +565,9 @@ class ObjectLib extends TikiLib
 				if( empty($title) ) {
 					$title = "$type:$id";
 				}
+                if ($extra) {
+                    $title .= ' (' . $extra . ')';
+                }
 				return $title;
 			case 'category':
 				return TikiLib::lib('categ')->get_category_name($id);
@@ -598,6 +610,81 @@ class ObjectLib extends TikiLib
 			return $info['name'];
 		}
 	}
+
+	/**
+     * Gets a wiki parsed content for an object. This is used in case an object can have wiki parsed
+     * content that generates relations (ex: Plugin Include).
+     *
+	 * @param string $type
+	 * @param $id
+	 * @return void|string
+	 */
+    function get_wiki_content($type, $objectId)
+    {
+        if (substr($type, -7) == 'comment') {
+            $comment_info = TikiLib::lib('comments')->get_comment((int)$objectId);
+            return $comment_info['data'];
+        }
+        
+        switch($type) {
+            case 'wiki':
+                $type = 'wiki page';
+            case 'wiki page':
+                $info = $this->get_page_info($objectId);
+                return $info['data'];
+            case 'forum post':
+                $comment_info = TikiLib::lib('comments')->get_comment((int)$objectId);
+                return $comment_info['data'];
+            case 'tracker':
+                $tracker_info = TikiLib::lib('trk')->get_tracker((int)$objectId);
+                return $tracker_info['description'];
+            case 'trackerfield':
+                $field_info = TikiLib::lib('trk')->get_field_info((int)$objectId);
+                return $field_info['description'];
+            case 'trackeritemfield':
+                $objectId = explode(':', $objectId);
+                $itemId = (int)$objectId[0];
+                $fieldId = (int)$objectId[1];
+                $trackerlib = TikiLib::lib('trk');
+                $item_info = $trackerlib->get_tracker_item($itemId);
+                return $item_info[$fieldId];
+        }
+    }
+
+    /**
+     * @param string $type
+     * @return string
+     */
+    function get_verbose_type($type)
+    {
+        if (substr($type, -7) == 'comment') {
+            $isComment = true;
+            $type = substr($type, 0, strlen($type)-8);
+        } else {
+            $isComment = false;
+        }
+
+        switch ($type) {
+            case 'trackeritem':
+                $type = 'tracker item';
+                break;
+            case 'trackeritemfield':
+                $type = 'tracker item field';
+                break;
+            case 'trackerfield':
+                $type = 'tracker field';
+                break;
+            case 'wiki':
+                $type = 'wiki page';
+                break;
+        }
+
+        if ($isComment) {
+            $type .= " comment";
+        }
+
+        return tra(ucwords($type));
+    }
 
 	// Returns a hash indicating which permission is needed for viewing an object of desired type.
 	static function map_object_type_to_permission()

@@ -31,6 +31,13 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 			$type = 'blogpost';
 			break;
 	}
+
+    if (substr($type, -7) == 'comment') {
+        $type = substr($type, 0, strlen($type)-8);
+        $info = TikiLib::lib('comments')->get_comment((int)$source);
+        $source = $info['object'];
+    }
+
 	switch ($type) {
 		case 'wiki':
 			return TikiLib::tikiUrlOpt($wikilib->sefurl($source, $with_next, $all_langs));
@@ -109,6 +116,11 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 			}
 			break;
 
+        case 'trackerfield':
+            $trklib = TikiLib::lib('trk');
+            $trackerId = TikiLib::lib('trk')->get_field_info((int)$source)['trackerId'];
+            $href = 'tiki-admin_tracker_fields.php?trackerId=' . $trackerId;
+            break;
 		case 'filegallery':
 		case 'file gallery':
 			$type = 'file gallery';

@@ -1,8 +1,8 @@
 <ul>
   {foreach from=$included_by item=include}
   <li>
-    {$include.verboseType|capitalize}:
-    <a href="{$include.href}" target="_blank">{$include.title}</a>
+    {object_type type=$include.type}:
+    {object_link type=$include.type objectId=$include.itemId}
     {if $include.start || $include.end} - {/if}
     {if $include.start}
     {tr}from{/tr} "{$include.start}"
