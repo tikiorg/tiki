@@ -33,6 +33,10 @@
 	<!-- any dot file -->
 	<exclude-pattern>*/\.*/*</exclude-pattern>
 
+	<!-- generated files / directories -->
+	<exclude-pattern>*/lib/core/JisonParser/Phraser.js</exclude-pattern>
+	<exclude-pattern>*/lib/core/JisonParser/Phraser.php</exclude-pattern>
+
 	<!-- other directories that should not contain core code -->
 	<!-- <exclude-pattern>*/doc/*</exclude-pattern> -->
 	<exclude-pattern>*/dump/*</exclude-pattern>
@@ -99,11 +103,16 @@
 		Instead of error, these rules will return warning, and the severity is 6 so you can
 		display only these warning using the cli option warning-severity=6 -->
 
-	<!-- Relax PSR-1 -->
+	<!-- Relax PSR -->
 	<!-- Namespaces and classes MUST follow PSR-0.
 		This means each class is in a file by itself, and is in a namespace of at least one level: a top-level vendor name. -->
 	<rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
 		<message>Tiki PSR1 Relaxed: Each %s must be in a namespace of at least one level (a top-level vendor name)</message>
+		<type>warning</type>
+		<severity>6</severity>
+	</rule>
+	<rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
+		<message>Tiki PSR1 Relaxed: Each class must be in a file by itself</message>
 		<type>warning</type>
 		<severity>6</severity>
 	</rule>
@@ -119,7 +128,25 @@
 		<type>warning</type>
 		<severity>6</severity>
 	</rule>
-	<!-- ~ PSR-1 -->
+	<!-- Visibility MUST be declared on all properties -->
+	<rule ref="PSR2.Classes.PropertyDeclaration.ScopeMissing">
+		<message>Tiki PSR2 Relaxed: Visibility must be declared on property "%s"</message>
+		<type>warning</type>
+		<severity>6</severity>
+	</rule>
+	<!-- The var keyword MUST NOT be used to declare a property -->
+	<rule ref="PSR2.Classes.PropertyDeclaration.VarUsed">
+		<message>Tiki PSR2 Relaxed: The var keyword must not be used to declare a property</message>
+		<type>warning</type>
+		<severity>6</severity>
+	</rule>
+	<!-- Visibility MUST be declared on all methods. -->
+	<rule ref="Squiz.Scope.MethodScope.Missing">
+		<message>Tiki PSR2 Relaxed: Visibility must be declared on method "%s"</message>
+		<type>warning</type>
+		<severity>6</severity>
+	</rule>
+	<!-- ~ PSR -->
 
 	<!-- Relax ZF Coding Standards -->
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax">
