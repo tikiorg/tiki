@@ -36,7 +36,7 @@ class LessCompileCommand  extends Command
 				'only',
 				'o',
 				InputOption::VALUE_OPTIONAL,
-				'Only compile named theme or themes, separated by commas'
+				'Only compile named theme or themes (or "base_files"), separated by commas'
 			)
 			->addOption(
 				'without-options',
