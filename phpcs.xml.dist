@@ -6,17 +6,34 @@
 	<file>.</file>
 
 	<!-- Exclude libraries and other folders that should not contain code -->
+
+	<!-- vendor folders -->
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 	<exclude-pattern>*/vendor_bundled/*</exclude-pattern>
 	<exclude-pattern>*/vendor_custom/*</exclude-pattern>
 	<exclude-pattern>*/vendor_extra/*</exclude-pattern>
-	<exclude-pattern>*/lib/sheet/ole/*</exclude-pattern>
-	<exclude-pattern>*/lib/sheet/include/*</exclude-pattern>
-	<exclude-pattern>*/lib/webmail/*</exclude-pattern>
+
+	<!-- libraries bundled with tiki -->
+	<exclude-pattern>*/lib/dracula/*</exclude-pattern>
 	<exclude-pattern>*/lib/equation/*</exclude-pattern>
 	<exclude-pattern>*/lib/ical/*</exclude-pattern>
-	<exclude-pattern>*/lib/swfobject/src/swfobject.js</exclude-pattern>
+	<exclude-pattern>*/lib/openlayers/*</exclude-pattern>
+	<exclude-pattern>*/lib/sheet/excel/*</exclude-pattern>
+	<exclude-pattern>*/lib/sheet/include/*</exclude-pattern>
+	<exclude-pattern>*/lib/sheet/ole.php</exclude-pattern>
+	<exclude-pattern>*/lib/sheet/ole/*</exclude-pattern>
+	<exclude-pattern>*/lib/soap/nusoap/*</exclude-pattern>
+	<exclude-pattern>*/lib/swfobject/*</exclude-pattern>
+	<exclude-pattern>*/lib/tar.class.php</exclude-pattern>
+	<exclude-pattern>*/lib/tikihelp/js/*</exclude-pattern>
+	<exclude-pattern>*/lib/tikihelp/menu/*</exclude-pattern>
+	<exclude-pattern>*/lib/webmail/mimeDecode.php</exclude-pattern>
+	<exclude-pattern>*/lib/webmail/net_pop3.php</exclude-pattern>
+
+	<!-- any dot file -->
 	<exclude-pattern>*/\.*/*</exclude-pattern>
+
+	<!-- other directories that should not contain core code -->
 	<!-- <exclude-pattern>*/doc/*</exclude-pattern> -->
 	<exclude-pattern>*/dump/*</exclude-pattern>
 	<exclude-pattern>*/img/*</exclude-pattern>
