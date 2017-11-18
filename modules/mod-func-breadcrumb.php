@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,25 +16,25 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_breadcrumb_info()
 {
-	return array(
+	return [
 		'name' => tra('Last-Visited Pages'),
 		'description' => tra('Displays the last Wiki pages visited by the user.'),
-		'prefs' => array('feature_wiki'),
+		'prefs' => ['feature_wiki'],
 		'documentation' => 'Module breadcrumb',
-		'params' => array(
-			'maxlen' => array(
+		'params' => [
+			'maxlen' => [
 				'name' => tra('Maximum length'),
 				'description' => tra('Maximum number of characters in page names allowed before truncating.'),
 				'filter' => 'int'
-			),
-			'show_namespace' => array(
+			],
+			'show_namespace' => [
 				'name' => tra('Show Namespace'),
-				'description' => tra('Show namespace prefix in page names.').' ( y / n )',	// Do not translate y/n
+				'description' => tra('Show namespace prefix in page names.') . ' ( y / n )',	// Do not translate y/n
 				'default' => 'y'
-			)
-		),
-		'common_params' => array('nonums', 'rows')
-	);
+			]
+		],
+		'common_params' => ['nonums', 'rows']
+	];
 }
 
 /**
@@ -46,30 +46,34 @@ function module_breadcrumb($mod_reference, $module_params)
 	global $prefs;
 	$smarty = TikiLib::lib('smarty');
 	$categlib = TikiLib::lib('categ');
-	if (!isset($_SESSION["breadCrumb"])) {
-		$_SESSION["breadCrumb"] = array();
+	if (! isset($_SESSION["breadCrumb"])) {
+		$_SESSION["breadCrumb"] = [];
 	}
 
 	if ($jail = $categlib->get_jail()) {
 		$objectlib = TikiLib::lib('object');
-		$objectIds=$objectlib->get_object_ids("wiki page", $_SESSION["breadCrumb"]);
+		$objectIds = $objectlib->get_object_ids("wiki page", $_SESSION["breadCrumb"]);
 
-		$breadIds=array();
+		$breadIds = [];
 		foreach ($_SESSION["breadCrumb"] as $step) {
-			if (isset($objectIds[$step])) $breadIds[$objectIds[$step]]=$step;
+			if (isset($objectIds[$step])) {
+				$breadIds[$objectIds[$step]] = $step;
+			}
 		}
 		if ($breadIds) { // If we have visited pages and we're in a perspective
-			$relevantIds=$categlib->filter_objects_categories(array_keys($breadIds), $jail);
+			$relevantIds = $categlib->filter_objects_categories(array_keys($breadIds), $jail);
 		} else {
-			$relevantIds=array_keys($breadIds);
+			$relevantIds = array_keys($breadIds);
 		}
 
-		$fullBreadCrumb=array();
+		$fullBreadCrumb = [];
 		foreach ($breadIds as $breadId => $breadName) {
-			if (in_array($breadId, $relevantIds)) $fullBreadCrumb[$breadId]=$breadName;
+			if (in_array($breadId, $relevantIds)) {
+				$fullBreadCrumb[$breadId] = $breadName;
+			}
 		}
 	} else {
-		$fullBreadCrumb=$_SESSION["breadCrumb"];
+		$fullBreadCrumb = $_SESSION["breadCrumb"];
 	}
 
 	$bbreadCrumb = array_slice(array_reverse($fullBreadCrumb), 0, $mod_reference['rows']);

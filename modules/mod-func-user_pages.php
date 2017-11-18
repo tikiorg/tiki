@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,13 +16,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_user_pages_info()
 {
-	return array(
+	return [
 		'name' => tra('User Pages'),
 		'description' => tra('Displays to registered users the specified number of wiki pages which they were the last to edit.'),
-		'prefs' => array('feature_wiki'),
-		'params' => array(),
-		'common_params' => array("rows", "nonums")
-	);
+		'prefs' => ['feature_wiki'],
+		'params' => [],
+		'common_params' => ["rows", "nonums"]
+	];
 }
 
 /**

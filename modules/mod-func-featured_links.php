@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,14 +16,14 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_featured_links_info()
 {
-	return array(
+	return [
 		'name' => tra('Featured Links'),
 		'description' => tra('Displays the site\'s first featured links.'),
-		'prefs' => array('feature_featuredLinks'),
+		'prefs' => ['feature_featuredLinks'],
 		'documentation' => 'Module featured_links',
-		'params' => array(),
-		'common_params' => array('nonums', 'rows')
-	);
+		'params' => [],
+		'common_params' => ['nonums', 'rows']
+	];
 }
 
 /**

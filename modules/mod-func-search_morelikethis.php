@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,40 +16,40 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_search_morelikethis_info()
 {
-	return array(
+	return [
 		'name' => tra('More Like This'),
 		'description' => tra('Uses the unified search to provide similar documents.'),
-		'prefs' => array('feature_search'),
-		'params' => array(
-			'typefilters' => array(
+		'prefs' => ['feature_search'],
+		'params' => [
+			'typefilters' => [
 				'required' => false,
 				'name' => tra('Object Type Filters'),
 				'description' => tra('Comma-separated types to allow.'),
 				'filter' => 'text',
-			),
-			'textfilters' => array(
+			],
+			'textfilters' => [
 				'required' => false,
 				'name' => tra('Text Search Filters'),
 				'description' => tra('Comma-separated text search filters to use. Use "=" to separate field and value.'),
 				'filter' => 'text',
-			),
-			'object' => array(
+			],
+			'object' => [
 				'required' => false,
 				'name' => tra('Object id of item you want to get similar items to'),
 				'description' => tra('The object id of the item. If none is provided, Tiki will attempt to resolve the current object.'),
 				'filter' => 'text',
 				'since' => '16'
-			),
-			'type' => array(
+			],
+			'type' => [
 				'required' => false,
 				'name' => tra('Object type of item you want to get similar items to'),
 				'description' => tra('The object type of the item (eg. "trackeritem"). If none is provided, Tiki will attempt to resolve the current object.'),
 				'filter' => 'text',
 				'since' => '16'
-			),
-		),
-		'common_params' => array('nonums', 'rows')
-	);
+			],
+		],
+		'common_params' => ['nonums', 'rows']
+	];
 }
 
 /**
@@ -62,24 +62,24 @@ function module_search_morelikethis($mod_reference, $module_params)
 
 	$smarty = TikiLib::lib('smarty');
 
-	$textfilters = array();
-	$typefilters = array();
-	if (!empty($module_params['textfilters'])) {
+	$textfilters = [];
+	$typefilters = [];
+	if (! empty($module_params['textfilters'])) {
 		$filters = explode(",", $module_params['textfilters']);
 		$filters = array_map('trim', $filters);
-		foreach($filters as $f) {
+		foreach ($filters as $f) {
 			$exploded = explode("=", $f);
-			if (!empty($exploded[1]) && !empty($exploded[0])) {
+			if (! empty($exploded[1]) && ! empty($exploded[0])) {
 				$textfilters[$exploded[0]] = $exploded[1];
 			}
 		}
 	}
-	if (!empty($module_params['typefilters'])) {
+	if (! empty($module_params['typefilters'])) {
 		$typefilters = explode(",", $module_params['typefilters']);
 		$typefilters = array_map('trim', $typefilters);
 	}
 
-	$object = array();
+	$object = [];
 	if ($module_params['object'] && $module_params['type']) {
 		$object['object'] = $module_params['object'];
 		$object['type'] = $module_params['type'];
@@ -87,17 +87,17 @@ function module_search_morelikethis($mod_reference, $module_params)
 		$object = current_object();
 	}
 
-	if (!empty($object)) {
+	if (! empty($object)) {
 		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 
-		$query = $unifiedsearchlib->buildQuery(array());
+		$query = $unifiedsearchlib->buildQuery([]);
 		$query->filterSimilar($object['type'], $object['object']);
 		$smarty->assign('simobject', $object);
 		$query->setRange(0, $mod_reference['rows']);
-		foreach ($textfilters as $k => $v) { 
+		foreach ($textfilters as $k => $v) {
 			$query->filterContent($v, $k);
 		}
-		if (!empty($typefilters)) {
+		if (! empty($typefilters)) {
 			$query->filterType($typefilters);
 		}
 

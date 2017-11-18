@@ -16,12 +16,12 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_contributors_info()
 {
-	return array(
+	return [
 		'name' => tra('Contributors'),
 		'description' => tra('Lists the contributors to the wiki page being viewed and some information on them.'),
-		'prefs' => array('feature_wiki'),
-		'params' => array()
-	);
+		'prefs' => ['feature_wiki'],
+		'params' => []
+	];
 }
 
 // Hides contributors past the fifth until a link is clicked
@@ -38,16 +38,16 @@ function module_contributors($mod_reference, $module_params)
 	$wikilib = TikiLib::lib('wiki');
 	$currentObject = current_object();
 	if ($currentObject['type'] == 'wiki page') {
-		$objectperms = Perms::get(array('type' => 'wiki page', 'object' => $currentObject['object']));
+		$objectperms = Perms::get(['type' => 'wiki page', 'object' => $currentObject['object']]);
 		if ($objectperms->view) {
 			$contributors = $wikilib->get_contributors($currentObject['object']);
-			$contributors_details = array();
+			$contributors_details = [];
 			$headerlib->add_css('div.contributors div br {clear: both;}'); // Avoid avatar conflicts with lines below
 			foreach ($contributors as $contributor) {
-				$details = array('login' => $contributor);
+				$details = ['login' => $contributor];
 				$details['realName'] = $userlib->get_user_preference($contributor, 'realName');
 				$country = $tikilib->get_user_preference($contributor, 'country');
-				if (!is_null($country) && $country != 'Other') {
+				if (! is_null($country) && $country != 'Other') {
 					$details['country'] = $country;
 				}
 				$email_isPublic = $tikilib->get_user_preference($contributor, 'email is public');
@@ -64,6 +64,6 @@ function module_contributors($mod_reference, $module_params)
 			if ($hiddenContributors > 0) {
 				$smarty->assign('hiddenContributors', $hiddenContributors);
 			}
-		}		
+		}
 	}
 }

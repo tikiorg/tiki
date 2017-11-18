@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,13 +16,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_last_created_quizzes_info()
 {
-	return array(
+	return [
 		'name' => tra('Newest Quizzes'),
 		'description' => tra('Displays the specified number of quizzes from newest to oldest.'),
-		'prefs' => array("feature_quizzes"),
-		'params' => array(),
-		'common_params' => array('nonums', 'rows')
-	);
+		'prefs' => ["feature_quizzes"],
+		'params' => [],
+		'common_params' => ['nonums', 'rows']
+	];
 }
 
 /**
@@ -33,6 +33,6 @@ function module_last_created_quizzes($mod_reference, $module_params)
 {
 	$smarty = TikiLib::lib('smarty');
 	$ranking = TikiLib::lib('quiz')->list_quizzes(0, $mod_reference["rows"], 'created_desc', '');
-	
+
 	$smarty->assign('modLastCreatedQuizzes', $ranking["data"]);
 }

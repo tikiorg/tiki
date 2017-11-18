@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__)) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,12 +16,12 @@ if (basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__)) {
  */
 function module_semantic_links_info()
 {
-	return array(
+	return [
 		'name' => tra('Semantic Links'),
 		'description' => tra('List the relationships known for the Wiki page displayed. For each relation type contained in the page, it lists all the pages it links to or gets linked from.'),
-		'prefs' => array('feature_semantic'),
-		'params' => array()
-	);
+		'prefs' => ['feature_semantic'],
+		'params' => []
+	];
 }
 
 /**
@@ -34,9 +34,9 @@ function module_semantic_links($mod_reference, $module_params)
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('show_semantic_links_module', false);
 
-	if (isset($page) && !empty($page)) {
+	if (isset($page) && ! empty($page)) {
 		$semanticlib = TikiLib::lib('semantic');
-	
+
 		$msl_page = $page;
 		$relations = $semanticlib->getRelationList($msl_page);
 

@@ -32,43 +32,43 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 function module_shoutbox_info()
 {
-	return array(
+	return [
 		'name' => tra('Shoutbox'),
 		'description' => tra('The shoutbox is a quick messaging tool. Messages reload each time the page changes. Anyone with the right permission can see all messages. Another permission allows messages to be sent..'),
-		'prefs' => array('feature_shoutbox'),
+		'prefs' => ['feature_shoutbox'],
 		'documentation' => 'Module shoutbox',
-		'params' => array(
-			'tooltip' => array(
+		'params' => [
+			'tooltip' => [
 				'name' => tra('Tooltip'),
 				'description' => tra('If set to "1", displays message post dates and times as tooltips instead of showing directly in the module content.') . " " . tr('Default:') . '"0".',
 				'filter' => 'word'
-			),
-			'buttontext' => array(
+			],
+			'buttontext' => [
 				'name' => tra('Button label'),
 				'description' => tra('Label on the button to post a message.') . ' ' . tra('Default:') . ' ' . tra('Post')
-			),
-			'waittext' => array(
+			],
+			'waittext' => [
 				'name' => tra('Wait label'),
 				'description' => tra('Label on the button to post a message when the message is being posted if AJAX is enabled.') . ' ' . tra('Default:') . ' ' . tra('Please wait...')
-			),
-			'maxrows' => array(
+			],
+			'maxrows' => [
 				'name' => tra('Maximum messages shown'),
 				'description' => tra('Number of messages to display.') . ' ' . tra('Default:') . ' 5.',
 				'filter' => 'int'
-			),
-			'tweet' => array(
-				'name'=> tra('Tweet'),
+			],
+			'tweet' => [
+				'name' => tra('Tweet'),
 				'description' => tra('If set to "1" and the user has authorized us to tweet messages with Twitter, the user can decide, if he wants to shout via Twitter.'),
 				'filter' => 'word'
-			),
-			'facebook' => array(
-				'name'=> tra('Facebook'),
+			],
+			'facebook' => [
+				'name' => tra('Facebook'),
 				'description' => tra('If set to "1" and the user has authorized us with Facebook, the user can decide, if he wants to add the shout to his Facebook wall.'),
 				'filter' => 'word'
-			)
+			]
 
-		)
-	);
+		]
+	];
 }
 
 /**
@@ -81,12 +81,11 @@ function doProcessShout($inFormValues)
 	$smarty = TikiLib::lib('smarty');
 //	$smarty->assign('tweet',$inFormValues['tweet']);
 	if (array_key_exists('shout_msg', $inFormValues) && strlen($inFormValues['shout_msg']) > 2) {
-		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!$captchalib->validate())) {
+		if (empty($user) && $prefs['feature_antibot'] == 'y' && (! $captchalib->validate())) {
 			$smarty->assign('shout_error', $captchalib->getErrors());
 			$smarty->assign_by_ref('shout_msg', $inFormValues['shout_msg']);
 		} else {
-
-			$shoutboxlib->replace_shoutbox(0, $user, $inFormValues['shout_msg'], ($inFormValues['shout_tweet']==1), ($inFormValues['shout_facebook']==1));
+			$shoutboxlib->replace_shoutbox(0, $user, $inFormValues['shout_msg'], ($inFormValues['shout_tweet'] == 1), ($inFormValues['shout_facebook'] == 1));
 		}
 	}
 }
@@ -103,10 +102,9 @@ function module_shoutbox($mod_reference, $module_params)
 	$smarty = TikiLib::lib('smarty');
 	$tikilib = TikiLib::lib('tiki');
 
-	include_once ('lib/shoutbox/shoutboxlib.php');
+	include_once('lib/shoutbox/shoutboxlib.php');
 
 	if ($tiki_p_view_shoutbox == 'y') {
-
 		if (isset($_REQUEST['shout_remove'])) {
 			$info = $shoutboxlib->get_shoutbox($_REQUEST['shout_remove']);
 			if ($tiki_p_admin_shoutbox == 'y' || $info['user'] == $user) {
@@ -132,12 +130,12 @@ function module_shoutbox($mod_reference, $module_params)
 
 		$smarty->assign(
 			'tweet',
-			isset($module_params['tweet']) &&($tikilib->get_user_preference($user, 'twitter_token')!='') ? $module_params['tweet'] : '0'
+			isset($module_params['tweet']) &&($tikilib->get_user_preference($user, 'twitter_token') != '') ? $module_params['tweet'] : '0'
 		);
 
 		$smarty->assign(
 			'facebook',
-			isset($module_params['facebook']) && ($tikilib->get_user_preference($user, 'facebook_token')!='') ? $module_params['facebook'] : '0'
+			isset($module_params['facebook']) && ($tikilib->get_user_preference($user, 'facebook_token') != '') ? $module_params['facebook'] : '0'
 		);
 	}
 }

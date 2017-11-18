@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,20 +16,20 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_terminology_info()
 {
-	return array(
+	return [
 		'name' => tra('Terminology'),
 		'description' => tra('Support for multilingual terminology'),
-		'prefs' => array("terminology_profile_installed"),
-		'params' => array(
-			'root_category' => array(
+		'prefs' => ["terminology_profile_installed"],
+		'params' => [
+			'root_category' => [
 				'name' => tra('Root category'),
 				'description' => tra('All terms will automatically be put in that category. ')
 												. tra('Note that the category must already exist. ')
 												. tra('Defaults to \'Term\''),
 				'profile_reference' => 'category',
-			),
-		)
-	);
+			],
+		]
+	];
 }
 
 /**
@@ -42,12 +42,12 @@ function module_terminology($mod_reference, $module_params)
 	if ($prefs['feature_multilingual'] != 'y') {
 		return;
 	}
-	
+
 	$smarty = TikiLib::lib('smarty');
 	init_from_parameters($module_params);
-	
+
 	$multilinguallib = TikiLib::lib('multilingual');
-	
+
 	$search_terms_in_lang = $multilinguallib->currentTermSearchLanguage();
 	$smarty->assign('search_terms_in_lang', $search_terms_in_lang);
 
@@ -75,6 +75,6 @@ function init_from_parameters($module_params)
 	if ($root_category_id == null) {
 		$root_category_id = '';
 	}
-	
+
 	$smarty->assign('term_root_category_id', $root_category_id);
 }

@@ -10,17 +10,17 @@ $uc_txt_file = 'usecases.txt'; // legacy
 $uc_file = 'usecases.bin';
 $file = fopen($uc_file, 'r') or exit('Unable to open file ' . $uc_file . '!');
 
-while (!feof($file)) {
+while (! feof($file)) {
 	$line_of_file_orig = fgets($file);
 	if ($line_of_file_orig == '') {
 		$dummy = true;
 	} else {
-	  $line_of_file_mod=str_replace(':', ' ', $line_of_file_orig);
-	  list($usecase, $def_subdir_perm, $def_file_perm, $def_subdir_write_perm, $def_file_write_perm) = sscanf($line_of_file_mod, '%s %d %d %d %d');
-	  $uc_perms_subdir[$usecase] = $def_subdir_perm;
-	  $uc_perms_file[$usecase] = $def_file_perm;
-	  $uc_perms_write_subdir[$usecase] = $def_subdir_write_perm; //redundant (2012-11-10), for later usage
-	  $uc_perms_write_file[$usecase] = $def_file_write_perm; //redundant (2012-11-10), for later usage
+		$line_of_file_mod = str_replace(':', ' ', $line_of_file_orig);
+		list($usecase, $def_subdir_perm, $def_file_perm, $def_subdir_write_perm, $def_file_write_perm) = sscanf($line_of_file_mod, '%s %d %d %d %d');
+		$uc_perms_subdir[$usecase] = $def_subdir_perm;
+		$uc_perms_file[$usecase] = $def_file_perm;
+		$uc_perms_write_subdir[$usecase] = $def_subdir_write_perm; //redundant (2012-11-10), for later usage
+		$uc_perms_write_file[$usecase] = $def_file_write_perm; //redundant (2012-11-10), for later usage
 	}
 }
 

@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,13 +16,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_last_file_galleries_info()
 {
-	return array(
+	return [
 		'name' => tra('Last-Modified File Galleries'),
 		'description' => tra('Display the specified number of file galleries, starting from the most recently modified.'),
-		'prefs' => array("feature_file_galleries"),
-		'params' => array(),
-		'common_params' => array('nonums', 'rows')
-	);
+		'prefs' => ["feature_file_galleries"],
+		'params' => [],
+		'common_params' => ['nonums', 'rows']
+	];
 }
 
 /**
@@ -35,6 +35,6 @@ function module_last_file_galleries($mod_reference, $module_params)
 	global $prefs;
 	$filegallib = TikiLib::lib('filegal');
 	$ranking = $filegallib->get_files(0, $mod_reference["rows"], 'lastModif_desc', null, $prefs['fgal_root_id'], false, true, false, false);
-	
+
 	$smarty->assign('modLastFileGalleries', $ranking["data"]);
 }

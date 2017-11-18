@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,18 +16,18 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_switch_lang_info()
 {
-	return array(
+	return [
 		'name' => tra('Switch Language'),
 		'description' => tra('Displays a language picker to change the language of the site.'),
-		'prefs' => array('feature_multilingual', 'change_language'),
-		'params' => array(
-			'mode' => array(
+		'prefs' => ['feature_multilingual', 'change_language'],
+		'params' => [
+			'mode' => [
 				'name' => tra('Display mode'),
 				'description' => tra('Changes how the list of languages is displayed. Possible values are droplist, flags and words. Defaults to droplist.'),
 				'filter' => 'alpha',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 /**
@@ -42,7 +42,7 @@ function module_switch_lang($mod_reference, $module_params)
 
 	// tiki-setup has already set the $language variable
 	//Create a list of languages
-	$languages = array();
+	$languages = [];
 	$langLib = TikiLib::lib('language');
 	$languages = $langLib->list_languages(false, 'y');
 	$mode = isset($module_params["mode"]) ? $module_params["mode"] : "droplist";
@@ -51,7 +51,7 @@ function module_switch_lang($mod_reference, $module_params)
 		include('lang/flagmapping.php');
 		global $pageRenderer;
 		//$trads = $multilinguallib->getTranslations('wiki page', $page_id, $page, $prefs['language']);
-		
+
 		for ($i = 0, $icount_languages = count($languages); $i < $icount_languages; $i++) {
 			if (isset($flagmapping[$languages[$i]['value']])) {
 				$languages[$i]['flag'] = $flagmapping[$languages[$i]['value']][0];
@@ -75,4 +75,3 @@ function module_switch_lang($mod_reference, $module_params)
 	}
 	$smarty->assign_by_ref('languages', $languages);
 }
-

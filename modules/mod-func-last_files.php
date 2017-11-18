@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,20 +16,20 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_last_files_info()
 {
-	return array(
+	return [
 		'name' => tra('Newest Files'),
 		'description' => tra('List the specified number of files, starting from the most recently added.'),
-		'prefs' => array("feature_file_galleries"),
-		'params' => array(
-			'galleryId' => array(
+		'prefs' => ["feature_file_galleries"],
+		'params' => [
+			'galleryId' => [
 				'name' => tra('Gallery identifiers'),
 				'description' => tra('If set to a set of file gallery identifiers, restricts the files to those in the identified galleries. The value is a colon-separated sequence of integers.') . " " . tra('Example value: 13, 2:13, 1:2:3:5:6.') . " " . tra('Not set by default.'),
 				'filter' => 'int',
 				'separator' => ':',
 				'profile_reference' => 'file_gallery',
-			),),
-		'common_params' => array('nonums', 'rows')
-	);
+			],],
+		'common_params' => ['nonums', 'rows']
+	];
 }
 
 /**
@@ -49,6 +49,6 @@ function module_last_files($mod_reference, $module_params)
 		global $prefs;
 		$ranking = $filegallib->get_files(0, $mod_reference["rows"], 'created_desc', '', $prefs['fgal_root_id'], false, false, false, true, false, false, false, true);
 	}
-	
+
 	$smarty->assign('modLastFiles', $ranking["data"]);
 }

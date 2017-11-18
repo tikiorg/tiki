@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,23 +16,23 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_last_blog_posts_info()
 {
-	return array(
+	return [
 		'name' => tra('Newest Blog Posts'),
 		'description' => tra('Lists the specified number of blogs posts from newest to oldest.'),
-		'prefs' => array("feature_blogs"),
-		'params' => array(
-			'nodate' => array(
+		'prefs' => ["feature_blogs"],
+		'params' => [
+			'nodate' => [
 				'name' => tra('No date'),
 				'description' => tra('If set to "y", the date of posts is not displayed in the module box.') . " " . tra('Default: "n".'),
-			),
-			'blogid' => array(
+			],
+			'blogid' => [
 				'name' => tra('Blog identifier'),
 				'description' => tra('If set to a blog identifier, restricts the blog posts to those in the identified blog.') . " " . tra('Example value: 13.') . " " . tra('Not set by default.'),
 				'profile_reference' => 'blog',
-			)
-		),
-		'common_params' => array('nonums', 'rows')
-	);
+			]
+		],
+		'common_params' => ['nonums', 'rows']
+	];
 }
 
 /**
@@ -46,11 +46,10 @@ function module_last_blog_posts($mod_reference, $module_params)
 	$blogId = isset($module_params["blogid"]) ? $module_params["blogid"] : 0;
 	$smarty->assign('blogid', $blogId);
 
-	$perms = Perms::get(array( 'type' => 'blog', 'object' => $blogId ));
+	$perms = Perms::get([ 'type' => 'blog', 'object' => $blogId ]);
 	TikiLib::lib('tiki')->get_perm_object($blogId, 'blog');
 
 	$blog_posts = TikiLib::lib('blog')->list_blog_posts($blogId, $perms->blog_admin, 0, $mod_reference["rows"], 'created_desc', '', '', TikiLib::lib('tiki')->now);
 	$smarty->assign('modLastBlogPosts', $blog_posts["data"]);
 	$smarty->assign('nodate', isset($module_params["nodate"]) ? $module_params["nodate"] : 'n');
-
 }

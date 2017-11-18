@@ -10,7 +10,7 @@
 
 $section = 'cms';
 //get_strings tra('Articles Home');
-require_once ('tiki-setup.php');
+require_once('tiki-setup.php');
 $artlib = TikiLib::lib('art');
 if ($prefs['feature_freetags'] == 'y') {
 	$freetaglib = TikiLib::lib('freetag');
@@ -20,7 +20,7 @@ if ($prefs['feature_categories'] == 'y') {
 }
 
 $access->check_feature('feature_articles');
-$access->check_permission_either(array('tiki_p_read_article', 'tiki_p_articles_read_heading'));
+$access->check_permission_either(['tiki_p_read_article', 'tiki_p_articles_read_heading']);
 
 if (isset($_REQUEST["remove"])) {
 	$access->check_permission('tiki_p_remove_article');
@@ -40,7 +40,7 @@ $smarty->assign_by_ref('sort_mode', $sort_mode);
 // If offset is set use it if not then use offset =0
 // use the maxRecords php variable to set the limit
 // if sortMode is not set then use lastModif_desc
-if (!isset($_REQUEST["offset"])) {
+if (! isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
@@ -95,7 +95,7 @@ if (isset($_REQUEST["categId"])) {
 	$categId = '';
 }
 $smarty->assign_by_ref('categId', $categId);
-if (!isset($_REQUEST['lang'])) {
+if (! isset($_REQUEST['lang'])) {
 	$_REQUEST['lang'] = '';
 }
 $topics = $artlib->list_topics();
@@ -103,8 +103,8 @@ $smarty->assign_by_ref('topics', $topics);
 $smarty->assign_by_ref('type', $type);
 $smarty->assign('maxArticles', $prefs['maxArticles']);
 
-include_once ('tiki-section_options.php');
+include_once('tiki-section_options.php');
 
 // Display the template
-$smarty->assign('mid', TikiLib::custom_template('lists/articles.tpl',$type));
+$smarty->assign('mid', TikiLib::custom_template('lists/articles.tpl', $type));
 $smarty->display("tiki.tpl");

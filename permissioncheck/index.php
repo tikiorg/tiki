@@ -31,7 +31,7 @@
 	.writeno	{background-color: red;}
 	.writeno	{background-color: orange;}
 	.writeno	{background-color: #88FFCC;} */
- ?>
+	?>
 	.writeno	{background-color: #FF88CC;}
 <?php /*
 	.writeyes	{background-color: green;}
@@ -63,7 +63,7 @@
 	include "permission_granted.inc.php";
 	$ascii_linebreak = "\n";
 	$html_and_ascii_linebreak = "<br />\n";
-	if ($permission_granted=="yes\n") {
+	if ($permission_granted == "yes\n") {
 		echo '<a href="https://doc.tiki.org/Permission+Check">https://doc.tiki.org/Permission+Check</a>' . $html_and_ascii_linebreak ;
 		echo $html_and_ascii_linebreak ;
 		echo '<span class="important">disable permission check on production machines</span>' . $html_and_ascii_linebreak;
@@ -118,7 +118,7 @@
 		$perms_asc = get_perms_ascii($filename);
 		echo "\n\tthis file " . '<strong>' . $filename . '</strong>' . ' owned by ';
 		echo "\n\tuser " . '<strong>' . $username . '</strong>' . ' and group ' . '<strong>' . $groupname . '</strong>' . ' has got access permissions ';
-		echo "\n\t<strong>" . $perms_asc . '</strong>' . ' which is ' . '<strong>' . $perms_oct. '</strong>' . ' octal.';
+		echo "\n\t<strong>" . $perms_asc . '</strong>' . ' which is ' . '<strong>' . $perms_oct . '</strong>' . ' octal.';
 		echo $html_and_ascii_linebreak;
 	?>
  </p>
@@ -139,33 +139,33 @@
  <div class="block"><table class="truetype"><?php
 	echo "\n  ";
 	$html_almost_empty_table_row = '<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td>';
-	$html_empty_table_row = '<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>'."\n  ";
-	echo '<tr>'.'<td>should</td>'.'<td>user</td>'.'<td>group</td>'.'<td>ascii and <br />colored&nbsp;PHP<br />permissions';
+	$html_empty_table_row = '<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>' . "\n  ";
+	echo '<tr>' . '<td>should</td>' . '<td>user</td>' . '<td>group</td>' . '<td>ascii and <br />colored&nbsp;PHP<br />permissions';
 	echo '<br />read:<span class="readyes">yes</span>/<span class="readno">no</span>';
 	echo '<br />write:<span class="writeyes">yes</span>/<span class="writeno">no</span></td>';
-	echo '<td>octal</td>'.'<td>filename</td>'.'</tr>';
+	echo '<td>octal</td>' . '<td>filename</td>' . '</tr>';
 	foreach ($uc_perms_subdir as $usecase => $perms_subdir) {
-		$perms_file=$uc_perms_file[$usecase];
+		$perms_file = $uc_perms_file[$usecase];
 		echo $html_empty_table_row;
 		// subdir
-		$filename=$usecase;
+		$filename = $usecase;
 		get_perm_data($filename, $username, $groupname, $perms_asc, $perms_oct);
-		if ($perms_subdir==$perms_oct) {
-			$css_class="equal";
+		if ($perms_subdir == $perms_oct) {
+			$css_class = "equal";
 		} else {
-			$css_class="notequal";
+			$css_class = "notequal";
 		}
 		color_classes_perm_asc($filename, $perms_asc, $css_class_writable);
-		echo '<tr>'.'<td><em class="'.$css_class.'">'.$perms_subdir.'</em></td>'.'<td>'.$username.'</td><td>'.$groupname.'</td>';
-		echo '<td class="' . $css_class_writable . '">'.$perms_asc.'</td><td>'.$perms_oct.'</td>';
-		echo '<td><a href="'.$filename.'" target="_blank">permissioncheck/'.$filename."</a></td></tr>\n  ";
+		echo '<tr>' . '<td><em class="' . $css_class . '">' . $perms_subdir . '</em></td>' . '<td>' . $username . '</td><td>' . $groupname . '</td>';
+		echo '<td class="' . $css_class_writable . '">' . $perms_asc . '</td><td>' . $perms_oct . '</td>';
+		echo '<td><a href="' . $filename . '" target="_blank">permissioncheck/' . $filename . "</a></td></tr>\n  ";
 		// file
-		$filename=$usecase."/".$default_file_name;
+		$filename = $usecase . "/" . $default_file_name;
 		get_perm_data($filename, $username, $groupname, $perms_asc, $perms_oct);
-		if ($perms_file==$perms_oct) {
-			$css_class="equal";
+		if ($perms_file == $perms_oct) {
+			$css_class = "equal";
 		} else {
-			$css_class="notequal";
+			$css_class = "notequal";
 		}
 //		if ( is_writable($filename) ) {
 //			$css_class_writable = 'writeyes';
@@ -174,9 +174,9 @@
 //		}
 //		$css_class_writable = 'noclass';
 		color_classes_perm_asc($filename, $perms_asc, $css_class_writable);
-		echo '<tr>'.'<td><em class="'.$css_class.'">'.$perms_file.'</em></td>'.'<td>'.$username.'</td><td>'.$groupname.'</td>';
-		echo '<td class="' . $css_class_writable . '">'.$perms_asc.'</td><td>'.$perms_oct.'</td>';
-		echo '<td><a href="'.$filename.'" target="_blank">permissioncheck/'.$filename."</a></td></tr>\n  ";
+		echo '<tr>' . '<td><em class="' . $css_class . '">' . $perms_file . '</em></td>' . '<td>' . $username . '</td><td>' . $groupname . '</td>';
+		echo '<td class="' . $css_class_writable . '">' . $perms_asc . '</td><td>' . $perms_oct . '</td>';
+		echo '<td><a href="' . $filename . '" target="_blank">permissioncheck/' . $filename . "</a></td></tr>\n  ";
 		// include this file as external one via HTTP request
 		echo $html_almost_empty_table_row;
 		echo '<td>';
@@ -202,7 +202,7 @@
 		echo $http_output;
 		//echo $check_if_model_works_text;
 		//echo $check_if_model_works_text . '</td>'."\n ";
-		echo '</td>'."\n ";
+		echo '</td>' . "\n ";
 	}
 	// general data for special checks
 	$perms_unknown = '???';
@@ -222,14 +222,14 @@
 //		$css_class_writable = 'writeno';
 //	}
 	color_classes_perm_asc($filename, $perms_asc, $css_class_writable);
-	echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td>';
+	echo '<tr>' . '<td><em class="' . $css_class . '">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td>';
 	echo '<td class="' . $css_class_writable . '">' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $filename . '</td></tr>' . "\n  ";
 	//
 //	$nosuchfile='/example_does_not_exist';
 	$usersubmittedfile = isset($_POST['usersubmittedfile']) ? $_POST['usersubmittedfile'] : '';
 	//$checkfile = $_POST['checkfile'];
-	if ( $usersubmittedfile == "" ) {
-		$dummy="foo";
+	if ($usersubmittedfile == "") {
+		$dummy = "foo";
 	} else {
 		$first_character = substr($usersubmittedfile, 0, 1);
 		if ($first_character == '/') {
@@ -252,7 +252,7 @@
 //			$css_class_writable = 'writeno';
 //		}
 		color_classes_perm_asc($filename, $perms_asc, $css_class_writable);
-		echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td>';
+		echo '<tr>' . '<td><em class="' . $css_class . '">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td>';
 		//echo '<td class="' . $css_class_writable . '">' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $usersubmittedfile . '</td></tr>' . "\n  ";
 		echo '<td class="' . $css_class_writable . '">' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $display_name . '</td></tr>' . "\n  ";
 	}

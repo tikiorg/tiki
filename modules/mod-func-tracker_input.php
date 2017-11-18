@@ -15,55 +15,55 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 function module_tracker_input_info()
 {
-	return array(
+	return [
 		'name' => tra('Tracker Input'),
 		'description' => tra('Allows a dialog to be opened to create new tracker items.'),
-		'prefs' => array('feature_trackers'),
-		'params' => array(
-			'trackerId' => array(
+		'prefs' => ['feature_trackers'],
+		'params' => [
+			'trackerId' => [
 				'name' => tr('Tracker'),
 				'description' => tr('Tracker ID to render'),
 				'filter' => 'int',
 				'profile_reference' => 'tracker',
-			),
-			'textinput' => array(
+			],
+			'textinput' => [
 				'name' => tr('Text Input'),
 				'description' => tr('Multiple text fields to display as part of the main form along with the label. Field names map to the permanent names in the tracker field definitions. ex: groupName(Group Name) relatedTask(Task)'),
 				'filter' => 'text',
-			),
-			'hiddeninput' => array(
+			],
+			'hiddeninput' => [
 				'name' => tr('Hidden Input'),
 				'description' => tr('Hidden values to be sent over to the dialog. fieldName(value)'),
 				'filter' => 'text',
-			),
-			'location' => array(
+			],
+			'location' => [
 				'name' => tr('Location Field'),
 				'description' => tr('Obtain the coordinates from a nearby map and send them to the location field. In addition to the field name, :marker or :viewport can be used as the suffix. Default is :marker.'),
 				'filter' => 'text',
-			),
-			'streetview' => array(
+			],
+			'streetview' => [
 				'name' => tr('Capture StreetView'),
 				'description' => tr('Include a button on the StreetView interface to create tracker items from the location. Requires upload image from URL and location parameter.'),
 				'filter' => 'text',
-			),
-			'submit' => array(
+			],
+			'submit' => [
 				'name' => tr('Button Label'),
 				'description' => tr('Alter the submit button label.'),
 				'filter' => 'text',
-			),
-			'success' => array(
+			],
+			'success' => [
 				'name' => tr('Operation to perform on success'),
 				'description' => tr('Operation to perform in the following format: operationName(argument). Current operations are redirect with the URL template as the argument. @valueName@ will be replaced by the appropriate value where valueName is itemId, status or a permanent name'),
 				'filter' => 'text',
-			),
-			'insertmode' => array(
+			],
+			'insertmode' => [
 				'name' => tr('Mode change on complete'),
 				'description' => tr('Target mode to enter after dialog closes'),
 				'filter' => 'text',
 				'default' => '',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 /**
@@ -81,12 +81,12 @@ function module_tracker_input($mod_reference, $module_params)
 	if (! $itemObject->canModify()) {
 		$smarty->assign(
 			'tracker_input',
-			array(
+			[
 				'trackerId' => 0,
-				'textInput' => array(),
-				'hiddenInput' => array(),
+				'textInput' => [],
+				'hiddenInput' => [],
 				'location' => null,
-			)
+			]
 		);
 		return;
 	}
@@ -116,13 +116,13 @@ function module_tracker_input($mod_reference, $module_params)
 	}
 
 	preg_match_all('/(\w+)\(([^\)]+)\)/', $textinput, $parts, PREG_SET_ORDER);
-	$text = array();
+	$text = [];
 	foreach ($parts as $p) {
 		$text[$p[1]] = tra($p[2]);
 	}
 
 	preg_match_all('/(\w+)\(([^\)]*)\)/', $hiddeninput, $parts, PREG_SET_ORDER);
-	$hidden = array();
+	$hidden = [];
 	foreach ($parts as $p) {
 		$hidden[$p[1]] = $p[2];
 	}
@@ -141,7 +141,7 @@ function module_tracker_input($mod_reference, $module_params)
 
 	$smarty->assign(
 		'tracker_input',
-		array(
+		[
 			'trackerId' => $trackerId,
 			'textInput' => $text,
 			'hiddenInput' => $hidden,
@@ -150,12 +150,11 @@ function module_tracker_input($mod_reference, $module_params)
 			'streetview' => $streetview,
 			'galleryId' => $galleryId,
 			'submit' => isset($module_params['submit']) ? $module_params['submit'] : tr('Create'),
-			'success' => array(
+			'success' => [
 				'operation' => $operation,
 				'argument' => $operationArgument,
-			),
+			],
 			'insertMode' => $insertmode,
-		)
+		]
 	);
 }
-

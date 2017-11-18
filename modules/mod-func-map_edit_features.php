@@ -16,43 +16,43 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 function module_map_edit_features_info()
 {
-	return array(
+	return [
 		'name' => tra('Map Feature Editor'),
 		'description' => tra('Allows shapes to be drawn over the map.'),
-		'prefs' => array(),
-		'params' => array(
-			'trackerId' => array(
+		'prefs' => [],
+		'params' => [
+			'trackerId' => [
 				'name' => tr('Tracker'),
 				'description' => tr('Tracker to store the feature in.'),
 				'required' => true,
 				'filter' => 'digits',
 				'profile_reference' => 'tracker',
-			),
-			'hiddeninput' => array(
+			],
+			'hiddeninput' => [
 				'name' => tr('Hidden Input'),
 				'description' => tr('Hidden values to be sent over to the dialog. fieldName(value)'),
 				'filter' => 'text',
-			),
-			'standard' => array(
+			],
+			'standard' => [
 				'name' => tr('Standard controls'),
 				'description' => tr('Dispay the standard draw controls'),
 				'filter' => 'int',
 				'default' => 1,
-			),
-			'insertmode' => array(
+			],
+			'insertmode' => [
 				'name' => tr('Mode change on insert'),
 				'description' => tr('Target mode to enter after successfully inserting an item'),
 				'filter' => 'text',
 				'default' => '',
-			),
-			'editdetail' => array(
+			],
+			'editdetail' => [
 				'name' => tr('Edit details'),
 				'description' => tr("Edit the tracker item's details through a dialog after the initial item creation."),
 				'filter' => 'int',
 				'default' => 0,
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 /**
@@ -77,14 +77,14 @@ function module_map_edit_features($mod_reference, $module_params)
 
 	$hiddeninput = isset($module_params['hiddeninput']) ? $module_params['hiddeninput'] : '';
 	preg_match_all('/(\w+)\(([^\)]*)\)/', $hiddeninput, $parts, PREG_SET_ORDER);
-	$hidden = array();
+	$hidden = [];
 	foreach ($parts as $p) {
 		$hidden[$p[1]] = $p[2];
 	}
 
 	$smarty->assign(
 		'edit_features',
-		array(
+		[
 			'trackerId' => $module_params['trackerId'],
 			'definition' => $definition,
 			'field' => $targetField,
@@ -92,7 +92,6 @@ function module_map_edit_features($mod_reference, $module_params)
 			'standardControls' => isset($module_params['standard']) ? intval($module_params['standard']) : 1,
 			'editDetails' => isset($module_params['editdetail']) ? intval($module_params['editdetail']) : 0,
 			'insertMode' => isset($module_params['insertmode']) ? $module_params['insertmode'] : '',
-		)
+		]
 	);
 }
-

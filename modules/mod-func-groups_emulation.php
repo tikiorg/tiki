@@ -16,37 +16,37 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_groups_emulation_info()
 {
-	return array(
+	return [
 		'name' => tra('Groups Emulation'),
 		'description' => tra('Enables temporarily changing one\'s group memberships to see how users in fewer groups experience the site.'),
-		'prefs' => array(),
-		'params' => array(
-			'showallgroups' => array(
+		'prefs' => [],
+		'params' => [
+			'showallgroups' => [
 				'name' => tra('Show All Groups'),
 				'description' => tra('Show All Groups') . '. ' . tra('If set to "n", the list is not shown.'),
 				'filter' => 'alpha',
 				'default' => 'y',
 				'since' => '13.1',
-				'options' => array(
-					array('text' => tra('Yes'), 'value' => 'y'), 
-					array('text' => tra('No'), 'value' => 'n')
-				),
-			),
-			'showyourgroups' => array(
+				'options' => [
+					['text' => tra('Yes'), 'value' => 'y'],
+					['text' => tra('No'), 'value' => 'n']
+				],
+			],
+			'showyourgroups' => [
 				'name' => tra('Show Your Groups'),
 				'description' => tra('Show Your Groups') . '. ' . tra('If set to "n", the list is not shown.'),
 				'filter' => 'alpha',
 				'default' => 'y',
 				'since' => '13.1',
-				'options' => array(
-					array('text' => tra('Yes'), 'value' => 'y'), 
-					array('text' => tra('No'), 'value' => 'n')
-				),
-			),
-		),
-		'common_params' => array('rows')
-		
-	);
+				'options' => [
+					['text' => tra('Yes'), 'value' => 'y'],
+					['text' => tra('No'), 'value' => 'n']
+				],
+			],
+		],
+		'common_params' => ['rows']
+
+	];
 }
 
 /**
@@ -58,13 +58,14 @@ function module_groups_emulation($mod_reference, $module_params)
 	global $user, $tiki_p_admin;
 	$userlib = TikiLib::lib('user');
 	$smarty = TikiLib::lib('smarty');
-	
+
 	$smarty->assign('groups_are_emulated', isset($_SESSION['groups_are_emulated']) ? $_SESSION['groups_are_emulated'] : 'n');
-	if (isset($_SESSION['groups_emulated']))
+	if (isset($_SESSION['groups_emulated'])) {
 		$smarty->assign('groups_emulated', unserialize($_SESSION['groups_emulated']));
-	
+	}
+
 	// Admins can see all existing groups
-	$allGroups = array();
+	$allGroups = [];
 	if ($tiki_p_admin == 'y') {
 		$alls = $userlib->get_groups();
 		foreach ($alls['data'] as $g) {
@@ -72,7 +73,7 @@ function module_groups_emulation($mod_reference, $module_params)
 		}
 		$smarty->assign_by_ref('allGroups', $allGroups);
 	}
-	
+
 	// Extract list of groups of user, including included groups
 	$userGroups = $userlib->get_user_groups_inclusion($user);
 	if ($tiki_p_admin == 'y') {

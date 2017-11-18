@@ -16,21 +16,21 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 function module_translation_info()
 {
-	return array(
+	return [
 		'name' => tra('Translate Updates'),
 		'description' => tra('Links to versions of the wiki page being viewed in other languages, distinguishing between better, equivalent or worse translations. Optionally displays the up-to-dateness of the translation being viewed.'),
-		'prefs' => array('feature_multilingual'),
-		'params' => array(
-			'pivot_language' => array(
+		'prefs' => ['feature_multilingual'],
+		'params' => [
+			'pivot_language' => [
 				'name' => tra('Reference language'),
 				'description' => tra('If set to a language code, restricts the localized pages shown to the reference page, unless that page is being displayed.') . ' ' . tra('Example values:') . ' en, fr.' . ' ' . tra('Not set by default.')
-			),
-			'show_language' => array(
+			],
+			'show_language' => [
 				'name' => tra('Show language'),
 				'description' => tra('If "y" the page language will be shown instead of the page name.') . tra('Default = "y".')
-			)
-		)
-	);
+			]
+		]
+	];
 }
 
 // Filter localized pages according to the reference language
@@ -65,14 +65,13 @@ function module_translation($mod_reference, $module_params)
 		$smarty->assign('from_edit_page', 'n');
 	}
 
-	if ((!$page or $page == '') and isset($_REQUEST['page'])) {
+	if ((! $page or $page == '') and isset($_REQUEST['page'])) {
 		$page = $_REQUEST['page'];
 	}
 	$smarty->assign('page', $page);
 	$smarty->assign('show_translation_module', false);
 
 	if (! empty($page) && is_string($page)) {
-
 		$multilinguallib = TikiLib::lib('multilingual');
 
 		if (isset($module_params['show_language']) && $module_params['show_language'] == 'n') {
@@ -83,10 +82,11 @@ function module_translation($mod_reference, $module_params)
 
 		$pivotLanguage = isset($module_params['pivot_language']) ? $module_params['pivot_language'] : '';
 		$langs = $multilinguallib->preferredLangs();
-		if (isset($GLOBALS['pageLang']))
+		if (isset($GLOBALS['pageLang'])) {
 			$pageLang = $GLOBALS['pageLang'];
-		else
+		} else {
 			$pageLang = '';
+		}
 
 		$transinfo = $tikilib->get_page_info($page);
 		if (empty($transinfo)) {
@@ -94,12 +94,12 @@ function module_translation($mod_reference, $module_params)
 		}
 
 		$tempList = $multilinguallib->getTranslations('wiki page', $transinfo['page_id']);
-		$completeList = array();
+		$completeList = [];
 		foreach ($tempList as $row) {
 			$t_id = $row['objId'];
 			$t_page = $row['objName'];
 			$t_lang = $row['lang'];
-			$completeList[$t_id] = array('page' => $t_page, 'lang' => $t_lang);
+			$completeList[$t_id] = ['page' => $t_page, 'lang' => $t_lang];
 		}
 
 		unset($completeList[$transinfo['page_id']]);
@@ -111,14 +111,15 @@ function module_translation($mod_reference, $module_params)
 
 		$origBetter = $better = $multilinguallib->getBetterPages($transinfo['page_id']);
 		$better = array_filter($better, 'filter_languages_from_pivot');
-		$known = array();
-		$other = array();
+		$known = [];
+		$other = [];
 
 		foreach ($better as $pageOption) {
-			if (in_array($pageOption['lang'], $langs))
+			if (in_array($pageOption['lang'], $langs)) {
 				$known[] = $pageOption;
-			else
+			} else {
 				$other[] = $pageOption;
+			}
 		}
 
 		$smarty->assign('mod_translation_better_known', $known);
@@ -126,14 +127,15 @@ function module_translation($mod_reference, $module_params)
 
 		$origWorst = $worst = $multilinguallib->getWorstPages($transinfo['page_id']);
 		$worst = array_filter($worst, 'filter_languages_from_pivot');
-		$known = array();
-		$other = array();
+		$known = [];
+		$other = [];
 
 		foreach ($worst as $pageOption) {
-			if (in_array($pageOption['lang'], $langs))
+			if (in_array($pageOption['lang'], $langs)) {
 				$known[] = $pageOption;
-			else
+			} else {
 				$other[] = $pageOption;
+			}
 		}
 
 		$smarty->assign('mod_translation_worst_known', $known);
@@ -150,13 +152,14 @@ function module_translation($mod_reference, $module_params)
 			unset($completeList[$id]);
 		}
 
-		$known = array();
-		$other = array();
+		$known = [];
+		$other = [];
 		foreach ($completeList as $pageOption) {
-			if (in_array($pageOption['lang'], $langs))
+			if (in_array($pageOption['lang'], $langs)) {
 				$known[] = $pageOption;
-			else
+			} else {
 				$other[] = $pageOption;
+			}
 		}
 
 		$smarty->assign('mod_translation_equivalent_known', $known);
@@ -171,14 +174,14 @@ function module_translation($mod_reference, $module_params)
 				'mod_translation_gauge',
 				wikiplugin_gauge(
 					'',
-					array(
+					[
 							'value' => $numeric,
 							'max' => 100,
 							'size' => '100%',
 							'color' => 'green',
 							'bgcolor' => 'gray',
 							'showvalue' => false,
-					)
+					]
 				)
 			);
 		}

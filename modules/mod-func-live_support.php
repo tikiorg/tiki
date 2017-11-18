@@ -16,12 +16,12 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 function module_live_support_info()
 {
-	return array(
+	return [
 		'name' => tra('Live Support'),
 		'description' => tra('Tells users whether a live support operator is present and allows them to request support if possible. If the user is an operator, links to the operator console.'),
-		'prefs' => array('feature_live_support'),
-		'params' => array()
-	);
+		'prefs' => ['feature_live_support'],
+		'params' => []
+	];
 }
 
 /**
@@ -31,8 +31,10 @@ function module_live_support_info()
 function module_live_support($mod_reference, $module_params)
 {
 	global $user;
-	global $lslib; include_once ('lib/live_support/lslib.php');
-	global $lsadminlib ; include_once ('lib/live_support/lsadminlib.php');
+	global $lslib;
+	include_once('lib/live_support/lslib.php');
+	global $lsadminlib ;
+	include_once('lib/live_support/lsadminlib.php');
 	$smarty = TikiLib::lib('smarty');
 
 	$smarty->assign('modsupport', $lslib->operators_online());

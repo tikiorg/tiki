@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 
@@ -17,13 +17,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_last_submissions_info()
 {
-	return array(
+	return [
 		'name' => tra('Newest Article Submissions'),
 		'description' => tra('Lists the specified number of article submissions from newest to oldest.'),
-		'prefs' => array("feature_submissions"),
-		'params' => array(),
-		'common_params' => array('nonums', 'rows')
-	);
+		'prefs' => ["feature_submissions"],
+		'params' => [],
+		'common_params' => ['nonums', 'rows']
+	];
 }
 
 /**

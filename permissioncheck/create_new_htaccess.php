@@ -35,8 +35,8 @@
 		//$perms_asc = get_perms_ascii($filename);
 		get_perm_data($filename, $username, $groupname, $perms_asc, $perms_oct);
 
-		echo '<td>' . $username . '</td><td>' . $groupname. '</td><td>' .$perms_asc . '</td>';
-		echo '<td>' . $perms_oct . '</td><td>permissioncheck/' . $filename .'</td>';
+		echo '<td>' . $username . '</td><td>' . $groupname . '</td><td>' . $perms_asc . '</td>';
+		echo '<td>' . $perms_oct . '</td><td>permissioncheck/' . $filename . '</td>';
 
 	?>
 </tr>

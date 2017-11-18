@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,17 +16,17 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_quickadmin_info()
 {
-	return array(
+	return [
 		'name' => tra('Quick Administration'),
 		'description' => tra('Some helpful tools for administrators.'),
-		'prefs' => array(),
-		'params' => array(
-			'mode' => array(
+		'prefs' => [],
+		'params' => [
+			'mode' => [
 				'name' => tra('Mode'),
 				'description' => tra('Display mode: module or header. Leave empty for module mode'),
-			),
-		)
-	);
+			],
+		]
+	];
 }
 
 /**
@@ -37,5 +37,4 @@ function module_quickadmin($mod_reference, $module_params)
 {
 
 	TikiLib::lib('smarty')->assign('recent_prefs', TikiLib::lib('prefs')->getRecent());
-
 }

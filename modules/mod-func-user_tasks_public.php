@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
-  header('location: index.php');
-  exit;
+	header('location: index.php');
+	exit;
 }
 
 /**
@@ -16,12 +16,12 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 function module_user_tasks_public_info()
 {
-	return array(
+	return [
 		'name' => tra('Public Tasks'),
 		'description' => tra('Lists the public user tasks of a chosen group, with links to tasks.'),
-		'prefs' => array('feature_tasks'),
-		'params' => array()
-	);
+		'prefs' => ['feature_tasks'],
+		'params' => []
+	];
 }
 
 /**
@@ -34,7 +34,8 @@ function module_user_tasks_public($mod_reference, $module_params)
 	$smarty = TikiLib::lib('smarty');
 	$tikilib = TikiLib::lib('tiki');
 	if ($user && isset($tiki_p_tasks) && $tiki_p_tasks == 'y') {
-		global $tasklib; require_once 'lib/tasks/tasklib.php';
+		global $tasklib;
+		require_once 'lib/tasks/tasklib.php';
 
 		$smarty->assign('ownurl', $_SERVER['REQUEST_URI']);
 		$user_groups = $tasklib->get_groups_to_user_with_permissions($user, 'tiki_p_tasks_receive');
@@ -50,9 +51,9 @@ function module_user_tasks_public($mod_reference, $module_params)
 		$smarty->assign('user_group', $user_group);
 
 		if ($user_group == '') {
-			$public_tasks =  array('data'=>'');
+			$public_tasks = ['data' => ''];
 		} else {
-			$public_tasks =  $tasklib->list_tasks($user, '0', '10', NULL, 'priority_asc', false, false, false, false, true, $user_group);
+			$public_tasks = $tasklib->list_tasks($user, '0', '10', null, 'priority_asc', false, false, false, false, true, $user_group);
 		}
 
 		$smarty->assign('public_tasks', $public_tasks['data']);

@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,12 +16,12 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_whats_related_info()
 {
-	return array(
+	return [
 		'name' => tra('Related Items'),
 		'description' => tra('Lists objects which share a category with the viewed object.'),
-		'prefs' => array('feature_categories'),
-		'params' => array()
-	);
+		'prefs' => ['feature_categories'],
+		'params' => []
+	];
 }
 
 /**
@@ -32,7 +32,7 @@ function module_whats_related($mod_reference, $module_params)
 {
 	$smarty = TikiLib::lib('smarty');
 	$categlib = TikiLib::lib('categ');
-	
-	$WhatsRelated=$categlib->get_link_related($_SERVER["REQUEST_URI"]);
+
+	$WhatsRelated = $categlib->get_link_related($_SERVER["REQUEST_URI"]);
 	$smarty->assign_by_ref('WhatsRelated', $WhatsRelated);
 }

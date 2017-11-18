@@ -16,65 +16,65 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_change_category_info()
 {
-	return array(
+	return [
 		'name' => tra('Change Category'),
 		'description' => tra('Enables to categorize an object.') . " " . tra('Some combinations of Multiple categories, Detailed, Unassign and Assign may challenge intuition or be simply broken.'),
-		'prefs' => array('feature_categories', 'feature_wiki'),
+		'prefs' => ['feature_categories', 'feature_wiki'],
 		'documentation' => 'Module change_category',
-		'params' => array(
-			'id' => array(
+		'params' => [
+			'id' => [
 				'name' => tra('Category identifier'),
 				'description' => tra('Changes the root of the displayed categories from default "TOP" to the category with the given identifier.') . " " . tra('Note that the root category is not displayed.') . " " . tra('Example value: 13.') . " " . tra('Defaults to 0 (root).'),
 				'filter' => 'int',
 				'profile_reference' => 'category',
-			),
-			'notop' => array(
+			],
+			'notop' => [
 				'name' => tra('No top'),
 				'description' => tra('In non-detailed view, disallow uncategorizing. Example value: 1.') . " " . tra('Not set by default.'),
-			),
-			'path' => array(
+			],
+			'path' => [
 				'name' => tra('Display path'),
 				'description' => tra('Unless set to "n", display relative category paths in the category tree rather than category names.') . " " . tra('Paths are relative to the root category, which is not displayed.') . " " . tra('Example value:') . ' "n". ' . tra('Not set by default.'),
-			),
-			'multiple' => array(
+			],
+			'multiple' => [
 				'name' => tra('Multiple categories'),
 				'description' => tra('If set to "n", only allows categorizing in one category (from those displayed).') . " " . tra('Not set by default.'),
-			),
-			'categorize' => array(
+			],
+			'categorize' => [
 				'name' => tra('Categorize'),
 				'description' => tra('String to display on the button to submit new categories, when multiple categories is enabled. Default value: Categorize.'),
-			),
-			'shy' => array(
+			],
+			'shy' => [
 				'name' => tra('Shy'),
 				'description' => tra('If set to "y", the module is not shown on pages which are not already categorized.') . " " . tra('Not set by default.'),
-			),
-			'detail' => array(
+			],
+			'detail' => [
 				'name' => tra('Detailed'),
 				'description' => tra('If set to "y", shows a list of categories in which the object is. If deletion is not disabled, it is done with the list.') . " " . tra('Not set by default.'),
-			),
-			'del' => array(
+			],
+			'del' => [
 				'name' => tra('Unassign'),
 				'description' => tra('If set to "n", the detailed list of categories will not offer to unassign a category.') . " " . tra('Not set by default.'),
 				'depends' => 'detail'
-			),
-			'add' => array(
+			],
+			'add' => [
 				'name' => tra('Assign'),
 				'description' => tra('If set to "y", allow to assign new categories.') . " " . tra('Example values: y, n.') . " " . tra('Default value: y.'),
-			),
-			'group' => array(
+			],
+			'group' => [
 				'name' => tra('Group filter'),
 				'description' => tra('Very particular filter option. If set to "y", only categories with a name matching one of the user\'s groups are shown, and descendants of these matching categories.') . " " . tra('Example values: y, n.') . " " . tra('Default value: n.'),
-			),
-			'imgUrlNotIn' => array(
+			],
+			'imgUrlNotIn' => [
 				'name' => tra('Image URL not in category'),
 				'description' => tra('Very particular parameter. If both this and "Image URL in category" are set and the root category contains a single child category, the module only displays an image with this URL if the object is not in the category.') . ' ' . tra('Example value:') . ' http://www.example.org/img/redcross.png.',
-			),
-			'imgUrlIn' => array(
+			],
+			'imgUrlIn' => [
 				'name' => tra('Image URL in category'),
 				'description' => tra('Very particular parameter. If both this and "Image URL not in category" are set and the root category contains a single child category, the module only displays an image with this URL if the object is in the category.') . ' ' . tra('Example value:') . ' http://www.example.org/img/bigplus.png.',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 /**
@@ -94,7 +94,7 @@ function module_change_category($mod_reference, $module_params)
 	if ($object || $modlib->is_admin_mode(true)) {
 		$categlib = TikiLib::lib('categ');
 
-		if (!empty($module_params['id'])) {
+		if (! empty($module_params['id'])) {
 			$id = $module_params['id'];
 			$cat_parent = $categlib->get_category_name($id);
 		} else {
@@ -102,7 +102,7 @@ function module_change_category($mod_reference, $module_params)
 			$cat_parent = '';
 		}
 
-		if (!empty($module_params['shy']) && !$modlib->is_admin_mode(true)) {
+		if (! empty($module_params['shy']) && ! $modlib->is_admin_mode(true)) {
 			$shy = $module_params['shy'] === 'y';
 		} else {
 			$shy = false;
@@ -121,12 +121,12 @@ function module_change_category($mod_reference, $module_params)
 		$cat_type = $object['type'];
 		$cat_objid = $object['object'];
 
-		$categories = $categlib->getCategories($id ? array('identifier'=>$id, 'type'=>'descendants') : null);
+		$categories = $categlib->getCategories($id ? ['identifier' => $id, 'type' => 'descendants'] : null);
 
-		if (!empty($module_params['group']) && $module_params['group'] == 'y') {
+		if (! empty($module_params['group']) && $module_params['group'] == 'y') {
 			global $user;
 			$userlib = TikiLib::lib('user');
-			if (!$user) {
+			if (! $user) {
 				return;
 			}
 			$userGroups = $userlib->get_user_groups_inclusion($user);
@@ -141,27 +141,27 @@ function module_change_category($mod_reference, $module_params)
 						break;
 					}
 				}
-				if (!$ok) {
+				if (! $ok) {
 					unset($categories[$i]);
 				}
 			}
 		}
 
 		$managedCategories = array_keys($categories);
-		if (isset($_REQUEST['remove']) && (!isset($module_params['del']) || $module_params['del'] != 'n')) {
+		if (isset($_REQUEST['remove']) && (! isset($module_params['del']) || $module_params['del'] != 'n')) {
 			$originalCategories = $categlib->get_object_categories($cat_type, $cat_objid);
 			// Check if the object is in the category to prevent infinite redirection.
 			if (in_array($_REQUEST['remove'], $originalCategories) && in_array($_REQUEST['remove'], $managedCategories)) {
-				$selectedCategories = array();
-				$managedCategories = array_intersect(array((int) $_REQUEST['remove']), $managedCategories);
+				$selectedCategories = [];
+				$managedCategories = array_intersect([(int) $_REQUEST['remove']], $managedCategories);
 			}
 		} elseif (isset($_REQUEST["modcatid"]) and $_REQUEST["modcatid"] == $id) {
-			if (!isset($_REQUEST['modcatchange'])) {
-				$selectedCategories = array();
+			if (! isset($_REQUEST['modcatchange'])) {
+				$selectedCategories = [];
 			} elseif (is_array($_REQUEST['modcatchange'])) {
-				$selectedCategories =  $_REQUEST['modcatchange'];
+				$selectedCategories = $_REQUEST['modcatchange'];
 			} else {
-				$selectedCategories = array($_REQUEST['modcatchange']);
+				$selectedCategories = [$_REQUEST['modcatchange']];
 			}
 			foreach ($selectedCategories as &$selectedCategory) {
 				$selectedCategory = (int) $selectedCategory;
@@ -172,11 +172,11 @@ function module_change_category($mod_reference, $module_params)
 		}
 
 		if (isset($selectedCategories)) {
-			$objectperms = Perms::get(array('type' => $cat_type, 'object' => $cat_objid));
+			$objectperms = Perms::get(['type' => $cat_type, 'object' => $cat_objid]);
 			if ($objectperms->modify_object_categories) {
 				$categlib->update_object_categories($selectedCategories, $cat_objid, $cat_type, null, null, null, $managedCategories);
 			}
-			header('Location: '.$_SERVER['REQUEST_URI']);
+			header('Location: ' . $_SERVER['REQUEST_URI']);
 			die;
 		}
 
@@ -198,7 +198,7 @@ function module_change_category($mod_reference, $module_params)
 		}
 
 		$smarty->assign('isInAllManagedCategories', $isInAllManagedCategories);
-		$smarty->assign('showmodule', !$shy);
+		$smarty->assign('showmodule', ! $shy);
 		$objectlib = TikiLib::lib('object');
 		$title = $objectlib->get_title($cat_type, $cat_objid);
 		if (empty($cat_parent)) {

@@ -16,52 +16,52 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 function module_quick_edit_info()
 {
-	return array(
+	return [
 		'name' => tra('Quick Edit'),
 		// Search actually lacks customTip, customTipTitle and headerwiki, added in r27746.
 		'description' => tra('Enables to quickly create or edit Wiki pages.') . ' ' . tra('Deprecated - use the Search module instead.'),
-		'prefs' => array('feature_wiki'),
-		'params' => array(
-			'templateId' => array(
+		'prefs' => ['feature_wiki'],
+		'params' => [
+			'templateId' => [
 				'name' => tra('Template identifier'),
 				'description' => tra('If set to a template identifier, the specified template is used for creating new Wiki pages.') . ' ' . tra('Not set by default.')
-			),
-			'action' => array(
+			],
+			'action' => [
 				'name' => 'FORM ACTION',
 				'description' => tra('If set, send the form to the given location (relative to Tiki\'s root) for processing.') . ' ' . tra('Default:') . ' tiki-editpage.php'
-			),
-			'submit' => array(
+			],
+			'submit' => [
 				'name' => tra('SUBMIT label'),
 				'description' => tra('The label on the button to submit the form.') . ' ' . tra('Default:') . ' ' . tra('Create/Edit')
-			),
-			'size' => array(
+			],
+			'size' => [
 				'name' => tra('INPUT SIZE'),
 				'description' => tra('Size attribute (horizontal, in characters) of the text input field for page names.') . ' ' . tra('Default:') . ' 15',
 				'filter' => 'int'
-			),
-			'mod_quickedit_heading' => array(
+			],
+			'mod_quickedit_heading' => [
 				'name' => tra('Heading'),
 				'description' => tra('Optional heading to display at the top of the module\'s content.')
-			),
-			'addcategId' => array(
+			],
+			'addcategId' => [
 				'name' => tra('Category to preselect'),
 				'description' => tra('If set, pages created through the module have this category prechecked to be categorized in.') . ' ' . tra('Not set by default.'),
 				'profile_reference' => 'category',
-			),
-			'customTip' => array(
+			],
+			'customTip' => [
 				'name' => tra('Tip to be shown'),
 				'description' => tra('Custom text to be shown as a tip at the top of the edit page'),
-			),
-			'customTipTitle' => array(
+			],
+			'customTipTitle' => [
 				'name' => tra('Title of tip to be shown'),
 				'description' => tra('Custom title to be shown for the tip at the top of the edit page'),
-			),
-			'headerwiki' => array(
+			],
+			'headerwiki' => [
 				'name' => tra('Custom header template'),
 				'description' => tra('Wiki page to be used as a template to show content on top of edit page'),
-			),
-		)
-	);
+			],
+		]
+	];
 }
 
 /**

@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,13 +16,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_top_files_info()
 {
-	return array(
+	return [
 		'name' => tra('Top Files'),
 		'description' => tra('Displays the specified number of files with links to them, starting with the one with most hits.'),
-		'prefs' => array('feature_file_galleries'),
-		'params' => array(),
-		'common_params' => array('nonums', 'rows')
-	);
+		'prefs' => ['feature_file_galleries'],
+		'params' => [],
+		'common_params' => ['nonums', 'rows']
+	];
 }
 
 /**
@@ -34,6 +34,6 @@ function module_top_files($mod_reference, $module_params)
 	$smarty = TikiLib::lib('smarty');
 	$filegallib = TikiLib::lib('filegal');
 	$ranking = $filegallib->list_files(0, $mod_reference["rows"], 'hits_desc', '');
-	
+
 	$smarty->assign('modTopFiles', $ranking["data"]);
 }

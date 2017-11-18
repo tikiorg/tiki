@@ -1,6 +1,6 @@
 <?php
 
-function check_file($filename,$filecontent)
+function check_file($filename, $filecontent)
 {
 	$dummy = 'foo';
 }
@@ -22,7 +22,7 @@ function check_file_read($filename)
 	$testname = $filename;
 	$read_permission = true;
 	$fileout = fopen($testname, 'r') or $read_permission = false;
-	if ( $read_permission ) {
+	if ($read_permission) {
 		$dummy = 'foo';
 		//$dummy = fgets($fileout);
 		fclose($fileout);
@@ -32,19 +32,19 @@ function check_file_read($filename)
 	return $read_permission;
 }
 
-function check_file_rename($oldfilename,$newfilename)
+function check_file_rename($oldfilename, $newfilename)
 {
 	$rename_permission = rename($oldfilename, $newfilename);
 	return $rename_permission;
 }
 
-function check_file_write($filename,$filecontent)
+function check_file_write($filename, $filecontent)
 {
 	$testname = $filename;
 	$testcontent = $filecontent;
 	$write_permission = true;
 	$fileout = fopen($testname, 'w') or $write_permission = false;
-	if ( $write_permission ) {
+	if ($write_permission) {
 		fwrite($fileout, $testcontent);
 		fclose($fileout);
 	} else {
@@ -54,9 +54,9 @@ function check_file_write($filename,$filecontent)
 }
 
 // replace template names with CSS class names
-function color_classes_perm_asc($filename,&$perms_asc,&$css_class_writable)
+function color_classes_perm_asc($filename, &$perms_asc, &$css_class_writable)
 {
-	if ( is_writable($filename) ) {
+	if (is_writable($filename)) {
 		$perms_asc = str_replace('WPERM', 'writeyes', $perms_asc);
 		$css_class_writable = 'writeyes';
 	} else {
@@ -64,7 +64,7 @@ function color_classes_perm_asc($filename,&$perms_asc,&$css_class_writable)
 		$css_class_writable = 'writeno';
 	}
 	$css_class_writable = 'noclass';
-	if ( is_readable($filename) ) {
+	if (is_readable($filename)) {
 		$perms_asc = str_replace('RPERM', 'readyes', $perms_asc);
 	} else {
 		$perms_asc = str_replace('RPERM', 'readno', $perms_asc);
@@ -86,16 +86,16 @@ function get_ownership_groupname($filename)
 // user/owner of file
 function get_ownership_username($filename)
 {
-    if (function_exists('posix_getpwuid')) {
-        if (file_exists($filename)) {
-            $user = posix_getpwuid(fileowner($filename));
-            $username = $user['name'];
-        } else {
-            $username = 'no user';
-        }
-    } else {
-        die('no posix extension');	// TODO (better)
-    }
+	if (function_exists('posix_getpwuid')) {
+		if (file_exists($filename)) {
+			$user = posix_getpwuid(fileowner($filename));
+			$username = $user['name'];
+		} else {
+			$username = 'no user';
+		}
+	} else {
+		die('no posix extension');	// TODO (better)
+	}
 	return $username;
 }
 
@@ -103,7 +103,7 @@ function get_ownership_username($filename)
 function get_page_url($filename)
 {
 	$page_basename = 'http';
-	if ( isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on" ) {
+	if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {
 		$page_basename .= 's';
 	}
 	$page_basename .= '://';
@@ -119,7 +119,7 @@ function get_page_url($filename)
 function get_page_url_clean($filename)
 {
 	$page_basename = 'http';
-	if ( $_SERVER["HTTPS"] == "on" ) {
+	if ($_SERVER["HTTPS"] == "on") {
 		$page_basename .= 's';
 	}
 	$page_basename .= '://';
@@ -182,22 +182,22 @@ function get_perms_ascii($filename)
 		$perm_string .= '<span class="RPERM">' . (($perms & 0x0100) ? 'r' : '-') . '</span>';
 		$perm_string .= '<span class="WPERM">' . (($perms & 0x0080) ? 'w' : '-') . '</span>';
 		$perm_string .= '<span class="XPERM">' . (($perms & 0x0040) ?
-	            (($perms & 0x0800) ? 's' : 'x' ) :
-        	    (($perms & 0x0800) ? 'S' : '-')) . '</span>';
+				(($perms & 0x0800) ? 's' : 'x' ) :
+				(($perms & 0x0800) ? 'S' : '-')) . '</span>';
 		// Group
 		$perm_string .= '<span class="RPERM">' . (($perms & 0x0020) ? 'r' : '-') . '</span>';
 		$perm_string .= '<span class="WPERM">' . (($perms & 0x0010) ? 'w' : '-') . '</span>';
 		$perm_string .= '<span class="XPERM">' . (($perms & 0x0008) ?
-	            (($perms & 0x0400) ? 's' : 'x' ) :
-        	    (($perms & 0x0400) ? 'S' : '-')) . '</span>';
+				(($perms & 0x0400) ? 's' : 'x' ) :
+				(($perms & 0x0400) ? 'S' : '-')) . '</span>';
 		// World
 		$perm_string .= '<span class="RPERM">' . (($perms & 0x0004) ? 'r' : '-') . '</span>';
 		$perm_string .= '<span class="WPERM">' . (($perms & 0x0002) ? 'w' : '-') . '</span>';
 		$perm_string .= '<span class="XPERM">' . (($perms & 0x0001) ?
-        	    (($perms & 0x0200) ? 't' : 'x' ) :
-        	    (($perms & 0x0200) ? 'T' : '-')) . '</span>';
+				(($perms & 0x0200) ? 't' : 'x' ) :
+				(($perms & 0x0200) ? 'T' : '-')) . '</span>';
 	} else {
-		$perm_string="no access";
+		$perm_string = "no access";
 	}
 	return $perm_string;
 }
@@ -205,7 +205,7 @@ function get_perms_ascii($filename)
 function get_perms_octal($filename)
 {
 	if (file_exists($filename)) {
-		$perms_oct=substr(sprintf('%o', fileperms($filename)), -3);
+		$perms_oct = substr(sprintf('%o', fileperms($filename)), -3);
 	} else {
 		$perms_oct = '999';
 	}

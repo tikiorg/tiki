@@ -16,30 +16,30 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_addon_info()
 {
-	return array(
+	return [
 		'name' => tra('Addon Module'),
 		'description' => tra('A module that shows content from a Tiki Addon View'),
-		'params' => array(
-			'package' => array(
+		'params' => [
+			'package' => [
 				'required' => true,
 				'name' => tra('Name of package (vendor/name)'),
 				'description' => tra('Name of package in the form vendor/name'),
 				'filter' => 'text',
-			),
-			'view' => array(
+			],
+			'view' => [
 				'required' => true,
 				'name' => tra('Name of the view'),
 				'description' => tra('Name of the view file without the .php'),
 				'filter' => 'text',
-			),
-			'otherparams' => array(
+			],
+			'otherparams' => [
 				'required' => false,
 				'name' => tra('Other parameters'),
 				'description' => tra('URL encoded string of other parameters (will not replace standard parameters)'),
 				'filter' => 'text',
-			)
-		),
-	);
+			]
+		],
+	];
 }
 
 /**
@@ -58,7 +58,7 @@ function module_addon($mod_reference, $module_params)
 	$parts = explode('/', $module_params['package']);
 	$path = TIKI_PATH . '/addons/' . $parts[0] . '_' . $parts[1] . '/views/' . $module_params['view'] . '.php';
 
-	if (!file_exists($path)) {
+	if (! file_exists($path)) {
 		$smarty->assign('error', tra("Error: Unable to locate view file for the package."));
 		return;
 	}
@@ -67,14 +67,14 @@ function module_addon($mod_reference, $module_params)
 
 	$functionname = "tikiaddon\\" . $parts[0] . "\\" . $parts[1] . "\\" . $module_params['view'];
 
-	if (!function_exists($functionname)) {
+	if (! function_exists($functionname)) {
 		$smarty->assign('error', tra("Error: Unable to locate view file for the package."));
 		return;
 	}
 
 	$prefname = 'ta_' . $parts[0] . '_' . $parts[1] . '_on';
 	$folder = $parts[0] . '_' . $parts[1];
-	if (!isset($GLOBALS['prefs'][$prefname]) || $GLOBALS['prefs'][$prefname] != 'y') {
+	if (! isset($GLOBALS['prefs'][$prefname]) || $GLOBALS['prefs'][$prefname] != 'y') {
 		$smarty->assign('error', tra('Addon is not activated: ') . $folder);
 		return;
 	}

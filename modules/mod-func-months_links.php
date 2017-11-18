@@ -16,23 +16,23 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 function module_months_links_info()
 {
-	return array(
+	return [
 		'name' => tra('Months Links'),
 		'description' => tra('Link to articles or blog posts for the current month and those preceding it.'),
-		'prefs' => array(),
-		'params' => array(
-			'feature' => array(
+		'prefs' => [],
+		'params' => [
+			'feature' => [
 				'name' => tra('Object Type'),
 				'description' => tra('Type of objects to link to.') . ' ' . tra('Possible values:') . ' ' . tra('"blogs" for blog posts, "cms" for published articles.'),
 				'required' => true
-			),
-			'id' => array(
+			],
+			'id' => [
 				'name' => tra('Object Identifier'),
-				'description' => tra('Identifier of an object with children to link to.') . ' ' .tra('This is required for the blog Object type.') . ' ' . tra('Example values:') . ' 3, 14.' . tra('For example, an identifier of 3 and a blogs Object type will show links to the blog posts in the blog with identifier 3.')
-			)
-		),
-		'common_params' => array('rows')
-	);
+				'description' => tra('Identifier of an object with children to link to.') . ' ' . tra('This is required for the blog Object type.') . ' ' . tra('Example values:') . ' 3, 14.' . tra('For example, an identifier of 3 and a blogs Object type will show links to the blog posts in the blog with identifier 3.')
+			]
+		],
+		'common_params' => ['rows']
+	];
 }
 
 /**
@@ -75,7 +75,7 @@ function module_months_links($mod_reference, $module_params)
 			$artlib = TikiLib::lib('art');
 		}
 
-		$month_names = array(
+		$month_names = [
 				'January',
 				'February',
 				'March',
@@ -88,7 +88,7 @@ function module_months_links($mod_reference, $module_params)
 				'October',
 				'November',
 				'December'
-		);
+		];
 
 		$current_month_num = TikiLib::date_format('%m', $tikilib->now);
 		$current_year = TikiLib::date_format('%Y', $tikilib->now);
@@ -96,18 +96,18 @@ function module_months_links($mod_reference, $module_params)
 
 		if ($_SESSION['cms_last_viewed_month'] && $module_params['feature'] == 'cms') {
 			list($year_expanded,$month_expanded_num) = explode('-', $_SESSION['cms_last_viewed_month']);
-			$month_expanded = $month_names[$month_expanded_num-1];
+			$month_expanded = $month_names[$month_expanded_num - 1];
 		} elseif ($_SESSION['blogs_last_viewed_month'] && $module_params['feature'] == 'blogs') {
 			list($year_expanded,$month_expanded_num) = explode('-', $_SESSION['blogs_last_viewed_month']);
-			$month_expanded = $month_names[$month_expanded_num-1];
+			$month_expanded = $month_names[$month_expanded_num - 1];
 		} else {
 			$year_expanded = $current_year;
-			$month_expanded = $month_names[$current_month_num-1];
+			$month_expanded = $month_names[$current_month_num - 1];
 		}
-		$archives = array();
+		$archives = [];
 		$numrows = $mod_reference['rows'] > 0 ? $mod_reference['rows'] : 120;
 
-		for ($i = 0 ; $i < $numrows ; $i++, $current_month_num--) {
+		for ($i = 0; $i < $numrows; $i++, $current_month_num--) {
 			if ($current_month_num == 0) {
 				$current_month_num = 12;
 				$current_year--;
@@ -129,11 +129,11 @@ function module_months_links($mod_reference, $module_params)
 					$archives[$current_year]['monthlist'][$real_month_name]['link'] = sprintf($link, $timestamp_month_start, $timestamp_month_end);
 					$archives[$current_year]['monthlist'][$real_month_name]['cant'] = $posts_of_month['cant'];
 					// Clicking on the year number displays the first non-empty month
-					if (!isset($archives[$current_year]['link'])) {
+					if (! isset($archives[$current_year]['link'])) {
 						$archives[$current_year]['link'] = $archives[$current_year]['monthlist'][$real_month_name]['link'];
 					}
 					$archives[$current_year]['cant'] += $posts_of_month['cant'];
-					for ($post=0; $post < $posts_of_month['cant']; $post++) {
+					for ($post = 0; $post < $posts_of_month['cant']; $post++) {
 						$archives[$current_year]['monthlist'][$real_month_name]['postlist'][$posts_of_month['data'][$post]['postId']] = $posts_of_month['data'][$post]['title'];
 					}
 				}
@@ -165,12 +165,12 @@ function module_months_links($mod_reference, $module_params)
 					$archives[$current_year]['monthlist'][$real_month_name]['link'] = sprintf($link, $timestamp_month_start, $timestamp_month_end);
 					$archives[$current_year]['monthlist'][$real_month_name]['cant'] = $posts_of_month['cant'];
 					// Clicking on the year number displays the first non-empty month
-					if (!isset($archives[$current_year]['link'])) {
+					if (! isset($archives[$current_year]['link'])) {
 						$archives[$current_year]['link'] = $archives[$current_year]['monthlist'][$real_month_name]['link'];
 					}
 					$archives[$current_year]['cant'] += $posts_of_month['cant'];
 
-					for ($post=0; $post < $posts_of_month['cant']; $post++) {
+					for ($post = 0; $post < $posts_of_month['cant']; $post++) {
 						$archives[$current_year]['monthlist'][$real_month_name]['postlist'][$posts_of_month['data'][$post]['articleId']] = $posts_of_month['data'][$post]['title'];
 					}
 				}

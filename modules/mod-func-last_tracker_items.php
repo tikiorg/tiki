@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header('location: index.php');
-  exit;
+	header('location: index.php');
+	exit;
 }
 
 /**
@@ -16,42 +16,42 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_last_tracker_items_info()
 {
-	return array(
+	return [
 		'name' => tra('Newest Tracker Items'),
 		'description' => tra('Displays the value of a field of the specified number of tracker items. If the specified tracker has no main field, either Field name or Field identifier is required.'),
-		'prefs' => array('feature_trackers'),
-		'params' => array(
-			'trackerId' => array(
+		'prefs' => ['feature_trackers'],
+		'params' => [
+			'trackerId' => [
 				'name' => tra('Tracker identifier'),
 				'description' => tra('Identifier of the tracker from which items are listed.') . " " . tra('Example value: 13.'),
 				'filter' => 'int',
 				'required' => true,
 				'profile_reference' => 'tracker',
-			),
-			'fieldId' => array(
+			],
+			'fieldId' => [
 				'name' => tra('Field identifier'),
 				'description' => tra('Identifier of the field from which values are listed. If Field name is set, this parameter is ignored.') . " " . tra('Example value: 13.'),
 				'filter' => 'int',
 				'profile_reference' => 'tracker_field',
-			),
-			'name' => array(
+			],
+			'name' => [
 				'name' => tra('Field name'),
 				'description' => tra('Name of the field from which values are listed.') . " " . tra('Example value: age.'),
 				'filter' => 'striptags',
-			),
-			'sort_mode' => array(
+			],
+			'sort_mode' => [
 				'name' => tra('Sort'),
-				'description' => tra('Specifies how the items should be sorted.') . " " . tra('Possible values include created and created_asc (equivalent), created_desc, status, lastModif, createdBy and lastModifBy. Unless "_desc" is specified, the sort is ascending. "created" sorts on item creation date. "lastModif" sorts on the last modification date of items. "lastModif_desc" sorts in descending order of last modification date.')  . ' ' . tra('Default value:') . " created_desc",
+				'description' => tra('Specifies how the items should be sorted.') . " " . tra('Possible values include created and created_asc (equivalent), created_desc, status, lastModif, createdBy and lastModifBy. Unless "_desc" is specified, the sort is ascending. "created" sorts on item creation date. "lastModif" sorts on the last modification date of items. "lastModif_desc" sorts in descending order of last modification date.') . ' ' . tra('Default value:') . " created_desc",
 				'filter' => 'striptags',
-			),
-			'status' => array(
+			],
+			'status' => [
 				'name' => tra('Status filter'),
 				'description' => tra('If set, limits the listed items to those with the given statuses. Values are combinations of "o" (open), "p" (pending) and "c" (closed). Possible values:') . ' opc, oc, op, pc, o, p or c. ' . tra('Default value:') . ' opc',
 				'filter' => 'word',
-			)
-		),
-		'common_params' => array('rows', 'nonums')
-	);
+			]
+		],
+		'common_params' => ['rows', 'nonums']
+	];
 }
 
 /**
@@ -77,17 +77,17 @@ function module_last_tracker_items($mod_reference, $module_params)
 			$smarty->assign('module_error', tra('Unable to determine which field to show. Tracker identifier may be invalid, or the tracker has no main field and neither Field identifier nor Field name were set.'));
 		} else {
 			$field_info = $trklib->get_tracker_field($module_params['fieldId']);
-			if (!isset($module_params['status'])) {
+			if (! isset($module_params['status'])) {
 				$module_params['status'] = '';
 			}
 			if (empty($module_params['sort_mode'])) {
 				$module_params['sort_mode'] = 'created_desc';
 			}
-			$modLastItems = array();
+			$modLastItems = [];
 			//list_items filters the fieldId if hidden...
-			$tmp = $trklib->list_items($module_params['trackerId'], 0, $mod_reference["rows"], $module_params['sort_mode'], array($module_params['fieldId']=>$field_info), '', '', $module_params['status']);
+			$tmp = $trklib->list_items($module_params['trackerId'], 0, $mod_reference["rows"], $module_params['sort_mode'], [$module_params['fieldId'] => $field_info], '', '', $module_params['status']);
 			foreach ($tmp['data'] as $data) {
-				if (!empty($data['field_values'][0]['value'])) {
+				if (! empty($data['field_values'][0]['value'])) {
 					$data['subject'] = $data['field_values'][0]['value'];
 					$modLastItems[] = $data;
 				}
@@ -98,6 +98,7 @@ function module_last_tracker_items($mod_reference, $module_params)
 		$smarty->assign('module_error', tra('You do not have permission to view this tracker.'));
 	}
 	$smarty->assign('tpl_module_title', tra("Last Items"));
-	if (!strcasecmp($module_params['sort_mode'], 'lastModif_desc'))
+	if (! strcasecmp($module_params['sort_mode'], 'lastModif_desc')) {
 		$smarty->assign('tpl_module_title', tra("Last modified Items"));
+	}
 }

@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,13 +16,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_freetags_prefered_info()
 {
-	return array(
+	return [
 		'name' => tra('My Preferred Tags'),
 		'description' => tra('Displays to registered users the tags they prefer, based on the number of objects they tagged. Greater preference is indicated by a larger text size.'),
-		'prefs' => array('feature_freetags'),
-		'params' => array(),
-		'common_params' => array('rows')
-	);
+		'prefs' => ['feature_freetags'],
+		'params' => [],
+		'common_params' => ['rows']
+	];
 }
 
 /**

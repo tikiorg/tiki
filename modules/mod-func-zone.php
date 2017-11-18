@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,26 +16,26 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_zone_info()
 {
-	return array(
+	return [
 		'name' => tr('Module Zone'),
 		'description' => tr('Can contain other modules so can be used as a Bootstrap navbar object, for example.'),
-		'params' => array(
-			'name' => array(
+		'params' => [
+			'name' => [
 				'required' => true,
 				'name' => tr('Zone Name'),
 				'description' => tr('Must be unique; the zone becomes an "extra module zone" and will appear in the admin modules panel.'),
 				'filter' => 'text',
 				'default' => '',
-			),
-			'zoneclass' => array(
+			],
+			'zoneclass' => [
 				'required' => false,
 				'name' => tr('CSS Class'),
 				'description' => tr('Example for a Bootstrap "social" navbar:') . ' "navbar navbar-inverse navbar-fixed-top"',
 				'filter' => 'text',
 				'default' => '',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 /**
@@ -55,5 +55,4 @@ function module_zone($mod_reference, $module_params)
 			$modlib = new ModLib();
 		}
 	}
-
 }

@@ -6,8 +6,8 @@
 // $Id$
 
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -15,45 +15,45 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_menupage_info()
 {
-	return array(
+	return [
 		'name' => tra('Menu Page'),
 		'description' => tra('Displays a Wiki page.'),
-		'prefs' => array('feature_wiki'),
-		'params' => array(
-			'pagemenu' => array(
+		'prefs' => ['feature_wiki'],
+		'params' => [
+			'pagemenu' => [
 				'name' => tra('Page'),
 				'description' => tra('Page to display in the menu. Example value: HomePage.'),
 				'filter' => 'pagename',
 				'required' => true,
 				'profile_reference' => 'wiki_page',
-			),
-			'use_namespace' => array(
+			],
+			'use_namespace' => [
 				'name' => tra('Use default namespace'),
 				'description' => tra('Prepend the default namespace to the page name for localized menus per workspace (1/0)'),
 				'filter' => 'int',
 				'default' => 0,
 				'required' => false,
-			),
-			'menu_id' => array(
+			],
+			'menu_id' => [
 				'name' => tra('DOM #id'),
 				'description' => tra('Id of the menu in the DOM'),
 				'filter' => 'text',
 				'required' => false,
-			),
-			'menu_class' => array(
+			],
+			'menu_class' => [
 				'name' => tra('CSS class'),
 				'description' => tra('Class of the menu container'),
 				'filter' => 'text',
 				'required' => false,
-			),
-			'menu_type' => array(
+			],
+			'menu_type' => [
 				'name' => tra('Menu style'),
 				'description' => tra('Display the page as a menu (horiz / vert)'),
 				'filter' => 'alpha',
 				'required' => false,
-			),
-		)
-	);
+			],
+		]
+	];
 }
 
 /**
@@ -62,7 +62,7 @@ function module_menupage_info()
  */
 function module_menupage($mod_reference, $module_params)
 {
-	if (!empty($module_params['pagemenu'])) {
+	if (! empty($module_params['pagemenu'])) {
 		$wikilib = TikiLib::lib('wiki');
 		$menulib = TikiLib::lib('menu');
 		$smarty = TikiLib::lib('smarty');
@@ -73,7 +73,7 @@ function module_menupage($mod_reference, $module_params)
 			$pagemenu = $wikilib->include_default_namespace($pagemenu);
 		}
 
-		$perms = Perms::get(array('object' => $pagemenu, 'type' => 'wiki page'));
+		$perms = Perms::get(['object' => $pagemenu, 'type' => 'wiki page']);
 
 		if ($perms->view) {
 			$content = $wikilib->get_parse($pagemenu, $dummy, true);
@@ -81,7 +81,7 @@ function module_menupage($mod_reference, $module_params)
 			$content = '<label class="alert-warning">' . tra("Permission denied") . '</label>';
 		}
 
-		if (! empty($content) && ! empty($module_params['menu_type']) && in_array($module_params['menu_type'], array('horiz', 'vert'))) {
+		if (! empty($content) && ! empty($module_params['menu_type']) && in_array($module_params['menu_type'], ['horiz', 'vert'])) {
 			$class = 'cssmenu_' . $module_params['menu_type'];
 			$content = preg_replace_callback(
 				'/<(ul|ol|li)([^>]*)>/Umi',

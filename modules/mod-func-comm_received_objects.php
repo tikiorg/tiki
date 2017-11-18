@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,13 +16,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_comm_received_objects_info()
 {
-	return array(
+	return [
 		'name' => tra('Received Objects'),
 		'description' => tra('Displays the number of pages received (via Communications).'),
-		'prefs' => array("feature_comm"),
+		'prefs' => ["feature_comm"],
 		'documentation' => 'Module comm_received_objects',
-		'params' => array()
-	);
+		'params' => []
+	];
 }
 
 /**
@@ -34,6 +34,6 @@ function module_comm_received_objects($mod_reference, $module_params)
 	$tikilib = TikiLib::lib('tiki');
 	$smarty = TikiLib::lib('smarty');
 	$ranking = $tikilib->list_received_pages(0, -1, 'pageName_asc');
-	
+
 	$smarty->assign('modReceivedPages', $ranking["cant"]);
 }

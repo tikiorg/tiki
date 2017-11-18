@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 
@@ -17,13 +17,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_user_blogs_info()
 {
-	return array(
+	return [
 		'name' => tra('My Blogs'),
 		'description' => tra('Displays to registered users their blogs.'),
-		'prefs' => array('feature_blogs'),
-		'params' => array(),
-		'common_params' => array("nonums")
-	);
+		'prefs' => ['feature_blogs'],
+		'params' => [],
+		'common_params' => ["nonums"]
+	];
 }
 
 /**
@@ -37,7 +37,7 @@ function module_user_blogs($mod_reference, $module_params)
 		$smarty = TikiLib::lib('smarty');
 		$bloglib = TikiLib::lib('blog');
 		$ranking = $bloglib->list_user_blogs($user, false);
-		
+
 		$smarty->assign('modUserBlogs', $ranking);
 		$smarty->assign('tpl_module_title', tra("My blogs"));
 	}

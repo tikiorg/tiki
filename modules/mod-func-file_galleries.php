@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,12 +16,12 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_file_galleries_info()
 {
-	return array(
+	return [
 		'name' => tra('File Galleries'),
 		'description' => tra('Displays links to file galleries.'),
-		'prefs' => array('feature_file_galleries'),
-		'params' => array(),
-	);
+		'prefs' => ['feature_file_galleries'],
+		'params' => [],
+	];
 }
 
 /**
@@ -32,6 +32,6 @@ function module_file_galleries($mod_reference, $module_params)
 {
 	$filegallib = TikiLib::lib('filegal');
 	$smarty = TikiLib::lib('smarty');
-	
+
 	$smarty->assign('tree', $filegallib->getTreeHTML());
 }

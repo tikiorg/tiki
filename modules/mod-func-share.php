@@ -16,182 +16,182 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 function module_share_info()
 {
-	return array(
+	return [
 		'name' => tra('Share'),
 		'description' => tra('Links for sharing, reporting etc.'),
-		'params' => array(
-			'report' => array(
+		'params' => [
+			'report' => [
 				'name' => tra('Report'),
 				'description' => tra('Report to Webmaster') . ' (y/n)',
 				'filter' => 'alpha',
-			),
-			'share' => array(
+			],
+			'share' => [
 				'name' => tra('Share'),
 				'description' => tra('Share this page') . ' (y/n)',
 				'filter' => 'alpha',
-			),
-			'email' => array(
+			],
+			'email' => [
 				'name' => tra('Email'),
 				'description' => tra('Email this page') . ' (y/n)',
 				'filter' => 'alpha',
-			),
-			'icons' => array(
+			],
+			'icons' => [
 				'name' => tra('Icons'),
 				'description' => tra('Use icons for report, share and email links') . ' (n/y)',
 				'filter' => 'alpha',
-			),
-			'facebook' => array(
+			],
+			'facebook' => [
 				'name' => tra('Facebook'),
 				'description' => tra('Show Facebook "Like" button on the current page') . ' (n/y)',
 				'filter' => 'alpha',
-			),
-			'facebook_href' => array(
+			],
+			'facebook_href' => [
 				'name' => tra('Facebook: URL'),
 				'description' => tra('URL to "Like" (leave blank for current URL)'),
 				'filter' => 'url',
-			),
-			'facebook_send' => array(
+			],
+			'facebook_send' => [
 				'name' => tra('Facebook: Send'),
 				'description' => tra('Show Facebook "Send" button') . ' (y/n)',
 				'filter' => 'alpha',
-			),
-			'facebook_layout' => array(
+			],
+			'facebook_layout' => [
 				'name' => tra('Facebook: Layout'),
 				'description' => tra('Size, layout and amount of social context') . ' (standard/button_count/box_count)',
 				'filter' => 'text',
-			),
-			'facebook_width' => array(
+			],
+			'facebook_width' => [
 				'name' => tra('Facebook: Width'),
 				'description' => tra('Width in pixels') . ' (450)',
 				'filter' => 'digits',
-			),
-			'facebook_height' => array(
+			],
+			'facebook_height' => [
 				'name' => tra('Facebook: Height'),
 				'description' => tra('Container height in CSS units (e.g. "120px" or "2em")'),
 				'filter' => 'text',
-			),
-			'facebook_show_faces' => array(
+			],
+			'facebook_show_faces' => [
 				'name' => tra('Facebook: Show Faces'),
 				'description' => tra('Show pictures of others who like this') . ' (y/n)',
 				'filter' => 'alpha',
-			),
-			'facebook_verb' => array(
+			],
+			'facebook_verb' => [
 				'name' => tra('Facebook: Verb'),
 				'description' => tra('Verb to display in button') . ' (like/recommend)',
 				'filter' => 'word',
-			),
-			'facebook_colorscheme' => array(
+			],
+			'facebook_colorscheme' => [
 				'name' => tra('Facebook: Colors'),
 				'description' => tra('Color scheme') . ' (light/dark)',
 				'filter' => 'word',
-			),
-			'facebook_font' => array(
+			],
+			'facebook_font' => [
 				'name' => tra('Facebook: Font'),
 				'description' => tra('Font to display') . ' (lucida grande/arial/segoe ui/tahoma/trebuchet ms/verdana)',
 				'filter' => 'text',
-			),
-			'facebook_locale' => array(
+			],
+			'facebook_locale' => [
 				'name' => tra('Facebook: Locale'),
 				'description' => tra('Locale in the format ll_CC (default "en_US")'),
 				'filter' => 'text',
-			),
-			'facebook_ref' => array(
+			],
+			'facebook_ref' => [
 				'name' => tra('Facebook: Referrals'),
 				'description' => tra('Label for tracking referrals (optional)'),
 				'filter' => 'text',
-			),
-			'facebook_appId' => array(
+			],
+			'facebook_appId' => [
 				'name' => tra('Facebook: App Id'),
 				'description' => tra('ID of your Facebook app (optional)'),
 				'filter' => 'digits',
-			),
-			'twitter' => array(
+			],
+			'twitter' => [
 				'name' => tra('Twitter'),
 				'description' => tra('Show Twitter Follow Button on the current page') . ' (n/y)',
 				'filter' => 'alpha',
-			),
-			'twitter_username' => array(
+			],
+			'twitter_username' => [
 				'name' => tra('Twitter: User Name'),
 				'description' => tra('Twitter user name to quote as "via"'),
 				'filter' => 'text',
-			),
-			'twitter_label' => array(
+			],
+			'twitter_label' => [
 				'name' => tra('Twitter: Label'),
 				'description' => tra('Text to display. Default "Tweet"'),
 				'filter' => 'text',
-			),
-			'twitter_url' => array(
+			],
+			'twitter_url' => [
 				'name' => tra('Twitter: URL'),
 				'description' => tra('URL to "Tweet" (leave blank for current URL)'),
 				'filter' => 'url',
-			),
-			'twitter_show_count' => array(
+			],
+			'twitter_show_count' => [
 				'name' => tra('Twitter: Show Count'),
 				'description' => tra('Position of Tweet count') . ' (horizontal/vertical/none)',
 				'filter' => 'alpha',
-			),
-			'twitter_language' => array(
+			],
+			'twitter_language' => [
 				'name' => tra('Twitter: Language'),
 				'description' => tra('Two letter language code') . ' (en/de/es/fr/id/it/ko/ja/nl/pt/re/tr)',
 				'filter' => 'word',
-			),
-			'twitter_width' => array(
+			],
+			'twitter_width' => [
 				'name' => tra('Twitter: Width'),
 				'description' => tra('Width in pixels or percentage (e.g. 300px)'),
 				'filter' => 'text',
-			),
-			'twitter_height' => array(
+			],
+			'twitter_height' => [
 				'name' => tra('Twitter: Height'),
 				'description' => tra('Container height in CSS units (e.g. "120px" or "2em")'),
 				'filter' => 'text',
-			),
-			'twitter_text' => array(
+			],
+			'twitter_text' => [
 				'name' => tra('Twitter: Text'),
 				'description' => tra('Tweet text (leave empty to use page title'),
 				'filter' => 'word',
-			),
-			'linkedin' => array(
+			],
+			'linkedin' => [
 				'name' => tra('LinkedIn'),
 				'description' => tra('Linked in share button') . ' (n/y)',
 				'filter' => 'alpha',
-			),
-			'linkedin_url' => array(
+			],
+			'linkedin_url' => [
 				'name' => tra('LinkedIn: URL'),
 				'description' => tra('URL to share (leave blank for current URL)'),
 				'filter' => 'url',
-			),
-			'linkedin_mode' => array(
+			],
+			'linkedin_mode' => [
 				'name' => tra('LinkedIn: Count Mode'),
 				'description' => tra('Position of count') . ' (none/top/right)',
 				'filter' => 'word',
-			),
-			'google' => array(
+			],
+			'google' => [
 				'name' => tra('Google +1'),
 				'description' => tra('Google +1 button') . ' (n/y)',
 				'filter' => 'alpha',
-			),
-			'google_size' => array(
+			],
+			'google_size' => [
 				'name' => tra('Google: Size'),
 				'description' => tra('Google button size') . ' (standard|small|medium|tall)',
 				'filter' => 'word',
-			),
-			'google_annotation' => array(
+			],
+			'google_annotation' => [
 				'name' => tra('Google: Annotation'),
 				'description' => tra('Google annotation') . ' (bubble|inline|none)',
 				'filter' => 'word',
-			),
-			'google_language' => array(
+			],
+			'google_language' => [
 				'name' => tra('Google: Language'),
 				'description' => tra('Google language') . ' (en-US|fr|ca|de|en-UK|...)',
 				'filter' => 'text',
-			),
-			'google_href' => array(
+			],
+			'google_href' => [
 				'name' => tra('Google: URL'),
 				'description' => tra('URL to share (leave blank for current URL)'),
 				'filter' => 'url',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 /**
@@ -204,14 +204,14 @@ function module_share($mod_reference, $module_params)
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('share_mod_usage_counter', ++$share_mod_usage_counter);
 
-	$smarty->assign('share_icons', !empty($module_params['icons']) && $module_params['icons'] === 'y');
+	$smarty->assign('share_icons', ! empty($module_params['icons']) && $module_params['icons'] === 'y');
 
 	// facebook like
-	
+
 	$fbData = '';
 	$fbDivAttr = '';
 
-	if (!empty($module_params['facebook_height'])) {
+	if (! empty($module_params['facebook_height'])) {
 		$fbDivAttr .= ' height:' . $module_params['facebook_height'] . ';';
 	}
 	if (empty($module_params['facebook_send']) || $module_params['facebook_send'] === 'y') {
@@ -219,10 +219,10 @@ function module_share($mod_reference, $module_params)
 	} else {
 		$fbData .= ' data-send="false"';
 	}
-	if (!empty($module_params['facebook_layout']) && $module_params['facebook_layout'] !== 'standard') {
+	if (! empty($module_params['facebook_layout']) && $module_params['facebook_layout'] !== 'standard') {
 		$fbData .= ' data-layout="' . $module_params['facebook_layout'] . '"';
 	}
-	if (!empty($module_params['facebook_width'])) {
+	if (! empty($module_params['facebook_width'])) {
 		$fbData .= ' data-width="' . $module_params['facebook_width'] . '"';
 		$fbDivAttr .= ' width:' . $module_params['facebook_width'] . 'px;';
 	}
@@ -231,36 +231,36 @@ function module_share($mod_reference, $module_params)
 	} else {
 		$fbData .= ' data-show-faces="false"';
 	}
-	if (!empty($module_params['facebook_verb']) && $module_params['facebook_verb'] !== 'like') {
+	if (! empty($module_params['facebook_verb']) && $module_params['facebook_verb'] !== 'like') {
 		$fbData .= ' data-action="recommend"';
 	}
-	if (!empty($module_params['facebook_colorscheme']) && $module_params['facebook_colorscheme'] !== 'light') {
+	if (! empty($module_params['facebook_colorscheme']) && $module_params['facebook_colorscheme'] !== 'light') {
 		$fbData .= ' data-colorscheme="dark"';
 	}
-	if (!empty($module_params['facebook_font']) && $module_params['facebook_font'] !== 'lucida grande') {
+	if (! empty($module_params['facebook_font']) && $module_params['facebook_font'] !== 'lucida grande') {
 		$fbData .= ' data-font="' . $module_params['facebook_font'] . '"';
 	}
-	if (!empty($module_params['facebook_ref'])) {
+	if (! empty($module_params['facebook_ref'])) {
 		$fbData .= ' data-ref="' . htmlspecialchars($module_params['facebook_ref']) . '"';
 	}
-	if (!empty($module_params['facebook_href'])) {
+	if (! empty($module_params['facebook_href'])) {
 		$fbData .= ' data-href="' . $module_params['facebook_href'] . '"';
 	}
 	$smarty->assign('fb_data_attributes', $fbData);
-	
-	if (!empty($module_params['facebook_appId'])) {
+
+	if (! empty($module_params['facebook_appId'])) {
 		$smarty->assign('fb_app_id_param', '&appId=' . $module_params['facebook_appId']);
 	} else {
 		$smarty->assign('fb_app_id_param', '');
 	};
-	if (!empty($fbDivAttr)) {
+	if (! empty($fbDivAttr)) {
 		$fbDivAttr = ' style="' . $fbDivAttr . '"';
 	}
 	$smarty->assign('fb_div_attributes', $fbDivAttr);
 
 	// TODO find a way of matching up tiki lang with https://www.facebook.com/translations/FacebookLocales.xml
 
-	if (!empty($module_params['facebook_locale'])) {
+	if (! empty($module_params['facebook_locale'])) {
 		$smarty->assign('fb_locale', $module_params['facebook_locale']);
 	} else {
 		$smarty->assign('fb_locale', 'en_US');
@@ -271,10 +271,10 @@ function module_share($mod_reference, $module_params)
 	$twData = '';
 	$twDivAttr = '';
 
-	if (!empty($module_params['twitter_height'])) {
+	if (! empty($module_params['twitter_height'])) {
 		$twDivAttr .= ' height:' . $module_params['twitter_height'] . ';';
 	}
-	if (!empty($module_params['twitter_width'])) {
+	if (! empty($module_params['twitter_width'])) {
 		$twDivAttr .= ' width:' . $module_params['twitter_width'] . ';';
 	}
 	if (empty($module_params['twitter_show_count']) || $module_params['twitter_show_count'] === 'horizontal') {
@@ -282,22 +282,22 @@ function module_share($mod_reference, $module_params)
 	} else {
 		$twData .= ' data-count="' . $module_params['twitter_show_count'] . '"';
 	}
-	if (!empty($module_params['twitter_username'])) {
+	if (! empty($module_params['twitter_username'])) {
 		$twData .= ' data-via="' . $module_params['twitter_username'] . '"';
 	}
-	if (!empty($module_params['twitter_language'])) {
+	if (! empty($module_params['twitter_language'])) {
 		$twData .= ' data-lang="' . $module_params['twitter_language'] . '"';
 	}
-	if (!empty($module_params['twitter_text'])) {
+	if (! empty($module_params['twitter_text'])) {
 		$twData .= ' data-text="' . htmlspecialchars($module_params['twitter_text']) . '"';
 	}
-	if (!empty($module_params['twitter_url'])) {
+	if (! empty($module_params['twitter_url'])) {
 		$twData .= ' data-url="' . $module_params['twitter_url'] . '"';
 	}
 
 	$smarty->assign('tw_data_attributes', $twData);
 
-	if (!empty($twDivAttr)) {
+	if (! empty($twDivAttr)) {
 		$twDivAttr = 'style="' . $twDivAttr . '"';
 	}
 	$smarty->assign('tw_div_attributes', $twDivAttr);
@@ -305,10 +305,10 @@ function module_share($mod_reference, $module_params)
 	// linkedin
 
 	$liData = '';
-	if (!empty($module_params['linkedin_url'])) {
+	if (! empty($module_params['linkedin_url'])) {
 		$liData .= ' data-url="' . $module_params['linkedin_url'] . '"';
 	}
-	if (!empty($module_params['linkedin_mode'])) {
+	if (! empty($module_params['linkedin_mode'])) {
 		$liData .= ' data-counter="' . $module_params['linkedin_mode'] . '"';
 	}
 	$smarty->assign('li_data_attributes', $liData);
@@ -316,18 +316,18 @@ function module_share($mod_reference, $module_params)
 	// linkedin
 
 	$glData = '';
-	if (!empty($module_params['google_size']) && $module_params['google_size'] !== 'standard') {
+	if (! empty($module_params['google_size']) && $module_params['google_size'] !== 'standard') {
 		$glData .= ' data-size="' . $module_params['google_size'] . '"';
 	}
-	if (!empty($module_params['google_annotation']) && $module_params['google_annotation'] !== 'bubble') {
+	if (! empty($module_params['google_annotation']) && $module_params['google_annotation'] !== 'bubble') {
 		$glData .= ' data-annotation="' . $module_params['google_annotation'] . '"';
 	}
-	if (!empty($module_params['google_href'])) {
+	if (! empty($module_params['google_href'])) {
 		$glData .= ' data-href="' . $module_params['google_href'] . '"';
 	}
 	$smarty->assign('gl_data_attributes', $glData);
 
-	if (!empty($module_params['google_language']) && $module_params['google_language'] !== 'en-US') {
+	if (! empty($module_params['google_language']) && $module_params['google_language'] !== 'en-US') {
 		$smarty->assign('gl_script_addition', "  window.___gcfg = {lang: '{$module_params['google_language']}'};\n");
 	}
 }

@@ -6,8 +6,8 @@
 // $Id$
 
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -15,14 +15,14 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_xmpp_info()
 {
-	return array(
+	return [
 		'description' => tra('Hold a chat session using XMPP (uses the ConverseJS client).'),
 		'name' => tra('XMPP'),
-		'params' => array(),
-		'prefs' => array('xmpp_feature'),
+		'params' => [],
+		'prefs' => ['xmpp_feature'],
 		'title' => tra('XMPP'),
 		'type' => 'function'
-	);
+	];
 }
 
 /**
@@ -35,10 +35,10 @@ function module_xmpp($mod_reference, &$module_params)
 	$xmpplib = TikiLib::lib('xmpp');
 	$smarty = TikiLib::lib('smarty');
 
-	$xmpp = array(
+	$xmpp = [
 		'server_http_bind' => $xmpplib->server_http_bind,
 		'user_jid' => $xmpplib->get_user_jid($user)
-	);
-	
+	];
+
 	$smarty->assign('xmpp', $xmpp);
 }

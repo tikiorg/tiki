@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,13 +16,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_top_forum_posters_info()
 {
-	return array(
+	return [
 		'name' => tra('Top Forum Posters'),
 		'description' => tra('Displays the specified number of users who posted to forums, starting with the one having most posts.'),
-		'prefs' => array('feature_forums'),
-		'params' => array(),
-		'common_params' => array('nonums', 'rows')
-	);
+		'prefs' => ['feature_forums'],
+		'params' => [],
+		'common_params' => ['nonums', 'rows']
+	];
 }
 
 /**
@@ -32,8 +32,9 @@ function module_top_forum_posters_info()
 function module_top_forum_posters($mod_reference, $module_params)
 {
 	$smarty = TikiLib::lib('smarty');
-	global $ranklib; include_once ('lib/rankings/ranklib.php');
+	global $ranklib;
+	include_once('lib/rankings/ranklib.php');
 	$posters = $ranklib->forums_top_posters($mod_reference["rows"]);
-	
+
 	$smarty->assign('modTopForumPosters', $posters["data"]);
 }

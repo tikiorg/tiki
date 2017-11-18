@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,13 +16,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_category_transition_info()
 {
-	return array(
+	return [
 		'name' => tra('Category Transitions'),
 		'description' => tra('Displays controls to trigger category transitions and change the page\'s state according to predefined rules.'),
-		'prefs' => array('feature_category_transition'),
-		'params' => array(
-		),
-	);
+		'prefs' => ['feature_category_transition'],
+		'params' => [
+		],
+	];
 }
 
 /**
@@ -52,19 +52,17 @@ function module_category_transition($mod_reference, $module_params)
 
 		$transitions = $transitionlib->getAvailableTransitions($cat_objid, $cat_type);
 		$smarty->assign('mod_transitions', $transitions);
-
-	} else if ($modlib->is_admin_mode(true)) {	// add a dummy transition to display on the module admin page
+	} elseif ($modlib->is_admin_mode(true)) {	// add a dummy transition to display on the module admin page
 
 		$smarty->assign(
 			'mod_transitions',
-			array(
-				array(
+			[
+				[
 					'enabled' => true,
 					'transitionId' => 0,
 					'name' => tra('Example Transition')
-				)
-			)
+				]
+			]
 		);
 	}
 }
-

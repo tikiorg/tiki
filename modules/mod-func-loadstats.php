@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,11 +16,11 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_loadstats_info()
 {
-	return array(
+	return [
 		'name' => tra('Server Load'),
 		'description' => tra('Report of server resources used'),
-		'params' => array(),
-	);
+		'params' => [],
+	];
 }
 
 /**
@@ -29,5 +29,4 @@ function module_loadstats_info()
  */
 function module_loadstats($mod_reference, $module_params)
 {
-
 }

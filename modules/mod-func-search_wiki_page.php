@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,18 +16,18 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_search_wiki_page_info()
 {
-	return array(
+	return [
 		'name' => tra('Search For a Wiki Page'),
 		'description' => tra('Search for a wiki page by name.') . ' ' . tra('Deprecated - use the Search module instead'), // Search doesn't support Exact Match
-		'prefs' => array('feature_wiki'),
-		'params' => array(
-			'exact' => array(
+		'prefs' => ['feature_wiki'],
+		'params' => [
+			'exact' => [
 				'name' => tra('Exact Match'),
 				'description' => tra('Exact match checkbox checked by default if set to "y".') . " " . tr('Default: "n".'),
 				'filter' => 'alpha'
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 /**

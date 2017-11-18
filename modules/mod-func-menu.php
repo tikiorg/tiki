@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,101 +16,101 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_menu_info()
 {
-	return array(
+	return [
 		'name' => tra('Menu'),
 		'description' => tra('Displays a menu or a structure as a menu.'),
-		'params' => array(
-			'id' => array(
+		'params' => [
+			'id' => [
 				'name' => tra('Menu'),
 				'description' => tra('Identifier of a menu (from tiki-admin_menus.php)'),
 				'filter' => 'int',
 				'profile_reference' => 'menu',
-			),
-			'structureId' => array(
+			],
+			'structureId' => [
 				'name' => tra('Structure'),
 				'description' => tra('Identifier of a structure of wiki pages (name or number from tiki-admin_structures.php)'),
 				'filter' => 'text',
 				'profile_reference' => 'structure',
-			),
-			'type' => array(
+			],
+			'type' => [
 				'name' => tra('Type'),
 				'description' => tra('Direction for menu: horiz or vert (default vert)'),
 				'filter' => 'text',
-			),
+			],
 
 			// FIXME: There are 3 types of menus: Bootstrap, CSS or classic (JavaScript). There should be a single option to select between the 3, or 1 should be removed (CSS).
-			'css' => array(
+			'css' => [
 				'name' => tra('CSS/Superfish'),
 				'description' => tra('Use CSS Superfish menu (if bootstrap = n). y|n (default y)'),
 				'filter' => 'alpha',
-			),
-			'bootstrap' => array(
+			],
+			'bootstrap' => [
 				'name' => tra('Use Bootstrap menus'),
-				'description' => tra('').' ( y / n )',
+				'description' => tra('') . ' ( y / n )',
 				'default' => 'y',
-			),
+			],
 
-			'navbar_toggle' => array(
+			'navbar_toggle' => [
 				'name' => tra('Show Navbar Toggle Button'),
-				'description' => tra('Used in Bootstrap navbar menus when viewport is too narrow for menu items').' ( y / n )',
+				'description' => tra('Used in Bootstrap navbar menus when viewport is too narrow for menu items') . ' ( y / n )',
 				'default' => 'y',
-			),
-			'navbar_brand' => array(
+			],
+			'navbar_brand' => [
 				'name' => tra('The URL of the navbar brand (logo)'),
 				'description' => tra('Used in Bootstrap navbar menus, if there is a Brand logo to be attached to the menu'),
 				'default' => '',
-			),
-			'navbar_class' => array(
+			],
+			'navbar_class' => [
 				'name' => tra('CSS class for the menu nav element'),
 				'description' => tra(''),
 				'default' => 'navbar navbar-default',
-			),
-			'menu_id' => array(
+			],
+			'menu_id' => [
 				'name' => tra('DOM #id'),
 				'description' => tra('Id of the menu in the DOM'),
-			),
-			'menu_class' => array(
+			],
+			'menu_class' => [
 				'name' => tra('CSS class'),
 				'description' => tra('Class of the menu container'),
 				'filter' => 'text',
-			),
-			'sectionLevel' => array(
+			],
+			'sectionLevel' => [
 				'name' => tra('Limit low visibles levels'),
 				'description' => tra('All the submenus beginning at this level will be displayed if the url matches one of the option of this level or above or below.'),
 				'filter' => 'int',
-			),
-			'toLevel' => array(
+			],
+			'toLevel' => [
 				'name' => tra('Limit top visible levels'),
 				'description' => tra('Do not display options higher than this level.'),
 				'filter' => 'int',
-			),
-			'link_on_section' => array(
+			],
+			'link_on_section' => [
 				'name' => tra('Link on Section'),
 				'description' => tra('Create links on menu sections') . ' ' . tra('(y/n default y)'),
 				'filter' => 'alpha',
-			),
-			'translate' => array(
+			],
+			'translate' => [
 				'name' => tra('Translate'),
 				'description' => tra('Translate labels') . ' ' . tra('(y/n default y)'),
 				'filter' => 'alpha',
-			),
-			'menu_cookie' => array(
+			],
+			'menu_cookie' => [
 				'name' => tra('Menu Cookie'),
 				'description' => tra('Open the menu to show current option if possible') . ' ' . tra('(y/n default y)'),
 				'filter' => 'alpha',
-			),
-			'show_namespace' => array(
+			],
+			'show_namespace' => [
 				'name' => tra('Show Namespace'),
-				'description' => tra('Show namespace prefix in page names').' ( y / n )',	// Do not translate y/n	
+				'description' => tra('Show namespace prefix in page names') . ' ( y / n )',	// Do not translate y/n
 				'default' => 'y'
-			),
-			'setSelected' => array(
+			],
+			'setSelected' => [
 				'name' => tra('Set Selected'),
-				'description' => tra('Process all menu items to show currently selected item and other dynamic states. Useful when disabled on very large menus where performance becomes an issue.').' ( y / n )',
+				'description' => tra('Process all menu items to show currently selected item and other dynamic states. Useful when disabled on very large menus where performance becomes an issue.') . ' ( y / n )',
 				'default' => 'y'
-			),
-		)
-	);
+			],
+		]
+	];
 }
 
 /**
@@ -124,7 +124,7 @@ function module_menu($mod_reference, $module_params)
 	if (empty($module_params['id']) && empty($module_params['structureId'])) {
 		$smarty->assign('module_error', tr('One of these parameters has to be set:') . ' ' . tr('Menu') . ', ' . tr('Structure') . '.');
 	}
-	if (!empty($module_params['structureId'])) {
+	if (! empty($module_params['structureId'])) {
 		$structlib = TikiLib::lib('struct');
 
 		if (empty($module_params['title'])) {
@@ -133,5 +133,5 @@ function module_menu($mod_reference, $module_params)
 	}
 	$smarty->assign('module_type', empty($module_params['css']) || $module_params['css'] === 'y' ? 'cssmenu' : 'menu');
 	$show_namespace = isset($module_params['show_namespace']) ? $module_params['show_namespace'] : 'y';
-	$smarty->assign('show_namespace',$show_namespace);
+	$smarty->assign('show_namespace', $show_namespace);
 }

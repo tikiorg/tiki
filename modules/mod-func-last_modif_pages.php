@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,32 +16,32 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_last_modif_pages_info()
 {
-	return array(
+	return [
 		'name' => tra('Latest Changes'),
 		'description' => tra('List the specified number of pages, starting from the most recently modified.'),
-		'prefs' => array("feature_wiki"),
-		'params' => array(
-			'absurl' => array(
+		'prefs' => ["feature_wiki"],
+		'params' => [
+			'absurl' => [
 				'name' => tra('Absolute URL'),
 				'description' => tra('If set to "y", some of the links use an absolute URL instead of a relative one. This can avoid broken links if the module is to be sent in a newsletter, for example.') . " " . tr('Default: "n".')
-			),
-			'url' => array(
+			],
+			'url' => [
 				'name' => tra('Link Target'),
 				'description' => tra('Target URL of the "...more" link at the bottom of the module.') . " " . tr('Default:') . ' tiki-lastchanges.php'
-			),
-			'maxlen' => array(
+			],
+			'maxlen' => [
 				'name' => tra('Maximum Length'),
 				'description' => tra('Maximum number of characters in page names allowed before truncating.'),
 				'filter' => 'int'
-			),
-			'show_namespace' => array(
+			],
+			'show_namespace' => [
 					'name' => tra('Show Namespace'),
-					'description' => tra('Show namespace prefix in page names.').' ( y / n )',	// Do not translate y/n
+					'description' => tra('Show namespace prefix in page names.') . ' ( y / n )',	// Do not translate y/n
 					'default' => 'y'
-			)
-		),
-		'common_params' => array('nonums', 'rows')
-	);
+			]
+		],
+		'common_params' => ['nonums', 'rows']
+	];
 }
 
 /**

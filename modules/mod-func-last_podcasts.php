@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,57 +16,57 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_last_podcasts_info()
 {
-	return array(
+	return [
 		'name' => tra('Newest Podcasts'),
 		'description' => tra('Displays Podcasts.'),
-		'prefs' => array('feature_file_galleries'),
-		'common_params' => array('nonums', 'rows'),
-		'params' => array(
-			'galleryId' => array(
+		'prefs' => ['feature_file_galleries'],
+		'common_params' => ['nonums', 'rows'],
+		'params' => [
+			'galleryId' => [
 				'required' => false,
 				'name' => tra('File galleries IDs'),
 				'description' => tra('List of IDs of file galleries of type "Podcast (Audio)". Identifiers are separated by a colon (":"). If none, all file galleries will be scanned.') . ' ' . tra('Example value:') . ' 1:3. ',
 				'filter' => 'int',
 				'separator' => ':',
 				'profile_reference' => 'file_gallery',
-			),
-			'width' => array(
+			],
+			'width' => [
 				'required' => false,
 				'name' => tra('width'),
 				'description' => tra('Width of mediaplayer in pixels.'),
 				'default' => 190,
-			),
-			'height' => array(
+			],
+			'height' => [
 				'required' => false,
 				'name' => tra('height'),
 				'description' => tra('Height of mediaplayer in pixels.'),
 				'default' => 20,
-			),
-			'mediaplayer' => array(
+			],
+			'mediaplayer' => [
 				'name' => tra('mediaplayer'),
 				'description' => tra('Path to mp3 player. For instance media/player_mp3_maxi.swf if you downloaded player_mp3_maxi.swf from http://flash-mp3-player.net/players/maxi/download/ to directory media/ (directory needs to be created or you can chose another place).'),
-			),
-			'link_url' => array(
+			],
+			'link_url' => [
 				'required' => false,
 				'name' => tra('Bottom Link URL'),
 				'description' => tra('URL for a link at bottom of module.'),
-			),
-			'link_text' => array(
+			],
+			'link_text' => [
 				'required' => false,
 				'name' => tra('Bottom Link URL Text'),
 				'description' => tra('Text for link if Bottom Link URL is set.'),
 				'default' => tra('More Podcasts'),
 				'filter' => 'striptags',
-			),
-			'verbose' => array(
+			],
+			'verbose' => [
 				'required' => false,
 				'name' => tra('Verbose'),
 				'description' => 'y|n ' . tra('Display description of podcast below player if "y", and on title mouseover if "n".'),
 				'default' => 'y',
 				'filter' => 'striptags',
-			)
-		)
-	);
+			]
+		]
+	];
 }
 
 /**
@@ -87,9 +87,9 @@ function module_last_podcasts($mod_reference, $module_params)
 	} else {
 		$mediafiles = $filegallib->list_files(0, $mod_reference["rows"], 'created_desc', '');
 	}
-	
+
 	$mediaplayer = (isset($module_params['mediaplayer']) && is_readable($module_params['mediaplayer'])) ? $module_params['mediaplayer'] : '';
-	
+
 	$smarty->assign('modLastFiles', $mediafiles['data']);
 	$smarty->assign('mediaplayer', $mediaplayer);
 	$smarty->assign('nonums', isset($module_params['nonums']) ? $module_params['nonums'] : 'n');
@@ -100,5 +100,3 @@ function module_last_podcasts($mod_reference, $module_params)
 	$smarty->assign('player_height', isset($module_params['height']) ? $module_params['height'] : '20');
 	$smarty->assign('module_rows', $mod_reference["rows"]);
 }
-
-

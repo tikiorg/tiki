@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,13 +16,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_old_articles_info()
 {
-	return array(
+	return [
 		'name' => tra('Old Articles'),
 		'description' => tra('Displays the specified number of old articles (which do not show on articles home page anymore).'),
-		'prefs' => array('feature_articles'),
-		'params' => array(),
-		'common_params' => array("rows", "nonums")
-	);
+		'prefs' => ['feature_articles'],
+		'params' => [],
+		'common_params' => ["rows", "nonums"]
+	];
 }
 
 /**
@@ -36,9 +36,10 @@ function module_old_articles($mod_reference, $module_params)
 	$tikilib = TikiLib::lib('tiki');
 	$artlib = TikiLib::lib('art');
 
-	if (!isset($prefs['maxArticles']))
+	if (! isset($prefs['maxArticles'])) {
 		$prefs['maxArticles'] = 0;
-	
+	}
+
 	$ranking = $artlib->list_articles($prefs['maxArticles'], $mod_reference["rows"], 'publishDate_desc', '', '', '', $user);
 	$smarty->assign('modOldArticles', $ranking["data"]);
 }

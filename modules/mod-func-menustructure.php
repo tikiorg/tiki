@@ -6,8 +6,8 @@
 // $Id$
 
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -15,18 +15,18 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_menustructure_info()
 {
-	return array(
+	return [
 		'name' => tra('Wiki Structure Menu'),
 		'description' => tra('Displays a structure.') . ' ' . tra('N.B. Deprecated, use the Menu module instead'),
-		'prefs' => array('feature_wiki_structure'),
-		'params' => array(
-			'structure' => array(
+		'prefs' => ['feature_wiki_structure'],
+		'params' => [
+			'structure' => [
 				'name' => tra('Structure'),
 				'description' => tra('Structure to display in the menu.'),
 				'required' => true
-			)
-		)
-	);
+			]
+		]
+	];
 }
 
 /**
@@ -38,7 +38,7 @@ function module_menustructure($mod_reference, $module_params)
 	$smarty = TikiLib::lib('smarty');
 	$structure = $module_params['structure'];
 
-	if (!empty($structure)) {
+	if (! empty($structure)) {
 		$structlib = TikiLib::lib('struct');
 		$smarty->assign('tpl_module_title', $structure);
 

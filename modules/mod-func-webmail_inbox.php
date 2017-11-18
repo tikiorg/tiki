@@ -16,85 +16,85 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 function module_webmail_inbox_info()
 {
-	return array(
+	return [
 		'name' => tra('Webmail Inbox'),
 		'description' => tra('Displays Webmail Inbox.'),
-		'prefs' => array('feature_webmail', 'feature_ajax'),
-		'params' => array(
-			'accountid' => array(
+		'prefs' => ['feature_webmail', 'feature_ajax'],
+		'params' => [
+			'accountid' => [
 				'name' => tra('Account Id'),
 				'description' => tra('Webmail account identifier (if not set uses user\'s current account)'),
 				'filter' => 'int'
-			),
-			'mode' => array(
+			],
+			'mode' => [
 				'name' => tra('Mode'),
 				'description' => tra('Mode.') . ' ' . tra('Possible values:') . ' "webmail", "groupmail".',
 				'filter' => 'word'
-			),
-			'group' => array(
+			],
+			'group' => [
 				'name' => tra('Group'),
 				'description' => tra('GroupMail: Group (e.g. "Help Team")'),
 				'filter' => 'striptags'
-			),
-			'trackerId' => array(
+			],
+			'trackerId' => [
 				'name' => tra('Tracker ID'),
 				'description' => tra('GroupMail: Tracker ID (to store GroupMail activity)'),
 				'filter' => 'int',
 				'profile_reference' => 'tracker',
-			),
-			'fromFId' => array(
+			],
+			'fromFId' => [
 				'name' => tra('From Field ID'),
 				'description' => tra('GroupMail: From Field (Id of field in tracker to store email From header)'),
 				'filter' => 'int',
 				'profile_reference' => 'tracker_field',
-			),
-			'subjectFId' => array(
+			],
+			'subjectFId' => [
 				'name' => tra('Subject Field ID'),
 				'description' => tra('GroupMail: Subject Field (Id of field in tracker to store email Subject header)'),
 				'filter' => 'int',
 				'profile_reference' => 'tracker_field',
-			),
-			'messageFId' => array(
+			],
+			'messageFId' => [
 				'name' => tra('Message Field ID'),
 				'description' => tra('GroupMail: Message Field (Id of field in tracker to store email message identifier)'),
 				'filter' => 'int',
 				'profile_reference' => 'tracker_field',
-			),
-			'contentFId' => array(
+			],
+			'contentFId' => [
 				'name' => tra('Content Field ID'),
 				'description' => tra('GroupMail: Content Field (Id of field in tracker to store email message body content)'),
 				'filter' => 'int',
 				'profile_reference' => 'tracker_field',
-			),
-			'accountFId' => array(
+			],
+			'accountFId' => [
 				'name' => tra('Account Field ID'),
 				'description' => tra('GroupMail: Account Field (Id of field in tracker to store Webmail account name)'),
 				'filter' => 'int',
 				'profile_reference' => 'tracker_field',
-			),
-			'datetimeFId' => array(
+			],
+			'datetimeFId' => [
 				'name' => tra('DateTime Field Id'),
 				'description' => tra('GroupMail: Date Time Field (Id of field in tracker to store email sent timestamp)'),
 				'filter' => 'int',
 				'profile_reference' => 'tracker_field',
-			),
-			'operatorFId' => array(
+			],
+			'operatorFId' => [
 				'name' => tra('Operator Field ID'),
 				'description' => tra('GroupMail: Operator Field (Id of field in tracker to store operator name (username))'),
 				'filter' => 'int',
 				'profile_reference' => 'tracker_field',
-			),
-			'maxlen' => array(
+			],
+			'maxlen' => [
 				'name' => tra('Maximum length'),
 				'description' => tra('Maximum number of characters in subjects allowed before truncating.'),
 				'filter' => 'int'
-			),
-		),
-		'common_params' => array(
+			],
+		],
+		'common_params' => [
 			'rows',
 			'nonums',
-		),
-	);
+		],
+	];
 }
 
 /**
@@ -106,7 +106,7 @@ function module_webmail_inbox($mod_reference, $module_params)
 	global $prefs, $webmaillib, $user, $webmail_reload, $webmail_start, $webmail_list_page;
 	$headerlib = TikiLib::lib('header');
 	$smarty = TikiLib::lib('smarty');
-	if (!$user) {
+	if (! $user) {
 		$smarty->assign('tpl_module_title', tra('Webmail error'));
 		$smarty->assign('error', 'You are not logged in');
 		return;	// modules cannot "exit", they must "return" to keep tiki alive
@@ -120,8 +120,8 @@ function module_webmail_inbox($mod_reference, $module_params)
 		return;
 	}
 
-	require_once ('tiki-webmail_ajax.php');
-	include_once ('lib/webmail/webmaillib.php');
+	require_once('tiki-webmail_ajax.php');
+	include_once('lib/webmail/webmaillib.php');
 
 
 	// get autoRefresh val from account so it can go into the page JS
@@ -132,7 +132,7 @@ function module_webmail_inbox($mod_reference, $module_params)
 	}
 
 	if ($webmail_account && $webmail_account['autoRefresh'] > 0) {
-		$headerlib->add_js('var autoRefresh = '.($webmail_account['autoRefresh'] * 1000).';');
+		$headerlib->add_js('var autoRefresh = ' . ($webmail_account['autoRefresh'] * 1000) . ';');
 	}
 	$webmail_reload = (isset($module_params['reload']) && $module_params['reload'] == 'y');
 	$webmail_start = isset($_SESSION['webmailinbox'][$mod_reference['moduleId']]['start']) ? $_SESSION['webmailinbox'][$mod_reference['moduleId']]['start'] : 0;
@@ -143,14 +143,14 @@ function module_webmail_inbox($mod_reference, $module_params)
 
 	$module_params['autoloaddelay'] = isset($module_params['autoloaddelay']) ? isset($module_params['autoloaddelay']) : 1;
 	if ($module_params['autoloaddelay'] > -1) {
-		$headerlib->add_js('setTimeout("doRefreshWebmail()", '.($module_params["autoloaddelay"] * 1000).');');
+		$headerlib->add_js('setTimeout("doRefreshWebmail()", ' . ($module_params["autoloaddelay"] * 1000) . ');');
 	}
 
 	$smarty->assign('webmail_list', $webmail_list_page);
 
 	$smarty->assign_by_ref('module_params', $module_params); // re-assigning this to cater for AJAX reloads
 	$smarty->assign('maxlen', isset($module_params['maxlen']) ? $module_params['maxlen'] : 30);
-	$smarty->assign('request_uri', strpos($_SERVER['REQUEST_URI'], '?') === false ? $_SERVER['REQUEST_URI'].'?' : $_SERVER['REQUEST_URI'].'&');
+	$smarty->assign('request_uri', strpos($_SERVER['REQUEST_URI'], '?') === false ? $_SERVER['REQUEST_URI'] . '?' : $_SERVER['REQUEST_URI'] . '&');
 	$module_rows = count($webmail_list_page);
 	$smarty->assign('module_type', 'module');
 	$smarty->assign('module_rows', $module_rows);
@@ -175,28 +175,29 @@ function webmail_refresh() 	// called in ajax mode
 		return;
 	}
 
-	if (!$webmail_account) {
+	if (! $webmail_account) {
 		$smarty->loadPlugin('smarty_function_icon');
 		$smarty->assign('tpl_module_title', tra('Webmail error'));
 		$smarty->assign(
 			'error',
 			tra('No accounts set up (or no current account set)') . '&nbsp;' .
 			'<a href="tiki-webmail.php?locSection=settings">' .
-			smarty_function_icon(array('_id'=>'arrow_right'), $smarty)
+			smarty_function_icon(['_id' => 'arrow_right'], $smarty)
 		) . '</a>';
 		return;
 	}
 
 	$mailsum = count($webmail_list);
 
-	if ($webmail_start < 1 || $webmail_start > $mailsum)
+	if ($webmail_start < 1 || $webmail_start > $mailsum) {
 		$webmail_start = $mailsum;
+	}
 
 	$upperlimit = $webmail_start;
 	$smarty->assign('start', $webmail_start);
 	$numshow = isset($module_params['rows']) ? $module_params['rows'] : $webmail_account['msgs'];
 
-	$webmail_list_page = Array();
+	$webmail_list_page = [];
 
 	for ($i = $webmail_start - 1; $i > -1 && $i > $upperlimit - $numshow - 1; $i--) {
 		$a_mail = $webmail_list[$i];
@@ -239,12 +240,12 @@ function webmail_refresh() 	// called in ajax mode
 	if ($upperlimit <> $mailsum) {
 		$prevstart = $upperlimit + $numshow;
 
-		if ($prevstart > $mailsum)
+		if ($prevstart > $mailsum) {
 			$prevstart = $mailsum;
+		}
 
 		$smarty->assign('prevstart', $prevstart);
 	} else {
 		$smarty->assign('prevstart', '');
 	}
-
 }

@@ -16,13 +16,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_map_search_location_info()
 {
-	return array(
+	return [
 		'name' => tra('Map location search'),
 		'description' => tra("Simple search controls for the map."),
-		'prefs' => array(),
-		'params' => array(
-		),
-	);
+		'prefs' => [],
+		'params' => [
+		],
+	];
 }
 
 /**
@@ -35,4 +35,3 @@ function module_map_search_location($mod_reference, $module_params)
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('search_location_id', 'search_location_' . ++$counter);
 }
-

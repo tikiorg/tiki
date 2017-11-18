@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
-  header('location: index.php');
-  exit;
+	header('location: index.php');
+	exit;
 }
 
 // Made by Yoni with Toggg great help
@@ -30,54 +30,54 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 function module_adsense_info()
 {
-	return array(
+	return [
 		'name' => tra('Google AdSense'),
 		'description' => tra('Displays a text/image Google AdSense advertisement. This module should be updated to support new Google code.'),
-		'prefs' => array(),
-		'params' => array(
-			'ad_channel' => array(
+		'prefs' => [],
+		'params' => [
+			'ad_channel' => [
 				'name' => tra('ad_channel'),
 				'description' => tra('Advertisement channel, as optionally provided by Google.'),
 				'filter' => 'striptags',
-			),
-			'client' => array(
+			],
+			'client' => [
 				'name' => tra('client'),
 				'description' => tra('As provided by Google. Format: "pub-xxxxxxxxxxxxxxxx"'),
 				'required' => true,
-			),
-			'display' => array(
+			],
+			'display' => [
 				'name' => tra('display'),
 				'description' => tra('Global banner format as provided by Google. For example: "display=468*60_as"'),
 				'filter' => 'striptags',
 				'required' => true,
-			),
-			'color_bg' => array(
+			],
+			'color_bg' => [
 				'name' => tra('color_bg'),
 				'description' => tra('Background color, as optionally provided by Google.'),
 				'filter' => 'striptags',
-			),
-			'color_border' => array(
+			],
+			'color_border' => [
 				'name' => tra('color_border'),
 				'description' => tra('Border color, as optionally provided by Google.'),
 				'filter' => 'striptags',
-			),
-			'color_link' => array(
+			],
+			'color_link' => [
 				'name' => tra('color_link'),
 				'description' => tra('Link color, as optionally provided by Google.'),
 				'filter' => 'striptags',
-			),
-			'color_text' => array(
+			],
+			'color_text' => [
 				'name' => tra('color_text'),
 				'description' => tra('Text color, as optionally provided by Google.'),
 				'filter' => 'striptags',
-			),
-			'color_url' => array(
+			],
+			'color_url' => [
 				'name' => tra('color_url'),
 				'description' => tra('URL color, as optionally provided by Google.'),
 				'filter' => 'striptags',
-			)
-		),
-	);
+			]
+		],
+	];
 }
 
 /**
@@ -89,7 +89,7 @@ function module_adsense($mod_reference, $module_params)
 	$smarty = TikiLib::lib('smarty');
 
 	$smarty->assign(
-		array(
+		[
 			'ad_channel' => $module_params['ad_channel'],
 			'client' => $module_params['client'],
 			'display' => $module_params['display'],
@@ -98,6 +98,6 @@ function module_adsense($mod_reference, $module_params)
 			'color_link' => $module_params['color_link'],
 			'color_text' => $module_params['color_text'],
 			'color_url' => $module_params['color_url']
-		)
+		]
 	);
 }

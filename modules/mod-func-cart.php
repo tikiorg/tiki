@@ -6,8 +6,8 @@
 // $Id$
 
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -15,61 +15,61 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_cart_info()
 {
-	return array(
+	return [
 		'name' => tra('Cart'),
 		'description' => tra('Displays the content of the cart, allows quantities to be modified and proceeds to payment.'),
-		'prefs' => array('payment_feature'),
-		'params' => array(
-			'ajax' => array(
+		'prefs' => ['payment_feature'],
+		'params' => [
+			'ajax' => [
 				'name' => tra('Use AJAX'),
 				'description' => tra('Use AJAX services for managing the cart') . ' (y/n)',
 				'filter' => 'alpha',
 				'default' => 'n',
-			),
-			'showItems' => array(
+			],
+			'showItems' => [
 				'name' => tra('Show Items'),
 				'description' => tra('Shows the items in the cart as they are added') . ' (y/n)',
 				'filter' => 'alpha',
 				'default' => 'y',
-			),
-			'showCount' => array(
+			],
+			'showCount' => [
 				'name' => tra('Show Item Count'),
 				'description' => tra('Shows the number of items in the cart') . ' (y/n)',
 				'filter' => 'alpha',
 				'default' => 'n',
-			),
-			'checkoutURL' => array(
+			],
+			'checkoutURL' => [
 				'name' => tra('Checkout URL'),
 				'description' => tra('Where to go to when the "Check-out" button is clicked but before the payment invoice is generated') . ' ' . tr('(Default empty: Goes to tiki-payment.php)'),
 				'filter' => 'url',
 				'default' => '',
-			),
-			'postPaymentURL' => array(
+			],
+			'postPaymentURL' => [
 				'name' => tra('Post-Payment URL'),
 				'description' => tra('Where to go to once the payment has been generated, will append "?invoice=xx" parameter on the URL for use in pretty trackers etc.') . ' ' . tr('(Default empty: Goes to tiki-payment.php)'),
 				'filter' => 'url',
 				'default' => '',
-			),
-			'showWeight' => array(
+			],
+			'showWeight' => [
 				'name' => tra('Show Total Weight'),
 				'description' => tra('Shows the weight of the items in the cart') . ' (y/n)',
 				'filter' => 'alpha',
 				'default' => 'n',
-			),
-			'weightUnit' => array(
+			],
+			'weightUnit' => [
 				'name' => tra('Weight Unit'),
 				'description' => tra('Shown after the weight'),
 				'filter' => 'alpha',
 				'default' => 'g',
-			),
-			'showItemButtons' => array(
+			],
+			'showItemButtons' => [
 				'name' => tra('Show Item Buttons'),
 				'description' => tra('Shows add, remove and delete buttons on items') . ' (y/n)',
 				'filter' => 'alpha',
 				'default' => 'n',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 /**
@@ -85,12 +85,12 @@ function module_cart($mod_reference, & $module_params)
 	$cartlib = TikiLib::lib('cart');
 
 	$info = module_cart_info();
-	$defaults = array();
+	$defaults = [];
 	foreach ($info['params'] as $key => $param) {
 		$defaults[$key] = $param['default'];
 	}
 
-	if (!empty($module_params['ajax']) && $module_params['ajax'] === 'y') {
+	if (! empty($module_params['ajax']) && $module_params['ajax'] === 'y') {
 		$smarty->assign('json_data', ' data-params=\'' . json_encode(array_filter($module_params)) . '\'');
 	} else {
 		$smarty->assign('json_data', '');
@@ -113,7 +113,7 @@ function module_cart($mod_reference, & $module_params)
 			$access->redirect($module_params['checkoutURL']);
 		} else {
 			$invoice = $cartlib->request_payment();
-	
+
 			if ($invoice) {
 				if ($module_params['postPaymentURL']) {
 					$delimiter = (strpos($module_params['postPaymentURL'], '?') === false) ? '?' : '&';
@@ -124,9 +124,9 @@ function module_cart($mod_reference, & $module_params)
 			}
 		}
 	}
-	
+
 	if ($cartlib->has_gift_certificate()) {
-		if (!empty($_POST['gift_certificate_redeem_code'])) {
+		if (! empty($_POST['gift_certificate_redeem_code'])) {
 			$added = $cartlib->add_gift_certificate($_POST['gift_certificate_redeem_code']);
 			if ($added) {
 				$access->redirect($_SERVER['REQUEST_URI'], tra('Gift card added'));
@@ -134,14 +134,14 @@ function module_cart($mod_reference, & $module_params)
 				$access->redirect($_SERVER['REQUEST_URI'], tra('Gift card not found'));
 			}
 		}
-	
+
 		if (isset($_POST['remove_gift_certificate'])) {
 			$cartlib->add_gift_certificate();
 			$access->redirect($_SERVER['REQUEST_URI'], tra('Gift card removed'));
 		}
-	
+
 		$cartlib->get_gift_certificate();
-	
+
 		$smarty->assign('has_gift_certificate', true);
 		$smarty->assign('gift_certificate_redeem_code', $cartlib->gift_certificate_code);
 		$smarty->assign('gift_certificate_amount', $cartlib->gift_certificate_amount);
@@ -154,4 +154,3 @@ function module_cart($mod_reference, & $module_params)
 	$smarty->assign('cart_weight', $cartlib->get_total_weight());
 	$smarty->assign('cart_count', $cartlib->get_count());
 }
-

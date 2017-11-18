@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,26 +16,26 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_last_visitors_info()
 {
-	return array(
+	return [
 		'name' => tra('Last Visitors'),
 		'description' => tra('Displays information about the specified number of users in decreasing order of last login time.'),
-		'params' => array(
-			'showavatars' => array(
+		'params' => [
+			'showavatars' => [
 				'name' => tra('Show profile pictures'),
 				'description' => tra('If set to "y", show user profile pictures.') . ' ' . tra('Default:') . ' "n"'
-			),
-			'maxlen' => array(
+			],
+			'maxlen' => [
 				'name' => tra('Maximum length'),
 				'description' => tra('Maximum number of characters in user names allowed before truncating.'),
 				'filter' => 'int'
-			),
-			'nodate' => array(
+			],
+			'nodate' => [
 				'name' => tra("Don't show date"),
 				'description' => tra('If set to "y", it will hide date.'),
-			)
-		),
-		'common_params' => array('nonums', 'rows'),
-	);
+			]
+		],
+		'common_params' => ['nonums', 'rows'],
+	];
 }
 
 /**

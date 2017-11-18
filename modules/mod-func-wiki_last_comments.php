@@ -16,43 +16,43 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 function module_wiki_last_comments_info()
 {
-	return array(
+	return [
 		'name' => tra('Newest Comments'),
 		'description' => tra('Lists the specified number of comments starting from the most recently posted.'),
-		'prefs' => array(),
-		'params' => array(
-			'moretooltips' => array(
+		'prefs' => [],
+		'params' => [
+			'moretooltips' => [
 				'name' => tra('More in tooltips'),
 				'description' => tra('If set to "y", the name of the object on which a comment is made is not displayed in the module box, but instead moved in the item\'s tooltip.'),
 				'default' => 'n',
-			),
-			'type' => array(
+			],
+			'type' => [
 				'name' => tra('Object type'),
 				'description' => tra('Type of the objects from which comments will be listed. Possible values:') . '  wiki page, article. ',
 				'filter' => 'word',
 				'default' => 'wiki page',
-			),
-			'commentlength' => array(
+			],
+			'commentlength' => [
 				'name' => tra('Maximum comment length'),
 				'description' => tra("If comments don't use titles this sets the maximum length for the comment snippet."),
 				'filter' => 'digits',
 				'default' => 40,
-			),
-			'avatars' => array(
+			],
+			'avatars' => [
 				'name' => tra('Show user profile pictures'),
 				'description' => tra('Display user profile pictures instead of numbers.'),
 				'filter' => 'alpha',
 				'default' => 'n',
-			),
-			'language' => array(
+			],
+			'language' => [
 				'name' => tra('Language'),
 				'description' => tra('Comments about objects in this language only.'),
 				'filter' => 'word',
 				'default' => '',
-			),
-		),
-		'common_params' => array('rows', 'nonums')
-	);
+			],
+		],
+		'common_params' => ['rows', 'nonums']
+	];
 }
 
 /**
@@ -61,22 +61,22 @@ function module_wiki_last_comments_info()
  */
 function module_wiki_last_comments($mod_reference, $module_params)
 {
-	if (!function_exists('module_last_comments')) {
-        /**
-         * @param $limit
-         * @param string $type
-         * @return array|null
-         */
-        function module_last_comments($limit, array $params)
+	if (! function_exists('module_last_comments')) {
+		/**
+		 * @param $limit
+		 * @param string $type
+		 * @return array|null
+		 */
+		function module_last_comments($limit, array $params)
 		{
 			global $tikilib, $user;
-			$bindvars = array($params['type']);
+			$bindvars = [$params['type']];
 			$where = '';
 			switch ($params['type']) {
 				case 'article':
 					$join = 'left join `tiki_articles` ta on (tc.`object` = ta.`articleId`)';
 					$get = ', ta.`title` as name';
-					if (!empty($params['language'])) {
+					if (! empty($params['language'])) {
 						$where .= ' and ta.`lang`=?';
 						$bindvars[] = $params['language'];
 					}
@@ -106,7 +106,7 @@ function module_wiki_last_comments($mod_reference, $module_params)
 
 			$query = "select tc.* $get from `tiki_comments` as tc $join where `objectType`=? $where order by `commentDate` desc";
 			$result = $tikilib->query($query, $bindvars, $limit, 0);
-			$ret = array();
+			$ret = [];
 
 			while ($res = $result->fetchRow()) {
 				switch ($params['type']) {
@@ -130,21 +130,29 @@ function module_wiki_last_comments($mod_reference, $module_params)
 		}
 	}
 	global $prefs;
-	if (!isset($module_params['type'])) $module_params['type'] = "wiki page";
-	if (!isset($module_params['commentlength'])) $module_params['commentlength'] = 40;
-	if (!isset($module_params['avatars'])) $module_params['avatars'] = 'n';
+	if (! isset($module_params['type'])) {
+		$module_params['type'] = "wiki page";
+	}
+	if (! isset($module_params['commentlength'])) {
+		$module_params['commentlength'] = 40;
+	}
+	if (! isset($module_params['avatars'])) {
+		$module_params['avatars'] = 'n';
+	}
 	$smarty = TikiLib::lib('smarty');
 	switch ($module_params['type']) {
-		case 'cms': case 'article': case 'articles':
-			if (!$prefs['feature_articles']) {
+		case 'cms':
+		case 'article':
+		case 'articles':
+			if (! $prefs['feature_articles']) {
 				return;
 			}
-			$module_params['type'] = 'article';
-			$smarty->assign('tpl_module_title', tra('Last article comments'));
+				$module_params['type'] = 'article';
+				$smarty->assign('tpl_module_title', tra('Last article comments'));
 			break;
 
 		default:
-			if (!$prefs['feature_wiki']) {
+			if (! $prefs['feature_wiki']) {
 				return;
 			}
 			$module_params['type'] = 'wiki page';

@@ -10,26 +10,26 @@
  */
 function module_quick_search_info()
 {
-	return array(
+	return [
 		'name' => tra('Quick Search'),
 		'description' => tra('Performs a search query and persists the results in the module for quick navigation access.'),
-		'prefs' => array('feature_search'),
-		'params' => array(
-			'filter_type' => array(
+		'prefs' => ['feature_search'],
+		'params' => [
+			'filter_type' => [
 				'name' => tra('Filter object type'),
 				'description' => tra('Limit search results to a specific object type. Enter an object type to use a static filter or write "selector" to provide an input.'),
 				'filter' => 'text',
-			),
-			'filter_category' => array(
+			],
+			'filter_category' => [
 				'name' => tra('Filter category'),
 				'description' => tra('Limit search results to a specific category. Enter the comma-separated list of category IDs to include in the selector. Single category will display no controls.'),
 				'filter' => 'digits',
 				'separator' => ',',
 				'profile_reference' => 'category',
-			),
-		),
-		'common_params' => array('rows'),
-	);
+			],
+		],
+		'common_params' => ['rows'],
+	];
 }
 
 /**
@@ -44,17 +44,17 @@ function module_quick_search($mod_reference, $module_params)
 	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 	$categlib = TikiLib::lib('categ');
 
-	$prefill = array(
+	$prefill = [
 		'trigger' => false,
 		'content' => '',
 		'type' => '',
 		'categories' => '',
-	);
+	];
 
 	$types = null;
-	$categories = array();
+	$categories = [];
 
-	if (isset ($module_params['filter_type'])) {
+	if (isset($module_params['filter_type'])) {
 		if ($module_params['filter_type'] == 'selector') {
 			$types = $unifiedsearchlib->getSupportedTypes();
 		} else {
@@ -62,7 +62,7 @@ function module_quick_search($mod_reference, $module_params)
 		}
 	}
 
-	if (isset ($module_params['filter_category']) && $prefs['feature_categories'] == 'y') {
+	if (isset($module_params['filter_category']) && $prefs['feature_categories'] == 'y') {
 		foreach ($module_params['filter_category'] as $categId) {
 			if (Perms::get('category', $categId)->view_category) {
 				$categories[$categId] = $categlib->get_category_name($categId);
@@ -86,7 +86,7 @@ function module_quick_search($mod_reference, $module_params)
 		if (isset($session['filter']['categories'])) {
 			$selected = $session['filter']['categories'];
 
-			if (isset ($categories[$selected])) {
+			if (isset($categories[$selected])) {
 				$prefill['categories'] = $selected;
 			}
 		}
@@ -97,4 +97,3 @@ function module_quick_search($mod_reference, $module_params)
 	$smarty->assign('qs_all_categories', implode(' or ', array_keys($categories)));
 	$smarty->assign('qs_types', $types);
 }
-

@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,13 +16,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_users_rank_info()
 {
-	return array(
+	return [
 		'name' => tra('Most Active Users'),
 		'description' => tra('Display the specified number of users and their score, starting from the one with the highest score.'),
-		'prefs' => array('feature_score'),
-		'params' => array(),
-		'common_params' => array('nonums', 'rows')
-	);
+		'prefs' => ['feature_score'],
+		'params' => [],
+		'common_params' => ['nonums', 'rows']
+	];
 }
 
 /**

@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -16,18 +16,18 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function module_messages_unread_messages_info()
 {
-	return array(
+	return [
 		'name' => tra('Unread Inter-User Messages'),
 		'description' => tra('Displays to users their number of new inter-user messages and a link to their message box.'),
-		'prefs' => array('feature_messages'),
-		'params' => array(
-			'showempty' => array(
+		'prefs' => ['feature_messages'],
+		'params' => [
+			'showempty' => [
 				'name' => tra('Show If Empty'),
 				'description' => tra('Show the module when there are no messages waiting. y|n ') . tra('Default=y'),
 				'required' => false,
-			)
-		)
-	);
+			]
+		]
+	];
 }
 
 /**
@@ -42,7 +42,7 @@ function module_messages_unread_messages($mod_reference, $module_params)
 	$tikilib = TikiLib::lib('tiki');
 	if ($user && $globalperms->messages) {
 		$modUnread = $tikilib->user_unread_messages($user);
-		if ($modUnread > 0 || !isset($module_params['showempty']) || $module_params['showempty'] == 'y') {
+		if ($modUnread > 0 || ! isset($module_params['showempty']) || $module_params['showempty'] == 'y') {
 			$smarty->assign('modUnread', $modUnread);
 			$smarty->assign('tpl_module_title', tra("Messages"));
 		}
