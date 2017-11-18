@@ -12,7 +12,7 @@ class TikiDb_MasterSlaveDispatch extends TikiDb
 
 	private $lastUsed;
 
-	function __construct( TikiDb $master, TikiDb $slave )
+	function __construct(TikiDb $master, TikiDb $slave)
 	{
 		$this->master = $master;
 		$this->slave = $slave;
@@ -34,37 +34,37 @@ class TikiDb_MasterSlaveDispatch extends TikiDb
 		$this->getApplicable()->stopTimer($starttime);
 	} // }}}
 
-	function qstr( $str ) // {{{
+	function qstr($str) // {{{
 	{
 		return $this->getApplicable()->qstr($str);
 	} // }}}
 
-	function query( $query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
+	function query($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true) // {{{
 	{
 		return $this->getApplicable($query)->query($query, $values, $numrows, $offset, $reporterrors);
 	} // }}}
 
-	function queryError( $query, &$error, $values = null, $numrows = -1, $offset = -1 ) // {{{
+	function queryError($query, &$error, $values = null, $numrows = -1, $offset = -1) // {{{
 	{
 		return $this->getApplicable($query)->queryError($query, $error, $values, $numrows, $offset);
 	} // }}}
 
-	function getOne( $query, $values = null, $reporterrors = true, $offset = 0 ) // {{{
+	function getOne($query, $values = null, $reporterrors = true, $offset = 0) // {{{
 	{
 		return $this->getApplicable($query)->getOne($query, $values, $reporterrors, $offset);
 	} // }}}
 
-	function setErrorHandler( TikiDb_ErrorHandler $handler ) // {{{
+	function setErrorHandler(TikiDb_ErrorHandler $handler) // {{{
 	{
 		$this->getApplicable()->setErrorHandler($handler);
 	} // }}}
 
-	function setTablePrefix( $prefix ) // {{{
+	function setTablePrefix($prefix) // {{{
 	{
 		$this->getApplicable()->setTablePrefix($prefix);
 	} // }}}
 
-	function setUsersTablePrefix( $prefix ) // {{{
+	function setUsersTablePrefix($prefix) // {{{
 	{
 		$this->getApplicable()->setUsersTablePrefix($prefix);
 	} // }}}
@@ -74,7 +74,7 @@ class TikiDb_MasterSlaveDispatch extends TikiDb
 		return $this->getApplicable()->getServerType();
 	} // }}}
 
-	function setServerType( $type ) // {{{
+	function setServerType($type) // {{{
 	{
 		$this->getApplicable()->setServerType($type);
 	} // }}}
@@ -84,22 +84,22 @@ class TikiDb_MasterSlaveDispatch extends TikiDb
 		return $this->lastUsed->getErrorMessage();
 	} // }}}
 
-	protected function setErrorMessage( $message ) // {{{
+	protected function setErrorMessage($message) // {{{
 	{
 		$this->getApplicable()->setErrorMessage($message);
 	} // }}}
 
-	protected function handleQueryError( $query, $values, $result ) // {{{
+	protected function handleQueryError($query, $values, $result) // {{{
 	{
 		$this->getApplicable()->handleQueryError($query, $values, $result);
 	} // }}}
 
-	protected function convertQueryTablePrefixes( &$query ) // {{{
+	protected function convertQueryTablePrefixes(&$query) // {{{
 	{
 		$this->getApplicable($query)->convertQueryTablePrefixes($query);
 	} // }}}
 
-	function convertSortMode( $sort_mode ) // {{{
+	function convertSortMode($sort_mode) // {{{
 	{
 		return $this->getApplicable()->convertSortMode($sort_mode);
 	} // }}}
@@ -109,17 +109,17 @@ class TikiDb_MasterSlaveDispatch extends TikiDb
 		return $this->getApplicable()->getQuery();
 	} // }}}
 
-	function setQuery( $sql ) // {{{
+	function setQuery($sql) // {{{
 	{
 		return $this->getApplicable()->setQuery($sql);
 	} // }}}
 
-	function ifNull( $field, $ifNull ) // {{{
+	function ifNull($field, $ifNull) // {{{
 	{
 		return $this->getApplicable()->ifNull($field, $ifNull);
 	} // }}}
 
-	function in( $field, $values, &$bindvars ) // {{{
+	function in($field, $values, &$bindvars) // {{{
 	{
 		return $this->getApplicable()->in($field, $values, $bindvars);
 	} // }}}
@@ -127,19 +127,19 @@ class TikiDb_MasterSlaveDispatch extends TikiDb
 	function concat() // {{{
 	{
 		$arr = func_get_args();
-		return call_user_func_array(array( $this->getApplicable(), 'concat' ), $arr);
+		return call_user_func_array([ $this->getApplicable(), 'concat' ], $arr);
 	} // }}}
 
-	private function getApplicable( $query = '' )
+	private function getApplicable($query = '')
 	{
-		if ( empty($query) ) {
+		if (empty($query)) {
 			return $this->lastUsed = $this->slave;
 		}
 
 		// If it's a write
 		// regex is for things starting with select in any case with potential
 		// whitespace in front of it
-		if (!preg_match('/^\s*select/i', $query)) {
+		if (! preg_match('/^\s*select/i', $query)) {
 			return $this->lastUsed = $this->master;
 		}
 

@@ -6,6 +6,7 @@
 // $Id$
 
 namespace Tiki\MailIn\Provider;
+
 use Tiki\MailIn\Action;
 
 class WikiMultipleProvider implements ProviderInterface
@@ -33,12 +34,12 @@ class WikiMultipleProvider implements ProviderInterface
 			'structure_routing' => $acc['routing'] == 'y',
 		];
 
-		return new Action\SubjectPrefixFactory(array(
+		return new Action\SubjectPrefixFactory([
 			'GET:' => new Action\DirectFactory('Tiki\MailIn\Action\WikiGet', $wikiParams),
 			'APPEND:' => new Action\DirectFactory('Tiki\MailIn\Action\WikiAppend', $wikiParams),
 			'PREPEND:' => new Action\DirectFactory('Tiki\MailIn\Action\WikiPrepend', $wikiParams),
 			'PUT:' => new Action\DirectFactory('Tiki\MailIn\Action\WikiPut', $wikiParams),
 			'' => new Action\DirectFactory('Tiki\MailIn\Action\WikiPut', $wikiParams),
-		));
+		]);
 	}
 }

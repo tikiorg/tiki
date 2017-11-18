@@ -27,7 +27,7 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 			$editable = array_shift($parts);
 			$group = array_shift($parts);
 
-			if (in_array($editable, array('block', 'inline', 'dialog'))) {
+			if (in_array($editable, ['block', 'inline', 'dialog'])) {
 				$this->editable = $editable;
 				$this->group = $group;
 			}
@@ -38,16 +38,16 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 	{
 		if ($name === 'tracker_status') {
 			switch ($value) {
-			case 'o':
-				$status = 'open';
-				break;
-			case 'p':
-				$status = 'pending';
-				break;
-			default:
-			case 'c':
-				$status = 'closed';
-				break;
+				case 'o':
+					$status = 'open';
+					break;
+				case 'p':
+					$status = 'pending';
+					break;
+				default:
+				case 'c':
+					$status = 'closed';
+					break;
 			}
 
 			$smarty = TikiLib::lib('smarty');
@@ -59,7 +59,7 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 		}
 
 		$tracker = Tracker_Definition::get($entry['tracker_id']);
-		if (!is_object($tracker)) {
+		if (! is_object($tracker)) {
 			return $value;
 		}
 		$field = $tracker->getField(substr($name, 14));
@@ -73,27 +73,27 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 		// TextArea fields need the raw wiki syntax here for it to get wiki parsed if necessary
 		if ($field['type'] === 'a' && isset($entry[$name . '_raw'])) {
 			$value = $entry[$name . '_raw'];
-		} elseif( in_array($field['type'], array('f', 'j')) ) {
+		} elseif (in_array($field['type'], ['f', 'j'])) {
 			$formatter = new Search_Formatter_ValueFormatter_Datetime();
 			$value = $formatter->timestamp($value);
 		}
 		$field['value'] = $value;
 
-		$this->cancache = ! in_array($field['type'], array('STARS', 's'));	// don't cache ratings fields
+		$this->cancache = ! in_array($field['type'], ['STARS', 's']);	// don't cache ratings fields
 
 		if ($this->editable) {
 			// Caching breaks inline editing
 			$this->cancache = false;
 		}
 
-		$item = array();
+		$item = [];
 		if ($entry['object_type'] == 'trackeritem') {
 			$item['itemId'] = $entry['object_id'];
 		}
 
 		$trklib = TikiLib::lib('trk');
 		$rendered = $trklib->field_render_value(
-			array(
+			[
 				'item' => $item,
 				'field' => $field,
 				'process' => 'y',
@@ -102,7 +102,7 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 				'editable' => $this->editable,
 				'editgroup' => $this->group,
 				'showpopup' => $field['isMain'],
-			)
+			]
 		);
 		return '~np~' . $rendered . '~/np~';
 	}
@@ -116,4 +116,3 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 		return $this->cancache;
 	}
 }
-

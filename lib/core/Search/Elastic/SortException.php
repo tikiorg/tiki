@@ -15,4 +15,3 @@ class Search_Elastic_SortException extends Search_Elastic_Exception
 		parent::__construct(tr('Sort field %0 not found in index', $this->field));
 	}
 }
-

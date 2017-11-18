@@ -7,9 +7,9 @@
 
 class Math_Formula_Function_SplitList extends Math_Formula_Function
 {
-	function evaluate( $element )
+	function evaluate($element)
 	{
-		$allowed = array('content', 'separator', 'keys', 'key');
+		$allowed = ['content', 'separator', 'keys', 'key'];
 
 		if ($extra = $element->getExtraValues($allowed)) {
 			$this->error(tr('Unexpected values: %0', implode(', ', $extra)));
@@ -17,32 +17,32 @@ class Math_Formula_Function_SplitList extends Math_Formula_Function
 
 		$content = $element->content;
 
-		if ( ! $content || count($content) < 1 ) {
+		if (! $content || count($content) < 1) {
 			$this->error(tra('Content required.'));
 		}
 
 		$separator = $element->separator;
-		if ( ! $separator || count($separator) != 1 ) {
+		if (! $separator || count($separator) != 1) {
 			$this->error(tra('Field must be provided and contain one argument: separator'));
 		}
 		$separator = $separator[0];
 
-		if ( ! $element->keys && ! $element->key ) {
+		if (! $element->keys && ! $element->key) {
 			$this->error(tra('Field must be provided and contain one or more values: key or keys'));
 		}
 
-		$out = array();
+		$out = [];
 
-		if( $element->key ) {
+		if ($element->key) {
 			$key = $element->key[0];
 			foreach ($content as $child) {
 				$string = $this->evaluateChild($child);
 				foreach (explode($separator, $string) as $value) {
-					$out[] = array($key => $value);
+					$out[] = [$key => $value];
 				}
 			}
 		} else {
-			$keys = array();
+			$keys = [];
 			foreach ($element->keys as $key) {
 				$keys[] = $key;
 			}
@@ -65,4 +65,3 @@ class Math_Formula_Function_SplitList extends Math_Formula_Function
 		return $out;
 	}
 }
-

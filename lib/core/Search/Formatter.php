@@ -9,8 +9,8 @@ class Search_Formatter
 {
 	private $plugin;
 	private $counter;
-	private $subFormatters = array();
-	private $customFilters = array();
+	private $subFormatters = [];
+	private $customFilters = [];
 	private $alternateOutput;
 
 	function __construct(Search_Formatter_Plugin_Interface $plugin, $counter = 0)
@@ -29,7 +29,8 @@ class Search_Formatter
 		$this->subFormatters[$name] = $formatter;
 	}
 
-	function addCustomFilter($filter) {
+	function addCustomFilter($filter)
+	{
 		$this->customFilters[] = $filter;
 	}
 
@@ -51,13 +52,13 @@ class Search_Formatter
 		if ($prefs['unified_cache_formatted_result'] === 'y') {
 			$cachelib = TikiLib::lib('cache');
 			$jsonList = $list->jsonSerialize();
-			usort($jsonList['result'], function($a, $b){
+			usort($jsonList['result'], function ($a, $b) {
 				if ($a['object_id'] == $b['object_id']) {
-        	return 0;
-    		}
-    		return ($a['object_id'] < $b['object_id']) ? -1 : 1;
+					return 0;
+				}
+				return ($a['object_id'] < $b['object_id']) ? -1 : 1;
 			});
-			$cacheKey = json_encode($jsonList).serialize($this->plugin);
+			$cacheKey = json_encode($jsonList) . serialize($this->plugin);
 			if ($formattedList = $cachelib->getSerialized($cacheKey, 'searchformat')) {
 				return $formattedList;
 			}
@@ -67,17 +68,17 @@ class Search_Formatter
 		$defaultValues = $this->plugin->getFields();
 
 		$fields = array_keys($defaultValues);
-		$subDefault = array();
+		$subDefault = [];
 		foreach ($this->subFormatters as $key => $plugin) {
 			$subDefault[$key] = $plugin->getFields();
 			$fields = array_merge($fields, array_keys($subDefault[$key]));
 		}
 
-		$data = array();
+		$data = [];
 
 		$enableHighlight = in_array('highlight', $fields);
 		foreach ($list as $pre) {
-			if( $preload ) {
+			if ($preload) {
 				foreach ($fields as $f) {
 					if (isset($pre[$f])) {
 						$pre[$f]; // Dynamic loading if applicable
@@ -98,10 +99,10 @@ class Search_Formatter
 				$row['highlight'] = $list->highlight($row);
 			}
 
-			$subEntries = array();
+			$subEntries = [];
 			foreach ($this->subFormatters as $key => $plugin) {
 				$subInput = new Search_Formatter_ValueFormatter(array_merge($subDefault[$key], $row));
-				$subEntries[$key] = $this->render($plugin, Search_ResultSet::create(array($plugin->prepareEntry($subInput))), $this->plugin->getFormat(), $list);
+				$subEntries[$key] = $this->render($plugin, Search_ResultSet::create([$plugin->prepareEntry($subInput)]), $this->plugin->getFormat(), $list);
 			}
 
 			$row = array_merge($row, $subEntries);
@@ -118,25 +119,26 @@ class Search_Formatter
 		return $formattedList;
 	}
 
-	public function renderFilters() {
-		$filters = array();
+	public function renderFilters()
+	{
+		$filters = [];
 		foreach ($this->customFilters as $filter) {
 			$fieldName = str_replace('tracker_field_', '', $filter['field']);
 			$mode = $filter['mode'];
 			$filters[] = Tracker\Filter\Collection::getFilter($fieldName, $mode);
 		}
 		$input = new JitFilter(@$_REQUEST);
-		$fields = array();
+		$fields = [];
 		foreach ($filters as $filter) {
 			if (! $filter->getControl()->isUsable()) {
 				continue;
 			}
 			$filter->applyInput($input);
-			$field = array(
+			$field = [
 				'id' => $filter->getControl()->getId(),
 				'name' => $filter->getLabel(),
 				'renderedInput' => $filter->getControl(),
-			);
+			];
 			if (preg_match("/<input.*type=['\"](text|search)['\"]/", $field['renderedInput'])) {
 				$field['textInput'] = true;
 			}
@@ -153,7 +155,8 @@ class Search_Formatter
 		return '';
 	}
 
-	public function getCounter() {
+	public function getCounter()
+	{
 		return $this->counter;
 	}
 
@@ -169,11 +172,10 @@ class Search_Formatter
 		} elseif ($target == Search_Formatter_Plugin_Interface::FORMAT_HTML && $pluginFormat == Search_Formatter_Plugin_Interface::FORMAT_WIKI) {
 			$out = "~/np~$rawOutput~np~";
 		} elseif ($target == Search_Formatter_Plugin_Interface::FORMAT_CSV) {
-			$out = strip_tags(Tikilib::lib('parser')->parse_data($rawOutput, array('is_html' => true)));
+			$out = strip_tags(Tikilib::lib('parser')->parse_data($rawOutput, ['is_html' => true]));
 		}
 
-		$out = str_replace(array('~np~~/np~', '~/np~~np~'), '', $out);
+		$out = str_replace(['~np~~/np~', '~/np~~np~'], '', $out);
 		return $out;
 	}
 }
-

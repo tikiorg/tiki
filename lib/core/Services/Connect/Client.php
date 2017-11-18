@@ -21,7 +21,6 @@ class Services_Connect_Client
 
 		$this->connectlib = TikiLib::lib('connect');
 		$this->remote = new Services_RemoteController($prefs['connect_server'], 'connect_server');
-
 	}
 
 	function action_vote($input)
@@ -40,15 +39,15 @@ class Services_Connect_Client
 		$pref = $input->pref->text();
 
 		$votes = $this->connectlib->getVotes(true);
-		if (!isset( $votes->$pref )) {
-			$votes->$pref = array();
+		if (! isset($votes->$pref)) {
+			$votes->$pref = [];
 		}
 		$arr = $votes->$pref;
 
 		if (substr($vote, 0, 2) === 'un') {
 			$vote  = substr($vote, 2);
 			unset($arr[ array_search($vote, $arr)]);
-		} else if (!in_array($vote, $arr)) {
+		} elseif (! in_array($vote, $arr)) {
 			$arr[] = $vote;
 			$vote = 'un' . $vote;	// send back the opposite vote to update the icon
 		}
@@ -57,7 +56,7 @@ class Services_Connect_Client
 			$this->connectlib->saveVotesForGuid($prefs['connect_guid'], $votes);
 		}
 
-		return array( 'newVote' => $vote );
+		return [ 'newVote' => $vote ];
 	}
 
 	function action_list($input = null)
@@ -82,45 +81,43 @@ class Services_Connect_Client
 		$tikilib = TikiLib::lib('tiki');
 		$confirmedGuid = $this->connectlib->getConfirmedGuid();
 
-		if ( empty($confirmedGuid) || empty($prefs['connect_guid']) || $prefs['connect_guid'] !== $confirmedGuid) {	// not connected?
+		if (empty($confirmedGuid) || empty($prefs['connect_guid']) || $prefs['connect_guid'] !== $confirmedGuid) {	// not connected?
 
 			$pending = $this->connectlib->getPendingGuid();
 
 			if (empty($pending)) {
 				$data = $this->remote->new();
 
-				if ($data && $data['status'] === 'pending' && !empty($data['guid'])) {
+				if ($data && $data['status'] === 'pending' && ! empty($data['guid'])) {
 					$this->connectlib->recordConnection($data['status'], $data['guid']);
 				} else {
-					$data = array(
+					$data = [
 						'status' => 'error',
 						'message' => empty($data['message']) ? tra('There was an error (Tiki Connect is still experimental). Please try again.') . ' (' . tra('registration') . ')' : $data['message'],
-					);
+					];
 				}
-
 			} else {
 				$data = $this->remote->confirm(
-					array(
-						'connect_data' => array(
+					[
+						'connect_data' => [
 							'guid' => $pending,
 							'captcha' => $input->captcha->filter(),
-						)
-					)
+						]
+					]
 				);
 
 				$this->connectlib->removeGuid($pending);
 
-				if ($data && !empty($data['guid']) && $data['status'] === 'confirmed' && $data['guid'] === $pending) {
+				if ($data && ! empty($data['guid']) && $data['status'] === 'confirmed' && $data['guid'] === $pending) {
 					$tikilib->set_preference('connect_guid', $pending);
 					$this->connectlib->recordConnection($data['status'], $pending);
 				} else {
-					$data = array(
+					$data = [
 						'status' => 'error',
 						'message' => empty($data['message']) ? tra('There was an error (Tiki Connect is still experimental). Please try again.') . ' (' . tra('confirmation') . ')' : $data['message'],
-					);
+					];
 				}
 			}
-
 		} else {
 			$odata = $this->connectlib->buildConnectData();	//$this->action_list();
 			//$diffdata = $this->connectlib->diffDataWithLastSent($odata);	// maybe later
@@ -128,7 +125,7 @@ class Services_Connect_Client
 			$odata['guid'] = $prefs['connect_guid'];
 
 
-			$data = $this->remote->receive(array( 'connect_data' => $odata ));
+			$data = $this->remote->receive([ 'connect_data' => $odata ]);
 
 			if ($data && $data['status'] === 'received') {
 				$status = 'sent';
@@ -146,10 +143,8 @@ class Services_Connect_Client
 		$guid = $input->guid->text();
 		if ($guid) {
 			$this->connectlib->removeGuid($guid);
-			$r = $this->remote->cancel(array('connect_data' => array('guid' => $guid)));
+			$r = $this->remote->cancel(['connect_data' => ['guid' => $guid]]);
 		}
-		return array('guid' => $guid);
+		return ['guid' => $guid];
 	}
-
 }
-

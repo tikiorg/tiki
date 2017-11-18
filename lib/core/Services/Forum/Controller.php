@@ -68,7 +68,7 @@ class Services_Forum_Controller
 		$forumId = $input->forumId->int();
 		$this->checkPerms($forumId);
 		$check = Services_Exception_BadRequest::checkAccess();
-		if (!empty($check['ticket'])) {
+		if (! empty($check['ticket'])) {
 			//check number of topics on first pass
 			$selected = $input->asArray('forumtopic');
 			if (count($selected) > 0) {
@@ -138,7 +138,7 @@ class Services_Forum_Controller
 			Feedback::success($feedback, 'session');
 			//return to page
 			return Services_Utilities::refresh($extra['referer']);
- 		}
+		}
 	}
 
 	/**
@@ -155,7 +155,7 @@ class Services_Forum_Controller
 		$forumId = $input->forumId->int();
 		$this->checkPerms($forumId);
 		$check = Services_Exception_BadRequest::checkAccess();
-		if (!empty($check['ticket'])) {
+		if (! empty($check['ticket'])) {
 			//check number of topics on first pass
 			$selected = $input->asArray('forumtopic');
 			if (count($selected) > 0) {
@@ -240,7 +240,7 @@ class Services_Forum_Controller
 		$forumId = $input->forumId->digits();
 		$this->checkPerms($forumId);
 		$check = Services_Exception_BadRequest::checkAccess();
-		if (!empty($check['ticket'])) {
+		if (! empty($check['ticket'])) {
 			//check number of topics on first pass
 			$selected = $input->asArray('forumtopic');
 			if (count($selected) > 0) {
@@ -314,7 +314,7 @@ class Services_Forum_Controller
 		$forumId = $input->forumId->int();
 		$this->checkPerms($forumId);
 		$check = Services_Exception_BadRequest::checkAccess();
-		if (!empty($check['ticket'])) {
+		if (! empty($check['ticket'])) {
 			if (isset($input['remove_attachment'])) {
 				$items[$input->remove_attachment->int()] = $input['filename'];
 				//provide redirect if js is not enabled
@@ -395,11 +395,11 @@ class Services_Forum_Controller
 	{
 		$selected = $input->asArray('checked');
 		$perms = Perms::get('forum', $selected);
-		if (!$perms->admin_forum) {
+		if (! $perms->admin_forum) {
 			throw new Services_Exception_Denied(tr('Reserved for forum administrators'));
 		}
 		$check = Services_Exception_BadRequest::checkAccess();
-		if (!empty($check['ticket'])) {
+		if (! empty($check['ticket'])) {
 			//check number of topics on first pass
 			if (count($selected) > 0) {
 				$items = $this->getForumNames($selected);
@@ -452,7 +452,7 @@ class Services_Forum_Controller
 	private function checkPerms($forumId)
 	{
 		$perm = $this->lib->admin_forum($forumId);
-		if (!$perm) {
+		if (! $perm) {
 			throw new Services_Exception_Denied(tr('Reserved for forum administrators and moderators'));
 		}
 	}
@@ -468,7 +468,7 @@ class Services_Forum_Controller
 	{
 		foreach ($topicIds as $id) {
 			$info = $this->lib->get_comment($id);
-			if (!empty($info['title'])){
+			if (! empty($info['title'])) {
 				$ret[(int) $id] = $info['title'];
 			} else {
 				$ret[(int) $id] = TikiLib::lib('tiki')->get_snippet($info['data'], "", false, "", 60);
@@ -506,7 +506,7 @@ class Services_Forum_Controller
 		$forumId = $input->forumId->int();
 		$this->checkPerms($forumId);
 		$check = Services_Exception_BadRequest::checkAccess();
-		if (!empty($check['ticket'])) {
+		if (! empty($check['ticket'])) {
 			//check number of topics on first pass
 			$selected = $input->asArray('forumtopic');
 			if (count($selected) > 0) {
@@ -569,7 +569,7 @@ class Services_Forum_Controller
 		$forumId = $input->forumId->int();
 		$this->checkPerms($forumId);
 		$check = Services_Exception_BadRequest::checkAccess();
-		if (!empty($check['ticket'])) {
+		if (! empty($check['ticket'])) {
 			if ($input['comments_parentId']) {
 				$topicId = $input->comments_parentId->int();
 				$items = $this->getTopicTitles([$topicId]);
@@ -620,4 +620,3 @@ class Services_Forum_Controller
 		}
 	}
 }
-

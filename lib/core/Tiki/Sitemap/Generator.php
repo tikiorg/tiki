@@ -92,9 +92,7 @@ class Generator
 			/** @var AbstractType $typeHandler */
 			$typeHandler = new $class($sitemap);
 			if (is_subclass_of($typeHandler, self::BASE_CLASS)) {
-
 				$typeHandler->generate();
-
 			}
 		}
 
@@ -102,7 +100,6 @@ class Generator
 
 		$user = $loggedUser; // restore the configuration for permissions
 		$perms->setGroups($oldGroups);
-
 	}
 
 	/**

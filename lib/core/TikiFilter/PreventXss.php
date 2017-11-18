@@ -8,13 +8,14 @@
 // FIXME: This may quietly alter the value. Users of this filter should report if the value is modified.
 class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
 {
-	function filter( $value )
+	function filter($value)
 	{
 		// No need to filter really simple values
-		if ( ctype_alnum($value) || empty($value) )
+		if (ctype_alnum($value) || empty($value)) {
 			return $value;
-		else
+		} else {
 			return $this->RemoveXSS($value);
+		}
 	}
 
 	/* RemoveXSS initially developped by kallahar - quickwired.com, modified for Tiki
@@ -23,151 +24,152 @@ class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
 	 */
 	function RemoveXSS($val)
 	{
-		static $ra_as_tag_only = NULL;
-		static $ra_as_attribute = NULL;
-		static $ra_as_content = NULL;
-		static $ra_javascript = NULL;
+		static $ra_as_tag_only = null;
+		static $ra_as_attribute = null;
+		static $ra_as_content = null;
+		static $ra_javascript = null;
 
 		// now the only remaining whitespace attacks are \t, \n, and \r
-		if ( $ra_as_tag_only == NULL ) {
-			$ra_as_tag_only = array(
-                'style',
-                'script',
-                'embed',
-                'object',
-                'applet',
-                'meta',
-                'iframe',
-                'frame',    // also filters frameset
-                'ilayer',
-                'layer',
-                'bgsound',
-                'base',
-                'xml',
-                'import',
-                'link',
-                'audio',
-                'video'
-			);
+		if ($ra_as_tag_only == null) {
+			$ra_as_tag_only = [
+				'style',
+				'script',
+				'embed',
+				'object',
+				'applet',
+				'meta',
+				'iframe',
+				'frame',    // also filters frameset
+				'ilayer',
+				'layer',
+				'bgsound',
+				'base',
+				'xml',
+				'import',
+				'link',
+				'audio',
+				'video'
+			];
 
 
 			// note: short forms, such as onmouse, will filter its long forms:　onmouseup, onmousedown etc.
-			$ra_as_attribute = array(
-                'onabort',
-                'onactivate',
-                'onafter',
-                'onbefore',
-                'onbegin',
-                'onblur',
-                'onbounce',
-                'onbroadcast',
-                'oncellchange',
-                'onchange',
-                'onclick',
-                'onclose',
-                'oncommand',
-                'oncontextmenu',
-                'oncontrolselect',
-                'oncopy',
-                'oncut',
-                'ondata',
-                'ondblclick',
-                'ondeactivate',
-                'ondrag',
-                'ondrop',
-                'onend',
-                'onerror',
-                'onfilterchange',
-                'onfinish',
-                'onfocus',
-                'ongotpointer',
-                'onhashchange',
-                'onhelp',
-                'oninput',
-                'oninvalid',
-                'onkeydown',
-                'onkeypress',
-                'onkeyup',
-                'onlayoutcomplete',
-                'onload',
-                'onlosecapture',
-                'onlostpointer',
-                'onmedia',
-                'onmessage',
-                'onmouse',
-                'onmove',
-                'onoffline',
-                'ononline',
-                'onoutofsync',
-                'onover',
-                'onpage', // Short for pageshow and pagehide
-                'onpaste',
-                'onpause',
-                'onpointer',
-                'onpopstate',
-                'onprogress',
-                'onpropertychange',
-                'onreadystatechange',
-                'onredo',
-                'onrepeat',
-                'onreset',
-                'onresize',
-                'onresume',
-                'onreverse',
-                'onrow',
-                'onscroll',
-                'onseek',
-                'onsearch',
-                'onselect',
-                'onstart',
-                'onshow',
-                'onstop',
-                'onstorage',
-                'onsyncrestored',
-                'onsubmit',
-                'ontimeerror',
-                'ontoggle',
-                'ontouch',
-                'ontrackchange',
-				'onunder', // Where is this specified? 2017-06-19 
-                'onundo',
-                'onunload',
-                'onurlflip',
-                'onwheel',
-                'onpopup',
-                'codebase',
-                'dynsrc',
-                'lowsrc',
-                'xmlns'
-			);
+			$ra_as_attribute = [
+				'onabort',
+				'onactivate',
+				'onafter',
+				'onbefore',
+				'onbegin',
+				'onblur',
+				'onbounce',
+				'onbroadcast',
+				'oncellchange',
+				'onchange',
+				'onclick',
+				'onclose',
+				'oncommand',
+				'oncontextmenu',
+				'oncontrolselect',
+				'oncopy',
+				'oncut',
+				'ondata',
+				'ondblclick',
+				'ondeactivate',
+				'ondrag',
+				'ondrop',
+				'onend',
+				'onerror',
+				'onfilterchange',
+				'onfinish',
+				'onfocus',
+				'ongotpointer',
+				'onhashchange',
+				'onhelp',
+				'oninput',
+				'oninvalid',
+				'onkeydown',
+				'onkeypress',
+				'onkeyup',
+				'onlayoutcomplete',
+				'onload',
+				'onlosecapture',
+				'onlostpointer',
+				'onmedia',
+				'onmessage',
+				'onmouse',
+				'onmove',
+				'onoffline',
+				'ononline',
+				'onoutofsync',
+				'onover',
+				'onpage', // Short for pageshow and pagehide
+				'onpaste',
+				'onpause',
+				'onpointer',
+				'onpopstate',
+				'onprogress',
+				'onpropertychange',
+				'onreadystatechange',
+				'onredo',
+				'onrepeat',
+				'onreset',
+				'onresize',
+				'onresume',
+				'onreverse',
+				'onrow',
+				'onscroll',
+				'onseek',
+				'onsearch',
+				'onselect',
+				'onstart',
+				'onshow',
+				'onstop',
+				'onstorage',
+				'onsyncrestored',
+				'onsubmit',
+				'ontimeerror',
+				'ontoggle',
+				'ontouch',
+				'ontrackchange',
+				'onunder', // Where is this specified? 2017-06-19
+				'onundo',
+				'onunload',
+				'onurlflip',
+				'onwheel',
+				'onpopup',
+				'codebase',
+				'dynsrc',
+				'lowsrc',
+				'xmlns'
+			];
 
-			$ra_as_content = array('vbscript', 'eval');
-			$ra_javascript = array('javascript');
+			$ra_as_content = ['vbscript', 'eval'];
+			$ra_javascript = ['javascript'];
 	///		$ra_style = array('style'); // Commented as it has been considered as a bit too aggressive
 		}
 
 		// keep replacing as long as the previous round replaced something
-		while ( $this->RemoveXSSchars($val)
+		while ($this->RemoveXSSchars($val)
 			|| $this->RemoveXSSregexp($ra_as_tag_only, $val, '(\<|\[\\\\xC0\]\[\\\\xBC\])\??')
 			|| $this->RemoveXSSregexp($ra_as_attribute, $val, '\s')
 			|| $this->RemoveXSSregexp($ra_as_content, $val, '[\.\\\\+\*\?\[\^\]\$\(\)\{\}\=\!\<\|\:;\-\/`#"\']', '(?!\s*[a-z0-9])', true)
 			|| $this->RemoveXSSregexp($ra_javascript, $val, '', ':', true)
 	///		|| RemoveXSSregexp($ra_style, $val, '[^a-z0-9]', '=') // Commented as it has been considered as a bit too aggressive
-		);
+		) {
+		}
 
 		return $val;
 	}
 
 	function RemoveXSSchars(&$val)
 	{
-		static $patterns = NULL;
-		static $replacements = NULL;
+		static $patterns = null;
+		static $replacements = null;
 		$val_before = $val;
 		$found = true;
 
-		if ( $patterns == NULL ) {
-			$patterns = array();
-			$replacements = array();
+		if ($patterns == null) {
+			$patterns = [];
+			$replacements = [];
 
 			// remove all non-printable characters. CR(0a) and LF(0b) and TAB(9) are
 			// allowed this prevents some character re-spacing such as <java\0script>
@@ -188,11 +190,11 @@ class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
 				// ;? matches the ;, which is optional
 				// 0* matches any padded zeros, which are optional
 				// &#x0040 @ search for the hex values
-				$patterns[] = '/(&#x0*'.dechex(ord($search[$i])).';?)/i';
+				$patterns[] = '/(&#x0*' . dechex(ord($search[$i])) . ';?)/i';
 				$replacements[] = $search[$i];
 				// &#00064 @ 0* matches padded zeros
 				// with a ;
-				$patterns[] = '/(&#0*'.ord($search[$i]).';?)/';
+				$patterns[] = '/(&#0*' . ord($search[$i]) . ';?)/';
 				$replacements[] = $search[$i];
 			}
 		}
@@ -208,26 +210,26 @@ class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
 	{
 		$val_before = $val;
 		$found = true;
-		$patterns = array();
-		$replacements = array();
+		$patterns = [];
+		$replacements = [];
 
 		$pattern_sep = '('
-			.'&#[xX]0{0,8}[9ab];?'
-			.'|&#0{0,8}(9|10|13);?'
-			.'|(?ms)(\/\*.*?\*\/|\<\!\-\-.*?\-\-\>)'
-			.'|(\<\!\[CDATA\[|\]\]\>)'
-			.'|\\\\?'
-			.( $allow_spaces ? '|\s' : '' )
-		.')*';
+			. '&#[xX]0{0,8}[9ab];?'
+			. '|&#0{0,8}(9|10|13);?'
+			. '|(?ms)(\/\*.*?\*\/|\<\!\-\-.*?\-\-\>)'
+			. '|(\<\!\[CDATA\[|\]\]\>)'
+			. '|\\\\?'
+			. ( $allow_spaces ? '|\s' : '' )
+		. ')*';
 
 		$pattern_start = '/';
-		if ( $prefix != '' ) {
+		if ($prefix != '') {
 			$pattern_start .= '(' . $prefix . '\s*' . $pattern_sep . ')';
 		}
 
 		$pattern_end = '/i';
-		if ( $suffix != '' ) {
-			if ( $suffix == '=' || $suffix == ':' ) {
+		if ($suffix != '') {
+			if ($suffix == '=' || $suffix == ':') {
 				$replacement_end = $suffix;
 				$pattern_end = '(' . $pattern_sep . '\s*' . $suffix . ')' . $pattern_end;
 			} else {
@@ -249,16 +251,18 @@ class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
 			$pattern .= $pattern_end;
 			$replacement = ( $prefix != '' ) ? '\\1' : '';
 			// add in <> to nerf the tag
-			$replacement .= substr($ra[$i], 0, 2).'<x>'.substr($ra[$i], 2);
+			$replacement .= substr($ra[$i], 0, 2) . '<x>' . substr($ra[$i], 2);
 			$patterns[] = $pattern;
-			$replacements[] = $replacement.$replacement_end;
+			$replacements[] = $replacement . $replacement_end;
 		}
 		// filter out the hex tags
 		$val = preg_replace($patterns, $replacements, $val);
 
 		if ($val === null) {
-			Feedback::error(tr('Filter error: "%0"', 
-				array_flip(get_defined_constants(true)['pcre'])[preg_last_error()]), 'session');
+			Feedback::error(tr(
+				'Filter error: "%0"',
+				array_flip(get_defined_constants(true)['pcre'])[preg_last_error()]
+			), 'session');
 		}
 		if ($val_before == $val) {
 			// no replacements were made, so exit the loop

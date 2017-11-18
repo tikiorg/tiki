@@ -9,15 +9,15 @@ class Tracker_Item
 {
 	/**
 	 * includes itemId, trackerId and fields using the fieldId as key
-	 * @var array - plain from database. 
+	 * @var array - plain from database.
 	 */
 	private $info;
-	
+
 
 	/**
 	 * object with tracker definition. includes itemId, items (nr of items for that tracker).
 	 * other important attributes: trackerInfo array, factory null, fields array,  perms Perms_Accessor
-	 * @var object Tracker_Definition - 
+	 * @var object Tracker_Definition -
 	 */
 	private $definition;
 
@@ -44,7 +44,7 @@ class Tracker_Item
 	public static function fromInfo($info)
 	{
 		$obj = new self;
-		if (empty($info['trackerId']) && !empty($info['itemId'])) {
+		if (empty($info['trackerId']) && ! empty($info['itemId'])) {
 			$info['trackerId'] = TikiLib::lib('trk')->get_tracker_for_item($info['itemId']);
 		}
 		$obj->info = $info;
@@ -57,7 +57,7 @@ class Tracker_Item
 	public static function newItem($trackerId)
 	{
 		$obj = new self;
-		$obj->info = array();
+		$obj->info = [];
 		$obj->definition = Tracker_Definition::get($trackerId);
 		$obj->asNew();
 		$obj->initialize();
@@ -136,7 +136,8 @@ class Tracker_Item
 		}
 	}
 
-	public function canViewComments() {
+	public function canViewComments()
+	{
 		if ($this->perms->tracker_view_comments || $this->perms->comment_tracker_items) {
 			return true;
 		}
@@ -146,7 +147,8 @@ class Tracker_Item
 		return false;
 	}
 
-	public function canPostComments() {
+	public function canPostComments()
+	{
 		if ($this->perms->comment_tracker_items) {
 			return true;
 		}
@@ -161,7 +163,7 @@ class Tracker_Item
 
 	public function getSpecialPermissionUsers($itemId, $operation)
 	{
-		$users = array();
+		$users = [];
 
 		if ($this->definition->getConfiguration('writerCan' . $operation, 'n') == 'y') {
 			$users = array_unique(array_merge($users, $this->owners));
@@ -196,7 +198,7 @@ class Tracker_Item
 	{
 		global $user;
 		if ($this->definition->getConfiguration('userCanSeeOwn') == 'y') {
-			return !empty($user) && $this->owners && in_array($user, $this->owners);
+			return ! empty($user) && $this->owners && in_array($user, $this->owners);
 		}
 
 		return false;
@@ -236,13 +238,13 @@ class Tracker_Item
 
 	private function getItemOwners()
 	{
-		if (!is_object($this->definition)) {
-			return array(); // TODO: This is a temporary fix, we should be able to getItemOwners always
+		if (! is_object($this->definition)) {
+			return []; // TODO: This is a temporary fix, we should be able to getItemOwners always
 		}
 
 		if ($this->isNew()) {
 			global $user;
-			return array($user);
+			return [$user];
 		}
 
 
@@ -251,23 +253,22 @@ class Tracker_Item
 			return $this->info['itemUsers'];
 		}
 
-		$owners = array_map(function($field) {
+		$owners = array_map(function ($field) {
 
 			$owners = $this->getValue($field);
 			return TikiLib::lib('trk')->parse_user_field($owners);
-			
 		}, $this->definition->getItemOwnerFields());
 
-		if( $owners ) {
+		if ($owners) {
 			return call_user_func_array('array_merge', $owners);
 		} else {
-			return array();
+			return [];
 		}
 	}
 
 	private function getItemGroupOwner()
 	{
-		if (!is_object($this->definition)) {
+		if (! is_object($this->definition)) {
 			return; // TODO: This is a temporary fix, we should be able to getItemOwner always
 		}
 
@@ -367,9 +368,9 @@ class Tracker_Item
 		return count($commonGroups) != 0;
 	}
 
-	
+
 	/**
-	 * Return raw value of a field. Raw means, value as saved in database. 
+	 * Return raw value of a field. Raw means, value as saved in database.
 	 * @param integer $fieldId
 	 * @return string - note: all values are saved as a string.
 	 */
@@ -394,7 +395,7 @@ class Tracker_Item
 	{
 		$input = $input->none();
 		$fields = $this->definition->getFields();
-		$output = array();
+		$output = [];
 
 		foreach ($fields as $field) {
 			$output[] = $this->prepareFieldInput($field, $input);
@@ -406,7 +407,7 @@ class Tracker_Item
 	public function prepareOutput()
 	{
 		$fields = $this->definition->getFields();
-		$output = array();
+		$output = [];
 
 		foreach ($fields as $field) {
 			$output[] = $this->prepareFieldOutput($field);
@@ -437,7 +438,7 @@ class Tracker_Item
 
 			$factory = $this->definition->getFieldFactory();
 			$handler = $factory->getHandler($field, $this->info);
-			return array_merge($field, $handler->getFieldData(array()));
+			return array_merge($field, $handler->getFieldData([]));
 		}
 	}
 
@@ -501,7 +502,7 @@ class Tracker_Item
 
 	public function getData($input = null, $forExport = false)
 	{
-		$out = array();
+		$out = [];
 		if ($input) {
 			$fields = $this->prepareInput($input);
 
@@ -526,13 +527,13 @@ class Tracker_Item
 			}
 		}
 
-		return array(
+		return [
 			'itemId' => $this->isNew() ? null : $this->info['itemId'],
 			'status' => $this->isNew() ? 'o' : $this->info['status'],
 			'creation_date' => $this->info['created'],
 			'trackerId' => $this->isNew() ? null : $this->info['trackerId'],
 			'fields' => $out,
-		);
+		];
 	}
 
 	public function getDefinition()
@@ -544,7 +545,6 @@ class Tracker_Item
 	{
 		if ($this->definition->getConfiguration('showStatus', 'n') == 'y'
 			|| ($this->definition->getConfiguration('showStatusAdminOnly', 'n') == 'y' && $this->perms->admin_trackers)) {
-
 			$status = $this->isNew()
 				? $this->definition->getConfiguration('newItemStatus', 'o')
 				: $this->info['status'];
@@ -560,4 +560,3 @@ class Tracker_Item
 		}
 	}
 }
-

@@ -23,7 +23,7 @@ class Services_File_Utilities
 			$perms = TikiLib::lib('tiki')->get_local_perms($user, $galleryId, 'file gallery', $gal_info, false);		//get_perm_object($galleryId, 'file gallery', $galinfo);
 			$canUpload = $perms['tiki_p_upload_files'] === 'y';
 		}
-		if (!$canUpload) {
+		if (! $canUpload) {
 			throw new Services_Exception(tr('Permission denied.'), 403);
 		}
 
@@ -36,10 +36,10 @@ class Services_File_Utilities
 		return $filegallib->get_file_gallery_info($galleryId);
 	}
 
-	function uploadFile($gal_info, $name, $size, $type, $data, $asuser = null,$image_x=null,$image_y=null)
+	function uploadFile($gal_info, $name, $size, $type, $data, $asuser = null, $image_x = null, $image_y = null)
 	{
 		$filegallib = TikiLib::lib('filegal');
-		return $filegallib->upload_single_file($gal_info, $name, $size, $type, $data, $asuser,$image_x,$image_y);
+		return $filegallib->upload_single_file($gal_info, $name, $size, $type, $data, $asuser, $image_x, $image_y);
 	}
 
 	function updateFile($gal_info, $name, $size, $type, $data, $fileId, $asuser = null)
@@ -48,4 +48,3 @@ class Services_File_Utilities
 		return $filegallib->update_single_file($gal_info, $name, $size, $type, $data, $fileId, $asuser);
 	}
 }
-

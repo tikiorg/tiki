@@ -21,7 +21,7 @@ class Tiki_Version_Upgrade
 
 	function getMessage()
 	{
-		$parts = array();
+		$parts = [];
 		if ($this->isRequired) {
 			$parts[] = tr('Version %0 is no longer supported.', (string) $this->old);
 
@@ -33,8 +33,8 @@ class Tiki_Version_Upgrade
 		} else {
 			// Do not encourage people to leave an LTS which is still supported. Just inform them
 			$current = $this->old;
-			$current_major = (strstr($current,'.',true) != false)?strstr($current,'.',true):$current;
-			if (in_array($current_major,array('9','12','15'))) {	// Keep list of LTS up to date or write method isLTS, whichever is less work
+			$current_major = (strstr($current, '.', true) != false) ? strstr($current, '.', true) : $current;
+			if (in_array($current_major, ['9','12','15'])) {	// Keep list of LTS up to date or write method isLTS, whichever is less work
 				$current = "$current LTS";
 				$parts[] = tr('Version %0 is still supported. However, an upgrade to %1 is available.', $current, (string) $this->new);
 			} else {
@@ -50,4 +50,3 @@ class Tiki_Version_Upgrade
 		return $this->old->getMajor() === $this->new->getMajor();
 	}
 }
-

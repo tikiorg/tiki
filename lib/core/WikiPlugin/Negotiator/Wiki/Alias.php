@@ -7,7 +7,7 @@
 
 class WikiPlugin_Negotiator_Wiki_Alias
 {
-	static public function info( $name )
+	public static function info($name)
 	{
 		global $prefs;
 
@@ -19,25 +19,25 @@ class WikiPlugin_Negotiator_Wiki_Alias
 
 		$prefName = "pluginalias_" . $name;
 
-		if ( ! isset( $prefs[$prefName] ) ) {
+		if (! isset($prefs[$prefName])) {
 			return false;
 		}
 
 		return unserialize($prefs[$prefName]);
 	}
 
-	static public function getList()
+	public static function getList()
 	{
 		global $prefs;
-		if ( isset($prefs['pluginaliaslist']) ) {
+		if (isset($prefs['pluginaliaslist'])) {
 			$alias = @unserialize($prefs['pluginaliaslist']);
 			$alias = array_filter($alias);
 			return $alias;
 		}
-		return array();
+		return [];
 	}
 
-	static public function store( $name, $data )
+	public static function store($name, $data)
 	{
 		/*
 			Input data structure:
@@ -78,31 +78,33 @@ class WikiPlugin_Negotiator_Wiki_Alias
 		$tikilib->set_preference($prefName, serialize($data));
 
 		global $prefs;
-		$list = array();
-		if ( isset($prefs['pluginaliaslist']) )
+		$list = [];
+		if (isset($prefs['pluginaliaslist'])) {
 			$list = unserialize($prefs['pluginaliaslist']);
+		}
 
-		if ( ! in_array($name, $list) ) {
+		if (! in_array($name, $list)) {
 			$list[] = $name;
 			$tikilib->set_preference('pluginaliaslist', serialize($list));
 		}
 
-		foreach ( glob('temp/cache/wikiplugin_*') as $file )
+		foreach (glob('temp/cache/wikiplugin_*') as $file) {
 			unlink($file);
+		}
 
 		$cachelib = TikiLib::lib('cache');
 		$cachelib->invalidate('plugindesc');
 	}
 
 
-	static public function delete( $name )
+	public static function delete($name)
 	{
 		$tikilib = TikiLib::lib('tiki');
 		$prefName = "pluginalias_" . $name;
 
 		// Remove from list
-		$list = $tikilib->get_preference('pluginaliaslist', array(), true);
-		$list = array_diff($list, array( $name ));
+		$list = $tikilib->get_preference('pluginaliaslist', [], true);
+		$list = array_diff($list, [ $name ]);
 		$tikilib->set_preference('pluginaliaslist', serialize($list));
 
 		// Remove the definition
@@ -111,12 +113,12 @@ class WikiPlugin_Negotiator_Wiki_Alias
 		// Clear cache
 		$cachelib = TikiLib::lib('cache');
 		$cachelib->invalidate('plugindesc');
-		foreach ( glob('temp/cache/wikiplugin_*') as $file ) {
+		foreach (glob('temp/cache/wikiplugin_*') as $file) {
 			unlink($file);
 		}
 	}
 
-	static public function getDetails($details = array())
+	public static function getDetails($details = [])
 	{
 		if (self::findImplementation($details['name'], $details['body'], $details['args'])) {
 			return $details;
@@ -125,35 +127,38 @@ class WikiPlugin_Negotiator_Wiki_Alias
 		}
 	}
 
-	static public function findImplementation( & $implementation, & $data, & $args )
+	public static function findImplementation(& $implementation, & $data, & $args)
 	{
-		if ( $info = self::info($implementation) ) {
+		if ($info = self::info($implementation)) {
 			$implementation = $info['implementation'];
 
 			// Do the body conversion
-			if ( isset($info['body']) ) {
-				if ( ( isset($info['body']['input']) && $info['body']['input'] == 'ignore' )
-					|| empty( $data ) )
+			if (isset($info['body'])) {
+				if (( isset($info['body']['input']) && $info['body']['input'] == 'ignore' )
+					|| empty($data) ) {
 					$data = isset($info['body']['default']) ? $info['body']['default'] : '';
+				}
 
-				if ( isset($info['body']['params']) )
+				if (isset($info['body']['params'])) {
 					$data = self::replaceArgs($data, $info['body']['params'], $args);
+				}
 			} else {
 				$data = '';
 			}
 
 			// Do parameter conversion
-			$params = array();
-			if ( isset($info['params']) ) {
-				foreach ( $info['params'] as $key => $value ) {
-					if ( is_array($value) && isset($value['pattern']) && isset($value['params']) ) {
+			$params = [];
+			if (isset($info['params'])) {
+				foreach ($info['params'] as $key => $value) {
+					if (is_array($value) && isset($value['pattern']) && isset($value['params'])) {
 						$params[$key] = self::replaceArgs($value['pattern'], $value['params'], $args);
 					} else {
 						// Handle simple values
-						if ( isset($args[$key]) )
+						if (isset($args[$key])) {
 							$params[$key] = $args[$key];
-						else
+						} else {
 							$params[$key] = $value;
+						}
 					}
 				}
 			}
@@ -169,28 +174,32 @@ class WikiPlugin_Negotiator_Wiki_Alias
 		return false;
 	}
 
-	static function replaceArgs( $content, $rules, $args )
+	static function replaceArgs($content, $rules, $args)
 	{
-		$patterns = array();
-		$replacements = array();
+		$patterns = [];
+		$replacements = [];
 
-		foreach ( $rules as $token => $info ) {
+		foreach ($rules as $token => $info) {
 			$patterns[] = "%$token%";
-			if ( isset( $info['input'] ) && ! empty( $info['input'] ) )
+			if (isset($info['input']) && ! empty($info['input'])) {
 				$token = $info['input'];
+			}
 
-			if ( isset( $args[$token] ) ) {
+			if (isset($args[$token])) {
 				$value = $args[$token];
 			} else {
 				$value = isset($info['default']) ? $info['default'] : '';
 			}
 
-			switch( isset($info['encoding']) ? $info['encoding'] : 'none' ) {
-				case 'html': $replacements[] = htmlentities($value, ENT_QUOTES, 'UTF-8');
+			switch (isset($info['encoding']) ? $info['encoding'] : 'none') {
+				case 'html':
+					$replacements[] = htmlentities($value, ENT_QUOTES, 'UTF-8');
 					break;
-				case 'url': $replacements[] = rawurlencode($value);
+				case 'url':
+					$replacements[] = rawurlencode($value);
 					break;
-				default: $replacements[] = $value;
+				default:
+					$replacements[] = $value;
 			}
 		}
 

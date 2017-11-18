@@ -79,4 +79,3 @@ class Tiki_Version_Version
 		return $string;
 	}
 }
-

@@ -19,7 +19,7 @@ class Services_Module_Controller
 
 		$modname = $input->module->text();
 		if ($modname) {
-			$params = $input->isArray('params') ? $input->asArray('params') : array();
+			$params = $input->isArray('params') ? $input->asArray('params') : [];
 
 			$moduleId = $input->moduleId->int();
 
@@ -28,17 +28,15 @@ class Services_Module_Controller
 				parse_str($module_reference['params'], $module_reference['params']);
 				$module_reference['params'] = array_merge($params, $module_reference['params']);
 			} else {
-				$module_reference = array(
+				$module_reference = [
 					'name' => $modname,
 					'params' => $params,
-				);
+				];
 			}
 
 
 			$result = $modlib->execute_module($module_reference);
 		}
-		return array('html' => $result);
+		return ['html' => $result];
 	}
-
 }
-

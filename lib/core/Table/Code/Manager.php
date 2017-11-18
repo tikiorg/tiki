@@ -28,17 +28,17 @@ class Table_Code_Manager extends Table_Code_Abstract
 	 *
 	 * @var array
 	 */
-	protected $subclasses = array(
+	protected $subclasses = [
 		//other is jQuery needed before the tablesorter function call
 		'other' => '',
 		//this is the jQuery tablesorter function call
-		'main' => array(
+		'main' => [
 			'mainOptions' => '',
 			'widgetOptions' => '',
-		),
+		],
 		//events to bind to the tablesorter function call
 		'bind' => ''
-	);
+	];
 
 	/**
 	 * Call the classes for each section in the order determined by the $subclasses property
@@ -64,7 +64,7 @@ class Table_Code_Manager extends Table_Code_Abstract
 			}
 		}
 		//put sections together into final overall code
-		self::$code['main'] = $this->iterate(self::$code['main'], $this->nt . '$(\''. self::$tid
+		self::$code['main'] = $this->iterate(self::$code['main'], $this->nt . '$(\'' . self::$tid
 			. '\').tablesorter({', $this->nt . '})', '', '');
 		if (empty(self::$code['bind'])) {
 			self::$code['main'] .= ';';

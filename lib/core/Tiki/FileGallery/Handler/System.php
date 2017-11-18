@@ -6,6 +6,7 @@
 // $Id$
 
 namespace Tiki\FileGallery\Handler;
+
 use Tiki\FileGallery\FileWrapper\PreloadedContent;
 
 class System implements HandlerInterface
@@ -33,4 +34,3 @@ class System implements HandlerInterface
 		return $this->real->delete($data, $path);
 	}
 }
-

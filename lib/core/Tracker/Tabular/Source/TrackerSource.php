@@ -36,4 +36,3 @@ class TrackerSource implements SourceInterface
 		return $this->schema;
 	}
 }
-

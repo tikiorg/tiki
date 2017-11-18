@@ -22,13 +22,13 @@ class Scheduler_Task_ShellCommandTask extends Scheduler_Task_CommandTask
 
 		$this->logger->debug(sprintf(tra('Executing shell command: %s'), $command));
 		$process = new Process($command);
-		if (!empty($params['timeout'])) {
+		if (! empty($params['timeout'])) {
 			$process->setTimeout($params['timeout']);
 			$process->setIdleTimeout($params['timeout']);
 		}
 		try {
 			$process->run();
-		} catch( ProcessTimedOutException $e ) {
+		} catch (ProcessTimedOutException $e) {
 			$this->errorMessage = $e->getMessage();
 			return false;
 		}
@@ -42,19 +42,19 @@ class Scheduler_Task_ShellCommandTask extends Scheduler_Task_CommandTask
 		return $success;
 	}
 
-	public function getParams() {
-		return array(
-			'shell_command' => array(
+	public function getParams()
+	{
+		return [
+			'shell_command' => [
 				'name' => tra('Shell command'),
 				'type' => 'text',
 				'required' => true,
-			),
-			'timeout' => array(
+			],
+			'timeout' => [
 				'name' => tra('Run timeout'),
 				'type' => 'text',
 				'required' => false,
-			),
-		);
+			],
+		];
 	}
-
 }

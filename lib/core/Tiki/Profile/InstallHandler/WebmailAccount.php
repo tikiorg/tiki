@@ -9,10 +9,11 @@ class Tiki_Profile_InstallHandler_WebmailAccount extends Tiki_Profile_InstallHan
 {
 	function getData()
 	{
-		if ( $this->data )
+		if ($this->data) {
 			return $this->data;
+		}
 
-		$defaults = array(
+		$defaults = [
 			'mode' => 'create',		// 'create' or 'update' account with same name (i.e. 'account')
 			'account' => '',		// * required
 			'pop' => '', 			// * one of pop, imap, mbox or maildir required
@@ -30,7 +31,7 @@ class Tiki_Profile_InstallHandler_WebmailAccount extends Tiki_Profile_InstallHan
 			'maildir' => '', 		// *? see pop
 			'useSSL' => 'n',			// y|n (default n)
 			'fromEmail' => '',
-		);
+		];
 
 		$data = array_merge($defaults, $this->obj->getData());
 
@@ -46,7 +47,7 @@ class Tiki_Profile_InstallHandler_WebmailAccount extends Tiki_Profile_InstallHan
 	{
 		$data = $this->getData();
 
-		if ( ! isset( $data['account']) || (!isset($data['pop']) && !isset($data['imap']) && !isset($data['mbox']) && !isset($data['maildir'] ))) {
+		if (! isset($data['account']) || (! isset($data['pop']) && ! isset($data['imap']) && ! isset($data['mbox']) && ! isset($data['maildir']))) {
 			return false;
 		}
 
@@ -60,7 +61,8 @@ class Tiki_Profile_InstallHandler_WebmailAccount extends Tiki_Profile_InstallHan
 
 		$this->replaceReferences($data);
 
-		global $webmaillib; require_once 'lib/webmail/webmaillib.php';
+		global $webmaillib;
+		require_once 'lib/webmail/webmaillib.php';
 
 		if ($data['mode'] == 'update') {
 			$accountId = $webmaillib->get_webmail_account_by_name($user, $data['account']);

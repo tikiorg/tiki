@@ -7,7 +7,7 @@
 
 class Tiki_Event_Customizer
 {
-	private $ruleSets = array();
+	private $ruleSets = [];
 
 	function addRule($eventName, $function)
 	{
@@ -30,4 +30,3 @@ class Tiki_Event_Customizer
 		return $this->ruleSets[$eventName];
 	}
 }
-

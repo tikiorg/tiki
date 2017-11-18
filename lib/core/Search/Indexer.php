@@ -8,14 +8,14 @@
 class Search_Indexer
 {
 	private $searchIndex;
-	private $contentSources = array();
-	private $globalSources = array();
-	private $addonSources = array();
+	private $contentSources = [];
+	private $globalSources = [];
+	private $addonSources = [];
 
 	private $cacheGlobals = null;
-	private $cacheTypes = array();
+	private $cacheTypes = [];
 
-	private $contentFilters = array();
+	private $contentFilters = [];
 
 	public $log = null;
 
@@ -41,7 +41,7 @@ class Search_Indexer
 
 	public function addGlobalSource(Search_GlobalSource_Interface $globalSource)
 	{
-		if (is_a($globalSource, "Search_GlobalSource_RelationSource")){
+		if (is_a($globalSource, "Search_GlobalSource_RelationSource")) {
 			$globalSource->setContentSources($this->contentSources);
 		}
 		$this->globalSources[] = $globalSource;
@@ -49,8 +49,8 @@ class Search_Indexer
 
 	public function clearSources()
 	{
-		$this->contentSources = array();
-		$this->globalSources = array();
+		$this->contentSources = [];
+		$this->globalSources = [];
 	}
 
 	public function addContentFilter(Zend\Filter\FilterInterface $filter)
@@ -84,7 +84,7 @@ class Search_Indexer
 	{
 
 		foreach (array_unique($objectList, SORT_REGULAR) as $object) {
-			$this->searchIndex->invalidateMultiple(array($object));
+			$this->searchIndex->invalidateMultiple([$object]);
 			$this->addDocument($object['object_type'], $object['object_id']);
 		}
 
@@ -100,8 +100,12 @@ class Search_Indexer
 			try {
 				$this->searchIndex->addDocument($entry);
 			} catch (Exception $e) {
-				$msg = tr('Indexing failed while processing "%0" (type %1) with the error "%2"', $objectId, $objectType, 
-					$e->getMessage());
+				$msg = tr(
+					'Indexing failed while processing "%0" (type %1) with the error "%2"',
+					$objectId,
+					$objectType,
+					$e->getMessage()
+				);
 				Feedback::error($msg, 'session');
 				$this->log->err($msg);
 			}
@@ -143,7 +147,7 @@ class Search_Indexer
 
 	public function getDocuments($objectType, $objectId)
 	{
-		$out = array();
+		$out = [];
 
 		$typeFactory = $this->searchIndex->getTypeFactory();
 
@@ -154,12 +158,15 @@ class Search_Indexer
 
 			if (false !== $data = $contentSource->getDocument($objectId, $typeFactory)) {
 				if ($data === null) {
-					Feedback::error(tr('Object %0 type %1 returned null from getDocument function', $objectId, 
-						$objectType), 'session');
-					$data = array();
+					Feedback::error(tr(
+						'Object %0 type %1 returned null from getDocument function',
+						$objectId,
+						$objectType
+					), 'session');
+					$data = [];
 				}
 				if (! is_int(key($data))) {
-					$data = array($data);
+					$data = [$data];
 				}
 
 				foreach ($data as $entry) {
@@ -192,11 +199,11 @@ class Search_Indexer
 			}
 		}
 
-		$base = array(
+		$base = [
 			'object_type' => $typeFactory->identifier($objectType),
 			'object_id' => $typeFactory->identifier($objectId),
 			'contents' => $typeFactory->plaintext($this->getGlobalContent($data, $globalFields)),
-		);
+		];
 
 		$data = array_merge(array_filter($data), $base);
 		$data = $this->applyFilters($data);
@@ -213,7 +220,7 @@ class Search_Indexer
 		foreach ($keys as $key) {
 			$value = $data[$key];
 
-			if (is_callable(array($value, 'filter'))) {
+			if (is_callable([$value, 'filter'])) {
 				$data[$key] = $value->filter($this->contentFilters);
 			}
 		}
@@ -263,7 +270,7 @@ class Search_Indexer
 	private function getGlobalFields($objectType)
 	{
 		if (is_null($this->cacheGlobals)) {
-			$this->cacheGlobals = array();
+			$this->cacheGlobals = [];
 			foreach ($this->globalSources as $source) {
 				$this->cacheGlobals = array_merge($this->cacheGlobals, $source->getGlobalFields());
 			}
@@ -278,7 +285,6 @@ class Search_Indexer
 
 	private function log($message)
 	{
-		$this->log->info($message, array('memoryUsage' => memory_get_usage()));
+		$this->log->info($message, ['memoryUsage' => memory_get_usage()]);
 	}
 }
-

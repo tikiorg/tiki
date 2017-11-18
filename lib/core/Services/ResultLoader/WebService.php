@@ -23,12 +23,12 @@ class Services_ResultLoader_WebService
 	function __invoke($offset, $count)
 	{
 		$this->client->setParameterPost(
-			array(
+			[
 				$this->offsetKey => $offset,
 				$this->countKey => $count,
-			)
+			]
 		);
-		$this->client->setHeaders(array('Accept' => 'application/json'));
+		$this->client->setHeaders(['Accept' => 'application/json']);
 
 		$this->client->setMethod(Zend\Http\Request::METHOD_POST);
 		$response = $this->client->send();
@@ -41,4 +41,3 @@ class Services_ResultLoader_WebService
 		return $out[$this->resultKey];
 	}
 }
-

@@ -6,6 +6,7 @@
 // $Id$
 
 namespace Tiki\MailIn\Action;
+
 use Tiki\MailIn\Account;
 use Tiki\MailIn\Source\Message;
 use TikiLib;
@@ -57,7 +58,7 @@ class WikiPut implements ActionInterface
 				return $categperms->edit;
 			}
 		}
-		
+
 		return $perms->edit;
 	}
 
@@ -115,7 +116,6 @@ class WikiPut implements ActionInterface
 
 		if (! $info) {
 			if ($route = $this->getRoute($message)) {
-
 				// Use the page structure node, if specified, otherwise link to the rrot of the structure
 				if ($route['page_id'] > 0) {
 					$parent_id = $route['page_struct_refid'];	// page_ref_id
@@ -128,8 +128,8 @@ class WikiPut implements ActionInterface
 				$begin = true;
 
 				$after_ref_id = null;
-				$alias='';
-				$options = array();
+				$alias = '';
+				$options = [];
 
 				$options['hide_toc'] = 'y';
 				$options['creator'] = $user;
@@ -138,7 +138,7 @@ class WikiPut implements ActionInterface
 
 				$structlib = TikiLib::lib('struct');
 				$structlib->s_create_page($parent_id, $after_ref_id, $page, $alias, $structure_id, $options);
-				$content.= "Page: $page has been added to structureId: ".$structure_id."<br />";
+				$content .= "Page: $page has been added to structureId: " . $structure_id . "<br />";
 
 				$tikilib->update_page(
 					$page,
@@ -230,12 +230,12 @@ class WikiPut implements ActionInterface
 		} elseif ($routing) {
 			if ($route = $this->getRoute($message)) {
 				$nsName = $wikilib->get_namespace($route['structName']);
-				if (!empty($nsName)) {
+				if (! empty($nsName)) {
 					return $wikilib->include_namespace($page, $nsName);
 				}
 			}
 		}
-		
+
 		return $page;
 	}
 
@@ -248,7 +248,7 @@ class WikiPut implements ActionInterface
 		$usermailinlib = TikiLib::lib('usermailin');
 		$body = $message->getHtmlBody();
 		$routes = $usermailinlib->locate_struct($chkUser, $aux['Subject'], $body);
-		if (!empty($routes['data'])) {
+		if (! empty($routes['data'])) {
 			return $routes['data'][0]; // Only use the first route
 		}
 	}
@@ -258,7 +258,7 @@ class WikiPut implements ActionInterface
 		if (! $att['link']) {
 			$wikilib = TikiLib::lib('wiki');
 			$attId = $wikilib->wiki_attach_file($page, $att['name'], $att['type'], $att['size'], $att['data'], "attached by mail $user");
-			return 'tiki-download_wiki_attachment.php?attId='.$attId.'&page='.urlencode($page);
+			return 'tiki-download_wiki_attachment.php?attId=' . $attId . '&page=' . urlencode($page);
 		} else {
 			return $att['link'];
 		}
@@ -285,4 +285,3 @@ class WikiPut implements ActionInterface
 		return $body;
 	}
 }
-

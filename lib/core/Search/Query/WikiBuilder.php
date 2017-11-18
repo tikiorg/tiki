@@ -16,7 +16,7 @@ class Search_Query_WikiBuilder
 	function __construct(Search_Query $query, $input = null)
 	{
 		global $prefs;
-		if (!empty($prefs['maxRecords'])) {
+		if (! empty($prefs['maxRecords'])) {
 			$max = $prefs['maxRecords'];
 		} else {
 			$max = 50;
@@ -24,11 +24,11 @@ class Search_Query_WikiBuilder
 
 		$this->query = $query;
 		$this->input = ( $input ?: new JitFilter(@$_REQUEST) );
-		$this->paginationArguments = array(
+		$this->paginationArguments = [
 			'offset_arg' => 'offset',
 			'sort_arg' => 'sort_mode',
 			'max' => $max,
-		);
+		];
 	}
 
 	/**
@@ -54,7 +54,8 @@ class Search_Query_WikiBuilder
 		$this->applyPagination();
 	}
 
-	function applyPagination() {
+	function applyPagination()
+	{
 		$offsetArg = $this->paginationArguments['offset_arg'];
 		$maxRecords = $this->paginationArguments['max'];
 		if (isset($_REQUEST[$offsetArg])) {
@@ -70,7 +71,7 @@ class Search_Query_WikiBuilder
 			$function = "wpquery_{$name}_{$key}";
 
 			if (method_exists($this, $function)) {
-				call_user_func(array($this, $function), $this->query, $value, $arguments);
+				call_user_func([$this, $function], $this->query, $value, $arguments);
 			}
 		}
 	}
@@ -85,7 +86,8 @@ class Search_Query_WikiBuilder
 		$this->paginationArguments['max'] = max(1, (int) $value);
 	}
 
-	function wpquery_filter_editable($query, $editableType, array $arguments) {
+	function wpquery_filter_editable($query, $editableType, array $arguments)
+	{
 		$fields = $this->get_fields_from_arguments($arguments);
 		foreach ($fields as $fieldName) {
 			$fieldName = str_replace('tracker_field_', '', $fieldName);
@@ -183,11 +185,11 @@ class Search_Query_WikiBuilder
 
 		/* custom mani for OR operation in relation filter */
 		$qualifiers = explode(' OR ', $arguments['qualifier']);
-		if(count($qualifiers) > 1) {
+		if (count($qualifiers) > 1) {
 			$token = '';
 			foreach ($qualifiers as $key => $qualifier) {
 				$token .= (string) new Search_Query_Relation($qualifier, $arguments['objecttype'], $value);
-				if(count($qualifiers) != ($key + 1)) {
+				if (count($qualifiers) != ($key + 1)) {
 					$token .= " OR ";
 				}
 			}
@@ -199,18 +201,18 @@ class Search_Query_WikiBuilder
 
 	function wpquery_filter_favorite($query, $value)
 	{
-		$this->wpquery_filter_relation($query, $value, array('qualifier' => 'tiki.user.favorite.invert', 'objecttype' => 'user'));
+		$this->wpquery_filter_relation($query, $value, ['qualifier' => 'tiki.user.favorite.invert', 'objecttype' => 'user']);
 	}
 
 	function wpquery_filter_range($query, $value, array $arguments)
 	{
-		if( isset($arguments['from']) && !is_numeric($arguments['from']) ) {
+		if (isset($arguments['from']) && ! is_numeric($arguments['from'])) {
 			$arguments['from'] = strtotime($arguments['from']);
 		}
-		if( isset($arguments['to']) && !is_numeric($arguments['to']) ) {
+		if (isset($arguments['to']) && ! is_numeric($arguments['to'])) {
 			$arguments['to'] = strtotime($arguments['to']);
 		}
-		if( isset($arguments['gap']) && !is_numeric($arguments['gap']) ) {
+		if (isset($arguments['gap']) && ! is_numeric($arguments['gap'])) {
 			$arguments['gap'] = strtotime($arguments['gap']) - time();
 		}
 		if (! isset($arguments['from']) && isset($arguments['to'], $arguments['gap'])) {
@@ -262,12 +264,12 @@ class Search_Query_WikiBuilder
 			);
 			$subquery->getExpr()->addPart(
 				new Search_Expr_And(
-					array(
+					[
 						$part,
 						new Search_Expr_Not(
 							new Search_Expr_Token($targetUser, 'identifier', 'user')
 						),
-					)
+					]
 				)
 			);
 		}
@@ -309,13 +311,13 @@ class Search_Query_WikiBuilder
 	function wpquery_sort_mode($query, $value, array $arguments)
 	{
 		if ($value == 'randommode') {
-			if ( !empty($arguments['modes']) ) {
+			if (! empty($arguments['modes'])) {
 				$modes = explode(',', $arguments['modes']);
 				$value = trim($modes[array_rand($modes)]);
 				// append a direction if not already supplied
 				$last = substr($value, strrpos($value, '_'));
-				$directions = array('_asc', '_desc', '_nasc', '_ndesc');
-				if (!in_array($last, $directions)) {
+				$directions = ['_asc', '_desc', '_nasc', '_ndesc'];
+				if (! in_array($last, $directions)) {
 					$direction = $directions[array_rand($directions)];
 					if (stripos($value, 'date')) {
 						$value .= $direction;
@@ -326,9 +328,8 @@ class Search_Query_WikiBuilder
 			} else {
 				return;
 			}
-		} else if ($value === 'distance') {
+		} elseif ($value === 'distance') {
 			if (isset($arguments['lat'], $arguments['lon'])) {
-
 				$arguments = array_merge([	// defaults
 					'order' => 'asc',
 					'unit' => 'km',
@@ -336,7 +337,6 @@ class Search_Query_WikiBuilder
 				], $arguments);
 
 				$value = new Search_Query_Order('geo_point', 'distance', $arguments['order'], $arguments);
-
 			} else {
 				Feedback::error(tr('Distance sort: Missing lat or lon arguments'), 'session');
 				return;
@@ -400,9 +400,9 @@ class Search_Query_WikiBuilder
 			$name = $match->getName();
 			if ($name == 'tablesorter') {
 				$tsargs = $parser->parse($match->getArguments());
-				$ajax = !empty($tsargs['server']) && $tsargs['server'] === 'y';
+				$ajax = ! empty($tsargs['server']) && $tsargs['server'] === 'y';
 				$ret['tsOn'] = Table_Check::isEnabled($ajax);
-				if (!$ret['tsOn']) {
+				if (! $ret['tsOn']) {
 					Feedback::error(tra('List plugin: Feature "jQuery Sortable Tables" (tablesorter) is not enabled'));
 					return $ret;
 				}
@@ -424,8 +424,8 @@ class Search_Query_WikiBuilder
 				// if fields have been "formatted" then get the original field name to filter on
 				$formatArgs = $parser->parse($match->getArguments());
 
-				// use first display subplugin or first one that ends in _text 
-				$displayArgsToUse = array();
+				// use first display subplugin or first one that ends in _text
+				$displayArgsToUse = [];
 				$subPlugins = WikiParser_PluginMatcher::match($match->getBody());
 				foreach ($subPlugins as $subPlugin) {
 					if ($subPlugin->getName() === 'display') {
@@ -433,13 +433,13 @@ class Search_Query_WikiBuilder
 						if (empty($displayArgsToUse) || substr($displayArgs['name'], -5) === '_text') {
 							$displayArgsToUse = $displayArgs;
 						}
-						if (!empty($displayArgsToUse['name']) && substr($displayArgsToUse['name'], -5) === '_text') {
+						if (! empty($displayArgsToUse['name']) && substr($displayArgsToUse['name'], -5) === '_text') {
 							break;
 						}
 					}
 				}
-				if (!empty($displayArgsToUse)) {
-					foreach($args as & $arg) {
+				if (! empty($displayArgsToUse)) {
+					foreach ($args as & $arg) {
 						if ($arg['field'] === $formatArgs['name']) {
 							$arg['field'] = $displayArgsToUse['name'];
 							if (isset($displayArgsToUse['format']) && $displayArgsToUse['format'] === 'trackerrender') {
@@ -455,15 +455,16 @@ class Search_Query_WikiBuilder
 
 		if (Table_Check::isSort()) {
 			foreach ($_REQUEST['sort'] as $key => $dir) {
-				if( $hasactions ) {
+				if ($hasactions) {
 					$type = $tsc[$key]['type'];
-					$field = @$args[$key-1]['field'];
+					$field = @$args[$key - 1]['field'];
 				} else {
 					$type = $tsc[$key]['type'];
 					$field = $args[$key]['field'];
 				}
-				if( !$field )
+				if (! $field) {
 					continue;
+				}
 				$n = '';
 				switch ($type) {
 					case 'digit':
@@ -480,27 +481,29 @@ class Search_Query_WikiBuilder
 
 		if (Table_Check::isFilter()) {
 			foreach ($_REQUEST['filter'] as $key => $filter) {
-				if( $hasactions ) {
+				if ($hasactions) {
 					$type = $tsc[$key]['type'];
-					$field = @$args[$key-1]['field'];
+					$field = @$args[$key - 1]['field'];
 				} else {
 					$type = $tsc[$key]['type'];
 					$field = $args[$key]['field'];
 				}
-				if( !$field )
+				if (! $field) {
 					continue;
+				}
 				switch ($type) {
 					case 'digit':
 					case strpos($type, 'date') !== false:
-						$from = 0; $to = 0;
+						$from = 0;
+						$to = 0;
 						$timestamps = explode(' - ', $filter);
 						if (count($timestamps) === 2) {
 							$from = $timestamps[0] / 1000;
 							$to = $timestamps[1] / 1000;
-						} else if (strpos($filter, '>=') === 0) {
+						} elseif (strpos($filter, '>=') === 0) {
 							$from = substr($filter, 2) / 1000;
 							$to = 'now';
-						} else if (strpos($filter, '<=') === 0) {
+						} elseif (strpos($filter, '<=') === 0) {
 							$from = '1970-01-01';
 							$to = substr($filter, 2) / 1000;
 						}
@@ -509,7 +512,7 @@ class Search_Query_WikiBuilder
 							break;
 						}	// else fall through to default
 					default:
-						if (!empty($tsf[$key]['initial'])) {
+						if (! empty($tsf[$key]['initial'])) {
 							$this->query->filterInitial($filter, $field);
 						} else {
 							$this->query->filterContent($filter, $field);
@@ -522,13 +525,13 @@ class Search_Query_WikiBuilder
 		return $ret;
 	}
 
-	private function get_fields_from_arguments($arguments){
+	private function get_fields_from_arguments($arguments)
+	{
 		if (isset($arguments['field'])) {
 			$fields = explode(',', $arguments['field']);
 		} else {
-			$fields = TikiLib::lib('tiki')->get_preference('unified_default_content', array('contents'), true);
+			$fields = TikiLib::lib('tiki')->get_preference('unified_default_content', ['contents'], true);
 		}
 		return $fields;
 	}
 }
-

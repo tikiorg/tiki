@@ -49,25 +49,25 @@ class CacheClearCommand extends Command
 			\TikiLib::lib('prefs')->rebuildIndex();
 		} else {
 			switch ($type) {
-			case 'public':
-				$output->writeln('Clearing public caches');
-				return $cachelib->empty_cache('temp_public');
-			case 'private':
-				$output->writeln('Clearing private caches');
-				return $cachelib->empty_cache('temp_cache');
-			case 'templates':
-				$output->writeln('Clearing template caches');
-				return $cachelib->empty_cache('templates_c');
-			case 'modules':
-				$output->writeln('Clearing module caches');
-				return $cachelib->empty_cache('modules_cache');
-			case 'all':
-				$output->writeln('Clearing all caches');
-				return $cachelib->empty_cache();
-			case '':
-				return $output->writeln('Missing parameter.');
-			default:
-				$output->writeln('<error>Invalid cache requested.</error>');
+				case 'public':
+					$output->writeln('Clearing public caches');
+					return $cachelib->empty_cache('temp_public');
+				case 'private':
+					$output->writeln('Clearing private caches');
+					return $cachelib->empty_cache('temp_cache');
+				case 'templates':
+					$output->writeln('Clearing template caches');
+					return $cachelib->empty_cache('templates_c');
+				case 'modules':
+					$output->writeln('Clearing module caches');
+					return $cachelib->empty_cache('modules_cache');
+				case 'all':
+					$output->writeln('Clearing all caches');
+					return $cachelib->empty_cache();
+				case '':
+					return $output->writeln('Missing parameter.');
+				default:
+					$output->writeln('<error>Invalid cache requested.</error>');
 			}
 		}
 	}

@@ -185,12 +185,11 @@ class ComposerManager
 
 		$externalPackage = $this->manageYaml('search', [], $packageKey);
 
-		if (!$externalPackage) {
+		if (! $externalPackage) {
 			return null;
 		}
 
 		return $this->composerWrapper->installPackage($externalPackage);
-
 	}
 
 	/**
@@ -203,7 +202,7 @@ class ComposerManager
 	{
 		$externalPackage = $this->manageYaml('search', [], $packageKey);
 
-		if (!$externalPackage) {
+		if (! $externalPackage) {
 			return null;
 		}
 
@@ -236,7 +235,7 @@ class ComposerManager
 		$packageKey = $this->sanitizePackageKey($packageKey);
 
 		//Open External Packages Config File
-		if (!file_exists($this->packagesConfigFile)) {
+		if (! file_exists($this->packagesConfigFile)) {
 			return [];
 		}
 		try {
@@ -252,7 +251,7 @@ class ComposerManager
 		foreach ($yamlContent as $key => $fileInfo) {
 			try {
 				if ($fileInfo) {
-					if (!isset($fileInfo['scripts'])) {
+					if (! isset($fileInfo['scripts'])) {
 						$fileInfo['scripts'] = [];
 					}
 					$externalPackage = new ComposerPackage(
@@ -282,8 +281,5 @@ class ComposerManager
 		}
 
 		return $availablePackages;
-
 	}
-
-
 }

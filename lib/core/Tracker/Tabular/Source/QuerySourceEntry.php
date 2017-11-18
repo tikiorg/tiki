@@ -37,4 +37,3 @@ class QuerySourceEntry
 		return $column->render($value, $extra);
 	}
 }
-

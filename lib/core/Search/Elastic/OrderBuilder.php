@@ -22,10 +22,10 @@ class Search_Elastic_OrderBuilder
 		if ($field !== Search_Query_Order::FIELD_SCORE) {
 			$this->ensureHasField($field);
 			if ($order->getMode() == Search_Query_Order::MODE_NUMERIC) {
-				$component = array(
+				$component = [
 					"$field.nsort" => $order->getOrder(),
-				);
-			} else if ($order->getMode() == Search_Query_Order::MODE_DISTANCE) {
+				];
+			} elseif ($order->getMode() == Search_Query_Order::MODE_DISTANCE) {
 				$arguments = $order->getArguments();
 
 				$component = [
@@ -40,20 +40,21 @@ class Search_Elastic_OrderBuilder
 					],
 				];
 			} else {
-				$component = array(
+				$component = [
 					"$field.sort" => $order->getOrder(),
-				);
+				];
 			}
 		}
 
-		return array(
-			"sort" => array(
+		return [
+			"sort" => [
 				$component,
-			),
-		);
+			],
+		];
 	}
 
-	function ensureHasField($field) {
+	function ensureHasField($field)
+	{
 		global $prefs;
 
 		$mapping = $this->index ? $this->index->getFieldMapping($field) : new stdClass;
@@ -67,4 +68,3 @@ class Search_Elastic_OrderBuilder
 		}
 	}
 }
-

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,16 +9,17 @@ class Tiki_Profile_InstallHandler_Perspective extends Tiki_Profile_InstallHandle
 {
 	function getData()
 	{
-		if ( $this->data )
+		if ($this->data) {
 			return $this->data;
+		}
 
-		$defaults = array(
-			'preferences' => array(),
-		);
+		$defaults = [
+			'preferences' => [],
+		];
 
 		$data = array_merge($defaults, $this->obj->getData());
 
-		$data['preferences'] = Tiki_Profile::convertLists($data['preferences'], array('enable' => 'y', 'disable' => 'n'));
+		$data['preferences'] = Tiki_Profile::convertLists($data['preferences'], ['enable' => 'y', 'disable' => 'n']);
 
 		$data['preferences'] = Tiki_Profile::convertYesNo($data['preferences']);
 
@@ -28,8 +29,9 @@ class Tiki_Profile_InstallHandler_Perspective extends Tiki_Profile_InstallHandle
 	function canInstall()
 	{
 		$data = $this->getData();
-		if ( ! isset( $data['name'] ) )
+		if (! isset($data['name'])) {
 			return false;
+		}
 
 		return true;
 	}
@@ -42,7 +44,7 @@ class Tiki_Profile_InstallHandler_Perspective extends Tiki_Profile_InstallHandle
 
 		$this->replaceReferences($data);
 
-		if ( $persp = $perspectivelib->replace_perspective(0, $data['name']) ) {
+		if ($persp = $perspectivelib->replace_perspective(0, $data['name'])) {
 			$perspectivelib->replace_preferences($persp, $data['preferences']);
 		}
 

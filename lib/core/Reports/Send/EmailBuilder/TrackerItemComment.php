@@ -18,7 +18,7 @@ class Reports_Send_EmailBuilder_TrackerItemComment extends Reports_Send_EmailBui
 	public function getOutput(array $change)
 	{
 		global $prefs;
-        $base_url = $change['data']['base_url'];
+		$base_url = $change['data']['base_url'];
 
 		$trackerId = $change['data']['trackerId'];
 		$itemId = $change['data']['itemId'];
@@ -26,11 +26,11 @@ class Reports_Send_EmailBuilder_TrackerItemComment extends Reports_Send_EmailBui
 		$trklib = TikiLib::lib('trk');
 		$tracker = $trklib->get_tracker($trackerId);
 		$mainFieldValue = $trklib->get_isMain_value($trackerId, $itemId);
-        if ( $prefs['tracker_show_comments_below'] == 'y' ) {
-            $locationComments = 'cookietab=1#Comments';
-        } else {
-            $locationComments = 'cookietab=2';
-        }
+		if ($prefs['tracker_show_comments_below'] == 'y') {
+			$locationComments = 'cookietab=1#Comments';
+		} else {
+			$locationComments = 'cookietab=2';
+		}
 		if ($mainFieldValue) {
 			$output = tr(
 				'%0 added a new comment to %1 on tracker %2',

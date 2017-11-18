@@ -23,7 +23,7 @@ class Services_StyleGuide_Controller
 	function action_show($input)
 	{
 
-		$sections =$input->sections->text();
+		$sections = $input->sections->text();
 
 		if (empty($sections)) {
 			$sections = [
@@ -41,7 +41,7 @@ class Services_StyleGuide_Controller
 				'tabs',
 			];
 		} else {
-			$sections =  explode(',', $sections);
+			$sections = explode(',', $sections);
 		}
 
 		TikiLib::lib('header')

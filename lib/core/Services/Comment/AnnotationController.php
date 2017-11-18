@@ -133,7 +133,6 @@ class Services_Comment_AnnotationController
 		}
 
 		return $ret;
-
 	}
 
 	/**
@@ -184,7 +183,7 @@ class Services_Comment_AnnotationController
 
 		$comments = [];
 
-		foreach($list['comments'] as $comment) {
+		foreach ($list['comments'] as $comment) {
 			if (strpos($comment['data'], ';note:') === 0) {			// only the "inline" ones starting ;note: so far
 				$data = explode("\n", $comment['data'], 2);
 				$quote = trim(substr($data[0], 6));
@@ -247,5 +246,4 @@ class Services_Comment_AnnotationController
 		$safeQuote = addslashes($safeQuote);
 		return ';note:' . $safeQuote . "\n\n" . $text;
 	}
-
 }

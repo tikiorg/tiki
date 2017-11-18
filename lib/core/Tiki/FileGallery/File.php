@@ -11,7 +11,7 @@ use TikiLib;
 
 class File
 {
-	public $param = array(
+	public $param = [
 		"fileId" 	=> 0,
 		"galleryId" 	=> 1,
 		"name"		=> "",
@@ -40,12 +40,13 @@ class File
 		"archiveId"	=> 0,
 		"deleteAfter" 	=> 0,
 		"backlinkPerms"	=> "",
-	);
+	];
 	public $exists = false;
 
 	function __construct()
 	{
-		global $mimetypes; include_once ('lib/mime/mimetypes.php');
+		global $mimetypes;
+		include_once('lib/mime/mimetypes.php');
 
 		$this->setParam('filetype', $mimetypes["txt"]);
 		$this->setParam('name', tr("New File"));
@@ -57,9 +58,9 @@ class File
 	{
 		$tikilib = TikiLib::lib('tiki');
 
-		$id = $tikilib->getOne("SELECT fileId FROM tiki_files WHERE filename = ? AND archiveId  < 1", array($filename));
+		$id = $tikilib->getOne("SELECT fileId FROM tiki_files WHERE filename = ? AND archiveId  < 1", [$filename]);
 
-		if (!empty($id)) {
+		if (! empty($id)) {
 			return self::id($id);
 		}
 
@@ -99,7 +100,7 @@ class File
 		return self::id($archives[$archive]['id']);
 	}
 
-	function archiveFromLastModif ($lastModif)
+	function archiveFromLastModif($lastModif)
 	{
 		foreach ($this->listArchives() as $archive) {
 			if ($archive['lastModif'] == $lastModif) {
@@ -129,7 +130,7 @@ class File
 	{
 		global $user;
 
-		$user = (!empty($user) ? $user : 'Anonymous');
+		$user = (! empty($user) ? $user : 'Anonymous');
 
 		if ($this->exists() == false) {
 			$id = TikiLib::lib("filegal")->insert_file(
@@ -167,9 +168,9 @@ class File
 
 	function diffLatestWithArchive($archive = 0)
 	{
-		include_once ( "lib/diff/Diff.php" );
+		include_once("lib/diff/Diff.php");
 
-		$textDiff =  new \Text_Diff(
+		$textDiff = new \Text_Diff(
 			self::id($this->getParam('fileId'))
 			->archive($archive)
 			->data(),

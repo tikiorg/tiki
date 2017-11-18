@@ -101,7 +101,7 @@ class Services_Group_Controller
 	 * @param $input
 	 * @return array
 	 */
-	function action_new_group ($input)
+	function action_new_group($input)
 	{
 		Services_Exception_Denied::checkGlobal('admin');
 		$util = new Services_Utilities();
@@ -109,7 +109,7 @@ class Services_Group_Controller
 		//first pass - show confirm modal popup
 		if ($util->access->ticketSet()) {
 			$util->setVars($input);
-			if (!empty($input['name'])) {
+			if (! empty($input['name'])) {
 				$newGroupName = trim($input->name->groupname());
 				$userlib = TikiLib::lib('user');
 				if ($userlib->group_exists($newGroupName)) {
@@ -187,7 +187,7 @@ class Services_Group_Controller
 	 * @param $input
 	 * @return array
 	 */
-	function action_modify_group ($input)
+	function action_modify_group($input)
 	{
 		Services_Exception_Denied::checkGlobal('admin');
 		$util = new Services_Utilities();
@@ -195,7 +195,7 @@ class Services_Group_Controller
 		//first pass - show confirm modal popup
 		if ($util->access->ticketSet()) {
 			$util->setVars($input);
-			if (!empty($input['name']) && isset($input['olgroup'])) {
+			if (! empty($input['name']) && isset($input['olgroup'])) {
 				$newGroupName = trim($input->name->groupname());
 				$userlib = TikiLib::lib('user');
 				if ($input['olgroup'] !== $newGroupName && $userlib->group_exists($newGroupName)) {
@@ -274,7 +274,7 @@ class Services_Group_Controller
 	 * @param $input
 	 * @return array
 	 */
-	function action_add_user ($input)
+	function action_add_user($input)
 	{
 		Services_Exception_Denied::checkGlobal('admin');
 		$util = new Services_Utilities();
@@ -328,7 +328,7 @@ class Services_Group_Controller
 	 * @param $input
 	 * @return array
 	 */
-	function action_ban_user ($input)
+	function action_ban_user($input)
 	{
 		Services_Exception_Denied::checkGlobal('admin');
 		$util = new Services_Utilities();
@@ -343,8 +343,7 @@ class Services_Group_Controller
 				} else {
 					$msg = tr('Ban the following users from group %0?', $group);
 				}
-				return $util->confirm
-				(
+				return $util->confirm(
 					$msg,
 					'group',
 					tra('Ban'),
@@ -390,7 +389,7 @@ class Services_Group_Controller
 	 * @param $input
 	 * @return array
 	 */
-	function action_unban_user ($input)
+	function action_unban_user($input)
 	{
 		Services_Exception_Denied::checkGlobal('admin');
 		$util = new Services_Utilities();
@@ -405,8 +404,7 @@ class Services_Group_Controller
 				} else {
 					$msg = tr('Unban the following users from group %0?', $group);
 				}
-				return $util->confirm
-				(
+				return $util->confirm(
 					$msg,
 					'group',
 					tra('Unban'),
@@ -452,14 +450,14 @@ class Services_Group_Controller
 	 * @param array $extra
 	 * @return array
 	 */
-	private function prepareParameters (array $extra)
+	private function prepareParameters(array $extra)
 	{
 		$extra = $this->setFilters($extra);
 		$extra = $extra->asArray();
 		$extra['home'] = isset($extra['home']) ? $extra['home'] : '';
 		$extra['theme'] = isset($extra['theme']) ? $extra['theme'] : '';
 		$extra['color'] = isset($extra['color']) ? $extra['color'] : '';
-		$extra['defcat'] = !empty($extra['defcat']) ? $extra['defcat'] : 0;
+		$extra['defcat'] = ! empty($extra['defcat']) ? $extra['defcat'] : 0;
 		$extra['userChoice'] = isset($extra['userChoice']) && $extra['userChoice'] == 'on' ? 'y' : '';
 		$extra['expireAfter'] = empty($extra['expireAfter']) ? 0 : $extra['expireAfter'];
 
@@ -473,7 +471,7 @@ class Services_Group_Controller
 		global $prefs;
 		$prefGroupTracker = isset($prefs['groupTracker']) and $prefs['groupTracker'] == 'y';
 		$prefUserTracker = isset($prefs['userTracker']) and $prefs['userTracker'] == 'y';
-		if (!empty($extra['groupstracker']) || !empty($extra['userstracker'])) {
+		if (! empty($extra['groupstracker']) || ! empty($extra['userstracker'])) {
 			if ($prefGroupTracker || $prefUserTracker) {
 				$trklib = TikiLib::lib('trk');
 				$trackerlist = $trklib->list_trackers(0, -1, 'name_asc', '');
@@ -490,7 +488,7 @@ class Services_Group_Controller
 				if (isset($extra['usersfield']) && $extra['usersfield']) {
 					$defaults['usersfield'] = $extra['usersfield'];
 				}
-				if (!empty($extra['registrationUsersFieldIds'])) {
+				if (! empty($extra['registrationUsersFieldIds'])) {
 					$defaults['registrationUsersFieldIds'] = $extra['registrationUsersFieldIds'];
 				}
 			}
@@ -507,7 +505,7 @@ class Services_Group_Controller
 	 */
 	private function setFilters($input)
 	{
-		if (!($input instanceof JitFilter)) {
+		if (! ($input instanceof JitFilter)) {
 			$input = new JitFilter($input);
 		}
 		$input->replaceFilters(
@@ -528,7 +526,8 @@ class Services_Group_Controller
 				'anniversary'               => 'digits',	// format MMDD or DD
 				'prorateInterval'           => 'word',
 				'referer'                   => 'striptags'
-			]);
+			]
+		);
 		return $input;
 	}
 }

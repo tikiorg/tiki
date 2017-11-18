@@ -21,11 +21,11 @@ class Services_User_FavoriteController
 		global $user;
 
 		if (! $user) {
-			return array();
+			return [];
 		}
 
 		$relationlib = TikiLib::lib('relation');
-		$favorites = array();
+		$favorites = [];
 		foreach ($relationlib->get_relations_from('user', $user, 'tiki.user.favorite') as $relation) {
 			$favorites[$relation['relationId']] = $relation['type'] . ':' . $relation['itemId'];
 		}
@@ -71,13 +71,13 @@ class Services_User_FavoriteController
 
 				TikiLib::events()->trigger(
 					'tiki.social.favorite.add',
-					array(
+					[
 						'type' => $type,
 						'object' => $object,
 						'parentobject' => $parentobject,
 						'user' => $user,
 						'item_user' => $item_user,
-					)
+					]
 				);
 			}
 		} else {
@@ -86,21 +86,21 @@ class Services_User_FavoriteController
 				unset($relations[$relationId]);
 				TikiLib::events()->trigger(
 					'tiki.social.favorite.remove',
-					array(
+					[
 						'type' => $type,
 						'object' => $object,
 						'parentobject' => $parentobject,
 						'user' => $user,
-					)
+					]
 				);
 			}
 		}
 
 		$tx->commit();
 
-		return array(
+		return [
 			'list' => $relations,
-		);
+		];
 	}
 
 	private function getCurrentRelation($relations, $user, $type, $object)
@@ -133,4 +133,3 @@ class Services_User_FavoriteController
 		return $item_user;
 	}
 }
-

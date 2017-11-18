@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * Handler class for dropdown
- * 
+ *
  * Letter key: ~d~ ~D~ ~R~ ~M~
  *
  */
@@ -15,104 +15,104 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 {
 	public static function getTypes()
 	{
-		return array(
-			'd' => array(
+		return [
+			'd' => [
 				'name' => tr('Dropdown'),
 				'description' => tr('Allows users to select only from a specified set of options'),
 				'help' => 'Drop Down - Radio Tracker Field',
-				'prefs' => array('trackerfield_dropdown'),
-				'tags' => array('basic'),
+				'prefs' => ['trackerfield_dropdown'],
+				'tags' => ['basic'],
 				'default' => 'y',
-				'supported_changes' => array('d', 'D', 'R', 'M', 'm', 't', 'a', 'L'),
-				'params' => array(
-					'options' => array(
+				'supported_changes' => ['d', 'D', 'R', 'M', 'm', 't', 'a', 'L'],
+				'params' => [
+					'options' => [
 						'name' => tr('Option'),
 						'description' => tr('If an option contains an equal sign, the part before the equal sign will be used as the value, and the second part as the label'),
 						'filter' => 'text',
 						'count' => '*',
 						'legacy_index' => 0,
-					),
-				),
-			),
-			'D' => array(
+					],
+				],
+			],
+			'D' => [
 				'name' => tr('Dropdown selector with "Other" field'),
 				'description' => tr('Allows users to select from a specified set of options or to enter an alternate option'),
 				'help' => 'Drop Down - Radio Tracker Field',
-				'prefs' => array('trackerfield_dropdownother'),
-				'tags' => array('basic'),
+				'prefs' => ['trackerfield_dropdownother'],
+				'tags' => ['basic'],
 				'default' => 'n',
-				'supported_changes' => array('d', 'D', 'R', 'M', 'm', 't', 'a', 'L'),
-				'params' => array(
-					'options' => array(
+				'supported_changes' => ['d', 'D', 'R', 'M', 'm', 't', 'a', 'L'],
+				'params' => [
+					'options' => [
 						'name' => tr('Option'),
 						'description' => tr('If an option contains an equal sign, the part before the equal sign will be used as the value, and the second part as the label.') . ' ' . tr('To change the label of the "Other" option, use "other=Label".'),
 						'filter' => 'text',
 						'count' => '*',
 						'legacy_index' => 0,
-					),
-				),
-			),
-			'R' => array(
+					],
+				],
+			],
+			'R' => [
 				'name' => tr('Radio Buttons'),
 				'description' => tr('Allows users to select only from a specified set of options'),
-				'help' => 'Drop Down - Radio Tracker Field',				
-				'prefs' => array('trackerfield_radio'),
-				'tags' => array('basic'),
+				'help' => 'Drop Down - Radio Tracker Field',
+				'prefs' => ['trackerfield_radio'],
+				'tags' => ['basic'],
 				'default' => 'y',
-				'supported_changes' => array('d', 'D', 'R', 'M', 'm', 't', 'a', 'L'),
-				'params' => array(
-					'options' => array(
+				'supported_changes' => ['d', 'D', 'R', 'M', 'm', 't', 'a', 'L'],
+				'params' => [
+					'options' => [
 						'name' => tr('Option'),
 						'description' => tr('If an option contains an equal sign, the part before the equal sign will be used as the value, and the second part as the label'),
 						'filter' => 'text',
 						'count' => '*',
 						'legacy_index' => 0,
-					),
-				),
-			),
-			'M' => array(
+					],
+				],
+			],
+			'M' => [
 				'name' => tr('Multiselect'),
 				'description' => tr('Allows a user to select multiple values from a specified set of options'),
-				'help' => 'Multiselect Tracker Field',				
-				'prefs' => array('trackerfield_multiselect'),
-				'tags' => array('basic'),
+				'help' => 'Multiselect Tracker Field',
+				'prefs' => ['trackerfield_multiselect'],
+				'tags' => ['basic'],
 				'default' => 'y',
-				'supported_changes' => array('M', 'm', 't', 'a', 'L'),
-				'params' => array(
-					'options' => array(
+				'supported_changes' => ['M', 'm', 't', 'a', 'L'],
+				'params' => [
+					'options' => [
 						'name' => tr('Option'),
 						'description' => tr('If an option contains an equal sign, the part before the equal sign will be used as the value, and the second part as the label'),
 						'filter' => 'text',
 						'count' => '*',
 						'legacy_index' => 0,
-					),
-					'inputtype' => array(
+					],
+					'inputtype' => [
 						'name' => tr('Input Type'),
 						'description' => tr('User interface control to be used.'),
 						'default' => '',
 						'filter' => 'alpha',
-						'options' => array(
+						'options' => [
 							'' => tr('Multiple-selection checkboxes'),
 							'm' => tr('List box'),
-						),
-					),
-				),
-			),
-		);
+						],
+					],
+				],
+			],
+		];
 	}
 
 	public static function build($type, $trackerDefinition, $fieldInfo, $itemData)
 	{
 		return new Tracker_Field_Dropdown($fieldInfo, $itemData, $trackerDefinition);
 	}
-	
-	function getFieldData(array $requestData = array())
+
+	function getFieldData(array $requestData = [])
 	{
-		
+
 		$ins_id = $this->getInsertId();
 
-		if (!empty($requestData['other_'.$ins_id])) {
-			$value = $requestData['other_'.$ins_id];
+		if (! empty($requestData['other_' . $ins_id])) {
+			$value = $requestData['other_' . $ins_id];
 		} elseif (isset($requestData[$ins_id])) {
 			$value = implode(',', (array) $requestData[$ins_id]);
 		} elseif (isset($requestData[$ins_id . '_old'])) {
@@ -121,24 +121,24 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 			$value = $this->getValue($this->getDefaultValue());
 		}
 
-		return array(
+		return [
 			'value' => $value,
-			'selected' => $value === '' ? array() : explode(',', $value),
+			'selected' => $value === '' ? [] : explode(',', $value),
 			'possibilities' => $this->getPossibilities(),
-		);
+		];
 	}
-	
-	function renderInput($context = array())
+
+	function renderInput($context = [])
 	{
 		return $this->renderTemplate('trackerinput/dropdown.tpl', $context);
 	}
 
-	function renderInnerOutput($context = array())
+	function renderInnerOutput($context = [])
 	{
-		if (!empty($context['list_mode']) && $context['list_mode'] === 'csv') {
+		if (! empty($context['list_mode']) && $context['list_mode'] === 'csv') {
 			return implode(', ', $this->getConfiguration('selected'));
 		} else {
-			$labels = array_map(array($this, 'getValueLabel'), $this->getConfiguration('selected'));
+			$labels = array_map([$this, 'getValueLabel'], $this->getConfiguration('selected'));
 			return implode(', ', $labels);
 		}
 	}
@@ -170,17 +170,17 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 
 	private function getPossibilities()
 	{
-		static $localCache = array();
+		static $localCache = [];
 
 		$string = $this->getConfiguration('options');
 		if (! isset($localCache[$string])) {
 			$options = $this->getOption('options');
 
 			if (empty($options)) {
-				return array();
+				return [];
 			}
 
-			$out = array();
+			$out = [];
 			foreach ($options as $value) {
 				$out[$this->getValuePortion($value)] = $this->getLabelPortion($value);
 			}
@@ -190,12 +190,12 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 
 		return $localCache[$string];
 	}
-	
+
 	private function getDefaultValue()
 	{
 		$options = $this->getOption('options');
-		
-		$parts = array();
+
+		$parts = [];
 		$last = false;
 		foreach ($options as $opt) {
 			if ($last === $opt) {
@@ -232,32 +232,32 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 		$label = $this->getValueLabel($value);
 		$baseKey = $this->getBaseKey();
 
-		return array(
+		return [
 			$baseKey => $typeFactory->identifier($value),
 			"{$baseKey}_text" => $typeFactory->sortable($label),
-		);
+		];
 	}
 
 	function getProvidedFields()
 	{
 		$baseKey = $this->getBaseKey();
-		return array($baseKey, $baseKey . '_text');
+		return [$baseKey, $baseKey . '_text'];
 	}
 
 	function getGlobalFields()
 	{
 		$baseKey = $this->getBaseKey();
-		return array("{$baseKey}_text" => true);
+		return ["{$baseKey}_text" => true];
 	}
 
 	function getFacets()
 	{
 		$baseKey = $this->getBaseKey();
-		return array(
+		return [
 			Search_Query_Facet_Term::fromField($baseKey)
 				->setLabel($this->getConfiguration('name'))
 				->setRenderMap($this->getPossibilities())
-		);
+		];
 	}
 
 	function getTabularSchema()
@@ -316,7 +316,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 				$value = $control->getValue();
 
 				if ($value === '-Blank (no data)-') {
-					$query->filterIdentifier('', $baseKey.'_text');
+					$query->filterIdentifier('', $baseKey . '_text');
 				} elseif ($value) {
 					$query->filterIdentifier($value, $baseKey);
 				}
@@ -333,7 +333,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 
 					foreach ($values as $v) {
 						if ($v === '-Blank (no data)-') {
-							$sub->filterIdentifier('', $baseKey.'_text');
+							$sub->filterIdentifier('', $baseKey . '_text');
 						} elseif ($v) {
 							$sub->filterContent((string) $v, $baseKey);
 						}
@@ -344,4 +344,3 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 		return $filters;
 	}
 }
-

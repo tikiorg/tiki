@@ -20,17 +20,14 @@ class Reports_Send_EmailBuilder_CategoryChanged extends Reports_Send_EmailBuilde
 		$base_url = $change['data']['base_url'];
 
 		if ($change['data']['action'] == 'object entered category') {
-
-			$output = '<u>' . $change['data']['user'] . '</u> '.
+			$output = '<u>' . $change['data']['user'] . '</u> ' .
 				tr(
 					'added the %0 %1 to the category %2',
 					$change['data']['objectType'],
 					"<a href=\"{$base_url}{$change['data']['objectUrl']}\">{$change['data']['objectName']}</a>",
 					"<a href=\"{$base_url}tiki-browse_categories.php?parentId={$change['data']['categoryId']}&deep=off\">{$change['data']['categoryName']}</a>"
 				);
-
-		} elseif ($change['data']['action']=="object leaved category") {
-
+		} elseif ($change['data']['action'] == "object leaved category") {
 			$output = '<u>' . $change['data']['user'] . '</u>' .
 				tr(
 					"removed the %0 %1 from the category %2",
@@ -38,22 +35,17 @@ class Reports_Send_EmailBuilder_CategoryChanged extends Reports_Send_EmailBuilde
 					"<a href=\"{$base_url}{$change['data']['objectUrl']}\">{$change['data']['objectName']}</a>",
 					"<a href=\"{$base_url}tiki-browse_categories.php?parentId={$change['data']['categoryId']}&deep=off\">{$change['data']['categoryName']}</a>."
 				);
-
 		} elseif ($change['data']['action'] == 'category created') {
-
 			$output = '<u>' . $change['data']['user'] . '</u> ' . tra('created the subcategory') .
 					" <a href=\"{$base_url}tiki-browse_categories.php?parentId=" . $change['data']['categoryId'] . "&deep=off\">" .
 					$change['data']['categoryName'] . '</a> ' . tra('in') .
 					" <a href=\"{$base_url}tiki-browse_categories.php?parentId=" . $change['data']['parentId'] . "&deep=off\">" .
 					$change['data']['parentName'] . '</a>.';
-
 		} elseif ($change['data']['action'] == 'category removed') {
-
 			$output = '<u>' . $change['data']['user'] . '</u> ' . tra('removed the subcategory') .
 					" <a href=\"{$base_url}tiki-browse_categories.php?parentId=" . $change['data']['categoryId'] . "&deep=off\">" .
 					$change['data']['categoryName'] . '</a> ' . tra('from') . " <a href=\"{$base_url}tiki-browse_categories.php?parentId=" .
 					$change['data']['parentId'] . "&deep=off\">" . $change['data']['parentName'] . '</a>.';
-
 		} elseif ($change['data']['action'] == 'category updated') {
 			$output = "<u>" . $change['data']['user'] . '</u> ' . tra('edited the category') .
 					" <a href=\"{$base_url}tiki-browse_categories.php?parentId=" . $change['data']['categoryId'] .

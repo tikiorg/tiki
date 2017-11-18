@@ -17,4 +17,3 @@ class Search_Elastic_NumberFormatException extends Search_Elastic_Exception
 		parent::__construct(tr('String "%0" cannot be formatted as a number for field "%1"', $this->string, $this->field));
 	}
 }
-

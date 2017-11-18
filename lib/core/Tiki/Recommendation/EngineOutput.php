@@ -11,4 +11,3 @@ interface EngineOutput
 {
 	function __toString();
 }
-

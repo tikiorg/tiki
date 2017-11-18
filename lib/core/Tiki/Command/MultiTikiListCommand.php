@@ -19,7 +19,8 @@ class MultiTikiListCommand extends Command
 		$this
 			->setName('multitiki:list')
 			->setDescription('List MultiTikis in a path')
-			->addArgument('path',
+			->addArgument(
+				'path',
 				InputArgument::OPTIONAL,
 				'path to the Tiki instance to list (defaults to this one if absent)'
 			)

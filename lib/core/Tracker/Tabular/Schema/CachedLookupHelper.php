@@ -6,6 +6,7 @@
 // $Id$
 
 namespace Tracker\Tabular\Schema;
+
 use TikiDb;
 
 /**
@@ -60,7 +61,7 @@ class CachedLookupHelper
 	public static function fieldLookup($fieldId)
 	{
 		$table = TikiDb::get()->table('tiki_tracker_item_fields');
-		
+
 		$cache = new self;
 		$cache->setInit(function ($count) use ($table, $fieldId) {
 			return $table->fetchMap('itemId', 'value', [
@@ -80,7 +81,7 @@ class CachedLookupHelper
 	public static function fieldInvert($fieldId)
 	{
 		$table = TikiDb::get()->table('tiki_tracker_item_fields');
-		
+
 		$cache = new self;
 		$cache->setInit(function ($count) use ($table, $fieldId) {
 			return $table->fetchMap('value', 'itemId', [
@@ -97,4 +98,3 @@ class CachedLookupHelper
 		return $cache;
 	}
 }
-

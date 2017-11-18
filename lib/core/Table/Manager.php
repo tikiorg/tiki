@@ -52,7 +52,7 @@ class Table_Manager
 	 */
 	private function addToHeader()
 	{
-		if (!empty(Table_Code_Manager::$code)) {
+		if (! empty(Table_Code_Manager::$code)) {
 			$headerlib = TikiLib::lib('header');
 			$code = '';
 			foreach (Table_Code_Manager::$code as $section) {

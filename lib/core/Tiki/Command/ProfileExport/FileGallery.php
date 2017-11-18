@@ -36,7 +36,7 @@ class FileGallery extends ObjectWriter
 				null,
 				InputOption::VALUE_NONE,
 				'Includes files to export'
-			)			
+			)
 			->addArgument(
 				'fileGallery',
 				InputArgument::REQUIRED,

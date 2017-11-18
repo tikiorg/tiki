@@ -20,7 +20,7 @@ class Tiki_Connect_Client extends Tiki_Connect_Abstract
 	function buildConnectData()
 	{
 		global $prefs, $TWV;
-		$info = array('version' => $TWV->version);
+		$info = ['version' => $TWV->version];
 
 		if ($prefs['connect_send_anonymous_info'] === 'y') {
 			$cachelib = TikiLib::lib('cache');
@@ -41,8 +41,8 @@ class Tiki_Connect_Client extends Tiki_Connect_Abstract
 			// get all table row counts
 			$tikilib = TikiLib::lib('tiki');
 			$res = $tikilib->fetchAll('SHOW TABLES;');
-			if (!empty($res)) {
-				$info['tables'] = array();
+			if (! empty($res)) {
+				$info['tables'] = [];
 				foreach ($res as $r) {
 					foreach ($r as $table) {
 						$info['tables'][$table] = $tikilib->getOne('SELECT COUNT(*) FROM `' . $table . '`');
@@ -51,14 +51,14 @@ class Tiki_Connect_Client extends Tiki_Connect_Abstract
 			}
 
 			$votes = $this->getVotes();
-			if (!empty($votes)) {
+			if (! empty($votes)) {
 				$info['votes'] = $votes;
 			}
 		}
 
 		if ($prefs['connect_send_info'] === 'y') {
 			// restore the protected values
-			$site_prefs = array();
+			$site_prefs = [];
 			foreach ($this->protectedPrefs as $p) {
 				if (isset($prefs[$p])) {			// some protected prefs are legacy ones from previous versions
 					$site_prefs[$p] = $prefs[$p];
@@ -73,20 +73,20 @@ class Tiki_Connect_Client extends Tiki_Connect_Abstract
 	function getLastDataSent()
 	{
 		$res = $this->connectTable->fetchAll(
-			array('created', 'data'),
-			array(
+			['created', 'data'],
+			[
 				'type' => 'sent',
 				'server' => 0,
-			),
+			],
 			1,
 			-1,
-			array('created' => 'DESC')
+			['created' => 'DESC']
 		);
 
-		if (!empty($res[0]) && !empty($res[0]['data'])) {
+		if (! empty($res[0]) && ! empty($res[0]['data'])) {
 			return unserialize($res[0]['data']);
 		} else {
-			return array();
+			return [];
 		}
 	}
 
@@ -94,7 +94,7 @@ class Tiki_Connect_Client extends Tiki_Connect_Abstract
 	{
 		$lastData = $this->getLastDataSent();
 
-		if (!empty($lastData)) {
+		if (! empty($lastData)) {
 			foreach ($data as $key => $val) {
 				if (is_array($val)) {
 					foreach ($val as $ikey => $ival) {
@@ -102,8 +102,8 @@ class Tiki_Connect_Client extends Tiki_Connect_Abstract
 							unset($data[$key][$ikey]);
 						}
 					}
-				} else if (!in_array($key, array('version', 'guid'))) {
-					if (isset( $lastData[$key] ) && $lastData[$key] === $val) {
+				} elseif (! in_array($key, ['version', 'guid'])) {
+					if (isset($lastData[$key]) && $lastData[$key] === $val) {
 						unset($data[$key]);
 					}
 				}
@@ -140,14 +140,14 @@ class Tiki_Connect_Client extends Tiki_Connect_Abstract
 	function getConfirmedGuid()
 	{
 		$res = $this->connectTable->fetchAll(
-			array('created', 'guid'),
-			array('type' => 'confirmed', 'server' => 0),
+			['created', 'guid'],
+			['type' => 'confirmed', 'server' => 0],
 			1,
 			-1,
-			array('created' => 'DESC')
+			['created' => 'DESC']
 		);
 
-		if (!empty($res[0])) {
+		if (! empty($res[0])) {
 			return $res[0]['guid'];
 		} else {
 			return '';
@@ -168,7 +168,7 @@ class Tiki_Connect_Client extends Tiki_Connect_Abstract
 		if (isset($votes->$pref)) {
 			return (array) $votes->$pref;
 		} else {
-			return array();
+			return [];
 		}
 	}
 
@@ -184,7 +184,7 @@ class Tiki_Connect_Client extends Tiki_Connect_Abstract
 	{
 		global $prefs;
 
-		if (empty($this->votes) || $reload ) {
+		if (empty($this->votes) || $reload) {
 			$this->votes = $this->getVotesForGuid($prefs['connect_guid']);
 		}
 		return $this->votes;
@@ -207,33 +207,33 @@ class Tiki_Connect_Client extends Tiki_Connect_Abstract
 		}
 
 		$count = $this->connectTable->fetchCount(
-			array(
+			[
 				'server' => 0,
 				'guid' => $guid,
 				'type' => 'votes',
-			)
+			]
 		);
 
 		if ($count) {
 			$this->connectTable->update(
-				array(
+				[
 					'type' => 'votes',
 					'data' => $votes,
-				),
-				array(
+				],
+				[
 					'server' => 0,
 					'guid' => $guid,
 					'type' => 'votes',
-				)
+				]
 			);
 		} else {
 			$this->connectTable->insert(
-				array(
+				[
 					'type' => 'votes',
 					'data' => $votes,
 					'server' => 0,
 					'guid' => $guid,
-				)
+				]
 			);
 		}
 	}

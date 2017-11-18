@@ -15,4 +15,3 @@ interface IndexInterface
 
 	function applySimilarConditions(\Search_Query $query, $type, $object);
 }
-

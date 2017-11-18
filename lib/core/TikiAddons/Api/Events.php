@@ -5,23 +5,26 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class TikiAddons_Api_Events extends TikiAddons_Api {
+class TikiAddons_Api_Events extends TikiAddons_Api
+{
 	protected static $eventMap = [];
 
 	// overriding isInstalled in TikiAddons_Utilities
-	function isInstalled($folder) {
+	function isInstalled($folder)
+	{
 		$installed1 = array_keys(self::$parents);
 		if (strpos($folder, '/') !== false && strpos($folder, '_') === false) {
 			$folder = str_replace('/', '_', $folder);
 		}
-		if (parent::isInstalled($folder) && in_array($folder, $installed1) ) {
+		if (parent::isInstalled($folder) && in_array($folder, $installed1)) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	static function setEventMap($folder, $eventMap) {
+	static function setEventMap($folder, $eventMap)
+	{
 		if (strpos($folder, '/') !== false && strpos($folder, '_') === false) {
 			$folder = str_replace('/', '_', $folder);
 		}
@@ -32,9 +35,10 @@ class TikiAddons_Api_Events extends TikiAddons_Api {
 		return true;
 	}
 
-	static function bindEvents($events) {
+	static function bindEvents($events)
+	{
 		foreach (self::$eventMap as $event) {
-			$events->bind($event->event, Tiki_Event_Lib::defer($event->lib, $event->function), array("addon_args" => (array) $event->params));
+			$events->bind($event->event, Tiki_Event_Lib::defer($event->lib, $event->function), ["addon_args" => (array) $event->params]);
 		}
 	}
 }

@@ -18,15 +18,14 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class Table_Settings_PluginWithAjax extends Table_Settings_Plugin
 {
-	protected $ts = array(
+	protected $ts = [
 		'selflinks' => true,
-		'sorts' => array(
+		'sorts' => [
 			'multisort' => false,	//$trklib->list_items doesn't seem to support multisorts
 			'group' => true,
-		),
-		'ajax' => array(
+		],
+		'ajax' => [
 			'custom' => false,		//url sort and filter params manipulated on the server side for this plugin
-		)
-	);
+		]
+	];
 }
-

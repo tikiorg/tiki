@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * Handler class for location/map/gmap
- * 
+ *
  * Letter key: ~G~
  *
  */
@@ -15,54 +15,54 @@ class Tracker_Field_Location extends Tracker_Field_Abstract implements Tracker_F
 {
 	public static function getTypes()
 	{
-		return array(
-			'G' => array(
+		return [
+			'G' => [
 				'name' => tr('Location'),
 				'description' => tr('Enable a geographic location to be selected for the item and displayed on a map.'),
 				'help' => 'Location Tracker Field',
-				'prefs' => array('trackerfield_location'),
-				'tags' => array('basic'),
+				'prefs' => ['trackerfield_location'],
+				'tags' => ['basic'],
 				'default' => 'y',
-				'params' => array(
-					'use_as_item_location' => array(
+				'params' => [
+					'use_as_item_location' => [
 						'name' => tr('Use as item location'),
 						'description' => tr("When enabled, the field's value is recorded as the item's geolocation to be displayed on locator maps."),
 						'filter' => 'int',
-						'options' => array(
+						'options' => [
 							0 => tr('No'),
 							1 => tr('Yes'),
-						),
+						],
 						'legacy_index' => 0,
-					),
-					'list_width' => array(
+					],
+					'list_width' => [
 						'name' => tr('List View Width'),
 						'description' => tr('Width of map in pixels when tracker items are shown in list view'),
 						'filter' => 'int',
 						'default' => 200,
 						'legacy_index' => 1,
-					),
-					'list_height' => array(
+					],
+					'list_height' => [
 						'name' => tr('List View Height'),
 						'description' => tr('Height of map in pixels when tracker items are shown in list view'),
 						'filter' => 'int',
 						'default' => 200,
 						'legacy_index' => 2,
-					),
-					'item_width' => array(
+					],
+					'item_width' => [
 						'name' => tr('Item View Width'),
 						'description' => tr('Width of map in pixels when a single tracker item is shown'),
 						'filter' => 'int',
 						'default' => 500,
 						'legacy_index' => 3,
-					),
-					'item_height' => array(
+					],
+					'item_height' => [
 						'name' => tr('Item View Height'),
 						'description' => tr('Height of map in pixels when a single tracker item is shown'),
 						'filter' => 'int',
 						'default' => 400,
 						'legacy_index' => 4,
-					),
-					'sourceFieldsList' => array(
+					],
+					'sourceFieldsList' => [
 						'name' => tr('Fields To Search'),
 						'description' => tr('Fields in this tracker to use as a source to search for a location for.'),
 						'separator' => '|',
@@ -71,26 +71,26 @@ class Tracker_Field_Location extends Tracker_Field_Abstract implements Tracker_F
 						'parent' => 'input[name=trackerId]',
 						'parentkey' => 'tracker_id',
 						'sort_order' => 'tracker_id',
-					),
-					'sourceSearchEvent' => array(
+					],
+					'sourceSearchEvent' => [
 						'name' => tr('When To Search'),
 						'description' => tr('Event to attempt to search for a location.'),
 						'filter' => 'alpha',
 						'default' => '',
-						'options' => array(
+						'options' => [
 							'' => tr('Never'),
 							'save' => tr('Save (when Location is empty)'),
 							'savealways' => tr('Save (always)'),
 							'index' => tr('Indexing (when Location is empty)'),
 							'indexalways' => tr('Indexing (always)'),
-						),
-					),
-				),
-			),
-		);
+						],
+					],
+				],
+			],
+		];
 	}
 
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
 		if (isset($requestData[$this->getInsertId()])) {
 			$value = $requestData[$this->getInsertId()];
@@ -108,29 +108,29 @@ class Tracker_Field_Location extends Tracker_Field_Abstract implements Tracker_F
 			$value .= str_replace(',', '.', $parts[1]) . ',';
 			$value .= str_replace(',', '.', $parts[2]);
 
-			return array(
+			return [
 				'value' => $value,
 				'x' => $parts[0],
 				'y' => $parts[1],
 				'z' => isset($parts[2]) ? $parts[2] : 0,
-			);
+			];
 		} else {
-			return array(
+			return [
 				'value' => '',
 				'x' => null,
 				'y' => null,
 				'z' => null,
-			);
+			];
 		}
 	}
 
-	function renderInput($context = array())
+	function renderInput($context = [])
 	{
 		TikiLib::lib('header')->add_map();
 		return $this->renderTemplate('trackerinput/location.tpl', $context);
 	}
 
-	function renderOutput($context = array())
+	function renderOutput($context = [])
 	{
 		if ($context['list_mode'] === 'csv') {
 			return $this->getConfiguration('value');
@@ -157,17 +157,16 @@ class Tracker_Field_Location extends Tracker_Field_Abstract implements Tracker_F
 		if ($sourceFieldsList) {
 			$event = $this->getOption('sourceSearchEvent');
 
-			$emptyValue = !$value || strpos($value, '0,0,') !== false;
+			$emptyValue = ! $value || strpos($value, '0,0,') !== false;
 
 			if ($event === 'save' && $emptyValue || $event === 'savealways') {
 				$value = $this->searchForLocation($sourceFieldsList);
 			}
 		}
 
-		return array(
+		return [
 			'value' => $value,
-		);
-
+		];
 	}
 
 	private function searchForLocation($sourceFieldsList)
@@ -182,7 +181,7 @@ class Tracker_Field_Location extends Tracker_Field_Abstract implements Tracker_F
 			$item = $item->getData();
 		}
 
-		array_walk($sourceFieldsList, function(& $field) use ($definition, $item, & $address) {
+		array_walk($sourceFieldsList, function (& $field) use ($definition, $item, & $address) {
 
 			$fieldArray = $definition->getField(intval($field));
 
@@ -190,7 +189,6 @@ class Tracker_Field_Location extends Tracker_Field_Abstract implements Tracker_F
 				$message = tr('Location: Field %0 not found for field "%1"', $field, $this->getConfiguration('permName'));
 				Feedback::error($message);
 			} else {
-
 				$factory = $definition->getFieldFactory();
 				$handler = $factory->getHandler($fieldArray, $item);
 
@@ -234,7 +232,7 @@ class Tracker_Field_Location extends Tracker_Field_Abstract implements Tracker_F
 		$sourceFieldsList = $this->getOption('sourceFieldsList');
 
 		if ($sourceFieldsList) {
-			$emptyValue = !$value || strpos($value, '0,0,') !== false;
+			$emptyValue = ! $value || strpos($value, '0,0,') !== false;
 			$event = $this->getOption('sourceSearchEvent');
 
 			if ($event === 'index' && $emptyValue || $event === 'indexalways') {
@@ -254,9 +252,8 @@ class Tracker_Field_Location extends Tracker_Field_Abstract implements Tracker_F
 		}
 
 		$baseKey = $this->getBaseKey();
-		return array(
+		return [
 			$baseKey => $typeFactory->sortable($value),	// TODO add geo_point type for elastic
-		);
+		];
 	}
 }
-

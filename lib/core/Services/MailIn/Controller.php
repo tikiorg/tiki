@@ -120,4 +120,3 @@ class Services_MailIn_Controller
 		];
 	}
 }
-

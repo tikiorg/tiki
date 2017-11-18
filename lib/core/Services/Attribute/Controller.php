@@ -9,7 +9,6 @@ class Services_Attribute_Controller
 {
 	function setUp()
 	{
-
 	}
 
 	/**
@@ -46,6 +45,4 @@ class Services_Attribute_Controller
 			'value' => $value,
 		];
 	}
-
 }
-

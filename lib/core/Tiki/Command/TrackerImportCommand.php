@@ -41,7 +41,7 @@ class TrackerImportCommand extends Command
 		$info = $lib->getInfo($input->getArgument('tabularId'));
 
 		$perms = \Perms::get('tabular', $info['tabularId']);
-		if (! $info || !$perms->tabular_import) {
+		if (! $info || ! $perms->tabular_import) {
 			throw new \Exception('Tracker Import: Tabular Format not found');
 		}
 

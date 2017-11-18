@@ -15,11 +15,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class NotificationDigestCommand extends Command
 {
-    protected function configure()
-    {
-        $this
-            ->setName('notification:digest')
-            ->setDescription('Send out email notification digests')
+	protected function configure()
+	{
+		$this
+			->setName('notification:digest')
+			->setDescription('Send out email notification digests')
 			->addArgument(
 				'domain',
 				InputArgument::REQUIRED,
@@ -50,10 +50,10 @@ class NotificationDigestCommand extends Command
 				'Port to include in the URL'
 			)
 			;
-    }
+	}
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
+	protected function execute(InputInterface $input, OutputInterface $output)
+	{
 		global $prefs, $url_scheme, $url_host, $tikiroot, $url_port;
 		$days = intval($input->getArgument('days')) ?: 7;
 
@@ -81,7 +81,7 @@ class NotificationDigestCommand extends Command
 
 		$monitormail = \TikiLib::lib('monitormail');
 
-		$from = date('Y-m-d H:i:s', time() - $days*24*3600);
+		$from = date('Y-m-d H:i:s', time() - $days * 24 * 3600);
 		$to = date('Y-m-d H:i:s');
 
 		foreach ($list as $info) {
@@ -92,5 +92,5 @@ class NotificationDigestCommand extends Command
 				$output->writeln("No data for {$info['email']}");
 			}
 		}
-    }
+	}
 }

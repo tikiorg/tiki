@@ -53,4 +53,3 @@ class TikiIndex implements IndexInterface
 		}
 	}
 }
-

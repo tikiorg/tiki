@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 class Tiki_Profile_InstallHandler_RatingConfigSet extends Tiki_Profile_InstallHandler
 {
-	private $configs = array();
+	private $configs = [];
 
 	function fetchData()
 	{
@@ -29,7 +29,7 @@ class Tiki_Profile_InstallHandler_RatingConfigSet extends Tiki_Profile_InstallHa
 	{
 		$this->fetchData();
 		$this->replaceReferences($this->configs);
-		
+
 		$configlib = TikiLib::lib('ratingconfig');
 		$configlib->preserve_configurations($this->configs);
 
@@ -41,7 +41,7 @@ class Tiki_Profile_InstallHandler_RatingConfigSet extends Tiki_Profile_InstallHa
 		$configlib = TikiLib::lib('ratingconfig');
 		$configs = $configlib->get_configurations();
 
-		$ids = array();
+		$ids = [];
 		foreach ($configs as $config) {
 			if (Tiki_Profile_InstallHandler_RatingConfig::export($writer, $config)) {
 				$ids[] = $config['ratingConfigId'];
@@ -51,11 +51,11 @@ class Tiki_Profile_InstallHandler_RatingConfigSet extends Tiki_Profile_InstallHa
 		$writer->addObject(
 			'rating_config_set',
 			'set',
-			array(
+			[
 				'configs' => array_map(function ($id) use ($writer) {
 					return $writer->getReference('rating_config', $id);
 				}, $ids),
-			)
+			]
 		);
 
 		return true;

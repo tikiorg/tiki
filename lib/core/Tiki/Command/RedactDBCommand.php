@@ -44,7 +44,7 @@ class RedactDBCommand extends Command
 		// Reset admin account
 		$output->writeln('<info>Resetting admin account.</info>');
 		$query = "UPDATE users_users SET email = ? WHERE login='admin';";
-		$bindvars = array('admin@example.com');
+		$bindvars = ['admin@example.com'];
 		$result = $tikilib->query($query, $bindvars);
 		$query = "UPDATE `users_users` SET `hash`= md5('admin') WHERE `login`='admin'";
 		$result = $tikilib->query($query);
@@ -53,17 +53,17 @@ class RedactDBCommand extends Command
 		$userprefix = 'user_';
 		$userprefixready = false;
 		$userprefixindex = 0;
-		while (!$userprefixready) {
-			$query = "SELECT count(*) FROM users_users WHERE login LIKE '".$userprefix."%';";
+		while (! $userprefixready) {
+			$query = "SELECT count(*) FROM users_users WHERE login LIKE '" . $userprefix . "%';";
 			$result = $tikilib->getOne($query);
 			if ($result > 0) {
 				$userprefixindex++;
-				$userprefix = 'user'.$userprefixindex.'_';
+				$userprefix = 'user' . $userprefixindex . '_';
 			} else {
 				$userprefixready = true;
 			}
 		}
-		$output->writeln('<comment>Using user names like '.$userprefix.'123.</comment>');
+		$output->writeln('<comment>Using user names like ' . $userprefix . '123.</comment>');
 
 		// Pseudonymise e-mail
 		$output->writeln('<comment>Pseudonymising user e-mails.</comment>');
@@ -73,16 +73,16 @@ class RedactDBCommand extends Command
 				AND table_name <> 'users_users'
 				AND table_schema = '$dbs_tiki';";
 		$result = $tikilib->query($query);
-		$ret = array();
+		$ret = [];
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 		foreach ($ret as $table) {
 			unset($bindvars);
-			$output->writeln('<info>'.$table['table_name'].'</info>');
-			$query = "UPDATE ".$table['table_name']." t, users_users u SET t.email = CONCAT('".$userprefix."', u.userId, '@example.com') WHERE t.email = u.email AND u.login <> 'admin';";
+			$output->writeln('<info>' . $table['table_name'] . '</info>');
+			$query = "UPDATE " . $table['table_name'] . " t, users_users u SET t.email = CONCAT('" . $userprefix . "', u.userId, '@example.com') WHERE t.email = u.email AND u.login <> 'admin';";
 			$result = $tikilib->query($query);
-			$query = "SET @newnum:=0;UPDATE ".$table['table_name']." t SET t.email = CONCAT('emailchanged', @newnum:=@newnum+1, '@example.com') WHERE t.email NOT LIKE '".$userprefix."%@example.com';";
+			$query = "SET @newnum:=0;UPDATE " . $table['table_name'] . " t SET t.email = CONCAT('emailchanged', @newnum:=@newnum+1, '@example.com') WHERE t.email NOT LIKE '" . $userprefix . "%@example.com';";
 			$result = $tikilib->query($query);
 		}
 
@@ -94,14 +94,14 @@ class RedactDBCommand extends Command
 				AND table_name <> 'users_users'
 				AND table_schema = '$dbs_tiki';";
 		$result = $tikilib->query($query);
-		$ret = array();	
+		$ret = [];
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 		foreach ($ret as $table) {
 			unset($bindvars);
-			$output->writeln('<info>'.$table['table_name'].'</info>');
-			$query = "UPDATE ".$table['table_name']." t, users_users u SET t.user = CONCAT('".$userprefix."', u.userId) WHERE t.user = u.login AND u.login <> 'admin';";
+			$output->writeln('<info>' . $table['table_name'] . '</info>');
+			$query = "UPDATE " . $table['table_name'] . " t, users_users u SET t.user = CONCAT('" . $userprefix . "', u.userId) WHERE t.user = u.login AND u.login <> 'admin';";
 			$result = $tikilib->query($query);
 		}
 
@@ -109,16 +109,16 @@ class RedactDBCommand extends Command
 		$output->writeln('<comment>Pseudonymising user selector tracker fields.</comment>');
 		$query = "SELECT fieldId, trackerId, name FROM tiki_tracker_fields WHERE type='u';";
 		$result = $tikilib->query($query);
-		$ret = array();
+		$ret = [];
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 		foreach ($ret as $field) {
 			unset($bindvars);
-			$output->writeln('<info>Tracker '.$field['trackerId'].' Field '.$field['fieldId'].': '.$field['name'].'</info>');
-			$trackername = $tikilib->getOne('SELECT name FROM tiki_trackers WHERE trackerId = '.$field['trackerId'].';'); 
-			$output->writeln('<comment>Consider removing data from Tracker '.$field['trackerId'].' ('.$trackername.').</comment>');
-			$query = "UPDATE tiki_tracker_item_fields t, users_users u SET t.value = CONCAT('".$userprefix."', u.userId) WHERE t.value = u.login AND u.login <> 'admin';";
+			$output->writeln('<info>Tracker ' . $field['trackerId'] . ' Field ' . $field['fieldId'] . ': ' . $field['name'] . '</info>');
+			$trackername = $tikilib->getOne('SELECT name FROM tiki_trackers WHERE trackerId = ' . $field['trackerId'] . ';');
+			$output->writeln('<comment>Consider removing data from Tracker ' . $field['trackerId'] . ' (' . $trackername . ').</comment>');
+			$query = "UPDATE tiki_tracker_item_fields t, users_users u SET t.value = CONCAT('" . $userprefix . "', u.userId) WHERE t.value = u.login AND u.login <> 'admin';";
 			$result = $tikilib->query($query);
 		}
 
@@ -127,12 +127,12 @@ class RedactDBCommand extends Command
 		$num = $tikilib->getOne($query);
 		for ($i = 2; $i <= $num; $i++) {
 			$query = "UPDATE `users_users` SET `email` = ?, `login` = ?, `hash`=md5( ? ) WHERE `userId` = ?";
-			$bindvars = array("$userprefix$i@example.com", "$userprefix$i", "pass$i", $i);
+			$bindvars = ["$userprefix$i@example.com", "$userprefix$i", "pass$i", $i];
 			$result = $tikilib->query($query, $bindvars);
 			// TODO : Update user avatars
 		}
 		$query = "UPDATE `users_users` SET `provpass` = '';";
-		$result = $tikilib->query($query);		
+		$result = $tikilib->query($query);
 
 		// Remove user web-mail accounts
 		$output->writeln('<info>Removing user mail accounts.</info>');

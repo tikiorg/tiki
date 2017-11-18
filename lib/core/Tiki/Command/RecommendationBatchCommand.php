@@ -18,16 +18,16 @@ use TikiLib;
 
 class RecommendationBatchCommand extends Command
 {
-    protected function configure()
-    {
-        $this
-            ->setName('recommendation:batch')
-            ->setDescription('Identify and send recommendations');
-    }
+	protected function configure()
+	{
+		$this
+			->setName('recommendation:batch')
+			->setDescription('Identify and send recommendations');
+	}
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
+	protected function execute(InputInterface $input, OutputInterface $output)
+	{
 		$batch = TikiLib::lib('recommendationcontentbatch');
 		$batch->process();
-    }
+	}
 }

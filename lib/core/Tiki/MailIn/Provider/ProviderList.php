@@ -24,4 +24,3 @@ class ProviderList
 		return $this->list;
 	}
 }
-

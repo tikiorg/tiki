@@ -46,8 +46,8 @@ class Reports_Users
 	public function get($user)
 	{
 		return $this->table->fetchRow(
-			array('id', 'interval', 'view', 'type', 'always_email', 'last_report'),
-			array('user' => $user)
+			['id', 'interval', 'view', 'type', 'always_email', 'last_report'],
+			['user' => $user]
 		);
 	}
 
@@ -59,7 +59,7 @@ class Reports_Users
 	 */
 	public function delete($user)
 	{
-		$this->table->deleteMultiple(array('user' => $user));
+		$this->table->deleteMultiple(['user' => $user]);
 	}
 
 	/**
@@ -75,26 +75,26 @@ class Reports_Users
 	 */
 	public function save($user, $interval, $view, $type, $always_email = 0)
 	{
-		if (!$this->get($user)) {
+		if (! $this->get($user)) {
 			$this->table->insert(
-				array(
+				[
 					'user' => $user,
 					'interval' => $interval,
 					'view' => $view,
 					'type' => $type,
 					'always_email' => $always_email,
 					'last_report' => '0000-00-00 00:00:00',
-				)
+				]
 			);
 		} else {
 			$this->table->update(
-				array(
+				[
 					'interval' => $interval,
 					'view' => $view,
 					'type' => $type,
 					'always_email' => $always_email
-				),
-				array('user' => $user)
+				],
+				['user' => $user]
 			);
 		}
 	}
@@ -120,7 +120,7 @@ class Reports_Users
 	{
 		$users = $this->db->fetchAll('select `user`, `interval`, UNIX_TIMESTAMP(`last_report`) as last_report from tiki_user_reports');
 
-		$ret = array();
+		$ret = [];
 
 		foreach ($users as $user) {
 			if ($user['interval'] == "minute" && ($user['last_report'] + 60) <= $this->dt->format('U')) {
@@ -149,7 +149,7 @@ class Reports_Users
 	 */
 	public function getAllUsers()
 	{
-		return $this->table->fetchColumn('user', array());
+		return $this->table->fetchColumn('user', []);
 	}
 
 	/**
@@ -161,8 +161,8 @@ class Reports_Users
 	function updateLastReport($user)
 	{
 		$this->table->update(
-			array('last_report' => $this->dt->format('Y-m-d H:i:s')),
-			array('user' => $user)
+			['last_report' => $this->dt->format('Y-m-d H:i:s')],
+			['user' => $user]
 		);
 	}
 }

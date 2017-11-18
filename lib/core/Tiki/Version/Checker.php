@@ -22,7 +22,7 @@ class Tiki_Version_Checker
 
 	function check($callback)
 	{
-		$upgrades = array();
+		$upgrades = [];
 		$branchupdate = null;
 
 		$content = call_user_func($callback, "http://tiki.org/{$this->cycle}.cycle");
@@ -46,7 +46,7 @@ class Tiki_Version_Checker
 
 	private function getSupportedVersions($content)
 	{
-		return array_filter(array_map(array('Tiki_Version_Version', 'get'), explode("\n", $content)));
+		return array_filter(array_map(['Tiki_Version_Version', 'get'], explode("\n", $content)));
 	}
 
 	private function findSupportedInBranch($versions)
@@ -73,4 +73,3 @@ class Tiki_Version_Checker
 		return $max;
 	}
 }
-

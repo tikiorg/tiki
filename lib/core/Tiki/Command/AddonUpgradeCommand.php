@@ -61,22 +61,22 @@ class AddonUpgradeCommand extends Command
 			return;
 		}
 
-		if (!$ignoredepends) {
+		if (! $ignoredepends) {
 			$addon_utilities->checkDependencies($folder);
 		}
 
 		$upgradeInfo = json_decode(file_get_contents(TIKI_PATH . '/addons/' . $folder . '/upgrade.json'));
-		$validVersions = array();
+		$validVersions = [];
 		foreach ($upgradeInfo as $version => $info) {
 			$validVersions[] = $version;
 		}
 		$config = null;
 		$lastVersionInstalled = $addon_utilities->getLastVersionInstalled($folder);
-		$reapplyProfiles = array();
-		$forgetProfiles = array();
-		$removeItems = array();
+		$reapplyProfiles = [];
+		$forgetProfiles = [];
+		$removeItems = [];
 		foreach ($validVersions as $v) {
-			if ($addon_utilities->checkVersionMatch($lastVersionInstalled,$v)) {
+			if ($addon_utilities->checkVersionMatch($lastVersionInstalled, $v)) {
 				$config = $upgradeInfo->$v;
 				$removeItems = $config->remove;
 				$forgetProfiles = $config->forget;
@@ -87,7 +87,7 @@ class AddonUpgradeCommand extends Command
 
 		$addons = \TikiAddons::getInstalled();
 
-		if (!$config) {
+		if (! $config) {
 			if (strnatcmp($lastVersionInstalled, $addons[$package]->version) <= 0) {
 				$output->writeln("<error>Currently installed version ($lastVersionInstalled) is already up to date.</error>");
 			} else {
@@ -125,7 +125,7 @@ class AddonUpgradeCommand extends Command
 		// First forget profiles that need to be forgotten
 		foreach ($forgetProfiles as $toForget) {
 			if (in_array($toForget, $installedProfileNames)) {
-				if ($confirm || (!$willRemove)) {
+				if ($confirm || (! $willRemove)) {
 					$addon_utilities->forgetProfileAllVersions($folder, $toForget);
 					$profile = \Tiki_Profile::fromNames($repository, $toForget);
 					if (! $profile) {
@@ -139,15 +139,14 @@ class AddonUpgradeCommand extends Command
 			}
 		}
 
-		if (!$confirm && ($willRemove)) {
+		if (! $confirm && ($willRemove)) {
 			$output->writeln("<error>There will be NO undo, and all data in the above objects will be deleted as part of the upgrade.</error>");
 			$output->writeln("<info>Use the --confirm option to proceed with removal and upgrade.</info>");
 		}
 
-		if ($confirm || (!$willRemove)) {
+		if ($confirm || (! $willRemove)) {
 			// Finally install profiles
 			foreach (glob(TIKI_PATH . '/addons/' . $folder . '/profiles/*.yml') as $file) {
-
 				$profileName = str_replace('.yml', '', basename($file));
 				$profile = \Tiki_Profile::fromNames($repository, $profileName);
 
@@ -183,7 +182,7 @@ class AddonUpgradeCommand extends Command
 						}
 					}
 				} else {
-					if (!in_array($profileName, $forgetProfiles)) {
+					if (! in_array($profileName, $forgetProfiles)) {
 						$addon_utilities->updateProfile($folder, $addons[$package]->version, $profileName);
 					}
 					$output->writeln("<info>Profile $profileName was already applied. Nothing happened.</info>");

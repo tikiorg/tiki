@@ -8,7 +8,7 @@
 class Tiki_Profile_Transport_Repository implements Tiki_Profile_Transport_Interface
 {
 	private $url;
-	
+
 	function __construct($url)
 	{
 		$this->url = $url;
@@ -17,13 +17,13 @@ class Tiki_Profile_Transport_Repository implements Tiki_Profile_Transport_Interf
 	function getPageContent($pageName)
 	{
 		$exportUrl = dirname($this->url) . '/tiki-export_wiki_pages.php?'
-			. http_build_query(array( 'page' => $pageName ));
+			. http_build_query([ 'page' => $pageName ]);
 
 		$content = TikiLib::lib('tiki')->httprequest($exportUrl);
 		$content = str_replace("\r", '', $content);
 		$begin = strpos($content, "\n\n");
 
-		if ( $begin !== false ) {
+		if ($begin !== false) {
 			$content = substr($content, $begin + 2);
 
 			// This allows compatibility with Tiki 8 and below, which export page content HTML-escaped. This should not be done for Tiki 9 and above and should be removed once only these are supported (after Tiki 6 reaches EOL).
@@ -38,7 +38,7 @@ class Tiki_Profile_Transport_Repository implements Tiki_Profile_Transport_Interf
 	function getPageParsed($pageName)
 	{
 		$pageUrl = dirname($this->url) . '/tiki-index_raw.php?'
-			. http_build_query(array( 'page' => $pageName ));
+			. http_build_query([ 'page' => $pageName ]);
 
 		$content = TikiLib::lib('tiki')->httprequest($pageUrl);
 		// index_raw replaces index.php with itself, so undo that here
@@ -50,6 +50,5 @@ class Tiki_Profile_Transport_Repository implements Tiki_Profile_Transport_Interf
 	function getProfilePath()
 	{
 		return $this->url;
-	}	
+	}
 }
-

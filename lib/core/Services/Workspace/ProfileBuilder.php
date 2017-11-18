@@ -9,10 +9,10 @@ use Symfony\Component\Yaml\Yaml;
 
 class Services_Workspace_ProfileBuilder
 {
-	private $objects = array();
-	private $groups = array();
-	private $autojoin = array();
-	private $permissions = array();
+	private $objects = [];
+	private $groups = [];
+	private $autojoin = [];
+	private $permissions = [];
 	private $managingGroup;
 
 	function ref($name)
@@ -31,21 +31,21 @@ class Services_Workspace_ProfileBuilder
 			$list = (array) $data['categories'];
 			unset($data['categories']);
 
-			$this->objects[] = array(
+			$this->objects[] = [
 				'type' => 'categorize',
-				'data' => array(
+				'data' => [
 					'type' => $type,
 					'object' => $this->ref($ref),
 					'categories' => $list,
-				),
-			);
+				],
+			];
 		}
 
-		$this->objects[] = array(
+		$this->objects[] = [
 			'type' => $type,
 			'ref' => $ref,
 			'data' => $data,
-		);
+		];
 	}
 
 	function addGroup($internalName, $fullName, $autojoin = false)
@@ -57,14 +57,14 @@ class Services_Workspace_ProfileBuilder
 	function setPermissions($internalName, $type, $objectId, array $permissionList)
 	{
 		if (! isset($this->permissions[$internalName])) {
-			$this->permissions[$internalName] = array('objects' => array());
+			$this->permissions[$internalName] = ['objects' => []];
 		}
 
-		$this->permissions[$internalName]['objects'][] = array(
+		$this->permissions[$internalName]['objects'][] = [
 			'type' => $type,
 			'id' => $objectId,
 			'allow' => $permissionList
-		);
+		];
 	}
 
 	function setManagingGroup($group)
@@ -79,26 +79,26 @@ class Services_Workspace_ProfileBuilder
 		foreach (array_keys($this->groups) as $group) {
 			foreach (array_keys($this->groups) as $peer) {
 				if ($group == $this->managingGroup) {
-					$builder->setPermissions($group, 'group', $peer, array('group_view', 'group_view_members', 'group_add_member', 'group_remove_member'));
+					$builder->setPermissions($group, 'group', $peer, ['group_view', 'group_view_members', 'group_add_member', 'group_remove_member']);
 				} else {
-					$builder->setPermissions($group, 'group', $peer, array('group_view', 'group_view_members'));
+					$builder->setPermissions($group, 'group', $peer, ['group_view', 'group_view_members']);
 				}
 			}
 		}
 
-		$data = array();
+		$data = [];
 
 		if (count($builder->objects)) {
 			$data['objects'] = $builder->objects;
 		}
 
 		if ($builder->groups) {
-			$data['mappings'] = array();
-			$data['permissions'] = array();
+			$data['mappings'] = [];
+			$data['permissions'] = [];
 			foreach ($builder->groups as $internal => $full) {
-				$groupDefinition = array(
+				$groupDefinition = [
 					'description' => $full,
-				);
+				];
 
 				if ($this->autojoin[$internal]) {
 					$groupDefinition['autojoin'] = 'y';
@@ -116,13 +116,11 @@ class Services_Workspace_ProfileBuilder
 		$self = $this;
 		array_walk_recursive(
 			$data,
-			function (& $entry) use ($self)
-			{
+			function (& $entry) use ($self) {
 				if (is_string($entry)) {
-	 				$entry = preg_replace_callback(
+					$entry = preg_replace_callback(
 						'/\{(\w+)\}/',
-						function ($matches) use ($self)
-						{
+						function ($matches) use ($self) {
 							return $self->user($matches[1]);
 						},
 						$entry
@@ -142,4 +140,3 @@ $yaml
 SYNTAX;
 	}
 }
-

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -17,11 +17,11 @@ class Perms_Accessor implements ArrayAccess
 {
 	private $resolver;
 	private $prefix = '';
-	private $context = array();
-	private $groups = array();
+	private $context = [];
+	private $groups = [];
 	private $checkSequence = null;
 
-	function setPrefix( $prefix )
+	function setPrefix($prefix)
 	{
 		$this->prefix = $prefix;
 	}
@@ -31,7 +31,7 @@ class Perms_Accessor implements ArrayAccess
 		return $this->prefix;
 	}
 
-	function setGroups( array $groups )
+	function setGroups(array $groups)
 	{
 		$this->groups = $groups;
 	}
@@ -41,7 +41,7 @@ class Perms_Accessor implements ArrayAccess
 		return $this->groups;
 	}
 
-	function setResolver( Perms_Resolver $resolver )
+	function setResolver(Perms_Resolver $resolver)
 	{
 		$this->resolver = $resolver;
 	}
@@ -56,7 +56,7 @@ class Perms_Accessor implements ArrayAccess
 		return $this->resolver->from();
 	}
 
-	function setContext( array $context )
+	function setContext(array $context)
 	{
 		$this->context = $context;
 	}
@@ -66,28 +66,28 @@ class Perms_Accessor implements ArrayAccess
 		return $this->context;
 	}
 
-	function setCheckSequence( array $sequence )
+	function setCheckSequence(array $sequence)
 	{
 		$this->checkSequence = $sequence;
 	}
 
-	function __get( $name )
+	function __get($name)
 	{
 
-		if ( $this->resolver ) {
+		if ($this->resolver) {
 			$name = $this->sanitize($name);
-			
+
 			return $this->checkPermission($name);
 		} else {
 			return false;
 		}
 	}
 
-	private function checkPermission( $name )
+	private function checkPermission($name)
 	{
-		if ( $this->checkSequence ) {
-			foreach ( $this->checkSequence as $check ) {
-				if ( $check->check($this->resolver, $this->context, $name, $this->groups) ) {
+		if ($this->checkSequence) {
+			foreach ($this->checkSequence as $check) {
+				if ($check->check($this->resolver, $this->context, $name, $this->groups)) {
 					return true;
 				}
 			}
@@ -98,53 +98,53 @@ class Perms_Accessor implements ArrayAccess
 		}
 	}
 
-	function globalize( $permissions, $smarty = null, $sanitize = true )
+	function globalize($permissions, $smarty = null, $sanitize = true)
 	{
-		foreach ( $permissions as $perm ) {
-			if ( $sanitize ) {
+		foreach ($permissions as $perm) {
+			if ($sanitize) {
 				$perm = $this->sanitize($perm);
 			}
 			$val = $this->checkPermission($perm) ? 'y' : 'n';
 			$GLOBALS[ $this->prefix . $perm ] = $val;
 
-			if ( $smarty ) {
+			if ($smarty) {
 				$smarty->assign('tiki_p_' . $perm, $val);
 			}
 		}
 	}
 
-	private function sanitize( $name )
+	private function sanitize($name)
 	{
-		if ( $this->prefix && $name{0} == $this->prefix{0} && strpos($name, $this->prefix) === 0 ) {
+		if ($this->prefix && $name{0} == $this->prefix{0} && strpos($name, $this->prefix) === 0) {
 			return substr($name, strlen($this->prefix));
 		} else {
 			return $name;
 		}
 	}
 
-	public function offsetGet( $name )
+	public function offsetGet($name)
 	{
 		return $this->__get($name);
 	}
 
-	public function offsetSet( $name, $value )
+	public function offsetSet($name, $value)
 	{
 	}
 
-	public function offsetUnset( $name )
+	public function offsetUnset($name)
 	{
 	}
 
-	public function offsetExists( $name )
+	public function offsetExists($name)
 	{
 		return true;
 	}
 
 	public function applicableGroups()
 	{
-		if ( $this->checkSequence ) {
-			$groups = array();
-			foreach ( $this->checkSequence as $check ) {
+		if ($this->checkSequence) {
+			$groups = [];
+			foreach ($this->checkSequence as $check) {
 				$groups = array_merge($groups, $check->applicableGroups($this->resolver));
 			}
 

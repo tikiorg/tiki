@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -27,7 +27,7 @@ class Search_ContentSource_Static implements Search_ContentSource_Interface
 			return false;
 		}
 
-		$out = array();
+		$out = [];
 
 		if (is_int(key($this->data[$objectId]))) {
 			foreach ($this->data[$objectId] as $entry) {
@@ -42,7 +42,7 @@ class Search_ContentSource_Static implements Search_ContentSource_Interface
 
 	private function mapData($data, $typeFactory)
 	{
-		$out = array();
+		$out = [];
 
 		foreach ($data as $key => $value) {
 			$type = $this->typeMap[$key];
@@ -62,4 +62,3 @@ class Search_ContentSource_Static implements Search_ContentSource_Interface
 		return array_fill_keys(array_keys($this->typeMap), true);
 	}
 }
-

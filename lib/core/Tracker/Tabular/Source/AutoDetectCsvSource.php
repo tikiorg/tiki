@@ -19,7 +19,7 @@ class AutoDetectCsvSource implements SourceInterface
 		$headers = $file->fgetcsv();
 
 		$schema = new Schema($definition);
-		
+
 		foreach ($headers as $header) {
 			if (preg_match(Schema\Column::HEADER_PATTERN, $header, $parts)) {
 				list($full, $pk, $field, $mode) = $parts;
@@ -48,4 +48,3 @@ class AutoDetectCsvSource implements SourceInterface
 		return $this->source->getSchema();
 	}
 }
-

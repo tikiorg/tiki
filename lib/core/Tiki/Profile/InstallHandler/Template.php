@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,13 +9,14 @@ class Tiki_Profile_InstallHandler_Template extends Tiki_Profile_InstallHandler
 {
 	function getData()
 	{
-		if ( $this->data )
+		if ($this->data) {
 			return $this->data;
+		}
 
-		$defaults = array(
-			'sections' => array( 'wiki' ),
+		$defaults = [
+			'sections' => [ 'wiki' ],
 			'type' => 'static',
-		);
+		];
 
 		$data = array_merge($defaults, $this->obj->getData());
 
@@ -27,12 +28,15 @@ class Tiki_Profile_InstallHandler_Template extends Tiki_Profile_InstallHandler
 	function canInstall()
 	{
 		$data = $this->getData();
-		if ( ! isset( $data['name'] ) )
+		if (! isset($data['name'])) {
 			return false;
-		if ( ! isset( $data['content'] ) && ! isset( $data['page'] ) )
+		}
+		if (! isset($data['content']) && ! isset($data['page'])) {
 			return false;
-		if ( ! isset( $data['sections'] ) || ! is_array($data['sections']) )
+		}
+		if (! isset($data['sections']) || ! is_array($data['sections'])) {
 			return false;
+		}
 
 		return true;
 	}
@@ -45,13 +49,13 @@ class Tiki_Profile_InstallHandler_Template extends Tiki_Profile_InstallHandler
 
 		$this->replaceReferences($data);
 
-		if ( isset( $data['page'] ) ) {
+		if (isset($data['page'])) {
 			$data['content'] = 'page:' . $data['page'];
 			$data['type'] = 'page';
 		}
 
 		$templateId = $templateslib->replace_template(null, $data['name'], $data['content'], $data['type']);
-		foreach ( $data['sections'] as $section ) {
+		foreach ($data['sections'] as $section) {
 			$templateslib->add_template_to_section($templateId, $section);
 		}
 

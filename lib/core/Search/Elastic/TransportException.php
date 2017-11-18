@@ -8,4 +8,3 @@
 class Search_Elastic_TransportException extends Search_Elastic_Exception
 {
 }
-

@@ -14,4 +14,3 @@ interface Tracker_Field_Filterable
 	 */
 	function setBaseKeyPrefix($prefix);
 }
-

@@ -12,20 +12,20 @@ class Tiki_Event_Function_EventSample extends Math_Formula_Function
 		$this->recorder = $recorder;
 	}
 
-	function evaluate( $element )
+	function evaluate($element)
 	{
 		$recorded = $this->evaluateChild($element[0]);
 		$event = $this->evaluateChild($element[1]);
 		$arguments = $this->evaluateChild($element[2]);
 
 		$this->recorder->setSample(
-			$recorded, array(
+			$recorded,
+			[
 				'event' => $event,
 				'args' => $arguments,
-			)
+			]
 		);
 
 		return 1;
 	}
 }
-

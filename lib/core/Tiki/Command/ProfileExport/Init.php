@@ -52,8 +52,8 @@ HTACCESS;
 profile.name = $profileName
 INI;
 		file_put_contents("profiles/info.ini", $definition);
-		
-		if( !file_exists("profiles/$profileName") ) {
+
+		if (! file_exists("profiles/$profileName")) {
 			mkdir("profiles/$profileName");
 		}
 	}

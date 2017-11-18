@@ -1,14 +1,14 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 class Search_Formatter_DataSource_Declarative implements Search_Formatter_DataSource_Interface
 {
-	private $contentSources = array();
-	private $globalSources = array();
+	private $contentSources = [];
+	private $globalSources = [];
 	private $prefilter;
 
 	function addContentSource($type, Search_ContentSource_Interface $contentSource)
@@ -79,7 +79,7 @@ class Search_Formatter_DataSource_Declarative implements Search_Formatter_DataSo
 			}
 		}
 
-		return array();
+		return [];
 	}
 
 	private function obtainFromGlobalSource($globalSource, $type, $object, & $missingFields, $data)
@@ -101,7 +101,7 @@ class Search_Formatter_DataSource_Declarative implements Search_Formatter_DataSo
 			return $this->getRaw($data, $missingFields);
 		}
 
-		return array();
+		return [];
 	}
 
 	private function sourceProvidesValue($contentSource, $missingFields)
@@ -115,7 +115,7 @@ class Search_Formatter_DataSource_Declarative implements Search_Formatter_DataSo
 
 		$missingFields = array_diff($missingFields, array_keys($data));
 
-		$raw = array();
+		$raw = [];
 		foreach ($data as $key => $value) {
 			$value = $value->getValue();
 			if (! empty($value)) {
@@ -145,4 +145,3 @@ class Search_Formatter_DataSource_Declarative implements Search_Formatter_DataSo
 		}
 	}
 }
-

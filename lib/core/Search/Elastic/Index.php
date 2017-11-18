@@ -10,9 +10,9 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 	private $connection;
 	private $index;
 	private $facetCount = 10;
-	private $invalidateList = array();
+	private $invalidateList = [];
 
-	private $providedMappings = array();
+	private $providedMappings = [];
 
 	private $camelCase = false;
 	private $possessiveStemmer = true;
@@ -44,7 +44,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 		$indexStatus = $this->connection->getIndexStatus($this->index);
 
 		if (is_object($indexStatus)) {
-			return !empty($indexStatus->indices->{$this->index});
+			return ! empty($indexStatus->indices->{$this->index});
 		} else {
 			return (bool) $indexStatus;
 		}
@@ -72,7 +72,8 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 		$data = array_map(
 			function ($entry) {
 				return $entry->getValue();
-			}, $data
+			},
+			$data
 		);
 
 		return [ $objectType, $objectId, $data ];
@@ -81,101 +82,102 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 	private function generateMapping($type, $data)
 	{
 		if (! isset($this->providedMappings[$type])) {
-			$this->providedMappings[$type] = array();
+			$this->providedMappings[$type] = [];
 		}
 
 		$mapping = array_map(
 			function ($entry) {
 				if ($entry instanceof Search_Type_Numeric) {
-					return array(
+					return [
 						"type" => "float",
-						"fields" => array(
-							"sort" => array(
+						"fields" => [
+							"sort" => [
 								"type" => "float",
 								"null_value" => 0.0,
 								"ignore_malformed" => true,
-							),
-							"nsort" => array(
+							],
+							"nsort" => [
 								"type" => "float",
 								"null_value" => 0.0,
 								"ignore_malformed" => true,
-							),
-						),
-					);
+							],
+						],
+					];
 				} elseif ($entry instanceof Search_Type_Whole || $entry instanceof Search_Type_MultivaluePlain) {
-					return array(
+					return [
 						"type" => $this->connection->getVersion() >= 5 ? "keyword" : "string",
 						"index" => $this->connection->getVersion() >= 5 ? true : "not_analyzed",
-						"fields" => array(
+						"fields" => [
 							"sort" => $this->connection->getVersion() >= 5 ?
-							array(
+							[
 								"type" => "keyword",
 								"ignore_above" => 200,
-							) : array(
+							] : [
 								"type" => "string",
 								"analyzer" => "sortable",
-							),
-							"nsort" => array(
+							],
+							"nsort" => [
 								"type" => "float",
 								"null_value" => 0.0,
 								"ignore_malformed" => true,
-							),
-						),
-					);
+							],
+						],
+					];
 				} elseif ($entry instanceof Search_Type_Object) {
-					return array(
+					return [
 						"type" => "object",
-					);
+					];
 				} elseif ($entry instanceof Search_Type_Json) {
-					return array(
+					return [
 						"type" => "object",
 						"enabled" => false,
-					);
+					];
 				} elseif ($entry instanceof Search_Type_Nested) {
-					return array(
+					return [
 						"type" => "nested",
-						"dynamic" =>  true,
-					);
+						"dynamic" => true,
+					];
 				} elseif ($entry instanceof Search_Type_GeoPoint) {
-					return array(
+					return [
 						"type" => "geo_point",
 						"index" => $this->connection->getVersion() >= 5 ? true : "not_analyzed",
-					);
+					];
 				} elseif ($entry instanceof Search_Type_DateTime) {
-					return array(
+					return [
 						"type" => "date",
-						"fields" => array(
-							"sort" => array(
+						"fields" => [
+							"sort" => [
 								"type" => "date",
-							),
-							"nsort" => array(
+							],
+							"nsort" => [
 								"type" => "date",
-							),
-						),
-					);
+							],
+						],
+					];
 				} else {
-					return array(
+					return [
 						"type" => $this->connection->getVersion() >= 5 ? "text" : "string",
 						"term_vector" => "with_positions_offsets",
-						"fields" => array(
+						"fields" => [
 							"sort" => $this->connection->getVersion() >= 5 ?
-							array(
+							[
 								"type" => "text",
 								"analyzer" => "sortable",
 								"fielddata" => true,
-							) : array(
+							] : [
 								"type" => "string",
 								"analyzer" => "sortable",
-							),
-							"nsort" => array(
+							],
+							"nsort" => [
 								"type" => "float",
 								"null_value" => 0.0,
 								"ignore_malformed" => true,
-							),
-						),
-					);
+							],
+						],
+					];
 				}
-			}, array_diff_key($data, $this->providedMappings[$type])
+			},
+			array_diff_key($data, $this->providedMappings[$type])
 		);
 		$this->providedMappings[$type] = array_merge($this->providedMappings[$type], $mapping);
 		$mapping = array_filter($mapping);
@@ -246,7 +248,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 
 		$this->connection->flush();
 
-		$this->invalidateList = array();
+		$this->invalidateList = [];
 	}
 
 	function optimize()
@@ -284,8 +286,8 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 			$cacheKey = ($query->getExpr()->getSerializedParts());
 			// if the sort order is modified or creation date, and there is a trim query cache item,
 			// fetch the period filter that it should be filtering by (set in part 2, below) and add it to the search
-			if (($soField == "modification_date" || $soField="creation_date") && $periodFilter = $cacheLib->getCached($cacheKey,"esquery")) {
-				$query->filterRange(strtotime("-".$periodFilter." days"),time(),$soField);
+			if (($soField == "modification_date" || $soField = "creation_date") && $periodFilter = $cacheLib->getCached($cacheKey, "esquery")) {
+				$query->filterRange(strtotime("-" . $periodFilter . " days"), time(), $soField);
 			}
 		}
 		/**End of Sorted Search size adjustment (part 1)*/
@@ -339,21 +341,21 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 			$facetPart,
 			$rescorePart,
 			$postFilterPart,
-			array(
+			[
 				"from" => $resultStart,
 				"size" => $resultCount,
-				"highlight" => array(
+				"highlight" => [
 					"tags_schema" => "styled",
-					"fields" => array(
-						'contents' => array(
+					"fields" => [
+						'contents' => [
 							"number_of_fragments" => 5,
-						),
-						'file' => array(
+						],
+						'file' => [
 							"number_of_fragments" => 5,
-						),
-					),
-				),
-			)
+						],
+					],
+				],
+			]
 		);
 
 		$result = $this->connection->search($indices, $fullQuery);
@@ -371,15 +373,15 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 					$periodFilter = 180;
 				} else {
 					// estimate the filter required to get 500 results
-					$periodFilter = round(500/$hits->total * $periodFilter);
+					$periodFilter = round(500 / $hits->total * $periodFilter);
 				}
-				$cacheLib->cacheItem($cacheKey,(string) $periodFilter,"esquery");
+				$cacheLib->cacheItem($cacheKey, (string) $periodFilter, "esquery");
 			}
 			// if total hits was less than 300 and a period filter had been set, increase the period filter
 			// for the next search
-			if ($hits->total < 300 && !empty($periodFilter)) {
-				$periodFilter = round(300/$hits->total * $periodFilter);
-				$cacheLib->cacheItem($cacheKey,(string) $periodFilter,"esquery");
+			if ($hits->total < 300 && ! empty($periodFilter)) {
+				$periodFilter = round(300 / $hits->total * $periodFilter);
+				$cacheLib->cacheItem($cacheKey, (string) $periodFilter, "esquery");
 			}
 		}
 		/** End Sorted Search size adjustment (part 2) */
@@ -418,7 +420,8 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 
 				$data['_index'] = $index;
 				return $data;
-			}, $hits->hits
+			},
+			$hits->hits
 		);
 
 		$resultSet = new Search_Elastic_ResultSet($entries, $hits->total, $resultStart, $resultCount);
@@ -447,19 +450,19 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 		$fullQuery = array_merge(
 			$queryPart,
 			$orderPart,
-			array(
+			[
 				"size" => 100,
-				"highlight" => array(
-					"fields" => array(
-						'contents' => array(
+				"highlight" => [
+					"fields" => [
+						'contents' => [
 							"number_of_fragments" => 5,
-						),
-						'file' => array(
+						],
+						'file' => [
 							"number_of_fragments" => 5,
-						),
-					),
-				),
-			)
+						],
+					],
+				],
+			]
 		);
 
 		$args = ['scroll' => '5m'];
@@ -472,7 +475,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 			}
 
 			$result = $this->connection->scroll($scrollId, $args);
-		} while(count($result->hits->hits) > 0);
+		} while (count($result->hits->hits) > 0);
 	}
 
 	function getTypeFactory()
@@ -523,22 +526,22 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 		$this->facetCount = (int) $count;
 	}
 
-	public function getFieldMapping($field) {
+	public function getFieldMapping($field)
+	{
 		$index = $this->index;
 		try {
 			$mapping = $this->connection->rawApi("/$index/_mapping/field/$field");
 		} catch (Search_Elastic_Exception $e) {
 			$mapping = false;
 		}
-		if( is_object($mapping) ) {
+		if (is_object($mapping)) {
 			$mapping = reset($mapping);
 			$mapping = isset($mapping->mappings) ? $mapping->mappings : $mapping; // v2 vs v5
 			$mapping = reset($mapping);
-			if( isset($mapping->$field->mapping->$field) ) {
+			if (isset($mapping->$field->mapping->$field)) {
 				return $mapping->$field->mapping->$field;
 			}
 		}
 		return new stdClass;
 	}
 }
-

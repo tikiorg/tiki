@@ -8,7 +8,7 @@
 class Search_MySql_Table extends TikiDb_Table
 {
 	private $definition = false;
-	private $indexes = array();
+	private $indexes = [];
 	private $exists = null;
 
 	private $schemaBuffer;
@@ -27,7 +27,7 @@ class Search_MySql_Table extends TikiDb_Table
 	{
 		try {
 			$this->flush();
-		} catch( Search_MySql_Exception $e ) {
+		} catch (Search_MySql_Exception $e) {
 			# ignore this to cleanly destruct the object
 		}
 	}
@@ -54,9 +54,9 @@ class Search_MySql_Table extends TikiDb_Table
 
 	function insert(array $values, $ignore = false)
 	{
-		$keySet = implode(', ', array_map(array($this, 'escapeIdentifier'), array_keys($values)));
+		$keySet = implode(', ', array_map([$this, 'escapeIdentifier'], array_keys($values)));
 
-		$valueSet = '(' . implode(', ', array_map(array($this->db, 'qstr'), $values)) . ')';
+		$valueSet = '(' . implode(', ', array_map([$this->db, 'qstr'], $values)) . ')';
 
 		$this->addToBuffer($keySet, $valueSet);
 
@@ -88,7 +88,7 @@ class Search_MySql_Table extends TikiDb_Table
 		$this->loadDefinition();
 
 		if (! isset($this->definition[$fieldName]) && $prefs['search_error_missing_field'] === 'y') {
-			if( preg_match('/^tracker_field_/', $fieldName) ) {
+			if (preg_match('/^tracker_field_/', $fieldName)) {
 				$msg = tr('Field %0 does not exist in the current index. Please check field permanent name and if you have any items in that tracker.', $fieldName);
 			} else {
 				$msg = tr('Field %0 does not exist in the current index. If this is a tracker field, the proper syntax is tracker_field_%0.', $fieldName, $fieldName);
@@ -123,13 +123,13 @@ class Search_MySql_Table extends TikiDb_Table
 
 		$table = $this->escapeIdentifier($this->tableName);
 		$result = $this->db->fetchAll("DESC $table");
-		$this->definition = array();
+		$this->definition = [];
 		foreach ($result as $row) {
 			$this->definition[$row['Field']] = $row['Type'];
 		}
 
 		$result = $this->db->fetchAll("SHOW INDEXES FROM $table");
-		$this->indexes = array();
+		$this->indexes = [];
 		foreach ($result as $row) {
 			$this->indexes[$row['Key_name']] = true;
 		}
@@ -206,4 +206,3 @@ class Search_MySql_Table extends TikiDb_Table
 		$this->dataBuffer->flush();
 	}
 }
-

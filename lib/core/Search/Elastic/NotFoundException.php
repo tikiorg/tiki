@@ -12,4 +12,3 @@ class Search_Elastic_NotFoundException extends Search_Elastic_Exception
 		parent::__construct(tr('Document not found in index %1 (%0)', $type, $id));
 	}
 }
-

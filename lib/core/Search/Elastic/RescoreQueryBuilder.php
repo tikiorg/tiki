@@ -117,7 +117,7 @@ class Search_Elastic_RescoreQueryBuilder
 						$terms[] = $this->getTerm($child);
 					}
 				}
-				
+
 				if (count($terms) == count($childNodes)) {
 					$this->addPhrase($node, $firstField, implode(' ', $terms));
 				}
@@ -135,4 +135,3 @@ class Search_Elastic_RescoreQueryBuilder
 		return strtolower($value->getValue());
 	}
 }
-

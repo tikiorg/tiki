@@ -6,6 +6,7 @@
 // $Id$
 
 namespace Tiki\MailIn\Action;
+
 use Tiki\MailIn\Account;
 use Tiki\MailIn\Source\Message;
 use TikiLib;
@@ -25,7 +26,7 @@ class Comment implements ActionInterface
 	{
 		return tr('Comment');
 	}
-	
+
 	function isEnabled()
 	{
 		$service = new \Services_Comment_Controller;
@@ -66,4 +67,3 @@ class Comment implements ActionInterface
 		return true;
 	}
 }
-

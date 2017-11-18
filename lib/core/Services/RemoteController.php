@@ -18,7 +18,7 @@ class Services_RemoteController
 
 	function __call($action, $args)
 	{
-		$arguments = array();
+		$arguments = [];
 		if (isset($args[0]) && is_array($args[0])) {
 			$arguments = $args[0];
 		}
@@ -30,30 +30,30 @@ class Services_RemoteController
 	{
 		$client = $this->getClient($action, $arguments);
 		return new Services_ResultLoader(
-			array(new Services_ResultLoader_WebService($client, $offsetKey, $maxRecordsKey, $resultKey), '__invoke'),
+			[new Services_ResultLoader_WebService($client, $offsetKey, $maxRecordsKey, $resultKey), '__invoke'],
 			$perPage
 		);
 	}
 
-	private function getClient($action, $postArguments = array())
+	private function getClient($action, $postArguments = [])
 	{
 		$tikilib = TikiLib::lib('tiki');
 		$client = $tikilib->get_http_client($this->url . '/tiki-ajax_services.php');
 		$client->setParameterGet(
-			array(
+			[
 				'controller' => $this->controller,
 				'action' => $action,
-			)
+			]
 		);
 		$client->setParameterPost($postArguments);
 
 		return $client;
 	}
 
-	private function getJson($action, $postArguments = array())
+	private function getJson($action, $postArguments = [])
 	{
 		$client = $this->getClient($action, $postArguments);
-		$client->setHeaders(array('Accept' => 'application/json'));
+		$client->setHeaders(['Accept' => 'application/json']);
 		$client->setMethod(Zend\Http\Request::METHOD_POST);
 		$response = $client->send();
 
@@ -64,4 +64,3 @@ class Services_RemoteController
 		return json_decode($response->getBody(), true);
 	}
 }
-

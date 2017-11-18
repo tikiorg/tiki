@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * Handler class for geographic features (points, lines, polygons)
- * 
+ *
  * Letter key: ~GF~
  *
  */
@@ -15,21 +15,21 @@ class Tracker_Field_GeographicFeature extends Tracker_Field_Abstract implements 
 {
 	public static function getTypes()
 	{
-		return array(
-			'GF' => array(
+		return [
+			'GF' => [
 				'name' => tr('Geographic Feature'),
 				'description' => tr('Stores a geographic feature on a map, allowing paths (LineString) and boundaries (Polygon) to be drawn on a map and saved.'),
 				'help' => 'Geographic feature Tracker Field',
-				'prefs' => array('trackerfield_geographicfeature'),
-				'tags' => array('advanced'),
+				'prefs' => ['trackerfield_geographicfeature'],
+				'tags' => ['advanced'],
 				'default' => 'n',
-				'params' => array(
-				),
-			),
-		);
+				'params' => [
+				],
+			],
+		];
 	}
 
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
 		if (isset($requestData[$this->getInsertId()])) {
 			$value = $requestData[$this->getInsertId()];
@@ -37,17 +37,17 @@ class Tracker_Field_GeographicFeature extends Tracker_Field_Abstract implements 
 			$value = $this->getValue();
 		}
 
-		return array(
+		return [
 			'value' => $value,
-		);
+		];
 	}
 
-	function renderInput($context = array())
+	function renderInput($context = [])
 	{
 		return tr('Feature cannot be set or modified through this interface.');
 	}
 
-	function renderOutput($context = array())
+	function renderOutput($context = [])
 	{
 		return tr('Feature cannot be viewed.');
 	}
@@ -69,21 +69,20 @@ class Tracker_Field_GeographicFeature extends Tracker_Field_Abstract implements 
 
 	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
-		return array(
+		return [
 			'geo_located' => $typeFactory->identifier('y'),
 			'geo_feature' => $typeFactory->identifier($this->getValue()),
 			'geo_feature_field' => $typeFactory->identifier($this->getConfiguration('permName')),
-		);
+		];
 	}
 
 	function getProvidedFields()
 	{
-		return array('geo_located', 'geo_feature', 'geo_feature_field');
+		return ['geo_located', 'geo_feature', 'geo_feature_field'];
 	}
 
 	function getGlobalFields()
 	{
-		return array();
+		return [];
 	}
 }
-

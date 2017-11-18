@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -14,9 +14,9 @@ class Tiki_Event_Function_EventTrigger extends Math_Formula_Function
 		$this->manager = $manager;
 	}
 
-	function evaluate( $element )
+	function evaluate($element)
 	{
-		$arguments = array();
+		$arguments = [];
 		$eventName = $element[0];
 
 		if (! is_string($eventName)) {
@@ -36,4 +36,3 @@ class Tiki_Event_Function_EventTrigger extends Math_Formula_Function
 		return 1;
 	}
 }
-

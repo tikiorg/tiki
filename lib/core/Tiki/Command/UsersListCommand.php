@@ -78,16 +78,16 @@ class UsersListCommand extends Command
 		);
 
 		$table = new Table($output);
-		$table->setHeaders(array('User', 'Email', 'Last Login', 'Registered', 'Groups'));
-		$rows = array();
+		$table->setHeaders(['User', 'Email', 'Last Login', 'Registered', 'Groups']);
+		$rows = [];
 		foreach ($users['data'] as $user) {
-			$rows[] = array(
+			$rows[] = [
 				$user['login'],
 				$user['email'],
-				!empty($user['lastLogin']) ? \TikiLib::date_format('%Y-%m-%d %H:%m', $user['lastLogin']) : 'Never',
+				! empty($user['lastLogin']) ? \TikiLib::date_format('%Y-%m-%d %H:%m', $user['lastLogin']) : 'Never',
 				\TikiLib::date_format('%Y-%m-%d %H:%m', $user['registrationDate']),
 				implode(', ', $user['groups'])
-			);
+			];
 		}
 
 		$table->setRows($rows);

@@ -61,7 +61,7 @@ class AddonInstallCommand extends Command
 			return false;
 		}
 
-		if (!$ignoredepends) {
+		if (! $ignoredepends) {
 			$addon_utilities->checkDependencies($folder);
 		}
 

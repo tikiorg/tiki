@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -34,7 +34,7 @@ class TikiDb_Table
 	 */
 	function insert(array $values, $ignore = false)
 	{
-		$bindvars = array();
+		$bindvars = [];
 		$query = $this->buildInsert($values, $ignore, $bindvars);
 
 		$this->db->queryException($query, $bindvars);
@@ -48,7 +48,7 @@ class TikiDb_Table
 	{
 		$insertData = array_merge($data, $keys);
 
-		$bindvars = array();
+		$bindvars = [];
 		$query = $this->buildInsert($insertData, false, $bindvars);
 		$query .= ' ON DUPLICATE KEY UPDATE ';
 		$query .= $this->buildUpdateList($data, $bindvars);
@@ -66,7 +66,7 @@ class TikiDb_Table
 	 */
 	function delete(array $conditions)
 	{
-		$bindvars = array();
+		$bindvars = [];
 		$query = $this->buildDelete($conditions, $bindvars) . ' LIMIT 1';
 
 		return $this->db->queryException($query, $bindvars);
@@ -83,7 +83,7 @@ class TikiDb_Table
 
 	function updateMultiple(array $values, array $conditions, $limit = null)
 	{
-		$bindvars = array();
+		$bindvars = [];
 		$query = $this->buildUpdate($values, $conditions, $bindvars);
 
 		if (! is_null($limit)) {
@@ -103,7 +103,7 @@ class TikiDb_Table
 	 */
 	function deleteMultiple(array $conditions)
 	{
-		$bindvars = array();
+		$bindvars = [];
 		$query = $this->buildDelete($conditions, $bindvars);
 
 		return $this->db->queryException($query, $bindvars);
@@ -111,7 +111,7 @@ class TikiDb_Table
 
 	function fetchOne($field, array $conditions, $orderClause = null)
 	{
-		if ($result = $this->fetchRow(array($field), $conditions, $orderClause)) {
+		if ($result = $this->fetchRow([$field], $conditions, $orderClause)) {
 			return reset($result);
 		}
 
@@ -131,19 +131,19 @@ class TikiDb_Table
 	function fetchRow(array $fields, array $conditions, $orderClause = null)
 	{
 		$result = $this->fetchAll($fields, $conditions, 1, 0, $orderClause);
-		
+
 		return reset($result);
 	}
 
 	function fetchColumn($field, array $conditions, $numrows = -1, $offset = -1, $order = null)
 	{
 		if (is_string($order)) {
-			$order = array($field => $order);
+			$order = [$field => $order];
 		}
 
-		$result = $this->fetchAll(array($field), $conditions, $numrows, $offset, $order);
+		$result = $this->fetchAll([$field], $conditions, $numrows, $offset, $order);
 
-		$output = array();
+		$output = [];
 
 		foreach ($result as $row) {
 			$output[] = reset($row);
@@ -154,11 +154,11 @@ class TikiDb_Table
 
 	function fetchMap($keyField, $valueField, array $conditions, $numrows = -1, $offset = -1, $order = null)
 	{
-		$result = $this->fetchAll(array($keyField, $valueField), $conditions, $numrows, $offset, $order);
+		$result = $this->fetchAll([$keyField, $valueField], $conditions, $numrows, $offset, $order);
 
-		$map = array();
+		$map = [];
 
-		foreach ( $result as $row ) {
+		foreach ($result as $row) {
 			$key = $row[$keyField];
 			$value = $row[$valueField];
 
@@ -168,9 +168,9 @@ class TikiDb_Table
 		return $map;
 	}
 
-	function fetchAll(array $fields = array(), array $conditions = array(), $numrows = -1, $offset = -1, $orderClause = null)
+	function fetchAll(array $fields = [], array $conditions = [], $numrows = -1, $offset = -1, $orderClause = null)
 	{
-		$bindvars = array();
+		$bindvars = [];
 
 		$fieldDescription = '';
 
@@ -190,7 +190,7 @@ class TikiDb_Table
 		}
 
 		$query = 'SELECT ';
-		$query .= (!empty($fieldDescription)) ? rtrim($fieldDescription, ', ') : '*';
+		$query .= (! empty($fieldDescription)) ? rtrim($fieldDescription, ', ') : '*';
 		$query .= ' FROM ' . $this->escapeIdentifier($this->tableName);
 		$query .= $this->buildConditions($conditions, $bindvars);
 		$query .= $this->buildOrderClause($orderClause);
@@ -198,14 +198,14 @@ class TikiDb_Table
 		return $this->db->fetchAll($query, $bindvars, $numrows, $offset, $this->errorMode);
 	}
 
-	function expr($string, $arguments = array())
+	function expr($string, $arguments = [])
 	{
 		return new TikiDb_Expr($string, $arguments);
 	}
 
 	function all()
 	{
-		return array($this->expr('*'));
+		return [$this->expr('*')];
 	}
 
 	function count()
@@ -230,52 +230,52 @@ class TikiDb_Table
 
 	function increment($count)
 	{
-		return $this->expr('$$ + ?', array($count));
+		return $this->expr('$$ + ?', [$count]);
 	}
 
 	function decrement($count)
 	{
-		return $this->expr('$$ - ?', array($count));
+		return $this->expr('$$ - ?', [$count]);
 	}
 
 	function greaterThan($value)
 	{
-		return $this->expr('$$ > ?', array($value));
+		return $this->expr('$$ > ?', [$value]);
 	}
 
 	function lesserThan($value)
 	{
-		return $this->expr('$$ < ?', array($value));
+		return $this->expr('$$ < ?', [$value]);
 	}
 
 	function not($value)
 	{
 		if (empty($value)) {
-			return $this->expr('($$ <> ? AND $$ IS NOT NULL)', array($value));
+			return $this->expr('($$ <> ? AND $$ IS NOT NULL)', [$value]);
 		} else {
-			return $this->expr('$$ <> ?', array($value));
+			return $this->expr('$$ <> ?', [$value]);
 		}
 	}
 
 	function like($value)
 	{
-		return $this->expr('$$ LIKE ?', array($value));
+		return $this->expr('$$ LIKE ?', [$value]);
 	}
 
 	function unlike($value)
 	{
-		return $this->expr('$$ NOT LIKE ?', array($value));
+		return $this->expr('$$ NOT LIKE ?', [$value]);
 	}
 
 	function exactly($value)
 	{
-		return $this->expr('BINARY $$ = ?', array($value));
+		return $this->expr('BINARY $$ = ?', [$value]);
 	}
 
 	function in(array $values, $caseSensitive = false)
 	{
 		if (empty($values)) {
-			return $this->expr('1=0', array());
+			return $this->expr('1=0', []);
 		} else {
 			return $this->expr(($caseSensitive ? 'BINARY ' : '') . '$$ IN(' . rtrim(str_repeat('?, ', count($values)), ', ') . ')', $values);
 		}
@@ -284,7 +284,7 @@ class TikiDb_Table
 	function notIn(array $values, $caseSensitive = false)
 	{
 		if (empty($values)) {
-			return $this->expr('1=0', array());
+			return $this->expr('1=0', []);
 		} else {
 			return $this->expr(($caseSensitive ? 'BINARY ' : '') . '$$ NOT IN(' . rtrim(str_repeat('?, ', count($values)), ', ') . ')', $values);
 		}
@@ -299,7 +299,7 @@ class TikiDb_Table
 
 	function concatFields(array $fields)
 	{
-		$fields = array_map(array($this, 'escapeIdentifier'), $fields);
+		$fields = array_map([$this, 'escapeIdentifier'], $fields);
 		$fields = implode(', ', $fields);
 
 		$expr = '';
@@ -312,8 +312,8 @@ class TikiDb_Table
 
 	function any(array $conditions)
 	{
-		$binds = array();
-		$parts = array();
+		$binds = [];
+		$parts = [];
 
 		foreach ($conditions as $field => $expr) {
 			$parts[] = $expr->getQueryPart($this->escapeIdentifier($field));
@@ -337,7 +337,7 @@ class TikiDb_Table
 	}
 
 	private function buildConditions(array $conditions, & $bindvars)
-	{ 
+	{
 		$query = " WHERE 1=1";
 
 		foreach ($conditions as $key => $value) {
@@ -402,7 +402,7 @@ class TikiDb_Table
 
 	private function buildInsert($values, $ignore, & $bindvars)
 	{
-		$fieldDefinition = implode(', ', array_map(array($this, 'escapeIdentifier'), array_keys($values)));
+		$fieldDefinition = implode(', ', array_map([$this, 'escapeIdentifier'], array_keys($values)));
 		$fieldPlaceholders = rtrim(str_repeat('?, ', count($values)), ' ,');
 
 		if ($ignore) {
@@ -418,4 +418,3 @@ class TikiDb_Table
 		return "`$identifier`";
 	}
 }
-

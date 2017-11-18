@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -10,20 +10,19 @@ class TikiFilter
 	/**
 	 * Provides a filter instance based on the input. Either a filter
 	 * can be passed or a shortcut name.
-	 * 
+	 *
 	 * @param \Zend\Filter\FilterInterface|string $filter		A filter shortcut name, or the filter name its self.
 	 * @return \Zend\Filter\FilterInterface 					The filter to apply.
 	 *
 	 * @link https://dev.tiki.org/Filtering+Best+Practices
 	 */
-	public static function get( $filter )
+	public static function get($filter)
 	{
-		if ( $filter instanceof \Zend\Filter\FilterInterface ) {
+		if ($filter instanceof \Zend\Filter\FilterInterface) {
 			return $filter;
 		}
 
-		switch( $filter )
-		{
+		switch ($filter) {
 			case 'alpha':
 				// Removes all but alphabetic characters. Unicode support.
 				return new TikiFilter_Alpha;
@@ -49,7 +48,7 @@ class TikiFilter
 			case 'digits':
 				// Removes everything except digits eg. ' 12345 to 67890' returns '1234567890', while '-5' returns '5'
 				// return type: (string)
-			return new Zend\Filter\Digits;
+				return new Zend\Filter\Digits;
 			case 'digitscolons':
 				// Removes everything except digits and colons, e.g., for colon-separated ID numbers.
 				// Only characters matched, not patterns - eg 'x75::xx44:' will return '75::44:'
@@ -87,7 +86,7 @@ class TikiFilter
 			case 'bool':
 				// False upon:	false, 0, '0', 0.0, '', array(), null, 'false', 'no', 'n' and php casting equivalent to false.
 				// True upon:	Everything else returns true. Case insensitive evaluation.
-			return new Zend\Filter\Boolean([
+				return new Zend\Filter\Boolean([
 					'type'			=> Zend\Filter\Boolean::TYPE_ALL,
 					'translations'	=> ['n' => false, 'N' => false]
 					]);
@@ -102,15 +101,15 @@ class TikiFilter
 				return new TikiFilter_HtmlPurifier('temp/cache');
 			case 'wikicontent':
 				return new TikiFilter_WikiContent;
-			
+
 			// Dummy filter to keep value unchanges
 			case 'none':
 				return new TikiFilter_None;
-				
-			// Exotic filter which may alter the filtered value, for values previously "neutered" by the PreventXss filter 
+
+			// Exotic filter which may alter the filtered value, for values previously "neutered" by the PreventXss filter
 			case 'rawhtml_unsafe':
 				return new TikiFilter_RawUnsafe;
-				
+
 			case 'lang':
 				// Allows values for languages (such as 'en') available on the site
 				return new TikiFilter_Lang;

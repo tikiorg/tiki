@@ -14,7 +14,7 @@ include_once "SentenceSegmentor.php";
 
 class Multilingual_Aligner_SentenceAlignments
 {
-	protected $alignment_table = array();
+	protected $alignment_table = [];
 	protected $l1 = "en";
 	protected $l2 = "fr";
 
@@ -24,52 +24,56 @@ class Multilingual_Aligner_SentenceAlignments
 		//echo "in addsentencepair<br/>";
 		if ($lng1 == $this->l1) {
 			$this->alignment_table[$lng1_sentence] = $lng2_sentence;
-		} else if ($lng2 == $this->l1) {
+		} elseif ($lng2 == $this->l1) {
 			$this->alignment_table[$lng2_sentence] = $lng1_sentence;
 		}
 	}
 
 	//this function returns an array of sentences /**not applicable now
-	public function getSentenceInOtherLanguage($source_lng_sentence, $source_lng,$key_value,$sentence_array,$index)
+	public function getSentenceInOtherLanguage($source_lng_sentence, $source_lng, $key_value, $sentence_array, $index)
 	{
 		echo "in getSentenceInOtherLanguage<br/>";
 		$segmentor = new Multilingual_Aligner_SentenceSegmentor();
 
-		if ($source_lng == $this->l1)
+		if ($source_lng == $this->l1) {
 			$k = 1;
-		else if ($source_lng == $this->l2)
+		} elseif ($source_lng == $this->l2) {
 			$k = 0;
+		}
 
-		foreach ($this->alignment_table as $key=>$val) {
+		foreach ($this->alignment_table as $key => $val) {
 			if ($k == 1) {
 				echo "key##$key<br/>";
 				$sentences = $segmentor->segment(trim($key));
 				echo "count " . count($sentences) . "<br/>";
 
-				foreach ($sentences as $t)
+				foreach ($sentences as $t) {
 					echo "line after segmenting ##$t<br/>";
+				}
 
-				if (strcmp(trim($sentences[0]), trim($source_lng_sentence))==0) {
+				if (strcmp(trim($sentences[0]), trim($source_lng_sentence)) == 0) {
 					$found = 1;
-					for ($j=1,$l=1, $countSentences = count($sentences); $j<$countSentences; $l++) {
+					for ($j = 1,$l = 1, $countSentences = count($sentences); $j < $countSentences; $l++) {
 						$flag = 0;
-						if (($l +$index) >= count($sentence_array)) {
+						if (($l + $index) >= count($sentence_array)) {
 							$found = 0;
 							break;
 						}
-						if (strcmp(trim($sentence_array[$index+$l]), trim($sentences[$j])) != 0) {
-							if ($sentence_array[$index+$l] == "" || $sentence_array[$index+$l][0] != "+") {
+						if (strcmp(trim($sentence_array[$index + $l]), trim($sentences[$j])) != 0) {
+							if ($sentence_array[$index + $l] == "" || $sentence_array[$index + $l][0] != "+") {
 								$found = 0;
 								break;
-							} else
+							} else {
 								$flag = 1;
+							}
 						}
-						if ($flag == 0)
+						if ($flag == 0) {
 							$j++;
+						}
 					}
 					if ($found == 1) {
 						$key_value = $key;
-						$array = array($key, $val);
+						$array = [$key, $val];
 						return $array;
 					}
 				}
@@ -77,28 +81,30 @@ class Multilingual_Aligner_SentenceAlignments
 				$sentences = $segmentor->segment(trim($val));
 				if (strcmp(trim($sentences[0]), trim($source_lng_sentence)) == 0) {
 					$found = 1;
-					for ($j=$i+1, $l=1, $countSentences = count($sentences); $j<$countSentences; $l++) {
+					for ($j = $i + 1, $l = 1, $countSentences = count($sentences); $j < $countSentences; $l++) {
 						$flag = 0;
-						if (($l +$index) >= count($sentence_array)) {
+						if (($l + $index) >= count($sentence_array)) {
 							$found = 0;
 							break;
 						}
 
-						if (strcmp(trim($sentence_array[$index+$l]), trim($sentences[$j])) != 0) {
-							if ($sentence_array[$index + $l] == "" || $sentence_array[$index+$l][0] != "+") { //if it is an added sentence
+						if (strcmp(trim($sentence_array[$index + $l]), trim($sentences[$j])) != 0) {
+							if ($sentence_array[$index + $l] == "" || $sentence_array[$index + $l][0] != "+") { //if it is an added sentence
 								$found = 0;
 								break;
-							} else
+							} else {
 								$flag = 1;
+							}
 						}
 
-						if ($flag == 0)
+						if ($flag == 0) {
 							$j++;
+						}
 					}
 
 					if ($found == 1) {
 						$key_value = $val;
-						$array= array($val, $key);
+						$array = [$val, $key];
 						return $array;
 					}
 				}
@@ -115,12 +121,12 @@ class Multilingual_Aligner_SentenceAlignments
 			$value = "";
 			$found = 0;
 
-			foreach ($this->alignment_table as $key=>$val) {
+			foreach ($this->alignment_table as $key => $val) {
 				$start++;
 				$sent_ind = 0;
 				$sentences = $segmentor->segment(trim($key));
 
-				for ($j=0, $countSentences = count($sentences); $j<$countSentences; $j++) {
+				for ($j = 0, $countSentences = count($sentences); $j < $countSentences; $j++) {
 					$sentences[$j] = trim($sentences[$j]);
 				}
 				echo "another sentence<br/>";
@@ -141,12 +147,12 @@ class Multilingual_Aligner_SentenceAlignments
 					$temp1 = trim($temp1);
 					$temp2 = trim($temp2);
 
-					if (($c=$this->strpos_function($temp1, $temp2)) != -1 && $c == 0) {
+					if (($c = $this->strpos_function($temp1, $temp2)) != -1 && $c == 0) {
 						$found = 1;
 						echo "inside strpos_function($temp1,$temp2)<br/>";
-						if (strlen($temp1)==strlen($temp2) && $sent_ind==count($sentences)) {
+						if (strlen($temp1) == strlen($temp2) && $sent_ind == count($sentences)) {
 							echo "inside strlen($temp1)==strlen($temp2) and ####start= $start<br/>";
-							for ($u=0; $u<$start; $u++) {
+							for ($u = 0; $u < $start; $u++) {
 								prev($this->alignment_table);
 							}
 
@@ -154,24 +160,24 @@ class Multilingual_Aligner_SentenceAlignments
 							$key_value = $key_value . $d;
 							$value = $value . current($this->alignment_table);
 
-							for ($u=0; $u<$start-1; $u++) {
+							for ($u = 0; $u < $start - 1; $u++) {
 								echo "outside<br/>";
 								next($this->alignment_table);
 								$d = key($this->alignment_table);
 
 								$key_value = $key_value . $d;
 								$value = $value . current($this->alignment_table);
-
 							}
-							$array = array($key_value, $value, $dummy);
+							$array = [$key_value, $value, $dummy];
 							$start = 0;
 							return $array;
 						}
 						$temp1 = substr($temp1, strlen($temp2));
-						if ($temp1 == "")
+						if ($temp1 == "") {
 							$temp1 = "NULL";
+						}
 
-						while (($index1+1) < count($sentence_array)) {
+						while (($index1 + 1) < count($sentence_array)) {
 							if ($sentence_array[$index1 + 1] == "" || $sentence_array[$index1 + 1][0] != "+") {
 								$temp2 = $sentence_array[$index1 + 1];
 								$index1++;
@@ -180,31 +186,28 @@ class Multilingual_Aligner_SentenceAlignments
 							$index1++;
 						}
 						continue;
-
-					} else if (($c = $this->strpos_function($temp2, $temp1)) != -1 && $c == 0) {
-
+					} elseif (($c = $this->strpos_function($temp2, $temp1)) != -1 && $c == 0) {
 						$found = 1;
 
 						if (strlen($temp1) == strlen($temp2) && $sent_ind == count($sentences)) {
-
 							echo "inside strlen($temp1)==strlen($temp2)  and ####start= $start<br/>";
 
-							for ($u=0; $u<$start; $u++) {
+							for ($u = 0; $u < $start; $u++) {
 								prev($this->alignment_table);
 							}
 
 							$d = key($this->alignment_table);
 
-							$key_value = $key_value.$d;
+							$key_value = $key_value . $d;
 							$value = $value . current($this->alignment_table);
 
-							for ($u=0; $u<$start-1; $u++) {
+							for ($u = 0; $u < $start - 1; $u++) {
 								next($this->alignment_table);
 								$key_value = $key_value . key($this->alignment_table);
 								$value = $value . current($this->alignment_table);
 							}
 
-							$array = array($key_value, $value,$dummy);
+							$array = [$key_value, $value,$dummy];
 							$start = 0;
 							return $array;
 						}
@@ -233,7 +236,6 @@ class Multilingual_Aligner_SentenceAlignments
 					$index1 = $index;
 				}
 			}
-
 		} else {
 			$times = 0;
 			$i = -1;
@@ -244,24 +246,24 @@ class Multilingual_Aligner_SentenceAlignments
 			$value = "";
 			$found = 0;
 
-			foreach ($this->alignment_table as $key=>$val) {
+			foreach ($this->alignment_table as $key => $val) {
 				$start++;
 				$sent_ind = 0;
 				$sentences = $segmentor->segment(trim($val));
 
-				for ($j=0, $countSentences = count($sentences); $j<$countSentences; $j++) {
+				for ($j = 0, $countSentences = count($sentences); $j < $countSentences; $j++) {
 					$sentences[$j] = trim($sentences[$j]);
 				}
 
 				while (1) {
 					$found = 0;
 
-					if ($temp1=="NULL" && $sent_ind<count($sentences)) {
+					if ($temp1 == "NULL" && $sent_ind < count($sentences)) {
 						$temp1 = $sentences[$sent_ind];
 						$sent_ind++;
 					}
 
-					if ($temp2=="NULL") {
+					if ($temp2 == "NULL") {
 						$temp2 = $source_lng_sentence;
 						$index1;
 					}
@@ -270,9 +272,9 @@ class Multilingual_Aligner_SentenceAlignments
 					$temp2 = trim($temp2);
 
 					if (($c = $this->strpos_function($temp1, $temp2)) != -1 && $c == 0) {
-						$found=1;
+						$found = 1;
 						if (strlen($temp1) == strlen($temp2) && $sent_ind == count($sentences)) {
-							for ($u=0; $u<$start; $u++) {
+							for ($u = 0; $u < $start; $u++) {
 								prev($this->alignment_table);
 							}
 
@@ -280,37 +282,37 @@ class Multilingual_Aligner_SentenceAlignments
 							$key_value = $key_value . $d;
 							$value = $value . key($this->alignment_table);
 
-							for ($u=0; $u<$start-1; $u++) {
+							for ($u = 0; $u < $start - 1; $u++) {
 								next($this->alignment_table);
 								$d = current($this->alignment_table);
 
-								$key_value = $key_value.$d;
+								$key_value = $key_value . $d;
 								$value = $value . key($this->alignment_table);
 							}
 
-							$array = array($key_value, $value,$dummy);
+							$array = [$key_value, $value,$dummy];
 							$start = 0;
 							return $array;
 						}
 						$temp1 = substr($temp1, strlen($temp2));
 
-						if ($temp1 == "")
+						if ($temp1 == "") {
 							$temp1 = "NULL";
+						}
 
 						while (($index1 + 1) < count($sentence_array)) {
-							if ($sentence_array[$index1 + 1] == "" || $sentence_array[$index1+1][0] != "+") {
-								$temp2 = $sentence_array[$index1+1];
+							if ($sentence_array[$index1 + 1] == "" || $sentence_array[$index1 + 1][0] != "+") {
+								$temp2 = $sentence_array[$index1 + 1];
 								$index1++;
 								break;
 							}
 							$index1++;
 						}
 						continue;
-
-					} else if (($c = $this->strpos_function($temp2, $temp1)) != -1 && $c == 0) {
+					} elseif (($c = $this->strpos_function($temp2, $temp1)) != -1 && $c == 0) {
 						$found = 1;
 						if (strlen($temp1) == strlen($temp2) && $sent_ind == count($sentences)) {
-							for ($u=0; $u<$start; $u++) {
+							for ($u = 0; $u < $start; $u++) {
 								prev($this->alignment_table);
 							}
 							$d = current($this->alignment_table);
@@ -318,13 +320,13 @@ class Multilingual_Aligner_SentenceAlignments
 							$key_value = $key_value . $d;
 							$value = $value . key($this->alignment_table);
 
-							for ($u=0; $u<$start-1; $u++) {
+							for ($u = 0; $u < $start - 1; $u++) {
 								next($this->alignment_table);
 								$key_value = $key_value . current($this->alignment_table);
 								$value = $value . current($this->alignment_table);
 							}
 
-							$array = array($key_value, $value, $dummy);
+							$array = [$key_value, $value, $dummy];
 							$start = 0;
 							return $array;
 						}
@@ -351,41 +353,43 @@ class Multilingual_Aligner_SentenceAlignments
 					$index1 = $index;
 				}
 			}
-
 		}
 
-		$array = array("", "NULL");
+		$array = ["", "NULL"];
 		return $array;
-
 	}
 
 	public function display_alignment_table()
 	{
 		echo "in func display<br/>";
-		foreach ($this->alignment_table as $key=>$val) {
+		foreach ($this->alignment_table as $key => $val) {
 			echo "<-->" . $key . "<--->" . $val . "<--><br/>";
 		}
 	}
 
 	public function strpos_function($string, $pat)
 	{
-		if (strlen($string)==0 && strlen($pat)==0)
+		if (strlen($string) == 0 && strlen($pat) == 0) {
 			return 0;
-		else if (strlen($string)==0 ||strlen($pat)==0)
+		} elseif (strlen($string) == 0 ||strlen($pat) == 0) {
 			return -1;
+		}
 
 		$start = 0;
 		$lasts = strlen($string) - 1;
 		$lastp = strlen($pat) - 1;
 		$endmatch = $lastp;
 		$j = 0;
-		for ($i=0; $endmatch<=$lasts; $endmatch++,$start++) {
+		for ($i = 0; $endmatch <= $lasts; $endmatch++,$start++) {
 			if ($string[$endmatch] == $pat[$lastp]) {
-				for ($j=0,$i=$start; $j<$lastp && $string[$i]==$pat[$j]; $i++,$j++);
+				for ($j = 0,$i = $start; $j < $lastp && $string[$i] == $pat[$j];
+				$i++,$j++) {
+				}
 			}
 
-			if ($j == $lastp)
+			if ($j == $lastp) {
 				return $start;
+			}
 		}
 		return -1;
 	}

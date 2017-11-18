@@ -25,10 +25,10 @@ class Table_Totals
 	 * @param $count
 	 * @return bool
 	 */
-	static public function getTotalsHtml(array $s, $count)
+	public static function getTotalsHtml(array $s, $count)
 	{
 		if (Table_Check::isEnabled()) {
-			if (!empty($s['math'])) {
+			if (! empty($s['math'])) {
 				$smarty = TikiLib::lib('smarty');
 				$smarty->assign('fieldcount', $count);
 				$smarty->assign('tstotals', $s['math']['totals']);
@@ -43,16 +43,14 @@ class Table_Totals
 	/**
 	 * @param array $s
 	 */
-	static public function setTotals(array $s)
+	public static function setTotals(array $s)
 	{
 		if (Table_Check::isEnabled()) {
-			if (!empty($s['math'])) {
+			if (! empty($s['math'])) {
 				$smarty = TikiLib::lib('smarty');
 				$smarty->assign('tstotals', $s['math']['totals']);
 				$smarty->assign('tscols', $s['columns']);
 			}
 		}
 	}
-
-
 }

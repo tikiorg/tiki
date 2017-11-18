@@ -31,4 +31,3 @@ class PaginatedQuerySource extends QuerySource
 		return $this->resultset;
 	}
 }
-

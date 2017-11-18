@@ -1,24 +1,24 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 class Search_Expr_Parser
 {
-	private $special = array('(', ')', 'AND', 'OR', 'NOT', '+');
+	private $special = ['(', ')', 'AND', 'OR', 'NOT', '+'];
 
 	function parse($string)
 	{
 		$tokenizer = new Search_Expr_Tokenizer;
 
-		$tokens = array();
+		$tokens = [];
 		foreach ($tokenizer->tokenize($string) as $part) {
 			if (in_array(strtoupper($part), $this->special)) {
 				$tokens[] = strtoupper($part);
 			} elseif (strpos($part, ' ') === false) {
-				if ( ! $this->isAStopWord($part)) {
+				if (! $this->isAStopWord($part)) {
 					$tokens[] = new Search_Expr_Token($part);
 				}
 			} else {
@@ -76,7 +76,7 @@ class Search_Expr_Parser
 
 	private function reduceParenthesis($tokens)
 	{
-		$out = array();
+		$out = [];
 		$firstOpen = null;
 		$openCount = 0;
 
@@ -115,7 +115,7 @@ class Search_Expr_Parser
 	private function applyOperator($tokens, $lookingFor, $buildMethod)
 	{
 		$tokens = array_values($tokens);
-		$positions = array();
+		$positions = [];
 		foreach ($tokens as $key => $token) {
 			if ($lookingFor === $token) {
 				$positions[] = $key;
@@ -134,11 +134,11 @@ class Search_Expr_Parser
 		$previous = $key - 1;
 		$next = $key + 1;
 
-		while (!$tokens[$previous]) {
+		while (! $tokens[$previous]) {
 			$previous--;
 		}
 
-		$tokens[$key] = new Search_Expr_Or(array($tokens[$previous], $tokens[$next]));
+		$tokens[$key] = new Search_Expr_Or([$tokens[$previous], $tokens[$next]]);
 		$tokens[$previous] = null;
 		$tokens[$next] = null;
 	}
@@ -148,11 +148,11 @@ class Search_Expr_Parser
 		$previous = $key - 1;
 		$next = $key + 1;
 
-		while (!$tokens[$previous]) {
+		while (! $tokens[$previous]) {
 			$previous--;
 		}
 
-		$tokens[$key] = new Search_Expr_And(array($tokens[$previous], $tokens[$next]));
+		$tokens[$key] = new Search_Expr_And([$tokens[$previous], $tokens[$next]]);
 		$tokens[$previous] = null;
 		$tokens[$next] = null;
 	}
@@ -169,10 +169,10 @@ class Search_Expr_Parser
 
 	private function filterExcessiveKeywords($tokens)
 	{
-		$out = array();
+		$out = [];
 		$skip = true;
 		foreach ($tokens as $token) {
-			if (is_string($token) && in_array($token, array('AND', 'OR', '+'))) {
+			if (is_string($token) && in_array($token, ['AND', 'OR', '+'])) {
 				if (! $skip) {
 					$out[] = $token;
 					$skip = true;
@@ -206,4 +206,3 @@ class Search_Expr_Parser
 		return in_array($word, $stopwords);
 	}
 }
-

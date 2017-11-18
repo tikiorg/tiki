@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -28,7 +28,7 @@ class Tiki_Security
 	{
 		$hash = $this->getHash($data);
 
-		return base64_encode(json_encode(array('data' => $data, 'hash' => $hash)));
+		return base64_encode(json_encode(['data' => $data, 'hash' => $hash]));
 	}
 
 	public function decode($string)
@@ -54,4 +54,3 @@ class Tiki_Security
 		return sha1($string . $this->salt);
 	}
 }
-

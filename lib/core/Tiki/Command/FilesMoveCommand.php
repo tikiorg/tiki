@@ -38,13 +38,13 @@ class FilesMoveCommand extends Command
 				'Confirm the move operation (required)'
 			)
 		;
-	}	
+	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		global $prefs;
 
-		if ($prefs['feature_file_galleries'] != 'y' ) {
+		if ($prefs['feature_file_galleries'] != 'y') {
 			throw new \Exception(tra('Feature Galleries not set up'));
 		}
 
@@ -72,14 +72,14 @@ class FilesMoveCommand extends Command
 		$files = $filegallib->get_files_info_from_gallery_id($galleryId);
 		if (! $files) {
 			if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-				$output->writeln('<comment>'.tra('No files to move').'</comment>');
+				$output->writeln('<comment>' . tra('No files to move') . '</comment>');
 			}
 			return;
 		}
 
 		$confirm = $input->getOption('confirm');
 
-		if (!$confirm) {
+		if (! $confirm) {
 			$help = new HelpCommand();
 			$help->setCommand($this);
 			$help->run($input, $output);
@@ -87,7 +87,7 @@ class FilesMoveCommand extends Command
 		}
 
 		if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-			$output->writeln('<comment>'.tra('File Move starting...').'</comment>');
+			$output->writeln('<comment>' . tra('File Move starting...') . '</comment>');
 		}
 
 		$feedback = $filegalcopylib->processCopy($files, $destinationPath, $sourcePath, true);
@@ -98,14 +98,14 @@ class FilesMoveCommand extends Command
 			if ($error) {
 				$message = "<error>$message</error>";
 				$output->writeln($message);
-			} else if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+			} elseif ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
 				$message = "<info>$message</info>";
 				$output->writeln($message);
 			}
 		}
 
 		if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-			$output->writeln('<comment>'.tra('File Move complete').'</comment>');
+			$output->writeln('<comment>' . tra('File Move complete') . '</comment>');
 		}
 	}
 }

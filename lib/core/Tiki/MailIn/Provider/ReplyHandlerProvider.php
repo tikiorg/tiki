@@ -6,6 +6,7 @@
 // $Id$
 
 namespace Tiki\MailIn\Provider;
+
 use Tiki\MailIn\Action;
 
 class ReplyHandlerProvider implements ProviderInterface
@@ -28,8 +29,8 @@ class ReplyHandlerProvider implements ProviderInterface
 
 	function getActionFactory(array $acc)
 	{
-		return new Action\RecipientPlaceholderFactory(array(
+		return new Action\RecipientPlaceholderFactory([
 			'comment' => 'Tiki\MailIn\Action\Comment',
-		));
+		]);
 	}
 }

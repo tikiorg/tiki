@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * Handler class for GroupSelector
- * 
+ *
  * Letter key: ~g~
  *
  */
@@ -15,80 +15,80 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract implements Trac
 {
 	public static function getTypes()
 	{
-		return array(
-			'g' => array(
+		return [
+			'g' => [
 				'name' => tr('Group Selector'),
 				'description' => tr('Allows a selection from a specified list of user groups.'),
-				'help' => 'Group selector',				
-				'prefs' => array('trackerfield_groupselector'),
-				'tags' => array('advanced'),
+				'help' => 'Group selector',
+				'prefs' => ['trackerfield_groupselector'],
+				'tags' => ['advanced'],
 				'default' => 'n',
-				'params' => array(
-					'autoassign' => array(
+				'params' => [
+					'autoassign' => [
 						'name' => tr('Auto-Assign'),
 						'description' => tr('Determines if any group should be automatically assigned to the field.'),
 						'filter' => 'int',
-						'options' => array(
+						'options' => [
 							0 => tr('None'),
 							1 => tr('Creator'),
 							2 => tr('Modifier'),
-						),
+						],
 						'legacy_index' => 0,
-					),
-					'groupId' => array(
+					],
+					'groupId' => [
 						'name' => tr('Group Filter'),
 						'description' => tr('Limit listed groups to those including the specified group.'),
 						'filter' => 'int',
 						'legacy_index' => 1,
-					),
-					'userGroups' => array(
+					],
+					'userGroups' => [
 						'name' => tr('User Groups'),
 						'description' => tr('Show groups user belongs to instead of the ones user has permission to see.'),
 						'filter' => 'int',
-						'options' => array(
+						'options' => [
 							0 => tr('No'),
 							1 => tr('Yes'),
-						),
+						],
 						'default' => 0,
 						'legacy_index' => 4,
-					),
-					'assign' => array(
+					],
+					'assign' => [
 						'name' => tr('Assign to the group'),
 						'description' => tr('For no auto-assigned field, the user (user selector if it exists, or user) will be assigned to the group and it will be his or her default group. The group must have the user choice setting activated.'),
 						'filter' => 'int',
-						'options' => array(
+						'options' => [
 							0 => tr('None'),
 							1 => tr('Assign'),
-						),
+						],
 						'default' => 0,
 						'legacy_index' => 2,
-					),
-					'notify' => array(
+					],
+					'notify' => [
 						'name' => tr('Email Notification'),
 						'description' => tr('Add selected group to group monitor the item. Group watches feature must be enabled.'),
 						'filter' => 'int',
-						'options' => array(
+						'options' => [
 							0 => tr('No'),
 							1 => tr('Yes'),
-						),
+						],
 						'legacy_index' => 3,
-					)
-				),
-			),
-		);
+					]
+				],
+			],
+		];
 	}
 
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
 		global $tiki_p_admin_trackers, $group, $user;
-		
+
 		$ins_id = $this->getInsertId();
 
-		$data = array();
-		
+		$data = [];
+
 		$groupId = $this->getOption('groupId');
 		if (empty($groupId)) {
-			if( $this->getOption('userGroups') ) {
+			if ($this->getOption('userGroups')) {
 				$data['list'] = array_keys(TikiLib::lib('user')->get_user_groups_inclusion($user));
 				sort($data['list']);
 			} else {
@@ -99,9 +99,9 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract implements Trac
 			$data['list'] =	TikiLib::lib('user')->get_including_groups($group_info['groupName']);
 		}
 
-		if ( isset($requestData[$ins_id])) {
+		if (isset($requestData[$ins_id])) {
 			if ($this->getOption('autoassign') < 1 || $tiki_p_admin_trackers === 'y') {
-				$data['value'] = in_array($requestData[$ins_id], $data['list'])? $requestData[$ins_id]: '';
+				$data['value'] = in_array($requestData[$ins_id], $data['list']) ? $requestData[$ins_id] : '';
 			} else {
 				if ($this->getOption('autoassign') == 2) {
 					$data['defvalue'] = $group;
@@ -114,13 +114,13 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract implements Trac
 			}
 		} else {
 			$data['defvalue'] = $group;
-			$data['value'] = $this->getValue();		
+			$data['value'] = $this->getValue();
 		}
-		
+
 		return $data;
 	}
-	
-	function renderInput($context = array())
+
+	function renderInput($context = [])
 	{
 		return $this->renderTemplate('trackerinput/groupselector.tpl', $context);
 	}
@@ -138,10 +138,10 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract implements Trac
 		if ($this->getOption('assign')) {
 			$creators = TikiLib::lib('trk')->get_item_creators($this->getConfiguration('trackerId'), $this->getItemId());
 			if (empty($creators)) {
-				$creators = array($user);
+				$creators = [$user];
 			}
 			$ginfo = TikiLib::lib('user')->get_group_info($value);
-			foreach( $creators as $creator ) {
+			foreach ($creators as $creator) {
 				if ($ginfo['userChoice'] == 'y') {
 					TikiLib::lib('user')->assign_user_to_group($creator, $value);
 					TikiLib::lib('user')->set_default_group($creator, $value);
@@ -149,31 +149,31 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract implements Trac
 			}
 		}
 
-		if( $this->getOption('notify') && $prefs['feature_group_watches'] == 'y' ) {
+		if ($this->getOption('notify') && $prefs['feature_group_watches'] == 'y') {
 			$objectId = $this->getItemId();
 			$watchEvent = 'tracker_item_modified';
-			$objectType = 'tracker '.$this->getConfiguration('trackerId');
+			$objectType = 'tracker ' . $this->getConfiguration('trackerId');
 
 			$tikilib = TikiLib::lib('tiki');
 			$old_watches = $tikilib->get_groups_watching($objectId, $watchEvent, $objectType);
 
-			foreach( $old_watches as $key => $group ) {
-				if( $group != $value ) {
+			foreach ($old_watches as $key => $group) {
+				if ($group != $value) {
 					$tikilib->remove_group_watch($group, $watchEvent, $objectId, $objectType);
 				}
 			}
 
-			if( !empty($value) && !in_array($value, $old_watches) ) {
+			if (! empty($value) && ! in_array($value, $old_watches)) {
 				$trackerInfo = $this->getTrackerDefinition()->getInformation();
 				$objectName = $trackerInfo['name'];
-				$objectHref = 'tiki-view_tracker_item.php?trackerId='.$this->getConfiguration('trackerId').'&itemId='.$this->getItemId();
+				$objectHref = 'tiki-view_tracker_item.php?trackerId=' . $this->getConfiguration('trackerId') . '&itemId=' . $this->getItemId();
 				$tikilib->add_group_watch($value, $watchEvent, $objectId, $objectType, $objectName, $objectHref);
 			}
 		}
 
-		return array(
+		return [
 			'value' => $value,
-		);
+		];
 	}
 
 	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
@@ -182,11 +182,10 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract implements Trac
 
 		$value = $this->getValue();
 
-		return array(
+		return [
 			$baseKey => $typeFactory->identifier($value),
 			"{$baseKey}_text" => $typeFactory->sortable($value),
-		);
-
+		];
 	}
 
 	function getFilterCollection()
@@ -195,7 +194,7 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract implements Trac
 		$groups = $userlib->list_all_groups_with_permission();
 		$groups = $userlib->get_group_info($groups);
 
-		$possibilities = array();
+		$possibilities = [];
 		foreach ($groups as $group) {
 			$possibilities[$group['groupName']] = $group['groupName'];
 		}
@@ -213,12 +212,12 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract implements Trac
 				$value = $control->getValue();
 
 				if ($value === '-Blank (no data)-') {
-					$query->filterIdentifier('', $baseKey.'_text');
+					$query->filterIdentifier('', $baseKey . '_text');
 				} elseif ($value) {
 					$query->filterIdentifier($value, $baseKey);
 				}
 			});
-		
+
 		$filters->addNew($permName, 'multiselect')
 			->setLabel($name)
 			->setControl(new Tracker\Filter\Control\MultiSelect("tf_{$permName}_ms", $possibilities))
@@ -230,15 +229,14 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract implements Trac
 
 					foreach ($values as $v) {
 						if ($v === '-Blank (no data)-') {
-							$sub->filterIdentifier('', $baseKey.'_text');
+							$sub->filterIdentifier('', $baseKey . '_text');
 						} elseif ($v) {
 							$sub->filterIdentifier((string) $v, $baseKey);
 						}
 					}
 				}
 			});
-		
+
 		return $filters;
 	}
 }
-

@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 class Tiki_Profile_InstallHandler_GoalSet extends Tiki_Profile_InstallHandler
 {
-	private $goals = array();
+	private $goals = [];
 
 	function fetchData()
 	{
@@ -29,7 +29,7 @@ class Tiki_Profile_InstallHandler_GoalSet extends Tiki_Profile_InstallHandler
 	{
 		$this->fetchData();
 		$this->replaceReferences($this->goals);
-		
+
 		$lib = TikiLib::lib('goal');
 		$lib->preserveGoals($this->goals);
 
@@ -51,9 +51,9 @@ class Tiki_Profile_InstallHandler_GoalSet extends Tiki_Profile_InstallHandler
 		$writer->addObject(
 			'goal_set',
 			'set',
-			array(
+			[
 				'goals' => $writer->getReference('goal', $ids),
-			)
+			]
 		);
 
 		return true;

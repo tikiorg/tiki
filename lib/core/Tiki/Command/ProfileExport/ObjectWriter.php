@@ -44,4 +44,3 @@ abstract class ObjectWriter extends Command
 		return $writer;
 	}
 }
-

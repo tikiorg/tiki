@@ -13,15 +13,15 @@ class Services_PDF_Controller
 	}
 
 	//function added to hold current state of fancy table / sorted table for pdf and print version. So when user generates pdf he gets his sorted data not default data in table.
-	function action_storeTable($input){
+	function action_storeTable($input)
+	{
 	   //write content to file
-	    $tableName=$input->tableName->text();
-	    //$tableHTML=$input->tableHTML->text();
-	   $tableFile=fopen("temp/".$tableName.'_'.session_id().".txt","w");
+		$tableName = $input->tableName->text();
+		//$tableHTML=$input->tableHTML->text();
+		$tableFile = fopen("temp/" . $tableName . '_' . session_id() . ".txt", "w");
 	   //fwrite($tableFile,$input->tableHTML->text());
-	   fwrite($tableFile,$input->tableHTML->html());
+		fwrite($tableFile, $input->tableHTML->html());
 	   //create session array to hold temp tables for printing, table original name and file name
-	   chmod($tableFile,0755);
-		
+		chmod($tableFile, 0755);
 	}
 }

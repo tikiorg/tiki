@@ -38,13 +38,12 @@ class Search_ResultSet_FacetFilter
 
 	function getOptions()
 	{
-		$out = array();
+		$out = [];
 
 		foreach ($this->data as $entry) {
 			$out[$entry['value']] = tr('%0 (%1)', tra($this->facet->render($entry['value'])), $entry['count']);
 		}
-		
+
 		return $out;
 	}
 }
-

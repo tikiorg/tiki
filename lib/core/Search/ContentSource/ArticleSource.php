@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -16,21 +16,21 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 
 	function getReferenceMap()
 	{
-		return array(
+		return [
 			'topic_id' => 'article_topic',
 			'article_type' => 'article_type',
-		);
+		];
 	}
 
 	function getDocuments()
 	{
-		return $this->db->table('tiki_articles')->fetchColumn('articleId', array());
+		return $this->db->table('tiki_articles')->fetchColumn('articleId', []);
 	}
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
 	{
 		$artlib = TikiLib::lib('art');
-		
+
 		$article = $artlib->get_article($objectId, false);
 
 		if (! $article) {
@@ -45,28 +45,28 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 
 		$rss_relations = TikiLib::lib('relation')->get_object_ids_with_relations_from('article', $objectId, 'tiki.rss.source');
 		$sitetitle = '';
- 		$siteurl = '';
- 		if ($rss_relations) {
- 			$rssId = reset($rss_relations);	
- 			$rssModule = TikiLib::lib('rss')->get_rss_module($rssId);
-			if ($rssModule['sitetitle']) { 
- 				$sitetitle = $rssModule['sitetitle'];
- 			}
- 			if ($rssModule['siteurl']) {
- 				$siteurl = $rssModule['siteurl'];
- 			}
- 		}
+		 $siteurl = '';
+		if ($rss_relations) {
+			$rssId = reset($rss_relations);
+			$rssModule = TikiLib::lib('rss')->get_rss_module($rssId);
+			if ($rssModule['sitetitle']) {
+				 $sitetitle = $rssModule['sitetitle'];
+			}
+			if ($rssModule['siteurl']) {
+				$siteurl = $rssModule['siteurl'];
+			}
+		}
 
-		$data = array(
+		$data = [
 			'title' => $typeFactory->sortable($article['title']),
 			'language' => $typeFactory->identifier($article['lang'] ? $article['lang'] : 'unknown'),
 			'creation_date' => $typeFactory->timestamp($article['created']),
 			'modification_date' => $typeFactory->timestamp($article['publishDate']),
-			'contributors' => $typeFactory->multivalue(array($article['author'])),
+			'contributors' => $typeFactory->multivalue([$article['author']]),
 			'description' => $typeFactory->plaintext($article['heading']),
 
 			'sitetitle' => $typeFactory->plaintext($sitetitle),
- 			'siteurl' => $typeFactory->plaintext($siteurl),
+			 'siteurl' => $typeFactory->plaintext($siteurl),
 
 			'topic_id' => $typeFactory->identifier($article['topicId']),
 			'topic_name' => $typeFactory->plaintext($topic_name),
@@ -83,14 +83,14 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 			'parent_object_id' => $typeFactory->identifier($article['topicId']),
 			'parent_view_permission' => $typeFactory->identifier('tiki_p_read_topic'),
 			'published' => ($article['ispublished'] == 'y') ? $typeFactory->identifier('y') : $typeFactory->identifier('n'),
-		);
+		];
 
 		return $data;
 	}
 
 	function getProvidedFields()
 	{
-		return array(
+		return [
 			'title',
 			'language',
 			'creation_date',
@@ -99,7 +99,7 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 			'description',
 
 			'sitetitle',
- 			'siteurl',
+			 'siteurl',
 
 			'topic_id',
 			'topic_name',
@@ -116,12 +116,12 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 			'parent_object_id',
 			'parent_object_type',
 			'published',
-		);
+		];
 	}
 
 	function getGlobalFields()
 	{
-		return array(
+		return [
 			'title' => true,
 			'description' => true,
 
@@ -129,7 +129,6 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 			'article_topline' => false,
 			'article_subtitle' => false,
 			'article_author' => false,
-		);
+		];
 	}
 }
-

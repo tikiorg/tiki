@@ -1,28 +1,28 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 class Tiki_Event_Manager
 {
-	private $eventRegistry = array();
-	private $priorities = array();
+	private $eventRegistry = [];
+	private $priorities = [];
 	private $currentPriority = false;
 	private $counter = 0;
-	private $eventLog = array();
+	private $eventLog = [];
 
 	function reset()
 	{
-		$this->eventRegistry = array();
-		$this->priorities = array();
+		$this->eventRegistry = [];
+		$this->priorities = [];
 	}
 
 	/**
 	 * Binds an event at normal priority and handles event chaining.
 	 */
-	function bind($eventName, $callback, array $arguments = array())
+	function bind($eventName, $callback, array $arguments = [])
 	{
 		$priority = 0;
 
@@ -41,20 +41,20 @@ class Tiki_Event_Manager
 	 * Priorities are numeric, false indicates that the event executes at all levels. This is used for chaining
 	 * and happens transparently when using bind() with an event as the callback.
 	 */
-	function bindPriority($priority, $eventName, $callback, array $arguments = array())
+	function bindPriority($priority, $eventName, $callback, array $arguments = [])
 	{
 		if ($priority !== false) {
 			$this->priorities[] = $priority;
 		}
 
-		$this->eventRegistry[$eventName][] = array(
+		$this->eventRegistry[$eventName][] = [
 			'priority' => $priority,
 			'callback' => $callback,
 			'arguments' => $arguments,
-		);
+		];
 	}
 
-	function trigger($eventName, array $arguments = array())
+	function trigger($eventName, array $arguments = [])
 	{
 		$arguments['EVENT_ID'] = ++$this->counter;
 
@@ -69,11 +69,11 @@ class Tiki_Event_Manager
 
 	function internalTrigger($eventName, array $arguments, $priority, $originalEvent)
 	{
-		if (isset ($this->eventRegistry[$eventName])) {
+		if (isset($this->eventRegistry[$eventName])) {
 			foreach ($this->eventRegistry[$eventName] as $callback) {
 				if ($callback['priority'] === false || $callback['priority'] === $priority) {
 					call_user_func(
-						$callback['callback'], 
+						$callback['callback'],
 						array_merge(
 							$callback['arguments'],
 							$arguments
@@ -88,27 +88,27 @@ class Tiki_Event_Manager
 
 	function getEventGraph()
 	{
-		$edges = array();
+		$edges = [];
 		$nodes = array_keys($this->eventRegistry);
 
 		foreach ($this->eventRegistry as $from => $callbackList) {
 			foreach ($callbackList as $callback) {
 				if ($callback['callback'] instanceof Tiki_Event_EdgeProvider) {
 					foreach ($callback['callback']->getTargetEvents() as $eventName) {
-						$edges[] = array(
+						$edges[] = [
 							'from' => $from,
 							'to' => $eventName,
-						);
+						];
 						$nodes[] = $eventName;
 					}
 				}
 			}
 		}
 
-		return array(
+		return [
 			'nodes' => array_values(array_unique($nodes)),
 			'edges' => $edges,
-		);
+		];
 	}
 
 	/**
@@ -134,4 +134,3 @@ class Tiki_Event_Manager
 		return $this->eventLog;
 	}
 }
-

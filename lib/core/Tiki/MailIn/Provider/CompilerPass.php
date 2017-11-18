@@ -15,7 +15,7 @@ class CompilerPass implements CompilerPassInterface
 {
 	public function process(ContainerBuilder $container)
 	{
-		if (!$container->hasDefinition('tiki.mailin.providerlist')) {
+		if (! $container->hasDefinition('tiki.mailin.providerlist')) {
 			return;
 		}
 
@@ -29,4 +29,3 @@ class CompilerPass implements CompilerPassInterface
 		}
 	}
 }
-

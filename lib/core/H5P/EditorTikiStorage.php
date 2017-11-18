@@ -17,7 +17,8 @@ class H5P_EditorTikiStorage implements H5peditorStorage
 	 *
 	 * @return \H5peditor
 	 */
-	public static function get_h5peditor_instance() {
+	public static function get_h5peditor_instance()
+	{
 		global $tikipath;
 
 		static $h5peditor;
@@ -28,7 +29,6 @@ class H5P_EditorTikiStorage implements H5peditorStorage
 				new H5P_EditorTikiStorage(),
 				$tikipath . H5P_H5PTiki::$h5p_path,
 				$tikipath . H5P_H5PTiki::$h5p_path
-
 			);
 		}
 
@@ -46,7 +46,8 @@ class H5P_EditorTikiStorage implements H5peditorStorage
 	 * @param string $lang Language code
 	 * @return string Translation in JSON format
 	 */
-	public function getLanguage($name, $majorVersion, $minorVersion, $language) {
+	public function getLanguage($name, $majorVersion, $minorVersion, $language)
+	{
 
 		// Load translation field from DB
 		$translation = TikiDb::get()->query(
@@ -60,7 +61,7 @@ AND hlt.`language_code` = ?',
 			[$name, $majorVersion, $minorVersion, $language]
 		);
 
-		return empty($translation->result) ? FALSE : $translation->result[0]->translation;
+		return empty($translation->result) ? false : $translation->result[0]->translation;
 	}
 
 	/**
@@ -69,7 +70,8 @@ AND hlt.`language_code` = ?',
 	 *
 	 * @param int $fileid
 	 */
-	public function keepFile($fileId) {
+	public function keepFile($fileId)
+	{
 		TikiDb::get()->query('DELETE FROM `tiki_h5p_tmpfiles` WHERE `path` = ?', $fileId);
 	}
 
@@ -86,12 +88,13 @@ AND hlt.`language_code` = ?',
 	 * @param array $libraries List of library names + version to load info for
 	 * @return array List of all libraries loaded
 	 */
-	public function getLibraries($libraries = NULL) {
+	public function getLibraries($libraries = null)
+	{
 		$can_use_all = Perms::get()->h5p_admin;
 
-		if ($libraries !== NULL) {
+		if ($libraries !== null) {
 			// Get details for the specified libraries only.
-			$librariesWithDetails = array();
+			$librariesWithDetails = [];
 			foreach ($libraries as $library) {
 				// Look for library
 				$details = TikiDb::get()->query(
@@ -108,7 +111,7 @@ AND `semantics` IS NOT NULL',
 					$library->tutorialUrl = $details['tutorial_url'];
 					$library->title = $details['title'];
 					$library->runnable = $details['runnable'];
-					$library->restricted = $can_use_all ? FALSE : ($details['restricted'] ? TRUE : FALSE);
+					$library->restricted = $can_use_all ? false : ($details['restricted'] ? true : false);
 					$librariesWithDetails[] = $library;
 				}
 			}
@@ -122,31 +125,29 @@ AND `semantics` IS NOT NULL',
 			'SELECT `name`, `title`, `major_version` AS majorVersion, `minor_version` AS minorVersion, `tutorial_url` AS tutorialUrl, `restricted`
 FROM `tiki_h5p_libraries`
 WHERE `runnable` = 1 AND `semantics` IS NOT NULL
-ORDER BY `title`');
+ORDER BY `title`'
+		);
 
 		$libraries = [];
 		foreach ($result->result as $library) {
-
 			// Make sure we only display the newest version of a library.
 			foreach ($libraries as $key => $existingLibrary) {
 				if ($library['name'] === $existingLibrary->name) {
-
 					// Found library with same name, check versions
-					if ( ( $library['majorVersion'] === $existingLibrary->majorVersion &&
+					if (( $library['majorVersion'] === $existingLibrary->majorVersion &&
 								 $library['minorVersion'] > $existingLibrary->minorVersion ) ||
 							 ( $library['majorVersion'] > $existingLibrary->majorVersion ) ) {
 						// This is a newer version
-						$existingLibrary->isOld = TRUE;
-					}
-					else {
+						$existingLibrary->isOld = true;
+					} else {
 						// This is an older version
-						$library['isOld'] = TRUE;
+						$library['isOld'] = true;
 					}
 				}
 			}
 
 			// Check to see if content type should be restricted
-			$library['restricted'] = $can_use_all ? FALSE : ($library['restricted'] ? TRUE : FALSE);
+			$library['restricted'] = $can_use_all ? false : ($library['restricted'] ? true : false);
 
 			// Add new library
 			$libraries[] = (object)$library;
@@ -166,7 +167,8 @@ ORDER BY `title`');
 	 *	List of libraries indexed by machineName with objects as values. The objects
 	 *	have majorVersion and minorVersion as properties.
 	 */
-	public function alterLibraryFiles(&$files, $libraries) {
+	public function alterLibraryFiles(&$files, $libraries)
+	{
 		// Not really needed for Tiki
 	}
 }

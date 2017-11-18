@@ -15,7 +15,7 @@ class CompilerPass implements CompilerPassInterface
 {
 	public function process(ContainerBuilder $container)
 	{
-		if (!$container->hasDefinition('tiki.lib.federatedsearch')) {
+		if (! $container->hasDefinition('tiki.lib.federatedsearch')) {
 			return;
 		}
 
@@ -32,4 +32,3 @@ class CompilerPass implements CompilerPassInterface
 		}
 	}
 }
-

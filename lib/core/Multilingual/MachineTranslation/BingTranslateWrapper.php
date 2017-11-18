@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -8,78 +8,78 @@
 class Multilingual_MachineTranslation_BingTranslateWrapper implements Multilingual_MachineTranslation_Interface
 {
 	const AUTH_URL = 'https://datamarket.accesscontrol.windows.net/v2/OAuth2-13';
-  	const TRANSLATE_URL = 'http://api.microsofttranslator.com/V2/Http.svc/Translate';
+	  const TRANSLATE_URL = 'http://api.microsofttranslator.com/V2/Http.svc/Translate';
 
 	private $clientId;
 	private $clientSecret;
-  	private $sourceLang;
-  	private $targetLang; 
-   	
-	function __construct ($clientId, $clientSecret, $sourceLang, $targetLang)
+	private $sourceLang;
+	private $targetLang;
+
+	function __construct($clientId, $clientSecret, $sourceLang, $targetLang)
 	{
 		$this->clientId = $clientId;
 		$this->clientSecret = $clientSecret;
 		$this->sourceLang = $sourceLang;
 		$this->targetLang = $targetLang;
 	}
-   	
+
 	function getSupportedLanguages()
 	{
-		return array(
-			'ar' => 'Arabic',
-			'bg' => 'Bulgarian',
-			'ca' => 'Catalan',
-			'zh' => 'Chinese',
-			'cs' => 'Czech',
-			'da' => 'Danish',
-			'nl' => 'Dutch',
-			'en' => 'English',
-			'et' => 'Estonian',
-			'fi' => 'Finnish',
-			'fr' => 'French',
-			'de' => 'German',
-			'el' => 'Greek',
-			'he' => 'Hebrew',
-			'hi' => 'Hindi',
-			'hu' => 'Hungarian',
-			'id' => 'Indonesian',
-			'it' => 'Italian',
-			'ja' => 'Japanese',
-			'ko' => 'Korean',
-			'lv' => 'Latvian',
-			'lt' => 'Lithuanian',
-			'no' => 'Norwegian',
-			'fa' => 'Persian',
-			'pl' => 'Polish',
-			'pt' => 'Portuguese',
-			'ro' => 'Romanian',
-			'ru' => 'Russian',
-			'sk' => 'Slovak',
-			'sl' => 'Slovenian',
-			'es' => 'Spanish',
-			'sv' => 'Swedish',
-			'th' => 'Thai',
-			'tr' => 'Turkish',
-			'uk' => 'Ukrainian',
-			'vi' => 'Vietnamese',
-		);
+		return [
+		 'ar' => 'Arabic',
+		 'bg' => 'Bulgarian',
+		 'ca' => 'Catalan',
+		 'zh' => 'Chinese',
+		 'cs' => 'Czech',
+		 'da' => 'Danish',
+		 'nl' => 'Dutch',
+		 'en' => 'English',
+		 'et' => 'Estonian',
+		 'fi' => 'Finnish',
+		 'fr' => 'French',
+		 'de' => 'German',
+		 'el' => 'Greek',
+		 'he' => 'Hebrew',
+		 'hi' => 'Hindi',
+		 'hu' => 'Hungarian',
+		 'id' => 'Indonesian',
+		 'it' => 'Italian',
+		 'ja' => 'Japanese',
+		 'ko' => 'Korean',
+		 'lv' => 'Latvian',
+		 'lt' => 'Lithuanian',
+		 'no' => 'Norwegian',
+		 'fa' => 'Persian',
+		 'pl' => 'Polish',
+		 'pt' => 'Portuguese',
+		 'ro' => 'Romanian',
+		 'ru' => 'Russian',
+		 'sk' => 'Slovak',
+		 'sl' => 'Slovenian',
+		 'es' => 'Spanish',
+		 'sv' => 'Swedish',
+		 'th' => 'Thai',
+		 'tr' => 'Turkish',
+		 'uk' => 'Ukrainian',
+		 'vi' => 'Vietnamese',
+		];
 	}
 
-	function translateText($html) 
+	function translateText($html)
 	{
 		return $this->getTranslationFromBing($html);
 	}
 
 
-	private function getTranslationFromBing($html) 
+	private function getTranslationFromBing($html)
 	{
 		try {
 			$access = $this->getAccessToken();
-			$params = array(
+			$params = [
 				'appId' => '',
 				'to' => $this->targetLang,
 				'text' => $html,
-			);
+			];
 
 			if ($this->sourceLang != Multilingual_MachineTranslation::DETECT_LANGUAGE) {
 				$params['from'] = $this->sourceLang;
@@ -100,7 +100,7 @@ class Multilingual_MachineTranslation_BingTranslateWrapper implements Multilingu
 		$url = $url . '?' . http_build_query($data, '', '&');
 
 		$client = $tikilib->get_http_client();
-		$client->setHeaders(array('Authorization' => "Bearer $access"));
+		$client->setHeaders(['Authorization' => "Bearer $access"]);
 		$client->setUri($url);
 		$response = $client->send();
 		$xml = $response->getBody();
@@ -143,10 +143,10 @@ class Multilingual_MachineTranslation_BingTranslateWrapper implements Multilingu
 
 		$data = json_decode($response->getBody());
 
-		$_SESSION['bing_translate_access'] = array(
+		$_SESSION['bing_translate_access'] = [
 			'token' => $data->access_token,
 			'expiry' => $tikilib->now + $data->expires_in,
-		);
+		];
 		return $data->access_token;
 	}
 }

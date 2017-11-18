@@ -42,27 +42,28 @@
  */
 class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 {
-	private $knownObjects = array();
-	private $knownCategories = array();
+	private $knownObjects = [];
+	private $knownCategories = [];
 	private $parent = '';
 
-	public function __construct($parent = '') {
+	public function __construct($parent = '')
+	{
 		$this->parent = $parent;
 	}
 
 	function clear()
 	{
-		$this->knownObjects = array();
-		$this->knownCategories = array();
+		$this->knownObjects = [];
+		$this->knownCategories = [];
 	}
 
 	/**
 	 * Provides a hash matching the full list of ordered categories
 	 * applicable to the context.
 	 */
-	function getHash( array $context )
+	function getHash(array $context)
 	{
-		if ( ! isset($context['type'], $context['object']) ) {
+		if (! isset($context['type'], $context['object'])) {
 			return '';
 		}
 
@@ -71,47 +72,47 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 			return '';
 		}
 
-		$this->bulk($context, 'object', array( $context['object'] ));
+		$this->bulk($context, 'object', [ $context['object'] ]);
 
 		$key = $this->objectKey($context);
 
-		if ( isset($this->knownObjects[$key]) && count($this->knownObjects[$key]) > 0 ) {
+		if (isset($this->knownObjects[$key]) && count($this->knownObjects[$key]) > 0) {
 			return 'category:' . implode(':', $this->knownObjects[$key]);
 		}
 	}
 
-	function bulk( array $baseContext, $bulkKey, array $values )
+	function bulk(array $baseContext, $bulkKey, array $values)
 	{
-		if ( ! isset($baseContext['type']) || $bulkKey != 'object' ) {
+		if (! isset($baseContext['type']) || $bulkKey != 'object') {
 			return $values;
 		}
 
 		// only trackeritem parents supported for now
-		if( $this->parent && $baseContext['type'] !== 'trackeritem' ) {
+		if ($this->parent && $baseContext['type'] !== 'trackeritem') {
 			return $values;
 		}
 
 		$newCategories = $this->bulkLoadCategories($baseContext, $bulkKey, $values);
-		if ( count($newCategories) != 0 ) {
+		if (count($newCategories) != 0) {
 			$this->bulkLoadPermissions($newCategories);
 		}
 
-		$remaining = array();
+		$remaining = [];
 
-		foreach ( $values as $v ) {
-			$key = $this->objectKey(array_merge($baseContext, array( 'object' => $v )));
-			if ( ! isset($this->knownObjects[$key]) || count($this->knownObjects[$key]) == 0 ) {
+		foreach ($values as $v) {
+			$key = $this->objectKey(array_merge($baseContext, [ 'object' => $v ]));
+			if (! isset($this->knownObjects[$key]) || count($this->knownObjects[$key]) == 0) {
 				$remaining[] = $v;
 			} else {
 				$add = true;
-				foreach ( $this->knownObjects[$key] as $categ ) {
-					if ( count($this->knownCategories[$categ]) > 0 ) {
+				foreach ($this->knownObjects[$key] as $categ) {
+					if (count($this->knownCategories[$categ]) > 0) {
 						$add = false;
 						break;
 					}
 				}
 
-				if ( $add ) {
+				if ($add) {
 					$remaining[] = $v;
 				}
 			}
@@ -120,34 +121,34 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 		return $remaining;
 	}
 
-	private function bulkLoadCategories( $baseContext, $bulkKey, $values )
+	private function bulkLoadCategories($baseContext, $bulkKey, $values)
 	{
-		$objects = array();
-		$keys = array();
+		$objects = [];
+		$keys = [];
 
 		// Reset the internal object cache when it becomes too large
 		// Leave the internal category cache intact as it should eventually stabilize
 		if (count($this->knownObjects) > 128) {
-			$this->knownObjects = array();
+			$this->knownObjects = [];
 		}
 
-		foreach ( $values as $v ) {
-			$key = $this->objectKey(array_merge($baseContext, array('object' => $v)));
+		foreach ($values as $v) {
+			$key = $this->objectKey(array_merge($baseContext, ['object' => $v]));
 
-			if ( ! isset($this->knownObjects[$key]) && $baseContext['type'] != 'category' ) {
+			if (! isset($this->knownObjects[$key]) && $baseContext['type'] != 'category') {
 				$objects[$this->cleanObject($v)] = $key;
-				$this->knownObjects[$key] = array();
+				$this->knownObjects[$key] = [];
 			}
 		}
 
-		if ( count($objects) == 0 ) {
-			return array();
+		if (count($objects) == 0) {
+			return [];
 		}
 
 		$db = TikiDb::get();
 
-		if( $baseContext['type'] === 'trackeritem' && $this->parent ) {
-			$bindvars = array();
+		if ($baseContext['type'] === 'trackeritem' && $this->parent) {
+			$bindvars = [];
 			$result = $db->fetchAll(
 				"SELECT co.`categId`, ti.`itemId` FROM `tiki_tracker_items` ti
 				INNER JOIN `tiki_objects` o ON ti.`trackerId` = o.`itemId` AND o.`type` = 'tracker'
@@ -156,7 +157,7 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 				$bindvars
 			);
 		} else {
-			$bindvars = array($baseContext['type']);
+			$bindvars = [$baseContext['type']];
 			$result = $db->fetchAll(
 				'SELECT `categId`, `itemId` FROM `tiki_category_objects` INNER JOIN `tiki_objects` ON `catObjectId` = `objectId` WHERE `type` = ? AND ' .
 				$db->in('itemId', array_keys($objects), $bindvars) . ' ORDER BY `catObjectId`, `categId`',
@@ -164,9 +165,9 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 			);
 		}
 
-		$categories = array();
+		$categories = [];
 
-		foreach ( $result as $row ) {
+		foreach ($result as $row) {
 			$category = (int) $row['categId'];
 			$object = $this->cleanObject($row['itemId']);
 
@@ -177,7 +178,7 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 			$key = $objects[$object];
 			$this->knownObjects[$key][] = $category;
 
-			if ( ! isset($this->knownCategories[$category]) ) {
+			if (! isset($this->knownCategories[$category])) {
 				$categories[$category] = true;
 			}
 		}
@@ -185,33 +186,33 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 		return array_keys($categories);
 	}
 
-	private function bulkLoadPermissions( $categories )
+	private function bulkLoadPermissions($categories)
 	{
-		$objects = array();
+		$objects = [];
 
-		foreach ( $categories as $categ ) {
+		foreach ($categories as $categ) {
 			$objects[md5('category' . $categ)] = $categ;
-			$this->knownCategories[$categ] = array();
+			$this->knownCategories[$categ] = [];
 		}
 
 		$db = TikiDb::get();
 
-		$bindvars = array();
+		$bindvars = [];
 		$result = $db->fetchAll(
 			'SELECT `objectId`, `groupName`, `permName` FROM `users_objectpermissions` WHERE `objectType` = \'category\' AND ' .
 			$db->in('objectId', array_keys($objects), $bindvars),
 			$bindvars
 		);
 
-		foreach ( $result as $row ) {
+		foreach ($result as $row) {
 			$object = $row['objectId'];
 			$group = $row['groupName'];
 			$categ = $objects[$object];
 
 			$perm = $this->sanitize($row['permName']);
 
-			if ( ! isset( $this->knownCategories[$categ][$group] ) ) {
-				$this->knownCategories[$categ][$group] = array();
+			if (! isset($this->knownCategories[$categ][$group])) {
+				$this->knownCategories[$categ][$group] = [];
 			}
 
 			$this->knownCategories[$categ][$group][] = $perm;
@@ -223,55 +224,55 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 	 * that apply to the context. A permission granted on any of the
 	 * categories will be added to the pool.
 	 */
-	function getResolver( array $context )
+	function getResolver(array $context)
 	{
-		if ( ! isset( $context['type'], $context['object'] ) ) {
+		if (! isset($context['type'], $context['object'])) {
 			return null;
 		}
 
-		$this->bulk($context, 'object', array($context['object']));
+		$this->bulk($context, 'object', [$context['object']]);
 
 		$key = $this->objectKey($context);
 
 		if (isset($this->knownObjects[$key])) {
 			$categories = $this->knownObjects[$key];
 		} else {
-			$categories = array();
+			$categories = [];
 		}
 
-		$perms = array();
+		$perms = [];
 
-		foreach ( $categories as $categ ) {
-			foreach ( $this->knownCategories[$categ] as $group => $partialPerms ) {
-				if ( ! isset($perms[$group]) ) {
-					$perms[$group] = array();
+		foreach ($categories as $categ) {
+			foreach ($this->knownCategories[$categ] as $group => $partialPerms) {
+				if (! isset($perms[$group])) {
+					$perms[$group] = [];
 				}
 
 				$perms[$group] = array_merge($perms[$group], array_combine($partialPerms, $partialPerms));
 			}
 		}
 
-		foreach ( $perms as & $p ) {
+		foreach ($perms as & $p) {
 			$p = array_values($p);
 		}
 
-		if ( count($perms) === 0 ) {
+		if (count($perms) === 0) {
 			return null;
 		} else {
 			return new Perms_Resolver_Static($perms, 'category');
 		}
 	}
 
-	private function sanitize( $name )
+	private function sanitize($name)
 	{
-		if ( strpos($name, 'tiki_p_') === 0 ) {
+		if (strpos($name, 'tiki_p_') === 0) {
 			return substr($name, strlen('tiki_p_'));
 		} else {
 			return $name;
 		}
 	}
 
-	private function objectKey( $context )
+	private function objectKey($context)
 	{
 		return $context['type'] . $this->parent . $this->cleanObject($context['object']);
 	}

@@ -17,7 +17,7 @@ class Reports_Send_EmailBuilder_Factory
 	{
 		$className = 'Reports_Send_EmailBuilder_' .
 								str_replace(' ', '', ucwords(str_replace('_', ' ', $eventName)));
-		
+
 		if (class_exists($className)) {
 			return new $className;
 		} else {

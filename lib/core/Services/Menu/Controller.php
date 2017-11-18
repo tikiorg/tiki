@@ -14,7 +14,7 @@ class Services_Menu_Controller
 		return TikiLib::lib('menu')->get_menu($menuId);
 	}
 
-	function action_manage ($input)
+	function action_manage($input)
 	{
 		//check permissions
 		$perms = Perms::get('menu');
@@ -28,39 +28,39 @@ class Services_Menu_Controller
 		$menuId = $input->menuId->int();
 		$info = TikiLib::lib('menu')->get_menu($menuId);
 		$symbol = Tiki_Profile::getObjectSymbolDetails('menu', $menuId);
-			
+
 		//execute menu insert/update
 		if ($_SERVER['REQUEST_METHOD'] === 'POST' && $input->confirm->int() && $util->access->ticketMatch()) {
 			$menuId = $input->menuId->int();
 			$name = $input->name->text();
 			$description = $input->description->text();
 			$type = $input->type->text();
-			$icon = $input->icon->text(); 
+			$icon = $input->icon->text();
 			$use_items_icons = $input->use_items_icons->int() ? 'y' : 'n';
 			$parse = $input->parse->int() ? 'y' : 'n';
-			
+
 			if (! $name) {
 				throw new Services_Exception_MissingValue('name');
 			}
 			$success = TikiLib::lib('menu')->replace_menu($menuId, $name, $description, $type, $icon, $use_items_icons, $parse);
 		}
-		
+
 		//information for the menu management screen
-		return array(
+		return [
 			'title' => $info['menuId'] ? tr('Edit Menu') : tr('Create Menu'),
 			'info' => $info,
 			'symbol' => $symbol,
-		);
+		];
 	}
-	
-	function action_clone_menu ($input)
+
+	function action_clone_menu($input)
 	{
 		//check permissions
 		$perms = Perms::get('menu');
 		if (! $perms->tiki_p_edit_menu_options) {
 			throw new Services_Exception_Denied(tr('Permission denied'));
 		}
-		
+
 		$menuId = $input->menuId->int();
 
 		//execute menu cloning
@@ -74,11 +74,11 @@ class Services_Menu_Controller
 		$symbol = Tiki_Profile::getObjectSymbolDetails('menu', $menuId);
 
 		//information for the clone menu screen
-		return array(
+		return [
 			'title' => tr('Clone this menu and its options'),
 			'info' => $info,
 			'symbol' => $symbol,
-		);
+		];
 	}
 
 	/**
@@ -90,7 +90,7 @@ class Services_Menu_Controller
 	 * @throws Services_Exception_MissingValue
 	 * @throws Services_Exception_NotFound
 	 */
-	function action_manage_option ($input)
+	function action_manage_option($input)
 	{
 		global $prefs;
 
@@ -109,7 +109,7 @@ class Services_Menu_Controller
 		} else {
 			$optionInfo = [];
 		}
-		
+
 		//get menu information
 		$menuId = $input->menuId->int();
 
@@ -152,7 +152,7 @@ class Services_Menu_Controller
 				}
 			}
 		}
-		
+
 		//get preference information
 		$feature_prefs = [];
 		foreach ($prefs as $k => $v) {	// attempt to filter out non-feature prefs (still finds 133!)
@@ -162,8 +162,8 @@ class Services_Menu_Controller
 		}
 		$headerlib->add_js('var prefNames = ' . json_encode($feature_prefs) . ';');
 
-		//get permission information		
-		$headerlib->add_js('var permNames = ' . json_encode($userLib->get_permission_names_for('all')) . ';');		
+		//get permission information
+		$headerlib->add_js('var permNames = ' . json_encode($userLib->get_permission_names_for('all')) . ';');
 
 		$util = new Services_Utilities();
 		$util->checkTicket();
@@ -179,7 +179,7 @@ class Services_Menu_Controller
 			if (! $name) {
 				throw new Services_Exception_MissingValue('name');
 			}
-					
+
 			$url = $input->url->text();
 			$type = $input->type->text();
 			$position = $input->position->int();
@@ -195,7 +195,7 @@ class Services_Menu_Controller
 			$menuLib = TikiLib::lib('menu');
 			$menuLib->replace_menu_option($menuId, $optionId, $name, $url, $type, $position, $section, $perm, $groupname, $level, $icon, $class);
 		}
-		
+
 		//information for the menu option screen
 		return [
 			'title' => $optionId ? tr('Menu Option %0', $optionInfo["optionId"]) : tr('Create Menu Option'),
@@ -207,21 +207,21 @@ class Services_Menu_Controller
 			'option_groups' => $option_groups,
 		];
 	}
-	
-	function action_export_menu_options ($input)
+
+	function action_export_menu_options($input)
 	{
 		//check permissions
 		$perms = Perms::get('menu');
 		if (! $perms->tiki_p_edit_menu_options) {
 			throw new Services_Exception_Denied(tr('Permission denied'));
 		}
-		
+
 		//get basic input
 		$menuId = $input->menuId->int();
-		
+
 		//get menu details
 		$menuDetails = $this->get_menu_details($menuId);
-		
+
 		//perform menu export
 		$confirm = $input->confirm->int();
 		if ($confirm) {
@@ -229,32 +229,32 @@ class Services_Menu_Controller
 			$encoding = $input->encoding->text();
 			$menuLib = TikiLib::lib('menu');
 			$menuLib->export_menu_options($menuId, $encoding);
-			return array(
+			return [
 				'confirm' => $confirm,
-			);
+			];
 		}
-		
+
 		//information for the export menu screen
-		return array(
+		return [
 			'title' => tr('Export Menu Options'),
 			'menuId' => $menuId,
 			'menuInfo' => $menuDetails["info"],
 			'menuSymbol' => $menuDetails["symbol"],
-		);
+		];
 	}
-	
-	function action_import_menu_options ($input)
+
+	function action_import_menu_options($input)
 	{
 		//check permissions
 		$perms = Perms::get('menu');
 		if (! $perms->tiki_p_edit_menu_options) {
 			throw new Services_Exception_Denied(tr('Permission denied'));
 		}
-		
+
 		//get menu details
 		$menuId = $input->menuId->int();
 		$menuDetails = $this->get_menu_details($menuId);
-		
+
 		//execute import
 		$confirm = $input->confirm->int();
 		if ($confirm) {
@@ -262,43 +262,42 @@ class Services_Menu_Controller
 			$menuLib = TikiLib::lib('menu');
 			$menuLib->import_menu_options($menuId);
 		}
-		
+
 		//information for the import menu screen
-		return array(
+		return [
 			'title' => tr('Import Menu Options'),
 			'menuId' => $menuId,
 			'menuInfo' => $menuDetails["info"],
 			'menuSymbol' => $menuDetails["symbol"],
-		);
+		];
 	}
-	
-	function action_preview_menu ($input)
+
+	function action_preview_menu($input)
 	{
 		//check permissions
 		$perms = Perms::get('menu');
 		if (! $perms->tiki_p_edit_menu_option) {
 			throw new Services_Exception_Denied(tr("You don't have permission to edit menu options (tiki_p_edit_menu_option)"));
 		}
-		
+
 		//get menu details
 		$menuId = $input->menuId->int();
 		$menuDetails = $this->get_menu_details($menuId);
-		
+
 		//preview options, see function.menu.php
 		$refresh = $input->refresh->int();
 		if ($refresh) {
 			$preview_type = $input->preview_type->text();
 			$preview_css = $input->preview_css->text();
 			$preview_bootstrap = $input->preview_bootstrap->text();
-		}
-		else {
+		} else {
 			$preview_type = 'vert';
 			$preview_css = 'n';
 			$preview_bootstrap = 'n';
 		}
 
 		//information for the preview menu screen
-		return array(
+		return [
 			'title' => tr('Menu Preview'),
 			'menuId' => $menuId,
 			'menuInfo' => $menuDetails["info"],
@@ -306,22 +305,22 @@ class Services_Menu_Controller
 			'preview_type' => $preview_type,
 			'preview_css' => $preview_css,
 			'preview_bootstrap' => $preview_bootstrap,
-		);
+		];
 	}
-		
-	private function get_menu_details ($menuId)
+
+	private function get_menu_details($menuId)
 	{
 		//get menu information
 		$menuLib = TikiLib::lib('menu');
 		$menuInfo = $menuLib->get_menu($menuId);
-		
+
 		//get related symbol information
 		$menuSymbol = Tiki_Profile::getObjectSymbolDetails('menu', $menuId);
-		
+
 		//return menu details
-		return array(
+		return [
 			'info' => $menuInfo,
 			'symbol' => $menuSymbol,
-		);
+		];
 	}
 }

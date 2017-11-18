@@ -513,4 +513,3 @@ class Services_Edit_ListPluginHelper
 		];
 	}
 }
-

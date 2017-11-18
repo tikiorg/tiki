@@ -19,7 +19,8 @@ class IDS_Rule
 		$this->id = $id;
 	}
 
-	public static function getCustomFilePath() {
+	public static function getCustomFilePath()
+	{
 
 		global $prefs;
 
@@ -93,7 +94,7 @@ class IDS_Rule
 	 */
 	public function setTags($tags)
 	{
-		if (!is_array($tags)) {
+		if (! is_array($tags)) {
 			$tags = explode(',', $tags);
 		}
 
@@ -112,12 +113,13 @@ class IDS_Rule
 		$this->impact = $impact;
 	}
 
-	public function save() {
+	public function save()
+	{
 
 		$customRules = self::getAllRules();
 
 		$updated = false;
-		foreach($customRules as $key => $rule) {
+		foreach ($customRules as $key => $rule) {
 			if ($rule->id == $this->id) {
 				$customRules[$key] = $this;
 				$updated = true;
@@ -125,18 +127,19 @@ class IDS_Rule
 			}
 		}
 
-		if (!$updated) {
+		if (! $updated) {
 			$customRules[] = $this;
 		}
 
 		return $this->writeRules($customRules);
 	}
 
-	public function delete() {
+	public function delete()
+	{
 
 		$customRules = self::getAllRules();
 
-		foreach($customRules as $key => $rule) {
+		foreach ($customRules as $key => $rule) {
 			if ($rule->id == $this->id) {
 				unset($customRules[$key]);
 				break;
@@ -146,7 +149,8 @@ class IDS_Rule
 		return $this->writeRules($customRules);
 	}
 
-	private function writeRules($customRules) {
+	private function writeRules($customRules)
+	{
 		$rules = [];
 		foreach ($customRules as $customRule) {
 			$rules[] = [
@@ -172,11 +176,12 @@ class IDS_Rule
 	/**
 	 * @return array
 	 */
-	public static function getAllRules() {
+	public static function getAllRules()
+	{
 
 		$filename = self::getCustomFilePath();
 
-		if (!file_exists($filename)) {
+		if (! file_exists($filename)) {
 			return [];
 		}
 
@@ -185,7 +190,6 @@ class IDS_Rule
 
 		$rules = [];
 		foreach ($customRules['filters'] as $customRule) {
-
 			$rule = new self($customRule['id']);
 			$rule->setRegex($customRule['rule']);
 			$rule->setDescription($customRule['description']);
@@ -202,11 +206,12 @@ class IDS_Rule
 	 * @param $ruleID
 	 * @return IDS_Rule | false
 	 */
-	public static function getRule($ruleID) {
+	public static function getRule($ruleID)
+	{
 
 		$customRules = self::getAllRules();
 
-		foreach($customRules as $rule) {
+		foreach ($customRules as $rule) {
 			if ($rule->id == $ruleID) {
 				return $rule;
 			}
@@ -214,5 +219,4 @@ class IDS_Rule
 
 		return false;
 	}
-
 }

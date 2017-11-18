@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-today by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -33,7 +33,7 @@ class Services_Language_TransifexController extends Services_Language_Controller
 	private function processTransifexLanguagePhp($file)
 	{
 		//check if file is available
-		if(!is_file($file)){
+		if (! is_file($file)) {
 			throw new Services_Exception_Denied(tr('Invalid file parameter supplied'));
 		}
 
@@ -50,12 +50,11 @@ class Services_Language_TransifexController extends Services_Language_Controller
 		foreach ($fileContent as $line) {
 			if (preg_match('|^\/\/\s*?"(.+)"\s*=>\s*"(.*)".*|', $line, $matches)) {
 				//assuming that untranslated lines are those, that have the same key and value OR where value is empty
-				if(($matches[1] === $matches[2]) || ($matches[2] === '')){
+				if (($matches[1] === $matches[2]) || ($matches[2] === '')) {
 					$untranslated[$matches[1]] = $matches[2];
 					//lets keep the original lines as they were so that untranslated strings remain commented out
 					$lang[] = $matches[0];
-				}
-				//assuming translated lines are those, where key and value are different
+				} //assuming translated lines are those, where key and value are different
 				else {
 					$translated[$matches[1]] = $matches[2];
 					//remove slashes and space to activate translated lines
@@ -64,11 +63,10 @@ class Services_Language_TransifexController extends Services_Language_Controller
 				}
 			}
 		}
-		return array(
+		return [
 			'lang' => $lang,
 			'translated' => $translated,
 			'untranslated' => $untranslated,
-		);
+		];
 	}
 }
-

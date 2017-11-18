@@ -9,51 +9,51 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 {
 	public static function getTypes()
 	{
-		return array(
-			'icon' => array(
+		return [
+			'icon' => [
 				'name' => tr('Icon'),
 				'description' => tr('Provides ability to select an image as an icon attached to the tracker item from file galleries.'),
-				'prefs' => array('trackerfield_icon', 'feature_file_galleries', 'feature_search'),
-				'tags' => array('advanced'),
+				'prefs' => ['trackerfield_icon', 'feature_file_galleries', 'feature_search'],
+				'tags' => ['advanced'],
 				'help' => 'Icon Tracker Field',
 				'default' => 'y',
-				'params' => array(
-					'galleryId' => array(
+				'params' => [
+					'galleryId' => [
 						'name' => tr('Gallery ID'),
 						'description' => tr('File gallery to upload new files into.'),
 						'filter' => 'int',
 						'legacy_index' => 0,
 						'profile_reference' => 'file_gallery',
-					),
-					'default' => array(
+					],
+					'default' => [
 						'name' => tr('Default image'),
 						'description' => tr('Path to the default icon used.'),
 						'filter' => 'url',
 						'legacy_index' => 1,
-					),
-					'maxIcons' => array(
+					],
+					'maxIcons' => [
 						'name' => tr('Maximum Icons'),
 						'description' => tr('Number of icons to display in each gallery (default 120).'),
 						'filter' => 'int',
 						'default' => 120,
 						'legacy_index' => 2,
-					),
-					'update' => array(
+					],
+					'update' => [
 						'name' => tr('Update icon event'),
 						'type' => 'list',
 						'description' => tr('Allow update during re-indexing. Selection of indexing is useful for changing the default icon for all items.'),
 						'filter' => 'word',
-						'options' => array(
+						'options' => [
 							'save' => tr('Save'),
 							'index' => tr('Indexing'),
-						),
-					),
-				),
-			),
-		);
+						],
+					],
+				],
+			],
+		];
 	}
 
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
 		$insertId = $this->getInsertId();
 
@@ -67,61 +67,62 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 			$value = $this->getOption('default');
 		}
 
-		return array(
+		return [
 			'value' => $value,
-		);
+		];
 	}
 
 	private function getSearchLink($galleryId)
 	{
 		return 'tiki-searchindex.php?' . http_build_query(
-			array(
+			[
 				'filter~type' => 'file',
 				'filter~gallery_id' => $galleryId,
 				'filter~filetype' => 'image',
 				'maxRecords' => $this->getOption('maxIcons', 120),
 				'sort_mode' => 'title_asc',
-			),
+			],
 			'',
 			'&'
 		);
 	}
 
-	function renderInput($context = array())
+	function renderInput($context = [])
 	{
 		$filegallib = TikiLib::lib('filegal');
 
 		$galleryId = (int) $this->getOption('galleryId');
 		$info = $filegallib->get_file_gallery_info($galleryId);
 
-		$galleries = array(
-			array('label' => $info['name'], 'url' => $this->getSearchLink($galleryId)),
-		);
+		$galleries = [
+			['label' => $info['name'], 'url' => $this->getSearchLink($galleryId)],
+		];
 
 		$children = $filegallib->table('tiki_file_galleries')->fetchMap(
 			'galleryId',
-			'name', array('parentId' => $galleryId),
+			'name',
+			['parentId' => $galleryId],
 			-1,
 			-1,
-			array('name' => 'ASC')
+			['name' => 'ASC']
 		);
 		foreach ($children as $galleryId => $name) {
-			$galleries[] = array(
+			$galleries[] = [
 				'label' => $name,
 				'url' => $this->getSearchLink($galleryId),
-			);
+			];
 		}
 
 		return $this->renderTemplate(
 			'trackerinput/icon.tpl',
 			$context,
-			array(
+			[
 				'galleries' => $galleries,
-			)
+			]
 		);
 	}
 
-	function renderInnerOutput($context = array())
+	function renderInnerOutput($context = [])
 	{
 		if ($context['list_mode'] === 'csv') {
 			return $this->getValue();
@@ -133,9 +134,9 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 	function handleSave($value, $oldValue)
 	{
 		$value = TikiLib::makeAbsoluteLinkRelative($value);
-		return array(
+		return [
 			'value' => $value,
-		);
+		];
 	}
 
 	function watchCompare($old, $new)
@@ -177,9 +178,8 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 		}
 
 		$baseKey = $this->getBaseKey();
-		return array(
+		return [
 			$baseKey => $typeFactory->identifier($this->getValue()),
-		);
+		];
 	}
 }
-

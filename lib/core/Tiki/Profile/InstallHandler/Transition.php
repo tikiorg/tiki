@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -11,15 +11,16 @@ class Tiki_Profile_InstallHandler_Transition extends Tiki_Profile_InstallHandler
 {
 	function getData()
 	{
-		if ( $this->data )
+		if ($this->data) {
 			return $this->data;
+		}
 
-		$defaults = array('preserve' => 'n', 'guards' => array());
+		$defaults = ['preserve' => 'n', 'guards' => []];
 
 		$data = array_merge($defaults, $this->obj->getData());
 
-		foreach ( $data['guards'] as & $guard ) {
-			if ( is_string($guard[2])) {
+		foreach ($data['guards'] as & $guard) {
+			if (is_string($guard[2])) {
 				$guard[2] = reset(Yaml::parse("- " . $guard[2]));
 			}
 		}
@@ -32,10 +33,12 @@ class Tiki_Profile_InstallHandler_Transition extends Tiki_Profile_InstallHandler
 	function canInstall()
 	{
 		$data = $this->getData();
-		if ( ! isset($data['type'], $data['name'], $data['from'], $data['to']) )
+		if (! isset($data['type'], $data['name'], $data['from'], $data['to'])) {
 			return false;
-		if ( ! is_array($data['guards']) )
+		}
+		if (! is_array($data['guards'])) {
 			return false;
+		}
 
 		return true;
 	}

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -53,14 +53,14 @@ class Tiki_Profile_InstallHandler_ActivityStreamRule extends Tiki_Profile_Instal
 		$this->replaceReferences($this->ruleType);
 		$this->replaceReferences($this->rule);
 		$this->replaceReferences($this->notes);
-		
+
 		$activitylib = TikiLib::lib('activity');
-		$id = $activitylib->replaceRule(null, array(
+		$id = $activitylib->replaceRule(null, [
 			'eventType' => $this->eventType,
 			'ruleType' => $this->ruleType,
 			'rule' => $this->rule,
 			'notes' => $this->notes,
-		));
+		]);
 
 		return $id;
 	}
@@ -79,12 +79,12 @@ class Tiki_Profile_InstallHandler_ActivityStreamRule extends Tiki_Profile_Instal
 			$writer->addObject(
 				'activity_stream_rule',
 				$data['ruleId'],
-				array(
+				[
 					'event_type' => $data['eventType'],
 					'rule_type' => $data['ruleType'],
 					'rule' => self::exportRule($writer, $data['rule']),
 					'notes' => $data['notes'],
-				)
+				]
 			);
 			return true;
 		} else {

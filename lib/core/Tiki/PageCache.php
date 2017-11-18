@@ -7,7 +7,7 @@
 
 class Tiki_PageCache
 {
-	private $cacheData = array();
+	private $cacheData = [];
 	private $key;
 	private $meta = null;
 	private $headerLibCopy = null;
@@ -21,7 +21,7 @@ class Tiki_PageCache
 	{
 		global $user;
 
-		if ( $user ) {
+		if ($user) {
 			$this->cacheData = null;
 		}
 
@@ -30,29 +30,29 @@ class Tiki_PageCache
 
 	function onlyForGet()
 	{
-		if ( $_SERVER['REQUEST_METHOD'] != 'GET' ) {
+		if ($_SERVER['REQUEST_METHOD'] != 'GET') {
 			$this->cacheData = null;
 		}
 
 		return $this;
 	}
 
-	function requiresPreference( $preference )
+	function requiresPreference($preference)
 	{
 		global $prefs;
 
-		if ( $prefs[$preference] != 'y' ) {
+		if ($prefs[$preference] != 'y') {
 			$this->cacheData = null;
 		}
 
 		return $this;
 	}
 
-	function addKeys( $array, $keys )
+	function addKeys($array, $keys)
 	{
-		if ( is_array($this->cacheData) ) {
-			foreach ( $keys as $k ) {
-				if (!isset($this->cacheData[$k])) {
+		if (is_array($this->cacheData)) {
+			foreach ($keys as $k) {
+				if (! isset($this->cacheData[$k])) {
 					$this->cacheData[$k] = isset($array[$k]) ? $array[$k] : null;
 				}
 			}
@@ -61,55 +61,55 @@ class Tiki_PageCache
 		return $this;
 	}
 
-	function addArray( $array )
+	function addArray($array)
 	{
-		if ( is_array($this->cacheData) ) {
+		if (is_array($this->cacheData)) {
 			$this->cacheData = array_merge($this->cacheData, $array);
 		}
 
 		return $this;
 	}
 
-	function addValue( $key, $value )
+	function addValue($key, $value)
 	{
-		if ( is_array($this->cacheData) ) {
+		if (is_array($this->cacheData)) {
 			$this->cacheData[$key] = $value;
 		}
 
 		return $this;
 	}
 
-	function checkMeta( $role, $data )
+	function checkMeta($role, $data)
 	{
-		$this->meta = array_merge(array( 'role' => $role ), $data);
+		$this->meta = array_merge([ 'role' => $role ], $data);
 
 		return $this;
 	}
 
 	function applyCache()
 	{
-		if ( is_array($this->cacheData) ) {
+		if (is_array($this->cacheData)) {
 			$memcachelib = TikiLib::lib("memcache");
 
-			if ( TikiLib::lib("memcache")->isEnabled() ) {
+			if (TikiLib::lib("memcache")->isEnabled()) {
 				$this->key = $memcachelib->buildKey($this->cacheData);
 
-				if ( $this->meta ) {
+				if ($this->meta) {
 					list($cachedOutput, $metaTime) = $memcachelib->getMulti(
-						array(
+						[
 							$this->key,
 							$this->meta,
-						)
+						]
 					);
 
-					if ( $cachedOutput && $metaTime && $metaTime > $cachedOutput['timestamp'] ) {
+					if ($cachedOutput && $metaTime && $metaTime > $cachedOutput['timestamp']) {
 						$cachedOutput = null;
 					}
 				} else {
 					$cachedOutput = $memcachelib->get($this->key);
 				}
 
-				if ( $cachedOutput && $cachedOutput['output'] ) {
+				if ($cachedOutput && $cachedOutput['output']) {
 					$headerlib = TikiLib::lib('header');
 					if (is_array($cachedOutput['jsfiles'])) {
 						foreach ($cachedOutput['jsfiles'] as $rank => $files) {
@@ -150,7 +150,7 @@ class Tiki_PageCache
 
 
 					echo $cachedOutput['output'];
-					echo "\n<!-- memcache ".htmlspecialchars($this->key)."-->";
+					echo "\n<!-- memcache " . htmlspecialchars($this->key) . "-->";
 					exit;
 				}
 
@@ -167,37 +167,37 @@ class Tiki_PageCache
 
 	function cleanUp()
 	{
-		if ( $this->key ) {
-			$cachedOutput = array(
+		if ($this->key) {
+			$cachedOutput = [
 				'timestamp' => time(),
 				'output'    => ob_get_contents()
-			);
+			];
 
 			if ($this->headerLibCopy) {
 				$headerlib = TikiLib::lib('header');
 				$cachedOutput['jsfiles']    = array_diff($headerlib->jsfiles, $this->headerLibCopy->jsfiles);
-				$cachedOutput['skip_minify']= array_diff($headerlib->skip_minify, $this->headerLibCopy->skip_minify);
+				$cachedOutput['skip_minify'] = array_diff($headerlib->skip_minify, $this->headerLibCopy->skip_minify);
 				$cachedOutput['jq_onready'] = array_diff($headerlib->jq_onready, $this->headerLibCopy->jq_onready);
 				$cachedOutput['js']         = array_diff($headerlib->js, $this->headerLibCopy->js);
 				$cachedOutput['css']        = array_diff($headerlib->css, $this->headerLibCopy->css);
 				$cachedOutput['cssfiles']   = array_diff($headerlib->cssfiles, $this->headerLibCopy->cssfiles);
 			}
 
-			if ( $cachedOutput['output'] ) {
+			if ($cachedOutput['output']) {
 				TikiLib::lib("memcache")->set($this->key, $cachedOutput);
 			}
 
 			ob_end_flush();
 		}
 
-		$this->cacheData = array();
+		$this->cacheData = [];
 		$this->key = null;
 		$this->meta = null;
 	}
 
 	function invalidate()
 	{
-		if ( $this->meta ) {
+		if ($this->meta) {
 			TikiLib::lib("memcache")->set($this->meta, time());
 		}
 	}
@@ -207,5 +207,3 @@ class Tiki_PageCache
 		$this->cleanUp();
 	}
 }
-
-

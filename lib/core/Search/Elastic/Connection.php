@@ -9,9 +9,9 @@ class Search_Elastic_Connection
 {
 	private $dsn;
 	private $version;
-	private $dirty = array();
+	private $dirty = [];
 
-	private $indices = array();
+	private $indices = [];
 
 	private $bulk;
 
@@ -44,17 +44,16 @@ class Search_Elastic_Connection
 			if (isset($result->version)) {	// elastic v2
 				$result->ok = true;
 				$result->status = 200;
-
-			} else if (! isset($result->ok)) {
+			} elseif (! isset($result->ok)) {
 				$result->ok = $result->status === 200;
 			}
 
 			return $result;
 		} catch (Exception $e) {
-			return (object) array(
+			return (object) [
 				'ok' => false,
 				'status' => 0,
-			);
+			];
 		}
 	}
 
@@ -63,17 +62,18 @@ class Search_Elastic_Connection
 	 *
 	 * @return float
 	 */
-	function getVersion() {
-		if( $this->version === null ) {
+	function getVersion()
+	{
+		if ($this->version === null) {
 			$status = $this->getStatus();
-			
-			if( !empty($status->version->number) ) {
+
+			if (! empty($status->version->number)) {
 				$this->version = (float) $status->version->number;
 			} else {
 				$this->version = 0;
 			}
 		}
-		
+
 		return $this->version;
 	}
 
@@ -131,11 +131,12 @@ class Search_Elastic_Connection
 		return $this->get("/$index/_search?" . http_build_query($args, '', '&'), json_encode($query));
 	}
 
-	function validate($index, array $query) {
+	function validate($index, array $query)
+	{
 		$result = $this->get("/$index/_validate/query?explain=true", json_encode(['query' => $query['query']]));
-		if( isset($result->valid) && $result->valid === false ) {
-			foreach( $result->explanations as $explanation ) {
-				if( $explanation->valid === false ) {
+		if (isset($result->valid) && $result->valid === false) {
+			foreach ($result->explanations as $explanation) {
+				if ($explanation->valid === false) {
 					throw new Search_Elastic_QueryParsingException($explanation->error);
 				}
 			}
@@ -154,7 +155,7 @@ class Search_Elastic_Connection
 
 	function storeQuery($index, $name, $query)
 	{
-		if( $this->getVersion() >= 5 ) {
+		if ($this->getVersion() >= 5) {
 			return $this->rawIndex($index, 'percolator', $name, $query);
 		} else {
 			return $this->rawIndex($index, '.percolator', $name, $query);
@@ -163,7 +164,7 @@ class Search_Elastic_Connection
 
 	function unstoreQuery($index, $name)
 	{
-		if( $this->getVersion() >= 5 ) {
+		if ($this->getVersion() >= 5) {
 			return $this->delete("/$index/percolator/$name");
 		} else {
 			return $this->delete("/$index/.percolator/$name");
@@ -177,7 +178,7 @@ class Search_Elastic_Connection
 		}
 
 		$type = $this->simplifyType($type);
-		if( $this->getVersion() >= 5 ) {
+		if ($this->getVersion() >= 5) {
 			$result = $this->search($index, [
 				'query' => [
 					'percolate' => [
@@ -191,9 +192,9 @@ class Search_Elastic_Connection
 				return $item->_id;
 			}, $result->hits->hits);
 		} else {
-			$result = $this->get("/$index/$type/_percolate", json_encode(array(
+			$result = $this->get("/$index/$type/_percolate", json_encode([
 				'doc' => $document,
-			)));
+			]));
 			return array_map(function ($item) {
 				return $item->_id;
 			}, $result->matches);
@@ -231,7 +232,7 @@ class Search_Elastic_Connection
 		}
 
 		// Before assigning new alias, check there is not already an index matching alias name.
-		if (isset($current->$alias) && !$this->aliasExists($alias)) {
+		if (isset($current->$alias) && ! $this->aliasExists($alias)) {
 			$this->deleteIndex($alias);
 		}
 
@@ -322,9 +323,9 @@ class Search_Elastic_Connection
 	function mapping($index, $type, array $mapping, callable $getIndex)
 	{
 		$type = $this->simplifyType($type);
-		$data = array($type => array(
+		$data = [$type => [
 			"properties" => $mapping,
-		));
+		]];
 
 		if (empty($this->indices[$index])) {
 			$this->createIndex($index, $getIndex);
@@ -350,7 +351,7 @@ class Search_Elastic_Connection
 	{
 		try {
 			$response = $this->get("/_alias/$index", "");
-			if( !empty($response->status) && $response->status == 404 ) {
+			if (! empty($response->status) && $response->status == 404) {
 				return false;
 			}
 		} catch (Search_Elastic_Exception $e) {
@@ -369,13 +370,14 @@ class Search_Elastic_Connection
 
 		try {
 			$this->put(
-				"/$index", json_encode($getIndex())
+				"/$index",
+				json_encode($getIndex())
 			);
 		} catch (Search_Elastic_Exception $e) {
 			// Index already exists: ignore
 		}
 
-		if( $this->getVersion() >= 5 ) {
+		if ($this->getVersion() >= 5) {
 			$this->put("/$index/percolator/_mapping", json_encode([
 				'properties' => [
 					'query' => [
@@ -459,7 +461,7 @@ class Search_Elastic_Connection
 			throw new Search_Elastic_NotFoundException($content->_type, $content->_id);
 		} elseif (isset($content->error)) {
 			$message = $content->error;
-			if (is_object($message) && !empty($message->reason)) {
+			if (is_object($message) && ! empty($message->reason)) {
 				$message = $message->reason;
 			}
 			if (preg_match('/^MapperParsingException\[No handler for type \[(?P<type>.*)\].*\[(?P<field>.*)\]\]$/', $message, $parts)) {
@@ -520,4 +522,3 @@ class Search_Elastic_Connection
 		});
 	}
 }
-

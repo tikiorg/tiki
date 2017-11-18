@@ -18,14 +18,14 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 
 	function getReferenceMap()
 	{
-		return array(
+		return [
 			'tracker_id' => 'tracker',
-		);
+		];
 	}
 
 	function getDocuments()
 	{
-		return $this->db->table('tiki_tracker_items')->fetchColumn('itemId', array());
+		return $this->db->table('tiki_tracker_items')->fetchColumn('itemId', []);
 	}
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
@@ -36,10 +36,10 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 			required semantics.
 		*/
 
-		$data = array(
+		$data = [
 			'title' => $typeFactory->sortable(tr('Unknown')),
 			'language' => $typeFactory->identifier('unknown'),
-		);
+		];
 
 		$item = $this->trklib->get_tracker_item($objectId);
 
@@ -69,11 +69,11 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 		$ownerGroup = $itemObject->getOwnerGroup();
 		$data = array_merge(
 			$data,
-			array(
+			[
 				'title' => $typeFactory->sortable($this->trklib->get_isMain_value($item['trackerId'], $objectId)),
 				'modification_date' => $typeFactory->timestamp($item['lastModif']),
 				'creation_date' => $typeFactory->timestamp($item['created']),
-				'contributors' => $typeFactory->multivalue(array_unique(array($item['createdBy'], $item['lastModifBy']))),
+				'contributors' => $typeFactory->multivalue(array_unique([$item['createdBy'], $item['lastModifBy']])),
 
 				'tracker_status' => $typeFactory->identifier($item['status']),
 				'tracker_id' => $typeFactory->identifier($item['trackerId']),
@@ -83,8 +83,8 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 				// Fake attributes, removed before indexing
 				'_extra_users' => $specialUsers,
 				'_permission_accessor' => $itemObject->getPerms(),
-				'_extra_groups' => $ownerGroup ? array($ownerGroup) : null,
-			)
+				'_extra_groups' => $ownerGroup ? [$ownerGroup] : null,
+			]
 		);
 
 		return $data;
@@ -98,7 +98,7 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 			return $data;
 		}
 
-		$data = array(
+		$data = [
 			'title',
 			'language',
 			'modification_date',
@@ -111,7 +111,7 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 			'parent_view_permission',
 			'parent_object_id',
 			'parent_object_type',
-		);
+		];
 
 		foreach ($this->getAllIndexableHandlers() as $handler) {
 			$data = array_merge($data, $handler->getProvidedFields());
@@ -128,7 +128,7 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 			return $data;
 		}
 
-		$data = array();
+		$data = [];
 
 		foreach ($this->getAllIndexableHandlers() as $handler) {
 			$data = array_merge($data, $handler->getGlobalFields());
@@ -138,7 +138,7 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 		return $data;
 	}
 
-	public static function getIndexableHandlers($definition, $item = array())
+	public static function getIndexableHandlers($definition, $item = [])
 	{
 		return self::getHandlersMatching('Tracker_Field_Indexable', $definition, $item);
 	}
@@ -147,7 +147,7 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 	{
 		$factory = $definition->getFieldFactory();
 
-		$handlers = array();
+		$handlers = [];
 		foreach ($definition->getFields() as $field) {
 			$handler = $factory->getHandler($field, $item);
 
@@ -161,9 +161,9 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 
 	private function getAllIndexableHandlers()
 	{
-		$trackers = $this->db->table('tiki_trackers')->fetchColumn('trackerId', array());
+		$trackers = $this->db->table('tiki_trackers')->fetchColumn('trackerId', []);
 
-		$handlers = array();
+		$handlers = [];
 		foreach ($trackers as $trackerId) {
 			$definition = Tracker_Definition::get($trackerId);
 			$handlers = array_merge($handlers, self::getIndexableHandlers($definition));
@@ -174,12 +174,12 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 
 	public function getFacets()
 	{
-		$trackers = $this->db->table('tiki_trackers')->fetchColumn('trackerId', array());
+		$trackers = $this->db->table('tiki_trackers')->fetchColumn('trackerId', []);
 
-		$handlers = array();
+		$handlers = [];
 		foreach ($trackers as $trackerId) {
 			$definition = Tracker_Definition::get($trackerId);
-			$handlers = array_merge($handlers, self::getHandlersMatching('Search_FacetProvider_Interface', $definition, array()));
+			$handlers = array_merge($handlers, self::getHandlersMatching('Search_FacetProvider_Interface', $definition, []));
 		}
 
 		$source = new Search_FacetProvider;
@@ -209,4 +209,3 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 		return $source->getFacets();
 	}
 }
-

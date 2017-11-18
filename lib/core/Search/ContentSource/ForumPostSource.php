@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -16,18 +16,18 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 
 	function getReferenceMap()
 	{
-		return array(
+		return [
 			'forum_id' => 'forum',
-		);
+		];
 	}
 
 	function getDocuments()
 	{
 		global $prefs;
 		if ($prefs['unified_forum_deepindexing'] == 'y') {
-			$filters = array('objectType' => 'forum', 'parentId' => 0);
+			$filters = ['objectType' => 'forum', 'parentId' => 0];
 		} else {
-			$filters = array('objectType' => 'forum');
+			$filters = ['objectType' => 'forum'];
 		}
 		return $this->db->table('tiki_comments')->fetchColumn('threadId', $filters);
 	}
@@ -47,18 +47,18 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 		$root_thread_id = $commentslib->find_root($comment['parentId']);
 		if ($comment['parentId']) {
 			$root = $commentslib->get_comment($root_thread_id);
-			if (!$comment['title']) {
+			if (! $comment['title']) {
 				$comment['title'] = $root['title'];
 			}
-			$root_author = array($root['userName']);
+			$root_author = [$root['userName']];
 		} else {
-			$root_author = array();
+			$root_author = [];
 		}
 
 		$lastModification = $comment['commentDate'];
 		$content = $comment['data'];
 		$snippet = TikiLib::lib('tiki')->get_snippet($content);
-		$author = array($comment['userName']);
+		$author = [$comment['userName']];
 
 		$thread = $commentslib->get_comments($comment['objectType'] . ':' . $comment['object'], $objectId, 0, 0);
 		$forum_info = $commentslib->get_forum($comment['object']);
@@ -74,7 +74,7 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 
 		$commentslib->extras_enabled(true);
 
-		$data = array(
+		$data = [
 			'title' => $typeFactory->sortable($comment['title']),
 			'language' => $typeFactory->identifier($forum_language),
 			'creation_date' => $typeFactory->timestamp($comment['commentDate']),
@@ -98,7 +98,7 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'root_thread_id' => $typeFactory->identifier($root_thread_id),
 			'thread_type' => $typeFactory->identifier($comment['type']),
 			'locked' => $typeFactory->identifier($comment['locked']),
-		);
+		];
 
 		$forum_lastPost = $this->getForumLastPostData($objectId, $typeFactory);
 
@@ -125,11 +125,11 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 		$lastModification = isset($comment['commentDate']) ? $comment['commentDate'] : 0;
 		$content = isset($comment['data']) ? $comment['data'] : '';
 		$snippet = TikiLib::lib('tiki')->get_snippet($content);
-		$author = array(isset($comment['userName']) ? $comment['userName'] : '');
+		$author = [isset($comment['userName']) ? $comment['userName'] : ''];
 
 		$commentslib->extras_enabled(true);
 
-		$data = array(
+		$data = [
 			'lastpost_title' => $typeFactory->sortable(isset($comment['title']) ? $comment['title'] : ''),
 			'lastpost_modification_date' => $typeFactory->timestamp($lastModification),
 			'lastpost_contributors' => $typeFactory->multivalue(array_unique($author)),
@@ -137,14 +137,14 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'lastpost_post_snippet' => $typeFactory->plaintext($snippet),
 			'lastpost_hits' => $typeFactory->numeric(isset($comment['hits']) ? $comment['hits'] : 0),
 			'lastpost_thread_id' => $typeFactory->identifier(isset($comment['thread_id']) ? $comment['thread_id'] : 0),
-		);
+		];
 
 		return $data;
 	}
 
 	function getProvidedFields()
 	{
-		return array(
+		return [
 			'title',
 			'language',
 			'creation_date',
@@ -177,16 +177,15 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'lastpost_hits',
 			'lastpost_thread_id',
 
-		);
+		];
 	}
 
 	function getGlobalFields()
 	{
-		return array(
+		return [
 			'title' => true,
 
 			'post_content' => false,
-		);
+		];
 	}
 }
-

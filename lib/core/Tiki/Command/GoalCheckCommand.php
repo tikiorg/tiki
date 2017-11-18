@@ -43,4 +43,3 @@ class GoalCheckCommand extends Command
 		$goallib->evaluateAllGoals();
 	}
 }
-

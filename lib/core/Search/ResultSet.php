@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -13,7 +13,7 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 	private $maxRecords;
 
 	private $highlightHelper;
-	private $filters = array();
+	private $filters = [];
 	private $id;
 	private $tsOn;
 	private $tsettings;
@@ -104,7 +104,7 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 
 	function setMaxResults($max)
 	{
-		$current = $this->exchangeArray(array());
+		$current = $this->exchangeArray([]);
 		$this->maxRecords = $max;
 		$this->exchangeArray(array_slice($current, 0, $max));
 	}
@@ -132,10 +132,10 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 				 && $key != 'relevance'
 				 && $key != 'score'
 				 && $key != 'url'
-			     && $key != 'title'
-			     && $key != 'title_initial'
-			     && $key != 'title_firstword'
-			     && $key != 'description'
+				 && $key != 'title'
+				 && $key != 'title_initial'
+				 && $key != 'title_firstword'
+				 && $key != 'description'
 				 && ! empty($value) // Skip empty
 				 && ! is_array($value) // Skip arrays, multivalues fields are not human readable
 				 && ! preg_match('/token[a-z]{8,}/', $value)	// tokens
@@ -175,9 +175,9 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 		$this->filters[$facet->getName()] = $facet;
 	}
 
-	function groupBy($field, array $collect = array())
+	function groupBy($field, array $collect = [])
 	{
-		$out = array();
+		$out = [];
 		foreach ($this as $entry) {
 			if (! isset($entry[$field])) {
 				$out[] = $entry;
@@ -185,7 +185,7 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 				$value = $entry[$field];
 				if (! isset($out[$value])) {
 					$newentry = $entry;
-					$newentry[$field] = array_fill_keys($collect, array());
+					$newentry[$field] = array_fill_keys($collect, []);
 					$out[$value] = $newentry;
 				}
 
@@ -201,11 +201,11 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 		$this->exchangeArray($out);
 	}
 
-	function aggregate(array $fields = array(), array $totals = array())
+	function aggregate(array $fields = [], array $totals = [])
 	{
-		$out = array();
+		$out = [];
 		foreach ($this as $entry) {
-			$values = array_map(function($field) use ($entry) {
+			$values = array_map(function ($field) use ($entry) {
 				return isset($entry[$field]) ? $entry[$field] : '';
 			}, $fields);
 			$key = implode('', $values);
@@ -237,18 +237,19 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 	}
 	/**  When relations have indexed relation objects, remove them from the resultset if user doesn't have
 	 * proper permissions */
-	function checkNestedObjectPerms(){
+	function checkNestedObjectPerms()
+	{
 		global $user;
 		$user_groups = array_keys(TikiLib::lib('user')->get_user_groups_inclusion($user));
 		if (empty($user_groups)) {
 			$user_groups = ['Anonymous'];
 		}
-		foreach($this as &$item){//for each element in resultset
-			if (isset($item['relation_objects'])){
+		foreach ($this as &$item) {//for each element in resultset
+			if (isset($item['relation_objects'])) {
 				foreach ($item['relation_objects'] as $key => $obj) {
-					$in_group = array_intersect($obj->allowed_groups,$user_groups);
+					$in_group = array_intersect($obj->allowed_groups, $user_groups);
 					$in_user = in_array($user, $obj->allowed_users);
-					if (!$in_group && !$in_user){
+					if (! $in_group && ! $in_user) {
 						unset($item['relation_objects'][$key]);
 					}
 				}
@@ -267,4 +268,3 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 		];
 	}
 }
-

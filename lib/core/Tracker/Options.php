@@ -7,7 +7,7 @@
 
 class Tracker_Options
 {
-	private $data = array();
+	private $data = [];
 	private $info;
 
 	private function __construct()
@@ -86,7 +86,7 @@ class Tracker_Options
 				if ($rawValue !== '') {
 					$values = explode(',', $rawValue);
 					$filter = TikiFilter::get($filter);
-					$values = array_map(array($filter, 'filter'), $values);
+					$values = array_map([$filter, 'filter'], $values);
 				} else {
 					$values = '';
 				}
@@ -131,13 +131,13 @@ class Tracker_Options
 
 	function getParam($key, $default = false)
 	{
-		if (isset($this->data[$key]) && ($this->data[$key] !== '' || !is_array($default))) {
+		if (isset($this->data[$key]) && ($this->data[$key] !== '' || ! is_array($default))) {
 			return $this->data[$key];
 		} elseif ($default === false && $def = $this->getParamDefinition($key)) {
 			if (isset($def['default'])) {
 				return $def['default'];
 			} elseif ($default === false && isset($def['separator'])) {
-				return array();
+				return [];
 			}
 		}
 
@@ -155,7 +155,7 @@ class Tracker_Options
 
 	function getAllParameters()
 	{
-		$out = array();
+		$out = [];
 
 		if (is_array($this->info['params'])) {
 			foreach (array_keys($this->info['params']) as $key) {
@@ -173,16 +173,16 @@ class Tracker_Options
 
 	function buildOptionsArray()
 	{
-		$out = array();
+		$out = [];
 		foreach ($this->getLegacySort() as $key) {
 			$info = $this->getParamDefinition($key);
 			$value = $this->getParam($key);
 			if (isset($info['count']) && $info['count'] == '*') {
 				$values = (array) $value;
 			} elseif (isset($info['separator']) && is_array($value)) {
-				$values = array(implode($info['separator'], $value));
+				$values = [implode($info['separator'], $value)];
 			} else {
-				$values = array($value);
+				$values = [$value];
 			}
 
 			foreach ($values as $v) {
@@ -195,8 +195,8 @@ class Tracker_Options
 
 	private function getLegacySort()
 	{
-		$out = array();
-		if (isset($this->info) && !empty($this->info['params'])) {
+		$out = [];
+		if (isset($this->info) && ! empty($this->info['params'])) {
 			foreach ($this->info['params'] as $key => $info) {
 				if (isset($info['legacy_index'])) {
 					$out[$key] = $info['legacy_index'];
@@ -207,4 +207,3 @@ class Tracker_Options
 		return array_keys($out);
 	}
 }
-

@@ -21,4 +21,3 @@ class InMemoryTracker
 		return isset($this->slugs[$slug]);
 	}
 }
-

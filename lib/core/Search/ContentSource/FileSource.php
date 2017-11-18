@@ -16,9 +16,9 @@ class Search_ContentSource_FileSource implements Search_ContentSource_Interface,
 
 	function getReferenceMap()
 	{
-		return array(
+		return [
 			'gallery_id' => 'file_gallery',
-		);
+		];
 	}
 
 	function getDocuments()
@@ -26,9 +26,9 @@ class Search_ContentSource_FileSource implements Search_ContentSource_Interface,
 		$files = $this->db->table('tiki_files');
 		return $files->fetchColumn(
 			'fileId',
-			array(
+			[
 				'archiveId' => 0,
-			),
+			],
 			-1,
 			-1,
 			'ASC'
@@ -45,17 +45,17 @@ class Search_ContentSource_FileSource implements Search_ContentSource_Interface,
 			return false;
 		}
 
-		if (!empty($file['name'])) {
+		if (! empty($file['name'])) {
 			// Many files when uploaded have underscore in the file name and makes search difficult
 			$file['name'] = str_replace('_', ' ', $file['name']);
 		}
 
-		$data = array(
-			'title' => $typeFactory->sortable(empty($file['name'])?$file['filename']:$file['name']),
+		$data = [
+			'title' => $typeFactory->sortable(empty($file['name']) ? $file['filename'] : $file['name']),
 			'language' => $typeFactory->identifier('unknown'),
 			'creation_date' => $typeFactory->timestamp($file['created']),
 			'modification_date' => $typeFactory->timestamp($file['lastModif']),
-			'contributors' => $typeFactory->multivalue(array_unique(array($file['author'], $file['user'], $file['lastModifUser']))),
+			'contributors' => $typeFactory->multivalue(array_unique([$file['author'], $file['user'], $file['lastModifUser']])),
 			'description' => $typeFactory->plaintext($file['description']),
 			'filename' => $typeFactory->identifier($file['filename']),
 			'filetype' => $typeFactory->sortable(preg_replace('/^([\w-]+)\/([\w-]+).*$/', '$1/$2', $file['filetype'])),
@@ -68,14 +68,14 @@ class Search_ContentSource_FileSource implements Search_ContentSource_Interface,
 			'parent_object_type' => $typeFactory->identifier('file gallery'),
 			'parent_object_id' => $typeFactory->identifier($file['galleryId']),
 			'parent_view_permission' => $typeFactory->identifier('tiki_p_download_files'),
-		);
+		];
 
 		return $data;
 	}
 
 	function getProvidedFields()
 	{
-		return array(
+		return [
 			'title',
 			'language',
 			'creation_date',
@@ -93,19 +93,18 @@ class Search_ContentSource_FileSource implements Search_ContentSource_Interface,
 			'parent_view_permission',
 			'parent_object_id',
 			'parent_object_type',
-		);
+		];
 	}
 
 	function getGlobalFields()
 	{
-		return array(
+		return [
 			'title' => true,
 			'description' => true,
 			'filename' => true,
 
 			'file_comment' => false,
 			'file_content' => false,
-		);
+		];
 	}
 }
-

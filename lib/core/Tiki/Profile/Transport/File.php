@@ -39,6 +39,4 @@ class Tiki_Profile_Transport_File implements Tiki_Profile_Transport_Interface
 	{
 		return $this->path;
 	}
-
 }
-

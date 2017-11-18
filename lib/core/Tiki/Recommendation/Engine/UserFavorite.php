@@ -6,6 +6,7 @@
 // $Id$
 
 namespace Tiki\Recommendation\Engine;
+
 use Tiki\Recommendation\Recommendation;
 use Tiki\Recommendation\Debug\SourceDocument;
 

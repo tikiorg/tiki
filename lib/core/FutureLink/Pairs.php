@@ -2,12 +2,12 @@
 
 class FutureLink_Pairs
 {
-    public $entry = array();
-    public $length = 0;
+	public $entry = [];
+	public $length = 0;
 
-    public function add(FutureLink_Pair $metadata)
-    {
-        $this->entry[] = $metadata;
-        $this->length++;
-    }
+	public function add(FutureLink_Pair $metadata)
+	{
+		$this->entry[] = $metadata;
+		$this->length++;
+	}
 }

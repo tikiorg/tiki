@@ -87,10 +87,10 @@ class AddonRemoveCommand extends Command
 
 		$installedProfiles = $addon_utilities->getInstalledProfiles($folder);
 
-		if (!$confirm && ($willRemove || !empty($installedProfiles))) {
+		if (! $confirm && ($willRemove || ! empty($installedProfiles))) {
 			$output->writeln("<error>There will be NO undo, and all data in the above objects will be deleted.</error>");
 			$output->writeln("<info>Use the --confirm option to proceed with removal.</info>");
-		} elseif (!$willRemove) {
+		} elseif (! $willRemove) {
 			$output->writeln("<info>It looks like the objects for this addon have been removed already.</info>");
 		}
 		if (empty($installedProfiles)) {

@@ -6,6 +6,7 @@
 // $Id$
 
 namespace Tiki\FileGallery\Handler;
+
 use Tiki\FileGallery\FileWrapper\PreloadedContent;
 
 class Preloaded implements HandlerInterface
@@ -19,4 +20,3 @@ class Preloaded implements HandlerInterface
 	{
 	}
 }
-

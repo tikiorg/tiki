@@ -35,13 +35,12 @@ class Definition
 	private function getHandler($info)
 	{
 		switch ($info['type']) {
-		case 'podcast':
-		case 'vidcast':
-			return new Handler\PodCast();
-		case 'system':
-		default:
-			return new Handler\System();
+			case 'podcast':
+			case 'vidcast':
+				return new Handler\PodCast();
+			case 'system':
+			default:
+				return new Handler\System();
 		}
 	}
 }
-

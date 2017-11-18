@@ -58,7 +58,7 @@ class Table_Settings_TikiAdminGroupsMembers extends Table_Settings_Standard
 			'#assigned' => [
 				'sort' => [
 					'type' => 'isoDate',
-					'ajax' =>'created'
+					'ajax' => 'created'
 				],
 				'filter' => [
 					'type' => false
@@ -68,7 +68,7 @@ class Table_Settings_TikiAdminGroupsMembers extends Table_Settings_Standard
 			'#expires' => [
 				'sort' => [
 					'type' => 'isoDate',
-					'ajax' =>'expire'
+					'ajax' => 'expire'
 				],
 				'filter' => [
 					'type' => false
@@ -87,4 +87,3 @@ class Table_Settings_TikiAdminGroupsMembers extends Table_Settings_Standard
 		]
 	];
 }
-

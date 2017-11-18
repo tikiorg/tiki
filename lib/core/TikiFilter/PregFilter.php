@@ -50,6 +50,6 @@ class TikiFilter_PregFilter implements Zend\Filter\FilterInterface
 			$return = preg_filter($this->pattern, $this->replacement, $subject, $this->limit, $this->count);
 		}
 		//return empty string rather than null
-		return !empty($return) ? $subject : '';
+		return ! empty($return) ? $subject : '';
 	}
 }

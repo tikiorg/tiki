@@ -31,12 +31,12 @@ class SchedulerRunCommand extends Command
 			exit(1);
 		}
 
-		$verbosityLevelMap = array(
+		$verbosityLevelMap = [
 			LogLevel::ERROR => OutputInterface::OUTPUT_NORMAL,
 			LogLevel::NOTICE => OutputInterface::OUTPUT_NORMAL,
 			LogLevel::INFO   => OutputInterface::VERBOSITY_VERY_VERBOSE,
 			LogLevel::DEBUG   => OutputInterface::VERBOSITY_DEBUG,
-		);
+		];
 
 		$logger = new ConsoleLogger($output, $verbosityLevelMap);
 

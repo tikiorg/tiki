@@ -25,7 +25,7 @@ class Table_Settings_TikiPaymentPast extends Table_Settings_TikiPayment
 
 	protected function getTableSettings()
 	{
-		unset ($this->ts['columns']['#req_date']);
+		unset($this->ts['columns']['#req_date']);
 		$this->ts['columns']['#detail'] = [
 			'sort' => [
 				'type' => 'text',
@@ -41,34 +41,34 @@ class Table_Settings_TikiPaymentPast extends Table_Settings_TikiPayment
 		$this->ts['columns']['#pmt_date'] = [
 			'sort' => [
 				'type' => 'dateFormat-yyyy-mm-dd',
-				'ajax' =>'payment_date',
+				'ajax' => 'payment_date',
 			],
 			'filter' => [
 				'type' => 'date',
-				'ajax' =>'filter_payment_date',
+				'ajax' => 'filter_payment_date',
 			],
 			'priority' => 5,
 		];
 		$this->ts['columns']['#pmt_type'] = [
 			'sort' => [
 				'type' => 'text',
-				'ajax' =>'type',
+				'ajax' => 'type',
 			],
 			'filter' => [
 				'type' => 'text',
-				'ajax' =>'filter_type',
+				'ajax' => 'filter_type',
 			],
 			'priority' => 5,
 		];
 		$this->ts['columns']['#payer'] = [
-			'sort' => array(
+			'sort' => [
 				'type' => 'text',
-				'ajax' =>'payer',
-			),
-			'filter' => array(
+				'ajax' => 'payer',
+			],
+			'filter' => [
 				'type' => 'text',
-				'ajax' =>'filter_payer',
-			),
+				'ajax' => 'filter_payer',
+			],
 			'priority' => 6,
 		];
 		$this->ts['ajax']['offset'] .= '_' . $this->ts['ajax']['requiredparams']['list_type'];

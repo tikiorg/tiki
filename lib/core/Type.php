@@ -5,9 +5,9 @@
  */
 class Type
 {
-    //FutureLink Protocol
-    public static function Pairs(FutureLink_Pairs &$obj)
-    {
-        return $obj;
-    }
+	//FutureLink Protocol
+	public static function Pairs(FutureLink_Pairs &$obj)
+	{
+		return $obj;
+	}
 }

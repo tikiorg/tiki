@@ -17,8 +17,8 @@ class Search_Lucene_Index implements Search_Index_Interface
 
 	function __construct($directory, $lang = 'en', $highlight = true)
 	{
-		switch($lang) {
-		case 'en':
+		switch ($lang) {
+			case 'en':
 			default:
 				ZendSearch\Lucene\Analysis\Analyzer\Analyzer::setDefault(new StandardAnalyzer_Analyzer_Standard_English());
 				ZendSearch\Lucene\Search\QueryParser::setDefaultEncoding('UTF-8');
@@ -43,13 +43,13 @@ class Search_Lucene_Index implements Search_Index_Interface
 			$this->lucene = ZendSearch\Lucene\Lucene::create($this->directory);
 		}
 		global $prefs;
-		if (!empty($prefs['unified_lucene_max_buffered_docs'])) {							// these break indexing if set empty
+		if (! empty($prefs['unified_lucene_max_buffered_docs'])) {							// these break indexing if set empty
 			$this->lucene->setMaxBufferedDocs($prefs['unified_lucene_max_buffered_docs']);	// default is 10
 		}
-		if (!empty($prefs['unified_lucene_max_merge_docs'])) {
+		if (! empty($prefs['unified_lucene_max_merge_docs'])) {
 			$this->lucene->setMaxMergeDocs($prefs['unified_lucene_max_merge_docs']);		// default is PHP_INT_MAX (effectively "infinite")
 		}
-		if (!empty($prefs['unified_lucene_merge_factor'])) {
+		if (! empty($prefs['unified_lucene_merge_factor'])) {
 			$this->lucene->setMergeFactor($prefs['unified_lucene_merge_factor']);			// default is 10
 		}
 		ZendSearch\Lucene\Lucene::setResultSetLimit($this->resultSetLimit);
@@ -85,16 +85,18 @@ class Search_Lucene_Index implements Search_Index_Interface
 		return file_exists($this->directory);
 	}
 
-    /**
+	/**
 	 * Private. Used by a callback, so made public until PHP 5.4.
 	 *
-     * @param $path
-     * @return int
+	 * @param $path
+	 * @return int
 	 * @private
-     */
+	 */
 	private function destroyDirectory($path)
 	{
-		if (!$path or !is_dir($path)) return false;
+		if (! $path or ! is_dir($path)) {
+			return false;
+		}
 
 		if ($dir = opendir($path)) {
 			while (false !== ($file = readdir($dir))) {
@@ -210,12 +212,12 @@ class Search_Lucene_Index implements Search_Index_Interface
 			Feedback::error($e->getMessage(), 'session');
 		}
 
-		$result = array();
+		$result = [];
 		foreach ($hits as $key => $hit) {
-			$res = array_merge($this->extractValues($hit->getDocument()), array('score' => round($hit->score * 100)));
+			$res = array_merge($this->extractValues($hit->getDocument()), ['score' => round($hit->score * 100)]);
 
 			$found = false;
-			if (!empty($res['object_id']) && !empty($res['object_type'])) {	// filter out duplicates here
+			if (! empty($res['object_id']) && ! empty($res['object_type'])) {	// filter out duplicates here
 				foreach ($result as $r) {
 					if ($r['object_id'] === $res['object_id'] && $r['object_type'] === $res['object_type']) {
 						$found = true;
@@ -223,7 +225,7 @@ class Search_Lucene_Index implements Search_Index_Interface
 					}
 				}
 			}
-			if (!$found) {
+			if (! $found) {
 				$result[] = $res;
 			}
 
@@ -232,19 +234,19 @@ class Search_Lucene_Index implements Search_Index_Interface
 			}
 		}
 
-		$return = array(
+		$return = [
 			'result' => $result,
 			'count' => count($hits),
-		);
+		];
 
 		if ($this->cache) {
 			$this->cache->cacheItem(
 				$cacheKey,
 				serialize(
-					array(
+					[
 						'query' => $query,
 						'hits' => $return,
-					)
+					]
 				),
 				'searchresult'
 			);
@@ -255,7 +257,7 @@ class Search_Lucene_Index implements Search_Index_Interface
 
 	private function extractValues($document)
 	{
-		$data = array();
+		$data = [];
 		foreach ($document->getFieldNames() as $field) {
 			if (! $document->getField($field)->isBinary) {
 				$data[$field] = $document->$field;
@@ -273,20 +275,20 @@ class Search_Lucene_Index implements Search_Index_Interface
 	private function getSortType($sortOrder)
 	{
 		switch ($sortOrder->getMode()) {
-		case Search_Query_Order::MODE_NUMERIC:
-			return SORT_NUMERIC;
-		case Search_Query_Order::MODE_TEXT:
-			return SORT_STRING;
+			case Search_Query_Order::MODE_NUMERIC:
+				return SORT_NUMERIC;
+			case Search_Query_Order::MODE_TEXT:
+				return SORT_STRING;
 		}
 	}
 
 	private function getSortOrder($sortOrder)
 	{
 		switch ($sortOrder->getOrder()) {
-		case Search_Query_Order::ORDER_ASC:
-			return SORT_ASC;
-		case Search_Query_Order::ORDER_DESC:
-			return SORT_DESC;
+			case Search_Query_Order::ORDER_ASC:
+				return SORT_ASC;
+			case Search_Query_Order::ORDER_DESC:
+				return SORT_DESC;
 		}
 	}
 
@@ -298,7 +300,7 @@ class Search_Lucene_Index implements Search_Index_Interface
 	private function generateDocument($data)
 	{
 		$document = new ZendSearch\Lucene\Document;
-		$typeMap = array(
+		$typeMap = [
 			'Search_Type_WikiText' => 'UnStored',
 			'Search_Type_PlainText' => 'UnStored',
 			'Search_Type_Whole' => 'Keyword',
@@ -306,7 +308,7 @@ class Search_Lucene_Index implements Search_Index_Interface
 			'Search_Type_Timestamp' => 'Keyword',
 			'Search_Type_MultivalueText' => 'UnStored',
 			'Search_Type_ShortText' => 'Text',
-		);
+		];
 		foreach ($data as $key => $value) {
 			$luceneType = $typeMap[get_class($value)];
 			$field = ZendSearch\Lucene\Document\Field::$luceneType($key, $value->getValue(), 'UTF-8');
@@ -318,7 +320,7 @@ class Search_Lucene_Index implements Search_Index_Interface
 
 	private function buildQuery($expr)
 	{
-		$query = (string) $expr->walk(array($this, 'walkCallback'));
+		$query = (string) $expr->walk([$this, 'walkCallback']);
 
 		// FIX : Depending on the locale, decimals may be rendered as 1,2 instead of 1.2, causing lucene to go crazy
 		$query = preg_replace('/\^(\d+),(\d+)/', '^$1.$2', $query);
@@ -383,7 +385,6 @@ class Search_Lucene_Index implements Search_Index_Interface
 	{
 		$result = new ZendSearch\Lucene\Search\Query\Boolean;
 		foreach ($childNodes as $child) {
-
 			// Detect if child is a NOT, and reformulate on the fly to support the syntax
 			if ($child instanceof ZendSearch\Lucene\Search\Query\Boolean) {
 				$signs = $child->getSigns();
@@ -406,26 +407,26 @@ class Search_Lucene_Index implements Search_Index_Interface
 		$field = $node->getField();
 
 		switch (get_class($value)) {
-		case 'Search_Type_WikiText':
-		case 'Search_Type_PlainText':
-		case 'Search_Type_MultivalueText':
-			$whole = $value->getValue();
-			$whole = str_replace(array('*', '?', '~', '+'), '', $whole);
-			$whole = str_replace(array('[', ']', '{', '}', '(', ')', ':', '-'), ' ', $whole);
+			case 'Search_Type_WikiText':
+			case 'Search_Type_PlainText':
+			case 'Search_Type_MultivalueText':
+				$whole = $value->getValue();
+				$whole = str_replace(['*', '?', '~', '+'], '', $whole);
+				$whole = str_replace(['[', ']', '{', '}', '(', ')', ':', '-'], ' ', $whole);
 
-			$parts = explode(' ', $this->leftToRight($whole));
-			if (count($parts) === 1) {
+				$parts = explode(' ', $this->leftToRight($whole));
+				if (count($parts) === 1) {
+					return new ZendSearch\Lucene\Search\Query\Term(new ZendSearch\Lucene\Index\Term($parts[0], $field), true);
+				} else {
+					return new ZendSearch\Lucene\Search\Query\Phrase($parts, array_keys($parts), $field);
+				}
+			case 'Search_Type_Timestamp':
+				$parts = explode(' ', $value->getValue());
 				return new ZendSearch\Lucene\Search\Query\Term(new ZendSearch\Lucene\Index\Term($parts[0], $field), true);
-			} else {
+			case 'Search_Type_Whole':
+			case 'Search_Type_Numeric':
+				$parts = explode(' ', $value->getValue());
 				return new ZendSearch\Lucene\Search\Query\Phrase($parts, array_keys($parts), $field);
-			}
-		case 'Search_Type_Timestamp':
-			$parts = explode(' ', $value->getValue());
-			return new ZendSearch\Lucene\Search\Query\Term(new ZendSearch\Lucene\Index\Term($parts[0], $field), true);
-		case 'Search_Type_Whole':
-		case 'Search_Type_Numeric':
-			$parts = explode(' ', $value->getValue());
-			return new ZendSearch\Lucene\Search\Query\Phrase($parts, array_keys($parts), $field);
 		}
 	}
 
@@ -434,4 +435,3 @@ class Search_Lucene_Index implements Search_Index_Interface
 		return $string . "\xE2\x80\x8E";
 	}
 }
-

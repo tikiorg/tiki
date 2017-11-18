@@ -1,19 +1,19 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 class Math_Formula_Runner
 {
-	private $sources = array();
-	private $collected = array();
+	private $sources = [];
+	private $collected = [];
 	private $element;
-	private $known = array();
-	private $variables = array();
+	private $known = [];
+	private $variables = [];
 
-	function __construct( array $sources )
+	function __construct(array $sources)
 	{
 		foreach ($sources as $prefix => $factory) {
 			if (empty($factory)) {
@@ -24,23 +24,23 @@ class Math_Formula_Runner
 		}
 	}
 
-	function setFormula( $element )
+	function setFormula($element)
 	{
 		$this->element = $this->getElement($element);
-		$this->collected = array();
+		$this->collected = [];
 
 		return $this->element;
 	}
 
-	function setVariables( array $variables )
+	function setVariables(array $variables)
 	{
 		$this->variables = $variables;
 	}
 
 	function inspect()
 	{
-		if ( $this->element ) {
-			$this->inspectElement($this->element);		
+		if ($this->element) {
+			$this->inspectElement($this->element);
 			return $this->collected;
 		} else {
 			throw new Math_Formula_Runner_Exception(tra('No formula provided.'));
@@ -52,24 +52,24 @@ class Math_Formula_Runner
 		return $this->evaluateData($this->element);
 	}
 
-	function evaluateData( $data, array $variables = array() )
+	function evaluateData($data, array $variables = [])
 	{
-		if ( $data instanceof Math_Formula_InternalString) {
+		if ($data instanceof Math_Formula_InternalString) {
 			return $data->getContent();
-		} elseif ( $data instanceof Math_Formula_Element ) {
+		} elseif ($data instanceof Math_Formula_Element) {
 			$op = $this->getOperation($data);
-			
+
 			$current = $this->variables;
-			if ( ! empty($variables) ) {
+			if (! empty($variables)) {
 				$this->variables = array_merge($this->variables, $variables);
 			}
-			$out = $op->evaluateTemplate($data, array( $this, 'evaluateData' ));
+			$out = $op->evaluateTemplate($data, [ $this, 'evaluateData' ]);
 			$this->variables = $current;
 
 			return $out;
-		} elseif ( is_numeric($data) ) {
+		} elseif (is_numeric($data)) {
 			return (double) $data;
-		} elseif ( isset($this->variables[$data]) ) {
+		} elseif (isset($this->variables[$data])) {
 			return $this->variables[$data];
 		} elseif (false !== $value = $this->findVariable(explode('.', $data), $this->variables)) {
 			return $value;
@@ -80,7 +80,7 @@ class Math_Formula_Runner
 
 	private function findVariable($path, $variables)
 	{
-		if (!count($path)) {
+		if (! count($path)) {
 			return $variables;
 		}
 
@@ -93,27 +93,27 @@ class Math_Formula_Runner
 		}
 	}
 
-	private function inspectElement( $element )
+	private function inspectElement($element)
 	{
 		$op = $this->getOperation($element);
 
-		$op->evaluateTemplate($element, array( $this, 'inspectData' ));
+		$op->evaluateTemplate($element, [ $this, 'inspectData' ]);
 	}
 
-	function inspectData( $data )
+	function inspectData($data)
 	{
-		if ( $data instanceof Math_Formula_Element ) {
+		if ($data instanceof Math_Formula_Element) {
 			$this->inspectElement($data);
-		} elseif ( ! is_numeric($data) ) {
+		} elseif (! is_numeric($data)) {
 			$this->collected[] = $data;
 		}
 
 		return 0;
 	}
 
-	private function getElement( $element )
+	private function getElement($element)
 	{
-		if ( is_string($element) ) {
+		if (is_string($element)) {
 			$parser = new Math_Formula_Parser;
 			$element = $parser->parse($element);
 		}
@@ -121,7 +121,7 @@ class Math_Formula_Runner
 		return $element;
 	}
 
-	private function getOperation( $element )
+	private function getOperation($element)
 	{
 		$name = $element->getType();
 
@@ -129,7 +129,7 @@ class Math_Formula_Runner
 			return $this->known[$name];
 		}
 
-		foreach ( $this->sources as $factory ) {
+		foreach ($this->sources as $factory) {
 			if ($function = $factory($name)) {
 				return $this->known[$name] = $function;
 			}
@@ -168,4 +168,3 @@ class Math_Formula_Runner
 		$this->known[$functionName] = $function;
 	}
 }
-

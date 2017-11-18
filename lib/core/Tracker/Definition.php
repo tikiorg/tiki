@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 class Tracker_Definition
 {
-	static $definitions = array();
+	static $definitions = [];
 
 	private $trackerInfo;
 	private $factory;
@@ -47,8 +47,8 @@ class Tracker_Definition
 
 	public static function getDefault()
 	{
-		$def = new self(array());
-		$def->fields = array();
+		$def = new self([]);
+		$def->fields = [];
 
 		return $def;
 	}
@@ -81,16 +81,16 @@ class Tracker_Definition
 	{
 		return $this->getConfiguration($key) === 'y';
 	}
-	
+
 	function getFieldsIdKeys()
 	{
-		$fields = array();
+		$fields = [];
 		foreach ($this->getFields() as $key => $field) {
 			$fields[$field['fieldId']] = $field;
 		}
 		return $fields;
 	}
-	
+
 	function getFields()
 	{
 		if ($this->fields) {
@@ -102,10 +102,10 @@ class Tracker_Definition
 
 		if ($trackerId) {
 			$fields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', false /* Translation must be done from the views to avoid translating the sources on edit. */);
-		
+
 			return $this->fields = $fields['data'];
 		} else {
-			return $this->fields = array();
+			return $this->fields = [];
 		}
 	}
 
@@ -146,10 +146,10 @@ class Tracker_Definition
 
 	function getPopupFields()
 	{
-		if (!empty($this->trackerInfo['showPopup'])) {
+		if (! empty($this->trackerInfo['showPopup'])) {
 			return explode(',', $this->trackerInfo['showPopup']);
 		} else {
-			return array();
+			return [];
 		}
 	}
 
@@ -159,7 +159,6 @@ class Tracker_Definition
 			if ($field['type'] == 'u'
 				&& $field['options_map']['autoassign'] == 1
 				&& ($this->isEnabled('userCanSeeOwn') or $this->isEnabled('writerCanModify'))) {
-
 				return $field['fieldId'];
 			}
 		}
@@ -170,7 +169,6 @@ class Tracker_Definition
 		foreach ($this->getFields() as $field) {
 			if ($field['type'] == 'I'
 				&& $field['options_map']['autoassign'] == 1) {
-
 				return $field['fieldId'];
 			}
 		}
@@ -179,7 +177,7 @@ class Tracker_Definition
 	function getWriterField()
 	{
 		foreach ($this->getFields() as $field) {
-			if (in_array($field['type'], array('u', 'I'))
+			if (in_array($field['type'], ['u', 'I'])
 				&& $field['options_map']['autoassign'] == 1) {
 				return $field['fieldId'];
 			}
@@ -191,7 +189,6 @@ class Tracker_Definition
 		foreach ($this->getFields() as $field) {
 			if ($field['type'] == 'u'
 				&& $field['options_map']['autoassign'] == 1) {
-
 				return $field['fieldId'];
 			}
 		}
@@ -199,32 +196,32 @@ class Tracker_Definition
 
 	function getItemOwnerFields()
 	{
-		$ownerFields = array();
+		$ownerFields = [];
 		foreach ($this->getFields() as $field) {
 			if ($field['type'] == 'u'
 				&& $field['options_map']['owner'] == 1) {
 				$ownerFields[] = $field['fieldId'];
 			}
 		}
-		if( !$ownerFields ) {
-			$ownerFields = array($this->getUserField());
+		if (! $ownerFields) {
+			$ownerFields = [$this->getUserField()];
 		}
 		return array_filter($ownerFields);
 	}
 
 	function getArticleField()
- 	{
- 		foreach ($this->getFields() as $field) {
- 			if ($field['type'] == 'articles') { 
- 				return $field['fieldId'];
- 			}
- 		}
- 	}
+	{
+		foreach ($this->getFields() as $field) {
+			if ($field['type'] == 'articles') {
+				return $field['fieldId'];
+			}
+		}
+	}
 
 	function getGeolocationField()
 	{
 		foreach ($this->getFields() as $field) {
-			if ($field['type'] == 'G' && in_array($field['options_map']['use_as_item_location'], array(1, 'y'))) {
+			if ($field['type'] == 'G' && in_array($field['options_map']['use_as_item_location'], [1, 'y'])) {
 				return $field['fieldId'];
 			}
 		}
@@ -232,7 +229,7 @@ class Tracker_Definition
 
 	function getWikiFields()
 	{
-		$fields = array(); 
+		$fields = [];
 		foreach ($this->getFields() as $field) {
 			if ($field['type'] == 'wiki') {
 				$fields[] = $field['fieldId'];
@@ -292,7 +289,7 @@ class Tracker_Definition
 
 	function getCategorizedFields()
 	{
-		$out = array();
+		$out = [];
 
 		foreach ($this->getFields() as $field) {
 			if ($field['type'] == 'e') {
@@ -312,12 +309,12 @@ class Tracker_Definition
 			}
 		}
 	}
-	
+
 	/**
 	 * Get the names of the item user(s) if any.
 	 * An item user is defined if a 'user selector' field
 	 * exist for this tracker and it has at least one user selected.
-	 * 
+	 *
 	 * @param int $itemId
 	 * @return string item user name
 	 */
@@ -342,12 +339,12 @@ class Tracker_Definition
 			return false;
 		}
 
-		return array(
+		return [
 			'provider' => $attributes['tiki.sync.provider'],
 			'source' => $attributes['tiki.sync.source'],
 			'last' => $attributes['tiki.sync.last'],
 			'modified' => $this->getConfiguration('lastModif') > $attributes['tiki.sync.last'],
-		);
+		];
 	}
 
 	function canInsert(array $keyList)
@@ -361,4 +358,3 @@ class Tracker_Definition
 		return true;
 	}
 }
-

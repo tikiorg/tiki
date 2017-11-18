@@ -37,4 +37,3 @@ class QuerySource implements SourceInterface
 		return $this->schema;
 	}
 }
-

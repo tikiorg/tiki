@@ -22,102 +22,102 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class Table_Settings_TikiAdminForums extends Table_Settings_Standard
 {
-	protected $ts = array(
-		'ajax' => array(
-			'url' => array(
+	protected $ts = [
+		'ajax' => [
+			'url' => [
 				'file' => 'tiki-admin_forums.php',
-			),
-		),
-		'columns' => array(
-			'#checkbox' => array(
-				'sort' => array(
+			],
+		],
+		'columns' => [
+			'#checkbox' => [
+				'sort' => [
 					'type' => false,
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'resizable' => false,
 				'priority' => 'critical',
-			),
-			'#name' => array(
-				'sort' => array(
+			],
+			'#name' => [
+				'sort' => [
 					'type' => true,
-					'ajax' =>'name',
-				),
-				'filter' => array(
+					'ajax' => 'name',
+				],
+				'filter' => [
 					'type' => 'text',
-					'ajax' =>'find',
-				),
+					'ajax' => 'find',
+				],
 				'priority' => 'critical',
-			),
-			'#threads' => array(
-				'sort' => array(
+			],
+			'#threads' => [
+				'sort' => [
 					'type' => 'digit',
-					'ajax' =>'threads',
-				),
-				'filter' => array(
+					'ajax' => 'threads',
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 6,
-			),
-			'#comments' => array(
-				'sort' => array(
+			],
+			'#comments' => [
+				'sort' => [
 					'type' => 'digit',
-					'ajax' =>'comments',
-				),
-				'filter' => array(
+					'ajax' => 'comments',
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 6,
-			),
-			'#users' => array(
-				'sort' => array(
+			],
+			'#users' => [
+				'sort' => [
 					'type' => 'digit',
-					'ajax' =>'users',
-				),
-				'filter' => array(
+					'ajax' => 'users',
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 6,
-			),
-			'#age' => array(
-				'sort' => array(
+			],
+			'#age' => [
+				'sort' => [
 					'type' => 'digit',
-					'ajax' =>'age',
-				),
-				'filter' => array(
+					'ajax' => 'age',
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 6,
-			),
-			'#ppd' => array(
-				'sort' => array(
+			],
+			'#ppd' => [
+				'sort' => [
 					'type' => 'digit',
-					'ajax' =>'posts_per_day',
-				),
-				'filter' => array(
+					'ajax' => 'posts_per_day',
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 6,
-			),
-			'#hits' => array(
-				'sort' => array(
+			],
+			'#hits' => [
+				'sort' => [
 					'type' => false,
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 5,
-			),
-			'#actions' => array(
-				'sort' => array(
+			],
+			'#actions' => [
+				'sort' => [
 					'type' => false,
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 1,
-			),
-		),
-	);
+			],
+		],
+	];
 }

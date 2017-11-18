@@ -29,7 +29,6 @@ class PluginListRunCommand extends Command
 				InputOption::VALUE_NONE,
 				tr('Shows only invocations/calls pending approval')
 			);
-
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
@@ -44,8 +43,8 @@ class PluginListRunCommand extends Command
 		$pluginTotal = count($pluginList);
 
 		$table = new Table($output);
-		$table->setHeaders(array('Plugin', 'Location', 'Added by', 'Status'));
-		$rows = array();
+		$table->setHeaders(['Plugin', 'Location', 'Added by', 'Status']);
+		$rows = [];
 
 		if ($pluginTotal > 0) {
 			foreach ($pluginList as $plugin) {
@@ -54,12 +53,12 @@ class PluginListRunCommand extends Command
 					$location = ucfirst($plugin['last_objectType']) . ": ";
 				}
 				$location .= $plugin['last_objectId'];
-				$rows[] = array(
+				$rows[] = [
 					$plugin['fingerprint'],
 					$location,
 					$plugin['added_by'],
 					$plugin['status'],
-				);
+				];
 			}
 			$table->setRows($rows);
 			$table->render();

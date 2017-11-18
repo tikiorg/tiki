@@ -25,7 +25,7 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 
 	public function getOptionArray()
 	{
-		$p = array();
+		$p = [];
 		$pre = 'pager_';
 		//add pager controls
 		if (parent::$pager) {
@@ -41,7 +41,7 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 
 		//ajax settings
 		if (parent::$ajax) {
-			$total = !empty(parent::$s['total']) ? parent::$s['total'] : 0;
+			$total = ! empty(parent::$s['total']) ? parent::$s['total'] : 0;
 			$p[] = $pre . 'processAjaxOnInit: false';
 			$p[] = $pre . 'initialRows: {total: ' . $total . ', filtered: ' . $total . '}';
 			$p[] = $pre . 'ajaxObject: {dataType: \'html\'}';
@@ -51,12 +51,12 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 
 			//ajax processing - this part grabs the html, usually from the smarty template file
 			//first prepare code to add a row total column using the math widget if set
-			$addcol = !empty(parent::$s['math']['totals']['row']) ?
+			$addcol = ! empty(parent::$s['math']['totals']['row']) ?
 				json_encode(parent::$s['math']['totals']['row']) : 0;
-			$ap = array(
+			$ap = [
 				'var rows = tsAjaxGetRows(data, \'' . parent::$tid . '\', ' . $addcol . ', ' . $total . ');',
 				'return rows;'
-			);
+			];
 			$p[] = $this->iterate(
 				$ap,
 				$pre . 'ajaxProcessing: function(data, table){',
@@ -73,7 +73,7 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 				$ajax['asort'] = $ajax['sort'];
 				unset($ajax['sort']);
 			}
-			$ajax['numrows'] = !empty($ajax['numrows']) ? $ajax['numrows'] : 'numrows';
+			$ajax['numrows'] = ! empty($ajax['numrows']) ? $ajax['numrows'] : 'numrows';
 			$ajax['colselector'] = parent::$usecolselector ? 1 : 0;
 			$ajax['tableid'] = parent::$tid;
 			$ca = [

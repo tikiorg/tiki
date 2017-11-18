@@ -16,28 +16,28 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 
 	function getProvidedFields()
 	{
-		return array('allowed_groups', 'allowed_users');
+		return ['allowed_groups', 'allowed_users'];
 	}
 
 	function getGlobalFields()
 	{
-		return array();
+		return [];
 	}
 
-	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
+	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = [])
 	{
 
-		if (!empty($data['_extra_users'])) {
+		if (! empty($data['_extra_users'])) {
 			$allowed_users = $data['_extra_users'];
 		} else {
-			$allowed_users = array();
+			$allowed_users = [];
 		}
 
 		if (isset($data['allowed_groups'])) {
-			return array('allowed_users' => $typeFactory->multivalue(array_unique($allowed_users)));
+			return ['allowed_users' => $typeFactory->multivalue(array_unique($allowed_users))];
 		}
 
-		$groups = array();
+		$groups = [];
 
 		if (isset($data['view_permission'])) {
 			$viewPermission = is_object($data['view_permission']) ? $data['view_permission']->getValue() : $data['view_permission'];
@@ -46,10 +46,10 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 				$accessor = $data['_permission_accessor'];
 			} else {
 				$accessor = $this->perms->getAccessor(
-					array(
+					[
 						'type' => $objectType,
 						'object' => $objectId,
-					)
+					]
 				);
 			}
 
@@ -59,10 +59,10 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 		if (isset($data['parent_view_permission'], $data['parent_object_id'], $data['parent_object_type'])) {
 			$viewPermission = is_object($data['parent_view_permission']) ? $data['parent_view_permission']->getValue() : $data['parent_view_permission'];
 			$accessor = $this->perms->getAccessor(
-				array(
+				[
 					'type' => $data['parent_object_type']->getValue(),
 					'object' => $data['parent_object_id']->getValue(),
-				)
+				]
 			);
 
 			$groups = array_merge($groups, $this->getAllowedGroups($accessor, $viewPermission));
@@ -80,17 +80,17 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 			$groups = array_merge($groups, $data['_extra_groups']);
 		}
 
-		return array(
+		return [
 			'allowed_groups' => $typeFactory->multivalue(array_unique($groups)),
 			'allowed_users' => $typeFactory->multivalue(array_unique($allowed_users)),
-		);
+		];
 	}
 
 	private function getAllowedGroups($accessor, $viewPermission)
 	{
-		$groups = array();
+		$groups = [];
 		foreach ($this->getCheckList($accessor) as $groupName) {
-			$accessor->setGroups(array($groupName));
+			$accessor->setGroups([$groupName]);
 
 			if ($accessor->$viewPermission) {
 				$groups[] = $groupName;
@@ -102,11 +102,11 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 
 	private function filterWithGlobalPermission($groups, $permission)
 	{
-		$out = array();
+		$out = [];
 		$accessor = $this->perms->getAccessor();
 
 		foreach ($groups as $group) {
-			$accessor->setGroups(array($group));
+			$accessor->setGroups([$group]);
 
 			if ($accessor->$permission) {
 				$out[] = $group;
@@ -125,7 +125,7 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 
 	private function getGroupExpansion($groups)
 	{
-		static $expansions = array();
+		static $expansions = [];
 		$tikilib = TikiLib::lib('tiki');
 
 		$out = $groups;
@@ -141,4 +141,3 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 		return $out;
 	}
 }
-

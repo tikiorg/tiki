@@ -16,9 +16,9 @@ use Tiki\FileGallery;
 abstract class Feed_Abstract
 {
 	public $name = "";
-	public $items = array();
-	public $item = array();
-	public $contents = array();
+	public $items = [];
+	public $item = [];
+	public $contents = [];
 	public $type = "";
 	public $isFileGal = false;
 	public $version = "0.0";
@@ -45,16 +45,18 @@ abstract class Feed_Abstract
 	{
 		$contents = $this->getContents();
 
-		if (empty($contents->entry)) return array();
+		if (empty($contents->entry)) {
+			return [];
+		}
 
 		return $contents->entry;
 	}
 
 	public function listItemNames()
 	{
-		$result = array();
+		$result = [];
 		foreach ($this->getItems() as $item) {
-			if (!empty($item->name)) {
+			if (! empty($item->name)) {
 				$result[] = addslashes(htmlspecialchars($item->name));
 			}
 		}
@@ -68,17 +70,18 @@ abstract class Feed_Abstract
 				return $item;
 			}
 		}
-		return array();
+		return [];
 	}
 
 	public function replace()
 	{
-
 	}
 
 	public function setEncoding($contents)
 	{
-		if (is_array($contents)) throw new Exception('die');
+		if (is_array($contents)) {
+			throw new Exception('die');
+		}
 		$this->encoding = mb_detect_encoding($contents, "ASCII, UTF-8, ISO-8859-1");
 	}
 
@@ -93,7 +96,9 @@ abstract class Feed_Abstract
 		$this->setEncoding($contents);
 
 		$contents = json_decode($contents);
-		if (empty($contents)) return array();
+		if (empty($contents)) {
+			return [];
+		}
 		return $contents;
 	}
 
@@ -102,13 +107,12 @@ abstract class Feed_Abstract
 		$contents = json_encode($contents);
 
 		if ($this->isFileGal == true) {
-            //TODO: abstract
+			//TODO: abstract
 			FileGallery\File::filename($this->name)
 				->setParam('description', '')
 				->replace($contents);
-
 		} else {
-            //TODO: abstract
+			//TODO: abstract
 			TikiLib::lib("cache")->cacheItem($this->name, $contents, get_class($this));
 		}
 
@@ -120,7 +124,9 @@ abstract class Feed_Abstract
 		global $tikilib;
 		$contents = $this->open();
 
-		if (!empty($contents)) return $contents;
+		if (! empty($contents)) {
+			return $contents;
+		}
 
 		//at this point contents is empty, so lets fill it
 		$this->replace();
@@ -172,12 +178,12 @@ abstract class Feed_Abstract
 		global $tikilib;
 		$contents = $this->getContents();
 
-        //TODO: convert to actual object
+		//TODO: convert to actual object
 		$feed = new Feed_Container(
 			$this->version,
 			$this->encoding, //we get this from the above call to open
 			$contents,
-            (!empty($origin) ? $origin : $tikilib->tikiUrl() . 'tiki-feed.php'),
+			(! empty($origin) ? $origin : $tikilib->tikiUrl() . 'tiki-feed.php'),
 			$this->type
 		);
 
@@ -186,7 +192,7 @@ abstract class Feed_Abstract
 
 	public function listArchives()
 	{
-		$archives = array();
+		$archives = [];
 
 		if ($this->isFileGal == true) {
 			$file = FileGallery\File::filename($this->name);
@@ -218,7 +224,7 @@ abstract class Feed_Abstract
 
 	public function getItemFromDates($name)
 	{
-		$archives = array();
+		$archives = [];
 
 		foreach ($this->listArchives() as $archive) {
 			foreach ($archive as $item) {

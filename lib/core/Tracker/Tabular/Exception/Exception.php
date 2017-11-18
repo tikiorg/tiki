@@ -10,4 +10,3 @@ namespace Tracker\Tabular\Exception;
 class Exception extends \Exception
 {
 }
-

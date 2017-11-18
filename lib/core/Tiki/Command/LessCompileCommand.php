@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class LessCompileCommand  extends Command
+class LessCompileCommand extends Command
 {
 	protected function configure()
 	{
@@ -66,19 +66,17 @@ class LessCompileCommand  extends Command
 
 		$cachelib = \TikiLib::lib('cache');
 
-		switch ($type)
-		{
+		switch ($type) {
 			case 'themes':
 				$output->writeln('Compiling less files from themes');
-				foreach (new \DirectoryIterator('themes') as $fileInfo)
-				{
+				foreach (new \DirectoryIterator('themes') as $fileInfo) {
 					if ($fileInfo->isDot() || ! $fileInfo->isDir()) {
 						continue;
 					}
 					$themename = $fileInfo->getFilename();
-                    if (!empty($only) && ! in_array($themename, $only) && ! $all) {
-                        continue;
-                    }
+					if (! empty($only) && ! in_array($themename, $only) && ! $all) {
+						continue;
+					}
 					$files = [];
 
 					if ($themename === 'base_files') {
@@ -88,9 +86,9 @@ class LessCompileCommand  extends Command
 						$less_file = "themes/$themename/less/$themename.less";
 						$css_file = "themes/$themename/css/$themename.css";
 					}
-                    if (file_exists($less_file) && (! file_exists($css_file) || ! $checkTimestamps || filemtime($css_file) < filemtime($less_file))) {
+					if (file_exists($less_file) && (! file_exists($css_file) || ! $checkTimestamps || filemtime($css_file) < filemtime($less_file))) {
 						$files[] = ['less' => $less_file, 'css' => $css_file];
-                    }
+					}
 
 					$less_file = "themes/$themename/less/newsletter.less";
 					$css_file = "themes/$themename/css/newsletter.css";
@@ -99,9 +97,8 @@ class LessCompileCommand  extends Command
 					}
 
 					if (! $input->getOption('without-options') && is_dir("themes/$themename/options")) {
-
 						foreach (new \DirectoryIterator("themes/$themename/options") as $fileInfo2) {
-							if ($fileInfo2->isDot() || !$fileInfo2->isDir()) {
+							if ($fileInfo2->isDot() || ! $fileInfo2->isDir()) {
 								continue;
 							}
 							$optionname = $fileInfo2->getFilename();
@@ -117,7 +114,7 @@ class LessCompileCommand  extends Command
 						$command = "php vendor_bundled/vendor/oyejorge/less.php/bin/lessc {$file['less']} {$file['css']}";
 						$output->writeln($command);
 						$result = shell_exec($command);
-						$result = str_replace(array("\r", "\n"), '', $result);
+						$result = str_replace(["\r", "\n"], '', $result);
 						$output->writeln($result);
 					}
 				}

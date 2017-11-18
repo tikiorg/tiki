@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -30,8 +30,8 @@ class Services_Tracker_CalendarController
 			$coloring = 'tracker_field_' . $coloring;
 		}
 
-		$query = $unifiedsearchlib->buildQuery(array());
-		$query->filterRange($input->start->int(), $input->end->int(), array($start, $end));
+		$query = $unifiedsearchlib->buildQuery([]);
+		$query->filterRange($input->start->int(), $input->end->int(), [$start, $end]);
 		$query->setRange(0, $prefs['unified_lucene_max_result']);
 
 		if ($body = $input->filters->none()) {
@@ -41,9 +41,9 @@ class Services_Tracker_CalendarController
 
 		$result = $query->search($index);
 
-		$response = array();
+		$response = [];
 
-		$fields = array();
+		$fields = [];
 		if ($definition = Tracker_Definition::get($input->trackerId->int())) {
 			foreach ($definition->getPopupFields() as $fieldId) {
 				if ($field = $definition->getField($fieldId)) {
@@ -61,11 +61,11 @@ class Services_Tracker_CalendarController
 			foreach ($fields as $field) {
 				if ($item->canViewField($field['fieldId'])) {
 					$val = trim($trklib->field_render_value(
-						array(
+						[
 							'field' => $field,
 							'item' => $item->getData(),
 							'process' => 'y',
-						)
+						]
 					));
 					if ($val) {
 						if (count($fields) > 1) {
@@ -78,7 +78,7 @@ class Services_Tracker_CalendarController
 
 			$colormap = base64_decode($input->colormap->word());
 
-			$response[] = array(
+			$response[] = [
 				'id' => $row['object_id'],
 				'trackerId' => isset($row['tracker_id']) ? $row['tracker_id'] : null,
 				'title' => $row['title'],
@@ -91,7 +91,7 @@ class Services_Tracker_CalendarController
 				'color' => $this->getColor(isset($row[$coloring]) ? $row[$coloring] : '', $colormap),
 				'textColor' => '#000',
 				'resource' => ($resource && isset($row[$resource])) ? strtolower($row[$resource]) : '',
-			);
+			];
 		}
 
 		return $response;
@@ -112,11 +112,11 @@ class Services_Tracker_CalendarController
 
 	private function getColor($value, $colormap)
 	{
-		static $colors = array('#6cf', '#6fc', '#c6f', '#cf6', '#f6c', '#fc6');
-		static $map = array();
+		static $colors = ['#6cf', '#6fc', '#c6f', '#cf6', '#f6c', '#fc6'];
+		static $map = [];
 
-		if (empty($map) && !empty($colormap)){
-			foreach (explode('|', $colormap) as $color){
+		if (empty($map) && ! empty($colormap)) {
+			foreach (explode('|', $colormap) as $color) {
 				$colorMapParts = explode(',', $color);
 				$map[trim($colorMapParts[0])] = trim($colorMapParts[1]);
 			}
@@ -131,4 +131,3 @@ class Services_Tracker_CalendarController
 		return $map[$value];
 	}
 }
-

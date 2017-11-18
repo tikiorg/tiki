@@ -47,7 +47,7 @@ class UsersPasswordCommand extends Command
 
 		$user = $input->getArgument('username');
 
-		if (!$userlib->user_exists($user)) {
+		if (! $userlib->user_exists($user)) {
 			$output->writeln("<error>User {$user} does not exist.</error>");
 			exit(1);
 		}
@@ -56,19 +56,19 @@ class UsersPasswordCommand extends Command
 
 		// Check password constraints
 		$polerr = $userlib->check_password_policy($password);
-		if (!empty($polerr)) {
+		if (! empty($polerr)) {
 			$output->writeln("<error>{$polerr}</error>");
 			exit(1);
 		}
 
-		if ($prefs['auth_method'] != 'tiki'){
+		if ($prefs['auth_method'] != 'tiki') {
 			$output->writeln("<info>\nWarning: Tiki authentication method set to: <options=bold>" . $prefs['auth_method'] . "</>\n"
 			. "Depending on the settings for this authentication method, \n"
 			. "this change of the local password might not be enough for the user to be able to login</info>"
 			. "\n");
 		}
 
-		if ($prefs['feature_user_encryption'] === 'y' && !$input->getOption('force')) {
+		if ($prefs['feature_user_encryption'] === 'y' && ! $input->getOption('force')) {
 			$output->writeln("<error>User encryption feature is enabled.\n" .
 				"Changing the user password might loose encrypted data.\n\n" .
 				"Use -f to force changing password.</error>");
@@ -78,5 +78,4 @@ class UsersPasswordCommand extends Command
 		$userlib->change_user_password($user, $password);
 		$output->writeln('Password changed successfully.');
 	}
-
 }

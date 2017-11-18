@@ -16,74 +16,74 @@ class Tracker_Field_PageSelector extends Tracker_Field_Abstract
 {
 	public static function getTypes()
 	{
-		return array(
-			'k' => array(
+		return [
+			'k' => [
 				'name' => tr('Page Selector'),
 				'description' => tr('Allows a selection from the list of pages.'),
 				'help' => 'Page selector',
-				'prefs' => array('trackerfield_pageselector', 'feature_wiki'),
-				'tags' => array('advanced'),
+				'prefs' => ['trackerfield_pageselector', 'feature_wiki'],
+				'tags' => ['advanced'],
 				'default' => 'y',
-				'params' => array(
-					'autoassign' => array(
+				'params' => [
+					'autoassign' => [
 						'name' => tr('Auto-Assign'),
 						'description' => tr('Will auto-assign the creator of the item.'),
 						'filter' => 'int',
-						'options' => array(
+						'options' => [
 							0 => tr('No'),
 							1 => tr('Yes'),
-						),
+						],
 						'legacy_index' => 0,
-					),
-					'size' => array(
+					],
+					'size' => [
 						'name' => tr('Display Size'),
 						'description' => tr('Visible size of the input in characters.'),
 						'filter' => 'int',
 						'legacy_index' => 1,
-					),
-					'create' => array(
+					],
+					'create' => [
 						'name' => tr('Create Page'),
 						'description' => tr('Create missing pages using the page name in this file as the template.'),
 						'filter' => 'pagename',
 						'legacy_index' => 2,
 						'profile_reference' => 'wiki_page',
-					),
-					'link' => array(
+					],
+					'link' => [
 						'name' => tr('Link'),
 						'description' => tr('Display the value as a link to the page'),
 						'filter' => 'alpha',
 						'default' => 'y',
-						'options' => array(
+						'options' => [
 							'y' => tr('Yes'),
 							'n' => tr('No'),
-						),
+						],
 						'legacy_index' => 3,
-					),
-				),
-			),
-		);
+					],
+				],
+			],
+		];
 	}
 
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
 		$ins_id = $this->getInsertId();
 
-		return array(
+		return [
 			'value' => isset($requestData[$ins_id])
 				? $requestData[$ins_id]
 				: $this->getValue(),
 			'defaultvalue' => $this->getOption('create')
 				? $this->getOption('create')
 				: $this->getValue(),
-		);
+		];
 	}
 
-	function renderInput($context = array())
+	function renderInput($context = [])
 	{
 		return $this->renderTemplate('trackerinput/pageselector.tpl', $context);
 	}
 
-	function renderOutput($context = array())
+	function renderOutput($context = [])
 	{
 		$value = $this->getConfiguration('value');
 		if ($value) {
@@ -93,14 +93,13 @@ class Tracker_Field_PageSelector extends Tracker_Field_Abstract
 				$smarty = TikiLib::lib('smarty');
 				$smarty->loadPlugin('smarty_function_object_link');
 				return smarty_function_object_link(
-					array(
+					[
 						'type' => 'wikipage',
 						'id' => $value,
-					),
+					],
 					$smarty
 				);
 			}
 		}
 	}
 }
-

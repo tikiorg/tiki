@@ -18,93 +18,93 @@ class Tracker_field_Image extends Tracker_Field_File
 
 	public static function getTypes()
 	{
-		return array(
-			'i' => array(
+		return [
+			'i' => [
 				'name' => tr('Image'),
 				'description' => tr('Deprecated in favor of the Files field.'),
 				'help' => 'Image Tracker Field',
-				'prefs' => array('trackerfield_image'),
-				'tags' => array('basic'),
+				'prefs' => ['trackerfield_image'],
+				'tags' => ['basic'],
 				'default' => 'n',
-				'params' => array(
-					'xListSize' => array(
+				'params' => [
+					'xListSize' => [
 						'name' => tr('List image width'),
 						'description' => tr('Display size in pixels'),
 						'filter' => 'int',
 						'default' => 30,
 						'legacy_index' => 0,
-					),
-					'yListSize' => array(
+					],
+					'yListSize' => [
 						'name' => tr('List image height'),
 						'description' => tr('Display size in pixels'),
 						'filter' => 'int',
 						'default' => 30,
 						'legacy_index' => 1,
-					),
-					'xDetailSize' => array(
+					],
+					'xDetailSize' => [
 						'name' => tr('Detail image width'),
 						'description' => tr('Display size in pixels'),
 						'filter' => 'int',
 						'default' => 300,
 						'legacy_index' => 2,
-					),
-					'yDetailSize' => array(
+					],
+					'yDetailSize' => [
 						'name' => tr('Detail image height'),
 						'description' => tr('Display size in pixels'),
 						'filter' => 'int',
 						'default' => 300,
 						'legacy_index' => 3,
-					),
-					'uploadLimitScale' => array(
+					],
+					'uploadLimitScale' => [
 						'name' => tr('Maximum image size'),
 						'description' => tr('Maximum image width or height in pixels.'),
 						'filter' => 'int',
 						'default' => '1000',
 						'legacy_index' => 4,
-					),
-					'shadowbox' => array(
+					],
+					'shadowbox' => [
 						'name' => tr('Shadowbox'),
 						'description' => tr('Shadowbox usage on this field'),
 						'filter' => 'alpha',
-						'options' => array(
+						'options' => [
 							'' => tr('Do not use'),
 							'individual' => tr('One box per item'),
 							'group' => tr('Use the same box for all images'),
-						),
+						],
 						'legacy_index' => 5,
-					),
-					'imageMissingIcon' => array(
+					],
+					'imageMissingIcon' => [
 						'name' => tr('Missing Icon'),
 						'description' => tr('Icon to use when no images have been uploaded.'),
 						'filter' => 'url',
 						'legacy_index' => 6,
-					),
-				),
-			),
-		);
+					],
+				],
+			],
+		];
 	}
 
 	function __construct($fieldInfo, $itemData, $trackerDefinition)
 	{
 		parent::__construct($fieldInfo, $itemData, $trackerDefinition);
-		$this->imgMimeTypes = array('image/jpeg', 'image/gif', 'image/png', 'image/pjpeg', 'image/bmp');
+		$this->imgMimeTypes = ['image/jpeg', 'image/gif', 'image/png', 'image/pjpeg', 'image/bmp'];
 		$this->imgMaxSize = (1048576 * 4); // 4Mo
 	}
 
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
 		global $prefs;
 		$smarty = TikiLib::lib('smarty');
 		$ins_id = $this->getInsertId();
 
-		if (!empty($prefs['fgal_match_regex']) && !empty($_FILES[$ins_id]['name'])) {
-			if (!preg_match('/' . $prefs['fgal_match_regex'] . '/', $_FILES[$ins_id]['name'], $reqs)) {
+		if (! empty($prefs['fgal_match_regex']) && ! empty($_FILES[$ins_id]['name'])) {
+			if (! preg_match('/' . $prefs['fgal_match_regex'] . '/', $_FILES[$ins_id]['name'], $reqs)) {
 				$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
 				$smarty->display("error.tpl");
 				die;
 			}
 		}
-		if (!empty($prefs['fgal_nmatch_regex']) && !empty($_FILES[$ins_id]['name'])) {
+		if (! empty($prefs['fgal_nmatch_regex']) && ! empty($_FILES[$ins_id]['name'])) {
 			if (preg_match('/' . $prefs['fgal_nmatch_regex'] . '/', $_FILES[$ins_id]['name'], $reqs)) {
 				$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
 				$smarty->display("error.tpl");
@@ -113,46 +113,46 @@ class Tracker_field_Image extends Tracker_Field_File
 		}
 
 		// "Blank" means remove image
-		if (!empty($requestData[$ins_id]) && $requestData[$ins_id] == 'blank') {
-			return array( 'value' => 'blank' );
+		if (! empty($requestData[$ins_id]) && $requestData[$ins_id] == 'blank') {
+			return [ 'value' => 'blank' ];
 		}
 
-		if (!empty($requestData)) {
+		if (! empty($requestData)) {
 			return parent::getFieldData($requestData);
 		} else {
-			return array( 'value' => $this->getValue() );
+			return [ 'value' => $this->getValue() ];
 		}
 	}
 
-	function renderInnerOutput( $context = array() )
+	function renderInnerOutput($context = [])
 	{
 		global $prefs;
 		$smarty = TikiLib::lib('smarty');
 
 		$val = $this->getConfiguration('value');
-		$list_mode = !empty($context['list_mode']) ? $context['list_mode'] : 'n';
+		$list_mode = ! empty($context['list_mode']) ? $context['list_mode'] : 'n';
 		if ($list_mode == 'csv') {
 			return $val; // return the filename
 		}
 		$pre = '';
-		if ( !empty($val) && file_exists($val) ) {
+		if (! empty($val) && file_exists($val)) {
 			$params['file'] = $val;
 			$shadowtype = $this->getOption('shadowbox');
-			if ($prefs['feature_shadowbox'] == 'y' && !empty($shadowtype)) {
+			if ($prefs['feature_shadowbox'] == 'y' && ! empty($shadowtype)) {
 				switch ($shadowtype) {
-				case 'item':
-					$rel = '['.$this->getItemId().']';
-    				break;
-				case 'individual':
-					$rel = '';
-    				break;
-				default:
-					$rel = '['.$this->getConfiguration('fieldId').']';
-    				break;
+					case 'item':
+						$rel = '[' . $this->getItemId() . ']';
+						break;
+					case 'individual':
+						$rel = '';
+						break;
+					default:
+						$rel = '[' . $this->getConfiguration('fieldId') . ']';
+						break;
 				}
 				$pre = "<a href=\"$val\" data-box=\"shadowbox$rel;type=img\">";
 			}
-			if ( $this->getOption('xListSize') || $this->getOption('yListSize') || $this->getOption('xDetailSize') || $this->getOption('yDetailSize')) {
+			if ($this->getOption('xListSize') || $this->getOption('yListSize') || $this->getOption('xDetailSize') || $this->getOption('yDetailSize')) {
 				$image_size_info = getimagesize($val);
 			}
 			if ($list_mode != 'n') {
@@ -184,19 +184,20 @@ class Tracker_field_Image extends Tracker_Field_File
 		}
 		$smarty->loadPlugin('smarty_function_html_image');
 		$ret = smarty_function_html_image($params, $smarty);
-		if (!empty($pre))
-			$ret = $pre.$ret.'</a>';
+		if (! empty($pre)) {
+			$ret = $pre . $ret . '</a>';
+		}
 		return $ret;
 	}
 
-	function renderInput($context = array())
+	function renderInput($context = [])
 	{
 		return $this->renderTemplate(
 			'trackerinput/image.tpl',
 			$context,
-			array(
+			[
 				'image_tag' => $this->renderInnerOutput($context),
-			)
+			]
 		);
 	}
 
@@ -210,9 +211,9 @@ class Tracker_field_Image extends Tracker_Field_File
 					unlink($old_file);
 				}
 
-				return array(
+				return [
 					'value' => '',
-				);
+				];
 			}
 
 			$type = $this->getConfiguration('file_type');
@@ -240,16 +241,16 @@ class Tracker_field_Image extends Tracker_Field_File
 						unlink($old_file);
 					}
 
-					return array(
+					return [
 						'value' => $file_name,
-					);
+					];
 				}
 			}
 		}
 
-		return array(
+		return [
 			'value' => false,
-		);
+		];
 	}
 
 	/**
@@ -265,12 +266,12 @@ class Tracker_field_Image extends Tracker_Field_File
 	 *
 	 * @return array(int $resized_width, int $resized_height)
 	 */
-	private function get_resize_dimensions( $image_width, $image_height, $max_width = null, $max_height = null, $upscale = false)
+	private function get_resize_dimensions($image_width, $image_height, $max_width = null, $max_height = null, $upscale = false)
 	{
-		if (!$upscale && $image_width <= $max_width && $image_height <= $max_height) {
-			return array($image_width, $image_height);
+		if (! $upscale && $image_width <= $max_width && $image_height <= $max_height) {
+			return [$image_width, $image_height];
 		}
-		if ( !$max_height || ($max_width && $image_width > $image_height && $image_height < $max_height)) {
+		if (! $max_height || ($max_width && $image_width > $image_height && $image_height < $max_height)) {
 			$ratio = $max_width / $image_width;
 		} else {
 			$ratio = $max_height / $image_height;
@@ -278,19 +279,19 @@ class Tracker_field_Image extends Tracker_Field_File
 				$ratio = $max_width / $image_width;
 			}
 		}
-		return array(round($image_width * $ratio), round($image_height * $ratio));
+		return [round($image_width * $ratio), round($image_height * $ratio)];
 	}
 
 	function getImageFilename($name, $itemId, $fieldId)
 	{
 		$ext = pathinfo($name, PATHINFO_EXTENSION);
-		if (! in_array($ext, array('png', 'gif', 'jpg', 'jpeg'))) {
+		if (! in_array($ext, ['png', 'gif', 'jpg', 'jpeg'])) {
 			$ext = 'jpg';
 		}
 
 		do {
 			$name = md5(uniqid("$name.$itemId.$fieldId"));
-			$name .= '.'.$ext;
+			$name .= '.' . $ext;
 		} while (file_exists("img/trackers/$name"));
 
 		return "img/trackers/$name";
@@ -306,9 +307,8 @@ class Tracker_field_Image extends Tracker_Field_File
 		$value = $this->getValue();
 		$baseKey = $this->getBaseKey();
 
-		return array(
+		return [
 			$baseKey => $typeFactory->plaintext($value),
-		);
+		];
 	}
 }
-

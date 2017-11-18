@@ -8,7 +8,7 @@
 class Tiki_Event_Customizer_RuleSet
 {
 	private $parser;
-	private $rules = array();
+	private $rules = [];
 
 	function __construct()
 	{
@@ -25,4 +25,3 @@ class Tiki_Event_Customizer_RuleSet
 		return $this->rules;
 	}
 }
-

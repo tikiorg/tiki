@@ -13,10 +13,9 @@ class Tiki_Connect_Server extends Tiki_Connect_Abstract
 	{
 		parent::__construct();
 		$this->indexFile = 'temp/connect_server-index';
-
 	}
 
-	function getMatchingConnections( $criteria )
+	function getMatchingConnections($criteria)
 	{
 		$index = $this->getIndex();
 
@@ -25,9 +24,9 @@ class Tiki_Connect_Server extends Tiki_Connect_Abstract
 
 		$results = $index->find($criteria);
 
-		$ret = array();
+		$ret = [];
 		foreach ($results as $hit) {
-			$res = array();
+			$res = [];
 			$res['created'] = $hit->created;
 			try {
 				$res['title'] = $hit->title;
@@ -113,7 +112,7 @@ class Tiki_Connect_Server extends Tiki_Connect_Abstract
 
 	public function indexNeedsRebuilding()
 	{
-		return !file_exists($this->indexFile);
+		return ! file_exists($this->indexFile);
 	}
 
 	private function indexConnection($created, $data)
@@ -122,20 +121,20 @@ class Tiki_Connect_Server extends Tiki_Connect_Abstract
 		$doc->addField(ZendSearch\Lucene\Document\Field::Keyword('created', $created));
 		$doc->addField(ZendSearch\Lucene\Document\Field::Text('version', $data['version']));
 
-		if (!empty($data['site'])) {
-			if (!empty($data['site']['connect_site_title'])) {
+		if (! empty($data['site'])) {
+			if (! empty($data['site']['connect_site_title'])) {
 				$doc->addField(ZendSearch\Lucene\Document\Field::Text('title', $data['site']['connect_site_title']));
 			}
-			if (!empty($data['site']['connect_site_url'])) {
+			if (! empty($data['site']['connect_site_url'])) {
 				$doc->addField(ZendSearch\Lucene\Document\Field::Keyword('url', $data['site']['connect_site_url']));
 			}
-			if (!empty($data['site']['connect_site_email'])) {
+			if (! empty($data['site']['connect_site_email'])) {
 				$doc->addField(ZendSearch\Lucene\Document\Field::Keyword('email', $data['site']['connect_site_email']));	// hmm
 			}
-			if (!empty($data['site']['connect_site_keywords'])) {
+			if (! empty($data['site']['connect_site_keywords'])) {
 				$doc->addField(ZendSearch\Lucene\Document\Field::Text('keywords', $data['site']['connect_site_keywords']));
 			}
-			if (!empty($data['site']['connect_site_location'])) {
+			if (! empty($data['site']['connect_site_location'])) {
 				$loc = TikiLib::lib('geo')->parse_coordinates($data['site']['connect_site_location']);
 				if (count($loc) > 1) {
 					$doc->addField(ZendSearch\Lucene\Document\Field::Keyword('geo_lat', $loc['lat']));
@@ -148,21 +147,21 @@ class Tiki_Connect_Server extends Tiki_Connect_Abstract
 		} else {
 			$doc->addField(ZendSearch\Lucene\Document\Field::Text('title', tra('Anonymous')));
 		}
-		if (!empty($data['tables'])) {
+		if (! empty($data['tables'])) {
 			$doc->addField(ZendSearch\Lucene\Document\Field::UnIndexed('tables', serialize($data['tables'])));
 		}
-		if (!empty($data['prefs'])) {
+		if (! empty($data['prefs'])) {
 			$doc->addField(ZendSearch\Lucene\Document\Field::UnIndexed('prefs', serialize($data['prefs'])));
-			if (!empty($data['prefs']['language'])) {
+			if (! empty($data['prefs']['language'])) {
 				$langLib = TikiLib::lib('language');
 				$languages = $langLib->get_language_map();
 				$doc->addField(ZendSearch\Lucene\Document\Field::Text('language', $languages[$data['prefs']['language']]));
 			}
 		}
-		if (!empty($data['server'])) {
+		if (! empty($data['server'])) {
 			$doc->addField(ZendSearch\Lucene\Document\Field::UnIndexed('server', serialize($data['server'])));
 		}
-		if (!empty($data['votes'])) {
+		if (! empty($data['votes'])) {
 			$doc->addField(ZendSearch\Lucene\Document\Field::UnIndexed('votes', serialize($data['votes'])));
 		}
 
@@ -188,13 +187,13 @@ class Tiki_Connect_Server extends Tiki_Connect_Abstract
 	{
 		global $prefs;
 
-		$ret = array();
+		$ret = [];
 
 		$ret['received'] = $this->connectTable->fetchCount(
-			array(
+			[
 				'type' => 'received',
 				'server' => 1,
-			)
+			]
 		);
 
 		// select distinct guid from tiki_connect where server=1;
@@ -222,15 +221,15 @@ class Tiki_Connect_Server extends Tiki_Connect_Abstract
 	 * @return string
 	 */
 
-	function isPendingGuid( $guid )
+	function isPendingGuid($guid)
 	{
 		$res = $this->connectTable->fetchOne(
 			'data',
-			array(
+			[
 				'type' => 'pending',
 				'server' => 1,
 				'guid' => $guid,
-			)
+			]
 		);
 		return $res;
 	}
@@ -243,14 +242,14 @@ class Tiki_Connect_Server extends Tiki_Connect_Abstract
 	 * @return bool
 	 */
 
-	function isConfirmedGuid( $guid )
+	function isConfirmedGuid($guid)
 	{
 		$res = $this->connectTable->fetchCount(
-			array(
+			[
 				'type' => 'confirmed',
 				'server' => 1,
 				'guid' => $guid,
-			)
+			]
 		);
 		return $res > 0;
 	}

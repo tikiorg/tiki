@@ -20,15 +20,18 @@ class MultiTikiMoveCommand extends Command
 		$this
 			->setName('multitiki:move')
 			->setDescription('Moves a MultiTiki site from one tiki instance to another')
-			->addArgument('site',
+			->addArgument(
+				'site',
 				InputArgument::REQUIRED,
 				'Name of multitiki site to move'
 			)
-			->addArgument('from',
+			->addArgument(
+				'from',
 				InputArgument::REQUIRED,
 				'path to the Tiki instance to move from (use "." for this one)'
 			)
-			->addArgument('to',
+			->addArgument(
+				'to',
 				InputArgument::OPTIONAL,
 				'path to the Tiki instance to move to (defaults to this one if absent or if a site name is given instead of a valid file path then the destination site will be renamed)'
 			)
@@ -54,7 +57,7 @@ class MultiTikiMoveCommand extends Command
 		$site = $input->getArgument('site');
 
 		$from = $input->getArgument('from');
-		if (!$from || !is_readable($from)) {
+		if (! $from || ! is_readable($from)) {
 			$output->writeln("<error>From path $from not found</error>");
 			$output->writeln('<info>' . $this->getSynopsis() . '</info>');
 			return -1;
@@ -79,7 +82,6 @@ class MultiTikiMoveCommand extends Command
 
 		if ($list) {
 			if (in_array($site, $list)) {
-
 				$list = $this->getVirtuals($to);
 
 				if (in_array($destSite, $list)) {
@@ -96,13 +98,13 @@ class MultiTikiMoveCommand extends Command
 				];
 
 				$moves = [];
-				foreach($dirs as $dir) {
+				foreach ($dirs as $dir) {
 					$src = $from . '/' . $dir . '/' . $site;
 					if (! is_dir($src) && $dir === 'themes' && is_dir($from . '/styles/' . $site)) {	// pre tiki 13
 						$src = $from . '/styles/' . $site;
 					}
 					if (is_dir($src)) {
-						$dest =  $to . '/' . $dir . '/' . $destSite;
+						$dest = $to . '/' . $dir . '/' . $destSite;
 						if (is_dir($dest)) {
 							if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
 								$output->writeln("<error>Destination directory already exists: $dest</error>");
@@ -117,7 +119,7 @@ class MultiTikiMoveCommand extends Command
 					}
 				}
 				// loop through the dirs to move
-				foreach($moves as $move) {
+				foreach ($moves as $move) {
 					if ($confirm) {
 						// do the actual move
 						rename($move[0], $move[1]);
@@ -142,7 +144,6 @@ class MultiTikiMoveCommand extends Command
 					if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
 						$output->writeln("<info>Updated both db/virtuals.inc files</info>");
 					}
-
 				} else {
 					if ($output->getVerbosity() >= OutputInterface::VERBOSITY_NORMAL) {
 						$output->writeln("<info>Use --confirm to perform moves</info>");
@@ -150,7 +151,6 @@ class MultiTikiMoveCommand extends Command
 				}
 
 				return 0;
-
 			} else {
 				$output->writeln("<error>Site $site not found in $from</error>");
 			}

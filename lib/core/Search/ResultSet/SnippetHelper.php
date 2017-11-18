@@ -13,13 +13,12 @@ class Search_ResultSet_SnippetHelper implements Zend\Filter\FilterInterface
 	function __construct($length = 240)
 	{
 		$this->length = (int) 240;
-		$this->formatter = new Search_Formatter_ValueFormatter_Snippet(array( 'length' => $this->length ));
+		$this->formatter = new Search_Formatter_ValueFormatter_Snippet([ 'length' => $this->length ]);
 	}
 
 	function filter($content)
 	{
-		$snippet = $this->formatter->render('', $content, array());
+		$snippet = $this->formatter->render('', $content, []);
 		return $snippet;
 	}
 }
-

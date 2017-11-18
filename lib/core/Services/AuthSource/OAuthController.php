@@ -30,4 +30,3 @@ class Services_AuthSource_OAuthController
 		$access->redirect('');
 	}
 }
-

@@ -41,9 +41,8 @@ class CsvWriter
 			foreach ($columns as $column) {
 				$row[] = $entry->render($column);
 			}
-			
+
 			$this->file->fputcsv($row);
 		}
 	}
 }
-

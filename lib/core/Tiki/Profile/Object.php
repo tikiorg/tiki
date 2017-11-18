@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -13,10 +13,10 @@ class Tiki_Profile_Object
 
 	private $references = null;
 
-	public static function serializeNamedObject( $object ) // {{{
+	public static function serializeNamedObject($object) // {{{
 	{
-		if ( strpos($object['domain'], '://') === false ) {
-			if ( is_dir($object['domain']) ) {
+		if (strpos($object['domain'], '://') === false) {
+			if (is_dir($object['domain'])) {
 				$object['domain'] = "file://" . $object['domain'];
 			} else {
 				$object['domain'] = "http://" . $object['domain'];
@@ -28,17 +28,18 @@ class Tiki_Profile_Object
 	public static function getNamedObjects() // {{{
 	{
 		global $tikilib;
-	
-		$objects = array();
+
+		$objects = [];
 
 		$result = $tikilib->query("SELECT domain, profile, object FROM tiki_profile_symbols WHERE named = 'y'");
-		while ( $row = $result->fetchRow() )
+		while ($row = $result->fetchRow()) {
 			$objects[] = $row;
+		}
 
 		return $objects;
 	} // }}}
-	
-	function __construct( &$data, Tiki_Profile $profile ) // {{{
+
+	function __construct(&$data, Tiki_Profile $profile) // {{{
 	{
 		$this->data = &$data;
 		$this->profile = $profile;
@@ -48,15 +49,15 @@ class Tiki_Profile_Object
 	{
 		$str = '';
 		if ($this->isWellStructured()) {
-			$str .= $this->getType().' ';
+			$str .= $this->getType() . ' ';
 			$name = isset($this->data['data']['name']) ? $this->data['data']['name'] : tra('No name');
-			$str .= '"'.$name.'"';
+			$str .= '"' . $name . '"';
 		} else {
 			$str .= tra('Bad object');
 		}
 		return $str;
 	} // }}}
-	
+
 	function isWellStructured() // {{{
 	{
 		$is = isset($this->data['type'], $this->data['data']);
@@ -80,12 +81,12 @@ class Tiki_Profile_Object
 		return $this->id;
 	} // }}}
 
-	function setValue( $value ) // {{{
+	function setValue($value) // {{{
 	{
 		$this->id = $value;
 
 		$named = 'y';
-		if ( ! $name = $this->getRef() ) {
+		if (! $name = $this->getRef()) {
 			$name = uniqid();
 			$named = 'n';
 		}
@@ -95,8 +96,9 @@ class Tiki_Profile_Object
 
 	function getInternalReferences() // {{{
 	{
-		if ( !is_null($this->references) )
+		if (! is_null($this->references)) {
 			return $this->references;
+		}
 
 		$this->references = $this->traverseForReferences($this->data);
 		return $this->references;
@@ -104,39 +106,42 @@ class Tiki_Profile_Object
 
 	function getData() // {{{
 	{
-		if ( array_key_exists('data', $this->data) ) {
+		if (array_key_exists('data', $this->data)) {
 			return $this->data['data'];
 		}
 
-		return array();
+		return [];
 	} // }}}
 
-	public function replaceReferences( &$data, $suppliedUserData = false ) // {{{
+	public function replaceReferences(&$data, $suppliedUserData = false) // {{{
 	{
 		$this->profile->replaceReferences($data, $suppliedUserData);
 	} // }}}
 
-	private function traverseForReferences( $value ) // {{{
+	private function traverseForReferences($value) // {{{
 	{
-		$array = array();
-		if ( is_array($value) )
-			foreach ( $value as $v )
+		$array = [];
+		if (is_array($value)) {
+			foreach ($value as $v) {
 				$array = array_merge($array, $this->traverseForReferences($v));
-		elseif ( preg_match(Tiki_Profile::SHORT_PATTERN, $value, $parts) ) {
+			}
+		} elseif (preg_match(Tiki_Profile::SHORT_PATTERN, $value, $parts)) {
 			$ref = $this->profile->convertReference($parts);
-			if ( $this->profile->domain == $ref['domain']
-				&& $this->profile->profile == $ref['profile'] )
+			if ($this->profile->domain == $ref['domain']
+				&& $this->profile->profile == $ref['profile'] ) {
 				$array[] = $ref['object'];
-		} elseif ( preg_match_all(Tiki_Profile::LONG_PATTERN, $value, $parts, PREG_SET_ORDER) ) {
-			foreach ( $parts as $row ) {
+			}
+		} elseif (preg_match_all(Tiki_Profile::LONG_PATTERN, $value, $parts, PREG_SET_ORDER)) {
+			foreach ($parts as $row) {
 				$ref = $this->profile->convertReference($row);
-				if ( $this->profile->domain == $ref['domain']
-					&& $this->profile->profile == $ref['profile'] )
+				if ($this->profile->domain == $ref['domain']
+				&& $this->profile->profile == $ref['profile'] ) {
 					$array[] = $ref['object'];
+				}
 			}
 		}
 
-		return $array;
+			return $array;
 	} // }}}
 
 	function getProfile() // {{{
@@ -144,9 +149,10 @@ class Tiki_Profile_Object
 		return $this->profile;
 	} // }}}
 
-	function __get( $name ) // {{{
+	function __get($name) // {{{
 	{
-		if ( array_key_exists($name, $this->data['data']) )
+		if (array_key_exists($name, $this->data['data'])) {
 			return $this->data['data'][$name];
+		}
 	} // }}}
 }

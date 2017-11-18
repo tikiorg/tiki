@@ -9,7 +9,7 @@ class Services_Object_Controller
 	public static function supported()
 	{
 		global $prefs;
-		$supported = array();
+		$supported = [];
 
 		if ($prefs['feature_trackers'] == 'y') {
 			$supported[] = 'trackeritem';
@@ -29,13 +29,13 @@ class Services_Object_Controller
 			throw new Services_Exception_NotAvailable(tr('No box available for %0', $type));
 		}
 
-		return array(
+		return [
 			'type' => $type,
 			'object' => $input->object->none(),
 			'content' => $this->{'infobox_' . $type}($input),
 			'plain' => $input->plain->int(),
 			'format' => $input->format->word(),
-		);
+		];
 	}
 
 	private function infobox_trackeritem($input)
@@ -57,7 +57,7 @@ class Services_Object_Controller
 			throw new Services_Exception('Permission denied', 403);
 		}
 
-		$fields = array();
+		$fields = [];
 		foreach ($definition->getPopupFields() as $fieldId) {
 			if ($itemObject->canViewField($fieldId) && $field = $definition->getField($fieldId)) {
 				$fields[] = $field;
@@ -105,13 +105,12 @@ class Services_Object_Controller
 
 
 		if (empty($lockedby) || $perms->$adminperm) {
-
 			Services_Exception_Denied::checkObject($perm, $permtype, $object);
 
 			if (! empty($object)) {
 				$return = TikiLib::lib('attribute')->set_attribute($type, $object, $attribute, $value);
 
-				if (!$return) {
+				if (! $return) {
 					Feedback::error(tr('Invalid attribute name "%0"', $attribute), 'session');
 				}
 			}
@@ -138,17 +137,15 @@ class Services_Object_Controller
 		if ($lockedby) {	// it's locked
 
 			if ($perms->$adminperm || ($user === $lockedby && $perms->$perm)) {
-
 				if (! empty($object)) {
 					$res = $attributelib->set_attribute($type, $object, $attribute, '');
 
-					if (!$res) {
+					if (! $res) {
 						Feedback::error(tr('Invalid attribute name "%0"', $attribute), 'session');
 					}
 				}
 
 				return ['locked' => false];
-
 			} else {
 				Services_Exception_Denied::checkObject($adminperm, $permtype, $object);
 			}
@@ -176,7 +173,7 @@ class Services_Object_Controller
 	private function setup_locking($type)
 	{
 		$perm = 'lock';    // default (for wiki page, so not used here yet)
-		$adminperm ='admin';
+		$adminperm = 'admin';
 		$attribute = 'tiki.object.lock';
 		$permtype = $type;
 
@@ -196,7 +193,6 @@ class Services_Object_Controller
 				Feedback::error(tr('Cannot lock "%0"', $type), 'session');
 		}
 
-		return array($perm, $adminperm, $attribute, $permtype);
+		return [$perm, $adminperm, $attribute, $permtype];
 	}
 }
-

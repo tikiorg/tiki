@@ -22,221 +22,221 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class Table_Settings_TikiListpages extends Table_Settings_Standard
 {
-	protected $ts = array(
-		'filters' => array(
-			'external' => array(
-				0 => array(
+	protected $ts = [
+		'filters' => [
+			'external' => [
+				0 => [
 					'type' => 'dropdown',
-					'options' => array(
+					'options' => [
 						'Orphan pages' => 'findfilter_orphan=page_orphans',
 						'Pages not in a structure' => 'findfilter_orphan=structure_orphans',
-					),
-				),
-			),
-		),
-		'ajax' => array(
-			'url' => array(
+					],
+				],
+			],
+		],
+		'ajax' => [
+			'url' => [
 				'file' => 'tiki-listpages.php',
-			),
+			],
 			'numrows' => 'maxRecords',
-		),
-		'columns' => array(
-			'#checkbox' => array(
-				'sort' => array(
+		],
+		'columns' => [
+			'#checkbox' => [
+				'sort' => [
 					'type' => false,
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'resizable' => false,
 				'priority' => 'critical',
-			),
-			'#pageid' => array(
-				'sort' => array(
+			],
+			'#pageid' => [
+				'sort' => [
 					'type' => 'digit',
 					'ajax' => 'page_id',
 					'group' => 'number-10'
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 6,
-			),
-			'#pagename' => array(
-				'sort' => array(
+			],
+			'#pagename' => [
+				'sort' => [
 					'type' => 'text',
-					'ajax' =>'pageName',
+					'ajax' => 'pageName',
 					'group' => 'letter'
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => 'text',
 					'ajax' => 'find',
-				),
+				],
 				'priority' => 'critical',
-			),
-			'#hits' => array(
-				'sort' => array(
+			],
+			'#hits' => [
+				'sort' => [
 					'type' => 'digits',
 					'ajax' => 'hits',
 					'group' => 'number-1000'
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 5,
-			),
-			'#lastmodif' => array(
-				'sort' => array(
+			],
+			'#lastmodif' => [
+				'sort' => [
 					'type' => 'isoDate',
 					'ajax' => 'lastModif',
 					'group' => 'date-year'
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 4,
-			),
-			'#creator' => array(
-				'sort' => array(
+			],
+			'#creator' => [
+				'sort' => [
 					'type' => 'text',
 					'ajax' => 'creator',
 					'group' => 'letter'
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 3,
-			),
-			'#lastauthor' => array(
-				'sort' => array(
+			],
+			'#lastauthor' => [
+				'sort' => [
 					'type' => 'text',
 					'ajax' => 'user',
 					'group' => 'letter'
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,//function doesn't allow for filtering on last author
-				),
+				],
 				'priority' => 3,
-			),
-			'#version' => array(
-				'sort' => array(
+			],
+			'#version' => [
+				'sort' => [
 					'type' => 'digits',
 					'ajax' => 'version',
 					'group' => 'number-100'
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 1,
-			),
-			'#status' => array(
-				'sort' => array(
+			],
+			'#status' => [
+				'sort' => [
 					'type' => 'text',
 					'ajax' => 'flag',
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 5,
-			),
-			'#versions' => array(
-				'sort' => array(
+			],
+			'#versions' => [
+				'sort' => [
 					'type' => 'digits',
 					'ajax' => 'versions',
 					'group' => 'number-100'
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 6,
-			),
-			'#links' => array(
-				'sort' => array(
+			],
+			'#links' => [
+				'sort' => [
 					'type' => 'digits',
 					'ajax' => 'links',
 					'group' => 'number-10'
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 6,
-			),
-			'#backlinks' => array(
-				'sort' => array(
+			],
+			'#backlinks' => [
+				'sort' => [
 					'type' => 'digits',
 					'ajax' => 'backlinks',
 					'group' => 'number-10'
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 6,
-			),
-			'#size' => array(
-				'sort' => array(
+			],
+			'#size' => [
+				'sort' => [
 					'type' => 'digits',
 					'ajax' => 'page_size',
 					'group' => 'number-10'
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 3,
-			),
-			'#language' => array(
-				'sort' => array(
+			],
+			'#language' => [
+				'sort' => [
 					'type' => 'text',
 					'ajax' => 'lang',
 					'group' => 'word'
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => 'dropdown',
 					'ajax' => 'lang',
-				),
+				],
 				'priority' => 2,
-			),
-			'#categories' => array(
-				'sort' => array(
+			],
+			'#categories' => [
+				'sort' => [
 					'type' => false,
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => 'dropdown',
 					'ajax' => 'categ_ts',
-				),
+				],
 				'priority' => 6,
-			),
-			'#catpaths' => array(
-				'sort' => array(
+			],
+			'#catpaths' => [
+				'sort' => [
 					'type' => false,
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => 'dropdown',
 					'ajax' => 'categPath_ts',
-				),
+				],
 				'priority' => 6,
-			),
-			'#rating' => array(
-				'sort' => array(
+			],
+			'#rating' => [
+				'sort' => [
 					'type' => 'digits',
 					'ajax' => 'rating',
 					'group' => 'number-10'
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 6,
-			),
-			'#actions' => array(
-				'sort' => array(
+			],
+			'#actions' => [
+				'sort' => [
 					'type' => false,
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 1,
-			),
-		),
-	);
+			],
+		],
+	];
 
 	/**
 	 * Manipulate table-specific settings as needed.
@@ -260,6 +260,4 @@ class Table_Settings_TikiListpages extends Table_Settings_Standard
 
 		return $this->ts;
 	}
-
 }
-

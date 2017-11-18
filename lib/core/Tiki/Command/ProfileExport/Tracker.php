@@ -33,8 +33,8 @@ class Tracker extends ObjectWriter
 		$trackerId = $input->getArgument('tracker');
 
 		$ref = $input->getOption('reference');
-		if ($ref && !\Tiki_Profile::isValidReference($ref, true)) {
-			$output->writeln('<error>The value provided for the parameter reference do not have the right format: '.$ref.'</error>');
+		if ($ref && ! \Tiki_Profile::isValidReference($ref, true)) {
+			$output->writeln('<error>The value provided for the parameter reference do not have the right format: ' . $ref . '</error>');
 			return;
 		}
 

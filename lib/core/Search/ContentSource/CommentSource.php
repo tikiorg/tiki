@@ -26,9 +26,9 @@ class Search_ContentSource_CommentSource implements Search_ContentSource_Interfa
 
 		return $comments->fetchColumn(
 			'threadId',
-			array(
+			[
 				'objectType' => $comments->in($this->types),
-			)
+			]
 		);
 	}
 
@@ -44,12 +44,12 @@ class Search_ContentSource_CommentSource implements Search_ContentSource_Interfa
 		$url = $commentslib->getHref($comment['objectType'], $comment['object'], $objectId);
 		$url = str_replace('&amp;', '&', $url);
 
-		$data = array(
+		$data = [
 			'title' => $typeFactory->sortable($comment['title']),
 			'language' => $typeFactory->identifier('unknown'),
 			'creation_date' => $typeFactory->timestamp($comment['commentDate']),
 			'modification_date' => $typeFactory->timestamp($comment['commentDate']),
-			'contributors' => $typeFactory->multivalue(array($comment['userName'])),
+			'contributors' => $typeFactory->multivalue([$comment['userName']]),
 
 			'comment_content' => $typeFactory->wikitext($comment['data']),
 			'parent_thread_id' => $typeFactory->identifier($comment['parentId']),
@@ -61,14 +61,14 @@ class Search_ContentSource_CommentSource implements Search_ContentSource_Interfa
 			'global_view_permission' => $typeFactory->identifier('tiki_p_read_comments'),
 
 			'url' => $typeFactory->identifier($url),
-		);
+		];
 
 		return $data;
 	}
 
 	function getProvidedFields()
 	{
-		return array(
+		return [
 			'title',
 			'language',
 			'creation_date',
@@ -84,16 +84,16 @@ class Search_ContentSource_CommentSource implements Search_ContentSource_Interfa
 			'parent_object_type',
 
 			'global_view_permission',
-		);
+		];
 	}
 
 	function getGlobalFields()
 	{
-		return array(
+		return [
 			'title' => true,
 
 			'comment_content' => false,
-		);
+		];
 	}
 
 	private function getParentPermissionForType($type)
@@ -103,4 +103,3 @@ class Search_ContentSource_CommentSource implements Search_ContentSource_Interfa
 		}
 	}
 }
-

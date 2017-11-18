@@ -3,30 +3,31 @@
 class TikiAddons_Api extends TikiAddons_Utilities
 {
 
-	protected static $objects = array();
+	protected static $objects = [];
 
-	private function loadObjects($folder) {
-		if (!$this->isInstalled($folder)) {
-			return array();
+	private function loadObjects($folder)
+	{
+		if (! $this->isInstalled($folder)) {
+			return [];
 		}
 
-		$ret = array();
+		$ret = [];
 		$table = $this->table('tiki_profile_symbols');
 
 		$domain = 'file://addons/' . $folder . '/profiles';
 		$installedProfiles = $this->getInstalledProfiles($folder);
 		$profiles = array_unique(array_keys($installedProfiles));
 
-		$all_info = array();
+		$all_info = [];
 		foreach ($profiles as $profile) {
 			$info = $table->fetchAll(
-				array('object', 'type', 'value'),
-				array('domain' => $domain, 'profile' => $profile)
+				['object', 'type', 'value'],
+				['domain' => $domain, 'profile' => $profile]
 			);
 			$all_info = array_merge($all_info, $info);
 		}
-		foreach($all_info as $v) {
-			$ret[$v['object']] = array('type' => $v['type'], 'id' => $v['value']);
+		foreach ($all_info as $v) {
+			$ret[$v['object']] = ['type' => $v['type'], 'id' => $v['value']];
 		}
 
 		self::$objects[$folder] = $ret;
@@ -36,7 +37,7 @@ class TikiAddons_Api extends TikiAddons_Utilities
 
 	function getObjects($folder)
 	{
-		if (!empty(self::$objects[$folder])) {
+		if (! empty(self::$objects[$folder])) {
 			return self::$objects[$folder];
 		} else {
 			return $this->loadObjects($folder);
@@ -65,12 +66,12 @@ class TikiAddons_Api extends TikiAddons_Utilities
 
 	function getItemIdFromToken($token)
 	{
-		if (!$this->isInstalled($this->getFolderFromToken($token))) {
+		if (! $this->isInstalled($this->getFolderFromToken($token))) {
 			return '';
 		}
 
 		preg_match('/\d+/', $token, $matches);
-		if (!$matches[0]) {
+		if (! $matches[0]) {
 			return '';
 		}
 		return $matches[0];

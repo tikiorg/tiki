@@ -27,7 +27,7 @@ class Services_Payment_Controller
 		$cartlib = TikiLib::lib('cart');
 
 		$items = $input->asArray('items');
-		$ret = array();
+		$ret = [];
 
 		foreach ($items as $item) {
 			$ret[] = $cartlib->add_to_cart($item['params'], new jitFilter($item));

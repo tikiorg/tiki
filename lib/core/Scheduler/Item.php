@@ -23,11 +23,11 @@ class Scheduler_Item
 	const STATUS_ACTIVE = 'active';
 	const STATUS_INACTIVE = 'inactive';
 
-	static $availableTasks = array(
+	static $availableTasks = [
 		'ConsoleCommandTask' => 'ConsoleCommand',
 		'ShellCommandTask' => 'ShellCommand',
 		'HTTPGetCommandTask' => 'HTTPGetCommand',
-	);
+	];
 
 	public function __construct($id, $name, $description, $task, $params, $run_time, $status, $re_run, LoggerInterface $logger)
 	{
@@ -60,20 +60,20 @@ class Scheduler_Item
 		$this->logger->info('Scheduler last run status: ' . $status);
 
 		if ($status == 'running') {
-			return array(
+			return [
 				'status' => 'failed',
 				'message' => tra('Scheduler task already running.')
-			);
+			];
 		}
 
 		$this->logger->info('Task: ' . $this->task);
 
 		$class = 'Scheduler_Task_' . $this->task;
-		if (!class_exists($class)) {
-			return array(
+		if (! class_exists($class)) {
+			return [
 				'status' => 'failed',
 				'message' => $class . ' not found.',
-			);
+			];
 		}
 
 		$startTime = $schedlib->start_scheduler_run($this->id);
@@ -82,11 +82,11 @@ class Scheduler_Item
 		$params = json_decode($this->params, true);
 		$this->logger->debug("Task params: " . $this->params);
 
-		if ($params === null && !empty($this->params)) {
-			return array(
+		if ($params === null && ! empty($this->params)) {
+			return [
 				'status' => 'failed',
 				'message' => tra('Unable to decode task params.')
-			);
+			];
 		}
 
 		$task = new $class($this->logger);
@@ -98,9 +98,9 @@ class Scheduler_Item
 		$endTime = $schedlib->end_scheduler_run($this->id, $executionStatus, $outputMessage, $startTime);
 		$this->logger->debug("End time: " . $endTime);
 
-		return array(
+		return [
 			'status' => $executionStatus,
 			'message' => $outputMessage,
-		);
+		];
 	}
 }

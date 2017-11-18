@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -16,12 +16,12 @@ class Search_ContentSource_GroupSource implements Search_ContentSource_Interface
 
 	function getDocuments()
 	{
-		return $this->db->table('users_groups')->fetchColumn('groupName', array());
+		return $this->db->table('users_groups')->fetchColumn('groupName', []);
 	}
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
 	{
-		$row = $this->db->table('users_groups')->fetchRow(['groupDesc'], array('groupName' => $objectId));
+		$row = $this->db->table('users_groups')->fetchRow(['groupDesc'], ['groupName' => $objectId]);
 
 		if (! $row) {
 			return false;
@@ -32,7 +32,7 @@ class Search_ContentSource_GroupSource implements Search_ContentSource_Interface
 		$addongroup = false;
 		$addonpendinggroup = false;
 		$addonleadergroup = false;
-	
+
 		if ($ret = $api->getOrganicGroupName($objectId)) {
 			$groupName = $ret;
 			$addongroup = $api->isOrganicGroup($objectId);
@@ -44,7 +44,7 @@ class Search_ContentSource_GroupSource implements Search_ContentSource_Interface
 			}
 		}
 
-		$data = array(
+		$data = [
 			'title' => $typeFactory->sortable($groupName),
 			'description' => $typeFactory->plaintext($row['groupDesc']),
 
@@ -55,14 +55,14 @@ class Search_ContentSource_GroupSource implements Search_ContentSource_Interface
 			'addongroup' => $addongroup ? $typeFactory->identifier('y') : $typeFactory->identifier('n'),
 			'addonleadergroup' => $addonleadergroup ? $typeFactory->identifier('y') : $typeFactory->identifier('n'),
 			'addonpendinggroup' => $addonpendinggroup ? $typeFactory->identifier('y') : $typeFactory->identifier('n'),
-		);
+		];
 
 		return $data;
 	}
 
 	function getProvidedFields()
 	{
-		return array(
+		return [
 			'title',
 			'description',
 
@@ -73,15 +73,14 @@ class Search_ContentSource_GroupSource implements Search_ContentSource_Interface
 			'addongroup',
 			'addonleadergroup',
 			'addonpendinggroup',
-		);
+		];
 	}
 
 	function getGlobalFields()
 	{
-		return array(
+		return [
 			'title' => true,
 			'description' => true,
-		);
+		];
 	}
 }
-

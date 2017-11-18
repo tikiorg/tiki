@@ -123,7 +123,7 @@ class Feedback
 		//add feedback to either the SESSION global variable or to smarty tpl variable
 		switch ($method) {
 			case 'session':
-				if (!isset($_SESSION['tikifeedback'])) {
+				if (! isset($_SESSION['tikifeedback'])) {
 					$_SESSION['tikifeedback'] = [];
 				} else {
 					if (in_array($feedback, $_SESSION['tikifeedback'])) {
@@ -150,13 +150,13 @@ class Feedback
 		if (empty($feedback)) {
 			trigger_error(tr('Feedback class called with no feedback provided.'), E_NOTICE);
 			return false;
-		} elseif (!is_array($feedback)) {
+		} elseif (! is_array($feedback)) {
 			$feedback = ['mes' => $feedback];
 		} else {
 			if (empty($feedback['mes'])) {
 				trigger_error(tr('Feedback class called with no feedback provided.'), E_NOTICE);
 				return false;
-			} elseif (!is_array($feedback['mes'])) {
+			} elseif (! is_array($feedback['mes'])) {
 				$feedback['mes'] = [$feedback['mes']];
 			}
 		}
@@ -191,13 +191,13 @@ class Feedback
 			}
 			//get feedback from smarty template variables
 			//merge the feedback arrays
-			if (!empty($tpl)) {
+			if (! empty($tpl)) {
 				$feedback = array_merge($session, $tpl);
 			} else {
 				$feedback = $session;
 			}
 			//add default tpl if not set
-			foreach($feedback as $key => $item) {
+			foreach ($feedback as $key => $item) {
 				$feedback[$key] = array_merge([
 					'tpl' => 'default',
 					'type' => 'feedback',
@@ -207,16 +207,17 @@ class Feedback
 				if (empty($item['tpl'])) {
 					$feedback[$key]['tpl'] = 'default';
 				}
-				if (!isset($item['type'])) {}
+				if (! isset($item['type'])) {
+				}
 			}
 			//make the tpl the first level array key
 			$fbbytpl = [];
-			foreach($feedback as $key => $item) {
+			foreach ($feedback as $key => $item) {
 				$tplkey = $item['tpl'];
 				unset($item['tpl']);
 				$fbbytpl[$tplkey][] = $item;
 			}
-			if (!empty($fbbytpl)) {
+			if (! empty($fbbytpl)) {
 				$result = $fbbytpl;
 			}
 		}
@@ -231,9 +232,10 @@ class Feedback
 	public static function send_headers()
 	{
 		require_once 'lib/smarty_tiki/function.feedback.php';
-		$feedback = rawurlencode(str_replace(array("\n", "\r", "\t"), '', smarty_function_feedback([], // Encode since HTTP headers are ASCII-only. Other characters can go through, but header()'s documentation has no word on their treatment. Chealer 2017-06-20 
-				TikiLib::lib('smarty'))));
+		$feedback = rawurlencode(str_replace(["\n", "\r", "\t"], '', smarty_function_feedback(
+			[], // Encode since HTTP headers are ASCII-only. Other characters can go through, but header()'s documentation has no word on their treatment. Chealer 2017-06-20
+			TikiLib::lib('smarty')
+		)));
 		header('X-Tiki-Feedback: ' . $feedback);
 	}
-
 }

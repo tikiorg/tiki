@@ -11,7 +11,7 @@ class WikiPlugin_Casperjs_Render
 	 * @param WikiPlugin_Casperjs_Result $result
 	 * @return string
 	 */
-	static public function resultAsHTML($result)
+	public static function resultAsHTML($result)
 	{
 		$executionResult = "<h3>CasperJs Execution Details</h3>";
 		$executionResult .= "<strong>CasperJS Script</strong>";
@@ -30,7 +30,7 @@ class WikiPlugin_Casperjs_Render
 		$executionResult .= "<strong>Tiki Bridge Variables</strong>";
 		$executionResult .= "<pre>";
 		foreach ($result->getScriptResults() as $key => $value) {
-			if (!is_string($value)) {
+			if (! is_string($value)) {
 				$value = print_r($value, true);
 			}
 			$valueToPrint = str_replace('=&gt;', '=>', htmlspecialchars($value));

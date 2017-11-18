@@ -92,7 +92,7 @@ class Services_Search_Controller
 
 			$lib = TikiLib::lib('unifiedsearch');
 
-			if (!empty($filter['title']) && preg_match_all('/\{(\w+)\}/', $format, $matches)) {
+			if (! empty($filter['title']) && preg_match_all('/\{(\w+)\}/', $format, $matches)) {
 				// formatted object_selector search results should also search in formatted fields besides the title
 				$titleFilter = $filter['title'];
 				unset($filter['title']);
@@ -101,10 +101,10 @@ class Services_Search_Controller
 			} else {
 				$query = $lib->buildQuery($filter);
 			}
-			
+
 			$query->setOrder($input->sort_order->text() ?: 'title_asc');
 			$query->setRange($input->offset->int(), $input->maxRecords->int() ?: $prefs['maxRecords']);
-			
+
 			$result = $query->search($lib->getIndex());
 
 			$result->applyTransform(function ($item) use ($format) {
@@ -118,7 +118,7 @@ class Services_Search_Controller
 							// otherwise its hard to distingish which field that is if multiple tracker use the same fieldname
 							// example: setup of trackerfield item-link: choose some fields from a list. currently this list show all fields of all trackers
 							if ($item['object_type'] == 'trackerfield') {
-								return $item[$key] . ' (Tracker-'. $item['tracker_id']. ')';
+								return $item[$key] . ' (Tracker-' . $item['tracker_id'] . ')';
 							} else {
 								return $item[$key];
 							}
@@ -140,4 +140,3 @@ class Services_Search_Controller
 		}
 	}
 }
-

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,11 +9,11 @@ class Search_Action_Delete implements Search_Action_Action
 {
 	function getValues()
 	{
-		return array(
+		return [
 			'object_type' => true,
 			'object_id' => true,
 			'aggregate_fields' => false,
-		);
+		];
 	}
 
 	function validate(JitFilter $data)
@@ -26,7 +26,7 @@ class Search_Action_Delete implements Search_Action_Action
 			throw new Search_Action_Exception(tr('Cannot apply delete action to an aggregation type %0.', $object_type));
 		}
 
-		if (!$aggregateFields && $object_type != 'trackeritem' && $object_type != 'file') {
+		if (! $aggregateFields && $object_type != 'trackeritem' && $object_type != 'file') {
 			throw new Search_Action_Exception(tr('Cannot apply delete action to an object type %0.', $object_type));
 		}
 
@@ -85,16 +85,18 @@ class Search_Action_Delete implements Search_Action_Action
 		return true;
 	}
 
-	function requiresInput(JitFilter $data) {
+	function requiresInput(JitFilter $data)
+	{
 		return false;
 	}
 
-	private function executeOnItem($object_id, $object_type) {
+	private function executeOnItem($object_id, $object_type)
+	{
 		switch ($object_type) {
 			case 'file':
 				$filegallib = TikiLib::lib('filegal');
 				$info = $filegallib->get_file_info($object_id);
-			
+
 				if (! $info) {
 					throw new Search_Action_Exception(tr('Cannot find file to delete: %0.', $object_id));
 				}
@@ -111,9 +113,9 @@ class Search_Action_Delete implements Search_Action_Action
 				} else {
 					throw new Search_Action_Exception(tr('Permission denied'));
 				}
+				break;
 			default:
 				return false;
 		}
 	}
 }
-

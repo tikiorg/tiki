@@ -28,13 +28,13 @@ class Services_ShowTikiOrg_Controller
 		$creator = $input->username->text();
 
 		$item = Tracker_Item::fromId($id);
-		if (!$item->canViewField($fieldId)) {
+		if (! $item->canViewField($fieldId)) {
 			throw new Services_Exception_Denied;
 		}
 
 		$field = TikiLib::lib('trk')->get_tracker_field($fieldId);
 		$options = json_decode($field['options']);
-		if (!is_object($options) && is_array($field['options_array'])) {
+		if (! is_object($options) && is_array($field['options_array'])) {
 			// Support Tiki 11
 			$options = new stdClass();
 			$options->domain = $field['options_array'][0];
@@ -52,7 +52,7 @@ class Services_ShowTikiOrg_Controller
 
 		$conntry = $conn->login($options->remoteShellUser, $password);
 
-		if (!$conntry) {
+		if (! $conntry) {
 			$ret['status'] = 'DISCO';
 			return $ret;
 		}
@@ -80,14 +80,14 @@ class Services_ShowTikiOrg_Controller
 		$statuspos = strpos($infooutput, 'STATUS: ');
 		$status = substr($infooutput, $statuspos + 8, 5);
 		$status = trim($status);
-		if (!$status || $status == 'FAIL') {
+		if (! $status || $status == 'FAIL') {
 			$ret['status'] = 'FAIL';
 		} else {
 			$ret['status'] = $status;
 			$sitepos = strpos($infooutput, 'SITE: ');
 			$site = substr($infooutput, $sitepos + 6);
 			$site = substr($site, 0, strpos($site, ' '));
-		 	$ret['showurl'] = $site;
+			 $ret['showurl'] = $site;
 			$ret['showlogurl'] = $site . '/info.txt';
 			$ret['snapshoturl'] = $site . '/snapshots/';
 			if ($site && $ret['status'] == 'ACTIV') {
@@ -100,13 +100,13 @@ class Services_ShowTikiOrg_Controller
 				TikiLib::lib('trk')->modify_field($id, $fieldId, $value);
 				require_once('lib/search/refresh-functions.php');
 				refresh_index('trackeritem', $id);
-		 	}
+			}
 		}
 
-		if (!empty($command)) {
+		if (! empty($command)) {
 			global $user;
 
-			if (($command == 'update' || $command == 'reset' || $command == 'destroy') && !TikiLib::lib('user')->user_has_permission($user, 'tiki_p_admin') && $user != $creator) {
+			if (($command == 'update' || $command == 'reset' || $command == 'destroy') && ! TikiLib::lib('user')->user_has_permission($user, 'tiki_p_admin') && $user != $creator) {
 				throw new Services_Exception_Denied;
 			}
 
@@ -121,11 +121,11 @@ class Services_ShowTikiOrg_Controller
 
 			if ($command == 'snapshot') {
 				$ret['status'] = 'SNAPS';
-			} else if ($command == 'destroy') {
+			} elseif ($command == 'destroy') {
 				$ret['status'] = 'DESTR';
-			} else if ($command == 'create' || $command == 'update') {
+			} elseif ($command == 'create' || $command == 'update') {
 				$ret['status'] = 'BUILD';
-			} else if ($command == 'reset') {
+			} elseif ($command == 'reset') {
 				if (strpos('ERROR', $fullstring) !== false) {
 					$ret['status'] = 'RENOK';
 				} else {
@@ -143,4 +143,3 @@ class Services_ShowTikiOrg_Controller
 		return $ret;
 	}
 }
-

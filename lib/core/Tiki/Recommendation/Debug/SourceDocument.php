@@ -27,4 +27,3 @@ class SourceDocument implements EngineOutput
 		return tr('Source: %0:%1 (%2)', $this->type, $this->object, $this->title ?: tr('Unknown'));
 	}
 }
-

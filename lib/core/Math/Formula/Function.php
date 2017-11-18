@@ -9,22 +9,21 @@ abstract class Math_Formula_Function
 {
 	private $callback;
 
-	function evaluateTemplate( $element, $evaluateCallback )
+	function evaluateTemplate($element, $evaluateCallback)
 	{
 		$this->callback = $evaluateCallback;
 		return $this->evaluate($element);
 	}
 
-	abstract function evaluate( $element );
+	abstract function evaluate($element);
 
-	protected function evaluateChild( $child, array $extraVariables = array() )
+	protected function evaluateChild($child, array $extraVariables = [])
 	{
 		return call_user_func($this->callback, $child, $extraVariables);
 	}
 
-	protected function error( $message )
+	protected function error($message)
 	{
 		throw new Math_Formula_Exception($message);
 	}
 }
-

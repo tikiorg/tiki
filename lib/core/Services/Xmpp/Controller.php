@@ -6,28 +6,32 @@
 // $Id$
 require_once 'lib/auth/tokens.php';
 
-class Services_Xmpp_Controller  {
-	function setUp() {
+class Services_Xmpp_Controller
+{
+	function setUp()
+	{
 		Services_Exception_Disabled::check('xmpp_feature');
 		Services_Exception_Disabled::check('auth_token_access');
 	}
 
-	function action_check_token($input) {
+	function action_check_token($input)
+	{
 		$xmpplib = TikiLib::lib('xmpp');
 		$query = $input->stored;
 
 		$user = $input->offsetGet('user');
 		$token = $input->offsetGet('token');
 
-		if( empty($user) || empty($token) ) {
-			return array('valid' => false);
+		if (empty($user) || empty($token)) {
+			return ['valid' => false];
 		}
 
 		$valid = (bool) $xmpplib->check_token($user, $token);
-		return array('valid' => $valid);
+		return ['valid' => $valid];
 	}
 
-	function action_get_user_info($input) {
+	function action_get_user_info($input)
+	{
 		$xmpplib = TikiLib::lib('xmpp');
 		$userlib = TikiLib::lib('user');
 
@@ -36,9 +40,9 @@ class Services_Xmpp_Controller  {
 		$user = $input->offsetGet('user');
 
 		// check if authorization is sent
-		if(! empty($_SERVER['Authorization'])) {
+		if (! empty($_SERVER['Authorization'])) {
 			$authHeader = $_SERVER['Authorization'];
-		} else if (! empty($_SERVER['HTTP_AUTHORIZATION']) ) {
+		} elseif (! empty($_SERVER['HTTP_AUTHORIZATION'])) {
 			$authHeader = $_SERVER['HTTP_AUTHORIZATION'];
 		} else {
 			header("HTTP/1.0 403 Forbidden", true, 403);
@@ -54,22 +58,22 @@ class Services_Xmpp_Controller  {
 			die(tr("Wrong authorization format"));
 		}
 
-		if(!$userlib->user_exists($user)) {
+		if (! $userlib->user_exists($user)) {
 			header("HTTP/1.0 404 Not Found", true, 404);
 			die(tr('Invalid user'));
 		}
 
 		// TODO: Check with jonnybradley if this is a good idea
 		$tokenlib = AuthTokens::build();
-		$tokens = $tokenlib->getTokens(array('entry' => 'openfireaccesskey'));
-		$key = !empty($tokens) ? md5("{$user}{$tokens[0]['token']}") : null;
+		$tokens = $tokenlib->getTokens(['entry' => 'openfireaccesskey']);
+		$key = ! empty($tokens) ? md5("{$user}{$tokens[0]['token']}") : null;
 
 		$validity = $key !== null
 			&& $givenKey !== null
 			&& strtoupper($key) === strtoupper($givenKey);
 
 		// final check, if givenKey is really valid
-		if($validity) {
+		if ($validity) {
 			$details = $userlib->get_user_details($user);
 			return isset($details['info']) ? $details['info'] : null;
 		}
@@ -78,7 +82,8 @@ class Services_Xmpp_Controller  {
 		die(tr('Invalid token'));
 	}
 
-	function action_prebind($input) {
+	function action_prebind($input)
+	{
 		global $user;
 		$xmpplib = TikiLib::lib('xmpp');
 
@@ -86,7 +91,7 @@ class Services_Xmpp_Controller  {
 			throw new Services_Exception(tr('Must be authenticated'), 403);
 		}
 
-		try{
+		try {
 			$result = $xmpplib->prebind($user);
 		} catch (Exception $e) {
 			$code = $e->getCode() ?: 500;

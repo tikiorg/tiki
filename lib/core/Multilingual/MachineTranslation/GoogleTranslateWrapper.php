@@ -12,7 +12,7 @@
 
 class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilingual_MachineTranslation_Interface
 {
-  	const SERVICE_URL = "https://www.googleapis.com/language/translate/v2";
+	  const SERVICE_URL = "https://www.googleapis.com/language/translate/v2";
 
 	//wiki markup (keep this regex in case we decide to translate wiki markup and not html)
 	//	const WIKI_MARKUP = "/<[^>]*>| ?[\`\!\@\#\$\%\^\&\*\[\]\:\;\"\'\<\,\>\/\|\\\=\-\+\_\(\)]{2,} ?|\(\([\s\S]*?\)\)|\~[a-z]{2,3}\~[\s\S]*?\~\/[a-z]{2,3}\~|\~hs\~|\~\~[\s\S]*?\:|\~\~|[[^\|]*?\||\[[^|\]]*\]|\{\*[^\}\*]*?\*\}|\{[^\}]*?\}|^;|!/m";
@@ -22,18 +22,18 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilin
 	//Include spaces in markup (Google adds some, and they will be stripped later. Want to preserve the original ones)
 	const HTML_MARKUP = "/ ?<[^>]*> ?| ?\(|\) ?/";
 	const TITLE_TAG = "/(<[Hh][\d][^>]*>(<[^>]*>)*)([^<]*)/";
-  	const NO_TRANSLATE_STRING = "<span class='notranslate'>\$0</span>";
+	  const NO_TRANSLATE_STRING = "<span class='notranslate'>\$0</span>";
 	const NO_TRANSLATE_PATTERN = "/ <span class='notranslate'>(.*)<\/span> |^<span class='notranslate'>(.*)<\/span> | <span class='notranslate'>(.*)<\/span>\$|^<span class='notranslate'>(.*)<\/span>\$|<span class='notranslate'>(.*)<\/span>/Um";
 
 	private $key;
-  	private $sourceLang;
-  	private $targetLang;
-  	private $markup;
-  	private $translatingHTML = true;
-	private $arrayOfUntranslatableStringsAndTheirIDs = array();
+	private $sourceLang;
+	private $targetLang;
+	private $markup;
+	private $translatingHTML = true;
+	private $arrayOfUntranslatableStringsAndTheirIDs = [];
 	private $currentID = 169;
 
-	function __construct ($key, $sourceLang, $targetLang, $html = true)
+	function __construct($key, $sourceLang, $targetLang, $html = true)
 	{
 		$this->key = $key;
 		$this->sourceLang = $sourceLang;
@@ -49,7 +49,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilin
 
 	function getSupportedLanguages()
 	{
-		return array(
+		return [
 			'sq' => 'Albanian',
 			'ar' => 'Arabic',
 			'bg' => 'Bulgarian',
@@ -92,7 +92,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilin
 			'tr' => 'Turkish',
 			'uk' => 'Ukrainian',
 			'vi' => 'Vietnamese'
-		);
+		];
 	}
 
 
@@ -103,14 +103,14 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilin
 		$urlencodedText = urlencode($text);
 
 		if (strlen($urlencodedText) < 1800) {
-			$chunks = array($text);
+			$chunks = [$text];
 		} else {
 			$chunks = $this->splitInLogicalChunksOf450CharsMax($text);
 		}
 
 		$result = "";
 		foreach ($chunks as $textToTranslate) {
-			$result .= $this->getTranslationFromGoogle($textToTranslate)." ";
+			$result .= $this->getTranslationFromGoogle($textToTranslate) . " ";
 		}
 
 		$result = $this->remove_notranslateTags_and_reverse_to_original_markup($result);
@@ -134,12 +134,12 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilin
 	{
 		require_once 'lib/ointegratelib.php';
 		$ointegrate = new OIntegrate();
-		$params = array(
+		$params = [
 			'key' => $this->key,
 			'target' => $this->targetLang,
 			'q' => $text,
 			'format' => ($this->markup === self::HTML_MARKUP) ? 'html' : 'text',
-		);
+		];
 
 		if ($this->sourceLang != Multilingual_MachineTranslation::DETECT_LANGUAGE) {
 			$params['source'] = $this->sourceLang;
@@ -163,15 +163,15 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilin
 
 	private function splitInLogicalChunksOf450CharsMax($text)
 	{
-		$chunks = array();
+		$chunks = [];
 		$segmentor = new Multilingual_Aligner_SentenceSegmentor();
 		$sentences = $segmentor->segment($text);
 		$ii = 0;
 		$chunk = $sentences[$ii];
-		while ($ii < (count($sentences)-1)) {
+		while ($ii < (count($sentences) - 1)) {
 			$ii++;
 			if (strlen(urlencode($chunk)) < 450) {
-				$chunk = $chunk.$sentences[$ii];
+				$chunk = $chunk . $sentences[$ii];
 			} else {
 				$chunks[] = $chunk;
 				$chunk = $sentences[$ii];
@@ -191,13 +191,13 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilin
 	{
 		//Title is all between <hx> tags. Put it in lower case, so Google doesn't
 		//take the capitalized words as proper names
-		if (preg_match_all(self::TITLE_TAG, $text, $matchesT) !=0 ) {
+		if (preg_match_all(self::TITLE_TAG, $text, $matchesT) != 0) {
 			foreach ($matchesT[0] as $i => $completeMatch) {
-				$text = str_replace($completeMatch, $matchesT[1][$i].strtolower($matchesT[3][$i]), $text);
+				$text = str_replace($completeMatch, $matchesT[1][$i] . strtolower($matchesT[3][$i]), $text);
 			}
 		}
 
-		if (!$this->translatingHTML) {
+		if (! $this->translatingHTML) {
 			$text = nl2br($text);
 		}
 		preg_match_all($this->markup, $text, $matches);
@@ -212,14 +212,14 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilin
 		}
 
 		foreach ($this->arrayOfUntranslatableStringsAndTheirIDs as $id => $markup) {
-			$id = "id".$id;
+			$id = "id" . $id;
 
 			//adding dot after </ul> to have it segmented properly. otherwise when the html contains only lists,
 			//sentence segmentor can't find where to segment the text
 			if ($markup == "</ul>") {
-				$text = preg_replace("/".preg_quote($markup, '/')."/", $id.".", $text);
+				$text = preg_replace("/" . preg_quote($markup, '/') . "/", $id . ".", $text);
 			} else {
-				$text = preg_replace("/".preg_quote($markup, '/')."/", $id, $text);
+				$text = preg_replace("/" . preg_quote($markup, '/') . "/", $id, $text);
 			}
 		}
 
@@ -236,19 +236,19 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilin
 
 		foreach ($matches as $i => $match) {
 			foreach ($matches[0] as $index => $found) {
-				if (!empty($match[$index])) {
+				if (! empty($match[$index])) {
 					$text = str_replace($found, $match[$index], $text);
 				}
 			}
 		}
 
 		foreach ($this->arrayOfUntranslatableStringsAndTheirIDs as $id => $markup) {
-			$id = "id".$id;
+			$id = "id" . $id;
 			$text = preg_replace("/$id/", $markup, $text); //str replace better
 		}
 
 		//trimming leading spaces in each line (wiki syntax doesn't work unless)
-		if (!$this->translatingHTML) {
+		if (! $this->translatingHTML) {
 			$textArray = preg_split('/\<br(\s*)?\/?\>/i', $text);
 			$textArray = array_map('trim', $textArray);
 			$text = implode("\n", $textArray);

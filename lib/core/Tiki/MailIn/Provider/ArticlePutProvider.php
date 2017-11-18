@@ -6,6 +6,7 @@
 // $Id$
 
 namespace Tiki\MailIn\Provider;
+
 use Tiki\MailIn\Action;
 
 class ArticlePutProvider implements ProviderInterface
@@ -28,9 +29,9 @@ class ArticlePutProvider implements ProviderInterface
 
 	function getActionFactory(array $acc)
 	{
-		return new Action\DirectFactory('Tiki\MailIn\Action\ArticlePut', array(
+		return new Action\DirectFactory('Tiki\MailIn\Action\ArticlePut', [
 			'topic' => $acc['article_topicId'],
 			'type' => $acc['article_type'],
-		));
+		]);
 	}
 }

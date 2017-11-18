@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -16,20 +16,20 @@ class Search_ContentSource_FileGallerySource implements Search_ContentSource_Int
 
 	function getDocuments()
 	{
-		return $this->db->table('tiki_file_galleries')->fetchColumn('galleryId', array());
+		return $this->db->table('tiki_file_galleries')->fetchColumn('galleryId', []);
 	}
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
 	{
 		$lib = TikiLib::lib('filegal');
-		
+
 		$item = $lib->get_file_gallery_info($objectId);
 
 		if (! $item) {
 			return false;
 		}
 
-		$data = array(
+		$data = [
 			'title' => $typeFactory->sortable($item['name']),
 			'creation_date' => $typeFactory->timestamp($item['created']),
 			'modification_date' => $typeFactory->timestamp($item['lastModif']),
@@ -39,14 +39,14 @@ class Search_ContentSource_FileGallerySource implements Search_ContentSource_Int
 			'gallery_id' => $typeFactory->identifier($item['parentId']),
 
 			'view_permission' => $typeFactory->identifier('tiki_p_view_file_gallery'),
-		);
+		];
 
 		return $data;
 	}
 
 	function getProvidedFields()
 	{
-		return array(
+		return [
 			'title',
 			'description',
 			'language',
@@ -58,15 +58,14 @@ class Search_ContentSource_FileGallerySource implements Search_ContentSource_Int
 			'searchable',
 
 			'view_permission',
-		);
+		];
 	}
 
 	function getGlobalFields()
 	{
-		return array(
+		return [
 			'title' => true,
 			'description' => true,
-		);
+		];
 	}
 }
-

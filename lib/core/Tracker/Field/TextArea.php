@@ -15,103 +15,104 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 {
 	public static function getTypes()
 	{
-		return array(
-			'a' => array(
+		return [
+			'a' => [
 				'name' => tr('Text Area'),
 				'description' => tr('Multi-line text input.'),
 				'help' => 'Textarea Tracker Field',
-				'prefs' => array('trackerfield_textarea'),
-				'tags' => array('basic'),
+				'prefs' => ['trackerfield_textarea'],
+				'tags' => ['basic'],
 				'default' => 'y',
-				'params' => array(
-					'toolbars' => array(
+				'params' => [
+					'toolbars' => [
 						'name' => tr('Toolbars'),
 						'description' => tr('Enable the toolbars as syntax helpers.'),
 						'filter' => 'int',
-						'options' => array(
+						'options' => [
 							0 => tr('Disable'),
 							1 => tr('Enable'),
-						),
+						],
 						'legacy_index' => 0,
-					),
-					'width' => array(
+					],
+					'width' => [
 						'name' => tr('Width'),
 						'description' => tr('Size of the text area, in characters.'),
 						'filter' => 'int',
 						'legacy_index' => 1,
-					),
-					'height' => array(
+					],
+					'height' => [
 						'name' => tr('Height'),
 						'description' => tr('Size of the text area, in lines.'),
 						'filter' => 'int',
 						'legacy_index' => 2,
-					),
-					'max' => array(
+					],
+					'max' => [
 						'name' => tr('Character Limit'),
 						'description' => tr('Maximum number of characters to be stored.'),
 						'filter' => 'int',
 						'legacy_index' => 3,
-					),
-					'listmax' => array(
+					],
+					'listmax' => [
 						'name' => tr('Display Limit (List)'),
 						'description' => tr('Maximum number of characters to be displayed in list mode before the value gets truncated.'),
 						'filter' => 'int',
 						'legacy_index' => 4,
-					),
-					'wordmax' => array(
+					],
+					'wordmax' => [
 						'name' => tr('Word Count'),
 						'description' => tr('Limit the length of the text, in number of words.'),
 						'filter' => 'int',
 						'legacy_index' => 5,
-					),
-					'distinct' => array(
+					],
+					'distinct' => [
 						'name' => tr('Distinct Values'),
 						'description' => tr('All values in the field must be different.'),
 						'filter' => 'alpha',
 						'default' => 'n',
-						'options' => array(
+						'options' => [
 							'n' => tr('No'),
 							'y' => tr('Yes'),
-						),
+						],
 						'legacy_index' => 6,
-					),
-					'wysiwyg' => array(
+					],
+					'wysiwyg' => [
 						'name' => tr('Use WYSIWYG'),
 						'description' => tr('Use a rich text editor instead of inputting plain text.'),
 						'default' => 'n',
 						'filter' => 'alpha',
-						'options' => array(
+						'options' => [
 							'n' => tr('No'),
 							'y' => tr('Yes'),
-						),
+						],
 						'legacy_index' => 7,
-					),
-					'samerow' => array(
+					],
+					'samerow' => [
 						'name' => tr('Same Row'),
 						'description' => tr('Display the field name and input on the same row.'),
 						'deprecated' => false,
 						'filter' => 'int',
 						'default' => 1,
-						'options' => array(
+						'options' => [
 							0 => tr('No'),
 							1 => tr('Yes'),
-						),
+						],
 						'legacy_index' => 8,
-					),
-				),
-			),
-		);
+					],
+				],
+			],
+		];
 	}
 
-    function postSaveHook($value) {
-        $itemId = (int)$this->getItemId();
-        $fieldId = (int)$this->getFieldId();
-        $permName = $this->getConfiguration('permName');
-        $wikilib = TikiLib::lib('wiki');
-        $wikilib->update_wikicontent_relations($value, 'trackeritemfield', sprintf("%d:%d", $itemId, $fieldId));
-    }
+	function postSaveHook($value)
+	{
+		$itemId = (int)$this->getItemId();
+		$fieldId = (int)$this->getFieldId();
+		$permName = $this->getConfiguration('permName');
+		$wikilib = TikiLib::lib('wiki');
+		$wikilib->update_wikicontent_relations($value, 'trackeritemfield', sprintf("%d:%d", $itemId, $fieldId));
+	}
 
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
 		$ins_id = $this->getInsertId();
 		$data = $this->processMultilingual($requestData, $ins_id);
@@ -125,11 +126,11 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 			foreach ($value as $key => $val) {
 				$newvalue = TikiLib::lib('parser')->process_save_plugins(
 					$val,
-					array(
+					[
 						'type' => 'trackeritem',
 						'itemId' => $this->getItemId(),
 						'user' => $user,
-					)
+					]
 				);
 				if ($newvalue !== $val) {
 					if (isset($data['lingualvalue'][$c])) {
@@ -151,24 +152,24 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 		return $data;
 	}
 
-	function renderInput($context = array())
+	function renderInput($context = [])
 	{
 		static $firstTime = true;
 
 		$cols = $this->getOption('width');
 		$rows = $this->getOption('height');
 
-		$data = array(
+		$data = [
 			'toolbar' => $this->getOption('toolbars') ? 'y' : 'n',
 			'cols' => ($cols >= 1) ? $cols : 80,
 			'rows' => ($rows >= 1) ? $rows : 6,
 			'keyup' => '',
-		);
+		];
 
 		if ($this->getOption('wordmax')) {
-            $data['keyup'] = "wordCount({$this->getOption('wordmax')}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . addcslashes(tr('Word Limit Exceeded'), "'") . "')";
+			$data['keyup'] = "wordCount({$this->getOption('wordmax')}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . addcslashes(tr('Word Limit Exceeded'), "'") . "')";
 		} elseif ($this->getOption('max')) {
-            $data['keyup'] = "charCount({$this->getOption('max')}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . addcslashes(tr('Character Limit Exceeded'), "'") . "')";
+			$data['keyup'] = "charCount({$this->getOption('max')}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . addcslashes(tr('Character Limit Exceeded'), "'") . "')";
 		}
 		$data['element_id'] = 'area_' . uniqid();
 		if ($firstTime && $this->getOption('wysiwyg') === 'y') {	// wysiwyg
@@ -180,11 +181,11 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 		return $this->renderTemplate('trackerinput/textarea.tpl', $context, $data) . $is_html;
 	}
 
-	function renderInnerOutput($context = array())
+	function renderInnerOutput($context = [])
 	{
 		$output = parent::renderInnerOutput($context);
 
-		if (!empty($context['list_mode']) && $context['list_mode'] === 'y' && $this->getOption('listmax')) {
+		if (! empty($context['list_mode']) && $context['list_mode'] === 'y' && $this->getOption('listmax')) {
 			TikiLib::lib('smarty')->loadPlugin('smarty_modifier_truncate');
 			return smarty_modifier_truncate(strip_tags($output), $this->getOption('listmax'));
 		} else {
@@ -199,14 +200,14 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 		$baseKey = $this->getBaseKey();
 
 		if ($this->getConfiguration('isMultilingual') == 'y') {
-			if (!empty($value)) {
+			if (! empty($value)) {
 				$decoded = json_decode($value, true);
 				$value = implode("\n", $decoded);
 			} else {
-				$decoded = array();
+				$decoded = [];
 			}
 
-			$data = array($baseKey => $typeFactory->$fieldType($value));
+			$data = [$baseKey => $typeFactory->$fieldType($value)];
 			foreach ($decoded as $lang => $content) {
 				$data["{$baseKey}_{$lang}"] = $typeFactory->$fieldType($content);
 				$data["{$baseKey}_{$lang}_raw"] = $typeFactory->identifier($content);
@@ -214,10 +215,10 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 
 			return $data;
 		} else {
-			$data = array(
+			$data = [
 				$baseKey => $typeFactory->$fieldType($value),
 				"{$baseKey}_raw" => $typeFactory->identifier($value),
-			);
+			];
 
 			return $data;
 		}
@@ -228,7 +229,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 		global $prefs;
 		$baseKey = $this->getBaseKey();
 
-		$data = array($baseKey, "{$baseKey}_raw");
+		$data = [$baseKey, "{$baseKey}_raw"];
 
 		if ($this->getConfiguration('isMultilingual') == 'y') {
 			foreach ($prefs['available_languages'] as $lang) {
@@ -245,7 +246,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 		global $prefs;
 		$baseKey = $this->getBaseKey();
 
-		$data = array($baseKey => true);
+		$data = [$baseKey => true];
 
 		if ($this->getConfiguration('isMultilingual') == 'y') {
 			foreach ($prefs['available_languages'] as $lang) {
@@ -356,7 +357,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 	{
 		global $prefs;
 
-		$parseOptions = array();
+		$parseOptions = [];
 		if ($this->getOption('wysiwyg') === 'y') {
 			$parseOptions['is_html'] = ($prefs['wysiwyg_htmltowiki'] !== 'y');
 		}
@@ -368,4 +369,3 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 		return 'wikitext';
 	}
 }
-

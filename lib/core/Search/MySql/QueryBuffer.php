@@ -10,7 +10,7 @@ class Search_MySql_QueryBuffer
 	private $db;
 	private $count;
 	private $prefix;
-	private $buffer = array();
+	private $buffer = [];
 
 	function __construct(TikiDb $db, $count, $prefix)
 	{
@@ -60,7 +60,6 @@ class Search_MySql_QueryBuffer
 
 	function clear()
 	{
-		$this->buffer = array();
+		$this->buffer = [];
 	}
 }
-

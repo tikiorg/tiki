@@ -22,204 +22,204 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class Table_Settings_TikiViewforum extends Table_Settings_Standard
 {
-	protected $ts = array(
-		'filters' => array(
-			'external' => array(
-				0 => array(
+	protected $ts = [
+		'filters' => [
+			'external' => [
+				0 => [
 					'type' => 'dropdown',
-					'options' => array(
+					'options' => [
 						'Show archived' => 'show_archived=y',
-					),
-				),
-			),
-		),
-		'ajax' => array(
+					],
+				],
+			],
+		],
+		'ajax' => [
 			'offset' => 'comments_offset',
 			'sortparam' => 'thread_sort_mode',
 			'numrows' => 'comments_per_page',
-			'url' => array(
+			'url' => [
 				'file' => 'tiki-view_forum.php',
-			),
-		),
-		'columns' => array(
-			'#checkbox' => array(
-				'sort' => array(
+			],
+		],
+		'columns' => [
+			'#checkbox' => [
+				'sort' => [
 					'type' => false,
 					'group' => 'false'
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'resizable' => false,
 				'priority' => 'critical',
-			),
-			'#type' => array(
-				'sort' => array(
+			],
+			'#type' => [
+				'sort' => [
 					'type' => 'image',
-					'ajax' =>'type',
+					'ajax' => 'type',
 					'group' => 'word',
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => 'dropdown',
 					'ajax' => 'filter_type',
-					'options' => array(
+					'options' => [
 						'n|Normal' => '',
 						'a|Announce' => '',
 						'h|Hot' => '',
 						's|Sticky' => '',
-					),
-				),
+					],
+				],
 				'priority' => 6,
-			),
-			'#smiley' => array(
-				'sort' => array(
+			],
+			'#smiley' => [
+				'sort' => [
 					'type' => false,
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 6,
-			),
-			'#title' => array(
-				'sort' => array(
+			],
+			'#title' => [
+				'sort' => [
 					'type' => 'text',
 					'ajax' => 'title',
 					'group' => 'letter'
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 'critical',
-			),
-			'#replies' => array(
-				'sort' => array(
+			],
+			'#replies' => [
+				'sort' => [
 					'type' => 'digit',
 					'ajax' => 'replies',
 					'group' => 'number-50'
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => 'dropdown',
 					'ajax' => 'reply_state',
-					'options' => array(
+					'options' => [
 						'none|No replies' => '',
-					),
-				),
+					],
+				],
 				'priority' => 5,
-			),
-			'#hits' => array(
-				'sort' => array(
+			],
+			'#hits' => [
+				'sort' => [
 					'type' => 'digit',
 					'ajax' => 'hits',
 					'group' => 'number-50'
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 3,
-			),
-			'#rating' => array(
-				'sort' => array(
+			],
+			'#rating' => [
+				'sort' => [
 					'type' => false,
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 6,
-			),
-			'#rating2' => array(
-				'sort' => array(
+			],
+			'#rating2' => [
+				'sort' => [
 					'type' => false,
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 6,
-			),
-			'#rating3' => array(
-				'sort' => array(
+			],
+			'#rating3' => [
+				'sort' => [
 					'type' => false,
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 6,
-			),
-			'#average' => array(
-				'sort' => array(
+			],
+			'#average' => [
+				'sort' => [
 					'type' => 'digit',
 					'ajax' => 'average',
 					'group' => 'number-50'
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 6,
-			),
-			'#lastpost' => array(
-				'sort' => array(
+			],
+			'#lastpost' => [
+				'sort' => [
 					'type' => 'isoDate',
 					'ajax' => 'lastPost',
 					'group' => 'date-year'
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => 'dropdown',
 					'ajax' => 'time_control',
-					'options' => array(
+					'options' => [
 						'3600|Last hour' => '',
 						'86400|Last 24 hours' => '',
 						'172800|Last 48 hours' => '',
-					),
-				),
+					],
+				],
 				'priority' => 4,
-			),
-			'#poster' => array(
-				'sort' => array(
+			],
+			'#poster' => [
+				'sort' => [
 					'type' => 'text',
 					'ajax' => 'userName',
 					'group' => 'word'
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => 'text',
 					'ajax' => 'poster',
-				),
+				],
 				'priority' => 2,
-			),
-			'#actions' => array(
-				'sort' => array(
+			],
+			'#actions' => [
+				'sort' => [
 					'type' => false,
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 1,
-			),
-			'#atts' => array(
-				'sort' => array(
+			],
+			'#atts' => [
+				'sort' => [
 					'type' => false,
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 6,
-			),
-			'#lang' => array(
-				'sort' => array(
+			],
+			'#lang' => [
+				'sort' => [
 					'type' => false,
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 6,
-			),
-			'#category' => array(
-				'sort' => array(
+			],
+			'#category' => [
+				'sort' => [
 					'type' => false,
-				),
-				'filter' => array(
+				],
+				'filter' => [
 					'type' => false,
-				),
+				],
 				'priority' => 6,
-			),
-		),
-	);
+			],
+		],
+	];
 }

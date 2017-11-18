@@ -24,18 +24,18 @@ class Services_Edit_Controller
 	{
 		$res = TikiLib::lib('edit')->parseToWiki($input->data->none());
 
-		return array(
+		return [
 			'data' => $res,
-		);
+		];
 	}
 
 	function action_tohtml($input)
 	{
 		$res = TikiLib::lib('edit')->parseToWysiwyg($input->data->none(), false, $input->allowhtml->int() ? true : false);
 
-		return array(
+		return [
 			'data' => $res,
-		);
+		];
 	}
 
 	function action_inlinesave($input)
@@ -63,9 +63,9 @@ class Services_Edit_Controller
 			$edit_comment = tra('Inline editor update');
 			$res = TikiLib::lib('tiki')->update_page($pageName, $edit_data, $edit_comment, $user, $_SERVER['REMOTE_ADDR']);
 
-			return array(
+			return [
 				'data' => $res,
-			);
+			];
 		}
 	}
 
@@ -84,31 +84,30 @@ class Services_Edit_Controller
 
 		$page = $autoSaveIdParts[2];	// plugins use global $page for approval
 
-		if (!Perms::get('wiki page', $page)->edit || $user != TikiLib::lib('service')->internal('semaphore', 'get_user', ['object_id' => $page, 'check' => 1])) {
+		if (! Perms::get('wiki page', $page)->edit || $user != TikiLib::lib('service')->internal('semaphore', 'get_user', ['object_id' => $page, 'check' => 1])) {
 			return '';
 		}
 
 		$info = $tikilib->get_page_info($page, false);
 		if (empty($info)) {
-			$info = array(		// new page
+			$info = [		// new page
 				'data' => '',
-			);
+			];
 		}
 
 		$info['is_html'] = $input->allowHtml->int();
 
-		if (!isset($info['wysiwyg']) && isset($_SESSION['wysiwyg'])) {
+		if (! isset($info['wysiwyg']) && isset($_SESSION['wysiwyg'])) {
 			$info['wysiwyg'] = $_SESSION['wysiwyg'];
 		}
-		$options = array(
+		$options = [
 			'is_html' => $info['is_html'],
 			'preview_mode' => true,
 			'process_wiki_paragraphs' => ($prefs['wysiwyg_htmltowiki'] === 'y' || $info['wysiwyg'] == 'n'),
 			'page' => $page,
-		);
+		];
 
-		if (count($autoSaveIdParts) === 3 && !empty($user) && $user === $autoSaveIdParts[0] && $autoSaveIdParts[1] === 'wiki_page') {
-
+		if (count($autoSaveIdParts) === 3 && ! empty($user) && $user === $autoSaveIdParts[0] && $autoSaveIdParts[1] === 'wiki_page') {
 			$editlib = TikiLib::lib('edit');
 			$smarty = TikiLib::lib('smarty');
 			$wikilib = TikiLib::lib('wiki');
@@ -118,7 +117,7 @@ class Services_Edit_Controller
 			$parserlib = TikiLib::lib('parser');
 			if ($input->inPage->int()) {
 				$diffstyle = $input->diff_style->text();
-				if (!$diffstyle) {	// use previously set diff_style
+				if (! $diffstyle) {	// use previously set diff_style
 					$diffstyle = getCookie('preview_diff_style', 'preview', '');
 				}
 				$data = $editlib->partialParseWysiwygToWiki(
@@ -126,7 +125,7 @@ class Services_Edit_Controller
 				);
 				TikiLib::lib('smarty')->assign('diff_style', $diffstyle);
 				if ($diffstyle) {
-					if (!empty($info['created'])) {
+					if (! empty($info['created'])) {
 						$info = $tikilib->get_page_info($page); // get page with data this time
 					}
 					if ($input->hdr->int()) {		// TODO refactor with code in editpage
@@ -164,7 +163,6 @@ class Services_Edit_Controller
 					$data = $parserlib->parse_data($data, $options);
 				}
 				$parsed = $data;
-
 			} else {					// popup window
 				TikiLib::lib('header')->add_js(
 					'
@@ -189,7 +187,8 @@ $(window).on("load", function(){
 					$data .= $parserlib->parse_data(
 						$editlib->partialParseWysiwygToWiki(
 							TikiLib::lib('autosave')->get_autosave($input->editor_id->text(), $input->autoSaveId->text())
-						), $options
+						),
+						$options
 					);
 				} else {
 					if ($autoSaveIdParts[1] == 'wiki_page') {
@@ -206,7 +205,6 @@ $(window).on("load", function(){
 			}
 
 			if ($prefs['feature_wiki_footnotes'] === 'y') {
-
 				$footnote = $input->footnote->text();
 				if ($footnote) {
 					$footnote = $parserlib->parse_data($footnote);
@@ -215,31 +213,31 @@ $(window).on("load", function(){
 				}
 			}
 
-			return array('parsed' => $parsed, 'parsed_footnote' => $footnote);
+			return ['parsed' => $parsed, 'parsed_footnote' => $footnote];
 		}
 	}
 
-    public static function page_editable($autoSaveId = null, &$page = null)
-    {
-        global $user;
-        $tikilib = TikiLib::lib('tiki');
+	public static function page_editable($autoSaveId = null, &$page = null)
+	{
+		global $user;
+		$tikilib = TikiLib::lib('tiki');
 
-        if ($autoSaveId !== null) {
-            $autoSaveIdParts = explode(':', $autoSaveId);	// user, section, object id
-            foreach ($autoSaveIdParts as & $part) {
-                $part = urldecode($part);
-            }
+		if ($autoSaveId !== null) {
+			$autoSaveIdParts = explode(':', $autoSaveId);	// user, section, object id
+			foreach ($autoSaveIdParts as & $part) {
+				$part = urldecode($part);
+			}
 
-            $page = $autoSaveIdParts[2];	// plugins use global $page for approval
-        }
+			$page = $autoSaveIdParts[2];	// plugins use global $page for approval
+		}
 
-        if (!Perms::get('wiki page', $page)->edit || $user != TikiLib::lib('service')->internal('semaphore', 'get_user', ['object_id' => $page, 'check' => 1])
+		if (! Perms::get('wiki page', $page)->edit || $user != TikiLib::lib('service')->internal('semaphore', 'get_user', ['object_id' => $page, 'check' => 1])
 		) {
-            return false;
-        }
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
 	public function action_help($input)
 	{
@@ -282,7 +280,6 @@ $(window).on("load", function(){
 					->add_jsfile('lib/jquery_tiki/pluginedit_list.js')
 					->add_jsfile('vendor_bundled/vendor/jquery/plugins/nestedsortable/jquery.ui.nestedSortable.js');
 			}
-
 		}
 
 		if ($input->sheet->int()) {
@@ -293,10 +290,10 @@ $(window).on("load", function(){
 			];
 		}
 
-		return array(
+		return [
 			'title' => tr('Edit Help'),
 			'help_sections' => $help_sections,
-		);
+		];
 	}
 
 	function action_inline_dialog($input)

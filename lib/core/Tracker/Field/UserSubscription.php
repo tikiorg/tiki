@@ -15,21 +15,21 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 {
 	public static function getTypes()
 	{
-		return array(
-			'U' => array(
+		return [
+			'U' => [
 				'name' => tr('User Subscription'),
 				'description' => tr('Allows registered users to subscribe themselves to a tracker item. Ideally, the item should only be editable by the creator or by administrators. Prepend the maximum amount of subscribers to the field value followed by # if such a limit is desired. For example, 50# means that 50 subscribers will be allowed for this item.'),
 				'help' => 'Subscription Tracker Field',
-				'prefs' => array('trackerfield_subscription'),
+				'prefs' => ['trackerfield_subscription'],
 				'default' => 'n',
-				'tags' => array('advanced'),
-				'params' => array(
-				),
-			),
-		);
+				'tags' => ['advanced'],
+				'params' => [
+				],
+			],
+		];
 	}
 
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
 		global $user, $jitPost;
 		$userlib = TikiLib::lib('user');
@@ -39,10 +39,10 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 
 		if (isset($requestData[$this->getInsertId()])) {
 			$value = $requestData[$this->getInsertId()];
-			return array( 'value' => $value);
+			return [ 'value' => $value];
 		} else {
 			$value = $this->getValue();
-			if (!$value) {
+			if (! $value) {
 				$value = '0#';		// default to unlimited
 			}
 		}
@@ -55,17 +55,17 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 			} else {
 				$nb = isset($requestData['user_friends']) ? intval($requestData['user_friends']) : $jitPost->user_friends->int();
 			}
-			foreach ($current_field_ins['users_array'] as $i=>$U) {
+			foreach ($current_field_ins['users_array'] as $i => $U) {
 				if ($U['login'] == $user) {
 					$current_field_ins['users_array'][$i]['friends'] = $nb;
 					$found = true;
 					break;
 				}
 			}
-			if (!$found) {
+			if (! $found) {
 				$userlib = TikiLib::lib('user');
 				$temp = $userlib->get_user_info($user);
-				$current_field_ins['users_array'][] = array('id' => $temp['userId'], 'login' => $user, 'friends' => $nb);
+				$current_field_ins['users_array'][] = ['id' => $temp['userId'], 'login' => $user, 'friends' => $nb];
 				$current_field_ins['user_subscription'] = true;
 			}
 			$value = $this->encodeUsers($current_field_ins);
@@ -73,7 +73,7 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 			$current_field_ins = $this->parseUsers($value);
 		}
 		if (isset($requestData['user_unsubscribe']) || $jitPost->user_unsubscribe->word()) {
-			foreach ($current_field_ins['users_array'] as $i=>$U) {
+			foreach ($current_field_ins['users_array'] as $i => $U) {
 				if ($U['login'] == $user) {
 					unset($current_field_ins['users_array'][$i]);
 					$value = $this->encodeUsers($current_field_ins);
@@ -88,21 +88,22 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 		return $current_field_ins;
 	}
 
-	function renderInput($context = array())
+	function renderInput($context = [])
 	{
 		return $this->renderTemplate('trackerinput/usersubscription.tpl', $context);
 	}
-	function renderOutput($context = array())
+	function renderOutput($context = [])
 	{
 		return $this->renderTemplate('trackeroutput/usersubscription.tpl', $context);
 	}
 	private function encodeUsers($current_field_ins)
 	{
-		$value =  $current_field_ins['maxsubscriptions'].'#';
-		foreach ($current_field_ins['users_array'] as $i=>$U) {
-			if (!empty($i))
+		$value = $current_field_ins['maxsubscriptions'] . '#';
+		foreach ($current_field_ins['users_array'] as $i => $U) {
+			if (! empty($i)) {
 				$value .= ',';
-			$value .= $U['id'].'['.$U['friends'].']';
+			}
+			$value .= $U['id'] . '[' . $U['friends'] . ']';
 		}
 		return $value;
 	}
@@ -115,7 +116,7 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 		$id_tiki_user = $temp['userId'];
 		$pattern = "/(\d+)\[(\d+)\]/";
 		preg_match_all($pattern, $value, $match);
-		$users_array = array();
+		$users_array = [];
 		$current_field_ins['user_subscription'] = false; // user is subscribed with firnd or not
 		$current_field_ins['user_nb_users'] = 0; // total number of user attending
 		$current_field_ins['user_nb_friends'] = 0; // total of friends for this user
@@ -123,11 +124,11 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 			$temp = $userlib->get_userId_info($id_user);
 			array_push(
 				$users_array,
-				array(
+				[
 					'id' => $id_user,
 					'login' => $temp['login'],
 					'friends' => $match[2][$j]
-				)
+				]
 			);
 			$current_field_ins['user_nb_users'] += $match[2][$j] + 1;
 			if ($id_user == $id_tiki_user) {
@@ -141,9 +142,9 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 	}
 	private function parseShortcut($current_field_ins)
 	{
-		$U_liste = NULL;
+		$U_liste = null;
 		$U_othersubscriptions = $current_field_ins['user_nb_friends'];
-		if (!$current_field_ins['user_subscription']) {
+		if (! $current_field_ins['user_subscription']) {
 			$U_othersubscriptions--;
 		}
 		if ($current_field_ins['maxsubscriptions']) {
@@ -156,7 +157,6 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 	private function save($value)
 	{
 		$query = 'update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?';
-		TikiLib::lib('trk')->query($query, array($value, $this->getItemId(), $this->getConfiguration('fieldId')));
+		TikiLib::lib('trk')->query($query, [$value, $this->getItemId(), $this->getConfiguration('fieldId')]);
 	}
 }
-

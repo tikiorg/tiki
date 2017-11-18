@@ -17,7 +17,8 @@ class Scheduler_Manager
 		$this->logger = $logger;
 	}
 
-	public function run() {
+	public function run()
+	{
 
 		$start_time = time();
 
@@ -27,8 +28,8 @@ class Scheduler_Manager
 
 		$this->logger->info(sprintf("Found %d active scheduler(s).", sizeof($activeSchedulers)));
 
-		$runTasks = array();
-		$reRunTasks = array();
+		$runTasks = [];
+		$reRunTasks = [];
 
 		foreach ($activeSchedulers as $scheduler) {
 			try {
@@ -67,7 +68,6 @@ class Scheduler_Manager
 		}
 
 		foreach ($runTasks as $runTask) {
-
 			$schedulerTask = new Scheduler_Item(
 				$runTask['id'],
 				$runTask['name'],
@@ -90,6 +90,4 @@ class Scheduler_Manager
 			}
 		}
 	}
-
-
 }

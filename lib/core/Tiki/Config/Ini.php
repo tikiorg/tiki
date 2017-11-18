@@ -30,11 +30,11 @@ class Tiki_Config_Ini extends Zend\Config\Reader\Ini
 		$config = parent::process($data);
 		$config = $this->posProcessSectionInheritance($config);
 
-		if ( !is_null($this->filterSection) ){
-			if (array_key_exists($this->filterSection, $config)){
+		if (! is_null($this->filterSection)) {
+			if (array_key_exists($this->filterSection, $config)) {
 				return $config[$this->filterSection];
 			} else {
-				return array();
+				return [];
 			}
 		}
 
@@ -43,12 +43,12 @@ class Tiki_Config_Ini extends Zend\Config\Reader\Ini
 
 	protected function preProcessSectionInheritance(array $data)
 	{
-		$result = array();
+		$result = [];
 
-		foreach($data as $key => $value){
+		foreach ($data as $key => $value) {
 			$tokens = explode(self::SECTION_SEPARATOR, $key);
 			$section = trim($tokens[0]);
-			if ( count($tokens) == 2 && is_array($value)){
+			if (count($tokens) == 2 && is_array($value)) {
 				$value[self::SECTION_EXTENDS_KEY] = trim($tokens[1]);
 			}
 			$result[$section] = $value;
@@ -58,10 +58,10 @@ class Tiki_Config_Ini extends Zend\Config\Reader\Ini
 
 	protected function posProcessSectionInheritance(array $config)
 	{
-		$result = array();
+		$result = [];
 
-		foreach($config as $key => $value){
-			if (is_array($value) && array_key_exists(self::SECTION_EXTENDS_KEY, $value)){
+		foreach ($config as $key => $value) {
+			if (is_array($value) && array_key_exists(self::SECTION_EXTENDS_KEY, $value)) {
 				$value = $this->resolveSectionInheritance($config, $key);
 			}
 			$result[$key] = $value;
@@ -71,9 +71,9 @@ class Tiki_Config_Ini extends Zend\Config\Reader\Ini
 
 	protected function resolveSectionInheritance($config, $section)
 	{
-		$result = array();
+		$result = [];
 
-		if (array_key_exists(self::SECTION_EXTENDS_KEY, $config[$section])){
+		if (array_key_exists(self::SECTION_EXTENDS_KEY, $config[$section])) {
 			$parentSection = $config[$section][self::SECTION_EXTENDS_KEY];
 			unset($config[$section][self::SECTION_EXTENDS_KEY]);
 			$result = $this->resolveSectionInheritance($config, $parentSection);

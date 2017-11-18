@@ -7,10 +7,10 @@
 
 class TikiDb_Initializer
 {
-	private $connectors = array(
+	private $connectors = [
 		'pdo' => 'TikiDb_Initializer_Pdo',
 		'adodb' => 'TikiDb_Initializer_Adodb',
-	);
+	];
 	private $preferred;
 	private $initializeCallback;
 
@@ -28,7 +28,7 @@ class TikiDb_Initializer
 
 	function getConnection(array $credentials)
 	{
-		if ( $connector = $this->getInitializer($this->preferred)) {
+		if ($connector = $this->getInitializer($this->preferred)) {
 			return $this->initialize($connector, $credentials);
 		}
 
@@ -62,4 +62,3 @@ class TikiDb_Initializer
 		}
 	}
 }
-

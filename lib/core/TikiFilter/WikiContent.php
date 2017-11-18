@@ -7,10 +7,10 @@
 
 class TikiFilter_WikiContent implements Zend\Filter\FilterInterface
 {
-	function filter( $value )
+	function filter($value)
 	{
 		$parserlib = TikiLib::lib('parser');
-		$noparsed = array();
+		$noparsed = [];
 		$parserlib->plugins_remove($value, $noparsed);
 
 		$value = TikiFilter::get('xss')->filter($value);

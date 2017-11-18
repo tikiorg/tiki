@@ -9,13 +9,14 @@ class Tiki_Profile_InstallHandler_ArticleType extends Tiki_Profile_InstallHandle
 {
 	function getData()
 	{
-		if ( $this->data )
+		if ($this->data) {
 			return $this->data;
+		}
 
 		$data = $this->obj->getData();
-		$data = Tiki_Profile::convertLists($data, array('show' => 'y', 'allow' => 'y'), true);
+		$data = Tiki_Profile::convertLists($data, ['show' => 'y', 'allow' => 'y'], true);
 
-		$defaults = array(
+		$defaults = [
 			'show_pre_publication' => 'n',
 			'show_post_expire' => 'n',
 			'show_heading_only' => 'n',
@@ -35,7 +36,7 @@ class Tiki_Profile_InstallHandler_ArticleType extends Tiki_Profile_InstallHandle
 			'allow_comments' => 'n',
 			'allow_comments_rating_article' => 'n',
 			'allow_creator_edit' => 'n',
-		);
+		];
 
 		$data = array_merge($defaults, $data);
 
@@ -48,8 +49,9 @@ class Tiki_Profile_InstallHandler_ArticleType extends Tiki_Profile_InstallHandle
 	{
 		$data = $this->getData();
 
-		if ( ! isset( $data['name'] ) )
+		if (! isset($data['name'])) {
 			return false;
+		}
 
 		return true;
 	}
@@ -61,9 +63,9 @@ class Tiki_Profile_InstallHandler_ArticleType extends Tiki_Profile_InstallHandle
 
 		$this->replaceReferences($data);
 
-		$converter = new Tiki_Profile_ValueMapConverter(array( 'y' => 'on' ));
+		$converter = new Tiki_Profile_ValueMapConverter([ 'y' => 'on' ]);
 
-		if ( ! $artlib->get_type($data['name']) ) {
+		if (! $artlib->get_type($data['name'])) {
 			$artlib->add_type($data['name']);
 		}
 
@@ -101,13 +103,13 @@ class Tiki_Profile_InstallHandler_ArticleType extends Tiki_Profile_InstallHandle
 			return false;
 		}
 
-		$out = array(
+		$out = [
 			'name' => $info['type'],
-			'allow' => array(),
-			'show' => array(),
-		);
+			'allow' => [],
+			'show' => [],
+		];
 
-		$map = array(
+		$map = [
 			'use_ratings' => 'allow_ratings',
 			'show_pre_publ' => 'show_pre_publication',
 			'heading_only' => 'show_heading_only',
@@ -116,7 +118,7 @@ class Tiki_Profile_InstallHandler_ArticleType extends Tiki_Profile_InstallHandle
 			'show_expdate' => 'show_expiration_date',
 			'show_linkto' => 'show_link_to',
 			'creator_edit' => 'allow_creator_edit',
-		);
+		];
 
 		foreach ($info as $key => $value) {
 			if (isset($map[$key])) {

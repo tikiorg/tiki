@@ -43,13 +43,12 @@ class IndexCatchUpCommand extends Command
 
 			$output->writeln('Processing completed. Amount remaining: ' . $count);
 		} catch (ZendSearch\Lucene\Exception\ExceptionInterface $e) {
-
 			$msg = tr('Search index could not be updated: %0', $e->getMessage());
 			\Feedback::error($msg, 'session');
 		}
-		
+
 		$errors = \Feedback::get();
-		if (is_array($errors)){
+		if (is_array($errors)) {
 			foreach ($errors as $message) {
 				$output->writeln("<error>$message</error>");
 			}

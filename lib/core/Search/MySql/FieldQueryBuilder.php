@@ -48,7 +48,8 @@ class Search_MySql_FieldQueryBuilder
 						$childNodes = array_map(
 							function ($node) {
 								return substr($node, 1);
-							}, $childNodes
+							},
+							$childNodes
 						);
 						$invert = true;
 
@@ -77,4 +78,3 @@ class Search_MySql_FieldQueryBuilder
 		return $this->invert;
 	}
 }
-

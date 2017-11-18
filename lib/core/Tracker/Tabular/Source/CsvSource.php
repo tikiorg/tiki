@@ -21,7 +21,7 @@ class CsvSource implements SourceInterface
 	function getEntries()
 	{
 		$this->file->fseek(0);
-		
+
 		$headers = $this->file->fgetcsv();
 		$this->schema->validateAgainstHeaders($headers);
 
@@ -46,4 +46,3 @@ class CsvSource implements SourceInterface
 		return $this->schema;
 	}
 }
-

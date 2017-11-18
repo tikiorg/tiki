@@ -16,7 +16,7 @@ class Search_ContentSource_SheetSource implements Search_ContentSource_Interface
 
 	function getDocuments()
 	{
-		return $this->db->table('tiki_sheets')->fetchColumn('sheetId', array());
+		return $this->db->table('tiki_sheets')->fetchColumn('sheetId', []);
 	}
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
@@ -32,15 +32,15 @@ class Search_ContentSource_SheetSource implements Search_ContentSource_Interface
 		$values = $this->db->table('tiki_sheet_values');
 		$contributors = $values->fetchColumn(
 			$values->expr('DISTINCT `user`'),
-			array(
+			[
 				'sheetId' => $objectId,
-			)
+			]
 		);
 		$lastModif = $values->fetchOne(
 			$values->max('begin'),
-			array(
+			[
 				'sheetId' => $objectId,
-			)
+			]
 		);
 
 		$loader = new TikiSheetDatabaseHandler($objectId);
@@ -52,7 +52,7 @@ class Search_ContentSource_SheetSource implements Search_ContentSource_Interface
 		$grid->export($writer);
 		$text = $writer->output;
 
-		$data = array(
+		$data = [
 			'title' => $typeFactory->sortable($info['title']),
 			'description' => $typeFactory->sortable($info['description']),
 			'modification_date' => $typeFactory->timestamp($lastModif),
@@ -61,14 +61,14 @@ class Search_ContentSource_SheetSource implements Search_ContentSource_Interface
 			'sheet_content' => $typeFactory->plaintext($text),
 
 			'view_permission' => $typeFactory->identifier('tiki_p_view_sheet'),
-		);
+		];
 
 		return $data;
 	}
 
 	function getProvidedFields()
 	{
-		return array(
+		return [
 			'title',
 			'description',
 			'modification_date',
@@ -77,17 +77,16 @@ class Search_ContentSource_SheetSource implements Search_ContentSource_Interface
 			'sheet_content',
 
 			'view_permission',
-		);
+		];
 	}
 
 	function getGlobalFields()
 	{
-		return array(
+		return [
 			'title' => true,
 			'description' => true,
 
 			'sheet_content' => false,
-		);
+		];
 	}
 }
-

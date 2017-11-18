@@ -8,4 +8,3 @@
 class Search_Action_Exception extends Search_Exception
 {
 }
-

@@ -14,7 +14,7 @@ class Reports_Send_EmailBuilder_BlogPost extends Reports_Send_EmailBuilder_Abstr
 	{
 		return tr('New blog posts:');
 	}
-	
+
 	public function getOutput(array $change)
 	{
 		$base_url = $change['data']['base_url'];
@@ -23,7 +23,7 @@ class Reports_Send_EmailBuilder_BlogPost extends Reports_Send_EmailBuilder_Abstr
 							tra('replied to the blog') .
 							" <a href=\"{$base_url}tiki-view_blog.php?blogId=" . $change['data']['blogId'] . "\">" . $change['data']['blogTitle'] . "</a>" .
 							" <a href=\"{$base_url}tiki-view_blog_post.php?postId=\"" . $change['data']['postId'] . "></a>.";
-		
+
 		return $output;
 	}
 }

@@ -36,20 +36,20 @@ class Services_IDS_Controller
 
 		$rule = IDS_Rule::getRule($ruleId);
 
-		if (!$rule) {
+		if (! $rule) {
 			throw new Services_Exception_NotFound;
 		}
 
 		if ($confirm) {
 			$rule->delete();
 
-			return array(
+			return [
 				'ruleId' => 0,
-			);
+			];
 		}
 
-		return array(
+		return [
 			'ruleId' => $ruleId,
-		);
+		];
 	}
 }

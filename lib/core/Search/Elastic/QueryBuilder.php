@@ -38,7 +38,7 @@ class Search_Elastic_QueryBuilder
 			return [];
 		}
 
-		$query = array("query" => $query);
+		$query = ["query" => $query];
 
 		return $query;
 	}
@@ -62,21 +62,23 @@ class Search_Elastic_QueryBuilder
 			$inner = array_map(
 				function ($expr) use ($callback) {
 					return $expr->traverse($callback);
-				}, $childNodes
+				},
+				$childNodes
 			);
 
-			return array(
-				'bool' => array(
+			return [
+				'bool' => [
 					'should' => $this->flatten($inner, 'should'),
 					"minimum_should_match" => 1,
-				),
-			);
+				],
+			];
 		} elseif ($node instanceof AndX) {
-			$not = array();
+			$not = [];
 			$inner = array_map(
 				function ($expr) use ($callback) {
 					return $expr->traverse($callback);
-				}, $childNodes
+				},
+				$childNodes
 			);
 
 			$inner = array_filter(
@@ -95,75 +97,76 @@ class Search_Elastic_QueryBuilder
 			if (count($inner) == 1 && isset($inner[0]['bool'])) {
 				$base = $inner[0]['bool'];
 				if (! isset($base['must_not'])) {
-					$base['must_not'] = array();
+					$base['must_not'] = [];
 				}
 
 				$base['must_not'] = array_merge($base['must_not'], $not);
 
-				return array(
+				return [
 					'bool' => array_filter($base),
-				);
+				];
 			} else {
-				return array(
+				return [
 					'bool' => array_filter(
-						array(
+						[
 							'must' => $inner,
 							'must_not' => $not,
-						)
+						]
 					),
-				);
+				];
 			}
 		} elseif ($node instanceof NotX) {
 			$inner = array_map(
 				function ($expr) use ($callback) {
-				return $expr->traverse($callback);
-				}, $childNodes
+					return $expr->traverse($callback);
+				},
+				$childNodes
 			);
-			if( count($inner) == 1 && isset($inner[0]['bool']) && isset($inner[0]['bool']['must_not']) ) {
-				return array(
-					'bool' => array(
+			if (count($inner) == 1 && isset($inner[0]['bool']) && isset($inner[0]['bool']['must_not'])) {
+				return [
+					'bool' => [
 						'must' => $inner[0]['bool']['must_not'],
-					),
-				);
+					],
+				];
 			} else {
-				return array(
-					'bool' => array(
+				return [
+					'bool' => [
 						'must_not' => $inner,
-					),
-				);
+					],
+				];
 			}
 		} elseif ($node instanceof Initial) {
-			return array(
-				'match_phrase_prefix' => array(
-					$this->getNodeField($node) . '.sort' => array(
+			return [
+				'match_phrase_prefix' => [
+					$this->getNodeField($node) . '.sort' => [
 						"query" => $this->getTerm($node),
 						"boost" => $node->getWeight(),
-					),
-				),
-			);
+					],
+				],
+			];
 		} elseif ($node instanceof Range) {
-			return array(
-				'range' => array(
-					$this->getNodeField($node) => array(
+			return [
+				'range' => [
+					$this->getNodeField($node) => [
 						"from" => $this->getTerm($node->getToken('from')),
 						"to" => $this->getTerm($node->getToken('to')),
 						"boost" => $node->getWeight(),
 						"include_upper" => false,
-					),
-				),
-			);
+					],
+				],
+			];
 		} elseif ($node instanceof MoreLikeThis) {
 			$type = $node->getObjectType();
 			$object = $node->getObjectId();
 
 			$content = $node->getContent() ?: $this->getDocumentContent($type, $object);
-			return array(
-				'more_like_this' => array(
-					'fields' => array($this->getNodeField($node) ?: 'contents'),
+			return [
+				'more_like_this' => [
+					'fields' => [$this->getNodeField($node) ?: 'contents'],
 					'like' => $content,
 					'boost' => $node->getWeight(),
-				),
-			);
+				],
+			];
 		} elseif ($node instanceof Distance) {
 			return [
 				'geo_distance' => [
@@ -184,7 +187,7 @@ class Search_Elastic_QueryBuilder
 		// Only merge when alone, should queries contain the 'minimum_should_match' attribute
 		$limit = ($type == 'should') ? 2 : 1;
 
-		$out = array();
+		$out = [];
 		foreach ($list as $entry) {
 			if (isset($entry['bool'][$type]) && count($entry['bool']) === $limit) {
 				$out = array_merge($out, $entry['bool'][$type]);
@@ -206,58 +209,58 @@ class Search_Elastic_QueryBuilder
 	{
 		$value = $node->getValue($this->factory)->getValue();
 		$mapping = $this->index ? $this->index->getFieldMapping($node->getField()) : new stdClass;
-		if( $value === '' ) {
-			if( isset($mapping->type) && $mapping->type === 'date' ) {
-				return array(
-					"bool" => array(
-						"must_not" => array(
-							array(
-								"exists" => array("field" => $this->getNodeField($node))
-							)
-						)
-					)
-				);
+		if ($value === '') {
+			if (isset($mapping->type) && $mapping->type === 'date') {
+				return [
+					"bool" => [
+						"must_not" => [
+							[
+								"exists" => ["field" => $this->getNodeField($node)]
+							]
+						]
+					]
+				];
 			} else {
-				return array(
-					"bool" => array(
-						"must_not" => array(
-							array(
-								"wildcard" => array($this->getNodeField($node) => "*")
-							)
-						)
-					)
-				);
+				return [
+					"bool" => [
+						"must_not" => [
+							[
+								"wildcard" => [$this->getNodeField($node) => "*"]
+							]
+						]
+					]
+				];
 			}
 		}
 		if (isset($mapping->type) && $mapping->type === 'float') {
 			$value = floatval($value);
 		}
 		if ($node->getType() == 'identifier') {
-			return array("match" => array(
-				$this->getNodeField($node) => array(
+			return ["match" => [
+				$this->getNodeField($node) => [
 					"query" => $value,
 					"operator" => "and",
-				),
-			));
+				],
+			]];
 		} elseif ($node->getType() == 'multivalue') {
-			return array("match" => array(
-				$this->getNodeField($node) => array(
+			return ["match" => [
+				$this->getNodeField($node) => [
 					"query" => reset($value),
 					"operator" => "and",
-				),
-			));
+				],
+			]];
 		} elseif ($node->getType() == 'plaintext' && strstr($value, '*')) {
-			return array("wildcard" => array(
+			return ["wildcard" => [
 				$this->getNodeField($node) => $value,
-			));
+			]];
 		} else {
-			return array("match" => array(
-				$this->getNodeField($node) => array(
+			return ["match" => [
+				$this->getNodeField($node) => [
 					"query" => strtolower($value),
 					"boost" => $node->getWeight(),
 					"operator" => "and",
-				),
-			));
+				],
+			]];
 		}
 	}
 
@@ -273,7 +276,8 @@ class Search_Elastic_QueryBuilder
 		return '';
 	}
 
-	private function getNodeField($node) {
+	private function getNodeField($node)
+	{
 		global $prefs;
 		$field = $node->getField();
 		$mapping = $this->index ? $this->index->getFieldMapping($field) : new stdClass;
@@ -288,4 +292,3 @@ class Search_Elastic_QueryBuilder
 		return $field;
 	}
 }
-

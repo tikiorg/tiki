@@ -23,4 +23,3 @@ class Search_Elastic_MappingException extends Search_Elastic_Exception
 		return $this->type;
 	}
 }
-

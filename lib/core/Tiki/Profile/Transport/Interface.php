@@ -13,4 +13,3 @@ interface Tiki_Profile_Transport_Interface
 
 	function getProfilePath();
 }
-

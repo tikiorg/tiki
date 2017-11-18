@@ -19,4 +19,3 @@ class ModeNotSupported extends Exception
 		$this->permName = $permName;
 	}
 }
-

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,19 +9,20 @@ class Tiki_Profile_InstallHandler_Rss extends Tiki_Profile_InstallHandler
 {
 	function getData()
 	{
-		if ( $this->data )
+		if ($this->data) {
 			return $this->data;
+		}
 
 		$data = $this->obj->getData();
-		$data = Tiki_Profile::convertLists($data, array('show' => 'y'), true);
+		$data = Tiki_Profile::convertLists($data, ['show' => 'y'], true);
 
-		$defaults = array(
+		$defaults = [
 			'description' => null,
 			'refresh' => 30,
 			'show_title' => 'n',
 			'show_publication_date' => 'n',
 			'article_generator' => null,
-		);
+		];
 
 		$data = array_merge($defaults, $data);
 		$data = Tiki_Profile::convertYesNo($data);
@@ -33,8 +34,9 @@ class Tiki_Profile_InstallHandler_Rss extends Tiki_Profile_InstallHandler
 	{
 		$data = $this->getData();
 
-		if ( ! isset( $data['name'], $data['url'] ) )
+		if (! isset($data['name'], $data['url'])) {
 			return false;
+		}
 
 		return true;
 	}
@@ -66,14 +68,14 @@ class Tiki_Profile_InstallHandler_Rss extends Tiki_Profile_InstallHandler
 			return false;
 		}
 
-		$out = array(
+		$out = [
 			'name' => $info['name'],
 			'url' => $info['url'],
 			'description' => $info['description'],
 			'refresh' => $info['refresh'],
 			'show_title' => $info['showTitle'],
 			'show_publication_date' => $info['showPubDate'],
-		);
+		];
 
 		$out = array_filter($out);
 
@@ -87,7 +89,7 @@ class Tiki_Profile_InstallHandler_Rss extends Tiki_Profile_InstallHandler
 		}
 
 		$writer->addObject('rss', $id, $out);
-		
+
 		return true;
 	}
 

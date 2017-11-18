@@ -15,38 +15,38 @@ use TikiLib;
 
 class PreferencesGetCommand extends Command
 {
-    protected function configure()
-    {
-        $this
-            ->setName('preferences:get')
-            ->setDescription('Get a preference')
-            ->addArgument(
-                'name',
-                InputArgument::REQUIRED,
-                'Preference name'
-            );
-    }
+	protected function configure()
+	{
+		$this
+			->setName('preferences:get')
+			->setDescription('Get a preference')
+			->addArgument(
+				'name',
+				InputArgument::REQUIRED,
+				'Preference name'
+			);
+	}
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $preference = $input->getArgument('name');
+	protected function execute(InputInterface $input, OutputInterface $output)
+	{
+		$preference = $input->getArgument('name');
 
-        $tikilib = TikiLib::lib('tiki');
-        $prefslib = TikiLib::lib('prefs');
+		$tikilib = TikiLib::lib('tiki');
+		$prefslib = TikiLib::lib('prefs');
 
-        $preferenceInfo = $prefslib->getPreference($preference);
+		$preferenceInfo = $prefslib->getPreference($preference);
 
-        if (empty($preferenceInfo)) {
-            $output->write('<error>Preference not found.</error>');
-            return;
-        }
+		if (empty($preferenceInfo)) {
+			$output->write('<error>Preference not found.</error>');
+			return;
+		}
 
-        $value = $tikilib->get_preference($preference);
+		$value = $tikilib->get_preference($preference);
 
-        if (!empty($preferenceInfo['separator']) && is_array($value)) {
-            $value = implode($preferenceInfo['separator'], $value);
-        }
+		if (! empty($preferenceInfo['separator']) && is_array($value)) {
+			$value = implode($preferenceInfo['separator'], $value);
+		}
 
-        $output->writeln(sprintf('Preference %s has value %s', $preference, $value));
-    }
+		$output->writeln(sprintf('Preference %s has value %s', $preference, $value));
+	}
 }

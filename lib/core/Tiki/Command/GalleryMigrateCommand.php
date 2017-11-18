@@ -30,4 +30,3 @@ class GalleryMigrateCommand extends Command
 		$output->writeln('<info>' . tra('All files migrated!') . '</info>');
 	}
 }
-

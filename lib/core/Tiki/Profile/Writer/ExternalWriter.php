@@ -9,7 +9,7 @@ class Tiki_Profile_Writer_ExternalWriter
 {
 	private $dataPath;
 	private $files;
-	private $hashes = array();
+	private $hashes = [];
 
 	function __construct($dataPath)
 	{

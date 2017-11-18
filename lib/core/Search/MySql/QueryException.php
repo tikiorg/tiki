@@ -8,4 +8,3 @@
 class Search_MySql_QueryException extends Search_MySql_Exception
 {
 }
-

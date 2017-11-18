@@ -12,14 +12,14 @@
 //
 // Purpose: Adds PastLink UI to page.  Makes it so that sentences wrapped in a PastLink are distinguished from the rest of the text in a page for the end user
 
-Class FutureLink_PastUI extends Feed_Abstract
+class FutureLink_PastUI extends Feed_Abstract
 {
 	public $type = 'futurelink';
 	public $version = 0.1;
 	public $isFileGal = false;
 	public $debug = false;
 	public $page = '';
-	public $metadata = array();
+	public $metadata = [];
 
 	static $pairs;
 	static $addedHashes;
@@ -28,7 +28,7 @@ Class FutureLink_PastUI extends Feed_Abstract
 	{
 		$this->page = $page;
 
-		if (!empty($page) && !empty($data)) {
+		if (! empty($page) && ! empty($data)) {
 			$this->metadata = FutureLink_MetadataAssembler::pagePastLink($page, $data);
 		}
 
@@ -39,23 +39,23 @@ Class FutureLink_PastUI extends Feed_Abstract
 	{
 		$me = new FutureLink_PastUI($page, $data);
 
-		$item = new FutureLink_Pair( $me->metadata->raw, $clipboarddata );
+		$item = new FutureLink_Pair($me->metadata->raw, $clipboarddata);
 
 		if (isset(self::$addedHashes[$item->pastlink->hash])) {
-            return null;
-        }
+			return null;
+		}
 
 		self::$addedHashes[$item->pastlink->hash] = true;
 		$item->futurelink->href = str_replace(' ', '+', $item->futurelink->href);
 
-        Type::Pairs(FutureLink_PastUI::$pairs)->add($item);
+		Type::Pairs(FutureLink_PastUI::$pairs)->add($item);
 
 		return FutureLink_PastUI::$pairs->length;
 	}
 
 	static function clearAll()
 	{
-        FutureLink_PastUI::$pairs = new FutureLink_Pairs();
+		FutureLink_PastUI::$pairs = new FutureLink_Pairs();
 	}
 
 	public function getContents()
@@ -66,7 +66,7 @@ Class FutureLink_PastUI extends Feed_Abstract
 			return FutureLink_PastUI::$pairs;
 		}
 
-		return array();
+		return [];
 	}
 
 	static function wikiView()
@@ -74,7 +74,7 @@ Class FutureLink_PastUI extends Feed_Abstract
 		global $page;
 		$headerlib = TikiLib::lib('header');
 		$me = new self();
-		$phrase = (!empty($_REQUEST['phrase']) ? $_REQUEST['phrase'] : '');
+		$phrase = (! empty($_REQUEST['phrase']) ? $_REQUEST['phrase'] : '');
 		FutureLink_Search::restorePastLinkPhrasesInWikiPage($me->getItems(), $phrase);
 
 		//if we have an awaiting PastLink that needs sent, we do so here
@@ -89,7 +89,7 @@ Class FutureLink_PastUI extends Feed_Abstract
 			foreach (FutureLink_SendToFuture::sendAll() as $text => $received) {
 				$receivedJSON = json_decode($received);
 				if (isset($receivedJSON->feed) && $receivedJSON->feed == 'success') {
-                    (new Tracker_Query('Wiki Attributes'))
+					(new Tracker_Query('Wiki Attributes'))
 						->byName()
 						->render(false)
 						->filterFieldByValue('Page', $page)
@@ -110,15 +110,15 @@ Class FutureLink_PastUI extends Feed_Abstract
 		$me = new self();
 
 		foreach ($me->getItems() as $item) {
-            (new Tracker_Query('Wiki Attributes'))
+			(new Tracker_Query('Wiki Attributes'))
 				->byName()
 				->replaceItem(
-					array(
+					[
 						'Page' => $page,
 						'Attribute' => $item->pastlink->text,
 						'Value' => 'true',
 						'Type' => 'PastLink Send'
-					)
+					]
 				);
 		}
 	}

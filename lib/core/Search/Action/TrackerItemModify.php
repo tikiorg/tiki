@@ -9,14 +9,14 @@ class Search_Action_TrackerItemModify implements Search_Action_Action
 {
 	function getValues()
 	{
-		return array(
+		return [
 			'object_type' => true,
 			'object_id' => true,
 			'field' => true,
 			'value' => false,
 			'calc' => false,
 			'aggregate_fields' => false,
-		);
+		];
 	}
 
 	function validate(JitFilter $data)
@@ -32,7 +32,7 @@ class Search_Action_TrackerItemModify implements Search_Action_Action
 			throw new Search_Action_Exception(tr('Cannot apply tracker_item_modify action to an aggregation type %0.', $object_type));
 		}
 
-		if (!$aggregateFields && $object_type != 'trackeritem') {
+		if (! $aggregateFields && $object_type != 'trackeritem') {
 			throw new Search_Action_Exception(tr('Cannot apply tracker_item_modify action to an object type %0.', $object_type));
 		}
 
@@ -58,7 +58,7 @@ class Search_Action_TrackerItemModify implements Search_Action_Action
 			}
 		}
 
-		if( empty($value) && empty($calc) ) {
+		if (empty($value) && empty($calc)) {
 			throw new Search_Action_Exception(tr('tracker_item_modify action missing value or calc parameter.'));
 		}
 
@@ -85,16 +85,18 @@ class Search_Action_TrackerItemModify implements Search_Action_Action
 		} else {
 			$this->executeOnItem($object_id, $data);
 		}
-		
+
 
 		return true;
 	}
 
-	function requiresInput(JitFilter $data) {
+	function requiresInput(JitFilter $data)
+	{
 		return empty($data->value->text()) && empty($data->calc->text());
 	}
 
-	private function executeOnItem($object_id, $data) {
+	private function executeOnItem($object_id, $data)
+	{
 		$field = $data->field->word();
 		$value = $data->value->text();
 		$calc = $data->calc->text();
@@ -104,24 +106,24 @@ class Search_Action_TrackerItemModify implements Search_Action_Action
 		$info = $trklib->get_tracker_item($object_id);
 		$definition = Tracker_Definition::get($info['trackerId']);
 
-		if( !empty($calc) ) {
+		if (! empty($calc)) {
 			$runner = new Math_Formula_Runner(
-				array(
+				[
 					'Math_Formula_Function_' => '',
 					'Tiki_Formula_Function_' => '',
-				)
+				]
 			);
 			try {
 				$runner->setFormula($calc);
 				$data = [];
 				foreach ($runner->inspect() as $fieldName) {
-					if( is_string($fieldName) || is_numeric($fieldName) ) {
-						$data[$fieldName] = $trklib->field_render_value(array('trackerId' => $info['trackerId'], 'permName' => $fieldName, 'item' => $info, 'process' => 'y'));
+					if (is_string($fieldName) || is_numeric($fieldName)) {
+						$data[$fieldName] = $trklib->field_render_value(['trackerId' => $info['trackerId'], 'permName' => $fieldName, 'item' => $info, 'process' => 'y']);
 					}
 				}
 				$runner->setVariables($data);
 				$value = $runner->evaluate();
-			} catch( Math_Formula_Exception $e ) {
+			} catch (Math_Formula_Exception $e) {
 				throw new Search_Action_Exception(tr('Error applying tracker_item_modify calc formula to item %0: %1', $object_id, $e->getMessage()));
 			}
 		}
@@ -129,14 +131,13 @@ class Search_Action_TrackerItemModify implements Search_Action_Action
 		$utilities = new Services_Tracker_Utilities;
 		$utilities->updateItem(
 			$definition,
-			array(
+			[
 				'itemId' => $object_id,
 				'status' => $info['status'],
-				'fields' => array(
+				'fields' => [
 					$field => $value,
-				),
-			)
+				],
+			]
 		);
 	}
 }
-

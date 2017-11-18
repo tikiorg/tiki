@@ -7,7 +7,7 @@
 
 class Tiki_Profile_Writer_Queue
 {
-	private $entries = array();
+	private $entries = [];
 
 	function add(array $data)
 	{
@@ -34,7 +34,8 @@ class Tiki_Profile_Writer_Queue
 		);
 
 		$this->entries = array_filter(
-			$this->entries, function ($entry) use ($writer) {
+			$this->entries,
+			function ($entry) use ($writer) {
 				return $entry['timestamp'] > $entry['stored'];
 			}
 		);
@@ -55,42 +56,42 @@ class Tiki_Profile_Writer_Queue
 	private function findInfo(array $data)
 	{
 		if ($data['type'] == 'wiki page') {
-			return array(
+			return [
 				'type' => 'wiki_page',
 				'object' => $data['object'],
 				'timestamp' => $data['timestamp'],
 				'remove' => $data['action'] == 'Removed',
-			);
+			];
 		} elseif ($data['type'] == 'category') {
-			return array(
+			return [
 				'type' => 'category',
 				'object' => $data['object'],
 				'timestamp' => $data['timestamp'],
 				'remove' => $data['action'] == 'Removed',
-			);
+			];
 		} elseif ($data['action'] == 'feature') {
-			return array(
+			return [
 				'type' => 'preference',
 				'object' => $data['object'],
 				'timestamp' => $data['timestamp'],
 				'remove' => false,
-			);
+			];
 		} elseif ($data['type'] == 'tracker') {
 			$extra = parse_str($data['detail'], $parts);
 			if (isset($parts['fieldId'])) {
-				return array(
+				return [
 					'type' => 'tracker_field',
 					'object' => $parts['fieldId'],
 					'timestamp' => $data['timestamp'],
 					'remove' => $parts['operation'] == 'remove_field',
-				);
+				];
 			} else {
-				return array(
+				return [
 					'type' => 'tracker',
 					'object' => $data['object'],
 					'timestamp' => $data['timestamp'],
 					'remove' => $data['action'] == 'Removed',
-				);
+				];
 			}
 		}
 	}
@@ -113,16 +114,17 @@ class Tiki_Profile_Writer_Queue
 			$entries
 		);
 
-		$columns = array('timestamp', 'type', 'object', 'status');
+		$columns = ['timestamp', 'type', 'object', 'status'];
 		$widths = array_fill_keys($columns, 0);
 
 		array_unshift(
-			$entries, array(
+			$entries,
+			[
 				'type' => 'Type',
 				'object' => 'Object',
 				'timestamp' => 'Last Modification',
 				'status' => 'Status',
-			)
+			]
 		);
 
 		foreach ($entries as $entry) {

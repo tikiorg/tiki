@@ -6,6 +6,7 @@
 // $Id$
 
 namespace Tiki\MailIn\Action;
+
 use Tiki\MailIn\Account;
 use Tiki\MailIn\Source\Message;
 
@@ -19,4 +20,3 @@ interface ActionInterface
 
 	function execute(Account $account, Message $message);
 }
-

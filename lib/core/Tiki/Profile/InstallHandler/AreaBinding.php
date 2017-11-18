@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,11 +9,11 @@ class Tiki_Profile_InstallHandler_AreaBinding extends Tiki_Profile_InstallHandle
 {
 	function getData()
 	{
-		if ( $this->data ) {
+		if ($this->data) {
 			return $this->data;
 		}
 
-		$defaults = array();
+		$defaults = [];
 		$data = array_merge($defaults, $this->obj->getData());
 
 		$data = Tiki_Profile::convertYesNo($data);
@@ -24,7 +24,7 @@ class Tiki_Profile_InstallHandler_AreaBinding extends Tiki_Profile_InstallHandle
 	function canInstall()
 	{
 		$data = $this->getData();
-		if ( ! isset($data['category'], $data['perspective']) ) {
+		if (! isset($data['category'], $data['perspective'])) {
 			return false;
 		}
 

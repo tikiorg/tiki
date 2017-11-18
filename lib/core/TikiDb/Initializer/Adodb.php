@@ -5,9 +5,15 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-if (! defined('ADODB_FORCE_NULLS')) define('ADODB_FORCE_NULLS', 1);
-if (! defined('ADODB_ASSOC_CASE')) define('ADODB_ASSOC_CASE', 2);
-if (! defined('ADODB_CASE_ASSOC')) define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase?
+if (! defined('ADODB_FORCE_NULLS')) {
+	define('ADODB_FORCE_NULLS', 1);
+}
+if (! defined('ADODB_ASSOC_CASE')) {
+	define('ADODB_ASSOC_CASE', 2);
+}
+if (! defined('ADODB_CASE_ASSOC')) {
+	define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase?
+}
 
 class TikiDb_Initializer_Adodb
 {
@@ -20,7 +26,7 @@ class TikiDb_Initializer_Adodb
 	{
 		$dbTiki = ADONewConnection('mysqli');
 
-		if (!@$dbTiki->Connect($credentials['host'], $credentials['user'], $credentials['pass'], $credentials['dbs'])) {
+		if (! @$dbTiki->Connect($credentials['host'], $credentials['user'], $credentials['pass'], $credentials['dbs'])) {
 			throw new Exception($dbTiki->ErrorMsg());
 		}
 
@@ -32,4 +38,3 @@ class TikiDb_Initializer_Adodb
 		return new TikiDb_Adodb($dbTiki);
 	}
 }
-

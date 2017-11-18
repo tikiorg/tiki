@@ -17,8 +17,8 @@ class Tiki_Render_Editable
 	function __construct($html, array $parameters)
 	{
 		$this->inner = $html;
-		
-		if (! empty($parameters['layout']) && in_array($parameters['layout'], array('inline', 'block', 'dialog'))) {
+
+		if (! empty($parameters['layout']) && in_array($parameters['layout'], ['inline', 'block', 'dialog'])) {
 			$this->layout = $parameters['layout'];
 		}
 
@@ -78,4 +78,3 @@ class Tiki_Render_Editable
 		return "<$tag class=\"$class\" data-field-fetch-url=\"$fieldFetch\" data-object-store-url=\"$objectStore\" data-group=\"$group\" data-label=\"$label\">$value</$tag>";
 	}
 }
-

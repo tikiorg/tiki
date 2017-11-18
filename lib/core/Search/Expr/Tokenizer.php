@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -13,15 +13,15 @@ class Search_Expr_Tokenizer
 
 	function tokenize($string)
 	{
-		$tokens = array();
+		$tokens = [];
 		$open = false;
 		$current = '';
 
 		$length = strlen($string);
-		for ($i = 0; $length > $i; ++$i ) {
+		for ($i = 0; $length > $i; ++$i) {
 			$char = $string{$i};
 
-			if ($open ) {
+			if ($open) {
 				if ($char === self::QUOTE) {
 					$this->addToken($tokens, $current);
 					$open = false;
@@ -49,10 +49,9 @@ class Search_Expr_Tokenizer
 
 	private function addToken(&$tokens, &$current)
 	{
-		if ( strlen($current) ) {
+		if (strlen($current)) {
 			$tokens[] = $current;
 			$current = '';
 		}
 	}
 }
-

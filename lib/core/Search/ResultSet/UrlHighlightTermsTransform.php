@@ -24,10 +24,8 @@ class UrlHighlightTermsTransform
 	{
 		if (isset($entry['url']) && $this->termsParameter) {
 			$entry['url'] = $entry['url'] . (strpos($entry['url'], '?') === false ? '?' : '&') . $this->termsParameter;
-
 		}
 
 		return $entry;
 	}
 }
-

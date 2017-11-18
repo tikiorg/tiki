@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -40,10 +40,11 @@ class DateRange implements Control
 	{
 		if ($this->hasValue()) {
 			$tikilib = \TikiLib::lib('tiki');
-			return tr('From %0 to %1',
+			return tr(
+				'From %0 to %1',
 				$tikilib->get_short_date($this->from),
 				$tikilib->get_short_date($this->to)
-				);
+			);
 		} else {
 			return '';
 		}
@@ -72,7 +73,7 @@ class DateRange implements Control
 	function getTo()
 	{
 		// Date ranges are inclusive, so use end of day so last day is included
-		return $this->to + 3600*24 - 1;
+		return $this->to + 3600 * 24 - 1;
 	}
 
 	function __toString()

@@ -13,18 +13,18 @@
 // Purpose: Inject FutureLink UI components into Wiki editing screens.  Managed page's saved attributes per
 //          FutureLink UI interaction.  Generates and presents FutureLink text string to user.
 
-Class FutureLink_FutureUI extends Feed_Abstract
+class FutureLink_FutureUI extends Feed_Abstract
 {
 	var $type = 'futurelink';
 	var $version = 0.1;
 	var $isFileGal = true;
 	var $debug = false;
 	var $page = '';
-	static $pagesParsed = array();
-	static $parsedDatas = array();
-	var $metadata = array();
-	var $verifications = array();
-	var $itemsAdded = array();
+	static $pagesParsed = [];
+	static $parsedDatas = [];
+	var $metadata = [];
+	var $verifications = [];
+	var $itemsAdded = [];
 
 	function __construct($page)
 	{
@@ -37,7 +37,7 @@ Class FutureLink_FutureUI extends Feed_Abstract
 	{
 		//May be used soon for encrypting futurelinks
 		if (isset($_REQUEST['action'], $_REQUEST['hash']) && $_REQUEST['action'] == 'timestamp') {
-			$client = TikiLib::lib('tiki')->get_http_client(TikiLib::tikiUrl() . 'tiki-timestamp.php', array('timeout' => 60));
+			$client = TikiLib::lib('tiki')->get_http_client(TikiLib::tikiUrl() . 'tiki-timestamp.php', ['timeout' => 60]);
 			$client->getRequest()->getQuery()->set('hash', $_REQUEST['hash']);
 			$client->getRequest()->getQuery()->set('clienttime', time());
 			$response = $client->send();
@@ -51,18 +51,17 @@ Class FutureLink_FutureUI extends Feed_Abstract
 		$perms = Perms::get();
 
 		//check if profile is created
-        // TODO: implement this or similar checks in search.php to explain why phrase query fails -- 2013-04-09 LDG
+		// TODO: implement this or similar checks in search.php to explain why phrase query fails -- 2013-04-09 LDG
 		$trackerId = TikiLib::lib('trk')->get_tracker_by_name('Wiki Attributes');
 		if ($trackerId < 1 && $perms->admin == 'y') {
 			TikiLib::lib('header')->add_jq_onready(
-<<<JQ
+				<<<JQ
 				var addQuestionsButton = $('<span class="button btn btn-default"><a href="tiki-admin.php?profile=Simple+Wiki+Attributes&repository=&page=profiles&list=List">' + tr('Apply Profile "Simple Wiki Attributes" To Add FutureLink Questions') + '</a></span>')
 					.appendTo('#page-bar');
 JQ
 			);
 		} else {
-
-			$trackerPerms = Perms::get(array( 'type' => 'tracker', 'object' => $trackerId ));
+			$trackerPerms = Perms::get([ 'type' => 'tracker', 'object' => $trackerId ]);
 			$page = htmlspecialchars($this->page);
 
 			if ($trackerPerms->edit == true) {
@@ -73,7 +72,7 @@ JQ
 				TikiLib::lib('header')
 					->add_jsfile('lib/jquery_tiki/tiki-trackers.js')
 					->add_jq_onready(
-<<<JQ
+						<<<JQ
 						function trackerForm(trackerId, itemId, tracker_fn_name, type, fn) {
 							$.tikiModal(tr("Loading..."));
 
@@ -241,7 +240,7 @@ JQ
 
 		TikiLib::lib('header')
 			->add_jq_onready(
-<<<JQ
+				<<<JQ
 				var addQuestionsButton = $('<span class="button btn btn-default"><a href="tiki-view_tracker.php?trackerId=' + $trackerId + '">' + tr("Edit FutureLink Questions") + '</a></span>')
 					.click(function() {
 						var questionBox = $('<table style="width: 100%;" />');
@@ -348,7 +347,7 @@ JQ
 		$page = urlencode($this->page);
 
 		$headerlib->add_jq_onready(
-<<<JQ
+			<<<JQ
 			var answers = $answers,
 
 			createPastLinkButton = $('.pastlinkCreationButton');
@@ -573,9 +572,9 @@ JQ
 
 		$me = new FutureLink_FutureUI($page);
 
-		$phrase = (!empty($_POST['phrase']) ? $_POST['phrase'] : '');
+		$phrase = (! empty($_POST['phrase']) ? $_POST['phrase'] : '');
 		FutureLink_Search::goToNewestWikiRevision($version, $phrase);
-        FutureLink_Search::restoreFutureLinkPhrasesInWikiPage($me->getItems(), $phrase);
+		FutureLink_Search::restoreFutureLinkPhrasesInWikiPage($me->getItems(), $phrase);
 
 		$me->editInterfaces();
 		$me->createPastLinksInterface();
@@ -593,15 +592,15 @@ JQ
 
 		$body = JisonParser_Phraser_Handler::superSanitize($body);
 
-        (new Tracker_Query('Wiki Attributes'))
+		(new Tracker_Query('Wiki Attributes'))
 			->byName()
 			->replaceItem(
-				array(
+				[
 					'Page' => $page,
 					'Attribute' => $version,
 					'Value' => $body,
 					'Type' => 'FutureLink Revision'
-				)
+				]
 			);
 	}
 
@@ -609,7 +608,7 @@ JQ
 	{
 		parent::addItem($item);
 
-		$exists = array();
+		$exists = [];
 		$verificationsCount = count($this->verifications);
 		foreach ($this->verifications as &$verification) {
 			foreach ($verification['reason'] as $reason) {
@@ -619,10 +618,10 @@ JQ
 			}
 		}
 
-        //If they were not added, but the reason is that they already exist, we show that they were sent successfully
+		//If they were not added, but the reason is that they already exist, we show that they were sent successfully
 		if (count($exists) == $verificationsCount) {
-            return true;
-        }
+			return true;
+		}
 
 		return $this->itemsAdded;
 	}
@@ -638,13 +637,12 @@ JQ
 		$this->itemsAdded = false;
 
 		foreach ($item->feed->entry as $i => $newEntry) {
-			$this->verifications[$i] = array();
-			$this->verifications[$i]["reason"] = array();
+			$this->verifications[$i] = [];
+			$this->verifications[$i]["reason"] = [];
 
 			//lets remove the new entry if it has already been accepted in the past
 			foreach ($contents->entry as &$existingEntry) {
-				if (
-					$existingEntry->pastlink->text == $newEntry->pastlink->text &&
+				if ($existingEntry->pastlink->text == $newEntry->pastlink->text &&
 					$existingEntry->pastlink->href == $newEntry->pastlink->href
 				) {
 					$this->verifications[$i]['reason'][] = 'exists';
@@ -664,7 +662,7 @@ JQ
 
 			$this->verifications[$i]["metadataHere"] = $this->metadata->raw;
 
-			$this->verifications[$i]["phraseThere"] =JisonParser_Phraser_Handler::superSanitize($newEntry->futurelink->text);
+			$this->verifications[$i]["phraseThere"] = JisonParser_Phraser_Handler::superSanitize($newEntry->futurelink->text);
 			$this->verifications[$i]["hashHere"] = hash_hmac("md5", $this->verifications[$i]["hashBy"], $this->verifications[$i]["phraseThere"]);
 			$this->verifications[$i]["hashThere"] = $newEntry->futurelink->hash;
 			$this->verifications[$i]['exists'] = JisonParser_Phraser_Handler::hasPhrase(
@@ -715,20 +713,20 @@ JQ
 			$this->itemsAdded = true;
 
 			foreach ($item->feed->entry as &$entry) {
-                (new Tracker_Query('Wiki Attributes'))
+				(new Tracker_Query('Wiki Attributes'))
 					->byName()
 					->replaceItem(
-						array(
+						[
 							'Page' => $this->page,
 							'Attribute' => '',
 							'Value' => $entry->futurelink->text,
 							'Type' => 'FutureLink Accepted'
-						)
+						]
 					);
 			}
 
 			if (empty($contents->entry) == true) {
-				$contents->entry = array();
+				$contents->entry = [];
 			}
 
 			$contents->entry = array_merge($contents->entry, $item->feed->entry);

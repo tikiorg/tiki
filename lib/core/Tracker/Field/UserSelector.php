@@ -15,138 +15,138 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 {
 	public static function getTypes()
 	{
-		return array(
-			'u' => array(
+		return [
+			'u' => [
 				'name' => tr('User Selector'),
 				'description' => tr('Allows the selection of a user or users from a list.'),
 				'help' => 'User selector',
-				'prefs' => array('trackerfield_userselector'),
-				'tags' => array('basic'),
+				'prefs' => ['trackerfield_userselector'],
+				'tags' => ['basic'],
 				'default' => 'y',
-				'params' => array(
-					'autoassign' => array(
+				'params' => [
+					'autoassign' => [
 						'name' => tr('Auto-Assign'),
 						'description' => tr('Assign the value based on the creator or modifier.'),
 						'filter' => 'int',
 						'default' => 0,
-						'options' => array(
+						'options' => [
 							0 => tr('None'),
 							1 => tr('Creator'),
 							2 => tr('Modifier'),
-						),
+						],
 						'legacy_index' => 0,
-					),
-					'owner' => array(
+					],
+					'owner' => [
 						'name' => tr('Item Owner'),
 						'description' => tr('Is this field an ItemOwner field that determines permissions of the item?'),
 						'filter' => 'int',
-						'options' => array(
+						'options' => [
 							0 => tr('No'),
 							1 => tr('Yes'),
-						),
+						],
 						'default' => 0,
-					),
-					'notify' => array(
+					],
+					'notify' => [
 						'name' => tr('Email Notification'),
 						'description' => tr('Send an email notification to the user(s) every time the item is modified.'),
 						'filter' => 'int',
-						'options' => array(
+						'options' => [
 							0 => tr('No'),
 							1 => tr('Yes'),
 							2 => tr('Only when other users modify the item'),
-						),
+						],
 						'legacy_index' => 1,
-					),
-					'notify_template' => array(
+					],
+					'notify_template' => [
 						'name' => tr('Notification Template'),
 						'description' => tr('The notification email template to use in templates/mail directory or in wiki:PAGE or tplwiki:PAGE format. Default: tracker_changed_notification.tpl. A corresponding subject template must also exist, e.g. tracker_changed_notification_subject.tpl (optional for wiki page templates).'),
 						'filter' => 'text',
-						'depends' => array(
+						'depends' => [
 							'field' => 'notify',
 							'value' => '0',
 							'op' => '!=='
-						),
-					),
-					'notify_template_format' => array(
+						],
+					],
+					'notify_template_format' => [
 						'name' => tr('Email Format'),
 						'description' => tr('Choose between values text or html, depending on the syntax in the template file that will be used.'),
 						'filter' => 'text',
-						'depends' => array(
+						'depends' => [
 							'field' => 'notify',
 							'value' => '0',
 							'op' => '!=='
-						),
+						],
 						'default' => 'text',
-						'options' => array(
+						'options' => [
 							'text' => tr('text'),
 							'html' => tr('html'),
-						),
-					),
-					'multiple' => array(
+						],
+					],
+					'multiple' => [
 						'name' => tr('Multiple selection'),
 						'description' => tr('Allow selection of multiple users from the list.'),
 						'filter' => 'int',
-						'options' => array(
+						'options' => [
 							0 => tr('No'),
 							1 => tr('Yes (complete list)'),
 							2 => tr('Yes (filterable by group)'),
-						),
+						],
 						'default' => 0,
-					),
-					'groupIds' => array(
+					],
+					'groupIds' => [
 						'name' => tr('Group IDs'),
 						'description' => tr('Limit the list of users to members of specific groups.'),
 						'separator' => '|',
 						'filter' => 'int',
 						'legacy_index' => 2,
-					),
-					'canChangeGroupIds' => array(
+					],
+					'canChangeGroupIds' => [
 						'name' => tr('Groups that can modify autoassigned values'),
 						'description' => tr('List of group IDs who can change this field, even without tracker_admin permission.'),
 						'separator' => '|',
 						'filter' => 'int',
-					),
-					'showRealname' => array(
+					],
+					'showRealname' => [
 						'name' => tr('Show real name if possible'),
 						'description' => tr('Show real name if possible'),
 						'filter' => 'int',
-						'options' => array(
+						'options' => [
 							0 => tr('No'),
 							1 => tr('Yes'),
-						),
+						],
 						'default' => 0,
-					),
-				),
-			),
-		);
+					],
+				],
+			],
+		];
 	}
 
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
 		global $user, $prefs;
 
 		$ins_id = $this->getInsertId();
 
-		$data = array();
+		$data = [];
 
 		$autoassign = (int) $this->getOption('autoassign');
 
-		if ( isset($requestData[$ins_id])) {
+		if (isset($requestData[$ins_id])) {
 			if ($autoassign == 0 || $this->canChangeValue()) {
 				$ausers = $requestData[$ins_id];
-				if( !is_array($ausers) ) {
+				if (! is_array($ausers)) {
 					$ausers = TikiLib::lib('trk')->parse_user_field($ausers);
 				}
 				$userlib = TikiLib::lib('user');
-				$users = array();
-				foreach( $ausers as $auser ) {
+				$users = [];
+				foreach ($ausers as $auser) {
 					if ($userlib->user_exists($auser)) {
 						$users[] = $auser;
-					} elseif( $auser ) {
+					} elseif ($auser) {
 						$finaluser = null;
 						if ($prefs['user_selector_realnames_tracker'] == 'y' && $this->getOption('showRealname')) {
-							$finalusers = $userlib->find_best_user(array($auser), '', 'login');
-							if (!empty($finalusers[0])) {
+							$finalusers = $userlib->find_best_user([$auser], '', 'login');
+							if (! empty($finalusers[0])) {
 								$finaluser = $finalusers[0];
 							}
 						}
@@ -160,9 +160,9 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 				$data['value'] = TikiLib::lib('tiki')->str_putcsv($users);
 			} else {
 				if ($autoassign == 2) {
-					if( $this->getOption('multiple') ) {
+					if ($this->getOption('multiple')) {
 						$data['value'] = TikiLib::lib('trk')->parse_user_field($this->getValue());
-						if( !in_array($user, $data['value']) ) {
+						if (! in_array($user, $data['value'])) {
 							$data['value'][] = $user;
 						}
 						$data['value'] = TikiLib::lib('tiki')->str_putcsv($data['value']);
@@ -170,7 +170,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 						$data['value'] = $user;
 					}
 				} elseif ($autoassign == 1) {
-					if (!$this->getItemId() || ($this->getTrackerDefinition()->getConfiguration('userCanTakeOwnership')  == 'y' && !$this->getValue())) {
+					if (! $this->getItemId() || ($this->getTrackerDefinition()->getConfiguration('userCanTakeOwnership') == 'y' && ! $this->getValue())) {
 						$data['value'] = $user; // the user appropiate the item
 					} else {
 						$data['value'] = $this->getValue();
@@ -187,19 +187,19 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		return $data;
 	}
 
-	function renderInput($context = array())
+	function renderInput($context = [])
 	{
 		global $user, $prefs;
 		$smarty = TikiLib::lib('smarty');
 
 		$value = $this->getConfiguration('value');
-		if( $value ) {
+		if ($value) {
 			$value = TikiLib::lib('trk')->parse_user_field($value);
 		} else {
-			$value = array();
+			$value = [];
 		}
 		$autoassign = (int) $this->getOption('autoassign');
-		if ((empty($value) && $autoassign == 1) || ($autoassign == 2 && !in_array($user, $value))) {	// always use $user for last mod autoassign
+		if ((empty($value) && $autoassign == 1) || ($autoassign == 2 && ! in_array($user, $value))) {	// always use $user for last mod autoassign
 			$value[] = $user;
 		}
 		if ($autoassign == 0 || $this->canChangeValue()) {
@@ -215,44 +215,44 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 				$realnames = 'n';
 			}
 
-			if( $this->getOption('multiple') == 2 ) {
+			if ($this->getOption('multiple') == 2) {
 				$userlib = TikiLib::lib('user');
-				if( !empty($groupIds) ) {
+				if (! empty($groupIds)) {
 					$groupIds = explode('|', $groupIds);
 				}
 				$groups = $userlib->list_all_groups_with_permission();
 				$groups = $userlib->get_group_info($groups);
-				if( !empty($groupIds) ) {
-					$groups = array_filter($groups, function($group) use ($groupIds) {
+				if (! empty($groupIds)) {
+					$groups = array_filter($groups, function ($group) use ($groupIds) {
 						return in_array($group['id'], $groupIds);
 					});
 				}
-				$groups = array_map(function($group) {
+				$groups = array_map(function ($group) {
 					return $group['groupName'];
 				}, $groups);
-				$selected_groups = array();
+				$selected_groups = [];
 				$users = $userlib->get_members($groups);
-				foreach( $users as $group => &$usrs ) {
-					if( array_intersect($value, $usrs) ) {
+				foreach ($users as $group => &$usrs) {
+					if (array_intersect($value, $usrs)) {
 						$selected_groups[] = $group;
 					}
-					if( $this->getOption('showRealname') ) {
+					if ($this->getOption('showRealname')) {
 						$smarty->loadPlugin('smarty_modifier_username');
 						$usrs = array_combine($usrs, array_map('smarty_modifier_username', $usrs));
 					} else {
 						$usrs = array_combine($usrs, $usrs);
 					}
 				}
-				return $this->renderTemplate('trackerinput/userselector_grouped.tpl', $context, array(
+				return $this->renderTemplate('trackerinput/userselector_grouped.tpl', $context, [
 					'groups' => $groups,
 					'users' => $users,
 					'selected_users' => $value,
 					'selected_groups' => $selected_groups,
-				));
+				]);
 			} else {
 				$smarty->loadPlugin('smarty_function_user_selector');
 				return smarty_function_user_selector(
-					array(
+					[
 						'user' => $name,
 						'id'  => 'user_selector_' . $this->getConfiguration('fieldId'),
 						'select' => $value,
@@ -263,7 +263,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 						'noneLabel' => ( empty($context['filter']) ? 'None' : '' ),
 						'groupIds' => $groupIds,
 						'realnames' => $realnames,
-					),
+					],
 					$smarty
 				);
 			}
@@ -280,17 +280,18 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 	/**
 	 * Check that groups exist in the database
-	 * 
+	 *
 	 * @param array $groupIds
 	 * @return array
 	 */
-	function checkGroupsExist($groupIds){
+	function checkGroupsExist($groupIds)
+	{
 		$userslib = TikiLib::lib('user');
 
 		$groups = [];
-		foreach($groupIds as $group){
+		foreach ($groupIds as $group) {
 			$info = $userslib->get_groupId_info($group);
-			if($info['id']){
+			if ($info['id']) {
 				$groups[] = $group;
 			}
 		}
@@ -298,13 +299,13 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		return $groups;
 	}
 
-	function renderInnerOutput($context = array())
+	function renderInnerOutput($context = [])
 	{
 		$value = $this->getConfiguration('value');
 		if (empty($value)) {
 			return '';
 		} else {
-			if (!is_array($value)) {
+			if (! is_array($value)) {
 				$value = TikiLib::lib('trk')->parse_user_field($value);
 			}
 			if ($this->getOption('showRealname')) {
@@ -335,12 +336,12 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		$controller = new Services_RemoteController($syncInfo['provider'], 'user');
 		$users = $controller->getResultLoader(
 			'list_users',
-			array(
+			[
 				'groupIds' => $groupIds,
-			)
+			]
 		);
 
-		$list = array();
+		$list = [];
 		foreach ($users as $user) {
 			$list[] = $user['login'];
 		}
@@ -358,7 +359,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 	/**
 	 * Search index fields:
-	 * - permName: identifier for exact match if single-user field OR multivalue if multiple-user field 
+	 * - permName: identifier for exact match if single-user field OR multivalue if multiple-user field
 	 * - permName_text: sortable text search for Real Name (if enabled) or user identifiers
 	 */
 	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
@@ -381,11 +382,10 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 			$baseValue = $typeFactory->identifier($value);
 		}
 
-		return array(
+		return [
 			$baseKey => $baseValue,
 			"{$baseKey}_text" => $typeFactory->sortable($realName),
-		);
-
+		];
 	}
 
 	/**
@@ -413,13 +413,13 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 	{
 		global $user;
 
-		$value =  $this->getValue('');
+		$value = $this->getValue('');
 		$autoassign = (int) $this->getOption('autoassign');
 
 		if ($autoassign === 1 || $autoassign === 2) {
-			if( $this->getOption('multiple') && $value ) {
+			if ($this->getOption('multiple') && $value) {
 				$value = TikiLib::lib('trk')->parse_user_field($value);
-				if( !in_array($user, $value) ) {
+				if (! in_array($user, $value)) {
 					$value[] = $user;
 				}
 				$value = TikiLib::lib('tiki')->str_putcsv($value);
@@ -428,10 +428,9 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 			}
 		}
 
-		return array(
+		return [
 			'value' => $value,
-		);
-
+		];
 	}
 
 	function getTabularSchema()
@@ -463,7 +462,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 				if ($value) {
 					$value = TikiLib::lib('trk')->parse_user_field($value);
-					foreach( $value as &$v ) {
+					foreach ($value as &$v) {
 						$v = smarty_modifier_username($v, true, false, false);
 					}
 					return implode(', ', $value);
@@ -481,7 +480,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 				if ($value) {
 					$value = TikiLib::lib('trk')->parse_user_field($value);
-					foreach( $value as &$v ) {
+					foreach ($value as &$v) {
 						$v = smarty_function_object_link([
 							'type' => 'trackeritem',
 							'id' => $extra['itemId'],
@@ -504,7 +503,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 				if ($value) {
 					$value = TikiLib::lib('trk')->parse_user_field($value);
-					foreach( $value as &$v ) {
+					foreach ($value as &$v) {
 						$v = smarty_function_object_link([
 							'type' => 'trackeritem',
 							'id' => $extra['itemId'],
@@ -543,24 +542,24 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 		$userlib = TikiLib::lib('user');
 		$tikilib = TikiLib::lib('tiki');
-		$users = array();
+		$users = [];
 
 		$groupIds = $this->getOption('groupIds', '');
-		if( !empty($groupIds) ) {
+		if (! empty($groupIds)) {
 			$groupIds = explode('|', $groupIds);
 		}
 		$groups = $userlib->list_all_groups_with_permission();
 		$groups = $userlib->get_group_info($groups);
-		if( !empty($groupIds) ) {
-			$groups = array_filter($groups, function($group) use ($groupIds) {
+		if (! empty($groupIds)) {
+			$groups = array_filter($groups, function ($group) use ($groupIds) {
 				return in_array($group['id'], $groupIds);
 			});
 		}
-		$groups = array_map(function($group) {
+		$groups = array_map(function ($group) {
 			return $group['groupName'];
 		}, $groups);
-		
-		if (!empty($groups)) {
+
+		if (! empty($groups)) {
 			$usrs = [];
 			foreach ($groups as $group) {
 				$group_users = $userlib->get_group_users($group);
@@ -598,7 +597,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 						foreach ($values as $v) {
 							if ($v === '-Blank (no data)-') {
-								$sub->filterIdentifier('', $baseKey.'_text');
+								$sub->filterIdentifier('', $baseKey . '_text');
 							} elseif ($v) {
 								$sub->filterMultivalue((string) $v, $baseKey);
 							}
@@ -613,13 +612,13 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 					$value = $control->getValue();
 
 					if ($value === '-Blank (no data)-') {
-						$query->filterIdentifier('', $baseKey.'_text');
+						$query->filterIdentifier('', $baseKey . '_text');
 					} elseif ($value) {
 						$query->filterIdentifier($value, $baseKey);
 					}
 				});
 		}
-		
+
 		return $filters;
 	}
 
@@ -645,4 +644,3 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		return $perms->admin_trackers;
 	}
 }
-

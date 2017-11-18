@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,11 +9,11 @@ class Search_Action_WikiApprovalAction implements Search_Action_Action
 {
 	function getValues()
 	{
-		return array(
+		return [
 			'object_type' => true,
 			'object_id' => true,
 			'wiki_approval_state' => true,
-		);
+		];
 	}
 
 	function validate(JitFilter $data)
@@ -50,8 +50,8 @@ class Search_Action_WikiApprovalAction implements Search_Action_Action
 		return true;
 	}
 
-	function requiresInput(JitFilter $data) {
+	function requiresInput(JitFilter $data)
+	{
 		return false;
 	}
 }
-

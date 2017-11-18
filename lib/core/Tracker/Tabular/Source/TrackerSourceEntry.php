@@ -34,4 +34,3 @@ class TrackerSourceEntry
 		return $column->render($value, $this->extra);
 	}
 }
-

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -22,7 +22,7 @@ class Search_GlobalSource_AdvancedRatingSource implements Search_GlobalSource_In
 		if (is_null($this->fields)) {
 			$ratingconfiglib = TikiLib::lib('ratingconfig');
 
-			$this->fields = array();
+			$this->fields = [];
 			foreach ($ratingconfiglib->get_configurations() as $config) {
 				$this->fields[] = "adv_rating_{$config['ratingConfigId']}";
 			}
@@ -33,14 +33,14 @@ class Search_GlobalSource_AdvancedRatingSource implements Search_GlobalSource_In
 
 	function getGlobalFields()
 	{
-		return array();
+		return [];
 	}
 
-	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
+	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = [])
 	{
 		$ratings = $this->ratinglib->obtain_ratings($objectType, $objectId, $this->recalculate);
 
-		$data = array();
+		$data = [];
 
 		foreach ($ratings as $id => $value) {
 			$data["adv_rating_$id"] = $typeFactory->sortable($value);
@@ -49,4 +49,3 @@ class Search_GlobalSource_AdvancedRatingSource implements Search_GlobalSource_In
 		return $data;
 	}
 }
-

@@ -7,50 +7,49 @@
 
 class Math_Formula_Tokenizer
 {
-	function getTokens( $string )
+	function getTokens($string)
 	{
-		$tokens = array();
+		$tokens = [];
 
 		$len = strlen($string);
 		$current = '';
 		$inString = false;
 
-		for ( $i = 0; $len > $i; ++$i ) {
+		for ($i = 0; $len > $i; ++$i) {
 			$chr = $string{$i};
 
 			$end = false;
 			$extra = null;
 
-			if ( $chr == '"' ) {
+			if ($chr == '"') {
 				$current .= $chr;
 				$inString = ! $inString;
 				$end = ! $inString;
-			} elseif ( $inString ) {
+			} elseif ($inString) {
 				$current .= $chr;
-			} elseif ( ctype_space($chr) ) {
+			} elseif (ctype_space($chr)) {
 				$end = true;
-			} elseif ( $chr == '(' || $chr == ')' ) {
+			} elseif ($chr == '(' || $chr == ')') {
 				$extra = $chr;
 				$end = true;
 			} else {
 				$current .= $chr;
 			}
 
-			if ( $end && 0 != strlen($current) ) {
+			if ($end && 0 != strlen($current)) {
 				$tokens[] = $current;
 				$current = '';
 			}
 
-			if ( $extra ) {
+			if ($extra) {
 				$tokens[] = $extra;
 			}
 		}
 
-		if ( strlen($current) != 0 ) {
+		if (strlen($current) != 0) {
 			$tokens[] = $current;
 		}
 
 		return $tokens;
 	}
 }
-

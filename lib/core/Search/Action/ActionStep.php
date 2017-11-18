@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -18,13 +18,13 @@ class Search_Action_ActionStep implements Search_Action_Step
 
 	function getFields()
 	{
-		$initial = array();
+		$initial = [];
 		foreach (array_keys($this->action->getValues()) as $keyName) {
 			$initial[] = rtrim($keyName, '+');
 		}
 
-		$required = array();
-		$found = array();
+		$required = [];
+		$found = [];
 
 		foreach ($this->definition as $key => $value) {
 			if (preg_match('/^(.*)_field$/', $key, $parts)) {
@@ -32,14 +32,14 @@ class Search_Action_ActionStep implements Search_Action_Step
 
 				if (in_array($key, $initial)) {
 					$required[] = $value;
-					$initial = array_diff($initial, array($key));
+					$initial = array_diff($initial, [$key]);
 				}
 			} elseif (preg_match('/^(.*)_field_(coalesce|multiple)$/', $key, $parts)) {
 				$key = $parts[1];
 
 				if (in_array($key, $initial)) {
 					$required = array_merge($required, $this->splitFields($value));
-					$initial = array_diff($initial, array($key));
+					$initial = array_diff($initial, [$key]);
 				}
 			} else {
 				$found[] = $key;
@@ -74,21 +74,21 @@ class Search_Action_ActionStep implements Search_Action_Step
 
 	private function prepare($entry)
 	{
-		$out = array();
+		$out = [];
 
 		foreach ($this->action->getValues() as $fieldName => $isRequired) {
 			$initialName = $fieldName;
 			$fieldName = rtrim($fieldName, '+');
 			$requiresArray = $initialName != $fieldName;
 
-			$values = array();
+			$values = [];
 
 			if (isset($this->definition[$fieldName])) {
 				// Static value
-				$values = array($this->definition[$fieldName]);
+				$values = [$this->definition[$fieldName]];
 			} elseif (isset($this->definition[$fieldName . '_field'])) {
 				// Use different field
-				$values = $this->readValues($entry, array($this->definition[$fieldName . '_field']));
+				$values = $this->readValues($entry, [$this->definition[$fieldName . '_field']]);
 			} elseif (isset($this->definition[$fieldName . '_field_coalesce'])) {
 				$readFrom = $this->splitFields($this->definition[$fieldName . '_field_coalesce']);
 				$values = $this->readValues($entry, $readFrom);
@@ -97,7 +97,7 @@ class Search_Action_ActionStep implements Search_Action_Step
 				$readFrom = $this->splitFields($this->definition[$fieldName . '_field_multiple']);
 				$values = $this->readValues($entry, $readFrom);
 			} else {
-				$values = $this->readValues($entry, array($fieldName));
+				$values = $this->readValues($entry, [$fieldName]);
 			}
 
 			if (empty($values) && $isRequired) {
@@ -114,7 +114,7 @@ class Search_Action_ActionStep implements Search_Action_Step
 
 	private function readValues($entry, $readFrom)
 	{
-		$values = array();
+		$values = [];
 
 		foreach ($readFrom as $candidate) {
 			if (isset($entry[$candidate])) {
@@ -130,4 +130,3 @@ class Search_Action_ActionStep implements Search_Action_Step
 		return array_filter(array_map('trim', explode(',', $string)));
 	}
 }
-

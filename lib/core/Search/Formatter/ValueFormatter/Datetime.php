@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -11,7 +11,7 @@ class Search_Formatter_ValueFormatter_Datetime extends Search_Formatter_ValueFor
 
 	function __construct(array $arguments = [])
 	{
-		if( isset($arguments['dateFormat']) ) {
+		if (isset($arguments['dateFormat'])) {
 			$this->format = $arguments['dateFormat'];
 		} else {
 			$tikilib = TikiLib::lib('tiki');
@@ -33,7 +33,8 @@ class Search_Formatter_ValueFormatter_Datetime extends Search_Formatter_ValueFor
 		}
 	}
 
-	public function timestamp($value) {
+	public function timestamp($value)
+	{
 		if (preg_match('/^\d{14}$/', $value)) {
 			// Facing a date formated as YYYYMMDDHHIISS as indexed in lucene
 			// Always stored as UTC
@@ -54,4 +55,3 @@ class Search_Formatter_ValueFormatter_Datetime extends Search_Formatter_ValueFor
 		return $time;
 	}
 }
-

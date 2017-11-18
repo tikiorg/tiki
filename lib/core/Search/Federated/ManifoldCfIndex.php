@@ -52,4 +52,3 @@ class ManifoldCfIndex implements IndexInterface
 		return $this->type;
 	}
 }
-

@@ -16,122 +16,122 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 {
 	public static function getTypes()
 	{
-		return array(
-			'e' => array(
+		return [
+			'e' => [
 				'name' => tr('Category'),
 				'description' => tr('Allows the tracker item to be categorized in one or more categories under the specified main category.'),
 				'help' => 'Category Tracker Field',
-				'prefs' => array('trackerfield_category', 'feature_categories'),
-				'tags' => array('advanced'),
+				'prefs' => ['trackerfield_category', 'feature_categories'],
+				'tags' => ['advanced'],
 				'default' => 'y',
-				'params' => array(
-					'parentId' => array(
+				'params' => [
+					'parentId' => [
 						'name' => tr('Parent Category'),
 						'description' => tr('Child categories will be provided as options for the field.'),
 						'filter' => 'int',
 						'legacy_index' => 0,
 						'profile_reference' => 'category',
-					),
-					'inputtype' => array(
+					],
+					'inputtype' => [
 						'name' => tr('Input Type'),
 						'description' => tr('User interface control to be used.'),
 						'default' => 'd',
 						'filter' => 'alpha',
-						'options' => array(
+						'options' => [
 							'd' => tr('Dropdown'),
 							'radio' => tr('Radio buttons'),
 							'm' => tr('List box'),
 							'checkbox' => tr('Multiple-selection checkboxes'),
-						),
+						],
 						'legacy_index' => 1,
-					),
-					'selectall' => array(
+					],
+					'selectall' => [
 						'name' => tr('Select All'),
 						'description' => tr('Includes a control to select all available options for multi-selection controls.'),
 						'filter' => 'int',
-						'options' => array(
+						'options' => [
 							0 => tr('No controls'),
 							1 => tr('Include controls'),
-						),
+						],
 						'legacy_index' => 2,
-					),
-					'descendants' => array(
+					],
+					'descendants' => [
 						'name' => tr('All descendants'),
 						'description' => tr('Display all descendants instead of only first-level descendants'),
 						'filter' => 'int',
-						'options' => array(
+						'options' => [
 							0 => tr('First level only'),
 							1 => tr('All descendants'),
 							2 => tr('All descendants and display full path'),
-						),
+						],
 						'legacy_index' => 3,
-					),
-					'help' => array(
+					],
+					'help' => [
 						'name' => tr('Help'),
 						'description' => tr('Displays the field description in a help tooltip.'),
 						'filter' => 'int',
-						'options' => array(
+						'options' => [
 							0 => tr('No help'),
 							1 => tr('Tooltip'),
-						),
+						],
 						'legacy_index' => 4,
-					),
-					'outputtype' => array(
+					],
+					'outputtype' => [
 						'name' => tr('Output Type'),
 						'description' => tr(''),
 						'filter' => 'word',
-						'options' => array(
+						'options' => [
 							'' => tr('Plain list with items separated by line breaks (default)'),
 							'links' => tr('Links separated by line breaks'),
 							'ul' => tr('Unordered list of labels'),
 							'ulinks' => tr('Unordered list of links'),
-						),
-					),
-					'doNotInheritCategories' => array(
+						],
+					],
+					'doNotInheritCategories' => [
 						'name' => tr('Do not Inherit Categories'),
 						'description' => tr("Tracker items will inherit their tracker's categories unless this option is set."),
 						'filter' => 'int',
-						'options' => array(
+						'options' => [
 							0 => tr('Inherit (default)'),
 							1 => tr('Do not inherit'),
-						),
-					),
-					'recategorize' => array(
+						],
+					],
+					'recategorize' => [
 						'name' => tr('Recategorization event'),
 						'type' => 'list',
 						'description' => tr('Set this to "Indexing" to recategorize the items during reindexing as well as when saving.'),
 						'filter' => 'word',
-						'options' => array(
+						'options' => [
 							'save' => tr('Save'),
 							'index' => tr('Indexing'),
-						),
-					),
-				),
-			),
-		);
+						],
+					],
+				],
+			],
+		];
 	}
 
-	public function getFieldData(array $requestData = array())
+	public function getFieldData(array $requestData = [])
 	{
 		$key = 'ins_' . $this->getConfiguration('fieldId');
 		$parentId = $this->getOption('parentId');
 
 		if (isset($requestData[$key])) {
-			if (!is_array($requestData[$key])) {
-				$selected = array($requestData[$key]);
+			if (! is_array($requestData[$key])) {
+				$selected = [$requestData[$key]];
 			} else {
 				$selected = $requestData[$key];
 			}
-		} else if (isset($requestData["cat_managed_$key"])) {
-			$selected = array();
-		} elseif ($this->getItemId() && !isset($requestData[$key])) {
+		} elseif (isset($requestData["cat_managed_$key"])) {
+			$selected = [];
+		} elseif ($this->getItemId() && ! isset($requestData[$key])) {
 			// only show existing category of not receiving request, otherwise might be uncategorization in progress
 			$selected = $this->getCategories($this->getItemId());
 		} else {
 			$selected = TikiLib::lib('categ')->get_default_categories();
 		}
 
-		$tracker_categories = array();
+		$tracker_categories = [];
 
 		if (! $this->getOption('doNotInheritCategories')) {
 			// use the parent tracker categories by default for new items
@@ -143,37 +143,37 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		$categories = $this->getApplicableCategories();
 		$selected = array_intersect($selected, $this->getIds($categories));
 
-		$data = array(
+		$data = [
 			'value' => implode(',', $selected),
 			'selected_categories' => $selected,
 			'tracker_categories' => $tracker_categories,
 			'list' => $categories,
-		);
+		];
 
 		return $data;
 	}
 
-	public function renderInput($context = array())
+	public function renderInput($context = [])
 	{
 		$itemId = $this->getItemId();
 		if ($itemId) {
-			$perms = Perms::get(array('type' => 'trackeritem', 'object' => $itemId));
+			$perms = Perms::get(['type' => 'trackeritem', 'object' => $itemId]);
 			if (! $perms->modify_object_categories) {
 				return $this->renderOutput($context);
 			}
 		} else {	// check perms on the parent tracker if creating a new item
-			$perms = Perms::get(array('type' => 'tracker', 'object' => $this->getConfiguration('trackerId')));
+			$perms = Perms::get(['type' => 'tracker', 'object' => $this->getConfiguration('trackerId')]);
 			if (! $perms->modify_object_categories) {
 				return $this->renderOutput($context);
 			}
 		}
 
 		$smarty = TikiLib::lib('smarty');
-		$smarty->assign('cat_tree', array());
+		$smarty->assign('cat_tree', []);
 		if ($this->getOption('descendants') > 0 && $this->getOption('inputtype') === 'checkbox') {
 			$categories = $this->getConfiguration('list');
 			$tracker_categories = $this->getConfiguration('tracker_categories');
-			if (is_array($tracker_categories) && !empty($tracker_categories)) {
+			if (is_array($tracker_categories) && ! empty($tracker_categories)) {
 				foreach ($categories as & $cat) {
 					$cat['canchange'] = ! in_array($cat['categId'], $tracker_categories);
 				}
@@ -190,11 +190,11 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		return $this->renderTemplate('trackerinput/category.tpl', $context);
 	}
 
-	public function renderInnerOutput($context = array())
+	public function renderInnerOutput($context = [])
 	{
 		$selected_categories = $this->getConfiguration('selected_categories');
 		$categories = $this->getConfiguration('list');
-		$ret = array();
+		$ret = [];
 		foreach ($selected_categories as $categId) {
 			foreach ($categories as $category) {
 				if ($category['categId'] == $categId) {
@@ -220,7 +220,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		if (strpos($this->getOption('outputtype'), 'ul') === 0) {
 			if (count($ret)) {
 				$out = '<ul class="tracker_field_category">';
-				foreach($ret as $li) {
+				foreach ($ret as $li) {
 					$out .= '<li>' . $li . '</li>';
 				}
 				$out .= '</ul>';
@@ -246,9 +246,9 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 			$value = implode(',', $value);
 		}
 
-		return array(
+		return [
 			'value' => $value,
-		);
+		];
 	}
 
 	public function watchCompare($old, $new)
@@ -280,18 +280,18 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 
 	private function describeCategoryList($categs)
 	{
-	    $categlib = TikiLib::lib('categ');
-	    $res = '';
-	    foreach ($categs as $cid) {
+		$categlib = TikiLib::lib('categ');
+		$res = '';
+		foreach ($categs as $cid) {
 			$info = $categlib->get_category($cid);
 			$res .= '    ' . $info['name'] . "\n";
-	    }
-	    return $res;
+		}
+		return $res;
 	}
 
 	private function getIds($categories)
 	{
-		$validIds = array();
+		$validIds = [];
 		foreach ($categories as $c) {
 			$validIds[] = $c['categId'];
 		}
@@ -301,16 +301,16 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 
 	private function getApplicableCategories()
 	{
-		static $cache = array();
+		static $cache = [];
 		$fieldId = $this->getConfiguration('fieldId');
 
 		if (! isset($cache[$fieldId])) {
 			$parentId = (int) $this->getOption('parentId');
 			$descends = $this->getOption('descendants') > 0;
 			if ($parentId > 0) {
-				$data = TikiLib::lib('categ')->getCategories(array('identifier'=>$parentId, 'type'=>$descends ? 'descendants' : 'children'));
+				$data = TikiLib::lib('categ')->getCategories(['identifier' => $parentId, 'type' => $descends ? 'descendants' : 'children']);
 			} else {
-				$data = TikiLib::lib('categ')->getCategories(array('type' => $descends ? 'all' : 'roots'));
+				$data = TikiLib::lib('categ')->getCategories(['type' => $descends ? 'all' : 'roots']);
 			}
 
 			$cache[$fieldId] = $data;
@@ -356,13 +356,13 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 	{
 		$controller = new Services_RemoteController($syncInfo['provider'], 'category');
 		$categories = $controller->list_categories(
-			array(
+			[
 				'parentId' => $parentId,
 				'descends' => $descending,
-			)
+			]
 		);
 
-		$parts = array();
+		$parts = [];
 		foreach ($categories as $categ) {
 			$parts[] = $categ['categId'] . '=' . $categ['name'];
 		}
@@ -407,7 +407,6 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		};
 
 		if ($type == 'd' || $type == 'radio') {
-
 			// Works for single selection only
 			$schema->addNew($permName, 'id')
 				->setLabel($name)
@@ -451,7 +450,6 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 				})
 				;
 		} else {
-
 			// Handle multi-selection fields
 			$schema->addNew($permName, 'multi-id')
 				->setLabel($name)
@@ -480,7 +478,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 							return $sourceCategories[$cat]['name'];
 						}
 					}, $categories);
-					
+
 					return implode('; ', array_filter($categories));
 				})
 				->setParseIntoTransform(function (& $info, $value) use ($permName, $invert) {
@@ -579,7 +577,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 				$value = $control->getValue();
 
 				if ($value === '-Blank (no data)-') {
-					$query->filterIdentifier('', $baseKey.'_text');
+					$query->filterIdentifier('', $baseKey . '_text');
 				} elseif ($value) {
 					$query->filterCategory((string) $value);
 				}
@@ -599,7 +597,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 
 					if (! empty($values)) {
 						if (in_array('-Blank (no data)-', $values)) {
-							$query->filterIdentifier('', $baseKey.'_text');
+							$query->filterIdentifier('', $baseKey . '_text');
 						} else {
 							$query->filterCategory(implode(' OR ', $values));
 						}
@@ -624,7 +622,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 
 						if (! empty($values)) {
 							if (in_array('-Blank (no data)-', $values)) {
-								$query->filterIdentifier('', $baseKey.'_text');
+								$query->filterIdentifier('', $baseKey . '_text');
 							} else {
 								$query->filterCategory(implode(' AND ', $values));
 							}
@@ -653,7 +651,6 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		$value = array_filter(explode(',', $this->getValue()));
 
 		if ($this->getOption('recategorize') === 'index') {
-
 			// if using inherit this will get the tracker's categories too even if not saved
 			$newValue = $this->getFieldData();
 			$newValue = $newValue['selected_categories'];
@@ -690,13 +687,13 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		// Warning to upgraders: older Tikis had no getDocumentPart so the comma-separated string was indexed
 		// in the past. It now indexes an array. Use {$baseKey}_text instead for a space delimited string.
 		$baseKey = $this->getBaseKey();
-		return array(
+		return [
 			$baseKey => $typeFactory->multivalue($value),
 			"{$baseKey}_text" => $typeFactory->plaintext(implode(' ', $value)),
-		);
+		];
 	}
 
-	static public function syncCategoryFields($args)
+	public static function syncCategoryFields($args)
 	{
 		if ($args['type'] == 'trackeritem') {
 			$itemId = $args['object'];
@@ -710,15 +707,15 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 					$applicable = array_keys($data['list']);
 					$value = $old_value = explode(",", TikiLib::lib('trk')->get_item_value($trackerId, $itemId, $fieldId));
 					foreach ($args['added'] as $added) {
-						if (!in_array($added, $applicable)) {
+						if (! in_array($added, $applicable)) {
 							continue;
 						}
-						if (!in_array($added, $value)) {
+						if (! in_array($added, $value)) {
 							$value[] = $added;
 						}
 					}
 					foreach ($args['removed'] as $removed) {
-						if (!in_array($removed, $applicable)) {
+						if (! in_array($removed, $applicable)) {
 							continue;
 						}
 						if (in_array($removed, $value)) {
@@ -734,4 +731,3 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		}
 	}
 }
-

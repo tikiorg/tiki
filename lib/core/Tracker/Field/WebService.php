@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * Handler class for WebService
- * 
+ *
  * Letter key: ~W~
  *
  */
@@ -15,77 +15,77 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 {
 	public static function getTypes()
 	{
-		return array(
-			'W' => array(
+		return [
+			'W' => [
 				'name' => tr('Webservice'),
 				'description' => tr('Displays the result of a registered webservice call.'),
 				'readonly' => true,
-				'help' => 'Webservice+tracker+field',				
-				'prefs' => array('trackerfield_webservice', 'feature_webservices'),
-				'tags' => array('advanced'),
+				'help' => 'Webservice+tracker+field',
+				'prefs' => ['trackerfield_webservice', 'feature_webservices'],
+				'tags' => ['advanced'],
 				'default' => 'n',
-				'params' => array(
-					'service' => array(
+				'params' => [
+					'service' => [
 						'name' => tr('Service Name'),
 						'description' => tr('Webservice name as registered in Tiki.'),
 						'filter' => 'word',
 						'legacy_index' => 0,
-					),
-					'template' => array(
+					],
+					'template' => [
 						'name' => tr('Template Name'),
 						'description' => tr('Template name to use for rendering as registered with the webservice.'),
 						'filter' => 'word',
 						'legacy_index' => 1,
-					),
-					'params' => array(
+					],
+					'params' => [
 						'name' => tr('Parameters'),
 						'description' => tr('URL-encoded list of parameters to send to the webservice. %field_name% can be used in the string to be replaced with the values in the tracker item by field permName, Id or Name.'),
 						'filter' => 'url',
 						'legacy_index' => 2,
-					),
-					'requireParams' => array(
+					],
+					'requireParams' => [
 						'name' => tr('Require parameters'),
 						'description' => tr('Do not execute the request if parameters are missing or empty'),
 						'filter' => 'word',
-						'options' => array(
+						'options' => [
 							'' => tra('All required') . ' ' . tra('(default)'),
 							'first' => tr('First only required'),
 							'none' => tr('No parameters required'),
-						),
-					),
-					'cacheSeconds' => array(
+						],
+					],
+					'cacheSeconds' => [
 						'name' => tr('Cache time'),
 						'description' => tr('Time in seconds to cache the result for before trying again.'),
 						'filter' => 'digits',
-					),
-				),
-			),
-		);
+					],
+				],
+			],
+		];
 	}
 
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
-		return array();
+		return [];
 	}
 
-	function renderInput($context = array())
+	function renderInput($context = [])
 	{
 		return '<div class="text-muted">' . tr('Read only') . '</div>';
 	}
 
-	function renderOutput($context = array())
+	function renderOutput($context = [])
 	{
 
 		$name = $this->getOption('service');
 		$tpl = $this->getOption('template');
 
-		if (!$name || !$tpl) {
+		if (! $name || ! $tpl) {
 			return false;
 		}
 
 		require_once 'lib/webservicelib.php';
 
-		if (!($webservice = Tiki_Webservice::getService($name))) {
+		if (! ($webservice = Tiki_Webservice::getService($name))) {
 			Feedback::error(tr('Webservice %0 not found', $name), 'session');
 			return false;
 		}
@@ -108,7 +108,7 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 		$itemId = 0;	// itemId once saved after updating data
 
 		if (! $cacheSeconds || TikiLib::lib('tiki')->now > $lastRefreshed + $cacheSeconds) {
-			$ws_params = array();
+			$ws_params = [];
 			$definition = $this->getTrackerDefinition();
 
 			if ($this->getOption('params')) {
@@ -123,7 +123,7 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 						$ws_param_field_name = $matches[2];
 
 						$field = $definition->getField($ws_param_field_name);
-						if (!$field) {
+						if (! $field) {
 							$field = $definition->getFieldFromName($ws_param_field_name);
 						}
 						if ($field) {
@@ -132,7 +132,7 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 							if (isset($itemData[$field['fieldId']])) {
 								$value = TikiLib::lib('trk')->get_field_value($field, $itemData);
 							} else {
-								$itemUsers = array();
+								$itemUsers = [];
 
 								if (empty($itemData['itemId'])) {
 									$itemData['itemId'] = $_REQUEST['itemId'];	// when editing an item the itemId doesn't seem to be available?
@@ -164,16 +164,16 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 			$error = '';
 			if ($response->errors) {
 				$error = implode(',', $response->errors);
-			} else if (! empty($response->data['error'])) {
+			} elseif (! empty($response->data['error'])) {
 				if (isset($response->data['error']['message'])) {
 					$error = $response->data['error']['message'];	// e.g. facebook graph api
 				} else {
 					$error = $response->data['error'];
 				}
-			} else if (isset($response->data['status']) && $response->data['status'] !== 'OK') {
+			} elseif (isset($response->data['status']) && $response->data['status'] !== 'OK') {
 				$error = $response->data['status'];					// e.g. google places api
-			} else if (!empty($response->data['hasErrors'])) {
-				if (!empty($response->data['errorCode'])) {			// others
+			} elseif (! empty($response->data['hasErrors'])) {
+				if (! empty($response->data['errorCode'])) {			// others
 					$error = tr('Unknown webservice error (code: %0)', $response->data['errorCode']);
 				} else {
 					$error = tr('Unknown webservice error');
@@ -181,9 +181,7 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 			}
 			if ($error) {
 				Feedback::error($error, 'session');
-
-			} else if (empty($context['search_render']) || $context['search_render'] !== 'y') {
-
+			} elseif (empty($context['search_render']) || $context['search_render'] !== 'y') {
 				if ($template->engine === 'index') {
 					$source = new Search_ContentSource_WebserviceSource();
 					$indexData = $source->getData($name, $tpl, $ws_params);	// preforms request again but should be cached
@@ -208,9 +206,7 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 												}
 											}
 										}
-
 									} else {
-
 										if (! empty($val) && ! empty($indexData['mapping'][$topObject][$key])) {
 											if (! is_array($val)) {
 												$newData[$key] = $val;
@@ -230,7 +226,6 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 							}
 						}
 					}
-
 				} else {
 					$newData = $response->data;
 				}
@@ -244,15 +239,16 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 					if (strlen(json_encode($newData)) >= 65535) {	// Limit to size of TEXT field
 						$newData = $oldData;
 						Feedback::error(
-							tr('Data too long for Webservice field %0 with %1',
+							tr(
+								'Data too long for Webservice field %0 with %1',
 								$this->getConfiguration('permName'),
 								http_build_query($ws_params)
-							));
+							)
+						);
 					}
 				}
 
 				if ($newData != $oldData) {
-
 					$thisField = $definition->getField($this->getConfiguration('fieldId'));
 					$newData['tiki_updated'] = gmdate('c');
 					$thisField['value'] = json_encode($newData);
@@ -263,8 +259,8 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 						['data' => [$thisField]]
 					);
 
-					if (!$itemId) {
-						Feedback::error(tr('Error updating Webservice field %0', $this->getConfiguration('permName')),'session');
+					if (! $itemId) {
+						Feedback::error(tr('Error updating Webservice field %0', $this->getConfiguration('permName')), 'session');
 						// try and restore previous data
 						$response->data = json_decode($this->getValue());
 					}
@@ -293,7 +289,7 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 
 		if (isset($value['result'])) {
 			$value = $value['result'];
-		} else if (isset($value['data'])) {
+		} elseif (isset($value['data'])) {
 			$value = $value['data'];
 		} else {
 			unset($value['tiki_updated']);	// index the whole response
@@ -302,15 +298,14 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 			$value = [];
 		}
 
-		return array(
+		return [
 			$baseKey => $typeFactory->multivalue(array_filter($value, 'is_string')),
 			"{$baseKey}_text" => $typeFactory->plaintext(		// ignore nested arrays and remove html for plain text
 					strip_tags(
-							implode(' ', array_filter($value, 'is_string'))
+						implode(' ', array_filter($value, 'is_string'))
 					)
 			),
 			"{$baseKey}_json" => $typeFactory->json($value),
-		);
+		];
 	}
-
 }

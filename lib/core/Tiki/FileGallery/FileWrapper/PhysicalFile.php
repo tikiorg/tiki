@@ -31,4 +31,3 @@ class PhysicalFile implements WrapperInterface
 		return \file_get_contents($tmpfname);
 	}
 }
-

@@ -15,46 +15,46 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 {
 	public static function getTypes()
 	{
-		return array(
-			'A' => array(
+		return [
+			'A' => [
 				'name' => tr('Attachment'),
 				'description' => tr('Deprecated in favor of the Files field.'),
 				'help' => 'Attachment Field',
-				'prefs' => array('trackerfield_file'),
-				'tags' => array('basic'),
+				'prefs' => ['trackerfield_file'],
+				'tags' => ['basic'],
 				'default' => 'n',
-				'params' => array(
-					'listview' => array(
+				'params' => [
+					'listview' => [
 						'name' => tr('List View'),
 						'description' => tr('Defines how attachments will be displayed within the field.'),
-						'options' => array(
+						'options' => [
 							'n' => tr('name'),
 							't' => tr('type'),
 							'ns' => tr('name, size'),
 							'nts' => tr('name, type, size'),
 							'u' => tr('uploader'),
 							'm' => tr('mediaplayer'),
-						),
+						],
 						'legacy_index' => 0,
-					),
-				),
-			),
-		);
+					],
+				],
+			],
+		];
 	}
 
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
 		$ins_id = $this->getInsertId();
 
-		if (!empty($requestData) && isset($_FILES[$ins_id]) && is_uploaded_file($_FILES[$ins_id]['tmp_name'])) {
+		if (! empty($requestData) && isset($_FILES[$ins_id]) && is_uploaded_file($_FILES[$ins_id]['tmp_name'])) {
 			$data['old_value'] = $this->getValue();
 			$data['value'] = file_get_contents($_FILES[$ins_id]['tmp_name']);
 			$data['file_type'] = $_FILES[$ins_id]['type'];
 			$data['file_size'] = $_FILES[$ins_id]['size'];
 			$data['file_name'] = $_FILES[$ins_id]['name'];
 		} else {
-			$data = array('value' => $this->getValue());
-			if (!empty($data['value']) && (int) $data['value'] > 0) {
+			$data = ['value' => $this->getValue()];
+			if (! empty($data['value']) && (int) $data['value'] > 0) {
 				$attachment = TikiLib::lib('trk')->get_item_attachment($data['value']);
 				$data['filename'] = $attachment['filename'];
 			}
@@ -62,12 +62,12 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 		return $data;
 	}
 
-	function renderInput($context = array())
+	function renderInput($context = [])
 	{
 		return $this->renderTemplate('trackerinput/file.tpl', $context);
 	}
 
-	function renderInnerOutput($context = array())
+	function renderInnerOutput($context = [])
 	{
 		$att_id = $this->getValue();
 
@@ -87,11 +87,11 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 		$smarty->loadPlugin('smarty_function_icon');
 
 		$link = smarty_block_self_link(
-			array(
+			[
 				'_script' => 'tiki-download_item_attachment.php',
 				'attId' => $att_id,
-			),
-			smarty_function_icon(array('_id' => 'disk', 'alt' => tra('Download')), $smarty) . ' ' .
+			],
+			smarty_function_icon(['_id' => 'disk', 'alt' => tra('Download')], $smarty) . ' ' .
 			$attachment['filename'],
 			$smarty
 		);
@@ -111,10 +111,10 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 		$perms = Perms::get('tracker', $trackerId);
 		if ($perms->attach_trackers && $file_name) {
 			if ($prefs['t_use_db'] == 'n') {
-				$fhash = md5($file_name.$tikilib->now);
+				$fhash = md5($file_name . $tikilib->now);
 				if (file_put_contents($prefs['t_use_dir'] . $fhash, $value) === false) {
 					$smarty = TikiLib::lib('smarty');
-					$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
+					$smarty->assign('msg', tra('Cannot write to this file:') . $fhash);
 					$smarty->display("error.tpl");
 					die;
 				}
@@ -127,25 +127,24 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 			$value = $trklib->replace_item_attachment($oldValue, $file_name, $file_type, $file_size, $value, '', $user, $fhash, '', '', $trackerId, $this->getItemId(), '', false);
 		}
 
-		return array(
+		return [
 			'value' => $value,
-		);
+		];
 	}
 
 	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
-		return array(
-		);
+		return [
+		];
 	}
 
 	function getProvidedFields()
 	{
-		return array();
+		return [];
 	}
 
 	function getGlobalFields()
 	{
-		return array();
+		return [];
 	}
 }
-

@@ -25,17 +25,17 @@ class Services_File_Controller
 	{
 		$gal_info = $this->checkTargetGallery($input);
 
-		return array(
+		return [
 			'title' => tr('File Upload'),
 			'galleryId' => $gal_info['galleryId'],
 			'limit' => abs($input->limit->int()),
 			'typeFilter' => $input->type->text(),
 			'uploadInModal' => $input->uploadInModal->int(),
 			'files' => $this->getFilesInfo((array) $input->file->int()),
-			'image_max_size_x'=>$input->image_max_size_x->text(),
-			'image_max_size_y'=>$input->image_max_size_y->text()
-			
-		);
+			'image_max_size_x' => $input->image_max_size_x->text(),
+			'image_max_size_y' => $input->image_max_size_y->text()
+
+		];
 	}
 
 	function action_upload($input)
@@ -48,15 +48,13 @@ class Services_File_Controller
 
 		$fileId = $input->fileId->int();
 		$asuser = $input->user->text();
-			if(!$input->imagesize->word())		
-          {		
-		   $image_x=$input->image_max_size_x->text();		
-		   $image_y=$input->image_max_size_y->text();		
-		  }		
-		else		
-		{  $image_x=$gal_info["image_max_size_x"];		
-		   $image_y=$gal_info["image_max_size_y"];		
-		} 
+		if (! $input->imagesize->word()) {
+			$image_x = $input->image_max_size_x->text();
+			$image_y = $input->image_max_size_y->text();
+		} else {
+			$image_x = $gal_info["image_max_size_x"];
+			$image_y = $gal_info["image_max_size_y"];
+		}
 		if (isset($_FILES['data'])) {
 			// used by $this->action_upload_multiple and file gallery Files fields (possibly others)
 			if (is_uploaded_file($_FILES['data']['tmp_name'])) {
@@ -93,7 +91,7 @@ class Services_File_Controller
 		if ($fileId) {
 			$this->utilities->updateFile($gal_info, $name, $size, $type, $data, $fileId, $asuser);
 		} else {
-			$fileId = $this->utilities->uploadFile($gal_info, $name, $size, $type, $data, $asuser,$image_x,$image_y);
+			$fileId = $this->utilities->uploadFile($gal_info, $name, $size, $type, $data, $asuser, $image_x, $image_y);
 		}
 
 		if ($fileId === false) {
@@ -107,14 +105,14 @@ class Services_File_Controller
 		$cat_href = "tiki-download_file.php?fileId=$fileId";
 		include('categorize.php');
 
-		return array(
+		return [
 			'size' => $size,
 			'name' => $name,
 			'type' => $type,
 			'fileId' => $fileId,
 			'galleryId' => $gal_info['galleryId'],
 			'md5sum' => md5($data),
-		);
+		];
 	}
 
 	/**
@@ -132,7 +130,6 @@ class Services_File_Controller
 		$output = ['files' => []];
 
 		if (isset($_FILES['files']) && is_array($_FILES['files']['tmp_name'])) {
-
 			// a few other params that are still arrays but shouldn't be (mostly)
 			if (is_array($input->galleryId->asArray())) {
 				$input->offsetSet('galleryId', $input->asArray('galleryId')[0]);
@@ -169,8 +166,8 @@ class Services_File_Controller
 					// do the actual upload
 					$file = $this->action_upload($input);
 
-					if (!empty($file['fileId'])) {
-						$file['info'] =  $filegallib->get_file_info($file['fileId']);
+					if (! empty($file['fileId'])) {
+						$file['info'] = $filegallib->get_file_info($file['fileId']);
 						// when stored in the database the file contents is here and should not be sent back to the client
 						$file['info']['data'] = null;
 						$file['syntax'] = $filegallib->getWikiSyntax($file['galleryId'], $file['info'], $input->asArray());
@@ -218,7 +215,6 @@ class Services_File_Controller
 		}
 
 		return $output;
-
 	}
 
 	function action_browse($input)
@@ -291,9 +287,9 @@ class Services_File_Controller
 		$url = $input->url->url();
 
 		if (! $url) {
-			return array(
+			return [
 				'galleryId' => $gal_info['galleryId'],
-			);
+			];
 		}
 
 		$filegallib = TikiLib::lib('filegal');
@@ -320,14 +316,14 @@ class Services_File_Controller
 
 		$filegallib->attach_file_source($fileId, $url, $info, $input->reference->int());
 
-		return array(
+		return [
 			'size' => $info['size'],
 			'name' => $info['name'],
 			'type' => $info['type'],
 			'fileId' => $fileId,
 			'galleryId' => $gal_info['galleryId'],
 			'md5sum' => md5($info['data']),
-		);
+		];
 	}
 
 	function action_refresh($input)
@@ -344,9 +340,9 @@ class Services_File_Controller
 		$filegallib = TikiLib::lib('filegal');
 		$ret = $filegallib->refresh_file($input->fileId->int());
 
-		return array(
+		return [
 			'success' => $ret,
-		);
+		];
 	}
 
 	/**
@@ -385,7 +381,7 @@ class Services_File_Controller
 		if ($this->utilities == null) {
 			$this->utilities = new Services_File_Utilities;
 		}
-		
+
 		return $this->utilities->checkTargetGallery($galleryId);
 	}
 
@@ -396,4 +392,3 @@ class Services_File_Controller
 		}, array_filter($files));
 	}
 }
-

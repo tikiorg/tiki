@@ -24,14 +24,14 @@ class UnavailableCommand extends Command
 		parent::__construct();
 	}
 
-    protected function configure()
-    {
-        $this
-            ->setDescription('Command not available');
-    }
+	protected function configure()
+	{
+		$this
+			->setDescription('Command not available');
+	}
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
+	protected function execute(InputInterface $input, OutputInterface $output)
+	{
 		$output->writeln('<error>Command not available at this stage. Complete required installation steps.</error>');
-    }
+	}
 }

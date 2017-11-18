@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -22,7 +22,7 @@
  *   }
  *
  * Global permissions may be obtained using Perms::get() without a context.
- * 
+ *
  * Please note that the Perms will now be correct for checking trackeritem
  * context and permissions assigned to parent tracker. If no trackeritem
  * specific permissions are set on the object or category level, system will
@@ -37,7 +37,7 @@
  *   $pages = $tikilib->listpages();
  *
  *   $filtered = Perms::filter(
- *       array( 'type' => 'wiki page' ), 
+ *       array( 'type' => 'wiki page' ),
  *       'object',
  *       $pages,
  *       array( 'object' => 'pageName' ),
@@ -58,7 +58,7 @@
  *
  * Configuration of the facade is required only once. Configuration
  * includes indicating which rules apply, which are the active groups
- * for the current user and a prefix for backwards compatibility. The 
+ * for the current user and a prefix for backwards compatibility. The
  * rules are provided as a list of ResolverFactory objects. Each of
  * these objects will fetch the permissions applicable for the given
  * context. The first factory providing a Resolver for the context
@@ -104,25 +104,25 @@ class Perms
 	private static $instance;
 
 	private $prefix = '';
-	private $groups = array();
-	private $factories = array();
+	private $groups = [];
+	private $factories = [];
 	private $checkSequence = null;
 
-	private $hashes = array();
+	private $hashes = [];
 
-	/** 
+	/**
 	 * Provides a new accessor configured with the global settings and
 	 * a resolver appropriate to the context requested.
 	 */
-	public static function get( $context = array() )
+	public static function get($context = [])
 	{
 		if (! is_array($context)) {
 			$args = func_get_args();
-			$context = array(
+			$context = [
 				'type' => $args[0],
 				'object' => $args[1],
 				'parentId' => isset($args[2]) ? $args[2] : null,
-			);
+			];
 		}
 
 		if (self::$instance) {
@@ -135,7 +135,7 @@ class Perms
 		}
 	}
 
-	public function getAccessor(array $context = array())
+	public function getAccessor(array $context = [])
 	{
 		$accessor = new Perms_Accessor;
 		$accessor->setContext($context);
@@ -180,7 +180,7 @@ class Perms
 	 *                           objects.
 	 * @param $bulkKey string The key added for each of the objects in bulk
 	 *                        loading.
-	 * @param $data array A simple list of values to be loaded (such as a 
+	 * @param $data array A simple list of values to be loaded (such as a
 	 *                    list of page names) or a list of records. When
 	 *                    a list of records is provided, the $dataKey
 	 *                    parameter is required.
@@ -189,7 +189,7 @@ class Perms
 	 */
 	public static function bulk(array $baseContext, $bulkKey, array $data, $dataKey = null)
 	{
-		$remaining = array();
+		$remaining = [];
 
 		foreach ($data as $entry) {
 			if ($dataKey) {
@@ -224,7 +224,7 @@ class Perms
 	{
 		self::bulk($baseContext, $bulkKey, $data, $contextMap[$bulkKey]);
 
-		$valid = array();
+		$valid = [];
 
 		foreach ($data as $entry) {
 			if (self::hasPerm($baseContext, $contextMap, $entry, $permission)) {
@@ -238,10 +238,10 @@ class Perms
 	public static function simpleFilter($type, $key, $permission, array $data)
 	{
 		return self::filter(
-			array('type' => $type),
+			['type' => $type],
 			'object',
 			$data,
-			array('object' => $key),
+			['object' => $key],
 			$permission
 		);
 	}
@@ -269,12 +269,12 @@ class Perms
 	{
 		//echo '<pre>BASECONTEXT'; print_r($baseContext); echo 'DISCRIMATOR';print_r($discriminator); echo 'BULKEY';print_r($bulkKey); echo 'DATA';print_r($data); echo 'CONTEXTMAPMAP';print_r($contextMapMap); echo 'PERMISSIONMAP';print_r($permissionMap); echo '</pre>';
 
-		$perType = array();
+		$perType = [];
 
 		foreach ($data as $row) {
 			$type = $row[$discriminator];
 			if (! isset($perType[$type])) {
-				$perType[$type] = array();
+				$perType[$type] = [];
 			}
 
 			$key = $contextMapMap[$type][$bulkKey];
@@ -288,7 +288,7 @@ class Perms
 			self::$instance->loadBulk($context, $bulkKey, $values);
 		}
 
-		$valid = array();
+		$valid = [];
 
 		foreach ($data as $entry) {
 			$type = $entry[$discriminator];
@@ -328,32 +328,32 @@ class Perms
 
 	private function getResolver(array $context)
 	{
-		$toSet = array();
+		$toSet = [];
 		$finalResolver = false;
 
 		foreach ($this->factories as $factory) {
 			$hash = $factory->getHash($context);
 
 			// no hash returned by factory means factory does not support that context
-			if (!$hash) {
+			if (! $hash) {
 				continue;
 			}
 
-			if( isset($this->hashes[$hash]) ) {
+			if (isset($this->hashes[$hash])) {
 				$finalResolver = $this->hashes[$hash];
 			} else {
 				$toSet[] = $hash;
 				$finalResolver = $factory->getResolver($context);
 			}
 
-			if( $finalResolver ) {
+			if ($finalResolver) {
 				break;
 			}
 		}
 
 		// Limit the amount of hashes preserved to reduce memory consumption
 		if (count($this->hashes) > 1024) {
-			$this->hashes = array();
+			$this->hashes = [];
 		}
 
 		foreach ($toSet as $hash) {
@@ -372,7 +372,7 @@ class Perms
 
 	public function clear()
 	{
-		$this->hashes = array();
+		$this->hashes = [];
 		foreach ($this->factories as $factory) {
 			if (method_exists($factory, 'clear')) {
 				$factory->clear();
@@ -380,4 +380,3 @@ class Perms
 		}
 	}
 }
-

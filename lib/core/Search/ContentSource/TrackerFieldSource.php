@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -16,13 +16,13 @@ class Search_ContentSource_TrackerFieldSource implements Search_ContentSource_In
 
 	function getDocuments()
 	{
-		return $this->db->table('tiki_tracker_fields')->fetchColumn('fieldId', array());
+		return $this->db->table('tiki_tracker_fields')->fetchColumn('fieldId', []);
 	}
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
 	{
 		$lib = TikiLib::lib('trk');
-		
+
 		$field = $lib->get_tracker_field($objectId);
 
 		if (! $field) {
@@ -34,7 +34,7 @@ class Search_ContentSource_TrackerFieldSource implements Search_ContentSource_In
 			$trackername = $definition->getConfiguration('name');
 		}
 
-		$data = array(
+		$data = [
 			'title' => $typeFactory->sortable($field['name']),
 			'description' => $typeFactory->plaintext($field['description']),
 			'tracker_id' => $typeFactory->identifier($field['trackerId']),
@@ -44,14 +44,14 @@ class Search_ContentSource_TrackerFieldSource implements Search_ContentSource_In
 			'searchable' => $typeFactory->identifier('n'),
 
 			'view_permission' => $typeFactory->identifier('tiki_p_view_trackers'),
-		);
+		];
 
 		return $data;
 	}
 
 	function getProvidedFields()
 	{
-		return array(
+		return [
 			'title',
 			'description',
 			'tracker_id',
@@ -60,15 +60,14 @@ class Search_ContentSource_TrackerFieldSource implements Search_ContentSource_In
 			'searchable',
 
 			'view_permission',
-		);
+		];
 	}
 
 	function getGlobalFields()
 	{
-		return array(
+		return [
 			'title' => true,
 			'description' => true,
-		);
+		];
 	}
 }
-

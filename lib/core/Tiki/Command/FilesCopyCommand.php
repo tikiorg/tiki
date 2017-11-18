@@ -31,13 +31,13 @@ class FilesCopyCommand extends Command
 				'Path to copy files to'
 			)
 		;
-	}	
+	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		global $prefs;
 
-		if ($prefs['feature_file_galleries'] != 'y' ) {
+		if ($prefs['feature_file_galleries'] != 'y') {
 			throw new \Exception(tra('Feature Galleries not set up'));
 		}
 
@@ -65,13 +65,13 @@ class FilesCopyCommand extends Command
 		$files = $filegallib->get_files_info_from_gallery_id($galleryId);
 		if (! $files) {
 			if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-				$output->writeln('<comment>'.tra('No files to copy').'</comment>');
+				$output->writeln('<comment>' . tra('No files to copy') . '</comment>');
 			}
 			return;
 		}
 
 		if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-			$output->writeln('<comment>'.tra('File Copy starting...').'</comment>');
+			$output->writeln('<comment>' . tra('File Copy starting...') . '</comment>');
 		}
 
 		$feedback = $filegalcopylib->processCopy($files, $destinationPath, $sourcePath);
@@ -81,15 +81,14 @@ class FilesCopyCommand extends Command
 			if ($error) {
 				$message = "<error>$message</error>";
 				$output->writeln($message);
-			} else if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+			} elseif ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
 				$message = "<info>$message</info>";
 				$output->writeln($message);
 			}
 		}
 
 		if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-			$output->writeln('<comment>'.tra('File Copy complete').'</comment>');
+			$output->writeln('<comment>' . tra('File Copy complete') . '</comment>');
 		}
-
 	}
 }

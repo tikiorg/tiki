@@ -7,28 +7,30 @@
 
 class TikiAddons_Api_Group extends TikiAddons_Api
 {
-	protected static $trackers = array();
-	protected static $public_catroots = array();
-	protected static $private_catroots = array();
-	protected static $managementpages = array();
-	protected static $homepages = array();
+	protected static $trackers = [];
+	protected static $public_catroots = [];
+	protected static $private_catroots = [];
+	protected static $managementpages = [];
+	protected static $homepages = [];
 
 	// overriding isInstalled in TikiAddons_Utilities
-	function isInstalled($folder) {
+	function isInstalled($folder)
+	{
 		$installed1 = array_keys(self::$trackers);
 		$installed2 = array_keys(self::$public_catroots);
 		$installed3 = array_keys(self::$private_catroots);
 		if (strpos($folder, '/') !== false && strpos($folder, '_') === false) {
 			$folder = str_replace('/', '_', $folder);
 		}
-		if (parent::isInstalled($folder) && in_array($folder, $installed1) && in_array($folder, $installed2) && in_array($folder, $installed3) ) {
+		if (parent::isInstalled($folder) && in_array($folder, $installed1) && in_array($folder, $installed2) && in_array($folder, $installed3)) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	static function setTracker($folder, $ref) {
+	static function setTracker($folder, $ref)
+	{
 		if (strpos($folder, '/') !== false && strpos($folder, '_') === false) {
 			$folder = str_replace('/', '_', $folder);
 		}
@@ -36,7 +38,8 @@ class TikiAddons_Api_Group extends TikiAddons_Api
 		return true;
 	}
 
-	static function setPublicCatroot($folder, $ref) {
+	static function setPublicCatroot($folder, $ref)
+	{
 		if (strpos($folder, '/') !== false && strpos($folder, '_') === false) {
 			$folder = str_replace('/', '_', $folder);
 		}
@@ -44,7 +47,8 @@ class TikiAddons_Api_Group extends TikiAddons_Api
 		return true;
 	}
 
-	static function setPrivateCatroot($folder, $ref) {
+	static function setPrivateCatroot($folder, $ref)
+	{
 		if (strpos($folder, '/') !== false && strpos($folder, '_') === false) {
 			$folder = str_replace('/', '_', $folder);
 		}
@@ -52,7 +56,8 @@ class TikiAddons_Api_Group extends TikiAddons_Api
 		return true;
 	}
 
-	static function setManagementPage($folder, $ref) {
+	static function setManagementPage($folder, $ref)
+	{
 		if (strpos($folder, '/') !== false && strpos($folder, '_') === false) {
 			$folder = str_replace('/', '_', $folder);
 		}
@@ -60,7 +65,8 @@ class TikiAddons_Api_Group extends TikiAddons_Api
 		return true;
 	}
 
-	static function setHomePage($folder, $ref) {
+	static function setHomePage($folder, $ref)
+	{
 		if (strpos($folder, '/') !== false && strpos($folder, '_') === false) {
 			$folder = str_replace('/', '_', $folder);
 		}
@@ -68,7 +74,8 @@ class TikiAddons_Api_Group extends TikiAddons_Api
 		return true;
 	}
 
-	function isOrganicGroup($token) {
+	function isOrganicGroup($token)
+	{
 		$folder = $this->getFolderFromToken($token);
 		$installed = array_keys(self::$trackers);
 		if (in_array($folder, $installed)) {
@@ -78,18 +85,20 @@ class TikiAddons_Api_Group extends TikiAddons_Api
 		}
 	}
 
-	function getOrganicGroupBaseName($token) {
+	function getOrganicGroupBaseName($token)
+	{
 		$folder = $this->getFolderFromToken($token);
-		if (!$this->isInstalled($folder)) {
+		if (! $this->isInstalled($folder)) {
 			return '';
 		}
 		$ret = $this->getItemTitleFromToken($token, 'tracker', self::$trackers[$folder]);
 		return $ret;
 	}
 
-	function getOrganicGroupName($token) {
+	function getOrganicGroupName($token)
+	{
 		$folder = $this->getFolderFromToken($token);
-		if (!$this->isInstalled($folder)) {
+		if (! $this->isInstalled($folder)) {
 			return '';
 		}
 		$ret = $this->getItemTitleFromToken($token, 'tracker', self::$trackers[$folder]);
@@ -101,27 +110,30 @@ class TikiAddons_Api_Group extends TikiAddons_Api
 		return $ret;
 	}
 
-	function getOrganicGroupLeaderToken($token) {
+	function getOrganicGroupLeaderToken($token)
+	{
 		$folder = $this->getFolderFromToken($token);
-		if (!$this->isInstalled($folder)) {
+		if (! $this->isInstalled($folder)) {
 			return '';
 		}
 		$id = $this->getItemIdFromToken($token);
 		return $folder . '_managers_' . $id;
 	}
 
-	function getOrganicGroupPendingToken($token) {
+	function getOrganicGroupPendingToken($token)
+	{
 		$folder = $this->getFolderFromToken($token);
-		if (!$this->isInstalled($folder)) {
+		if (! $this->isInstalled($folder)) {
 			return '';
 		}
 		$id = $this->getItemIdFromToken($token);
 		return $folder . '_pending_' . $id;
 	}
 
-	function getOrganicGroupBaseToken($token) {
+	function getOrganicGroupBaseToken($token)
+	{
 		$folder = $this->getFolderFromToken($token);
-		if (!$this->isInstalled($folder)) {
+		if (! $this->isInstalled($folder)) {
 			return '';
 		}
 		$id = $this->getItemIdFromToken($token);
@@ -141,26 +153,26 @@ class TikiAddons_Api_Group extends TikiAddons_Api
 	private function getPublicOrganicGroupCats($token)
 	{
 		$folder = $this->getFolderFromToken($token);
-		if (!$this->isInstalled($folder)) {
-			return array();
+		if (! $this->isInstalled($folder)) {
+			return [];
 		}
-		if ($id = $this->getItemIdFromRef($token, array(self::$public_catroots[$folder]))) {
-			return array_diff(TikiLib::lib('categ')->get_category_descendants($id), array(self::$public_catroots[$folder]));
+		if ($id = $this->getItemIdFromRef($token, [self::$public_catroots[$folder]])) {
+			return array_diff(TikiLib::lib('categ')->get_category_descendants($id), [self::$public_catroots[$folder]]);
 		} else {
-			return array();
+			return [];
 		}
 	}
 
 	private function getPrivateOrganicGroupCats($token)
 	{
 		$folder = $this->getFolderFromToken($token);
-		if (!$this->isInstalled($folder)) {
-			return array();
+		if (! $this->isInstalled($folder)) {
+			return [];
 		}
 		if ($id = $this->getItemIdFromRef($token, self::$private_catroots[$folder])) {
-			return array_diff(TikiLib::lib('categ')->get_category_descendants($id), array(self::$private_catroots[$folder]));
+			return array_diff(TikiLib::lib('categ')->get_category_descendants($id), [self::$private_catroots[$folder]]);
 		} else {
-			return array();
+			return [];
 		}
 	}
 
@@ -173,14 +185,14 @@ class TikiAddons_Api_Group extends TikiAddons_Api
 
 	private function getAllOrganicGroupCats()
 	{
-		$ret = array();
+		$ret = [];
 		foreach (self::$public_catroots as $folder => $ref) {
 			$objects = $this->getObjects($folder);
-			$ret = array_merge($ret, array_diff(TikiLib::lib('categ')->get_category_descendants($objects[$ref]['id']), array($objects[$ref]['id'])));
+			$ret = array_merge($ret, array_diff(TikiLib::lib('categ')->get_category_descendants($objects[$ref]['id']), [$objects[$ref]['id']]));
 		}
 		foreach (self::$private_catroots as $folder => $ref) {
 			$objects = $this->getObjects($folder);
-			$ret = array_merge($ret, array_diff(TikiLib::lib('categ')->get_category_descendants($objects[$ref]['id']), array($objects[$ref]['id'])));
+			$ret = array_merge($ret, array_diff(TikiLib::lib('categ')->get_category_descendants($objects[$ref]['id']), [$objects[$ref]['id']]));
 		}
 		return $ret;
 	}
@@ -189,10 +201,10 @@ class TikiAddons_Api_Group extends TikiAddons_Api
 	{
 		$validcats = $this->getAllOrganicGroupCats();
 		if (empty($validcats)) {
-			return array();
+			return [];
 		}
 
-		$cats = array();
+		$cats = [];
 		$groups = TikiLib::lib('user')->get_user_groups($usr);
 
 		foreach ($groups as $g) {
@@ -204,7 +216,8 @@ class TikiAddons_Api_Group extends TikiAddons_Api
 		return $cats;
 	}
 
-	function organicGroupIsPrivate($token) {
+	function organicGroupIsPrivate($token)
+	{
 		if ($id = $this->getItemIdFromToken($token)) {
 			$status = TikiLib::lib('trk')->get_item_status($id);
 			if ($status == 'p') {
@@ -214,9 +227,10 @@ class TikiAddons_Api_Group extends TikiAddons_Api
 		return false;
 	}
 
-	function getOrganicGroupInfoForItem($type, $id) {
-		$pubcats = array();
-		$pricats = array();
+	function getOrganicGroupInfoForItem($type, $id)
+	{
+		$pubcats = [];
+		$pricats = [];
 		foreach (self::$public_catroots as $folder => $ref) {
 			$objects = $this->getObjects($folder);
 			$pubcats = TikiLib::lib('categ')->get_object_categories($type, $id, $objects[$ref]['id']);
@@ -234,27 +248,29 @@ class TikiAddons_Api_Group extends TikiAddons_Api
 			$ogid = '';
 			$cat = '';
 		}
-		return array('organicgroup' => $ogid, 'cat' => $cat);
+		return ['organicgroup' => $ogid, 'cat' => $cat];
 	}
 
-	function getGroupHomePage($token) {
+	function getGroupHomePage($token)
+	{
 		$folder = $this->getFolderFromToken($token);
-		if (!$this->isInstalled($folder)) {
+		if (! $this->isInstalled($folder)) {
 			return '';
 		}
-		if (!empty(self::$homepages[$folder])) {
+		if (! empty(self::$homepages[$folder])) {
 			return self::$homepages[$folder];
 		} else {
 			return '';
 		}
 	}
 
-	function getGroupManagementPage($token) {
+	function getGroupManagementPage($token)
+	{
 		$folder = $this->getFolderFromToken($token);
-		if (!$this->isInstalled($folder)) {
+		if (! $this->isInstalled($folder)) {
 			return '';
 		}
-		if (!empty(self::$managementpages[$folder])) {
+		if (! empty(self::$managementpages[$folder])) {
 			return self::$managementpages[$folder];
 		} else {
 			return '';

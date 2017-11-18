@@ -25,4 +25,3 @@ class Search_Lucene_HighlightHelper implements Zend\Filter\FilterInterface
 		return trim(strip_tags($this->query->highlightMatches($content, 'UTF-8'), '<b><i><em><strong><pre><code><span>'));
 	}
 }
-

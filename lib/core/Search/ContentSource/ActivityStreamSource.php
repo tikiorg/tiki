@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -38,12 +38,12 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 
 		$mapping = $this->lib->getMapping();
 
-		$document = array(
+		$document = [
 			'event_type' => $typeFactory->identifier($info['eventType']),
 			'modification_date' => $typeFactory->timestamp($info['eventDate']),
 
 			'searchable' => $typeFactory->identifier('n'),
-		);
+		];
 
 		foreach ($info['arguments'] as $key => $value) {
 			$type = isset($mapping[$key]) ? $mapping[$key] : '';
@@ -62,7 +62,7 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 
 			if (count($related)) {
 				$first = reset($related);
-				$collectedFields = array('allowed_groups', 'categories', 'deep_categories', 'freetags', 'freetags_text', 'geo_located', 'geo_location', 'relations', 'relation_types');
+				$collectedFields = ['allowed_groups', 'categories', 'deep_categories', 'freetags', 'freetags_text', 'geo_located', 'geo_location', 'relations', 'relation_types'];
 
 				foreach ($collectedFields as $field) {
 					if (isset($first[$field])) {
@@ -93,8 +93,8 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 
 	function getGlobalFields()
 	{
-		return array(
-		);
+		return [
+		];
 	}
 
 	private function getClearList($activityId)
@@ -110,4 +110,3 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 		return $out;
 	}
 }
-

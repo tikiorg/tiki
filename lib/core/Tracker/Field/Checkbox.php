@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * Handler class for Checkboxes
- * 
+ *
  * Letter key: ~c~
  *
  */
@@ -15,27 +15,27 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract implements Tracker_F
 {
 	public static function getTypes()
 	{
-		return array(
-			'c' => array(
+		return [
+			'c' => [
 				'name' => tr('Checkbox'),
 				'description' => tr('Provides a checkbox field for yes/no, on/off input.'),
-				'help' => 'Checkbox Tracker Field',					
-				'prefs' => array('trackerfield_checkbox'),
-				'tags' => array('basic'),
+				'help' => 'Checkbox Tracker Field',
+				'prefs' => ['trackerfield_checkbox'],
+				'tags' => ['basic'],
 				'default' => 'y',
-				'params' => array(
-				),
-			),
-		);
+				'params' => [
+				],
+			],
+		];
 	}
 
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
 		$ins_id = $this->getInsertId();
 
-		if (!empty($requestData[$ins_id])) {
+		if (! empty($requestData[$ins_id])) {
 			$val = 'y';
-		} elseif (!empty($requestData[$ins_id . '_old'])) {
+		} elseif (! empty($requestData[$ins_id . '_old'])) {
 			$val = 'n';
 		} else {
 			$val = $this->getValue();
@@ -43,12 +43,12 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract implements Tracker_F
 				$val = 'n';
 			}
 		}
-		return array(
+		return [
 			'value' => $val,
-		);
+		];
 	}
 
-	function renderInput($context = array())
+	function renderInput($context = [])
 	{
 		return $this->renderTemplate('trackerinput/checkbox.tpl', $context);
 	}
@@ -59,9 +59,9 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract implements Tracker_F
 			$value = 'y';
 		}
 
-		return array(
+		return [
 			'value' => $value,
-		);
+		];
 	}
 
 	function importRemote($value)
@@ -79,7 +79,7 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract implements Tracker_F
 		return $info;
 	}
 
-	function renderOutput($context = array())
+	function renderOutput($context = [])
 	{
 		$fieldData = $this->getFieldData();
 		if ($fieldData['value'] == 'y' && $context['list_mode'] !== 'csv') {
@@ -87,7 +87,7 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract implements Tracker_F
 		} elseif ($fieldData['value'] == 'n' && $context['list_mode'] !== 'csv') {
 			return tra('No');
 		} else {
-			return $fieldData['value']; 
+			return $fieldData['value'];
 		}
 	}
 
@@ -96,9 +96,9 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract implements Tracker_F
 		$baseKey = $this->getBaseKey();
 		$checked = $this->getValue() === 'y';
 
-		return array(
+		return [
 			$baseKey => $typeFactory->identifier($checked ? 'y' : 'n'),
-		);
+		];
 	}
 
 	function getTabularSchema()

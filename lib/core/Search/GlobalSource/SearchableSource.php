@@ -9,15 +9,15 @@ class Search_GlobalSource_SearchableSource implements Search_GlobalSource_Interf
 {
 	function getProvidedFields()
 	{
-		return array('searchable');
+		return ['searchable'];
 	}
 
 	function getGlobalFields()
 	{
-		return array();
+		return [];
 	}
 
-	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
+	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = [])
 	{
 		// Unless specified by content source explicitly, everything is searchable
 
@@ -25,9 +25,8 @@ class Search_GlobalSource_SearchableSource implements Search_GlobalSource_Interf
 			return [];
 		}
 
-		return array(
+		return [
 			'searchable' => $typeFactory->identifier('y'),
-		);
+		];
 	}
 }
-

@@ -51,10 +51,10 @@ class Services_Search_ManifoldController
 			}
 		}
 
-		return array(
+		return [
 			'title' => tr('ManifoldCF Configuration Check'),
 			'instances' => $instances,
-		);
+		];
 	}
 
 	function action_create_index($input)

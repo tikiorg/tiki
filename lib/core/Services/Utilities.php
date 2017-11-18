@@ -24,10 +24,10 @@ class Services_Utilities
 
 	/**
 	 * Provide referer url if javascript not enabled.
-	 * 
+	 *
 	 * @return bool|string
 	 */
-	static function noJsPath ()
+	static function noJsPath()
 	{
 		global $prefs;
 		//no javascript
@@ -46,14 +46,14 @@ class Services_Utilities
 	 * Send feedback using Feedback class (using 'session' for the method parameter) first before using this.
 	 * Improves handling when javascript is not enabled compared to throwing a Services Exception because it takes the
 	 * user back to the page where the action was initiated and shows the error message there.
-	 * 
+	 *
 	 * @param bool $referer
 	 * @throws Exception
 	 */
-	static function sendFeedback ($referer = false)
+	static function sendFeedback($referer = false)
 	{
 		//no javascript
-		if (!empty($referer)) {
+		if (! empty($referer)) {
 			TikiLib::lib('access')->redirect($referer);
 		//javascript
 		} else {
@@ -67,15 +67,15 @@ class Services_Utilities
 	 * Send feedback using Feedback class (using 'session' for the method parameter) first before using this.
 	 * Improves handling when javascript is not enabled compared to throwing a Services Exception because it takes the
 	 * user back to the page where the action was initiated and shows the error message there.
-	 * 
+	 *
 	 * @param bool $referer
 	 * @return array
 	 * @throws Exception
 	 */
-	static function closeModal ($referer = false)
+	static function closeModal($referer = false)
 	{
 		//no javascript
-		if (!empty($referer)) {
+		if (! empty($referer)) {
 			TikiLib::lib('access')->redirect($referer);
 		//javascript
 		} else {
@@ -94,10 +94,10 @@ class Services_Utilities
 	 * @return array
 	 * @throws Exception
 	 */
-	static function refresh ($referer = false)
+	static function refresh($referer = false)
 	{
 		//no javascript
-		if (!empty($referer)) {
+		if (! empty($referer)) {
 			$referer = new JitFilter(['referer' => $referer]);
 			TikiLib::lib('access')->redirect($referer->referer->striptags());
 		//javascript
@@ -110,12 +110,12 @@ class Services_Utilities
 	/**
 	 * Handle a redirect depending on whether javascript is enabled or not
 	 * Send any feedback using Feedback class (using 'session' for the method parameter) first before using this.
-	 * 
+	 *
 	 * @param $url
 	 * @return array
 	 * @throws Exception
 	 */
-	static function redirect ($url)
+	static function redirect($url)
 	{
 		//no javascript
 		global $prefs;
@@ -131,16 +131,16 @@ class Services_Utilities
 	 * Handle exception when initially clicking a modal service action according to whether javascript is enabled or not.
 	 * Improves handling when javascript is not enabled compared to throwing a Services Exception because it takes the
 	 * user back to the page where the action was initiated and shows the error message there.
-	 * 
+	 *
 	 * @param $mes
 	 * @throws Exception
 	 * @throws Services_Exception
 	 */
-	static function modalException ($mes)
+	static function modalException($mes)
 	{
 		$referer = self::noJsPath();
 		//no javascript
-		if (!empty($referer)) {
+		if (! empty($referer)) {
 			Feedback::error($mes, 'session');
 			TikiLib::lib('access')->redirect($referer);
 		//javascript

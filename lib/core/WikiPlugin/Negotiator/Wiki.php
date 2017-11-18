@@ -33,13 +33,13 @@ class WikiPlugin_Negotiator_Wiki
 	public static $standardRelativePath = 'lib/wiki-plugins/wikiplugin_';
 	public static $zendRelativePath = 'vendor_bundled/vendor/zendframework/zendframework1/library/';
 	public static $checkZendPaths = true;
-	static $pluginIndexes = array();
-	static $pluginInfo = array();
-	static $parserLevels = array();
+	static $pluginIndexes = [];
+	static $pluginInfo = [];
+	static $parserLevels = [];
 	static $currentParserLevel = 0;
-	static $pluginsAwaitingExecution = array();
-	static $pluginInstances = array();
-	static $pluginDetails = array();
+	static $pluginsAwaitingExecution = [];
+	static $pluginInstances = [];
+	static $pluginDetails = [];
 
 	function __construct(& $parser)
 	{
@@ -76,9 +76,11 @@ class WikiPlugin_Negotiator_Wiki
 		$this->className = 'WikiPlugin_' . $this->name;
 
 		if ($this->zendExists() == true) {
-			if (empty(self::$pluginInstances[$this->className])) self::$pluginInstances[$this->className] = new $this->className;
+			if (empty(self::$pluginInstances[$this->className])) {
+				self::$pluginInstances[$this->className] = new $this->className;
+			}
 			$this->class = self::$pluginInstances[$this->className];
-		} else if ($this->injectedExists() == true) {
+		} elseif ($this->injectedExists() == true) {
 			$this->class = self::$pluginInstances[$this->name];
 		} else {
 			$this->class = null;
@@ -101,7 +103,9 @@ class WikiPlugin_Negotiator_Wiki
 
 	private function incrementIndex()
 	{
-		if (isset(self::$pluginIndexes[$this->name]) == false) self::$pluginIndexes[$this->name] = 0;
+		if (isset(self::$pluginIndexes[$this->name]) == false) {
+			self::$pluginIndexes[$this->name] = 0;
+		}
 
 		self::$pluginIndexes[$this->name]++;
 
@@ -126,7 +130,6 @@ class WikiPlugin_Negotiator_Wiki
 					$this->addWaitingPlugin();
 					return $this->key;
 				} else {
-
 					$this->applyFilters();
 					$button = $this->button(false);
 
@@ -142,9 +145,9 @@ class WikiPlugin_Negotiator_Wiki
 
 
 		//old style plugins start
-		$fnName = strtolower('wikiplugin_' .  $this->name);
+		$fnName = strtolower('wikiplugin_' . $this->name);
 
-		if ( $this->exists && function_exists($fnName) ) {
+		if ($this->exists && function_exists($fnName)) {
 			return $fnName($this->body, $this->args, $this->index, $this) . $this->button();
 		}
 		//end old style
@@ -173,17 +176,17 @@ class WikiPlugin_Negotiator_Wiki
 	function urlEncodeArgs()
 	{
 		$args = '';// not using http_build_query() as it converts spaces into +
-		if (!empty($this->args)) {
-			foreach ( $this->args as $argKey => $argValue ) {
+		if (! empty($this->args)) {
+			foreach ($this->args as $argKey => $argValue) {
 				if (is_array($argValue)) {
 					if (isset($this->info['params'][$argKey]['separator'])) {
 						$sep = $this->info['params'][$argKey]['separator'];
 					} else {
 						$sep = ',';
 					}
-					$args .= $argKey.'='.implode($sep, $argValue).'&';
+					$args .= $argKey . '=' . implode($sep, $argValue) . '&';
 				} else {
-					$args .= $argKey.'='.$argValue.'&';
+					$args .= $argKey . '=' . $argValue . '&';
 				}
 			}
 		}
@@ -220,11 +223,11 @@ class WikiPlugin_Negotiator_Wiki
 
 		$exists = file_exists($phpName);
 
-		if ( $include && $exists ) {
+		if ($include && $exists) {
 			include_once $phpName;
 		}
 
-		if ( $exists ) {
+		if ($exists) {
 			return true;
 		}
 
@@ -235,17 +238,17 @@ class WikiPlugin_Negotiator_Wiki
 	{
 		global $tikilib, $prefs;
 		// If validation is disabled, anything can execute
-		if ( $prefs['wiki_validate_plugin'] != 'y' ) {
+		if ($prefs['wiki_validate_plugin'] != 'y') {
 			return true;
 		}
 
-		if ( ! isset( $this->info['validate'] ) ) {
+		if (! isset($this->info['validate'])) {
 			return true;
 		}
 
 		$val = $this->fingerprintCheck();
 
-		switch($val) {
+		switch ($val) {
 			case 'accept':
 				return true;
 							break;
@@ -254,26 +257,25 @@ class WikiPlugin_Negotiator_Wiki
 							break;
 			default:
 				global $tiki_p_plugin_approve, $tiki_p_plugin_preview;
-				if (
-					isset($_SERVER['REQUEST_METHOD'])
+				if (isset($_SERVER['REQUEST_METHOD'])
 					&& $_SERVER['REQUEST_METHOD'] == 'POST'
-					&& isset( $_POST['plugin_fingerprint'] )
+					&& isset($_POST['plugin_fingerprint'])
 					&& $_POST['plugin_fingerprint'] == $this->fingerprint
 				) {
-					if ( $tiki_p_plugin_approve == 'y' ) {
-						if ( isset( $_POST['plugin_accept'] ) ) {
+					if ($tiki_p_plugin_approve == 'y') {
+						if (isset($_POST['plugin_accept'])) {
 							$this->fingerprintStore('accept');
 							$tikilib->invalidate_cache($this->page);
 							return true;
-						} elseif ( isset( $_POST['plugin_reject'] ) ) {
+						} elseif (isset($_POST['plugin_reject'])) {
 							$this->fingerprintStore('reject');
 							$tikilib->invalidate_cache($this->page);
 							return 'rejected';
 						}
 					}
 
-					if ( $tiki_p_plugin_preview == 'y'
-						&& isset( $_POST['plugin_preview'] ) ) {
+					if ($tiki_p_plugin_preview == 'y'
+						&& isset($_POST['plugin_preview']) ) {
 						return true;
 					}
 				}
@@ -284,22 +286,23 @@ class WikiPlugin_Negotiator_Wiki
 
 	function enabled(& $output)
 	{
-		if ( ! $this->info )
+		if (! $this->info) {
 			return true; // Legacy plugins always execute
+		}
 
 		global $prefs;
 
-		$missing = array();
+		$missing = [];
 
-		if ( isset( $this->info['prefs'] ) ) {
-			foreach ( $this->info['prefs'] as $pref ) {
-				if ( isset($prefs[$pref]) && $prefs[$pref] != 'y' ) {
+		if (isset($this->info['prefs'])) {
+			foreach ($this->info['prefs'] as $pref) {
+				if (isset($prefs[$pref]) && $prefs[$pref] != 'y') {
 					$missing[] = $pref;
 				}
 			}
 		}
 
-		if ( count($missing) > 0 ) {
+		if (count($missing) > 0) {
 			$output = WikiParser_PluginOutput::disabled($this->name, $missing);
 			return false;
 		}
@@ -316,30 +319,33 @@ class WikiPlugin_Negotiator_Wiki
 			isset($this->info) &&
 			$tiki_p_edit == 'y' &&
 			$prefs['wiki_edit_plugin'] == 'y' &&
-			!$this->isInline()
+			! $this->isInline()
 		);
 	}
 
 	private function isInline()
 	{
-		if ( ! $this->info )
+		if (! $this->info) {
 			return true; // Legacy plugins always inline
+		}
 
-		if ( isset( $this->info['inline'] ) && $this->info['inline'] )
+		if (isset($this->info['inline']) && $this->info['inline']) {
 			return true;
+		}
 
-		$inline_pref = 'wikiplugininline_' .  $this->name;
-		if ( isset( $this->prefs[ $inline_pref ] ) && $this->prefs[ $inline_pref ] == 'y' )
+		$inline_pref = 'wikiplugininline_' . $this->name;
+		if (isset($this->prefs[ $inline_pref ]) && $this->prefs[ $inline_pref ] == 'y') {
 			return true;
+		}
 
 		return false;
 	}
 
-	private function fingerprintStore( $type )
+	private function fingerprintStore($type)
 	{
 		global $tikilib;
 
-		if ( $this->page ) {
+		if ($this->page) {
 			$objectType = 'wiki page';
 			$objectId = $this->page;
 		} else {
@@ -348,21 +354,21 @@ class WikiPlugin_Negotiator_Wiki
 		}
 
 		$pluginSecurity = $tikilib->table('tiki_plugin_security');
-		$pluginSecurity->delete(array('fingerprint' => $this->fingerprint));
+		$pluginSecurity->delete(['fingerprint' => $this->fingerprint]);
 		$pluginSecurity->insert(
-			array(
+			[
 				'fingerprint' => $this->fingerprint,
 				'status' => $type,
 				'added_by' => $this->parser->user,
 				'last_objectType' => $objectType,
 				'last_objectId' => $objectId
-			)
+			]
 		);
 	}
 
 	public function info()
 	{
-		if ( isset( self::$pluginInfo[$this->name] ) ) {
+		if (isset(self::$pluginInfo[$this->name])) {
 			return self::$pluginInfo[$this->name];
 		}
 
@@ -374,14 +380,14 @@ class WikiPlugin_Negotiator_Wiki
 			return self::$pluginInfo[$this->name];
 		}
 
-		if ( ! $this->exists ) {
+		if (! $this->exists) {
 			return self::$pluginInfo[$this->name] = false;
 		}
 
 		$funcNameInfo = "wikiplugin_{$this->name}_info";
 
-		if ( ! function_exists($funcNameInfo) ) {
-			if ( $info = WikiPlugin_Negotiator_Wiki_Alias::info($this->name) ) {
+		if (! function_exists($funcNameInfo)) {
+			if ($info = WikiPlugin_Negotiator_Wiki_Alias::info($this->name)) {
 				return self::$pluginInfo[$this->name] = $info['description'];
 			} else {
 				return self::$pluginInfo[$this->name] = false;
@@ -392,25 +398,25 @@ class WikiPlugin_Negotiator_Wiki
 	}
 
 
-	static public function getList( $includeReal = true, $includeAlias = true )
+	public static function getList($includeReal = true, $includeAlias = true)
 	{
-		$real = array();
+		$real = [];
 
-		foreach ( glob('lib/wiki-plugins/wikiplugin_*.php') as $file ) {
+		foreach (glob('lib/wiki-plugins/wikiplugin_*.php') as $file) {
 			$base = basename($file);
 			$plugin = substr($base, 11, -4);
 
 			$real[] = $plugin;
 		}
 
-		if ( $includeReal && $includeAlias ) {
+		if ($includeReal && $includeAlias) {
 			$plugins = array_merge($real, WikiPlugin_Negotiator_Wiki_Alias::getList());
-		} elseif ( $includeReal ) {
+		} elseif ($includeReal) {
 			$plugins = $real;
-		} elseif ( $includeAlias ) {
+		} elseif ($includeAlias) {
 			$plugins = WikiPlugin_Negotiator_Wiki_Alias::getList();
 		} else {
-			$plugins = array(); // Should probably throw an exception
+			$plugins = []; // Should probably throw an exception
 		}
 		$plugins = array_filter($plugins);
 		sort($plugins);
@@ -422,18 +428,19 @@ class WikiPlugin_Negotiator_Wiki
 	{
 		$validate = (isset($this->info['validate']) ? $this->info['validate'] : '');
 
-		if ( $validate == 'all' || $validate == 'body' )
+		if ($validate == 'all' || $validate == 'body') {
 			$validateBody = str_replace('<x>', '', $this->body);	// de-sanitize plugin body to make fingerprint consistant with 5.x
-		else
+		} else {
 			$validateBody = '';
+		}
 
-		if ( $validate == 'all' || $validate == 'arguments' ) {
+		if ($validate == 'all' || $validate == 'arguments') {
 			$validateArgs = $this->args;
 
 			// Remove arguments marked as safe from the fingerprint
-			foreach ( $this->info['params'] as $key => $info ) {
-				if ( isset( $validateArgs[$key] )
-					&& isset( $info['safe'] )
+			foreach ($this->info['params'] as $key => $info) {
+				if (isset($validateArgs[$key])
+					&& isset($info['safe'])
 					&& $info['safe']
 				) {
 					unset($validateArgs[$key]);
@@ -443,10 +450,10 @@ class WikiPlugin_Negotiator_Wiki
 			ksort($validateArgs);
 
 			if (empty($validateArgs)) {
-				$validateArgs = array( '' => '' );	// maintain compatibility with pre-Tiki 7 fingerprints
+				$validateArgs = [ '' => '' ];	// maintain compatibility with pre-Tiki 7 fingerprints
 			}
 		} else {
-			$validateArgs = array();
+			$validateArgs = [];
 		}
 
 		$bodyLen = str_pad(strlen($validateBody), 6, '0', STR_PAD_RIGHT);
@@ -462,33 +469,33 @@ class WikiPlugin_Negotiator_Wiki
 	private function fingerprintCheck()
 	{
 		global $tikilib;
-		$limit = date('Y-m-d H:i:s', time() - 15*24*3600);
+		$limit = date('Y-m-d H:i:s', time() - 15 * 24 * 3600);
 		$result = $tikilib->query(
 			"SELECT status, if(status='pending' AND last_update < ?, 'old', '') flag
 			FROM tiki_plugin_security
 			WHERE fingerprint = ?",
-			array( $limit, $this->fingerprint )
+			[ $limit, $this->fingerprint ]
 		);
 
 		$needUpdate = false;
 
-		if ( $row = $result->fetchRow() ) {
+		if ($row = $result->fetchRow()) {
 			$status = $row['status'];
 			$flag = $row['flag'];
 
-			if ( $status == 'accept' || $status == 'reject' ) {
+			if ($status == 'accept' || $status == 'reject') {
 				return $status;
 			}
 
-			if ( $flag == 'old' ) {
+			if ($flag == 'old') {
 				$needUpdate = true;
 			}
 		} else {
 			$needUpdate = true;
 		}
 
-		if ( $needUpdate && !$this->dontModify ) {
-			if ( $this->page ) {
+		if ($needUpdate && ! $this->dontModify) {
+			if ($this->page) {
 				$objectType = 'wiki page';
 				$objectId = $this->page;
 			} else {
@@ -498,15 +505,15 @@ class WikiPlugin_Negotiator_Wiki
 
 
 			$pluginSecurity = $tikilib->table('tiki_plugin_security');
-			$pluginSecurity->delete(array('fingerprint' => $this->fingerprint));
+			$pluginSecurity->delete(['fingerprint' => $this->fingerprint]);
 			$pluginSecurity->insert(
-				array(
+				[
 					'fingerprint' => $this->fingerprint,
 					'status' => 'pending',
 					'added_by' => $this->parser->user,
 					'last_objectType' => $objectType,
 					'last_objectId' => $objectId
-				)
+				]
 			);
 		}
 
@@ -517,16 +524,16 @@ class WikiPlugin_Negotiator_Wiki
 	{
 		global $tikilib;
 
-		$default = TikiFilter::get(isset( $this->info['defaultfilter'] ) ? $this->info['defaultfilter'] : 'xss');
+		$default = TikiFilter::get(isset($this->info['defaultfilter']) ? $this->info['defaultfilter'] : 'xss');
 
 		// Apply filters on the body
 		$filter = isset($this->info['filter']) ? TikiFilter::get($this->info['filter']) : $default;
 		$this->body = $filter->filter($this->body);
 
-		if (!$this->parser->getOption('is_html')) {
-			$noparsed = array('data' => array(), 'key' => array());
+		if (! $this->parser->getOption('is_html')) {
+			$noparsed = ['data' => [], 'key' => []];
 			//$this->striUnparsedBlock($this->body, $noparsed);
-			$body = str_replace(array('<', '>'), array('&lt;', '&gt;'), $this->body);
+			$body = str_replace(['<', '>'], ['&lt;', '&gt;'], $this->body);
 			foreach ($noparsed['data'] as &$instance) {
 				$instance = '~np~' . $instance . '~/np~';
 			}
@@ -536,18 +543,18 @@ class WikiPlugin_Negotiator_Wiki
 
 		// Make sure all arguments are declared
 		$params = & $this->info['params'];
-		if ( ! isset( $this->info['extraparams'] ) && is_array($params) ) {
+		if (! isset($this->info['extraparams']) && is_array($params)) {
 			$this->args = array_intersect_key($this->args, $params);
 		}
 
 		// Apply filters on values individually
-		if (!empty($this->args)) {
-			foreach ( $this->args as $argKey => &$argValue ) {
+		if (! empty($this->args)) {
+			foreach ($this->args as $argKey => &$argValue) {
 				$paramInfo = $params[$argKey];
 				$filter = isset($paramInfo['filter']) ? TikiFilter::get($paramInfo['filter']) : $default;
 				$argValue = TikiLib::htmldecode($argValue);
 
-				if ( isset($paramInfo['separator']) ) {
+				if (isset($paramInfo['separator'])) {
 					$vals = $tikilib->array_apply_filter($tikilib->multi_explode($paramInfo['separator'], $argValue), $filter);
 
 					$argValue = array_values($vals);
@@ -563,23 +570,21 @@ class WikiPlugin_Negotiator_Wiki
 		$headerlib = TikiLib::lib('header');
 		$smarty = TikiLib::lib('smarty');
 
-		if (
-			$this->isEditable() &&
-			!$this->parser->getOption('preview_mode') &&
-			!$this->parser->getOption('indexing') &&
-			!$this->parser->getOption('print') &&
-			!$this->parser->getOption('suppress_icons') &&
-			!$this->parser->getOption('preview_mode')
+		if ($this->isEditable() &&
+			! $this->parser->getOption('preview_mode') &&
+			! $this->parser->getOption('indexing') &&
+			! $this->parser->getOption('print') &&
+			! $this->parser->getOption('suppress_icons') &&
+			! $this->parser->getOption('preview_mode')
 		) {
 			$id = 'plugin-edit-' . $this->name . $this->index;
 			$iconDisplayStyle = '';
-			if (
-				$this->prefs['wiki_edit_icons_toggle'] == 'y' &&
+			if ($this->prefs['wiki_edit_icons_toggle'] == 'y' &&
 				(
 					$this->prefs['wiki_edit_plugin'] == 'y' || $this->prefs['wiki_edit_section'] == 'y'
 				)
 			) {
-				if (!isset($_COOKIE['wiki_plugin_edit_view'])) {
+				if (! isset($_COOKIE['wiki_plugin_edit_view'])) {
 					$iconDisplayStyle = ' style="display:none;"';
 				}
 			}
@@ -607,11 +612,13 @@ class WikiPlugin_Negotiator_Wiki
 			$smarty->loadPlugin('smarty_function_icon');
 
 			$button = '<a id="' . $id . '" class="editplugin tips"' . $iconDisplayStyle . '>' .
-						smarty_function_icon(array('name'=>'plugin', 'iclass' => 'tips',
-						'ititle'=>tra('Edit Plugin') . ':' . $this->name), $smarty) . '</a>'
+						smarty_function_icon(['name' => 'plugin', 'iclass' => 'tips',
+						'ititle' => tra('Edit Plugin') . ':' . $this->name], $smarty) . '</a>'
 			;
 
-			if ($wrapInNp == false) return $button;
+			if ($wrapInNp == false) {
+				return $button;
+			}
 
 			return '~np~' . $button . '~/np~';
 		}

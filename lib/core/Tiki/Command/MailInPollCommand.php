@@ -18,15 +18,15 @@ use TikiLib;
 
 class MailInPollCommand extends Command
 {
-    protected function configure()
-    {
-        $this
-            ->setName('mail-in:poll')
-            ->setDescription('Read the mail-in messages');
-    }
+	protected function configure()
+	{
+		$this
+			->setName('mail-in:poll')
+			->setDescription('Read the mail-in messages');
+	}
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
+	protected function execute(InputInterface $input, OutputInterface $output)
+	{
 		$mailinlib = TikiLib::lib('mailin');
 		$accs = $mailinlib->list_active_mailin_accounts(0, -1, 'account_desc', '');
 
@@ -39,5 +39,5 @@ class MailInPollCommand extends Command
 			$account = MailIn\Account::fromDb($acc);
 			$account->check();
 		}
-    }
+	}
 }

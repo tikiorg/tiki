@@ -16,4 +16,3 @@ interface SourceInterface
 
 	function getSchema();
 }
-

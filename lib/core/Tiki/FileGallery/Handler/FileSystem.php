@@ -6,6 +6,7 @@
 // $Id$
 
 namespace Tiki\FileGallery\Handler;
+
 use Tiki\FileGallery\FileWrapper\PhysicalFile;
 
 class FileSystem implements HandlerInterface
@@ -32,4 +33,3 @@ class FileSystem implements HandlerInterface
 		}
 	}
 }
-

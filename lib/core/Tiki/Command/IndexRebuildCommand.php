@@ -68,9 +68,9 @@ class IndexRebuildCommand extends Command
 
 		if (! $cron) {
 			list($engine, $version) = $unifiedsearchlib->getEngineAndVersion();
-			if (!empty($engine)) {
-				$engineMessage = 'Unified search engine: '. $engine;
-				if (!empty($version)){
+			if (! empty($engine)) {
+				$engineMessage = 'Unified search engine: ' . $engine;
+				if (! empty($version)) {
 					$engineMessage .= ', version ' . $version;
 				}
 				$output->writeln($engineMessage);
@@ -92,9 +92,9 @@ class IndexRebuildCommand extends Command
 		$queries_after = $num_queries;
 
 		if ($result) {
-			if (!$cron) {
+			if (! $cron) {
 				$output->writeln("Indexed");
-				foreach($result as $key => $val) {
+				foreach ($result as $key => $val) {
 					$output->writeln("  $key: $val");
 				}
 				$output->writeln('Rebuilding index done');
@@ -110,9 +110,9 @@ class IndexRebuildCommand extends Command
 			if (is_array($errors)) {
 				foreach ($errors as $type => $message) {
 					if (is_array($message)) {
-						if (is_array($message[0]) && ! empty( $message[0]['mes'])) {
+						if (is_array($message[0]) && ! empty($message[0]['mes'])) {
 							$message = $type . ': ' . str_replace('<br />', "\n", $message[0]['mes'][0]);
-						} else if (! empty( $message['mes'])) {
+						} elseif (! empty($message['mes'])) {
 							$message = $type . ': ' . str_replace('<br />', "\n", $message['mes']);
 						}
 					}

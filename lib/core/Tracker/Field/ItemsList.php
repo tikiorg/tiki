@@ -15,24 +15,24 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 {
 	public static function getTypes()
 	{
-		return array(
-			'l' => array(
+		return [
+			'l' => [
 				'name' => tr('Items List'),
 				'description' => tr('Displays a list of field values from another tracker that has a relation with this tracker.'),
 				'readonly' => true,
 				'help' => 'Items List and Item Link Tracker Fields',
-				'prefs' => array('trackerfield_itemslist'),
-				'tags' => array('advanced'),
+				'prefs' => ['trackerfield_itemslist'],
+				'tags' => ['advanced'],
 				'default' => 'n',
-				'params' => array(
-					'trackerId' => array(
+				'params' => [
+					'trackerId' => [
 						'name' => tr('Tracker ID'),
 						'description' => tr('Tracker from which to list items'),
 						'filter' => 'int',
 						'legacy_index' => 0,
 						'profile_reference' => 'tracker',
-					),
-					'fieldIdThere' => array(
+					],
+					'fieldIdThere' => [
 						'name' => tr('Link Field ID'),
 						'description' => tr('Field ID from the other tracker containing an item link pointing to the item in this tracker or some other value to be matched.'),
 						'filter' => 'int',
@@ -41,8 +41,8 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 						'parent' => 'trackerId',
 						'parentkey' => 'tracker_id',
 						'sort_order' => 'position_nasc',
-					),
-					'fieldIdHere' => array(
+					],
+					'fieldIdHere' => [
 						'name' => tr('Value Field ID'),
 						'description' => tr('Field ID from this tracker matching the value in the link field ID from the other tracker if the field above is not an item link. If the field chosen here is an ItemLink, Link Field ID above can be left empty.'),
 						'filter' => 'int',
@@ -51,8 +51,8 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 						'parent' => 'input[name=trackerId]',
 						'parentkey' => 'tracker_id',
 						'sort_order' => 'position_nasc',
-					),
-					'displayFieldIdThere' => array(
+					],
+					'displayFieldIdThere' => [
 						'name' => tr('Fields to display'),
 						'description' => tr('Display alternate fields from the other tracker instead of the item title'),
 						'filter' => 'int',
@@ -62,13 +62,13 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 						'parent' => 'trackerId',
 						'parentkey' => 'tracker_id',
 						'sort_order' => 'position_nasc',
-					),
-					'displayFieldIdThereFormat' => array(
+					],
+					'displayFieldIdThereFormat' => [
 						'name' => tr('Format for customising fields to display'),
 						'description' => tr('Uses the translate function to replace %0 etc with the field values. E.g. "%0 any text %1"'),
 						'filter' => 'text',
-					),
-					'sortField' => array(
+					],
+					'sortField' => [
 						'name' => tr('Sort Fields'),
 						'description' => tr('Order results by one or more fields from the other tracker.'),
 						'filter' => 'int',
@@ -78,56 +78,56 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 						'parent' => 'trackerId',
 						'parentkey' => 'tracker_id',
 						'sort_order' => 'position_nasc',
-					),
-					'linkToItems' => array(
+					],
+					'linkToItems' => [
 						'name' => tr('Display'),
 						'description' => tr('How the link to the items should be rendered'),
 						'filter' => 'int',
-						'options' => array(
+						'options' => [
 							0 => tr('Value'),
 							1 => tr('Link'),
-						),
+						],
 						'legacy_index' => 4,
-					),
-					'status' => array(
+					],
+					'status' => [
 						'name' => tr('Status Filter'),
 						'description' => tr('Limit the available items to a selected set'),
 						'filter' => 'alpha',
-						'options' => array(
+						'options' => [
 							'opc' => tr('all'),
 							'o' => tr('open'),
 							'p' => tr('pending'),
 							'c' => tr('closed'),
 							'op' => tr('open, pending'),
 							'pc' => tr('pending, closed'),
-						),
+						],
 						'legacy_index' => 5,
-					),
-				),
-			),
-		);
+					],
+				],
+			],
+		];
 	}
 
-	
+
 	/**
 	 * Get field data
 	 * @see Tracker_Field_Interface::getFieldData()
-	 * 
+	 *
 	 */
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
 		$items = $this->getItemIds();
 		$list = $this->getItemLabels($items);
-		
-		$ret = array(
+
+		$ret = [
 			'value' => '',
 			'items' => $list,
-		);
-		
+		];
+
 		return $ret;
 	}
 
-	function renderInput($context = array())
+	function renderInput($context = [])
 	{
 		if (empty($this->getOption('fieldIdHere'))) {
 			return $this->renderOutput();
@@ -168,7 +168,7 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 		}
 	}
 
-	function renderOutput( $context = array() )
+	function renderOutput($context = [])
 	{
 		if (isset($context['search_render']) && $context['search_render'] == 'y') {
 			$items = $this->getData($this->getConfiguration('fieldId'));
@@ -180,7 +180,7 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 
 		// if nothing found check definition for previous list (used for output render)
 		if (empty($list)) {
-			$list = $this->getConfiguration('items', array());
+			$list = $this->getConfiguration('items', []);
 			$items = array_keys($list);
 		}
 
@@ -190,13 +190,13 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 			return $this->renderTemplate(
 				'trackeroutput/itemslist.tpl',
 				$context,
-				array(
+				[
 					'links' => (bool) $this->getOption('linkToItems'),
 					'raw' => (bool) $this->getOption('displayFieldIdThere'),
 					'itemIds' => implode(',', $items),
 					'items' => $list,
 					'num' => count($list),
-				)
+				]
 			);
 		}
 	}
@@ -218,24 +218,24 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 		$list = $this->getItemLabels($items);
 		$listtext = implode(' ', $list);
 
-		return array(
+		return [
 			$baseKey => $typeFactory->multivalue($items),
 			"{$baseKey}_text" => $typeFactory->sortable($listtext),
-		);
+		];
 	}
 
 	function getProvidedFields()
 	{
 		$baseKey = $this->getBaseKey();
-		return array(
+		return [
 			$baseKey,
 			"{$baseKey}_text",
-		);
+		];
 	}
 
 	function getGlobalFields()
 	{
-		return array();
+		return [];
 	}
 
 	function getTabularSchema()
@@ -288,18 +288,18 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 	{
 		$trklib = TikiLib::lib('trk');
 		$trackerId = (int) $this->getOption('trackerId');
-		
+
 		$filterFieldIdHere = (int) $this->getOption('fieldIdHere');
 		$filterFieldIdThere = (int) $this->getOption('fieldIdThere');
-		
-		$filterFieldHere = $this->getTrackerDefinition()->getField($filterFieldIdHere); 
+
+		$filterFieldHere = $this->getTrackerDefinition()->getField($filterFieldIdHere);
 		$filterFieldThere = $trklib->get_tracker_field($filterFieldIdThere);
-		
+
 		$sortFieldIds = $this->getOption('sortField');
 		$status = $this->getOption('status', 'opc');
 		$tracker = Tracker_Definition::get($trackerId);
 
-		
+
 
 		// note: if itemlink or dynamic item list is used, than the final value to compare with must be calculated based on the current itemid
 
@@ -307,12 +307,12 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 
 		// not sure this is working
 		// r = item link
-		if ($tracker && $filterFieldThere && (!$filterFieldIdHere || $filterFieldThere['type'] === 'r' || $filterFieldThere['type'] === 'w')) {
+		if ($tracker && $filterFieldThere && (! $filterFieldIdHere || $filterFieldThere['type'] === 'r' || $filterFieldThere['type'] === 'w')) {
 			if ($filterFieldThere['type'] === 'r' || $filterFieldThere['type'] === 'w') {
 				$technique = 'id';
 			}
 		}
-		
+
 		// not sure this is working
 		// q = Autoincrement
 		if ($filterFieldHere['type'] == 'q' && isset($filterFieldHere['options_array'][3]) && $filterFieldHere['options_array'][3] == 'itemId') {
@@ -321,29 +321,29 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 
 		if ($technique == 'id') {
 			$itemId = $this->getItemId();
-			if( !$itemId ) {
-				$items = array();
+			if (! $itemId) {
+				$items = [];
 			} else {
 				$items = $trklib->get_items_list($trackerId, $filterFieldIdThere, $itemId, $status, false, $sortFieldIds);
 			}
 		} else {
 			// when this is an item link or dynamic item list field, localvalue contains the target itemId
 			$localValue = $this->getData($filterFieldIdHere);
-			if (!$localValue) {
+			if (! $localValue) {
 				// in some cases e.g. pretty tracker $this->getData($filterFieldIdHere) is not reliable as the info is not there
 				// Note: this fix only works if the itemId is passed via the template
 				$itemId = $this->getItemId();
 				$localValue = $trklib->get_item_value($trackerId, $itemId, $filterFieldIdHere);
 			}
-			if( !$filterFieldThere && $filterFieldHere && ( $filterFieldHere['type'] === 'r' || $filterFieldHere['type'] === 'w' ) && $localValue ) {
+			if (! $filterFieldThere && $filterFieldHere && ( $filterFieldHere['type'] === 'r' || $filterFieldHere['type'] === 'w' ) && $localValue) {
 				// itemlink/dynamic item list field in this tracker pointing directly to an item in the other tracker
-				return array($localValue);
+				return [$localValue];
 			}
-			// r = item link - not sure this is working 
+			// r = item link - not sure this is working
 			if ($filterFieldHere['type'] == 'r' && isset($filterFieldHere['options_array'][0]) && isset($filterFieldHere['options_array'][1])) {
 				$localValue = $trklib->get_item_value($filterFieldHere['options_array'][0], $localValue, $filterFieldHere['options_array'][1]);
 			}
-			
+
 			// w = dynamic item list - localvalue is the itemid of the target item. so rewrite.
 			if ($filterFieldHere['type'] == 'w') {
 				$localValue = $trklib->get_item_value($trackerId, $localValue, $filterFieldIdThere);
@@ -352,7 +352,7 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 			if ($localValue) {
 				$items = $trklib->get_items_list($trackerId, $filterFieldIdThere, $localValue, $status, false, $sortFieldIds);
 			} else {
-				$items = array();
+				$items = [];
 			}
 		}
 
@@ -365,7 +365,7 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 	 * @param array $context
 	 * @return array array of values by itemId
 	 */
-	private function getItemLabels($items, $context = array('list_mode' => ''))
+	private function getItemLabels($items, $context = ['list_mode' => ''])
 	{
 		$displayFields = $this->getOption('displayFieldIdThere');
 		$trackerId = (int) $this->getOption('trackerId');
@@ -373,10 +373,10 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 
 		$definition = Tracker_Definition::get($trackerId);
 		if (! $definition) {
-			return array();
+			return [];
 		}
 
-		$list = array();
+		$list = [];
 		$trklib = TikiLib::lib('trk');
 		foreach ($items as $itemId) {
 			if ($displayFields && $displayFields[0]) {
@@ -410,17 +410,17 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 
 		$definition = Tracker_Definition::get($trackerId);
 		if (! $definition) {
-			return array();
+			return [];
 		}
 
-		$itemsValues = array();
+		$itemsValues = [];
 
 		$items = $this->getItemIds();
-		foreach( $items as $itemId ) {
+		foreach ($items as $itemId) {
 			$item = TikiLib::lib('trk')->get_tracker_item($itemId);
-			$itemValues = array();
-			if( $displayFields ) {
-				foreach( $displayFields as $fieldId ) {
+			$itemValues = [];
+			if ($displayFields) {
+				foreach ($displayFields as $fieldId) {
 					$field = $definition->getField($fieldId);
 					$itemValues[$field['permName']] = isset($item[$fieldId]) ? $item[$fieldId] : '';
 				}
@@ -431,4 +431,3 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 		return $itemsValues;
 	}
 }
-

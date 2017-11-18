@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 class Search_Index_Memory implements Search_Index_Interface
 {
-	private $data = array();
+	private $data = [];
 	private $lastQuery;
 	private $lastOrder;
 	private $lastStart;
@@ -32,7 +32,7 @@ class Search_Index_Memory implements Search_Index_Interface
 		$this->lastOrder = $query->getSortOrder();
 		$this->lastStart = $resultStart;
 		$this->lastCount = $resultCount;
-		return new Search_ResultSet(array(), 0, $resultStart, $resultCount);
+		return new Search_ResultSet([], 0, $resultStart, $resultCount);
 	}
 
 	function getTypeFactory()
@@ -46,10 +46,10 @@ class Search_Index_Memory implements Search_Index_Interface
 
 	function destroy()
 	{
-		$this->data = array();
+		$this->data = [];
 		return true;
 	}
-	
+
 	function exists()
 	{
 		return count($this->data) > 0;
@@ -103,4 +103,3 @@ class Search_Index_Memory implements Search_Index_Interface
 		return $this->lastCount;
 	}
 }
-

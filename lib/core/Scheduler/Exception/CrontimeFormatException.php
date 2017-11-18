@@ -10,4 +10,3 @@ namespace Scheduler\Exception;
 class CrontimeFormatException extends Exception
 {
 }
-

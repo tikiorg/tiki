@@ -12,7 +12,7 @@
 //
 // Purpose: Send a pastlink to a futurelink
 
-Class FutureLink_SendToFuture extends Feed_Abstract
+class FutureLink_SendToFuture extends Feed_Abstract
 {
 	var $type = 'futurelink';
 	var $version = 0.1;
@@ -27,49 +27,50 @@ Class FutureLink_SendToFuture extends Feed_Abstract
 	public static function send()
 	{
 		$me = new self("global");
-		$sent = array();
+		$sent = [];
 		$pastlink = new FutureLink_PastUI();
 		$feed = $pastlink->feed();
 
-		$items = array();
+		$items = [];
 		//we send something only if we have something to send
 		if (empty($feed->feed->entry) == false) {
 			foreach ($feed->feed->entry as &$item) {
-				if (empty($item->futurelink->href) || isset($sent[$item->futurelink->hash])) continue;
+				if (empty($item->futurelink->href) || isset($sent[$item->futurelink->hash])) {
+					continue;
+				}
 
 				$sent[$item->futurelink->hash] = true;
-				$client = TikiLib::lib('tiki')->get_http_client($item->futurelink->href, array('timeout' => 60));
+				$client = TikiLib::lib('tiki')->get_http_client($item->futurelink->href, ['timeout' => 60]);
 
-				if (!empty($feed->feed->entry)) {
+				if (! empty($feed->feed->entry)) {
 					$client->setParameterPost(
-						array(
-							'protocol'=> 'futurelink',
-							'metadata'=> json_encode($feed)
-						)
+						[
+							'protocol' => 'futurelink',
+							'metadata' => json_encode($feed)
+						]
 					);
 
-						try {
-							$client->setMethod(Zend\Http\Request::METHOD_POST);
-							$response = $client->send();
-							$request = $client->getLastResponse();
-			                $result = $response->getBody();
-							$resultJson = json_decode($response->getBody());
+					try {
+						$client->setMethod(Zend\Http\Request::METHOD_POST);
+						$response = $client->send();
+						$request = $client->getLastResponse();
+						$result = $response->getBody();
+						$resultJson = json_decode($response->getBody());
 
-			            //Here we add the date last updated so that we don't have to send it if not needed, saving load time.
-			            if (!empty($resultJson->feed) && $resultJson->feed == "success") {
+						//Here we add the date last updated so that we don't have to send it if not needed, saving load time.
+						if (! empty($resultJson->feed) && $resultJson->feed == "success") {
 								$me->addItem(
-									array(
-						            'dateLastUpdated'=> $item->pastlink->dateLastUpdated,
-						            'pastlinklinkHash'=> $item->pastlink->hash,
-						            'futurelinkHash'=> $item->futurelink->hash
-					            )
+									[
+									'dateLastUpdated' => $item->pastlink->dateLastUpdated,
+									'pastlinklinkHash' => $item->pastlink->hash,
+									'futurelinkHash' => $item->futurelink->hash
+									]
 								);
-			            }
-
-			            $items[$item->pastlink->text] = $result;
-
-						} catch(Exception $e) {
 						}
+
+						$items[$item->pastlink->text] = $result;
+					} catch (Exception $e) {
+					}
 				}
 			}
 

@@ -59,7 +59,7 @@ class ProfileInstallCommand extends Command
 			return;
 		}
 
-		if (!$profile->validateNamedObjectsReferences()){ // sanity check on the Named Objects references
+		if (! $profile->validateNamedObjectsReferences()) { // sanity check on the Named Objects references
 			$output->writeln('<error>' . tr('Some of the named object references in the profile are invalid') . '</error>');
 			return;
 		}
@@ -90,16 +90,14 @@ class ProfileInstallCommand extends Command
 					$output->writeln(tr('Dry-run for profile: ') . $profile->profile);
 
 					foreach ($installer->getTrackProfileChanges() as $profileChanges) {
-
 						if (is_array($profileChanges)) {
-
 							$type = $profileChanges['type'];
 							$newValue = ! empty($profileChanges['new']) ? $profileChanges['new'] : 'n';
 							$oldValue = ! empty($profileChanges['old']) ? $profileChanges['old'] : 'n';
 							$description = ! empty($profileChanges['description']) ? $profileChanges['description'] : '';
 
 							switch ($type) {
-								case 'permission' :
+								case 'permission':
 									$msg = tr('Permission removed: ') . $description[0];
 
 									if ($newValue == 'y') {
@@ -109,7 +107,7 @@ class ProfileInstallCommand extends Command
 									$output->writeln($msg);
 									break;
 
-								case 'user' :
+								case 'user':
 									$msg = tr('User modified: ') . $description;
 
 									if ($oldValue == 'n') {
@@ -119,7 +117,7 @@ class ProfileInstallCommand extends Command
 									$output->writeln($msg);
 									break;
 
-								case 'group' :
+								case 'group':
 									$msg = tr('Group modified: ') . $description;
 
 									if ($oldValue == 'n') {
@@ -129,11 +127,11 @@ class ProfileInstallCommand extends Command
 									$output->writeln($msg);
 									break;
 
-								case 'preference' :
+								case 'preference':
 									$output->writeln(tr('Preference set: %0= %1 old value= %2', $description, $newValue, $oldValue));
 									break;
 
-								case 'installer' :
+								case 'installer':
 									$output->writeln(tr('Installer added: ') . $description);
 									break;
 							}

@@ -26,12 +26,12 @@ abstract class Table_Settings_Abstract
 	 * Values here are overriden by table-specific defaults and any user settings
 	 * @var array
 	 */
-	protected $default = array(
+	protected $default = [
 		//this is the id of the table
 		'id' => 'tsTable',
 //		'selflinks' => true,				//if smarty self_links need to be removed
 		//overall sort settings for the table - individual column settings are under columns below
-		'sorts' => array(
+		'sorts' => [
 			'type' => 'reset',				//choices: boolean true, boolean false, save, reset, savereset.
 			'group' => true,				//overall switch to allow or disallow group headings
 //			'multisort' => false,			//multisort on by default - set to false to disable
@@ -39,9 +39,9 @@ abstract class Table_Settings_Abstract
 //				'col' => 0,					//id of the th element that the table is sorted by on server side
 //				'dir' => 'asc'				//direction of the default initial server-side sort
 //			]
-		),
+		],
 		//overall filter settings for the table or external filters - individual column settings are under columns below
-		'filters' => array(
+		'filters' => [
 			'type' => 'reset',						//choices: boolean true, boolean false, reset
 /*			'external' => false,
 			'hide' => false,					//to hide filters. choices: true, false (default)
@@ -58,7 +58,7 @@ abstract class Table_Settings_Abstract
 				),
 			),
 */
-		),
+		],
 /*
 		//to add pagination controls
 		'pager' => array(
@@ -88,9 +88,9 @@ abstract class Table_Settings_Abstract
 		// the columns
 */
 		'usecolselector' => false,
-		'colselect' => array(
+		'colselect' => [
 			'type' => false,
-		),
+		],
 /*
 		//Set individual sort and filter settings for each column
 		//No need to set if overall sorts and filters settings for the table are set to false above
@@ -167,81 +167,81 @@ abstract class Table_Settings_Abstract
 			),
 		),
 */
-	);
+	];
 
 	/**
 	 * Default placeholder text for the different types of filters
 	 * @var array
 	 */
-	protected $defaultFilters = array(
-		'text' => array(
+	protected $defaultFilters = [
+		'text' => [
 			'type' => 'text',
 			'placeholder' => ''
-		),
+		],
 		//tra('Select a value')
-		'dropdown' => array(
+		'dropdown' => [
 			'type' => 'dropdown',
 			'placeholder' => ''
-		),
-		'date'	=> array(
+		],
+		'date'	=> [
 			'type' => 'date',
 			'format' => 'yy-mm-dd',
 			'from' => '',
 			'to'	=> '',
-		),
-		'range'	=> array(
+		],
+		'range'	=> [
 			'type' => 'range',
 			'style' => 'inline',		//other option is popup. from and to values can also be set
-		),
-	);
+		],
+	];
 
 	/**
 	 * Strings used to create button and pager control ids and default text
 	 * @var array
 	 */
-	protected $ids = array(
-		'sorts' => array(
-			'reset' => array(
+	protected $ids = [
+		'sorts' => [
+			'reset' => [
 				'id' => '-sortreset',
 				//tra('Unsort')
 				'text' => 'Unsort',
-			),
-		),
-		'filters' => array(
-			'reset' => array(
+			],
+		],
+		'filters' => [
+			'reset' => [
 				'id' => '-filterreset',
 				//tra('Clear Filters')
 				'text' => 'Clear Filters',
-			),
-			'external' => array(
+			],
+			'external' => [
 				'id' => '-ext',
-			),
-		),
-		'pager' => array(
-			'disable' => array(
+			],
+		],
+		'pager' => [
+			'disable' => [
 				'id' => '-pagerbutton',
-				'text' => array(
+				'text' => [
 					//tra('Enable Pager')
 					'enable' => 'Enable Pager',
 					//tra('Disable Pager')
 					'disable' => 'Disable Pager',
-				),
-			),
-			'controls' => array(
+				],
+			],
+			'controls' => [
 				'id' => '-pager',
-			),
-		),
-		'colselect' => array(
-			'button' => array(
+			],
+		],
+		'colselect' => [
+			'button' => [
 				'id' => '-colselectbtn',
 				//tra('Show/hide columns')
 				'text' => 'Show/hide columns',
-			),
-			'div' => array(
+			],
+			'div' => [
 				'id' => '-colselectdiv',
-			)
-		),
-	);
+			]
+		],
+	];
 
 	/**
 	 * Used by a second level of abstract classes extending this class to set different
@@ -308,7 +308,7 @@ abstract class Table_Settings_Abstract
 	private function translateDefault()
 	{
 		foreach ($this->ids as $type => $elements) {
-			foreach($elements as $element => $info) {
+			foreach ($elements as $element => $info) {
 				if (isset($elements[$element]['text'])) {
 					if (is_array($elements[$element]['text'])) {
 						foreach ($elements[$element]['text'] as $each => $text) {
@@ -372,7 +372,8 @@ abstract class Table_Settings_Abstract
 	/**
 	 * Set placeholders for filters
 	 */
-	private function setPlaceholders() {
+	private function setPlaceholders()
+	{
 		//TODO try array_column here
 		if (isset($this->s['columns'])) {
 			foreach ($this->s['columns'] as $col => $colinfo) {
@@ -402,18 +403,17 @@ abstract class Table_Settings_Abstract
 			if (isset($this->s[$type]['type'])
 				&& $this->s[$type]['type'] !== false
 				&& $this->s[$type]['type'] !== 'save') {
-				foreach($elements as $element => $info) {
+				foreach ($elements as $element => $info) {
 					//for multiple elements
 					if (isset($this->s[$type][$element][0])) {
 						foreach ($this->s[$type][$element] as $key => $info) {
-							if (!isset($this->s[$type][$element][$key]['id'])) {
+							if (! isset($this->s[$type][$element][$key]['id'])) {
 								$this->s[$type][$element][$key]['id'] = $this->s['id']
 									. htmlspecialchars($elements[$element]['id'] . $key);
 							}
 						}
-					} elseif ((!isset($this->s[$type][$element]) || (isset($this->s[$type][$element])
-						&& $this->s[$type][$element] !== false)) && !isset($this->s[$type][$element]['id']))
-					{
+					} elseif ((! isset($this->s[$type][$element]) || (isset($this->s[$type][$element])
+						&& $this->s[$type][$element] !== false)) && ! isset($this->s[$type][$element]['id'])) {
 						$this->s[$type][$element]['id'] = $this->s['id'] . htmlspecialchars($elements[$element]['id']);
 					}
 				}
@@ -427,18 +427,18 @@ abstract class Table_Settings_Abstract
 	private function setMax()
 	{
 		if (isset($this->s['pager']['type']) && $this->s['pager']['type'] !== false) {
-			if (isset($GLOBALS['maxRecords']) && !isset($this->s['pager']['max'])) {
+			if (isset($GLOBALS['maxRecords']) && ! isset($this->s['pager']['max'])) {
 				$this->s['pager']['max'] = $GLOBALS['maxRecords'];
-			} elseif (!isset($this->s['pager']['max'])) {
+			} elseif (! isset($this->s['pager']['max'])) {
 				$this->s['pager']['max'] = 25;
 			}
-			if (!isset($this->s['pager']['expand']) && isset($this->s['pager']['max'])) {
-				$this->s['pager']['expand'] = array(
+			if (! isset($this->s['pager']['expand']) && isset($this->s['pager']['max'])) {
+				$this->s['pager']['expand'] = [
 					$this->s['pager']['max'],
 					2 * $this->s['pager']['max'],
 					4 * $this->s['pager']['max'],
 					12 * $this->s['pager']['max'],
-				);
+				];
 			}
 		}
 	}
@@ -450,11 +450,11 @@ abstract class Table_Settings_Abstract
 	 */
 	private function setAjax()
 	{
-		if (!empty($this->s['ajax'])) {
+		if (! empty($this->s['ajax'])) {
 			//sort and filter url parameters
 			if (isset($this->s['columns']) && is_array($this->s['columns'])) {
 				foreach ($this->s['columns'] as $col => $colinfo) {
-					$colpointer =  $this->s['usecolselector'] ? substr($col,1)  : $col;
+					$colpointer = $this->s['usecolselector'] ? substr($col, 1) : $col;
 					if (isset($colinfo['sort']['ajax'])) {
 						//tablesorter url param pattern is sort[0]=0 for ascending sort of first column
 						$this->s['ajax']['sort']['sort-' . $colpointer] = $colinfo['sort']['ajax'];
@@ -462,7 +462,7 @@ abstract class Table_Settings_Abstract
 					if (isset($colinfo['filter']['ajax'])) {
 						//tablesorter url param pattern is filter[0]=text for filter on first column
 						$this->s['ajax']['colfilters']['filter-' . $colpointer] = $colinfo['filter']['ajax'];
-					}  elseif (isset($colinfo['filter']['options'])) {
+					} elseif (isset($colinfo['filter']['options'])) {
 						foreach ($colinfo['filter']['options'] as $label => $value) {
 							$label = rawurlencode($label);
 							$this->s['ajax']['colfilters']['filter-' . $colpointer][$label] = $value;
@@ -472,9 +472,9 @@ abstract class Table_Settings_Abstract
 			}
 			//external filter params
 			if (isset($this->s['filters']['external']) && is_array($this->s['filters']['external'])) {
-				foreach($this->s['filters']['external'] as $key => $info) {
+				foreach ($this->s['filters']['external'] as $key => $info) {
 					if (isset($info['options']) && is_array($info['options'])) {
-						foreach($info['options'] as $opt => $value) {
+						foreach ($info['options'] as $opt => $value) {
 							$this->s['ajax']['extfilters'][] = rawurlencode($value);
 						}
 					}

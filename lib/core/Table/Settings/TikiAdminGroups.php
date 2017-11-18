@@ -53,7 +53,7 @@ class Table_Settings_TikiAdminGroups extends Table_Settings_Standard
 				'sort' => [
 					'type' => true,
 					'dir' => 'asc',
-					'ajax' =>'groupName'
+					'ajax' => 'groupName'
 				],
 				'filter' => [
 					'type' => 'text',
@@ -102,4 +102,3 @@ class Table_Settings_TikiAdminGroups extends Table_Settings_Standard
 		]
 	];
 }
-

@@ -28,7 +28,7 @@ class Services_Category_Controller
 		}
 
 		$categlib = TikiLib::lib('categ');
-		return $categlib->getCategories(array('identifier'=>$parentId, 'type'=>$descends ? 'descendants' : 'children'));
+		return $categlib->getCategories(['identifier' => $parentId, 'type' => $descends ? 'descendants' : 'children']);
 	}
 
 	function action_categorize($input)
@@ -46,11 +46,11 @@ class Services_Category_Controller
 		if (count($objects) && $input->confirm->int()) {
 			return $this->processObjects('doCategorize', $categId, $objects);
 		} else {
-			return array(
+			return [
 				'categId' => $categId,
 				'objects' => $objects,
 				'confirm' => 0,
-			);
+			];
 		}
 	}
 
@@ -70,11 +70,11 @@ class Services_Category_Controller
 		if (count($objects) && $input->confirm->int()) {
 			return $this->processObjects('doUncategorize', $categId, $objects);
 		} else {
-			return array(
+			return [
 				'categId' => $categId,
 				'objects' => $objects,
 				'confirm' => 0,
-			);
+			];
 		}
 	}
 
@@ -104,21 +104,21 @@ class Services_Category_Controller
 		}
 
 		$categories = $categlib->get_object_categories($type, $object);
-		return array(
+		return [
 			'subset' => implode(',', $subset),
 			'categories' => array_combine(
 				$subset,
 				array_map(
 					function ($categId) use ($categories) {
-						return array(
+						return [
 							'name' => TikiLib::lib('object')->get_title('category', $categId),
 							'selected' => in_array($categId, $categories),
-						);
+						];
 					},
 					$subset
 				)
 			),
-		);
+		];
 	}
 
 	private function processObjects($function, $categId, $objects)
@@ -141,12 +141,12 @@ class Services_Category_Controller
 		$query->setRange(0, 1);
 		$result = $query->search($unifiedsearchlib->getIndex());
 
-		return array(
+		return [
 			'categId' => $categId,
 			'count' => count($result),
 			'objects' => $objects,
 			'confirm' => 1,
-		);
+		];
 	}
 
 	private function doCategorize($categId, $type, $id)
@@ -167,7 +167,7 @@ class Services_Category_Controller
 
 	private function convertObjects($objects)
 	{
-		$out = array();
+		$out = [];
 		foreach ($objects as $object) {
 			$object = explode(':', $object, 2);
 
@@ -176,7 +176,7 @@ class Services_Category_Controller
 				$objectPerms = Perms::get($type, $id);
 
 				if ($objectPerms->modify_object_categories) {
-					$out[] = array('type' => $type, 'id' => $id);
+					$out[] = ['type' => $type, 'id' => $id];
 				}
 			}
 		}
@@ -184,4 +184,3 @@ class Services_Category_Controller
 		return $out;
 	}
 }
-

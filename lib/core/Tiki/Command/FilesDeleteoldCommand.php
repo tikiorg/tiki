@@ -27,7 +27,7 @@ class FilesDeleteoldCommand extends Command
 				'Perform the deletes'
 			)
 		;
-	}	
+	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
@@ -51,7 +51,7 @@ class FilesDeleteoldCommand extends Command
 		} else {
 			$query = 'select * from `tiki_files` where `deleteAfter` < ? - `lastModif` and `deleteAfter` is not NULL and `deleteAfter` != \'\' order by galleryId asc';
 			$now = time();
-			$files = \TikiDb::get()->query($query, array($now));
+			$files = \TikiDb::get()->query($query, [$now]);
 
 			if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
 				if ($files->numrows) {
@@ -66,9 +66,7 @@ class FilesDeleteoldCommand extends Command
 				} else {
 					$output->writeln("<comment>No files to delete</comment>");
 				}
-
 			}
 		}
-
 	}
 }

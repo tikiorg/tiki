@@ -8,4 +8,3 @@
 class Search_Elastic_Exception extends Search_Exception
 {
 }
-

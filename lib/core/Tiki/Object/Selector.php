@@ -36,7 +36,7 @@ class Selector
 
 		$raw = array_map('trim', $input);
 		$raw = array_unique($raw);
-		$raw = array_map(function($input) use ($format) {
+		$raw = array_map(function ($input) use ($format) {
 			return $this->read($input, $format);
 		}, $raw);
 		return array_values(array_filter($raw));
@@ -64,4 +64,3 @@ class Selector
 		return $this->lib->get_title($type, $object, $format);
 	}
 }
-

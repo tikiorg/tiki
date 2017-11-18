@@ -29,4 +29,3 @@ class CompilerPass implements CompilerPassInterface
 		}
 	}
 }
-

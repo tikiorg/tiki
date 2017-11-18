@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -49,7 +49,7 @@ class Services_Language_TranslationController
 			throw new Services_Exception(tr('No source provided'), 400);
 		}
 
-		return array(
+		return [
 			'title' => tr('Manage translations'),
 			'type' => $type,
 			'source' => $object,
@@ -57,7 +57,7 @@ class Services_Language_TranslationController
 			'translations' => $this->utilities->getTranslations($type, $object),
 			'canAttach' => $this->canAttach($type, $object),
 			'canDetach' => $this->canDetach($type, $object),
-		);
+		];
 	}
 
 	/**
@@ -97,13 +97,13 @@ class Services_Language_TranslationController
 			throw new Services_Exception(tr('Could not attach the translations.'), 409);
 		}
 
-		return array(
-			'FORWARD' => array(
+		return [
+			'FORWARD' => [
 				'action' => 'manage',
 				'type' => $type,
 				'source' => $source,
-			),
-		);
+			],
+		];
 	}
 
 	/**
@@ -137,23 +137,23 @@ class Services_Language_TranslationController
 		}
 
 		if (! $confirmed) {
-			return array(
+			return [
 				'title' => tr('Manage translations'),
 				'type' => $type,
 				'source' => $source,
 				'target' => $target,
-			);
+			];
 		}
 
 		$this->utilities->detachTranslation($type, $source, $target);
 
-		return array(
-			'FORWARD' => array(
+		return [
+			'FORWARD' => [
 				'action' => 'manage',
 				'type' => $type,
 				'source' => $source,
-			),
-		);
+			],
+		];
 	}
 
 	/**
@@ -170,7 +170,7 @@ class Services_Language_TranslationController
 		global $prefs;
 
 		$content = $input->content->rawhtml_unsafe();
-		if (!empty($input->lang->text())) {
+		if (! empty($input->lang->text())) {
 			$lang = $input->lang->text();
 		} else {
 			$lang = $prefs['language'];
@@ -181,10 +181,10 @@ class Services_Language_TranslationController
 
 		$content = $impl->translateText($content);
 
-		return array(
+		return [
 			'content' => $content,
 			'target' => $lang
-		);
+		];
 	}
 
 	private function getObjectFilter($type)
@@ -215,10 +215,10 @@ class Services_Language_TranslationController
 			$language = null;
 		}
 
-		$filters = array(
+		$filters = [
 			'type' => $type,
 			'language' => $language,
-		);
+		];
 
 		if ($type == 'trackeritem') {
 			$info = TikiLib::lib('trk')->get_tracker_item($object);
@@ -276,6 +276,4 @@ class Services_Language_TranslationController
 		$perms = Perms::get($type, $object);
 		return $perms->detach_translation;
 	}
-
 }
-

@@ -66,7 +66,7 @@ class Search_Expr_Distance implements Search_Expr_Interface
 
 	function walk($callback)
 	{
-		return call_user_func($callback, $this, array());
+		return call_user_func($callback, $this, []);
 	}
 
 	function getValue(Search_Type_Factory_Interface $typeFactory)
@@ -82,6 +82,6 @@ class Search_Expr_Distance implements Search_Expr_Interface
 
 	function traverse($callback)
 	{
-		return call_user_func($callback, $callback, $this, array());
+		return call_user_func($callback, $callback, $this, []);
 	}
 }

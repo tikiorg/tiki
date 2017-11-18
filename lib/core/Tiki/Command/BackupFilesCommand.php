@@ -22,8 +22,8 @@ class BackupFilesCommand extends Command
 			->setDescription('Create a backup of Tiki instance files')
 			->addArgument(
 				'path',
-				InputArgument::REQUIRED,	
-				'Path to save backup (relative to console.php, or absolute)' 
+				InputArgument::REQUIRED,
+				'Path to save backup (relative to console.php, or absolute)'
 			)
 			->addArgument(
 				'dateFormat',
@@ -53,11 +53,11 @@ class BackupFilesCommand extends Command
 			$path = substr($path, 0, strlen($path) - 1);
 		}
 
-		if (!is_dir($path)) {
+		if (! is_dir($path)) {
 			$output->writeln('<error>Error: Provided path not found</error>');
 			return;
 		}
- 
+
 		$local = \TikiInit::getCredentialsFile();
 		if (! is_readable($local)) {
 			$output->writeln('<error>Error: "' . $local . '" not readable.</error>');
@@ -72,7 +72,7 @@ class BackupFilesCommand extends Command
 		require $local;
 
 		$root = getcwd();
-		if (!$root) {
+		if (! $root) {
 			$output->writeln('<error>Error: Unable to derive source path</error>');
 			return;
 		}
@@ -80,48 +80,47 @@ class BackupFilesCommand extends Command
 		if ($input->getOption('storageonly')) {
 			$source = '';
 		} else {
-			$source = escapeshellarg( $root );
+			$source = escapeshellarg($root);
 		}
 
 		// get other directories
-		if (!$input->getOption('nostorage')) {
+		if (! $input->getOption('nostorage')) {
 			$query = "select distinct value from tiki_preferences where name like '%use_dir' union select att_store_dir from tiki_forums";
 			$result = $tikilib->query($query);
-			$storage = array();
+			$storage = [];
 			while ($res = $result->fetchRow()) {
 				$storage[] = $res['value'];
 			}
 			foreach ($storage as $dir) {
-				if (strpos($dir, '..') !== FALSE) {
-					$output->writeln('<error>Warning: Unable to backup storage directory '.$dir.' (please use absolute path)</error>');
+				if (strpos($dir, '..') !== false) {
+					$output->writeln('<error>Warning: Unable to backup storage directory ' . $dir . ' (please use absolute path)</error>');
 					continue;
 				}
-				if (!empty($dir) && $input->getOption('storageonly') && substr($dir, 0, 1) != '/') {
+				if (! empty($dir) && $input->getOption('storageonly') && substr($dir, 0, 1) != '/') {
 					$dir = $root . '/' . $dir;
-				} elseif (!$dir || substr($dir, 0, 1) != '/') {
+				} elseif (! $dir || substr($dir, 0, 1) != '/') {
 					continue;
 				}
 				if (substr($dir, -1) == '/') {
 					$dir = substr($dir, 0, strlen($dir) - 1);
 				}
-				if (!is_dir($dir)) {
-					$output->writeln('<error>Warning: Unable to backup storage directory '.$dir.' (directory not found)</error>');
+				if (! is_dir($dir)) {
+					$output->writeln('<error>Warning: Unable to backup storage directory ' . $dir . ' (directory not found)</error>');
 					continue;
 				}
 				$source .= ' ' . escapeshellarg($dir);
 			}
 		}
 
-		if (!$source) {
+		if (! $source) {
 			$output->writeln('<error>Error: No backup sources found.</error>');
 			return;
 		}
 
-		$tarLocation = $path . '/' . $dbs_tiki . '_' . date( $dateFormat ) . '.tar.bz2';
-		$tar = escapeshellarg( $tarLocation );
+		$tarLocation = $path . '/' . $dbs_tiki . '_' . date($dateFormat) . '.tar.bz2';
+		$tar = escapeshellarg($tarLocation);
 		$command = "tar -cjf $tar $source";
-		exec( $command );
-		$output->writeln('<comment>Backup complete: '.$tarLocation.'</comment>');
-	
+		exec($command);
+		$output->writeln('<comment>Backup complete: ' . $tarLocation . '</comment>');
 	}
 }

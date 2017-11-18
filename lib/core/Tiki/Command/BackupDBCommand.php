@@ -22,8 +22,8 @@ class BackupDBCommand extends Command
 			->setDescription('Create a database backup (with mysqldump)')
 			->addArgument(
 				'path',
-				InputArgument::REQUIRED,	
-				'Path to save backup (relative to console.php, or absolute)' 
+				InputArgument::REQUIRED,
+				'Path to save backup (relative to console.php, or absolute)'
 			)
 			->addArgument(
 				'dateFormat',
@@ -40,7 +40,7 @@ class BackupDBCommand extends Command
 			$path = substr($path, 0, strlen($path) - 1);
 		}
 
-		if (!is_dir($path)) {
+		if (! is_dir($path)) {
 			$output->writeln('<error>Error: Provided path not found</error>');
 			return;
 		}
@@ -60,15 +60,15 @@ class BackupDBCommand extends Command
 
 		require $local;
 
-		$args = array();
-		if( $user_tiki ) {
-			$args[] = "-u" . escapeshellarg( $user_tiki );
+		$args = [];
+		if ($user_tiki) {
+			$args[] = "-u" . escapeshellarg($user_tiki);
 		}
-		if( $pass_tiki ) {
-			$args[] = "-p" . escapeshellarg( $pass_tiki );
+		if ($pass_tiki) {
+			$args[] = "-p" . escapeshellarg($pass_tiki);
 		}
-		if( $host_tiki ) {
-			$args[] = "-h" . escapeshellarg( $host_tiki );
+		if ($host_tiki) {
+			$args[] = "-h" . escapeshellarg($host_tiki);
 		}
 
 		// Find out how many non-InnoDB tables exist in the schema
@@ -81,12 +81,12 @@ class BackupDBCommand extends Command
 		} else {
 			$dbOpenFilesLimit = 0;
 			$result = $db->fetchAll('SHOW GLOBAL VARIABLES LIKE "open_files_limit"');
-			if (count($result)>0){
+			if (count($result) > 0) {
 				$dbOpenFilesLimit = (int)$result[0]['Value'];
 			}
-			if ($dbOpenFilesLimit > 0 && $dbOpenFilesLimit < 2000){
+			if ($dbOpenFilesLimit > 0 && $dbOpenFilesLimit < 2000) {
 				// some distributions bring a lower limit of open files, so lock all tables during backup might fail the backup
-				$output->writeln('<info>Mysql database has open_files_limit='.$dbOpenFilesLimit.', skipping lock tables to avoid failing the backup</info>');
+				$output->writeln('<info>Mysql database has open_files_limit=' . $dbOpenFilesLimit . ', skipping lock tables to avoid failing the backup</info>');
 			} else {
 				$args[] = "--lock-tables";
 			}
@@ -94,10 +94,10 @@ class BackupDBCommand extends Command
 
 		$args[] = $dbs_tiki;
 
-		$args = implode( ' ', $args );
+		$args = implode(' ', $args);
 		$outputFile = $path . '/' . $dbs_tiki . '_' . date($dateFormat) . '.sql.gz';
-		$command = "mysqldump --quick --create-options --extended-insert $args | gzip -5 > " . escapeshellarg( $outputFile );
-		exec( $command );
-		$output->writeln('<comment>Database backup completed: '.$outputFile.'</comment>');
+		$command = "mysqldump --quick --create-options --extended-insert $args | gzip -5 > " . escapeshellarg($outputFile);
+		exec($command);
+		$output->writeln('<comment>Database backup completed: ' . $outputFile . '</comment>');
 	}
 }

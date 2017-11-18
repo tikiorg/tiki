@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -72,7 +72,7 @@ class CleanVendorAfterVendorBundledMigration
 		}
 
 		// if we cant find the vendor dir no sense in progressing
-		if ($oldVendorFolder === false || !is_dir($oldVendorFolder)) {
+		if ($oldVendorFolder === false || ! is_dir($oldVendorFolder)) {
 			return;
 		}
 
@@ -87,7 +87,6 @@ class CleanVendorAfterVendorBundledMigration
 
 		// 2) If there is a vendor/autoload.php, check the hash of the folder structure, if different from at the time of the vendor_bundle migration, ignore
 		if (file_exists($oldVendorFolder . '/autoload.php')) {
-
 			$finder = new Finder();
 			$finder->in($oldVendorFolder)->exclude(['Composer'])->depth(2);
 
@@ -105,7 +104,6 @@ class CleanVendorAfterVendorBundledMigration
 			if ($md5checksum != self::PRE_MIGRATION_OLD_VENDOR_FOLDER_MD5_HASH) {
 				return;
 			}
-
 		}
 
 		// 3) If we arrive here, clean all folders and autoload.php in the old (pre migration) vendor folder
@@ -136,4 +134,3 @@ class CleanVendorAfterVendorBundledMigration
 		}
 	}
 }
-

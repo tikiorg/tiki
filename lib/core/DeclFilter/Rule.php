@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -18,11 +18,11 @@ interface DeclFilter_Rule
 	 * @param mixed Key name
 	 * @return bool
 	 */
-	function match( $key );
+	function match($key);
 
 	/**
 	 * Apply the rule on the key. This method is expected to
 	 * modify the data array on the provided key only.
 	 */
-	function apply( array &$data, $key );
+	function apply(array &$data, $key);
 }

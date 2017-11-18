@@ -48,7 +48,6 @@ class WikiPlugin_Casperjs_Runner
 		$result = new WikiPlugin_Casperjs_Result($output, $commandLine, $fullScript);
 
 		return $result;
-
 	}
 
 	protected function scriptPrefix()

@@ -35,9 +35,12 @@ class SelectorItem implements \ArrayAccess
 	function offsetGet($offset)
 	{
 		switch ($offset) {
-		case 'type': return $this->type;
-		case 'id': return $this->object;
-		case 'title': return $this->getTitle();
+			case 'type':
+				return $this->type;
+			case 'id':
+				return $this->object;
+			case 'title':
+				return $this->getTitle();
 		}
 	}
 
@@ -54,4 +57,3 @@ class SelectorItem implements \ArrayAccess
 		return "{$this->type}:{$this->object}";
 	}
 }
-

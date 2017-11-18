@@ -53,10 +53,10 @@ class Services_MustRead_Controller
 		$complete = $input->complete->int();
 		$completed = [];
 
-		if (!is_array($complete)) {
-			$complete = array($complete);
+		if (! is_array($complete)) {
+			$complete = [$complete];
 		}
-		
+
 		foreach ($complete as $item) {
 			$this->getItem($item); // Validate the item exists
 
@@ -65,24 +65,24 @@ class Services_MustRead_Controller
 			if ($result) {
 				$completed[] = $item;
 
-				TikiLib::events()->trigger('tiki.mustread.complete', array(
+				TikiLib::events()->trigger('tiki.mustread.complete', [
 					'type' => 'trackeritem',
 					'object' => $item,
 					'user' => $user,
-				));
+				]);
 			}
 		}
 
 		if (count($completed) > 0) {
-			TikiLib::events()->trigger('tiki.mustread.completed', array(
+			TikiLib::events()->trigger('tiki.mustread.completed', [
 				'type' => 'user',
 				'object' => $user,
 				'targets' => $completed,
-			));
+			]);
 		}
 
 		$tx->commit();
-		
+
 		return [
 			'FORWARD' => ['action' => 'list'],
 		];
@@ -119,7 +119,7 @@ class Services_MustRead_Controller
 	{
 		$item = $this->getItem($input->id->int());
 		$itemId = $item->getId();
-		$count = $this->getUserCount($itemId, 'open').'-'.$this->getUserCount($itemId, 'sent');
+		$count = $this->getUserCount($itemId, 'open') . '-' . $this->getUserCount($itemId, 'sent');
 		return $count;
 	}
 
@@ -176,7 +176,7 @@ class Services_MustRead_Controller
 		}
 
 		if ($add > 0) {
-			TikiLib::events()->trigger('tiki.mustread.addgroup', array(
+			TikiLib::events()->trigger('tiki.mustread.addgroup', [
 				'type' => 'trackeritem',
 				'object' => $item->getId(),
 				'user' => $GLOBALS['user'],
@@ -184,7 +184,7 @@ class Services_MustRead_Controller
 				'added' => $add,
 				'skipped' => $skip,
 				'action' => $action,
-			));
+			]);
 		}
 
 		$tx->commit();
@@ -229,14 +229,14 @@ class Services_MustRead_Controller
 		}
 
 		if (count($add) > 0) {
-			TikiLib::events()->trigger('tiki.mustread.adduser', array(
+			TikiLib::events()->trigger('tiki.mustread.adduser', [
 				'type' => 'trackeritem',
 				'object' => $item->getId(),
 				'user' => $GLOBALS['user'],
 				'added' => $add,
 				'skipped' => $skip,
 				'action' => $action,
-			));
+			]);
 		}
 
 		$tx->commit();
@@ -308,13 +308,13 @@ class Services_MustRead_Controller
 		$ret = (bool) $relationlib->add_relation('tiki.mustread.' . $action, 'user', $user, 'trackeritem', $item, true);
 
 		if ($ret) {
-			TikiLib::events()->trigger('tiki.mustread.required', array(
+			TikiLib::events()->trigger('tiki.mustread.required', [
 				'type' => 'user',
 				'object' => $user,
 				'user' => $GLOBALS['user'],
 				'target' => $item,
 				'action' => $action,
-			));
+			]);
 		}
 
 		return $ret;
@@ -497,4 +497,3 @@ class Services_MustRead_Controller
 		}
 	}
 }
-

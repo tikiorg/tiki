@@ -18,7 +18,7 @@ class WikiPlugin_Casperjs_Result
 		$this->commandLine = $commandLine;
 		$this->casperJsScript = $casperJsScript;
 
-		$this->output = array();
+		$this->output = [];
 
 		$tagStart = $prefix . "_START";
 		$tagStartLen = strlen($tagStart);

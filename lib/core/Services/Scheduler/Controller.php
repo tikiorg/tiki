@@ -44,21 +44,21 @@ class Services_Scheduler_Controller
 
 		$scheduler = $this->lib->get_scheduler($schedulerId);
 
-		if (!$scheduler) {
+		if (! $scheduler) {
 			throw new Services_Exception_NotFound;
 		}
 
 		if ($confirm) {
 			$this->lib->remove_scheduler($schedulerId);
 
-			return array(
+			return [
 				'schedulerId' => 0,
-			);
+			];
 		}
 
-		return array(
+		return [
 			'schedulerId' => $schedulerId,
 			'name' => $scheduler['name'],
-		);
+		];
 	}
 }

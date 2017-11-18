@@ -13,25 +13,25 @@
 
 class StandardAnalyzer_Analysis_TokenFilter_EnglishStemmer implements ZendSearch\Lucene\Analysis\TokenFilter\TokenFilterInterface
 {
-    /**
-     * Stop Words
-     * @var array
-     */
-    /**
-     * Constructs new instance of this filter.
-     *
-     * @param array $stopwords array (set) of words that will be filtered out
-     */
+	/**
+	 * Stop Words
+	 * @var array
+	 */
+	/**
+	 * Constructs new instance of this filter.
+	 *
+	 * @param array $stopwords array (set) of words that will be filtered out
+	 */
 	public function __construct()
 	{
 	}
 
-    /**
-     * Normalize Token or remove it (if null is returned)
-     *
-     * @param ZendSearch\Lucene\Analysis\Token $srcToken
-     * @return ZendSearch\Lucene\Analysis\Token
-     */
+	/**
+	 * Normalize Token or remove it (if null is returned)
+	 *
+	 * @param ZendSearch\Lucene\Analysis\Token $srcToken
+	 * @return ZendSearch\Lucene\Analysis\Token
+	 */
 	public function normalize(ZendSearch\Lucene\Analysis\Token $srcToken)
 	{
 
@@ -46,4 +46,3 @@ class StandardAnalyzer_Analysis_TokenFilter_EnglishStemmer implements ZendSearch
 		return $newToken;
 	}
 }
-

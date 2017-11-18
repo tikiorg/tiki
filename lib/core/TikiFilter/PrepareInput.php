@@ -22,16 +22,16 @@ class TikiFilter_PrepareInput
 
 	function prepare(array $input)
 	{
-		$output = array();
+		$output = [];
 
 		foreach ($input as $key => $value) {
-			if (strpos($key, $this->delimiter) === false ) {
+			if (strpos($key, $this->delimiter) === false) {
 				$output[$key] = $value;
 			} else {
 				list ($base, $remain) = explode($this->delimiter, $key, 2);
 
 				if (! isset($output[$base]) || ! is_array($output[$base])) {
-					$output[$base] = array();
+					$output[$base] = [];
 				}
 
 				$output[$base][$remain] = $value;
@@ -47,22 +47,22 @@ class TikiFilter_PrepareInput
 		return $output;
 	}
 
-	function flatten($values, &$newValues = array(), $prefix = '')
+	function flatten($values, &$newValues = [], $prefix = '')
 	{
 		foreach ($values as $key => $value) {
 			if (is_array($value) || is_object($value)) {
-				$newPrefix = $prefix.$key.$this->delimiter;
+				$newPrefix = $prefix . $key . $this->delimiter;
 				$newValue = $this->flatten($value, $newValues, $newPrefix, $this->delimiter);
 				$newValues =& $newValue;
 			} else {
-				$newValues[$prefix.$key] = $value;
+				$newValues[$prefix . $key] = $value;
 			}
 		}
 
 		return $newValues;
 	}
 
-	function toString($values, &$newValues = array(), $prefex = '')
+	function toString($values, &$newValues = [], $prefex = '')
 	{
 		$flatArray = self::flatten($values, $newValues, $prefex);
 
@@ -79,7 +79,7 @@ class TikiFilter_PrepareInput
 	{
 		$stringArray = explode("\n", $input);
 
-		$flatArray = array();
+		$flatArray = [];
 
 		foreach ($stringArray as $string) {
 			$string = explode(":", $string);
@@ -91,4 +91,3 @@ class TikiFilter_PrepareInput
 		return self::prepare($flatArray);
 	}
 }
-

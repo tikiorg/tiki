@@ -7,22 +7,24 @@
 
 class TikiAddons_Api_NavBar extends TikiAddons_Api
 {
-	protected static $templates = array();
+	protected static $templates = [];
 
 	// overriding isInstalled in TikiAddons_Utilities
-	function isInstalled($folder) {
+	function isInstalled($folder)
+	{
 		$installed1 = array_keys(self::$templates);
 		if (strpos($folder, '/') !== false && strpos($folder, '_') === false) {
 			$folder = str_replace('/', '_', $folder);
 		}
-		if (parent::isInstalled($folder) && in_array($folder, $installed1) ) {
+		if (parent::isInstalled($folder) && in_array($folder, $installed1)) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	static function setNavBar($folder, $tpl) {
+	static function setNavBar($folder, $tpl)
+	{
 		if (strpos($folder, '/') !== false && strpos($folder, '_') === false) {
 			$folder = str_replace('/', '_', $folder);
 		}
@@ -31,12 +33,13 @@ class TikiAddons_Api_NavBar extends TikiAddons_Api
 	}
 
 
-	function getNavBar($token, $from = '') {
+	function getNavBar($token, $from = '')
+	{
 		$smarty = TikiLib::lib('smarty');
 
 		$folder = $this->getFolderFromToken($token);
 
-		if (!$this->isInstalled($folder)) {
+		if (! $this->isInstalled($folder)) {
 			return '';
 		}
 
@@ -47,29 +50,29 @@ class TikiAddons_Api_NavBar extends TikiAddons_Api
 			$smarty->assign('groupTrackerItemId', $_REQUEST['organicgroup']);
 		}
 
-		if (!isset($_REQUEST['organicgroup']) && !empty($_REQUEST['page'])) {
+		if (! isset($_REQUEST['organicgroup']) && ! empty($_REQUEST['page'])) {
 			$info = $this->getOrganicGroupInfoForItem('wiki page', $_REQUEST['page']);
 			$cat = $info['cat'];
 			$ogid = $info['organicgroup'];
 			$smarty->assign('groupTrackerItemId', $ogid);
 			$_REQUEST['organicgroup'] = $ogid;
-			if (!isset($_REQUEST['cat'])) {
+			if (! isset($_REQUEST['cat'])) {
 				$_REQUEST['cat'] = $cat;
 			}
 		}
 
-		if (!isset($_REQUEST['organicgroup']) && !empty($_REQUEST['itemId'])) {
+		if (! isset($_REQUEST['organicgroup']) && ! empty($_REQUEST['itemId'])) {
 			$info = $this->getOrganicGroupInfoForItem('trackeritem', $_REQUEST['itemId']);
 			$cat = $info['cat'];
 			$ogid = $info['organicgroup'];
 			$smarty->assign('groupTrackerItemId', $ogid);
 			$_REQUEST['organicgroup'] = $ogid;
-			if (!isset($_REQUEST['cat'])) {
+			if (! isset($_REQUEST['cat'])) {
 				$_REQUEST['cat'] = $cat;
 			}
 		}
 
-		if (!empty($_REQUEST['organicgroup']) && empty($_REQUEST['cat'])) {
+		if (! empty($_REQUEST['organicgroup']) && empty($_REQUEST['cat'])) {
 			$ogname = 'syn_organicgrp_' . $_REQUEST['organicgroup'];
 			$cat = \TikiLib::lib('categ')->get_category_id($ogname);
 			$_REQUEST['cat'] = $cat;
@@ -81,5 +84,4 @@ class TikiAddons_Api_NavBar extends TikiAddons_Api
 		$smarty->assign('groupnavfrom', $from);
 		return $smarty->fetch(self::$templates[$folder]);
 	}
-
 }

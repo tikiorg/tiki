@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,13 +9,14 @@ class Tiki_Profile_InstallHandler_Webservice extends Tiki_Profile_InstallHandler
 {
 	function getData()
 	{
-		if ( $this->data )
+		if ($this->data) {
 			return $this->data;
+		}
 
-		$defaults = array(
+		$defaults = [
 			'schema_version' => null,
 			'schema_documentation' => null,
-		);
+		];
 
 		$data = array_merge($defaults, $this->obj->getData());
 
@@ -26,8 +27,9 @@ class Tiki_Profile_InstallHandler_Webservice extends Tiki_Profile_InstallHandler
 	{
 		$data = $this->getData();
 
-		if ( ! isset( $data['name'], $data['url'] ) )
+		if (! isset($data['name'], $data['url'])) {
 			return false;
+		}
 
 		return true;
 	}

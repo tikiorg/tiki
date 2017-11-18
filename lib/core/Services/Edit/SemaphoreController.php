@@ -42,14 +42,14 @@ class Services_Edit_SemaphoreController
 
 		$now = TikiLib::lib('tiki')->now;
 
-		$this->table->delete(array('semName' => $object_id, 'objectType' => $object_type));
+		$this->table->delete(['semName' => $object_id, 'objectType' => $object_type]);
 		$this->table->insert(
-			array(
+			[
 				'semName' => $object_id,
 				'objectType' => $object_type,
 				'timestamp' => $now,
 				'user' => $user,
-			)
+			]
 		);
 
 		$_SESSION[$this->getSessionId($input)] = $now;
@@ -101,7 +101,7 @@ class Services_Edit_SemaphoreController
 		$lim = TikiLib::lib('tiki')->now - $limit;
 
 		// remove expired ones
-		$this->table->deleteMultiple(array('timestamp' => $this->table->lesserThan((int)$lim)));
+		$this->table->deleteMultiple(['timestamp' => $this->table->lesserThan((int)$lim)]);
 
 		return (
 			$this->table->fetchCount([
@@ -142,10 +142,10 @@ class Services_Edit_SemaphoreController
 		} else {
 			return $user;
 		}
-
 	}
 
-	private function getSessionId($input) {
+	private function getSessionId($input)
+	{
 		$object_id = $input->object_id->pagename();
 		$object_type = $input->object_type->pagename();
 		$object_type = $object_type ? $object_type : 'wiki page';
@@ -154,7 +154,4 @@ class Services_Edit_SemaphoreController
 			str_replace(' ', '_', TikiLib::remove_non_word_characters_and_accents($object_id)) . '_ ' .
 			str_replace(' ', '_', $object_type);
 	}
-
 }
-
-

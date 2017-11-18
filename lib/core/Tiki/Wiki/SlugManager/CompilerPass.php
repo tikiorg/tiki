@@ -15,7 +15,7 @@ class CompilerPass implements CompilerPassInterface
 {
 	public function process(ContainerBuilder $container)
 	{
-		if (!$container->hasDefinition('tiki.lib.slugmanager')) {
+		if (! $container->hasDefinition('tiki.lib.slugmanager')) {
 			return;
 		}
 
@@ -29,4 +29,3 @@ class CompilerPass implements CompilerPassInterface
 		}
 	}
 }
-

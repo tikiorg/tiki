@@ -18,29 +18,28 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class Table_Settings_Standard extends Table_Settings_Abstract
 {
-	protected $default2 = array(
+	protected $default2 = [
 		'selflinks' => true,
-		'sorts' => array(
+		'sorts' => [
 			'type' => 'reset',
 			'group' => false,
 			'multisort' => false,
-		),
-		'pager' => array(
+		],
+		'pager' => [
 			'type' => true,
-		),
-		'ajax' => array(
+		],
+		'ajax' => [
 			'type' => true,
 			'offset' => 'offset',
 			'sortparam' => 'sort_mode',
 			'numrows' => 'numrows',
-			'url' => array(
+			'url' => [
 				'query' => '?{sort:sort}&{filter:filter}',
-			),
-		),
+			],
+		],
 		'usecolselector' => true,
-		'colselect' => array(
+		'colselect' => [
 			'type' => true,
-		),
-	);
+		],
+	];
 }
-

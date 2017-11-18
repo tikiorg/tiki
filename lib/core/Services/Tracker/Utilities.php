@@ -30,35 +30,35 @@ class Services_Tracker_Utilities
 	function resaveItem($itemId)
 	{
 		$tracker = TikiLib::lib('trk')->get_item_info($itemId);
-		if( !$tracker ) {
+		if (! $tracker) {
 			return;
 		}
 		$definition = Tracker_Definition::get($tracker['trackerId']);
-		if( !$definition ) {
+		if (! $definition) {
 			return;
 		}
-		$this->replaceItem($definition, $itemId, null, array(), [
+		$this->replaceItem($definition, $itemId, null, [], [
 			'validate' => false,
 			'skip_categories' => true,
 			'bulk_import' => true,
 		]);
 	}
 
-	function validateItem($definition, $item, $fields = array())
+	function validateItem($definition, $item, $fields = [])
 	{
 		$trackerId = $definition->getConfiguration('trackerId');
-		if (!$fields) {
+		if (! $fields) {
 			$fields = $this->initializeItemFields($definition, $item['itemId'], $item['fields']);
 		}
 
 		$trklib = TikiLib::lib('trk');
 		$categorizedFields = $definition->getCategorizedFields();
-		$itemErrors = $trklib->check_field_values(array('data' => $fields), $categorizedFields, $trackerId, $item['itemId'] ? $item['itemId'] : '');
+		$itemErrors = $trklib->check_field_values(['data' => $fields], $categorizedFields, $trackerId, $item['itemId'] ? $item['itemId'] : '');
 
-		$errors = array();
+		$errors = [];
 
 		if (count($itemErrors['err_mandatory']) > 0) {
-			$names = array();
+			$names = [];
 			foreach ($itemErrors['err_mandatory'] as $f) {
 				$names[] = $f['name'];
 			}
@@ -84,7 +84,7 @@ class Services_Tracker_Utilities
 		$trklib = TikiLib::lib('trk');
 
 		if ($options['validate']) {
-			$errors = $this->validateItem($definition, array('itemId' => $itemId, 'fields' => $fieldMap), $fields);
+			$errors = $this->validateItem($definition, ['itemId' => $itemId, 'fields' => $fieldMap], $fields);
 		}
 
 		if ($options['skip_categories']) {
@@ -94,8 +94,8 @@ class Services_Tracker_Utilities
 			}
 		}
 
-		if (!$options['validate'] || count($errors) == 0) {
-			$newItem = $trklib->replace_item($trackerId, $itemId, array('data' => $fields), $status, 0, $options['bulk_import']);
+		if (! $options['validate'] || count($errors) == 0) {
+			$newItem = $trklib->replace_item($trackerId, $itemId, ['data' => $fields], $status, 0, $options['bulk_import']);
 			return $newItem;
 		}
 
@@ -106,8 +106,9 @@ class Services_Tracker_Utilities
 		return false;
 	}
 
-	private function initializeItemFields($definition, $itemId, $fieldMap) {
-		$fields = array();
+	private function initializeItemFields($definition, $itemId, $fieldMap)
+	{
+		$fields = [];
 		foreach ($fieldMap as $key => $value) {
 			if (preg_match('/ins_/', $key)) { //make compatible with the 'ins_' keys
 				$id = (int)str_replace('ins_', '', $key);
@@ -115,7 +116,7 @@ class Services_Tracker_Utilities
 					$field['value'] = $value;
 					$fields[$field['fieldId']] = $field;
 				}
-			} else if ($field = $definition->getFieldFromPermName($key)) {
+			} elseif ($field = $definition->getFieldFromPermName($key)) {
 				$field['value'] = $value;
 				$fields[$field['fieldId']] = $field;
 			}
@@ -125,7 +126,7 @@ class Services_Tracker_Utilities
 			$item = $this->getItem($definition->getConfiguration('trackerId'), $itemId);
 			$initialData = new JitFilter($item['fields']);
 		} else {
-			$initialData = new JitFilter(array());
+			$initialData = new JitFilter([]);
 		}
 
 		// Add unspecified fields for the validation to work correctly
@@ -216,9 +217,9 @@ class Services_Tracker_Utilities
 	 *
 	 * @return mixed
 	 */
-	function getItems(array $conditions, $maxRecords = -1, $offset = -1, $fields = array())
+	function getItems(array $conditions, $maxRecords = -1, $offset = -1, $fields = [])
 	{
-		$keyMap = array();
+		$keyMap = [];
 		$definition = Tracker_Definition::get($conditions['trackerId']);
 		foreach ($definition->getFields() as $field) {
 			if (! empty($field['permName']) && (empty($fields) || in_array($field['permName'], $fields))) {
@@ -244,7 +245,7 @@ class Services_Tracker_Utilities
 
 		unset($conditions['modifiedSince']);
 
-		$items = $table->fetchAll(array('itemId', 'status'), $conditions, $maxRecords, $offset);
+		$items = $table->fetchAll(['itemId', 'status'], $conditions, $maxRecords, $offset);
 
 		foreach ($items as & $item) {
 			$item['fields'] = $this->getItemFields($item['itemId'], $keyMap);
@@ -256,10 +257,10 @@ class Services_Tracker_Utilities
 	function getItem($trackerId, $itemId)
 	{
 		$items = $this->getItems(
-			array(
+			[
 				'trackerId' => $trackerId,
 				'itemId' => $itemId,
-			),
+			],
 			1,
 			0
 		);
@@ -267,7 +268,7 @@ class Services_Tracker_Utilities
 
 		return $item;
 	}
-	
+
 	function getTitle($definition, $item)
 	{
 		$parts = [];
@@ -290,10 +291,10 @@ class Services_Tracker_Utilities
 			$field = $definition->getFieldFromPermName($permName);
 			$field['value'] = $rawValue;
 			$item['fields'][$permName] = $trklib->field_render_value(
-				array(
+				[
 					'field' => $field,
 					'process' => 'y',
-				)
+				]
 			);
 		}
 
@@ -306,13 +307,13 @@ class Services_Tracker_Utilities
 		$dataMap = $table->fetchMap(
 			'fieldId',
 			'value',
-			array(
+			[
 				'fieldId' => $table->in(array_keys($keyMap)),
 				'itemId' => $itemId,
-			)
+			]
 		);
 
-		$out = array();
+		$out = [];
 		foreach ($keyMap as $fieldId => $name) {
 			if (isset($dataMap[$fieldId])) {
 				$out[$name] = $dataMap[$fieldId];
@@ -331,7 +332,7 @@ class Services_Tracker_Utilities
 			0,
 			$data['name'],
 			$data['description'],
-			array(),
+			[],
 			$data['descriptionIsParsed']
 		);
 	}
@@ -356,7 +357,7 @@ class Services_Tracker_Utilities
 
 		$items = $table->fetchColumn(
 			'itemId',
-			array('trackerId' => $trackerId,)
+			['trackerId' => $trackerId,]
 		);
 
 		foreach ($items as $itemId) {
@@ -377,7 +378,7 @@ class Services_Tracker_Utilities
 			$description = $field->description->text();
 		}
 
-		$data = array(
+		$data = [
 				'name' => $field->name->text(),
 				'permName' => $field->permName->word(),
 				'type' => $field->type->word(),
@@ -404,7 +405,7 @@ class Services_Tracker_Utilities
 				'editableBy' => $field->editableBy->groupname(),
 				'visibleBy' => $field->visibleBy->groupname(),
 				'errorMsg' => $field->errorMsg->text(),
-				);
+				];
 
 		// enable prefs for imported fields if required
 		$factory = new Tracker_Field_Factory(false);
@@ -468,10 +469,9 @@ EXPORT;
 		$factory = new Tracker_Field_Factory(false);
 		$completeList = $factory->getFieldTypes();
 
-		$list = array();
+		$list = [];
 
 		foreach ($completeList as $code => $info) {
-
 			if ($this->isEnabled($info) == false) {
 				$list[$code] = $info;
 			}
@@ -480,16 +480,16 @@ EXPORT;
 		return $list;
 	}
 
-	function getFieldTypes($filter = array())
+	function getFieldTypes($filter = [])
 	{
 		$factory = new Tracker_Field_Factory(false);
 		$completeList = $factory->getFieldTypes();
-		
-		if( !empty($filter) ) {
+
+		if (! empty($filter)) {
 			$completeList = array_intersect_key($completeList, array_flip($filter));
 		}
 
-		$list = array();
+		$list = [];
 
 		foreach ($completeList as $code => $info) {
 			if ($this->isEnabled($info)) {
@@ -515,7 +515,7 @@ EXPORT;
 
 	function getFieldsFromIds($definition, $fieldIds)
 	{
-		$fields = array();
+		$fields = [];
 		foreach ($fieldIds as $fieldId) {
 			$field = $field = $definition->getField($fieldId);
 
@@ -535,7 +535,8 @@ EXPORT;
 		$trklib->remove_tracker_item($itemId, true);
 	}
 
-	function removeItemAndReferences($definition, $itemObject, $uncascaded, $replacement) {
+	function removeItemAndReferences($definition, $itemObject, $uncascaded, $replacement)
+	{
 		$tx = TikiDb::get()->begin();
 
 		$itemData = $itemObject->getData();
@@ -581,7 +582,8 @@ EXPORT;
 		return $newTrackerId;
 	}
 
-	function cloneItem($definition, $itemData) {
+	function cloneItem($definition, $itemData)
+	{
 		$transaction = TikiLib::lib('tiki')->begin();
 
 		$id = $this->insertItem($definition, $itemData);
@@ -616,7 +618,6 @@ EXPORT;
 				}
 
 				$new = $this->insertItem($childDefinition, $data);
-
 			}
 		}
 
@@ -625,4 +626,3 @@ EXPORT;
 		return $itemObject;
 	}
 }
-

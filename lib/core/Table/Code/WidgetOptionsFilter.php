@@ -47,15 +47,15 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 				$fsource = [];
 				$fform = [];
 				foreach (parent::$s['columns'] as $col => $info) {
-					$info = !empty($info['filter']) ? $info['filter'] : [];
-					$colpointer =  parent::$usecolselector ? (string) '\'' . $col . '\'' : (int) $col;
-					if (!empty($info['type'])) {
-						switch($info['type']) {
-							case 'dropdown' :
+					$info = ! empty($info['filter']) ? $info['filter'] : [];
+					$colpointer = parent::$usecolselector ? (string) '\'' . $col . '\'' : (int) $col;
+					if (! empty($info['type'])) {
+						switch ($info['type']) {
+							case 'dropdown':
 								$o = [];
 								if (array_key_exists('options', $info)) {
 									foreach ($info['options'] as $key => $val) {
-										$label =  addcslashes(is_numeric($key) ? $val : $key,"'/");
+										$label = addcslashes(is_numeric($key) ? $val : $key, "'/");
 										if (parent::$ajax) {
 											$o[] = '\'' . $label . '\' : function() {}';
 										} else {
@@ -67,7 +67,7 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 										$options = $this->iterate($o, '{', $this->nt4 . '}', $this->nt5, '', ',');
 										$ffunc[] = $colpointer . ' : ' . $options;
 									}
-								} elseif (!parent::$ajax) {
+								} elseif (! parent::$ajax) {
 									$ffunc[] = $colpointer . ' : {
 					\'(empty)\': function( e, n, f, i, $r, c, data ) {
 						if( typeof e === "Object" && typeof n === "Object" && typeof f === "undefined" ) {
@@ -88,7 +88,7 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 									. $this->nt3 . '}';
 								}
 								break;
-							case 'range' :
+							case 'range':
 								$min = isset($info['from']) ? $info['from'] : 0;
 								$max = isset($info['to']) ? $info['to'] : 100;
 								$valtohead = isset($info['style']) && $info['style'] == 'popup' ? 'false' : 'true';
@@ -96,7 +96,7 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 										. '$cell, indx, {values: [' . $min . ', ' . $max . '], min: ' . $min . ', max: ' . $max
 										. ', delayed: false, valueToHeader: ' . $valtohead . ', exactMatch: true});}';
 								break;
-							case 'date' :
+							case 'date':
 								$fm = isset($info['from']) ? $info['from'] : '';
 								$to = isset($info['to']) ? $info['to'] : '';
 								$format = isset($info['format']) ? $info['format'] : 'yy-mm-dd';

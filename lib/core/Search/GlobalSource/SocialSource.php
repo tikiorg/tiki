@@ -18,41 +18,41 @@ class Search_GlobalSource_SocialSource implements Search_GlobalSource_Interface
 
 	function getProvidedFields()
 	{
-		return array(
+		return [
 			'user_groups',
 			'user_followers',
-		);
+		];
 	}
 
 	function getGlobalFields()
 	{
-		return array();
+		return [];
 	}
 
-	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
+	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = [])
 	{
-		$groups = array();
-		$followers = array();
+		$groups = [];
+		$followers = [];
 
 		foreach ($this->getUsers($data, $objectType, $objectId) as $user) {
 			$groups = array_merge($groups, $this->userlib->get_user_groups_inclusion($user));
 			$userfollowers = $this->getFollowers($user);
 			if (is_array($userfollowers)) {
-				$followers = array_merge($followers, $userfollowers);	
+				$followers = array_merge($followers, $userfollowers);
 			}
 		}
 
 		unset($groups['Anonymous'], $groups['Registered']);
 
-		return array(
+		return [
 			'user_groups' => $typeFactory->multivalue(array_keys($groups)),
 			'user_followers' => $typeFactory->multivalue(array_unique($followers)),
-		);
+		];
 	}
 
 	private function getUsers($data, $objectType, $objectId)
 	{
-		$users = array();
+		$users = [];
 		if (isset($data['contributors'])) {
 			$users = $this->read($data['contributors']);
 		}
@@ -81,7 +81,7 @@ class Search_GlobalSource_SocialSource implements Search_GlobalSource_Interface
 
 	private function getFollowers($user)
 	{
-		static $localCache = array();
+		static $localCache = [];
 
 		if (! isset($localCache[$user])) {
 			$list = $this->sociallib->listFollowers($user);
@@ -96,4 +96,3 @@ class Search_GlobalSource_SocialSource implements Search_GlobalSource_Interface
 		return $localCache[$user];
 	}
 }
-

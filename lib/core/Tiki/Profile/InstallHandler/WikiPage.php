@@ -12,7 +12,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 	private $namespace;
 	private $name;
 	private $lang;
-	private $translations = array();
+	private $translations = [];
 	private $message;
 	private $structure;
 	private $structure_as_sibling;
@@ -21,59 +21,76 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 	private $geolocation;
 	private $hide_title;
 	private $locked;
-    private $freetags;
+	private $freetags;
 	private $mode = 'create_or_update';
 	private $exists;
 
 	function fetchData()
 	{
-		if ( $this->name )
+		if ($this->name) {
 			return;
+		}
 
 		$data = $this->obj->getData();
 
-		if ( array_key_exists('message', $data) )
+		if (array_key_exists('message', $data)) {
 			$this->message = $data['message'];
-        if ( array_key_exists('freetags', $data) )
-            $this->freetags = $data['freetags'];
-		if ( array_key_exists('name', $data) )
+		}
+		if (array_key_exists('freetags', $data)) {
+			$this->freetags = $data['freetags'];
+		}
+		if (array_key_exists('name', $data)) {
 			$this->name = $data['name'];
-		if ( array_key_exists('namespace', $data) )
+		}
+		if (array_key_exists('namespace', $data)) {
 			$this->namespace = $data['namespace'];
-		if ( array_key_exists('description', $data) )
+		}
+		if (array_key_exists('description', $data)) {
 			$this->description = $data['description'];
-		if ( array_key_exists('lang', $data) )
+		}
+		if (array_key_exists('lang', $data)) {
 			$this->lang = $data['lang'];
-		if ( array_key_exists('content', $data) )
+		}
+		if (array_key_exists('content', $data)) {
 			$this->content = $data['content'];
-		if ( array_key_exists('mode', $data) )
+		}
+		if (array_key_exists('mode', $data)) {
 			$this->mode = $data['mode'];
-		if ( $this->lang
+		}
+		if ($this->lang
 			&& array_key_exists('translations', $data)
-			&& is_array($data['translations']) )
+			&& is_array($data['translations']) ) {
 			$this->translations = $data['translations'];
-		if ( array_key_exists('structure', $data) )
+		}
+		if (array_key_exists('structure', $data)) {
 			$this->structure = $data['structure'];
-		if ( array_key_exists('structure_as_sibling', $data) )
+		}
+		if (array_key_exists('structure_as_sibling', $data)) {
 			$this->structure_as_sibling = $data['structure_as_sibling'];
-		if ( array_key_exists('wysiwyg', $data) )
+		}
+		if (array_key_exists('wysiwyg', $data)) {
 			$this->wysiwyg = $data['wysiwyg'];
-		if ( array_key_exists('wiki_authors_style', $data) )
+		}
+		if (array_key_exists('wiki_authors_style', $data)) {
 			$this->wiki_authors_style = $data['wiki_authors_style'];
-		if ( array_key_exists('geolocation', $data) )
+		}
+		if (array_key_exists('geolocation', $data)) {
 			$this->geolocation = $data['geolocation'];
-		if ( array_key_exists('hide_title', $data) )
+		}
+		if (array_key_exists('hide_title', $data)) {
 			$this->hide_title = $data['hide_title'];
-		if ( array_key_exists('locked', $data) )
+		}
+		if (array_key_exists('locked', $data)) {
 			$this->locked = $data['locked'];
-
+		}
 	}
 
 	function canInstall()
 	{
 		$this->fetchData();
-		if ( empty( $this->name ) )
+		if (empty($this->name)) {
 			return false;
+		}
 
 		$this->convertMode();
 
@@ -88,24 +105,24 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 
 		$this->exists = $tikilib->page_exists($name);
 
-		switch( $this->mode ) {
-		case 'create':
-			if ( $this->exists ) {
-				throw new Exception("Page {$name} already exists and profile does not allow update.");
-			}
-			break;
-		case 'update':
-		case 'append':
-			if ( ! $this->exists ) {
-				throw new Exception("Page {$name} does not exist and profile only allows update.");
-			}
-			break;
-		case 'create_or_update':
-			return $this->exists ? 'update' : 'create';
-		case 'create_or_append':
-			return $this->exists ? 'append' : 'create';
-		default:
-			throw new Exception("Invalid mode '{$this->mode}' for wiki handler.");
+		switch ($this->mode) {
+			case 'create':
+				if ($this->exists) {
+					throw new Exception("Page {$name} already exists and profile does not allow update.");
+				}
+				break;
+			case 'update':
+			case 'append':
+				if (! $this->exists) {
+					throw new Exception("Page {$name} does not exist and profile only allows update.");
+				}
+				break;
+			case 'create_or_update':
+				return $this->exists ? 'update' : 'create';
+			case 'create_or_append':
+				return $this->exists ? 'append' : 'create';
+			default:
+				throw new Exception("Invalid mode '{$this->mode}' for wiki handler.");
 		}
 
 		return $this->mode;
@@ -135,44 +152,45 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 
 		$this->mode = $this->convertMode();
 
-		if ( strpos($this->content, 'wikidirect:') === 0 ) {
+		if (strpos($this->content, 'wikidirect:') === 0) {
 			$pageName = substr($this->content, strlen('wikidirect:'));
 			$this->content = $this->obj->getProfile()->getPageContent($pageName);
 		}
 
 		$finalName = $this->getPageName();
-		
-		$hash = array();
 
-		if ( $this->mode == 'create' ) {
-			if ( $this->wysiwyg ) {
+		$hash = [];
+
+		if ($this->mode == 'create') {
+			if ($this->wysiwyg) {
 				$this->wysiwyg = 'y';
 				$is_html = true;
 			} else {
 				$this->wysiwyg = 'n';
 				$is_html = false;
 			}
-			if ( $this->locked == 'y') {
+			if ($this->locked == 'y') {
 				$hash['lock_it'] = 'y';
 			} else {
 				$this->locked = 'n';
-				$hash = NULL;
+				$hash = null;
 			}
-			if ( ! $this->message ) {
+			if (! $this->message) {
 				$this->message = tra('Created by profile installer');
 			}
-			if ( ! $tikilib->create_page($finalName, 0, $this->content, time(), $this->message, 'admin', '0.0.0.0', $this->description, $this->lang, $is_html, $hash, $this->wysiwyg, $this->wiki_authors_style))
+			if (! $tikilib->create_page($finalName, 0, $this->content, time(), $this->message, 'admin', '0.0.0.0', $this->description, $this->lang, $is_html, $hash, $this->wysiwyg, $this->wiki_authors_style)) {
 				return null;
+			}
 		} else {
 			$info = $tikilib->get_page_info($finalName, true, true);
 
-			if ( ! $this->wysiwyg ) {
-				if ( ! empty($info['wysiwyg']) ) {
+			if (! $this->wysiwyg) {
+				if (! empty($info['wysiwyg'])) {
 					$this->wysiwyg = $info['wysiwyg'];
 				} else {
 					$this->wysiwyg = 'n';
 				}
-				if ( isset($info['is_html']) ) {
+				if (isset($info['is_html'])) {
 					$is_html = $info['is_html'];
 				} else {
 					$is_html = false;
@@ -182,17 +200,19 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 				$is_html = true;
 			}
 
-			if ( ! $this->description )
+			if (! $this->description) {
 				$this->description = $info['description'];
+			}
 
-			if ( ! $this->lang )
+			if (! $this->lang) {
 				$this->lang = $info['lang'];
+			}
 
-			if ( $this->mode == 'append' ) {
+			if ($this->mode == 'append') {
 				$this->content = rtrim($info['data']) . "\n" . trim($this->content) . "\n";
 			}
 
-			if ( ! $this->message ) {
+			if (! $this->message) {
 				$this->message = tra('Page updated by profile installer');
 			}
 
@@ -204,7 +224,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 			TikiLib::lib('geo')->set_coordinates('wiki page', $this->name, $this->geolocation);
 		}
 
-		if ($prefs['wiki_page_hide_title'] == 'y' && !empty($this->hide_title)) {
+		if ($prefs['wiki_page_hide_title'] == 'y' && ! empty($this->hide_title)) {
 			if ($this->hide_title == 'y') {
 				$isHideTitle = -1;
 			} elseif ($this->hide_title == 'n') {
@@ -216,10 +236,10 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 		$multilinguallib = TikiLib::lib('multilingual');
 
 		$current = $tikilib->get_page_id_from_name($finalName);
-		foreach ( $this->translations as $targetName ) {
+		foreach ($this->translations as $targetName) {
 			$target = $tikilib->get_page_info($targetName);
 
-			if ( $target && $target['lang'] && $target['lang'] != $this->lang ) {
+			if ($target && $target['lang'] && $target['lang'] != $this->lang) {
 				$multilinguallib->insertTranslation('wiki page', $current, $this->lang, $target['page_id'], $target['lang']);
 			}
 		}
@@ -251,14 +271,14 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 			}
 		}
 
-        if ($this->freetags != "" && $tikilib->page_exists($finalName, false)) {
-            $cat_type = "wiki page";
-            $cat_objid = $finalName;
-            $cat_name = $finalName;
-            $tag_string = $this->freetags;
-            $cat_lang = null;
-            require_once 'freetag_apply.php';
-        }
+		if ($this->freetags != "" && $tikilib->page_exists($finalName, false)) {
+			$cat_type = "wiki page";
+			$cat_objid = $finalName;
+			$cat_name = $finalName;
+			$tag_string = $this->freetags;
+			$cat_lang = null;
+			require_once 'freetag_apply.php';
+		}
 
 		return $finalName;
 	}
@@ -287,13 +307,13 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 		$writer->addObject(
 			'wiki_page',
 			$page,
-			array_filter(array(
+			array_filter([
 				'name' => $page,
 				'content' => "wikicontent:$page",
 				'description' => $info['description'],
 				'lang' => $info['lang'],
 				'wysiwyg' => $info['wysiwyg'],
-			))
+			])
 		);
 
 		return true;

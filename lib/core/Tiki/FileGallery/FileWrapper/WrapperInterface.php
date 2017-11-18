@@ -20,4 +20,3 @@ interface WrapperInterface
 	 */
 	function getContents();
 }
-

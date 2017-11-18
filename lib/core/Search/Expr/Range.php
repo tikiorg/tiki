@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -27,7 +27,7 @@ class Search_Expr_Range implements Search_Expr_Interface
 		if ($which != 'from' && $which != 'to') {
 			return null;
 		}
-		
+
 		return new Search_Expr_Token($this->$which, $this->type, $this->field);
 	}
 
@@ -53,7 +53,7 @@ class Search_Expr_Range implements Search_Expr_Interface
 
 	function walk($callback)
 	{
-		return call_user_func($callback, $this, array());
+		return call_user_func($callback, $this, []);
 	}
 
 	function getValue(Search_Type_Factory_Interface $typeFactory)
@@ -69,7 +69,6 @@ class Search_Expr_Range implements Search_Expr_Interface
 
 	function traverse($callback)
 	{
-		return call_user_func($callback, $callback, $this, array());
+		return call_user_func($callback, $callback, $this, []);
 	}
 }
-

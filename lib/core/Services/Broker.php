@@ -29,10 +29,10 @@ class Services_Broker
 
 			if (isset($output['FORWARD'])) {
 				$output['FORWARD'] = array_merge(
-					array(
+					[
 						'controller' => $controller,
 						'action' => $action,
-					),
+					],
 					$output['FORWARD']
 				);
 			}
@@ -53,7 +53,7 @@ class Services_Broker
 				$smarty->assign('detail', ['message' => $e->getMessage()]);
 				$smarty->display("extends:internal/modal.tpl|error-ajax.tpl");
 			} else {
-				$access->display_error(NULL, $e->getMessage(), $e->getCode());
+				$access->display_error(null, $e->getMessage(), $e->getCode());
 			}
 		} catch (Exception $e) {
 			if ($request->modal->int() && $access->is_xml_http_request()) {
@@ -65,12 +65,12 @@ class Services_Broker
 				$smarty->assign('detail', ['message' => $e->getMessage()]);
 				$smarty->display("extends:internal/modal.tpl|error-ajax.tpl");
 			} else {
-				$access->display_error(NULL, $e->getMessage(), $e->getCode());
+				$access->display_error(null, $e->getMessage(), $e->getCode());
 			}
 		}
 	}
 
-	function internal($controller, $action, $request = array())
+	function internal($controller, $action, $request = [])
 	{
 		if (! $request instanceof JitFilter) {
 			$request = new JitFilter($request);
@@ -135,7 +135,7 @@ class Services_Broker
 		$template = "$controller/$action.tpl";
 
 		//if template doesn't exists, simply return the array given from the action
-        //if noTemplate is specified in the query string, it will skip the template
+		//if noTemplate is specified in the query string, it will skip the template
 		if (! $smarty->templateExists($template) || strpos($_SERVER['QUERY_STRING'], '&noTemplate') !== false) {
 			return json_encode($output);
 		}
@@ -162,4 +162,3 @@ class Services_Broker
 		}
 	}
 }
-

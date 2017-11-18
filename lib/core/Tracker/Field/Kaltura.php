@@ -15,48 +15,48 @@ class Tracker_Field_Kaltura extends Tracker_Field_Abstract implements Tracker_Fi
 {
 	public static function getTypes()
 	{
-		return array(
-			'kaltura' => array(
+		return [
+			'kaltura' => [
 				'name' => tr('Kaltura Video'),
 				'description' => tr('Displays a series of attached Kaltura videos.'),
 				'help' => 'Kaltura',
-				'prefs' => array('trackerfield_kaltura', 'feature_kaltura', 'wikiplugin_kaltura'),
-				'tags' => array('advanced'),
+				'prefs' => ['trackerfield_kaltura', 'feature_kaltura', 'wikiplugin_kaltura'],
+				'tags' => ['advanced'],
 				'default' => 'n',
-				'params' => array(
-					'displayParams' => array(
+				'params' => [
+					'displayParams' => [
 						'name' => tr('Display parameters'),
 						'description' => tr('URL-encoded parameters used in the {kaltura} plugin, for example,.') . ' "width=800&height=600"',
 						'filter' => 'text',
-					),
-					'displayParamsForLists' => array(
+					],
+					'displayParamsForLists' => [
 						'name' => tr('Display parameters for lists'),
 						'description' => tr('URL-encoded parameters used in the {kaltura} plugin, for example,.') . ' "width=240&height=80"',
 						'filter' => 'text',
-					),
-				),
-			),
-		);
+					],
+				],
+			],
+		];
 	}
 
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
 		$insertId = $this->getInsertId();
 
 		if (isset($requestData[$insertId])) {
 			$value = implode(',', $requestData[$insertId]);
-		} else if (!empty($requestData['old_' . $insertId])) {    // all entries removed
+		} elseif (! empty($requestData['old_' . $insertId])) {    // all entries removed
 			$value = '';
 		} else {
 			$value = $this->getValue();
 		}
 
-		return array(
+		return [
 			'value' => $value,
-		);
+		];
 	}
 
-	function renderInput($context = array())
+	function renderInput($context = [])
 	{
 		$kalturalib = TikiLib::lib('kalturauser');
 		$movies = array_filter(explode(',', $this->getValue()));
@@ -74,14 +74,14 @@ class Tracker_Field_Kaltura extends Tracker_Field_Abstract implements Tracker_Fi
 		return $this->renderTemplate(
 			'trackerinput/kaltura.tpl',
 			$context,
-			array(
+			[
 				'movies' => $movieList,
 				'extras' => $extra,
-			)
+			]
 		);
 	}
 
-	function renderOutput($context = array())
+	function renderOutput($context = [])
 	{
 		if ($context['list_mode'] === 'y') {
 			$otherParams = $this->getOption('displayParamsForLists', []);
@@ -98,7 +98,7 @@ class Tracker_Field_Kaltura extends Tracker_Field_Abstract implements Tracker_Fi
 		$movieIds = array_filter(explode(',', $this->getValue()));
 		$output = '';
 
-		foreach( $movieIds as $id ) {
+		foreach ($movieIds as $id) {
 			$params = array_merge($otherParams, ['id' => $id]);
 			$output .= wikiplugin_kaltura('', $params);
 		}
@@ -121,4 +121,3 @@ class Tracker_Field_Kaltura extends Tracker_Field_Abstract implements Tracker_Fi
 		return $info;
 	}
 }
-

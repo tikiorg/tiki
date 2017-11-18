@@ -28,4 +28,3 @@ class CsvSourceEntry
 		$column->parseInto($info, $entry);
 	}
 }
-

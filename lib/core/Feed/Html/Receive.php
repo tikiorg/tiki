@@ -22,7 +22,7 @@ class Feed_Html_Receive extends Feed_Abstract
 
 	public function getContents()
 	{
-		if (!empty($this->contents)) {
+		if (! empty($this->contents)) {
 			return $this->contents;
 		} else {
 			$feed = json_decode(file_get_contents($this->href));

@@ -37,36 +37,39 @@ class Services_User_MonitorController
 			}
 		}
 
-		return array(
+		return [
 			'type' => $type,
 			'object' => $object,
 			'title' => tr('Notifications for %0', $title),
 			'options' => $monitorlib->getOptions($user, $type, $object),
 			'priorities' => $monitorlib->getPriorities(),
-		);
+		];
 	}
 
-	function action_set_component_last_view($input) {
+	function action_set_component_last_view($input)
+	{
 		global $user;
 
-		if(!$user) return;
+		if (! $user) {
+			return;
+		}
 
 		$tikiLib = TikiLib::lib('tiki');
-		
+
 		$component = $input->component->text();
 		$id = $input->id->int();
 
 		$prefName = "last_viewed_";
 
-		if(!empty($id)) {
-			$prefName .= $component."_".$id;
+		if (! empty($id)) {
+			$prefName .= $component . "_" . $id;
 		} else {
 			$prefName .= $component;
 		}
 
 		$tikiLib->set_user_preference($user, $prefName, time());
 	}
-	
+
 	function action_stream($input)
 	{
 		$loginlib = TikiLib::lib('login');
@@ -213,4 +216,3 @@ class Services_User_MonitorController
 		}
 	}
 }
-

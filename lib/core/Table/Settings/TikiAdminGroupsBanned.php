@@ -67,4 +67,3 @@ class Table_Settings_TikiAdminGroupsBanned extends Table_Settings_Standard
 		]
 	];
 }
-

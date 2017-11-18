@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -17,47 +17,47 @@ class TikiDb_Bridge extends TikiDb
 		self::get()->stopTimer($starttime);
 	} // }}}
 
-	function qstr( $str ) // {{{
+	function qstr($str) // {{{
 	{
 		return self::get()->qstr($str);
 	} // }}}
 
-	function query( $query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
+	function query($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true) // {{{
 	{
 		return self::get()->query($query, $values, $numrows, $offset, $reporterrors);
 	} // }}}
 
-	function fetchAll( $query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
+	function fetchAll($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true) // {{{
 	{
 		return self::get()->fetchAll($query, $values, $numrows, $offset, $reporterrors);
 	} // }}}
 
-	function queryError( $query, &$error, $values = null, $numrows = -1, $offset = -1 ) // {{{
+	function queryError($query, &$error, $values = null, $numrows = -1, $offset = -1) // {{{
 	{
 		return self::get()->queryError($query, $error, $values, $numrows, $offset);
 	} // }}}
 
-	function queryException( $query, $values = null, $numrows = -1, $offset = -1 ) // {{{
+	function queryException($query, $values = null, $numrows = -1, $offset = -1) // {{{
 	{
 		return self::get()->queryException($query, $values, $numrows, $offset);
 	} // }}}
 
-	function getOne( $query, $values = null, $reporterrors = true, $offset = 0 ) // {{{
+	function getOne($query, $values = null, $reporterrors = true, $offset = 0) // {{{
 	{
 		return self::get()->getOne($query, $values, $reporterrors, $offset);
 	} // }}}
 
-	function setErrorHandler( TikiDb_ErrorHandler $handler ) // {{{
+	function setErrorHandler(TikiDb_ErrorHandler $handler) // {{{
 	{
 		self::get()->setErrorHandler($handler);
 	} // }}}
 
-	function setTablePrefix( $prefix ) // {{{
+	function setTablePrefix($prefix) // {{{
 	{
 		self::get()->setTablePrefix($prefix);
 	} // }}}
 
-	function setUsersTablePrefix( $prefix ) // {{{
+	function setUsersTablePrefix($prefix) // {{{
 	{
 		self::get()->setUsersTablePrefix($prefix);
 	} // }}}
@@ -67,7 +67,7 @@ class TikiDb_Bridge extends TikiDb
 		return self::get()->getServerType();
 	} // }}}
 
-	function setServerType( $type ) // {{{
+	function setServerType($type) // {{{
 	{
 		self::get()->setServerType($type);
 	} // }}}
@@ -77,22 +77,22 @@ class TikiDb_Bridge extends TikiDb
 		return self::get()->getErrorMessage();
 	} // }}}
 
-	protected function setErrorMessage( $message ) // {{{
+	protected function setErrorMessage($message) // {{{
 	{
 		self::get()->setErrorMessage($message);
 	} // }}}
 
-	protected function handleQueryError( $query, $values, $result, $mode ) // {{{
+	protected function handleQueryError($query, $values, $result, $mode) // {{{
 	{
 		self::get()->handleQueryError($query, $values, $result, $mode);
 	} // }}}
 
-	protected function convertQueryTablePrefixes( &$query ) // {{{
+	protected function convertQueryTablePrefixes(&$query) // {{{
 	{
 		self::get()->convertQueryTablePrefixes($query);
 	} // }}}
 
-	function convertSortMode( $sort_mode, $fields = null ) // {{{
+	function convertSortMode($sort_mode, $fields = null) // {{{
 	{
 		return self::get()->convertSortMode($sort_mode, $fields);
 	} // }}}
@@ -102,17 +102,17 @@ class TikiDb_Bridge extends TikiDb
 		return self::get()->getQuery();
 	} // }}}
 
-	function setQuery( $sql ) // {{{
+	function setQuery($sql) // {{{
 	{
 		return self::get()->setQuery($sql);
 	} // }}}
 
-	function ifNull( $field, $ifNull ) // {{{
+	function ifNull($field, $ifNull) // {{{
 	{
 		return self::get()->ifNull($field, $ifNull);
 	} // }}}
 
-	function in( $field, $values, &$bindvars ) // {{{
+	function in($field, $values, &$bindvars) // {{{
 	{
 		return self::get()->in($field, $values, $bindvars);
 	} // }}}
@@ -120,7 +120,7 @@ class TikiDb_Bridge extends TikiDb
 	function concat() // {{{
 	{
 		$arr = func_get_args();
-		return call_user_func_array(array( self::get(), 'concat' ), $arr);
+		return call_user_func_array([ self::get(), 'concat' ], $arr);
 	} // }}}
 
 	function table($tableName, $autoIncrement = true) // {{{

@@ -22,11 +22,11 @@ class Tiki_Event_Customizer_Executor implements Tiki_Event_EdgeProvider
 		$runner = $this->runner;
 
 		$runner->setVariables(
-			array(
+			[
 				'args' => $arguments,
 				'event' => $eventName,
 				'priority' => $priority,
-			)
+			]
 		);
 
 		foreach ($rules as $rule) {
@@ -41,7 +41,7 @@ class Tiki_Event_Customizer_Executor implements Tiki_Event_EdgeProvider
 
 	function getTargetEvents()
 	{
-		$out = array();
+		$out = [];
 
 		foreach ($this->ruleSet->getRules() as $rule) {
 			$out = array_merge($out, $this->findTrigger($rule));
@@ -53,9 +53,9 @@ class Tiki_Event_Customizer_Executor implements Tiki_Event_EdgeProvider
 	private function findTrigger($element)
 	{
 		if ($element->getType() == 'event-trigger') {
-			return array($element[0]);
+			return [$element[0]];
 		} else {
-			$out = array();
+			$out = [];
 			foreach ($element as $child) {
 				if ($child instanceof Math_Formula_Element) {
 					$out = array_merge($out, $this->findTrigger($child));
@@ -66,4 +66,3 @@ class Tiki_Event_Customizer_Executor implements Tiki_Event_EdgeProvider
 		}
 	}
 }
-

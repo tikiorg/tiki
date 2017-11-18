@@ -10,30 +10,30 @@ class Math_Formula_Element implements ArrayAccess, Iterator, Countable
 	private $type;
 	private $children;
 
-	function __construct( $type, array $children = array() )
+	function __construct($type, array $children = [])
 	{
 		$this->type = $type;
 		$this->children = $children;
 	}
 
-	function addChild( $child )
+	function addChild($child)
 	{
 		$this->children[] = $child;
 	}
 
-	function offsetExists( $offset )
+	function offsetExists($offset)
 	{
 		return is_int($offset) && isset($this->children[$offset]);
 	}
 
-	function offsetGet( $offset )
+	function offsetGet($offset)
 	{
-		if ( isset($this->children[$offset]) ) {
+		if (isset($this->children[$offset])) {
 			return $this->children[$offset];
 		}
 	}
 
-	function offsetSet( $offset, $value )
+	function offsetSet($offset, $value)
 	{
 	}
 
@@ -41,10 +41,10 @@ class Math_Formula_Element implements ArrayAccess, Iterator, Countable
 	{
 	}
 
-	function __get( $name )
+	function __get($name)
 	{
-		foreach ( $this->children as $child ) {
-			if ( $child instanceof Math_Formula_Element && $child->type == $name ) {
+		foreach ($this->children as $child) {
+			if ($child instanceof Math_Formula_Element && $child->type == $name) {
 				return $child;
 			}
 		}
@@ -86,13 +86,13 @@ class Math_Formula_Element implements ArrayAccess, Iterator, Countable
 		return count($this->children);
 	}
 
-	function getExtraValues( array $allowedKeys )
+	function getExtraValues(array $allowedKeys)
 	{
-		$extra = array();
+		$extra = [];
 
-		foreach ( $this->children as $child ) {
-			if ( $child instanceof self ) {
-				if ( ! in_array($child->type, $allowedKeys) ) {
+		foreach ($this->children as $child) {
+			if ($child instanceof self) {
+				if (! in_array($child->type, $allowedKeys)) {
 					$extra[] = "({$child->type} ...)";
 				}
 			} else {
@@ -100,9 +100,8 @@ class Math_Formula_Element implements ArrayAccess, Iterator, Countable
 			}
 		}
 
-		if ( count($extra) ) {
+		if (count($extra)) {
 			return $extra;
 		}
 	}
 }
-

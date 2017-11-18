@@ -85,19 +85,23 @@ class Schema
 		return $out;
 	}
 
-	function loadConfig($config) {
+	function loadConfig($config)
+	{
 		$this->config = $config;
 	}
 
-	function canImportUpdate() {
+	function canImportUpdate()
+	{
 		return $this->config['import_update'];
 	}
 
-	function ignoreImportBlanks() {
+	function ignoreImportBlanks()
+	{
 		return $this->config['ignore_blanks'];
 	}
 
-	function isImportTransaction() {
+	function isImportTransaction()
+	{
 		return $this->config['import_transaction'];
 	}
 
@@ -218,17 +222,17 @@ class Schema
 		return $column;
 	}
 
-	function addStatic($value)     
-	{     
-		$column = new Schema\Column('ignore', uniqid());    
-		$column->setReadOnly(true);    
-		$column->setRenderTransform(function () use ($value) {     
-			return $value;    
-		});    
+	function addStatic($value)
+	{
+		$column = new Schema\Column('ignore', uniqid());
+		$column->setReadOnly(true);
+		$column->setRenderTransform(function () use ($value) {
+			return $value;
+		});
 
-		$this->columns[] = $column;    
-		return $column;    
-	}     
+		$this->columns[] = $column;
+		return $column;
+	}
 
 	function getColumns()
 	{
@@ -304,10 +308,10 @@ class Schema
 	private function getSystemSchema($name)
 	{
 		switch ($name) {
-		case 'actions':
-			$trackerId = $this->definition->getConfiguration('trackerId');
-			$schema = new self($this->definition);
-			$schema->addNew($name, 'all')
+			case 'actions':
+				$trackerId = $this->definition->getConfiguration('trackerId');
+				$schema = new self($this->definition);
+				$schema->addNew($name, 'all')
 				->setLabel(tr('Actions'))
 				->addQuerySource('itemId', 'object_id')
 				->setReadOnly(true)
@@ -325,49 +329,49 @@ class Schema
 
 					return $smarty->fetch('tabular/item_actions.tpl');
 				})
-				;
-			return $schema;
-		case 'itemId':
-			$schema = new self($this->definition);
-			$schema->addNew($name, 'id')
+					;
+				return $schema;
+			case 'itemId':
+				$schema = new self($this->definition);
+				$schema->addNew($name, 'id')
 				->setLabel(tr('Item ID'))
 				->addQuerySource('itemId', 'object_id')
 				->setRenderTransform(function ($value, $extra) {
 					return $extra['itemId'];
 				})
-				->setParseIntoTransform(function (& $info, $value) {
-					$info['itemId'] = (int) $value;
-				})
-				;
-			return $schema;
-		case 'status':
-			$types = \TikiLib::lib('trk')->status_types();
-			$invert = array_flip(array_map(function ($s) {
-				return $s['name'];
-			}, $types));
+					->setParseIntoTransform(function (& $info, $value) {
+						$info['itemId'] = (int) $value;
+					})
+					;
+				return $schema;
+			case 'status':
+				$types = \TikiLib::lib('trk')->status_types();
+				$invert = array_flip(array_map(function ($s) {
+					return $s['name'];
+				}, $types));
 
-			$schema = new self($this->definition);
-			$schema->addNew($name, 'system')
-				->setLabel(tr('Status'))
-				->addQuerySource('status', 'tracker_status')
-				->setRenderTransform(function ($value, $extra) {
-					return $extra['status'];
-				})
-				->setParseIntoTransform(function (& $info, $value) {
-					$info['status'] = $value;
-				})
-				;
-			$schema->addNew($name, 'name')
-				->setLabel(tr('Status'))
-				->addQuerySource('status', 'tracker_status')
-				->setRenderTransform(function ($value, $extra) use ($types) {
-					return $types[$extra['status']]['name'];
-				})
-				->setParseIntoTransform(function (& $info, $value) use ($invert) {
-					$info['status'] = $invert[$value];
-				})
-				;
-			return $schema;
+				$schema = new self($this->definition);
+				$schema->addNew($name, 'system')
+					->setLabel(tr('Status'))
+					->addQuerySource('status', 'tracker_status')
+					->setRenderTransform(function ($value, $extra) {
+						return $extra['status'];
+					})
+					->setParseIntoTransform(function (& $info, $value) {
+						$info['status'] = $value;
+					})
+					;
+				$schema->addNew($name, 'name')
+					->setLabel(tr('Status'))
+					->addQuerySource('status', 'tracker_status')
+					->setRenderTransform(function ($value, $extra) use ($types) {
+						return $types[$extra['status']]['name'];
+					})
+					->setParseIntoTransform(function (& $info, $value) use ($invert) {
+						$info['status'] = $invert[$value];
+					})
+					;
+				return $schema;
 		}
 	}
 }

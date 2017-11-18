@@ -37,18 +37,19 @@ class Services_Access_Controller
 		return $ret;
 	}
 
-	private function prepareReturn($input) {
-		$title = !empty($input['title']) ? $input['title'] : tra('Please confirm');
-		$confirmButton = !empty($input['confirmButton']) ? $input['confirmButton'] : tra('OK');
-		$confirmButtonClass = !empty($input['confirmButtonClass']) ? $input['confirmButtonClass'] : 'btn-primary';
+	private function prepareReturn($input)
+	{
+		$title = ! empty($input['title']) ? $input['title'] : tra('Please confirm');
+		$confirmButton = ! empty($input['confirmButton']) ? $input['confirmButton'] : tra('OK');
+		$confirmButtonClass = ! empty($input['confirmButtonClass']) ? $input['confirmButtonClass'] : 'btn-primary';
 		$items = $input->asArray('items');
 
 		/*** confirm message ***/
-		$customMsg = !empty($input['customMsg']) ? $input['customMsg'] : '';
-		$customVerb = !empty($input['customVerb']) ? $input['customVerb'] : '';
-		$customObject = !empty($input['customObject']) ? $input['customObject'] : '';
+		$customMsg = ! empty($input['customMsg']) ? $input['customMsg'] : '';
+		$customVerb = ! empty($input['customVerb']) ? $input['customVerb'] : '';
+		$customObject = ! empty($input['customObject']) ? $input['customObject'] : '';
 		if (empty($customMsg)) {
-			if (!empty($customVerb) && !empty($customObject)) {
+			if (! empty($customVerb) && ! empty($customObject)) {
 				$customMsg = tr('Are you sure you want to %0 the following %1?', $customVerb, $customObject);
 			} else {
 				if (count($items) === 1) {

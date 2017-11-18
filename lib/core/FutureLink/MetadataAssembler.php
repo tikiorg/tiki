@@ -25,37 +25,37 @@ class FutureLink_MetadataAssembler
 	public $minimumStatisticsNeeded;
 	public $minimumMathNeeded;
 	public $scientificField;
-	public $categories = array();
+	public $categories = [];
 	public $keywords;
 	public $questions;
 	public $datePageOriginated;
 	public $countAll;
 	public $language = '';
-    public $findDatePageOriginated;
+	public $findDatePageOriginated;
 
-	static $acceptableKeys = array(
-		'websiteTitle' =>               true,
-		'websiteSubtitle' =>            true,
-		'moderator' =>                  true,
-		'moderatorInstitution' =>       true,
-		'moderatorProfession' =>        true,
-		'hash' =>                       true,
-		'author' =>                     true,
-		'authorInstitution' =>          true,
-		'authorProfession' =>           true,
-		"href" =>                       true,
-		'answers' =>                    true,
-		'dateLastUpdated' =>            true,
-		'dateOriginated' =>             true,
-		'language' =>                   true,
-		'count' =>                      true,
-		'keywords' =>                   true,
-		'categories' =>                 true,
-		'scientificField' =>            true,
-		'minimumMathNeeded' =>          true,
-		'minimumStatisticsNeeded' =>    true,
-		'text' =>                       true
-	);
+	static $acceptableKeys = [
+		'websiteTitle' => true,
+		'websiteSubtitle' => true,
+		'moderator' => true,
+		'moderatorInstitution' => true,
+		'moderatorProfession' => true,
+		'hash' => true,
+		'author' => true,
+		'authorInstitution' => true,
+		'authorProfession' => true,
+		"href" => true,
+		'answers' => true,
+		'dateLastUpdated' => true,
+		'dateOriginated' => true,
+		'language' => true,
+		'count' => true,
+		'keywords' => true,
+		'categories' => true,
+		'scientificField' => true,
+		'minimumMathNeeded' => true,
+		'minimumStatisticsNeeded' => true,
+		'text' => true
+	];
 
 	function __construct($page)
 	{
@@ -63,7 +63,7 @@ class FutureLink_MetadataAssembler
 
 		$this->page = $page;
 
-        //TODO: abstract
+		//TODO: abstract
 		$details = $tikilib->fetchAll("SELECT lang, lastModif FROM tiki_pages WHERE pageName = ?", $page);
 		$detail = end($details);
 
@@ -73,66 +73,68 @@ class FutureLink_MetadataAssembler
 		$this->href = TikiLib::tikiUrl() . 'tiki-index.php?page=' . $page;
 	}
 
-    static function fromRawToMetaData($raw)
-    {
-        $me = new FutureLink_Metadata();
-        $me->websiteTitle =             $raw->websiteTitle;
-        $me->websiteSubtitle =          $raw->websiteSubtitle;
-        $me->moderator =                $raw->moderator;
-        $me->moderatorInstitution=      $raw->moderatorInstitution;
-        $me->moderatorProfession=       $raw->moderatorProfession;
-        $me->hash=                      $raw->hash;
-        $me->author=                    $raw->author;
-        $me->dateLastUpdated=           $raw->dateLastUpdated;
-        $me->authorProfession=          $raw->authorProfession;
-        $me->href= 	                    $raw->href;
-        $me->answers=                   $raw->answers;
-        $me->dateLastUpdated=           $raw->dateLastUpdated;
-        $me->dateOriginated=            $raw->dateOriginated;
-        $me->language=                  $raw->language;
-        $me->count=                     $raw->countAll;
-        $me->keywords=                  $raw->keywords;
-        $me->categories=                $raw->categories;
-        $me->scientificField=           $raw->scientificField;
-        $me->minimumMathNeeded=         $raw->minimumMathNeeded;
-        $me->minimumStatisticsNeeded=   $raw->minimumStatisticsNeeded;
-        $me->text= 	                    $raw->text;
+	static function fromRawToMetaData($raw)
+	{
+		$me = new FutureLink_Metadata();
+		$me->websiteTitle = $raw->websiteTitle;
+		$me->websiteSubtitle = $raw->websiteSubtitle;
+		$me->moderator = $raw->moderator;
+		$me->moderatorInstitution = $raw->moderatorInstitution;
+		$me->moderatorProfession = $raw->moderatorProfession;
+		$me->hash = $raw->hash;
+		$me->author = $raw->author;
+		$me->dateLastUpdated = $raw->dateLastUpdated;
+		$me->authorProfession = $raw->authorProfession;
+		$me->href = $raw->href;
+		$me->answers = $raw->answers;
+		$me->dateLastUpdated = $raw->dateLastUpdated;
+		$me->dateOriginated = $raw->dateOriginated;
+		$me->language = $raw->language;
+		$me->count = $raw->countAll;
+		$me->keywords = $raw->keywords;
+		$me->categories = $raw->categories;
+		$me->scientificField = $raw->scientificField;
+		$me->minimumMathNeeded = $raw->minimumMathNeeded;
+		$me->minimumStatisticsNeeded = $raw->minimumStatisticsNeeded;
+		$me->text = $raw->text;
 
-        return $me;
-    }
+		return $me;
+	}
 
 	static function pagePastLink($page, $data)
 	{
 		$me = new FutureLink_MetadataAssembler($page);
 
-        $me->raw = new FutureLink_Metadata();
-		$me->raw->websiteTitle =            $me->websiteTitle;
-        $me->raw->websiteSubtitle =         $me->page;
-		$me->raw->moderator =               $me->moderatorName();
-		$me->raw->moderatorInstitution=     $me->moderatorBusinessName();
-	    $me->raw->moderatorProfession=      $me->moderatorProfession();
-		$me->raw->hash=                     hash_hmac("md5", JisonParser_Phraser_Handler::superSanitize(
-                                                    $me->raw->author .
-                                                    $me->raw->authorInstitution .
-                                                    $me->raw->authorProfession
-                                                ),
-                                                JisonParser_Phraser_Handler::superSanitize($data)
-                                            );
-	    $me->raw->author=                   $me->authorName();
-	    $me->raw->authorInstitution=        $me->authorBusinessName();
-	    $me->raw->authorProfession=         $me->authorProfession();
-	    $me->raw->href= 	                $me->href;
-	    $me->raw->answers=                  $me->answers();
-		$me->raw->dateLastUpdated=          $me->lastModif;
-		$me->raw->dateOriginated=           $me->findDatePageOriginated();
-		$me->raw->language=                 $me->language();
-		$me->raw->count=                    $me->countAll();
-		$me->raw->keywords=                 $me->keywords();
-		$me->raw->categories=               $me->categories();
-		$me->raw->scientificField=          $me->scientificField();
-		$me->raw->minimumMathNeeded=        $me->minimumMathNeeded();
-		$me->raw->minimumStatisticsNeeded=  $me->minimumStatisticsNeeded();
-		$me->raw->text= 	                $data;
+		$me->raw = new FutureLink_Metadata();
+		$me->raw->websiteTitle = $me->websiteTitle;
+		$me->raw->websiteSubtitle = $me->page;
+		$me->raw->moderator = $me->moderatorName();
+		$me->raw->moderatorInstitution = $me->moderatorBusinessName();
+		$me->raw->moderatorProfession = $me->moderatorProfession();
+		$me->raw->hash = hash_hmac(
+			"md5",
+			JisonParser_Phraser_Handler::superSanitize(
+				$me->raw->author .
+													$me->raw->authorInstitution .
+													$me->raw->authorProfession
+			),
+			JisonParser_Phraser_Handler::superSanitize($data)
+		);
+		$me->raw->author = $me->authorName();
+		$me->raw->authorInstitution = $me->authorBusinessName();
+		$me->raw->authorProfession = $me->authorProfession();
+		$me->raw->href = $me->href;
+		$me->raw->answers = $me->answers();
+		$me->raw->dateLastUpdated = $me->lastModif;
+		$me->raw->dateOriginated = $me->findDatePageOriginated();
+		$me->raw->language = $me->language();
+		$me->raw->count = $me->countAll();
+		$me->raw->keywords = $me->keywords();
+		$me->raw->categories = $me->categories();
+		$me->raw->scientificField = $me->scientificField();
+		$me->raw->minimumMathNeeded = $me->minimumMathNeeded();
+		$me->raw->minimumStatisticsNeeded = $me->minimumStatisticsNeeded();
+		$me->raw->text = $data;
 
 		return $me;
 	}
@@ -141,40 +143,40 @@ class FutureLink_MetadataAssembler
 	{
 		$me = new FutureLink_MetadataAssembler($page);
 
-        $me->raw = new FutureLink_Metadata();
-        $me->raw->websiteTitle =            $me->websiteTitle;
-        $me->raw->websiteSubtitle =         $me->page;
-        $me->raw->moderator =               $me->moderatorName();
-        $me->raw->moderatorInstitution=     $me->moderatorBusinessName();
-        $me->raw->moderatorProfession=      $me->moderatorProfession();
-        $me->raw->hash=                     ''; //hash isn't yet known
-        $me->raw->author=                   $me->authorName();
-        $me->raw->authorInstitution=        $me->authorBusinessName();
-        $me->raw->authorProfession=         $me->authorProfession();
-        $me->raw->href= 	                $me->href;
-        $me->raw->answers=                  $me->answers();
-        $me->raw->dateLastUpdated=          $me->lastModif;
-        $me->raw->dateOriginated=           $me->findDatePageOriginated();
-        $me->raw->language=                 $me->language();
-        $me->raw->count=                    $me->countAll();
-        $me->raw->keywords=                 $me->keywords();
-        $me->raw->categories=               $me->categories();
-        $me->raw->scientificField=          $me->scientificField();
-        $me->raw->minimumMathNeeded=        $me->minimumMathNeeded();
-        $me->raw->minimumStatisticsNeeded=  $me->minimumStatisticsNeeded();
-        $me->raw->text=                     ''; //text isn't yet known
+		$me->raw = new FutureLink_Metadata();
+		$me->raw->websiteTitle = $me->websiteTitle;
+		$me->raw->websiteSubtitle = $me->page;
+		$me->raw->moderator = $me->moderatorName();
+		$me->raw->moderatorInstitution = $me->moderatorBusinessName();
+		$me->raw->moderatorProfession = $me->moderatorProfession();
+		$me->raw->hash = ''; //hash isn't yet known
+		$me->raw->author = $me->authorName();
+		$me->raw->authorInstitution = $me->authorBusinessName();
+		$me->raw->authorProfession = $me->authorProfession();
+		$me->raw->href = $me->href;
+		$me->raw->answers = $me->answers();
+		$me->raw->dateLastUpdated = $me->lastModif;
+		$me->raw->dateOriginated = $me->findDatePageOriginated();
+		$me->raw->language = $me->language();
+		$me->raw->count = $me->countAll();
+		$me->raw->keywords = $me->keywords();
+		$me->raw->categories = $me->categories();
+		$me->raw->scientificField = $me->scientificField();
+		$me->raw->minimumMathNeeded = $me->minimumMathNeeded();
+		$me->raw->minimumStatisticsNeeded = $me->minimumStatisticsNeeded();
+		$me->raw->text = ''; //text isn't yet known
 
 		return $me;
 	}
 
 	public function answers()
 	{
-		$answers = array();
+		$answers = [];
 		foreach ($this->questions() as $question) {
-			$answers[] = array(
-				'question'=> strip_tags($question['Value']),
-				'answer'=> '',
-			);
+			$answers[] = [
+				'question' => strip_tags($question['Value']),
+				'answer' => '',
+			];
 		}
 
 		return $answers;
@@ -201,7 +203,7 @@ class FutureLink_MetadataAssembler
 			$item = $item['Value'];
 		}
 
-		if (!empty($implodeOn)) {
+		if (! empty($implodeOn)) {
 			$item = implode(JisonParser_Phraser_Handler::sanitizeToWords($item), ',');
 		}
 
@@ -230,15 +232,17 @@ class FutureLink_MetadataAssembler
 	{
 		global $tikilib;
 
-        //TODO: abstract
+		//TODO: abstract
 		if (empty($this->authorData)) {
 			if ($version < 0) {
-				$user = TikiLib::lib('trk')->getOne("SELECT user FROM tiki_pages WHERE pageName = ?", array($this->page));
+				$user = TikiLib::lib('trk')->getOne("SELECT user FROM tiki_pages WHERE pageName = ?", [$this->page]);
 			} else {
-				$user = TikiLib::lib('trk')->getOne("SELECT user FROM tiki_history WHERE pageName = ? AND version = ?", array($this->page, $version));
+				$user = TikiLib::lib('trk')->getOne("SELECT user FROM tiki_history WHERE pageName = ? AND version = ?", [$this->page, $version]);
 			}
 
-			if (empty($user))  return array();
+			if (empty($user)) {
+				return [];
+			}
 
 			$authorData = (new Tracker_Query("Users"))
 				->byName()
@@ -260,19 +264,19 @@ class FutureLink_MetadataAssembler
 	public function authorName()
 	{
 		$author = $this->author();
-		return (!empty($author['Name']) ? $author['Name'] : '');
+		return (! empty($author['Name']) ? $author['Name'] : '');
 	}
 
 	public function authorBusinessName()
 	{
 		$author = $this->author();
-		return (!empty($author['Business Name']) ? $author['Business Name'] : '');
+		return (! empty($author['Business Name']) ? $author['Business Name'] : '');
 	}
 
 	public function authorProfession()
 	{
 		$author = $this->author();
-		return (!empty($author['Profession']) ? $author['Profession'] : '');
+		return (! empty($author['Profession']) ? $author['Profession'] : '');
 	}
 
 	public function moderator()
@@ -280,7 +284,7 @@ class FutureLink_MetadataAssembler
 		global $tikilib;
 
 		if (empty($this->moderatorData)) {
-            //TODO: abstract
+			//TODO: abstract
 			$moderatorData = (new Tracker_Query("Users"))
 				->byName()
 				->filterFieldByValue('login', 'admin') //admin is un-deletable
@@ -301,29 +305,29 @@ class FutureLink_MetadataAssembler
 	public function moderatorName()
 	{
 		$moderator = $this->moderator();
-		return (!empty($moderator['Name']) ? $moderator['Name'] : '');
+		return (! empty($moderator['Name']) ? $moderator['Name'] : '');
 	}
 
 	public function moderatorBusinessName()
 	{
 		$moderator = $this->moderator();
-		return (!empty($moderator['Business Name']) ? $moderator['Business Name'] : '');
+		return (! empty($moderator['Business Name']) ? $moderator['Business Name'] : '');
 	}
 
 	public function moderatorProfession()
 	{
 		$moderator = $this->moderator();
-		return (!empty($moderator['Profession']) ? $moderator['Profession'] : '');
+		return (! empty($moderator['Profession']) ? $moderator['Profession'] : '');
 	}
 
 	public function findDatePageOriginated()
 	{
 		if (empty($this->findDatePageOriginated)) {
-			$this->findDatePageOriginated = TikiLib::lib('trk')->getOne('SELECT lastModif FROM tiki_history WHERE pageName = ? ORDER BY lastModif DESC', array($this->page));
+			$this->findDatePageOriginated = TikiLib::lib('trk')->getOne('SELECT lastModif FROM tiki_history WHERE pageName = ? ORDER BY lastModif DESC', [$this->page]);
 
 			if (empty($date)) {
 				//page doesn't yet have history
-				$this->findDatePageOriginated = TikiLib::lib('trk')->getOne('SELECT lastModif FROM tiki_pages WHERE pageName = ?', array($this->page));
+				$this->findDatePageOriginated = TikiLib::lib('trk')->getOne('SELECT lastModif FROM tiki_pages WHERE pageName = ?', [$this->page]);
 			}
 		}
 
@@ -334,7 +338,7 @@ class FutureLink_MetadataAssembler
 	{
 		if (empty($this->countAll)) {
 			$this->countAll = count(
-                (new Tracker_Query('Wiki Attributes'))
+				(new Tracker_Query('Wiki Attributes'))
 					->byName()
 					->filterFieldByValue('Type', 'FutureLink Accepted')
 					->render(false)
@@ -342,7 +346,7 @@ class FutureLink_MetadataAssembler
 			);
 		}
 
-        return $this->countAll;
+		return $this->countAll;
 	}
 
 	public function categories()
@@ -359,7 +363,7 @@ class FutureLink_MetadataAssembler
 	public function scientificField($out = true)
 	{
 		if (empty($this->scientificField)) {
-            //TODO: abstract
+			//TODO: abstract
 			$this->scientificField = (new Tracker_Query('Wiki Attributes'))
 				->byName()
 				->filterFieldByValue('Type', 'Scientific Field')
@@ -378,7 +382,7 @@ class FutureLink_MetadataAssembler
 	public function minimumMathNeeded($out = true)
 	{
 		if (empty($this->minimumMathNeeded)) {
-            //TODO: abstract
+			//TODO: abstract
 			$this->minimumMathNeeded = (new Tracker_Query('Wiki Attributes'))
 				->byName()
 				->filterFieldByValue('Type', 'Minimum Math Needed')
@@ -397,7 +401,7 @@ class FutureLink_MetadataAssembler
 	public function minimumStatisticsNeeded($out = true)
 	{
 		if (empty($this->minimumStatisticsNeeded)) {
-            //TODO: abstract
+			//TODO: abstract
 			$this->minimumStatisticsNeeded = (new Tracker_Query('Wiki Attributes'))
 				->byName()
 				->filterFieldByValue('Type', 'Minimum Statistics Needed')
@@ -416,7 +420,7 @@ class FutureLink_MetadataAssembler
 	public function language()
 	{
 		if (empty($this->language)) {
-            //TODO: abstract
+			//TODO: abstract
 			$langLib = TikiLib::lib('language');
 			$languages = $langLib->list_languages();
 			foreach ($languages as $listLanguage) {

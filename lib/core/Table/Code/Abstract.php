@@ -68,7 +68,7 @@ class Table_Code_Abstract
 			//whether to use array index to identify columns or a selector (id, class, etc.)
 			//generally index used for plugins where columns are set by user and selectors are used with tables with
 			//smarty templates to keep from recreating tpl logic that determines which columns are shown
-			self::$usecolselector = !isset(self::$s['usecolselector']) || self::$s['usecolselector'] !== false;
+			self::$usecolselector = ! isset(self::$s['usecolselector']) || self::$s['usecolselector'] !== false;
 			self::$pager = empty($settings['pager']['type']) ? false : true;
 			global $prefs;
 			self::$ajax = $settings['ajax']['type'] === true && $prefs['feature_ajax'] === 'y';
@@ -103,14 +103,14 @@ class Table_Code_Abstract
 	 *
 	 * @return string
 	 */
-	protected function iterate(array $data, $start = '', $finish = '', $before = '\'' , $after = '\'', $separator = ', ')
+	protected function iterate(array $data, $start = '', $finish = '', $before = '\'', $after = '\'', $separator = ', ')
 	{
 		// if $data is just empty, count($data) equals 1. So need to check for type.
-		if (!is_array($data)) {
-			$ret = $start. $before. $after. $finish;
+		if (! is_array($data)) {
+			$ret = $start . $before . $after . $finish;
 			return $ret;
 		}
-		
+
 		$c = count($data);
 		$i = 0;
 		$ret = '';

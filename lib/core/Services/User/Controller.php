@@ -37,25 +37,25 @@ class Services_User_Controller
 			$table = TikiDb::get()->table('users_groups');
 			$groupFilter = $table->fetchColumn(
 				'groupName',
-				array(
+				[
 					'id' => $table->in($groupIds),
-				)
+				]
 			);
 		}
 
 		$result = $this->lib->get_users($offset, $maxRecords, 'login_asc', '', '', false, $groupFilter);
 
-		return array(
+		return [
 			'result' => $result['data'],
 			'count' => $result['cant'],
-		);
+		];
 	}
 
 	function action_register($input)
 	{
 		global $https_mode, $prefs;
-		if (!$https_mode && $prefs['https_login'] == 'required') {
-			return array('result' => json_encode(array(tr("secure connection required"))));
+		if (! $https_mode && $prefs['https_login'] == 'required') {
+			return ['result' => json_encode([tr("secure connection required")])];
 		}
 
 		$name = $input->name->text();
@@ -70,20 +70,20 @@ class Services_User_Controller
 			throw new Services_Exception($errormsg);
 		}
 
-		$regResult =  TikiLib::lib('registration')->register_new_user(
-			array(
+		$regResult = TikiLib::lib('registration')->register_new_user(
+			[
 				'name' => $name,
 				'pass' => $pass,
 				'passAgain' => $passAgain,
 				'captcha' => $captcha,
 				'antibotcode' => $antibotcode,
 				'email' => $email,
-			)
+			]
 		);
 
-		return array(
-            'result' => $regResult,
-        );
+		return [
+			'result' => $regResult,
+		];
 	}
 
 	/**
@@ -92,13 +92,14 @@ class Services_User_Controller
 	 * @param $input JitFilter (username)
 	 * @return array
 	 */
-	function action_info($input) {
+	function action_info($input)
+	{
 		global $prefs, $user;
 
 		$tikilib = TikiLib::lib('tiki');
 		$sociallib = TikiLib::lib('social');
 
-		$result = array(
+		$result = [
 			'fullname' => '',
 			'gender' => '',
 			'starHtml' => '',
@@ -109,35 +110,31 @@ class Services_User_Controller
 			'avatarHtml' => '',
 			'error' => '',
 			'shared_groups' => '',
-		);
+		];
 
 		if ($prefs['feature_community_mouseover'] == 'y' &&
 				$this->lib->get_user_preference($user, 'show_mouseover_user_info', 'y') == 'y' || $prefs['feature_friends'] == 'y') {
-
 			$other_user = $input->username->email();
 			$result['other_user'] = $other_user;
 
 			if ($this->lib->user_exists($other_user) &&
 					($tikilib->get_user_preference($other_user, 'user_information', 'public') === 'public' || $user == $other_user || $prefs['feature_friends'] == 'y')) {
-
 				$info = $this->lib->get_user_info($other_user);
 
 				$result['add_friend_button'] = '';
-				$result['friendship'] = array();
+				$result['friendship'] = [];
 
 				if ($prefs['feature_friends'] === 'y' && $user) {
-
-					$friendship = array();
+					$friendship = [];
 
 					if ($prefs['social_network_type'] === 'friend') {
-
 						$friend = $this->isFriend($sociallib->listFriends($user), $other_user);
 						if ($friend) {
-							$friendship[] = array(
+							$friendship[] = [
 								'type' => 'friend',
 								'label' => tra('Friend'),
 								'remove' => tra('Remove Friend'),
-							);
+							];
 						} else {
 							$result['add_friend_button'] = tra('Add Friend');
 						}
@@ -146,32 +143,32 @@ class Services_User_Controller
 						$following = $this->isFriend($sociallib->listFollowers($other_user), $user);
 
 						if ($follower) {
-							$friendship[] = array(
+							$friendship[] = [
 								'type' => 'follower',
 								'label' => tra('Following you'),
-							);
+							];
 							if ($prefs['social_network_type'] === 'follow_approval') {
 								$friendship[count($friendship) - 1]['remove'] = tra('Remove Follower');
 							}
 						}
 						if ($following) {
-							$friendship[] = array(
+							$friendship[] = [
 								'type' => 'following',
 								'label' => tra('You are following'),
 								'remove' => tra('Stop Following'),
-							);
+							];
 						} else {
 							$result['add_friend_button'] = tra('Follow');
 						}
 					}
 					$incoming = $this->isFriend($sociallib->listIncomingRequests($user), $other_user);
 					if ($incoming) {
-						$friendship[] = array(
+						$friendship[] = [
 							'type' => 'incoming',
 							'label' => tra('Awaiting your approval'),
 							'remove' => tra('Refuse Request'),
 							'add' => tra('Accept &amp; Add'),
-						);
+						];
 						if ($prefs['social_network_type'] === 'follow_approval') {
 							$friendship[count($friendship) - 1]['approve'] = tra('Accept Request');
 						}
@@ -179,11 +176,11 @@ class Services_User_Controller
 					}
 					$outgoing = $this->isFriend($sociallib->listOutgoingRequests($user), $other_user);
 					if ($outgoing) {
-						$friendship[] = array(
+						$friendship[] = [
 							'type' => 'outgoing',
 							'label' => tra('Waiting for approval'),
 							'remove' => tra('Cancel Request'),
-						);
+						];
 						$result['add_friend_button'] = '';
 					}
 
@@ -208,9 +205,9 @@ class Services_User_Controller
 				}
 
 				if ($prefs['feature_score'] == 'y') {
-					$info['score'] =  TikiLib::lib('score')->get_user_score($other_user);
+					$info['score'] = TikiLib::lib('score')->get_user_score($other_user);
 					if ($prefs['feature_community_mouseover_score'] == 'y' &&
-							!empty($info['score']) && $other_user !== 'admin' && $other_user !== 'system' && $other_user !== 'Anonymous') {
+							! empty($info['score']) && $other_user !== 'admin' && $other_user !== 'system' && $other_user !== 'Anonymous') {
 						$result['starHtml'] = $tikilib->get_star($info['score']);
 					} else {
 						$result['starHtml'] = '';
@@ -227,7 +224,7 @@ class Services_User_Controller
 				if ($prefs['feature_community_mouseover_distance'] == 'y') {
 					$distance = TikiLib::lib('userprefs')->get_userdistance($other_user, $user);
 					if ($distance) {
-						$result['distance'] = $distance . ' '.tra('km');
+						$result['distance'] = $distance . ' ' . tra('km');
 					}
 				}
 
@@ -258,7 +255,6 @@ class Services_User_Controller
 					$result['shared_groups'] = implode(', ', $sharedGroups);
 				}
 			}
-
 		} else {
 			$result['error'] = tra("You cannot see this user's data.");
 			if ($user) {
@@ -278,8 +274,9 @@ class Services_User_Controller
 	 * @param $user string
 	 * @return bool
 	 */
-	private function isFriend($userlist, $user) {
-		foreach($userlist as $v) {
+	private function isFriend($userlist, $user)
+	{
+		foreach ($userlist as $v) {
 			if (isset($v['user']) && $v['user'] === $user) {
 				return true;
 			}
@@ -313,7 +310,7 @@ class Services_User_Controller
 		Services_Exception_Denied::checkGlobal('admin_users');
 		$check = Services_Exception_BadRequest::checkAccess();
 		//first pass - show confirm modal popup
-		if (!empty($check['ticket'])) {
+		if (! empty($check['ticket'])) {
 			$items = $input->asArray('checked');
 			if (count($items) > 0) {
 				if (count($items) === 1) {
@@ -406,7 +403,7 @@ class Services_User_Controller
 		Services_Exception_Denied::checkGlobal('admin_banning');
 		$check = Services_Exception_BadRequest::checkAccess();
 		//first pass - show confirm popup
-		if (!empty($check['ticket'])) {
+		if (! empty($check['ticket'])) {
 			$items = $input->asArray('checked');
 			if (count($items) > 0) {
 				if (count($items) === 1) {
@@ -458,11 +455,11 @@ class Services_User_Controller
 		Services_Exception_Denied::checkGlobal('admin_users');
 		$check = Services_Exception_BadRequest::checkAccess();
 		//first pass - show confirm popup
-		if (!empty($check['ticket'])) {
+		if (! empty($check['ticket'])) {
 			$selected = $input->asArray('checked');
 			if (count($selected) > 0) {
 				//provide redirect if js is not enabled
-				if (!empty($input['anchor'])) {
+				if (! empty($input['anchor'])) {
 					$referer = $_SERVER['HTTP_REFERER'];
 				} else {
 					$referer = Services_Utilities::noJsPath();
@@ -476,8 +473,10 @@ class Services_User_Controller
 							'action' => 'confirm',
 							'confirmAction' => $input->action->word(),
 							'confirmController' => 'user',
-							'customMsg' => tr('Remove user %0 from the following group?',
-								$selected[0]),
+							'customMsg' => tr(
+								'Remove user %0 from the following group?',
+								$selected[0]
+							),
 							'items' => $items,
 							'extra' => [
 								'add_remove'    => 'remove',
@@ -532,15 +531,15 @@ class Services_User_Controller
 				$users = json_decode($input['items'], true);
 				$add_remove = $input->add_remove->word();
 			//single user removed from a particular group
-			} elseif (!empty($extra['add_remove'])) {
+			} elseif (! empty($extra['add_remove'])) {
 				$groups = json_decode($input['items'], true);
 				$users[] = $extra['user'];
 				$add_remove = $extra['add_remove'];
-			} else if ($defaultGroup) {
+			} elseif ($defaultGroup) {
 				$users = json_decode($input['items'], true);
 				$groups = [];
 			}
-			if (!empty($users) && (!empty($groups) || $defaultGroup)) {
+			if (! empty($users) && (! empty($groups) || $defaultGroup)) {
 				global $user;
 				$logslib = TikiLib::lib('logs');
 				$userGroups = $this->lib->get_user_groups_inclusion($user);
@@ -556,14 +555,21 @@ class Services_User_Controller
 									$logmsg = sprintf(tra('%s %s assigned to %s %s.'), tra('user'), $assign_user, tra('group'), $group);
 									$logslib->add_log('adminusers', $logmsg, $user);
 								} else {
-									Feedback::error(['mes' => tra('An error occurred. The group assignment failed.')],
-										'session');
+									Feedback::error(
+										['mes' => tra('An error occurred. The group assignment failed.')],
+										'session'
+									);
 									return Services_Utilities::closeModal($extra['referer']);
 								}
 							} elseif ($add_remove === 'remove') {
 								$this->lib->remove_user_from_group($assign_user, $group);
-								$logmsg = sprintf(tra('%s %s removed from %s %s.'), tra('user'), $assign_user,
-									tra('group'), $group);
+								$logmsg = sprintf(
+									tra('%s %s removed from %s %s.'),
+									tra('user'),
+									$assign_user,
+									tra('group'),
+									$group
+								);
 								$logslib->add_log('adminusers', $logmsg, $user);
 							}
 						} else {
@@ -575,7 +581,6 @@ class Services_User_Controller
 					if ($defaultGroup) {
 						$this->lib->set_default_group($assign_user, $defaultGroup);
 					}
-
 				}
 				//prepare feedback
 				if (count($users) === 1) {
@@ -602,7 +607,7 @@ class Services_User_Controller
 				];
 				Feedback::success($feedback, 'session');
 				//return to page
-				if (!empty($extra['anchor'])) {
+				if (! empty($extra['anchor'])) {
 					return Services_Utilities::redirect($extra['referer'] . $extra['anchor']);
 				} else {
 					return Services_Utilities::refresh($extra['referer']);
@@ -630,7 +635,7 @@ class Services_User_Controller
 		Services_Exception_Denied::checkGlobal('group_add_member');
 		$check = Services_Exception_BadRequest::checkAccess();
 		//first pass - show confirm popup
-		if (!empty($check['ticket'])) {
+		if (! empty($check['ticket'])) {
 			$users = $input->asArray('checked');
 			if (count($users) > 0) {
 				$all_groups = $this->lib->list_all_groups();
@@ -662,7 +667,7 @@ class Services_User_Controller
 				: $input->asArray('toId');
 			$users = json_decode($input['items'], true);
 			$extra = json_decode($input['extra'], true);
-			if (!empty($users) && !empty($groups)) {
+			if (! empty($users) && ! empty($groups)) {
 				//perform action
 				global $user;
 				$logslib = TikiLib::lib('logs');
@@ -673,8 +678,11 @@ class Services_User_Controller
 					foreach ($groups as $group) {
 						if ($groupperm || (array_key_exists($group, $userGroups) && $userperm)) {
 							$this->lib->set_default_group($assign_user, $group);
-							$logmsg = sprintf(tra('group %s set as the default group for user %s.'),
-								$group, $assign_user);
+							$logmsg = sprintf(
+								tra('group %s set as the default group for user %s.'),
+								$group,
+								$assign_user
+							);
 							$logslib->add_log('adminusers', $logmsg, $user);
 						}
 					}
@@ -717,7 +725,7 @@ class Services_User_Controller
 		Services_Exception_Denied::checkGlobal('admin_users');
 		$check = Services_Exception_BadRequest::checkAccess();
 		//first pass - show confirm popup
-		if (!empty($check['ticket'])) {
+		if (! empty($check['ticket'])) {
 			$users = $input->asArray('checked');
 			if (count($users) > 0) {
 				//provide redirect if js is not enabled
@@ -742,20 +750,22 @@ class Services_User_Controller
 			$tikilib = TikiLib::lib('tiki');
 			$pageinfo = $tikilib->get_page_info($wikiTpl);
 			$extra = json_decode($input['extra'], true);
-			if (!$pageinfo) {
+			if (! $pageinfo) {
 				Feedback::error(tra('Page not found'), 'session');
 				return Services_Utilities::closeModal($extra['referer']);
 			}
 			if (empty($pageinfo['description'])) {
-				Feedback::error(tra('The page does not have a description, which is mandatory to perform this action.'),
-					'session');
+				Feedback::error(
+					tra('The page does not have a description, which is mandatory to perform this action.'),
+					'session'
+				);
 				return Services_Utilities::closeModal($extra['referer']);
 			}
 			$bcc = $input['bcc'];
-			include_once ('lib/webmail/tikimaillib.php');
+			include_once('lib/webmail/tikimaillib.php');
 			$mail = new TikiMail();
-			if (!empty($bcc)) {
-				if (!validate_email($bcc)) {
+			if (! empty($bcc)) {
+				if (! validate_email($bcc)) {
 					Feedback::error(tra('Invalid bcc email address'), 'session');
 					return Services_Utilities::closeModal($extra['referer']);
 				}
@@ -781,7 +791,7 @@ class Services_User_Controller
 					return Services_Utilities::closeModal($extra['referer']);
 				}
 				$mail->setHtml($text);
-				if (!$mail->send($this->lib->get_user_email($mail_user))) {
+				if (! $mail->send($this->lib->get_user_email($mail_user))) {
 					$errormsg = tra('Unable to send mail');
 					if (Perms::get()->admin) {
 						$mailerrors = print_r($mail->errors, true);
@@ -790,10 +800,11 @@ class Services_User_Controller
 					Feedback::error($errormsg, 'session');
 					return Services_Utilities::closeModal($extra['referer']);
 				} else {
-					if (!empty($bcc))
+					if (! empty($bcc)) {
 						$logmsg = sprintf(tra('Mail sent to user %s'), $mail_user);
-						$logmsg = !empty($bccmsg) ? $logmsg . ' ' . $bccmsg : $logmsg;
-					if (!empty($msg)) {
+					}
+						$logmsg = ! empty($bccmsg) ? $logmsg . ' ' . $bccmsg : $logmsg;
+					if (! empty($msg)) {
 						$logslib->add_log('adminusers', $logmsg, $user);
 					}
 				}
@@ -802,7 +813,7 @@ class Services_User_Controller
 			//prepare feedback
 			$msg = count($users) === 1 ? tr('The page %0 has been emailed to the following user:', $wikiTpl)
 				: tr('The page %0 has been emailed to the following users:', $wikiTpl);
-			$toMsg = !empty($bcc) ? tr('And blind copied to %0.', $bcc) : '';
+			$toMsg = ! empty($bcc) ? tr('And blind copied to %0.', $bcc) : '';
 			$feedback = [
 				'tpl' => 'action',
 				'mes' => $msg,
@@ -815,7 +826,8 @@ class Services_User_Controller
 		}
 	}
 
-	function action_send_message($input) {
+	function action_send_message($input)
+	{
 		global $user;
 		$userlib = TikiLib::lib('user');
 		$referer = Services_Utilities::noJsPath();
@@ -825,7 +837,7 @@ class Services_User_Controller
 			return Services_Utilities::closeModal($referer);
 		}
 		//sets default priority for the message to 3 if no priority was given
-		if (!empty($input->priority->text())) {
+		if (! empty($input->priority->text())) {
 			$priority = $input->priority->text();
 		} else {
 			$priority = 3;
@@ -836,12 +848,22 @@ class Services_User_Controller
 				Feedback::error(tra('Message not sent - no subject or body.'), 'session');
 			} else {
 				//if message is successfully sent
-				if (TikiLib::lib('message')->post_message($input->userwatch->text(), $user, $input->to->text(), '',
-					$input->subject->text(), $input->body->text(), $priority, '', isset($input->replytome) ? 'y' : '',
-					isset($input->bccme) ? 'y' : ''))
-				{
-					$message = tr('Your message was successfully sent to %0,',
-						$userlib->clean_user($input->userwatch->text()));
+				if (TikiLib::lib('message')->post_message(
+					$input->userwatch->text(),
+					$user,
+					$input->to->text(),
+					'',
+					$input->subject->text(),
+					$input->body->text(),
+					$priority,
+					'',
+					isset($input->replytome) ? 'y' : '',
+					isset($input->bccme) ? 'y' : ''
+				)) {
+					$message = tr(
+						'Your message was successfully sent to %0,',
+						$userlib->clean_user($input->userwatch->text())
+					);
 					Feedback::success($message, 'session');
 				} else {
 					Feedback::error(tra('An error occurred, please check your mail settings and try again.'), 'session');
@@ -849,16 +871,17 @@ class Services_User_Controller
 			}
 			return Services_Utilities::closeModal($referer);
 		} else {
-			return array(
+			return [
 				'title' => tra("Send Me a Message"),
 				'userwatch' => $input->userwatch->text(),
 				'priority' => $priority,
 				'referer' => $referer
-			);
+			];
 		}
 	}
 
-	function action_get_message_count($input) {
+	function action_get_message_count($input)
+	{
 		global $user;
 
 		$sinceDate = null;
@@ -897,13 +920,13 @@ class Services_User_Controller
 		$emails = array_map('trim', $emails);
 		if ($expiry > 0) {
 			$expiry = $expiry * 3600 * 24; //translate day input to seconds
-		} else if ($expiry != -1) {
+		} elseif ($expiry != -1) {
 			Feedback::error(tra('Please specify validity period'), 'session');
 			Services_Utilities::sendFeedback($referer);
 		}
 
-		foreach($groups as $grp) {
-			if (!TikiLib::lib('user')->group_exists($grp)) {
+		foreach ($groups as $grp) {
+			if (! TikiLib::lib('user')->group_exists($grp)) {
 				Feedback::error(tr('The group %0 does not exist', $grp), 'session');
 				Services_Utilities::sendFeedback($referer);
 			}
@@ -915,11 +938,12 @@ class Services_User_Controller
 		Services_Utilities::sendFeedback($referer);
 	}
 
-	function action_upload_avatar( $input ) {
+	function action_upload_avatar($input)
+	{
 		global $user;
 		$userwatch = $input->user->none();
 
-		if (!$userwatch) {
+		if (! $userwatch) {
 			$errormsg = tra('You must set a user for whom to set an avatar.');
 			throw new Services_Exception($errormsg);
 		}
@@ -931,7 +955,7 @@ class Services_User_Controller
 		$this->access->check_feature('feature_userPreferences');
 		$this->access->check_user($user);
 
-		if($_SERVER['REQUEST_METHOD'] === 'POST') {
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			if (empty($_FILES['userfile']['name'])) {
 				$errormsg = tra('You must select an avatar to upload.');
 				throw new Services_Exception($errormsg, 400);
@@ -942,10 +966,10 @@ class Services_User_Controller
 			$avatarlib->set_avatar_from_url($_FILES['userfile']['tmp_name'], $userwatch, $name);
 			return true;
 		} else {
-			return array(
+			return [
 				"title" => tra("Upload Avatar"),
 				"userwatch" => $userwatch,
-			);
+			];
 		}
 	}
 
@@ -954,7 +978,6 @@ class Services_User_Controller
 		global $user;
 		foreach ($users as $deleteuser) {
 			if ($deleteuser != 'admin') {
-
 				// remove the user's objects, wiki page first
 				if ($page) {
 					global $prefs;
@@ -977,7 +1000,7 @@ class Services_User_Controller
 
 					$items = $trklib->get_user_items($deleteuser, false);
 
-					foreach($items as $item) {
+					foreach ($items as $item) {
 						if (in_array($item['trackerId'], $trackerIds)) {
 							$trklib->remove_tracker_item($item['itemId'], true);
 						}

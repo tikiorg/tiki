@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * Handler class for DateTime
- * 
+ *
  * Letter key: ~f~
  *
  */
@@ -15,84 +15,84 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 {
 	public static function getTypes()
 	{
-		return array(
-			'f' => array(
+		return [
+			'f' => [
 				'name' => tr('Date and Time'),
 				'description' => tr('Provides drop-down options to accurately select a date and/or time.'),
-				'help' => 'Date Tracker Field',					
-				'prefs' => array('trackerfield_datetime'),
-				'tags' => array('basic'),
+				'help' => 'Date Tracker Field',
+				'prefs' => ['trackerfield_datetime'],
+				'tags' => ['basic'],
 				'default' => 'y',
-				'supported_changes' => array('f', 'j'),
-				'params' => array(
-					'datetime' => array(
+				'supported_changes' => ['f', 'j'],
+				'params' => [
+					'datetime' => [
 						'name' => tr('Type'),
 						'description' => tr('Components to be included'),
 						'filter' => 'text',
-						'options' => array(
+						'options' => [
 							'dt' => tr('Date and Time'),
 							'd' => tr('Date only'),
-						),
+						],
 						'legacy_index' => 0,
-					),
-					'startyear' => array(
+					],
+					'startyear' => [
 						'name' => tr('Start year'),
 						'description' => tr('Year to allow selecting from'),
 						'example' => '1987',
 						'filter' => 'digits',
 						'legacy_index' => 1,
-					),
-					'endyear' => array(
+					],
+					'endyear' => [
 						'name' => tr('End year'),
 						'description' => tr('Year to allow selecting to'),
 						'example' => '2020',
 						'filter' => 'digits',
 						'legacy_index' => 2,
-					),
-					'blankdate' => array(
+					],
+					'blankdate' => [
 						'name' => tr('Default selection'),
 						'description' => tr('Indicates if blank dates should be allowed.'),
 						'filter' => 'alpha',
-						'options' => array(
+						'options' => [
 							'' => tr('Current Date'),
 							'blank' => tr('Blank'),
-						),
+						],
 						'legacy_index' => 3,
-					),
-					'useTimeAgo' => array(
+					],
+					'useTimeAgo' => [
 						'name' => tr('Time Ago'),
 						'description' => tr('Use timeago.js if the feature is enabled'),
 						'filter' => 'int',
-						'options' => array(
+						'options' => [
 							0 => tr('No'),
 							1 => tr('Yes'),
-						),
-					),
-				),
-			),
-		);
+						],
+					],
+				],
+			],
+		];
 	}
 
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
 		$ins_id = $this->getInsertId();
 
 		$value = $this->getValue();
-		$data = array(
+		$data = [
 			'value' => empty($value) ? ($this->getOption('blankdate') == 'blank' ? '' : TikiLib::lib('tiki')->now) : $value,
-		);
+		];
 
-		if (isset($requestData[$ins_id.'Month']) || isset($requestData[$ins_id.'Day']) || isset($requestData[$ins_id.'Year']) || isset($requestData[$ins_id.'Hour']) || isset($requestData[$ins_id.'Minute'])) {
+		if (isset($requestData[$ins_id . 'Month']) || isset($requestData[$ins_id . 'Day']) || isset($requestData[$ins_id . 'Year']) || isset($requestData[$ins_id . 'Hour']) || isset($requestData[$ins_id . 'Minute'])) {
 			$data['value'] = TikiLib::lib('trk')->build_date($requestData, $this->getOption('datetime'), $ins_id);
-			if (empty($data['value']) && (!empty($requestData[$ins_id.'Month']) || !empty($requestData[$ins_id.'Day']) || !empty($requestData[$ins_id.'Year']) || !empty($requestData[$ins_id.'Hour']) || !empty($requestData[$ins_id.'Minute']))) {
+			if (empty($data['value']) && (! empty($requestData[$ins_id . 'Month']) || ! empty($requestData[$ins_id . 'Day']) || ! empty($requestData[$ins_id . 'Year']) || ! empty($requestData[$ins_id . 'Hour']) || ! empty($requestData[$ins_id . 'Minute']))) {
 				$data['error'] = 'y';
 			}
 		}
 
 		return $data;
 	}
-	
-	function renderInput($context = array())
+
+	function renderInput($context = [])
 	{
 		global $user;
 
@@ -105,7 +105,7 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 		return $this->renderTemplate('trackerinput/datetime.tpl', $context);
 	}
 
-	function renderInnerOutput($context = array())
+	function renderInnerOutput($context = [])
 	{
 		global $prefs;
 
@@ -119,7 +119,7 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 
 			if ($prefs['jquery_timeago'] === 'y' && $this->getOption('useTimeAgo')) {
 				TikiLib::lib('header')->add_jq_onready('$("time.timeago").timeago();');
-				return '<time class="timeago" datetime="' . TikiLib::date_format('c', $value, false, 5, false) .  '">' . $tikilib->get_short_datetime($value) . '</time>';
+				return '<time class="timeago" datetime="' . TikiLib::date_format('c', $value, false, 5, false) . '">' . $tikilib->get_short_datetime($value) . '</time>';
 			}
 			$date = $tikilib->get_short_date($value);
 			if ($this->getOption('datetime') == 'd') {
@@ -132,7 +132,7 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 
 			$current = $tikilib->get_short_date($tikilib->now);
 
-			if ($date == $current && $prefs['tiki_same_day_time_only'] == 'y' ) {
+			if ($date == $current && $prefs['tiki_same_day_time_only'] == 'y') {
 				return $tikilib->get_short_time($value);
 			} else {
 				return $tikilib->get_short_datetime($value);
@@ -143,9 +143,10 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 	function watchCompare($old, $new)
 	{
 		global $prefs;
-		$dformat = $prefs['short_date_format'].' '.$prefs['short_time_format'];
-		if ($old)
+		$dformat = $prefs['short_date_format'] . ' ' . $prefs['short_time_format'];
+		if ($old) {
 			$old = TikiLib::lib('tiki')->date_format($dformat, (int)$old);
+		}
 		$new = TikiLib::lib('tiki')->date_format($dformat, (int)$new);
 
 		return parent::watchCompare($old, $new);
@@ -169,9 +170,9 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
 		$baseKey = $this->getBaseKey();
-		return array(
+		return [
 			$baseKey => $typeFactory->timestamp($this->getValue(), $this->getOption('datetime') == 'd'),
-		);
+		];
 	}
 
 	function getTabularSchema()
@@ -220,4 +221,3 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 		return $filters;
 	}
 }
-

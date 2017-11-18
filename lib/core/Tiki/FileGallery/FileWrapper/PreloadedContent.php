@@ -32,7 +32,7 @@ class PreloadedContent implements WrapperInterface
 		}
 
 		$sIniUploadTmpDir = \ini_get('upload_tmp_dir');
-		if (!empty($sIniUploadTmpDir)) {
+		if (! empty($sIniUploadTmpDir)) {
 			$sTmpDir = \ini_get('upload_tmp_dir');
 		} else {
 			$sTmpDir = '/tmp';
@@ -48,4 +48,3 @@ class PreloadedContent implements WrapperInterface
 		return $this->data;
 	}
 }
-

@@ -34,7 +34,7 @@ class DateHelper
 			}
 		);
 	}
-	
+
 	function setupFormat($format, Column $column)
 	{
 		$permName = $column->getField();
@@ -85,4 +85,3 @@ class DateHelper
 		}
 	}
 }
-

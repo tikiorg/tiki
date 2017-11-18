@@ -12,10 +12,11 @@ class Configuration
 			$this->dom = $xmlString;
 		} else {
 			$this->dom = new \DOMDocument;
-			$this->dom->loadXML($xmlString);;
+			$this->dom->loadXML($xmlString);
+			;
 		}
 	}
-	
+
 	function getXml()
 	{
 		return $this->dom->saveXML();
@@ -32,7 +33,7 @@ class Configuration
 
 	private function getRemoveList($moduleName)
 	{
-		$toRemove = array();
+		$toRemove = [];
 		$modules = $this->dom->getElementsByTagName('module');
 		foreach ($modules as $node) {
 			if ($node->getAttribute('name') == $moduleName) {
@@ -47,4 +48,3 @@ class Configuration
 		return $toRemove;
 	}
 }
-

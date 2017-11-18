@@ -39,10 +39,10 @@ class Services_Tracker_SyncController
 			if (! $tracker) {
 				// Prepare the list for tracker selection
 				$trackers = $this->getRemoteTrackerList($url);
-				return array(
+				return [
 					'url' => $url,
 					'list' => $trackers['list'],
-				);
+				];
 			} else {
 				// Proceed with the tracker import
 				$export = $this->getRemoteTrackerFieldExport($url, $remoteTracker);
@@ -51,35 +51,35 @@ class Services_Tracker_SyncController
 				$this->createSynchronizedFields(
 					$trackerId,
 					$export,
-					array('provider' => $url, 'source' => $remoteTracker, 'last' => 0)
+					['provider' => $url, 'source' => $remoteTracker, 'last' => 0]
 				);
 				$this->utilities->createField(
-					array(
+					[
 						'trackerId' => $trackerId,
 						'type' => 't',
 						'name' => tr('Remote Source'),
 						'permName' => 'syncSource',
 						'description' => tr('Automatically generated field for synchronized trackers. Contains the itemId of the remote item.'),
 						'options' => $this->utilities->buildOptions(
-							array('prepend' => $url . '/item'),
+							['prepend' => $url . '/item'],
 							't'
 						),
 						'isMandatory' => false,
-					)
+					]
 				);
 
 				$this->registerSynchronization($trackerId, $url, $remoteTracker);
 
-				return array(
+				return [
 					'trackerId' => $trackerId,
-				);
+				];
 			}
 		}
 
-		return array(
+		return [
 			'url' => $url,
 			'title' => tr('Clone Remote Tracker'),
-		);
+		];
 	}
 
 	function action_sync_meta($input)
@@ -103,7 +103,7 @@ class Services_Tracker_SyncController
 			$this->utilities->updateField($trackerId, $localField['fieldId'], $importable);
 		}
 
-		return array();
+		return [];
 	}
 
 	function action_sync_refresh($input)
@@ -114,7 +114,7 @@ class Services_Tracker_SyncController
 
 		$this->utilities->clearTracker($trackerId);
 
-		$itemMap = array();
+		$itemMap = [];
 
 		$remoteDefinition = $this->getRemoteDefinition($definition);
 		$factory = $remoteDefinition->getFieldFactory();
@@ -139,7 +139,7 @@ class Services_Tracker_SyncController
 
 		$this->registerSynchronization($trackerId, $syncInfo['provider'], $syncInfo['source']);
 		TikiLib::lib('unifiedsearch')->processUpdateQueue(count($itemMap) * 3); // Process lots of inserts
-		return array();
+		return [];
 	}
 
 	function action_sync_new($input)
@@ -153,10 +153,10 @@ class Services_Tracker_SyncController
 		$itemIds = $trklib->get_items_list($trackerId, $syncField['fieldId'], '', 'opc');
 
 		if ($items) {
-			set_time_limit(30 + 10*count($items)); // 10 sec per item plus some initial overhead
+			set_time_limit(30 + 10 * count($items)); // 10 sec per item plus some initial overhead
 			$itemIds = array_intersect($itemIds, $items);
 			$table = TikiDb::get()->table('tiki_tracker_items');
-			$items = $this->utilities->getItems(array('trackerId' => $trackerId, 'itemId' => $table->in($itemIds)));
+			$items = $this->utilities->getItems(['trackerId' => $trackerId, 'itemId' => $table->in($itemIds)]);
 
 			$remoteDefinition = $this->getRemoteDefinition($definition);
 			foreach ($items as $item) {
@@ -169,14 +169,14 @@ class Services_Tracker_SyncController
 			}
 			TikiLib::lib('unifiedsearch')->processUpdateQueue();
 
-			return array(
-			);
+			return [
+			];
 		} else {
-			return array(
+			return [
 				'trackerId' => $trackerId,
-				'sets' => array('items'),
+				'sets' => ['items'],
 				'items' => $this->getItemList($itemIds),
-			);
+			];
 		}
 	}
 
@@ -188,17 +188,17 @@ class Services_Tracker_SyncController
 		$items = TikiDb::get()->table('tiki_tracker_items');
 		$itemIds = $items->fetchColumn(
 			'itemId',
-			array(
+			[
 				'trackerId' => $trackerId,
 				'created' => $items->lesserThan($syncInfo['last']),
 				'lastModif' => $items->greaterThan($syncInfo['last']),
-			)
+			]
 		);
 
 		// Collect remote IDs that were modified
-		$remoteItems = $this->getRemoteItems($syncInfo, array('modifiedSince' => $syncInfo['last']));
+		$remoteItems = $this->getRemoteItems($syncInfo, ['modifiedSince' => $syncInfo['last']]);
 
-		$modifiedIds = array();
+		$modifiedIds = [];
 		foreach ($remoteItems as $item) {
 			$modifiedIds[] = $item['itemId'];
 		}
@@ -209,14 +209,14 @@ class Services_Tracker_SyncController
 		$itemMap = $fields->fetchMap(
 			'itemId',
 			'value',
-			array('fieldId' => $syncField['fieldId'], 'value' => $fields->in($modifiedIds))
+			['fieldId' => $syncField['fieldId'], 'value' => $fields->in($modifiedIds)]
 		);
 
 		$modifiedIds = array_keys($itemMap);
 		$automatic = array_diff($itemIds, $modifiedIds);
 		$manual = array_intersect($itemIds, $modifiedIds);
 
-		set_time_limit(30 + 10*count($automatic) + 10*count($manual)); // 10 sec per item plus some initial overhead
+		set_time_limit(30 + 10 * count($automatic) + 10 * count($manual)); // 10 sec per item plus some initial overhead
 
 		if ($input->automatic->int() || $input->manual->int()) {
 			$remoteDefinition = $this->getRemoteDefinition($definition);
@@ -231,12 +231,12 @@ class Services_Tracker_SyncController
 			$item['remoteUrl'] = $syncInfo['provider'] . '/' . smarty_modifier_sefurl($itemMap[$itemId], 'trackeritem');
 		}
 
-		return array(
+		return [
 			'trackerId' => $trackerId,
-			'sets' => array('automatic', 'manual'),
+			'sets' => ['automatic', 'manual'],
 			'automatic' => $this->getItemList($automatic),
 			'manual' => $manualList,
-		);
+		];
 	}
 
 	private function createSynchronizedFields($trackerId, $data, $syncInfo)
@@ -258,7 +258,7 @@ class Services_Tracker_SyncController
 
 	private function getRemoteTrackerList($serviceUrl)
 	{
-		static $cache = array();
+		static $cache = [];
 		if (isset($cache[$serviceUrl])) {
 			return $cache[$serviceUrl];
 		}
@@ -271,7 +271,7 @@ class Services_Tracker_SyncController
 	private function getRemoteTrackerFieldExport($serviceUrl, $trackerId)
 	{
 		$controller = new Services_RemoteController($serviceUrl, 'tracker');
-		$export = $controller->export_fields(array('trackerId' => $trackerId));
+		$export = $controller->export_fields(['trackerId' => $trackerId]);
 
 		return TikiLib::lib('tiki')->read_raw($export['export']);
 	}
@@ -295,12 +295,15 @@ class Services_Tracker_SyncController
 		$attributelib->set_attribute('tracker', $localTrackerId, 'tiki.sync.last', time()); // Real sync time, not tiki initial load
 	}
 
-	private function getRemoteItems($syncInfo, array $conditions = array())
+	private function getRemoteItems($syncInfo, array $conditions = [])
 	{
 		$controller = new Services_RemoteController($syncInfo['provider'], 'tracker');
 		return $controller->getResultLoader(
-			'list_items', array_merge($conditions, array('trackerId' => $syncInfo['source'], 'format' => 'raw')),
-			'offset', 'maxRecords', 'result'
+			'list_items',
+			array_merge($conditions, ['trackerId' => $syncInfo['source'], 'format' => 'raw']),
+			'offset',
+			'maxRecords',
+			'result'
 		);
 	}
 
@@ -368,9 +371,9 @@ class Services_Tracker_SyncController
 	private function getRemoteTranslations($syncInfo, $type, $remoteSource)
 	{
 		$controller = new Services_RemoteController($syncInfo['provider'], 'translation');
-		$data = $controller->manage(array('type' => $type, 'source' => $remoteSource));
+		$data = $controller->manage(['type' => $type, 'source' => $remoteSource]);
 
-		$out = array();
+		$out = [];
 
 		if ($data['translations']) {
 			foreach ($data['translations'] as $translation) {
@@ -408,7 +411,7 @@ class Services_Tracker_SyncController
 			throw new Services_Exception(tr('Tracker is not synchronized with a remote source.'), 409);
 		}
 
-		return array($trackerId, $definition, $syncInfo);
+		return [$trackerId, $definition, $syncInfo];
 	}
 
 	private function getItemList($itemIds)
@@ -416,13 +419,13 @@ class Services_Tracker_SyncController
 		$trklib = TikiLib::lib('trk');
 		require_once 'lib/smarty_tiki/modifier.sefurl.php';
 
-		$out = array();
+		$out = [];
 		foreach ($itemIds as $itemId) {
-			$out[] = array(
+			$out[] = [
 				'itemId' => $itemId,
 				'title' => $trklib->get_isMain_value(null, $itemId),
 				'localUrl' => smarty_modifier_sefurl($itemId, 'trackeritem'),
-			);
+			];
 		}
 
 		return $out;
@@ -439,11 +442,10 @@ class Services_Tracker_SyncController
 		$list = array_diff($list, $values);
 
 		$table = TikiDb::get()->table('tiki_tracker_items');
-		$itemList = $this->utilities->getItems(array('trackerId' => $definition->getConfiguration('trackerId'), 'itemId' => $table->in($toProcess)));
+		$itemList = $this->utilities->getItems(['trackerId' => $definition->getConfiguration('trackerId'), 'itemId' => $table->in($toProcess)]);
 		foreach ($itemList as $item) {
 			$this->updateRemoteItem($remoteDefinition, $definition, $item);
 			$this->utilities->removeItem($item['itemId']);
 		}
 	}
 }
-

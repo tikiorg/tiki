@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,58 +9,58 @@ class Tracker_Field_Action implements Tracker_Field_Interface
 {
 	public static function getTypes()
 	{
-		return array(
-			'x' => array(
+		return [
+			'x' => [
 				'name' => tr('Action'),
 				'description' => tr('Create a form to be posted somewhere, not necessarily in a tracker or even at this Tiki site.'),
 				'help' => 'Action Tracker Field',
-				'prefs' => array('trackerfield_action'),
-				'tags' => array('experimental'),
+				'prefs' => ['trackerfield_action'],
+				'tags' => ['experimental'],
 				'default' => 'n',
-				'params' => array(
-					'label' => array(
+				'params' => [
+					'label' => [
 						'name' => tr('Name'),
 						'description' => tr('The title of the button'),
 						'filter' => 'text',
 						'legacy_index' => 0,
-					),
-					'post' => array(
+					],
+					'post' => [
 						'name' => tr('Post'),
 						'description' => tr('The protocol to use in the form: either get or post'),
 						'filter' => 'text',
 						'legacy_index' => 1,
-					),
-					'script' => array(
+					],
+					'script' => [
 						'name' => tr('Script'),
 						'description' => tr('The URL of the destination of the form'),
 						'filter' => 'text',
 						'example' => 'tiki-index.php',
 						'legacy_index' => 2,
-					),
-					'parameters' => array(
+					],
+					'parameters' => [
 						'name' => tr('Parameters'),
 						'description' => tr('Here page:fieldname can be repeated several times. It specifies the variable names to pass in the form as well as the value taken from the current item in the field named fieldname. "highlight=test" can also be repeated and is useful for fixed values as parameters to pass to the form.'),
 						'filter' => 'text',
 						'count' => '*',
 						'example' => 'page:fieldname',
 						'legacy_index' => 3,
-					),
-				),
-			),
-		);
+					],
+				],
+			],
+		];
 	}
 
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
-		return array();
+		return [];
 	}
 
-	function renderInput($context = array())
+	function renderInput($context = [])
 	{
 		return null;
 	}
 
-	function renderOutput($context = array())
+	function renderOutput($context = [])
 	{
 		return null;
 	}

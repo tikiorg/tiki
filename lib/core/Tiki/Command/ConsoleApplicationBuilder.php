@@ -202,7 +202,7 @@ class ConsoleApplicationBuilder
 	protected function checkIsInstalledAndDoNotRequireUpdate()
 	{
 		$installer = new Installer;
-		$result = ($installer->isInstalled() && !$installer->requiresUpdate()) ? true : false;
+		$result = ($installer->isInstalled() && ! $installer->requiresUpdate()) ? true : false;
 
 		return $result;
 	}
@@ -240,15 +240,14 @@ class ConsoleApplicationBuilder
 	 */
 	public function create($returnLastInstance = false)
 	{
-		if ($returnLastInstance && self::$lastInstance instanceof self){
+		if ($returnLastInstance && self::$lastInstance instanceof self) {
 			return self::$lastInstance;
 		}
 
 		$console = new Application;
 
 		foreach ($this->listOfRegisteredConsoleCommands() as $condition => $CommandGroupDefinition) {
-
-			$available = call_user_func(array($this, $condition));
+			$available = call_user_func([$this, $condition]);
 			$actionWhenNotAvailable = $CommandGroupDefinition['action'];
 
 			/** @var \Symfony\Component\Console\Command\Command $command */
@@ -261,12 +260,10 @@ class ConsoleApplicationBuilder
 					}
 				}
 			}
-
 		}
 
 		self::$lastInstance = $console;
 
 		return $console;
 	}
-
 }

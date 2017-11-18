@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -10,9 +10,9 @@ class Perms_Builder
 	private $prefix = 'tiki_p_';
 
 	private $categories = false;
-	private $definitions = array();
-	private $adminPermissionMap = array();
-	private $globalOnlyPermissions = array();
+	private $definitions = [];
+	private $adminPermissionMap = [];
+	private $globalOnlyPermissions = [];
 
 	function build()
 	{
@@ -24,7 +24,7 @@ class Perms_Builder
 		$perms->setCheckSequence($this->getSequence($alternateCheck, $fixedCheck));
 		$perms->setResolverFactories($this->getFactories());
 
-		$accessor = $perms->getAccessor(array());
+		$accessor = $perms->getAccessor([]);
 		$alternateCheck->setResolver($accessor->getResolver());
 		$fixedCheck->setResolver($accessor->getResolver());
 
@@ -37,11 +37,11 @@ class Perms_Builder
 		return $this;
 	}
 
-	function withDefinitions($definitions = array())
+	function withDefinitions($definitions = [])
 	{
 		$this->definitions = $definitions;
 
-		$adminPermissions = array();
+		$adminPermissions = [];
 
 		foreach ($definitions as $row) {
 			$permName = $row['name'];
@@ -81,9 +81,9 @@ class Perms_Builder
 
 	private function getFactories()
 	{
-		$factories = array(
+		$factories = [
 			new Perms_ResolverFactory_ObjectFactory
-		);
+		];
 
 		if ($this->categories) {
 			$factories[] = new Perms_ResolverFactory_CategoryFactory;
@@ -100,4 +100,3 @@ class Perms_Builder
 		return $factories;
 	}
 }
-

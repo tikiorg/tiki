@@ -53,46 +53,45 @@ class Services_File_FinderController
 
 		if ($this->parentIds === null) {
 			$ids = TikiLib::lib('filegal')->getGalleriesParentIds();
-			$this->parentIds = array( 'galleries' => array(), 'files' => array() );
+			$this->parentIds = [ 'galleries' => [], 'files' => [] ];
 			foreach ($ids as $id) {
 				if ($id['parentId'] > 0) {
 					$this->parentIds['galleries'][(int) $id['galleryId']] = (int) $id['parentId'];
 				}
 			}
 			$tiki_files = TikiDb::get()->table('tiki_files');
-			$this->parentIds['files'] = $tiki_files->fetchMap('fileId', 'galleryId', array());
-
+			$this->parentIds['files'] = $tiki_files->fetchMap('fileId', 'galleryId', []);
 		}
 
 		// turn off some elfinder commands here too (stops the back-end methods being accessible)
-		$disabled = array('mkfile', 'edit', 'archive', 'resize');
+		$disabled = ['mkfile', 'edit', 'archive', 'resize'];
 		// done so far: 'rename', 'rm', 'duplicate', 'upload', 'copy', 'cut', 'paste', 'mkdir', 'extract',
 
 		// check for a "userfiles" gallery - currently although elFinder can support more than one root, it always starts in the first one
-		$opts = array(
+		$opts = [
 			'debug' => true,
-			'roots' => array(),
-		);
+			'roots' => [],
+		];
 
-		$rootDefaults = array(
+		$rootDefaults = [
 			'driver' => 'TikiFiles', // driver for accessing file system (REQUIRED)
 //			'path' => $rootId, // tiki root filegal - path to files (REQUIRED) - to be filled in later
 			'disabled' => $disabled,
 //			'URL'           => 									// URL to files (seems not to be REQUIRED)
-			'accessControl' => array($this, 'elFinderAccess'), // obey tiki perms
+			'accessControl' => [$this, 'elFinderAccess'], // obey tiki perms
 			'uploadMaxSize' => ini_get('upload_max_filesize'),
-			'accessControlData' => array(
+			'accessControlData' => [
 				'deepGallerySearch' => $input->deepGallerySearch->int(),
 				'parentIds' => $this->parentIds,
-			),
-		);
+			],
+		];
 
 		// gallery to start in
 		$startGallery = $input->defaultGalleryId->int();
 
 		if ($startGallery) {
 			$gal_info = TikiLib::lib('filegal')->get_file_gallery_info($startGallery);
-			if (!$gal_info) {
+			if (! $gal_info) {
 				Feedback::error(tr('Gallery ID %0 not found', $startGallery), 'session');
 				$startGallery = $prefs['fgal_root_id'];
 			}
@@ -103,22 +102,20 @@ class Services_File_FinderController
 
 		$opts['roots'][] = array_merge(
 			// normal file gals
-			array(
+			[
 				'path' => $prefs['fgal_root_id'],		// should be a function?
-			),
+			],
 			$rootDefaults
 		);
 		$startRoot = 0;
 
-		if (!empty($user) && $prefs['feature_userfiles'] == 'y' && $prefs['feature_use_fgal_for_user_files'] == 'y') {
-
+		if (! empty($user) && $prefs['feature_userfiles'] == 'y' && $prefs['feature_use_fgal_for_user_files'] == 'y') {
 			if ($startGallery && $startGallery == $prefs['fgal_root_user_id'] && ! Perms::get('file gallery', $startGallery)->admin_file_galleries) {
 				$startGallery = (int) TikiLib::lib('filegal')->get_user_file_gallery();
 			}
 			$userRootId = $prefs['fgal_root_user_id'];
 
 			if ($startGallery != $userRootId) {
-
 				$gal_info = TikiLib::lib('filegal')->get_file_gallery_info($startGallery);
 				if ($gal_info['type'] == 'user') {
 					$startRoot = count($opts['roots']);
@@ -127,12 +124,11 @@ class Services_File_FinderController
 				$startRoot = count($opts['roots']);
 			}
 			$opts['roots'][] = array_merge(
-				array(
+				[
 					'path' => $userRootId,		// should be $prefs['fgal_root_id']?
-				),
+				],
 				$rootDefaults
 			);
-
 		}
 
 		if ($prefs['feature_wiki_attachments'] == 'y' && $prefs['feature_use_fgal_for_wiki_attachments'] === 'y') {
@@ -140,9 +136,9 @@ class Services_File_FinderController
 				$startRoot = count($opts['roots']);
 			}
 			$opts['roots'][] = array_merge(
-				array(
+				[
 					'path' => $prefs['fgal_root_wiki_attachments_id'],		// should be $prefs['fgal_root_id']?
-				),
+				],
 				$rootDefaults
 			);
 		}
@@ -175,7 +171,7 @@ class Services_File_FinderController
 			} else {
 				$info = $filegallib->get_file_gallery(str_replace('d_', '', $fileId));
 			}
-			$params = array();
+			$params = [];
 			if ($input->filegals_manager->text()) {
 				$params['filegals_manager'] = $input->filegals_manager->text();
 			}
@@ -185,8 +181,7 @@ class Services_File_FinderController
 			$info['wiki_syntax'] = $filegallib->getWikiSyntax($info['galleryId'], $info, $params);
 			$info['data'] = '';	// binary data makes JSON fall over
 			return $info;
-		} else if ($input->cmd->text() === 'file') {
-
+		} elseif ($input->cmd->text() === 'file') {
 			// intercept download command and use tiki-download_file so the mime type and extension is correct
 			$fileId = $elFinder->realpath($input->target->text());
 			if (strpos($fileId, 'f_') !== false) {
@@ -202,18 +197,16 @@ class Services_File_FinderController
 					$info = $filegallib->get_file($fileId);
 
 					if (strpos($info['filetype'], 'image/') !== false) {
-
 						$url .= '&display';
-
-					} else if ($prefs['fgal_viewerjs_feature'] === 'y' &&
+					} elseif ($prefs['fgal_viewerjs_feature'] === 'y' &&
 							($info['filetype'] === 'application/pdf' or
 									strpos($info['filetype'], 'application/vnd.oasis.opendocument.') !== false)) {
-						$url = TikiLib::lib('access')->absoluteUrl($prefs['fgal_viewerjs_uri'].'#'.$url);
+						$url = TikiLib::lib('access')->absoluteUrl($prefs['fgal_viewerjs_uri'] . '#' . $url);
 					}
 				}
 
 				TikiLib::lib('access')->redirect($url);
-				return array();
+				return [];
 			}
 		}
 
@@ -227,8 +220,7 @@ class Services_File_FinderController
 		$connector->run();
 		// deals with response
 
-		return array();
-
+		return [];
 	}
 
 	/**
@@ -265,7 +257,7 @@ class Services_File_FinderController
 			$perms = TikiLib::lib('tiki')->get_perm_object($id, 'file', TikiLib::lib('filegal')->get_file($id));
 		}
 
-		switch($attr) {
+		switch ($attr) {
 			case 'read':
 				if ($isgal) {
 					return $visible && ($perms['tiki_p_view_file_gallery'] === 'y' || $id == $prefs['fgal_root_id']);
@@ -280,10 +272,9 @@ class Services_File_FinderController
 				}
 			case 'locked':
 			case 'hidden':
-				return !$visible;
+				return ! $visible;
 			default:
 				return false;
-
 		}
 	}
 
@@ -291,7 +282,7 @@ class Services_File_FinderController
 	{
 		$visible = true;
 
-		if (!empty($data['startPath'])) {
+		if (! empty($data['startPath'])) {
 			if ($data['startPath'] == $id) { // is startPath
 				$visible = true;
 				return $visible;
@@ -327,16 +318,14 @@ class Services_File_FinderController
 		return $visible;
 	}
 
-	private function isParentOf( $id, $child, $parentIds)
+	private function isParentOf($id, $child, $parentIds)
 	{
-		if (!isset($parentIds[$child])) {
+		if (! isset($parentIds[$child])) {
 			return false;
-		} else if ($parentIds[$child] == $id) {
+		} elseif ($parentIds[$child] == $id) {
 			return true;
 		} else {
 			return $this->isParentOf($child, $parentIds[$child], $parentIds);
 		}
 	}
-
 }
-

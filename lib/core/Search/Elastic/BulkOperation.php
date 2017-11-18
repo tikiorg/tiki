@@ -32,29 +32,29 @@ class Search_Elastic_BulkOperation
 	function index($index, $type, $id, array $data)
 	{
 		$this->append(
-			array(
-				array('index' => array(
+			[
+				['index' => [
 						'_index' => $index,
 						'_type' => $type,
 						'_id' => $id,
-					)
-				),
+					]
+				],
 				$data,
-			)
+			]
 		);
 	}
 
 	function unindex($index, $type, $id)
 	{
 		$this->append(
-			array(
-				array('delete' => array(
+			[
+				['delete' => [
 						'_index' => $index,
 						'_type' => $type,
 						'_id' => $id,
-					)
-				),
-			)
+					]
+				],
+			]
 		);
 	}
 
@@ -70,4 +70,3 @@ class Search_Elastic_BulkOperation
 		}
 	}
 }
-

@@ -7,14 +7,14 @@
 
 class Math_Formula_Function_IsEmpty extends Math_Formula_Function
 {
-	function evaluate( $element )
+	function evaluate($element)
 	{
 		// Multiple components will all need to be equal.
-		$out = array();
+		$out = [];
 
-		foreach ( $element as $child ) {
+		foreach ($element as $child) {
 			$component = $this->evaluateChild($child);
-			if (!empty($component)) {
+			if (! empty($component)) {
 				return false;
 			}
 		}
@@ -22,4 +22,3 @@ class Math_Formula_Function_IsEmpty extends Math_Formula_Function
 		return true;
 	}
 }
-

@@ -10,4 +10,3 @@ namespace Tracker\Filter\Exception;
 class Exception extends \Exception
 {
 }
-

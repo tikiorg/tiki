@@ -12,7 +12,7 @@ class Tiki_Profile_Writer
 	private $data;
 	private $filePath;
 	private $externalWriter;
-	private $references = array();
+	private $references = [];
 
 	function __construct($directory, $profileName)
 	{
@@ -22,12 +22,12 @@ class Tiki_Profile_Writer
 			$content = file_get_contents($this->filePath);
 			$this->data = Yaml::parse($content);
 		} else {
-			$this->data = array(
-				'permissions' => array(),
-				'preferences' => array(),
-				'objects' => array(),
-				'unknown_objects' => array(),
-			);
+			$this->data = [
+				'permissions' => [],
+				'preferences' => [],
+				'objects' => [],
+				'unknown_objects' => [],
+			];
 		}
 	}
 
@@ -44,7 +44,7 @@ class Tiki_Profile_Writer
 	 */
 	function writeExternal($page, $content, $ext = '.wiki')
 	{
-		$this->externalWriter->write($page.$ext, $content);
+		$this->externalWriter->write($page . $ext, $content);
 	}
 
 	function setPreference($name, $value)
@@ -63,7 +63,7 @@ class Tiki_Profile_Writer
 
 	function addFake($type, $id)
 	{
-		$this->addRawObject($type, null, $id, array('_is_fake' => true));
+		$this->addRawObject($type, null, $id, ['_is_fake' => true]);
 	}
 
 	/**
@@ -95,13 +95,13 @@ class Tiki_Profile_Writer
 	{
 		$this->clearObject($type, $currentId);
 
-		$this->data['objects'][] = array(
+		$this->data['objects'][] = [
 			'type' => $type,
 			'ref' => $reference,
 			'_id' => $currentId,
 			'_timestamp' => time(),
 			'data' => $data,
-		);
+		];
 	}
 
 	private function getInternalReference($type, $currentId, array $data)
@@ -118,10 +118,10 @@ class Tiki_Profile_Writer
 		}
 
 		// Find the object name property
-		$candidates = array();
+		$candidates = [];
 		$currentId = preg_replace('/[^\w]+/u', '', strtolower($currentId));
 
-		foreach (array('name', 'title') as $key) {
+		foreach (['name', 'title'] as $key) {
 			if (! empty($data[$key])) {
 				$basename = preg_replace('/\W+/u', '_', strtolower($data[$key]));
 				$candidates[] = $basename;
@@ -160,7 +160,7 @@ class Tiki_Profile_Writer
 	 */
 	function removeUnknown($type, $id, $replacement)
 	{
-		if( !is_array($this->data['unknown_objects']) ) {
+		if (! is_array($this->data['unknown_objects'])) {
 			return;
 		}
 		foreach ($this->data['unknown_objects'] as $key => $entry) {
@@ -204,7 +204,7 @@ class Tiki_Profile_Writer
 	 */
 	function getUnknownObjects()
 	{
-		if (is_array($this->data['unknown_objects'])){
+		if (is_array($this->data['unknown_objects'])) {
 			return array_map(
 				function ($entry) {
 					unset($entry['token']);
@@ -222,7 +222,7 @@ class Tiki_Profile_Writer
 	 * the declarative interfaces (plugins, field types, preferences, ...). Extra parameters are
 	 * provided in those cases since the type may depend on other arguments.
 	 */
-	function getReference($type, $id, array $parameters = array())
+	function getReference($type, $id, array $parameters = [])
 	{
 		if (empty($id)) {
 			// Empty strings, id=0, ... not valid references skip
@@ -315,7 +315,7 @@ class Tiki_Profile_Writer
 	private function generateTemporaryReference($type, $id)
 	{
 		// Find existing entry for unknown reference
-		if( is_array($this->data['unknown_objects']) ) {
+		if (is_array($this->data['unknown_objects'])) {
 			foreach ($this->data['unknown_objects'] as $entry) {
 				if ($entry['type'] == $type && $entry['id'] == $id) {
 					return $entry['token'];
@@ -325,11 +325,11 @@ class Tiki_Profile_Writer
 
 		// Or generate a new one
 		$token = '$unknownobject:' . uniqid() . '$';
-		$this->data['unknown_objects'][] = array(
+		$this->data['unknown_objects'][] = [
 			'type' => $type,
 			'id' => $id,
 			'token' => $token,
-		);
+		];
 
 		return $token;
 	}

@@ -23,10 +23,10 @@ class Search_Query_RelationReplacer
 				$invert = $relation->getInvert();
 
 				return new Search_Expr_Or(
-					array(
+					[
 						$expr,
 						new Search_Expr_Token($invert->getToken()),
-					)
+					]
 				);
 			}
 		}
@@ -41,4 +41,3 @@ class Search_Query_RelationReplacer
 		return $expr;
 	}
 }
-

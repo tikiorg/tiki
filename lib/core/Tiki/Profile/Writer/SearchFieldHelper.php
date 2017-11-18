@@ -7,7 +7,7 @@
 
 class Tiki_Profile_Writer_SearchFieldHelper
 {
-	private $mapping = array();
+	private $mapping = [];
 
 	function addGlobalSource(Search_GlobalSource_Interface $source)
 	{
@@ -58,11 +58,12 @@ class Tiki_Profile_Writer_SearchFieldHelper
 		return $args;
 	}
 
-	function replaceStepReferences(Tiki_Profile_Writer $writer, $args) {
-		if( isset($args['action'], $args['field'], $args['value']) && $args['action'] == 'tracker_item_modify' ) {
+	function replaceStepReferences(Tiki_Profile_Writer $writer, $args)
+	{
+		if (isset($args['action'], $args['field'], $args['value']) && $args['action'] == 'tracker_item_modify') {
 			$trklib = TikiLib::lib('trk');
 			$field = $trklib->get_field_by_perm_name($args['field']);
-			if( $field && isset($field['type']) && $field['type'] == 'e' ) { // category field
+			if ($field && isset($field['type']) && $field['type'] == 'e') { // category field
 				$args['value'] = Tiki_profile_Writer_Helper::uniform_string('category', $writer, $args['value']);
 			}
 		}
@@ -70,4 +71,3 @@ class Tiki_Profile_Writer_SearchFieldHelper
 		return $args;
 	}
 }
-

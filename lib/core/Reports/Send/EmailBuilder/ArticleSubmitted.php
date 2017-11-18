@@ -14,14 +14,14 @@ class Reports_Send_EmailBuilder_ArticleSubmitted extends Reports_Send_EmailBuild
 	{
 		return tr('New articles submitted:');
 	}
-	
+
 	public function getOutput(array $change)
 	{
 		$base_url = $change['data']['base_url'];
 
 		$output = '<u>' . $change['data']['user'] . '</u> ' . tra('created the article') .
 							" <a href=\"{$base_url}tiki-read_article.php?articleId=" . $change['data']['articleId'] . "\">" . $change['data']['articleTitle'] . "</a>.";
-		
+
 		return $output;
 	}
 }

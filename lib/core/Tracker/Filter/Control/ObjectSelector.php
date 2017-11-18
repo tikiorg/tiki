@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -81,7 +81,9 @@ class ObjectSelector implements Control
 		if ($this->multi) {
 			$params['_name'] = $this->fieldName;
 			$type = $this->filters['type'];
-			$value = array_map(function ($v) use ($type) { return str_replace($type . ':', '', $v); }, $this->value);
+			$value = array_map(function ($v) use ($type) {
+				return str_replace($type . ':', '', $v);
+			}, $this->value);
 			$params['_simplevalue'] = implode(',', $value);
 			$params['_separator'] = ',';
 

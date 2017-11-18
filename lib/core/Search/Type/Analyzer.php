@@ -56,4 +56,3 @@ class Search_Type_Analyzer
 		return $suffix === substr($key, -strlen($suffix));
 	}
 }
-

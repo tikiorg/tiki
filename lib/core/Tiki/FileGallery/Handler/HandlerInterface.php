@@ -13,4 +13,3 @@ interface HandlerInterface
 
 	function delete($data, $path);
 }
-

@@ -28,7 +28,7 @@ class Forums extends AbstractType
 		$commentsLib = TikiLib::lib('comments');
 		$channels = $commentsLib->list_forums();
 
-		$channels['data'] = Perms::filter(array('type' => 'forum'), 'object', $channels['data'], array('object' => 'forumId'), 'forum_read');
+		$channels['data'] = Perms::filter(['type' => 'forum'], 'object', $channels['data'], ['object' => 'forumId'], 'forum_read');
 
 		$this->addEntriesToSitemap($channels, '/tiki-view_forum.php?forumId=%s', 'forumId', null, '', 'lastPost', '0.6', 'daily');
 	}

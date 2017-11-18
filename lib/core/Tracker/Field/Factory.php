@@ -10,23 +10,23 @@ class Tracker_Field_Factory
 	private static $trackerFieldLocalCache;
 
 	private $trackerDefinition;
-	private $typeMap = array();
-	private $infoMap = array();
+	private $typeMap = [];
+	private $infoMap = [];
 
 	function __construct($trackerDefinition = null)
 	{
 		$this->trackerDefinition = $trackerDefinition;
 
 		$fieldMap = $this->buildTypeMap(
-			array(
+			[
 				'lib/core/Tracker/Field' => 'Tracker_Field_',
-			)
+			]
 		);
 	}
 
 	private function getPreCacheTypeMap()
 	{
-		if (!empty(self::$trackerFieldLocalCache)) {
+		if (! empty(self::$trackerFieldLocalCache)) {
 			$this->typeMap = self::$trackerFieldLocalCache['type'];
 			$this->infoMap = self::$trackerFieldLocalCache['info'];
 			return true;
@@ -37,10 +37,10 @@ class Tracker_Field_Factory
 
 	private function setPreCacheTypeMap($data)
 	{
-		self::$trackerFieldLocalCache = array(
+		self::$trackerFieldLocalCache = [
 			'type' => $data['typeMap'],
 			'info' => $data['infoMap']
-		);
+		];
 	}
 
 	private function buildTypeMap($paths)
@@ -63,13 +63,14 @@ class Tracker_Field_Factory
 
 		foreach ($paths as $path => $prefix) {
 			foreach (glob("$path/*.php") as $file) {
-				if ($file === "$path/index.php")
+				if ($file === "$path/index.php") {
 					continue;
+				}
 				$class = $prefix . substr($file, strlen($path) + 1, -4);
 				$reflected = new ReflectionClass($class);
 
 				if ($reflected->isInstantiable() && $reflected->implementsInterface('Tracker_Field_Interface')) {
-					$providedFields = call_user_func(array($class, 'getTypes'));
+					$providedFields = call_user_func([$class, 'getTypes']);
 
 					foreach ($providedFields as $key => $info) {
 						$this->typeMap[$key] = $class;
@@ -79,12 +80,12 @@ class Tracker_Field_Factory
 			}
 		}
 
-		uasort($this->infoMap, array($this, 'compareName'));
+		uasort($this->infoMap, [$this, 'compareName']);
 
-		$data = array(
+		$data = [
 			'typeMap' => $this->typeMap,
 			'infoMap' => $this->infoMap,
-		);
+		];
 
 		if (defined('TIKI_PREFS_DEFINED')) {
 			$cachelib->cacheItem($cacheKey, serialize($data));
@@ -110,20 +111,21 @@ class Tracker_Field_Factory
 			return [];
 		}
 	}
-	
+
 	/**
 	 * Get a list of field types by their letter type and the corresponding class name
-	 * @Example 'q' => 'Tracker_Field_AutoIncrement', ... 
+	 * @Example 'q' => 'Tracker_Field_AutoIncrement', ...
 	 * @return array letterType => classname
 	 */
-	function getTypeMap() {
+	function getTypeMap()
+	{
 		return $this->typeMap;
 	}
 
-	function getHandler($field_info, $itemData = array())
+	function getHandler($field_info, $itemData = [])
 	{
-		if (!isset($field_info['type'])) {
-			// When does a field have no type? Should this not throw an exception? Chealer 2017-05-23 
+		if (! isset($field_info['type'])) {
+			// When does a field have no type? Should this not throw an exception? Chealer 2017-05-23
 			return null;
 		}
 		$type = $field_info['type'];
@@ -135,18 +137,20 @@ class Tracker_Field_Factory
 			global $prefs;
 			foreach ($info['prefs'] as $pref) {
 				if ($prefs[$pref] != 'y') {
-					Feedback::error(tr('Tracker Field Factory Error: Pref "%0" required for field type "%1"', $pref, 
-						$class), 'session');
+					Feedback::error(tr(
+						'Tracker Field Factory Error: Pref "%0" required for field type "%1"',
+						$pref,
+						$class
+					), 'session');
 					return null;
 				}
 			}
 
-			if (class_exists($class) && is_callable(array($class, 'build'))) {
-				return call_user_func(array($class, 'build'), $type, $this->trackerDefinition, $field_info, $itemData);
+			if (class_exists($class) && is_callable([$class, 'build'])) {
+				return call_user_func([$class, 'build'], $type, $this->trackerDefinition, $field_info, $itemData);
 			} else {
 				return new $class($field_info, $itemData, $this->trackerDefinition);
 			}
 		}
 	}
 }
-

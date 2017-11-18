@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * Handler class for Text
- * 
+ *
  * Letter key: ~t~
  *
  */
@@ -15,90 +15,90 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 {
 	public static function getTypes()
 	{
-		return array(
-			't' => array(
+		return [
+			't' => [
 				'name' => tr('Text Field'),
 				'description' => tr('Single-line text input.'),
 				'help' => 'Text Tracker Field',
-				'prefs' => array('trackerfield_text'),
-				'tags' => array('basic'),
+				'prefs' => ['trackerfield_text'],
+				'tags' => ['basic'],
 				'default' => 'y',
-				'supported_changes' => array('d', 'D', 'R', 'M', 'm', 't', 'a', 'L'),
-				'params' => array(
-					'samerow' => array(
+				'supported_changes' => ['d', 'D', 'R', 'M', 'm', 't', 'a', 'L'],
+				'params' => [
+					'samerow' => [
 						'name' => tr('Same Row'),
 						'description' => tr('Display the field name and input on the same row.'),
 						'deprecated' => false,
 						'filter' => 'int',
 						'default' => 1,
-						'options' => array(
+						'options' => [
 							0 => tr('No'),
 							1 => tr('Yes'),
-						),
+						],
 						'legacy_index' => 0,
-					),
-					'size' => array(
+					],
+					'size' => [
 						'name' => tr('Display Size'),
 						'description' => tr('Visible size of the field, in characters.'),
 						'filter' => 'int',
 						'legacy_index' => 1,
-					),
-					'prepend' => array(
+					],
+					'prepend' => [
 						'name' => tr('Prepend'),
 						'description' => tr('Text to prepend when displaying the value.'),
 						'filter' => 'text',
 						'legacy_index' => 2,
-					),
-					'append' => array(
+					],
+					'append' => [
 						'name' => tr('Append'),
 						'description' => tr('Text to append when displaying the value.'),
 						'filter' => 'text',
 						'legacy_index' => 3,
-					),
-					'max' => array(
+					],
+					'max' => [
 						'name' => tra('Maximum Length'),
 						'description' => tra('Maximum amount of characters to store.'),
 						'filter' => 'int',
 						'legacy_index' => 4,
-					),
-					'autocomplete' => array(
+					],
+					'autocomplete' => [
 						'name' => tra('Autocomplete'),
 						'description' => tra('Enable autocompletion while typing in the field.'),
 						'filter' => 'alpha',
-						'options' => array(
+						'options' => [
 							'n' => tr('No'),
 							'y' => tr('Yes'),
-						),
+						],
 						'legacy_index' => 5,
-					),
-					'exact' => array(
+					],
+					'exact' => [
 						'name' => tr('Index exact value'),
 						'description' => tr('In addition to indexing the content of the field, also index it as an identifier in tracker_field_{perm name}_exact. This option is not available for multilingual fields. Mostly for identifiers like product codes or ISBN numbers.'),
 						'filter' => 'alpha',
-						'options' => array(
+						'options' => [
 							'n' => tr('No'),
 							'y' => tr('Yes'),
-						),
+						],
 						'legacy_index' => 6,
-					),
-				),
-			),
-		);
+					],
+				],
+			],
+		];
 	}
 
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
 		$data = $this->processMultilingual($requestData, $this->getInsertId());
 
 		return $data;
 	}
 
-	function renderInput($context = array())
+	function renderInput($context = [])
 	{
 		return $this->renderTemplate('trackerinput/text.tpl', $context);
 	}
 
-	function renderInnerOutput($context = array())
+	function renderInnerOutput($context = [])
 	{
 		$pre = '';
 		$post = '';
@@ -121,7 +121,7 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 		return $pre . $value . $post;
 	}
 
-	function renderOutput($context = array())
+	function renderOutput($context = [])
 	{
 		if (isset($context['history']) && $context['history'] == 'y' && is_array($this->getConfiguration('value'))) {
 			return $this->renderTemplate('trackeroutput/text_history.tpl');
@@ -130,13 +130,13 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 		}
 	}
 
-	protected function processMultilingual($requestData, $id_string) 
+	protected function processMultilingual($requestData, $id_string)
 	{
 		global $prefs, $jitRequest;
 		$language = $prefs['language'];
 		$multilingual = $this->getConfiguration('isMultilingual') == 'y';
 
-		if (!isset($requestData[$id_string])) { // although we're using jitRequest test for $requestData here as it gets unset once processed
+		if (! isset($requestData[$id_string])) { // although we're using jitRequest test for $requestData here as it gets unset once processed
 			$value = $this->getValue();
 			if ($multilingual) {
 				$newValue = @json_decode($value, true);
@@ -155,33 +155,33 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 			$thisVal = $value;
 		}
 
-		$data = array(
+		$data = [
 			'value' => $value,
 			'pvalue' => trim($this->attemptParse($thisVal), "\n"),
-			'lingualvalue' => array(),
-			'lingualpvalue' => array(),
-		);
+			'lingualvalue' => [],
+			'lingualpvalue' => [],
+		];
 
 		if ($multilingual) {
 			// When multilingual is turned on after data exists, this may well be a string
 			// rather than an array. Assume it's empty, $thisVal will replace all values.
 			if (! is_array($value)) {
-				$value = array();
+				$value = [];
 			}
 			foreach ($prefs['available_languages'] as $num => $lang) { // TODO add a limit on number of langs - 40+ makes this blow up
-				if (!isset($value[$lang])) {
+				if (! isset($value[$lang])) {
 					$value[$lang] = $thisVal;
 				}
 
-				$data['lingualvalue'][$num] = array(
-					'id' => str_replace(array('[', ']'), array('_', ''), $this->getInsertId()) . '_' . $lang,
+				$data['lingualvalue'][$num] = [
+					'id' => str_replace(['[', ']'], ['_', ''], $this->getInsertId()) . '_' . $lang,
 					'lang' => $lang,
 					'value' => $value[$lang],
-				);
-				$data['lingualpvalue'][$num] = array(
+				];
+				$data['lingualpvalue'][$num] = [
 					'lang' => $lang,
 					'value' => $this->attemptParse($value[$lang]),
-				);
+				];
 			}
 		}
 
@@ -196,13 +196,13 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 	function handleSave($value, $oldValue)
 	{
 		if (is_array($value)) {
-			return array(
-				'value' => json_encode(array_map(array($this, 'filterValue'), $value)),
-			);
+			return [
+				'value' => json_encode(array_map([$this, 'filterValue'], $value)),
+			];
 		} else {
-			return array(
+			return [
 				'value' => $this->filterValue($value),
-			);
+			];
 		}
 	}
 
@@ -244,23 +244,23 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 		$baseKey = $this->getBaseKey();
 
 		if ($this->getConfiguration('isMultilingual') == 'y') {
-			if (!empty($value)) {
+			if (! empty($value)) {
 				$decoded = json_decode($value, true);
 				$value = implode("\n", $decoded);
 			} else {
-				$decoded = array();
+				$decoded = [];
 			}
 
-			$data = array($baseKey => $typeFactory->$fieldType($value));
+			$data = [$baseKey => $typeFactory->$fieldType($value)];
 			foreach ($decoded as $lang => $content) {
 				$data[$baseKey . '_' . $lang] = $typeFactory->$fieldType($content);
 			}
 
 			return $data;
 		} else {
-			$data = array(
+			$data = [
 				$baseKey => $typeFactory->$fieldType($value),
-			);
+			];
 
 			if ($this->getOption('exact') == 'y') {
 				$data[$baseKey . '_exact'] = $typeFactory->identifier($value);
@@ -275,7 +275,7 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 		global $prefs;
 		$baseKey = $this->getBaseKey();
 
-		$data = array($baseKey);
+		$data = [$baseKey];
 
 		if ($this->getConfiguration('isMultilingual') == 'y') {
 			foreach ($prefs['available_languages'] as $lang) {
@@ -293,7 +293,7 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 		global $prefs;
 		$baseKey = $this->getBaseKey();
 
-		$data = array($baseKey => true);
+		$data = [$baseKey => true];
 
 		if ($this->getConfiguration('isMultilingual') == 'y') {
 			foreach ($prefs['available_languages'] as $lang) {
@@ -518,4 +518,3 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 		return $filters;
 	}
 }
-

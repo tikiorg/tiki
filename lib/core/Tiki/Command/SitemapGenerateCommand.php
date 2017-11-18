@@ -38,7 +38,5 @@ class SitemapGenerateCommand extends Command
 		$sitemap->generate($url);
 
 		$output->writeln('<info>' . tra('New sitemap created.') . '</info>');
-
 	}
-
 }

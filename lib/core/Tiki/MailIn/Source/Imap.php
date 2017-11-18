@@ -6,6 +6,7 @@
 // $Id$
 
 namespace Tiki\MailIn\Source;
+
 use Tiki\MailIn\Exception\TransportException;
 use Zend\Mail\Storage\Imap as ZendImap;
 use Zend\Mail\Exception\ExceptionInterface as ZendMailException;

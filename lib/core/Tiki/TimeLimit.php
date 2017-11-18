@@ -12,4 +12,3 @@ class Tiki_TimeLimit
 		set_time_limit((int) $targetLimit);
 	}
 }
-

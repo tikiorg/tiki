@@ -35,8 +35,8 @@ installer allows a user to change or destroy the site’s database through the
 browser so it is very important to keep it locked.
 
 LOCK;
-		$file='db/lock';
-		if (!file_put_contents($file, $out)) {
+		$file = 'db/lock';
+		if (! file_put_contents($file, $out)) {
 			$output->writeln("<error>Could not lock installer</error>");
 		} else {
 			$output->writeln("<info>Installer locked</info>");

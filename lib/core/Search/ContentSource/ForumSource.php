@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -16,20 +16,20 @@ class Search_ContentSource_ForumSource implements Search_ContentSource_Interface
 
 	function getDocuments()
 	{
-		return $this->db->table('tiki_forums')->fetchColumn('forumId', array());
+		return $this->db->table('tiki_forums')->fetchColumn('forumId', []);
 	}
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
 	{
 		$lib = TikiLib::lib('comments');
-		
+
 		$item = $lib->get_forum($objectId);
 
 		if (! $item) {
 			return false;
 		}
 
-		$data = array(
+		$data = [
 			'title' => $typeFactory->sortable($item['name']),
 			'creation_date' => $typeFactory->timestamp($item['created']),
 			'description' => $typeFactory->plaintext($item['description']),
@@ -38,14 +38,14 @@ class Search_ContentSource_ForumSource implements Search_ContentSource_Interface
 			'forum_section' => $typeFactory->identifier($item['section']),
 
 			'view_permission' => $typeFactory->identifier('tiki_p_forum_read'),
-		);
+		];
 
 		return $data;
 	}
 
 	function getProvidedFields()
 	{
-		return array(
+		return [
 			'title',
 			'creation_date',
 			'description',
@@ -56,15 +56,14 @@ class Search_ContentSource_ForumSource implements Search_ContentSource_Interface
 			'searchable',
 
 			'view_permission',
-		);
+		];
 	}
 
 	function getGlobalFields()
 	{
-		return array(
+		return [
 			'title' => true,
 			'description' => true,
-		);
+		];
 	}
 }
-

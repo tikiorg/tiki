@@ -24,7 +24,7 @@ class Tiki_Autoload
 	 *
 	 * @param string $class the name of the class to be autoloaded
 	 */
-	static public function autoload($class)
+	public static function autoload($class)
 	{
 		switch ($class) {
 			case 'mPDF':
@@ -43,14 +43,13 @@ class Tiki_Autoload
 	 *
 	 * @param string $class the name of the class to be autoloaded
 	 */
-	static protected function loadMpdf($class)
+	protected static function loadMpdf($class)
 	{
 		global $prefs;
 
 		if ($class == 'mPDF'
 			&& ! empty($prefs['print_pdf_from_url']) && $prefs['print_pdf_from_url'] === 'mpdf'
 			&& ! empty($prefs['print_pdf_mpdf_path'])) {
-
 			$path = $prefs['print_pdf_mpdf_path'];
 			if (substr($prefs['print_pdf_mpdf_path'], -1) != '/') {
 				$path .= '/';
@@ -70,7 +69,7 @@ class Tiki_Autoload
 	 *
 	 * @param $class
 	 */
-	static protected function loadInternalClassesNotInComposer($class)
+	protected static function loadInternalClassesNotInComposer($class)
 	{
 		global $tikipath;
 

@@ -14,67 +14,67 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 {
 	public static function getTypes()
 	{
-		return array(
-			'L' => array(
+		return [
+			'L' => [
 				'name' => tr('URL'),
 				'description' => tr('Creates a link to a specified URL.'),
 				'help' => 'URL Tracker Field',
-				'prefs' => array('trackerfield_url'),
-				'tags' => array('basic'),
+				'prefs' => ['trackerfield_url'],
+				'tags' => ['basic'],
 				'default' => 'y',
-				'supported_changes' => array('d', 'D', 'R', 'M', 'm', 't', 'a', 'L'),
-				'params' => array(
-					'linkToURL' => array(
+				'supported_changes' => ['d', 'D', 'R', 'M', 'm', 't', 'a', 'L'],
+				'params' => [
+					'linkToURL' => [
 						'name' => tr('Display'),
 						'description' => tr('How the URL should be rendered'),
 						'filter' => 'int',
-						'options' => array(
+						'options' => [
 							0 => tr('URL as link'),
 							1 => tr('Plain text'),
 							2 => tr('Site title as link'),
 							3 => tr('URL as link plus site title'),
 							4 => tr('Text as link (see Other)'),
-						),
+						],
 						'legacy_index' => 0,
 						'default' => 0,
-					),
-					'other' => array(
+					],
+					'other' => [
 						'name' => tr('Other'),
 						'description' => tr('Label of the link text. Requires "Display" to be set to "Text as link"'),
 						'filter' => 'text',
 						'default' => '',
-					),
-				),
-			),
-		);
+					],
+				],
+			],
+		];
 	}
 
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
 		$ins_id = $this->getInsertId();
 
-		return array(
+		return [
 			'value' => (isset($requestData[$ins_id]))
 				? $requestData[$ins_id]
 				: $this->getValue(),
-		);
+		];
 	}
 
-	function renderOutput($context = array())
+	function renderOutput($context = [])
 	{
 		$smarty = TikiLib::lib('smarty');
 
 		$url = $this->getConfiguration('value');
 
-		if (empty($url) || $context['list_mode'] == 'csv' || $this->getOption('linkToURL') == 1 ) {
+		if (empty($url) || $context['list_mode'] == 'csv' || $this->getOption('linkToURL') == 1) {
 			return $url;
 		} elseif ($this->getOption('linkToURL') == 2) { // Site title as link
 			$smarty->loadPlugin('smarty_function_object_link');
 			return smarty_function_object_link(
-				array(
+				[
 					'type' => 'external',
 					'id' => $url,
-				),
+				],
 				$smarty
 			);
 		} elseif ($this->getOption('linkToURL') == 0) { // URL as link
@@ -84,30 +84,30 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 			}
 			$smarty->loadPlugin('smarty_function_object_link');
 			return smarty_function_object_link(
-				array(
+				[
 					'type' => 'external',
 					'id' => $url,
 					'title' => $url,
-				),
+				],
 				$smarty
 			);
 		} elseif ($this->getOption('linkToURL') == 3) { // URL + site title
 			$smarty->loadPlugin('smarty_function_object_link');
 			return smarty_function_object_link(
-				array(
+				[
 					'type' => 'external_extended',
 					'id' => $url,
-				),
+				],
 				$smarty
 			);
 		} elseif ($this->getOption('linkToURL') == 4) { // URL as link
 			$smarty->loadPlugin('smarty_function_object_link');
 			return smarty_function_object_link(
-				array(
+				[
 					'type' => 'external',
 					'id' => $url,
 					'title' => tr($this->getOption('other')),
-				),
+				],
 				$smarty
 			);
 		} else {
@@ -115,7 +115,7 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 		}
 	}
 
-	function renderInput($context = array())
+	function renderInput($context = [])
 	{
 		return $this->renderTemplate("trackerinput/url.tpl", $context);
 	}
@@ -153,6 +153,4 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 
 		return $schema;
 	}
-
 }
-

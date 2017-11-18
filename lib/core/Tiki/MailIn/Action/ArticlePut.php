@@ -6,6 +6,7 @@
 // $Id$
 
 namespace Tiki\MailIn\Action;
+
 use Tiki\MailIn\Account;
 use Tiki\MailIn\Source\Message;
 use TikiLib;
@@ -86,4 +87,3 @@ class ArticlePut implements ActionInterface
 		return true;
 	}
 }
-

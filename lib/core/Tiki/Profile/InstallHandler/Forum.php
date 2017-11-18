@@ -9,18 +9,19 @@ class Tiki_Profile_InstallHandler_Forum extends Tiki_Profile_InstallHandler
 {
 	function getData()
 	{
-		if ( $this->data )
+		if ($this->data) {
 			return $this->data;
+		}
 
 		$data = $this->obj->getData();
 
-		$defaults = array(
+		$defaults = [
 			'description' => '',
 			'flood_interval' => 120,
 			'moderator' => 'admin',
 			'per_page' => 10,
-			'prune_max_age' => 3*24*3600,
-			'prune_unreplied_max_age' => 30*24*3600,
+			'prune_max_age' => 3 * 24 * 3600,
+			'prune_unreplied_max_age' => 30 * 24 * 3600,
 			'topic_order' => 'lastPost_desc',
 			'thread_order' => '',
 			'section' => '',
@@ -71,9 +72,9 @@ class Tiki_Profile_InstallHandler_Forum extends Tiki_Profile_InstallHandler
 			'enable_ui_online' => 'n',
 			'enable_password_protection' => 'n',
 			'forum_language' => '',
-		);
+		];
 
-		$data = Tiki_Profile::convertLists($data, array('enable' => 'y', 'list' => 'y',	'show' => 'y'), true);
+		$data = Tiki_Profile::convertLists($data, ['enable' => 'y', 'list' => 'y',	'show' => 'y'], true);
 
 		$data = array_merge($defaults, $data);
 
@@ -86,8 +87,9 @@ class Tiki_Profile_InstallHandler_Forum extends Tiki_Profile_InstallHandler
 	{
 		$data = $this->getData();
 
-		if ( ! isset( $data['name'] ) )
+		if (! isset($data['name'])) {
 			return false;
+		}
 
 		return true;
 	}
@@ -95,12 +97,12 @@ class Tiki_Profile_InstallHandler_Forum extends Tiki_Profile_InstallHandler
 	private static function getAttConverter()
 	{
 		return new Tiki_Profile_ValueMapConverter(
-			array(
+			[
 				'none' => 'att_no',
 				'everyone' => 'att_all',
 				'allowed' => 'att_perm',
 				'admin' => 'att_admin',
-			)
+			]
 		);
 	}
 
@@ -186,7 +188,7 @@ class Tiki_Profile_InstallHandler_Forum extends Tiki_Profile_InstallHandler
 		$writer->addObject(
 			'forum',
 			$forumId,
-			array(
+			[
 				'name' => $info['name'],
 				'description' => $info['description'],
 				'enable_flood_control' => $info['controlFlood'],
@@ -242,7 +244,7 @@ class Tiki_Profile_InstallHandler_Forum extends Tiki_Profile_InstallHandler
 				'thread_style' => $info['threadStyle'],
 				'comments_per_page' => $info['commentsPerPage'],
 				'is_flat' => $info['is_flat'],
-			)
+			]
 		);
 
 		return true;

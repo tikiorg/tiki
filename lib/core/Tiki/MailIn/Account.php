@@ -6,7 +6,9 @@
 // $Id$
 
 namespace Tiki\MailIn;
-use TikiLib, TikiMail;
+
+use TikiLib;
+use TikiMail;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 class Account
@@ -189,7 +191,7 @@ class Account
 
 	function sendReply(Source\Message $message, TikiMail $mail)
 	{
-		$mail->send(array($message->getFromAddress()), 'mail');
+		$mail->send([$message->getFromAddress()], 'mail');
 	}
 
 	function getDefaultCategory()
@@ -202,7 +204,7 @@ class Account
 		global $prefs;
 
 		$is_html = false;
-		$wysiwyg = NULL;
+		$wysiwyg = null;
 		if ($this->containsStringHTML($body)) {
 			$is_html = true;
 			$wysiwyg = 'y';
@@ -218,14 +220,14 @@ class Account
 			$editlib = TikiLib::lib('edit');
 			$body = $editlib->parseToWiki($body);
 			$is_html = false;
-			$wysiwyg = NULL;
+			$wysiwyg = null;
 		}
 
-		return array(
+		return [
 			'body' => $body,
 			'is_html' => $is_html,
 			'wysiwyg' => $wysiwyg,
-		);
+		];
 	}
 
 	private function containsStringHTML($str)
@@ -273,7 +275,6 @@ class Account
 
 				unset($context);
 			} else {
-				
 				$success = false;
 
 				$this->sendFailureResponse($message, 'nothing_to_do');
@@ -294,4 +295,3 @@ class Account
 		$lib->add_log('mailin', $detail . ' - ' . $message->getSubject(), $message->getAssociatedUser());
 	}
 }
-

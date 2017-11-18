@@ -15,15 +15,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class IndexOptimizeCommand extends Command
 {
-    protected function configure()
-    {
-        $this
-            ->setName('index:optimize')
-            ->setDescription('Optimize the unified search index');
-    }
+	protected function configure()
+	{
+		$this
+			->setName('index:optimize')
+			->setDescription('Optimize the unified search index');
+	}
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
+	protected function execute(InputInterface $input, OutputInterface $output)
+	{
 		$unifiedsearchlib = \TikiLib::lib('unifiedsearch');
 
 		$output->writeln('Started optimizing index...');
@@ -31,5 +31,5 @@ class IndexOptimizeCommand extends Command
 		$unifiedsearchlib->getIndex('data-write')->optimize();
 
 		$output->writeln('Optimizing index done');
-    }
+	}
 }

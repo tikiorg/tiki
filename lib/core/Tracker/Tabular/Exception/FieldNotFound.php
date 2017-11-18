@@ -17,4 +17,3 @@ class FieldNotFound extends Exception
 		$this->field = $field;
 	}
 }
-

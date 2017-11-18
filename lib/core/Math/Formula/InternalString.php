@@ -11,7 +11,7 @@ class Math_Formula_InternalString
 	private $type;
 	private $children;
 
-	function __construct( $content )
+	function __construct($content)
 	{
 		$this->content = trim($content, '"');
 	}
@@ -21,4 +21,3 @@ class Math_Formula_InternalString
 		return $this->content;
 	}
 }
-

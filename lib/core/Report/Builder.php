@@ -9,10 +9,10 @@ class Report_Builder
 {
 	var $type = '';
 	var $id = null;
-	var $input = array();
+	var $input = [];
 	var $name = '';
 	var $description = '';
-	var $values = array();
+	var $values = [];
 
 	static function load($type)
 	{
@@ -36,18 +36,18 @@ class Report_Builder
 
 	static function listDefinitions()
 	{
-		$files = array();
+		$files = [];
 
 		foreach (scandir('lib/core/Report/Definition') as $fileName) {
 			if (preg_match('/[.]php/', $fileName) && $fileName != "index.php") {
-                $files[] = str_replace('.php', '', $fileName);
+				$files[] = str_replace('.php', '', $fileName);
 			}
 		}
 
 		return $files;
 	}
 
-	function setValues($values = array())
+	function setValues($values = [])
 	{
 		$this->values = $values;
 		return $this;
@@ -55,12 +55,14 @@ class Report_Builder
 
 	static function fromWikiSyntax($data = "")
 	{
-		if (empty($data)) throw new Exception("Failed to get body", 1);
-		$parsedValues = array();
+		if (empty($data)) {
+			throw new Exception("Failed to get body", 1);
+		}
+		$parsedValues = [];
 
 		foreach (explode("\n", $data) as $values) {
 			$values = trim($values);
-			if (!empty($values)) {
+			if (! empty($values)) {
 				$value = explode(":", $values);
 				$parsedValues[trim($value[0])] = trim($value[1]);
 			}
@@ -78,19 +80,19 @@ class Report_Builder
 
 	function setValuesFromRequest($values)
 	{
-		$parsedValues = array();
+		$parsedValues = [];
 		foreach ($values as $value) {
 			$value = (array)$value; //was having trouble with downloading csv
 
 			if (preg_match('/\[\]/', $value['name'])) {
 				$value['name'] = str_replace('[]', '', $value['name']);
-				$parsedValues[$value['name']][] = array(
+				$parsedValues[$value['name']][] = [
 					"value" => trim($value['value'])
-				);
+				];
 			} else {
-				$parsedValues[$value['name']] = array(
+				$parsedValues[$value['name']] = [
 					"value" => trim($value['value'])
-				);
+				];
 			}
 		}
 
@@ -104,7 +106,7 @@ class Report_Builder
 			$definition = new $class;
 			return $definition->output($this->values);
 		}
-		return array();
+		return [];
 	}
 
 	function outputSheet($name = "")
@@ -116,10 +118,10 @@ class Report_Builder
 		}
 
 		$handler = new TikiSheetSimpleArrayHandler(
-			array(
-				"values"=>$this->outputArray(),
-				"name"=>$name
-			)
+			[
+				"values" => $this->outputArray(),
+				"name" => $name
+			]
 		);
 
 		$grid = new TikiSheet();
@@ -137,14 +139,14 @@ class Report_Builder
 		foreach ($this->outputArray() as $row) {
 			if ($header == false) {
 				$header = true;
-				$headerNames = array();
-				foreach ($row as $headerName=>$col) {
+				$headerNames = [];
+				foreach ($row as $headerName => $col) {
 					$headerNames[] = tr(ucwords($headerName));
 				}
 
-				$output .= '"' . implode('","', $headerNames) . '"'. "\n";
+				$output .= '"' . implode('","', $headerNames) . '"' . "\n";
 			}
-			$output .= '"' . implode('","', $row) . '"'. "\n";
+			$output .= '"' . implode('","', $row) . '"' . "\n";
 		}
 
 		if ($auto == true) {
@@ -168,8 +170,8 @@ class Report_Builder
 	{
 		$result = "type : " . $this->type . "\n";
 		foreach (TikiFilter_PrepareInput::delimiter('_')->flatten($this->values) as $key => $value) {
-			if (!empty($value)) {
-				$result .= $key .' : '. $value . "\n";
+			if (! empty($value)) {
+				$result .= $key . ' : ' . $value . "\n";
 			}
 		}
 		return $result;

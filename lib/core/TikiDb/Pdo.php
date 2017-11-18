@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -10,7 +10,7 @@ class TikiDb_Pdo_Result
 	public $result;
 	public $numrows;
 
-	function __construct ($result)
+	function __construct($result)
 	{
 		$this->result = &$result;
 		$this->numrows = count($this->result);
@@ -34,22 +34,23 @@ class TikiDb_Pdo extends TikiDb
 
 	/**
 	 * TikiDb_Pdo constructor.
-	 * @param PDO $db 
+	 * @param PDO $db
 	 */
-	function __construct( $db ) // {{{
+	function __construct($db) // {{{
 	{
-		if (!$db) {
-			die ("Invalid db object passed to TikiDB constructor");
+		if (! $db) {
+			die("Invalid db object passed to TikiDB constructor");
 		}
 
-		$this->db=$db;
+		$this->db = $db;
 		$this->setServerType($db->getAttribute(PDO::ATTR_DRIVER_NAME));
 	} // }}}
 
-	function qstr( $str ) // {{{
+	function qstr($str) // {{{
 	{
-		if( is_null($str) )
+		if (is_null($str)) {
 			return 'NULL';
+		}
 		return $this->db->quote($str);
 	} // }}}
 
@@ -60,24 +61,25 @@ class TikiDb_Pdo extends TikiDb
 
 		$numrows = intval($numrows);
 		$offset = intval($offset);
-		if ( $query == null ) {
+		if ($query == null) {
 			$query = $this->getQuery();
 		}
 
 		$this->convertQueryTablePrefixes($query);
 
-		if ( $offset != -1 && $numrows != -1 )
+		if ($offset != -1 && $numrows != -1) {
 			$query .= " LIMIT $numrows OFFSET $offset";
-		elseif ( $numrows != -1 )
+		} elseif ($numrows != -1) {
 			$query .= " LIMIT $numrows";
+		}
 
-		$starttime=$this->startTimer();
+		$starttime = $this->startTimer();
 
 		$result = false;
 		if ($values) {
-			if ( @ $pq = $this->db->prepare($query) ) {
-				if (!is_array($values)) {
-					$values = array($values);
+			if (@ $pq = $this->db->prepare($query)) {
+				if (! is_array($values)) {
+					$values = [$values];
 				}
 				$result = $pq->execute($values);
 			}
@@ -87,8 +89,8 @@ class TikiDb_Pdo extends TikiDb
 
 		$this->stopTimer($starttime);
 
-		if ( $result === false) {
-			if ( !$values || ! $pq) { // Query preparation or query failed 
+		if ($result === false) {
+			if (! $values || ! $pq) { // Query preparation or query failed
 				$tmp = $this->db->errorInfo();
 			} else { // Prepared query failed to execute
 				$tmp = $pq->errorInfo();
@@ -98,9 +100,9 @@ class TikiDb_Pdo extends TikiDb
 			return false;
 		} else {
 			$this->setErrorMessage("");
-			if (($values && !$pq->columnCount()) || (!$values && !$result->columnCount())) {
-				return array(); // Return empty result set for statements of manipulation
-			} elseif ( !$values) {
+			if (($values && ! $pq->columnCount()) || (! $values && ! $result->columnCount())) {
+				return []; // Return empty result set for statements of manipulation
+			} elseif (! $values) {
 				return $result->fetchAll(PDO::FETCH_ASSOC);
 			} else {
 				return $pq->fetchAll(PDO::FETCH_ASSOC);
@@ -108,20 +110,20 @@ class TikiDb_Pdo extends TikiDb
 		}
 	} // }}}
 
-	function fetchAll($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = parent::ERR_DIRECT ) // {{{
+	function fetchAll($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = parent::ERR_DIRECT) // {{{
 	{
 		$result = $this->_query($query, $values, $numrows, $offset);
-		if (! is_array($result) ) {
+		if (! is_array($result)) {
 			$this->handleQueryError($query, $values, $result, $reporterrors);
 		}
 
 		return $result;
 	} // }}}
 
-	function query($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = self::ERR_DIRECT ) // {{{
+	function query($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = self::ERR_DIRECT) // {{{
 	{
 		$result = $this->_query($query, $values, $numrows, $offset);
-		if ( $result === false ) {
+		if ($result === false) {
 			$this->handleQueryError($query, $values, $result, $reporterrors);
 		}
 

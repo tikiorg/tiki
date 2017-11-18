@@ -49,12 +49,12 @@ class Services_Workspace_Controller
 			$this->utilities->validatePage($name);
 			$this->utilities->validateGroup($name);
 
-			$values = array(
+			$values = [
 				'category' => $this->utilities->createCategory($parts),
 				'perspective' => $this->utilities->createPerspective($name),
 				'page' => $this->utilities->createPage($name),
 				'group' => $this->utilities->createGroup($name),
-			);
+			];
 			$values['namespace'] = $values['page'];
 
 			$this->utilities->initialize($values);
@@ -63,18 +63,18 @@ class Services_Workspace_Controller
 			$transaction->commit();
 		}
 
-		return array(
+		return [
 			'title' => tr('Create Workspace'),
 			'templates' => $templates,
-		);
+		];
 	}
 
 	function action_list_templates($input)
 	{
-		return array(
+		return [
 			'title' => tr('Workspace Templates'),
 			'list' => $this->utilities->getTemplateList(),
-		);
+		];
 	}
 
 	function action_add_template($input)
@@ -92,7 +92,7 @@ class Services_Workspace_Controller
 				'Base',
 				'category',
 				$builder->user('category'),
-				array(
+				[
 					'admin_cms',
 					'blog_admin',
 					'bigbluebutton_create',
@@ -131,21 +131,21 @@ class Services_Workspace_Controller
 					'modify_object_categories',
 					'use_references',
 					'edit_references',
-				)
+				]
 			);
 			$id = $this->utilities->replaceTemplate(
 				0,
-				array(
+				[
 					'name' => $input->name->text(),
 					'definition' => $builder->getContent(),
-				)
+				]
 			);
 		}
 
-		return array(
+		return [
 			'title' => tr('Create Workspace Template'),
 			'id' => $id,
-		);
+		];
 	}
 
 	function action_edit_template($input)
@@ -158,7 +158,7 @@ class Services_Workspace_Controller
 
 		$template = $this->utilities->getTemplate($input->id->int());
 		if ($template['is_advanced'] == 'y') {
-			return array('FORWARD' => array('action' => 'advanced_edit', 'id' => $input->id->int()));
+			return ['FORWARD' => ['action' => 'advanced_edit', 'id' => $input->id->int()]];
 		}
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -168,10 +168,10 @@ class Services_Workspace_Controller
 				$builder->addObject(
 					'area_binding',
 					'binding',
-					array(
+					[
 						'category' => $builder->user('category'),
 						'perspective' => $builder->user('perspective'),
-					)
+					]
 				);
 			}
 
@@ -187,21 +187,21 @@ class Services_Workspace_Controller
 				$builder->addObject(
 					'wiki_page',
 					uniqid(),
-					array(
+					[
 						'name' => $page->name->pagename(),
 						'namespace' => $page->namespace->pagename(),
 						'content' => $page->content->wikicontent(),
 						'categories' => $builder->user('category'),
-					)
+					]
 				);
 			}
 
 			$this->utilities->replaceTemplate(
 				$input->id->int(),
-				array(
+				[
 					'name' => $input->name->text(),
 					'definition' => $builder->getContent(),
-				)
+				]
 			);
 		}
 
@@ -210,15 +210,15 @@ class Services_Workspace_Controller
 		$analyser = new Services_Workspace_ProfileAnalyser($profile);
 
 		$hasArea = $analyser->contains(
-			array(
+			[
 				'type' => 'area_binding',
 				'ref' => 'binding',
 				'category' => $analyser->user('category'),
 				'perspective' => $analyser->user('perspective'),
-			)
+			]
 		) ? 'y' : 'n';
 
-		return array(
+		return [
 			'title' => tr('Edit template %0', $template['name']),
 			'id' => $input->id->int(),
 			'name' => $template['name'],
@@ -226,13 +226,13 @@ class Services_Workspace_Controller
 			'groups' => $analyser->getGroups('category', $analyser->user('category')),
 			'pages' => $analyser->getObjects(
 				'wiki_page',
-				array(
+				[
 					'name' => '{namespace}',
 					'namespace' => null,
 					'content' => '',
-				)
+				]
 			),
-		);
+		];
 	}
 
 	function action_advanced_edit($input)
@@ -244,23 +244,23 @@ class Services_Workspace_Controller
 		if ($definition = $input->edit->wikicontent()) {
 			$this->utilities->replaceTemplate(
 				$input->id->int(),
-				array(
+				[
 					'name' => $input->name->text(),
 					'definition' => $definition,
 					'is_advanced' => 'y',
-				)
+				]
 			);
 		}
 
 		$template = $this->utilities->getTemplate($input->id->int());
 
-		return array(
+		return [
 			'title' => tr('Edit template %0', $template['name']),
 			'id' => $input->id->int(),
 			'name' => $template['name'],
 			'definition' => $template['definition'],
 			'is_advanced' => $template['is_advanced'],
-		);
+		];
 	}
 
 	function action_select_permissions($input)
@@ -269,12 +269,11 @@ class Services_Workspace_Controller
 			throw new Services_Exception_Denied;
 		}
 
-		$permissions = array();
+		$permissions = [];
 
 		if ($raw = $input->permissions->none()) {
 			$permissions = array_map(
-				function ($list)
-				{
+				function ($list) {
 					$list = preg_split('/\W+/', $list);
 					return array_filter($list);
 				},
@@ -286,22 +285,22 @@ class Services_Workspace_Controller
 
 		$userlib = TikiLib::lib('user');
 
-		$descriptions = array();
+		$descriptions = [];
 		$rawList = $userlib->get_permissions(0, -1, 'permName_asc', '', 'category', '', true);
 		foreach ($rawList['data'] as $raw) {
 			$type = $raw['type'];
 			if (! isset($descriptions[$type])) {
-				$descriptions[$type] = array();
+				$descriptions[$type] = [];
 			}
 
 			$descriptions[$type][] = $raw;
 		}
 
-		return array(
+		return [
 			'groups' => array_keys($permissions),
 			'permissions' => $permissions,
 			'descriptions' => $descriptions,
-		);
+		];
 	}
 
 	function action_edit_content($input)
@@ -317,11 +316,9 @@ class Services_Workspace_Controller
 			$content = null;
 		}
 
-		return array(
+		return [
 			'page' => $page,
 			'content' => $content,
-		);
+		];
 	}
-	
 }
-

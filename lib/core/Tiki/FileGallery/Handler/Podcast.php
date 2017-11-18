@@ -17,4 +17,3 @@ class Podcast extends FileSystem
 		parent::__construct($prefs['fgal_podcast_dir']);
 	}
 }
-

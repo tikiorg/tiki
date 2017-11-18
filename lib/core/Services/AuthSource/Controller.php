@@ -21,7 +21,7 @@ class Services_AuthSource_Controller
 
 	function action_list($input)
 	{
-		return $this->sources()->fetchColumn('identifier', array());
+		return $this->sources()->fetchColumn('identifier', []);
 	}
 
 	function action_save($input)
@@ -38,21 +38,21 @@ class Services_AuthSource_Controller
 		}
 
 		return $this->sources()->insertOrUpdate(
-			array(
+			[
 				'scheme' => $info['scheme'],
 				'domain' => $info['host'],
 				'path' => $info['path'],
 				'method' => $method,
 				'arguments' => json_encode($arguments),
-			),
-			array('identifier' => $identifier,)
+			],
+			['identifier' => $identifier,]
 		);
 	}
 
 	function action_fetch($input)
 	{
 		$data = $this->sources()->fetchFullRow(
-			array('identifier' => $input->identifier->text(),)
+			['identifier' => $input->identifier->text(),]
 		);
 
 		$data['arguments'] = json_decode($data['arguments'], true);
@@ -64,8 +64,7 @@ class Services_AuthSource_Controller
 	function action_delete($input)
 	{
 		return $this->sources()->delete(
-			array('identifier' => $input->identifier->text(),)
+			['identifier' => $input->identifier->text(),]
 		);
 	}
 }
-

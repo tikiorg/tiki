@@ -15,14 +15,15 @@
  */
 class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 {
-	private $known = array();
+	private $known = [];
 	private $parent = '';
 
-	public function __construct($parent = '') {
+	public function __construct($parent = '')
+	{
 		$this->parent = $parent;
 	}
 
-	function getHash( array $context )
+	function getHash(array $context)
 	{
 		if (isset($context['type'], $context['object'])) {
 			// parent permissions of trackeritems should all go in one hash key, so they share the cache
@@ -37,43 +38,43 @@ class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 		}
 	}
 
-	function bulk( array $baseContext, $bulkKey, array $values )
+	function bulk(array $baseContext, $bulkKey, array $values)
 	{
-		if ( $bulkKey != 'object' || ! isset($baseContext['type']) ) {
+		if ($bulkKey != 'object' || ! isset($baseContext['type'])) {
 			return $values;
 		}
 
 		// only trackeritem parents supported for now
-		if( $this->parent && $baseContext['type'] !== 'trackeritem' ) {
+		if ($this->parent && $baseContext['type'] !== 'trackeritem') {
 			return $values;
 		}
 
-		$objects = array();
-		$hashes = array();
+		$objects = [];
+		$hashes = [];
 
 		// Limit the amount of hashes preserved to reduce memory consumption
 		if (count($this->known) > 1024) {
-			$this->known = array();
+			$this->known = [];
 		}
 
-		foreach ( $values as $v ) {
-			$hash = $this->getHash(array_merge($baseContext, array( 'object' => $v )));
-			if ( ! isset($this->known[$hash]) ) {
-				$this->known[$hash] = array();
+		foreach ($values as $v) {
+			$hash = $this->getHash(array_merge($baseContext, [ 'object' => $v ]));
+			if (! isset($this->known[$hash])) {
+				$this->known[$hash] = [];
 				$key = md5($baseContext['type'] . $this->cleanObject($v));
 				$objects[$key] = $v;
 				$hashes[$key] = $hash;
 			}
 		}
 
-		if ( count($objects) == 0 ) {
-			return array();
+		if (count($objects) == 0) {
+			return [];
 		}
 
 		$db = TikiDb::get();
 
-		if( $baseContext['type'] === 'trackeritem' && $this->parent ) {
-			$bindvars = array();
+		if ($baseContext['type'] === 'trackeritem' && $this->parent) {
+			$bindvars = [];
 			$result = $db->fetchAll(
 				"SELECT md5(concat('trackeritem', LOWER(tti.`itemId`))) as `objectId`, op.`groupName`, op.`permName`
 				FROM `tiki_tracker_items` tti, `users_objectpermissions` op
@@ -82,24 +83,24 @@ class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 				$bindvars
 			);
 		} else {
-			$bindvars = array( $baseContext['type'] );
+			$bindvars = [ $baseContext['type'] ];
 			$result = $db->fetchAll(
 				'SELECT `objectId`, `groupName`, `permName` FROM users_objectpermissions WHERE `objectType` = ? AND ' .
 				$db->in('objectId', array_keys($objects), $bindvars),
 				$bindvars
 			);
 		}
-		$found = array();
+		$found = [];
 
-		foreach ( $result as $row ) {
+		foreach ($result as $row) {
 			$object = $row['objectId'];
 			$group = $row['groupName'];
 			$perm = $this->sanitize($row['permName']);
 			$hash = $hashes[$object];
 			$found[] = $objects[$object];
 
-			if ( ! isset($this->known[$hash][$group] )) {
-				$this->known[$hash][$group] = array();
+			if (! isset($this->known[$hash][$group])) {
+				$this->known[$hash][$group] = [];
 			}
 
 			$this->known[$hash][$group][] = $perm;
@@ -108,32 +109,32 @@ class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 		return array_values(array_diff($values, $found));
 	}
 
-	function getResolver( array $context )
+	function getResolver(array $context)
 	{
-		if ( ! isset($context['type'], $context['object'] )) {
+		if (! isset($context['type'], $context['object'])) {
 			return null;
 		}
 
 		$hash = $this->getHash($context);
 
-		$this->bulk($context, 'object', array( $context['object'] ));
+		$this->bulk($context, 'object', [ $context['object'] ]);
 
-		if( isset($this->known[$hash]) ) {
+		if (isset($this->known[$hash])) {
 			$perms = $this->known[$hash];
 		} else {
-			$perms = array();
+			$perms = [];
 		}
 
-		if ( count($perms) == 0 ) {
+		if (count($perms) == 0) {
 			return null;
 		} else {
 			return new Perms_Resolver_Static($perms, 'object');
 		}
 	}
 
-	private function sanitize( $name )
+	private function sanitize($name)
 	{
-		if ( strpos($name, 'tiki_p_') === 0 ) {
+		if (strpos($name, 'tiki_p_') === 0) {
 			return substr($name, strlen('tiki_p_'));
 		} else {
 			return $name;

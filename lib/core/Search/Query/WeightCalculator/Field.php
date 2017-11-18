@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -19,7 +19,7 @@ class Search_Query_WeightCalculator_Field implements Search_Query_WeightCalculat
 		if (method_exists($expr, 'getField')) {
 			$field = $expr->getField();
 
-			if (isset ($this->map[$field])) {
+			if (isset($this->map[$field])) {
 				$expr->setWeight($this->map[$field]);
 				return;
 			}
@@ -28,4 +28,3 @@ class Search_Query_WeightCalculator_Field implements Search_Query_WeightCalculat
 		$expr->setWeight(1.0);
 	}
 }
-

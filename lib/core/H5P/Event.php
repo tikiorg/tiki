@@ -27,7 +27,7 @@ class H5P_Event extends H5PEventBase
 	 * @param string $library_version
 	 * @internal param string $library Name of H5P library affacted*  Name of H5P library affacted
 	 */
-	function __construct($type, $sub_type = NULL, $content_id = NULL, $content_title = NULL, $library_name = NULL, $library_version = NULL)
+	function __construct($type, $sub_type = null, $content_id = null, $content_title = null, $library_name = null, $library_version = null)
 	{
 		global $user;
 
@@ -45,19 +45,19 @@ class H5P_Event extends H5PEventBase
 		// Get data in array format without NULL values
 		$data = $this->getDataArray();
 
-		$message = 'Library ' . $data['library_name'] . ' (' .$data['library_version'] . ')';
+		$message = 'Library ' . $data['library_name'] . ' (' . $data['library_version'] . ')';
 
 		$title = $data['content_title'] ? $data['content_title'] : $data['content_id'];
 
 		TikiLib::lib('logs')->add_action(
 			$data['type'],
 			$title,
-				'h5p',
-				$message,
-				$this->user,
-				'',
-				'',
-				$data['created_at']
+			'h5p',
+			$message,
+			$this->user,
+			'',
+			'',
+			$data['created_at']
 		);
 
 		return $this->id;

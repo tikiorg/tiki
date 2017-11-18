@@ -20,8 +20,7 @@ class PatchCommand extends Command
 		$this
 			->setName('patch')
 			->setDescription('Apply a specific database schema patch')
-			->addArgument('name',InputArgument::REQUIRED, 'Name of the patch applied'
-			)
+			->addArgument('name', InputArgument::REQUIRED, 'Name of the patch applied')
 			->addOption(
 				'force-application',
 				null,
@@ -56,7 +55,7 @@ class PatchCommand extends Command
 					return;
 				case 2:
 					$output->writeln("<error>Application failed</error>");
-					foreach ( $installer->queries['failed'] as $key => $error ) {
+					foreach ($installer->queries['failed'] as $key => $error) {
 						list( $query, $message, $patch ) = $error;
 						$output->writeln("<error>Error $key in $patch\n\t$query\n\t$message</error>");
 					}

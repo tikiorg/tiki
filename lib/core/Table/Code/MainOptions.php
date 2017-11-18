@@ -28,12 +28,12 @@ class Table_Code_MainOptions extends Table_Code_Manager
 	 */
 	public function setCode()
 	{
-		$mo = array();
+		$mo = [];
 
 		$mo[] = 'showProcessing: true';
 
 		/***  onRenderHeader option - change html elements before table renders. Repeated for each column. ***/
-		$orh = array();
+		$orh = [];
 		/* First handle column-specific code since the array index is used for the column number */
 		foreach (parent::$s['columns'] as $col => $info) {
 			//turn off column resizing per settings
@@ -44,13 +44,13 @@ class Table_Code_MainOptions extends Table_Code_Manager
 			if (parent::$sorts && parent::$sortcol) {
 				//row grouping setting
 				if (parent::$group) {
-					if (!empty($info['sort']['group'])) {
+					if (! empty($info['sort']['group'])) {
 						$allcols[$col]['addClass'][] = 'group-' . $info['sort']['group'];
 					} else {
 						$allcols[$col]['addClass'][] = 'group-false';
 					}
 				}
-				if (!empty($info['sort']['group']) && parent::$group !== false) {
+				if (! empty($info['sort']['group']) && parent::$group !== false) {
 					$allcols[$col]['addClass'][] = 'group-' . $info['sort']['group'];
 				}
 				if (isset($info['sort']['type']) && $info['sort']['type'] !== true) {
@@ -70,9 +70,11 @@ class Table_Code_MainOptions extends Table_Code_Manager
 						$allcols[$col]['data']['placeholder'] = $info['filter']['placeholder'];
 					}
 					// add special filter type
-					if (isset($info['filter']['type']) && $info['filter']['type'] === 'dropdown' && !isset($info['filter']['options'])) {
-						if( !empty($allcols[$col]['addClass']) ) {
-							$allcols[$col]['addClass'] = array_filter($allcols[$col]['addClass'], function($class){ return !strstr($class, 'sorter-'); });
+					if (isset($info['filter']['type']) && $info['filter']['type'] === 'dropdown' && ! isset($info['filter']['options'])) {
+						if (! empty($allcols[$col]['addClass'])) {
+							$allcols[$col]['addClass'] = array_filter($allcols[$col]['addClass'], function ($class) {
+								return ! strstr($class, 'sorter-');
+							});
 						}
 						$allcols[$col]['addClass'][] = 'sorter-dropdown';
 						$allcols[$col]['addClass'][] = 'filter-parsed';
@@ -93,18 +95,18 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		unset($col, $info);
 		//process columns
 		if (count($allcols) > 0) {
-			foreach($allcols as $col => $info) {
+			foreach ($allcols as $col => $info) {
 				if (parent::$usecolselector) {
-					$orh[$col] = 'if (id == \'' . substr($col,1) . '\'){';
+					$orh[$col] = 'if (id == \'' . substr($col, 1) . '\'){';
 				} else {
 					$orh[$col] = 'if (index == ' . $col . '){';
 				}
 				$orh[$col] .= '$(this)';
-				foreach($info as $attr => $val) {
+				foreach ($info as $attr => $val) {
 					if ($attr == 'addClass') {
-						$args = implode(' ',$val);
+						$args = implode(' ', $val);
 					} else {
-						foreach($info[$attr] as $type => $val2) {
+						foreach ($info[$attr] as $type => $val2) {
 							$args = $type . '\',\'' . $val2;
 						}
 					}
@@ -121,7 +123,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 			$orh[] = '$(this).find(\'a\').replaceWith(\'<span>\' + $(this).find(\'a\').text() + \'</span>\');';
 		}
 		//no sort on all columns
-		if (!parent::$sorts) {
+		if (! parent::$sorts) {
 			$orh[] = '$(this).addClass(\'sorter-false\');';
 		}
 		if (count($orh) > 0) {
@@ -179,19 +181,19 @@ class Table_Code_MainOptions extends Table_Code_Manager
 
 		//Turn multi-column sort off (on by default by shift-clicking column headers)
 		if (isset(parent::$s['sorts']['multisort']) && parent::$s['sorts']['multisort'] === false) {
-			$mo[] =  'sortMultiSortKey : \'none\'';
+			$mo[] = 'sortMultiSortKey : \'none\'';
 		}
 
 		//Sort list
-		if (!empty(parent::$s['sorts']['sortlist'])) {
-			$mo[] = 'sortList : [[' . parent::$s['sorts']['sortlist']['col'] . ',' . parent::$s['sorts']['sortlist']['dir']. ']]';
+		if (! empty(parent::$s['sorts']['sortlist'])) {
+			$mo[] = 'sortList : [[' . parent::$s['sorts']['sortlist']['col'] . ',' . parent::$s['sorts']['sortlist']['dir'] . ']]';
 		} elseif (parent::$sorts && parent::$sortcol) {
 			$sl = [];
 			$i = 0;
 			foreach (parent::$s['columns'] as $col => $info) {
-				$info = !empty($info['sort']) ? $info['sort'] : [];
-				$colpointer =  parent::$usecolselector ? $i : $col;
-				if (!empty($info['dir'])) {
+				$info = ! empty($info['sort']) ? $info['sort'] : [];
+				$colpointer = parent::$usecolselector ? $i : $col;
+				if (! empty($info['dir'])) {
 					if ($info['dir'] === 'asc') {
 						$sl[] = $colpointer . ',' . '0';
 					} elseif ($info['dir'] === 'desc') {
@@ -211,7 +213,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		$mo[] = $this->iterate($p, 'initialized: function(table){', $this->nt2 . '}', '', '', '');
 
 		//Sort image attribute
-		if (!empty(parent::$s['sorts']['imgattr'])) {
+		if (! empty(parent::$s['sorts']['imgattr'])) {
 			$mo[] = 'imgAttr: \'title\'';
 		}
 
@@ -221,6 +223,4 @@ class Table_Code_MainOptions extends Table_Code_Manager
 			parent::$code[self::$level1][self::$level2] = $code;
 		}
 	}
-
-
 }

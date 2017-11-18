@@ -7,7 +7,7 @@
 
 class Search_FacetProvider implements Search_FacetProvider_Interface
 {
-	private $facets = array();
+	private $facets = [];
 
 	function addContentSource($type, Search_ContentSource_Interface $source)
 	{
@@ -47,4 +47,3 @@ class Search_FacetProvider implements Search_FacetProvider_Interface
 		}
 	}
 }
-

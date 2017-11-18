@@ -23,7 +23,7 @@ class TikiFilter_RelativeURL implements Zend\Filter\FilterInterface
 	{
 
 		$filter = new Zend\Filter\StripTags();
-		$url =  $filter->filter($input);
+		$url = $filter->filter($input);
 
 		$url = Zend\Uri\UriFactory::factory($url);
 		$url->normalize();
@@ -32,12 +32,13 @@ class TikiFilter_RelativeURL implements Zend\Filter\FilterInterface
 		$fragment = $url->getFragment();
 		$url = preg_replace('/^\/\/+/', '', $url->getPath());
 
-		if ($query)
-			$url .= '?'.$query;
-		if ($fragment)
-			$url .= '#'.$fragment;
+		if ($query) {
+			$url .= '?' . $query;
+		}
+		if ($fragment) {
+			$url .= '#' . $fragment;
+		}
 
 		return $url;
-
 	}
 }

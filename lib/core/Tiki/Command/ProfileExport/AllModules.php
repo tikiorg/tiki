@@ -27,7 +27,7 @@ class AllModules extends ObjectWriter
 	{
 		$writer = $this->getProfileWriter($input);
 
-		$list = \TikiDb::get()->table('tiki_modules')->fetchColumn('moduleId', array());
+		$list = \TikiDb::get()->table('tiki_modules')->fetchColumn('moduleId', []);
 
 		foreach ($list as $moduleId) {
 			\Tiki_Profile_InstallHandler_Module::export($writer, $moduleId);

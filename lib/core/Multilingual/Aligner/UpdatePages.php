@@ -38,19 +38,19 @@ class Multilingual_Aligner_UpdatePages
 		$target_modified_sentences = $segmentor->segment($target_modified_string);
 		$target_modified_sentences[count($target_modified_sentences)] = 'dummy';
 		$i = -1;
-		for ($a=0, $aCountSourceOutofdateSentences = count($source_outofdate_sentences); $a<$aCountSourceOutofdateSentences; $a++) {
+		for ($a = 0, $aCountSourceOutofdateSentences = count($source_outofdate_sentences); $a < $aCountSourceOutofdateSentences; $a++) {
 			$source_outofdate_sentences[$a] = trim($source_outofdate_sentences[$a]);
 		}
-		
-		for ($a=0, $aCountSourceModifiedSentences = count($source_modified_sentences); $a<$aCountSourceModifiedSentences; $a++) {
+
+		for ($a = 0, $aCountSourceModifiedSentences = count($source_modified_sentences); $a < $aCountSourceModifiedSentences; $a++) {
 			$source_modified_sentences[$a] = trim($source_modified_sentences[$a]);
 		}
 
-		for ($a=0, $aCountTargetOutofdateSentences = count($target_outofdate_sentences); $a<$aCountTargetOutofdateSentences; $a++) {
+		for ($a = 0, $aCountTargetOutofdateSentences = count($target_outofdate_sentences); $a < $aCountTargetOutofdateSentences; $a++) {
 			$target_outofdate_sentences[$a] = trim($target_outofdate_sentences[$a]);
 		}
 
-		for ($a=0, $aCountTargetModifiedSentences = count($target_modified_sentences); $a<$aCountTargetModifiedSentences; $a++) {
+		for ($a = 0, $aCountTargetModifiedSentences = count($target_modified_sentences); $a < $aCountTargetModifiedSentences; $a++) {
 			$target_modified_sentences[$a] = trim($target_modified_sentences[$a]);
 		}
 
@@ -58,17 +58,18 @@ class Multilingual_Aligner_UpdatePages
 		$source_diff = $update->DifferencebetweenOriginalFileandModifiedFile($source_outofdate_sentences, $source_modified_sentences, $this->alignments, $this->translator, 'en', 'fr', 1);
 		$target_diff = $update->DifferencebetweenOriginalFileandModifiedFile($target_outofdate_sentences, $target_modified_sentences, $this->alignments, $this->translator, 'en', 'fr', 0);
 
-		for ($a=0, $aCountSourceDiff = count($source_diff); $a<$aCountSourceDiff; $a++) {
+		for ($a = 0, $aCountSourceDiff = count($source_diff); $a < $aCountSourceDiff; $a++) {
 			$source_diff[$a] = trim($source_diff[$a]);
 		}
-			
-		for ($a=0, $aCountTargetDiff = count($target_diff); $a<$aCountTargetDiff; $a++) {
+
+		for ($a = 0, $aCountTargetDiff = count($target_diff); $a < $aCountTargetDiff; $a++) {
 			$target_diff[$a] = trim($target_diff[$a]);
-			if ($target_diff[$a] == '+dummy')
-			unset($target_diff[$a]);
+			if ($target_diff[$a] == '+dummy') {
+				unset($target_diff[$a]);
+			}
 		}
 		$target_diff = array_values($target_diff);
-		for ($a=0, $aCountSourceDiff = count($source_diff); $a<$aCountSourceDiff; $a++) {
+		for ($a = 0, $aCountSourceDiff = count($source_diff); $a < $aCountSourceDiff; $a++) {
 			$index = 0;
 			$i = 2;
 			if ($source_diff[$a] == '' || ($source_diff[$a][0] != '+')) {
@@ -78,8 +79,9 @@ class Multilingual_Aligner_UpdatePages
 					while (is_numeric($source_diff[$a][$b])) {
 						$b++;
 					}
-					if ($source_diff[$a][$b] == '>')
+					if ($source_diff[$a][$b] == '>') {
 						$pat = 1;
+					}
 				}
 				if ($source_diff[$a] == ''|| $pat == 0) {
 					$index = array_search($source_diff[$a], $source_diff);
@@ -96,7 +98,7 @@ class Multilingual_Aligner_UpdatePages
 			}
 		}
 
-		for ($a=0, $aCountTargetDiff = count($target_diff); $a<$aCountTargetDiff; $a++) {
+		for ($a = 0, $aCountTargetDiff = count($target_diff); $a < $aCountTargetDiff; $a++) {
 			$index = 1;
 			$i = 2;
 			if ($target_diff[$a] == '' || ($target_diff[$a][0] != '+')) {
@@ -106,10 +108,11 @@ class Multilingual_Aligner_UpdatePages
 					while (is_numeric($target_diff[$a][$b])) {
 						$b++;
 					}
-					if ($target_diff[$a][$b] == '>')
+					if ($target_diff[$a][$b] == '>') {
 						$pat = 1;
+					}
 				}
-				if ( $target_diff[$a] == '' || $pat == 0) {
+				if ($target_diff[$a] == '' || $pat == 0) {
 					$index = array_search($target_diff[$a], $target_diff);
 					$index++;
 					$first = 0;
@@ -137,7 +140,6 @@ class Multilingual_Aligner_UpdatePages
 				 echo "fail";
 			 */
 		return $final_updated;
-
 	}
 
 	public function SetAlignment($source_file, $target_file, $source_lng, $target_lng)
@@ -147,7 +149,7 @@ class Multilingual_Aligner_UpdatePages
 //		for ($i=1; $i<count($target_array); $i++) {
 //			$target_array[$i]=utf8_decode($target_array[$i]);
 //		}
-		for ($i=0, $iCountSourceArray = count($source_array); $i<$iCountSourceArray; $i++) {
+		for ($i = 0, $iCountSourceArray = count($source_array); $i < $iCountSourceArray; $i++) {
 				$this->alignments->addSentencePair($source_array[$i], $source_lng, $target_array[$i], $target_lng);
 		}
 	}
@@ -156,7 +158,7 @@ class Multilingual_Aligner_UpdatePages
 	public function array_search_function($temp, $array, $index)
 	{
 		$i = 0;
-		for ($i=$index, $iCountArray = count($array); $i<$iCountArray; $i++) {
+		for ($i = $index, $iCountArray = count($array); $i < $iCountArray; $i++) {
 			$val = $array[$i];
 			if (strcmp($temp, $val) == 0) {
 				return $i;
@@ -164,7 +166,6 @@ class Multilingual_Aligner_UpdatePages
 		}
 		return -1;
 	}
-
 }
 
 // algorithm can be checked by running through these instructions
@@ -190,10 +191,10 @@ class Multilingual_Aligner_UpdatePages
 //		$target_modified="Firefox supporte les caract�res internationaux pour des langues tel que lindien. Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.La plupart des sites qui ont besoin de polices suppl�mentaires vont avoir une page qui d�crit o� vous pouvez obtenir la police.";
 //		$source_alignment="Firefox supports international characters for languages such as Hindi.<br/>You can test your Firefoxs support of Hindi scripts at BBC Hindi.<br/>Most sites that require additional fonts will have a page describing where you can get the font.";
 //		$target_alignment="Firefox supporte les caract�res internationaux pour des langues tel que lindien.<br/>Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.<br/>La plupart des sites qui ont besoin de polices suppl�mentaires vont avoir une page qui d�crit o� vous pouvez obtenir la police.";
-//		
+//
 //		$source_Mtranslation="This is a test statement.";
 //		$target_Mtranslation="C'est une d�claration d'essai.";
-//				
+//
 //	$test=new Multilingual_Aligner_UpdatePages();
 //	$test->setUp();
 //	$test->SetAlignment($source_alignment,$target_alignment,$source_lng,$target_lng);

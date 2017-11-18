@@ -6,6 +6,7 @@
 // $Id$
 
 namespace Tiki\MailIn\Action;
+
 use Tiki\MailIn\Account;
 use Tiki\MailIn\Source\Message;
 use Tiki\MailIn\Exception\MailInException;
@@ -35,4 +36,3 @@ class SubjectPrefixFactory implements FactoryInterface
 		throw new MailInException(tr("Unable to find suitable action."));
 	}
 }
-

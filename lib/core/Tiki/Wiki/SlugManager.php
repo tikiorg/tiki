@@ -58,4 +58,3 @@ class SlugManager
 		return $slug;
 	}
 }
-

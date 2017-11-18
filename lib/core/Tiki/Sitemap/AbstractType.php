@@ -78,15 +78,21 @@ abstract class AbstractType
 	 * @param string $priority Priority to assign in sitemap (default 0.6)
 	 * @param string $changeFrequency How frequent is the content to change (default weekly)
 	 */
-	protected function addEntriesToSitemap($entries, $urlTemplate, $idField, $entryType,
-		$titleField = 'title', $updateField = 'created', $priority = '0.6', $changeFrequency = 'weekly'
+	protected function addEntriesToSitemap(
+		$entries,
+		$urlTemplate,
+		$idField,
+		$entryType,
+		$titleField = 'title',
+		$updateField = 'created',
+		$priority = '0.6',
+		$changeFrequency = 'weekly'
 	) {
 		if (! isset($entries['data'])) {
 			return;
 		}
 
 		foreach ($entries['data'] as $entry) {
-
 			$url = sprintf($urlTemplate, urlencode($entry[$idField]));
 			if (function_exists('filter_out_sefurl')) {
 				$url = filter_out_sefurl($url, $entryType, (empty($titleField) || empty($entryType[$titleField])) ? '' : $entry[$titleField]);

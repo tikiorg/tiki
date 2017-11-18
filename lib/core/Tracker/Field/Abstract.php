@@ -67,7 +67,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 	 * @param array $context - ???
 	 * @return string $renderedContent depending on the $context
 	 */
-	public function renderInput($context = array())
+	public function renderInput($context = [])
 	{
 		return 'Not implemented';
 	}
@@ -92,31 +92,31 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 	 *
 	 * @return string $renderedContent depending on the $context
 	 */
-	public function renderOutput($context = array())
+	public function renderOutput($context = [])
 	{
 		// only if this field is marked as link and the is no request for a csv export
 		// create the link and if required the mouseover popup
 		if ($this->isLink($context)) {
 			$itemId = $this->getItemId();
-			$query = array();
+			$query = [];
 			if (isset($_GET['page'])) {
 				$query['from'] = $_GET['page'];
 			}
 
-			$classList = array('tablename');
+			$classList = ['tablename'];
 			$metadata = TikiLib::lib('object')->get_metadata('trackeritem', $itemId, $classList);
 
-			require_once ('lib/smarty_tiki/modifier.sefurl.php');
+			require_once('lib/smarty_tiki/modifier.sefurl.php');
 			$href = smarty_modifier_sefurl($itemId, 'trackeritem');
 			$href .= (strpos($href, '?') === false) ? '?' : '&';
 			$href .= http_build_query($query, '', '&');
 			$href = rtrim($href, '?&');
 
-			$arguments = array(
+			$arguments = [
 				'class' => implode(' ', $classList),
 				'href' => $href,
-			);
-			if (!empty($context['url'])) {
+			];
+			if (! empty($context['url'])) {
 				if ($context['url'] == 'sefurl') {
 					$context['url'] = 'item' . $itemId;
 				} elseif (strpos($context['url'], 'itemId') !== false) {
@@ -173,7 +173,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 			// mark every old value line with standard email reply character
 			$old_value_lines = '';
 			foreach ($lines as $line) {
-				$old_value_lines .= '> '.$line;
+				$old_value_lines .= '> ' . $line;
 			}
 			return "[-[$name]-]:\n--[Old]--:\n$old_value_lines\n\n*-[New]-*:\n$new";
 		} else {
@@ -182,7 +182,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 	}
 
 
-	private function isLink($context = array())
+	private function isLink($context = [])
 	{
 		$type = $this->getConfiguration('type');
 		if ($type == 'x') {
@@ -240,15 +240,15 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		if (empty($fields)) {
 			return null;
 		}
-				
+
 		$factory = $this->trackerDefinition->getFieldFactory();
 
-		$popupFields = array();
+		$popupFields = [];
 
 		foreach ($fields as $id) {
 			$field = $this->trackerDefinition->getField($id);
 
-			if (!isset($this->itemData[$field['fieldId']])) {
+			if (! isset($this->itemData[$field['fieldId']])) {
 				if (! empty($this->itemData['field_values'])) {
 					foreach ($this->itemData['field_values'] as $fieldVal) {
 						if ($fieldVal['fieldId'] == $id) {
@@ -284,15 +284,15 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 	 * @param array $context - key 'list_mode' defines wether to output for a list or a simple value
 	 * @return string $html
 	 */
-	protected function renderInnerOutput($context = array())
+	protected function renderInnerOutput($context = [])
 	{
 		$value = $this->getConfiguration('value');
 		$pvalue = $this->getConfiguration('pvalue', $value);
 
 		if (isset($context['list_mode']) && $context['list_mode'] === 'csv') {
-			$default = array('CR'=>'%%%', 'delimitorL'=>'"', 'delimitorR'=>'"');
+			$default = ['CR' => '%%%', 'delimitorL' => '"', 'delimitorR' => '"'];
 			$context = array_merge($default, $context);
-			$value = str_replace(array("\r\n", "\n", '<br />', $context['delimitorL'], $context['delimitorR']), array($context['CR'], $context['CR'], $context['CR'], $context['delimitorL'].$context['delimitorL'], $context['delimitorR'].$context['delimitorR']), $value);
+			$value = str_replace(["\r\n", "\n", '<br />', $context['delimitorL'], $context['delimitorR']], [$context['CR'], $context['CR'], $context['CR'], $context['delimitorL'] . $context['delimitorL'], $context['delimitorR'] . $context['delimitorR']], $value);
 			return $value;
 		} else {
 			return $pvalue;
@@ -315,10 +315,10 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		return 'filter_' . $this->definition['fieldId'];
 	}
 
-    protected function getFieldId()
-    {
-        return $this->definition['fieldId'];
-    }
+	protected function getFieldId()
+	{
+		return $this->definition['fieldId'];
+	}
 
 	/**
 	 * Gets data from the field's configuration
@@ -349,9 +349,9 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 
 		if (isset($this->itemData[$key])) {
 			$value = $this->itemData[$key];
-		} else if (isset($this->definition['value'])) {
+		} elseif (isset($this->definition['value'])) {
 			$value = $this->definition['value'];
-		} else if (isset($this->itemData['fields'][$this->getConfiguration('permName')])) {
+		} elseif (isset($this->itemData['fields'][$this->getConfiguration('permName')])) {
 			$value = $this->itemData['fields'][$this->getConfiguration('permName')];
 		} else {
 			$value = null;
@@ -385,7 +385,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 	 * Return option from the options array.
 	 * For the list of options for a particular field check its getTypes() method.
 	 * Note: This function should be public, as long as certain low-level trackerlib functions need to be accessed directly.
-	 * Otherwise one would be forced to get the options from fields like this: $myField['options_array'][0] ...  
+	 * Otherwise one would be forced to get the options from fields like this: $myField['options_array'][0] ...
 	 * @param int $number | string $key.  depending on type: based on the numeric array position, or by name.
 	 * @param mixed $default - defaultValue to return if nothing found
 	 * @return mixed
@@ -419,12 +419,12 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		return $this->itemData;
 	}
 
-	protected function renderTemplate($file, $context = array(), $data = array())
+	protected function renderTemplate($file, $context = [], $data = [])
 	{
 		$smarty = TikiLib::lib('smarty');
 
 		//ensure value is set, because it may not always come from definition
-		if (!isset($this->definition['value'])) {
+		if (! isset($this->definition['value'])) {
 			$this->definition['value'] = $this->getValue();
 		}
 
@@ -439,21 +439,21 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
 		$baseKey = $this->getBaseKey();
-		return array(
+		return [
 			$baseKey => $typeFactory->sortable($this->getValue()),
-		);
+		];
 	}
 
 	function getProvidedFields()
 	{
 		$baseKey = $this->getBaseKey();
-		return array($baseKey);
+		return [$baseKey];
 	}
 
 	function getGlobalFields()
 	{
 		$baseKey = $this->getBaseKey();
-		return array($baseKey => true);
+		return [$baseKey => true];
 	}
 
 	function getBaseKey()
@@ -468,5 +468,3 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		$this->baseKeyPrefix = $prefix;
 	}
 }
-
-

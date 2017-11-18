@@ -39,11 +39,11 @@ class Message
 	{
 		$this->messageId = $messageId;
 	}
-	
+
 	function setRawFrom($from)
 	{
 		$this->from = $from;
-		
+
 		if ($email = $this->getFromAddress()) {
 			$userlib = \TikiLib::lib('user');
 			$this->associatedUser = $userlib->get_user_by_email($email);
@@ -53,7 +53,7 @@ class Message
 	function getFromAddress()
 	{
 		preg_match(self::EXTRACT_EMAIL_REGEX, $this->from, $mail);
-		
+
 		return $mail[1];
 	}
 
@@ -75,7 +75,7 @@ class Message
 			$this->deleteCallback = null;
 		}
 	}
-	
+
 	function setSubject($subject)
 	{
 		$this->subject = $subject;
@@ -154,8 +154,7 @@ class Message
 	function getRecipientAddress()
 	{
 		preg_match(self::EXTRACT_EMAIL_REGEX, $this->recipient, $mail);
-		
+
 		return $mail[1];
 	}
 }
-

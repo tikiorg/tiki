@@ -66,10 +66,10 @@ class Services_User_ConditionsController
 		$hash = $this->generateHash($info, $user);
 
 		$content = $info['data'];
-		$parse_options = array(
+		$parse_options = [
 			'is_html' => $info['is_html'],
 			'language' => $info['lang'],
-		);
+		];
 
 		$pdata = new Tiki_Render_Lazy(
 			function () use ($content, $parse_options) {
@@ -97,12 +97,12 @@ class Services_User_ConditionsController
 			}
 		}
 
-		return array(
+		return [
 			'title' => tr('Terms and Conditions'),
 			'origin' => $origin,
 			'content' => $pdata,
 			'hash' => $hash,
-		);
+		];
 	}
 
 	public function action_age_validation($input)
@@ -125,12 +125,12 @@ class Services_User_ConditionsController
 			}
 		}
 
-		return array(
+		return [
 			'title' => tr('Age Validation'),
 			'origin' => $origin,
 			'birth_date' => $this->getBirthDate($user),
 			'hasRequiredAge' => $this->hasRequiredAge($user),
-		);
+		];
 	}
 
 	private function getApprovalPageInfo()
@@ -231,4 +231,3 @@ class Services_User_ConditionsController
 		}
 	}
 }
-

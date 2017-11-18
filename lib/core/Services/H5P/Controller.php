@@ -35,7 +35,6 @@ class Services_H5P_Controller
 
 		if (empty($fileId)) {
 			if ($perms->h5p_edit) {
-
 				TikiLib::lib('header')->add_jq_onready(
 					'$(".create-h5p-content").click($.clickModal({title: "' . tr('Create H5P Content') . '", size: "modal-lg"}))'
 				);
@@ -52,7 +51,6 @@ class Services_H5P_Controller
 						'_class' => 'create-h5p-content btn-xs',
 					], $smarty),
 				];
-
 			} else {
 				throw new Services_Exception_NotAvailable(tr('H5P Embed:') . ' ' . tr('No fileID provided.'));
 			}
@@ -67,20 +65,22 @@ class Services_H5P_Controller
 
 		if (is_string($content)) {
 			// Return error message if the user has the correct cap
-			return Perms::get()->h5p_edit ? $content : NULL;
+			return Perms::get()->h5p_edit ? $content : null;
 		}
 
 		// Log view
-		new H5P_Event('content', 'embed',
+		new H5P_Event(
+			'content',
+			'embed',
 			$content['id'],
 			$content['title'],
 			$content['library']['name'],
-			$content['library']['majorVersion'] . '.' . $content['library']['minorVersion']);
+			$content['library']['majorVersion'] . '.' . $content['library']['minorVersion']
+		);
 
 		$html = TikiLib::lib('h5p')->addAssets($content);
 
 		if ($perms->h5p_edit) {
-
 			TikiLib::lib('header')->add_jq_onready(
 				'$(".edit-h5p-content").click($.clickModal({title: "' . tr('Edit H5P Content') . '", size: "modal-lg"}))'
 			);
@@ -96,7 +96,6 @@ class Services_H5P_Controller
 				'_text' => tra('Edit'),
 				'_class' => 'edit-h5p-content btn-xs',
 			], $smarty);
-
 		}
 		return [
 			'html' => $html,
@@ -118,11 +117,10 @@ class Services_H5P_Controller
 
 			$content = TikiLib::lib('h5p')->loadContentFromFileId($fileId);
 			$content['title'] = TikiLib::lib('filegal')->get_file_label($fileId);
-
 		} else {
-			$content = array(
+			$content = [
 				'disable' => H5PCore::DISABLE_NONE,
-			);
+			];
 		}
 
 		$page = $input->page->pagename();
@@ -133,7 +131,6 @@ class Services_H5P_Controller
 
 		// Handle for submit
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
 			switch ($input->op->word()) {
 				case 'Save':
 					// Create new content or update existing
@@ -143,7 +140,6 @@ class Services_H5P_Controller
 					if ($fileId = TikiLib::lib('h5p')->saveContent($content, $input)) {
 						// Content updated, redirect to view
 						if ($created && $page) {
-
 							$result = TikiLib::lib('service')->internal(
 								'plugin',
 								'edit',
@@ -160,13 +156,9 @@ class Services_H5P_Controller
 							if (! empty($result['redirect'])) {
 								TikiLib::lib('access')->redirect($result['redirect']);
 							}
-
 						} else {
-
 							if ($page) {
-
 								TikiLib::lib('access')->redirect(TikiLib::lib('wiki')->sefurl($page));
-
 							} else {
 								return ['FORWARD' => [
 									'controller' => 'h5p',
@@ -179,13 +171,11 @@ class Services_H5P_Controller
 					break;
 
 				case 'Delete':
-
 					$filegallib = TikiLib::lib('filegal');
 					$fileInfo = $filegallib->get_file_info($fileId);
 					$filegallib->remove_file($fileInfo);
 
 					if ($page) {
-
 						$result = TikiLib::lib('service')->internal(
 							'plugin',
 							'edit',
@@ -202,7 +192,6 @@ class Services_H5P_Controller
 						if (! empty($result['redirect'])) {
 							TikiLib::lib('access')->redirect($result['redirect']);
 						}
-
 					} else {
 						return [
 							'FORWARD' => [
@@ -216,18 +205,21 @@ class Services_H5P_Controller
 
 		if (! empty($content['id'])) {
 			// Log editing of content
-			new H5P_Event('content', 'edit',
+			new H5P_Event(
+				'content',
+				'edit',
 				$content['id'],
 				$input->title->text(),
 				$content['library']['name'],
-				$content['library']['majorVersion'] . '.' . $content['library']['minorVersion']);
+				$content['library']['majorVersion'] . '.' . $content['library']['minorVersion']
+			);
 		} else {
 			// Log creation of new content (form opened)
 			new H5P_Event('content', 'new');
 		}
 
 		// Load assets required for Editor
-		TikiLib::lib('h5p')->addEditorAssets(empty($content['id']) ? NULL : $content['id']);
+		TikiLib::lib('h5p')->addEditorAssets(empty($content['id']) ? null : $content['id']);
 
 		// Prepare for template
 		$core = \H5P_H5PTiki::get_h5p_instance('core');
@@ -257,7 +249,7 @@ class Services_H5P_Controller
 		global $prefs;
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$_POST['libraries'] = array();
+			$_POST['libraries'] = [];
 			foreach ($input->libraries as $library) {
 				$_POST['libraries'][] = $library;
 			}
@@ -276,9 +268,14 @@ class Services_H5P_Controller
 			print $editor->getLibraryData($name, $major_version, $minor_version, substr($prefs['language'], 0, 2), '');
 
 			// Log library load
-			new H5P_Event('library', NULL,
-				NULL, NULL,
-				$name, $major_version . '.' . $minor_version);
+			new H5P_Event(
+				'library',
+				null,
+				null,
+				null,
+				$name,
+				$major_version . '.' . $minor_version
+			);
 		} else {
 			print $editor->getLibraries();
 		}
@@ -291,7 +288,7 @@ class Services_H5P_Controller
 		global $prefs;
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$_POST['libraries'] = array();
+			$_POST['libraries'] = [];
 			foreach ($input->libraries as $library) {
 				$_POST['libraries'][] = $library;
 			}
@@ -314,9 +311,14 @@ class Services_H5P_Controller
 			$results['libraries'] = $editor->findEditorLibraries($name, $majorVersion, $minorVersion);
 
 			// Log library load
-			new H5P_Event('library', NULL,
-				NULL, NULL,
-				$name, $majorVersion . '.' . $minorVersion);
+			new H5P_Event(
+				'library',
+				null,
+				null,
+				null,
+				$name,
+				$majorVersion . '.' . $minorVersion
+			);
 		} else {
 			$results = $editor->getLibraries();
 			$results = json_decode($results, true);
@@ -349,10 +351,10 @@ class Services_H5P_Controller
 			$file_id = $core->fs->saveFile($file, $contentId);
 
 			// Keep track of temporary files so they can be cleaned up later.
-			TikiDb::get()->table('tiki_h5p_tmpfiles')->insert(array(
+			TikiDb::get()->table('tiki_h5p_tmpfiles')->insert([
 				'path' => $file_id,
 				'created_at' => time(),
-			));
+			]);
 		}
 
 		header('Cache-Control: no-cache');
@@ -387,13 +389,13 @@ class Services_H5P_Controller
 			]
 		);
 
-		$data = array(
+		$data = [
 			'score' => $input->score->int(),
 			'max_score' => $input->maxScore->int(),
 			'opened' => $input->opened->int(),
 			'finished' => $input->finished->int(),
 			'time' => $input->finished->int() - $input->opened->int(),    // is this right?
-		);
+		];
 
 		if (! $result_id) {
 			// Insert new results
@@ -410,9 +412,14 @@ class Services_H5P_Controller
 		$content = $H5PTiki->loadContent($contentId);
 
 		// Log view
-		new H5P_Event('results', 'set',
-			$contentId, $content->title,
-			$content->name, $content->major_version . '.' . $content->minor_version);
+		new H5P_Event(
+			'results',
+			'set',
+			$contentId,
+			$content->title,
+			$content->name,
+			$content->major_version . '.' . $content->minor_version
+		);
 
 		return [];
 	}
@@ -444,7 +451,8 @@ class Services_H5P_Controller
 		return ['data' => $data];
 	}
 
-	function action_list_results ($input) {
+	function action_list_results($input)
+	{
 		// tiki_p_admin required for now
 		\Services_Exception_Denied::checkGlobal('admin');
 
@@ -457,16 +465,16 @@ LEFT JOIN `users_users` AS u ON u.`userId` = r.`user_id`');
 			'title' => tr('H5P User Results'),
 			'results' => $results->result,
 		];
-
 	}
 
-	function action_cron($input) {
+	function action_cron($input)
+	{
 		global $prefs;
 
 		ignore_user_abort(true);
 
 		// Verify token to prevent unauthorized use
-		if (!isset($prefs['h5p_cron_token']) || $prefs['h5p_cron_token'] !== $input->token->word()) {
+		if (! isset($prefs['h5p_cron_token']) || $prefs['h5p_cron_token'] !== $input->token->word()) {
 			return 'Invalid token'; // Invalid token
 		}
 

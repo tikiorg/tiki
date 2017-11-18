@@ -70,11 +70,11 @@ class Services_Goal_Controller
 			return empty($item['hidden']);
 		});
 
-		return array(
+		return [
 			'title' => $info['name'],
 			'goal' => $info,
 			'messages' => $messages,
-		);
+		];
 	}
 
 	function action_show_list($input)
@@ -85,7 +85,7 @@ class Services_Goal_Controller
 		if (! $info) {
 			throw new Services_Exception_NotFound;
 		}
-		
+
 		return [
 			'title' => $info['name'],
 			'goal' => $info,
@@ -121,11 +121,11 @@ class Services_Goal_Controller
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && $name) {
 			$goallib = TikiLib::lib('goal');
-			$id = $goallib->replaceGoal(0, array(
+			$id = $goallib->replaceGoal(0, [
 				'name' => $name,
 				'description' => $description,
 				'type' => 'user',
-			));
+			]);
 
 			return [
 				'FORWARD' => [
@@ -425,4 +425,3 @@ class Services_Goal_Controller
 		return 0;
 	}
 }
-

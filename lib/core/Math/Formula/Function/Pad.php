@@ -7,9 +7,9 @@
 
 class Math_Formula_Function_Pad extends Math_Formula_Function
 {
-	function evaluate( $element )
+	function evaluate($element)
 	{
-		$elements = array();
+		$elements = [];
 		$help = ' ' . tra('string $input , int $pad_length [, string $pad_string = " " [, string $pad_type = right|left|both ]]');
 		// see http://php.net/manual/en/function.str-pad.php for more info
 
@@ -21,7 +21,7 @@ class Math_Formula_Function_Pad extends Math_Formula_Function
 			$this->error(tr('Too few arguments for pad.') . $help);
 		}
 
-		foreach ( $element as $child ) {
+		foreach ($element as $child) {
 			$elements[] = $this->evaluateChild($child);
 		}
 
@@ -45,7 +45,5 @@ class Math_Formula_Function_Pad extends Math_Formula_Function
 		}
 
 		return str_pad($input, $pad_length, $pad_string, $pad_type);
-
 	}
 }
-

@@ -9,12 +9,13 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 {
 	private function getData() // {{{
 	{
-		if ( $this->data )
+		if ($this->data) {
 			return $this->data;
+		}
 
 		$data = $this->obj->getData();
 
-		$data = Tiki_Profile::convertLists($data, array('flags' => 'y'));
+		$data = Tiki_Profile::convertLists($data, ['flags' => 'y']);
 
 		$data = Tiki_Profile::convertYesNo($data);
 
@@ -23,7 +24,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 
 	static function getDefaultValues() // {{{
 	{
-		return array(
+		return [
 			'name' => '',
 			'description' => '',
 			'type' => 'text_field',
@@ -44,14 +45,14 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 			'validation' => '',
 			'validation_param' => '',
 			'validation_message' => '',
-		);
+		];
 	} // }}}
 
 	static function getConverters() // {{{
 	{
-		return array(
+		return [
 			'type' => new Tiki_Profile_ValueMapConverter(
-				array( // {{{
+				[ // {{{
 					'action' => 'x',
 					'attachment' => 'A',
 					'auto_increment' => 'q',
@@ -98,24 +99,24 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 					'user_subscription' => 'U',
 					'user' => 'u',
 					'webservice' => 'W',
-				)
+				]
 			), // }}}
 			'visible' => new Tiki_Profile_ValueMapConverter(
-				array(
+				[
 					'public' => 'n',
 					'admin_only' => 'y',
 					'admin_editable' => 'p',
 					'admin_editable_after' => 'a',
 					'creator_editable' => 'c',
 					'immutable' => 'i',
-				)
+				]
 			),
-		);
+		];
 	} // }}}
 
 	private static function getOptionMap() //{{{
 	{
-		return array(
+		return [
 			'type' => 'type',
 			'order' => 'position',
 			'visible' => 'isHidden',
@@ -133,15 +134,16 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 			'validation' => 'validation',
 			'validation_param' => 'validationParam',
 			'validation_message' => 'validationMessage',
-		);
+		];
 	} // }}}
 
 	function canInstall()
 	{
 		$data = $this->getData();
 
-		if ( ! isset( $data['name'], $data['tracker'] ) )
+		if (! isset($data['name'], $data['tracker'])) {
 			return false;
+		}
 
 		return true;
 	}
@@ -152,17 +154,17 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 		$converters = self::getConverters();
 		$this->replaceReferences($data);
 
-		foreach ( $data as $key => &$value ) {
-			if ( isset( $converters[$key] ) ) {
+		foreach ($data as $key => &$value) {
+			if (isset($converters[$key])) {
 				$value = $converters[$key]->convert($value);
 			}
 		}
 
 		$data = array_merge(
 			self::getDefaultValues(),
-			array(
+			[
 				'permname' => $this->obj->getRef(), // Use the profile reference as the name by default
-			),
+			],
 			$data
 		);
 
@@ -176,7 +178,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 
 		$factory = new Tracker_Field_Factory;
 		$fieldInfo = $factory->getFieldInfo($data['type']);
-		if (!is_array($data['options'])) {
+		if (! is_array($data['options'])) {
 			$options = Tracker_Options::fromString($data['options'], $fieldInfo);
 		} else {
 			$options = Tracker_Options::fromArray($data['options'], $fieldInfo);
@@ -233,18 +235,18 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 			}
 		}
 
-		$data = array(
+		$data = [
 			'name' => $field['name'],
 			'permname' => $field['permName'],
 			'tracker' => $writer->getReference('tracker', $field['trackerId']),
 			'options' => $optionsData,
-		);
+		];
 
 		$optionMap = array_flip(self::getOptionMap());
 		$defaults = self::getDefaultValues();
 		$conversions = self::getConverters();
 
-		$flag = array();
+		$flag = [];
 
 		foreach ($field as $key => $value) {
 			if (empty($optionMap[$key])) {
@@ -258,14 +260,14 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 			}
 
 			if ($value != $default) {
-				if (in_array($optionKey, array('list', 'link', 'searchable', 'public', 'mandatory', 'multilingual'))) {
-					if (!empty($value)) {
+				if (in_array($optionKey, ['list', 'link', 'searchable', 'public', 'mandatory', 'multilingual'])) {
+					if (! empty($value)) {
 						$flag[] = $optionKey;
 					}
-				} elseif (!empty($conversions[$optionKey])) {
+				} elseif (! empty($conversions[$optionKey])) {
 					$reverseVal = $conversions[$optionKey]->reverse($value);
 					$data[$optionKey] = $reverseVal;
-				} elseif( $optionKey == 'description' ) {
+				} elseif ($optionKey == 'description') {
 					$data[$optionKey] = $writer->getReference('wiki_content', $value);
 				} else {
 					$data[$optionKey] = $value;
@@ -273,7 +275,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 			}
 		}
 
-		if (!empty($flag)) {
+		if (! empty($flag)) {
 			$data['flags'] = $flag;
 		}
 
@@ -293,7 +295,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 			$trklib = TikiLib::lib('trk');
 			$trackerFields = $trklib
 				->table('tiki_tracker_fields')
-				->fetchAll(array('fieldId', 'trackerId'), array('name' => $trackerField));
+				->fetchAll(['fieldId', 'trackerId'], ['name' => $trackerField]);
 			if (count($trackerFields) == 1) {
 				$trackerFieldId = ! empty($trackerFields[0]['fieldId']) ? $trackerFields[0]['fieldId'] : 0;
 				$trackerId = ! empty($trackerFields[0]['trackerId']) ? $trackerFields[0]['trackerId'] : 0;

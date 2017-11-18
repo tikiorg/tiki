@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * Handler class for simple fields:
- * 
+ *
  * - email key ~m~
  */
 class Tracker_Field_Email extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Exportable, Tracker_Field_Filterable
@@ -16,62 +16,62 @@ class Tracker_Field_Email extends Tracker_Field_Abstract implements Tracker_Fiel
 
 	public static function getTypes()
 	{
-		return array(
-			'm' => array(
+		return [
+			'm' => [
 				'name' => tr('Email'),
 				'description' => tr('Allows an email address to be input with the option of making it active.'),
 				'help' => 'Email Tracker Field',
-				'prefs' => array('trackerfield_email'),
-				'tags' => array('basic'),
+				'prefs' => ['trackerfield_email'],
+				'tags' => ['basic'],
 				'default' => 'y',
-				'supported_changes' => array('d', 'D', 'R', 'M', 'm', 't', 'a', 'L'),
-				'params' => array(
-					'link' => array(
+				'supported_changes' => ['d', 'D', 'R', 'M', 'm', 't', 'a', 'L'],
+				'params' => [
+					'link' => [
 						'name' => tr('Link Type'),
 						'description' => tr('How the email address will be rendered.'),
 						'filter' => 'int',
-						'options' => array(
+						'options' => [
 							0 => tr('Plain text'),
 							1 => tr('Encoded mailto link'),
 							2 => tr('Simple mailto link'),
-						),
+						],
 						'legacy_index' => 0,
-					),
-					'watchopen' => array(
+					],
+					'watchopen' => [
 						'name' => tr('Watch Open'),
 						'description' => tr('Notify this address every time the status changes to open.'),
 						'filter' => 'alpha',
-						'options' => array(
+						'options' => [
 							'' => tr('No'),
 							'o' => tr('Yes'),
-						),
+						],
 						'legacy_index' => 1,
-					),
-					'watchpending' => array(
+					],
+					'watchpending' => [
 						'name' => tr('Watch Pending'),
 						'description' => tr('Notify this address every time the status changes to pending.'),
 						'filter' => 'alpha',
-						'options' => array(
+						'options' => [
 							'' => tr('No'),
 							'p' => tr('Yes'),
-						),
+						],
 						'legacy_index' => 2,
-					),
-					'watchclosed' => array(
+					],
+					'watchclosed' => [
 						'name' => tr('Watch Closed'),
 						'description' => tr('Notify this address every time the status changes to closed.'),
 						'filter' => 'alpha',
-						'options' => array(
+						'options' => [
 							'' => tr('No'),
 							'c' => tr('Yes'),
-						),
+						],
 						'legacy_index' => 3,
-					),
-				),
-			),
-		);
+					],
+				],
+			],
+		];
 	}
-	
+
 	public static function build($type, $trackerDefinition, $fieldInfo, $itemData)
 	{
 		switch ($type) {
@@ -79,7 +79,7 @@ class Tracker_Field_Email extends Tracker_Field_Abstract implements Tracker_Fiel
 				return new self($fieldInfo, $itemData, $trackerDefinition, 'email');
 		}
 	}
-	
+
 	function __construct($fieldInfo, $itemData, $trackerDefinition, $type)
 	{
 		$this->type = $type;
@@ -89,36 +89,36 @@ class Tracker_Field_Email extends Tracker_Field_Abstract implements Tracker_Fiel
 	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
 		$baseKey = $this->getBaseKey();
-		return array(
+		return [
 			$baseKey => $typeFactory->sortable($this->getValue()),
 			"{$baseKey}_text" => $typeFactory->identifier($this->getValue()),
-		);
+		];
 	}
 
 	function getProvidedFields()
 	{
 		$baseKey = $this->getBaseKey();
-		return array($baseKey, "{$baseKey}_text");
+		return [$baseKey, "{$baseKey}_text"];
 	}
 
 	function getGlobalFields()
 	{
 		$baseKey = $this->getBaseKey();
-		return array($baseKey => true, "{$baseKey}_text" => true);
+		return [$baseKey => true, "{$baseKey}_text" => true];
 	}
-	
-	function getFieldData(array $requestData = array())
+
+	function getFieldData(array $requestData = [])
 	{
 		$ins_id = $this->getInsertId();
 
-		return array(
+		return [
 			'value' => (isset($requestData[$ins_id]))
 				? $requestData[$ins_id]
 				: $this->getValue(),
-		);
+		];
 	}
-	
-	public function renderOutput($context = array())
+
+	public function renderOutput($context = [])
 	{
 		$opt = $this->getOption('link');
 		$value = $this->getValue();
@@ -135,7 +135,7 @@ class Tracker_Field_Email extends Tracker_Field_Abstract implements Tracker_Fiel
 		}
 	}
 
-	function renderInput($context = array())
+	function renderInput($context = [])
 	{
 		return $this->renderTemplate("trackerinput/{$this->type}.tpl", $context);
 	}
@@ -210,4 +210,3 @@ class Tracker_Field_Email extends Tracker_Field_Abstract implements Tracker_Fiel
 		return $filters;
 	}
 }
-

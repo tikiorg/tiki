@@ -29,4 +29,3 @@ class Tiki_Render_Lazy
 		return (string) $this->data;
 	}
 }
-

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,8 +9,8 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 {
 	private $stored;
 	private $defaultFilter;
-	private $lastUsed = array();
-	private $filters = array();
+	private $lastUsed = [];
+	private $filters = [];
 
 	function __construct($data)
 	{
@@ -32,8 +32,9 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 	function offsetGet($key)
 	{
 		// Composed objects go through
-		if ($this->stored[$key] instanceof self)
+		if ($this->stored[$key] instanceof self) {
 			return $this->stored[$key];
+		}
 
 		$filter = $this->getFilter($key);
 
@@ -48,11 +49,12 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 		}
 
 		if ($filter) {
-			if (isset($this->lastUsed[$key] ) && $this->lastUsed[$key][0] == $filter)
+			if (isset($this->lastUsed[$key]) && $this->lastUsed[$key][0] == $filter) {
 				return $this->lastUsed[$key][1];
+			}
 
 
-			$this->lastUsed[$key] = array($filter, $filter->filter($this->stored[$key]));
+			$this->lastUsed[$key] = [$filter, $filter->filter($this->stored[$key])];
 			return $this->lastUsed[$key][1];
 		} else {
 			// No filtering has no special behavior
@@ -64,53 +66,56 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 	{
 		unset($this->lastUsed[$key]);
 
-		if ( $value instanceof self )
+		if ($value instanceof self) {
 			return $this->stored[$key] = $value->stored;
-		else
+		} else {
 			return $this->stored[$key] = $value;
+		}
 	}
 
 	function asArray($key = false, $separator = false)
 	{
 		if ($key === false) {
-			$ret = array();
+			$ret = [];
 			foreach (array_keys($this->stored) as $k) {
 				$ret[$k] = $this->offsetGet($k);
-				if ($ret[$k] instanceof self)
+				if ($ret[$k] instanceof self) {
 					$ret[$k] = $ret[$k]->asArray();
+				}
 			}
 
 			return $ret;
-
-		} elseif (isset( $this->stored[$key])) {
+		} elseif (isset($this->stored[$key])) {
 			$value = $this->stored[$key];
 
-			if ($value instanceof self || is_array($value))
+			if ($value instanceof self || is_array($value)) {
 				return $this->offsetGet($key)->asArray();
-			elseif ($separator === false)
-				return array($this->offsetGet($key));
-			else {
+			} elseif ($separator === false) {
+				return [$this->offsetGet($key)];
+			} else {
 				$jit = new self(explode($separator, $value));
 				$jit->setDefaultFilter($this->getFilter($key));
 
 				return $jit->asArray();
 			}
 		} else {
-			return array();
+			return [];
 		}
 	}
 
 	function subset($keys)
 	{
-		$jit = new self(array());
+		$jit = new self([]);
 		$jit->defaultFilter = $this->defaultFilter;
 		$jit->filters = $this->filters;
-		
+
 		foreach ($keys as $key) {
-			if (isset($this->stored[$key]))
+			if (isset($this->stored[$key])) {
 				$jit->stored[$key] = $this->stored[$key];
-			if (isset($this->lastUsed[$key]))
+			}
+			if (isset($this->lastUsed[$key])) {
 				$jit->lastUsed[$key] = $this->lastUsed[$key];
+			}
 		}
 
 		return $jit;
@@ -128,10 +133,11 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 
 	private function getFilter($key)
 	{
-		if (array_key_exists($key, $this->filters))
+		if (array_key_exists($key, $this->filters)) {
 			return $this->filters[$key];
-		elseif ($this->defaultFilter)
+		} elseif ($this->defaultFilter) {
 			return $this->defaultFilter;
+		}
 
 		return null;
 	}
@@ -155,10 +161,9 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 	function replaceFilters($filters)
 	{
 		foreach ($filters as $key => $values) {
-			if ( is_array($values) 
-				&& $this->offsetExists($key) 
+			if (is_array($values)
+				&& $this->offsetExists($key)
 				&& $this->offsetGet($key) instanceof self) {
-
 				$this->offsetGet($key)->replaceFilters($values);
 			} else {
 				$this->replaceFilter($key, $values);
@@ -197,17 +202,19 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 		return count($this->stored);
 	}
 
-    /**
-     * @param $key
-     * @return JitFilter_Element
-     */
-    function __get($key)
+	/**
+	 * @param $key
+	 * @return JitFilter_Element
+	 */
+	function __get($key)
 	{
-		if (! isset( $this->stored[$key]))
+		if (! isset($this->stored[$key])) {
 			return new JitFilter_Element(null);
+		}
 
-		if ($this->stored[$key] instanceof self || is_array($this->stored[$key]))
+		if ($this->stored[$key] instanceof self || is_array($this->stored[$key])) {
 			return $this->offsetGet($key);
+		}
 
 		return new JitFilter_Element($this->stored[$key]);
 	}

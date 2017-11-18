@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -14,10 +14,10 @@ class Search_Formatter_Plugin_CsvTemplate extends Search_Formatter_Plugin_Abstra
 
 	function prepareEntry($valueFormatter)
 	{
-		$entry = array();
+		$entry = [];
 		$searchRow = $valueFormatter->getPlainValues();
 		foreach ($this->fields as $field => $arguments) {
-			if( isset($arguments['format']) ) {
+			if (isset($arguments['format'])) {
 				$format = $arguments['format'];
 			} else {
 				$format = 'plain';
@@ -33,12 +33,12 @@ class Search_Formatter_Plugin_CsvTemplate extends Search_Formatter_Plugin_Abstra
 	function renderEntries(Search_ResultSet $entries)
 	{
 		$fh = fopen('php://temp', 'rw');
-		$header = array();
-		foreach($this->fields as $field => $arguments) {
-			$header[] = !empty($arguments['label']) ? $arguments['label'] : '';
+		$header = [];
+		foreach ($this->fields as $field => $arguments) {
+			$header[] = ! empty($arguments['label']) ? $arguments['label'] : '';
 		}
 		fputcsv($fh, $header);
-		foreach($entries as $entry) {
+		foreach ($entries as $entry) {
 			fputcsv($fh, $entry);
 		}
 		rewind($fh);

@@ -11,9 +11,9 @@
 
 class Services_Search_CustomSearchController
 {
-	private $textranges = array();
-	private $dateranges = array();
-	private $distances = array();
+	private $textranges = [];
+	private $dateranges = [];
+	private $distances = [];
 
 	function setUp()
 	{
@@ -26,9 +26,9 @@ class Services_Search_CustomSearchController
 	{
 		global $prefs;
 
-		$this->textranges = array();
-		$this->dateranges = array();
-		$this->distances = array();
+		$this->textranges = [];
+		$this->dateranges = [];
+		$this->distances = [];
 
 		$cachelib = TikiLib::lib('cache');
 		$definition = $input->definition->word();
@@ -36,7 +36,7 @@ class Services_Search_CustomSearchController
 			$smarty = \TikiLib::lib('smarty');
 			$smarty->assign('url', $_SERVER['HTTP_REFERER']);
 			$value = $smarty->fetch('search_customsearch/cache_expired.tpl');
-			return array('html' => $value);
+			return ['html' => $value];
 		}
 
 		/** @var Search_Query $query */
@@ -122,7 +122,6 @@ class Services_Search_CustomSearchController
 						if (! $input->sort_mode->text()) {
 							$config['sort'] = true;
 						}
-
 					}
 				}
 
@@ -156,7 +155,7 @@ class Services_Search_CustomSearchController
 		}
 
 		if ($prefs['storedsearch_enabled'] == 'y' && $queryId = $input->store_query->int()) {
-			// Store prior to adding 
+			// Store prior to adding
 			$storedsearchlib = TikiLib::lib('storedsearch');
 			$storeResult = $storedsearchlib->storeUserQuery($queryId, $query);
 
@@ -189,15 +188,15 @@ class Services_Search_CustomSearchController
 		$formatter = $builder->getFormatter();
 		$results = $formatter->format($resultSet);
 
-		$results = TikiLib::lib('parser')->parse_data($results, array('is_html' => true, 'skipvalidation' => true));
+		$results = TikiLib::lib('parser')->parse_data($results, ['is_html' => true, 'skipvalidation' => true]);
 
-		return array('html' => $results);
+		return ['html' => $results];
 	}
 
 	private function cs_dataappend_language(Search_Query $query, $config, $value)
 	{
 		if ($config['type'] != 'text') {
-			if (!empty($config['_value'])) {
+			if (! empty($config['_value'])) {
 				$value = $config['_value'];
 				$query->filterLanguage($value);
 			} elseif ($value) {
@@ -209,7 +208,7 @@ class Services_Search_CustomSearchController
 	private function cs_dataappend_type(Search_Query $query, $config, $value)
 	{
 		if ($config['type'] != 'text') {
-			if (!empty($config['_value'])) {
+			if (! empty($config['_value'])) {
 				$value = $config['_value'];
 				$query->filterType($value);
 			} elseif ($value) {
@@ -220,7 +219,7 @@ class Services_Search_CustomSearchController
 
 	private function cs_dataappend_content(Search_Query $query, $config, $value)
 	{
-		if ( ( isset($config['_textrange']) || isset($config['_daterange']) ) && ( isset($config['_emptyfrom']) || isset($config['_emptyto']) )  && $value <= '') {
+		if (( isset($config['_textrange']) || isset($config['_daterange']) ) && ( isset($config['_emptyfrom']) || isset($config['_emptyto']) )  && $value <= '') {
 			$value = isset($config['_emptyfrom']) ? $config['_emptyfrom'] : $config['_emptyto'];
 		}
 		if ($value > '') {
@@ -232,7 +231,7 @@ class Services_Search_CustomSearchController
 				if (empty($config['_field'])) {
 					return;
 				}
-				if (!empty($config['_value'])) {
+				if (! empty($config['_value'])) {
 					if ($config['_value'] == 'n') {
 						$config['_value'] = 'NOT y';
 					}
@@ -240,7 +239,7 @@ class Services_Search_CustomSearchController
 				} else {
 					$query->filterContent('y', $config['_field']);
 				}
-			} elseif ($config['type'] == 'radio' && !empty($config['_value'])) {
+			} elseif ($config['type'] == 'radio' && ! empty($config['_value'])) {
 				if (empty($config['_field'])) {
 					$query->filterContent($config['_value']);
 				} else {
@@ -261,11 +260,11 @@ class Services_Search_CustomSearchController
 	private function cs_handle_textrange($rangeName, Search_Query $query, $config, $value)
 	{
 		if (! isset($this->textranges[$rangeName])) {
-			$this->textranges[$rangeName] = array(
+			$this->textranges[$rangeName] = [
 				'query' => $query,
 				'config' => $config,
-				'values' => array(),
-			);
+				'values' => [],
+			];
 		}
 
 		if (isset($config['_emptyother']) && isset($config['_emptyfrom'])) {
@@ -292,11 +291,11 @@ class Services_Search_CustomSearchController
 	private function cs_handle_daterange($rangeName, Search_Query $query, $config, $value)
 	{
 		if (! isset($this->dateranges[$rangeName])) {
-			$this->dateranges[$rangeName] = array(
+			$this->dateranges[$rangeName] = [
 				'query' => $query,
 				'config' => $config,
-				'values' => array(),
-			);
+				'values' => [],
+			];
 		}
 
 		if (isset($config['_emptyother']) && isset($config['_emptyfrom'])) {
@@ -323,10 +322,10 @@ class Services_Search_CustomSearchController
 	private function cs_dataappend_categories(Search_Query $query, $config, $value)
 	{
 		if (isset($config['_filter']) && $config['_filter'] == 'categories' && $config['type'] != 'text') {
-			if (!empty($config['_value'])) {
+			if (! empty($config['_value'])) {
 				$value = $config['_value'];
 			}
-		} elseif (!isset($config['_style'])) {
+		} elseif (! isset($config['_style'])) {
 			return;
 		} elseif ($value) {
 			$deep = (isset($config['_showdeep']) && $config['_showdeep'] != 'n') || (isset($config['_deep']) && $config['_deep'] != 'n');
@@ -340,7 +339,7 @@ class Services_Search_CustomSearchController
 			if (count($vals) == 2) {
 				$from = $vals[0];
 				$to = $vals[1];
-				if (!empty($config['_field'])) {
+				if (! empty($config['_field'])) {
 					$field = $config['_field'];
 				} else {
 					$field = 'modification_date';
@@ -357,7 +356,7 @@ class Services_Search_CustomSearchController
 				$distance = $vals[0];
 				$lat = $vals[1];
 				$lon = $vals[2];
-				if (!empty($config['_field'])) {
+				if (! empty($config['_field'])) {
 					$field = $config['_field'];
 				} else {
 					$field = 'geo_point';
@@ -365,7 +364,6 @@ class Services_Search_CustomSearchController
 				$query->filterDistance($distance, $lat, $lon, $field);
 
 				if (! empty($config['sort']) || ! empty($config['_mode'])) {
-
 					$order = empty($config['_mode']) ? 'asc' : $config['_mode'];
 					$sortOrder = new Search_Query_Order(
 						$field,
@@ -379,7 +377,6 @@ class Services_Search_CustomSearchController
 					);
 					$query->setOrder($sortOrder);
 				}
-
 			}
 		}
 	}

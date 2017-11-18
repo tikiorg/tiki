@@ -1,11 +1,12 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 namespace Tracker\Filter;
+
 use Search_Query;
 use TikiLib;
 
@@ -21,23 +22,24 @@ class Collection
 		$this->definition = $definition;
 	}
 
-	public static function getFilter($fieldName, $mode) {
+	public static function getFilter($fieldName, $mode)
+	{
 		$field = TikiLib::lib('trk')->get_field_by_perm_name($fieldName);
 		if ($field) {
-			if( !isset($collection) ) {
+			if (! isset($collection)) {
 				$definition = \Tracker_Definition::get($field['trackerId']);
 				$collection = new self($definition);
 			}
 			try {
 				return $collection->addFilter($field['permName'], $mode);
-			} catch( Exception\ModeNotSupported $e) {
+			} catch (Exception\ModeNotSupported $e) {
 				return $collection->addFilter($field['permName']);
 			}
 		} else {
 			// non-tracker field in the index
 			$filter = new Filter($fieldName, 'default');
 			$filter->setLabel($fieldName)
-				->setControl(new Control\TextField("tf_".$fieldName))
+				->setControl(new Control\TextField("tf_" . $fieldName))
 				->setApplyCondition(function ($control, Search_Query $query) use ($fieldName) {
 					$value = $control->getValue();
 					if ($value) {
@@ -67,7 +69,7 @@ class Collection
 	{
 		return $this->filters;
 	}
-	
+
 	function applyConditions(\Search_Query $query)
 	{
 		foreach ($this->filters as $filter) {
@@ -115,7 +117,7 @@ class Collection
 	private function lookupMode($permName, $mode)
 	{
 		foreach ($this->filters as $filter) {
-			if ($filter->getField() == $permName && (!$mode || $filter->getMode() == $mode)) {
+			if ($filter->getField() == $permName && (! $mode || $filter->getMode() == $mode)) {
 				return $filter;
 			}
 		}
@@ -148,9 +150,9 @@ class Collection
 	private function getSystemCollection($name)
 	{
 		switch ($name) {
-		case 'itemId':
-			$collection = new self($this->definition);
-			$collection->addNew($name, 'lookup')
+			case 'itemId':
+				$collection = new self($this->definition);
+				$collection->addNew($name, 'lookup')
 				->setLabel(tr('Item ID'))
 				->setHelp(tr('Look up a single item by ID.'))
 				->setControl(new Control\TextField("tf_itemId"))
@@ -161,11 +163,11 @@ class Collection
 						$query->filterIdentifier($value, 'object_id');
 					}
 				})
-				;
-			return $collection;
-		case 'search':
-			$collection = new self($this->definition);
-			$collection->addNew($name, 'search')
+					;
+				return $collection;
+			case 'search':
+				$collection = new self($this->definition);
+				$collection->addNew($name, 'search')
 				->setLabel(tr('Search'))
 				->setHelp(tr('Full-text search across all of the content.'))
 				->setControl(new Control\TextField("tf_search"))
@@ -173,41 +175,41 @@ class Collection
 					$value = $control->getValue();
 
 					if ($value) {
-						$o = TikiLib::lib('tiki')->get_preference('unified_default_content', array('contents'), true);
+						$o = TikiLib::lib('tiki')->get_preference('unified_default_content', ['contents'], true);
 						if (count($o) == 1 && empty($o[0])) {
 							// Use "contents" field by default, if no default is specified
-							$query->filterContent($value, array('contents'));
+							$query->filterContent($value, ['contents']);
 						} else {
 							$query->filterContent($value, $o);
 						}
 					}
 				})
-				;
-			return $collection;
-		case 'status':
-			$types = TikiLib::lib('trk')->status_types();
-			$possibilities = array_map(function ($item) {
-				return $item['label'];
-			}, $types);
+					;
+				return $collection;
+			case 'status':
+				$types = TikiLib::lib('trk')->status_types();
+				$possibilities = array_map(function ($item) {
+					return $item['label'];
+				}, $types);
 
-			$collection = new self($this->definition);
-			$collection->addNew($name, 'dropdown')
-				->setLabel(tr('Status'))
-				->setControl(new Control\DropDown("tfdd_status", $possibilities))
-				->setApplyCondition(function ($control, Search_Query $query) {
-					$value = $control->getValue();
+				$collection = new self($this->definition);
+				$collection->addNew($name, 'dropdown')
+					->setLabel(tr('Status'))
+					->setControl(new Control\DropDown("tfdd_status", $possibilities))
+					->setApplyCondition(function ($control, Search_Query $query) {
+						$value = $control->getValue();
 
-					if ($value) {
-						$query->filterIdentifier($value, 'tracker_status');
-					}
-				});
+						if ($value) {
+							$query->filterIdentifier($value, 'tracker_status');
+						}
+					});
 
-			$controls = [
-				'multiselect' => new Control\MultiSelect("tfms_status", $possibilities),
-				'checkboxes' => new Control\InlineCheckboxes("tfc_status", $possibilities),
-			];
-			foreach ($controls as $key => $control) {
-				$collection->addNew($name, $key)
+				$controls = [
+					'multiselect' => new Control\MultiSelect("tfms_status", $possibilities),
+					'checkboxes' => new Control\InlineCheckboxes("tfc_status", $possibilities),
+				];
+				foreach ($controls as $key => $control) {
+					$collection->addNew($name, $key)
 					->setLabel(tr('Status'))
 					->setControl($control)
 					->setApplyCondition(function ($control, Search_Query $query) {
@@ -221,32 +223,32 @@ class Collection
 							}
 						}
 					});
-			}
+				}
 
-			return $collection;
-		case 'facet':
-			$collection = new self($this->definition);
+				return $collection;
+			case 'facet':
+				$collection = new self($this->definition);
 
-			$lib = \TikiLib::lib('unifiedsearch');
-			$provider = $lib->getFacetProvider();
+				$lib = \TikiLib::lib('unifiedsearch');
+				$provider = $lib->getFacetProvider();
 
-			foreach ($provider->getFacets() as $facet) {
-				$getoptions = function () use ($facet) {
-					if ($this->resultset) {
-						if ($filter = $this->resultset->getFacet($facet)) {
-							return $filter->getOptions();
+				foreach ($provider->getFacets() as $facet) {
+					$getoptions = function () use ($facet) {
+						if ($this->resultset) {
+							if ($filter = $this->resultset->getFacet($facet)) {
+								return $filter->getOptions();
+							}
 						}
-					}
 
-					return [];
-				};
+						return [];
+					};
 
-				$renderextra = function ($id) use ($facet) {
-					$label = $facet->render($id) ?: tr('Unknown value');
-					return "$label (0)";
-				};
+					$renderextra = function ($id) use ($facet) {
+						$label = $facet->render($id) ?: tr('Unknown value');
+						return "$label (0)";
+					};
 
-				$collection->addNew($name, 'facet-any-' . $facet->getName())
+					$collection->addNew($name, 'facet-any-' . $facet->getName())
 					->setLabel(tr('%0 (any of)', $facet->getLabel()))
 					->setControl(new Control\MultiSelect("facet_any_{$facet->getName()}", $getoptions, $renderextra))
 					->setApplyCondition(function ($control, Search_Query $query) use ($facet) {
@@ -258,20 +260,20 @@ class Collection
 						}
 					});
 
-				$collection->addNew($name, 'facet-all-' . $facet->getName())
-					->setLabel(tr('%0 (all of)', $facet->getLabel()))
-					->setControl(new Control\MultiSelect("facet_all_{$facet->getName()}", $getoptions, $renderextra))
-					->setApplyCondition(function ($control, Search_Query $query) use ($facet) {
-						$query->requestFacet($facet);
+					$collection->addNew($name, 'facet-all-' . $facet->getName())
+						->setLabel(tr('%0 (all of)', $facet->getLabel()))
+						->setControl(new Control\MultiSelect("facet_all_{$facet->getName()}", $getoptions, $renderextra))
+						->setApplyCondition(function ($control, Search_Query $query) use ($facet) {
+							$query->requestFacet($facet);
 
-						$values = $control->getValues();
-						if (! empty($values)) {
-							$query->getPostFilter()->filterContent(implode(" AND ", $values), $facet->getName());
-						}
-					});
-			}
-			
-			return $collection;
+							$values = $control->getValues();
+							if (! empty($values)) {
+								$query->getPostFilter()->filterContent(implode(" AND ", $values), $facet->getName());
+							}
+						});
+				}
+
+				return $collection;
 		}
 	}
 
@@ -293,7 +295,7 @@ class Collection
 		foreach ($this->filters as $filter) {
 			$parts += $filter->getControl()->getQueryArguments();
 		}
-		
+
 		return $parts;
 	}
 

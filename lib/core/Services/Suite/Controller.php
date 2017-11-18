@@ -29,9 +29,8 @@ class Services_Suite_Controller
 			$input->username->none(),
 			$input->password->none(),
 		], $config);
-		return array(
+		return [
 			'configuration' => $config,
-		);
+		];
 	}
 }
-

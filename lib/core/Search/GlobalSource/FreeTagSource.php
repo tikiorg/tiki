@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -16,35 +16,35 @@ class Search_GlobalSource_FreeTagSource implements Search_GlobalSource_Interface
 
 	function getFacets()
 	{
-		return array(
+		return [
 			Search_Query_Facet_Term::fromField('freetags')
 				->setLabel(tr('Tags'))
-				->setRenderCallback(array($this->freetaglib, 'get_tag_from_id')),
-		);
+				->setRenderCallback([$this->freetaglib, 'get_tag_from_id']),
+		];
 	}
 
 	function getProvidedFields()
 	{
-		return array('freetags', 'freetags_text');
+		return ['freetags', 'freetags_text'];
 	}
 
 	function getGlobalFields()
 	{
-		return array(
+		return [
 			'freetags_text' => true,
-		);
+		];
 	}
 
-	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
+	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = [])
 	{
 		if (isset($data['freetags']) || isset($data['freetags_text'])) {
-			return array();
+			return [];
 		}
 
 		$tags = $this->freetaglib->get_tags_on_object($objectId, $objectType);
 
-		$textual = array();
-		$ids = array();
+		$textual = [];
+		$ids = [];
 
 		if (isset($tags['data'])) {
 			foreach ($tags['data'] as $entry) {
@@ -53,10 +53,9 @@ class Search_GlobalSource_FreeTagSource implements Search_GlobalSource_Interface
 			}
 		}
 
-		return array(
+		return [
 			'freetags' => $typeFactory->multivalue($ids),
 			'freetags_text' => $typeFactory->plaintext(implode(' ', $textual)),
-		);
+		];
 	}
 }
-

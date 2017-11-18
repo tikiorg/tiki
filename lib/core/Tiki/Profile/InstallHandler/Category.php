@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -11,30 +11,31 @@ class Tiki_Profile_InstallHandler_Category extends Tiki_Profile_InstallHandler
 	private $description = '';
 	private $parent = 0;
 	private $migrateparent = 0;
-	private $items = array();
+	private $items = [];
 
 	function fetchData()
 	{
-		if ( $this->name )
+		if ($this->name) {
 			return;
+		}
 
 		$data = $this->obj->getData();
 
-		if ( array_key_exists('name', $data) ) {
+		if (array_key_exists('name', $data)) {
 			$this->name = $data['name'];
 		}
-		if ( array_key_exists('description', $data) ) {
+		if (array_key_exists('description', $data)) {
 			$this->description = $data['description'];
 		}
-		if ( array_key_exists('parent', $data) ) {
+		if (array_key_exists('parent', $data)) {
 			$this->parent = $data['parent'];
 		}
-		if ( array_key_exists('migrateparent', $data) ) {
+		if (array_key_exists('migrateparent', $data)) {
 			$this->migrateparent = $data['migrateparent'];
 		}
-		if ( array_key_exists('items', $data) && is_array($data['items']) ) {
-			foreach ( $data['items'] as $pair ) {
-				if ( is_array($pair) && count($pair) == 2 ) {
+		if (array_key_exists('items', $data) && is_array($data['items'])) {
+			foreach ($data['items'] as $pair) {
+				if (is_array($pair) && count($pair) == 2) {
 					$this->items[] = $pair;
 				}
 			}
@@ -45,7 +46,7 @@ class Tiki_Profile_InstallHandler_Category extends Tiki_Profile_InstallHandler
 	{
 		$this->fetchData();
 
-		if ( empty( $this->name ) ) {
+		if (empty($this->name)) {
 			return false;
 		}
 
@@ -61,7 +62,7 @@ class Tiki_Profile_InstallHandler_Category extends Tiki_Profile_InstallHandler
 		$this->replaceReferences($this->parent);
 		$this->replaceReferences($this->migrateparent);
 		$this->replaceReferences($this->items);
-		
+
 		$categlib = TikiLib::lib('categ');
 		if ($id = $categlib->exist_child_category($this->parent, $this->name)) {
 			$categlib->update_category($id, $this->name, $this->description, $this->parent);
@@ -73,7 +74,7 @@ class Tiki_Profile_InstallHandler_Category extends Tiki_Profile_InstallHandler
 			$categlib->move_all_objects($from, $id);
 		}
 
-		foreach ( $this->items as $item ) {
+		foreach ($this->items as $item) {
 			list( $type, $object ) = $item;
 
 			$type = Tiki_Profile_Installer::convertType($type);
@@ -91,16 +92,16 @@ class Tiki_Profile_InstallHandler_Category extends Tiki_Profile_InstallHandler
 			return false;
 		}
 
-		$items = array();
+		$items = [];
 		foreach ($categlib->get_category_objects($categId) as $row) {
 			if ($includeObjectCallback($row['type'], $row['itemId'])) {
-				$items[] = array($row['type'], $writer->getReference($row['type'], $row['itemId']));
+				$items[] = [$row['type'], $writer->getReference($row['type'], $row['itemId'])];
 			}
 		}
 
-		$data = array(
+		$data = [
 			'name' => $info['name'],
-		);
+		];
 
 		if (! empty($info['parentId'])) {
 			$data['parent'] = $writer->getReference('category', $info['parentId']);
@@ -119,7 +120,7 @@ class Tiki_Profile_InstallHandler_Category extends Tiki_Profile_InstallHandler
 				self::export($writer, $children, $deep, $includeObjectCallback);
 			}
 		}
-		
+
 		return true;
 	}
 

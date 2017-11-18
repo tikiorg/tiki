@@ -48,16 +48,16 @@ class UpdateCommand extends Command
 				}
 			}
 
-			if ( count($installer->executed) ) {
-				foreach ( $installer->executed as $script ) {
+			if (count($installer->executed)) {
+				foreach ($installer->executed as $script) {
 					$output->writeln("<info>Executed: $script</info>");
 				}
 			}
 
 			$output->writeln('<info>Queries executed successfully: ' . count($installer->queries['successful']) . '</info>');
 
-			if ( count($installer->queries['failed']) ) {
-				foreach ( $installer->queries['failed'] as $key => $error ) {
+			if (count($installer->queries['failed'])) {
+				foreach ($installer->queries['failed'] as $key => $error) {
 					list( $query, $message, $patch ) = $error;
 
 					$output->writeln("<error>Error $key in $patch\n\t$query\n\t$message</error>");

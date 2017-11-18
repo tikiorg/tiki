@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -12,17 +12,17 @@
  */
 class DeclFilter implements \Zend\Filter\FilterInterface
 {
-	private $rules = array();
+	private $rules = [];
 
 	/**
 	 * Builds a declarative filter object from a configuration array.
 	 *
 	 * @var array The configuration array
 	 * @var array The list of filtering rules that are disallowed
-     * @return \DeclFilter
-     * @see DeclFilter_ConfigureTest Unit tests contain samples of expected input
+	 * @return \DeclFilter
+	 * @see DeclFilter_ConfigureTest Unit tests contain samples of expected input
 	 */
-	public static function fromConfiguration(array $configuration, array $reject = array())
+	public static function fromConfiguration(array $configuration, array $reject = [])
 	{
 		$filter = new self;
 
@@ -32,7 +32,7 @@ class DeclFilter implements \Zend\Filter\FilterInterface
 					$real = 'add' . ucfirst($method);
 
 					// Accept all methods begining with 'add' except those that are disallowed
-					if ( method_exists($filter, $real) 
+					if (method_exists($filter, $real)
 						&& ! in_array($method, $reject)
 						) {
 						$filter->$real($argument);
@@ -47,7 +47,7 @@ class DeclFilter implements \Zend\Filter\FilterInterface
 
 		return $filter;
 	}
-	
+
 	/**
 	 * Applies the registered filters on the provided data.
 	 */
@@ -146,7 +146,7 @@ class DeclFilter implements \Zend\Filter\FilterInterface
 		$this->rules[] = $rule;
 	}
 
-	function addKeyPatternFiltersForArrays( $filters )
+	function addKeyPatternFiltersForArrays($filters)
 	{
 		require_once 'DeclFilter/KeyPatternFilterRule.php';
 		$rule = new DeclFilter_KeyPatternFilterRule($filters);
@@ -155,7 +155,7 @@ class DeclFilter implements \Zend\Filter\FilterInterface
 		$this->rules[] = $rule;
 	}
 
-	function addKeyPatternUnset( $keys )
+	function addKeyPatternUnset($keys)
 	{
 		require_once 'DeclFilter/KeyPatternUnsetRule.php';
 		$rule = new DeclFilter_KeyPatternUnsetRule($keys);

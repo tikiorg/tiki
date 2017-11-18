@@ -52,7 +52,8 @@ class EngineSet
 		}
 	}
 
-	function getCount() {
+	function getCount()
+	{
 		return count($this->engines);
 	}
 }

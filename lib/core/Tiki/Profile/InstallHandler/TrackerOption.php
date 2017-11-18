@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,8 +9,9 @@ class Tiki_Profile_InstallHandler_TrackerOption extends Tiki_Profile_InstallHand
 {
 	private function getData() // {{{
 	{
-		if ( $this->data )
+		if ($this->data) {
 			return $this->data;
+		}
 
 		$data = $this->obj->getData();
 
@@ -37,7 +38,7 @@ class Tiki_Profile_InstallHandler_TrackerOption extends Tiki_Profile_InstallHand
 		if (! isset($data['tracker'], $data['name'], $data['value'])) {
 			return false;
 		}
-		
+
 		return true;
 	} // }}}
 
@@ -62,7 +63,7 @@ class Tiki_Profile_InstallHandler_TrackerOption extends Tiki_Profile_InstallHand
 
 		$trklib = TikiLib::lib('trk');
 		$trklib->replace_tracker_option($input['tracker'], $name, $value);
-		
+
 		return true;
 	} // }}}
 }

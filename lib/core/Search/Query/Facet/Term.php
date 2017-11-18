@@ -85,7 +85,7 @@ class Search_Query_Facet_Term implements Search_Query_Facet_Interface
 
 	function setOperator($operator)
 	{
-		$this->operator = in_array($operator, array('and', 'or')) ? $operator : 'or';
+		$this->operator = in_array($operator, ['and', 'or']) ? $operator : 'or';
 		return $this;
 	}
 
@@ -94,4 +94,3 @@ class Search_Query_Facet_Term implements Search_Query_Facet_Interface
 		return $this->operator;
 	}
 }
-

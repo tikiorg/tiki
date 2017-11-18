@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -77,7 +77,8 @@ class Tracker_Field_CalendarItem extends Tracker_Field_JsCalendar
 
 			$itemId = $this->getItemId();
 			$trackerId = $this->getConfiguration('trackerId');
-			$name = $trklib->get_isMain_value($trackerId, $itemId);;
+			$name = $trklib->get_isMain_value($trackerId, $itemId);
+			;
 
 			$calitemId = $attributelib->get_attribute('tracker_item', $itemId, 'tiki.calendar.item');
 			$new = ! $calitemId;
@@ -110,9 +111,9 @@ class Tracker_Field_CalendarItem extends Tracker_Field_JsCalendar
 			//$itemInfo = $calendarlib->get_item($calitemId);
 		}
 
-		return array(
+		return [
 			'value' => $value,
-		);
+		];
 	}
 
 	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
@@ -121,18 +122,18 @@ class Tracker_Field_CalendarItem extends Tracker_Field_JsCalendar
 
 		$calitemId = TikiLib::lib('attribute')->get_attribute('tracker_item', $this->getItemId(), 'tiki.calendar.item');
 
-		return array(
+		return [
 			$baseKey => $typeFactory->timestamp($this->getValue(), $this->getOption('datetime') == 'd'),
 			"{$baseKey}_calitemid" => $typeFactory->numeric($calitemId),
-		);
+		];
 	}
 
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
 		return parent::getFieldData($requestData);
 	}
 
-	function renderInput($context = array())
+	function renderInput($context = [])
 	{
 		return parent::renderInput($context);
 	}
@@ -142,4 +143,3 @@ class Tracker_Field_CalendarItem extends Tracker_Field_JsCalendar
 		return parent::isValid($ins_fields_data);
 	}
 }
-

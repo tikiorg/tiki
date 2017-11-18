@@ -81,7 +81,7 @@ class ComposerCli
 	 */
 	protected function getComposerConfig()
 	{
-		if (!$this->checkConfigExists()) {
+		if (! $this->checkConfigExists()) {
 			return false;
 		}
 		$content = json_decode(file_get_contents($this->getComposerConfigFilePath()), true);
@@ -151,7 +151,7 @@ class ComposerCli
 	 */
 	protected function getPhpPath()
 	{
-		if (!is_null($this->phpCli)) {
+		if (! is_null($this->phpCli)) {
 			return $this->phpCli;
 		}
 
@@ -182,7 +182,7 @@ class ComposerCli
 	public function canExecuteComposer()
 	{
 		static $canExecute = null;
-		if (!is_null($canExecute)) {
+		if (! is_null($canExecute)) {
 			return $canExecute;
 		}
 
@@ -206,8 +206,8 @@ class ComposerCli
 	 */
 	protected function execComposer($args)
 	{
-		if (!is_array($args)) {
-			$args = array($args);
+		if (! is_array($args)) {
+			$args = [$args];
 		}
 
 		$builder = new ProcessBuilder();
@@ -222,7 +222,7 @@ class ComposerCli
 
 		$builder->setArguments($args);
 
-		if (!getenv('HOME') && !getenv('COMPOSER_HOME')) {
+		if (! getenv('HOME') && ! getenv('COMPOSER_HOME')) {
 			$builder->setEnv('COMPOSER_HOME', $this->basePath . self::COMPOSER_HOME);
 		}
 
@@ -245,7 +245,7 @@ class ComposerCli
 	 */
 	protected function execShow()
 	{
-		if (!$this->canExecuteComposer()) {
+		if (! $this->canExecuteComposer()) {
 			return [];
 		}
 		list($result) = $this->execComposer(['--format=json', 'show', '-d', $this->workingPath]);
@@ -272,7 +272,7 @@ class ComposerCli
 	 */
 	public function getListOfPackagesFromConfig()
 	{
-		if (!$this->checkConfigExists() || !$this->canExecuteComposer()) {
+		if (! $this->checkConfigExists() || ! $this->canExecuteComposer()) {
 			return false;
 		}
 
@@ -317,7 +317,7 @@ class ComposerCli
 	 */
 	public function installMissingPackages()
 	{
-		if (!$this->checkConfigExists() || !$this->canExecuteComposer()) {
+		if (! $this->checkConfigExists() || ! $this->canExecuteComposer()) {
 			return false;
 		}
 
@@ -335,7 +335,7 @@ class ComposerCli
 	 */
 	public function execDiagnose()
 	{
-		if (!$this->canExecuteComposer()) {
+		if (! $this->canExecuteComposer()) {
 			return false;
 		}
 
@@ -352,7 +352,7 @@ class ComposerCli
 	 */
 	public function installPackage(ComposerPackage $package)
 	{
-		if (!$this->canExecuteComposer()) {
+		if (! $this->canExecuteComposer()) {
 			return false;
 		}
 
@@ -382,7 +382,7 @@ class ComposerCli
 	 */
 	public function removePackage(ComposerPackage $package)
 	{
-		if (!$this->canExecuteComposer() || !$this->checkConfigExists()) {
+		if (! $this->canExecuteComposer() || ! $this->checkConfigExists()) {
 			return false;
 		}
 
@@ -418,34 +418,34 @@ class ComposerCli
 			'post-update-cmd',
 		];
 
-		if (!is_array($composerJson)) {
+		if (! is_array($composerJson)) {
 			$composerJson = [];
 		}
 		// require
-		if (!isset($composerJson['require'])) {
+		if (! isset($composerJson['require'])) {
 			$composerJson['require'] = [];
 		}
-		if (!isset($composerJson['require'][$package])) {
+		if (! isset($composerJson['require'][$package])) {
 			$composerJson['require'][$package] = $version;
 		}
 
 		// scripts
 		if (is_array($scripts) && count($scripts)) {
-			if (!isset($composerJson['scripts'])) {
+			if (! isset($composerJson['scripts'])) {
 				$composerJson['scripts'] = [];
 			}
 			foreach ($scriptsKeys as $type) {
-				if (!isset($scripts[$type])) {
+				if (! isset($scripts[$type])) {
 					continue;
 				}
 				$scriptList = $scripts[$type];
 				if (is_string($scriptList)) {
 					$scriptList = [$scriptList];
 				}
-				if (!count($scriptList)) {
+				if (! count($scriptList)) {
 					continue;
 				}
-				if (!isset($composerJson['scripts'][$type])) {
+				if (! isset($composerJson['scripts'][$type])) {
 					$composerJson['scripts'][$type] = [];
 				}
 				foreach ($scriptList as $scriptString) {

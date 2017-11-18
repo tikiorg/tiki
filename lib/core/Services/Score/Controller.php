@@ -9,10 +9,10 @@ class Services_Score_Controller
 
 	function setUp()
 	{
-
 	}
 
-	function action_create_score_event($input) {
+	function action_create_score_event($input)
+	{
 
 		$eventType = $input->eventType->text();
 
@@ -28,10 +28,10 @@ class Services_Score_Controller
 			$rowCount = 0;
 		}
 
-		return array (
+		return  [
 			'eventType' => $eventType,
 			'rowOnly' => $rowOnly,
 			'rowCount' => $rowCount,
-		);
+		];
 	}
 }

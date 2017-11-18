@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,18 +9,19 @@ class Tiki_Profile_InstallHandler_PluginAlias extends Tiki_Profile_InstallHandle
 {
 	function getData()
 	{
-		if ( $this->data )
+		if ($this->data) {
 			return $this->data;
+		}
 
-		$defaults = array(
-			'body' => array(
+		$defaults = [
+			'body' => [
 				'input' => 'ignore',
 				'default' => '',
-				'params' => array()
-			),
-			'params' => array(
-			),
-		);
+				'params' => []
+			],
+			'params' => [
+			],
+		];
 
 		$data = array_merge($defaults, $this->obj->getData());
 
@@ -31,11 +32,13 @@ class Tiki_Profile_InstallHandler_PluginAlias extends Tiki_Profile_InstallHandle
 	{
 		$data = $this->getData();
 
-		if ( ! isset( $data['name'], $data['implementation'], $data['description'] ) )
+		if (! isset($data['name'], $data['implementation'], $data['description'])) {
 			return false;
+		}
 
-		if ( ! is_array($data['description']) || ! is_array($data['body']) || ! is_array($data['params']) )
+		if (! is_array($data['description']) || ! is_array($data['body']) || ! is_array($data['params'])) {
 			return false;
+		}
 
 		return true;
 	}
@@ -48,8 +51,8 @@ class Tiki_Profile_InstallHandler_PluginAlias extends Tiki_Profile_InstallHandle
 		$this->replaceReferences($data);
 
 		$name = $data['name'];
-		unset( $data['name'] );
-		
+		unset($data['name']);
+
 		$parserlib = TikiLib::lib('parser');
 		$parserlib->plugin_alias_store($name, $data);
 

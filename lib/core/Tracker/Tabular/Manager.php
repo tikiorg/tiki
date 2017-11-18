@@ -54,10 +54,10 @@ class Manager
 			'format_descriptor' => json_encode($fields),
 			'filter_descriptor' => json_encode($filters),
 			'config' => json_encode([
-				'simple_headers' => intval(!empty($config['simple_headers'])),
-				'import_update' => intval(!empty($config['import_update'])),
-				'ignore_blanks' => intval(!empty($config['ignore_blanks'])),
-				'import_transaction' => intval(!empty($config['import_transaction'])),
+				'simple_headers' => intval(! empty($config['simple_headers'])),
+				'import_update' => intval(! empty($config['import_update'])),
+				'ignore_blanks' => intval(! empty($config['ignore_blanks'])),
+				'import_transaction' => intval(! empty($config['import_transaction'])),
 			])
 		], ['tabularId' => $tabularId]);
 	}
@@ -67,4 +67,3 @@ class Manager
 		return $this->table->delete(['tabularId' => $tabularId]);
 	}
 }
-

@@ -9,16 +9,17 @@ class Tiki_Profile_InstallHandler_Article extends Tiki_Profile_InstallHandler
 {
 	function getData()
 	{
-		if ( $this->data )
+		if ($this->data) {
 			return $this->data;
+		}
 
 		$data = $this->obj->getData();
 
-		$defaults = array(
+		$defaults = [
 			'author' => 'Anonymous',
 			'heading' => '',
 			'publication_date' => time(),
-			'expiration_date' => time() + 3600*24*365,
+			'expiration_date' => time() + 3600 * 24 * 365,
 			'type' => 'Article',
 			'topic' => 0,
 			'topline' => '',
@@ -26,7 +27,7 @@ class Tiki_Profile_InstallHandler_Article extends Tiki_Profile_InstallHandler
 			'link_to' => '',
 			'language' => 'en',
 			'geolocation' => '',
-		);
+		];
 
 		$data = array_merge($defaults, $data);
 
@@ -37,8 +38,9 @@ class Tiki_Profile_InstallHandler_Article extends Tiki_Profile_InstallHandler
 	{
 		$data = $this->getData();
 
-		if ( ! isset( $data['title'], $data['topic'], $data['body'] ) )
+		if (! isset($data['title'], $data['topic'], $data['body'])) {
 			return false;
+		}
 
 		return true;
 	}
@@ -96,7 +98,7 @@ class Tiki_Profile_InstallHandler_Article extends Tiki_Profile_InstallHandler
 
 		$bodypage = "article_{$id}_body";
 		$writer->writeExternal($bodypage, $writer->getReference('wiki_content', $info['body']));
-		$out = array(
+		$out = [
 			'title' => $info['title'],
 			'author' => $info['authorName'],
 			'body' => "wikicontent:$bodypage",
@@ -107,7 +109,7 @@ class Tiki_Profile_InstallHandler_Article extends Tiki_Profile_InstallHandler
 			'subtitle' => $info['subtitle'],
 			'link_to' => $info['linkto'],
 			'language' => $info['lang'],
-		);
+		];
 
 		if ($info['topicId']) {
 			if ($withTopic) {

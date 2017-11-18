@@ -60,7 +60,7 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 				$this->setOption('cron_token', $token);
 			}
 
-			$this->fetchExternalData($cronUrl, array('token' => $token), false);
+			$this->fetchExternalData($cronUrl, ['token' => $token], false);
 		}
 	}
 
@@ -83,7 +83,8 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 			// Setup Core and Interface components that are always needed
 			$interface = new \H5P_H5PTiki();
 
-			$core = new \H5PCore($interface,
+			$core = new \H5PCore(
+				$interface,
 				$tikipath . self::$h5p_path,   // Where the extracted content files will be stored
 				$tikiroot . self::$h5p_path,     // URL of the previous option
 				$prefs['language'],                  // TODO: Map proper language code from Tiki to H5P langs
@@ -124,11 +125,11 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 	{
 		$TWV = new TWVersion();
 
-		return array(
+		return [
 			'name' => 'Tiki',
 			'version' => $TWV->version,
 			'h5pVersion' => '1.0.0', // TODO: Use variable? (\H5PLib not loaded)
-		);
+		];
 	}
 
 	/**
@@ -143,7 +144,7 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 		$handle = curl_init($url);
 		curl_setopt($handle, CURLOPT_POST, true);
 		curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
-	 	curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
+		 curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
 
 		if (! $blocking) {
 			curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 0.01);
@@ -152,7 +153,7 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 		$response = curl_exec($handle);
 		curl_close($handle);
 
-		if (!$response) {
+		if (! $response) {
 			$error = curl_error($handle);
 			// Print error?
 		}
@@ -170,9 +171,10 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 	 */
 	public function setLibraryTutorialUrl($machineName, $tutorialUrl)
 	{
-		$this->tiki_h5p_libraries->update([
+		$this->tiki_h5p_libraries->update(
+			[
 			'tutorial_url' => $tutorialUrl,
-		],
+			],
 			['name' => $machineName]
 		);
 	}
@@ -220,12 +222,12 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 	 * @return string Translated string
 	 * Translated string
 	 */
-	public function t($message, $replacements = array())
+	public function t($message, $replacements = [])
 	{
 		$args = [];
 		$counter = 0;
 
-		foreach($replacements as $key => $val) {
+		foreach ($replacements as $key => $val) {
 			$args[] = $val;
 			$message = str_replace($key, "%$counter", $message);
 		}
@@ -465,7 +467,7 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 		$dropLibraryCss = '';
 
 		if (isset($libraryData['dropLibraryCss'])) {
-			$libs = array();
+			$libs = [];
 			foreach ($libraryData['dropLibraryCss'] as $lib) {
 				$libs[] = $lib['machineName'];
 			}
@@ -501,7 +503,8 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 
 			$libraryData['libraryId'] = $libraryId;
 		} else {
-			$this->tiki_h5p_libraries->update([
+			$this->tiki_h5p_libraries->update(
+				[
 				'title' => $libraryData['title'],
 				'patch_version' => $libraryData['patchVersion'],
 				'runnable' => $libraryData['runnable'],
@@ -511,7 +514,7 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 				'preloaded_css' => $preloadedCss,
 				'drop_library_css' => $dropLibraryCss,
 				'semantics' => $libraryData['semantics'],
-			],
+				],
 				['id' => $libraryData['libraryId']]
 			);
 
@@ -519,9 +522,14 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 		}
 
 		// Log library successfully installed/upgraded
-		new H5P_Event('library', ($new ? 'create' : 'update'),
-			NULL, NULL,
-			$libraryData['machineName'], $libraryData['majorVersion'] . '.' . $libraryData['minorVersion']);
+		new H5P_Event(
+			'library',
+			($new ? 'create' : 'update'),
+			null,
+			null,
+			$libraryData['machineName'],
+			$libraryData['majorVersion'] . '.' . $libraryData['minorVersion']
+		);
 
 		$this->tiki_h5p_libraries_languages->deleteMultiple(['library_id' => $libraryData['libraryId']]);
 
@@ -549,7 +557,7 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 	private function pathsToCsv($libraryData, $key)
 	{
 		if (isset($libraryData[$key])) {
-			$paths = array();
+			$paths = [];
 			foreach ($libraryData[$key] as $file) {
 				$paths[] = $file['path'];
 			}
@@ -602,7 +610,7 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 		}
 
 
-		$data = array(
+		$data = [
 			'updated_at' => date("Y-m-d H:i:s", TikiLib::lib('tiki')->now),
 			'title' => $title,
 			'parameters' => isset($content['params']) ? $content['params'] : '',
@@ -612,7 +620,7 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 			'slug' => '',
 			'disable' => isset($content['disable']) ? $content['disable'] : 0,
 			'file_id' => $contentMainId,
-		);
+		];
 
 		if (! isset($content['id'])) {
 			// Insert new content
@@ -634,11 +642,14 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 		if (! empty($content['uploaded'])) {
 			$event_type .= ' upload';
 		}
-		new H5P_Event('content', $event_type,
+		new H5P_Event(
+			'content',
+			$event_type,
 			$content['id'],
 			$content['title'],
 			$content['library']['machineName'],
-			$content['library']['majorVersion'] . '.' . $content['library']['minorVersion']);
+			$content['library']['majorVersion'] . '.' . $content['library']['minorVersion']
+		);
 
 		return $content['id'];
 	}
@@ -672,7 +683,6 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 	public function saveLibraryDependencies($libraryId, $dependencies, $dependencyType)
 	{
 		foreach ($dependencies as $dependency) {
-
 			$lh = $this->tiki_h5p_libraries->fetchOne(
 				'id',
 				[
@@ -836,8 +846,8 @@ FROM `tiki_h5p_libraries` l
 JOIN `tiki_h5p_contents_libraries` cl ON l.`id` = cl.`library_id`
 JOIN `tiki_h5p_contents` c ON cl.content_id = c.id
 WHERE l.id = ?',
-				$libraryId)
-			);
+				$libraryId
+			));
 		}
 
 		return $usage;
@@ -946,7 +956,7 @@ WHERE hll.`library_id` = ?',
 		if (file_exists($semanticsPath)) {
 			$semantics = file_get_contents($semanticsPath);
 			if (! json_decode($semantics, true)) {
-				$this->setErrorMessage($this->t('Invalid json in semantics for %library', array('%library' => $name)));
+				$this->setErrorMessage($this->t('Invalid json in semantics for %library', ['%library' => $name]));
 			}
 			return $semantics;
 		}
@@ -1082,7 +1092,8 @@ WHERE hll.`library_id` = ?',
 FROM `tiki_h5p_contents` hc
 JOIN `tiki_h5p_libraries` hl ON hl.id = hc.library_id
 WHERE hc.id =?',
-			$id);
+			$id
+		);
 
 		$row = $content->fetchRow();
 		return $row;
@@ -1120,7 +1131,7 @@ hcl.`drop_css` AS dropCss, hcl.`dependency_type` AS dependencyType
 
 		$queryArgs = [$id];
 
-		if ($type !== NULL) {
+		if ($type !== null) {
 			$query .= " AND hcl.`dependency_type` = ?";
 			$queryArgs[] = $type;
 		}
@@ -1294,11 +1305,9 @@ hcl.`drop_css` AS dropCss, hcl.`dependency_type` AS dependencyType
 	public function saveCachedAssets($key, $libraries)
 	{
 		foreach ($libraries as $library) {
-
 			$libraryId = isset($library['id']) ? $library['id'] : $library['libraryId'];
 
 			if (! $this->tiki_h5p_libraries_cachedassets->fetchCount(['library_id' => $libraryId])) {
-
 				$this->tiki_h5p_libraries_cachedassets->insert(
 					[
 						'library_id' => $libraryId,
@@ -1350,7 +1359,7 @@ hcl.`drop_css` AS dropCss, hcl.`dependency_type` AS dependencyType
 	 */
 	public function getLibraryContentCount()
 	{
-		$count = array();
+		$count = [];
 
 		// Find number of content per library
 		$results = TikiDb::get()->query('

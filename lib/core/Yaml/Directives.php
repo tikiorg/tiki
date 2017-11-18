@@ -42,7 +42,7 @@ class Directives
 			return;
 		}
 		$directive = new $class();
-		$directive->process($value, $key, array('path' => $this->path));
+		$directive->process($value, $key, ['path' => $this->path]);
 	}
 
 	protected function directiveFromValue($value)
@@ -88,13 +88,13 @@ class Directives
 			$this->applyDirective($this->directiveFromValue($value), $value, $key);
 		} else {
 			if (is_array($value)) {
-				array_walk($value, array($this, "map"));
+				array_walk($value, [$this, "map"]);
 			}
 		}
 	}
 
 	public function process(&$yaml)
 	{
-		array_walk($yaml, array($this, "map"));
+		array_walk($yaml, [$this, "map"]);
 	}
 }

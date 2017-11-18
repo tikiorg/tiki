@@ -105,7 +105,7 @@ abstract class TikiDb
 	{
 		$result = $this->query($query, $values, $numrows, $offset, $reporterrors);
 
-		$rows = array();
+		$rows = [];
 
 		if ($result) {
 			while ($row = $result->fetchRow()) {
@@ -119,7 +119,7 @@ abstract class TikiDb
 	{
 		$result = $this->fetchAll($query, $values, $numrows, $offset, $reporterrors);
 
-		$map = array();
+		$map = [];
 
 		foreach ($result as $row) {
 			$key = array_shift($row);
@@ -177,28 +177,27 @@ abstract class TikiDb
 		}
 	} // }}}
 
-	protected function convertQueryTablePrefixes( &$query ) // {{{
+	protected function convertQueryTablePrefixes(&$query) // {{{
 	{
 		$db_table_prefix = $this->tablePrefix;
 		$common_users_table_prefix = $this->usersTablePrefix;
 
-		if ( !is_null($db_table_prefix) && !empty($db_table_prefix) ) {
-
-			if ( !is_null($common_users_table_prefix) && !empty($common_users_table_prefix) ) {
-				$query = str_replace("`users_", "`".$common_users_table_prefix."users_", $query);
+		if (! is_null($db_table_prefix) && ! empty($db_table_prefix)) {
+			if (! is_null($common_users_table_prefix) && ! empty($common_users_table_prefix)) {
+				$query = str_replace("`users_", "`" . $common_users_table_prefix . "users_", $query);
 			} else {
-				$query = str_replace("`users_", "`".$db_table_prefix."users_", $query);
+				$query = str_replace("`users_", "`" . $db_table_prefix . "users_", $query);
 			}
 
-			$query = str_replace("`tiki_", "`".$db_table_prefix."tiki_", $query);
-			$query = str_replace("`messu_", "`".$db_table_prefix."messu_", $query);
-			$query = str_replace("`sessions", "`".$db_table_prefix."sessions", $query);
+			$query = str_replace("`tiki_", "`" . $db_table_prefix . "tiki_", $query);
+			$query = str_replace("`messu_", "`" . $db_table_prefix . "messu_", $query);
+			$query = str_replace("`sessions", "`" . $db_table_prefix . "sessions", $query);
 		}
 	} // }}}
 
-	function convertSortMode( $sort_mode, $fields = null ) // {{{
+	function convertSortMode($sort_mode, $fields = null) // {{{
 	{
-		if ( !$sort_mode ) {
+		if (! $sort_mode) {
 			return '1';
 		}
 		// parse $sort_mode for evil stuff
@@ -206,7 +205,7 @@ abstract class TikiDb
 		$sort_mode = preg_replace('/[^A-Za-z_,.]/', '', $sort_mode);
 
 		// Do not process empty sort modes
-		if ( empty($sort_mode) ) {
+		if (empty($sort_mode)) {
 			return '1';
 		}
 
@@ -214,14 +213,13 @@ abstract class TikiDb
 			return "RAND()";
 		}
 
-		$sorts = array();
+		$sorts = [];
 		foreach (explode(',', $sort_mode) as $sort) {
-
 			// force ending to either _asc or _desc unless it's "random"
 			$sep = strrpos($sort, '_');
 			$dir = substr($sort, $sep);
 			if (($dir !== '_asc') && ($dir !== '_desc')) {
-				if ( $sep != (strlen($sort) - 1) ) {
+				if ($sep != (strlen($sort) - 1)) {
 					$sort .= '_';
 				}
 				$sort .= 'asc';
@@ -245,7 +243,7 @@ abstract class TikiDb
 			return '1';
 		}
 
-		$sort_mode=implode(',', $sorts);
+		$sort_mode = implode(',', $sorts);
 		return $sort_mode;
 	} // }}}
 
@@ -254,12 +252,12 @@ abstract class TikiDb
 		return $this->savedQuery;
 	} // }}}
 
-	function setQuery( $sql ) // {{{
+	function setQuery($sql) // {{{
 	{
 		$this->savedQuery = $sql;
 	} // }}}
 
-	function ifNull( $field, $ifNull ) // {{{
+	function ifNull($field, $ifNull) // {{{
 	{
 		return " COALESCE($field, $ifNull) ";
 	} // }}}
@@ -267,12 +265,13 @@ abstract class TikiDb
 	function in($field, $values, &$bindvars) // {{{
 	{
 		$parts = explode('.', $field);
-		foreach ($parts as &$part)
+		foreach ($parts as &$part) {
 			$part = '`' . $part . '`';
+		}
 		$field = implode('.', $parts);
 		$bindvars = array_merge($bindvars, $values);
 
-		if (count($values) > 0 ) {
+		if (count($values) > 0) {
 			$values = rtrim(str_repeat('?,', count($values)), ',');
 			return " $field IN( $values ) ";
 		} else {
@@ -282,7 +281,7 @@ abstract class TikiDb
 
 	function parentObjects(&$objects, $table, $childKey, $parentKey) // {{{
 	{
-		$query = "select `$childKey`, `$parentKey` from `$table` where `$childKey` in (".implode(',', array_fill(0, count($objects), '?')) .')';
+		$query = "select `$childKey`, `$parentKey` from `$table` where `$childKey` in (" . implode(',', array_fill(0, count($objects), '?')) . ')';
 		foreach ($objects as $object) {
 			$bindvars[] = $object['itemId'];
 		}
@@ -290,7 +289,7 @@ abstract class TikiDb
 		while ($res = $result->fetchRow()) {
 			$ret[$res[$childKey]] = $res[$parentKey];
 		}
-		foreach ($objects as $i=>$object) {
+		foreach ($objects as $i => $object) {
 			$objects[$i][$parentKey] = $ret[$object['itemId']];
 		}
 	} // }}}
@@ -301,8 +300,11 @@ abstract class TikiDb
 
 		// suggestion by andrew005@mnogo.ru
 		$s = implode(',', $arr);
-		if (strlen($s) > 0) return "CONCAT($s)";
-		else return '';
+		if (strlen($s) > 0) {
+			return "CONCAT($s)";
+		} else {
+			return '';
+		}
 	} // }}}
 
 	function table($tableName, $autoIncrement = true) // {{{
@@ -321,7 +323,7 @@ abstract class TikiDb
 	*/
 	function getEngines()
 	{
-		static $engines = array();
+		static $engines = [];
 		if (empty($engines)) {
 			$result = $this->query('show engines');
 			if ($result) {
@@ -422,7 +424,7 @@ abstract class TikiDb
 	function listTables()
 	{
 		$result = $this->fetchAll("show tables");
-		$list = array();
+		$list = [];
 
 		if ($result) {
 			foreach ($result as $row) {
@@ -432,23 +434,23 @@ abstract class TikiDb
 
 		return $list;
 	}
-	
+
 	/*
 	*	isMySQLConnSSL
 	*	Check if MySQL is using an SSL connection
 	*	@return true if MySQL uses SSL. Otherwise false;
 	*/
-	function isMySQLConnSSL() 
+	function isMySQLConnSSL()
 	{
-		if(!$this->haveMySQLSSL()) {
+		if (! $this->haveMySQLSSL()) {
 			return false;
 		}
 		$result = $this->query('show status like "Ssl_cipher"');
 		$ret = $result->fetchRow();
 		$cypher = $ret['Value'];
-		return !empty($cypher);
+		return ! empty($cypher);
 	}
-	
+
 	/*
 	*	Check if the MySQL installation has SSL activated
 	*	@return true is SSL is supported and activated on the current MySQL server
@@ -456,15 +458,15 @@ abstract class TikiDb
 	function haveMySQLSSL()
 	{
 		static $haveMySQLSSL = null;
-		
-		if (!isset($haveMySQLSSL)) {
+
+		if (! isset($haveMySQLSSL)) {
 			$result = $this->query('show variables like "have_ssl"');
 			$ret = $result->fetchRow();
 			if (empty($ret)) {
 				$result = $this->query('show variables like "have_openssl"');
 				$ret = $result->fetchRow();
 			}
-			if (!isset($ret)) {
+			if (! isset($ret)) {
 				$haveMySQLSSL = false;
 			}
 			$ssl = $ret['Value'];

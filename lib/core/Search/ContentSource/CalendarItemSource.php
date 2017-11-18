@@ -16,9 +16,9 @@ class Search_ContentSource_CalendarItemSource implements Search_ContentSource_In
 
 	function getReferenceMap()
 	{
-		return array(
+		return [
 			'calendar_id' => 'calendar',
-		);
+		];
 	}
 
 	function getDocuments()
@@ -47,13 +47,13 @@ class Search_ContentSource_CalendarItemSource implements Search_ContentSource_In
 
 		if ($item['status'] == 0) {
 			$status_text = tr('Tentative');
-		} else if ($item['status'] == 1) {
+		} elseif ($item['status'] == 1) {
 			$status_text = tr('Confirmed');
-		} else if ($item['status'] == 2) {
+		} elseif ($item['status'] == 2) {
 			$status_text = tr('Cancelled');
 		}
 
-		$data = array(
+		$data = [
 			'title' => $typeFactory->sortable($item['name']),
 			'language' => $typeFactory->identifier(empty($item['lang']) ? 'unknown' : $item['lang']),
 			'creation_date' => $typeFactory->timestamp($item['created']),
@@ -76,14 +76,14 @@ class Search_ContentSource_CalendarItemSource implements Search_ContentSource_In
 			'parent_object_type' => $typeFactory->identifier('calendar'),
 			'parent_object_id' => $typeFactory->identifier($item['calendarId']),
 			'parent_view_permission' => $typeFactory->identifier('tiki_p_view_calendar'),
-		);
+		];
 
 		return $data;
 	}
 
 	function getProvidedFields()
 	{
-		return array(
+		return [
 			'title',
 			'language',
 			'creation_date',
@@ -101,19 +101,18 @@ class Search_ContentSource_CalendarItemSource implements Search_ContentSource_In
 			'parent_view_permission',
 			'parent_object_id',
 			'parent_object_type',
-		);
+		];
 	}
 
 	function getGlobalFields()
 	{
-		return array(
+		return [
 			'title' => true,
 			'description' => true,
 			'filename' => true,
 
 			'file_comment' => false,
 			'file_content' => false,
-		);
+		];
 	}
 }
-

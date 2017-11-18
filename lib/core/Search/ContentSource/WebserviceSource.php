@@ -28,7 +28,7 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 			if ($row['output'] === 'mindex') {	// multi-index
 				$data = $this->getData($row['service'], $row['template']);
 				if ($data) {
-					foreach($data['mapping'] as $topObject => $topValue) {
+					foreach ($data['mapping'] as $topObject => $topValue) {
 						if (is_array($data['data'][$topObject])) {
 							foreach ($data['data'][$topObject] as $key => $val) {
 								$out[] = $row['template'] . ':' . $key;
@@ -47,32 +47,32 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 	/**
 	 * Uses a JSON formatted "template" value set in the webservices interface
 	 * example mapping for a single google place - use http://www.jsoneditoronline.org/ to check syntax
-	 	{
-	 	  "result": {
-	 	    "name": {
-	 	      "type": "sortable",
-	 	      "field": "name"
-	 	    },
-	 	    "formatted_address": {
-	 	      "type": "sortable",
-	 	      "field": "address"
-	 	    },
-	 	    "formatted_phone_number": {
-	 	      "type": "sortable",
-	 	      "field": "phone"
-	 	    },
-	 	    "opening_hours": {
-	 	      "weekday_text": {
-	 	        "type": "multivalue",
-	 	        "field": "opening_hours"
-	 	      }
-	 	    },
-	 	    "types": {
-	 	      "type": "multivalue",
-	 	      "field": "google_types"
-	 	    }
-	 	  }
-	 	}
+		 {
+		   "result": {
+			 "name": {
+			   "type": "sortable",
+			   "field": "name"
+			 },
+			 "formatted_address": {
+			   "type": "sortable",
+			   "field": "address"
+			 },
+			 "formatted_phone_number": {
+			   "type": "sortable",
+			   "field": "phone"
+			 },
+			 "opening_hours": {
+			   "weekday_text": {
+				 "type": "multivalue",
+				 "field": "opening_hours"
+			   }
+			 },
+			 "types": {
+			   "type": "multivalue",
+			   "field": "google_types"
+			 }
+		   }
+		 }
 	 *
 	 *
 	 * @param $templateName
@@ -85,9 +85,7 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 
 			list ($templateName, $index) = explode(':', $templateName);
 			$serviceName = $this->tiki_webservice_template->fetchOne('service', ['template' => $templateName]);
-
 		} else {
-
 			$row = $this->tiki_webservice_template->fetchRow(['service', 'template', 'output',], ['template' => $templateName]);
 
 			if ($row['output'] === 'mindex') {
@@ -164,7 +162,8 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 	 * @param bool $plain
 	 * @return bool
 	 */
-	private function mapValue($value, $mapInfo, $typeFactory, & $destinationArray, $plain = false) {
+	private function mapValue($value, $mapInfo, $typeFactory, & $destinationArray, $plain = false)
+	{
 		if (isset($mapInfo['type']) & isset($mapInfo['field'])) {
 			$type = $mapInfo['type'];
 			if (! $plain && is_callable([$typeFactory, $type])) {
@@ -183,7 +182,8 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 	 * @param array $params
 	 * @return bool|mixed|string
 	 */
-	function getData($serviceName, $templateName, $params = null) {
+	function getData($serviceName, $templateName, $params = null)
+	{
 		require_once 'lib/webservicelib.php';
 
 		$webservice = \Tiki_Webservice::getService($serviceName);
@@ -209,22 +209,21 @@ class Search_ContentSource_WebserviceSource implements Search_ContentSource_Inte
 
 	function getProvidedFields()
 	{
-		return array(
+		return [
 			'title',
 			'description',
 			'modification_date',
 
 			'view_permission',
 			// TODO more
-		);
+		];
 	}
 
 	function getGlobalFields()
 	{
-		return array(
+		return [
 			'title' => true,
 			'description' => true,
-		);
+		];
 	}
 }
-

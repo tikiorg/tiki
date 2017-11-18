@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * Handler class for User preference
- * 
+ *
  * Letter key: ~p~
  *
  */
@@ -15,43 +15,43 @@ class Tracker_Field_UserPreference extends Tracker_Field_Abstract
 {
 	public static function getTypes()
 	{
-		return array(
-			'p' => array(
+		return [
+			'p' => [
 				'name' => tr('User Preference'),
 				'description' => tr('Allows user preference changes from a tracker.'),
 				'help' => 'User Preference Field',
-				'prefs' => array('trackerfield_userpreference'),
-				'tags' => array('advanced'),
+				'prefs' => ['trackerfield_userpreference'],
+				'tags' => ['advanced'],
 				'default' => 'n',
-				'params' => array(
-					'type' => array(
+				'params' => [
+					'type' => [
 						'name' => tr('Preference Name'),
 						'description' => tr('Name of the preference to manipulate. password and email are not preferences, but are also valid values that will modify the user\'s profile.'),
 						'filter' => 'word',
 						'legacy_index' => 0,
-					),
-				),
-			),
-		);
+					],
+				],
+			],
+		];
 	}
 
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
 		$ins_id = $this->getInsertId();
-		
+
 		if (isset($requestData[$ins_id])) {
 			$value = $requestData[$ins_id];
 		} else {
 			$userlib = TikiLib::lib('user');
 			$trklib = TikiLib::lib('trk');
-	
+
 			$value = '';
 			$itemId = $this->getItemId();
-			
+
 			if ($itemId) {
 				$itemUsers = $this->getTrackerDefinition()->getItemUsers($itemId);
-		
-				if (!empty($itemUsers)) {
+
+				if (! empty($itemUsers)) {
 					if ($this->getOption('type') == 'email') {
 						$value = $userlib->get_user_email($itemUsers[0]);
 					} else {
@@ -60,11 +60,12 @@ class Tracker_Field_UserPreference extends Tracker_Field_Abstract
 				}
 			}
 		}
-					
-		return array('value' => $value);
+
+		return ['value' => $value];
 	}
 
-	function renderInnerOutput($context = array()) {
+	function renderInnerOutput($context = [])
+	{
 		$fieldData = $this->getFieldData();
 		$value = $fieldData['value'];
 		if ($this->getOption('type') === 'country') {
@@ -73,7 +74,7 @@ class Tracker_Field_UserPreference extends Tracker_Field_Abstract
 		return $value;
 	}
 
-	function renderInput($context = array())
+	function renderInput($context = [])
 	{
 		if ($this->getOption('type') === 'country') {
 			$context['flags'] = TikiLib::lib('tiki')->get_flags('', '', '', true);
@@ -84,9 +85,8 @@ class Tracker_Field_UserPreference extends Tracker_Field_Abstract
 	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
 		$baseKey = $this->getBaseKey();
-		return array(
+		return [
 			$baseKey => $typeFactory->plaintext($this->renderInnerOutput()),
-		);
+		];
 	}
 }
-

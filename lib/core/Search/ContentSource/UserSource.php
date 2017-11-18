@@ -26,7 +26,7 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 
 	function getDocuments()
 	{
-		return $this->db->table('users_users')->fetchColumn('login', array());
+		return $this->db->table('users_users')->fetchColumn('login', []);
 	}
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
@@ -72,7 +72,7 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 		}
 		if ($prefs['allowmsg_is_optional'] == 'y' && isset($detail['preferences']['allowMsgs'])) {
 			$allowMsgs = $detail['preferences']['allowMsgs'];
-		}else{
+		} else {
 			$allowMsgs = 'y';
 		}
 		if (isset($detail['preferences']['user_style'])) {
@@ -83,15 +83,15 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 
 		$user_language = $this->tiki->get_language($objectId);
 		$langLib = TikiLib::lib('language');
-		$user_language_text = $langLib->format_language_list(array($user_language));
+		$user_language_text = $langLib->format_language_list([$user_language]);
 
 		$userPage = $prefs['feature_wiki_userpage_prefix'] . $objectId;
-		if (! $this->tiki->page_exists($userPage)){
+		if (! $this->tiki->page_exists($userPage)) {
 			$userPage = "";
 		}
 
 
-		$data = array(
+		$data = [
 			'title' => $typeFactory->sortable($name),
 			'creation_date' => $typeFactory->timestamp($detail['info']['created']),
 			'wiki_content' => $typeFactory->wikitext($content),
@@ -110,10 +110,10 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 
 			'searchable' => $typeFactory->identifier($this->userIsIndexed($detail) ? 'y' : 'n'),
 			'groups' => $typeFactory->multivalue($detail['groups']),
-			'_extra_groups' => array('Registered'), // Add all registered to allowed groups
+			'_extra_groups' => ['Registered'], // Add all registered to allowed groups
 
 			'view_permission' => $typeFactory->identifier('tiki_p_list_users'),
-		);
+		];
 
 		$data = array_merge($data, $this->getTrackerFieldsForUser($objectId, $typeFactory));
 
@@ -139,7 +139,7 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 			return $data;
 		}
 
-		$data = array(
+		$data = [
 			'title',
 			'creation_date',
 			'wiki_content',
@@ -159,7 +159,7 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 			'searchable',
 			'groups',
 			'_extra_groups',
-		);
+		];
 
 		foreach ($this->getAllIndexableHandlers() as $baseKey => $handler) {
 			$data = array_merge($data, $handler->getProvidedFields($baseKey));
@@ -176,12 +176,12 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 			return $data;
 		}
 
-		$data = array(
+		$data = [
 			'title' => true,
 
 			'wiki_content' => false,
 			'user_country' => true,
-		);
+		];
 
 		foreach ($this->getAllIndexableHandlers() as $baseKey => $handler) {
 			$data = array_merge($data, $handler->getGlobalFields($baseKey));
@@ -194,7 +194,7 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 	{
 		$result = $this->db->fetchAll("SELECT DISTINCT usersTrackerId FROM users_groups WHERE usersTrackerId IS NOT NULL");
 
-		$handlers = array();
+		$handlers = [];
 		foreach ($result as $row) {
 			if ($definition = Tracker_Definition::get($row['usersTrackerId'])) {
 				$handlers = array_merge($handlers, Search_ContentSource_TrackerItemSource::getIndexableHandlers($definition));
@@ -212,10 +212,11 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 				users_groups
 				INNER JOIN tiki_tracker_item_fields ON usersFieldId = fieldId
 			WHERE value = ? AND usersTrackerId IS NOT NULL
-			", array($user)
+			",
+			[$user]
 		);
 
-		$data = array();
+		$data = [];
 		foreach ($result as $row) {
 			$definition = Tracker_Definition::get($row['trackerId']);
 
@@ -224,10 +225,10 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 			}
 
 			$item = $this->trk->get_tracker_item($row['itemId']);
-			$data = array_merge($data, array(
+			$data = array_merge($data, [
 				'tracker_item_id' => $typeFactory->identifier($row['itemId']),
 				'tracker_item_status' => $typeFactory->identifier($item['status']),
-			));
+			]);
 
 			foreach (Search_ContentSource_TrackerItemSource::getIndexableHandlers($definition, $item) as $baseKey => $handler) {
 				$data = array_merge($data, $handler->getDocumentPart($typeFactory));
@@ -237,4 +238,3 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 		return $data;
 	}
 }
-

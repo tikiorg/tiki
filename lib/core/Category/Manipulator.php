@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -10,16 +10,16 @@ class Category_Manipulator
 	private $objectType;
 	private $objectId;
 
-	private $current = array();
-	private $managed = array();
-	private $unmanaged = array();
-	private $constraints = array(
-		'required' => array(),
-	);
-	private $new = array();
+	private $current = [];
+	private $managed = [];
+	private $unmanaged = [];
+	private $constraints = [
+		'required' => [],
+	];
+	private $new = [];
 
 	private $prepared = false;
-	private $overrides = array();
+	private $overrides = [];
 	private $overrideAll = false;
 
 	function __construct($objectType, $objectId)
@@ -28,15 +28,15 @@ class Category_Manipulator
 		$this->objectId = $objectId;
 	}
 
-	function addRequiredSet(array $categories, $default, $filter=null, $type=null)
+	function addRequiredSet(array $categories, $default, $filter = null, $type = null)
 	{
 		$categories = array_unique($categories);
-		$this->constraints['required'][] = array(
+		$this->constraints['required'][] = [
 			'set' => $categories,
 			'default' => $default,
 			'filter' => $filter,
 			'type' => $type
-		);
+		];
 	}
 
 	function overrideChecks()
@@ -80,7 +80,7 @@ class Category_Manipulator
 		return $this->filter($attempt, 'remove_object');
 	}
 
-	
+
 	/*
 	 * Check wether the given permission is allowed for the given categories.
 	 * Note: The group in question requires also the _global_ permission 'modify_object_categories'
@@ -89,14 +89,14 @@ class Category_Manipulator
 	 * @param string  $permission - required permission for that category. Ie. 'add_category'
 	 * @return array $authorizedCategories - filterd list of given $categories that have proper permissions set.
 	 */
-	private function filter( $categories, $permission )
+	private function filter($categories, $permission)
 	{
-		$objectperms = Perms::get(array('type' => $this->objectType, 'object' => $this->objectId));
+		$objectperms = Perms::get(['type' => $this->objectType, 'object' => $this->objectId]);
 		$canModifyObject = $objectperms->modify_object_categories;
 
-		$out = array();
+		$out = [];
 		foreach ($categories as $categ) {
-			$perms = Perms::get(array('type' => 'category', 'object' => $categ));
+			$perms = Perms::get(['type' => 'category', 'object' => $categ]);
 			$hasCategoryPermission = $perms->$permission;
 
 			if ($this->overrideAll || ($canModifyObject && $hasCategoryPermission) || in_array($categ, $this->overrides)) {
@@ -115,14 +115,14 @@ class Category_Manipulator
 		}
 
 		$categories = $this->managed;
-		Perms::bulk(array('type' => 'category'), 'object', $categories);
+		Perms::bulk(['type' => 'category'], 'object', $categories);
 
 		if (count($this->managed)) {
 			$base = array_diff($this->current, $this->managed);
 			$managed = array_intersect($this->new, $this->managed);
 			$this->new = array_merge($base, $managed);
 		}
-		
+
 		if (count($this->unmanaged)) {
 			$base = array_intersect($this->current, $this->unmanaged);
 			$managed = array_diff($this->new, $this->unmanaged);
@@ -144,14 +144,14 @@ class Category_Manipulator
 
 			$interim = array_intersect($this->new, $set);
 
-			if (!empty($type) && $type != $this->objectType) {
+			if (! empty($type) && $type != $this->objectType) {
 				return;
 			}
-				
-			if (!empty($filter)) {
+
+			if (! empty($filter)) {
 				$objectlib = TikiLib::lib('object');
 				$info = $objectlib->get_info($this->objectType, $this->objectId);
-				if (!preg_match($filter, $info['title'])) {
+				if (! preg_match($filter, $info['title'])) {
 					return;
 				}
 			}

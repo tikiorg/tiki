@@ -9,12 +9,13 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 {
 	private function getData() // {{{
 	{
-		if ( $this->data )
+		if ($this->data) {
 			return $this->data;
+		}
 
 		$data = $this->obj->getData();
 
-		$data = Tiki_Profile::convertLists($data, array('show' => 'y', 'allow' => 'y'), true);
+		$data = Tiki_Profile::convertLists($data, ['show' => 'y', 'allow' => 'y'], true);
 
 		$data = Tiki_Profile::convertYesNo($data);
 
@@ -24,7 +25,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 	public static function getOptionMap() // {{{
 	{
 		// Also used by TrackerOption
-		return array(
+		return [
 			'name' => '',
 			'description' => '',
 			'fieldPrefix' => '',
@@ -52,7 +53,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 			'allow_comments' => 'useComments',
 			'allow_attachments' => 'useAttachments',
 			'restrict_start' => 'start',
-			'restrict_end' =>  'end',
+			'restrict_end' => 'end',
 			'hide_list_empty_fields' => 'doNotShowEmptyField',
 			'allow_one_item_per_user' => 'oneUserItem',
 			'section_format' => 'sectionFormat',
@@ -60,7 +61,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 			'admin_only_view' => 'adminOnlyViewEditItem',
 			'use_form_classes' => 'useFormClasses',
 			'form_classes' => 'formClasses',
-		);
+		];
 	} // }}}
 
 	private static function getDefaults() // {{{
@@ -86,14 +87,14 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 	public static function getOptionConverters() // {{{
 	{
 		// Also used by TrackerOption
-		return array(
+		return [
 			'restrict_start' => new Tiki_Profile_DateConverter,
 			'restrict_end' => new Tiki_Profile_DateConverter,
-			'sort_default_field' => new Tiki_Profile_ValueMapConverter(array( 'modification' => -1, 'creation' => -2, 'item' => -3 )),
-			'list_default_status' => new Tiki_Profile_ValueMapConverter(array( 'open' => 'o', 'pending' => 'p', 'closed' => 'c' )),
-			'default_status' => new Tiki_Profile_ValueMapConverter(array( 'open' => 'o', 'pending' => 'p', 'closed' => 'c' )),
-			'modification_status' => new Tiki_Profile_ValueMapConverter(array( 'open' => 'o', 'pending' => 'p', 'closed' => 'c' )),
-		);
+			'sort_default_field' => new Tiki_Profile_ValueMapConverter([ 'modification' => -1, 'creation' => -2, 'item' => -3 ]),
+			'list_default_status' => new Tiki_Profile_ValueMapConverter([ 'open' => 'o', 'pending' => 'p', 'closed' => 'c' ]),
+			'default_status' => new Tiki_Profile_ValueMapConverter([ 'open' => 'o', 'pending' => 'p', 'closed' => 'c' ]),
+			'modification_status' => new Tiki_Profile_ValueMapConverter([ 'open' => 'o', 'pending' => 'p', 'closed' => 'c' ]),
+		];
 	} // }}}
 
 	function canInstall() // {{{
@@ -101,7 +102,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 		$data = $this->getData();
 
 		// Check for mandatory fields
-		if ( !isset($data['name']) ) {
+		if (! isset($data['name'])) {
 			$ref = $this->obj->getRef();
 			throw (new Exception('No name for tracker:' . (empty($ref) ? '' : ' ref=' . $ref)));
 		}
@@ -110,7 +111,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 		$optionMap = $this->getOptionMap();
 
 		$remain = array_diff(array_keys($data), array_keys($optionMap));
-		if ( count($remain) ) {
+		if (count($remain)) {
 			throw (new Exception('Cannot map object options: "' . implode('","', $remain) . '" for tracker:' . $data['name']));
 		}
 
@@ -125,11 +126,12 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 		$this->replaceReferences($input);
 
 		$conversions = self::getOptionConverters();
-		foreach ( $input as $key => $value ) {
-			if ( array_key_exists($key, $conversions) )
+		foreach ($input as $key => $value) {
+			if (array_key_exists($key, $conversions)) {
 				$values[$key] = $conversions[$key]->convert($value);
-			else
+			} else {
 				$values[$key] = $value;
+			}
 		}
 
 		$name = $values['name'];
@@ -140,8 +142,8 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 
 		$optionMap = $this->getOptionMap();
 
-		$options = array();
-		foreach ( $values as $key => $value ) {
+		$options = [];
+		foreach ($values as $key => $value) {
 			$key = $optionMap[$key];
 			$options[$key] = $value;
 		}
@@ -165,17 +167,17 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 			$info = array_merge($info, $options);
 		}
 
-		$data = array(
+		$data = [
 			'name' => $info['name'],
 			'description' => $info['description'],
-		);
+		];
 
 		$optionMap = array_flip(self::getOptionMap());
 		$defaults = self::getDefaults();
 		$conversions = self::getOptionConverters();
 
-		$allow = array();
-		$show = array();
+		$allow = [];
+		$show = [];
 
 		foreach ($info as $key => $value) {
 			if (empty($optionMap[$key])) {
@@ -193,7 +195,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 					$allow[] = str_replace('allow_', '', $optionKey);
 				} elseif (strstr($optionKey, 'show_')) {
 					$show[] = str_replace('show_', '', $optionKey);
-				} else if (isset($conversions[$optionKey]) && method_exists($conversions[$optionKey], 'reverse')) {
+				} elseif (isset($conversions[$optionKey]) && method_exists($conversions[$optionKey], 'reverse')) {
 					$data[$optionKey] = $conversions[$optionKey]->reverse($value);
 				} else {
 					$data[$optionKey] = $value;
@@ -208,8 +210,8 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 			$data['show'] = $show;
 		}
 
-		$fieldReferences = array();
-		foreach (array('sort_default_field', 'popup_fields') as $key) {
+		$fieldReferences = [];
+		foreach (['sort_default_field', 'popup_fields'] as $key) {
 			if (isset($data[$key])) {
 				$fieldReferences[$key] = $data[$key];
 				unset($data[$key]);
@@ -236,11 +238,11 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 			$writer->addObject(
 				'tracker_option',
 				"$key-$trackerId",
-				array(
+				[
 					'tracker' => $writer->getReference('tracker', $trackerId),
 					'name' => $key,
 					'value' => $value,
-				)
+				]
 			);
 		}
 

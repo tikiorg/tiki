@@ -60,7 +60,7 @@ class Tiki_Log extends AbstractLogger
 	 */
 	const EMERGENCY = 600;
 
-	protected static $levels = array(
+	protected static $levels = [
 		'debug' => self::DEBUG,
 		'info' => self::INFO,
 		'notice' => self::NOTICE,
@@ -69,7 +69,7 @@ class Tiki_Log extends AbstractLogger
 		'critical' => self::CRITICAL,
 		'alert' => self::ALERT,
 		'emergency' => self::EMERGENCY,
-	);
+	];
 
 	private $level;
 
@@ -81,7 +81,7 @@ class Tiki_Log extends AbstractLogger
 		$this->level = $level;
 	}
 
-	public function log($level, $message, array $context = array())
+	public function log($level, $message, array $context = [])
 	{
 		if (self::$levels[$level] < self::$levels[$this->level]) {
 			//Do not log
@@ -91,6 +91,4 @@ class Tiki_Log extends AbstractLogger
 		$logslib = TikiLib::lib('logs');
 		$logslib->add_log($this->type, sprintf("[%s] %s", strtoupper(tra($level)), $message));
 	}
-
-
 }

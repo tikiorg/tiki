@@ -8,4 +8,3 @@
 class Search_MySql_LimitReachedException extends Search_MySql_Exception
 {
 }
-

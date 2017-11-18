@@ -15,50 +15,50 @@ class Tracker_Field_Freetags extends Tracker_Field_Abstract implements Tracker_F
 {
 	public static function getTypes()
 	{
-		return array(
-			'F' => array(
+		return [
+			'F' => [
 				'name' => tr('Tags'),
 				'description' => tr('Allows tags to be shown or added for tracker items.'),
-				'prefs' => array('trackerfield_freetags', 'feature_freetags'),
-				'tags' => array('advanced'),
+				'prefs' => ['trackerfield_freetags', 'feature_freetags'],
+				'tags' => ['advanced'],
 				'default' => 'y',
-				'params' => array(
-					'size' => array(
+				'params' => [
+					'size' => [
 						'name' => tr('Size'),
 						'description' => tr('Visible size of the input field'),
 						'filter' => 'int',
 						'legacy_index' => 0,
-					),
-					'hidehelp' => array(
+					],
+					'hidehelp' => [
 						'name' => tr('Help'),
 						'description' => tr('Hide or show the input help'),
 						'default' => '',
 						'filter' => 'alpha',
-						'options' => array(
+						'options' => [
 							'' => tr('Show'),
 							'y' => tr('Hide'),
-						),
+						],
 						'legacy_index' => 1,
-					),
-					'hidesuggest' => array(
+					],
+					'hidesuggest' => [
 						'name' => tr('Suggest'),
 						'description' => tr('Hide or show the tag suggestions'),
 						'default' => '',
 						'filter' => 'alpha',
-						'options' => array(
+						'options' => [
 							'' => tr('Show'),
 							'y' => tr('Hide'),
-						),
+						],
 						'legacy_index' => 2,
-					),
-				),
-			),
-		);
+					],
+				],
+			],
+		];
 	}
 
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
-		$data = array();
+		$data = [];
 
 		$ins_id = $this->getInsertId();
 
@@ -90,12 +90,12 @@ class Tracker_Field_Freetags extends Tracker_Field_Abstract implements Tracker_F
 		return $data;
 	}
 
-	function renderInput($context = array())
+	function renderInput($context = [])
 	{
 		return $this->renderTemplate('trackerinput/freetags.tpl', $context);
 	}
 
-	function renderOutput($context = array())
+	function renderOutput($context = [])
 	{
 		return $this->renderTemplate('trackeroutput/freetags.tpl', $context);
 	}
@@ -157,4 +157,3 @@ class Tracker_Field_Freetags extends Tracker_Field_Abstract implements Tracker_F
 		return $filters;
 	}
 }
-

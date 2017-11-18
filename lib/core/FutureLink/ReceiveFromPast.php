@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -12,7 +12,7 @@
 //
 // Purpose: Verify that incoming URI is requesting a FutureLink destination on this site and redirect accordingly.
 
-Class FutureLink_ReceiveFromPast extends Feed_Abstract
+class FutureLink_ReceiveFromPast extends Feed_Abstract
 {
 	var $type = "futurelink";
 	var $isFileGal = false;
@@ -22,7 +22,7 @@ Class FutureLink_ReceiveFromPast extends Feed_Abstract
 
 	static function wikiView($args)
 	{
-        //TODO: abstract
+		//TODO: abstract
 		if (isset($_POST['protocol']) && $_POST['protocol'] == 'futurelink' && isset($_POST['metadata'])) {
 			$me = new self($args['object']);
 			$futureLink = new FutureLink_FutureUI($args['object']);
@@ -39,8 +39,7 @@ Class FutureLink_ReceiveFromPast extends Feed_Abstract
 
 			$feed = $me->feed(TikiLib::tikiUrl() . 'tiki-index.php?page=' . $args['object']);
 
-			if (
-				$me->response == 'failure' &&
+			if ($me->response == 'failure' &&
 				$futureLink == true
 			) {
 				$feed->reason = $futureLink->verifications;

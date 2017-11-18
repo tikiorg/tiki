@@ -187,9 +187,11 @@ class Column
 						continue;
 					}
 
-					throw new \Exception(tr('Column "%0" cannot co-exist with "%1".',
+					throw new \Exception(tr(
+						'Column "%0" cannot co-exist with "%1".',
 						$column->getEncodedHeader(),
-						$this->getEncodedHeader()));
+						$this->getEncodedHeader()
+					));
 				}
 			}
 		}
@@ -220,4 +222,3 @@ class Column
 		return $column;
 	}
 }
-

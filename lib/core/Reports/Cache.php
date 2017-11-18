@@ -44,9 +44,9 @@ class Reports_Cache
 	 */
 	public function get($user)
 	{
-		$entries = $this->table->fetchAll(array('user', 'event', 'data', 'time'), array('user' => $user), -1, -1, 'time ASC');
+		$entries = $this->table->fetchAll(['user', 'event', 'data', 'time'], ['user' => $user], -1, -1, 'time ASC');
 
-		$ret = array();
+		$ret = [];
 
 		foreach ($entries as $entry) {
 			$entry['data'] = unserialize($entry['data']);
@@ -64,7 +64,7 @@ class Reports_Cache
 	 */
 	public function delete($user)
 	{
-		$this->table->deleteMultiple(array('user' => $user));
+		$this->table->deleteMultiple(['user' => $user]);
 	}
 
 	/**
@@ -86,12 +86,12 @@ class Reports_Cache
 			if (in_array($watch['user'], $users)) {
 				// add data to report cache
 				$this->table->insert(
-					array(
+					[
 						'user' => $watch['user'],
 						'event' => $data['event'],
 						'data' => serialize($data),
 						'time' => $this->dt->format('Y-m-d H:i:s')
-					)
+					]
 				);
 
 				// remove data from $watches array so that the user doesn't receive a email

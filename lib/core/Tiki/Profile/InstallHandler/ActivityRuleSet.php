@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 class Tiki_Profile_InstallHandler_ActivityRuleSet extends Tiki_Profile_InstallHandler
 {
-	private $rules = array();
+	private $rules = [];
 
 	function fetchData()
 	{
@@ -29,7 +29,7 @@ class Tiki_Profile_InstallHandler_ActivityRuleSet extends Tiki_Profile_InstallHa
 	{
 		$this->fetchData();
 		$this->replaceReferences($this->rules);
-		
+
 		$activitylib = TikiLib::lib('activity');
 		$activitylib->preserveRules($this->rules);
 
@@ -41,7 +41,7 @@ class Tiki_Profile_InstallHandler_ActivityRuleSet extends Tiki_Profile_InstallHa
 		$activitylib = TikiLib::lib('activity');
 		$rules = $activitylib->getRules();
 
-		$ids = array();
+		$ids = [];
 		foreach ($rules as $rule) {
 			if (Tiki_Profile_InstallHandler_ActivityStreamRule::export($writer, $rule)) {
 				$ids[] = $rule['ruleId'];
@@ -51,11 +51,11 @@ class Tiki_Profile_InstallHandler_ActivityRuleSet extends Tiki_Profile_InstallHa
 		$writer->addObject(
 			'activity_rule_set',
 			'set',
-			array(
+			[
 				'rules' => array_map(function ($id) use ($writer) {
 					return $writer->getReference('activity_stream_rule', $id);
 				}, $ids),
-			)
+			]
 		);
 
 		return true;

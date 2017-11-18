@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -28,7 +28,7 @@ class Services_Language_Utilities
 
 		$out = $multilinguallib->insertTranslation($type, $sourceId, $sourceLang, $targetId, $targetLang);
 
-		return !$out;
+		return ! $out;
 	}
 
 	/**
@@ -113,7 +113,7 @@ class Services_Language_Utilities
 				break;
 		}
 
-		if (!$lang) {
+		if (! $lang) {
 			throw new Services_Exception(tr('The object has no language indicated and cannot be translated'), 400);
 		}
 
@@ -185,12 +185,12 @@ class Services_Language_Utilities
 	{
 		$langDir = "lang/";
 
-		if (!empty($language)) {
+		if (! empty($language)) {
 			$langDir .= "$language/";
 		}
 
 		global $tikidomain;
-		if (!empty($tikidomain)) {
+		if (! empty($tikidomain)) {
 			$langDir .= "$tikidomain/";
 		}
 
@@ -211,7 +211,7 @@ class Services_Language_Utilities
 		$directory = $this->getLanguageDirectory($language);
 		$langDirIsReadable = is_readable($directory);
 
-		if (!$langDirIsReadable) {
+		if (! $langDirIsReadable) {
 			throw new Services_Exception(tra('The language directory is not readable'), 400);
 		} else {
 			return $langDirIsReadable;
@@ -232,7 +232,7 @@ class Services_Language_Utilities
 		$directory = $this->getLanguageDirectory($language);
 		$langDirIsWritable = is_writable($directory);
 
-		if (!$langDirIsWritable) {
+		if (! $langDirIsWritable) {
 			throw new Services_Exception(tra('The language directory is not writeable'), 400);
 		} else {
 			return $langDirIsWritable;
@@ -316,13 +316,13 @@ class Services_Language_Utilities
 		//prepare php file
 		$custom_code = "<?php\r\n\$lang_custom = array(\r\n";
 
-		if (!is_array($data)) {
+		if (! is_array($data)) {
 			throw new Services_Exception(tr('String translation set is not an array'), 400);
 		}
 
 		//add translations
 		foreach ($data as $from => $to) {
-			if (!empty($from)) {
+			if (! empty($from)) {
 				$custom_code .= '"' . str_replace('"', '\\"', $from) . '" => "' . str_replace('"', '\\"', $to) . "\",\r\n";
 			}
 		}
@@ -334,10 +334,10 @@ class Services_Language_Utilities
 		//$custom_code .= '$lang = $lang_custom + $lang;';
 
 		//write the strings to custom.php file
-		if (!($fp = fopen($custom_file, 'w+'))) {
+		if (! ($fp = fopen($custom_file, 'w+'))) {
 			throw new Services_Exception(tra('Can not fopen custom.php'), 400);
 		} else {
-			if (!fwrite($fp, $custom_code)) {
+			if (! fwrite($fp, $custom_code)) {
 				throw new Services_Exception(tra('Can not fwrite custom.php'), 400);
 			}
 			fclose($fp);
@@ -425,30 +425,26 @@ class Services_Language_Utilities
 	function processStringTranslationSets($sourceStringTranslationSet, $targetStringTranslationSet, $process_type)
 	{
 		//validate input
-		if (!is_array($sourceStringTranslationSet)) {
+		if (! is_array($sourceStringTranslationSet)) {
 			throw new Services_Exception(tr('Source string translation set is not an array'), 400);
 		}
-		if (!is_array($targetStringTranslationSet)) {
+		if (! is_array($targetStringTranslationSet)) {
 			throw new Services_Exception(tr('Target string translation set is not an array'), 400);
 		}
 		//merge means that existing translations in the target are replaced and new ones are added to the set
 		if ($process_type === 'merge') {
 			$updatedStringTranslationSet = array_merge($targetStringTranslationSet, $sourceStringTranslationSet);
-		}
-		//diff means that only those items are returned from source that are not in target
+		} //diff means that only those items are returned from source that are not in target
 		elseif ($process_type === 'diff') {
 			$updatedStringTranslationSet = array_diff($sourceStringTranslationSet, $targetStringTranslationSet);
-		}
-		//intersect_merge means that values for matching keys are overwritten, but values for keys in the source set that do not exist in the target set are not added
+		} //intersect_merge means that values for matching keys are overwritten, but values for keys in the source set that do not exist in the target set are not added
 		elseif ($process_type === 'intersect_merge') {
 			$updatedStringTranslationSet = array_intersect($targetStringTranslationSet, $sourceStringTranslationSet);
 			$updatedStringTranslationSet = array_merge($updatedStringTranslationSet, $sourceStringTranslationSet);
-		}
-		//replace means that source set is replace by the target set (you will probably just overwrite the variable in your function. This option is left here not to run into error in case for some reason the type is called)
+		} //replace means that source set is replace by the target set (you will probably just overwrite the variable in your function. This option is left here not to run into error in case for some reason the type is called)
 		elseif ($process_type === 'replace') {
 			$updatedStringTranslationSet = $sourceStringTranslationSet;
-		}
-		else {
+		} else {
 			throw new Services_Exception(tr('Invalid process type'), 400);
 		}
 		return $updatedStringTranslationSet;
@@ -463,13 +459,12 @@ class Services_Language_Utilities
 	//define upload types for the uploaded file
 	function getStringTranslationSetProcessTypes()
 	{
-		$stringTranslationSetProcessTypes = array(
+		$stringTranslationSetProcessTypes = [
 			'merge' => tra('Add new and update existing'),
 			'diff' => tra('Add new only'),
 			'intersect_merge' => tra('Update existing only'),
 			'replace' => tra('Replace all'),
-		);
+		];
 		return $stringTranslationSetProcessTypes;
 	}
 }
-

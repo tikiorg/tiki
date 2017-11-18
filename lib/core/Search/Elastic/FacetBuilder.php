@@ -19,25 +19,24 @@ class Search_Elastic_FacetBuilder
 	function build(array $facets)
 	{
 		if (empty($facets)) {
-			return array();
+			return [];
 		}
 
-		$out = array();
+		$out = [];
 		foreach ($facets as $facet) {
 			$out[$facet->getName()] = $this->buildFacet($facet);
 		}
 
-		return array(
+		return [
 			$this->mainKey => $out,
-		);
+		];
 	}
 
 	private function buildFacet(Search_Query_Facet_Interface $facet)
 	{
-		return array('terms' => array(
+		return ['terms' => [
 			'field' => $facet->getField(),
 			'size' => $facet->getCount() ?: $this->count,
-		));
+		]];
 	}
 }
-

@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 class Search_Query_FacetWikiBuilder
 {
-	private $facets = array();
+	private $facets = [];
 
 	function apply(WikiParser_PluginMatcher $matches)
 	{
@@ -20,11 +20,11 @@ class Search_Query_FacetWikiBuilder
 				$count = isset($arguments['count']) ? $arguments['count'] : null;
 
 				if (isset($arguments['name'])) {
-					$this->facets[] = array(
+					$this->facets[] = [
 						'name' => $arguments['name'],
 						'operator' => $operator,
 						'count' => $count,
-					);
+					];
 				}
 			}
 		}
@@ -45,4 +45,3 @@ class Search_Query_FacetWikiBuilder
 		}
 	}
 }
-

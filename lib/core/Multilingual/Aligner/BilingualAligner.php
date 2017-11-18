@@ -8,11 +8,11 @@
 
 class Multilingual_Aligner_BilingualAligner
 {
-	var $l1_sentences = array();
-	var $l2_sentences = array();
-	var $nodes_at_current_level = array();
-	var $nodes_at_next_level = array();
-	var $cost_matrix = array();
+	var $l1_sentences = [];
+	var $l2_sentences = [];
+	var $nodes_at_current_level = [];
+	var $nodes_at_next_level = [];
+	var $cost_matrix = [];
 
 	public function align($l1_sentences, $l2_sentences)
 	{
@@ -47,7 +47,7 @@ class Multilingual_Aligner_BilingualAligner
 		//        print "-- _generate_shortest_path_matrix: invoked\n";
 
 
-		$this->nodes_at_current_level = array('-1n0|-1n0');
+		$this->nodes_at_current_level = ['-1n0|-1n0'];
 
 		//		print "-- _generate_shortest_path_matrix: count(\$this->nodes_at_current_level)=".count($this->nodes_at_current_level)."\n";
 
@@ -67,7 +67,7 @@ class Multilingual_Aligner_BilingualAligner
 	public function _extend_shortest_path_matrix_by_one_level()
 	{
 		//		print "-- _extend_shortest_path_matrix_by_one_level: \$this->nodes_at_current_level=\n";var_dump($this->nodes_at_current_level);print "\n";
-		$this->nodes_at_next_level = array();
+		$this->nodes_at_next_level = [];
 		foreach ($this->nodes_at_current_level as $a_node_to_extend) {
 			$this->_extend_shortest_path_matrix_from_this_node($a_node_to_extend);
 		}
@@ -107,8 +107,7 @@ class Multilingual_Aligner_BilingualAligner
 		);
 
 		if (strcmp($node_to_extend, $new_node) != 0 &&
-				!in_array($new_node, $this->nodes_at_next_level)) {
-
+				! in_array($new_node, $this->nodes_at_next_level)) {
 			//		print "-- _match_current_l1_and_l2_sentences: adding '$new_node' to list of nodes to expand at next iteration\n";
 
 			array_push($this->nodes_at_next_level, $new_node);
@@ -141,7 +140,7 @@ class Multilingual_Aligner_BilingualAligner
 		);
 
 		if (strcmp($node_to_extend, $new_node) != 0
-				&& !in_array($new_node, $this->nodes_at_next_level)
+				&& ! in_array($new_node, $this->nodes_at_next_level)
 		) {
 			array_push($this->nodes_at_next_level, $new_node);
 
@@ -152,7 +151,6 @@ class Multilingual_Aligner_BilingualAligner
 		}
 
 		return;
-
 	}
 
 	/**
@@ -182,12 +180,18 @@ class Multilingual_Aligner_BilingualAligner
 		//       print "-- _parse_node_ID: \$node_id='$node_id'\n";
 		preg_match('/([\-\d]+)([msn])([\d]+)\|([\-\d]+)([msn])([\d]+)/', $node_id, $info);
 		//       print "-- _parse_node_ID: \$info=\n";var_dump($info);print "\n";;
-		return array($info[1], $info[2], $info[3], $info[4], $info[5], $info[6]);
+		return [$info[1], $info[2], $info[3], $info[4], $info[5], $info[6]];
 	}
 
-	public function _generate_node_ID($l1_sentence_num, $l1_operation, $l1_n_times,
-			$l2_sentence_num, $l2_operation, $l2_n_times)
-	{
+	public function _generate_node_ID(
+		$l1_sentence_num,
+		$l1_operation,
+		$l1_n_times,
+		$l2_sentence_num,
+		$l2_operation,
+		$l2_n_times
+	) {
+
 		$next_l1_sentence_num = $l1_sentence_num + $l1_n_times;
 		$next_l2_sentence_num = $l2_sentence_num + $l2_n_times;
 		if ($next_l1_sentence_num >= count($this->l1_sentences)) {
@@ -206,7 +210,7 @@ class Multilingual_Aligner_BilingualAligner
 		$l2_length = strlen($l2_sentence);
 		$delta = 0;
 		if ($l1_length != 0) {
-			$delta = abs($l1_length - $l2_length)/$l1_length;
+			$delta = abs($l1_length - $l2_length) / $l1_length;
 		} else {
 			if ($l2_length == 0) {
 				$delta = 0;
@@ -231,7 +235,7 @@ class Multilingual_Aligner_BilingualAligner
 		$l1_next_sentence = $l1_sentence + $l1_advance_by;
 		$l2_next_sentence = $l2_sentence + $l2_advance_by;
 
-		return array($l1_next_sentence, $l2_next_sentence);
+		return [$l1_next_sentence, $l2_next_sentence];
 	}
 
 	function _sentences_preceding_this_node($node_id)
@@ -239,7 +243,7 @@ class Multilingual_Aligner_BilingualAligner
 		$node_info = $this->_parse_node_ID($node_id);
 		$l1_sentence = $node_info[0];
 		$l2_sentence = $node_info[3];
-		return array($l1_sentence, $l2_sentence);
+		return [$l1_sentence, $l2_sentence];
 	}
 
 	function _compute_node_transition_cost($destination_node)
@@ -274,5 +278,4 @@ class Multilingual_Aligner_BilingualAligner
 
 		return $transition_cost;
 	}
-
 }

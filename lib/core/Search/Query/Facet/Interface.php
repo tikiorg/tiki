@@ -17,4 +17,3 @@ interface Search_Query_Facet_Interface
 	function getCount();
 	function setCount($count);
 }
-

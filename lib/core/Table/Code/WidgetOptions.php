@@ -68,5 +68,4 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 			parent::$code[self::$level1][self::$level2] = $code;
 		}
 	}
-
 }

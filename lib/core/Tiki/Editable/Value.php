@@ -15,8 +15,8 @@ class Tiki_Editable_Value
 	function __construct($html, array $parameters)
 	{
 		$this->inner = $html;
-		
-		if (! empty($parameters['layout']) && in_array($parameters['layout'], array('inline', 'block'))) {
+
+		if (! empty($parameters['layout']) && in_array($parameters['layout'], ['inline', 'block'])) {
 			$this->layout = $parameters['layout'];
 		}
 
@@ -53,4 +53,3 @@ class Tiki_Editable_Value
 		return "<$tag class=\"editable-inline\" data-field-fetch-url=\"$fieldFetch\" data-object-store-url=\"$objectStore\">$value</$tag>";
 	}
 }
-

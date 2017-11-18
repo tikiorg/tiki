@@ -30,9 +30,9 @@ class Services_AutoSave_Controller
 			$res = TikiLib::lib('autosave')->get_autosave($input->editor_id->text(), $referer);
 		}
 
-		return array(
+		return [
 			'data' => $res,
-		);
+		];
 	}
 
 	/**
@@ -52,9 +52,9 @@ class Services_AutoSave_Controller
 			$res = TikiLib::lib('autosave')->auto_save($input->editor_id->text(), $data, $referer);
 		}
 
-		return array(
+		return [
 			'data' => $res,
-		);
+		];
 	}
 
 	/**
@@ -72,7 +72,7 @@ class Services_AutoSave_Controller
 			TikiLib::lib('autosave')->remove_save($input->editor_id->text(), $referer);
 		}
 
-		return array();
+		return [];
 	}
 
 	/**
@@ -98,6 +98,4 @@ class Services_AutoSave_Controller
 
 		return $isok;
 	}
-
 }
-

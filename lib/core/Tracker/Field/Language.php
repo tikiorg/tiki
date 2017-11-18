@@ -11,30 +11,30 @@ class Tracker_Field_Language extends Tracker_Field_Abstract implements Tracker_F
 
 	public static function getTypes()
 	{
-		return array(
-			'LANG' => array(
+		return [
+			'LANG' => [
 				'name' => tr('Language'),
 				'description' => tr('Assign a language to the tracker item to enable multilingual trackers.'),
-				'prefs' => array('trackerfield_language', 'feature_multilingual'),
-				'tags' => array('advanced'),
+				'prefs' => ['trackerfield_language', 'feature_multilingual'],
+				'tags' => ['advanced'],
 				'default' => 'y',
-				'params' => array(
-					'autoassign' => array(
+				'params' => [
+					'autoassign' => [
 						'name' => tr('Auto-Assign'),
 						'description' => tr('Indicates if the language should be assigned as the item\'s language.'),
 						'filter' => 'int',
-						'options' => array(
+						'options' => [
 							0 => tr('No'),
 							1 => tr('Yes'),
-						),
+						],
 						'legacy_index' => 0,
-					),
-				),
-			),
-		);
+					],
+				],
+			],
+		];
 	}
 
-	function getFieldData(array $requestData = array())
+	function getFieldData(array $requestData = [])
 	{
 		$insertId = $this->getInsertId();
 
@@ -42,29 +42,29 @@ class Tracker_Field_Language extends Tracker_Field_Abstract implements Tracker_F
 			$selected = $requestData[$insertId];
 
 			if ($this->isLanguageAvailable($selected)) {
-				return array(
+				return [
 					'value' => $selected,
-				);
+				];
 			}
 		}
 
-		return array(
+		return [
 			'value' => $this->getValue(),
-		);
+		];
 	}
 
-	function renderInput($context = array())
+	function renderInput($context = [])
 	{
 		return $this->renderTemplate(
 			'trackerinput/language.tpl',
 			$context,
-			array(
+			[
 				'languages' => $this->getLanguages(),
-			)
+			]
 		);
 	}
 
-	function renderOutput($context = array())
+	function renderOutput($context = [])
 	{
 		$selected = $this->getConfiguration('value');
 
@@ -76,17 +76,17 @@ class Tracker_Field_Language extends Tracker_Field_Abstract implements Tracker_F
 		return $this->renderTemplate(
 			'trackeroutput/language.tpl',
 			$context,
-			array(
+			[
 				'label' => isset($languages[$selected]) ? $languages[$selected] : tr('None'),
-			)
+			]
 		);
 	}
 
 	function handleSave($value, $oldValue)
 	{
-		return array(
+		return [
 			'value' => $value,
-		);
+		];
 	}
 
 	function watchCompare($old, $new)
@@ -140,21 +140,20 @@ class Tracker_Field_Language extends Tracker_Field_Abstract implements Tracker_F
 	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
 		$baseKey = $this->getBaseKey();
-		return array(
+		return [
 			$baseKey => $typeFactory->sortable($this->getValue()),
 			'language' => $typeFactory->identifier($this->getValue()),
-		);
+		];
 	}
 
 	function getProvidedFields()
 	{
 		$baseKey = $this->getBaseKey();
-		return array($baseKey, 'language');
+		return [$baseKey, 'language'];
 	}
 
 	function getGlobalFields()
 	{
-		return array();
+		return [];
 	}
 }
-

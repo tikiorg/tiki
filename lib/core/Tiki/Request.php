@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -11,12 +11,12 @@
  */
 class Tiki_Request
 {
-	protected $properties = array();
-	
+	protected $properties = [];
+
 	/**
 	 * Populates $this->properties with params passed to PHP
 	 * via http request or cli arguments.
-	 * 
+	 *
 	 * @return null
 	 */
 	public function __construct()
@@ -24,7 +24,7 @@ class Tiki_Request
 		if (isset($_SERVER['REQUEST_METHOD'])) {
 			// http
 			$this->properties = $_REQUEST;
-		} else if (isset($_SERVER['argc'], $_SERVER['argv']) && $_SERVER['argc'] >= 2) {
+		} elseif (isset($_SERVER['argc'], $_SERVER['argv']) && $_SERVER['argc'] >= 2) {
 			// cli
 			foreach ($_SERVER['argv'] as $arg) {
 				if (strpos($arg, '=')) {
@@ -34,10 +34,10 @@ class Tiki_Request
 			}
 		}
 	}
-	
+
 	/**
 	 * Set property a new property
-	 * 
+	 *
 	 * @param string $key property key
 	 * @param string $value property value
 	 * @return null
@@ -46,10 +46,10 @@ class Tiki_Request
 	{
 		$this->properties[$key] = $value;
 	}
-	
+
 	/**
 	 * Return property value
-	 * 
+	 *
 	 * @param string $key property key
 	 * @return string|null property value or null
 	 */
@@ -59,11 +59,11 @@ class Tiki_Request
 			return $this->properties[$key];
 		}
 	}
-	
+
 	/**
 	 * Return true or false depending whether the
 	 * property exist or not.
-	 * 
+	 *
 	 * @param string $key
 	 * @return bool
 	 */
@@ -72,7 +72,7 @@ class Tiki_Request
 		if (isset($this->properties[$key])) {
 			return true;
 		}
-		
+
 		return false;
 	}
 }

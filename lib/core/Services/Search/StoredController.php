@@ -42,23 +42,23 @@ class Services_Search_StoredController
 			}
 		}
 
-		return array(
+		return [
 			'title' => tr('Save Search'),
 			'priorities' => $lib->getPriorities(),
 			'queries' => $lib->getUserQueries(),
 			'queryId' => $queryId,
-		);
+		];
 	}
 
 	function action_list($input)
 	{
 		$lib = TikiLib::lib('storedsearch');
 		$results = null;
-		$query = array(
+		$query = [
 			'query' => null,
 			'label' => null,
 			'description' => null,
-		);
+		];
 
 		if ($queryId = $input->queryId->int()) {
 			if ($query = $lib->getPresentedQuery($queryId)) {
@@ -67,7 +67,7 @@ class Services_Search_StoredController
 			}
 		}
 
-		return array(
+		return [
 			'title' => $query['label'] ?: tr('Saved Searches'),
 			'priorities' => $lib->getPriorities(),
 			'queries' => $lib->getUserQueries(),
@@ -75,15 +75,15 @@ class Services_Search_StoredController
 			'description' => $query['description'],
 			'results' => $results,
 			'url' => TikiLib::lib('service')->getUrl(['controller' => 'search_stored', 'action' => 'list']),
-		);
+		];
 	}
 
 	function action_delete($input)
 	{
 		if (! $input->queryId->int()) {
-			return array(
+			return [
 				'FORWARD' => ['action' => 'list'],
-			);
+			];
 		}
 
 		$lib = TikiLib::lib('storedsearch');
@@ -91,13 +91,13 @@ class Services_Search_StoredController
 			throw new Services_Exception_NotFound('User query not found.');
 		}
 
-		$out = array(
+		$out = [
 			'title' => tr('Delete Saved Search'),
 			'success' => false,
 			'queryId' => $data['queryId'],
 			'label' => $data['label'],
 			'lastModif' => $data['lastModif'],
-		);
+		];
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$lib->deleteQuery($data);
@@ -111,9 +111,9 @@ class Services_Search_StoredController
 	function action_edit($input)
 	{
 		if (! $input->queryId->int()) {
-			return array(
+			return [
 				'FORWARD' => ['action' => 'list'],
-			);
+			];
 		}
 
 		$lib = TikiLib::lib('storedsearch');
@@ -121,7 +121,7 @@ class Services_Search_StoredController
 			throw new Services_Exception_NotFound('User query not found.');
 		}
 
-		$out = array(
+		$out = [
 			'title' => tr('Edit Saved Search'),
 			'success' => false,
 			'queryId' => $data['queryId'],
@@ -129,7 +129,7 @@ class Services_Search_StoredController
 			'description' => $data['description'],
 			'priority' => $data['priority'],
 			'priorities' => $lib->getPriorities(),
-		);
+		];
 
 		$label = $input->label->text();
 		$priority = $input->priority->word();
@@ -162,7 +162,7 @@ class Services_Search_StoredController
 			Feedback::error($e->getMessage(), 'session');
 		}
 	}
-	
+
 	private function renderResults($resultset)
 	{
 		global $prefs;
@@ -172,16 +172,16 @@ class Services_Search_StoredController
 
 		$plugin = new Search_Formatter_Plugin_SmartyTemplate('searchresults-plain.tpl');
 		$plugin->setData(
-			array(
+			[
 				'prefs' => $prefs,
-			)
+			]
 		);
-		$fields = array(
+		$fields = [
 			'title' => null,
 			'url' => null,
 			'modification_date' => null,
 			'highlight' => null,
-		);
+		];
 		if ($prefs['feature_search_show_visit_count'] === 'y') {
 			$fields['visits'] = null;
 		}
@@ -193,9 +193,9 @@ class Services_Search_StoredController
 		$tikilib = TikiLib::lib('tiki');
 		$results = TikiLib::lib('parser')->parse_data(
 			$wiki,
-			array(
+			[
 				'is_html' => true,
-			)
+			]
 		);
 
 		return $results;

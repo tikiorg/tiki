@@ -52,7 +52,5 @@ class Search_Formatter_Transform_DynamicLoaderWrapper extends ArrayObject
 		foreach ($data as $key => $name) {
 			$this[$key] = $name;
 		}
+	}
 }
-}
-
-

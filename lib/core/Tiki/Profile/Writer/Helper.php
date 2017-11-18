@@ -44,7 +44,7 @@ class Tiki_Profile_Writer_Helper
 
 			$pluginName = $match->getName();
 			$params = $argumentParser->parse($match->getArguments());
-			$params = preg_replace(array('/^&quot;/', '/&quot;$/'), '', $params);
+			$params = preg_replace(['/^&quot;/', '/&quot;$/'], '', $params);
 			$body = $match->getBody();
 
 			$info = $parserlib->plugin_info($pluginName);
@@ -78,7 +78,7 @@ class Tiki_Profile_Writer_Helper
 					$body = $writer->getReference($info['profile_reference'], $body);
 				}
 
-				if( $pluginName == 'jq') {
+				if ($pluginName == 'jq') {
 					// Handle ins_FIELDID|user_selector_FIELDID|trackerinput_FIELDID JQ references
 					$body = preg_replace_callback(
 						'/(ins|user_selector|trackerinput)_(\d+)/',
@@ -90,8 +90,8 @@ class Tiki_Profile_Writer_Helper
 
 					// handle inline JQ comment references
 					$lines = preg_split("/[\r\n]+/", $body);
-					foreach( $lines as &$line ) {
-						if( preg_match('#//\s*profile_reference=(.*)$#', $line, $m) ) {
+					foreach ($lines as &$line) {
+						if (preg_match('#//\s*profile_reference=(.*)$#', $line, $m)) {
 							$reference = $m[1];
 							$line = self::uniform_string($reference, $writer, $line);
 						}
@@ -115,14 +115,14 @@ class Tiki_Profile_Writer_Helper
 		);
 
 		// handle [links] plugin_tracker references
-		if( $info = $parserlib->plugin_info('tracker') ) {
-			$info['params']['prefills'] = array('profile_reference' => 'tracker_field');
-			foreach( $info['params'] as $paramName => $paramInfo ) {
-				if( isset($paramInfo['profile_reference']) && in_array($paramInfo['profile_reference'], array('tracker_field', 'tracker')) ) {
+		if ($info = $parserlib->plugin_info('tracker')) {
+			$info['params']['prefills'] = ['profile_reference' => 'tracker_field'];
+			foreach ($info['params'] as $paramName => $paramInfo) {
+				if (isset($paramInfo['profile_reference']) && in_array($paramInfo['profile_reference'], ['tracker_field', 'tracker'])) {
 					$content = preg_replace_callback(
 						"/(?<!\[)(\[[^\]]+\b)($paramName=((\d+:?)+))([^\]]+\])/",
 						function ($args) use ($writer, $paramName, $paramInfo) {
-							return $args[1]."$paramName=".self::uniform_string($paramInfo['profile_reference'], $writer, $args[3]).array_pop($args);
+							return $args[1] . "$paramName=" . self::uniform_string($paramInfo['profile_reference'], $writer, $args[3]) . array_pop($args);
 						},
 						$content
 					);
@@ -173,7 +173,7 @@ class Tiki_Profile_Writer_Helper
 				$justReplaced = true;
 			}
 
-			if( $name === 'step' ) {
+			if ($name === 'step') {
 				$args = $dataSource->replaceStepReferences($writer, $args);
 				$match->replaceWithPlugin('step', $args, $match->getBody());
 				$justReplaced = true;
@@ -215,7 +215,7 @@ class Tiki_Profile_Writer_Helper
 		$searchlib = TikiLib::lib('unifiedsearch');
 		$dataSource = $searchlib->getProfileExportHelper();
 
-		$data = array();
+		$data = [];
 		parse_str($value, $data);
 		foreach ($data as $key => & $value) {
 			if ($type = $dataSource->getTypeForField($key)) {
@@ -230,4 +230,3 @@ class Tiki_Profile_Writer_Helper
 		return $string;
 	}
 }
-

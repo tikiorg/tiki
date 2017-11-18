@@ -61,13 +61,12 @@ class Scheduler_Task_ConsoleCommandTask extends Scheduler_Task_CommandTask
 
 	public function getParams()
 	{
-		return array(
-			'console_command' => array(
+		return [
+			'console_command' => [
 				'name' => tra('Console command'),
 				'type' => 'text',
 				'required' => true,
-			),
-		);
+			],
+		];
 	}
-
 }

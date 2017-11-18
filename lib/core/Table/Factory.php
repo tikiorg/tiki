@@ -37,7 +37,7 @@ class Table_Factory
 	 *
 	 * @return bool|Table_Manager
 	 */
-	static public function build($name, $settings = null, $type = 'manager')
+	public static function build($name, $settings = null, $type = 'manager')
 	{
 		if (Table_Check::isEnabled()) {
 			switch ($type) {
