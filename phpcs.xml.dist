@@ -50,6 +50,7 @@
 	<!-- display progress -->
 	<arg value="p"/>
 	<arg name="colors"/>
+	<arg name="extensions" value="php"/>
 
 	<!-- Tiki uses the Zend Coding Standards
 		reference: https://github.com/zendframework/zend-coding-standard/blob/master/ruleset.xml -->
