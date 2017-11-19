@@ -11,80 +11,82 @@ function wikiplugin_vimeo_info()
 {
 	global $prefs;
 
-	return array(
+	return [
 		'name' => tra('Vimeo'),
 		'documentation' => 'PluginVimeo',
 		'description' => tra('Embed a Vimeo video'),
-		'prefs' => array( 'wikiplugin_vimeo' ),
+		'prefs' => [ 'wikiplugin_vimeo' ],
 		'iconname' => 'vimeo',
 		'introduced' => 6.1,
 		'format' => 'html',
-		'params' => array(
-			'url' => array(
+		'params' => [
+			'url' => [
 				'required' => $prefs['vimeo_upload'] !== 'y',
 				'name' => tra('URL'),
 				'description' => tra('Complete URL to the Vimeo video. Example:') . ' <code>http://vimeo.com/3319966</code>'
-					.	($prefs['vimeo_upload'] === 'y' ? ' ' . tra('or leave blank to upload one.') : ''),
+					. ($prefs['vimeo_upload'] === 'y' ? ' ' . tra('or leave blank to upload one.') : ''),
 				'since' => '6.1',
 				'filter' => 'url',
 				'default' => '',
-			),
-			'width' => array(
+			],
+			'width' => [
 				'required' => false,
 				'name' => tra('Width'),
 				'description' => tra('Width in pixels'),
 				'since' => '6.1',
 				'filter' => 'text',
 				'default' => 425,
-			),
-			'height' => array(
+			],
+			'height' => [
 				'required' => false,
 				'name' => tra('Height'),
 				'description' => tra('Height in pixels'),
 				'since' => '6.1',
 				'filter' => 'text',
 				'default' => 350,
-			),
-			'quality' => array(
+			],
+			'quality' => [
 				'required' => false,
 				'name' => tra('Quality'),
 				'description' => tra('Quality of the video'),
 				'since' => '6.1',
 				'filter' => 'alpha',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('High'), 'value' => 'high'),
-					array('text' => tra('Medium'), 'value' => 'medium'),
-					array('text' => tra('Low'), 'value' => 'low'),
-				),
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('High'), 'value' => 'high'],
+					['text' => tra('Medium'), 'value' => 'medium'],
+					['text' => tra('Low'), 'value' => 'low'],
+				],
 				'default' => 'high',
 				'advanced' => true
-			),
-			'allowFullScreen' => array(
+			],
+			'allowFullScreen' => [
 				'required' => false,
 				'name' => tra('Full screen'),
 				'description' => tra('Expand to full screen'),
 				'since' => '6.1',
 				'filter' => 'alpha',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'true'),
-					array('text' => tra('No'), 'value' => 'false'),
-				),
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'true'],
+					['text' => tra('No'), 'value' => 'false'],
+				],
 				'default' => '',
 				'advanced' => true
-			),
-			'fileId' => array(
+			],
+			'fileId' => [
 				'required' => false,
 				'name' => tra('File ID'),
-				'description' => tr('Numeric ID of a Vimeo file in a File Gallery (or list separated by commas or %0).',
-					'<code>|</code>'),
+				'description' => tr(
+					'Numeric ID of a Vimeo file in a File Gallery (or list separated by commas or %0).',
+					'<code>|</code>'
+				),
 				'since' => '12.0',
 				'filter' => 'text',
 				'default' => '',
 				'advanced' => true
-			),
-			'fromFieldId' => array(
+			],
+			'fromFieldId' => [
 				'required' => false,
 				'name' => tra('Field ID'),
 				'description' => tra('Numeric ID of a Tracker Files field, using Vimeo displayMode.'),
@@ -92,8 +94,8 @@ function wikiplugin_vimeo_info()
 				'filter' => 'int',
 				'default' => 0,
 				'advanced' => true
-			),
-			'fromItemId' => array(
+			],
+			'fromItemId' => [
 				'required' => false,
 				'name' => tra('Item ID'),
 				'description' => tra('Numeric ID of a Tracker item, using Vimeo displayMode.'),
@@ -101,82 +103,83 @@ function wikiplugin_vimeo_info()
 				'filter' => 'int',
 				'default' => 0,
 				'advanced' => true
-			),
-			'galleryId' => array(
+			],
+			'galleryId' => [
 				'required' => false,
 				'name' => tra('Gallery ID'),
 				'description' => tra('Gallery ID to upload to.'),
 				'since' => '12.0',
 				'filter' => 'int',
 				'advanced' => true
-			),
-			'useFroogaloopApi' => array(
+			],
+			'useFroogaloopApi' => [
 				'required' => false,
 				'name' => tra('Froogaloop API'),
 				'description' => tra('Use Vimeo Froogaloop API'),
 				'since' => '14.0',
 				'filter' => 'alpha',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'true'),
-					array('text' => tra('No'), 'value' => 'false'),
-				),
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'true'],
+					['text' => tra('No'), 'value' => 'false'],
+				],
 				'default' => '',
 				'advanced' => true,
-			),
-			'showTitle' => array(
+			],
+			'showTitle' => [
 				'required' => false,
 				'name' => tra('Show Title'),
 				'description' => tra('Show the Video Title') . ' ' . tra('(default is to show)'),
 				'since' => '15.0',
 				'filter' => 'alpha',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'true'),
-					array('text' => tra('No'), 'value' => 'false'),
-				),
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'true'],
+					['text' => tra('No'), 'value' => 'false'],
+				],
 				'default' => '',
 				'advanced' => true,
-			),
-			'showByline' => array(
+			],
+			'showByline' => [
 				'required' => false,
 				'name' => tra('Show Byline') . ' ' . tra('(default is to show)'),
 				'description' => tra("Show the creator's byline"),
 				'since' => '15.0',
 				'filter' => 'alpha',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'true'),
-					array('text' => tra('No'), 'value' => 'false'),
-				),
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'true'],
+					['text' => tra('No'), 'value' => 'false'],
+				],
 				'default' => '',
 				'advanced' => true,
-			),
-			'showPortrait' => array(
+			],
+			'showPortrait' => [
 				'required' => false,
 				'name' => tra('Show Portrait') . ' ' . tra('(default is to show)'),
 				'description' => tra("Show the creator's profile picture"),
 				'since' => '15.0',
 				'filter' => 'alpha',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'true'),
-					array('text' => tra('No'), 'value' => 'false'),
-				),
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'true'],
+					['text' => tra('No'), 'value' => 'false'],
+				],
 				'default' => '',
 				'advanced' => true,
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
-function vimeo_iframe($data, $params) {
-	if (!empty($params['height'])) {
+function vimeo_iframe($data, $params)
+{
+	if (! empty($params['height'])) {
 		$height = $params['height'];
 	} else {
 		$height = '350';
-	}	
-	if (!empty($params['width'])) {
+	}
+	if (! empty($params['width'])) {
 		$width = $params['width'];
 	} else {
 		$width = '425';
@@ -187,20 +190,20 @@ function vimeo_iframe($data, $params) {
 		if (ctype_digit($urlpart)) {
 			$vimeoId = $urlpart;
 		}
-	}	
-	if (!isset($vimeoId)) {
+	}
+	if (! isset($vimeoId)) {
 		return '';
 	}
 	$url = '//player.vimeo.com/video/' . $vimeoId;
 
 	$args = [];
-	if (!empty($params['showTitle']) && $params['showTitle'] === 'false') {
+	if (! empty($params['showTitle']) && $params['showTitle'] === 'false') {
 		$args['title'] = 0;
 	}
-	if (!empty($params['showByline']) && $params['showByline'] === 'false') {
+	if (! empty($params['showByline']) && $params['showByline'] === 'false') {
 		$args['byline'] = 0;
 	}
-	if (!empty($params['showPortrait']) && $params['showPortrait'] === 'false') {
+	if (! empty($params['showPortrait']) && $params['showPortrait'] === 'false') {
 		$args['portrait'] = 0;
 	}
 	if ($args) {
@@ -217,18 +220,18 @@ function wikiplugin_vimeo($data, $params)
 	static $instance = 0;
 	$instance++;
 
-	if ($params['useFroogaloopApi']) { 
+	if ($params['useFroogaloopApi']) {
 		TikiLib::lib('header')->add_jsfile('vendor_extra/vimeo/froogaloop.min.js', true);
 		TikiLib::lib('header')->add_jsfile('vendor_extra/vimeo/vimeo.js');
 	}
 
 	if (isset($params['url'])) {
 		$params['vimeo'] = $params['url'];
-		$params['player_id'] = "pid_".uniqid(); 
+		$params['player_id'] = "pid_" . uniqid();
 		$params['vimeo_fileId'] = 0;
 		unset($params['url']);
 		if ($params['useFroogaloopApi']) {
-			$params['vimeo'] .= "?api=1&player_id=".$params['player_id'];
+			$params['vimeo'] .= "?api=1&player_id=" . $params['player_id'];
 		}
 		return vimeo_iframe($data, $params);
 	} elseif (isset($params['fileId'])) {
@@ -237,14 +240,14 @@ function wikiplugin_vimeo($data, $params)
 
 		$out = '';
 		foreach ($fileIds as $fileId) {
-		$attributelib = TikiLib::lib('attribute');
+			$attributelib = TikiLib::lib('attribute');
 			$attributes = $attributelib->get_attributes('file', $fileId);
-			if (!empty($attributes['tiki.content.url'])) {
+			if (! empty($attributes['tiki.content.url'])) {
 				$params['vimeo'] = $attributes['tiki.content.url'];
-				$params['player_id'] = "pid_".uniqid(); 
+				$params['player_id'] = "pid_" . uniqid();
 				$params['vimeo_fileId'] = $fileId;
 				if ($params['useFroogaloopApi']) {
-					$params['vimeo'] .= "?api=1&player_id=".$params['player_id'];
+					$params['vimeo'] .= "?api=1&player_id=" . $params['player_id'];
 				}
 				$out .= vimeo_iframe($data, $params);
 			} else {
@@ -254,43 +257,41 @@ function wikiplugin_vimeo($data, $params)
 
 		return $out;
 	} else {
-
 		global $page;
 		$smarty = TikiLib::lib('smarty');
 		if ($prefs['vimeo_upload'] !== 'y') {
 			$smarty->loadPlugin('smarty_block_remarksbox');
 			$repeat = false;
 			return smarty_block_remarksbox(
-				array('type' => 'error', 'title' => tra('Feature required')),
-				tra('Feature "vimeo_upload" is required to be able to add videos here.'), $smarty, $repeat
+				['type' => 'error', 'title' => tra('Feature required')],
+				tra('Feature "vimeo_upload" is required to be able to add videos here.'),
+				$smarty,
+				$repeat
 			);
 		}
 
 		// old perms access to get "special" gallery perms to handle user gals etc
 		$perms = TikiLib::lib('tiki')->get_perm_object(
-			!empty($params['galleryId']) ? $params['galleryId'] : $prefs['vimeo_default_gallery'],
+			! empty($params['galleryId']) ? $params['galleryId'] : $prefs['vimeo_default_gallery'],
 			'file gallery',
 			TikiLib::lib('filegal')->get_file_gallery_info($prefs['vimeo_default_gallery']),
 			false
 		);
-		if ($perms['tiki_p_upload_files'] !== 'y' ) {
-
+		if ($perms['tiki_p_upload_files'] !== 'y') {
 			return '';		//$permMessage = tra('You do not have permsission to add files here.');
-
-		} else if (!empty($params['fromFieldId'])) {
-
+		} elseif (! empty($params['fromFieldId'])) {
 			$fieldInfo = TikiLib::lib('trk')->get_tracker_field($params['fromFieldId']);
 			if (empty($params['fromItemId'])) {
 				$item = Tracker_Item::newItem($fieldInfo['trackerId']);
 			} else {
 				$item = Tracker_Item::fromId($params['fromItemId']);
 			}
-			if (!$item->canModify()) {
+			if (! $item->canModify()) {
 				return '';		//$permMessage = tra('You do not have permsission modify this tracker item.');
 			}
-		} else if ($page) {
-			$pagePerms = Perms::get(array( 'type' => 'wiki page', 'object' => $page ))->edit;
-			if (!$pagePerms) {
+		} elseif ($page) {
+			$pagePerms = Perms::get([ 'type' => 'wiki page', 'object' => $page ])->edit;
+			if (! $pagePerms) {
 				return '';		//$permMessage = tra('You do not have permsission modify this page.');
 			}
 		}
@@ -299,18 +300,19 @@ function wikiplugin_vimeo($data, $params)
 		$smarty->loadPlugin('smarty_function_button');
 		$smarty->loadPlugin('smarty_function_service');
 		$html = smarty_function_button(
-			array(
+			[
 				'_keepall' => 'y',
 				'_class' => 'vimeo dialog',
 				'href' => smarty_function_service(
-					array(
+					[
 						'controller' => 'vimeo',
 						'action' => 'upload',
-					),
+					],
 					$smarty
 				),
 				'_text' => tra('Upload Video'),
-			), $smarty
+			],
+			$smarty
 		);
 
 		$js = '
@@ -321,15 +323,15 @@ $(".vimeo.dialog").click(function () {
 		data: {
 			controller: "vimeo",
 			action: "upload"' .
-			(!empty($params['galleryId']) ? ',galleryId:' . $params['galleryId'] : '') .
-			(!empty($params['fromFieldId']) ? ',fieldId:' . $params['fromFieldId'] : '') .
-			(!empty($params['fromItemId']) ? ',itemId:' . $params['fromItemId'] : '') . '
+			(! empty($params['galleryId']) ? ',galleryId:' . $params['galleryId'] : '') .
+			(! empty($params['fromFieldId']) ? ',fieldId:' . $params['fromFieldId'] : '') .
+			(! empty($params['fromItemId']) ? ',itemId:' . $params['fromItemId'] : '') . '
 		},
 		load: function(data) {
 			var $dialog = $(".vimeo_upload").parents(".ui-dialog-content");		// odd its the content, not the outer div
 			$(".vimeo_upload").on("vimeo_uploaded", function(event, data) {';
 
-		if (!empty($page) && empty($params['fromFieldId'])) {
+		if (! empty($page) && empty($params['fromFieldId'])) {
 			$js .= '
 				var params = {
 					page: ' . json_encode($page) . ',
@@ -365,5 +367,4 @@ $(".vimeo.dialog").click(function () {
 
 		return $html;
 	}
-
 }

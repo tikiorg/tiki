@@ -1,21 +1,21 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 function wikiplugin_trackerprefill_info()
 {
-	return array(
+	return [
 		'name' => tra('Tracker Prefill'),
 		'documentation' => 'PluginTrackerPrefill',
 		'description' => tra('Create a button to prefill tracker fields'),
-		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerprefill' ),
+		'prefs' => [ 'feature_trackers', 'wikiplugin_trackerprefill' ],
 		'iconname' => 'trackers',
 		'introduced' => 2,
-		'params' => array(
-			'page' => array(
+		'params' => [
+			'page' => [
 				'required' => true,
 				'name' => tra('Page'),
 				'description' => tra('Tracker page name'),
@@ -23,25 +23,28 @@ function wikiplugin_trackerprefill_info()
 				'filter' => 'pagename',
 				'default' => '',
 				'profile_reference' => 'wiki_page',
-			),
-			'label' => array(
+			],
+			'label' => [
 				'required' => false,
 				'name' => tra('Label'),
 				'description' => tra('Button Label.'),
 				'since' => '2.0',
 				'filter' => 'text',
 				'default' => '',
-			),
-			'urlparams' => array(
+			],
+			'urlparams' => [
 				'required' => false,
 				'name' => tra('URL Parameters'),
-				'description' => tr('Parameters to pass in the URL, for example, %0&my_parameter1=123&my_parameter2=q%1',
-					'<code>', '</code>'),
+				'description' => tr(
+					'Parameters to pass in the URL, for example, %0&my_parameter1=123&my_parameter2=q%1',
+					'<code>',
+					'</code>'
+				),
 				'since' => '6.0',
 				'filter' => 'striptags',
 				'default' => '',
-			),
-			'field1' => array(
+			],
+			'field1' => [
 				'required' => true,
 				'name' => tra('Field 1'),
 				'description' => tra('Field ID for the first field'),
@@ -49,16 +52,16 @@ function wikiplugin_trackerprefill_info()
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'tracker_field',
-			),
-			'value1' => array(
+			],
+			'value1' => [
 				'required' => true,
 				'name' => tra('Value 1'),
 				'description' => tra('Content that should be used to prefill the field.'),
 				'since' => '2.0',
 				'filter' => 'striptags',
 				'default' => '',
-			),
-			'field2' => array(
+			],
+			'field2' => [
 				'required' => false,
 				'name' => tra('Field 2'),
 				'description' => tra('Field ID for the second field'),
@@ -66,16 +69,16 @@ function wikiplugin_trackerprefill_info()
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'tracker_field',
-			),
-			'value2' => array(
+			],
+			'value2' => [
 				'required' => false,
 				'name' => tra('Value 2'),
 				'description' => tra('Content that should be used to prefill the field.'),
 				'since' => '2.0',
 				'filter' => 'striptags',
 				'default' => '',
-			),
-			'field3' => array(
+			],
+			'field3' => [
 				'required' => false,
 				'name' => tra('Field 3'),
 				'description' => tra('Field ID for the third field'),
@@ -83,16 +86,16 @@ function wikiplugin_trackerprefill_info()
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'tracker_field',
-			),
-			'value3' => array(
+			],
+			'value3' => [
 				'required' => false,
 				'name' => tra('Value 3'),
 				'description' => tra('Content that should be used to prefill the field.'),
 				'since' => '2.0',
 				'filter' => 'striptags',
 				'default' => '',
-			),
-			'field4' => array(
+			],
+			'field4' => [
 				'required' => false,
 				'name' => tra('Field 4'),
 				'description' => tra('Field ID for the fourth field'),
@@ -100,16 +103,16 @@ function wikiplugin_trackerprefill_info()
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'tracker_field',
-			),
-			'value4' => array(
+			],
+			'value4' => [
 				'required' => false,
 				'name' => tra('Value 4'),
 				'description' => tra('Content that should be used to prefill the field.'),
 				'since' => '2.0',
 				'filter' => 'striptags',
 				'default' => '',
-			),
-			'field5' => array(
+			],
+			'field5' => [
 				'required' => false,
 				'name' => tra('Field 5'),
 				'description' => tra('Field ID for the fifth field'),
@@ -117,16 +120,16 @@ function wikiplugin_trackerprefill_info()
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'tracker_field',
-			),
-			'value5' => array(
+			],
+			'value5' => [
 				'required' => false,
 				'name' => tra('Value 5'),
 				'description' => tra('Content that should be used to prefill the field.'),
 				'since' => '2.0',
 				'filter' => 'striptags',
 				'default' => '',
-			),
-			'field6' => array(
+			],
+			'field6' => [
 				'required' => false,
 				'name' => tra('Field 6'),
 				'description' => tra('Field ID for the sixth field'),
@@ -134,16 +137,16 @@ function wikiplugin_trackerprefill_info()
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'tracker_field',
-			),
-			'value6' => array(
+			],
+			'value6' => [
 				'required' => false,
 				'name' => tra('Value 6'),
 				'description' => tra('Content that should be used to prefill the field.'),
 				'since' => '2.0',
 				'filter' => 'striptags',
 				'default' => '',
-			),
-			'field7' => array(
+			],
+			'field7' => [
 				'required' => false,
 				'name' => tra('Field 7'),
 				'description' => tra('Field ID for the seventh field'),
@@ -151,16 +154,16 @@ function wikiplugin_trackerprefill_info()
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'tracker_field',
-			),
-			'value7' => array(
+			],
+			'value7' => [
 				'required' => false,
 				'name' => tra('Value 7'),
 				'description' => tra('Content that should be used to prefill the field.'),
 				'since' => '2.0',
 				'filter' => 'striptags',
 				'default' => '',
-			),
-			'field8' => array(
+			],
+			'field8' => [
 				'required' => false,
 				'name' => tra('Field 8'),
 				'description' => tra('Field ID for the eighth field'),
@@ -168,24 +171,24 @@ function wikiplugin_trackerprefill_info()
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'tracker_field',
-			),
-			'value8' => array(
+			],
+			'value8' => [
 				'required' => false,
 				'name' => tra('Value 8'),
 				'description' => tra('Content that should be used to prefill the field.'),
 				'since' => '2.0',
 				'filter' => 'striptags',
 				'default' => '',
-			),			
-		),
-	);
+			],
+		],
+	];
 }
 
 function wikiplugin_trackerprefill($data, $params)
 {
 	$smarty = TikiLib::lib('smarty');
-	$prefills = array();
-	foreach ($params as $param=>$value) {
+	$prefills = [];
+	foreach ($params as $param => $value) {
 		if (strstr($param, 'field')) {
 			$id = substr($param, strlen('field'));
 			$f['fieldId'] = $value;

@@ -1,22 +1,22 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 function wikiplugin_usercount_info()
 {
-	return array(
+	return [
 		'name' => tra('User Count'),
 		'documentation' => 'PluginUserCount',
 		'description' => tra('Display number of users for a site or one or more groups'),
-		'prefs' => array( 'wikiplugin_usercount' ),
+		'prefs' => [ 'wikiplugin_usercount' ],
 		'body' => tra('Group name. If left blank, the total number of users for the site will be shown.'),
 		'iconname' => 'group',
 		'introduced' => 1,
-		'params' => array(
-			'groups' => array(
+		'params' => [
+			'groups' => [
 				'required' => false,
 				'name' => tra('Groups'),
 				'description' => tra('List of colon separated groups where a consolidated user count for multiple
@@ -26,9 +26,9 @@ function wikiplugin_usercount_info()
 				'separator' => ':',
 				'filter' => 'groupname',
 				'default' => '',
-			),		
-		),
-	);
+			],
+		],
+	];
 }
 
 function wikiplugin_usercount($data, $params)
@@ -37,7 +37,7 @@ function wikiplugin_usercount($data, $params)
 
 	extract($params, EXTR_SKIP);
 
-	if ( isset( $params['groups'] ) ) {
+	if (isset($params['groups'])) {
 		$groups = $params['groups'];
 		$numusers = $userlib->count_users_consolidated($groups);
 	} else {

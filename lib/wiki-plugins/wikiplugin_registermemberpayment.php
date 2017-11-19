@@ -7,22 +7,22 @@
 
 function wikiplugin_registermemberpayment_info()
 {
-	require_once( 'lib/wiki-plugins/wikiplugin_memberpayment.php' );
+	require_once('lib/wiki-plugins/wikiplugin_memberpayment.php');
 	$infoFromParent = wikiplugin_memberpayment_info();
 
-	return array(
+	return [
 		'name' => tra('Register Member Payment'),
 		'documentation' => 'PluginRegisterMemberPayment',
 		'validate' => 'all',
 		'description' => tra('Register and make a member payment at the same time'),
-		'prefs' => array( 'wikiplugin_registermemberpayment', 'payment_feature' ),
+		'prefs' => [ 'wikiplugin_registermemberpayment', 'payment_feature' ],
 		'body' => tra('NA'),
 		'iconname' => 'money',
 		'introduced' => 9.1,
 		'params' => array_merge(
 			$infoFromParent['params'],
-			array(
-				'fixedperiods' => array(
+			[
+				'fixedperiods' => [
 					'required' => false,
 					'name' => tra('Fixed Periods'),
 					'description' => tra('Give specific periods that can be chosen with a dropdown list.
@@ -30,10 +30,10 @@ function wikiplugin_registermemberpayment_info()
 					'since' => '9.1',
 					'filter' => 'text',
 					'default' => 'Number of periods:',
-				),
-			)
+				],
+			]
 		)
-	);
+	];
 }
 
 function wikiplugin_registermemberpayment($data, $params, $offset)
@@ -60,10 +60,10 @@ function wikiplugin_registermemberpayment($data, $params, $offset)
 
 	$fixedperiods = explode(';', isset($params['fixedperiods']) ? $params['fixedperiods'] : '');
 	foreach ($fixedperiods as $fixedperiod) {
-		if (!empty($fixedperiod)) {
+		if (! empty($fixedperiod)) {
 			$fixedperiod = explode(':', $fixedperiod);
 			$name = $fixedperiod[0];
-			$value = (!empty($fixedperiod[1]) ? $fixedperiod[1] : $fixedperiod[0]);
+			$value = (! empty($fixedperiod[1]) ? $fixedperiod[1] : $fixedperiod[0]);
 			$fixedperiodsDDL .= '<option value="' . trim($value) . '">' . trim($name) . '</option>';
 		}
 	}
@@ -74,18 +74,18 @@ function wikiplugin_registermemberpayment($data, $params, $offset)
 		$periods = '<select id="memberDuration' . $i . '" name="duration">' . $fixedperiodsDDL . '</select>';
 	}
 
-    //force current user to not be used
-    $params['currentuser'] = 'n';
-	$memberPayment = TikiLib::lib('parser')->parse_data(wikiplugin_memberpayment($data, $params, $offset), array('is_html' => true));
+	//force current user to not be used
+	$params['currentuser'] = 'n';
+	$memberPayment = TikiLib::lib('parser')->parse_data(wikiplugin_memberpayment($data, $params, $offset), ['is_html' => true]);
 	if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 		if (isset($_POST['msg'])) {
 			$_POST['msg'] = addslashes(htmlspecialchars($_POST['msg']));
 			$headerlib->add_jq_onready("$.notify('" . $_POST['msg'] . "')");
 		}
 
-		if (empty($user) ) {
+		if (empty($user)) {
 			include_once('lib/smarty_tiki/function.user_registration.php');
-			$register = smarty_function_user_registration(array(), $smarty);
+			$register = smarty_function_user_registration([], $smarty);
 		} else {
 			$register = "<table>
 				<tr class='registerSubmitTr'>
@@ -189,7 +189,7 @@ reg
         return false;
     });
 JS
-);
+	);
 
 	$paymentStyle = '';
 	$registerStyle = '';

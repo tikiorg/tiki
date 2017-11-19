@@ -7,25 +7,25 @@
 
 function wikiplugin_convene_info()
 {
-	return array(
+	return [
 		'name' => tra('Convene'),
 		'documentation' => 'PluginConvene',
 		'description' => tra('Agree a date from a list of alternatives'),
 		'introduced' => 9,
-		'prefs' => array('wikiplugin_convene','feature_calendar'),
+		'prefs' => ['wikiplugin_convene','feature_calendar'],
 		'body' => tra('Convene data generated from user input'),
 		'iconname' => 'group',
 		'filter' => 'rawhtml_unsafe',
-		'tags' => array( 'basic' ),
-		'params' => array(
-			'title' => array(
+		'tags' => [ 'basic' ],
+		'params' => [
+			'title' => [
 				'required' => false,
 				'name' => tra('Title'),
 				'description' => tra('Title for the event'),
 				'since' => '9.0',
 				'default' => tra('Convene'),
-			),
-			'calendarid' => array(
+			],
+			'calendarid' => [
 				'required' => false,
 				'name' => tra('Calendar ID'),
 				'description' => tra('ID number of the site calendar in which to store the date for the events with the most votes'),
@@ -33,8 +33,8 @@ function wikiplugin_convene_info()
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'calendar',
-			),
-			'minvotes' => array(
+			],
+			'minvotes' => [
 				'required' => false,
 				'name' => tra('Minimum Votes'),
 				'description' => tra('Minimum number of votes needed to show Add-to-Calendar icon, so that new users do
@@ -42,22 +42,22 @@ function wikiplugin_convene_info()
 				'since' => '10.3',
 				'filter' => 'digits',
 				'default' => '3',
-			),
-			'dateformat' => array(
+			],
+			'dateformat' => [
 				'required' => false,
 				'name' => tra('Date-Time Format'),
 				'description' => tra('Display date and time in short or long format, according to the site wide setting'),
 				'since' => '9.0',
 				'filter' => 'alpha',
 				'default' => '',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Short'), 'value' => 'short'),
-					array('text' => tra('Long'), 'value' => 'long')
-				)
-			),
-		)
-	);
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Short'), 'value' => 'short'],
+					['text' => tra('Long'), 'value' => 'long']
+				]
+			],
+		]
+	];
 }
 
 function wikiplugin_convene($data, $params)
@@ -74,19 +74,19 @@ function wikiplugin_convene($data, $params)
 	$i = $conveneI;
 
 	$params = array_merge(
-		array(
+		[
 			"title" => "Convene",
 			"calendarid" => "1",
 			"minvotes" => "3",
 			"dateformat" => "short"
-		),
+		],
 		$params
 	);
 
 	extract($params, EXTR_SKIP);
 
 	$dataString = $data . '';
-	$dataArray = array();
+	$dataArray = [];
 
 	//start flat static text to prepared array
 	$lines = explode("\n", trim($data));
@@ -94,7 +94,7 @@ function wikiplugin_convene($data, $params)
 	foreach ($lines as $line) {
 		$line = trim($line);
 
-		if (!empty($line)) {
+		if (! empty($line)) {
 			$parts = explode(':', $line);
 			$dataArray[trim($parts[0])] = trim($parts[1]);
 		}
@@ -104,7 +104,7 @@ function wikiplugin_convene($data, $params)
 	//end flat static text to prepared array
 
 	//start get users from array
-	$users = array();
+	$users = [];
 	foreach (end($data['dates']) as $user => $vote) {
 		$users[] = $user;
 	}
@@ -112,10 +112,12 @@ function wikiplugin_convene($data, $params)
 
 
 	//start votes summed together
-	$votes = array();
+	$votes = [];
 	foreach ($data['dates'] as $stamp => $date) {
 		foreach ($date as $vote) {
-			if (empty($votes[$stamp])) $votes[$stamp] = 0;
+			if (empty($votes[$stamp])) {
+				$votes[$stamp] = 0;
+			}
 			$votes[$stamp] += (int)$vote;
 		}
 	}
@@ -125,8 +127,7 @@ function wikiplugin_convene($data, $params)
 	//start find top vote stamp
 	$topVoteStamp = 0;
 	foreach ($votes as $stamp => $vote) {
-		if (
-			!isset($votes[$topVoteStamp]) || (
+		if (! isset($votes[$topVoteStamp]) || (
 				isset($votes[$topVoteStamp]) &&
 				$vote > $votes[$topVoteStamp]
 			)
@@ -138,10 +139,12 @@ function wikiplugin_convene($data, $params)
 
 
 	//start reverse array for easy listing as table
-	$rows = array();
+	$rows = [];
 	foreach ($data['dates'] as $stamp => $date) {
 		foreach ($date as $user => $vote) {
-			if (isset($rows[$user][$stamp])) $rows[$user][$stamp] = array();
+			if (isset($rows[$user][$stamp])) {
+				$rows[$user][$stamp] = [];
+			}
 
 			$rows[$user][$stamp] = $vote;
 		}
@@ -157,13 +160,13 @@ function wikiplugin_convene($data, $params)
 	$gmformat = str_replace($tikiDate->search, $tikiDate->replace, $tikilib->get_short_datetime_format());
 	foreach ($votes as $stamp => $totals) {
 		$dateHeader .= '<td class="conveneHeader"><span class="tips" title="' . tr('UTC date time: %0', gmdate($gmformat, $stamp)) . '">';
-		if (!empty($dateformat) && $dateformat == "long") {
+		if (! empty($dateformat) && $dateformat == "long") {
 			$dateHeader .= $tikilib->get_long_datetime($stamp);
 		} else {
 			$dateHeader .= $tikilib->get_short_datetime($stamp);
 		}
 		$dateHeader .= '</span>';
-		$dateHeader .= ($perms->edit ? " <button class='conveneDeleteDate$i icon btn btn-default btn-xs' data-date='$stamp'>$deleteicon</button>" : ""). "</td>";
+		$dateHeader .= ($perms->edit ? " <button class='conveneDeleteDate$i icon btn btn-default btn-xs' data-date='$stamp'>$deleteicon</button>" : "") . "</td>";
 	}
 	$result .= "<tr class='conveneHeaderRow'>";
 
@@ -172,9 +175,9 @@ function wikiplugin_convene($data, $params)
 			?
 				"<input type='button' class='conveneAddDate$i btn btn-default btn-sm' value='" . tr('Add Date') . "'/>"
 			: ""
-	)."</td>";
+	) . "</td>";
 
-	$result .=	"$dateHeader
+	$result .= "$dateHeader
 		</tr>";
 	//end date header
 
@@ -183,29 +186,29 @@ function wikiplugin_convene($data, $params)
 	$userList = "";
 	foreach ($rows as $user => $row) {
 		$userList .= "<tr class='conveneVotes conveneUserVotes$i'>";
-		$userList .= "<td style='white-space: nowrap'>". ($perms->edit ? "<button class='conveneUpdateUser$i icon btn btn-default btn-sm'>"
-				.  smarty_function_icon(['name' => 'pencil', 'iclass' => 'tips', 'ititle' => ':'
+		$userList .= "<td style='white-space: nowrap'>" . ($perms->edit ? "<button class='conveneUpdateUser$i icon btn btn-default btn-sm'>"
+				. smarty_function_icon(['name' => 'pencil', 'iclass' => 'tips', 'ititle' => ':'
 					. tr("Edit User/Save changes")], $smarty)
 				. "</button><button data-user='$user' title='" . tr("Delete User")
 				. "' class='conveneDeleteUser$i icon btn btn-danger btn-sm'>"
 				. smarty_function_icon(['name' => 'delete'], $smarty) . "</button> " : "") . TikiLib::lib('user')->clean_user($user) . "</td>";
 		foreach ($row as $stamp => $vote) {
 			if ($vote == 1) {
-				$class = 	"convene-ok text-center label-success";
-				$text = 	smarty_function_icon(['name' => 'ok', 'iclass' => 'tips', 'ititle' => ':' . tr('OK')], $smarty);
+				$class = "convene-ok text-center label-success";
+				$text = smarty_function_icon(['name' => 'ok', 'iclass' => 'tips', 'ititle' => ':' . tr('OK')], $smarty);
 			} elseif ($vote == -1) {
-				$class = 	"convene-no text-center label-danger";
-				$text = 	smarty_function_icon(['name' => 'remove', 'iclass' => 'tips', 'ititle' => ':'
+				$class = "convene-no text-center label-danger";
+				$text = smarty_function_icon(['name' => 'remove', 'iclass' => 'tips', 'ititle' => ':'
 					. tr('Not OK')], $smarty);
 			} else {
-				$class = 	"convene-unconfirmed text-center label-default";
-				$text = 	smarty_function_icon(['name' => 'help', 'iclass' => 'tips', 'ititle' => ':'
+				$class = "convene-unconfirmed text-center label-default";
+				$text = smarty_function_icon(['name' => 'help', 'iclass' => 'tips', 'ititle' => ':'
 					. tr('Unconfirmed')], $smarty);
 			}
 
-			$userList .= "<td class='$class'>". $text
-				."<input type='hidden' name='dates_" . $stamp . "_" . $user . "' value='$vote' class='conveneUserVote$i form-control' />"
-				."</td>";
+			$userList .= "<td class='$class'>" . $text
+				. "<input type='hidden' name='dates_" . $stamp . "_" . $user . "' value='$vote' class='conveneUserVote$i form-control' />"
+				. "</td>";
 		}
 		$userList .= "</tr>";
 	}
@@ -247,7 +250,7 @@ function wikiplugin_convene($data, $params)
 			}
 		}
 
-		$lastRow .= "<td class='conveneFooter'>". $total ."&nbsp;$pic</td>";
+		$lastRow .= "<td class='conveneFooter'>" . $total . "&nbsp;$pic</td>";
 	}
 	$result .= $lastRow;
 
@@ -264,14 +267,14 @@ function wikiplugin_convene($data, $params)
 FORM;
 
 	$conveneData = json_encode(
-		array(
+		[
 			"dates" => $data['dates'],
 			"users" => $users,
 			"votes" => $votes,
 			"topVote" => $votes[$topVoteStamp],
-			"rows" =>	$rows,
+			"rows" => $rows,
 			"data" => $dataString,
-		)
+		]
 	);
 
 	$n = '\n';
@@ -282,7 +285,7 @@ FORM;
 	$ticket = $access->getTicket();
 
 	$headerlib->add_jq_onready(
-/** @lang JavaScript */
+		/** @lang JavaScript */
 		<<<JQ
 
 		var convene$i = $.extend({
@@ -607,10 +610,10 @@ FORM;
 		};
 		initConvene$i();
 JQ
-);
+	);
 
 	return
-<<<RETURN
+	<<<RETURN
 ~np~
 	<div class="panel panel-default">
 		<div class="panel-heading">

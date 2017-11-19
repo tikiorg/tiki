@@ -7,34 +7,34 @@
 
 function wikiplugin_sort_info()
 {
-	return array(
+	return [
 		'name' => tra('Sort'),
 		'documentation' => 'PluginSort',
 		'description' => tra('Sort lines of text'),
-		'prefs' => array( 'wikiplugin_sort' ),
+		'prefs' => [ 'wikiplugin_sort' ],
 		'body' => tra('Data to sort, one entry per line.'),
 		'filter' => 'text',
 		'iconname' => 'sort-desc',
 		'introduced' => 1,
-		'tags' => array( 'basic' ),
-		'params' => array(
-			'sort' => array(
+		'tags' => [ 'basic' ],
+		'params' => [
+			'sort' => [
 				'required' => false,
 				'name' => tra('Order'),
 				'description' => tra('Set the sort order of lines of content (default is ascending)'),
 				'since' => '1',
 				'filter' => 'alpha',
 				'default' => 'asc',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Ascending'), 'value' => 'asc'),
-					array('text' => tra('Descending'), 'value' => 'desc'),
-					array('text' => tra('Reverse'), 'value' => 'reverse'),
-					array('text' => tra('Shuffle'), 'value' => 'shuffle')
-				)
-			)
-		)
-	);
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Ascending'), 'value' => 'asc'],
+					['text' => tra('Descending'), 'value' => 'desc'],
+					['text' => tra('Reverse'), 'value' => 'reverse'],
+					['text' => tra('Shuffle'), 'value' => 'shuffle']
+				]
+			]
+		]
+	];
 }
 
 function wikiplugin_sort($data, $params)
@@ -51,12 +51,12 @@ function wikiplugin_sort($data, $params)
 
 	if ($sort == "asc") {
 		natcasesort($lines);
-	} else if ($sort == "desc") {
+	} elseif ($sort == "desc") {
 		natcasesort($lines);
 		$lines = array_reverse($lines);
-	} else if ($sort == "reverse") {
+	} elseif ($sort == "reverse") {
 		$lines = array_reverse($lines);
-	} else if ($sort == "shuffle") {
+	} elseif ($sort == "shuffle") {
 		shuffle($lines);
 	}
 

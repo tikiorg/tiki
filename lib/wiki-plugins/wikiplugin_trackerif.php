@@ -9,60 +9,60 @@ require_once('lib/ldap/filter.php');
 
 function wikiplugin_trackerif_info()
 {
-	return array(
+	return [
 		'name' => tra('Tracker If'),
 		'documentation' => 'PluginTrackerIf',
 		'description' => tra('Display content based on results of a tracker field test'),
-		'prefs' => array( 'wikiplugin_trackerif', 'feature_trackers', 'wikiplugin_tracker' ), // ML: is wikiplugin_tracker necessary?
+		'prefs' => [ 'wikiplugin_trackerif', 'feature_trackers', 'wikiplugin_tracker' ], // ML: is wikiplugin_tracker necessary?
 		'iconname' => 'trackers',
 		'introduced' => 7,
 		'defaultfilter' => 'wikicontent',
-		'params' => array(
-			'test' => array(
+		'params' => [
+			'test' => [
 				'required' => true,
 				'name' => tra('Test'),
 				'description' => tra('Test'),
 				'since' => '7.0',
-			),
-			'ignore' => array(
+			],
+			'ignore' => [
 				'required' => false,
 				'name' => tra('Ignore'),
 				'default' => 'y',
 				'description' => tra('Ignore test in edit mode'),
 				'since' => '7.0',
 				'filter' => 'alpha',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n')
-				)
-			),
-		),
-	);
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'y'],
+					['text' => tra('No'), 'value' => 'n']
+				]
+			],
+		],
+	];
 }
 
-function wikiplugin_trackerif ($data, $params)
+function wikiplugin_trackerif($data, $params)
 {
 	$trklib = TikiLib::lib('trk');
 	$test = null;
-	$values = array();
+	$values = [];
 	$dataelse = '';
 
 	if (strpos($data, '{ELSE}')) {
 		// Else bloc when test does not pass
-		$dataelse = substr($data, strpos($data, '{ELSE}')+6);
+		$dataelse = substr($data, strpos($data, '{ELSE}') + 6);
 		$data = substr($data, 0, strpos($data, '{ELSE}'));
 	}
 
 	if (empty($_REQUEST["trackerId"])) {
-                $trackerId = $trklib->get_tracker_for_item($_REQUEST['itemId']);
+				$trackerId = $trklib->get_tracker_for_item($_REQUEST['itemId']);
 	} else {
 		$trackerId = $_REQUEST["trackerId"];
 	}
 
-	if (!$trackerId || !isset($_REQUEST['itemId'])) {
+	if (! $trackerId || ! isset($_REQUEST['itemId'])) {
 		// Edit mode
-		if (!isset($params['ignore']) || $params['ignore'] == 'y') {
+		if (! isset($params['ignore']) || $params['ignore'] == 'y') {
 			return $data;
 		}
 
@@ -83,7 +83,7 @@ function wikiplugin_trackerif ($data, $params)
 		$values[$field['fieldId']] = $trklib->get_item_value($trackerId, $_REQUEST['itemId'], $field['fieldId']);
 	}
 
-	if (!wikiplugin_trackerif_test($test, $values)) {
+	if (! wikiplugin_trackerif_test($test, $values)) {
 		if ($dataelse) {
 			return $dataelse;
 		}
@@ -105,15 +105,14 @@ function wikiplugin_trackerif_test(LDAPFilter $test, array $values)
 				case '&':
 					// And
 					$return &= wikiplugin_trackerif_test($subfilter, $values);
-    				break;
+					break;
 				case '|':
 					// Or
 					$return |= wikiplugin_trackerif_test($subfilter, $values);
-    				break;
+					break;
 			}
 		}
-
-	} else if ($test->_filter != null) {
+	} elseif ($test->_filter != null) {
 		// a operator b
 		preg_match('/^\(\'?([^!\']*)\'?(=|!=|<|<=|>|>=)\'?([^\']*)\'?\)$/', $test->_filter, $matches);
 
@@ -123,12 +122,12 @@ function wikiplugin_trackerif_test(LDAPFilter $test, array $values)
 
 			if (preg_match('/f_([0-9]+)/', $matches[1], $matches_f)) {
 				// Retrieve the field f_*
-				$_a = isset( $values[$matches_f[1]] ) ? $values[$matches_f[1]] : '';
+				$_a = isset($values[$matches_f[1]]) ? $values[$matches_f[1]] : '';
 			}
 
 			if (preg_match('/f_([0-9]+)/', $matches[3], $matches_f)) {
 				// Retrieve the field f_*
-				$_b = isset( $values[$matches_f[1]] ) ? $values[$matches_f[1]] : '';
+				$_b = isset($values[$matches_f[1]]) ? $values[$matches_f[1]] : '';
 			}
 
 			switch ($matches[2]) {
@@ -139,12 +138,11 @@ function wikiplugin_trackerif_test(LDAPFilter $test, array $values)
 
 					if ($_begins) {
 						if ($_ends) {
-							return preg_match('/'. $_b . '/', $_a);
+							return preg_match('/' . $_b . '/', $_a);
 						}
-						return preg_match('/^'. $_b . '/', $_a);
-
-					} else if ($_ends) {
-						return preg_match('/'. $_b . '$/', $_a);
+						return preg_match('/^' . $_b . '/', $_a);
+					} elseif ($_ends) {
+						return preg_match('/' . $_b . '$/', $_a);
 					}
 
 					return $_a == $_b;
@@ -165,7 +163,7 @@ function wikiplugin_trackerif_test(LDAPFilter $test, array $values)
 	return $return;
 }
 
-function wikiplugin_trackerif_starts_with($haystack, $needle, $case=true)
+function wikiplugin_trackerif_starts_with($haystack, $needle, $case = true)
 {
 	if ($case) {
 		return strcmp(substr($haystack, 0, strlen($needle)), $needle) === 0;
@@ -174,7 +172,7 @@ function wikiplugin_trackerif_starts_with($haystack, $needle, $case=true)
 	return strcasecmp(substr($haystack, 0, strlen($needle)), $needle) === 0;
 }
 
-function wikiplugin_trackerif_ends_with($haystack, $needle, $case=true)
+function wikiplugin_trackerif_ends_with($haystack, $needle, $case = true)
 {
 	if ($case) {
 		return strcmp(substr($haystack, strlen($haystack) - strlen($needle)), $needle) === 0;

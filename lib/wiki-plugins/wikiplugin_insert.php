@@ -7,23 +7,23 @@
 
 function wikiplugin_insert_info()
 {
-	return array(
+	return [
 		'name' => tr('Insert Tracker Item'),
 		'description' => tr('Creates a tracker item when the plugin is inserted in the page. The plugin is removed and replaced by a link to the newly created item.'),
-		'prefs' => array('wikiplugin_insert', 'feature_trackers', 'wikiplugin_objectlink'),
-		'tags' => array('basic'),
+		'prefs' => ['wikiplugin_insert', 'feature_trackers', 'wikiplugin_objectlink'],
+		'tags' => ['basic'],
 		'iconname' => 'add',
 		'introduced' => 10,
 		'extraparams' => true,
 		'defaultfilter' => 'text',
-	);
+	];
 }
 
 function wikiplugin_insert_rewrite($data, $params, $context)
 {
 	$tikilib = TikiLib::lib('tiki');
 
-	$trackerIds = $tikilib->get_preference('tracker_insert_allowed', array(), true);
+	$trackerIds = $tikilib->get_preference('tracker_insert_allowed', [], true);
 
 	foreach ($trackerIds as $trackerId) {
 		$utilities = new Services_Tracker_Utilities;
@@ -39,7 +39,7 @@ function wikiplugin_insert_rewrite($data, $params, $context)
 			continue;
 		}
 
-		$available = array();
+		$available = [];
 		foreach ($params as $key => $value) {
 			if ($item->canModifyField($key)) {
 				$available[$key] = $value;
@@ -47,10 +47,11 @@ function wikiplugin_insert_rewrite($data, $params, $context)
 		}
 
 		$id = $utilities->insertItem(
-			$definition, array(
+			$definition,
+			[
 				'status' => 'o',
 				'fields' => $available,
-			)
+			]
 		);
 
 		if (false !== $id) {
@@ -67,4 +68,3 @@ function wikiplugin_insert($data, $params)
 {
 	return '__' . tr('Item not inserted') . '__';
 }
-

@@ -9,21 +9,21 @@ require_once 'lib/wiki/pluginslib.php';
 
 function wikiplugin_listexecute_info()
 {
-	return array(
+	return [
 		'name' => tra('List Execute'),
 		'documentation' => 'PluginListExecute',
 		'description' => tra('Set custom actions that can be executed on a filtered list of objects'),
-		'prefs' => array('wikiplugin_listexecute', 'feature_search'),
+		'prefs' => ['wikiplugin_listexecute', 'feature_search'],
 		'body' => tra('List configuration information'),
 		'validate' => 'all',
 		'filter' => 'wikicontent',
 		'profile_reference' => 'search_plugin_content',
 		'iconname' => 'list',
 		'introduced' => 11,
-		'tags' => array( 'advanced' ),
-		'params' => array(
-		),
-	);
+		'tags' => [ 'advanced' ],
+		'params' => [
+		],
+	];
 }
 
 function wikiplugin_listexecute($data, $params)
@@ -33,11 +33,11 @@ function wikiplugin_listexecute($data, $params)
 
 	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 
-	$actions = array();
+	$actions = [];
 
 	$factory = new Search_Action_Factory;
 	$factory->register(
-		array(
+		[
 			'change_status' => 'Search_Action_ChangeStatusAction',
 			'delete' => 'Search_Action_Delete',
 			'email' => 'Search_Action_EmailAction',
@@ -45,7 +45,7 @@ function wikiplugin_listexecute($data, $params)
 			'tracker_item_modify' => 'Search_Action_TrackerItemModify',
 			'filegal_change_filename' => 'Search_Action_FileGalleryChangeFilename',
 			'filegal_image_overlay' => 'Search_Action_FileGalleryImageOverlay',
-		)
+		]
 	);
 
 	$query = new Search_Query;
@@ -56,14 +56,14 @@ function wikiplugin_listexecute($data, $params)
 	$builder = new Search_Query_WikiBuilder($query);
 	$builder->apply($matches, true);
 	$tsret = $builder->applyTablesorter($matches, true);
-	if (!empty($tsret['max']) || !empty($_GET['numrows'])) {
-		$max = !empty($_GET['numrows']) ? $_GET['numrows'] : $tsret['max'];
+	if (! empty($tsret['max']) || ! empty($_GET['numrows'])) {
+		$max = ! empty($_GET['numrows']) ? $_GET['numrows'] : $tsret['max'];
 		$builder->wpquery_pagination_max($query, $max);
 		$builder->applyPagination();
 	}
 	$paginationArguments = $builder->getPaginationArguments();
 
-	if (!empty($_REQUEST[$paginationArguments['sort_arg']])) {
+	if (! empty($_REQUEST[$paginationArguments['sort_arg']])) {
 		$query->setOrder($_REQUEST[$paginationArguments['sort_arg']]);
 	}
 
@@ -96,8 +96,9 @@ function wikiplugin_listexecute($data, $params)
 			}
 		}
 
-		if ($name == 'output')
+		if ($name == 'output') {
 			$customOutput = true;
+		}
 	}
 
 	$index = $unifiedsearchlib->getIndex();
@@ -124,14 +125,14 @@ function wikiplugin_listexecute($data, $params)
 
 	$formatter = $builder->getFormatter();
 
-	if( !$customOutput ) {
+	if (! $customOutput) {
 		$plugin = new Search_Formatter_Plugin_SmartyTemplate('templates/wiki-plugins/wikiplugin_listexecute.tpl');
-		$plugin->setFields(array('report_status' => null));
+		$plugin->setFields(['report_status' => null]);
 		$plugin->setData(
-			array(
+			[
 				'actions' => $actions,
 				'iListExecute' => $iListExecute
-			)
+			]
 		);
 		$builder->setFormatterPlugin($plugin);
 		$formatter = $builder->getFormatter();
@@ -157,19 +158,19 @@ function wikiplugin_listexecute($data, $params)
 			foreach ($list as $entry) {
 				$identifier = "{$entry['object_type']}:{$entry['object_id']}";
 				if (in_array($identifier, $objects) || in_array('ALL', $objects)) {
-					if( isset($_POST['list_input']) ) {
+					if (isset($_POST['list_input'])) {
 						$entry['value'] = $_POST['list_input'];
 					}
-					
+
 					try {
 						$success = $action->execute($entry);
-						if( !$success ) {
+						if (! $success) {
 							Feedback::error(tr("Unknown error executing action %0 on item %1.", $_POST['list_action'], $entry['title']));
 						}
-					} catch( Search_Action_Exception $e ) {
+					} catch (Search_Action_Exception $e) {
 						Feedback::error(
 							tr("Error executing action %0 on item %1:", $_POST['list_action'], $entry['title'])
-							.' '.$e->getMessage()
+							. ' ' . $e->getMessage()
 						);
 						$success = false;
 					}
@@ -200,7 +201,7 @@ function wikiplugin_listexecute($data, $params)
 			// remove any tablesorter header js that will be added twice otherwise
 			foreach (TikiLib::lib('header')->jq_onready as &$scripts) {
 				foreach ($scripts as $key => $js) {
-					if (strstr($js, '$(\'table#wplistexecute-'.$iListExecute.'\').tablesorter(')) {
+					if (strstr($js, '$(\'table#wplistexecute-' . $iListExecute . '\').tablesorter(')) {
 						unset($scripts[$key]);
 					}
 				}

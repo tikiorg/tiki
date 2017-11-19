@@ -7,18 +7,18 @@
 
 function wikiplugin_piwik_info()
 {
-	return array(
+	return [
 		'name' => tra('Piwik'),
 		'documentation' => 'PluginPiwik',
 		'description' => tr('Embed a Piwik preformatted report (widget module) - Piwik Analytics is required.
                             To use this plugin you have to grant in your Piwik view permission to anonymous for the selected "Site Id" or to add a token authentification parameter.'),
-		'prefs' => array('wikiplugin_piwik'),
+		'prefs' => ['wikiplugin_piwik'],
 		'iconname' => 'chart',
 		'introduced' => 15,
-		'tags' => array('basic'),
+		'tags' => ['basic'],
 		'format' => 'html',
-		'params' => array(
-			'piwikserverurl' => array(
+		'params' => [
+			'piwikserverurl' => [
 				'required' => false,
 				'name' => tra('Piwik server url'),
 				'description' => tr('The url to your Piwik Server, where data for the report are collected and available.') . ' <code>http(s)://yourpiwik.tld/index.php?</code> ' . '<br />'
@@ -26,125 +26,125 @@ function wikiplugin_piwik_info()
 					. '<code>http(s)://yourpiwik.tld/index.php&token_auth=yourtokencode</code> ' . tr('Important : token_auth is visible in the html code and must be used in private page accessible to trusted users.'),
 				'since' => '15',
 				'default' => '',
-			),
+			],
 
-			'idSite' => array(
+			'idSite' => [
 				'required' => false,
 				'name' => tra('Site Id'),
 				'description' => tr('The ID of your website in Piwik. To be improved.'),
 				'since' => '15',
 				'filter' => 'digits',
 				'default' => '',
-			),
+			],
 
-			'moduleToWidgetize' => array(
+			'moduleToWidgetize' => [
 				'required' => false,
 				'name' => tra('Module and Action To Widgetize'),
 				'description' => tr('Piwik widget module to be used (as described in the widget section of your Piwik server) followed by the actionToWidgetize parameter separated by a comma.'),
 				'since' => '15',
 				'default' => 'VisitsSummary,getEvolutionGraph',
-				'options' => array(
-					array('text' => tra('Actions - Pages'), 'value' => 'Actions,getPageUrls'),
-					array('text' => tra('Actions - Entry pages'), 'value' => 'Actions,getEntryPageUrls'),
-					array('text' => tra('Actions - Exit pages'), 'value' => 'Actions,getExitPageUrls'),
-					array('text' => tra('Actions - Outlinks'), 'value' => 'Actions,getOutlinks'),
-					array('text' => tra('Dashboard'), 'value' => 'Dashboard,index'),
-					array('text' => tra('Live - Visitor in real time'), 'value' => 'Live,widget'),
-					array('text' => tra('Live - Simple Last Visit Count'), 'value' => 'Live,getSimpleLastVisitCount'),
-					array('text' => tra('Live - Visitor Profile Popup'), 'value' => 'Live,getVisitorProfilePopup'),
-					array('text' => tra('Referrers - All referrers'), 'value' => 'Referrers,getAll'),
-					array('text' => tra('Referrers - Search engines'), 'value' => 'Referrers,getSearchEngines'),
-					array('text' => tra('Resolution - Screen Resolution'), 'value' => 'Resolution,getResolution'),
-					array('text' => tra('SEO - SEO Ranking (slow)'), 'value' => 'SEO,getRank'),
-					array('text' => tra('User Country Map - RealTime Map'), 'value' => 'UserCountryMap,realtimeMap'),
-					array('text' => tra('User Country Map - Visitor Map'), 'value' => 'UserCountryMap,visitorMap'),
-					array('text' => tra('User Country Map - Country'), 'value' => 'UserCountryMap,getCountry'),
-					array('text' => tra('User Country Map - Continent'), 'value' => 'UserCountryMap,getContinent'),
-					array('text' => tra('User Language - Language'), 'value' => 'UserLanguage,getLanguage'),
-					array('text' => tra('User Language - Language Code'), 'value' => 'UserLanguage,getLanguageCode'),
-					array('text' => tra('Visits Time - By day of the week'), 'value' => 'VisitTime,getByDayOfWeek'),
-					array('text' => tra('Visits Time - Visit Information Per Local Time'), 'value' => 'VisitTime,getVisitInformationPerLocalTime'),
-					array('text' => tra('Visits Time - Visit Information Per Server Time'), 'value' => 'VisitTime,getVisitInformationPerServerTime'),
-					array('text' => tra('Visits Summary - by day of the week'), 'value' => 'VisitTime,getByDayOfWeek'),
-					array('text' => tra('Visits Summary - over time'), 'value' => 'VisitsSummary,getEvolutionGraph'),
-					array('text' => tra('Visits Summary - overview with graph'), 'value' => 'VisitsSummary,index'),
-					array('text' => tra('Visitors - Visitor map'), 'value' => 'UserCountryMap,visitorMap'),
-					array('text' => tra('Visitors - Pages per visit'), 'value' => 'VisitorInterest,getNumberOfVisitsPerVisitDuration'),
-					array('text' => tra('Visitors - Frequency overview'), 'value' => 'VisitFrequency,getSparklines'),
-                    array('text' => tra('Visitors - Returning visits over time'), 'value' => 'VisitFrequency,getEvolutionGraph'),
-                    array('text' => tra('Visitor Devices - Device type'), 'value' => 'DevicesDetection,getType'),
-					array('text' => tra('Visitor Devices - browser'), 'value' => 'DevicesDetection,getBrowsers'),
-					array('text' => tra('Visitor Devices - Browser Versions'), 'value' => 'DevicesDetection,getBrowserVersions'),
-					array('text' => tra('Visitor Devices - OS Families'), 'value' => 'DevicesDetection,getOsFamilies'),
-					array('text' => tra('Visitor Devices - OS Versions'), 'value' => 'DevicesDetection,getOsVersions'),
-					array('text' => tra('Visitor Interest - Number Of Visits Per Visit Duration'), 'value' => 'VisitorInterest,getNumberOfVisitsPerVisitDuration'),
-					array('text' => tra('Visitor Interest - Number Of Visits Per Page'), 'value' => 'VisitorInterest,getNumberOfVisitsPerPage'),
-					array('text' => tra('Visitor Interest - Number Of Visits By Visit Count'), 'value' => 'VisitorInterest,getNumberOfVisitsByVisitCount'),
-					array('text' => tra('Visitor Interest - Number Of Visits By Days Since Last'), 'value' => 'VisitorInterest,getNumberOfVisitsByDaysSinceLast'),
-					array('text' => tra('Visitor Setting - Screen resolution'), 'value' => 'Resolution,getResolution'),
-				),
-			),
+				'options' => [
+					['text' => tra('Actions - Pages'), 'value' => 'Actions,getPageUrls'],
+					['text' => tra('Actions - Entry pages'), 'value' => 'Actions,getEntryPageUrls'],
+					['text' => tra('Actions - Exit pages'), 'value' => 'Actions,getExitPageUrls'],
+					['text' => tra('Actions - Outlinks'), 'value' => 'Actions,getOutlinks'],
+					['text' => tra('Dashboard'), 'value' => 'Dashboard,index'],
+					['text' => tra('Live - Visitor in real time'), 'value' => 'Live,widget'],
+					['text' => tra('Live - Simple Last Visit Count'), 'value' => 'Live,getSimpleLastVisitCount'],
+					['text' => tra('Live - Visitor Profile Popup'), 'value' => 'Live,getVisitorProfilePopup'],
+					['text' => tra('Referrers - All referrers'), 'value' => 'Referrers,getAll'],
+					['text' => tra('Referrers - Search engines'), 'value' => 'Referrers,getSearchEngines'],
+					['text' => tra('Resolution - Screen Resolution'), 'value' => 'Resolution,getResolution'],
+					['text' => tra('SEO - SEO Ranking (slow)'), 'value' => 'SEO,getRank'],
+					['text' => tra('User Country Map - RealTime Map'), 'value' => 'UserCountryMap,realtimeMap'],
+					['text' => tra('User Country Map - Visitor Map'), 'value' => 'UserCountryMap,visitorMap'],
+					['text' => tra('User Country Map - Country'), 'value' => 'UserCountryMap,getCountry'],
+					['text' => tra('User Country Map - Continent'), 'value' => 'UserCountryMap,getContinent'],
+					['text' => tra('User Language - Language'), 'value' => 'UserLanguage,getLanguage'],
+					['text' => tra('User Language - Language Code'), 'value' => 'UserLanguage,getLanguageCode'],
+					['text' => tra('Visits Time - By day of the week'), 'value' => 'VisitTime,getByDayOfWeek'],
+					['text' => tra('Visits Time - Visit Information Per Local Time'), 'value' => 'VisitTime,getVisitInformationPerLocalTime'],
+					['text' => tra('Visits Time - Visit Information Per Server Time'), 'value' => 'VisitTime,getVisitInformationPerServerTime'],
+					['text' => tra('Visits Summary - by day of the week'), 'value' => 'VisitTime,getByDayOfWeek'],
+					['text' => tra('Visits Summary - over time'), 'value' => 'VisitsSummary,getEvolutionGraph'],
+					['text' => tra('Visits Summary - overview with graph'), 'value' => 'VisitsSummary,index'],
+					['text' => tra('Visitors - Visitor map'), 'value' => 'UserCountryMap,visitorMap'],
+					['text' => tra('Visitors - Pages per visit'), 'value' => 'VisitorInterest,getNumberOfVisitsPerVisitDuration'],
+					['text' => tra('Visitors - Frequency overview'), 'value' => 'VisitFrequency,getSparklines'],
+					['text' => tra('Visitors - Returning visits over time'), 'value' => 'VisitFrequency,getEvolutionGraph'],
+					['text' => tra('Visitor Devices - Device type'), 'value' => 'DevicesDetection,getType'],
+					['text' => tra('Visitor Devices - browser'), 'value' => 'DevicesDetection,getBrowsers'],
+					['text' => tra('Visitor Devices - Browser Versions'), 'value' => 'DevicesDetection,getBrowserVersions'],
+					['text' => tra('Visitor Devices - OS Families'), 'value' => 'DevicesDetection,getOsFamilies'],
+					['text' => tra('Visitor Devices - OS Versions'), 'value' => 'DevicesDetection,getOsVersions'],
+					['text' => tra('Visitor Interest - Number Of Visits Per Visit Duration'), 'value' => 'VisitorInterest,getNumberOfVisitsPerVisitDuration'],
+					['text' => tra('Visitor Interest - Number Of Visits Per Page'), 'value' => 'VisitorInterest,getNumberOfVisitsPerPage'],
+					['text' => tra('Visitor Interest - Number Of Visits By Visit Count'), 'value' => 'VisitorInterest,getNumberOfVisitsByVisitCount'],
+					['text' => tra('Visitor Interest - Number Of Visits By Days Since Last'), 'value' => 'VisitorInterest,getNumberOfVisitsByDaysSinceLast'],
+					['text' => tra('Visitor Setting - Screen resolution'), 'value' => 'Resolution,getResolution'],
+				],
+			],
 
-			'period' => array(
+			'period' => [
 				'required' => false,
 				'name' => tra('Statistics period'),
 				'description' => tr('Data display duration. If range is selected you must enter the start and end the date.'),
 				'since' => '15',
 				'default' => 'day',
-				'options' => array(
-					array('text' => tra('Day'), 'value' => 'day'),
-					array('text' => tra('Week'), 'value' => 'week'),
-					array('text' => tra('Month'), 'value' => 'month'),
-					array('text' => tra('Year'), 'value' => 'year'),
-					array('text' => tra('Range'), 'value' => 'range'),
-				),
-			),
+				'options' => [
+					['text' => tra('Day'), 'value' => 'day'],
+					['text' => tra('Week'), 'value' => 'week'],
+					['text' => tra('Month'), 'value' => 'month'],
+					['text' => tra('Year'), 'value' => 'year'],
+					['text' => tra('Range'), 'value' => 'range'],
+				],
+			],
 
-			'date' => array(
+			'date' => [
 				'required' => false,
 				'name' => tra('Date or Start date'),
 				'description' => tr('Enter date or start date for the data to be displayed (yesterday by default). Possible values are: today, yesterday, and yyyy-mm-dd.'),
 				'since' => '15',
 				'default' => 'yesterday',
-			),
+			],
 
-			'enddate' => array(
+			'enddate' => [
 				'required' => false,
 				'name' => tra('End date'),
 				'description' => tr('Enter end date (format yyyy-mm-dd) for the data to be displayed (only if range period is selected).'),
 				'since' => '15',
 				'default' => '',
-			),
+			],
 
-			'_width' => array(
+			'_width' => [
 				'required' => false,
 				'name' => tra('Module width'),
 				'description' => tr('Optional, width of the module in px or % (100% by default).'),
 				'since' => '15',
 				'default' => '100%',
-			),
+			],
 
-			'_height' => array(
+			'_height' => [
 				'required' => false,
 				'name' => tra('Module height'),
 				'description' => tr('Optional, height of the module in px.'), // Would be nice to have this as auto - checking if number of rows is applicable.
 				'since' => '15',
 				'default' => '265',
-			),
+			],
 
-			'_scrolling' => array(
+			'_scrolling' => [
 				'required' => false,
 				'name' => tra('Iframe Scrolling'),
 				'description' => tr('Optional, scrolling of the iframe that contain the module (no by default).'),
 				'since' => '15',
 				'default' => 'no',
-				'options' => array(
-					array('text' => tra('No'), 'value' => 'no'),
-					array('text' => tra('Yes'), 'value' => 'yes'),
-				),
-			),
-		),
-	);
+				'options' => [
+					['text' => tra('No'), 'value' => 'no'],
+					['text' => tra('Yes'), 'value' => 'yes'],
+				],
+			],
+		],
+	];
 }
 
 function wikiplugin_piwik($data, $params)
@@ -152,7 +152,7 @@ function wikiplugin_piwik($data, $params)
 	global $prefs;
 
 	$plugininfo = wikiplugin_piwik_info();
-	$default = array();
+	$default = [];
 	foreach ($plugininfo['params'] as $key => $param) {
 		$default["$key"] = $param['default'];
 	}
@@ -175,9 +175,7 @@ function wikiplugin_piwik($data, $params)
 	}
 
 	if (empty($params['moduleToWidgetize'])) {
-
 		return tra('Plugin Piwik error:') . ' ' . tra('moduleToWidgetize is required.');
-
 	} else {
 		$arr = explode(',', $params['moduleToWidgetize']);
 
@@ -197,7 +195,7 @@ function wikiplugin_piwik($data, $params)
 	// grab out the params that aren't going to be part of the url, they will be iframe attributes and start with an underscore
 	$attributes = '';
 
-	foreach($params as $key => $value) {
+	foreach ($params as $key => $value) {
 		if (strpos($key, '_') === 0) {
 			if ($value) {
 				$attributes .= ' ' . substr($key, 1) . '="' . $value . '"';

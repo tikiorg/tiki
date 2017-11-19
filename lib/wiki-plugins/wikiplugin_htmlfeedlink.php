@@ -7,71 +7,71 @@
 
 function wikiplugin_htmlfeedlink_info()
 {
-	return array(
+	return [
 		'name' => tra('HTML Feed Link'),
 		'documentation' => 'PluginHtmlFeedlink',
 		'description' => tra('Receive and display content from another site sent using PluginHTMLFeed'),
-		'prefs' => array( 'feature_wiki', 'wikiplugin_htmlfeedlink', 'feature_htmlfeed' ),
+		'prefs' => [ 'feature_wiki', 'wikiplugin_htmlfeedlink', 'feature_htmlfeed' ],
 		'body' => tra('Initial Value'),
 		'iconname' => 'link',
 		'filter' => 'rawhtml_unsafe',
-		'tags' => array( 'basic' ),
+		'tags' => [ 'basic' ],
 		'introduced' => 9,
-		'params' => array(
-			'feed' => array(
+		'params' => [
+			'feed' => [
 				'required' => false,
 				'name' => tra('Feed Location'),
 				'description' => tra(''),
 				'since' => '9.0',
-			),
-			'name' => array(
+			],
+			'name' => [
 				'required' => false,
 				'name' => tra('Content Name'),
 				'description' => tra(''),
 				'since' => '9.0',
-			),
-			'style' => array(
+			],
+			'style' => [
 				'required' => false,
 				'name' => tra('Content Style'),
 				'since' => '9.0',
-				'options' => array(
-					array('text' => tra('None'), 'value' => ''),
-					array('text' => tra('Highlight'), 'value' => 'highlight'),
-					array('text' => tra('Asterisk'), 'value' => 'asterisk'),
-				),
-			),
-			'type' => array(
+				'options' => [
+					['text' => tra('None'), 'value' => ''],
+					['text' => tra('Highlight'), 'value' => 'highlight'],
+					['text' => tra('Asterisk'), 'value' => 'asterisk'],
+				],
+			],
+			'type' => [
 				'required' => false,
 				'name' => tra('HTML Feed Link Type'),
 				'since' => '9.0',
 				'default' => 'replace',
-				'options' => array(
-					array('text' => tra('Replace'), 'value' => 'replace'),
-					array('text' => tra('Backlink'), 'value' => 'backlink'),
-					array('text' => tra('Popup'), 'value' => 'popup'),
-					array('text' => tra('Hover'), 'value' => 'hover'),
-				),
-			),
-			'moderate' => array(
+				'options' => [
+					['text' => tra('Replace'), 'value' => 'replace'],
+					['text' => tra('Backlink'), 'value' => 'backlink'],
+					['text' => tra('Popup'), 'value' => 'popup'],
+					['text' => tra('Hover'), 'value' => 'hover'],
+				],
+			],
+			'moderate' => [
 				'required' => false,
 				'name' => tra('Moderated?'),
 				'since' => '9.0',
 				'default' => 'n',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n')
-				),
-			),
-			'date' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'y'],
+					['text' => tra('No'), 'value' => 'n']
+				],
+			],
+			'date' => [
 				'required' => false,
 				'name' => tra('Date'),
 				'description' => tr('Date of last accepted HTML item, not used if not moderated'),
 				'since' => '9.0',
 				'default' => '',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 function wikiplugin_htmlfeedlink($data, $params)
@@ -84,26 +84,30 @@ function wikiplugin_htmlfeedlink($data, $params)
 	++$htmlFeedLinkI;
 
 	$params = array_merge(
-		array(
+		[
 			"feed" => "",
 			"name" => "",
 			"type" => "replace",
 			"moderate" => "y",
 			"style" => "",
 			"date" => ""
-		),
+		],
 		$params
 	);
 
 	extract($params, EXTR_SKIP);
 
-	if (empty($feed)) return $data;
-	if (isset($caching)) return $data; //caching is running, if no return, causes recursive parsing
+	if (empty($feed)) {
+		return $data;
+	}
+	if (isset($caching)) {
+		return $data; //caching is running, if no return, causes recursive parsing
+	}
 
 	$htmlFeed = new Feed_Html_Receive($feed);
 
 	$headerlib->add_jq_onready(
-    	"if (!$.fn.htmlFeedPopup) {
+		"if (!$.fn.htmlFeedPopup) {
 			$.fn.htmlFeedPopup = function(s) {
 				$(this).each(function() {
 					$(this)
@@ -172,10 +176,10 @@ function wikiplugin_htmlfeedlink($data, $params)
 	$item = $htmlFeed->getItem($name);
 	$same = $date == $item->date;
 
-	if (!empty($item->name)) {
+	if (! empty($item->name)) {
 		$name = $item->name;
 		$date = $item->date;
-		switch($type) {
+		switch ($type) {
 			case "":
 			case "replace":
 				$data = "~np~" . $item->data . "~/np~";
@@ -187,19 +191,19 @@ function wikiplugin_htmlfeedlink($data, $params)
 							class='revision'
 							title='Revision Available, click to see'
 							style='cursor: pointer;'
-							data-feed='".urlencode($feed)."'
-							data-name='".urlencode($name)."'
+							data-feed='" . urlencode($feed) . "'
+							data-name='" . urlencode($name) . "'
 							/>
 							<form id='form$htmlFeedLinkI' method='post' action='tiki-wikiplugin_edit.php' style='display: none;'>
 								<input type='hidden' name='page' value='$page'/>
 								<input type='hidden' name='index' value='$htmlFeedLinkI'/>
 								<input type='hidden' name='type' value='htmlfeedlink'/>
-								<input type='hidden' name='params[name]' value='".htmlspecialchars($name)."'/>
-								<input type='hidden' name='params[feed]' value='".htmlspecialchars($feed)."'/>
-								<input type='hidden' name='params[type]' value='".htmlspecialchars($type)."'/>
-								<input type='hidden' name='params[style]' value='".htmlspecialchars($style)."'/>
-								<input type='hidden' name='params[date]' value='".htmlspecialchars($date)."'/>
-								<input type='hidden' name='content' value='".htmlspecialchars($data)."'/>
+								<input type='hidden' name='params[name]' value='" . htmlspecialchars($name) . "'/>
+								<input type='hidden' name='params[feed]' value='" . htmlspecialchars($feed) . "'/>
+								<input type='hidden' name='params[type]' value='" . htmlspecialchars($type) . "'/>
+								<input type='hidden' name='params[style]' value='" . htmlspecialchars($style) . "'/>
+								<input type='hidden' name='params[date]' value='" . htmlspecialchars($date) . "'/>
+								<input type='hidden' name='content' value='" . htmlspecialchars($data) . "'/>
 							</form>
 							~/np~";
 					} else {
@@ -208,49 +212,49 @@ function wikiplugin_htmlfeedlink($data, $params)
 				} else {
 					$data = $item->description;
 				}
-    			break;
+				break;
 			case "backlink":
 				$data = "<a href='$item->url'>" . $data . "</a>";
-    			break;
+				break;
 			case "popup":
 				$headerlib->add_jq_onready(
-    				"$('#backlink')
+					"$('#backlink')
 						.htmlFeedPopup(" . $link . ");"
 				);
-    			break;
+				break;
 			case "hover":
-    			break;
+				break;
 		}
 
 		$link = json_encode($link);
 	}
 
-	$result = "<span id='htmlFeedLink' title='$name'>". $data ."</span>";
+	$result = "<span id='htmlFeedLink' title='$name'>" . $data . "</span>";
 
 	switch ($style) {
 		case "highlight":
 			$headerlib->add_jq_onready(
-    			"$('#htmlFeedLink$htmlFeedLinkI')
+				"$('#htmlFeedLink$htmlFeedLinkI')
 					.css('border', '1px solid red');"
 			);
-    		break;
+			break;
 		case "asterisk":
 			$result = "<sup>*</sup>" . $result;
-    		break;
+			break;
 	}
 
 	$archives = "";
 	foreach ($htmlFeed->getItemFromDates($item->name) as $archive) {
-		$archives .= "<a href='tiki-html_feed.php?feed=".$feed.
-			"&name=".urlencode($archive->name).
-			"&date=".urlencode($archive->date)."'>". htmlspecialchars($archive->name) ." ". htmlspecialchars($archive->date) . "</a><br />";
+		$archives .= "<a href='tiki-html_feed.php?feed=" . $feed .
+			"&name=" . urlencode($archive->name) .
+			"&date=" . urlencode($archive->date) . "'>" . htmlspecialchars($archive->name) . " " . htmlspecialchars($archive->date) . "</a><br />";
 	}
 
 	if (strlen($archives) > 0) {
-		$result .= "~np~<img src='img/icons/disk_multiple.png' id='viewArchives$htmlFeedLinkI' title='View Archives' name='".htmlspecialchars($archive->name)."' style='cursor: pointer;' />
+		$result .= "~np~<img src='img/icons/disk_multiple.png' id='viewArchives$htmlFeedLinkI' title='View Archives' name='" . htmlspecialchars($archive->name) . "' style='cursor: pointer;' />
 		<div id='archives$htmlFeedLinkI' style='display: none;' >" . $archives . "</div>~/np~";
 		$headerlib->add_jq_onready(
-<<<JQ
+			<<<JQ
 			$('#viewArchives$htmlFeedLinkI').click(function() {
 				$('#archives$htmlFeedLinkI')
 					.dialog({title: "Revisions for " + $(this).attr('name')})

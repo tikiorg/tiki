@@ -1,25 +1,25 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 function wikiplugin_group_info()
 {
-	return array(
+	return [
 		'name' => tra('Group'),
 		'documentation' => 'PluginGroup',
 		'description' => tra('Display content based on the user\'s groups or friends'),
 		'body' => tr('Wiki text to display if conditions are met. The body may contain %0. Text after the marker
 			will be displayed to users not matching the conditions.', '<code>{ELSE}</code>'),
-		'prefs' => array('wikiplugin_group'),
+		'prefs' => ['wikiplugin_group'],
 		'iconname' => 'group',
 		'filter' => 'wikicontent',
 		'introduced' => 1,
-		'tags' => array( 'basic' ),
-		'params' => array(
-			'friends' => array(
+		'tags' => [ 'basic' ],
+		'params' => [
+			'friends' => [
 				'required' => false,
 				'name' => tra('Allowed User Friends'),
 				'description' => tra('Pipe separated list of users whose friends are allowed to view the block.
@@ -27,8 +27,8 @@ function wikiplugin_group_info()
 				'since' => '4.0',
 				'filter' => 'username',
 				'default' => ''
-			),
-			'groups' => array(
+			],
+			'groups' => [
 				'required' => false,
 				'name' => tra('Allowed Groups'),
 				'description' => tra('Pipe separated list of groups allowed to view the block.
@@ -36,16 +36,16 @@ function wikiplugin_group_info()
 				'since' => '1',
 				'filter' => 'groupname',
 				'default' => ''
-			),
-			'notgroups' => array(
+			],
+			'notgroups' => [
 				'required' => false,
 				'name' => tra('Denied Groups'),
 				'description' => tra('Pipe-separated list of groups not allowed to view the block.'),
 				'since' => '1',
 				'filter' => 'groupname',
 				'default' => ''
-			),
-			'pending' => array(
+			],
+			'pending' => [
 				'required' => false,
 				'name' => tra('Allowed Groups Pending Membership'),
 				'description' => tra('User allowed to view block if membership payment to join group (or pipe-separated
@@ -53,8 +53,8 @@ function wikiplugin_group_info()
 				'since' => '13.0',
 				'filter' => 'groupname',
 				'default' => ''
-			),
-			'notpending' => array(
+			],
+			'notpending' => [
 				'required' => false,
 				'name' => tra('Allowed Groups Full Membership'),
 				'description' => tra('User allowed to view block if membership in the group (or pipe-separated list of
@@ -62,9 +62,9 @@ function wikiplugin_group_info()
 				'since' => '13.0',
 				'filter' => 'groupname',
 				'default' => ''
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 function wikiplugin_group($data, $params)
@@ -74,26 +74,26 @@ function wikiplugin_group($data, $params)
 	$tikilib = TikiLib::lib('tiki');
 	$dataelse = '';
 	if (strrpos($data, '{ELSE}')) {
-		$dataelse = substr($data, strrpos($data, '{ELSE}')+6);
+		$dataelse = substr($data, strrpos($data, '{ELSE}') + 6);
 		$data = substr($data, 0, strrpos($data, '{ELSE}'));
 	}
 
 	if (isset($groupPluginReturnAll) && $groupPluginReturnAll == true) {
-		return $data.$dataelse;
+		return $data . $dataelse;
 	}
 
-	if (!empty($params['groups'])) {
+	if (! empty($params['groups'])) {
 		$groups = explode('|', $params['groups']);
 	}
-	if (!empty($params['notgroups'])) {
+	if (! empty($params['notgroups'])) {
 		$notgroups = explode('|', $params['notgroups']);
 	}
-	$userPending = array();
-	if (!empty($params['pending']) || !empty($params['notpending'])) {
+	$userPending = [];
+	if (! empty($params['pending']) || ! empty($params['notpending'])) {
 		$attributelib = TikiLib::lib('attribute');
 		$attributes = $attributelib->get_attributes('user', $user);
 		$userlib = TikiLib::lib('user');
-		if (!empty($params['pending'])) {
+		if (! empty($params['pending'])) {
 			$pending = explode('|', $params['pending']);
 			foreach ($pending as $pgrp) {
 				$grpinfo = $userlib->get_group_info($pgrp);
@@ -103,12 +103,12 @@ function wikiplugin_group($data, $params)
 				}
 			}
 		}
-		if (!empty($params['notpending'])) {
+		if (! empty($params['notpending'])) {
 			$notpending = explode('|', $params['notpending']);
 			foreach ($notpending as $npgrp) {
 				$grpinfo = $userlib->get_group_info($npgrp);
 				$attname = 'tiki.memberextend.' . $grpinfo['id'];
-				if (!isset($attributes[$attname])) {
+				if (! isset($attributes[$attname])) {
 					$userNotPending[] = $npgrp;
 				}
 			}
@@ -122,16 +122,16 @@ function wikiplugin_group($data, $params)
 	$userGroups = $tikilib->get_user_groups($user);
 	$smarty = TikiLib::lib('smarty');
 	if (count($userGroups) > 1) { //take away the anonymous as everybody who is registered is anonymous
-		foreach ($userGroups as $key=>$grp) {
+		foreach ($userGroups as $key => $grp) {
 			if ($grp == 'Anonymous') {
 				$userGroups[$key] = '';
 				break;
 			}
 		}
 	}
-	if (!empty($groups) || !empty($pending)) {
+	if (! empty($groups) || ! empty($pending)) {
 		$ok = false;
-		if (!empty($groups)) {
+		if (! empty($groups)) {
 			foreach ($userGroups as $grp) {
 				if (in_array($grp, $groups)) {
 					$ok = true;
@@ -144,13 +144,14 @@ function wikiplugin_group($data, $params)
 		if (count($userPending) > 0) {
 			$ok = true;
 		}
-		if (!$ok)
+		if (! $ok) {
 			return $dataelse;
+		}
 	}
 
-	if (!empty($notgroups) || !empty($notpending)) {
+	if (! empty($notgroups) || ! empty($notpending)) {
 		$ok = true;
-		if (!empty($notgroups)) {
+		if (! empty($notgroups)) {
 			foreach ($userGroups as $grp) {
 				if (in_array($grp, $notgroups)) {
 					$ok = false;
@@ -163,10 +164,11 @@ function wikiplugin_group($data, $params)
 		if (isset($userNotPending) && (count($userNotPending) < count($notpending))) {
 			$ok = false;
 		}
-		if (!$ok)
+		if (! $ok) {
 			return $dataelse;
+		}
 	}
-		
-	
+
+
 	return $data;
 }

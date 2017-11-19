@@ -7,36 +7,36 @@
 
 function wikiplugin_modulelist_info()
 {
-	return array(
+	return [
 		'name' => tra('Module List'),
 		'documentation' => 'PluginModuleList',
 		'description' => tra('Display the modules assigned to a zone'),
-		'prefs' => array( 'wikiplugin_modulelist' ),
+		'prefs' => [ 'wikiplugin_modulelist' ],
 		'format' => 'html',
 		'iconname' => 'list',
 		'introduced' => 11,
-		'tags' => array( 'basic' ),
-		'params' => array(
-			'zone' => array(
+		'tags' => [ 'basic' ],
+		'params' => [
+			'zone' => [
 				'required' => true,
 				'name' => tra('Zone Name'),
 				'description' => tra('The name of the module zone to include. Can be a custom zone name.'),
 				'since' => '11.0',
 				'filter' => 'word',
 				'default' => '',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Top'), 'value' => 'top'),
-					array('text' => tra('Top bar'), 'value' => 'topbar'),
-					array('text' => tra('Page top'), 'value' => 'pagetop'),
-					array('text' => tra('Left'), 'value' => 'left'),
-					array('text' => tra('Right'), 'value' => 'right'),
-					array('text' => tra('Page bottom'), 'value' => 'pagebottom'),
-					array('text' => tra('Bottom'), 'value' => 'bottom'),
-				)
-			),
-		)
-	);
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Top'), 'value' => 'top'],
+					['text' => tra('Top bar'), 'value' => 'topbar'],
+					['text' => tra('Page top'), 'value' => 'pagetop'],
+					['text' => tra('Left'), 'value' => 'left'],
+					['text' => tra('Right'), 'value' => 'right'],
+					['text' => tra('Page bottom'), 'value' => 'pagebottom'],
+					['text' => tra('Bottom'), 'value' => 'bottom'],
+				]
+			],
+		]
+	];
 }
 
 function wikiplugin_modulelist($data, $params)
@@ -49,14 +49,14 @@ function wikiplugin_modulelist($data, $params)
 	$smarty->loadPlugin('smarty_function_modulelist');
 
 	if (! isset($params['zone'])) {
-		return WikiParser_PluginOutput::argumentError(array('zone'));
+		return WikiParser_PluginOutput::argumentError(['zone']);
 	}
 
 	return smarty_function_modulelist(
-		array(
+		[
 			'zone' => $params['zone'],
 			'id' => $params['zone'] . '_plugin_modules',
-		),
+		],
 		$smarty
 	);
 }

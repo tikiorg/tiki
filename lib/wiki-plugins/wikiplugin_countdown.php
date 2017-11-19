@@ -7,95 +7,101 @@
 
 function wikiplugin_countdown_info()
 {
-	return array(
+	return [
 		'name' => tra('Countdown'),
 		'documentation' => 'PluginCountdown',
 		'description' => tra('Display the time until or after a date and time'),
-		'prefs' => array('wikiplugin_countdown'),
+		'prefs' => ['wikiplugin_countdown'],
 		'iconname' => 'history',
 		'body' => tra('Text to append to the countdown.'),
-		'tags' => array( 'basic' ),
+		'tags' => [ 'basic' ],
 		'introduced' => 1,
-		'params' => array(
-			'enddate' => array(
+		'params' => [
+			'enddate' => [
 				'required' => true,
 				'name' => tra('End Date'),
 				'description' => tra('Target date and time. Multiple formats accepted.'),
 				'since' => '1',
 				'filter' => 'date',
 				'default' => '',
-			),
-			'show' => array(
+			],
+			'show' => [
 				'required' => false,
 				'name' => tra('Items to Show'),
 				'description' => tr(
 					'Select: %0y%1=years, %0o%1=months, %0d%1=days, %0h%1=hours, %0m%1=minutes, %0s%1=seconds.
 					Enter multiple values as: %0yodhms%1. Must be in the order of descending length, and a time unit should not be skipped.
-					If blank, the time is shown down to the hour if not zero.', '<code>', '</code>'
+					If blank, the time is shown down to the hour if not zero.',
+					'<code>',
+					'</code>'
 				),
 				'since' => '4.2',
 				'filter' => 'alpha',
 				'default' => '',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Years'), 'value' => 'y'),
-					array('text' => tra('Years, Months'), 'value' => 'yo'),
-					array('text' => tra('Years, Months, Days'), 'value' => 'yod'),
-					array('text' => tra('Years, Months, Days, Hours'), 'value' => 'yodh'),
-					array('text' => tra('Years, Months, Days, Hours, Minutes'), 'value' => 'yodhm'),
-					array('text' => tra('Years, Months, Days, Hours, Minutes & Seconds'), 'value' => 'yodhms'),
-					array('text' => tra('Months'), 'value' => 'o'),
-					array('text' => tra('Months, Days'), 'value' => 'od'),
-					array('text' => tra('Months, Days, Hours'), 'value' => 'odh'),
-					array('text' => tra('Months, Days, Hours, Minutes'), 'value' => 'odhm'),
-					array('text' => tra('Months, Days, Hours, Minutes & Seconds'), 'value' => 'odhms'),
-					array('text' => tra('Days'), 'value' => 'd'),
-					array('text' => tra('Days & Hours'), 'value' => 'dh'),
-					array('text' => tra('Days, Hours & Minutes'), 'value' => 'dhm'),
-					array('text' => tra('Days, Hours, Minutes & Seconds'), 'value' => 'dhms'),
-					array('text' => tra('Hours'), 'value' => 'h'),
-					array('text' => tra('Hours & Minutes'), 'value' => 'hm'),
-					array('text' => tra('Hours, Minutes & Seconds'), 'value' => 'hms'),
-					array('text' => tra('Minutes'), 'value' => 'm'),
-					array('text' => tra('Minutes & Seconds'), 'value' => 'ms'),
-					array('text' => tra('Seconds'), 'value' => 's'),
-				),
-			),
-			'caldays' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Years'), 'value' => 'y'],
+					['text' => tra('Years, Months'), 'value' => 'yo'],
+					['text' => tra('Years, Months, Days'), 'value' => 'yod'],
+					['text' => tra('Years, Months, Days, Hours'), 'value' => 'yodh'],
+					['text' => tra('Years, Months, Days, Hours, Minutes'), 'value' => 'yodhm'],
+					['text' => tra('Years, Months, Days, Hours, Minutes & Seconds'), 'value' => 'yodhms'],
+					['text' => tra('Months'), 'value' => 'o'],
+					['text' => tra('Months, Days'), 'value' => 'od'],
+					['text' => tra('Months, Days, Hours'), 'value' => 'odh'],
+					['text' => tra('Months, Days, Hours, Minutes'), 'value' => 'odhm'],
+					['text' => tra('Months, Days, Hours, Minutes & Seconds'), 'value' => 'odhms'],
+					['text' => tra('Days'), 'value' => 'd'],
+					['text' => tra('Days & Hours'), 'value' => 'dh'],
+					['text' => tra('Days, Hours & Minutes'), 'value' => 'dhm'],
+					['text' => tra('Days, Hours, Minutes & Seconds'), 'value' => 'dhms'],
+					['text' => tra('Hours'), 'value' => 'h'],
+					['text' => tra('Hours & Minutes'), 'value' => 'hm'],
+					['text' => tra('Hours, Minutes & Seconds'), 'value' => 'hms'],
+					['text' => tra('Minutes'), 'value' => 'm'],
+					['text' => tra('Minutes & Seconds'), 'value' => 'ms'],
+					['text' => tra('Seconds'), 'value' => 's'],
+				],
+			],
+			'caldays' => [
 				'required' => false,
 				'name' => tra('Calendar Days'),
 				'description' => tr(
 					'Will use calendar day difference when set to Yes (%0y%1) and time units are not shown.
 					Result is that tomorrow, for example, is always shown as a one day away even if less than 24 hours
-					from now. No (%0n%1) is the default.', '<code>', '</code>'
+					from now. No (%0n%1) is the default.',
+					'<code>',
+					'</code>'
 				),
 				'since' => '9.0',
 				'filter' => 'alpha',
 				'default' => 'n',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n')
-				),
-			),
-			'since' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'y'],
+					['text' => tra('No'), 'value' => 'n']
+				],
+			],
+			'since' => [
 				'required' => false,
 				'name' => tra('Handle Past Events'),
 				'description' => tr(
 					'If Yes (%0y%1), will display amount of time since the event (default).
 					If No (%0n%1) and if there is body text, will display "is over" or custom text set in text parameter
-					after body text.', '<code>', '</code>'
+					after body text.',
+					'<code>',
+					'</code>'
 				),
 				'since' => '4.2',
 				'filter' => 'alpha',
 				'default' => '',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n')
-				),
-			),
-			'text' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'y'],
+					['text' => tra('No'), 'value' => 'n']
+				],
+			],
+			'text' => [
 				'required' => false,
 				'name' => tra('Text'),
 				'description' => tr(
@@ -106,39 +112,43 @@ function wikiplugin_countdown_info()
 					less than a year before/after the end date) then "[body text] will happen in less than a year/happened in the last year" will show.
 					Or set pipe-separated custom text as follows: %0before date|before date by less than shortest time unit shown|after date
 					|after date by less than shortest time unit shown|after date and since set to No (n)%1.
-					Set to %0silent%1 for no text.', '<code>', '</code>'
+					Set to %0silent%1 for no text.',
+					'<code>',
+					'</code>'
 				),
 				'accepted' => tra('default, silent, custom: before event|after event|after event when time not shown'),
 				'since' => '9.0',
 				'filter' => 'text',
 				'default' => '',
-			),
-			'thousands' => array(
+			],
+			'thousands' => [
 				'required' => false,
 				'name' => tra('Thousands separator'),
 				'description' => tr(
 					'Set the thousands separator for results of 1,000 or more.
-					Choices are comma (%0c%1), decimal (%0d%1), space (%0s%1), or leave blank for no separator.', '<code>', '</code>'
+					Choices are comma (%0c%1), decimal (%0d%1), space (%0s%1), or leave blank for no separator.',
+					'<code>',
+					'</code>'
 				),
 				'since' => '9.0',
 				'filter' => 'alpha',
 				'default' => '',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Comma'), 'value' => 'c'),
-					array('text' => tra('Period'), 'value' => 'p'),
-					array('text' => tra('Space'), 'value' => 's'),
-				),
-			),
-		),
-	);
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Comma'), 'value' => 'c'],
+					['text' => tra('Period'), 'value' => 'p'],
+					['text' => tra('Space'), 'value' => 's'],
+				],
+			],
+		],
+	];
 }
 
 function wikiplugin_countdown($data, $params)
 {
 	extract($params, EXTR_SKIP);
 	//must have an enddate
-	if (!isset($enddate)) {
+	if (! isset($enddate)) {
 		return '<strong>' . tra('Countdown: Missing "enddate" parameter for plugin') . '</strong><br />';
 	}
 	//set now date and time
@@ -160,17 +170,17 @@ function wikiplugin_countdown($data, $params)
 	$timediff = $nowadj->getTimestamp() - $nowobj->getTimestamp();
 
 	//Set thousands separator
-	if (!empty($thousands)) {
+	if (! empty($thousands)) {
 		switch ($thousands) {
 			case 'c':
 				$thousands = ',';
-    			break;
+				break;
 			case 'p':
 				$thousands = '.';
-    			break;
+				break;
 			case 's':
 				$thousands = ' ';
-    			break;
+				break;
 			default:
 				$thousands = '';
 		}
@@ -181,7 +191,7 @@ function wikiplugin_countdown($data, $params)
 	//Calculate the date interval
 	$interval = $thenobj->diff($nowobj);
 	// put into an array to maintain compatibility with prior versions
-	$diff = array(
+	$diff = [
 		'y' => $interval->y,
 		//using o for backwards compatibility since plugin had used m for minutes
 		'o' => $interval->m,
@@ -192,19 +202,19 @@ function wikiplugin_countdown($data, $params)
 		's' => $interval->s,
 		'invert' => $interval->invert,
 		'days' => $interval->days,
-	);
+	];
 
 	if (empty($show)) {
 		// Set default. If no explicit SHOW, then show down to the hour.
 		$show_years = true;
-		$show_months =  true;
+		$show_months = true;
 		$show_days = true;
 		$show_hours = true;
 		$show_minutes = false;
 		$show_seconds = false;
 	} else {
 		$show_years = (strpos($show, 'y') === false) ? false : true;
-		$show_months = (strpos($show, 'o') === false)  ? false : true;
+		$show_months = (strpos($show, 'o') === false) ? false : true;
 		$show_days = strpos($show, 'd') === false ? false : true;
 		$show_hours = strpos($show, 'h') === false ? false : true;
 		$show_minutes = strpos($show, 'm') === false ? false : true;
@@ -232,9 +242,9 @@ function wikiplugin_countdown($data, $params)
 	if ($diff['invert'] == 1 || (isset($since) && $since == 'y')) {
 	//either before the event or if countdown also shown after the event
 		//calculate total time in hours, minutes or seconds
-		$diff['months'] = abs(($diff['y']*12) + $diff['o']);
-		$diff['hours'] = abs(intval($difference/60/60));
-		$diff['minutes'] = abs(intval($difference/60));
+		$diff['months'] = abs(($diff['y'] * 12) + $diff['o']);
+		$diff['hours'] = abs(intval($difference / 60 / 60));
+		$diff['minutes'] = abs(intval($difference / 60));
 		$diff['seconds'] = abs($difference);
 		$comma = ', ';
 		$and = ' ' . tra('and') . ' ';
@@ -247,7 +257,7 @@ function wikiplugin_countdown($data, $params)
 		if ($show_months && ($diff['o'] || $diff['months'])) {
 			if ($show_years) {
 				if ($diff['o']) {
-					if (!empty($ret)) {
+					if (! empty($ret)) {
 						//if not the last item, precede with comma, otherwise and
 						$sep = ($show_days && $diff['caldays']) || ($show_hours && $diff['h']) || ($show_minutes && $diff['m'])
 							|| ($show_seconds && $diff['s']) ? $comma : $and;
@@ -268,7 +278,7 @@ function wikiplugin_countdown($data, $params)
 			$d_label = $diff['caldays'] == 1 ? tra('day') : tra('days');
 			if ($show_months) {
 				if ($diff['caldays']) {
-					if (!empty($ret)) {
+					if (! empty($ret)) {
 						//if not the last item, precede with comma, otherwise and
 						$sep = ($show_hours && $diff['h']) || ($show_minutes && $diff['m']) || ($show_seconds && $diff['s'])
 								? $comma : $and;
@@ -285,7 +295,7 @@ function wikiplugin_countdown($data, $params)
 		if ($show_hours && ($diff['h'] || $diff['hours'])) {
 			if ($show_days) {
 				if ($diff['h']) {
-					if (!empty($ret)) {
+					if (! empty($ret)) {
 						//if not the last item, precede with comma, otherwise and
 						$sep = ($show_minutes && $diff['m']) || ($show_seconds && $diff['s']) ? $comma : $and;
 					} else {
@@ -296,14 +306,14 @@ function wikiplugin_countdown($data, $params)
 				}
 			} else {
 				$h_label = $diff['hours'] == 1 ? tra('hour') : tra('hours');
-				$ret = number_format($diff['hours'], 0, '', $thousands)  . ' ' . $h_label;
+				$ret = number_format($diff['hours'], 0, '', $thousands) . ' ' . $h_label;
 			}
 		}
 		//minutes
 		if ($show_minutes && ($diff['m'] || $diff['minutes'])) {
 			if ($show_hours) {
 				if ($diff['m']) {
-					if (!empty($ret)) {
+					if (! empty($ret)) {
 						//if not the last item, precede with comma, otherwise and
 						$sep = $show_seconds && $diff['s'] ? $comma : $and;
 					} else {
@@ -321,7 +331,7 @@ function wikiplugin_countdown($data, $params)
 		if ($show_seconds && ($diff['s'] || $diff['seconds'])) {
 			if ($show_minutes) {
 				if ($diff['s']) {
-					if (!empty($ret)) {
+					if (! empty($ret)) {
 						$sep = $and;
 					} else {
 						$sep = '';
@@ -335,7 +345,7 @@ function wikiplugin_countdown($data, $params)
 			}
 		}
 		//add text
-		if (empty($text) || (!empty($text) && $text != 'silent')) {
+		if (empty($text) || (! empty($text) && $text != 'silent')) {
 			if (empty($text) || $text == 'default' || strpos($text, '|') === false) {
 				//if $ret is empty here, it means the time before/after the event is shorter than the smallest unit of time being shown
 				if (empty($ret)) {
@@ -343,43 +353,43 @@ function wikiplugin_countdown($data, $params)
 						switch (substr($show, -1)) {
 							case 'y':
 								$nowtext = tra('will happen in less than a year');
-    							break;
+								break;
 							case 'o':
 								$nowtext = tra('will happen in less than a month');
-    							break;
+								break;
 							case 'd':
 								$nowtext = tra('will happen in less than a day');
-    							break;
+								break;
 							case 'h':
 								$nowtext = tra('will happen in less than an hour');
-    							break;
+								break;
 							case 'm':
 								$nowtext = tra('will happen in less than a minute');
-    							break;
+								break;
 							case 's':
 								$nowtext = tra('is happening this second');
-    							break;
+								break;
 						}
 					} else {
 						switch (substr($show, -1)) {
 							case 'y':
 								$nowtext = tra('happened in the last year');
-    							break;
+								break;
 							case 'o':
 								$nowtext = tra('happened in the last month');
-    							break;
+								break;
 							case 'd':
 								$nowtext = tra('happened in the last day');
-    							break;
+								break;
 							case 'h':
 								$nowtext = tra('happened in the last hour');
-    							break;
+								break;
 							case 'm':
 								$nowtext = tra('happened in the last minute');
-    							break;
+								break;
 							case 's':
 								$nowtext = tra('is happening this second');
-    							break;
+								break;
 						}
 					}
 					$data = $data . ' ' . $nowtext;
@@ -394,39 +404,39 @@ function wikiplugin_countdown($data, $params)
 						$word = $text;
 					}
 				}
-			} elseif (!empty($text) && strpos($text, '|') !== false) {
+			} elseif (! empty($text) && strpos($text, '|') !== false) {
 				$custom = explode('|', $text);
 				//if $ret is empty here, it means the time before/after the event is shorter than the unit of time being shown
 				if (empty($ret)) {
 					if ($diff['invert'] == 1) {
 						//$custom[1] = text to display before event occurs when closer than the unit of time being shown
-						$cust1 = !empty($custom[1]) ? $custom[1] : '';
+						$cust1 = ! empty($custom[1]) ? $custom[1] : '';
 						$data = $data . ' ' . $cust1;
 					} else {
 						//$custom[3] = text to display after event occurs when closer than the unit of time being shown
-						$cust3 = !empty($custom[3]) ? $custom[3] : '';
+						$cust3 = ! empty($custom[3]) ? $custom[3] : '';
 						$data = $data . ' ' . $cust3;
 					}
 				} else {
 					if ($diff['invert'] == 1) {
 						//$custom[0] = text to display before event occurs
-						$word = !empty($custom[0]) ? $custom[0] : '';
+						$word = ! empty($custom[0]) ? $custom[0] : '';
 					} else {
 						//$custom[2] = text to display after event occurs
-						$word = !empty($custom[2]) ? $custom[2] : '';
+						$word = ! empty($custom[2]) ? $custom[2] : '';
 					}
 				}
 			}
 			$ret .= ' ' . $word . ' ' . $data;
 		}
 	//if after the event and no countdown shown
-	} elseif (!empty($data)) {
+	} elseif (! empty($data)) {
 		if (empty($text) || strpos($text, '|') === false) {
 			$word = tra('is over');
 		} elseif (strpos($text, '|') !== false) {
 			$custom = explode('|', $text);
 			//$custom[4] = text to display after event occurs when no countdown is shown because since set to n
-			$word = !empty($custom[4]) ? $custom[4] : '';
+			$word = ! empty($custom[4]) ? $custom[4] : '';
 		}
 		$ret = $data . ' ' . $word;
 	}

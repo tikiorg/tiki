@@ -7,98 +7,98 @@
 
 function wikiplugin_appframe_info()
 {
-	return array(
+	return [
 		'name' => tra('Application Frame'),
 		'description' => tra('Create a frame in which to assemble custom applications'),
-		'prefs' => array('wikiplugin_appframe'),
+		'prefs' => ['wikiplugin_appframe'],
 		'format' => 'html',
 		'documentation' => 'PluginAppFrame',
 		'iconname' => 'merge',
 		'filter' => 'wikicontent',
 		'introduced' => 9,
 		'body' => tr('Application layout'),
-		'params' => array(
-			'min' => array(
+		'params' => [
+			'min' => [
 				'required' => false,
 				'name' => tr('Minimum height'),
 				'description' => tr('Prevent the frame from becoming any shorter than the specified size.'),
 				'default' => 300,
 				'filter' => 'int',
 				'since' => '9.0',
-			),
-			'max' => array(
+			],
+			'max' => [
 				'required' => false,
 				'name' => tr('Maximum height'),
 				'description' => tr('Prevent the frame from becoming any higher than the specified size.'),
 				'default' => -1,
 				'filter' => 'int',
 				'since' => '10.0',
-			),
-			'hideleft' => array(
+			],
+			'hideleft' => [
 				'requred' => false,
 				'name' => tr('Hide left column'),
 				'description' => tr('Hide the left column when the application frame is in use to provide more space to the application.'),
 				'default' => 'n',
 				'since' => '9.0',
-				'options' => array(
-					array('value' => 'n', 'text' => tr('No')),
-					array('value' => 'y', 'text' => tr('Yes')),
-				),
-			),
-			'hideright' => array(
+				'options' => [
+					['value' => 'n', 'text' => tr('No')],
+					['value' => 'y', 'text' => tr('Yes')],
+				],
+			],
+			'hideright' => [
 				'requred' => false,
 				'name' => tr('Hide right column'),
 				'description' => tr('Hide the right column when the application frame is in use to provide more space to the application.'),
 				'default' => 'n',
 				'since' => '9.0',
-				'options' => array(
-					array('value' => 'n', 'text' => tr('No')),
-					array('value' => 'y', 'text' => tr('Yes')),
-				),
-			),
-			'fullpage' => array(
+				'options' => [
+					['value' => 'n', 'text' => tr('No')],
+					['value' => 'y', 'text' => tr('Yes')],
+				],
+			],
+			'fullpage' => [
 				'required' => false,
 				'name' => tr('Full page'),
 				'description' => tr('Completely fill the content area of the page.'),
 				'default' => 'n',
 				'since' => '9.0',
-				'options' => array(
-					array('value' => 'n', 'text' => tr('No')),
-					array('value' => 'y', 'text' => tr('Yes')),
-				),
-			),
-			'absolute' => array(
+				'options' => [
+					['value' => 'n', 'text' => tr('No')],
+					['value' => 'y', 'text' => tr('Yes')],
+				],
+			],
+			'absolute' => [
 				'required' => false,
 				'name' => tr('Absolute Position'),
 				'description' => tr('Use all available space for the application frame (by means of CSS absolute positioning).'),
 				'default' => 'n',
 				'since' => '9.0',
-				'options' => array(
-					array('value' => 'n', 'text' => tr('No')),
-					array('value' => 'y', 'text' => tr('Yes')),
-				),
-			),
-			'top' => array(
+				'options' => [
+					['value' => 'n', 'text' => tr('No')],
+					['value' => 'y', 'text' => tr('Yes')],
+				],
+			],
+			'top' => [
 				'required' => false,
 				'name' => tr('Top'),
 				'description' => tr('When using absolute mode, leave some space for the header at the top.'),
 				'default' => 0,
 				'filter' => 'int',
 				'since' => '9.0',
-			),
-			'fullscreen' => array(
+			],
+			'fullscreen' => [
 				'required' => false,
 				'name' => tr('Full screen'),
 				'description' => tr('Fill the complete page.'),
 				'default' => 'n',
 				'since' => '10.0',
-				'options' => array(
-					array('value' => 'n', 'text' => tr('No')),
-					array('value' => 'y', 'text' => tr('Yes')),
-				),
-			),
-		),
-	);
+				'options' => [
+					['value' => 'n', 'text' => tr('No')],
+					['value' => 'y', 'text' => tr('Yes')],
+				],
+			],
+		],
+	];
 }
 
 function wikiplugin_appframe($data, $params)
@@ -128,7 +128,7 @@ function wikiplugin_appframe($data, $params)
 	}
 
 	$headerlib->add_js(
-<<<JS
+		<<<JS
 $(window).resize(function () {
 	var viewportHeight = $(window).height(), appframe = $('#appframe'), footerSize, centerHeader, surplus, target;
 
@@ -224,7 +224,7 @@ if ($fullscreen) {
 
 $(window).resize();
 JS
-);
+	);
 
 	$matches = WikiParser_PluginMatcher::match($data);
 	foreach ($matches as $plugin) {
@@ -247,7 +247,7 @@ function wikiplugin_appframe_execute($plugin)
 	$argumentParger = new WikiParser_PluginArgumentParser();
 	$params = $argumentParger->parse($plugin->getArguments());
 
-	if (! in_array($name, array('tab', 'column', 'page', 'module', 'cond', 'anchor', 'overlay', 'template', 'hidden', 'mapcontrol'))) {
+	if (! in_array($name, ['tab', 'column', 'page', 'module', 'cond', 'anchor', 'overlay', 'template', 'hidden', 'mapcontrol'])) {
 		return null;
 	}
 
@@ -299,8 +299,8 @@ function wikiplugin_appframe_page($data, $params, $start)
 		return null;
 	}
 
-	$keys = array();
-	$replacements = array();
+	$keys = [];
+	$replacements = [];
 	foreach ($params as $key => $value) {
 		$keys[] = "{{{$key}}}";
 		$replacements[] = $value;
@@ -319,7 +319,7 @@ function wikiplugin_appframe_module($data, $params, $start)
 	if (! $label) {
 		$info = $modlib->get_module_info($moduleName);
 
-		if (! $info ) {
+		if (! $info) {
 			return null;
 		}
 
@@ -327,10 +327,10 @@ function wikiplugin_appframe_module($data, $params, $start)
 	}
 
 	$data = $modlib->execute_module(
-		array(
+		[
 			'name' => $moduleName,
-			'params' => array_merge($params->none(), array('nobox' => 'y', 'notitle' => 'y')),
-		)
+			'params' => array_merge($params->none(), ['nobox' => 'y', 'notitle' => 'y']),
+		]
 	);
 
 	if (! $data) {
@@ -365,9 +365,9 @@ function wikiplugin_appframe_cond($data, $params, $start)
 
 function wikiplugin_appframe_overlay($data, $params, $start)
 {
-	$position = array();
+	$position = [];
 
-	foreach (array('top', 'bottom', 'left', 'right') as $pos) {
+	foreach (['top', 'bottom', 'left', 'right'] as $pos) {
 		if (isset($params[$pos])) {
 			$value = $params->$pos->int();
 			$position[] = "$pos: {$value}px;";
@@ -399,8 +399,7 @@ function wikiplugin_appframe_template($data, $params, $start)
 
 	try {
 		$data = array_map(
-			function ($value)
-			{
+			function ($value) {
 				return preg_replace('/\{\{\w+\}\}/', '', $value);
 			},
 			$params->text()
@@ -422,45 +421,45 @@ function wikiplugin_appframe_mapcontrol($data, $params, $start)
 	$mode = null;
 
 	switch ($name = $params->type->word()) {
-	case 'pan_zoom':
-		$label = tr('Pan/Zoom');
-		$mode = tr('Default');
-		break;
-	case 'mode_enable':
-		$mode = $params->mode->text();
-		$label = $mode;
+		case 'pan_zoom':
+			$label = tr('Pan/Zoom');
+			$mode = tr('Default');
+			break;
+		case 'mode_enable':
+			$mode = $params->mode->text();
+			$label = $mode;
 
-		if (! $mode) {
-			return false;
-		}
-		break;
-	case 'select_feature':
-		$control = 'new OpenLayers.Control.SelectFeature(vlayer)';
-		$label = tr('Select');
-		break;
-	case 'modify_feature':
-		$control = 'new OpenLayers.Control.ModifyFeature(vlayer, {
+			if (! $mode) {
+				return false;
+			}
+			break;
+		case 'select_feature':
+			$control = 'new OpenLayers.Control.SelectFeature(vlayer)';
+			$label = tr('Select');
+			break;
+		case 'modify_feature':
+			$control = 'new OpenLayers.Control.ModifyFeature(vlayer, {
 			mode: OpenLayers.Control.ModifyFeature.DRAG | OpenLayers.Control.ModifyFeature.RESHAPE,
 			standalone: true,
 			virtualStyle: drawStyle,
 			vertexRenderIntent: "vertex"
 		}), new OpenLayers.Control.SelectFeature(vlayer)';
-		$label = tr('Select/Modify');
-		break;
-	case 'draw_polygon':
-		$control = 'new OpenLayers.Control.DrawFeature(vlayer, OpenLayers.Handler.Polygon, {handlerOptions:{style:drawStyle}})';
-		$label = tr('Draw Polygon');
-		break;
-	case 'draw_path':
-		$control = 'new OpenLayers.Control.DrawFeature(vlayer, OpenLayers.Handler.Path, {handlerOptions:{style:drawStyle}})';
-		$label = tr('Draw Path');
-		break;
-	case 'reset_zoom':
-		$function = 'container.resetPosition();';
-		$label = tr('Reset Zoom');
-		break;
-	default:
-		return false;
+			$label = tr('Select/Modify');
+			break;
+		case 'draw_polygon':
+			$control = 'new OpenLayers.Control.DrawFeature(vlayer, OpenLayers.Handler.Polygon, {handlerOptions:{style:drawStyle}})';
+			$label = tr('Draw Polygon');
+			break;
+		case 'draw_path':
+			$control = 'new OpenLayers.Control.DrawFeature(vlayer, OpenLayers.Handler.Path, {handlerOptions:{style:drawStyle}})';
+			$label = tr('Draw Path');
+			break;
+		case 'reset_zoom':
+			$function = 'container.resetPosition();';
+			$label = tr('Reset Zoom');
+			break;
+		default:
+			return false;
 	}
 
 	if (! $icon = $params->icon->url()) {
@@ -473,7 +472,8 @@ function wikiplugin_appframe_mapcontrol($data, $params, $start)
 
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign(
-		'mapcontrol', array(
+		'mapcontrol',
+		[
 			'id' => 'mapcontrol-' . ++$counter,
 			'control' => $control,
 			'icon' => $icon,
@@ -482,7 +482,7 @@ function wikiplugin_appframe_mapcontrol($data, $params, $start)
 			'function' => $function,
 			'navigation' => $params->navigation->int(),
 			'class' => $params->class->text() ? $params->class->text() : 'icon',
-		)
+		]
 	);
 	return $smarty->fetch('wiki-plugins/wikiplugin_appframe_mapcontrol.tpl');
 }

@@ -7,44 +7,44 @@
 
 function wikiplugin_contributionsdashboard_info()
 {
-	return array(
+	return [
 		'name' => tra('Contributions Dashboard'),
 		'documentation' => 'PluginContributionsDashboard',
 		'description' => tra('List users\' contributions to a page'),
-		'prefs' => array( 'feature_trackers', 'wikiplugin_contributionsdashboard' ),
-		'tags' => array( 'basic' ),
+		'prefs' => [ 'feature_trackers', 'wikiplugin_contributionsdashboard' ],
+		'tags' => [ 'basic' ],
 		'body' => tra('Notice'),
 		'format' => 'html',
 		'introduced' => 9,
 		'iconname' => 'dashboard',
 		'filter' => 'text',
-		'params' => array(
-			'start' => array(
+		'params' => [
+			'start' => [
 				'required' => false,
 				'name' => tra('Start Date'),
 				'description' => tra('Default Beginning Date'),
 				'since' => '9.0',
 				'filter' => 'text',
 				'default' => 'Today - 7 days',
-			),
-			'end' => array(
+			],
+			'end' => [
 				'required' => false,
 				'name' => tra('End Date'),
 				'description' => tra('Default Ending Date'),
 				'since' => '9.0',
 				'filter' => 'text',
 				'default' => 'Today',
-			),
-			'types' => array(
+			],
+			'types' => [
 				'required' => true,
 				'name' => tra('Dashboard Types'),
 				'description' => tra('The types of charts that will be rendered, separated by commas'),
 				'since' => '9.0',
 				'filter' => 'text',
 				'default' => 'trackeritems',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 function wikiplugin_contributionsdashboard($data, $params)
@@ -62,18 +62,18 @@ function wikiplugin_contributionsdashboard($data, $params)
 
 	$smarty->assign('iContributionsDashboard', $iContributionsDashboard);
 
-	$default = array(
-		"start"=> 	time() - (365 * 24 * 60 * 60),
-		"end"=> 	time(),
-		"types"=> 	"trackeritems,toptrackeritemsusers,toptrackeritemsusersip"
-	);
+	$default = [
+		"start" => time() - (365 * 24 * 60 * 60),
+		"end" => time(),
+		"types" => "trackeritems,toptrackeritemsusers,toptrackeritemsusersip"
+	];
 
 	$params = array_merge($default, $params);
 
 	extract($params, EXTR_SKIP);
 
-	$start = (!empty($_REQUEST["raphaelStart$i"]) ? strtotime($_REQUEST["raphaelStart$i"]) : $start);
-	$end = (!empty($_REQUEST["raphaelEnd$i"]) ? strtotime($_REQUEST["raphaelEnd$i"]) : $end);
+	$start = (! empty($_REQUEST["raphaelStart$i"]) ? strtotime($_REQUEST["raphaelStart$i"]) : $start);
+	$end = (! empty($_REQUEST["raphaelEnd$i"]) ? strtotime($_REQUEST["raphaelEnd$i"]) : $end);
 
 	$types = explode(',', $types);
 
@@ -81,8 +81,8 @@ function wikiplugin_contributionsdashboard($data, $params)
 	$headerlib->add_jsfile("vendor_bundled/vendor/jquery/jquery-sheet/plugins/g.raphael-min.js", true);
 	$headerlib->add_jq_onready("$('.cDashDate').datepicker();");
 
-	$usersTrackerItems = array();
-	foreach ($tikilib->fetchAll("SELECT itemId FROM tiki_tracker_items WHERE createdBy = ?", array("simon")) as $item) {
+	$usersTrackerItems = [];
+	foreach ($tikilib->fetchAll("SELECT itemId FROM tiki_tracker_items WHERE createdBy = ?", ["simon"]) as $item) {
 		$usersTrackerItems[] = $item['itemId'];
 	}
 
@@ -119,8 +119,8 @@ function wikiplugin_contributionsdashboard($data, $params)
 
 	foreach ($types as $type) {
 		if ($type == "trackeritems") {
-			$data = array();
-			$dates = array();
+			$data = [];
+			$dates = [];
 
 			foreach (LogsQueryLib::trackerItem()->start($start)->end($end)->countByDateFilterId($usersTrackerItems) as $date => $count) {
 				$data[] = $count * 1;
@@ -129,8 +129,8 @@ function wikiplugin_contributionsdashboard($data, $params)
 
 			$headerlib->add_jq_onready(
 				"$('#raphaelTrackeritems$i').chart({
-					labels: 	".json_encode($dates).",
-					data:		".json_encode($data).",
+					labels: 	" . json_encode($dates) . ",
+					data:		" . json_encode($data) . ",
 					label:		'Tracker Item Activity Grouped By Date'
 				});"
 			);
@@ -139,8 +139,8 @@ function wikiplugin_contributionsdashboard($data, $params)
 		}
 
 		if ($type == "toptrackeritemsusers") {
-			$hits = array();
-			$users = array();
+			$hits = [];
+			$users = [];
 
 			foreach (LogsQueryLib::trackerItem()->start($start)->end($end)->countUsersFilterId($usersTrackerItems) as $user => $count) {
 				$hits[] = $count;
@@ -149,8 +149,8 @@ function wikiplugin_contributionsdashboard($data, $params)
 
 			$headerlib->add_jq_onready(
 				"$('#raphaelTrackeritemsUsers$i').chart({
-					labels: 	".json_encode($users).",
-					data:		".json_encode($hits).",
+					labels: 	" . json_encode($users) . ",
+					data:		" . json_encode($hits) . ",
 					label:		'Tracker Item Activity Grouped By Users'
 				});"
 			);
@@ -159,8 +159,8 @@ function wikiplugin_contributionsdashboard($data, $params)
 		}
 
 		if ($type == "toptrackeritemsusersip") {
-			$hits = array();
-			$users = array();
+			$hits = [];
+			$users = [];
 
 			foreach (LogsQueryLib::trackerItem()->start($start)->end($end)->countUsersIPFilterId($usersTrackerItems) as $data => $count) {
 				$data = json_decode($data);
@@ -171,8 +171,8 @@ function wikiplugin_contributionsdashboard($data, $params)
 
 			$headerlib->add_jq_onready(
 				"$('#raphaelTrackeritemsUsersIP$i').chart({
-					labels: 	".json_encode($users).",
-					data:		".json_encode($hits).",
+					labels: 	" . json_encode($users) . ",
+					data:		" . json_encode($hits) . ",
 					label:		'Tracker Item Activity Grouped By Users & IP Address'
 				});"
 			);
@@ -195,13 +195,13 @@ function wikiplugin_contributionsdashboard($data, $params)
 			</style>
 			<div class='ui-widget ui-widget-content ui-corner-all'>
 				<h3 class='header ui-state-default ui-corner-tl ui-corner-tr' style='margin: 0; padding: 5px;'>
-					".tr("Contributions Dashboard")."
+					" . tr("Contributions Dashboard") . "
 					<form class='headerHelper'>
-						".tr("Date Range")."
-						<input type='text' name='raphaelStart$i' id='raphaelStart$i' class='cDashDate' value='".strftime("%m/%d/%Y", $start)."' />
-						<input type='text' name='raphaelEnd$i' id='raphaelEnd$i' class='cDashDate' value='".strftime("%m/%d/%Y", $end)."' />
+						" . tr("Date Range") . "
+						<input type='text' name='raphaelStart$i' id='raphaelStart$i' class='cDashDate' value='" . strftime("%m/%d/%Y", $start) . "' />
+						<input type='text' name='raphaelEnd$i' id='raphaelEnd$i' class='cDashDate' value='" . strftime("%m/%d/%Y", $end) . "' />
 						<input type='hidden' name='refresh' value='1' />
-						<input type='submit' id='raphaelUpdate$i' value='".tr("Update")."' />
+						<input type='submit' id='raphaelUpdate$i' value='" . tr("Update") . "' />
 					</form>
 				</h3>
 				$result

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,41 +9,41 @@ function wikiplugin_trade_info()
 {
 	global $prefs;
 
-	return array(
+	return [
 		'name' => tra('Trade'),
 		'documentation' => 'PluginTrade',
 		'description' => tra('Send payments between members using cclite'),
 		'validate' => 'all',
-		'prefs' => array( 'wikiplugin_trade', 'payment_feature' ),
+		'prefs' => [ 'wikiplugin_trade', 'payment_feature' ],
 		'iconname' => 'money',
 		'introduced' => 6,
-		'tags' => array( 'experimental' ),
-		'params' => array(
-			'price' => array(
+		'tags' => [ 'experimental' ],
+		'params' => [
+			'price' => [
 				'required' => true,
 				'name' => tra('Price'),
 				'description' => tr('Currency depends on the selected registry.'),
 				'since' => '6.0',
 				'filter' => 'text',
 				'default' => '',
-			),
-			'registry' => array(
+			],
+			'registry' => [
 				'required' => false,
 				'name' => tra('Registry'),
 				'description' => tr('Registry to trade in. Default: site preference (or first in list when more than one)'),
 				'since' => '6.0',
 				'filter' => 'text',
 				'default' => '',
-			),
-			'currency' => array(
+			],
+			'currency' => [
 				'required' => false,
 				'name' => tra('Currency'),
 				'description' => tr('Currency to trade in. Default: Cclite currency preference for registry set above'),
 				'since' => '6.0',
 				'filter' => 'text',
 				'default' => '',
-			),
-			'other_user' => array(
+			],
+			'other_user' => [
 				'required' => false,
 				'name' => tra('Other User'),
 				'description' => tra('Name of the user to receive or send the payment.') . ' '
@@ -51,96 +51,105 @@ function wikiplugin_trade_info()
 				'since' => '6.0',
 				'filter' => 'username',
 				'default' => '',
-			),
-			'wanted' => array(
+			],
+			'wanted' => [
 				'required' => false,
 				'name' => tra('Mode'),
-				'description' => tr('Offered or wanted item.') . ' ' . tr('Default') . ':' . tr('%0Offered%1', '<code>',
-						'</code>'),
-				'since' => '6.0',
-				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Offered'), 'value' => 'n'), 
-					array('text' => tra('Wanted'), 'value' => 'y'), 
+				'description' => tr('Offered or wanted item.') . ' ' . tr('Default') . ':' . tr(
+					'%0Offered%1',
+					'<code>',
+					'</code>'
 				),
+				'since' => '6.0',
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Offered'), 'value' => 'n'],
+					['text' => tra('Wanted'), 'value' => 'y'],
+				],
 				'filter' => 'alpha',
 				'default' => 'n',
-			),
-			'action' => array(
+			],
+			'action' => [
 				'required' => false,
 				'name' => tra('Button Label'),
 				'description' => tr('Default') . ':' . tr('%0Continue%1', '<code>', '</code>'),
 				'since' => '6.0',
 				'filter' => 'text',
 				'default' => tra('Continue'),
-			),
-			'inputtitle' => array(
+			],
+			'inputtitle' => [
 				'required' => false,
 				'name' => tra('Input Title'),
-				'description' => tra('Title of the input form.').' '. tr('Use %0 for the amount, %1 for currency,
-					 %2 for your user name, %3 for the other user.', '<code>%0</code>', '<code>%1</code>',
-					'<code>%2</code>', '<code>%3</code>').' '
-					.tra('Supports wiki syntax') . '<br />'. tr('Default') . ':'
+				'description' => tra('Title of the input form.') . ' ' . tr(
+					'Use %0 for the amount, %1 for currency,
+					 %2 for your user name, %3 for the other user.',
+					'<code>%0</code>',
+					'<code>%1</code>',
+					'<code>%2</code>',
+					'<code>%3</code>'
+				) . ' '
+					. tra('Supports wiki syntax') . '<br />' . tr('Default') . ':'
 					. tra('"Payment of %0 %1 from user %2 to %3" for offered items, "Request payment of %0 %1 to user
 					%2 from %3" for wanted'),
 				'since' => '6.0',
 				'filter' => 'text',
 				'default' => '',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
-function wikiplugin_trade( $data, $params, $offset )
+function wikiplugin_trade($data, $params, $offset)
 {
 	global $prefs, $user;
 	$userlib = TikiLib::lib('user');
 	$smarty = TikiLib::lib('smarty');
 	$headerlib = TikiLib::lib('header');
 	$paymentlib = TikiLib::lib('payment');
-	global $cclitelib; require_once 'lib/payment/cclitelib.php';
+	global $cclitelib;
+	require_once 'lib/payment/cclitelib.php';
 	static $iPluginTrade = 0;
 
-	$default = array( 'inputtitle'=>'', 'wanted' => 'n', 'action' => tra('Continue'), 'registry' => '', 'currency' => '' );
+	$default = [ 'inputtitle' => '', 'wanted' => 'n', 'action' => tra('Continue'), 'registry' => '', 'currency' => '' ];
 	$params = array_merge($default, $params);
-	
+
 	if (empty($params['registry'])) {
 		$params['registry'] = $cclitelib->get_registry();
 	}
 	if (empty($params['currency'])) {
 		$params['currency'] = $cclitelib->get_currency($params['registry']);
 	}
-	
+
 	$iPluginTrade++;
 	$smarty->assign('iPluginTrade', $iPluginTrade);
-	
+
 	$params['price'] = floatval(preg_replace('/^\D*([\d\.]*)/', '$1', $params['price']));
 	$smarty->assign('wp_trade_other_user_set', empty($params['other_user']) ? 'n' : 'y');
 	$smarty->assign('wp_trade_action', $params['action']);
-	
+
 //	$smarty->assign( 'wp_trade_quantity_edit', $params['quantity'] <= 0 ? 'y' : 'n');	// TODO
 //	$smarty->assign( 'wp_trade_quantity', abs($params['quantity']));
-	
-	if ( isset($_POST['wp_trade_offset']) && $_POST['wp_trade_offset'] == $offset && !empty($_POST['wp_trade_other_user']) ) {
+
+	if (isset($_POST['wp_trade_offset']) && $_POST['wp_trade_offset'] == $offset && ! empty($_POST['wp_trade_other_user'])) {
 		$params['other_user'] = $_POST['wp_trade_other_user'];
 	}
 	$params['other_user'] = trim($params['other_user'], '|');
 	$other_users = explode('|', $params['other_user']);
 	$other_users = array_map('trim', $other_users);
-	$other_users = array_filter($other_users, array( $userlib, 'user_exists' ));
+	$other_users = array_filter($other_users, [ $userlib, 'user_exists' ]);
 	$other_users = array_filter($other_users);
-	
-	if (!empty($other_users)) {
+
+	if (! empty($other_users)) {
 		$info = $userlib->get_user_info($other_users[0]);
 	} else {
-		$info = array();
+		$info = [];
 	}
 	$smarty->assign('wp_trade_offset', $offset);
 	$smarty->assign('wp_trade_price', $params['price']);
 	$smarty->assign('wp_trade_other_user', $info);
 	$smarty->assign('wp_trade_currentuser', $params['currentuser']);
-	
-	if ( $params['wanted'] == 'n' ) {
+
+	if ($params['wanted'] == 'n') {
 		if (empty($params['inputtitle'])) {
 			$params['inputtitle'] = 'Payment of %0 %1 from user %2 to %3';
 		}
@@ -150,12 +159,10 @@ function wikiplugin_trade( $data, $params, $offset )
 		}
 	}
 	$desc = tr($params['inputtitle'], number_format($params['price'], 2), $params['currency'], $user, $params['other_user']);
-	
-	if ( ( !empty($info) && $info['waiting'] == null )) {
 
+	if (( ! empty($info) && $info['waiting'] == null )) {
 		// user clicked "continue" (probably)
-		if ( isset($_POST['wp_trade_offset']) && $_POST['wp_trade_offset'] == $offset ) {
-
+		if (isset($_POST['wp_trade_offset']) && $_POST['wp_trade_offset'] == $offset) {
 			$id = $paymentlib->request_payment($desc, $params['price'], $prefs['payment_default_delay'], null, $params['currency']);
 
 			if (empty($user)) {
@@ -165,23 +172,22 @@ function wikiplugin_trade( $data, $params, $offset )
 				$params['main_user'] = $user;
 			}
 			$params['invoice'] = $id;
-			$paymentlib->register_behavior($id, 'complete', 'perform_trade', array($params));
+			$paymentlib->register_behavior($id, 'complete', 'perform_trade', [$params]);
 
 			//$smarty->assign( 'wp_trade_title', $desc );
 			require_once 'lib/smarty_tiki/function.payment.php';
-			return '^~np~' . smarty_function_payment(array( 'id' => $id ), $smarty) . '~/np~^';
-		} else if ($prefs['payment_system'] == 'cclite' && isset($_POST['cclite_payment_amount']) && isset($_POST['invoice'])) {
+			return '^~np~' . smarty_function_payment([ 'id' => $id ], $smarty) . '~/np~^';
+		} elseif ($prefs['payment_system'] == 'cclite' && isset($_POST['cclite_payment_amount']) && isset($_POST['invoice'])) {
 			require_once 'lib/smarty_tiki/function.payment.php';
 			$params['id'] = $_POST['invoice'];
 			return '^~np~' . smarty_function_payment($params, $smarty) . '~/np~^';
 		}
-
-	} else if ($info['waiting'] != null) {
-		return '{REMARKSBOX(type=warning, title=Plugin Trade Error)}' . tra('The user ') . '<em>' . $info['login'] 
+	} elseif ($info['waiting'] != null) {
+		return '{REMARKSBOX(type=warning, title=Plugin Trade Error)}' . tra('The user ') . '<em>' . $info['login']
 				. '</em>' . tra(' needs to validate their account.')
 				. '{REMARKSBOX}';
 	}
-	
+
 	$smarty->assign('wp_trade_title', $desc);
 	return '~np~' . $smarty->fetch('wiki-plugins/wikiplugin_trade.tpl') . '~/np~';
 }

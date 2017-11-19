@@ -1,23 +1,23 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 function wikiplugin_proposal_info()
 {
-	return array(
+	return [
 		'name' => tra('Proposal'),
 		'documentation' => 'PluginProposal',
 		'description' => tra('Allow users to vote on a proposal and view the results'),
-		'prefs' => array( 'wikiplugin_proposal' ),
+		'prefs' => [ 'wikiplugin_proposal' ],
 		'body' => tra('The list of votes cast. One vote per line. Either 0, +1 or -1 followed by a username.'),
 		'iconname' => 'thumbs-up',
 		'introduced' => 3,
-		'tags' => array( 'basic' ),
-		'params' => array(
-			'caption' => array(
+		'tags' => [ 'basic' ],
+		'params' => [
+			'caption' => [
 				'required' => false,
 				'name' => tra('Caption'),
 				'description' => tra('Short description of the proposal to vote on. Will be displayed above the result
@@ -25,8 +25,8 @@ function wikiplugin_proposal_info()
 				'since' => '3.0',
 				'filter' => 'text',
 				'default' => '',
-			),
-			'weights' => array(
+			],
+			'weights' => [
 				'required' => false,
 				'advanced' => true,
 				'name' => tr('Weights'),
@@ -36,20 +36,20 @@ function wikiplugin_proposal_info()
 				'since' => '10.0',
 				'filter' => 'text',
 				'default' => 'Registered(1)',
-			),
-		)
-	);
+			],
+		]
+	];
 }
 
-function wikiplugin_proposal_save( $context, $data, $params )
+function wikiplugin_proposal_save($context, $data, $params)
 {
 	$attributelib = TikiLib::lib('attribute');
 
-	static $objects = array();
+	static $objects = [];
 	$key = $context['type'] . ':' . $context['object'];
 
-	if ( ! isset( $objects[$key] ) ) {
-		$objects[$key] = array( '+1' => 0, '0' => 0, '-1' => 0 );
+	if (! isset($objects[$key])) {
+		$objects[$key] = [ '+1' => 0, '0' => 0, '-1' => 0 ];
 	}
 
 	$counts = wikiplugin_proposal_get_counts($data);
@@ -57,7 +57,7 @@ function wikiplugin_proposal_save( $context, $data, $params )
 	$objects[$key]['+1'] += $counts['weights']['+1'];
 	$objects[$key]['0'] += $counts['weights']['0'];
 	$objects[$key]['-1'] += $counts['weights']['-1'];
-	
+
 	$attributelib->set_attribute($context['type'], $context['object'], 'tiki.proposal.accept', $objects[$key]['+1']);
 	$attributelib->set_attribute($context['type'], $context['object'], 'tiki.proposal.undecided', $objects[$key]['0']);
 	$attributelib->set_attribute($context['type'], $context['object'], 'tiki.proposal.reject', $objects[$key]['-1']);
@@ -71,13 +71,13 @@ function wikiplugin_proposal($data, $params)
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('counts', $counts);
 
-	if ( $user && $tiki_p_edit == 'y' ) {
+	if ($user && $tiki_p_edit == 'y') {
 		$weight = wikiplugin_proposal_get_weight($user, $params);
-		$availableVotes = array(
+		$availableVotes = [
 			tra('Accept proposal') => "$data\n+1~$weight $user",
 			tra('Still undecided') => "$data\n0~$weight $user",
 			tra('Reject proposal') => "$data\n-1~$weight $user",
-		);
+		];
 
 		$smarty->assign('available_votes', $availableVotes);
 	}
@@ -90,14 +90,14 @@ function wikiplugin_proposal($data, $params)
 	return "~np~$content~/np~";
 }
 
-function wikiplugin_proposal_get_counts( $data ) 
+function wikiplugin_proposal_get_counts($data)
 {
 	$voteData = explode("\n", $data);
-	$votes = array();
+	$votes = [];
 
-	foreach ( $voteData as $entry ) {
+	foreach ($voteData as $entry) {
 		$entry = trim($entry);
-		if ( preg_match("/^(([\+\-]1)|0)(~(\d+(\.\d+)?))?\s+(\w+)/", $entry, $parts) ) {
+		if (preg_match("/^(([\+\-]1)|0)(~(\d+(\.\d+)?))?\s+(\w+)/", $entry, $parts)) {
 			list( $full, $vote, $null, $null, $weight, $null, $voter ) = $parts;
 			if (strlen($weight) == 0) {
 				$weight = 1;
@@ -105,34 +105,34 @@ function wikiplugin_proposal_get_counts( $data )
 				$weight = (float) $weight;
 			}
 
-			$votes[$voter] = array($vote, $weight);
+			$votes[$voter] = [$vote, $weight];
 		}
 	}
 
-	$counts = array(
-		'+1' => array(),
-		 '0' => array(),
-		'-1' => array(),
-		'weights' => array(
+	$counts = [
+		'+1' => [],
+		 '0' => [],
+		'-1' => [],
+		'weights' => [
 			'+1' => 0,
 			 '0' => 0,
 			'-1' => 0,
-		),
-	);
+		],
+	];
 
-	foreach ( $votes as $voter => $values ) {
+	foreach ($votes as $voter => $values) {
 		list($vote, $weight) = $values;
 		$counts[$vote][] = $voter;
 		$counts['weights'][$vote] += $weight;
 	}
-	
+
 	return $counts;
 }
 
 function wikiplugin_proposal_get_weight($user, array $params)
 {
-	$weights = array();
-	
+	$weights = [];
+
 	if (isset($params['weights'])) {
 		$parts = explode(',', $params['weights']);
 		foreach ($parts as $part) {
@@ -156,4 +156,3 @@ function wikiplugin_proposal_get_weight($user, array $params)
 
 	return 0;
 }
-

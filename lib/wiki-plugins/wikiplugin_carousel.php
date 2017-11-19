@@ -7,27 +7,27 @@
 
 function wikiplugin_carousel_info()
 {
-	return array(
+	return [
 		'name' => tra('Carousel'),
 		'documentation' => 'PluginCarousel',
 		'description' => tra('Display images in a self-advancing carousel'),
 		'introduced' => 8,
-		'prefs' => array('wikiplugin_carousel', 'feature_file_galleries', 'feature_jquery_carousel'),
+		'prefs' => ['wikiplugin_carousel', 'feature_file_galleries', 'feature_jquery_carousel'],
 		'iconname' => 'wizard',
-		'tags' => array( 'basic' ),
-		'params' => array(
-			'type' => array(
+		'tags' => [ 'basic' ],
+		'params' => [
+			'type' => [
 				'required' => true,
 				'name' => tra('Images Source'),
 				'description' => tra('Choose where to get your images from'),
 				'default' => 'fgalId',
-				'options' => array(
-					array('text' => tra('Select an option'), 'value' => ''),
-					array('text' => tra('All the images in a file gallery'), 'value' => 'fgalId'),
-					array('text' => tra('A list of file IDs'), 'value' => 'fileIds'),
-				),
-			),
-			'fgalId' => array(
+				'options' => [
+					['text' => tra('Select an option'), 'value' => ''],
+					['text' => tra('All the images in a file gallery'), 'value' => 'fgalId'],
+					['text' => tra('A list of file IDs'), 'value' => 'fileIds'],
+				],
+			],
+			'fgalId' => [
 				'required' => true,
 				'name' => tra('File Gallery ID'),
 				'description' => tra('ID number of the file gallery that contains the images to be displayed'),
@@ -35,19 +35,19 @@ function wikiplugin_carousel_info()
 				'filter' => 'digits',
 				'accepted' => 'ID',
 				'default' => '',
-				'parentparam' => array('name' => 'type', 'value' => 'fgalId'),
+				'parentparam' => ['name' => 'type', 'value' => 'fgalId'],
 				'profile_reference' => 'file_gallery',
-			),
-			'fileIds' => array(
+			],
+			'fileIds' => [
 				'required' => true,
 				'name' => tra('File IDs'),
 				'description' => tra('List of IDs of images from the File Galleries separated by commas.'),
 				'filter' => 'striptags',
 				'default' => '',
-				'parentparam' => array('name' => 'type', 'value' => 'fileIds'),
+				'parentparam' => ['name' => 'type', 'value' => 'fileIds'],
 				'profile_reference' => 'file',
-			),
-			'sort_mode' => array(
+			],
+			'sort_mode' => [
 				'required' => false,
 				'name' => tra('Sort Mode'),
 				'description' => tr('Sort by database table field name, ascending or descending. Examples:
@@ -57,8 +57,8 @@ function wikiplugin_carousel_info()
 				'accepted' => tr('%0 or %1 with actual database field name in place of
 					%2.', '<code>fieldname_asc</code>', '<code>fieldname_desc</code>', '<code>fieldname</code>'),
 				'default' => 'created_desc',
-			),
-			'transitionSpeed' => array(
+			],
+			'transitionSpeed' => [
 				'required' => false,
 				'name' => tra('Transition Time'),
 				'description' => tra('The time (in milliseconds) for the transition between two images.'),
@@ -66,8 +66,8 @@ function wikiplugin_carousel_info()
 				'filter' => 'digits',
 				'accepted' => tra('number'),
 				'default' => '1500',
-			),
-			'displayTime' => array(
+			],
+			'displayTime' => [
 				'required' => false,
 				'name' => tra('Display Time'),
 				'description' => tra('The time (in milliseconds) to display each image.'),
@@ -75,8 +75,8 @@ function wikiplugin_carousel_info()
 				'filter' => 'digits',
 				'accepted' => tra('number'),
 				'default' => '6000',
-			),
-			'textholderHeight' => array(
+			],
+			'textholderHeight' => [
 				'required' => false,
 				'name' => tra('Caption Height'),
 				'description' => tra('The height of the caption. This is a fraction of the height of the images.'),
@@ -85,35 +85,35 @@ function wikiplugin_carousel_info()
 				'accepted' => tra('real between 0 and 1'),
 				'default' => '.2',
 				'advanced' => true,
-			),
-			'displayProgressBar' => array(
+			],
+			'displayProgressBar' => [
 				'required' => false,
 				'name' => tra('Display Progress Bar'),
 				'since' => '8.0',
 				'filter' => 'digits',
-				'options' => array(
-					array('text' => tra('Yes'), 'value' => '1'),
-					array('text' => tra('No'), 'value' => '0'),
-				),
+				'options' => [
+					['text' => tra('Yes'), 'value' => '1'],
+					['text' => tra('No'), 'value' => '0'],
+				],
 				'default' => '1',
 				'advanced' => true,
-			),
-			'thumbnailType' => array(
+			],
+			'thumbnailType' => [
 				'required' => false,
 				'name' => tra('Display Thumbnails'),
 				'description' => tra('Display thumbnails, number, count etc.'),
 				'since' => '8.0',
 				'filter' => 'text',
-				'options' => array(
-					array('text' => tra('None'), 'value' => 'none'),
-					array('text' => tra('Buttons'), 'value' => 'buttons'),
-					array('text' => tra('Images'), 'value' => 'images'),
-					array('text' => tra('Numbers'), 'value' => 'numbers'),
-					array('text' => tra('Count'), 'value' => 'count'),
-				),
+				'options' => [
+					['text' => tra('None'), 'value' => 'none'],
+					['text' => tra('Buttons'), 'value' => 'buttons'],
+					['text' => tra('Images'), 'value' => 'images'],
+					['text' => tra('Numbers'), 'value' => 'numbers'],
+					['text' => tra('Count'), 'value' => 'count'],
+				],
 				'default' => 'none',
-			),
-			'thumbnailWidth' => array(
+			],
+			'thumbnailWidth' => [
 				'required' => false,
 				'name' => tra('Thumbnail Box Width'),
 				'description' => tr('Width of thumbnail box in CSS units (default %0)', '<code>20px</code>'),
@@ -121,8 +121,8 @@ function wikiplugin_carousel_info()
 				'filter' => 'text',
 				'default' => '20px',
 				'advanced' => true,
-			),
-			'thumbnailHeight' => array(
+			],
+			'thumbnailHeight' => [
 				'required' => false,
 				'name' => tra('Thumbnail Box Height'),
 				'description' => tr('Height of thumbnail box in CSS units (default %0)', '<code>20px</code>'),
@@ -130,59 +130,59 @@ function wikiplugin_carousel_info()
 				'filter' => 'text',
 				'default' => '20px',
 				'advanced' => true,
-			),
-			'autoPilot' => array(
+			],
+			'autoPilot' => [
 				'required' => false,
 				'name' => tra('Start Automatically'),
 				'description' => tra('Start the carousel automatically when the page loads (default: Yes).'),
 				'since' => '8.0',
 				'filter' => 'digits',
-				'options' => array(
-					array('text' => tra('Yes'), 'value' => '1'),
-					array('text' => tra('No'), 'value' => '0'),
-				),
+				'options' => [
+					['text' => tra('Yes'), 'value' => '1'],
+					['text' => tra('No'), 'value' => '0'],
+				],
 				'default' => '1',
-			),
-			'displayThumbnails' => array(
+			],
+			'displayThumbnails' => [
 				'required' => false,
 				'name' => tra('Thumbnails'),
 				'description' => tra('Legacy v2 param:') . ' ' . tra('Display thumbnails.'),
 				'since' => '8.0',
 				'filter' => 'digits',
-				'options' => array(
-					array('text' => tra('Yes'), 'value' => '1'),
-					array('text' => tra('No'), 'value' => '0'),
-				),
+				'options' => [
+					['text' => tra('Yes'), 'value' => '1'],
+					['text' => tra('No'), 'value' => '0'],
+				],
 				'default' => '1',
 				'advanced' => true,
-			),
-			'displayThumbnailNumbers' => array(
+			],
+			'displayThumbnailNumbers' => [
 				'required' => false,
 				'name' => tra('Thumbnail Numbers'),
 				'description' => tra('Legacy v2 param:') . ' ' . tra('Display place numbers in the thumbnail boxes.'),
 				'since' => '8.0',
 				'filter' => 'digits',
-				'options' => array(
-					array('text' => tra('Yes'), 'value' => '1'),
-					array('text' => tra('No'), 'value' => '0'),
-				),
+				'options' => [
+					['text' => tra('Yes'), 'value' => '1'],
+					['text' => tra('No'), 'value' => '0'],
+				],
 				'default' => '1',
 				'advanced' => true,
-			),
-			'displayThumbnailBackground' => array(
+			],
+			'displayThumbnailBackground' => [
 				'required' => false,
 				'name' => tra('Thumbnail Background'),
 				'description' => tra('Legacy v2 param:') . ' ' . tra('Use corresponding image as background for a thumbnail box.'),
 				'since' => '8.0',
 				'filter' => 'digits',
-				'options' => array(
-					array('text' => tra('Yes'), 'value' => '1'),
-					array('text' => tra('No'), 'value' => '0'),
-				),
+				'options' => [
+					['text' => tra('Yes'), 'value' => '1'],
+					['text' => tra('No'), 'value' => '0'],
+				],
 				'default' => '1',
 				'advanced' => true,
-			),
-			'thumbnailFontSize' => array(
+			],
+			'thumbnailFontSize' => [
 				'required' => false,
 				'name' => tra('Thumbnail Font Size'),
 				'description' => tra('Legacy v2 param:') . ' ' . tr('Font size of thumbnail box in CSS units
@@ -192,8 +192,8 @@ function wikiplugin_carousel_info()
 				'accepted' => tra('CSS units'),
 				'default' => '.7em',
 				'advanced' => true,
-			),
-			'displaySize' => array(
+			],
+			'displaySize' => [
 				'required' => false,
 				'name' => tra('Image Size'),
 				'description' => tra('Scale image between 0 and 1 to reduce it, or set a maximum size in pixels'),
@@ -202,24 +202,24 @@ function wikiplugin_carousel_info()
 				'default' => '1',
 				'accepted' => tra('Real between 0 and 1, or integer over 10'),
 				'advanced' => true,
-			),
-			'clickable' => array(
+			],
+			'clickable' => [
 				'required' => false,
 				'name' => tra('Makes images clickable'),
 				'description' => tra('In case there are URLs in the image description, the image is made clickable and links to the first URL found'),
 				'filter' => 'digits',
-				'options' => array(
-					array('text' => tra('No'), 'value' => '0'),
-					array('text' => tra('Yes'), 'value' => '1'),
-				),
+				'options' => [
+					['text' => tra('No'), 'value' => '0'],
+					['text' => tra('Yes'), 'value' => '1'],
+				],
 				'default' => '0',
 				'advanced' => true,
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
-function wikiplugin_carousel( $body, $params )
+function wikiplugin_carousel($body, $params)
 {
 	static $id = 0;
 	$plugininfo = wikiplugin_carousel_info();
@@ -229,19 +229,19 @@ function wikiplugin_carousel( $body, $params )
 	$params = array_merge($default, $params);
 
 	$unique = 'wpcarousel-' . ++$id;
-	$uniqueId = 'carousel'.$id;
+	$uniqueId = 'carousel' . $id;
 
 	$filegallib = TikiLib::lib('filegal');
 
 	if ($params['type'] == 'fgalId') {
 		$files = $filegallib->get_files(0, -1, $params['sort_mode'], '', $params['fgalId']);
-	} else if ($params['type'] == 'fileIds') {
+	} elseif ($params['type'] == 'fileIds') {
 		$params['fileIds'] = explode(',', $params['fileIds']);
 
 		foreach ($params['fileIds'] as $fileId) {
 			$file = $filegallib->get_file($fileId);
 
-			if (!is_null($file)) {
+			if (! is_null($file)) {
 				$files['data'][] = $file;
 			}
 		}
@@ -263,24 +263,24 @@ function wikiplugin_carousel( $body, $params )
 		$displayThumbnailBackground = ($params['displayThumbnailBackground'] == 1);
 
 		if ($displayThumbnailNumbers) {
-			$params['thumbnailType']= 'numbers';
+			$params['thumbnailType'] = 'numbers';
 		}
 		if ($displayThumbnails) {
-			$params['thumbnailType']= 'images';
+			$params['thumbnailType'] = 'images';
 		}
 	}
 
-	foreach ( $params as &$param) {
+	foreach ($params as &$param) {
 		if (is_numeric($param)) {
 			$param = (float) $param;	// seems to leave ints as ints
 		}
 	}
 
- 	if ($params['thumbnailType'] === 'images') {
+	if ($params['thumbnailType'] === 'images') {
 		TikiLib::lib('header')->add_css(".ic_button { float: left; width: {$params['thumbnailWidth']}; height: {$params['thumbnailHeight']};}");
 	}
 
-	if (isset($params['clickable']) && $params['clickable'] == 1 ) {
+	if (isset($params['clickable']) && $params['clickable'] == 1) {
 		$jq_clickable = '
 function carousel_callback(){
 	$("#' . $uniqueId . ' div.ic_tray div.ic_caption").each(function(){
@@ -315,37 +315,37 @@ function carousel_callback(){ };
 		$params['thumbnailFontSize']
 	);
 
-	TikiLib::lib('header')->add_jq_onready('setTimeout( function() { $("#' . $unique . '").tiki("carousel", "", '. json_encode($params).'); carousel_callback();}, 1000);');
+	TikiLib::lib('header')->add_jq_onready('setTimeout( function() { $("#' . $unique . '").tiki("carousel", "", ' . json_encode($params) . '); carousel_callback();}, 1000);');
 	$size = '';
 	if (empty($params['displaySize'])) {
 		$size = 'width: 1px; height: 1px;';
-	} else if ($params['displaySize'] > 10) {
+	} elseif ($params['displaySize'] > 10) {
 		$size = "width: {$params['displaySize']}px; height: {$params['displaySize']}px;";
 	}
-	$html = '<div id="'.$uniqueId.'" ><div id="'.$unique. '" class="clearfix carousel" style="' . $size . ' overflow: hidden"><ul>';
+	$html = '<div id="' . $uniqueId . '" ><div id="' . $unique . '" class="clearfix carousel" style="' . $size . ' overflow: hidden"><ul>';
 	foreach ($files['data'] as $file) {
-		$html .= '<li><img src="tiki-download_file.php?fileId='.$file['fileId'].'&amp;display';
-		if (!empty($params['displaySize'])) {
+		$html .= '<li><img src="tiki-download_file.php?fileId=' . $file['fileId'] . '&amp;display';
+		if (! empty($params['displaySize'])) {
 			if ($params['displaySize'] > 10) {
-				$html .= '&amp;max='.$params['displaySize'];
-			} elseif ( $params['displaySize'] <= 1) {
-				$html .= '&amp;scale='.$params['displaySize'];
+				$html .= '&amp;max=' . $params['displaySize'];
+			} elseif ($params['displaySize'] <= 1) {
+				$html .= '&amp;scale=' . $params['displaySize'];
 			}
 		}
 
-		$html .= '" alt="'.htmlentities($file['description']).'" />';
+		$html .= '" alt="' . htmlentities($file['description']) . '" />';
 
 		$caption = '';
-		if (!empty($file['name'])) {
-			$caption .= '<strong>'.htmlentities($file['name']).'</strong>';
-			if (!empty($file['description'])) {
+		if (! empty($file['name'])) {
+			$caption .= '<strong>' . htmlentities($file['name']) . '</strong>';
+			if (! empty($file['description'])) {
 					$caption .= '<br />';
 			}
 		}
-		if (!empty($file['description'])) {
+		if (! empty($file['description'])) {
 			$caption .= htmlentities($file['description']);
 		}
-		if (!empty($caption)) {
+		if (! empty($caption)) {
 			$caption = '<p style="display:none;">' . $caption . '</p>';
 			TikiLib::lib('header')->add_css('.textholder { padding: .5em .8em; }');
 		}
@@ -355,4 +355,3 @@ function carousel_callback(){ };
 
 	return "~np~$html~/np~";
 }
-

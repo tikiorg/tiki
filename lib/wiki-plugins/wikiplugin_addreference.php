@@ -7,51 +7,46 @@
 
 function wikiplugin_addreference_info()
 {
-	return array(
+	return [
 		'name' => tra('Add Reference'),
 		'description' => tra('Add a bibliography reference'),
 		'format' => 'html',
 		'introduced' => 10,
-		'prefs' => array('wikiplugin_addreference','feature_references'),
+		'prefs' => ['wikiplugin_addreference','feature_references'],
 		'iconname' => 'pencil',
-		'params' => array(
-			'biblio_code' => array(
+		'params' => [
+			'biblio_code' => [
 				'required' => true,
 				'name' => tra('Biblio Code'),
 				'description' => tra('The code to be added as reference.'),
 				'default' => '',
 				'since' => '10.0',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
-function wikiplugin_addreference($data,$params)
+function wikiplugin_addreference($data, $params)
 {
 	global $prefs;
 
 	if ($prefs['wikiplugin_addreference'] == 'y') {
-
 		$referenceslib = TikiLib::lib('references');
 
 		if (! isset($GLOBALS['referencesData'])) {
-			$GLOBALS['referencesData'] = array();
+			$GLOBALS['referencesData'] = [];
 		}
 
 		$data = trim($data);
 
 		if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-print.php')) {
-
 			$page = urldecode($_REQUEST['page']);
 			$page_id = TikiLib::lib('tiki')->get_page_id_from_name($page);
 			$page_info = TikiLib::lib('tiki')->get_page_info($page);
-
 		} else {
-
 			$object = current_object();
 			$page_id = TikiLib::lib('tiki')->get_page_id_from_name($object['object']);
 			$page_info = TikiLib::lib('tiki')->get_page_info($object['object']);
-
 		}
 
 		extract($params, EXTR_SKIP);
@@ -62,11 +57,11 @@ function wikiplugin_addreference($data,$params)
 		$regex = "/{ADDREFERENCE\(?\ ?biblio_code=\"(.*)\"\)?}.*({ADDREFERENCE})?/siU";
 		preg_match_all($regex, $page_info['data'], $matches);
 
-		$temp = array();
-		$curr_matches = array();
+		$temp = [];
+		$curr_matches = [];
 		$temp = array_unique($matches[1]);
 		$i = 0;
-		foreach ($temp as $k=>$v) {
+		foreach ($temp as $k => $v) {
 			if (strlen(trim($v)) > 0) {
 				$curr_matches[$i] = $v;
 				$i++;
@@ -74,12 +69,12 @@ function wikiplugin_addreference($data,$params)
 		}
 		unset($temp);
 
-		$found_keys = array();
+		$found_keys = [];
 
-		foreach ($curr_matches as $key=>$val) {
+		foreach ($curr_matches as $key => $val) {
 			if (strlen(trim($val)) > 0) {
 				if ($val == $params['biblio_code']) {
-					if (!in_array($val, $found_keys)) {
+					if (! in_array($val, $found_keys)) {
 						$found_keys[] = $val;
 						$index = $key + 1;
 						$i++;
@@ -93,6 +88,5 @@ function wikiplugin_addreference($data,$params)
 		$url = $GLOBALS['base_uri'] . "#" . $params['biblio_code'];
 
 		return $data . "<a href='" . $url . "' title='" . $params['biblio_code'] . "'><sup>" . $index . "</sup></a>";
-
 	}
 }

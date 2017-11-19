@@ -7,15 +7,15 @@
 
 function wikiplugin_galleriffic_info()
 {
-	return array(
+	return [
 		'name' => tra('Galleriffic'),
 		'documentation' => 'PluginGalleriffic',
 		'description' => tra('Display a slideshow of images on a page'),
 		'iconname' => 'image',
-		'prefs' => array('wikiplugin_galleriffic', 'feature_file_galleries'),
+		'prefs' => ['wikiplugin_galleriffic', 'feature_file_galleries'],
 		'introduced' => 8,
-		'params' => array(
-			'fgalId' => array(
+		'params' => [
+			'fgalId' => [
 				'required' => true,
 				'name' => tra('File Gallery ID'),
 				'description' => tra('ID number of the file gallery that contains the images to be displayed'),
@@ -24,105 +24,118 @@ function wikiplugin_galleriffic_info()
 				'accepted' => 'ID',
 				'default' => '',
 				'profile_reference' => 'file_gallery',
-			),
-			'sort_mode' => array(
+			],
+			'sort_mode' => [
 				'required' => false,
 				'name' => tra('Sort Mode'),
 				'description' => tr('Sort by database table field name, ascending (_asc) or descending (_desc). Examples:
 					%0 or %1.', '<code>fileId_asc</code>', '<code>name_desc</code>'),
 				'since' => '8.0',
 				'filter' => 'word',
-				'accepted' => tr('%0 or %1 with actual table field name in place of %2.', 'fieldname_asc',
-					'fieldname_desc', 'fieldname'),
+				'accepted' => tr(
+					'%0 or %1 with actual table field name in place of %2.',
+					'fieldname_asc',
+					'fieldname_desc',
+					'fieldname'
+				),
 				'default' => 'created_desc',
-			),
-			'thumbsWidth' => array(
+			],
+			'thumbsWidth' => [
 				'required' => false,
 				'name' => tra('Thumbs Width'),
-				'description' => tr('Width in pixels or percentage. (e.g. %0 or %1)', '<code>200px</code>',
-					'<code>100%</code>'),
+				'description' => tr(
+					'Width in pixels or percentage. (e.g. %0 or %1)',
+					'<code>200px</code>',
+					'<code>100%</code>'
+				),
 				'since' => '8.0',
 				'filter' => 'text',
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by \'%\' (e.g. "200px" or "100%").',
 				'default' => '300px',
-			),
-			'imgWidth' => array(
+			],
+			'imgWidth' => [
 				'required' => false,
 				'name' => tra('Image Slideshow Width'),
-				'description' => tr('Width in pixels or percentage of the largest image. (e.g. %0 or %1)',
-					'<code>200px</code>', '<code>100%</code>'),
+				'description' => tr(
+					'Width in pixels or percentage of the largest image. (e.g. %0 or %1)',
+					'<code>200px</code>',
+					'<code>100%</code>'
+				),
 				'since' => '8.0',
 				'filter' => 'text',
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by \'%\' (e.g. "200px" or "100%").',
 				'default' => '550px',
-			),
-			'imgHeight' => array(
+			],
+			'imgHeight' => [
 				'required' => false,
 				'name' => tra('Image Slideshow Height'),
-				'description' => tr('Height in pixels or percentage of the largest images. (e.g. %0 or %1)',
-					'<code>200px</code>', '<code>100%</code>'),
+				'description' => tr(
+					'Height in pixels or percentage of the largest images. (e.g. %0 or %1)',
+					'<code>200px</code>',
+					'<code>100%</code>'
+				),
 				'since' => '8.0',
 				'filter' => 'text',
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by \'%\' (e.g. "200px" or "100%").',
 				'default' => '502px',
-			),
-			'autoStart' => array(
+			],
+			'autoStart' => [
 				'required' => false,
 				'name' => tra('Start Slideshow'),
 				'description' => tra('Automatically start the slideshow'),
 				'since' => '9.2',
 				'filter' => 'alpha',
 				'default' => 'n',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('No'), 'value' => 'n'),
-					array('text' => tra('Yes'), 'value' => 'y'),
-				),
-			),
-			'delay' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('No'), 'value' => 'n'],
+					['text' => tra('Yes'), 'value' => 'y'],
+				],
+			],
+			'delay' => [
 				'required' => false,
 				'name' => tra('Delay'),
 				'description' => tra('Delay in milliseconds between each transition'),
 				'since' => '9.2',
 				'filter' => 'digits',
 				'default' => '2500',
-			),
-			'numThumbs' => array(
+			],
+			'numThumbs' => [
 				'required' => false,
 				'name' => tra('Number of thumbnails'),
 				'description' => tra('The number of thumbnails to show per page'),
 				'since' => '9.2',
 				'filter' => 'digits',
 				'default' => '15',
-			),
-			'topPager' => array(
+			],
+			'topPager' => [
 				'required' => false,
 				'name' => tra('Show Top Pager'),
 				'description' => tra('Display thumbnail pager at top'),
 				'since' => '9.2',
 				'filter' => 'alpha',
 				'default' => 'y',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n'),
-				),
-			),
-			'bottomPager' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'y'],
+					['text' => tra('No'), 'value' => 'n'],
+				],
+			],
+			'bottomPager' => [
 				'required' => false,
 				'name' => tra('Show Bottom Pager'),
 				'description' => tra('Display thumbnail pager at bottom'),
 				'since' => '9.2',
 				'filter' => 'alpha',
 				'default' => 'y',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n'),
-				),
-			),
-		),
-	);
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'y'],
+					['text' => tra('No'), 'value' => 'n'],
+				],
+			],
+		],
+	];
 }
 
 function wikiplugin_galleriffic($data, $params)
@@ -137,7 +150,7 @@ function wikiplugin_galleriffic($data, $params)
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
 
-    $filegallib = TikiLib::lib('filegal');
+	$filegallib = TikiLib::lib('filegal');
 	$files = $filegallib->get_files(0, -1, $params['sort_mode'], '', $params['fgalId']);
 	if (empty($files['cant'])) {
 		return '';
@@ -148,15 +161,15 @@ function wikiplugin_galleriffic($data, $params)
 	$headerlib->add_jsfile('vendor_bundled/vendor/jquery/plugins/galleriffic/js/jquery.opacityrollover.js');
 	$playLinkText = tra('Play Slideshow');
 	$pauseLinkText = tra('Pause Slideshow');
-	$prevLinkText = '&lsaquo; '.tra('Previous Photo');
-	$nextLinkText = tra('Next Photo').' &rsaquo;';
-	$nextPageLinkText = tra('Next').' &rsaquo;';
-	$prevPageLinkText = '&lsaquo; '.tra('Prev');
+	$prevLinkText = '&lsaquo; ' . tra('Previous Photo');
+	$nextLinkText = tra('Next Photo') . ' &rsaquo;';
+	$nextPageLinkText = tra('Next') . ' &rsaquo;';
+	$prevPageLinkText = '&lsaquo; ' . tra('Prev');
 	$autoStart = $autoStart === 'n' ? 'false' : 'true';
 	$topPager = $topPager === 'n' ? 'false' : 'true';
 	$bottomPager = $bottomPager === 'n' ? 'false' : 'true';
 
-$jq = <<<JQ
+	$jq = <<<JQ
 if (\$('#thumbs').length) {
 	// We only want these styles applied when javascript is enabled
 	\$('div.navigation').css({'width' : '$thumbsWidth', 'float' : 'left'});
@@ -206,7 +219,7 @@ if (\$('#thumbs').length) {
 JQ;
 
 	$headerlib->add_jq_onready($jq);
-$css = <<<CSS
+	$css = <<<CSS
 div.slideshow-container {
 	height: $imgHeight;
 }

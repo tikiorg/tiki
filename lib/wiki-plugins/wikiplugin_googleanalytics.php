@@ -1,32 +1,32 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 function wikiplugin_googleanalytics_info()
 {
-	return array(
+	return [
 		'name' => tra('Google Analytics'),
 		'documentation' => 'PluginGoogleAnalytics',
 		'description' => tra('Add the tracking code for Google Analytics'),
-		'prefs' => array( 'wikiplugin_googleanalytics' ),
+		'prefs' => [ 'wikiplugin_googleanalytics' ],
 		'iconname' => 'chart',
 		'format' => 'html',
 		'introduced' => 14,
-		'params' => array(
-			'account' => array(
+		'params' => [
+			'account' => [
 				'required' => true,
 				'name' => tra('Account Number'),
 				'description' => tr('The account number for the site. Your account number from Google looks like
-					%0. All you need to enter is %1', 'UA-XXXXXXX-YY','<code>XXXXXXX-YY</code>'),
+					%0. All you need to enter is %1', 'UA-XXXXXXX-YY', '<code>XXXXXXX-YY</code>'),
 				'since' => '3.0',
 				'filter' => 'text',
 				'default' => ''
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 function wikiplugin_googleanalytics($data, $params)
@@ -53,7 +53,6 @@ ga('send', 'pageview');
 
 </script>
 HTML;
-
 	} else {
 		$ret = <<<HTML
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -66,7 +65,6 @@ HTML;
   gtag('config', 'UA-$account');
 </script>
 HTML;
-
 	}
 	return $ret;
 }

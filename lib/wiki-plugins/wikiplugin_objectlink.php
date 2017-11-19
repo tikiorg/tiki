@@ -7,17 +7,17 @@
 
 function wikiplugin_objectlink_info()
 {
-	return array(
+	return [
 		'name' => tra('Object Link'),
 		'description' => tra('Display a link to an object'),
-		'prefs' => array('wikiplugin_objectlink'),
+		'prefs' => ['wikiplugin_objectlink'],
 		'iconname' => 'link',
 		'introduced' => 10,
-		'tags' => array( 'basic' ),
+		'tags' => [ 'basic' ],
 		'format' => 'html',
 		'inline' => true,
-		'params' => array(
-			'type' => array(
+		'params' => [
+			'type' => [
 				'required' => true,
 				'name' => tr('Type'),
 				'description' => tr('The object type'),
@@ -25,17 +25,17 @@ function wikiplugin_objectlink_info()
 				'accepted' => 'wiki, user, external, relation_source, relation_target, freetag, trackeritem',
 				'filter' => 'text',
 				'type' => 'text',
-			),
-			'id' => array(
+			],
+			'id' => [
 				'required' => true,
 				'name' => tra('Object ID'),
 				'description' => tra('The item to display'),
 				'since' => '10.0',
 				'filter' => 'text',
 				'profile_reference' => 'type_in_param',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 function wikiplugin_objectlink($data, $params)
@@ -44,11 +44,10 @@ function wikiplugin_objectlink($data, $params)
 	$smarty->loadPlugin('smarty_function_object_link');
 
 	return smarty_function_object_link(
-		array(
+		[
 			'type' => $params['type'],
 			'id' => $params['id'],
-		),
+		],
 		$smarty
 	);
 }
-

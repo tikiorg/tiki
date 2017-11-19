@@ -7,58 +7,58 @@
 
 function wikiplugin_sql_info()
 {
-	return array(
+	return [
 		'name' => tra('SQL'),
 		'documentation' => 'PluginSQL',
 		'description' => tra('Query a MySQL database and display the results'),
-		'prefs' => array( 'wikiplugin_sql' ),
+		'prefs' => [ 'wikiplugin_sql' ],
 		'body' => tr('The SQL query goes in the body. Example: ') . '<code>SELECT column1, column2 FROM table</code>',
 		'validate' => 'all',
 		'iconname' => 'database',
 		'introduced' => 1,
-		'params' => array(
-			'db' => array(
+		'params' => [
+			'db' => [
 				'required' => true,
 				'name' => tra('DSN Name'),
 				'description' => tr('DSN name of the database being queried. The DSN name needs to first be defined at
 					%0', '<code>tiki-admin_dsn.php</code>'),
 				'since' => '1',
 				'default' => ''
-			),
-			'raw' => array(
+			],
+			'raw' => [
 				'required' => false,
 				'name' => tra('Raw return'),
 				'description' => tra('Return with table formatting (default) or raw data with no table formatting'),
 				'since' => '11.0',
 				'default' => '0',
 				'filter' => 'digits',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Normal'), 'value' => '0'),
-					array('text' => tra('Raw'), 'value' => '1')
-				)
-			),
-			'delim' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Normal'), 'value' => '0'],
+					['text' => tra('Raw'), 'value' => '1']
+				]
+			],
+			'delim' => [
 				'required' => false,
 				'name' => tra('Delim'),
 				'description' => tr('The delimiter to be used between data elements (sets %0)', '<code>raw=1</code>'),
 				'since' => '11.0',
-			),
-			'wikiparse' => array(
+			],
+			'wikiparse' => [
 				'required' => false,
 				'name' => tra('Wiki Parse'),
 				'description' => tr('Turn wiki parsing of select results on and off (default is on)'),
 				'since' => '11.0',
 				'default' => '1',
 				'filter' => 'digits',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Off'), 'value' => '0'),
-					array('text' => tra('On'), 'value' => '1')
-				)
-			)
-		)
-	);
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Off'), 'value' => '0'],
+					['text' => tra('On'), 'value' => '1']
+				]
+			]
+		]
+	];
 }
 
 function wikiplugin_sql($data, $params)
@@ -67,16 +67,16 @@ function wikiplugin_sql($data, $params)
 	global $tikilib;
 	extract($params, EXTR_SKIP);
 
-	if (!isset($db)) {
+	if (! isset($db)) {
 		return tra('Missing db param');
 	}
 
-	$perms = Perms::get(array( 'type' => 'dsn', 'object' => $db ));
-	if ( ! $perms->dsn_query ) {
+	$perms = Perms::get([ 'type' => 'dsn', 'object' => $db ]);
+	if (! $perms->dsn_query) {
 		return tra('You do not have permission to use this feature');
 	}
 
-	$bindvars = array();
+	$bindvars = [];
 	$data = html_entity_decode($data);
 	if ($nb = preg_match_all("/\?/", $data, $out)) {
 		foreach ($params as $key => $value) {
@@ -97,30 +97,30 @@ function wikiplugin_sql($data, $params)
 
 	$ret = '';
 	$sql_oke = true;
- 	$dbmsg = '';
+	 $dbmsg = '';
 
-	if ($db = $tikilib->get_db_by_name($db) ) {
+	if ($db = $tikilib->get_db_by_name($db)) {
 		$result = $db->query($data, $bindvars);
 	} else {
 		return '~np~' . tra('Could not obtain valid DSN connection.') . '~/np~';
 	}
 
-	$setup_table = ( isset( $raw ) or isset( $delim ) ) ? false : true;
+	$setup_table = ( isset($raw) or isset($delim) ) ? false : true;
 	$class = 'even';
-	while ($result && $res = $result->fetchRow() ) {
-		if ( $setup_table ) {
+	while ($result && $res = $result->fetchRow()) {
+		if ($setup_table) {
 			$ret .= "<table class='normal'><thead><tr>";
 
 			$setup_table = false;
 
-			foreach (array_keys($res)as $col) {
+			foreach (array_keys($res) as $col) {
 				$ret .= "<th>$col</th>";
 			}
 
 			$ret .= "</tr></thead>";
 		}
 
-		if ( !isset( $raw ) && !isset( $delim ) ) {
+		if (! isset($raw) && ! isset($delim)) {
 			$ret .= "<tr>";
 		}
 
@@ -132,11 +132,11 @@ function wikiplugin_sql($data, $params)
 
 		$first_field = true;
 		foreach ($res as $name => $val) {
-			if ( isset( $delim ) && !$first_field ) {
+			if (isset($delim) && ! $first_field) {
 				$ret .= $delim;
 			}
 
-			if ( isset( $raw ) || isset( $delim ) ) {
+			if (isset($raw) || isset($delim)) {
 				$ret .= "$val";
 			} else {
 				$ret .= "<td class=\"$class\">$val</td>";
@@ -145,14 +145,14 @@ function wikiplugin_sql($data, $params)
 			$first_field = false;
 		}
 
-		if ( !isset( $raw ) && !isset( $delim ) ) {
+		if (! isset($raw) && ! isset($delim)) {
 			$ret .= "<tr>";
-		} elseif ( isset( $delim ) ) {
+		} elseif (isset($delim)) {
 			$ret .= "<br>";
 		}
 	}
 
-	if ($ret && !isset( $raw )) {
+	if ($ret && ! isset($raw)) {
 		$ret .= "</table>";
 	}
 	if ($dbmsg) {

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,27 +9,27 @@ require_once 'lib/wiki/pluginslib.php';
 
 function wikiplugin_list_info()
 {
-	return array(
+	return [
 		'name' => tra('List'),
 		'documentation' => 'PluginList',
 		'description' => tra('Search for, list, and filter all types of items and display custom formatted results'),
-		'prefs' => array('wikiplugin_list', 'feature_search'),
+		'prefs' => ['wikiplugin_list', 'feature_search'],
 		'body' => tra('List configuration information'),
 		'filter' => 'wikicontent',
 		'profile_reference' => 'search_plugin_content',
 		'iconname' => 'list',
 		'introduced' => 7,
-		'tags' => array( 'basic' ),
-		'params' => array(
-			'searchable_only' => array(
+		'tags' => [ 'basic' ],
+		'params' => [
+			'searchable_only' => [
 				'required' => false,
 				'name' => tra('Searchable Only Results'),
 				'description' => tra('Only include results marked as searchable in the index.'),
 				'filter' => 'digits',
 				'default' => '1',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 function wikiplugin_list($data, $params)
@@ -48,7 +48,7 @@ function wikiplugin_list($data, $params)
 	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 
 	$query = new Search_Query;
-	if (!isset($params['searchable_only']) || $params['searchable_only'] == 1) {
+	if (! isset($params['searchable_only']) || $params['searchable_only'] == 1) {
 		$query->filterIdentifier('y', 'searchable');
 	}
 	$unifiedsearchlib->initQuery($query);
@@ -59,13 +59,13 @@ function wikiplugin_list($data, $params)
 	$builder->enableAggregate();
 	$builder->apply($matches);
 	$tsret = $builder->applyTablesorter($matches);
-	if (!empty($tsret['max']) || !empty($_GET['numrows'])) {
-		$max = !empty($_GET['numrows']) ? $_GET['numrows'] : $tsret['max'];
+	if (! empty($tsret['max']) || ! empty($_GET['numrows'])) {
+		$max = ! empty($_GET['numrows']) ? $_GET['numrows'] : $tsret['max'];
 		$builder->wpquery_pagination_max($query, $max);
 	}
 	$paginationArguments = $builder->getPaginationArguments();
 
-	if (!empty($_REQUEST[$paginationArguments['sort_arg']])) {
+	if (! empty($_REQUEST[$paginationArguments['sort_arg']])) {
 		$query->setOrder($_REQUEST[$paginationArguments['sort_arg']]);
 	}
 

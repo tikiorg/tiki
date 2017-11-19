@@ -7,41 +7,41 @@
 
 function wikiplugin_report_info()
 {
-	return array(
+	return [
 		'name' => tra('Report'),
 		'documentation' => 'Report',
 		'description' => tra('Display data from the Tiki database in spreadsheet or chart format'),
-		'prefs' => array( 'wikiplugin_report', 'feature_reports', 'feature_trackers' ),
+		'prefs' => [ 'wikiplugin_report', 'feature_reports', 'feature_trackers' ],
 		'body' => tra('The wiki syntax report settings'),
 		'iconname' => 'table',
 		'introduced' => 9,
-		'params' => array(
-			'view' => array(
+		'params' => [
+			'view' => [
 				'name' => tra('Report View'),
 				'description' => tra('Report plugin view'),
 				'since' => '9.0',
 				'required' => true,
 				'default' => 'sheet',
 				'filter' => 'word',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Sheet'), 'value' => 'sheet'),
-					array('text' => tra('Chart'), 'value' => 'chart')
-				)
-			),
-			'name' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Sheet'), 'value' => 'sheet'],
+					['text' => tra('Chart'), 'value' => 'chart']
+				]
+			],
+			'name' => [
 				'name' => tra('Report Name'),
 				'description' => tra('Report Plugin Name, sometimes used headings and reference'),
 				'since' => '9.0',
 				'required' => true,
 				'filter' => 'text',
 				'default' => 'Report Type',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
-function wikiplugin_report( $data, $params )
+function wikiplugin_report($data, $params)
 {
 	global $prefs, $page, $tiki_p_edit;
 	$headerlib = TikiLib::lib('header');
@@ -50,18 +50,18 @@ function wikiplugin_report( $data, $params )
 	static $reportI = 0;
 	++$reportI;
 
-	$params = array_merge(array("view"=> "sheet","name"=> ""), $params);
+	$params = array_merge(["view" => "sheet","name" => ""], $params);
 
 	extract($params, EXTR_SKIP);
 
-	if (!empty($data)) {
+	if (! empty($data)) {
 		$result = "";
 		$report = Report_Builder::loadFromWikiSyntax($data);
 		$values = Report_Builder::fromWikiSyntax($data);
 		$values = json_encode($values);
 		$type = $report->type;
 
-		switch($view) {
+		switch ($view) {
 			case 'sheet':
 				TikiLib::lib("sheet")->setup_jquery_sheet();
 
@@ -91,8 +91,7 @@ function wikiplugin_report( $data, $params )
 					<div id='reportPlugin$reportI'>"
 						. $report->outputSheet($name) .
 					"</div>";
-    			break;
-
+				break;
 		}
 	}
 
@@ -157,7 +156,7 @@ function wikiplugin_report( $data, $params )
 				<input type='hidden' name='params[view]' value='$view' />
 				" . $tiki_token . "
 			</form>
-			<span title='".tr('Edit Report')."' style='cursor: pointer;' onclick='return editReport$reportI(this);'>
+			<span title='" . tr('Edit Report') . "' style='cursor: pointer;' onclick='return editReport$reportI(this);'>
 				<img src='img/icons/page_edit.png' alt='$label' width='16' height='16' title='$label' class='icon' />
 			</span>";
 	}

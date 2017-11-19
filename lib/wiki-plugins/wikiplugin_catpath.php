@@ -1,43 +1,45 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 function wikiplugin_catpath_info()
 {
-	return array(
+	return [
 		'name' => tra('Category Path'),
 		'documentation' => 'PluginCatPath',
 		'description' => tra('Show the full category path for a wiki page'),
-		'prefs' => array( 'feature_categories', 'wikiplugin_catpath' ),
+		'prefs' => [ 'feature_categories', 'wikiplugin_catpath' ],
 		'iconname' => 'structure',
 		'introduced' => 1,
-		'params' => array(
-			'divider' => array(
+		'params' => [
+			'divider' => [
 				'required' => false,
 				'name' => tra('Separator'),
-				'description' => tr('String used to separate the categories in the path. Default character is %0.',
-					'<code>></code>'),
+				'description' => tr(
+					'String used to separate the categories in the path. Default character is %0.',
+					'<code>></code>'
+				),
 				'since' => '1',
 				'default' => '>',
-			),
-			'top' => array(
+			],
+			'top' => [
 				'required' => false,
 				'name' => tra('Display Top Category'),
 				'description' => tra('Show the top category as part of the path name (not shown by default)'),
 				'since' => '1',
 				'filter' => 'alpha',
 				'default' => 'no',
-				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
-					array('text' => tra('No'), 'value' => 'n')
-				),
-			),
-		),
-	);
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'y'],
+					['text' => tra('No'), 'value' => 'n']
+				],
+			],
+		],
+	];
 }
 
 function wikiplugin_catpath($data, $params)
@@ -49,18 +51,18 @@ function wikiplugin_catpath($data, $params)
 	$categlib = TikiLib::lib('categ');
 
 	if ($prefs['feature_categories'] != 'y') {
-		return "<span class='warn'>" . tra("Categories are disabled"). "</span>";
+		return "<span class='warn'>" . tra("Categories are disabled") . "</span>";
 	}
 
 	extract($params, EXTR_SKIP);
 
 	// default divider is '>'
-	if (!(isset($divider))) {
+	if (! (isset($divider))) {
 		$divider = '>';
 	}
 
 	// default setting for top is 'no'
-	if (!(isset($top))) {
+	if (! (isset($top))) {
 		$top = 'no';
 	} elseif ($top != 'y' and $top != 'yes' and $top != 'n' and $top != 'no') {
 		$top = 'no';

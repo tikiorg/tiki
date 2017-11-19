@@ -1,56 +1,56 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 function wikiplugin_trackertoggle_info()
 {
-	return array(
+	return [
 		'name' => tra('Tracker Toggle'),
 		'documentation' => 'PluginTrackerToggle',
 		'description' => tra("Adjust the visibility of content based on a tracker field's value, possibly dynamically"),
 		'iconname' => 'trackers',
 		'introduced' => 7,
-		'prefs' => array('wikiplugin_trackertoggle', 'feature_jquery', 'feature_trackers'),
-		'params' => array(
-			'fieldId' => array(
+		'prefs' => ['wikiplugin_trackertoggle', 'feature_jquery', 'feature_trackers'],
+		'params' => [
+			'fieldId' => [
 				'required' => true,
 				'name' => tra('Field ID'),
 				'description' => tra('Numeric value representing the field ID tested.'),
 				'since' => '7.0',
 				'filter' => 'digits',
 				'profile_reference' => 'tracker_field',
-			),
-			'value' => array(
+			],
+			'value' => [
 				'required' => true,
 				'name' => tra('Value'),
 				'description' => tra('Value to compare against.'),
 				'since' => '7.0',
 				'filter' => 'text',
-			),
-			'visible' => array(
+			],
+			'visible' => [
 				'required' => false,
 				'name' => tra('Element Visibility'),
 				'description' => tra('Set whether visible when the field has the value.'),
 				'since' => '7.0',
 				'filter' => 'alpha',
 				'default' => 'n',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n')
-				)
-			),
-			'id' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'y'],
+					['text' => tra('No'), 'value' => 'n']
+				]
+			],
+			'id' => [
 				'required' => true,
 				'name' => tra('ID'),
 				'description' => tra('HTML id of the element that is toggled'),
 				'since' => '7.0',
 				'filter' => 'text',
-			),
-			'itemId' => array(
+			],
+			'itemId' => [
 				'required' => false,
 				'name' => tra('Item ID'),
 				'description' => tra('Use the field of specific item. The URL param itemId is used if this parameter
@@ -59,14 +59,14 @@ function wikiplugin_trackertoggle_info()
 				'filter' => 'digits',
 				'default' => 0,
 				'profile_reference' => 'tracker_item',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 function wikiplugin_trackertoggle($data, $params)
 {
-	$default = array('visible' => 'n');
+	$default = ['visible' => 'n'];
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
 
@@ -78,20 +78,20 @@ function wikiplugin_trackertoggle($data, $params)
 		Feedback::error(tr('trackertoggle: Param fieldId field %0 does not exsist.', $fieldId));
 	}
 
-	if (!isset($value)) {
+	if (! isset($value)) {
 		Feedback::error(tr('trackertoggle: Param value is required'));
 	}
 	if (empty($id)) {
 		Feedback::error(tr('trackertoggle: Param id is required'));
 	}
 
-	if (empty($itemId) && !empty($_REQUEST['itemId'])) {
+	if (empty($itemId) && ! empty($_REQUEST['itemId'])) {
 		$itemId = $_REQUEST['itemId'];
 	}
 
-	$action = $visible == 'y'? 'show': 'hide';
-	$anti = $visible == 'y'? 'hide': 'show';
-	if (!empty($itemId)) {
+	$action = $visible == 'y' ? 'show' : 'hide';
+	$anti = $visible == 'y' ? 'hide' : 'show';
+	if (! empty($itemId)) {
 		$fieldValue = TikiLib::lib('trk')->get_item_value(0, $itemId, $fieldId);
 		if ($fieldValue === $value) {
 			$jq = "\$('#$id').$action();";
@@ -101,16 +101,16 @@ function wikiplugin_trackertoggle($data, $params)
 	} else {
 		$htmlFieldName = "ins_$fieldId";
 
-		$htmltype = $field['type'] == 'a'? 'textarea': 'input';
+		$htmltype = $field['type'] == 'a' ? 'textarea' : 'input';
 		$extension = '';
 		$trigger = 'keyup';
-		if (!is_numeric($value) && ! preg_match('/^[\'"].*[\'"]$/', $value)) {
+		if (! is_numeric($value) && ! preg_match('/^[\'"].*[\'"]$/', $value)) {
 			$value = "'$value'";		// add quotes if not already quoted and not a number
 		}
 		switch ($field['type']) {
 			case 'c':
 				$extension = ':checked';
-				$value = $value == 'y'? 'undefined': "'on'";
+				$value = $value == 'y' ? 'undefined' : "'on'";
 				$trigger = 'change';
 				break;
 			case 'a':
@@ -138,8 +138,8 @@ function wikiplugin_trackertoggle($data, $params)
 				break;
 			default:
 		}
-		$jq = "if (\$('".$htmltype."[name=$htmlFieldName]$extension').val() == $value) {\$('#$id').$action();} else {\$('#$id').$anti();}";
-		$jq = "\$('".$htmltype."[name=$htmlFieldName]').$trigger(function () { $jq }).trigger('$trigger');";
+		$jq = "if (\$('" . $htmltype . "[name=$htmlFieldName]$extension').val() == $value) {\$('#$id').$action();} else {\$('#$id').$anti();}";
+		$jq = "\$('" . $htmltype . "[name=$htmlFieldName]').$trigger(function () { $jq }).trigger('$trigger');";
 	}
 
 	TikiLib::lib('header')->add_jq_onready($jq);

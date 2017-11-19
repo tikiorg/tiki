@@ -7,19 +7,19 @@
 
 function wikiplugin_map_info()
 {
-	return array(
+	return [
 		'name' => tra('Map'),
 		'format' => 'html',
 		'documentation' => 'PluginMap',
 		'description' => tra('Display a map'),
-		'prefs' => array( 'wikiplugin_map', 'feature_search' ),
+		'prefs' => [ 'wikiplugin_map', 'feature_search' ],
 		'iconname' => 'map',
 		'introduced' => 1,
-		'tags' => array( 'basic' ),
+		'tags' => [ 'basic' ],
 		'filter' => 'wikicontent',
 		'body' => tr('Instructions to load content'),
-		'params' => array(
-			'scope' => array(
+		'params' => [
+			'scope' => [
 				'required' => false,
 				'name' => tra('Scope'),
 				'description' => tr('Display the geolocated items represented in the page (%0all%1, %0center%1, or
@@ -27,8 +27,8 @@ function wikiplugin_map_info()
 				'since' => '8.0',
 				'filter' => 'text',
 				'default' => 'center',
-			),
-			'controls' => array(
+			],
+			'controls' => [
 				'required' => false,
 				'name' => tra('Controls'),
 				'description' => tr('Comma-separated list of map controls will be displayed on the map and around it'),
@@ -38,82 +38,82 @@ function wikiplugin_map_info()
 					navigation, coordinates, overview',
 				'separator' => ',',
 				'default' => wp_map_default_controls(),
-			),
-			'width' => array(
+			],
+			'width' => [
 				'required' => false,
 				'name' => tra('Width'),
 				'description' => tra('Width of the map in pixels'),
 				'since' => '1',
 				'filter' => 'digits',
-			),
-			'height' => array(
+			],
+			'height' => [
 				'required' => false,
 				'name' => tra('Height'),
 				'description' => tra('Height of the map in pixels'),
 				'since' => '1',
 				'filter' => 'digits',
-			),
-			'center' => array(
+			],
+			'center' => [
 				'requied' => false,
 				'name' => tra('Center'),
 				'description' => tr('Format: %0x,y,zoom%1 where %0x%1 is the longitude, and %0y%1 is the latitude.
 					%0zoom%1 is between %00%1 (view Earth) and %019%1.', '<code>', '</code>'),
 				'since' => '9.0',
 				'filter' => 'text',
-			),
-			'popupstyle' => array(
+			],
+			'popupstyle' => [
 				'required' => false,
 				'name' => tr('Popup Style'),
 				'description' => tr('Alter the way the information is displayed when objects are loaded on the map.'),
 				'since' => '10.0',
 				'filter' => 'word',
 				'default' => 'bubble',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tr('Bubble'), 'value' => 'bubble'),
-					array('text' => tr('Dialog'), 'value' => 'dialog'),
-				),
-			),
-			'mapfile' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tr('Bubble'), 'value' => 'bubble'],
+					['text' => tr('Dialog'), 'value' => 'dialog'],
+				],
+			],
+			'mapfile' => [
 				'required' => false,
 				'name' => tra('MapServer File'),
 				'description' => tra('MapServer file identifier. Only fill this in if you are using MapServer.'),
 				'since' => '1',
 				'filter' => 'url',
 				'advanced' => true,
-			),
-			'extents' => array(
+			],
+			'extents' => [
 				'required' => false,
 				'name' => tra('Extents'),
 				'description' => tra('Extents'),
 				'since' => '1',
 				'filter' => 'text',
 				'advanced' => true,
-			),
-			'size' => array(
+			],
+			'size' => [
 				'required' => false,
 				'name' => tra('Size'),
 				'description' => tra('Size of the map'),
 				'since' => '1',
 				'filter' => 'digits',
 				'advanced' => true,
-			),
-			'tooltips' => array(
+			],
+			'tooltips' => [
 				'required' => false,
 				'name' => tra('Tooltips'),
 				'description' => tra('Show item name in a tooltip on hover'),
 				'since' => '12.1',
 				'default' => 'n',
 				'filter' => 'alpha',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n')
-				),
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'y'],
+					['text' => tra('No'), 'value' => 'n']
+				],
 				'advanced' => true,
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 function wikiplugin_map($data, $params)
@@ -213,7 +213,7 @@ function wp_map_default_controls()
 
 function wp_map_available_controls()
 {
-	return array(
+	return [
 		'controls',
 		'layers',
 		'levels',
@@ -224,7 +224,7 @@ function wp_map_available_controls()
 		'navigation',
 		'coordinates',
 		'overview',
-	);
+	];
 }
 
 function wp_map_plugin_searchlayer($body, $args)
@@ -272,7 +272,7 @@ function wp_map_plugin_searchlayer($body, $args)
 		$fieldList = '<input type="hidden" name="fields" value="' . smarty_modifier_escape(implode(',', $fields)) . '"/>';
 	}
 
-	$popup_config = array();
+	$popup_config = [];
 	if ($popup_width && preg_match('/\d+[%]?/', $popup_width)) {
 		$popup_config['width'] = $popup_width;
 	}
@@ -453,7 +453,7 @@ FULL;
 	return "<div id=\"$target\" data-title=\"$title\"></div>";
 }
 
-function wp_map_color_filter ($color)
+function wp_map_color_filter($color)
 {
 	$color = strtolower($color);
 	if (preg_match('/^[0-9a-f]{3}([0-9a-f]{3})?$/', $color)) {

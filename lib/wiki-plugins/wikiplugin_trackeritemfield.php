@@ -1,23 +1,23 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 function wikiplugin_trackeritemfield_info()
 {
-	return array(
+	return [
 		'name' => tra('Tracker Item Field'),
 		'documentation' => 'PluginTrackerItemField',
 		'description' => tra('Display or test the value of a tracker item field'),
-		'prefs' => array( 'wikiplugin_trackeritemfield', 'feature_trackers' ),
+		'prefs' => [ 'wikiplugin_trackeritemfield', 'feature_trackers' ],
 		'body' => tr('Wiki text containing an %0{ELSE}%1 marker.', '<code>', '</code>'),
 		'iconname' => 'trackers',
 		'introduced' => 2,
 		'filter' => 'wikicontent',
-		'params' => array(
-			'trackerId' => array(
+		'params' => [
+			'trackerId' => [
 				'required' => false,
 				'name' => tra('Tracker ID'),
 				'description' => tra('Numeric value representing the tracker ID.'),
@@ -25,8 +25,8 @@ function wikiplugin_trackeritemfield_info()
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'tracker',
-			),
-			'itemId' => array(
+			],
+			'itemId' => [
 				'required' => false,
 				'name' => tra('Item ID'),
 				'description' => tra('Numeric value representing the item ID. Default is the user tracker item for the
@@ -35,8 +35,8 @@ function wikiplugin_trackeritemfield_info()
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'tracker_item',
-			),
-			'fieldId' => array(
+			],
+			'fieldId' => [
 				'required' => false,
 				'name' => tra('Field ID'),
 				'description' => tra('Numeric value representing the field ID displayed or tested'),
@@ -46,8 +46,8 @@ function wikiplugin_trackeritemfield_info()
 				'profile_reference' => 'tracker_field',
 				'parent' => 'input[name="params[trackerId]"]',
 				'parentkey' => 'tracker_id',
-			),
-			'fields' => array(
+			],
+			'fields' => [
 				'required' => false,
 				'name' => tra('Fields'),
 				'description' => tra('Colon-separated list of field IDs. Default is all fields'),
@@ -58,26 +58,26 @@ function wikiplugin_trackeritemfield_info()
 				'profile_reference' => 'tracker_field',
 				'parent' => 'input[name="params[trackerId]"]',
 				'parentkey' => 'tracker_id',
-			),
-			'status' => array(
+			],
+			'status' => [
 				'required' => false,
 				'name' => tra('Status'),
 				'description' => tra('Status of the tracker item'),
 				'since' => '2.0',
 				'filter' => 'alpha',
 				'default' => '',
-				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Open'), 'value' => 'o'), 
-					array('text' => tra('Pending'), 'value' => 'p'), 
-					array('text' => tra('Closed'), 'value' => 'c'), 
-					array('text' => tra('Open & Pending'), 'value' => 'op'), 
-					array('text' => tra('Open & Closed'), 'value' => 'oc'), 
-					array('text' => tra('Pending & Closed'), 'value' => 'pc'), 
-					array('text' => tra('Open, Pending & Closed'), 'value' => 'opc'),
-				)
-			),
-			'test' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Open'), 'value' => 'o'],
+					['text' => tra('Pending'), 'value' => 'p'],
+					['text' => tra('Closed'), 'value' => 'c'],
+					['text' => tra('Open & Pending'), 'value' => 'op'],
+					['text' => tra('Open & Closed'), 'value' => 'oc'],
+					['text' => tra('Pending & Closed'), 'value' => 'pc'],
+					['text' => tra('Open, Pending & Closed'), 'value' => 'opc'],
+				]
+			],
+			'test' => [
 				'required' => false,
 				'name' => tra('Test'),
 				'description' => tr('Set to Yes (%01%1) to test whether a field is empty (if value parameter is empty)
@@ -85,22 +85,22 @@ function wikiplugin_trackeritemfield_info()
 				'since' => '2.0',
 				'default' => '',
 				'filter' => 'digits',
-				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 1), 
-					array('text' => tra('No'), 'value' => 0),
-				),
-			),
-			'value' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 1],
+					['text' => tra('No'), 'value' => 0],
+				],
+			],
+			'value' => [
 				'required' => false,
 				'name' => tra('Value'),
 				'description' => tra('Value to compare against.'),
 				'since' => '2.0',
 				'default' => '',
 				'filter' => 'text',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 function wikiplugin_trackeritemfield($data, $params)
@@ -120,10 +120,10 @@ function wikiplugin_trackeritemfield($data, $params)
 
 	extract($params, EXTR_SKIP);
 
-	if (empty($itemId) && !empty($_REQUEST['itemId'])) {
-		if (!empty($trackerId)) {
+	if (empty($itemId) && ! empty($_REQUEST['itemId'])) {
+		if (! empty($trackerId)) {
 			$info = $trklib->get_item_info($_REQUEST['itemId']);
-			if (!empty($info) && $info['trackerId'] == $trackerId) {
+			if (! empty($info) && $info['trackerId'] == $trackerId) {
 				$itemId = $_REQUEST['itemId'];
 			}
 		} else {
@@ -131,14 +131,14 @@ function wikiplugin_trackeritemfield($data, $params)
 		}
 	}
 
-	if (empty($itemId) && !empty($trackerId) && ($tracker_info = $trklib->get_tracker($trackerId))) {
+	if (empty($itemId) && ! empty($trackerId) && ($tracker_info = $trklib->get_tracker($trackerId))) {
 		if ($t = $trklib->get_tracker_options($trackerId)) {
 			$tracker_info = array_merge($tracker_info, $t);
 		}
 		$itemId = $trklib->get_user_item($trackerId, $tracker_info);
 	}
 
-	if ((!empty($itemId) && $memoItemId == $itemId) || (empty($itemId) && !empty($memoItemId))) {
+	if ((! empty($itemId) && $memoItemId == $itemId) || (empty($itemId) && ! empty($memoItemId))) {
 		$itemId = $memoItemId;
 		if (empty($memoTrackerId)) {
 			return tra('Incorrect param');
@@ -146,39 +146,39 @@ function wikiplugin_trackeritemfield($data, $params)
 		$trackerId = $memoTrackerId;
 		$itemObject = $memoItemObject;
 	} else {
-		if (!empty($trackerId) && !empty($_REQUEST['view_user'])) {
+		if (! empty($trackerId) && ! empty($_REQUEST['view_user'])) {
 			$itemId = $trklib->get_user_item($trackerId, $tracker_info, $_REQUEST['view_user']);
 		}
-		if (empty($trackerId) && empty($itemId) && ((isset($userTracker) && $userTracker == 'y') || (isset($prefs) && $prefs['userTracker'] == 'y')) && !empty($group) && ($utid = $userlib->get_tracker_usergroup($user)) && $utid['usersTrackerId']) {
+		if (empty($trackerId) && empty($itemId) && ((isset($userTracker) && $userTracker == 'y') || (isset($prefs) && $prefs['userTracker'] == 'y')) && ! empty($group) && ($utid = $userlib->get_tracker_usergroup($user)) && $utid['usersTrackerId']) {
 			$trackerId = $utid['usersTrackerId'];
 			$itemId = $trklib->get_item_id($trackerId, $utid['usersFieldId'], $user);
-		} else if (empty($trackerId) && !empty($itemId)) {
+		} elseif (empty($trackerId) && ! empty($itemId)) {
 			$item = $trklib->get_tracker_item($itemId);
 			$trackerId = $item['trackerId'];
 		}
 
 		if (empty($itemId) && empty($test) && empty($status)) {// need an item
-			return tra('Incorrect param').': itemId';
+			return tra('Incorrect param') . ': itemId';
 		}
 
-		if (!empty($status) && !$trklib->valid_status($status)) {
-			return tra('Incorrect param').': status';
+		if (! empty($status) && ! $trklib->valid_status($status)) {
+			return tra('Incorrect param') . ': status';
 		}
 
 		$info = $trklib->get_tracker_item($itemId);
-		if (!empty($info) && empty($trackerId)) {
+		if (! empty($info) && empty($trackerId)) {
 			$trackerId = $info['trackerId'];
 		}
 
-		if (empty($info) && !empty($test) && $test == 1) {
+		if (empty($info) && ! empty($test) && $test == 1) {
 			// item not found, should still test if that is the function (as documented)
-			if (!isset($data)) {
+			if (! isset($data)) {
 				$data = $dataelse = '';
-			} elseif (!empty($data) && strpos($data, '{ELSE}')) {
-				$dataelse = substr($data, strpos($data, '{ELSE}')+6);
+			} elseif (! empty($data) && strpos($data, '{ELSE}')) {
+				$dataelse = substr($data, strpos($data, '{ELSE}') + 6);
 				$data = substr($data, 0, strpos($data, '{ELSE}'));
 			} else {
-				$dataelse = '';	
+				$dataelse = '';
 			}
 			if (empty($value)) {
 				// testing if empty
@@ -187,7 +187,7 @@ function wikiplugin_trackeritemfield($data, $params)
 				// testing for something
 				return $dataelse;
 			}
-		} 
+		}
 
 		$itemObject = Tracker_Item::fromInfo($info);
 		if (! $itemObject->canView()) {
@@ -200,32 +200,32 @@ function wikiplugin_trackeritemfield($data, $params)
 		$memoItemObject = $itemObject;
 		if (isset($_REQUEST['itemId']) && $_REQUEST['itemId'] != $itemId) {
 			$logslib = TikiLib::lib('logs');
-			$logslib->add_action('Viewed', $itemId, 'trackeritem', $_SERVER['REQUEST_URI'].'&trackeritemfield');
+			$logslib->add_action('Viewed', $itemId, 'trackeritem', $_SERVER['REQUEST_URI'] . '&trackeritemfield');
 		}
 	}
-	if (!isset($data)) {
+	if (! isset($data)) {
 		$data = $dataelse = '';
-	} elseif (!empty($data) && strpos($data, '{ELSE}')) {
-		$dataelse = substr($data, strpos($data, '{ELSE}')+6);
+	} elseif (! empty($data) && strpos($data, '{ELSE}')) {
+		$dataelse = substr($data, strpos($data, '{ELSE}') + 6);
 		$data = substr($data, 0, strpos($data, '{ELSE}'));
 	} else {
 			$dataelse = '';
 	}
-	if (!empty($status)) {
-		if (!strstr($status, $memoStatus)) {
+	if (! empty($status)) {
+		if (! strstr($status, $memoStatus)) {
 			return $dataelse;
 		}
 	}
-	if (empty($itemId) && !empty($test)) {
+	if (empty($itemId) && ! empty($test)) {
 		return $dataelse;
 	} elseif (empty($itemId)) {
-		return tra('Incorrect param').': itemId';
+		return tra('Incorrect param') . ': itemId';
 	} elseif (isset($fields)) {
 		$all_fields = $trklib->list_tracker_fields($trackerId, 0, -1);
 		$all_fields = $all_fields['data'];
-		if (!empty($fields)) {
-			foreach ($all_fields as $i=>$fopt) {
-				if (!in_array($fopt['fieldId'], $fields)) {
+		if (! empty($fields)) {
+			foreach ($all_fields as $i => $fopt) {
+				if (! in_array($fopt['fieldId'], $fields)) {
 					unset($all_fields[$i]);
 				}
 			}
@@ -235,8 +235,9 @@ function wikiplugin_trackeritemfield($data, $params)
 		}
 		$field_values = $trklib->get_item_fields($trackerId, $itemId, $all_fields, $itemUsers);
 		foreach ($field_values as $field_value) {
-			if (($field_value['type'] == 'p' && $field_value['options_array'][0] == 'password') || ($field_value['isHidden'] != 'n' && $field_value['isHidden'] != 'c'))
+			if (($field_value['type'] == 'p' && $field_value['options_array'][0] == 'password') || ($field_value['isHidden'] != 'n' && $field_value['isHidden'] != 'c')) {
 				continue;
+			}
 
 			if (! $itemObject->canViewField($field_value['fieldId'])) {
 				continue;
@@ -246,32 +247,32 @@ function wikiplugin_trackeritemfield($data, $params)
 				return $dataelse;
 			}
 		}
-	} elseif (!empty($fieldId)) {
-
-		if (!($field = $trklib->get_tracker_field($fieldId))) {
-			return tra('Incorrect param').': fieldId';
+	} elseif (! empty($fieldId)) {
+		if (! ($field = $trklib->get_tracker_field($fieldId))) {
+			return tra('Incorrect param') . ': fieldId';
 		}
 
 		if (! $itemObject->canViewField($fieldId)) {
 			return WikiParser_PluginOutput::error(tr('Permission denied'), tr("You don't have permission to view this field."));
 		}
 
-		if (empty($test))
+		if (empty($test)) {
 			$test = false;
+		}
 
 		if (($val = $trklib->get_item_value($trackerId, $itemId, $fieldId)) !== false) {
-			if ($test) { 
+			if ($test) {
 				if (empty($value) && empty($val)) {
 					return $data;
 				}
-				if (!empty($value) && $val == $value) {
+				if (! empty($value) && $val == $value) {
 					return $data;
 				}
 				return $dataelse;
 			} else {
 				$field['value'] = $val;
 				$handler = $trklib->get_field_handler($field, $info);	// gets the handler to blend back the value into the definitions array
-				$out = $handler->renderOutput(array('showlinks'=>'n'));
+				$out = $handler->renderOutput(['showlinks' => 'n']);
 
 				return $out;
 			}

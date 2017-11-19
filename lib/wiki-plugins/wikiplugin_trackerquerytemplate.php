@@ -7,41 +7,43 @@
 
 function wikiplugin_trackerquerytemplate_info()
 {
-	return array(
+	return [
 		'name' => tra('Tracker Query Template'),
 		'documentation' => 'PluginTrackerQueryTemplate',
 		'description' => tra('Generate a form from tracker data'),
-		'prefs' => array('feature_trackers','wikiplugin_trackerquerytemplate'),
+		'prefs' => ['feature_trackers','wikiplugin_trackerquerytemplate'],
 		'body' => tra('Wiki Syntax, with variables from tracker query.'),
 		'filter' => 'striptags',
 		'iconname' => 'code',
 		'introduced' => 10,
-		'tags' => array( 'basic' ),
-		'params' => array(
-			'tracker' => array(
+		'tags' => [ 'basic' ],
+		'params' => [
+			'tracker' => [
 				'required' => true,
 				'name' => tra('Tracker'),
-				'description' => tr('The name of the tracker to be queried, or if %0, the tracker ID.',
-					'<code>byname="n"</code>'),
+				'description' => tr(
+					'The name of the tracker to be queried, or if %0, the tracker ID.',
+					'<code>byname="n"</code>'
+				),
 				'since' => '10.0',
 				'filter' => 'text',
 				'default' => '',
 				'profile_reference' => 'tracker',
-			),
-			'debug' => array(
+			],
+			'debug' => [
 				'required' => false,
 				'name' => tra('Debug'),
 				'description' => tra('Turn tracker query debug on (off by default).'),
 				'since' => '10.0',
 				'default' => '',
 				'filter' => 'alpha',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n'),
-				)
-			),
-			'byname' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'y'],
+					['text' => tra('No'), 'value' => 'n'],
+				]
+			],
+			'byname' => [
 				'required' => false,
 				'name' => tra('Tracker'),
 				'description' => tr('Use the tracker name instead of tracker ID in the %0 parameter. Also use the field
@@ -50,26 +52,26 @@ function wikiplugin_trackerquerytemplate_info()
 				'since' => '10.0',
 				'default' => 'y',
 				'filter' => 'alpha',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n'),
-				)
-			),
-			'render' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'y'],
+					['text' => tra('No'), 'value' => 'n'],
+				]
+			],
+			'render' => [
 				'required' => false,
 				'name' => tra('Render'),
 				'description' => tra('Render as needed for trackers (default).'),
 				'since' => '10.0',
 				'default' => 'y',
 				'filter' => 'alpha',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n'),
-				)
-			),
-			'itemid' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'y'],
+					['text' => tra('No'), 'value' => 'n'],
+				]
+			],
+			'itemid' => [
 				'required' => false,
 				'name' => tra('Tracker Item Id'),
 				'description' => tra('Item id of tracker item'),
@@ -77,8 +79,8 @@ function wikiplugin_trackerquerytemplate_info()
 				'default' => '',
 				'filter' => 'digits',
 				'profile_reference' => 'tracker_item',
-			),
-			'itemids' => array(
+			],
+			'itemids' => [
 				'required' => false,
 				'name' => tra('Tracker Item Ids'),
 				'description' => tra('Item id of tracker items, separated with comma'),
@@ -87,76 +89,85 @@ function wikiplugin_trackerquerytemplate_info()
 				'filter' => 'digits',
 				'separator' => ',',
 				'profile_reference' => 'tracker_item',
-			),
-			'likefilters' => array(
+			],
+			'likefilters' => [
 				'required' => false,
 				'name' => tra('Like Filters'),
-				'description' => tr('Apply "like" filters to fields. Format: %0field:value;field:value;field:value%1,
+				'description' => tr(
+					'Apply "like" filters to fields. Format: %0field:value;field:value;field:value%1,
 					where %0field%1 may be the field name or ID depending on the setting for the %0byname%1 parameter.',
-					'<code>', '</code>'),
+					'<code>',
+					'</code>'
+				),
 				'since' => '10.0',
 				'filter' => 'text',
 				'default' => ''
-			),
-			'andfilters' => array(
+			],
+			'andfilters' => [
 				'required' => false,
 				'name' => tra('And Filters'),
-				'description' => tr('Apply "and" filters to fields. Format: %0field:value;field:value;field:value%1,
+				'description' => tr(
+					'Apply "and" filters to fields. Format: %0field:value;field:value;field:value%1,
 					where %0field%1 may be the field name or ID depending on the setting for the %0byname%1 parameter.',
-					'<code>', '</code>'),
+					'<code>',
+					'</code>'
+				),
 				'since' => '10.0',
 				'filter' => 'text',
 				'default' => ''
-			),
-			'orfilters' => array(
+			],
+			'orfilters' => [
 				'required' => false,
 				'name' => tra('Or Filters'),
-				'description' => tr('Apply "or" filters to fields. Format: %0field:value;field:value;field:value%1,
+				'description' => tr(
+					'Apply "or" filters to fields. Format: %0field:value;field:value;field:value%1,
 					where %0field%1 may be the field name or ID depending on the setting for the %0byname%1 parameter.',
-					'<code>', '</code>'),
+					'<code>',
+					'</code>'
+				),
 				'since' => '10.0',
 				'filter' => 'text',
 				'default' => ''
-			),
-			'getlast' => array(
+			],
+			'getlast' => [
 				'required' => false,
 				'name' => tra('Get Last'),
 				'description' => tra('Retrieve only the last item from the tracker.'),
 				'since' => '10.0',
 				'filter' => 'alpha',
 				'default' => '',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n'),
-				)
-			),
-		)
-	);
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'y'],
+					['text' => tra('No'), 'value' => 'n'],
+				]
+			],
+		]
+	];
 }
 
 function wikiplugin_trackerquerytemplate($data, $params)
 {
 
 	$params = array_merge(
-		array(
-			'tracker'=>'',
-			'debug'=>'',
-			'byname'=>'y',
-			'render'=>'y',
-			'likefilters'=>'',
-			'andfilters'=>'',
-			'getlast'=>''
-		),
+		[
+			'tracker' => '',
+			'debug' => '',
+			'byname' => 'y',
+			'render' => 'y',
+			'likefilters' => '',
+			'andfilters' => '',
+			'getlast' => ''
+		],
 		$params
 	);
 
-	if (!empty($params['itemids'])) {
+	if (! empty($params['itemids'])) {
 		$itemIds = $params['itemids'];
 		unset($params['itemids']);
 		$newData = '';
 		foreach ($itemIds as $itemId) {
-			if (!empty($itemId)) {
+			if (! empty($itemId)) {
 				$params['itemid'] = $itemId;
 				$newData .= wikiplugin_trackerquerytemplate($data, $params);
 			}
@@ -174,16 +185,16 @@ function wikiplugin_trackerquerytemplate($data, $params)
 
 	$pattern = 'id';
 
-	if (!empty($params['byname']) && $params['byname'] == 'y') {
+	if (! empty($params['byname']) && $params['byname'] == 'y') {
 		$query->byName();
 		$pattern = 'name';
 	}
 
-	if (!empty($params['render']) && $params['render'] == 'n') {
+	if (! empty($params['render']) && $params['render'] == 'n') {
 		$query->render(false);
 	}
 
-	if (!empty($params['itemid']) || isset($_REQUEST['itemId'])) {
+	if (! empty($params['itemid']) || isset($_REQUEST['itemId'])) {
 		if (isset($_REQUEST['itemId'])) { //itemId overrides parameters
 			$query->itemId($_REQUEST['itemId']);
 			unset($_REQUEST['itemId']); //we unset because nested plugins may need to have itemId set
@@ -192,7 +203,7 @@ function wikiplugin_trackerquerytemplate($data, $params)
 		}
 	}
 
-	if (!empty($params['likefilters'])) {
+	if (! empty($params['likefilters'])) {
 		$likefilters = explode(';', $params['likefilters']);
 		foreach ($likefilters as $likefilter) {
 			$filter = explode(':', $likefilter);
@@ -200,7 +211,7 @@ function wikiplugin_trackerquerytemplate($data, $params)
 		}
 	}
 
-	if (!empty($params['andfilters'])) {
+	if (! empty($params['andfilters'])) {
 		$andfilters = explode(';', $params['andfilters']);
 		foreach ($andfilters as $andfilter) {
 			$filter = explode(':', $andfilter);
@@ -208,7 +219,7 @@ function wikiplugin_trackerquerytemplate($data, $params)
 		}
 	}
 
-	if (!empty($params['orfilters'])) {
+	if (! empty($params['orfilters'])) {
 		$orfilters = explode(';', $params['orfilters']);
 		foreach ($orfilters as $orfilter) {
 			$filter = explode(':', $orfilter);
@@ -216,11 +227,11 @@ function wikiplugin_trackerquerytemplate($data, $params)
 		}
 	}
 
-	if (!empty($params['debug']) && $params['debug'] == 'y') {
+	if (! empty($params['debug']) && $params['debug'] == 'y') {
 		$query->debug();
 	}
 
-	if (!empty($params['getlast']) && $params['getlast'] == 'y') {
+	if (! empty($params['getlast']) && $params['getlast'] == 'y') {
 		$items = $query->getLast();
 	} else {
 		$items = $query->query();
@@ -233,7 +244,7 @@ function wikiplugin_trackerquerytemplate($data, $params)
 		$handler->set($pattern, $fields, $query->itemsRaw[$itemId], $itemId, $trackerId);
 
 		$newData .= $handler->parse($data);
-		$newData = "~np~" . TikiLib::lib('parser')->parse_data($newData, array('is_html'=>true)) . "~/np~";
+		$newData = "~np~" . TikiLib::lib('parser')->parse_data($newData, ['is_html' => true]) . "~/np~";
 		$handler->pop();
 	}
 
@@ -242,7 +253,7 @@ function wikiplugin_trackerquerytemplate($data, $params)
 
 class dataToFieldHandler
 {
-	public static $itemStack = array();
+	public static $itemStack = [];
 	public $pattern;
 	private $trackerId;
 	private $itemId;
@@ -253,7 +264,7 @@ class dataToFieldHandler
 	{
 		$last = end(self::$itemStack);
 
-		if (!empty($last)) {
+		if (! empty($last)) {
 			$this->set($last['pattern'], $last['fields'], $last['fieldsRaw'], $last['itemId'], $last['trackerId']);
 		}
 	}
@@ -266,13 +277,13 @@ class dataToFieldHandler
 		$this->fields = $fields;
 		$this->fieldsRaw = $fieldsRaw;
 
-		self::$itemStack[] = array(
+		self::$itemStack[] = [
 			"pattern" => $this->pattern,
 			"fields" => $this->fields,
 			"fieldsRaw" => $this->fieldsRaw,
 			"itemId" => $this->itemId,
 			"trackerId" => $this->trackerId,
-		);
+		];
 	}
 
 	function pop()
@@ -291,7 +302,7 @@ class dataToFieldHandler
 
 		$data = str_replace('$trackerId$', $this->trackerId, $data);
 		$data = str_replace('$itemId$', $this->itemId, $data);
-		$data = str_replace('$'. $this->trackerId . '_itemId$', $this->itemId, $data);
+		$data = str_replace('$' . $this->trackerId . '_itemId$', $this->itemId, $data);
 
 		if ($this->pattern == 'name') {
 			foreach ($this->fields as $key => $field) {
@@ -300,7 +311,7 @@ class dataToFieldHandler
 			}
 		} else {
 			preg_match_all('/[\{][$](.)+?[\}]/', $data, $matches);
-			if (!empty($matches[0])) {
+			if (! empty($matches[0])) {
 				foreach ($matches[0] as $match) {
 					$data = str_replace($match, "(" . substr($match, 1, -1) . ")", $data);
 				}
@@ -315,7 +326,7 @@ class dataToFieldHandler
 		}
 
 		if (strpos($data, '$created$')) {
-			$data = str_replace('$created$', $tikilib->get_short_date($tikilib->getOne("SELECT created FROM tiki_tracker_items WHERE itemId = ?", array($this->itemId))), $data);
+			$data = str_replace('$created$', $tikilib->get_short_date($tikilib->getOne("SELECT created FROM tiki_tracker_items WHERE itemId = ?", [$this->itemId])), $data);
 		}
 
 		return $data;

@@ -8,42 +8,42 @@
 
 function wikiplugin_prettytrackerviews_info()
 {
-	return array(
+	return [
 		'name' => tra('Pretty Tracker View Tracking'),
 		'documentation' => tra('PluginPrettyTrackerViews'),
 		'description' => tra('Store tiki.tracker.pretty.views attribute for a trackeritem'),
-		'prefs' => array('wikiplugin_prettytrackerviews', 'feature_trackers'),
+		'prefs' => ['wikiplugin_prettytrackerviews', 'feature_trackers'],
 		'defaultfilter' => 'text',
-		'tags' => array( 'experimental' ),
+		'tags' => [ 'experimental' ],
 		'iconname' => 'trackers',
 		'introduced' => 7,
-		'params' => array (
-			'record' => array (
+		'params' => [
+			'record' => [
 				'required' => false,
 				'name' => tra('Record'),
 				'description' => tr('Set to %0y%1 to record view each time this is loaded', '<code>', '</code>'),
 				'since' => '7.0',
 				'default' => 'n',
 				'filter' => 'alpha',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n')
-				)
-			),
-			'show' => array (
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'y'],
+					['text' => tra('No'), 'value' => 'n']
+				]
+			],
+			'show' => [
 				'required' => false,
 				'name' => tra('Show'),
 				'description' => tr('Set to %0n%1 to hide showing of attribute', '<code>', '</code>'),
 				'default' => 'y',
 				'filter' => 'alpha',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n')
-				)
-			),
-			'itemId' => array (
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'y'],
+					['text' => tra('No'), 'value' => 'n']
+				]
+			],
+			'itemId' => [
 				'required' => true,
 				'name' => tra('Item ID'),
 				'description' => tra('Set to ID of tracker item'),
@@ -51,15 +51,15 @@ function wikiplugin_prettytrackerviews_info()
 				'default' => '',
 				'filter' => 'digits',
 				'profile_reference' => 'tracker_item',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
-function wikiplugin_prettytrackerviews( $data, $params )
+function wikiplugin_prettytrackerviews($data, $params)
 {
 	$attributelib = TikiLib::lib('attribute');
-	if (empty($params['itemId']) && !is_int($params['itemId'])) {
+	if (empty($params['itemId']) && ! is_int($params['itemId'])) {
 		return '';
 	}
 	if (isset($params['record']) && $params['record'] == 'y') {
@@ -72,7 +72,7 @@ function wikiplugin_prettytrackerviews( $data, $params )
 		$attributelib->set_attribute('trackeritem', $params['itemId'], 'tiki.tracker.pretty.views', $value);
 	}
 	if (empty($params['show']) || $params['show'] == 'y') {
-		if (!isset($value)) {
+		if (! isset($value)) {
 			$attributes = $attributelib->get_attributes('trackeritem', $params['itemId']);
 			if (isset($attributes['tiki.tracker.pretty.views'])) {
 				$value = $attributes['tiki.tracker.pretty.views'];

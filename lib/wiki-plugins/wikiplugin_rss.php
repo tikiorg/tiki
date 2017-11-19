@@ -7,18 +7,18 @@
 
 function wikiplugin_rss_info()
 {
-	return array(
+	return [
 		'name' => tra('RSS Feed'),
 		'documentation' => 'PluginRSS',
 		'description' => tra('Display items from one or more RSS feeds'),
-		'prefs' => array( 'wikiplugin_rss' ),
+		'prefs' => [ 'wikiplugin_rss' ],
 		'iconname' => 'rss',
 		'introduced' => 1,
 		'format' => 'html',
 		'filter' => 'striptags',
-		'tags' => array( 'basic' ),
-		'params' => array(
-			'id' => array(
+		'tags' => [ 'basic' ],
+		'params' => [
+			'id' => [
 				'required' => true,
 				'name' => tra('IDs'),
 				'separator' => ':',
@@ -27,106 +27,106 @@ function wikiplugin_rss_info()
 				'since' => '1',
 				'default' => '',
 				'profile_reference' => 'rss',
-			),
-			'max' => array(
+			],
+			'max' => [
 				'required' => false,
 				'name' => tra('Result Count'),
 				'filter' => 'int',
 				'description' => tra('Number of results displayed.'),
 				'since' => '1',
 				'default' => 10,
-			),
-			'date' => array(
+			],
+			'date' => [
 				'required' => false,
 				'name' => tra('Date'),
 				'filter' => 'digits',
 				'description' => tra('Show date of each item (not shown by default)'),
 				'since' => '1',
 				'default' => 0,
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 1),
-					array('text' => tra('No'), 'value' => 0)
-				)
-			),
-			'desc' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 1],
+					['text' => tra('No'), 'value' => 0]
+				]
+			],
+			'desc' => [
 				'required' => false,
 				'name' => tra('Description'),
 				'filter' => 'digits',
 				'description' => tra('Show feed descriptions (not shown by default)'),
 				'since' => '1',
 				'default' => 0,
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 1),
-					array('text' => tra('No'), 'value' => 0)
-				)
-			),
-			'author' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 1],
+					['text' => tra('No'), 'value' => 0]
+				]
+			],
+			'author' => [
 				'required' => false,
 				'name' => tra('Author'),
 				'filter' => 'digits',
 				'description' => tra('Show authors (not shown by default)'),
 				'since' => '1',
 				'default' => 0,
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 1),
-					array('text' => tra('No'), 'value' => 0)
-				)
-			),
-			'icon' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 1],
+					['text' => tra('No'), 'value' => 0]
+				]
+			],
+			'icon' => [
 				'required' => false,
 				'name' => tra('Icon'),
 				'filter' => 'url',
 				'description' => tra('URL to a favicon to put before each entry'),
 				'since' => '5.0',
 				'default' => '',
-			),
-			'showtitle' => array(
+			],
+			'showtitle' => [
 				'required' => false,
 				'name' => tra('Show Title'),
 				'filter' => 'digits',
 				'description' => tra('Show the title of the feed (shown by default)'),
 				'since' => '6.0',
 				'default' => 1,
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 1),
-					array('text' => tra('No'), 'value' => 0)
-				)
-			),
-			'ticker' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 1],
+					['text' => tra('No'), 'value' => 0]
+				]
+			],
+			'ticker' => [
 				'required' => false,
 				'name' => tra('Ticker'),
 				'filter' => 'digits',
 				'description' => tra('Turn static feed display into ticker news like'),
 				'since' => '10.1',
 				'default' => 1,
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 1),
-					array('text' => tra('No'), 'value' => 0)
-				)
-			),
-			'desclen' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 1],
+					['text' => tra('No'), 'value' => 0]
+				]
+			],
+			'desclen' => [
 				'required' => false,
 				'name' => tra('Description Length'),
 				'filter' => 'digits',
 				'description' => tra('Max characters/length, truncates text to fit design'),
 				'since' => '10.1',
 				'default' => 0,
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
-function wikiplugin_rss($data,$params)
+function wikiplugin_rss($data, $params)
 {
 	$rsslib = TikiLib::lib('rss');
 
 	$params = array_merge(
-		array(
+		[
 			'max' => 10,
 			'date' => 0,
 			'desc' => 0,
@@ -135,12 +135,12 @@ function wikiplugin_rss($data,$params)
 			'showtitle' => 1,
 			'ticker' => 0,
 			'desclen' => 0,
-		),
+		],
 		$params
 	);
 
-	if ( ! isset( $params['id'] ) ) {
-		return WikiParser_PluginOutput::argumentError(array( 'id' ));
+	if (! isset($params['id'])) {
+		return WikiParser_PluginOutput::argumentError([ 'id' ]);
 	}
 
 	$params['id'] = (array) $params['id'];
@@ -148,14 +148,14 @@ function wikiplugin_rss($data,$params)
 	$items = $rsslib->get_feed_items($params['id'], $params['max']);
 
 	$title = null;
-	if ( count($params['id']) == 1 ) {
+	if (count($params['id']) == 1) {
 		$module = $rsslib->get_rss_module(reset($params['id']));
 
-		if ( $module['sitetitle'] ) {
-			$title = array(
+		if ($module['sitetitle']) {
+			$title = [
 				'title' => $module['sitetitle'],
 				'link' => $module['siteurl'],
-			);
+			];
 		}
 	}
 

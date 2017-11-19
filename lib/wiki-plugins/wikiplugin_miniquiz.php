@@ -1,32 +1,32 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 function wikiplugin_miniquiz_info()
 {
-	return array(
+	return [
 		'name' => tra('Mini Quiz'),
 		'documentation' => 'PluginMiniQuiz',
 		'description' => tra('Create a quiz using a tracker'),
-		'prefs' => array( 'feature_trackers', 'wikiplugin_miniquiz' ),
+		'prefs' => [ 'feature_trackers', 'wikiplugin_miniquiz' ],
 		'body' => tra('Instructions::Feedback'),
 		'iconname' => 'help',
 		'introduced' => 1,
 		'format' => 'html',
-		'params' => array(
-			'trackerId' => array(
+		'params' => [
+			'trackerId' => [
 				'required' => true,
 				'name' => tra('Tracker ID'),
 				'description' => tra('Numeric value representing the miniquiz tracker ID'),
 				'since' => '1',
 				'default' => '',
 				'profile_reference' => 'tracker',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 function rcmp($a, $b)
@@ -35,21 +35,22 @@ function rcmp($a, $b)
 }
 function shuf(&$ar)
 {
-	srand((double) microtime() * 10000000); uksort($ar, "rcmp");
+	srand((double) microtime() * 10000000);
+	uksort($ar, "rcmp");
 }
 
 function wikiplugin_miniquiz($data, $params)
 {
 	global $prefs;
 	$trklib = TikiLib::lib('trk');
-	
-	if ($prefs['feature_trackers'] != 'y' || !isset($params['trackerId']) || !($tracker = $trklib->get_tracker($params['trackerId']))) {
+
+	if ($prefs['feature_trackers'] != 'y' || ! isset($params['trackerId']) || ! ($tracker = $trklib->get_tracker($params['trackerId']))) {
 		$smarty = TikiLib::lib('smarty');
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
 
 	$items = $trklib->list_tracker_items($params['trackerId'], 0, -1, 'lastModif_desc', '', 'o');
-	$info = array();
+	$info = [];
 
 	foreach ($items['data'] as $it) {
 		$id = $it['itemId'];
@@ -91,7 +92,7 @@ function wikiplugin_miniquiz($data, $params)
 
 		if (isset($_REQUEST['quizit']) and $_REQUEST['quizit']) {
 			if (isset($_REQUEST['answer']) and is_array($_REQUEST['answer'])) {
-				foreach ($_REQUEST['answer'] as $q=>$a) {
+				foreach ($_REQUEST['answer'] as $q => $a) {
 					if ($info["$q"]['answer'] == $a) {
 						$info["$q"]['qresult'] = 'y';
 					} else {
@@ -99,24 +100,24 @@ function wikiplugin_miniquiz($data, $params)
 					}
 				}
 			} else {
-				$back.= '<div class="text-warning">Please fill the quiz!<div>';
+				$back .= '<div class="text-warning">Please fill the quiz!<div>';
 			}
 		}
 
-		$back.= '<form method="post"><input type="hidden" name="quizit" value="1" />';
-		$back.= '<input type="hidden" name="page" value="'.$_REQUEST["page"].'" />';
-		$back.= '<div class="titlebar"><a href="tiki-view_tracker.php?trackerId='.$params['trackerId'].'">'.$tracker["name"].'</a></div>';
-		$back.= '<div class="wikitext">'.$tracker["description"].'</div><br />';
-		$back.= '<style>.q label { background-color: none; cursor: normal; border: 1px solid white; padding: 0 5px 0 5px; }';
-		$back.= '.q label:hover { background-color: #efe0d0; cursor: pointer; border: 1px solid black; }</style>';
-	
-		foreach ($info as $id=>$item) {
+		$back .= '<form method="post"><input type="hidden" name="quizit" value="1" />';
+		$back .= '<input type="hidden" name="page" value="' . $_REQUEST["page"] . '" />';
+		$back .= '<div class="titlebar"><a href="tiki-view_tracker.php?trackerId=' . $params['trackerId'] . '">' . $tracker["name"] . '</a></div>';
+		$back .= '<div class="wikitext">' . $tracker["description"] . '</div><br />';
+		$back .= '<style>.q label { background-color: none; cursor: normal; border: 1px solid white; padding: 0 5px 0 5px; }';
+		$back .= '.q label:hover { background-color: #efe0d0; cursor: pointer; border: 1px solid black; }</style>';
+
+		foreach ($info as $id => $item) {
 			if (isset($item['valid']) and $item['valid'] == 'y') {
-				$back.= '<div class="titlebar">'.$item['question'].'</div>';
+				$back .= '<div class="titlebar">' . $item['question'] . '</div>';
 				if ($item['qresult'] !== 'n') {
 					if ($item['qresult'] == 'y') {
 						$back .= '<div class="wikitext" style="background-color:#ccffcc;">';
-						if (!isset($_POST["$id"])) {
+						if (! isset($_POST["$id"])) {
 							$back .= '<b>' . $success_mess[array_rand($success_mess)] . '</b> ' . $success_comment[array_rand($success_comment)] . '<br />';
 						}
 						$back .= 'The answer was: <b>' . $item['answer'] . '</b></div><br />';
@@ -128,8 +129,8 @@ function wikiplugin_miniquiz($data, $params)
 					}
 				}
 				$option_base = 'option ';
-				$options = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j');
-				$answers = array($item['answer']);
+				$options = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
+				$answers = [$item['answer']];
 				foreach ($options as $option) {
 					if (isset($item[$option_base . $option])) {
 						$answers[] = $item[$option_base . $option];
@@ -137,27 +138,26 @@ function wikiplugin_miniquiz($data, $params)
 				}
 
 				shuf($answers);
-				$back.= '<div class="wikitext">';
+				$back .= '<div class="wikitext">';
 				$i = 1;
-				foreach ($answers as $aid=>$answer) {
-					$back.= '<div class="q"><input type="radio" id="answer'.$id.'_'.++$i.'" name="answer['.$id.']" value="'. htmlspecialchars($answer) . '"';
-					if (!empty($item['qresult']) && $item['qresult'] == $answer) {
+				foreach ($answers as $aid => $answer) {
+					$back .= '<div class="q"><input type="radio" id="answer' . $id . '_' . ++$i . '" name="answer[' . $id . ']" value="' . htmlspecialchars($answer) . '"';
+					if (! empty($item['qresult']) && $item['qresult'] == $answer) {
 						$back .= ' checked="checked"';
 					}
 					$back .= ' /> ';
-					$back.= '<label for="answer'.$id.'_'.$i.'">'.$answer.'</label>';
-					$back.= '</div>';
+					$back .= '<label for="answer' . $id . '_' . $i . '">' . $answer . '</label>';
+					$back .= '</div>';
 				}
-				$back.= '</div><br />';
-
+				$back .= '</div><br />';
 			}
 		}
 
-		$back.= "<br /><div><input type='reset' name='reset' value='Start Over' class='btn btn-info' /><input type='submit' name='action' value='Finish'  class='btn btn-default' />";
-		$back.= '</div>';
-		$back.= '<br /><div><b>Students</b>: <a href="tiki-view_tracker.php?trackerId='.$params['trackerId'].'&amp;new">Suggest a new question</a></div>';
-		
-		$back.= "</form>";
+		$back .= "<br /><div><input type='reset' name='reset' value='Start Over' class='btn btn-info' /><input type='submit' name='action' value='Finish'  class='btn btn-default' />";
+		$back .= '</div>';
+		$back .= '<br /><div><b>Students</b>: <a href="tiki-view_tracker.php?trackerId=' . $params['trackerId'] . '&amp;new">Suggest a new question</a></div>';
+
+		$back .= "</form>";
 	} else {
 		$back = "No such id in trackers.";
 	}

@@ -7,59 +7,62 @@
 
 function wikiplugin_showreference_info()
 {
-	return array(
+	return [
 		'name' => tra('Add Bibliography'),
 		'documentation' => 'PluginShowReference',
 		'description' => tra('Add bibliography listing in the footer of a wiki page'),
 		'format' => 'html',
 		'iconname' => 'list',
 		'introduced' => 10,
-		'prefs' => array('wikiplugin_showreference','feature_references'),
-		'params' => array(
-			'title' => array(
+		'prefs' => ['wikiplugin_showreference','feature_references'],
+		'params' => [
+			'title' => [
 				'required' => false,
 				'name' => tra('Title'),
-				'description' => tr('Title to be displayed in the bibliography listing. Default is %0Bibliography%1.',
-					'<code>', '</code>'),
+				'description' => tr(
+					'Title to be displayed in the bibliography listing. Default is %0Bibliography%1.',
+					'<code>',
+					'</code>'
+				),
 				'since' => '10.0',
 				'default' => 'Bibliography',
 				'filter' => 'text',
-			),
-			'showtitle' => array(
+			],
+			'showtitle' => [
 				'required' => false,
 				'name' => tra('Show Title'),
 				'description' => tra('Show bibliography title. Title is shown by default.'),
 				'since' => '10.0',
 				'filter' => 'word',
-				'options' => array(
-					array('text' => tra(''), 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'yes'),
-					array('text' => tra('No'), 'value' => 'no'),
-				),
+				'options' => [
+					['text' => tra(''), 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'yes'],
+					['text' => tra('No'), 'value' => 'no'],
+				],
 				'default' => '',
-			),
-			'hlevel' => array(
+			],
+			'hlevel' => [
 				'required' => false,
 				'name' => tra('Header Tag'),
 				'description' => tr('The HTML header tag level of the title. Default: %01%1', '<code>', '</code>'),
 				'since' => '10.0',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('0'), 'value' => '0'),
-					array('text' => tra('1'), 'value' => '1'),
-					array('text' => tra('2'), 'value' => '2'),
-					array('text' => tra('3'), 'value' => '3'),
-					array('text' => tra('4'), 'value' => '4'),
-					array('text' => tra('5'), 'value' => '5'),
-					array('text' => tra('6'), 'value' => '6'),
-					array('text' => tra('7'), 'value' => '7'),
-					array('text' => tra('8'), 'value' => '8'),
-				),
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('0'), 'value' => '0'],
+					['text' => tra('1'), 'value' => '1'],
+					['text' => tra('2'), 'value' => '2'],
+					['text' => tra('3'), 'value' => '3'],
+					['text' => tra('4'), 'value' => '4'],
+					['text' => tra('5'), 'value' => '5'],
+					['text' => tra('6'), 'value' => '6'],
+					['text' => tra('7'), 'value' => '7'],
+					['text' => tra('8'), 'value' => '8'],
+				],
 				'filter' => 'digits',
 				'default' => '',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 function wikiplugin_showreference($data, $params)
@@ -88,8 +91,8 @@ function wikiplugin_showreference($data, $params)
 	$hlevel_start = '<h1>';
 	$hlevel_end = '</h1>';
 
-	if (isset($params['hlevel']) && $params['hlevel']!='') {
-		if ($params['hlevel']!='0') {
+	if (isset($params['hlevel']) && $params['hlevel'] != '') {
+		if ($params['hlevel'] != '0') {
 			$hlevel_start = '<h' . $params['hlevel'] . '>';
 			$hlevel_end = '</h' . $params['hlevel'] . '>';
 		} else {
@@ -102,27 +105,26 @@ function wikiplugin_showreference($data, $params)
 	}
 
 	if ($prefs['wikiplugin_showreference'] == 'y') {
-
 		$page_id = $GLOBALS['info']['page_id'];
 
-		$tags = array(
-				'~biblio_code~'=>'biblio_code',
-				'~author~'=>'author',
-				'~title~'=>'title',
-				'~year~'=>'year',
-				'~part~'=>'part',
-				'~uri~'=>'uri',
-				'~code~'=>'code',
-				'~publisher~'=>'publisher',
-				'~location~'=>'location'
-		);
+		$tags = [
+				'~biblio_code~' => 'biblio_code',
+				'~author~' => 'author',
+				'~title~' => 'title',
+				'~year~' => 'year',
+				'~part~' => 'part',
+				'~uri~' => 'uri',
+				'~code~' => 'code',
+				'~publisher~' => 'publisher',
+				'~location~' => 'location'
+		];
 
 		$htm = '';
 
 		$referenceslib = TikiLib::lib('references');
 		$references = $referenceslib->list_assoc_references($page_id);
 
-		$referencesData = array();
+		$referencesData = [];
 		$is_global = 1;
 		if (isset($GLOBALS['referencesData']) && is_array($GLOBALS['referencesData'])) {
 			$referencesData = $GLOBALS['referencesData'];
@@ -135,7 +137,6 @@ function wikiplugin_showreference($data, $params)
 		}
 
 		if (is_array($referencesData)) {
-
 			$referencesData = array_unique($referencesData);
 
 			$htm .= '<div class="references">';
@@ -151,13 +152,13 @@ function wikiplugin_showreference($data, $params)
 			if (count($referencesData)) {
 				$values = $referenceslib->get_reference_from_code_and_page($referencesData, $page_id);
 			} else {
-				$values = array();
+				$values = [];
 			}
 
 			if ($is_global) {
-				$excluded = array();
-				foreach ($references['data'] as $key=>$value) {
-					if (!array_key_exists($key, $values['data'])) {
+				$excluded = [];
+				foreach ($references['data'] as $key => $value) {
+					if (! array_key_exists($key, $values['data'])) {
 						$excluded[$key] = $references['data'][$key]['biblio_code'];
 					}
 				}
@@ -166,14 +167,12 @@ function wikiplugin_showreference($data, $params)
 				}
 			}
 
-			foreach ($referencesData as $index=>$ref) {
-
+			foreach ($referencesData as $index => $ref) {
 				$ref_no = $index + 1;
 
 				$text = '';
 				$cssClass = '';
 				if (array_key_exists($ref, $values['data'])) {
-
 					if ($values['data'][$ref]['style'] != '') {
 						$cssClass = $values['data'][$ref]['style'];
 					}
@@ -199,7 +198,6 @@ function wikiplugin_showreference($data, $params)
 			$htm .= '<hr>';
 
 			$htm .= '</div>';
-
 		}
 
 		return $htm;
@@ -215,7 +213,7 @@ function parseTemplate($tags, $ref, $values)
 	}
 
 	if ($text != '') {
-		foreach ($tags as $tag=>$val) {
+		foreach ($tags as $tag => $val) {
 			if ($values[$ref][$val] == '') {
 				$pos = strpos($text, $tag);
 				$len = strlen($tag);

@@ -19,7 +19,7 @@ class WikipluginDBReportToken
 	public $code;
 	public function type_name()
 	{
-		switch($this->type) {
+		switch ($this->type) {
 			case 'key':
 				return 'Keyword';
 			case 'txt':
@@ -40,7 +40,7 @@ class WikipluginDBReportToken
 				return $token->type;
 		}
 	}
-	public function __construct($content=null)
+	public function __construct($content = null)
 	{
 		$this->content = $content;
 	}
@@ -56,7 +56,7 @@ class WikipluginDBReportField
 	{
 		global $wikiplugin_dbreport_fields, $wikiplugin_dbreport_fields_allowed;
 		$this->name = stripcslashes($text);
-		if ($text[0]=='$') {
+		if ($text[0] == '$') {
 			$this->variable = substr($this->name, 1);
 			// print("new variable $this->variable ");
 		} else {
@@ -71,13 +71,13 @@ class WikipluginDBReportField
 		if (isset($this->index)) {
 			// indexed field
 			return (string) ($wikiplugin_dbreport_record[$this->index]);
-		} else if (isset($this->variable)) {
+		} elseif (isset($this->variable)) {
 			// PHP variable
 			if (isset($GLOBALS[$this->variable])) {
 				return (string) $GLOBALS[$this->variable];
 			} elseif (isset($_SESSION[$this->variable])) {
 				return (string) $_SESSION[$this->variable];
-			} else if (isset($_REQUEST[$this->variable])) {
+			} elseif (isset($_REQUEST[$this->variable])) {
 				return (string) $_REQUEST[$this->variable];
 			}
 		} else {
@@ -138,9 +138,9 @@ class WikipluginDBReportContent
 		$len = strlen($text);
 		while ($pos < $len) {
 			$char = $text[$pos++];
-			switch($parse_state) {
+			switch ($parse_state) {
 				case 0: // start of next token
-					switch($char) {
+					switch ($char) {
 						case '[':
 							$parse_state = 3;
 							break;
@@ -154,17 +154,17 @@ class WikipluginDBReportContent
 					}
 					break;
 				case 1: // text string
-					switch($char) {
+					switch ($char) {
 						case '[':
 							unset($this->elements);
 							$this->elements[] = new WikipluginDBReportString($parse_text);
 							$parse_text = '';
 							$parse_state = 3;
-	  	 			 		break;
+							break;
 						case '\\':
 							$parse_state = 2;
 							$parse_text .= $char;
-		  	 			 	break;
+							break;
 						default:
 							$parse_text .= $char;
 					}
@@ -174,31 +174,31 @@ class WikipluginDBReportContent
 					$parse_state = 1;
 					break;
 				case 3: // field text
-					switch($char) {
+					switch ($char) {
 						case '[':
-		  	  				break;
+							break;
 						case ']':
 							unset($this->elements);
 							$this->elements[] = new WikipluginDBReportField($parse_text);
 							$parse_text = '';
 							$parse_state = 0;
-	  		  				break;
+							break;
 						case '\\':
 							$parse_state = 4;
 							$parse_text .= $char;
-	  	  					break;
+							break;
 						default:
 							$parse_text .= $char;
 					}
-	    		 	break;
+					break;
 				case 4: // field escape
 					$parse_text .= $char;
 					$parse_state = 3;
-	    	 		break;
+					break;
 			}
 		}
 		// hanging text is parsed as a string
-		if ($parse_state!=0) {
+		if ($parse_state != 0) {
 			unset($this->elements);
 			$this->elements[] = new WikipluginDBReportString($parse_text);
 		}
@@ -211,7 +211,7 @@ class WikipluginDBReportContent
 	public function append_variable($name)
 	{
 		unset($this->elements);
-		$this->elements[] = new WikipluginDBReportField('$'.$name);
+		$this->elements[] = new WikipluginDBReportField('$' . $name);
 	}
 	public function append_string($text)
 	{
@@ -224,7 +224,7 @@ class WikipluginDBReportContent
 	}
 	public function __construct(&$token)
 	{
-		switch($token->type) {
+		switch ($token->type) {
 			case 'txt':
 				$this->parse_text($token->content);
 				break;
@@ -289,7 +289,7 @@ class WikipluginDBReportText extends WikipluginDBReportContent
 			$result .= $this->style->code();
 		}
 		if (isset($this->link)) {
-			$result .= ' '.$this->link->code();
+			$result .= ' ' . $this->link->code();
 		}
 		return $result;
 	}
@@ -324,7 +324,7 @@ class WikipluginDBReportStyle
 				unset($this->style);
 				$this->style = new WikipluginDBReportContent($subtoken);
 			}
-		} else if (is_string($token)) {
+		} elseif (is_string($token)) {
 			unset($subtoken);
 			$subtoken = new WikipluginDBReportToken($token);
 			$subtoken->type = 'txt';
@@ -337,7 +337,7 @@ class WikipluginDBReportStyle
 		$code = ':';
 		if (isset($this->class)) {
 			$code .= addcslashes($this->class->code(), ' ');
-		} else if ($this->tag!='span') {
+		} elseif ($this->tag != 'span') {
 			$code .= $this->tag;
 		}
 		// if (isset($this->class)) $code .= $this->class->code();
@@ -360,7 +360,7 @@ class WikipluginDBReportStyle
 	{
 		if (isset($this->class)) {
 			$class = $this->class->html();
-			switch(strtolower($class)) {
+			switch (strtolower($class)) {
 				case 'u':
 				case 'b':
 				case 'i':
@@ -389,7 +389,7 @@ class WikipluginDBReportStyle
 	}
 	public function html_end()
 	{
-		return '</'.$this->tag.'>';
+		return '</' . $this->tag . '>';
 	}
 }
 
@@ -403,8 +403,8 @@ class WikipluginDBReportLink
 		if (isset($this->contents)) {
 			foreach ($this->contents as $content) {
 				if (is_a($content, 'WikipluginDBReportContent')) {
-					$result .= '"'.$content->code().'"';
-				} else if (is_a($content, 'WikipluginDBReportField')) {
+					$result .= '"' . $content->code() . '"';
+				} elseif (is_a($content, 'WikipluginDBReportField')) {
 					$result .= $content->code();
 				}
 			}
@@ -421,7 +421,7 @@ class WikipluginDBReportLink
 			foreach ($this->contents as $content) {
 				if (is_a($content, 'WikipluginDBReportContent')) {
 					$uri .= $content->html();
-				} else if (is_a($content, 'WikipluginDBReportField')) {
+				} elseif (is_a($content, 'WikipluginDBReportField')) {
 					$uri .= $content->uri();
 				}
 			}
@@ -458,26 +458,26 @@ class WikipluginDBReportCell
 	{
 		$result = 'CELL';
 		if (isset($this->colspan) && isset($this->rowspan)) {
-			if ($this->rowspan!=1) {
-				$result .= ' ROWSPAN '.$this->rowspan;
+			if ($this->rowspan != 1) {
+				$result .= ' ROWSPAN ' . $this->rowspan;
 			}
-			if ($this->colspan!=1) {
-				$result .= ' COLSPAN '.$this->colspan;
+			if ($this->colspan != 1) {
+				$result .= ' COLSPAN ' . $this->colspan;
 			}
-		} else if (isset($this->colspan)) {
-			if ($this->colspan!=1) {
-				if ($mode=='ROW') {
-					$result .= ' SPAN '.$this->colspan;
+		} elseif (isset($this->colspan)) {
+			if ($this->colspan != 1) {
+				if ($mode == 'ROW') {
+					$result .= ' SPAN ' . $this->colspan;
 				} else {
-					$result .= ' COLSPAN '.$this->colspan;
+					$result .= ' COLSPAN ' . $this->colspan;
 				}
 			}
-		} else if (isset($this->rowspan)) {
-			if ($this->rowspan!=1) {
-				if ($mode=='ROW') {
-					$result .= ' ROWSPAN '.$this->rowspan;
+		} elseif (isset($this->rowspan)) {
+			if ($this->rowspan != 1) {
+				if ($mode == 'ROW') {
+					$result .= ' ROWSPAN ' . $this->rowspan;
 				} else {
-					$result .= ' SPAN '.$this->rowspan;
+					$result .= ' SPAN ' . $this->rowspan;
 				}
 			}
 		}
@@ -489,12 +489,12 @@ class WikipluginDBReportCell
 		}
 		if (isset($this->contents)) {
 			foreach ($this->contents as $content) {
-				$result .= ' '.$content->code();
+				$result .= ' ' . $content->code();
 			}
 		}
 		return $result;
 	}
-	public function html($heading=false)
+	public function html($heading = false)
 	{
 		if ($heading) {
 			$html = '<th';
@@ -529,24 +529,24 @@ class WikipluginDBReportLine
 	public $link;
 	public $styles;
 	public $cells;
-	public function code($indent='',$rtype='ROW',$cellmode='ROW')
+	public function code($indent = '', $rtype = 'ROW', $cellmode = 'ROW')
 	{
-		$result = $indent.$rtype;
+		$result = $indent . $rtype;
 		if (isset($this->styles)) {
 			foreach ($this->styles as $style) {
-				$result .= ' '.$style->code();
+				$result .= ' ' . $style->code();
 			}
 		}
 		if (isset($this->link)) {
-			$result .= ' '.$this->link->code();
+			$result .= ' ' . $this->link->code();
 		}
 		$result .= "\n";
 		foreach ($this->cells as $cell) {
-			$result .= $indent.'  '.$cell->code($cellmode)."\n";
+			$result .= $indent . '  ' . $cell->code($cellmode) . "\n";
 		}
 		return $result;
 	}
-	public function row_html($data,$style,$heading=false)
+	public function row_html($data, $style, $heading = false)
 	{
 		// set the global report row
 		global $wikiplugin_dbreport_record;
@@ -575,31 +575,31 @@ class WikipluginDBReportTable
 	public $rows;
 	public $footers;
 	public $style_index;
-	public function code($indent='')
+	public function code($indent = '')
 	{
-		$result = $indent.'TABLE';
+		$result = $indent . 'TABLE';
 		if (isset($this->style)) {
-			$result .= ' '.$this->style->code();
+			$result .= ' ' . $this->style->code();
 		}
 		$result .= "\n";
 		if (isset($this->headers)) {
 			foreach ($this->headers as $line) {
-				$result .= $line->code($indent.'  ', 'HEADER');
+				$result .= $line->code($indent . '  ', 'HEADER');
 			}
 		}
 		if (isset($this->rows)) {
 			foreach ($this->rows as $line) {
-				$result .= $line->code($indent.'  ', 'ROW');
+				$result .= $line->code($indent . '  ', 'ROW');
 			}
 		}
 		if (isset($this->footers)) {
 			foreach ($this->footers as $line) {
-				$result .= $line->code($indent.'  ', 'FOOTER');
+				$result .= $line->code($indent . '  ', 'FOOTER');
 			}
 		}
 		return $result;
 	}
-	public function line_row_html($list,$data,$heading=false)
+	public function line_row_html($list, $data, $heading = false)
 	{
 		$html = '';
 		foreach ($list as $line) {
@@ -666,23 +666,23 @@ class WikipluginDBReportGroup
 		}
 		return $result;
 	}
-	public function code($indent='')
+	public function code($indent = '')
 	{
-		$result = $indent.'GROUP';
+		$result = $indent . 'GROUP';
 		if (isset($this->style)) {
-			$result .= ' '.$this->style->code();
+			$result .= ' ' . $this->style->code();
 		}
 		if (isset($this->fields)) {
 			foreach ($this->fields as $field) {
-				$result .= ' '.$field->code();
+				$result .= ' ' . $field->code();
 			}
 		}
 		if (isset($this->link)) {
-			$result .= ' '.$this->link->code();
+			$result .= ' ' . $this->link->code();
 		}
 		if (isset($this->contents)) {
 			foreach ($this->contents as $content) {
-				$result .= ' '.$content->code();
+				$result .= ' ' . $content->code();
 			}
 		}
 		$result .= "\n";
@@ -692,7 +692,7 @@ class WikipluginDBReportGroup
 	{
 		$ret = false;
 		// compare the field values against the break values
-		for ($i=0; $i<$this->field_count; $i++) {
+		for ($i = 0; $i < $this->field_count; $i++) {
 			$field =& $this->fields[$i];
 			$value =& $row[$field->index];
 			if ($value !== $field->break) {
@@ -715,7 +715,7 @@ class WikipluginDBReportGroup
 		}
 		if (isset($this->contents)) {
 			foreach ($this->contents as $content) {
-				$html.= $content->html();
+				$html .= $content->html();
 			}
 		}
 		return $html;
@@ -732,9 +732,9 @@ class WikipluginDBReportGroup
 class WikipluginDBReportParameter extends WikipluginDBReportContent
 {
 	public $name;
-	public function code($indent='')
+	public function code($indent = '')
 	{
-		$result = $indent.'PARAM';
+		$result = $indent . 'PARAM';
 		// if (isset($this->name)) $result .= ' :'.$this->name;
 		if (isset($this->elements)) {
 			foreach ($this->elements as $element) {
@@ -763,12 +763,12 @@ class WikipluginDBReportFail
 		}
 		if (isset($this->contents)) {
 			foreach ($this->contents as $content) {
-				$result .= ' '.$content->code();
+				$result .= ' ' . $content->code();
 			}
 		}
 		return $result;
 	}
-	public function html($heading=false)
+	public function html($heading = false)
 	{
 		$html = '<div';
 		if (isset($this->style)) {
@@ -796,13 +796,13 @@ class WikipluginDBReport
 	public $table;
 	public $columns;
 	public $fail;
-	public function code($indent='')
+	public function code($indent = '')
 	{
 		// write the report in cannonical form.
-		$result = $indent.'SQL {' . $this->sql . '}'."\n";
+		$result = $indent . 'SQL {' . $this->sql . '}' . "\n";
 		if (isset($this->params)) {
 			foreach ($this->params as $param) {
-				$result .= $param->code($indent.'  ');
+				$result .= $param->code($indent . '  ');
 			}
 		}
 		if (isset($this->groups)) {
@@ -824,24 +824,25 @@ function wikiplugin_dbreport_parse_error(&$token, $msg)
 {
 	global $wikiplugin_dbreport_errors;
 	// find the line relating to the token in the code
-	$pos = 0; $line = 0;
+	$pos = 0;
+	$line = 0;
 	$code =& $token->code;
 	$len = strlen($code);
-	while ($pos<$len) {
+	while ($pos < $len) {
 		// find the next line break
 		$line++;
 		$break = strpos($code, "\n", $pos);
-		if ($break===false) {
+		if ($break === false) {
 			$break = $len;
 		}
 		// was the token in this line?
 		if ($token->start < $break) {
 			// format the line with the token highlighted
-			$err_line = '<i>line '.$line.'</i>: ';
-			$err_line .= substr($code, $pos, $token->start-$pos);
-			$err_line .= '<span style="font-weight:bold;color:DarkRed;">'.substr($code, $token->start, $token->after-$token->start).'</span>';
-			if ($token->after<$break) {
-				$err_line .= substr($code, $token->after, $break-$token->after);
+			$err_line = '<i>line ' . $line . '</i>: ';
+			$err_line .= substr($code, $pos, $token->start - $pos);
+			$err_line .= '<span style="font-weight:bold;color:DarkRed;">' . substr($code, $token->start, $token->after - $token->start) . '</span>';
+			if ($token->after < $break) {
+				$err_line .= substr($code, $token->after, $break - $token->after);
 			}
 			$wikiplugin_dbreport_errors[] = $err_line;
 			$pos = $len;
@@ -858,29 +859,29 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 {
 	global $wikiplugin_dbreport_errors, $wikiplugin_dbreport_fields_allowed;
 	$whitespace = " \n\r\t\v\f";
-	$tokenstop =  " :<>[$\"\n\r\t\v\f";
+	$tokenstop = " :<>[$\"\n\r\t\v\f";
 	// create a token object to return
 	unset($token);
 	$token = new WikipluginDBReportToken();
 	$token->code =& $code;
 	// find the next non-whitespace character in the code
-	while ( ($pos < $len) && (strpos($whitespace, $code[$pos])!==false) ) {
+	while (($pos < $len) && (strpos($whitespace, $code[$pos]) !== false)) {
 		$pos++;
 	}
-	if ( $pos >= $len ) {
+	if ($pos >= $len) {
 		$token->type = 'eof';
 		$token->start = $len - 1;
 		$token->after = $pos;
 		return $token;
 	}
 	// what did we find?
-	switch($code[$pos]) {
+	switch ($code[$pos]) {
 		case '[':
 			// field token
 			$token->start = $pos;
 			// parse to closing ']'
-			while ( ($pos < $len) && ($code[$pos]!=']') ) {
-				if ($code[$pos]=='\\') {
+			while (($pos < $len) && ($code[$pos] != ']')) {
+				if ($code[$pos] == '\\') {
 					$pos++;
 				}
 				$pos++;
@@ -888,7 +889,7 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 			if ($pos < $len) {
 				$token->after = ++$pos;
 				$token->type = 'fld';
-				$token->content = substr($code, $token->start+1, $pos-$token->start-2);
+				$token->content = substr($code, $token->start + 1, $pos - $token->start - 2);
 				return $token;
 			} else {
 				$token->after = ++$pos;
@@ -904,48 +905,64 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 			// parse until we find the closing bracket.
 			$pos++;
 			$state = 0;
-			while ( ($pos < $len) && ($state<4) ) {
+			while (($pos < $len) && ($state < 4)) {
 				$c = $code[$pos++];
-				switch($state) {
+				switch ($state) {
 					case 0: // normal content
-						switch($c) {
-							case '}': $state = 4;
-     							break;
-							case '`': $state = 1; $token->content .= $c;
-     							break;
-							case "'": $state = 2; $token->content .= $c;
-     							break;
-							case '"': $state = 3; $token->content .= $c;
-     							break;
-							default:  $token->content .= $c;
+						switch ($c) {
+							case '}':
+								$state = 4;
+								break;
+							case '`':
+								$state = 1;
+								$token->content .= $c;
+								break;
+							case "'":
+								$state = 2;
+								$token->content .= $c;
+								break;
+							case '"':
+								$state = 3;
+								$token->content .= $c;
+								break;
+							default:
+								$token->content .= $c;
 						}
 						break;
 					case 1: // backtick-quoted
-						switch($c) {
-							case '`': $state = 0;
-							default:  $token->content .= $c;
+						switch ($c) {
+							case '`':
+								$state = 0;
+							default:
+								$token->content .= $c;
 						}
-    					break;
+						break;
 					case 2: // single-quoted
-						switch($c) {
-							case '\\': $token->content .= $c . $code[$pos++];
+						switch ($c) {
+							case '\\':
+								$token->content .= $c . $code[$pos++];
 								break;
-							case '\'': $state = 0;
-							default:  $token->content .= $c;
+							case '\'':
+								$state = 0;
+							default:
+								$token->content .= $c;
 						}
-    					break;
+						break;
 					case 3: // double-quoted
-						switch($c) {
-							case '\\': $token->content .= $c . $code[$pos++];
+						switch ($c) {
+							case '\\':
+								$token->content .= $c . $code[$pos++];
 								break;
-							case '"': $state = 0;
-							default:  $token->content .= $c;
+							case '"':
+								$state = 0;
+							default:
+								$token->content .= $c;
 						}
-    					break;
+						break;
 				}
 			}
 			$token->after = $pos;
-			switch($state) {
+			switch ($state) {
 				case 0: // unclosed brackets
 					wikiplugin_dbreport_parse_error($token, "Unclosed brackets. } expected");
 					$token->type = 'eof';
@@ -953,15 +970,15 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 				case 1: // unclosed backtick-quoted content
 					wikiplugin_dbreport_parse_error($token, "Unclosed backtick-quoted content in brackets. ` then } expected");
 					$token->type = 'eof';
-  					break;
+					break;
 				case 2: // unclosed single-quoted content
 					wikiplugin_dbreport_parse_error($token, "Unclosed single-quoted content in brackets. ' then } expected");
 					$token->type = 'eof';
-  					break;
+					break;
 				case 3: // unclosed double-quoted content
 					wikiplugin_dbreport_parse_error($token, "Unclosed double-quoted content in brackets. \" then } expected");
 					$token->type = 'eof';
-  					break;
+					break;
 			}
 			return $token;
 			break;
@@ -969,7 +986,7 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 			// style token
 			$token->type = 'sty';
 			$token->start = $pos;
-			$token->content = array();
+			$token->content = [];
 			// create content sub-tokens
 			unset($class);
 			$class = new WikipluginDBReportToken();
@@ -983,96 +1000,120 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 			// parse until we find the closing space.
 			$pos++;
 			$state = 0;
-			while ( ($pos < $len) && ($state<6) ) {
+			while (($pos < $len) && ($state < 6)) {
 				$c = $code[$pos++];
-				if ($c=='\\') {
+				if ($c == '\\') {
 					$c .= $code[$pos++];
 					$tc = $c;
 				} else {
-					$tc = strpos($whitespace, $c)!==false ? ' ': $c;
+					$tc = strpos($whitespace, $c) !== false ? ' ' : $c;
 				}
-				switch($state) {
+				switch ($state) {
 					case 0: // class content
-						switch($tc) {
+						switch ($tc) {
 							case '<':
 							case '>':
 							case '"':
-							case ' ': $state = 6; $class->after = $pos;
+							case ' ':
+								$state = 6;
+								$class->after = $pos;
 								break;
-							case '{': $state = 1; $class->after = $pos; $style->start = $pos-1;
+							case '{':
+								$state = 1;
+								$class->after = $pos;
+								$style->start = $pos - 1;
 								break;
-							case '[': $state = 2;
-							default:  $class->content .= $c;
+							case '[':
+								$state = 2;
+							default:
+								$class->content .= $c;
 						}
 						break;
 					case 1: // inline style content
-						switch($tc) {
-							case '}': $state = 6; $style->after = $pos;
+						switch ($tc) {
+							case '}':
+								$state = 6;
+								$style->after = $pos;
 								break;
-							case '[': $state = 3; $style->content .= $c;
+							case '[':
+								$state = 3;
+								$style->content .= $c;
 								break;
-							case "'": $state = 4; $style->content .= $c;
+							case "'":
+								$state = 4;
+								$style->content .= $c;
 								break;
-							case '"': $state = 5; $style->content .= $c;
+							case '"':
+								$state = 5;
+								$style->content .= $c;
 								break;
-							default:  $style->content .= $c;
+							default:
+								$style->content .= $c;
 						}
 						break;
 					case 2: // class field
-						switch($tc) {
-							case ']': $state = 0;
-							default:  $class->content .= $c;
+						switch ($tc) {
+							case ']':
+								$state = 0;
+							default:
+								$class->content .= $c;
 						}
-    					break;
+						break;
 					case 3: // inline style field
-						switch($tc) {
-							case ']': $state = 1;
-							default:  $style->content .= $c;
+						switch ($tc) {
+							case ']':
+								$state = 1;
+							default:
+								$style->content .= $c;
 						}
-    					break;
+						break;
 					case 4: // single-quoted inline style
-						switch($tc) {
-							case '\'': $state = 1;
-							default:  $style->content .= $c;
+						switch ($tc) {
+							case '\'':
+								$state = 1;
+							default:
+								$style->content .= $c;
 						}
-    					break;
+						break;
 					case 5: // double-quoted inline style
-						switch($tc) {
-							case '"': $state = 1;
-							default:  $style->content .= $c;
+						switch ($tc) {
+							case '"':
+								$state = 1;
+							default:
+								$style->content .= $c;
 						}
-    					break;
+						break;
 				}
 			}
-			switch($state) {
+			switch ($state) {
 				case 0: // end of file
 					$class->after = $pos;
-    				break;
+					break;
 				case 1: // inline style content
 					$style->after = $pos;
 					wikiplugin_dbreport_parse_error($style, "Unclosed style CSS. } expected");
 					$token->type = 'eof';
-    				break;
+					break;
 				case 2: // class field
 					$class->after = $pos;
 					wikiplugin_dbreport_parse_error($class, "Unclosed field in style class. ] expected");
 					$token->type = 'eof';
-    				break;
+					break;
 				case 3: // inline style field
 					$style->after = $pos;
 					wikiplugin_dbreport_parse_error($style, "Unclosed field in style CSS. ] then } expected");
 					$token->type = 'eof';
-    				break;
+					break;
 				case 4: // single-quoted inline style
 					$style->after = $pos;
 					wikiplugin_dbreport_parse_error($style, "Unclosed single-quoted content in style CSS. ' then } expected");
 					$token->type = 'eof';
-    				break;
+					break;
 				case 5: // double-quoted inline style
 					$style->after = $pos;
 					wikiplugin_dbreport_parse_error($style, "Unclosed double-quoted content in style CSS. \" then } expected");
 					$token->type = 'eof';
-    				break;
+					break;
 			}
 			if ($class->content) {
 				$token->content['class'] = $class;
@@ -1089,13 +1130,13 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 			$token->start = $pos;
 			$pos++;
 			// parse to end of token
-			while ( ($pos < $len) && (strpos($tokenstop, $code[$pos])===false) ) {
-				if ($code[$pos]=='\\') {
+			while (($pos < $len) && (strpos($tokenstop, $code[$pos]) === false)) {
+				if ($code[$pos] == '\\') {
 					$pos++;
 				}
 				$pos++;
 			}
-			$token->content = substr($code, $token->start+1, $pos-$token->start-1);
+			$token->content = substr($code, $token->start + 1, $pos - $token->start - 1);
 			$token->after = $pos;
 			return $token;
 			break;
@@ -1106,17 +1147,17 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 			$token->content = '';
 			// parse until we find the closing quote.
 			$pos++;
-			while ( $pos < $len ) {
+			while ($pos < $len) {
 				// what is it?
 				$c = $code[$pos++];
-				switch($c) {
+				switch ($c) {
 					case '"':
 						$token->after = $pos;
 						return $token;
-    					break;
+						break;
 					case '\\':
 						$token->content .= $c;
-						if ( ($pos < $len) ) {
+						if (($pos < $len)) {
 							$c = $code[$pos++];
 							$token->content .= $c;
 						} else {
@@ -1124,10 +1165,10 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 							$token->type = 'eof';
 							return $token;
 						}
-    					break;
+						break;
 					default:
 						$token->content .= $c;
-    					break;
+						break;
 				}
 			}
 			// didn't find closing quotes
@@ -1149,7 +1190,7 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 			// keyword token
 			$token->start = $pos;
 			// parse to end of token
-			while ( ($pos < $len) && (strpos($tokenstop, $code[$pos])===false) ) {
+			while (($pos < $len) && (strpos($tokenstop, $code[$pos]) === false)) {
 				$pos++;
 			}
 			$token->type = 'key';
@@ -1165,7 +1206,7 @@ function wikiplugin_dbreport_parse(&$code)
 	// code properties
 	$len = strlen($code);
 	$pos = 0;
-    	// FSM state
+		// FSM state
 	$parse_state = 0;
 	$parse_link_return = 0;
 	$parse_line_return = 0;
@@ -1185,22 +1226,22 @@ function wikiplugin_dbreport_parse(&$code)
 		// repeat while we have an unconsumed token
 		while (isset($token)) {
 			$next_token = $token;
-			switch($parse_state) {
+			switch ($parse_state) {
 				case 0: // next keyword
 					switch ($token->type) {
 						case 'eof':
-							if (!isset($parse_report->sql)) {
+							if (! isset($parse_report->sql)) {
 								return wikiplugin_dbreport_parse_error($token, "Unexpected End.");
 							}
 							return $parse_report;
-    						break;
+							break;
 						case 'key':
-							switch(TikiLib::strtoupper($token->content)) {
+							switch (TikiLib::strtoupper($token->content)) {
 								case 'SQL':
 									$parse_state = 1;	// switch state
 									unset($next_token);	// consume the token
 									$wikiplugin_dbreport_fields_allowed = false; // no fields in sql
-    								break;
+									break;
 								case 'PARAM':
 									// create the parameter object
 									unset($parse_object);
@@ -1209,7 +1250,7 @@ function wikiplugin_dbreport_parse(&$code)
 									$parse_state = 2;	// switch state
 									unset($next_token);	// consume the token
 									$wikiplugin_dbreport_fields_allowed = false; // no fields in sql params
-    								break;
+									break;
 								case 'GROUP':
 									// create the group object
 									unset($parse_object);
@@ -1218,7 +1259,7 @@ function wikiplugin_dbreport_parse(&$code)
 									$parse_state = 3;	// switch state
 									unset($next_token);	// consume the token
 									$wikiplugin_dbreport_fields_allowed = true; // we can now parse fields
-    								break;
+									break;
 								case 'TABLE':
 									// create the table object
 									unset($parse_object);
@@ -1227,7 +1268,7 @@ function wikiplugin_dbreport_parse(&$code)
 									$parse_state = 4;	// switch state
 									unset($next_token);	// consume the token
 									$wikiplugin_dbreport_fields_allowed = true; // we can now parse fields
-    								break;
+									break;
 								case 'FAIL':
 									// create the fail object
 									unset($parse_object);
@@ -1236,40 +1277,40 @@ function wikiplugin_dbreport_parse(&$code)
 									$parse_state = 10;	// switch state
 									unset($next_token);	// consume the token
 									$wikiplugin_dbreport_fields_allowed = false; // no fields in fail message
-    								break;
+									break;
 								default:
 									return wikiplugin_dbreport_parse_error($token, "Invalid keyword '$token->content'");
 							}
-    						break;
+							break;
 						default:
-							return wikiplugin_dbreport_parse_error($token, "Unexpected ".$token->type." '".$token->content."' at ".$token->start);
+							return wikiplugin_dbreport_parse_error($token, "Unexpected " . $token->type . " '" . $token->content . "' at " . $token->start);
 					}
-    				break;
+					break;
 				case 1: // SQL content
-					switch($token->type) {
+					switch ($token->type) {
 						case 'eof':
 							$parse_state = 0; 	// switch state and reparse the token
-    						break;
+							break;
 						case 'bra':
 							$parse_report->sql .= $token->content;
 							unset($next_token);	// consume the token
-    						break;
+							break;
 						case 'txt':
 							$parse_report->sql .= stripcslashes($token->content);
 							unset($next_token);	// consume the token
-    						break;
+							break;
 						case 'key':
 							$parse_state = 0; 	// switch state and reparse the token
-    						break;
+							break;
 						default:
 							return wikiplugin_dbreport_parse_error($token, "Unexpected " . $token->type_name() . " '$token->content' after 'SQL'. String expected.");
 					}
-    				break;
+					break;
 				case 2: // PARAM content
-					switch($token->type) {
+					switch ($token->type) {
 						case 'eof':
 							$parse_state = 0; // switch parse state
-    						break;
+							break;
 						/* case 'sty':
 							$parse_object->name = $token->content;
 							unset($next_token);	// consume the token
@@ -1277,35 +1318,35 @@ function wikiplugin_dbreport_parse(&$code)
 						case 'fld':
 							$parse_object->append_field($token->content);
 							unset($next_token);	// consume the token
-    						break;
+							break;
 						case 'var':
 							$parse_object->append_variable($token->content);
 							unset($next_token);	// consume the token
-    						break;
+							break;
 						case 'txt':
 							unset($parse_object->elements);
 							$parse_object->elements[] = new WikipluginDBReportText($token);
 							unset($next_token);	// consume the token
-    						break;
+							break;
 						case 'key':
 							unset($parse_object);
 							$parse_state = 0;	// switch state and reparse the token
-    						break;
+							break;
 						default:
 							return wikiplugin_dbreport_parse_error($token, "Unexpected " . $token->type_name() . " '$token->content' after 'PARAM'. Name, Field, String or Variable expected.");
 					}
-    				break;
+					break;
 				case 3: // GROUP content
-					switch($token->type) {
+					switch ($token->type) {
 						case 'eof':
 							$parse_state = 0;	// switch state and reparse the token
-    						break;
+							break;
 						case 'fld':
 							unset($parse_object->fields);
 							$parse_object->fields[] = new WikipluginDBReportField($token->content);
 							$parse_object->field_count++;
 							unset($next_token);		// consume the token
-    						break;
+							break;
 						case 'txt':
 						case 'var':
 							unset($parse_text);
@@ -1314,14 +1355,14 @@ function wikiplugin_dbreport_parse(&$code)
 							$parse_text_return = $parse_state; // return to this state
 							$parse_state = 9;	// switch state
 							unset($next_token);		// consume the token
-    						break;
+							break;
 						case 'sty':
 							unset($parse_object->style);
 							$parse_object->style = new WikipluginDBReportStyle($token);
 							unset($next_token);		// consume the token
-    						break;
+							break;
 						case 'key':
-							switch(TikiLib::strtoupper($token->content)) {
+							switch (TikiLib::strtoupper($token->content)) {
 								case '<':
 									unset($parse_link);
 									$parse_link = new WikipluginDBReportLink($token);	// create the link object
@@ -1329,30 +1370,30 @@ function wikiplugin_dbreport_parse(&$code)
 									$parse_link_return = $parse_state; // return to this state
 									$parse_state = 5;	// switch state
 									unset($next_token);		// consume the token
-    								break;
+									break;
 								default:
 									unset($parse_object); // we are finished parsing the group
 									$wikiplugin_dbreport_fields_allowed = false; // we cannot parse fields anymore
 									$parse_state = 0;	// switch state and reparse the token
-	    							break;
+									break;
 							}
-    						break;
+							break;
 						default:
 							return wikiplugin_dbreport_parse_error($token, "Unexpected " . $token->type_name() . " '$token->content' after '<'. Field, String or Style expected.");
 					}
-    				break;
+					break;
 				case 4: // TABLE content
-					switch($token->type) {
+					switch ($token->type) {
 						case 'eof':
 							$parse_state = 0;	// switch state and reparse the token
-	    					break;
+							break;
 						case 'sty':
 							unset($parse_object->style);
 							$parse_object->style = new WikipluginDBReportStyle($token);
-		 					unset($next_token);		// consume the token
-		    				break;
+							 unset($next_token);		// consume the token
+							break;
 						case 'key':
-							switch(TikiLib::strtoupper($token->content)) {
+							switch (TikiLib::strtoupper($token->content)) {
 								case 'HEADER':
 									unset($parse_line);
 									$parse_line = new WikipluginDBReportLine();
@@ -1360,15 +1401,15 @@ function wikiplugin_dbreport_parse(&$code)
 									$parse_line_return = $parse_state; // return to this state
 									$parse_state = 6;	// switch state
 									unset($next_token);		// consume the token
-			    					break;
+									break;
 								case 'FOOTER':
 									unset($parse_line);
 									$parse_line = new WikipluginDBReportLine();
 									$parse_object->footers[] =& $parse_line;
 									$parse_line_return = $parse_state; // return to this state
 									$parse_state = 6;	// switch state
-				  					unset($next_token);		// consume the token
-				    				break;
+									  unset($next_token);		// consume the token
+									break;
 								case 'ROW':
 								case 'ROWS':
 									unset($parse_line);
@@ -1377,33 +1418,33 @@ function wikiplugin_dbreport_parse(&$code)
 									$parse_line_return = $parse_state; // return to this state
 									$parse_state = 6;	// switch state
 									unset($next_token);		// consume the token
-					    			break;
+									break;
 								default:
 									unset($parse_object);	// we are finished parsing the table
 									$wikiplugin_dbreport_fields_allowed = false; // we cannot parse fields anymore
 									$parse_state = 0;		// switch state and reparse the token
 							}
-    						break;
+							break;
 						default:
 							return wikiplugin_dbreport_parse_error($token, "Unexpected " . $token->type_name() . " '$token->content' after 'TABLE'. HEADER, FOOTER, ROWS, <, or Style expected.");
 					}
-    				break;
+					break;
 				case 5: // Link content
-					switch($token->type) {
+					switch ($token->type) {
 						case 'eof':
 							return wikiplugin_dbreport_parse_error($token, "Unexpected EOF in WikipluginDBReportLink. '>' expected.");
-	    					break;
+							break;
 						case 'var':
 						case 'fld':
 							unset($parse_link->contents);
 							$parse_link->contents[] = new WikipluginDBReportField($token->content);
 							unset($next_token);		// consume the token
-	    					break;
+							break;
 						case 'txt':
 							unset($parse_link->contents);
 							$parse_link->contents[] = new WikipluginDBReportContent($token);
 							unset($next_token);		// consume the token
-		    				break;
+							break;
 						/*
 						case 'txt':
 							$parse_link->append($token->content);
@@ -1422,34 +1463,34 @@ function wikiplugin_dbreport_parse(&$code)
 							unset($parse_link->style);
 							$parse_link->style = new WikipluginDBReportStyle($token);
 							unset($next_token);		// consume the token
-			    			break;
+							break;
 						case 'key':
-							switch(TikiLib::strtoupper($token->content)) {
+							switch (TikiLib::strtoupper($token->content)) {
 								case '<':
 									return wikiplugin_dbreport_parse_error($token, "Unexpected '<' in Link. '>' expected.");
 								case '>':
 									unset($next_token);		// consume the token
 									$parse_state = $parse_link_return;	// return to previous state
-    								break;
+									break;
 								default:
 									return wikiplugin_dbreport_parse_error($token, "Unexpected Keyword '$token->content' in Link. '>' expected.");
 							}
 						default:
 							$parse_state = $parse_link_return;	// switch state and reparse the token
 					}
-    				break;
+					break;
 				case 6: // HEADER, FOOTER, ROW content
-					switch($token->type) {
+					switch ($token->type) {
 						case 'eof':
 							$parse_state = $parse_line_return;	// switch state and reparse the token
-	    					break;
+							break;
 						case 'sty':
 							unset($parse_link->styles);
 							$parse_line->styles[] = new WikipluginDBReportStyle($token);
 							unset($next_token);		// consume the token
-		    				break;
+							break;
 						case 'key':
-							switch(TikiLib::strtoupper($token->content)) {
+							switch (TikiLib::strtoupper($token->content)) {
 								case 'CELL':
 									unset($parse_cell);
 									$parse_cell = new WikipluginDBReportCell();
@@ -1457,7 +1498,7 @@ function wikiplugin_dbreport_parse(&$code)
 									$parse_cell_return = $parse_state; // return to this state
 									$parse_state = 7;	// switch state
 									unset($next_token);		// consume the token
-			    					break;
+									break;
 								case '<':
 									unset($parse_link);
 									$parse_link = new WikipluginDBReportLink($token);	// create the link object
@@ -1465,26 +1506,26 @@ function wikiplugin_dbreport_parse(&$code)
 									$parse_link_return = $parse_state; // return to this state
 									$parse_state = 5;	// switch state
 									unset($next_token);		// consume the token
-				    				break;
+									break;
 								case 'HEADER':
 								case 'ROW':
 								case 'FOOTER':
 								case 'FAIL':
 									$parse_state = $parse_line_return;
-					    			break;
+									break;
 								default:
 									return wikiplugin_dbreport_parse_error($token, "Invalid keyword '$token->content' after row. CELL or Link expected.");
 							}
-    						break;
+							break;
 						default:
 							return wikiplugin_dbreport_parse_error($token, "Unexpected " . $token->type_name() . " '$token->content' in row.");
 					}
-	    			break;
+					break;
 				case 7: // CELL content
-					switch($token->type) {
+					switch ($token->type) {
 						case 'eof':
 							$parse_state = $parse_cell_return;	// switch state and reparse the token
-		    				break;
+							break;
 						case 'fld':
 						case 'var':
 						case 'txt':
@@ -1494,14 +1535,14 @@ function wikiplugin_dbreport_parse(&$code)
 							$parse_text_return = $parse_state; // return to this state
 							$parse_state = 9;	// switch state
 							unset($next_token);		// consume the token
-    						break;
+							break;
 						case 'sty':
 							unset($parse_cell->style);
 							$parse_cell->style = new WikipluginDBReportStyle($token);
 							unset($next_token);		// consume the token
-	    					break;
+							break;
 						case 'key':
-							switch(TikiLib::strtoupper($token->content)) {
+							switch (TikiLib::strtoupper($token->content)) {
 								case '<':
 									unset($parse_link);
 									$parse_link = new WikipluginDBReportLink($token);	// create the link object
@@ -1509,22 +1550,22 @@ function wikiplugin_dbreport_parse(&$code)
 									$parse_link_return = $parse_state; // return to this state
 									$parse_state = 5;	// switch state
 									unset($next_token);		// consume the token
-		    						break;
+									break;
 								case 'SPAN':
 									$span_mode = 'COL';
 									$parse_state = 8;	// switch state
 									unset($next_token);		// consume the token
-			    					break;
+									break;
 								case 'COLSPAN':
 									$span_mode = 'COL';
 									$parse_state = 8;	// switch state
 									unset($next_token);		// consume the token
-				    				break;
+									break;
 								case 'ROWSPAN':
 									$span_mode = 'ROW';
 									$parse_state = 8;	// switch state
 									unset($next_token);		// consume the token
-					    			break;
+									break;
 								case 'CELL':
 								case 'HEADER':
 								case 'ROW':
@@ -1532,22 +1573,22 @@ function wikiplugin_dbreport_parse(&$code)
 								case 'FOOTER':
 								case 'FAIL':
 									$parse_state = $parse_cell_return;	// switch state and reparse the token
-    								break;
+									break;
 								default:
 									return wikiplugin_dbreport_parse_error($token, "Invalid keyword '$token->content' in 'CELL'. Field, String, Style or Link expected.");
 							}
-    						break;
+							break;
 						default:
 							return wikiplugin_dbreport_parse_error($token, "Unexpected " . $token->type_name() . " '$token->content' after 'CELL'.");
 					}
-    				break;
+					break;
 				case 8: // SPAN content
-					switch($token->type) {
+					switch ($token->type) {
 						case 'key':
 							// try to parse the keyword as as number
 							$span = (int) $token->content;
 							if ((string) $span == $token->content) {
-								if ($span_mode=='ROW') {
+								if ($span_mode == 'ROW') {
 									$parse_cell->rowspan = $span;
 								} else {
 									$parse_cell->colspan = $span;
@@ -1555,20 +1596,20 @@ function wikiplugin_dbreport_parse(&$code)
 								unset($next_token);		// consume the token
 							}
 							$parse_state = 7;	// switch state (and possibly reparse the token)
-	    					break;
+							break;
 						default:
 							$parse_state = 7;	// switch state and reparse the token
 					}
-    				break;
+					break;
 				case 9: // Text content
-					switch($token->type) {
+					switch ($token->type) {
 						case 'sty':
 							unset($parse_text->style);
 							$parse_text->style = new WikipluginDBReportStyle($token);
- 							unset($next_token);		// consume the token
-    						break;
+							 unset($next_token);		// consume the token
+							break;
 						case 'key':
-							switch(TikiLib::strtoupper($token->content)) {
+							switch (TikiLib::strtoupper($token->content)) {
 								case '<':
 									unset($parse_link);
 									$parse_link = new WikipluginDBReportLink($token);	// create the link object
@@ -1576,22 +1617,22 @@ function wikiplugin_dbreport_parse(&$code)
 									$parse_link_return = $parse_state; // return to this state
 									$parse_state = 5;	// switch state
 									unset($next_token);		// consume the token
-	    							break;
+									break;
 								default:
 									$parse_state = $parse_text_return;	// return to the previous state
-		    						break;
+									break;
 							}
-			    			break;
+							break;
 						default:
 							$parse_state = $parse_text_return;	// return to the previous state
-    						break;
+							break;
 					}
-	    			break;
+					break;
 				case 10: // Fail content
-					switch($token->type) {
+					switch ($token->type) {
 						case 'eof':
 							$parse_state = 0;	// switch state and reparse the token
-		    				break;
+							break;
 						case 'var':
 						case 'txt':
 							unset($parse_text);
@@ -1599,15 +1640,15 @@ function wikiplugin_dbreport_parse(&$code)
 							$parse_object->contents[] =& $parse_text;
 							$parse_text_return = $parse_state; // return to this state
 							$parse_state = 9;		// switch state
-			 				unset($next_token);		// consume the token
-			    			break;
+							 unset($next_token);		// consume the token
+							break;
 						case 'sty':
 							unset($parse_object->style);
 							$parse_object->style = new WikipluginDBReportStyle($token);
 							unset($next_token);		// consume the token
-				    		break;
+							break;
 						case 'key':
-							switch(TikiLib::strtoupper($token->content)) {
+							switch (TikiLib::strtoupper($token->content)) {
 								case '<':
 									unset($parse_link);
 									$parse_link = new WikipluginDBReportLink($token);	// create the link object
@@ -1615,17 +1656,17 @@ function wikiplugin_dbreport_parse(&$code)
 									$parse_link_return = $parse_state; // return to this state
 									$parse_state = 5;	// switch state
 									unset($next_token);		// consume the token
-					    			break;
+									break;
 								default:
 									unset($parse_object); // we are finished parsing the fail
 									$parse_state = 0;	// switch state and reparse the token
-						    		break;
+									break;
 							}
-    						break;
+							break;
 						default:
 							return wikiplugin_dbreport_parse_error($token, "Unexpected " . $token->type_name() . " '$token->content' after 'FAIL'.");
 					}
-	    			break;
+					break;
 				default:
 					$parse_state = 0;
 			}
@@ -1637,18 +1678,18 @@ function wikiplugin_dbreport_parse(&$code)
 function wikiplugin_dbreport_error_box($error)
 {
 	$return = '~np~<table style="border-width:1px; border-style:dashed; border-color:red; background:#FFE0E0;"><tr><td>';
-	switch(gettype($error)) {
+	switch (gettype($error)) {
 		case 'array':
 			foreach ($error as $entry) {
-				$return .= $entry.'<br/>';
+				$return .= $entry . '<br/>';
 			}
-    		break;
+			break;
 		case 'string':
 		case 'object':
 			$return .= (string) $error;
-	    	break;
+			break;
 		default:
-			$return .= gettype($error).' ERROR!';
+			$return .= gettype($error) . ' ERROR!';
 	}
 	$return .= '</td></tr></table>~/np~';
 	return $return;
@@ -1657,10 +1698,10 @@ function wikiplugin_dbreport_error_box($error)
 function wikiplugin_dbreport_message_box($msg)
 {
 	$return = '<table style="border-width:1px; border-style:dashed; border-color:silver; background:#E0E0FF;"><tr><td>';
-	switch(gettype($error)) {
+	switch (gettype($error)) {
 		case 'array':
 			foreach ($msg as $entry) {
-				$return .= $entry.'<br/>';
+				$return .= $entry . '<br/>';
 			}
 			break;
 		default:
@@ -1672,23 +1713,23 @@ function wikiplugin_dbreport_message_box($msg)
 
 function wikiplugin_dbreport_help()
 {
-	return tra("Run a database report").":<br />~np~{DBREPORT(dsn=>dsnname | db=>dbname, wiki=0|1, debug=>0|1)}".tra("report definition")."{DBREPORT}~/np~";
+	return tra("Run a database report") . ":<br />~np~{DBREPORT(dsn=>dsnname | db=>dbname, wiki=0|1, debug=>0|1)}" . tra("report definition") . "{DBREPORT}~/np~";
 }
 
 
 function wikiplugin_dbreport_info()
 {
-	return array(
+	return [
 		'name' => tra('DB Report'),
 		'documentation' => 'PluginDBReport',
 		'description' => tra('Query an ADOdb database and display results (does not work with PDO)'),
-		'prefs' => array('wikiplugin_dbreport'),
+		'prefs' => ['wikiplugin_dbreport'],
 		'body' => tra('report definition'),
 		'validate' => 'all',
 		'iconname' => 'table',
 		'introduced' => 3,
-		'params' => array(
-			'dsn' => array(
+		'params' => [
+			'dsn' => [
 				'required' => false,
 				'name' => tra('Full DSN'),
 				'description' => tr('A full DSN (Data Source Name) connection string. Example: ')
@@ -1696,43 +1737,43 @@ function wikiplugin_dbreport_info()
 				'since' => '3.0',
 				'default' => '',
 				'filter' => 'url',
-			),
-			'db' => array(
+			],
+			'db' => [
 				'required' => false,
 				'name' => tra('Wiki DSN Name'),
 				'description' => tra('The name of a DSN connection defined by the Wiki administrator.'),
 				'since' => '3.0',
 				'default' => '',
 				'filter' => 'text',
-			),
-			'wiki' => array(
+			],
+			'wiki' => [
 				'required' => false,
 				'name' => tra('Wiki Syntax'),
 				'description' => tra('Parse wiki syntax within the report (not parsed by default)'),
 				'since' => '3.0',
 				'default' => '',
 				'filter' => 'digits',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 1),
-					array('text' => tra('No'), 'value' => 0)
-				),
-			),
-			'debug' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 1],
+					['text' => tra('No'), 'value' => 0]
+				],
+			],
+			'debug' => [
 				'required' => false,
 				'name' => tra('Debug'),
 				'description' => tra('Display the parsed report definition (not displayed by default)'),
 				'since' => '3.0',
 				'default' => '',
 				'filter' => 'digits',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 1),
-					array('text' => tra('No'), 'value' => 0)
-				),
-			),
-		),
-	);
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 1],
+					['text' => tra('No'), 'value' => 0]
+				],
+			],
+		],
+	];
 }
 
 
@@ -1747,18 +1788,18 @@ function wikiplugin_dbreport($data, $params)
 	global $wikiplugin_dbreport_fields_allowed;
 	global $wikiplugin_dbreport_record;
 	// initialize globals
-	$wikiplugin_dbreport_errors = array();
-	$wikiplugin_dbreport_fields = array();
+	$wikiplugin_dbreport_errors = [];
+	$wikiplugin_dbreport_fields = [];
 	$wikiplugin_dbreport_fields_allowed = false;
 	$wikiplugin_dbreport_record = null;
 	// extract parameters
 	extract($params, EXTR_SKIP);
 	// we need a dsn or db parameter
-	if (!isset($dsn) && !isset($db)) {
+	if (! isset($dsn) && ! isset($db)) {
 		return tra('Missing db or dsn parameter');
 	}
 	// parse the report definition
-	$parse_fix = ($_REQUEST['preview']) && ($prefs['tiki_release']=='2.2');
+	$parse_fix = ($_REQUEST['preview']) && ($prefs['tiki_release'] == '2.2');
 	if ($parse_fix) {
 		$report =& wikiplugin_dbreport_parse($data);
 	} else {
@@ -1770,7 +1811,7 @@ function wikiplugin_dbreport($data, $params)
 		return $ret;
 	}
 	// create the bind variables array
-	$bindvars = array();
+	$bindvars = [];
 	if (isset($report->params)) {
 		foreach ($report->params as $param) {
 			if (isset($param->name)) {
@@ -1782,8 +1823,8 @@ function wikiplugin_dbreport($data, $params)
 	}
 	// translate db name into dsn
 	if (isset($db)) {
-		$perms = Perms::get(array( 'type' => 'dsn', 'object' => $db ));
-		if ( ! $perms->dsn_query ) {
+		$perms = Perms::get([ 'type' => 'dsn', 'object' => $db ]);
+		if (! $perms->dsn_query) {
 			return tra('You do not have permission to use this feature');
 		}
 		// retrieve the dsn string
@@ -1797,7 +1838,7 @@ function wikiplugin_dbreport($data, $params)
 		}
 
 		$ado = ADONewConnection($dsn);
-		if (!$ado) {
+		if (! $ado) {
 			$ret .= wikiplugin_dbreport_error_box($ado->ErrorMsg());
 			return $ret;
 		} else {
@@ -1806,7 +1847,7 @@ function wikiplugin_dbreport($data, $params)
 			$query =& $ado->Execute($report->sql, $bindvars);
 			$field_count = $query->FieldCount();
 			$fetchfield = 'FetchField';
-			if (!$query) {
+			if (! $query) {
 				$ret .= wikiplugin_dbreport_error_box($ado->ErrorMsg());
 				return $ret;
 			}
@@ -1815,9 +1856,9 @@ function wikiplugin_dbreport($data, $params)
 		return (tra('No DSN connection string found!'));
 	}
 	// create an array of field names and their index
-	$field_index = array();
+	$field_index = [];
 	//	$field_count = $query->FieldCount();
-	for ($index = 0; $index<$field_count; $index++) {
+	for ($index = 0; $index < $field_count; $index++) {
 		$column =& $query->$fetchfield($index);
 		$field_index[$column->name] = $index;
 	}
@@ -1834,7 +1875,7 @@ function wikiplugin_dbreport($data, $params)
 		}
 	}
 	// does the report have a table definition?
-	if (!isset($report->table)) {
+	if (! isset($report->table)) {
 		// create a default definition from the data
 		$report->table = new WikipluginDBReportTable();
 		$style = 'sortable';
@@ -1851,7 +1892,7 @@ function wikiplugin_dbreport($data, $params)
 		$report->table->rows[] =& $row;
 		// fill in the cells
 		$field_count = $query->FieldCount();
-		for ($index = 0; $index<$field_count; $index++) {
+		for ($index = 0; $index < $field_count; $index++) {
 			// get the query field
 			$column =& $query->FetchField($index);
 			// create the header cell
@@ -1876,13 +1917,13 @@ function wikiplugin_dbreport($data, $params)
 	}
 	// are we debugging?
 	if ($debug) {
-		$ret .= wikiplugin_dbreport_message_box("~np~<pre>".htmlspecialchars($report->code())."</pre>~/np~");
+		$ret .= wikiplugin_dbreport_message_box("~np~<pre>" . htmlspecialchars($report->code()) . "</pre>~/np~");
 	}
 	// generate the report
-	if (!$wiki) {
+	if (! $wiki) {
 		$ret .= '~np~';
 	}
-	if (!$query->EOF) {
+	if (! $query->EOF) {
 		// get the first row
 		$current_row = $query->FetchRow();
 		// start the group breaks
@@ -1940,7 +1981,7 @@ function wikiplugin_dbreport($data, $params)
 			$ret .= $report->fail->html();
 		}
 	}
-	if (!$wiki) {
+	if (! $wiki) {
 		$ret .= '~/np~';
 	}
 	// close the database connection

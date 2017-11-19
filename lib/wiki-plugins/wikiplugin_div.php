@@ -9,19 +9,19 @@ function wikiplugin_div_info()
 {
 	global $prefs;
 
-	$info = array(
+	$info = [
 		'name' => tra('Div'),
 		'documentation' => 'PluginDiv',
 		'description' => tra('Define and format sections of a page or text'),
-		'prefs' => array('wikiplugin_div'),
+		'prefs' => ['wikiplugin_div'],
 		'body' => tra('text'),
 		'iconname' => 'code',
 		'filter' => 'wikicontent',
-		'tags' => array( 'basic' ),
+		'tags' => [ 'basic' ],
 		'validate' => 'arguments',
 		'introduced' => 1,
-		'params' => array(
-			'type' => array(
+		'params' => [
+			'type' => [
 				'required' => false,
 				'name' => tra('Type'),
 				'description' => tr('Indicate the type of HTML tag to use (default is %0)', '<code>div</code>'),
@@ -29,25 +29,25 @@ function wikiplugin_div_info()
 				'filter' => 'text',
 				'safe' => true,
 				'default' => 'div',
-				'options' => array(
-					array('text' => tra('None'), 'value' => ''),
-					array('text' => tra('Div'), 'value' => 'div'),
-					array('text' => tra('Span'), 'value' => 'span'),
-					array('text' => tra('Pre'), 'value' => 'pre'),
-					array('text' => tra('Bold'), 'value' => 'b'),
-					array('text' => tra('Italic'), 'value' => 'i'),
-					array('text' => tra('Teletype'), 'value' => 'tt'),
-					array('text' => tra('Paragraph'), 'value' => 'p'),
-					array('text' => tra('Block quote'), 'value' => 'blockquote'),
-					array('text' => tra('H1'), 'value' => 'h1'),
-					array('text' => tra('H2'), 'value' => 'h2'),
-					array('text' => tra('H3'), 'value' => 'h3'),
-					array('text' => tra('H4'), 'value' => 'h4'),
-					array('text' => tra('H5'), 'value' => 'h5'),
-					array('text' => tra('H6'), 'value' => 'h6'),
-				),
-			),
-			'bg' => array(
+				'options' => [
+					['text' => tra('None'), 'value' => ''],
+					['text' => tra('Div'), 'value' => 'div'],
+					['text' => tra('Span'), 'value' => 'span'],
+					['text' => tra('Pre'), 'value' => 'pre'],
+					['text' => tra('Bold'), 'value' => 'b'],
+					['text' => tra('Italic'), 'value' => 'i'],
+					['text' => tra('Teletype'), 'value' => 'tt'],
+					['text' => tra('Paragraph'), 'value' => 'p'],
+					['text' => tra('Block quote'), 'value' => 'blockquote'],
+					['text' => tra('H1'), 'value' => 'h1'],
+					['text' => tra('H2'), 'value' => 'h2'],
+					['text' => tra('H3'), 'value' => 'h3'],
+					['text' => tra('H4'), 'value' => 'h4'],
+					['text' => tra('H5'), 'value' => 'h5'],
+					['text' => tra('H6'), 'value' => 'h6'],
+				],
+			],
+			'bg' => [
 				'required' => false,
 				'name' => tra('Background Color'),
 				'description' => tra('As defined by CSS, name, or color hex code.'),
@@ -56,8 +56,8 @@ function wikiplugin_div_info()
 				'accepted' => tra('Valid CSS color name or hex code'),
 				'safe' => true,
 				'default' => '',
-			),
-			'width' => array(
+			],
+			'width' => [
 				'required' => false,
 				'name' => tra('Box width'),
 				'description' => tra('In pixels or percentage. Default is original size'),
@@ -65,8 +65,8 @@ function wikiplugin_div_info()
 				'default' => '',
 				'filter' => 'text',
 				'safe' => true,
-			),
-			'align' => array(
+			],
+			'align' => [
 				'required' => false,
 				'name' => tra('Text Alignment'),
 				'description' => tra('Aligns the text within the element'),
@@ -74,32 +74,31 @@ function wikiplugin_div_info()
 				'filter' => 'alpha',
 				'safe' => true,
 				'default' => '',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Left'), 'value' => 'left'),
-					array('text' => tra('Right'), 'value' => 'right'),
-					array('text' => tra('Center'), 'value' => 'center'),
-					array('text' => tra('Justify'), 'value' => 'justify'),
-				),
-			),
-			'float' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Left'), 'value' => 'left'],
+					['text' => tra('Right'), 'value' => 'right'],
+					['text' => tra('Center'), 'value' => 'center'],
+					['text' => tra('Justify'), 'value' => 'justify'],
+				],
+			],
+			'float' => [
 				'required' => false,
 				'name' => tra('Float Position'),
 				'description' => tr('Set the alignment for the entire element. For elements with a width of less than
-				100%, other elements will wrap around it unless the %0 parameter is appropriately set.', '<code>clear</code>'
-				),
+				100%, other elements will wrap around it unless the %0 parameter is appropriately set.', '<code>clear</code>'),
 				'since' => '1',
 				'filter' => 'alpha',
 				'safe' => true,
 				'default' => '',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Right'), 'value' => 'right'),
-					array('text' => tra('Left'), 'value' => 'left'),
-					array('text' => tra('None'), 'value' => 'none'),
-				),
-			),
-			'clear' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Right'), 'value' => 'right'],
+					['text' => tra('Left'), 'value' => 'left'],
+					['text' => tra('None'), 'value' => 'none'],
+				],
+			],
+			'clear' => [
 				'required' => false,
 				'name' => tra('Clear'),
 				'description' => tra('Content cannot wrap around this object because of what the parameter is set to.'),
@@ -107,15 +106,15 @@ function wikiplugin_div_info()
 				'filter' => 'text',
 				'safe' => true,
 				'default' => '',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Right'), 'value' => 'right'),
-					array('text' => tra('Left'), 'value' => 'left'),
-					array('text' => tra('Both'), 'value' => 'both'),
-					array('text' => tra('None'), 'value' => 'none'),
-				),
-			),
-			'class' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Right'), 'value' => 'right'],
+					['text' => tra('Left'), 'value' => 'left'],
+					['text' => tra('Both'), 'value' => 'both'],
+					['text' => tra('None'), 'value' => 'none'],
+				],
+			],
+			'class' => [
 				'required' => false,
 				'name' => tra('CSS Class'),
 				'description' => tra('Apply custom CSS class to the div.'),
@@ -123,8 +122,8 @@ function wikiplugin_div_info()
 				'filter' => 'text',
 				'safe' => true,
 				'default' => '',
-			),
-			'id' => array(
+			],
+			'id' => [
 				'required' => false,
 				'name' => tra('HTML ID'),
 				'description' => tra("Sets the id attribute of the div, as defined by HTML."),
@@ -132,8 +131,8 @@ function wikiplugin_div_info()
 				'filter' => 'text',
 				'safe' => true,
 				'default' => '',
-			),
-			'title' => array(
+			],
+			'title' => [
 				'required' => false,
 				'name' => tra('Title attribute'),
 				'description' => tra('Title for the div, usually displayed as a tooltip.'),
@@ -141,8 +140,8 @@ function wikiplugin_div_info()
 				'filter' => 'text',
 				'safe' => true,
 				'default' => '',
-			),
-			'onclick' => array(
+			],
+			'onclick' => [
 				'required' => false,
 				'name' => tra('onClick attribute'),
 				'description' => tra('Enter on onclick event'),
@@ -150,8 +149,8 @@ function wikiplugin_div_info()
 				'advanced' => true,
 				'since' => '14.0',
 				'default' => '',
-			),
-			'style' => array(
+			],
+			'style' => [
 				// Note that this is ignored unless preference wiki_plugindiv_approvable is set in
 				// Configuration → Configuration Panels → Editing and Plugins → Miscellaneous
 				'required' => false,
@@ -161,10 +160,10 @@ function wikiplugin_div_info()
 				'filter' => 'text',
 				'advanced' => true,
 				'default' => '',
-			),
+			],
 
-		),
-	);
+		],
+	];
 
 	if ($prefs['wiki_plugindiv_approvable'] != 'y') {
 		unset($info['validate']);
@@ -172,8 +171,7 @@ function wikiplugin_div_info()
 		unset($info['params']['style']);
 	}
 
-  return $info;
-
+	return $info;
 }
 
 function wikiplugin_div($data, $params)
@@ -181,29 +179,29 @@ function wikiplugin_div($data, $params)
 	global $prefs;
 
 	extract($params, EXTR_SKIP);
-	if ($prefs['wiki_plugindiv_approvable'] != 'y' || !isset($style)) {
+	if ($prefs['wiki_plugindiv_approvable'] != 'y' || ! isset($style)) {
 		// If any other unsafe parameters are created, unset them here
 		$style = '';
 	}
-	$possibletypes = array('div','span','pre','b','i','tt','p','blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6');
-	$t    = (isset($type) and in_array($type, $possibletypes)) ? "$type"  : "div";
-	$c    = (isset($class)) ? " class='$class'"  : "";
-	$id   = (isset($id)) ? " id='$id'"  : "";
-	$oc   = (isset($onclick)) ? " onclick='$onclick'"  : "";
-	$w    = (isset($width)) ? " width: $width;"  : "";
-	$bg   = (isset($bg))    ? " background-color: $bg;" : "";
+	$possibletypes = ['div','span','pre','b','i','tt','p','blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+	$t    = (isset($type) and in_array($type, $possibletypes)) ? "$type" : "div";
+	$c    = (isset($class)) ? " class='$class'" : "";
+	$id   = (isset($id)) ? " id='$id'" : "";
+	$oc   = (isset($onclick)) ? " onclick='$onclick'" : "";
+	$w    = (isset($width)) ? " width: $width;" : "";
+	$bg   = (isset($bg)) ? " background-color: $bg;" : "";
 	$al   = (isset($align) && ($align == 'right' || $align == "center" || $align == "justify" || $align == 'left')) ? " text-align: $align;" : '';
-	$fl   = (isset($float) && ($float == 'left' || $float == 'right' || $float == 'none')) ? " float: $float;"  : '';
-	$cl   = (isset($clear) && ($clear == 'left' || $clear == 'right' || $clear == 'both' || $clear == 'none')) ? " clear: $clear;"  : '';
+	$fl   = (isset($float) && ($float == 'left' || $float == 'right' || $float == 'none')) ? " float: $float;" : '';
+	$cl   = (isset($clear) && ($clear == 'left' || $clear == 'right' || $clear == 'both' || $clear == 'none')) ? " clear: $clear;" : '';
 
-	if (!empty($title)) {
+	if (! empty($title)) {
 		$title = " title=\"$title\"";
 	} else {
 		$title = '';
 	}
 	$begin  = "<{$t}{$title}";
 	$format = "$style$bg$al$w$fl$cl";
-	if (!empty($format)) {
+	if (! empty($format)) {
 		$begin .= " style=\"$format\"";
 	}
 	$begin .= " $c $id $oc>";

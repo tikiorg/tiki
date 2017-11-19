@@ -1,39 +1,39 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 function wikiplugin_exercise_info()
 {
-	return array(
+	return [
 		'name' => tra('Exercise'),
 		'documentation' => tra('PluginExercise'),
 		'description' => tra('Create an exercise/test with questions and grade'),
-		'prefs' => array('wikiplugin_exercise'),
+		'prefs' => ['wikiplugin_exercise'],
 		'filter' => 'text',
 		'format' => 'html',
 		'iconname' => 'education',
 		'introduced' => 9,
-		'tags' => array('basic'),
-		'params' => array(
-			'answer' => array(
+		'tags' => ['basic'],
+		'params' => [
+			'answer' => [
 				'required' => false,
 				'name' => tr('Answer'),
 				'description' => tr('Used inline to specify the right answer to the question and propose an input field.'),
 				'since' => '9.0',
 				'filter' => 'text',
-			),
-			'incorrect' => array(
+			],
+			'incorrect' => [
 				'required' => false,
 				'name' => tr('Incorrect'),
 				'description' => tr('Incorrect answer to suggest. Several incorrect answers can be suggested (separated by "+")'),
 				'since' => '9.0',
 				'filter' => 'text',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 function wikiplugin_exercise($data, $params)
@@ -70,7 +70,7 @@ HTML;
 
 function wikiplugin_exercise_parse_data($data)
 {
-	$exercises = array();
+	$exercises = [];
 	$key = -1;
 
 	foreach (explode("\n", $data) as $line) {
@@ -82,10 +82,10 @@ function wikiplugin_exercise_parse_data($data)
 
 		if (substr($line, 0, 3) === '---') {
 			$key = count($exercises);
-			$exercises[] = array();
+			$exercises[] = [];
 		} elseif ($key !== -1) {
 			$parts = array_map('trim', explode(':', $line, 2));
-			$exercises[$key][] = array('option' => array_shift($parts), 'justification' => array_shift($parts));
+			$exercises[$key][] = ['option' => array_shift($parts), 'justification' => array_shift($parts)];
 		}
 	}
 
@@ -94,15 +94,15 @@ function wikiplugin_exercise_parse_data($data)
 
 function wikiplugin_exercise_parse_argument($data)
 {
-	$out = array();
+	$out = [];
 	$answers = explode('+', $data);
 	foreach ($answers as $possibility) {
 		if (preg_match('/^\s*([^\(]+)(:\s*\(\s*(.*)\s*\))?\s*/', $possibility, $parts)) {
-			$out[] = array('option' => $parts[1], 'justification' => isset($parts[2]) ? $parts[2] : false);
+			$out[] = ['option' => $parts[1], 'justification' => isset($parts[2]) ? $parts[2] : false];
 		}
 	}
 
-	return array($out);
+	return [$out];
 }
 
 function wikiplugin_exercise_process_group($exercises, $scope = '.exercise-input')
@@ -154,8 +154,8 @@ function wikiplugin_exercise_finalize()
 
 	$checkYourScore = smarty_modifier_escape(tr('Check your score'));
 	$yourScoreIs = tr('You scored %0 out of %1', '~SCORE~', '~TOTAL~');
-	$checkIcon = smarty_function_icon(array('_id' => 'tick', 'title' => tr('Good!')), $smarty);
-	$crossIcon = smarty_function_icon(array('_id' => 'cross', 'title' => tr('Oops!')), $smarty);
+	$checkIcon = smarty_function_icon(['_id' => 'tick', 'title' => tr('Good!')], $smarty);
+	$crossIcon = smarty_function_icon(['_id' => 'cross', 'title' => tr('Oops!')], $smarty);
 
 	$js = <<<JS
 $.exerciseFinalize = function (random) {
@@ -208,4 +208,3 @@ JS;
 </form>
 HTML;
 }
-

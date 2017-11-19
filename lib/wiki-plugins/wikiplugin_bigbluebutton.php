@@ -7,17 +7,17 @@
 
 function wikiplugin_bigbluebutton_info()
 {
-	return array(
+	return [
 		'name' => tra('BigBlueButton'),
 		'documentation' => 'PluginBigBlueButton',
 		'description' => tra('Hold a video/audio/chat/presentation session using BigBlueButton'),
 		'format' => 'html',
-		'prefs' => array( 'wikiplugin_bigbluebutton', 'bigbluebutton_feature' ),
+		'prefs' => [ 'wikiplugin_bigbluebutton', 'bigbluebutton_feature' ],
 		'iconname' => 'video',
 		'introduced' => 5,
-		'tags' => array( 'basic' ),
-		'params' => array(
-			'name' => array(
+		'tags' => [ 'basic' ],
+		'params' => [
+			'name' => [
 				'required' => true,
 				'name' => tra('Meeting'),
 				'description' => tr('MeetingID for BigBlueButton. This is a 5 digit number, starting with a 7.
@@ -25,32 +25,32 @@ function wikiplugin_bigbluebutton_info()
 				'since' => '5.0',
 				'filter' => 'text',
 				'default' => '',
-			),
-			'prefix' => array(
+			],
+			'prefix' => [
 				'required' => false,
 				'name' => tra('Anonymous Prefix'),
 				'description' => tra('Unregistered users will get this token prepended to their name.'),
 				'since' => '5.0',
 				'filter' => 'text',
 				'default' => '',
-			),
-			'welcome' => array(
+			],
+			'welcome' => [
 				'required' => false,
 				'name' => tra('Welcome Message'),
 				'description' => tra('A message to be provided when someone enters the room.'),
 				'since' => '5.0',
 				'filter' => 'text',
 				'default' => '',
-			),
-			'number' => array(
+			],
+			'number' => [
 				'required' => false,
 				'name' => tra('Dial Number'),
 				'description' => tra('The phone-in support number to join from traditional phones.'),
 				'since' => '5.0',
 				'filter' => 'text',
 				'default' => '',
-			),
-			'voicebridge' => array(
+			],
+			'voicebridge' => [
 				'required' => false,
 				'name' => tra('Voice Bridge'),
 				'description' => tra('Code to enter for phone attendees to join the room. Typically, the same 5 digits
@@ -58,16 +58,16 @@ function wikiplugin_bigbluebutton_info()
 				'since' => '5.0',
 				'filter' => 'digits',
 				'default' => '',
-			),
-			'logout' => array(
+			],
+			'logout' => [
 				'required' => false,
 				'name' => tra('Log-out URL'),
 				'description' => tra('URL to which the user will be redirected after logging out of BigBlueButton.'),
 				'since' => '5.0',
 				'filter' => 'url',
 				'default' => '',
-			),
-			'recording' => array(
+			],
+			'recording' => [
 				'required' => false,
 				'name' => tra('Record'),
 				'description' => tra('The recording starts when the first person enters the room, and ends when the last
@@ -76,30 +76,30 @@ function wikiplugin_bigbluebutton_info()
 				'since' => '5.0',
 				'filter' => 'digits',
 				'default' => 0,
-				'options' => array(
-					array('value' => 0, 'text' => tr('Off')),
-					array('value' => 1, 'text' => tr('On')),
-				),
-			),
-			'showrecording' => array(
+				'options' => [
+					['value' => 0, 'text' => tr('Off')],
+					['value' => 1, 'text' => tr('On')],
+				],
+			],
+			'showrecording' => [
 				'required' => false,
 				'name' => tra('Display Recordings'),
 				'description' => tra('Enable or Disable the display of video recordings.'),
 				'filter' => 'alpha',
 				'default' => 'y',
-			),
-			'showattendees' => array(
+			],
+			'showattendees' => [
 				'required' => false,
 				'name' => tra('Display Attendees'),
 				'description' => tra('Enable or Disable the display of attendees list.'),
 				'filter' => 'alpha',
 				'default' => 'y',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
-function wikiplugin_bigbluebutton( $data, $params )
+function wikiplugin_bigbluebutton($data, $params)
 {
 	try {
 		global $prefs, $user;
@@ -110,17 +110,17 @@ function wikiplugin_bigbluebutton( $data, $params )
 
 		$perms = Perms::get('bigbluebutton', $meeting);
 
-		$params = array_merge(array('prefix' => '', 'recording' => 0), $params);
+		$params = array_merge(['prefix' => '', 'recording' => 0], $params);
 		// This is incomplete, will only apply if the dynamic feature is enabled. To be completed.
-		$params['configuration'] = array(
-			'presentation' => array(
+		$params['configuration'] = [
+			'presentation' => [
 				'active' => false,
-			),
-		);
+			],
+		];
 		$smarty->assign('bbb_params', Tiki_Security::get()->encode($params));
 
-		if ( ! $bigbluebuttonlib->roomExists($meeting) ) {
-			if ( ! isset($_POST['bbb']) || $_POST['bbb'] != $meeting || ! $perms->bigbluebutton_create ) {
+		if (! $bigbluebuttonlib->roomExists($meeting)) {
+			if (! isset($_POST['bbb']) || $_POST['bbb'] != $meeting || ! $perms->bigbluebutton_create) {
 				if ($perms->bigbluebutton_view_rec && $params['showrecording'] != 'n') {
 					$smarty->assign('bbb_recordings', $bigbluebuttonlib->getRecordings($meeting));
 				} else {
@@ -145,7 +145,6 @@ function wikiplugin_bigbluebutton( $data, $params )
 			}
 
 			return $smarty->fetch('wiki-plugins/wikiplugin_bigbluebutton.tpl');
-
 		}
 
 		// Won't display anything if recordings were not loaded

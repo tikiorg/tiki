@@ -7,29 +7,32 @@
 
 function wikiplugin_trackeritemcopy_info()
 {
-	return array(
+	return [
 		'name' => tra('Copy Tracker Item'),
 		'documentation' => tra('PluginTrackerItemCopy'),
 		'description' => tra('Copy a tracker item'),
-		'prefs' => array('wikiplugin_trackeritemcopy', 'feature_trackers'),
+		'prefs' => ['wikiplugin_trackeritemcopy', 'feature_trackers'],
 		'validate' => 'all',
 		'filter' => 'wikicontent',
 		'iconname' => 'copy',
 		'introduced' => 7,
-		'tags' => array( 'experimental' ),
-		'params' => array(
-			'trackerId' => array(
+		'tags' => [ 'experimental' ],
+		'params' => [
+			'trackerId' => [
 				'required' => true,
 				'name' => tra('Tracker ID'),
-				'description' => tr('Tracker from which to copy item, joined tracker ids separated by %0:%1',
-					'<code>', '</code>'),
+				'description' => tr(
+					'Tracker from which to copy item, joined tracker ids separated by %0:%1',
+					'<code>',
+					'</code>'
+				),
 				'since' => '7.0',
 				'filter' => 'text',
 				'default' => '',
-				'separator' => array(':'),
+				'separator' => [':'],
 				'profile_reference' => 'tracker',
-			),
-			'linkFieldIds' => array(
+			],
+			'linkFieldIds' => [
 				'required' => true,
 				'name' => tra('Link Field IDs'),
 				'description' => tr('Fields links that are related to this tracker that you would like to join on,
@@ -37,10 +40,10 @@ function wikiplugin_trackeritemcopy_info()
 				'since' => '8.0',
 				'filter' => 'text',
 				'default' => '',
-				'separator' => array(':'),
+				'separator' => [':'],
 				'profile_reference' => 'tracker_field',
-			),
-			'copyFieldIds' => array(
+			],
+			'copyFieldIds' => [
 				'required' => true,
 				'name' => tra('Copy Field IDs'),
 				'description' => tr('Field IDs to copy old value of, separated by %0:%1, joined fields separated by
@@ -48,10 +51,10 @@ function wikiplugin_trackeritemcopy_info()
 				'since' => '7.0',
 				'filter' => 'text',
 				'default' => '',
-				'separator' => array('|', ':'),
+				'separator' => ['|', ':'],
 				'profile_reference' => 'tracker_field',
-			),
-			'updateFieldIds' => array(
+			],
+			'updateFieldIds' => [
 				'required' => false,
 				'name' => tra('Update Field IDs'),
 				'description' => tr('Field IDs to update with new values specified, separated by %0:%1, joined fields
@@ -59,10 +62,10 @@ function wikiplugin_trackeritemcopy_info()
 				'since' => '7.0',
 				'filter' => 'text',
 				'default' => '',
-				'separator' => array('|', ':'),
+				'separator' => ['|', ':'],
 				'profile_reference' => 'tracker_field',
-			),
-			'updateFieldValues' => array(
+			],
+			'updateFieldValues' => [
 				'required' => false,
 				'name' => tra('New Values'),
 				'description' => tr('New values to replace for the field IDs specified, separated by %0:%1, joined
@@ -71,10 +74,10 @@ function wikiplugin_trackeritemcopy_info()
 				'since' => '7.0',
 				'filter' => 'text',
 				'default' => '',
-				'separator' => array('|', ':'),
+				'separator' => ['|', ':'],
 				'profile_reference' => 'tracker_field',
-			),
-			'itemId' => array(
+			],
+			'itemId' => [
 				'required' => false,
 				'name' => tra('Item ID'),
 				'description' => tra('ID of item to make copy of, otherwise input is asked for'),
@@ -82,16 +85,16 @@ function wikiplugin_trackeritemcopy_info()
 				'filter' => 'text',
 				'default' => '',
 				'profile_reference' => 'tracker_item',
-			),
-			'copies_on_load' => array(
+			],
+			'copies_on_load' => [
 				'required' => false,
 				'name' => tra('Make this number of copies on load'),
 				'description' => tra('Set the number of copies to make on load of plugin automatically'),
 				'since' => '7.0',
 				'filter' => 'int',
 				'default' => ''
-			),
-			'return_array' => array(
+			],
+			'return_array' => [
 				'required' => false,
 				'name' => tra('Returns array non-interactively'),
 				'advanced' => true,
@@ -100,21 +103,23 @@ function wikiplugin_trackeritemcopy_info()
 				'since' => '7.0',
 				'filter' => 'text',
 				'default' => '',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
-function wikiplugin_trackeritemcopy( $data, $params )
+function wikiplugin_trackeritemcopy($data, $params)
 {
 	$trklib = TikiLib::lib("trk");
 	$smarty = TikiLib::lib('smarty');
 
-	if (!isset($params["trackerId"]) || !isset($params["copyFieldIds"])) {
+	if (! isset($params["trackerId"]) || ! isset($params["copyFieldIds"])) {
 		return tra('Missing mandatory parameters');
 	} else {
 		$trackerId = $params["trackerId"];
-		if (is_array($trackerId) == false) $trackerId = array($trackerId);
+		if (is_array($trackerId) == false) {
+			$trackerId = [$trackerId];
+		}
 		$copyFieldIds = $params["copyFieldIds"];
 	}
 
@@ -129,24 +134,25 @@ function wikiplugin_trackeritemcopy( $data, $params )
 	}
 
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
 		$items_copy = function ($trackerId, $updateFieldIds, $updateFieldValues, $copyFieldIds, $itemIds, $linkFieldId, $itemLinkId, $copies) {
 			$trklib = TikiLib::lib('trk');
 
-			if (is_array($itemIds) == false) $itemIds = array($itemIds);
+			if (is_array($itemIds) == false) {
+				$itemIds = [$itemIds];
+			}
 
 			foreach ($itemIds as $itemId) {
 				$tracker_fields_info = $trklib->list_tracker_fields($trackerId);
 
-				$fieldTypes = array();
-				$fieldOptionsArray = array();
+				$fieldTypes = [];
+				$fieldOptionsArray = [];
 
 				foreach ($tracker_fields_info['data'] as $t) {
 					$fieldTypes[$t['fieldId']] = $t['type'];
 					$fieldOptionsArray[$t['fieldId']] = $t['options_array'];
 				}
 
-				$ins_fields["data"] = array();
+				$ins_fields["data"] = [];
 
 				if (isset($linkFieldId) && isset($itemLinkId)) {
 					$updateFieldIds[] = $linkFieldId;
@@ -156,32 +162,32 @@ function wikiplugin_trackeritemcopy( $data, $params )
 				//print_r(array($trackerId, $updateFieldIds, $updateFieldValues, $copyFieldIds, $itemIds, $linkFieldId, $itemLinkId, $copies));
 
 				for ($i = 0, $count_updateFieldIds = count($updateFieldIds); $i < $count_updateFieldIds; $i++) {
-					$ins_fields["data"][] = array(
+					$ins_fields["data"][] = [
 						'options_array' => $fieldOptionsArray[$updateFieldIds[$i]],
 						'type' => $fieldTypes[$updateFieldIds[$i]],
 						'fieldId' => $updateFieldIds[$i],
 						'value' => $updateFieldValues[$i]
-					);
+					];
 				}
 
 				// CUSTOM: this part is totally custom to store admin notes (how to generalize?)
-				if (!empty($_POST['admin_notes_for_copy'])) {
-					$ins_fields["data"][] = array(
+				if (! empty($_POST['admin_notes_for_copy'])) {
+					$ins_fields["data"][] = [
 						'type' => 'a',
 						'fieldId' => 118,
 						'value' => $_POST['admin_notes_for_copy']
-					);
+					];
 				}
 				// end totally CUSTOM part
 
-				$newitems = array();
+				$newitems = [];
 				for ($i = 0; $i < $copies; $i++) {
 					// Check for -randomstring- and f_xx
-					$ins_fields_final["data"] = array();
+					$ins_fields_final["data"] = [];
 					foreach ($ins_fields["data"] as $h) {
 						if ($h["value"] == '-randomstring-') {
 							$h["value"] = $trklib->genPass();
-						} else if (substr($h["value"], 0, 2) == 'f_') {
+						} elseif (substr($h["value"], 0, 2) == 'f_') {
 							$sourceFieldId = (int) trim(substr($h["value"], 2));
 							$h["value"] = $trklib->get_item_value($trackerId, $itemId, $sourceFieldId);
 						}
@@ -197,15 +203,15 @@ function wikiplugin_trackeritemcopy( $data, $params )
 				}
 			}
 
-			return array(
+			return [
 				"items" => $newitems,
 				"data" => $newitemsdata,
 				"list" => $newitemslist
-			);
+			];
 		};
 
-		$return_array = array();
-		$itemIds = array();
+		$return_array = [];
+		$itemIds = [];
 
 		foreach ($trackerId as $key => $trackerIdLeft) {
 			//ensure that the fields are set and usable
@@ -231,13 +237,12 @@ function wikiplugin_trackeritemcopy( $data, $params )
 			}
 
 			if ($copies > 0) {
-
 				if ($key > 0) {
 					$qry = Tracker_Query::tracker($trackerIdLeft)
 						->fields($params["linkFieldIds"][0])
-						->equals(array($itemId));
+						->equals([$itemId]);
 
-					$itemIds = array();
+					$itemIds = [];
 					foreach ($qry as $linkedItemIds => $item) {
 						$itemIds[] = $linkedItemIds;
 					}
@@ -260,7 +265,6 @@ function wikiplugin_trackeritemcopy( $data, $params )
 					$copies
 				);
 			}
-
 		}
 
 		$smarty->assign('newitemslist', $return_array['list']);
@@ -272,7 +276,6 @@ function wikiplugin_trackeritemcopy( $data, $params )
 				return $return_array;
 			}
 		}
-
 	}
 
 	return $smarty->fetch('wiki-plugins/wikiplugin_trackeritemcopy.tpl');

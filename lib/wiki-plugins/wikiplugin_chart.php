@@ -7,197 +7,203 @@
 
 function wikiplugin_chart_info()
 {
-	return array(
+	return [
 		'name' => tra('Chart'),
 		'documentation' => 'PluginChart',
 		'description' => tra('Display a chart from TikiSheet'),
-		'prefs' => array( 'feature_sheet', 'wikiplugin_chart' ),
+		'prefs' => [ 'feature_sheet', 'wikiplugin_chart' ],
 		'iconname' => 'chart',
 		'body' => tra('Chart caption.'),
 		'introduced' => 2,
-		'params' => array(
-			'id' => array(
+		'params' => [
+			'id' => [
 				'required' => true,
 				'name' => tra('Spreadsheet ID'),
 				'description' => tra('Data sheet ID'),
 				'since' => '2.0',
 				'filter' => 'digits',
 				'profile_reference' => 'sheet',
-			),
-			'type' => array(
+			],
+			'type' => [
 				'required' => true,
 				'name' => tra('Chart Type'),
 				'description' => tra('Specify a valid chart type'),
 				'accepted' => 'BarStackGraphic | MultibarGraphic | MultilineGraphic | PieChartGraphic',
 				'since' => '2.0',
 				'filter' => 'word',
-			),
-			'width' => array(
+			],
+			'width' => [
 				'required' => true,
 				'name' => tra('Chart Width'),
 				'description' => tra('Width in pixels.'),
 				'since' => '2.0',
 				'filter' => 'digits',
-			),
-			'height' => array(
+			],
+			'height' => [
 				'required' => true,
 				'name' => tra('Chart Height'),
 				'description' => tra('Height in pixels.'),
 				'since' => '2.0',
 				'filter' => 'digits',
-			),
-			'value' => array(
+			],
+			'value' => [
 				'required' => false,
 				'name' => tra('Value series'),
 				'description' => tra('Required for pie charts'),
 				'since' => '2.0',
 				'filter' => 'text',
-			),
-			'x' => array(
+			],
+			'x' => [
 				'required' => false,
 				'name' => tra('Independent series'),
 				'description' => tra('Required for types other than pie chart'),
 				'since' => '2.0',
 				'filter' => 'text',
-			),
-			'y0' => array(
+			],
+			'y0' => [
 				'required' => false,
 				'name' => tra('Dependent series'),
 				'description' => tra('Required for types other than pie chart'),
 				'since' => '2.0',
 				'filter' => 'text',
-			),
-			'y1' => array(
+			],
+			'y1' => [
 				'required' => false,
 				'name' => tra('Dependent series'),
 				'description' => tra('Description needed'),
 				'since' => '2.0',
 				'filter' => 'text',
-			),
-			'y2' => array(
+			],
+			'y2' => [
 				'required' => false,
 				'name' => tra('Dependent series'),
 				'description' => tra('Description needed'),
 				'since' => '2.0',
 				'filter' => 'text',
-			),
-			'y3' => array(
+			],
+			'y3' => [
 				'required' => false,
 				'name' => tra('Dependent series'),
 				'description' => tra('Description needed'),
 				'since' => '2.0',
 				'filter' => 'text',
-			),
-			'y4' => array(
+			],
+			'y4' => [
 				'required' => false,
 				'name' => tra('Dependent series'),
 				'description' => tra('Description needed'),
 				'since' => '2.0',
 				'filter' => 'text',
-			),
-			'color' => array(
+			],
+			'color' => [
 				'required' => false,
 				'name' => tra('Colors'),
 				'description' => tra('List of colors to use.'),
 				'since' => '2.0',
 				'filter' => 'text',
-			),
-			'style' => array(
+			],
+			'style' => [
 				'required' => false,
 				'name' => tra('Styles'),
 				'description' => tra('List of styles to use.'),
 				'since' => '2.0',
 				'filter' => 'text',
-			),
-			'label' => array(
+			],
+			'label' => [
 				'required' => false,
 				'name' => tra('Labels'),
 				'description' => tra('Labels for the series or values in the legend.'),
 				'since' => '2.0',
 				'filter' => 'text',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 function wikiplugin_chart($data, $params)
 {
 	extract($params, EXTR_SKIP);
 
-	if (!isset($id))
+	if (! isset($id)) {
 		return ("<b>missing id parameter for plugin</b><br />");
+	}
 
-	if (!isset($type))
+	if (! isset($type)) {
 		return ("<b>missing type parameter for plugin</b><br />");
+	}
 
-	$params = array( "sheetId" => $id, "graphic" => $type, "title" => $data );
-	switch( $type ) {
+	$params = [ "sheetId" => $id, "graphic" => $type, "title" => $data ];
+	switch ($type) {
 		case 'PieChartGraphic':
-			if ( !isset( $value ) ) {
+			if (! isset($value)) {
 				return "<b>missing value parameter for plugin</b><br />";
 			}
 
 			$params['series[value]'] = $value;
-	    	break;
+			break;
 
-	default:
-		$params['independant'] = isset( $independant ) ? $independant : 'horizontal';
-		$params['horizontal'] = isset( $horizontal ) ? $horizontal : 'bottom';
-		$params['vertical'] = isset( $vertical ) ? $vertical : 'left';
+		default:
+			$params['independant'] = isset($independant) ? $independant : 'horizontal';
+			$params['horizontal'] = isset($horizontal) ? $horizontal : 'bottom';
+			$params['vertical'] = isset($vertical) ? $vertical : 'left';
 
-		if ( !isset( $x ) ) {
-			return "<b>missing x parameter for plugin</b><br />";
-		}
+			if (! isset($x)) {
+				return "<b>missing x parameter for plugin</b><br />";
+			}
 
-		$params['series[x]'] = $x;
+			$params['series[x]'] = $x;
 
-		for ( $i = 0; isset( ${'y' . $i} ); $i++ ) {
-			$params['series[y' . $i . ']'] = ${'y' . $i};
-		}
+			for ($i = 0; isset(${'y' . $i}); $i++) {
+				$params['series[y' . $i . ']'] = ${'y' . $i};
+			}
 
-    	break;
+			break;
 	}
 
-	$params['series[color]'] = isset( $color ) ? $color : '';
-	$params['series[style]'] = isset( $style ) ? $style : '';
-	$params['series[label]'] = isset( $label ) ? $label : '';
+	$params['series[color]'] = isset($color) ? $color : '';
+	$params['series[style]'] = isset($style) ? $style : '';
+	$params['series[label]'] = isset($label) ? $label : '';
 
-	if ( function_exists('imagepng') ) {
-		if ( !isset($width) )
+	if (function_exists('imagepng')) {
+		if (! isset($width)) {
 			return "<b>missing width parameter for plugin</b><br />";
-		if ( !isset($height) )
+		}
+		if (! isset($height)) {
 			return "<b>missing height parameter for plugin</b><br />";
+		}
 
 		$params['width'] = $width;
 		$params['height'] = $height;
 
 		$disp = '<img src="' . _wikiplugin_chart_uri($params, 'PNG') . '"/>';
-	} elseif ( function_exists('image_jpeg') ) {
-		if ( !isset( $width ) )
+	} elseif (function_exists('image_jpeg')) {
+		if (! isset($width)) {
 			return "<b>missing width parameter for plugin</b><br />";
-		if ( !isset( $height ) )
+		}
+		if (! isset($height)) {
 			return "<b>missing height parameter for plugin</b><br />";
+		}
 
 		$params['width'] = $width;
 		$params['height'] = $height;
 
 		$disp = '<img src="' . _wikiplugin_chart_uri($params, 'JPEG') . '"/>';
-	}
-	elseif ( function_exists('pdf_new') )
+	} elseif (function_exists('pdf_new')) {
 		$disp = tra("Chart as PDF");
-	elseif ( function_exists('ps_new') )
+	} elseif (function_exists('ps_new')) {
 		$disp = tra("Chart as PostScript");
-	else
+	} else {
 		return "<b>no valid renderer for plugin</b><br />";
+	}
 
-	if ( function_exists('pdf_new') ) {
-		$params['format'] = isset( $format ) ? $format : 'A4';
-		$params['orientation'] = isset( $orientation ) ? $orientation : 'landscape';
+	if (function_exists('pdf_new')) {
+		$params['format'] = isset($format) ? $format : 'A4';
+		$params['orientation'] = isset($orientation) ? $orientation : 'landscape';
 
 		$disp = '<a href="' . _wikiplugin_chart_uri($params, 'PDF') . '">' . $disp . '</a>';
-	} elseif ( function_exists('ps_new') ) {
-		$params['format'] = isset( $format ) ? $format : 'A4';
-		$params['orientation'] = isset( $orientation ) ? $orientation : 'landscape';
+	} elseif (function_exists('ps_new')) {
+		$params['format'] = isset($format) ? $format : 'A4';
+		$params['orientation'] = isset($orientation) ? $orientation : 'landscape';
 
 		$disp = '<a href="' . _wikiplugin_chart_uri($params, 'PS') . '">' . $disp . '</a>';
 	}
@@ -205,12 +211,13 @@ function wikiplugin_chart($data, $params)
 	return $disp;
 }
 
-function _wikiplugin_chart_uri( $params, $renderer )
+function _wikiplugin_chart_uri($params, $renderer)
 {
 	$params['renderer'] = $renderer;
-	$array = array();
-	foreach ( $params as $key => $value )
+	$array = [];
+	foreach ($params as $key => $value) {
 		$array[] = rawurlencode($key) . '=' . rawurlencode($value);
+	}
 
 	return 'tiki-graph_sheet.php?' . implode('&', $array);
 }

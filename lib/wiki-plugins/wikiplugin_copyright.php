@@ -1,26 +1,29 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ("lib/copyrights/copyrightslib.php");
+require_once("lib/copyrights/copyrightslib.php");
 
 function wikiplugin_copyright_info()
 {
-	return array(
+	return [
 		'name' => tra('Copyright'),
 		'documentation' => 'PluginCopyright',
 		'description' => tra('Insert copyright notices'),
-		'prefs' => array( 'wiki_feature_copyrights', 'wikiplugin_copyright' ),
-		'body' => tr('Pattern for display of the copyright information. May contain %0~title~%1, %0~year~%1, %0~authors~%1 and %0~holder~%1.',
-			'<code>', '</code>'),
+		'prefs' => [ 'wiki_feature_copyrights', 'wikiplugin_copyright' ],
+		'body' => tr(
+			'Pattern for display of the copyright information. May contain %0~title~%1, %0~year~%1, %0~authors~%1 and %0~holder~%1.',
+			'<code>',
+			'</code>'
+		),
 		'iconname' => 'copyright',
 		'introduced' => 1,
-		'params' => array(
-		),
-	);
+		'params' => [
+		],
+	];
 }
 
 function wikiplugin_copyright($data, $params)
@@ -29,7 +32,7 @@ function wikiplugin_copyright($data, $params)
 
 	$copyrightslib = new CopyrightsLib;
 
-	if (!isset($_REQUEST['page'])) {
+	if (! isset($_REQUEST['page'])) {
 		return '';
 	}
 

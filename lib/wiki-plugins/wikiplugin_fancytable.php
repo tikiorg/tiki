@@ -14,93 +14,112 @@ function wikiplugin_fancytable_info()
 		$tsparams = $ts->params;
 		unset($tsparams['server']);
 	} else {
-		$tsparams = array();
+		$tsparams = [];
 	}
 	$params = array_merge(
-		array(
-			 'head' => array(
+		[
+			 'head' => [
 				 'required' => false,
 				 'name' => tra('Heading Row'),
 				 'description' => tr('Header rows of the table. Use %0 to separate multiple rows.', '<code>>></code>'),
 				 'default' => '',
 				 'since' => '1'
-			 ),
-			 'headclass' => array(
+			 ],
+			 'headclass' => [
 				 'required' => false,
 				 'name' => tra('Heading CSS Class'),
 				 'description' => tra('CSS class to apply to the heading row.'),
 				 'default' => '',
 				 'since' => '1'
-			 ),
-			 'headaligns' => array(
+			 ],
+			 'headaligns' => [
 				 'required' => false,
 				 'name' => tra('Header Horizontal Alignment'),
-				 'description' => tr('Horizontal alignments for header cells, separated by %0. Choices: %1', '<code>|</code>',
-					 '<code>left</code>, <code>right</code>, <code>center</code>, <code>justify</code>'),
+				 'description' => tr(
+					 'Horizontal alignments for header cells, separated by %0. Choices: %1',
+					 '<code>|</code>',
+					 '<code>left</code>, <code>right</code>, <code>center</code>, <code>justify</code>'
+				 ),
 				 'default' => '',
 				 'since' => '4.1',
 				 'filter' => 'text',
-			 ),
-			 'headvaligns' => array(
+			 ],
+			 'headvaligns' => [
 				 'required' => false,
 				 'name' => tra('Header Vertical Alignment'),
-				 'description' => tr('Vertical alignments for header cells, separated by %0". Choices: %1', '<code>|</code>',
-					 '<code>top</code>, <code>middle</code>, <code>bottom</code>, <code>baseline</code>'),
+				 'description' => tr(
+					 'Vertical alignments for header cells, separated by %0". Choices: %1',
+					 '<code>|</code>',
+					 '<code>top</code>, <code>middle</code>, <code>bottom</code>, <code>baseline</code>'
+				 ),
 				 'default' => '',
 				 'since' => '4.1',
 				 'filter' => 'text',
-			 ),
-			 'colwidths' => array(
+			 ],
+			 'colwidths' => [
 				 'required' => false,
 				 'name' => tra('Column Widths'),
 				 'description' => tr('Column widths followed by "px" for pixels or "%" for percentages. Each column
 				    separated by %0.', '<code>|</code>'),
 				 'default' => '',
 				 'since' => '4.1'
-			 ),
-			 'colaligns' => array(
+			 ],
+			 'colaligns' => [
 				 'required' => false,
 				 'name' => tra('Cell Horizontal Align'),
-				 'description' => tr('Table body column horizontal alignments, separated by %0. Choices: %1', '<code>|</code>',
-					 '<code>left</code>, <code>right</code>, <code>center</code>, <code>justify</code>'),
+				 'description' => tr(
+					 'Table body column horizontal alignments, separated by %0. Choices: %1',
+					 '<code>|</code>',
+					 '<code>left</code>, <code>right</code>, <code>center</code>, <code>justify</code>'
+				 ),
 				 'default' => '',
 				 'since' => '4.1',
 				 'filter' => 'text',
-			 ),
-			 'colvaligns' => array(
+			 ],
+			 'colvaligns' => [
 				 'required' => false,
 				 'name' => tra('Cell Vertical Align'),
-				 'description' => tr('Table body column vertical alignments, separated by %0. Choices: %1', '<code>|</code>',
-					 '<code>top</code>, <code>middle</code>, <code>bottom</code>, <code>baseline</code>'),
+				 'description' => tr(
+					 'Table body column vertical alignments, separated by %0. Choices: %1',
+					 '<code>|</code>',
+					 '<code>top</code>, <code>middle</code>, <code>bottom</code>, <code>baseline</code>'
+				 ),
 				 'default' => '',
 				 'since' => '4.1',
 				 'filter' => 'text',
-			 ),
-		), $tsparams
+			 ],
+		],
+		$tsparams
 	);
-	return array(
+	return [
 		'name' => tra('Fancy Table'),
 		'documentation' => 'PluginFancyTable',
 		'description' => tra('Create a formatted table that can be filtered and sorted'),
-		'prefs' => array('wikiplugin_fancytable'),
-		'body' => tr('Rows separated by %0 in the header; for the table body, one row per line. Cells separated by %1 (since Tiki4) or %2 in both cases.',
-			'<code>>></code>', '<code>|</code>', '<code>~|~</code>'),
+		'prefs' => ['wikiplugin_fancytable'],
+		'body' => tr(
+			'Rows separated by %0 in the header; for the table body, one row per line. Cells separated by %1 (since Tiki4) or %2 in both cases.',
+			'<code>>></code>',
+			'<code>|</code>',
+			'<code>~|~</code>'
+		),
 		'iconname' => 'table',
 		'introduced' => 1,
-		'tags' => array( 'basic' ),
+		'tags' => [ 'basic' ],
 		'params' => $params,
-	);
+	];
 }
 
 function wikiplugin_fancytable($data, $params)
 {
 	global $prefs;
-	$tagremove = array();
-	$pluginremove = array();
+	$tagremove = [];
+	$pluginremove = [];
 	static $iFancytable = 0;
 	++$iFancytable;
 	extract($params, EXTR_SKIP);
-	if (empty($sortable)) $sortable = 'n';
+	if (empty($sortable)) {
+		$sortable = 'n';
+	}
 	$msg = '';
 
 	if ((isset($sortable) && $sortable != 'n')) {
@@ -138,7 +157,7 @@ function wikiplugin_fancytable($data, $params)
 				$msg = '<em>' . tra('The jQuery Sortable Tables feature must be activated for the sort feature to work.')
 					. '</em>';
 			} elseif ($prefs['javascript_enabled'] !== 'y') {
-				$msg =  '<em>' . tra('JavaScript must be enabled for the sort feature to work.') . '</em>';
+				$msg = '<em>' . tra('JavaScript must be enabled for the sort feature to work.') . '</em>';
 			} else {
 				$msg = '<em>' . tra('Unable to load the jQuery Sortable Tables feature.') . '</em>';
 			}
@@ -156,7 +175,7 @@ function wikiplugin_fancytable($data, $params)
 	//Header
 	if (isset($head)) {
 		//set header class
-		if (!empty($headclass)) {
+		if (! empty($headclass)) {
 			$tdhdr = "\r\t\t\t" . '<th class="' . $headclass . '"';
 		} else {
 			$tdhdr = "\r\t\t\t<th";
@@ -173,8 +192,10 @@ function wikiplugin_fancytable($data, $params)
 		//now create header table rows
 		$headrows = process_section(
 			$head,
-			$type, '>>',
-			$tdhdr, '</th>',
+			$type,
+			'>>',
+			$tdhdr,
+			'</th>',
 			isset($colwidths) ? $colwidths : '',
 			isset($headaligns) ? $headaligns : '',
 			isset($headvaligns) ? $headvaligns : ''
@@ -234,7 +255,7 @@ function wikiplugin_fancytable($data, $params)
  * @param 		array			$tagremove		Key => value pairs of Hash => data for tags or enclosing characters
  * @param 		array			$pluginremove	Key => value pairs of Hash => data for plugins
  */
-function preprocess_section (&$data, &$tagremove, &$pluginremove)
+function preprocess_section(&$data, &$tagremove, &$pluginremove)
 {
 	$parserlib = TikiLib::lib('parser');
 	//first replace plugins with hash strings since they may contain pipe characters
@@ -242,72 +263,72 @@ function preprocess_section (&$data, &$tagremove, &$pluginremove)
 
 	//then replace tags or other enclosing charcters that could enclose a pipe (| or ~|~) character with a hash string
 	$tikilib = TikiLib::lib('tiki');
-	$tags = array(
-		array(
+	$tags = [
+		[
 			'start' => '\(\(',		// (( ))
 			'end'	=> '\)\)',
-		),
-		array(
+		],
+		[
 			'start' => '\[',		// [ ]
 			'end'	=> '\]',
-		),
-		array(
+		],
+		[
 			'start' => '~np~',		// ~np~ ~/np~
 			'end'	=> '~\/np~',
-		),
-		array(
+		],
+		[
 			'start' => '~tc~',		// ~tc~ ~/tc~
 			'end'	=> '~\/tc~',
-		),
-		array(
+		],
+		[
 			'start' => '~hc~',		// ~hc~ ~/hc~
 			'end'	=> '~\/hc~',
-		),
-		array(
+		],
+		[
 			'start' => '\^',		// ^ ^
 			'end'	=> '\^',
-		),
-		array(
+		],
+		[
 			'start' => '__',		// __ __
 			'end'	=> '__',
-		),
-		array(
+		],
+		[
 			'start' => '\:\:',		// :: ::
 			'end'	=> '\:\:',
-		),
-		array(
+		],
+		[
 			'start' => '\:\:\:',		// ::: :::
 			'end'	=> '\:\:\:',
-		),
-		array(
+		],
+		[
 			'start' => '\'\'',		// '' ''
 			'end'	=> '\'\'',
-		),
-		array(
+		],
+		[
 			'start' => '-\+',		// -+ +-
 			'end'	=> '\+-',
-		),
-		array(
+		],
+		[
 			'start' => '-=',		// -= =-
 			'end'	=> '=-',
-		),
-		array(
+		],
+		[
 			'start' => '===',		// === ===
 			'end'	=> '===',
-		),
-		array(
+		],
+		[
 			'start' => '--',		// -- --
 			'end'	=> '--',
-		),
-	array(
+		],
+		[
 			'start' => '\(',		// ( )
 			'end'	=> '\)',
-		),
-	array(
+		],
+		[
 		'start' => '\"',		// " "
 		'end'	=> '\"',
-	),
-	);
+		],
+	];
 	$count = count($tags) - 1;
 	$pattern = '/(';
 	foreach ($tags as $key => $tag) {
@@ -339,13 +360,13 @@ function preprocess_section (&$data, &$tagremove, &$pluginremove)
  *
  * @return 		string			$wret		HTML string for the header or body rows processed
  */
-function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, $aligns, $valigns)
+function process_section($data, $type, $line_sep, $cellbeg, $cellend, $widths, $aligns, $valigns)
 {
 	$separator = strpos($data, '~|~') === false ? '|' : '~|~';
 	$lines = explode($line_sep, $data);
-	$widths = !empty($widths) ?  explode('|', $widths) : '';
-	$aligns = !empty($aligns) ?  explode('|', $aligns) : '';
-	$valigns = !empty($valigns)?  explode('|', $valigns) : '';
+	$widths = ! empty($widths) ? explode('|', $widths) : '';
+	$aligns = ! empty($aligns) ? explode('|', $aligns) : '';
+	$valigns = ! empty($valigns) ? explode('|', $valigns) : '';
 	$trbeg = "\r\t\t<tr>";
 	$trend = "\r\t\t</tr>";
 	$l = 0;
@@ -392,13 +413,19 @@ function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, 
 					}
 					//create rowspan if there are \ characters at beginning of cell
 					if ($matches[1][0] || $matches[3][0]) {
-						if ($matches[1][0]) $rnum1 = substr_count($matches[0][0], $matches[1][0]);
-						if ($matches[3][0]) $rnum2 = substr_count($matches[0][0], $matches[3][0]);
-						$rnum = $rnum1+ $rnum2;
+						if ($matches[1][0]) {
+							$rnum1 = substr_count($matches[0][0], $matches[1][0]);
+						}
+						if ($matches[3][0]) {
+							$rnum2 = substr_count($matches[0][0], $matches[3][0]);
+						}
+						$rnum = $rnum1 + $rnum2;
 						$rowspan = ' rowspan="' . $rnum . '"';
 						//If there's another rowspan still in force, bump up the column number
 						if (isset(${$colnum}['col']) && ${$colnum}['col'] == $c) {
-							if ((${$colnum}['span'] - ($l - ${$colnum}['line'])) > 0) $c++;
+							if ((${$colnum}['span'] - ($l - ${$colnum}['line'])) > 0) {
+								$c++;
+							}
 						}
 						//Note the info for this new rowspan
 						${$colnum}['col'] = $c;
@@ -409,15 +436,17 @@ function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, 
 
 				//set column style
 				$colstyle = '';
-				if (!empty($widths) || !empty($aligns) || !empty($valigns)) {
+				if (! empty($widths) || ! empty($aligns) || ! empty($valigns)) {
 					//If there's another rowspan still in force, bump up the column number
 					if (isset(${$colnum}['col']) && ${$colnum}['col'] == $c && ($l > ${$colnum}['line'])) {
-						if ((${$colnum}['span'] - ($l - ${$colnum}['line'])) > 0) $c++;
+						if ((${$colnum}['span'] - ($l - ${$colnum}['line'])) > 0) {
+							$c++;
+						}
 					}
 					$colstyle = ' style="';
-					$colstyle .= !empty($widths[$c]) ? ' width: ' . $widths[$c] . ';' : '';
-					$colstyle .= !empty($aligns[$c]) ? ' text-align: ' . $aligns[$c] . ';' : '';
-					$colstyle .= !empty($valigns[$c]) ? ' vertical-align: ' . $valigns[$c] : '';
+					$colstyle .= ! empty($widths[$c]) ? ' width: ' . $widths[$c] . ';' : '';
+					$colstyle .= ! empty($aligns[$c]) ? ' text-align: ' . $aligns[$c] . ';' : '';
+					$colstyle .= ! empty($valigns[$c]) ? ' vertical-align: ' . $valigns[$c] : '';
 					$colstyle .= '"';
 				}
 				$row .= $cellbeg . $colspan . $rowspan . $colstyle . '>' . $column . $cellend;
@@ -440,7 +469,7 @@ function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, 
  * @param 		array		$tagremove		Tag hash => data pairs for tags that were replaced with hash strings
  * @param 		array		$pluginremove	Plugin Hash => data pairs for plugins that were replaced with hash strings
  */
-function postprocess_section (&$data, &$tagremove, &$pluginremove)
+function postprocess_section(&$data, &$tagremove, &$pluginremove)
 {
 	//first restore tag strings
 	$parserlib = TikiLib::lib('parser');
@@ -451,6 +480,6 @@ function postprocess_section (&$data, &$tagremove, &$pluginremove)
 	//then restore plugin strings
 	$parserlib->plugins_replace($data, $pluginremove);
 	//reset variables since this function is run for both the header and body
-	$tagremove = array();
-	$pluginremove = array();
+	$tagremove = [];
+	$pluginremove = [];
 }

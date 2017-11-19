@@ -8,41 +8,41 @@
 function wikiplugin_kaltura_info()
 {
 	global $prefs;
-	$players = array();
+	$players = [];
 	if ($prefs['feature_kaltura'] === 'y') {
 		$kalturaadminlib = TikiLib::lib('kalturaadmin');
 
 		$playerList = $kalturaadminlib->getPlayersUiConfs();
 		foreach ($playerList as $pl) {
-			$players[] = array('value' => $pl['id'], 'text' => tra($pl['name']));
+			$players[] = ['value' => $pl['id'], 'text' => tra($pl['name'])];
 		}
 
 		if (count($players)) {
-			array_unshift($players, array('value' => '', 'text' => tra('Default')));
+			array_unshift($players, ['value' => '', 'text' => tra('Default')]);
 		}
 	}
 
-	return array(
+	return [
 		'name' => tra('Kaltura Video'),
 		'documentation' => 'PluginKaltura',
 		'description' => tra('Display a video created through the Kaltura feature'),
-		'prefs' => array('wikiplugin_kaltura', 'feature_kaltura'),
+		'prefs' => ['wikiplugin_kaltura', 'feature_kaltura'],
 		'format' => 'html',
 		'iconname' => 'video',
 		'introduced' => 4,
-		'params' => array(
-			'id' => array(
+		'params' => [
+			'id' => [
 				'required' => false,
 				'name' => tra('Kaltura Entry ID'),
 				'description' => tra('Kaltura ID of the video to be displayed, or leave empty to show a button to allow
 					users to add a new one.'),
 				'since' => '4.0',
-				'tags' => array('basic'),
+				'tags' => ['basic'],
 				'area' => 'kaltura_uploader_id',
 				'type' => 'kaltura',
 				'iconname' => 'video',
-			),
-			'player_id' => array(
+			],
+			'player_id' => [
 				'name' => tra('Kaltura Video Player ID'),
 				'description' => tra('Kaltura Dynamic Player (KDP) user interface configuration ID'),
 				'since' => '10.0',
@@ -50,72 +50,72 @@ function wikiplugin_kaltura_info()
 				'options' => $players,
 				'size' => 20,
 				'default' => '',
-				'tags' => array('basic'),
-			),
-			'width' => array(
+				'tags' => ['basic'],
+			],
+			'width' => [
 				'required' => false,
 				'name' => tra('Width'),
 				'description' => tra('Width of the player in pixels or percent'),
 				'since' => '10.0',
 				'default' => 595,
 				'filter' => 'text',
-			),
-			'height' => array(
+			],
+			'height' => [
 				'required' => false,
 				'name' => tra('Height'),
 				'description' => tra('Height of the player in pixels or percent'),
 				'since' => '10.0',
 				'default' => 365,
 				'filter' => 'text',
-			),
-			'align' => array(
+			],
+			'align' => [
 				'required' => false,
 				'name' => tra('Align'),
 				'description' => tra('Alignment of the player'),
 				'since' => '10.0',
 				'default' => '',
 				'filter' => 'word',
-				'options' => array(
-					array('text' => tra('Not set'), 'value' => ''),
-					array('text' => tra('Left'), 'value' => 'left'),
-					array('text' => tra('Centre'), 'value' => 'center'),
-					array('text' => tra('Right'), 'value' => 'right'),
-				),
-			),
-			'float' => array(
+				'options' => [
+					['text' => tra('Not set'), 'value' => ''],
+					['text' => tra('Left'), 'value' => 'left'],
+					['text' => tra('Centre'), 'value' => 'center'],
+					['text' => tra('Right'), 'value' => 'right'],
+				],
+			],
+			'float' => [
 				'required' => false,
 				'name' => tra('Float'),
 				'description' => tra('Alignment of the player using CSS float'),
 				'since' => '10.0',
 				'default' => '',
 				'filter' => 'word',
-				'options' => array(
-					array('text' => tra('Not set'), 'value' => ''),
-					array('text' => tra('Left'), 'value' => 'left'),
-					array('text' => tra('Right'), 'value' => 'right'),
-				),
-			),
-			'add_button_label' => array(
+				'options' => [
+					['text' => tra('Not set'), 'value' => ''],
+					['text' => tra('Left'), 'value' => 'left'],
+					['text' => tra('Right'), 'value' => 'right'],
+				],
+			],
+			'add_button_label' => [
 				'required' => false,
 				'name' => tra('Add Media Button Label'),
 				'description' => tra('Text to display on button for adding new media.'),
 				'since' => '10.0',
 				'default' => tra('Add media'),
-			),
-			'type' => array(
+			],
+			'type' => [
 				'required' => false,
 				'name' => tra('Player Type'),
 				'description' => tra('Set player type'),
 				'since' => '11.0',
 				'default' => 'html5',
 				'filter' => 'word',
-				'options' => array(
-					array('text' => tra('KDP'), 'value' => 'kdp'),
-					array('text' => tra('HTML5'), 'value' => 'html5'),
-				),
-			),
-		),
-	);
+				'options' => [
+					['text' => tra('KDP'), 'value' => 'kdp'],
+					['text' => tra('HTML5'), 'value' => 'html5'],
+				],
+			],
+		],
+	];
 }
 
 function wikiplugin_kaltura($data, $params)
@@ -126,7 +126,7 @@ function wikiplugin_kaltura($data, $params)
 
 	$instance++;
 
-	$defaults = array();
+	$defaults = [];
 	$plugininfo = wikiplugin_kaltura_info();
 	foreach ($plugininfo['params'] as $key => $param) {
 		if (isset($param['default'])) {
@@ -135,7 +135,6 @@ function wikiplugin_kaltura($data, $params)
 	}
 
 	if (empty($params['id'])) {
-
 		if ($tiki_p_upload_videos === 'y') {
 			$smarty = TikiLib::lib('smarty');
 			$smarty->loadPlugin('smarty_function_button');
@@ -144,7 +143,7 @@ function wikiplugin_kaltura($data, $params)
 			$json_instance = json_encode($instance);
 			$json_title = json_encode(tr('Upload Media'));
 			TikiLib::lib('header')->add_jq_onready(
-<<<REG
+				<<<REG
 $("#kaltura_upload_btn$instance a").on("click", function() {
 	$(this).serviceDialog({
 		title: $json_title,
@@ -173,20 +172,19 @@ REG
 			);
 
 			$html = smarty_function_button(
-				array(	// default for add_button_label already tra but not merged yet
-					'_text' => !empty($params['add_button_label']) ? tra($params['add_button_label']) : $defaults['add_button_label'],
+				[	// default for add_button_label already tra but not merged yet
+					'_text' => ! empty($params['add_button_label']) ? tra($params['add_button_label']) : $defaults['add_button_label'],
 					'_id' => 'kaltura_upload_btn' . $instance,
 					'href' => TikiLib::lib('service')->getUrl(
-						array(
+						[
 							'controller' => 'kaltura',
 							'action' => 'upload'
-						)
+						]
 					),
-				),
+				],
 				$smarty
 			);
-
-		} else if (!empty($user)) {
+		} elseif (! empty($user)) {
 			$html = '<span class="alert-warning">' . tra('Media ID or permission to upload video is required') . '</span>';
 		} else {
 			$html = '<span class="alert-warning">' . tra('Log in to upload video') . '</span>';
@@ -228,10 +226,10 @@ REG
 	}
 
 	$style = '';
-	if (!empty($params['align'])) {
+	if (! empty($params['align'])) {
 		$style .= "text-align:{$params['align']};";
 	}
-	if (!empty($params['float'])) {
+	if (! empty($params['float'])) {
 		$style .= "float:{$params['float']};";
 	}
 	if ($params['type'] === 'html5') {
@@ -240,7 +238,7 @@ REG
 		$autoPlay = 'false';
 
 		if ($playlistObject) {
-			parse_str(str_replace(array('k_pl_0_u', 'k_pl_0_n'), array('kpl0U', 'kpl0N'), $playlistObject->executeUrl), $playlistAPI);
+			parse_str(str_replace(['k_pl_0_u', 'k_pl_0_n'], ['kpl0U', 'kpl0N'], $playlistObject->executeUrl), $playlistAPI);
 			$playlistAPI['kpl0Id'] = $params['id'];
 			$playlistAPI = '"playlistAPI": ' . json_encode($playlistAPI);
 		} else {
@@ -278,11 +276,9 @@ kWidget.embed({
 			$params['height'] .= 'px';
 		}
 		return "<div id='kaltura_player$instance' style='width:{$params['width']};height:{$params['height']};$style'></div>";
-
 	} elseif ($params['type'] === 'kdp') {
-
 		if ($playlistObject) {
-			$params['playlistAPI'] = '&' . str_replace(array('k_pl_0_u', 'k_pl_0_n'), array('playlistAPI.kpl0U', 'playlistAPI.kpl0N'), $playlistObject->executeUrl);
+			$params['playlistAPI'] = '&' . str_replace(['k_pl_0_u', 'k_pl_0_n'], ['playlistAPI.kpl0U', 'playlistAPI.kpl0N'], $playlistObject->executeUrl);
 		} else {
 			$params['playlistAPI'] = '';
 		}
@@ -290,14 +286,12 @@ kWidget.embed({
 		$smarty = TikiLib::lib('smarty');
 		$smarty->assign('kaltura', $params);
 		$code = $smarty->fetch('wiki-plugins/wikiplugin_kaltura.tpl');
-		if (!empty($style)) {
+		if (! empty($style)) {
 			$code = "<div style='$style'>$code</div>";
 		}
 		return $code;
-
 	} else {
 		TikiLib::lib('erroreport')->report(tra('Kaltura player: unsupported type.'));
 		return '';
 	}
-
 }

@@ -7,17 +7,17 @@
 
 function wikiplugin_timeline_info()
 {
-	return array(
+	return [
 		'name' => tra('Timeline'),
 		'format' => 'html',
 		'documentation' => 'PluginTimeline',
 		'description' => tra('Display a timeline'),
-		'prefs' => array( 'wikiplugin_timeline' ),
+		'prefs' => [ 'wikiplugin_timeline' ],
 		'iconname' => 'history',
 		'introduced' => 8,
-		'tags' => array( 'experimental' ),
-		'params' => array(
-			'scope' => array(
+		'tags' => [ 'experimental' ],
+		'params' => [
+			'scope' => [
 				'required' => false,
 				'name' => tr('Scope'),
 				'description' => tr('Display the event list items represented in the page. (%0all%1, %0center%1, or
@@ -25,23 +25,23 @@ function wikiplugin_timeline_info()
 				'since' => '8.0',
 				'filter' => 'text',
 				'default' => 'center',
-			),
-			'width' => array(
+			],
+			'width' => [
 				'required' => false,
 				'name' => tra('Width'),
 				'description' => tr('Width of the timeline as CSS units (default: %0)', '<code>100%</code>'),
 				'since' => '8.0',
 				'filter' => 'text',
 				'default' => '100%',
-			),
-			'height' => array(
+			],
+			'height' => [
 				'required' => false,
 				'name' => tra('Height'),
 				'description' => tr('Height of the timeline as CSS units (default: %0)', '<code>400px</code>'),
 				'since' => '8.0',
 				'filter' => 'text',
 				'default' => '400px',
-			),
+			],
 			//these two parameters don't seem to be used so commenting out to avoid confusion for users
 /*			'lower' => array(
 				'required' => true,
@@ -59,44 +59,44 @@ function wikiplugin_timeline_info()
 				'default' => '',
 				'accepted' => 'Date in YYYY-MM-DD HH:mm:ss format',
 			),*/
-			'scale1' => array(
+			'scale1' => [
 				'required' => false,
 				'name' => tra('Primary Scale Unit'),
 				'description' => tra('Unit of time to use for the primary scale (default is Month)'),
 				'since' => '8.0',
 				'filter' => 'alpha',
 				'default' => 'month',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Hour'), 'value' => 'hour'),
-					array('text' => tra('Day'), 'value' => 'day'),
-					array('text' => tra('Week'), 'value' => 'week'),
-					array('text' => tra('Month'), 'value' => 'month'),
-					array('text' => tra('Year'), 'value' => 'year'),
-					array('text' => tra('Decade'), 'value' => 'decade'),
-					array('text' => tra('Century'), 'value' => 'century'),
-				)
-			),
-			'scale2' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Hour'), 'value' => 'hour'],
+					['text' => tra('Day'), 'value' => 'day'],
+					['text' => tra('Week'), 'value' => 'week'],
+					['text' => tra('Month'), 'value' => 'month'],
+					['text' => tra('Year'), 'value' => 'year'],
+					['text' => tra('Decade'), 'value' => 'decade'],
+					['text' => tra('Century'), 'value' => 'century'],
+				]
+			],
+			'scale2' => [
 				'required' => false,
 				'name' => tra('Secondary Scale Unit'),
 				'description' => tra('Unit of time to use for the secondary scale'),
 				'since' => '8.0',
 				'filter' => 'alpha',
 				'default' => '',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Hour'), 'value' => 'hour'),
-					array('text' => tra('Day'), 'value' => 'day'),
-					array('text' => tra('Week'), 'value' => 'week'),
-					array('text' => tra('Month'), 'value' => 'month'),
-					array('text' => tra('Year'), 'value' => 'year'),
-					array('text' => tra('Decade'), 'value' => 'decade'),
-					array('text' => tra('Century'), 'value' => 'century'),
-				)
-			),
-		),
-	);
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Hour'), 'value' => 'hour'],
+					['text' => tra('Day'), 'value' => 'day'],
+					['text' => tra('Week'), 'value' => 'week'],
+					['text' => tra('Month'), 'value' => 'month'],
+					['text' => tra('Year'), 'value' => 'year'],
+					['text' => tra('Decade'), 'value' => 'decade'],
+					['text' => tra('Century'), 'value' => 'century'],
+				]
+			],
+		],
+	];
 }
 
 function wikiplugin_timeline($data, $params)
@@ -104,7 +104,7 @@ function wikiplugin_timeline($data, $params)
 	$smarty = TikiLib::lib('smarty');
 	$smarty->loadPlugin('smarty_modifier_escape');
 
-	$default = array('scale1' => 'month', 'width' => '100%', 'height' => '400px');
+	$default = ['scale1' => 'month', 'width' => '100%', 'height' => '400px'];
 	$params = array_merge($default, $params);
 
 	$width = smarty_modifier_escape($params['width']);

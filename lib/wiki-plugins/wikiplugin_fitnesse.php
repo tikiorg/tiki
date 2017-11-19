@@ -1,28 +1,28 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 function wikiplugin_fitnesse_info()
 {
-	return array(
+	return [
 		'name' => tra('Fitnesse Test Suite'),
 		'documentation' => 'PluginFitnesse',
 		'description' => tra('Create test suites for applications built using Tiki'),
-		'prefs' => array('wikiplugin_fitnesse'),
+		'prefs' => ['wikiplugin_fitnesse'],
 		'default' => 'n',
 		'format' => 'wiki',
 		'body' => tra('Test execution scenario'),
 		'filter' => 'wikicontent',
 		'iconname' => 'pencil',
 		'introduced' => 12.1,
-		'tags' => array('advanced'),
+		'tags' => ['advanced'],
 		'profile_reference' => 'fitnesse_content',
-		'params' => array(
-		),
-	);
+		'params' => [
+		],
+	];
 }
 
 function wikiplugin_fitnesse($data, $params)
@@ -31,12 +31,12 @@ function wikiplugin_fitnesse($data, $params)
 	$mock = new FixtureMockTrackerField;
 	$runner->mockFunction('tracker-field', $mock);
 
-	$fixtures = array(
+	$fixtures = [
 		'trackermath' => 'wp_fixture_tracker_math',
 		'trackerdata' => function ($data, $params) use ($mock) {
 			return wp_fixture_tracker_data($data, $params, $mock);
 		},
-	);
+	];
 
 	$matches = WikiParser_PluginMatcher::match($data);
 	$argParser = new WikiParser_PluginArgumentParser;
@@ -78,7 +78,7 @@ function wp_fixture_tracker_math($data, $params)
 
 	$factory = new Tracker_Field_Factory($tracker);
 
-	$checks = array();
+	$checks = [];
 
 	$headings = $table->getHeadings();
 	foreach ($headings as $key => $heading) {
@@ -156,8 +156,8 @@ function wp_fixture_tracker_data($data, $params, $mock)
 class FixtureTable implements Iterator
 {
 	private $title;
-	private $headings = array();
-	private $data = array();
+	private $headings = [];
+	private $data = [];
 	private $position = 0;
 
 	function __construct($string)
@@ -182,7 +182,7 @@ class FixtureTable implements Iterator
 		}, $this->headings));
 
 		if ($this->title) {
-			array_unshift($lines, array($this->title));
+			array_unshift($lines, [$this->title]);
 		}
 		return "||" . implode("\n", array_map(function ($line) {
 			return implode(' | ', $line);
@@ -199,25 +199,30 @@ class FixtureTable implements Iterator
 		$this->title = $title;
 	}
 
-	function rewind() {
+	function rewind()
+	{
 		$this->position = 0;
 	}
 
-	function current() {
+	function current()
+	{
 		return array_map(function ($value) {
 			return str_replace('%%%', "\n", $value);
 		}, $this->data[$this->position]);
 	}
 
-	function key() {
+	function key()
+	{
 		return $this->position;
 	}
 
-	function next() {
+	function next()
+	{
 		++$this->position;
 	}
 
-	function valid() {
+	function valid()
+	{
 		return isset($this->data[$this->position]);
 	}
 
@@ -233,7 +238,7 @@ class FixtureTable implements Iterator
 
 class FixtureMockTrackerField extends Tiki_Formula_Function_TrackerField
 {
-	private $data = array();
+	private $data = [];
 
 	function fetchValue($object, $field, $default)
 	{
@@ -253,4 +258,3 @@ class FixtureMockTrackerField extends Tiki_Formula_Function_TrackerField
 		}
 	}
 }
-

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -14,47 +14,47 @@
 
 function wikiplugin_gdgraph_info()
 {
-	return array(
+	return [
 		'name' => tra('GDGraph'),
 		'documentation' => 'PluginGDGraph',
 		'description' => tra('Create a simple graph from supplied data'),
-		'tags' => array('basic'),
-		'prefs' => array('wikiplugin_gdgraph'),
+		'tags' => ['basic'],
+		'prefs' => ['wikiplugin_gdgraph'],
 		'body' => tra('Comma-separated data (x,y) to be graphed. A useful option is to generate this data from a LIST
 			or CUSTOMSEARCH using a .tpl template or trackerlist plugin placed in the body'),
 		'iconname' => 'chart',
 		'format' => 'html',
 		'introduced' => tra('14, backported to 12.4'),
-		'params' => array(
-			'type' => array(
+		'params' => [
+			'type' => [
 				'required' => true,
 				'name' => tra('Graph Type'),
 				'description' => tra('Defines what ype of graph or chart is to be generated'),
 				'since' => '14.0',
 				'filter' => 'word',
-				'options' => array(
-					array('text' => tra('Vertical Bar'), 'value' => 'barvert'),
-					array('text' => tra('Horizontal Bar'), 'value' => 'barhoriz'),
+				'options' => [
+					['text' => tra('Vertical Bar'), 'value' => 'barvert'],
+					['text' => tra('Horizontal Bar'), 'value' => 'barhoriz'],
 /*					array('text' => tra('Multiline'), 'value' => 'multiline'),
 					array('text' => tra('Pie'), 'value' => 'pie'),*/
-				),
-			),
-			'title' => array(
+				],
+			],
+			'title' => [
 				'required' => false,
 				'name' => tra('Graph Title'),
 				'description' => tra('Displayed above the graph'),
 				'since' => '14.0',
 				'filter' => 'text',
 				'default' => '',
-			),
-			'alttag' => array(
+			],
+			'alttag' => [
 				'required' => false,
 				'name' => tra('Alt Tag'),
 				'description' => tra('Text for image alt tag'),
 				'since' => '14.0',
 				'filter' => 'text',
 				'default' => 'GDgraph graph image',
-			),			
+			],
 /*			'bg' => array(
 				'required' => false,
 				'name' => tra('Background color'),
@@ -62,27 +62,26 @@ function wikiplugin_gdgraph_info()
 				'filter' => 'text',
 				'default' => '',
 			),*/
-			'width' => array(
+			'width' => [
 				'required' => false,
 				'name' => tra('Graph Image Width'),
 				'description' => tr('Overall width in pixels. Default value is %0.', '<code>300</code>'),
 				'since' => '14.0',
 				'filter' => 'digits',
 				'default' => 300,
-			),
-			'height' => array(
+			],
+			'height' => [
 				'required' => false,
 				'name' => tra('Graph Image Height'),
 				'description' => tr('Sets the total height in pixels of the image generated to display the entire graph
 					- if not set and %0 is %1 then the image height will be calculated from the number of x,y pairs,
 					which is useful if the number of x,y pairs is not known eg they are generated using (say) a LIST,
 					CUSTOMSEARCH or trackerlist plugin. The auto height option only works properly if the title is not
-					shown.', '<code>type</code>', '<code>barhoriz</code>'
-				),
+					shown.', '<code>type</code>', '<code>barhoriz</code>'),
 				'since' => '14.0',
 				'filter' => 'digits',
 				'default' => 0,
-			),
+			],
 /*			'class' => array(
 				'required' => false,
 				'name' => tra('CSS Class'),
@@ -100,27 +99,27 @@ function wikiplugin_gdgraph_info()
 					less than 100%, other elements will wrap around it unless the clear parameter is appropriately set
 					- not used yet'),
 			),*/
-		),
-	);
+		],
+	];
 }
 
 function wikiplugin_gdgraph($data, $params)
 {
 	// check required param
-	if (!isset($params['type']) || ($params['type'] !== 'barvert' && $params['type'] !== 'barhoriz')) {
+	if (! isset($params['type']) || ($params['type'] !== 'barvert' && $params['type'] !== 'barhoriz')) {
 		return ("<span class='error'>missing or wrong graph type parameter - ony barvert and barhoriz available at present</span>");
 	}
 
 	// set default params
 	$plugininfo = wikiplugin_gdgraph_info();
-	$default = array();
+	$default = [];
 	foreach ($plugininfo['params'] as $key => $param) {
 		$default["$key"] = $param['default'];
 	}
 	$params = array_merge($default, $params);
 
 	// parse the body content to allow data to be generated from other plugins and strip tags
-	$data = TikiLib::lib('parser')->parse_data($data, array('noparseplugins' => false, 'suppress_icons' => true));
+	$data = TikiLib::lib('parser')->parse_data($data, ['noparseplugins' => false, 'suppress_icons' => true]);
 	// strip tags
 	$data = strip_tags($data);
 
@@ -129,7 +128,7 @@ function wikiplugin_gdgraph($data, $params)
 	// remove empties
 	$data = array_filter($data);
 
-	$xy = array();
+	$xy = [];
 	foreach ($data as $line) {
 		$pair = explode(',', $line);
 		if (count($pair) !== 2) {
@@ -156,31 +155,30 @@ function wikiplugin_gdgraph($data, $params)
 // The XY data strings should each contain the same number
 // of data elements.
 	$ynonzero = false;
-	$xydata = array('xdata' => array(), 'ydata' => array());
+	$xydata = ['xdata' => [], 'ydata' => []];
 	for ($i = 0; $i < count($xy); $i++) {
 		$xydata['xdata'][] = $xy[$i][0];
 		$xydata['ydata'][] = floatval($xy[$i][1]);
-		if (floatval($xy[$i][1]) !== 0.0 ) {
+		if (floatval($xy[$i][1]) !== 0.0) {
 			$ynonzero = true;
 		}
 	}
 // if all y-values are zero don't bother doing the graph
-	if (!$ynonzero) {
-		return "<span class='error'>All ".count($xy)." y-values are zero: so no graph drawn</span>";
+	if (! $ynonzero) {
+		return "<span class='error'>All " . count($xy) . " y-values are zero: so no graph drawn</span>";
 	}
-	
-	$imgparams = array(
+
+	$imgparams = [
 		'type' => $params['type'],
 		'title' => $params['title'],
 		'height' => $params['height'],
 		'width' => $params['width'],
 		'usexydata' => json_encode($xydata),
-	);
+	];
 
-	$ret = '<div class="wp-gdgraph">'.
-		'<img src="tiki-gdgraph.php?'. http_build_query($imgparams, '', '&amp;') . '" alt="'.$params['alttag'].'">'.
+	$ret = '<div class="wp-gdgraph">' .
+		'<img src="tiki-gdgraph.php?' . http_build_query($imgparams, '', '&amp;') . '" alt="' . $params['alttag'] . '">' .
 		'</div>';
 
 	return $ret;
-
 }

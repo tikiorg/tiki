@@ -7,42 +7,41 @@
 
 function wikiplugin_pdfbookmark_info()
 {
-			return array(
+			return [
 				'name' => 'PluginPDF Bookmark',
 				'documentation' => 'PluginPDFBookmark',
 				'description' => tra('Manual bookmark entry for PDF'),
-				'tags' => array( 'advanced' ),
+				'tags' => [ 'advanced' ],
 				'iconname' => 'pdf',
-				'prefs' => array( 'wikiplugin_pdf' ),
+				'prefs' => [ 'wikiplugin_pdf' ],
 				'introduced' => 18,
-				'params'=>array(
-					'content' => array(
+				'params' => [
+					'content' => [
 						'name' => tra('Bookmark Label'),
 						'description' => tra(''),
-						'tags' => array('advanced'),
+						'tags' => ['advanced'],
 						'type' => 'text',
 						'default' => ''
-					),
-					'level' => array(
+					],
+					'level' => [
 						'name' => tra('Bookmark level'),
 						'description' => tra(''),
-						'tags' => array('advanced'),
+						'tags' => ['advanced'],
 						'type' => 'text',
 						'default' => '0',
-						'options' => array(
-							array('text'=>'0','value'=>'0'),
-							array('text'=>'1','value'=>'1'),
-							array('text'=>'2','value'=>'2'),
-						),
-					),
-				)
-		);
+						'options' => [
+							['text' => '0','value' => '0'],
+							['text' => '1','value' => '1'],
+							['text' => '2','value' => '2'],
+						],
+					],
+				]
+			];
 }
-function wikiplugin_pdfbookmark($data,$params)
+function wikiplugin_pdfbookmark($data, $params)
 {
-	foreach($params as $paramName=>$param)
-	{
-		$paramList.=$paramName."='".$param."' ";
+	foreach ($params as $paramName => $param) {
+		$paramList .= $paramName . "='" . $param . "' ";
 	}
-	return "<bookmark ".$paramList." />";
+	return "<bookmark " . $paramList . " />";
 }

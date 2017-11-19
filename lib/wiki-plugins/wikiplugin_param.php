@@ -8,48 +8,48 @@
 
 function wikiplugin_param_info()
 {
-	return array(
+	return [
 		'name' => tra('Parameter'),
 		'documentation' => 'PluginParam',
 		'description' => tra('Display content based on URL parameters'),
-		'prefs' => array( 'wikiplugin_param' ),
+		'prefs' => [ 'wikiplugin_param' ],
 		'body' => tr('Wiki text to display if conditions are met. The body may contain %0{ELSE}%1. Text after the
 			marker will be displayed if conditions are not met.', '<code>', '</code>'),
 		'iconname' => 'cog',
 		'introduced' => 7,
-		'params' => array(
-			'name' => array(
+		'params' => [
+			'name' => [
 				'required' => true,
 				'name' => tra('Name'),
 				'description' => tr('Names of parameters required to display text, separated by %0|%1.', '<code>', '</code>'),
 				'since' => '7.0',
 				'filter' => 'text',
 				'separator' => '|',
-			),
-			'source' => array(
+			],
+			'source' => [
 				'required' => false,
 				'name' => tra('Source'),
 				'default' => 'request',
 				'description' => tra('Source where the parameter is checked.'),
 				'since' => '7.0',
 				'filter' => 'word',
-				'options' => array (
-					array('text' => tra('REQUEST'), 'value' => ''),
-					array('text' => tra('GET'), 'value' => 'get'),
-					array('text' => tra('POST'), 'value' => 'post'),
-					array('text' => tra('COOKIE'), 'value' => 'cookie'),
-				),
-			),
-			'value' => array(
+				'options' => [
+					['text' => tra('REQUEST'), 'value' => ''],
+					['text' => tra('GET'), 'value' => 'get'],
+					['text' => tra('POST'), 'value' => 'post'],
+					['text' => tra('COOKIE'), 'value' => 'cookie'],
+				],
+			],
+			'value' => [
 				'required' => false,
 				'name' => tra('Value'),
 				'description' => tra('Value to test for. If empty then just tests if the named params are set and not
 					"empty".'),
 				'since' => '13.1',
 				'filter' => 'text',
-			),
-		)
-	);
+			],
+		]
+	];
 }
 
 function wikiplugin_param($data, $params)
@@ -62,7 +62,7 @@ function wikiplugin_param($data, $params)
 		$data = substr($data, 0, strpos($data, '{ELSE}'));
 	}
 
-	if (!isset($params['source']) || empty($params['source'])) {
+	if (! isset($params['source']) || empty($params['source'])) {
 		$params['source'] = 'request';
 	}
 
@@ -87,7 +87,7 @@ function wikiplugin_param($data, $params)
 				$test = false;
 				break;
 			}
-		} else if (empty($value)) {	// multiple "names" work as AND
+		} elseif (empty($value)) {	// multiple "names" work as AND
 			$test = false;
 			break;
 		}

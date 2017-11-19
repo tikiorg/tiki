@@ -1,32 +1,32 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 function wikiplugin_addrelation_info()
 {
-	return array(
+	return [
 		'name' => tra('Add Relation'),
 		'description' => tra('Provide a button to toggle a pre-specified relation'),
 		'filter' => 'int',
 		'format' => 'html',
 		'validate' => 'all',
-		'prefs' => array('wikiplugin_addrelation'),
+		'prefs' => ['wikiplugin_addrelation'],
 		'introduced' => 8,
 		'iconname' => 'link-external',
 		'documentation' => 'PluginAddRelation',
-		'params' => array(
-			'qualifier' => array(
+		'params' => [
+			'qualifier' => [
 				'required' => true,
 				'name' => tra('Qualifier'),
 				'description' => tra('Relation qualifier. Usually a three-part string separated by two periods.'),
 				'filter' => 'attribute_type',
-				'default' => array(),
+				'default' => [],
 				'since' => '8.0',
-			),
-			'source_object' => array(
+			],
+			'source_object' => [
 				'required' => false,
 				'name' => tra('Source Object'),
 				'description' => tr('Object identifier as %0type:itemId%1 to start the relation from, will use the current
@@ -35,8 +35,8 @@ function wikiplugin_addrelation_info()
 				'default' => null,
 				'since' => '8.0',
 				'profile_reference' => 'type_colon_object',
-			),
-			'target_object' => array(
+			],
+			'target_object' => [
 				'required' => false,
 				'name' => tra('Target Object'),
 				'description' => tr('Object identifier as %0type:itemId%1 to end the relation to, will use the current
@@ -45,49 +45,49 @@ function wikiplugin_addrelation_info()
 				'default' => null,
 				'since' => '8.0',
 				'profile_reference' => 'type_colon_object',
-			),
-			'label_add' => array(
+			],
+			'label_add' => [
 				'required' => false,
 				'name' => tra('Button Text for Add'),
 				'description' => tra('Text to show on the button to add relation'),
 				'filter' => 'text',
 				'since' => '8.0',
 				'default' => tra('Add Relation'),
-			),
-			'label_added' => array(
+			],
+			'label_added' => [
 				'required' => false,
 				'name' => tra('Button Text for Already Added State'),
 				'description' => tra('Text to show on the button when relation is already added'),
 				'filter' => 'text',
 				'since' => '8.0',
 				'default' => tra('Relation Added'),
-			),
-			'label_remove' => array(
+			],
+			'label_remove' => [
 				'required' => false,
 				'name' => tra('Mouseover Button Text for Remove'),
 				'description' => tra('Text to show on the button to remove relation'),
 				'filter' => 'text',
 				'since' => '8.0',
 				'default' => tra('Remove Relation'),
-			),
-			'button_id' => array(
+			],
+			'button_id' => [
 				'required' => false,
 				'name' => tra('Button ID'),
 				'description' => tra('A unique ID to distinguish the button from others on the page if there is more than one'),
 				'filter' => 'text',
 				'since' => '8.0',
 				'default' => '0',
-			),
-			'button_class' => array(
+			],
+			'button_class' => [
 				'required' => false,
 				'name' => tra('Set Button Class'),
 				'description' => tra('Class or classes for the Button'),
 				'filter' => 'text',
 				'since' => '8.0',
 				'default' => 'btn btn-default',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 function wikiplugin_addrelation($data, $params)
@@ -106,32 +106,32 @@ function wikiplugin_addrelation($data, $params)
 	if ($source_object == $target_object) {
 		return tra('Source and target object cannot be the same');
 	}
-	if (!isset($params['qualifier'])) {
-		return WikiParser_PluginOutput::argumentError(array('qualifier'));
+	if (! isset($params['qualifier'])) {
+		return WikiParser_PluginOutput::argumentError(['qualifier']);
 	} else {
 		$qualifier = $params['qualifier'];
 	}
-	if (!empty($params['label_add'])) {
+	if (! empty($params['label_add'])) {
 		$labeladd = $params['label_add'];
 	} else {
 		$labeladd = tra('Add Relation');
 	}
-	if (!empty($params['label_remove'])) {
+	if (! empty($params['label_remove'])) {
 		$labelremove = $params['label_remove'];
 	} else {
 		$labelremove = tra('Remove Relation');
 	}
-	if (!empty($params['label_added'])) {
+	if (! empty($params['label_added'])) {
 		$labeladded = $params['label_added'];
 	} else {
 		$labeladded = tra('Relation Added');
 	}
-	if (!empty($params['button_id'])) {
+	if (! empty($params['button_id'])) {
 		$id = 'wp_addrelation_' . $params['button_id'];
 	} else {
 		$id = 'wp_addrelation_0';
 	}
-	if (!empty($params['button_class'])) {
+	if (! empty($params['button_class'])) {
 		$button_class = $params['button_class'];
 	} else {
 		$button_class = "btn btn-default";

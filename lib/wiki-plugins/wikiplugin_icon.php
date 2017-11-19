@@ -1,24 +1,24 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 function wikiplugin_icon_info()
 {
-	return array(
+	return [
 		'name' => tra('Icon'),
 		'documentation' => 'PluginIcon',
 		'description' => tra('Display an icon'),
-		'prefs' => array('wikiplugin_icon'),
+		'prefs' => ['wikiplugin_icon'],
 		'iconname' => 'information',
-		'tags' => array('basic'),
+		'tags' => ['basic'],
 		'format' => 'html',
 		'introduced' => 14.1,
 		'extraparams' => true,
-		'params' => array(
-			'name' => array(
+		'params' => [
+			'name' => [
 				'required' => true,
 				'name' => tra('Name'),
 				'description' => tra('Name of the icon'),
@@ -26,8 +26,8 @@ function wikiplugin_icon_info()
 				'filter' => 'text',
 				'accepted' => tra('Valid icon name'),
 				'default' => '',
-			),
-			'size' => array(
+			],
+			'size' => [
 				'required' => false,
 				'name' => tra('Size'),
 				'description' => tra('Size of the icon (greater than 0 and less than 10).'),
@@ -36,8 +36,8 @@ function wikiplugin_icon_info()
 				'filter' => 'digits',
 				'accepted' => tra('greater than 0 and less than 10'),
 				'type' => 'digits',
-			),
-			'rotate' => array(
+			],
+			'rotate' => [
 				'required' => false,
 				'name' => tra('Rotate'),
 				'description' => tra('Rotate the icon (90, 180 or 270 degrees) or flip it (horizontal or vertical).'),
@@ -46,9 +46,9 @@ function wikiplugin_icon_info()
 				'filter' => 'text',
 				'accepted' => tra('90, 180, 270, horizontal, vertical'),
 				'type' => 'text',
-			),
-		)
-	);
+			],
+		]
+	];
 }
 
 function wikiplugin_icon($data, $params)

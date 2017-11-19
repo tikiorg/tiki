@@ -7,18 +7,18 @@
 
 function wikiplugin_timesheet_info()
 {
-	return array(
+	return [
 		'name' => tra('TimeSheet'),
 		'documentation' => 'Timesheet',
 		'description' => tra('Embed a timesheet into a page'),
-		'prefs' => array('wikiplugin_timesheet', 'feature_time_sheet'),
+		'prefs' => ['wikiplugin_timesheet', 'feature_time_sheet'],
 		'body' => tra('text'),
 		'iconname' => 'table',
 		'introduced' => 9,
-		'tags' => array( 'basic' ),
-		'params' => array(
-		),
-	);
+		'tags' => [ 'basic' ],
+		'params' => [
+		],
+	];
 }
 
 function wikiplugin_timesheet($data, $params)
@@ -26,7 +26,9 @@ function wikiplugin_timesheet($data, $params)
 	global $tikilib, $tiki_p_view_trackers, $tiki_p_create_tracker_items;
 	extract($params, EXTR_SKIP);
 
-	if ( $tiki_p_view_trackers != "y" || $tiki_p_create_tracker_items != "y") return "";
+	if ($tiki_p_view_trackers != "y" || $tiki_p_create_tracker_items != "y") {
+		return "";
+	}
 
 	TikiLib::lib("header")
 		->add_cssfile("vendor_bundled/vendor/jquery/jtrack/css/jtrack.css")

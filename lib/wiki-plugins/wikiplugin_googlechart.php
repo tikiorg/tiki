@@ -5,33 +5,34 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_googlechart_info() {
+function wikiplugin_googlechart_info()
+{
 
-	return array(
+	return [
 		'name' => tra('Google Analytics Chart'),
 		'description' => tra('Draws charts from Google Analytics Data.'),
-		'prefs' => array('wikiplugin_googlechart'),
+		'prefs' => ['wikiplugin_googlechart'],
 		'iconname' => 'bookmark',
 		'format' => 'html',
 		'introduced' => 15,
 		'validate' => 'all',
-		'params' => array(
-			'credentials' => array(
+		'params' => [
+			'credentials' => [
 				'name' => tra('JSON File'),
 				'description' => tra('Location of the (service account) credentials JSON file. Must be kept private and not web accessible. (Only needed on the first plugin on each page)'),
 				'required' => false,
 				'since' => '15.0',
 				'filter' => 'text',
-			),
-			'query_ids' => array(
+			],
+			'query_ids' => [
 				'name' => tra('Profle IDs'),
 				'description' => tra('In the format ga:XXXXXXX where XXXXXXX the URL of the analytics admin.'),
 				// see https://developers.google.com/analytics/devguides/reporting/core/v3/#user_reports or https://ga-dev-tools.appspot.com/query-explorer/ for more
 				'since' => '15.0',
 				'required' => true,
 				'filter' => 'text',
-			),
-			'query' => array(
+			],
+			'query' => [
 				'name' => tra('Query String'),
 				'description' => tr('Can be used instead of the parameters below. E.g. "metrics=ga:users&dimensions=ga:country", query can be generated here: %0', '<a href="https://ga-dev-tools.appspot.com/query-explorer">ga-dev-tools</a>'),
 				'since' => '15.0',
@@ -39,88 +40,88 @@ function wikiplugin_googlechart_info() {
 				'required' => false,
 				'default' => '',
 				'filter' => 'text',
-			),
-			'query_metrics' => array(
+			],
+			'query_metrics' => [
 				'name' => tra('Metrics'),
 				'description' => tra('e.g. "ga:pageviews", default "ga:sessions,ga:users"'),
 				'since' => '15.0',
 				'required' => false,
 				'default' => 'ga:sessions,ga:users',
 				'filter' => 'text',
-			),
-			'query_start-date' => array(
+			],
+			'query_start-date' => [
 				'name' => tra('Start Date'),
 				'description' => tra('default "30daysAgo"'),
 				'since' => '15.0',
 				'required' => false,
 				'default' => '30daysAgo',
 				'filter' => 'text',
-			),
-			'query_end-date' => array(
+			],
+			'query_end-date' => [
 				'name' => tra('End Date'),
 				'description' => tra('default "yesterday"'),
 				'since' => '15.0',
 				'required' => false,
 				'default' => 'yesterday',
 				'filter' => 'text',
-			),
-			'query_dimensions' => array(
+			],
+			'query_dimensions' => [
 				'name' => tra('Dimensions'),
 				'description' => tra('default "ga:date"'),
 				'since' => '15.0',
 				'required' => false,
 				'default' => 'ga:date',
 				'filter' => 'text',
-			),
-			'query_segment' => array(
+			],
+			'query_segment' => [
 				'name' => tra('Segment'),
 				'description' => tra('default ""'),
 				'since' => '15.0',
 				'required' => false,
 				'default' => '',
 				'filter' => 'text',
-			),
-			'query_max-results' => array(
+			],
+			'query_max-results' => [
 				'name' => tra('Max Results'),
 				'description' => tra('default 50'),
 				'since' => '15.0',
 				'required' => false,
 				'default' => 50,
 				'filter' => 'int',
-			),
-			'query_sort' => array(
+			],
+			'query_sort' => [
 				'name' => tra('Sort'),
 				'description' => tra('One of the metrics usually, e.g. "-ga:sessions" default ""'),
 				'since' => '15.0',
 				'required' => false,
 				'default' => '',
 				'filter' => 'text',
-			),
-			'chart_container' => array(
+			],
+			'chart_container' => [
 				'name' => tra('Container'),
 				'description' => tra('ID of a DIV to contain the chart (optional)'),
 				'since' => '15.0',
 				'required' => false,
 				'filter' => 'text',
-			),
-			'chart_type' => array(
+			],
+			'chart_type' => [
 				'name' => tra('Chart Type'),
 				'description' => tra('Type of chart, e.g. LINE, PIE etc.'),
 				'since' => '15.0',
 				'required' => false,
 				'filter' => 'word',
 				'default' => 'LINE',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Line'), 'value' => 'LINE'),
-					array('text' => tra('Column'), 'value' => 'COLUMN'),
-					array('text' => tra('Bar'), 'value' => 'BAR'),
-					array('text' => tra('Pie'), 'value' => 'PIE'),
-					array('text' => tra('Table'), 'value' => 'TABLE'),
-					array('text' => tra('Geo'), 'value' => 'GEO'),
-				),
-			),
-			'width' => array(
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Line'), 'value' => 'LINE'],
+					['text' => tra('Column'), 'value' => 'COLUMN'],
+					['text' => tra('Bar'), 'value' => 'BAR'],
+					['text' => tra('Pie'), 'value' => 'PIE'],
+					['text' => tra('Table'), 'value' => 'TABLE'],
+					['text' => tra('Geo'), 'value' => 'GEO'],
+				],
+			],
+			'width' => [
 				'required' => false,
 				'safe' => true,
 				'name' => tra('Chart Width'),
@@ -128,8 +129,8 @@ function wikiplugin_googlechart_info() {
 				'since' => '15.0',
 				'default' => '100%',
 				'filter' => 'text',
-			),
-			'height' => array(
+			],
+			'height' => [
 				'required' => false,
 				'safe' => true,
 				'name' => tra('Chart Height'),
@@ -137,8 +138,8 @@ function wikiplugin_googlechart_info() {
 				'since' => '15.0',
 				'default' => '300',
 				'filter' => 'text',
-			),
-			'float' => array(
+			],
+			'float' => [
 				'required' => false,
 				'name' => tra('Float Position'),
 				'description' => tr('Set the alignment for the entire element. For elements with a width of less than
@@ -147,24 +148,25 @@ function wikiplugin_googlechart_info() {
 				'filter' => 'alpha',
 				'safe' => true,
 				'default' => '',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Right'), 'value' => 'right'),
-					array('text' => tra('Left'), 'value' => 'left'),
-					array('text' => tra('None'), 'value' => 'none'),
-				),
-			),
-		),
-	);
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Right'), 'value' => 'right'],
+					['text' => tra('Left'), 'value' => 'left'],
+					['text' => tra('None'), 'value' => 'none'],
+				],
+			],
+		],
+	];
 }
 
-function wikiplugin_googlechart($data, $params) {
+function wikiplugin_googlechart($data, $params)
+{
 
 	static $id = 0;
 	$unique = 'wpdialog_' . ++$id;
 	$headerlib = TikiLib::lib('header');
 
-	$defaults = array();
+	$defaults = [];
 	$plugininfo = wikiplugin_googlechart_info();
 	foreach ($plugininfo['params'] as $key => $param) {
 		$defaults["$key"] = $param['default'];
@@ -191,11 +193,11 @@ function wikiplugin_googlechart($data, $params) {
 		$params['height'] .= 'px';
 	}
 
-	if (!empty($params['float'])) {
+	if (! empty($params['float'])) {
 		$params['float'] = ' float:' . $params['float'];
 	}
 
-	if (!empty($params['class'])) {
+	if (! empty($params['class'])) {
 		$params['class'] = ' class="' . $params['class'] . '"';
 	} else {
 		$params['class'] = ' class="wp_googlechart"';
@@ -223,8 +225,7 @@ function wikiplugin_googlechart($data, $params) {
 	$headerlib->add_js($js);
 
 	$query = [];
-	if (!empty($params['query'])) {
-
+	if (! empty($params['query'])) {
 		parse_str($params['query'], $query);
 
 		if (empty($query['ids'])) {
@@ -232,7 +233,7 @@ function wikiplugin_googlechart($data, $params) {
 		}
 	}
 	$queryp = [];
-	foreach($params as $key => $param) {
+	foreach ($params as $key => $param) {
 		if (strpos($key, 'query_') === 0) {
 			$queryp[substr($key, strlen('query_'))] = $param;
 		}
@@ -242,7 +243,7 @@ function wikiplugin_googlechart($data, $params) {
 
 	$chart = ['options' => ['width' => '100%']];
 
-	foreach($params as $key => $param) {
+	foreach ($params as $key => $param) {
 		if (strpos($key, 'chart_') === 0) {
 			$chart[substr($key, strlen('query_'))] = $param;
 		}
@@ -294,7 +295,8 @@ gapi.analytics.ready(function () {
 	return $return;
 }
 
-function wikiplugin_googlechart_authenticate($credentials_file) {
+function wikiplugin_googlechart_authenticate($credentials_file)
+{
 
 	$client = new Google_Client();
 	$token = isset($_SESSION['ga_access_token']) && $_SESSION['ga_access_token'] ? $_SESSION['ga_access_token'] : false;
@@ -305,7 +307,7 @@ function wikiplugin_googlechart_authenticate($credentials_file) {
 
 		$cred = new Google_Auth_AssertionCredentials(
 			$data->client_email,
-			array(Google_Service_Analytics::ANALYTICS_READONLY),
+			[Google_Service_Analytics::ANALYTICS_READONLY],
 			$data->private_key
 		);
 
@@ -324,27 +326,20 @@ function wikiplugin_googlechart_authenticate($credentials_file) {
 		$token = json_decode($token, true);
 
 		$_SESSION['ga_access_token'] = $token;
-
 	}
 
 	if ($token) {
 		try {
-
 			$client->setAccessToken(json_encode($_SESSION['ga_access_token']));
-
 		} catch (Exception $e) {
-
 			Feedback::error(tr('googlechart exception: %0', $e->getMessage()));
 
 			return false;
 		}
 
 		return $token['access_token'];
-
 	} else {    // no token
 
 		return false;
-
 	}
-
 }

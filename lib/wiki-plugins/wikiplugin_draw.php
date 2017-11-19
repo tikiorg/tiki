@@ -7,16 +7,16 @@
 
 function wikiplugin_draw_info()
 {
-	return array(
+	return [
 		'name' => tra('Draw'),
 		'documentation' => 'PluginDraw',
 		'description' => tra('Embed a drawing in a page'),
-		'prefs' => array( 'feature_draw' , 'wikiplugin_draw'),
+		'prefs' => [ 'feature_draw' , 'wikiplugin_draw'],
 		'iconname' => 'edit',
-		'tags' => array( 'basic' ),
+		'tags' => [ 'basic' ],
 		'introduced' => 7.1,
-		'params' => array(
-			'id' => array(
+		'params' => [
+			'id' => [
 				'required' => false,
 				'name' => tra('Drawing ID'),
 				'description' => tra('Internal ID of the file ID'),
@@ -25,18 +25,21 @@ function wikiplugin_draw_info()
 				'default' => '',
 				'since' => '7.1',
 				'profile_reference' => 'file',
-			),
-			'width' => array(
+			],
+			'width' => [
 				'required' => false,
 				'name' => tra('Width'),
-				'description' => tr('Width in pixels or percentage. Default value is page width, for example, %0 or %1',
-					'<code>200px</code>', '<code>100%</code>'),
+				'description' => tr(
+					'Width in pixels or percentage. Default value is page width, for example, %0 or %1',
+					'<code>200px</code>',
+					'<code>100%</code>'
+				),
 				'filter' => 'text',
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
 				'default' => 'Image width',
 				'since' => '7.1'
-			),
-			'height' => array(
+			],
+			'height' => [
 				'required' => false,
 				'name' => tra('Height'),
 				'description' => tra('Height in pixels or percentage. Default value is complete drawing height.'),
@@ -44,8 +47,8 @@ function wikiplugin_draw_info()
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
 				'default' => 'Image height',
 				'since' => '7.1'
-			),
-			'archive' => array(
+			],
+			'archive' => [
 				'required' => false,
 				'name' => tra('Force Display Archive'),
 				'description' => tr('The latest revision of file is automatically shown, by setting archive to Yes (%0),
@@ -53,14 +56,14 @@ function wikiplugin_draw_info()
 				'filter' => 'alpha',
 				'default' => 'n',
 				'since' => '8.0',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n')
-				)
-			),
-		),
-	);
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Yes'), 'value' => 'y'],
+					['text' => tra('No'), 'value' => 'n']
+				]
+			],
+		],
+	];
 }
 
 function wikiplugin_draw($data, $params)
@@ -72,12 +75,12 @@ function wikiplugin_draw($data, $params)
 	$filegallib = TikiLib::lib('filegal');
 	$globalperms = Perms::get();
 
-	extract(array_merge($params, array()), EXTR_SKIP);
+	extract(array_merge($params, []), EXTR_SKIP);
 
 	static $drawIndex = 0;
 	++$drawIndex;
 
-	if (!isset($id)) {
+	if (! isset($id)) {
 		//check permissions
 		if ($tiki_p_upload_files != 'y') {
 			return;
@@ -87,24 +90,26 @@ function wikiplugin_draw($data, $params)
 		$page = htmlentities($page);
 		$content = htmlentities($data);
 		$formId = "form$drawIndex";
-		$gals=$filegallib->list_file_galleries(0, -1, 'name_desc', $user);
+		$gals = $filegallib->list_file_galleries(0, -1, 'name_desc', $user);
 
 		$galHtml = "";
-		if (!function_exists('wp_draw_cmp')) {
-			function wp_draw_cmp($a, $b) {
+		if (! function_exists('wp_draw_cmp')) {
+			function wp_draw_cmp($a, $b)
+			{
 				return strcmp(strtolower($a["name"]), strtolower($b["name"]));
 			}
 		}
 		usort($gals['data'], 'wp_draw_cmp');
 		foreach ($gals['data'] as $gal) {
-			if ($gal['name'] != "Wiki Attachments" && $gal['name'] != "Users File Galleries")
-				$galHtml .= "<option value='".$gal['id']."'>".$gal['name']."</option>";
+			if ($gal['name'] != "Wiki Attachments" && $gal['name'] != "Users File Galleries") {
+				$galHtml .= "<option value='" . $gal['id'] . "'>" . $gal['name'] . "</option>";
+			}
 		}
 
 		$in = tr(" in ");
 
 		$headerlib->add_jq_onready(
-<<<JQ
+			<<<JQ
 			$('#newDraw$drawIndex').submit(function() {
 				var form = $(this);
 				var fields = form.serializeArray();
@@ -149,23 +154,25 @@ EOF;
 	$fileInfo = $filegallib->get_file_info($id);
 
 	//this sets the image to latest in a group of archives
-	if (!isset($archive) || $archive != 'y') {
-		if (!empty($fileInfo['archiveId']) && $fileInfo['archiveId'] > 0) {
+	if (! isset($archive) || $archive != 'y') {
+		if (! empty($fileInfo['archiveId']) && $fileInfo['archiveId'] > 0) {
 			$id = $fileInfo['archiveId'];
 			$fileInfo = $filegallib->get_file_info($id);
 		}
 	}
 
-	if (!isset($fileInfo['created'])) {
+	if (! isset($fileInfo['created'])) {
 		return tra("File not found.");
 	} else {
-		$globalperms = Perms::get(array( 'type' => 'file gallery', 'object' => $fileInfo['galleryId'] ));
+		$globalperms = Perms::get([ 'type' => 'file gallery', 'object' => $fileInfo['galleryId'] ]);
 
-		if ($globalperms->view_file_gallery != 'y') return "";
+		if ($globalperms->view_file_gallery != 'y') {
+			return "";
+		}
 
 		$label = tra('Edit SVG Image');
 		$ret = '<div type="image/svg+xml" class="svgImage pluginImg table-responsive' . $fileInfo['fileId'] . '" style="' .
-			(isset($height) ? "height: $height;" : "" ).
+			(isset($height) ? "height: $height;" : "" ) .
 			(isset($width) ? "width: $width;" : "" )
 		. '">' . $fileInfo['data'] . '</div>';
 
@@ -174,8 +181,8 @@ EOF;
 			$editicon = smarty_function_icon(['name' => 'edit'], $smarty);
 			$ret .= "<a href='tiki-edit_draw.php?fileId=$id&page=$page&index=$drawIndex&label=$label" .
 				(isset($width) ? "&width=$width" : "") . (isset($height) ? "&height=$height" : "") .
-				"' onclick='return $(this).ajaxEditDraw();'  title='Edit: ".$fileInfo['filename'].
-				"' data-fileid='".$fileInfo['fileId']."' data-galleryid='".$fileInfo['galleryId']."'>" .
+				"' onclick='return $(this).ajaxEditDraw();'  title='Edit: " . $fileInfo['filename'] .
+				"' data-fileid='" . $fileInfo['fileId'] . "' data-galleryid='" . $fileInfo['galleryId'] . "'>" .
 				$editicon . "</a>";
 		}
 

@@ -8,35 +8,35 @@
 
 function wikiplugin_cartmissinguserinfo_info()
 {
-	return array(
+	return [
 		'name' => tra('Cart Missing User Info'),
 		'documentation' => tra('PluginCartMissingUserInfo'),
 		'description' => tra('Check completeness of user input for a shopping cart transaction'),
-		'prefs' => array('wikiplugin_cartmissinguserinfo', 'payment_feature'),
-		'tags' => array( 'experimental' ),
+		'prefs' => ['wikiplugin_cartmissinguserinfo', 'payment_feature'],
+		'tags' => [ 'experimental' ],
 		'iconname' => 'cart',
 		'introduced' => 7,
-		'params' => array(
-			'info_type' => array(
+		'params' => [
+			'info_type' => [
 				'required' => true,
 				'name' => tra('Information Type'),
 				'since' => '7.0',
 				'filter' => 'word',
 				'default' => 'postpurchase',
-				'options' => array(
-					array('text' => tra('Post Purchase'), 'value' => 'postpurchase'),
-					array('text' => tra('Required before purchase'), 'value' => 'required'),
-				),
-			),
-			'product_class_id' => array(
+				'options' => [
+					['text' => tra('Post Purchase'), 'value' => 'postpurchase'],
+					['text' => tra('Required before purchase'), 'value' => 'required'],
+				],
+			],
+			'product_class_id' => [
 				'required' => true,
 				'name' => tra('Product Class ID'),
 				'since' => '7.0',
 				'filter' => 'digits',
 				'default' => '',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 function wikiplugin_cartmissinguserinfo($data, $params)

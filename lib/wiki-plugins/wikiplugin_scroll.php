@@ -1,23 +1,23 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 function wikiplugin_scroll_info()
 {
-	return array(
+	return [
 		'name' => tra('Scroll'),
 		'documentation' => 'PluginScroll',
 		'description' => tra('Show animated text that scrolls up or down'),
-		'prefs' => array('wikiplugin_scroll'),
+		'prefs' => ['wikiplugin_scroll'],
 		'body' => tra('text'),
 		'iconname' => 'sort-down',
 		'introduced' => 5,
-		'tags' => array( 'basic' ),
-		'params' => array(
-			'width' => array(
+		'tags' => [ 'basic' ],
+		'params' => [
+			'width' => [
 				'required' => true,
 				'name' => tra('Width'),
 				'description' => tr('Width in pixels. Example: %0.', '<code>600px</code>'),
@@ -25,8 +25,8 @@ function wikiplugin_scroll_info()
 				'accepted' => tra('Number of pixels followed by "px".'),
 				'filter' => 'text',
 				'default' => '',
-			),
-			'height' => array(
+			],
+			'height' => [
 				'required' => true,
 				'name' => tra('Height'),
 				'description' => tr('Height in pixels. Example: %0.', '<code>450px</code>'),
@@ -34,54 +34,54 @@ function wikiplugin_scroll_info()
 				'accepted' => tra('Number of pixels followed by "px".'),
 				'filter' => 'text',
 				'default' => '',
-			),
-			'speed' => array(
+			],
+			'speed' => [
 				'required' => false,
 				'name' => tra('Speed'),
 				'description' => tr('Scroll speed in number of seconds (default is %0)', '<code>8</code>'),
 				'since' => '5.0',
 				'filter' => 'digits',
 				'default' => 8,
-			),
-		)
-	);
+			],
+		]
+	];
 }
 
 function wikiplugin_scroll($data, $params)
 {
 	extract($params, EXTR_SKIP);
 //minimum parameters
-	if (!isset($width)) {
+	if (! isset($width)) {
 		return ('<b>missing width parameter for plugin</b><br/>');
 	}
 
-	if (!isset($height)) {
+	if (! isset($height)) {
 		return ('<b>missing height parameter for plugin</b><br/>');
 	}
-	
+
 //optional parameters
-	if (!isset($speed)) {
-		$speed=8;
+	if (! isset($speed)) {
+		$speed = 8;
 	}
 
 
 // margin requierd for ilayer scrolling on mozilla
-   $margin=40;
+	$margin = 40;
 	if (substr($width, -1) == "x") {
-		$width_w=substr($width, 0, -2);
-		$height_h=substr($height, 0, -2); 
-	} else if (substr($width, -1) == "%") {
+		$width_w = substr($width, 0, -2);
+		$height_h = substr($height, 0, -2);
+	} elseif (substr($width, -1) == "%") {
 		return ("<b>Warning the value of the height parameters must be set using px  (ex: 600px ) for plugin</b><br/>");
 	} else {
-	   return ("<b>Warning the value of the width parameters must be set using px  (ex: 600px ) for plugin</b><br/>");  
+		return ("<b>Warning the value of the width parameters must be set using px  (ex: 600px ) for plugin</b><br/>");
 	}
-   $margin =20;
-   $i_width=$width_w - $margin;
-	$c_width=$width_w - 10;
-	$cx_width=$i_width."px";
-	$z_width_w=$width_w+10;
-	$z_width=$z_width_w."px";
-	$ret= "~np~<div style=\"background-color:#FFFFDD;width:$width\"><center><a href=\"javascript:movedown()\">Down</a>  <a href=\"javascript:moveup()\">Up</a> 
+	$margin = 20;
+	$i_width = $width_w - $margin;
+	$c_width = $width_w - 10;
+	$cx_width = $i_width . "px";
+	$z_width_w = $width_w + 10;
+	$z_width = $z_width_w . "px";
+	$ret = "~np~<div style=\"background-color:#FFFFDD;width:$width\"><center><a href=\"javascript:movedown()\">Down</a>  <a href=\"javascript:moveup()\">Up</a> 
 	 <a href=\"javascript:stopscroll()\">Stop</a>  <a href=\"javascript:movetop()\">Top</a></center>
 	 </div>
 	 

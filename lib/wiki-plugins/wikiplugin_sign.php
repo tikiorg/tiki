@@ -7,18 +7,18 @@
 
 function wikiplugin_sign_info()
 {
-	return array(
+	return [
 		'name' => tr('Signature'),
 		'documentation' => 'PluginSign',
 		'description' => tr('Sign and date your contribution to a page'),
-		'prefs' => array('wikiplugin_sign'),
-		'tags' => array('basic'),
+		'prefs' => ['wikiplugin_sign'],
+		'tags' => ['basic'],
 		'inline' => true,
 		'format' => 'html',
 		'iconname' => 'pencil',
 		'introduced' => 10,
-		'params' => array(
-			'user' => array(
+		'params' => [
+			'user' => [
 				'required' => false,
 				'name' => tr('User'),
 				'description' => tr('Auto-generated, the username.'),
@@ -26,8 +26,8 @@ function wikiplugin_sign_info()
 				'default' => '',
 				'filter' => 'text',
 				'advanced' => true,
-			),
-			'datetime' => array(
+			],
+			'datetime' => [
 				'required' => false,
 				'name' => tr('Date and time'),
 				'description' => tr('Auto-generated, the timestamp'),
@@ -35,9 +35,9 @@ function wikiplugin_sign_info()
 				'default' => '',
 				'filter' => 'text',
 				'advanced' => true,
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 function wikiplugin_sign_rewrite($data, $params, $context)
@@ -68,17 +68,17 @@ function wikiplugin_sign($data, $params, $offset)
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign(
 		'sign',
-		array(
+		[
 			'user' => $user,
 			'datetime' => $params['datetime'],
 			'time' => $time,
-		)
+		]
 	);
 
 	$tip = $smarty->fetch('wiki-plugins/wikiplugin_sign.tpl');
 
 	$smarty->loadPlugin('smarty_function_icon');
-	$icon = smarty_function_icon(array('name' => 'pencil', 'title' => '', 'iclass' => 'wp-sign-icon'), $smarty);
+	$icon = smarty_function_icon(['name' => 'pencil', 'title' => '', 'iclass' => 'wp-sign-icon'], $smarty);
 
 	TikiLib::lib('header')-> add_jq_onready(
 		'
@@ -92,4 +92,3 @@ function wikiplugin_sign($data, $params, $offset)
 
 	return $icon . $tip;
 }
-

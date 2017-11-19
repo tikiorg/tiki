@@ -6,27 +6,27 @@
 // $Id$
 
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  die;
+	header("location: index.php");
+	die;
 }
 
 function wikiplugin_pagetabs_help()
 {
-        return "Cutom Tabs Engine";
+		return "Cutom Tabs Engine";
 }
 
 function wikiplugin_pagetabs_info()
 {
-	return array(
+	return [
 		'name' => tra('Page Tabs'),
 		'documentation' => tra('PluginPageTabs'),
 		'description' => tra('Display content of wiki pages in a set of tabs'),
-		'prefs' => array( 'wikiplugin_pagetabs' ),
+		'prefs' => [ 'wikiplugin_pagetabs' ],
 		'iconname' => 'copy',
 		'introduced' => 9,
-		'body' => NULL,
-		'params' => array(
-			'pages' => array(
+		'body' => null,
+		'params' => [
+			'pages' => [
 				'required' => false,
 				'name' => tra('Wiki page names'),
 				'description' => tr('The wiki pages you would like to use in this plugin, optional, separate with
@@ -37,9 +37,9 @@ function wikiplugin_pagetabs_info()
 				'separator' => '|',
 				'filter' => 'pagename',
 				'profile_reference' => 'wiki_page',
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 function wikiplugin_pagetabs($data, $params)
@@ -69,13 +69,13 @@ function wikiplugin_pagetabs($data, $params)
 		$headerlib
 			->add_jq_onready(
 				'
-				var tabPages = '.$pages.';
+				var tabPages = ' . $pages . ';
 
 				var tabsTable = $("table.pagetabs")
 					.hide();
 
 				var tabParent = $("<div id=\'TabContainer\' />")
-					.insertAfter("#pagetabs'.$pagetabsindex.'");
+					.insertAfter("#pagetabs' . $pagetabsindex . '");
 
 				var tabMenu = $("<ul id=\'tabMenu\' class=\'tabs\' />")
 					.appendTo(tabParent);
