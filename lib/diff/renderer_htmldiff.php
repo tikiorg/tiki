@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -30,14 +30,14 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 		$this->rspan = false;
 		$this->lspan = false;
 		//$this->tracked_tags = array ("table","ul","div");
-		$this->tracked_tags = array ("table", "ul");
+		$this->tracked_tags = ["table", "ul"];
 	}
 
 	function _endDiff()
 	{
-		for ($i=0; $i <= $this->n; $i++) {
+		for ($i = 0; $i <= $this->n; $i++) {
 			if ($this->original[$i] != "" and $this->final[$i] != "") {
-				echo "<tr><td width='50%' colspan='2' style='vertical-align:top'>".$this->original[$i]."</td><td width='50%' colspan='2' style='vertical-align:top'>".$this->final[$i]."</td></tr>\n";
+				echo "<tr><td width='50%' colspan='2' style='vertical-align:top'>" . $this->original[$i] . "</td><td width='50%' colspan='2' style='vertical-align:top'>" . $this->final[$i] . "</td></tr>\n";
 			}
 		}
 		//echo '</table>';
@@ -59,11 +59,11 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 	{
 	}
 
-	function _insert_tag($line, $tag, &$span) 
+	function _insert_tag($line, $tag, &$span)
 	{
 		$string = "";
 		if ($line != '') {
-			if (strstr($line, "<") === FALSE) {
+			if (strstr($line, "<") === false) {
 				if ($span === false) {
 					$string .= "<span class='$tag'>";
 					$span = true;
@@ -74,18 +74,18 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 					$string .= "</span class='fin'>";
 					$span = false;
 				}
-				if (strstr($line, "class=")  === FALSE) {
+				if (strstr($line, "class=") === false) {
 					$string .= preg_replace("#<([^/> ]+)(.*[^/]?)?>#", "<$1 class='$tag' $2>", $line);
 					$string = preg_replace("#<br class='(.*)'\s*/>#", "<span class='$1'>&crarr;</span><br class='$1' />", $string);
 				} else {
 					$string .= preg_replace("#<([^/> ]+)(.*)class=[\"']?([^\"']+)[\"']?(.*[^/]?)?>#", "<$1$2 class='$3 $tag' $4>", $line);
 				}
-			} 
+			}
 		}
 		return $string;
 	}
 
-	function _count_tags($line, $version) 
+	function _count_tags($line, $version)
 	{
 
 		preg_match("#<(/?)([^ >]+)#", $line, $out);
@@ -100,7 +100,7 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 		}
 	}
 
-	function _can_break($line) 
+	function _can_break($line)
 	{
 
 		if (preg_match("#<(p|h\d|br)#", $line) == 0) {
@@ -123,7 +123,7 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 	{
 		static $context = 0;
 
-		switch($type) {
+		switch ($type) {
 			case 'context':
 				foreach ($lines as $line) {
 					if ($context == 0 and $this->_can_break($line)) {
@@ -141,16 +141,16 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 						$this->final[$this->n] .= "</span>";
 						$this->rspan = false;
 					}
-					if (!isset($this->original[$this->n])) { 
+					if (! isset($this->original[$this->n])) {
 						$this->original[$this->n] = '';
 					}
 					$this->original[$this->n] .= "$line";
-					if (!isset($this->final[$this->n])) { 
-						$this->final[$this->n] = ''; 
+					if (! isset($this->final[$this->n])) {
+						$this->final[$this->n] = '';
 					}
 					$this->final[$this->n] .= "$line";
 				}
-    			break;
+				break;
 			case 'change-added':
 			case 'added':
 				foreach ($lines as $line) {
@@ -160,7 +160,7 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 						$context = 0;
 					}
 				}
-    			break;
+				break;
 			case 'deleted':
 			case 'change-deleted':
 				foreach ($lines as $line) {
@@ -170,7 +170,7 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 						$context = 0;
 					}
 				}
-    			break;
+				break;
 		}
 	}
 
@@ -179,7 +179,7 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 		$this->_lines('context', $lines);
 	}
 
-	function _added($lines, $changemode = FALSE)
+	function _added($lines, $changemode = false)
 	{
 		if ($changemode) {
 			$this->_lines('change-added', $lines, '+');
@@ -188,7 +188,7 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 		}
 	}
 
-	function _deleted($lines, $changemode = FALSE)
+	function _deleted($lines, $changemode = false)
 	{
 		if ($changemode) {
 			$this->_lines('change-deleted', $lines, '-');
@@ -199,7 +199,7 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 
 	function _changed($orig, $final)
 	{
-		$this->_deleted($orig, TRUE);
-		$this->_added($final, TRUE);
+		$this->_deleted($orig, true);
+		$this->_added($final, true);
 	}
 }

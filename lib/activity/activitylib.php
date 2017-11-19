@@ -14,30 +14,30 @@ class ActivityLib
 		$table = $this->rulesTable();
 		$table->useExceptions();
 		return $table->fetchAll(
-			array(
+			[
 				'ruleId',
 				'eventType',
 				'ruleType',
 				'rule',
 				'notes',
-			),
-			array()
+			],
+			[]
 		);
 	}
 
 	function getRule($id)
 	{
 		return $this->rulesTable()->fetchRow(
-			array(
+			[
 				'ruleId',
 				'eventType',
 				'ruleType',
 				'rule',
 				'notes',
-			),
-			array(
+			],
+			[
 				'ruleId' => $id,
-			)
+			]
 		);
 	}
 
@@ -52,27 +52,27 @@ class ActivityLib
 
 		return $this->rulesTable()->insertOrUpdate(
 			$data,
-			array(
+			[
 				'ruleId' => $id,
-			)
+			]
 		);
 	}
 
 	function deleteRule($id)
 	{
 		return $this->rulesTable()->delete(
-			array(
+			[
 				'ruleId' => $id,
-			)
+			]
 		);
 	}
 
 	function deleteActivity($id)
 	{
 		$info = $this->streamTable()->delete(
-			array(
+			[
 				'activityId' => $id,
-			)
+			]
 		);
 		require_once 'lib/search/refresh-functions.php';
 		refresh_index('activity', $id);
@@ -82,15 +82,15 @@ class ActivityLib
 	{
 		$table = $this->rulesTable();
 		return $table->deleteMultiple(
-			array(
+			[
 				'ruleId' => $table->notIn($ids),
-			)
+			]
 		);
 	}
 
 	function recordEvent($event, $arguments)
 	{
-		if (!$event) {
+		if (! $event) {
 			return; // prevent false recording of test runs
 		}
 
@@ -102,11 +102,11 @@ class ActivityLib
 		}
 
 		$id = $this->streamTable()->insert(
-			array(
+			[
 				'eventType' => $event,
 				'eventDate' => TikiLib::lib('tiki')->now,
 				'arguments' => json_encode($arguments),
-			)
+			]
 		);
 
 		TikiLib::lib('unifiedsearch')->invalidateObject('activity', $id);
@@ -120,24 +120,24 @@ class ActivityLib
 	 * @param $event
 	 * @param $arguments
 	 */
-	function logEvent($event, $arguments, $includes = array(), $excludes = array())
+	function logEvent($event, $arguments, $includes = [], $excludes = [])
 	{
-		if (!$event) {
+		if (! $event) {
 			return; // prevent false recording of test runs
 		}
 
 		if ($includes) {
 			// if includes is provided, then everything is excluded by default
-			$clean_args = array();
+			$clean_args = [];
 			foreach ($arguments as $k => $v) {
 				if (in_array($k, $includes)) {
 					$clean_args[$k] = $v;
 				}
 			}
-		} else if ($excludes) {
-			$clean_args = array();
+		} elseif ($excludes) {
+			$clean_args = [];
 			foreach ($arguments as $k => $v) {
-				if (!in_array($k, $excludes)) {
+				if (! in_array($k, $excludes)) {
 					$clean_args[$k] = $v;
 				}
 			}
@@ -153,13 +153,13 @@ class ActivityLib
 	function bindBasicEvents(Tiki_Event_Manager $manager)
 	{
 		global $prefs;
-		$map = array(
+		$map = [
 			'activity_basic_tracker_create' => 'tiki.trackeritem.create',
 			'activity_basic_tracker_update' => 'tiki.trackeritem.update',
 			'activity_basic_user_follow_add' => 'tiki.user.follow.add',
 			'activity_basic_user_follow_incoming' => 'tiki.user.follow.incoming',
 			'activity_basic_user_friend_add' => 'tiki.user.friend.add',
-		);
+		];
 
 		foreach ($map as $preference => $event) {
 			if ($prefs[$preference] == 'y') {
@@ -199,38 +199,38 @@ class ActivityLib
 	{
 		$self = $this;
 		return new Math_Formula_Runner(
-			array(
+			[
 				function ($verb) use ($manager, $self) {
 					switch ($verb) {
-					case 'event-trigger':
-						return new Tiki_Event_Function_EventTrigger($manager);
-					case 'event-record':
-						return new Tiki_Event_Function_EventRecord($self);
-					case 'event-notify':
-						return new Tiki_Event_Function_EventNotify($self);
-					case 'event-sample':
-						return new Tiki_Event_Function_EventSample($self);
-					case 'event-log':
-						return new Tiki_Event_Function_EventLog($self);
+						case 'event-trigger':
+							return new Tiki_Event_Function_EventTrigger($manager);
+						case 'event-record':
+							return new Tiki_Event_Function_EventRecord($self);
+						case 'event-notify':
+							return new Tiki_Event_Function_EventNotify($self);
+						case 'event-sample':
+							return new Tiki_Event_Function_EventSample($self);
+						case 'event-log':
+							return new Tiki_Event_Function_EventLog($self);
 					}
 				},
 				'Math_Formula_Function_' => '',
 				'Tiki_Event_Function_' => '',
-			)
+			]
 		);
 	}
 
 	function getActivityList()
 	{
-		return $this->streamTable()->fetchColumn('activityId', array());
+		return $this->streamTable()->fetchColumn('activityId', []);
 	}
 
 	function getActivity($id)
 	{
 		$info = $this->streamTable()->fetchFullRow(
-			array(
+			[
 				'activityId' => $id,
-			)
+			]
 		);
 
 		if ($info) {
@@ -244,7 +244,7 @@ class ActivityLib
 	{
 		if ($this->mapping === false) {
 			$table = $this->mappingTable();
-			$this->mapping = $table->fetchMap('field_name', 'field_type', array());
+			$this->mapping = $table->fetchMap('field_name', 'field_type', []);
 		}
 
 		return $this->mapping;
@@ -290,10 +290,10 @@ class ActivityLib
 		foreach ($arguments as $key => $value) {
 			$type = $mapper->findType($key, $value);
 			$mappingTable->insert(
-				array(
+				[
 					'field_name' => $key,
 					'field_type' => $type,
-				)
+				]
 			);
 			$this->mapping[$key] = $type;
 		}
@@ -314,4 +314,3 @@ class ActivityLib
 		return TikiDb::get()->table('tiki_activity_stream');
 	}
 }
-

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,7 +9,7 @@
  * \brief Base class for external debugger command
  * \author zaufi <zaufi@sendmail.ru>
  */
-require_once ('lib/debug/debugger-common.php');
+require_once('lib/debug/debugger-common.php');
 
 /**
  * \brief Base class for external debugger command
@@ -21,7 +21,7 @@ class DebuggerCommand extends ResultType
 	 *
 	 * Assume interface extension if no name provided
 	 */
-	function name() 
+	function name()
 	{
 		return '';
 	}
@@ -30,7 +30,7 @@ class DebuggerCommand extends ResultType
 	 *
 	 * Used as title foe interface extentions
 	 */
-	function description() 
+	function description()
 	{
 		return 'No help available for ' . $this->name();
 	}

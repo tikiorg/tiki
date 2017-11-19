@@ -16,20 +16,20 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 class BanLib extends TikiLib
 {
-    /**
-     * @param $banId
-     * @return mixed
-     */
-    function get_rule($banId)
+	/**
+	 * @param $banId
+	 * @return mixed
+	 */
+	function get_rule($banId)
 	{
 		$query = "select * from `tiki_banning` where `banId`=?";
 
-		$result = $this->query($query, array($banId));
+		$result = $this->query($query, [$banId]);
 		$res = $result->fetchRow();
-		$aux = array();
+		$aux = [];
 		$query2 = "select `section` from `tiki_banning_sections` where `banId`=?";
-		$result2 = $this->query($query2, array($banId));
-		$aux = array();
+		$result2 = $this->query($query2, [$banId]);
+		$aux = [];
 
 		while ($res2 = $result2->fetchRow()) {
 			$aux[] = $res2['section'];
@@ -39,49 +39,49 @@ class BanLib extends TikiLib
 		return $res;
 	}
 
-    /**
-     * @param $banId
-     */
-    function remove_rule($banId)
+	/**
+	 * @param $banId
+	 */
+	function remove_rule($banId)
 	{
 		$query = "delete from `tiki_banning` where `banId`=?";
 
-		$this->query($query, array($banId));
+		$this->query($query, [$banId]);
 		$query = "delete from `tiki_banning_sections` where `banId`=?";
-		$this->query($query, array($banId));
+		$this->query($query, [$banId]);
 	}
 
-    /**
-     * @param $offset
-     * @param $maxRecords
-     * @param $sort_mode
-     * @param $find
-     * @return array
-     */
-    function list_rules($offset, $maxRecords, $sort_mode, $find)
+	/**
+	 * @param $offset
+	 * @param $maxRecords
+	 * @param $sort_mode
+	 * @param $find
+	 * @return array
+	 */
+	function list_rules($offset, $maxRecords, $sort_mode, $find)
 	{
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
 
 			$mid = " where ((`message` like ?) or (`title` like ?))";
-			$bindvars = array($findesc, $findesc);
+			$bindvars = [$findesc, $findesc];
 		} else {
 			$mid = "";
-			$bindvars = array();
+			$bindvars = [];
 		}
 
 		$query = "select * from `tiki_banning` $mid order by " . $this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_banning` $mid";
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
-		$ret = array();
+		$ret = [];
 
 		while ($res = $result->fetchRow()) {
-			$aux = array();
+			$aux = [];
 
 			$query2 = "select * from `tiki_banning_sections` where `banId`=?";
-			$result2 = $this->query($query2, array($res['banId']));
+			$result2 = $this->query($query2, [$res['banId']]);
 
 			while ($res2 = $result2->fetchRow()) {
 				$aux[] = $res2;
@@ -91,11 +91,11 @@ class BanLib extends TikiLib
 			$ret[] = $res;
 		}
 
-		$retval = array();
+		$retval = [];
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
 		$query = "select `banId` from `tiki_banning` where `use_dates`=? and `date_to` < FROM_UNIXTIME(?)";
-		$result = $this->query($query, array('y', $this->now));
+		$result = $this->query($query, ['y', $this->now]);
 
 		while ($res = $result->fetchRow()) {
 			$this->remove_rule($res['banId']);
@@ -104,15 +104,15 @@ class BanLib extends TikiLib
 		return $retval;
 	}
 
-    /**
-     * @param $rules
-     * @return string
-     */
-    function export_rules($rules)
+	/**
+	 * @param $rules
+	 * @return string
+	 */
+	function export_rules($rules)
 	{
 		$csv = "banId,mode,title,ip1,ip2,ip3,ip4,user,date_from,date_to,use_dates,created,created_readable,message,sections\n";
 		foreach ($rules as $rule) {
-			if (!isset($rule['title'])) {
+			if (! isset($rule['title'])) {
 				$rule['title'] = '';
 			}
 			if (isset($rule['user'])) {
@@ -128,7 +128,7 @@ class BanLib extends TikiLib
 				$rule['date_from'] = '';
 				$rule['date_to'] = '';
 			}
-			if (!isset($rule['message'])) {
+			if (! isset($rule['message'])) {
 				$rule['message'] = '';
 			}
 			$csv .= '"' . $rule['banId']
@@ -146,7 +146,7 @@ class BanLib extends TikiLib
 					. '","' . $this->date_format("%y%m%d %H:%M", $rule['created'])
 					. '","' . $rule['message'] . '","';
 
-			if (!empty($rule['sections'])) {
+			if (! empty($rule['sections'])) {
 				foreach ($rule['sections'] as $section) {
 					$csv .= $section['section'] . '|';
 				}
@@ -157,12 +157,12 @@ class BanLib extends TikiLib
 		return $csv;
 	}
 
-    /**
-     * @param $fname
-     * @param $import_as_new
-     * @return int
-     */
-    function importCSV($fname, $import_as_new)
+	/**
+	 * @param $fname
+	 * @param $import_as_new
+	 * @return int
+	 */
+	function importCSV($fname, $import_as_new)
 	{
 		$fields = false;
 		if ($fhandle = fopen($fname, 'r')) {
@@ -176,9 +176,9 @@ class BanLib extends TikiLib
 			die;
 		}
 		$nb = 0;
-		while (($data = fgetcsv($fhandle, 1000)) !== FALSE) {
-			$d = array("banId" => "", "mode" => "", "title" => "", "ip1" => "", "ip2" => "",
-					   "ip3" => "", "ip4" => "", "user" => "", "date_from" => "", "date_to" => "", "use_dates" => "", "created" => "", "created_readable" => "", "message" => "");
+		while (($data = fgetcsv($fhandle, 1000)) !== false) {
+			$d = ["banId" => "", "mode" => "", "title" => "", "ip1" => "", "ip2" => "",
+					   "ip3" => "", "ip4" => "", "user" => "", "date_from" => "", "date_to" => "", "use_dates" => "", "created" => "", "created_readable" => "", "message" => ""];
 			foreach ($fields as $field) {
 				$d[$field] = $data[array_search($field, $fields)];
 			}
@@ -191,8 +191,18 @@ class BanLib extends TikiLib
 			$nb++;
 
 			$this->replace_rule(
-				$d['banId'], $d['mode'], $d['title'], $d['ip1'], $d['ip2'], $d['ip3'], $d['ip4'],
-				$d['user'], strtotime($d['date_from']), strtotime($d['date_to']), $d['use_dates'], $d['message'],
+				$d['banId'],
+				$d['mode'],
+				$d['title'],
+				$d['ip1'],
+				$d['ip2'],
+				$d['ip3'],
+				$d['ip4'],
+				$d['user'],
+				strtotime($d['date_from']),
+				strtotime($d['date_to']),
+				$d['use_dates'],
+				$d['message'],
 				explode('|', $d['sections'])
 			);
 		}
@@ -215,47 +225,47 @@ class BanLib extends TikiLib
 	  message text,
 	  primary key(banId)
 	  */
-    /**
-     * @param $banId
-     * @param $mode
-     * @param $title
-     * @param $ip1
-     * @param $ip2
-     * @param $ip3
-     * @param $ip4
-     * @param $user
-     * @param $date_from
-     * @param $date_to
-     * @param $use_dates
-     * @param $message
-     * @param $sections
-     */
-    function replace_rule($banId, $mode, $title, $ip1, $ip2, $ip3, $ip4, $user, $date_from, $date_to, $use_dates, $message, $sections)
+	/**
+	 * @param $banId
+	 * @param $mode
+	 * @param $title
+	 * @param $ip1
+	 * @param $ip2
+	 * @param $ip3
+	 * @param $ip4
+	 * @param $user
+	 * @param $date_from
+	 * @param $date_to
+	 * @param $use_dates
+	 * @param $message
+	 * @param $sections
+	 */
+	function replace_rule($banId, $mode, $title, $ip1, $ip2, $ip3, $ip4, $user, $date_from, $date_to, $use_dates, $message, $sections)
 	{
 		if (empty($title)) {
 			$title = empty($user) ? "$ip1.$ip2.$ip3.$ip4" : $user;
 		}
 
-		$count = TikiDb::get()->table('tiki_banning')->fetchCount(array('banId' => $banId));
+		$count = TikiDb::get()->table('tiki_banning')->fetchCount(['banId' => $banId]);
 		if ($banId && $count > 0) {
 			$query = "update `tiki_banning` set `title`=?, `ip1`=?, `ip2`=?, `ip3`=?, `ip4`=?, `user`=?, " .
 					 "`date_from` = FROM_UNIXTIME(?), `date_to` = FROM_UNIXTIME(?), `use_dates` = ?, `message` = ? where `banId`=?";
 
-			$this->query($query, array($title, $ip1, $ip2, $ip3, $ip4, $user, $date_from, $date_to, $use_dates, $message, $banId));
+			$this->query($query, [$title, $ip1, $ip2, $ip3, $ip4, $user, $date_from, $date_to, $use_dates, $message, $banId]);
 		} else {
 			$query = "insert into `tiki_banning`(`mode`,`title`,`ip1`,`ip2`,`ip3`,`ip4`,`user`,`date_from`,`date_to`,`use_dates`,`message`,`created`) " .
 					 "values(?,?,?,?,?,?,?,FROM_UNIXTIME(?),FROM_UNIXTIME(?),?,?,?)";
-			$this->query($query, array($mode, $title, $ip1, $ip2, $ip3, $ip4, $user, $date_from, $date_to, $use_dates, $message, $this->now));
-			$banId = $this->getOne("select max(`banId`) from `tiki_banning` where `created`=?", array($this->now));
+			$this->query($query, [$mode, $title, $ip1, $ip2, $ip3, $ip4, $user, $date_from, $date_to, $use_dates, $message, $this->now]);
+			$banId = $this->getOne("select max(`banId`) from `tiki_banning` where `created`=?", [$this->now]);
 		}
 
 		$query = "delete from `tiki_banning_sections` where `banId`=?";
-		$this->query($query, array($banId));
+		$this->query($query, [$banId]);
 
 		foreach ($sections as $section) {
 			$query = "insert into `tiki_banning_sections`(`banId`,`section`) values(?,?)";
 
-			$this->query($query, array($banId, $section));
+			$this->query($query, [$banId, $section]);
 		}
 	}
 }

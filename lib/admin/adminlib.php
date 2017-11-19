@@ -27,7 +27,7 @@ class AdminLib extends TikiLib
 	function list_dsn($offset, $maxRecords, $sort_mode, $find)
 	{
 
-		$bindvars = array();
+		$bindvars = [];
 		if ($find) {
 			$findesc = '%' . $find . '%';
 
@@ -41,13 +41,13 @@ class AdminLib extends TikiLib
 		$query_cant = "select count(*) from `tiki_dsn` $mid";
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
-		$ret = array();
+		$ret = [];
 
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
-		$retval = array();
+		$retval = [];
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
 		return $retval;
@@ -64,11 +64,11 @@ class AdminLib extends TikiLib
 		// Check the name
 		if ($dsnId) {
 			$query = "update `tiki_dsn` set `name`=?,`dsn`=? where `dsnId`=?";
-			$bindvars = array($name, $dsn, $dsnId);
+			$bindvars = [$name, $dsn, $dsnId];
 			$result = $this->query($query, $bindvars);
 		} else {
 			$query = "delete from `tiki_dsn`where `name`=? and `dsn`=?";
-			$bindvars = array($name, $dsn);
+			$bindvars = [$name, $dsn];
 			$result = $this->query($query, $bindvars);
 			$query = "insert into `tiki_dsn`(`name`,`dsn`)
                 		values(?,?)";
@@ -87,7 +87,7 @@ class AdminLib extends TikiLib
 		$info = $this->get_dsn($dsnId);
 
 		$query = "delete from `tiki_dsn` where `dsnId`=?";
-		$this->query($query, array($dsnId));
+		$this->query($query, [$dsnId]);
 		return true;
 	}
 
@@ -99,10 +99,11 @@ class AdminLib extends TikiLib
 	{
 		$query = "select * from `tiki_dsn` where `dsnId`=?";
 
-		$result = $this->query($query, array($dsnId));
+		$result = $this->query($query, [$dsnId]);
 
-		if (!$result->numRows())
+		if (! $result->numRows()) {
 			return false;
+		}
 
 		$res = $result->fetchRow();
 		return $res;
@@ -116,10 +117,11 @@ class AdminLib extends TikiLib
 	{
 		$query = "select * from `tiki_dsn` where `name`=?";
 
-		$result = $this->query($query, array($dsnName));
+		$result = $this->query($query, [$dsnName]);
 
-		if (!$result->numRows())
+		if (! $result->numRows()) {
 			return false;
+		}
 
 		$res = $result->fetchRow();
 		return $res;
@@ -134,7 +136,7 @@ class AdminLib extends TikiLib
 	 */
 	function list_extwiki($offset, $maxRecords, $sort_mode, $find)
 	{
-		$bindvars = array();
+		$bindvars = [];
 		if ($find) {
 			$findesc = '%' . $find . '%';
 
@@ -148,9 +150,9 @@ class AdminLib extends TikiLib
 		$query_cant = "select count(*) from `tiki_extwiki` $mid";
 		$result = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
-		$ret = array();
+		$ret = [];
 
-		$retval = array();
+		$retval = [];
 		$retval["data"] = $result;
 		$retval["cant"] = $cant;
 		return $retval;
@@ -187,7 +189,7 @@ class AdminLib extends TikiLib
 		$info = $this->get_extwiki($extwikiId);
 
 		$query = "delete from `tiki_extwiki` where `extwikiId`=?";
-		$this->query($query, array($extwikiId));
+		$this->query($query, [$extwikiId]);
 		return true;
 	}
 
@@ -200,7 +202,7 @@ class AdminLib extends TikiLib
 		$table = $this->table('tiki_extwiki');
 		$row = $table->fetchFullRow(['extwikiId' => $extwikiId]);
 
-		if (!empty($row['groups'])) {
+		if (! empty($row['groups'])) {
 			$row['groups'] = json_decode($row['groups']);
 		}
 		return $row;
@@ -211,20 +213,22 @@ class AdminLib extends TikiLib
 		global $tikidomain;
 
 		$query = "select `data` from `tiki_pages`";
-		$result = $this->query($query, array());
-		$pictures = array();
+		$result = $this->query($query, []);
+		$pictures = [];
 
 		while ($res = $result->fetchRow()) {
 			preg_match_all("/\{(picture |img )([^\}]+)\}/ixs", $res['data'], $pics); // to be fixed: pick also the picture into ~np~
 
 			foreach (array_unique($pics[2]) as $pic) {
-				if (preg_match("/(src|file)=\"([^\"]+)\"/xis", $pic, $matches))
+				if (preg_match("/(src|file)=\"([^\"]+)\"/xis", $pic, $matches)) {
 					$pictures[] = $matches[2];
-				if (preg_match("/(src|file)=&quot;([^&]+)&quot;/xis", $pic, $matches))
+				}
+				if (preg_match("/(src|file)=&quot;([^&]+)&quot;/xis", $pic, $matches)) {
 					$pictures[] = $matches[2];
-				if (preg_match("/(src|file)=([^&\"\s,]+)/xis", $pic, $matches))
+				}
+				if (preg_match("/(src|file)=([^&\"\s,]+)/xis", $pic, $matches)) {
 					$pictures[] = $matches[2];
-
+				}
 			}
 		}
 		$pictures = array_unique($pictures);
@@ -239,7 +243,7 @@ class AdminLib extends TikiLib
 			if (is_file("$path/$file") && $file != 'license.txt' && $file != 'index.php' && $file != '.cvsignore' && $file != 'README') {
 				$filename = "$path/$file";
 
-				if (!in_array($filename, $pictures)) {
+				if (! in_array($filename, $pictures)) {
 					@unlink($filename);
 				}
 			}
@@ -250,11 +254,11 @@ class AdminLib extends TikiLib
 
 	function remove_orphan_images()
 	{
-		$merge = array();
+		$merge = [];
 
 		// Find images in tiki_pages
 		$query = "select `data` from `tiki_pages`";
-		$result = $this->query($query, array());
+		$result = $this->query($query, []);
 
 		while ($res = $result->fetchRow()) {
 			preg_match_all("/src=\"([^\"]+)\"/", $res["data"], $reqs1);
@@ -267,7 +271,7 @@ class AdminLib extends TikiLib
 
 		// Find images in Tiki articles
 		$query = "select `body` from `tiki_articles`";
-		$result = $this->query($query, array());
+		$result = $this->query($query, []);
 
 		while ($res = $result->fetchRow()) {
 			preg_match_all("/src=\"([^\"]+)\"/", $res["body"], $reqs1);
@@ -280,7 +284,7 @@ class AdminLib extends TikiLib
 
 		// Find images in tiki_submissions
 		$query = "select `body` from `tiki_submissions`";
-		$result = $this->query($query, array());
+		$result = $this->query($query, []);
 
 		while ($res = $result->fetchRow()) {
 			preg_match_all("/src=\"([^\"]+)\"/", $res["body"], $reqs1);
@@ -293,7 +297,7 @@ class AdminLib extends TikiLib
 
 		// Find images in tiki_blog_posts
 		$query = "select `data` from `tiki_blog_posts`";
-		$result = $this->query($query, array());
+		$result = $this->query($query, []);
 
 		while ($res = $result->fetchRow()) {
 			preg_match_all("/src=\"([^\"]+)\"/", $res["data"], $reqs1);
@@ -304,7 +308,7 @@ class AdminLib extends TikiLib
 			$merge = array_unique($merge);
 		}
 
-		$positives = array();
+		$positives = [];
 
 		foreach ($merge as $img) {
 			if (strstr($img, 'show_image')) {
@@ -315,12 +319,12 @@ class AdminLib extends TikiLib
 		}
 
 		$query = "select `imageId` from `tiki_images` where `galleryId`=0";
-		$result = $this->query($query, array());
+		$result = $this->query($query, []);
 
 		while ($res = $result->fetchRow()) {
 			$id = $res["imageId"];
 
-			if (!in_array($id, $positives)) {
+			if (! in_array($id, $positives)) {
 				$this->remove_image($id);
 			}
 		}
@@ -334,7 +338,7 @@ class AdminLib extends TikiLib
 	{
 		$query = "select distinct `tagName` from `tiki_tags` where `tagName` = ?";
 
-		$result = $this->query($query, array($tag));
+		$result = $this->query($query, [$tag]);
 		return $result->numRows($result);
 	}
 
@@ -345,7 +349,7 @@ class AdminLib extends TikiLib
 	function remove_tag($tagname)
 	{
 		$query = "delete from `tiki_tags` where `tagName`=?";
-		$this->query($query, array($tagname));
+		$this->query($query, [$tagname]);
 		$logslib = TikiLib::lib('logs');
 		$logslib->add_log('dump', "removed tag: $tagname");
 		return true;
@@ -358,8 +362,8 @@ class AdminLib extends TikiLib
 	{
 		$query = "select distinct `tagName` from `tiki_tags`";
 
-		$result = $this->query($query, array());
-		$ret = array();
+		$result = $this->query($query, []);
+		$ret = [];
 
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res["tagName"];
@@ -378,19 +382,19 @@ class AdminLib extends TikiLib
 	function create_tag($tagname)
 	{
 		$query = "select * from `tiki_pages`";
-		$result = $this->query($query, array());
+		$result = $this->query($query, []);
 
 		while ($res = $result->fetchRow()) {
 			$data = $res["data"];
 			$pageName = $res["pageName"];
 			$description = $res["description"];
 			$query = "delete from `tiki_tags`where `tagName`=? and `pageName`=?";
-			$this->query($query, array($tagname, $pageName), -1, -1, false);
+			$this->query($query, [$tagname, $pageName], -1, -1, false);
 			$query = "insert into `tiki_tags`(`tagName`,`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`flag`,`description`)" .
 				" values(?,?,?,?,?,?,?,?,?,?,?)";
 			$this->query(
 				$query,
-				array(
+				[
 					$tagname,
 					$pageName,
 					$res["hits"],
@@ -402,7 +406,7 @@ class AdminLib extends TikiLib
 					$res["ip"],
 					$res["flag"],
 					$description
-				)
+				]
 			);
 		}
 
@@ -421,19 +425,18 @@ class AdminLib extends TikiLib
 	{
 
 		$query = "update `tiki_pages` set `cache_timestamp`=0";
-		$this->query($query, array());
+		$this->query($query, []);
 		$query = "select * from `tiki_tags` where `tagName`=?";
-		$result = $this->query($query, array($tagname));
+		$result = $this->query($query, [$tagname]);
 
 		while ($res = $result->fetchRow()) {
-
 			$query = "update `tiki_pages`" .
 				" set `hits`=?,`data`=?,`lastModif`=?,`comment`=?,`version`=`version`+1,`user`=?,`ip`=?,`flag`=?,`description`=?" .
 				"  where `pageName`=?";
 
 			$this->query(
 				$query,
-				array(
+				[
 					$res["hits"],
 					$res["data"],
 					$res["lastModif"],
@@ -443,7 +446,7 @@ class AdminLib extends TikiLib
 					$res["flag"],
 					$res["description"],
 					$res["pageName"]
-				)
+				]
 			);
 		}
 
@@ -474,7 +477,7 @@ class AdminLib extends TikiLib
 
 		// Foreach page
 		$query = "select * from `tiki_pages`";
-		$result = $this->query($query, array());
+		$result = $this->query($query, []);
 
 		while ($res = $result->fetchRow()) {
 			$pageName = $res["pageName"] . '.html';
@@ -504,15 +507,15 @@ class AdminLib extends TikiLib
 			$tar->addData($pageName, $data, $res["lastModif"]);
 		}
 
-		$tar->toTar($dumpPath, FALSE);
-		unset ($tar);
+		$tar->toTar($dumpPath, false);
+		unset($tar);
 		$logslib = TikiLib::lib('logs');
 		$logslib->add_log('dump', 'wiki file dump created in ' . $dumpPath);
 	}
 
 	public function getOpcodeCacheStatus()
 	{
-		$opcode_stats = array(
+		$opcode_stats = [
 			'opcode_cache' => null,
 			'stat_flag' => null,
 			'warning_check' => false,
@@ -521,10 +524,9 @@ class AdminLib extends TikiLib
 			'warning_starve' => false,
 			'warning_low' => false,
 			'warning_xcache_blocked' => false,
-		);
+		];
 
 		if (function_exists('apc_sma_info') && ini_get('apc.enabled')) {
-
 			if ($_REQUEST['apc_clear']) {
 				check_ticket('admin-inc-performance');
 				apc_clear_cache();
@@ -537,12 +539,12 @@ class AdminLib extends TikiLib
 
 			$cache = apc_cache_info(null, true);
 			$hit_total = $cache['num_hits'] + $cache['num_misses'];
-			if (!$hit_total) {    // cheat for chart after cache clear
+			if (! $hit_total) {    // cheat for chart after cache clear
 				$hit_total = 1;
 				$cache['num_misses'] = 1;
 			}
 
-			$opcode_stats = array(
+			$opcode_stats = [
 				'opcode_cache' => 'APC',
 				'stat_flag' => 'apc.stat',
 				'memory_used' => ($mem_total - $sma['avail_mem']) / $mem_total,
@@ -552,12 +554,12 @@ class AdminLib extends TikiLib
 				'hit_miss' => $cache['num_misses'] / $hit_total,
 				'hit_total' => $hit_total,
 				'type' => 'apc',
-			);
+			];
 		} elseif (function_exists('xcache_info') && (ini_get('xcache.cacher') == '1' || ini_get('xcache.cacher') == 'On')) {
 			if (ini_get('xcache.admin.enable_auth') == '1' || ini_get('xcache.admin.enable_auth') == 'On') {
 				$opcode_stats['warning_xcache_blocked'] = true;
 			} else {
-				$opcode_stats = array(
+				$opcode_stats = [
 					'stat_flag' => 'xcache.stat',
 					'memory_used' => 0,
 					'memory_avail' => 0,
@@ -566,7 +568,7 @@ class AdminLib extends TikiLib
 					'hit_miss' => 0,
 					'hit_total' => 0,
 					'type' => 'xcache',
-				);
+				];
 
 				foreach (range(0, xcache_count(XC_TYPE_PHP) - 1) as $index) {
 					$info = xcache_info(XC_TYPE_PHP, $index);
@@ -586,7 +588,6 @@ class AdminLib extends TikiLib
 				$opcode_stats['hit_miss'] /= $opcode_stats['hit_total'];
 			}
 			$opcode_stats['opcode_cache'] = 'XCache';
-
 		} elseif (function_exists('wincache_fcache_fileinfo')) {
 			// Wincache is installed
 
@@ -595,7 +596,7 @@ class AdminLib extends TikiLib
 			if (function_exists('wincache_ocache_fileinfo')) {
 				// Wincache version 1
 				if (ini_get('wincache.ocenabled') == '1') {
-					$opcode_stats = array(
+					$opcode_stats = [
 						'opcode_cache' => 'WinCache',
 						'stat_flag' => 'wincache.ocenabled',
 						'memory_used' => 0,
@@ -605,14 +606,14 @@ class AdminLib extends TikiLib
 						'hit_miss' => 0,
 						'hit_total' => 0,
 						'type' => 'wincache',
-					);
+					];
 
 					$info = wincache_ocache_fileinfo();
 				}
 			} else {
 				// Wincache version 2 or higher
 				if (ini_get('wincache.fcenabled') == '1') {
-					$opcode_stats = array(
+					$opcode_stats = [
 						'opcode_cache' => 'WinCache',
 						'stat_flag' => 'wincache.fcenabled',
 						'memory_used' => 0,
@@ -622,11 +623,11 @@ class AdminLib extends TikiLib
 						'hit_miss' => 0,
 						'hit_total' => 0,
 						'type' => 'wincache',
-					);
+					];
 					$info = wincache_fcache_fileinfo();
 				}
 			}
-			if (!empty($opcode_stats['stat_flag'])) {
+			if (! empty($opcode_stats['stat_flag'])) {
 				$opcode_stats['hit_hit'] = $info['total_hit_count'];
 				$opcode_stats['hit_miss'] = $info['total_miss_count'];
 				$opcode_stats['hit_total'] = $info['total_hit_count'] + $info['total_miss_count'];
@@ -668,20 +669,20 @@ class AdminLib extends TikiLib
 		if (isset($opcode_stats['hit_total'])) {
 			$opcode_stats = array_merge(
 				$opcode_stats,
-				array(
+				[
 					'warning_fresh' => $opcode_stats['hit_total'] < 10000,
 					'warning_ratio' => $opcode_stats['hit_hit'] < 0.8,
-				)
+				]
 			);
 		}
 
 		if (isset($opcode_stats['memory_total'])) {
 			$opcode_stats = array_merge(
 				$opcode_stats,
-				array(
+				[
 					'warning_starve' => $opcode_stats['memory_avail'] < 0.2,
 					'warning_low' => $opcode_stats['memory_total'] < 60 * 1024 * 1024,
-				)
+				]
 			);
 		}
 

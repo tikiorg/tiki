@@ -12,20 +12,20 @@ class BigBlueButtonLib
 {
 	private $version = false;
 
-    /**
-     * @return bool|string
-     */
-    private function getVersion()
+	/**
+	 * @return bool|string
+	 */
+	private function getVersion()
 	{
-		if ( $this->version !== false ) {
+		if ($this->version !== false) {
 			return $this->version;
 		}
 
-		if ( $version = $this->performRequest('', array()) ) {
+		if ($version = $this->performRequest('', [])) {
 			$values = $this->grabValues($version->documentElement);
 			$version = $values['version'];
 
-			if ( false !== $pos = strpos($version, '-') ) {
+			if (false !== $pos = strpos($version, '-')) {
 				$version = substr($version, 0, $pos);
 			}
 
@@ -37,18 +37,18 @@ class BigBlueButtonLib
 		return $this->version;
 	}
 
-    /**
-     * @return array|mixed
-     */
-    public function getMeetings()
+	/**
+	 * @return array|mixed
+	 */
+	public function getMeetings()
 	{
 		$cachelib = TikiLib::lib('cache');
 
-		if ( ! $meetings = $cachelib->getSerialized('bbb_meetinglist') ) {
-			$meetings = array();
+		if (! $meetings = $cachelib->getSerialized('bbb_meetinglist')) {
+			$meetings = [];
 
-			if ( $dom = $this->performRequest('getMeetings', array('random' => 1)) ) {
-				foreach ( $dom->getElementsByTagName('meeting') as $node ) {
+			if ($dom = $this->performRequest('getMeetings', ['random' => 1])) {
+				foreach ($dom->getElementsByTagName('meeting') as $node) {
 					$meetings[] = $this->grabValues($node);
 				}
 			}
@@ -59,18 +59,17 @@ class BigBlueButtonLib
 		return $meetings;
 	}
 
-    /**
-     * @param $room
-     * @return array
-     */
-	public function getAttendees( $room, $username=false)
+	/**
+	 * @param $room
+	 * @return array
+	 */
+	public function getAttendees($room, $username = false)
 	{
-		if ( $meeting = $this->getMeeting($room) ) {
-			if ( $dom = $this->performRequest('getMeetingInfo', array('meetingID' => $room, 'password' => $meeting['moderatorPW'])) ) {
+		if ($meeting = $this->getMeeting($room)) {
+			if ($dom = $this->performRequest('getMeetingInfo', ['meetingID' => $room, 'password' => $meeting['moderatorPW']])) {
+				$attendees = [];
 
-				$attendees = array();
-
-				foreach ( $dom->getElementsByTagName('attendee') as $node ) {
+				foreach ($dom->getElementsByTagName('attendee') as $node) {
 					$attendees[] = $this->grabValues($node, $username);
 				}
 
@@ -79,16 +78,16 @@ class BigBlueButtonLib
 		}
 	}
 
-    /**
-     * @param $node
-     * @return array
-     */
-	private function grabValues( $node, $username=false)
+	/**
+	 * @param $node
+	 * @return array
+	 */
+	private function grabValues($node, $username = false)
 	{
-		$values = array();
+		$values = [];
 
-		foreach ( $node->childNodes as $n ) {
-			if ( $n instanceof DOMElement ) {
+		foreach ($node->childNodes as $n) {
+			if ($n instanceof DOMElement) {
 				$values[$n->tagName] = $n->textContent;
 			}
 		}
@@ -101,14 +100,14 @@ class BigBlueButtonLib
 		return $values;
 	}
 
-    /**
-     * @param $room
-     * @return bool
-     */
-    public function roomExists( $room )
+	/**
+	 * @param $room
+	 * @return bool
+	 */
+	public function roomExists($room)
 	{
-		foreach ( $this->getMeetings() as $meeting ) {
-			if ( $meeting['meetingID'] == $room ) {
+		foreach ($this->getMeetings() as $meeting) {
+			if ($meeting['meetingID'] == $room) {
 				return true;
 			}
 		}
@@ -116,45 +115,45 @@ class BigBlueButtonLib
 		return false;
 	}
 
-    /**
-     * @param $room
-     * @param array $params
-     */
-    public function createRoom( $room, array $params = array() )
+	/**
+	 * @param $room
+	 * @param array $params
+	 */
+	public function createRoom($room, array $params = [])
 	{
 		global $prefs;
 		$cachelib = TikiLib::lib('cache');
 		$tikilib = TikiLib::lib('tiki');
 		$params = array_merge(
-			array('logout' => $tikilib->tikiUrl(''),),
+			['logout' => $tikilib->tikiUrl(''),],
 			$params
 		);
 
-		$request = array(
+		$request = [
 				'name' => $room,
 				'meetingID' => $room,
 				'logoutURL' => $params['logout'],
-		);
+		];
 
-		if ( isset($params['welcome']) ) {
+		if (isset($params['welcome'])) {
 			$request['welcome'] = $params['welcome'];
 		}
 
-		if ( isset($params['number']) ) {
+		if (isset($params['number'])) {
 			$request['dialNumber'] = $params['number'];
 		}
 
-		if ( isset($params['voicebridge']) ) {
+		if (isset($params['voicebridge'])) {
 			$request['voiceBridge'] = $params['voicebridge'];
 		} else {
 			$request['voiceBridge'] = '7' . mt_rand(0, 9999);
 		}
 
-		if ( isset($params['logout']) ) {
+		if (isset($params['logout'])) {
 			$request['logoutURL'] = $tikilib->tikiUrl($params['logout']);
 		}
 
-		if ( isset($params['recording']) && $params['recording'] > 0 && $this->isRecordingSupported() ) {
+		if (isset($params['recording']) && $params['recording'] > 0 && $this->isRecordingSupported()) {
 			$request['record'] = 'true';
 			$request['duration'] = $prefs['bigbluebutton_recording_max_duration'];
 		}
@@ -171,7 +170,7 @@ class BigBlueButtonLib
 			return null;
 		}
 
-		$content = $this->performRequest('getDefaultConfigXML', array('random' => '1'), false);
+		$content = $this->performRequest('getDefaultConfigXML', ['random' => '1'], false);
 
 		if (! $content) {
 			return null;
@@ -184,19 +183,19 @@ class BigBlueButtonLib
 		}
 		$content = $config->getXml();
 
-		$parameters = array(
+		$parameters = [
 			'meetingID' => $meetingName,
 			'configXML' => rawurlencode($content),
-		);
+		];
 		$tikilib = TikiLib::lib('tiki');
 		$checksum = $this->generateChecksum('setConfigXML', $parameters);
 		$client = $tikilib->get_http_client($this->getBaseUrl('/api/setConfigXML.xml') . '?');
 		$client->setParameterPost(
-			array(
+			[
 				'meetingID' => $meetingName,
 				'configXML' => rawurlencode($content),
 				'checksum' => $checksum,
-			)
+			]
 		);
 
 		$client->getRequest()->setMethod(Zend\Http\Request::METHOD_POST);
@@ -213,64 +212,64 @@ class BigBlueButtonLib
 		}
 	}
 
-    /**
-     * @param $room
-     */
-    public function joinMeeting( $room, $configToken = null )
+	/**
+	 * @param $room
+	 */
+	public function joinMeeting($room, $configToken = null)
 	{
 		$version = $this->getVersion();
 
 		$name = $this->getAttendeeName();
 		$password = $this->getAttendeePassword($room);
 
-		if ( $name && $password ) {
+		if ($name && $password) {
 			TikiLib::lib('logs')->add_action('Joined Room', $room, 'bigbluebutton');
 			$this->joinRawMeeting($room, $name, $password, $configToken);
 		}
 	}
 
-    /**
-     * @param $recordingID
-     */
-    public function removeRecording($recordingID)
+	/**
+	 * @param $recordingID
+	 */
+	public function removeRecording($recordingID)
 	{
 		if ($this->isRecordingSupported()) {
 			$this->performRequest(
 				'deleteRecordings',
-				array('recordID' => $recordingID)
+				['recordID' => $recordingID]
 			);
 		}
 	}
 
-    /**
-     * @return bool|mixed|null|string
-     */
+	/**
+	 * @return bool|mixed|null|string
+	 */
 	private function getAttendeeName()
 	{
 		global $user, $tikilib;
 
-		if ( $realName = $tikilib->get_user_preference($user, 'realName') ) {
-			$realName .= " (". $user . ")";
+		if ($realName = $tikilib->get_user_preference($user, 'realName')) {
+			$realName .= " (" . $user . ")";
 			return $realName;
-		} elseif ( $user ) {
+		} elseif ($user) {
 			return $user;
-		} elseif (!empty($_SESSION['bbb_name'])) {
+		} elseif (! empty($_SESSION['bbb_name'])) {
 			return $_SESSION['bbb_name'];
 		} else {
 			return tra('anonymous');
 		}
 	}
 
-    /**
-     * @param $room
-     * @return mixed
-     */
-    private function getAttendeePassword( $room )
+	/**
+	 * @param $room
+	 * @return mixed
+	 */
+	private function getAttendeePassword($room)
 	{
-		if ( $meeting = $this->getMeeting($room) ) {
+		if ($meeting = $this->getMeeting($room)) {
 			$perms = Perms::get('bigbluebutton', $room);
 
-			if ( $perms->bigbluebutton_moderate ) {
+			if ($perms->bigbluebutton_moderate) {
 				return $meeting['moderatorPW'];
 			} else {
 				return $meeting['attendeePW'];
@@ -278,33 +277,33 @@ class BigBlueButtonLib
 		}
 	}
 
-    /**
-     * @param $room
-     * @return mixed
-     */
-    private function getMeeting( $room )
+	/**
+	 * @param $room
+	 * @return mixed
+	 */
+	private function getMeeting($room)
 	{
 		$meetings = $this->getMeetings();
 
-		foreach ( $meetings as $meeting ) {
-			if ( $meeting['meetingID'] == $room ) {
+		foreach ($meetings as $meeting) {
+			if ($meeting['meetingID'] == $room) {
 				return $meeting;
 			}
 		}
 	}
 
-    /**
-     * @param $room
-     * @param $name
-     * @param $password
-     */
-    public function joinRawMeeting( $room, $name, $password, $configToken = null )
+	/**
+	 * @param $room
+	 * @param $name
+	 * @param $password
+	 */
+	public function joinRawMeeting($room, $name, $password, $configToken = null)
 	{
-		$parameters = array(
+		$parameters = [
 			'meetingID' => $room,
 			'fullName' => $name,
 			'password' => $password,
-		);
+		];
 
 		if ($configToken) {
 			$parameters['configToken'] = $configToken;
@@ -316,42 +315,42 @@ class BigBlueButtonLib
 		exit;
 	}
 
-    /**
-     * @param $action
-     * @param array $parameters
-     * @return DOMDocument
-     */
-    private function performRequest( $action, array $parameters, $checkSuccess = true )
+	/**
+	 * @param $action
+	 * @param array $parameters
+	 * @return DOMDocument
+	 */
+	private function performRequest($action, array $parameters, $checkSuccess = true)
 	{
 		global $tikilib;
 
 		$url = $this->buildUrl($action, $parameters);
 
-		if ( $result = $tikilib->httprequest($url) ) {
+		if ($result = $tikilib->httprequest($url)) {
 			$dom = new DOMDocument;
-			if ( $dom->loadXML($result) ) {
+			if ($dom->loadXML($result)) {
 				$nodes = $dom->getElementsByTagName('returncode');
 
-				if ( ! $checkSuccess ) {
+				if (! $checkSuccess) {
 					return $dom;
 				}
 
-				if ( $nodes->length > 0 && ($returnCode = $nodes->item(0)) && $returnCode->textContent == 'SUCCESS' ) {
+				if ($nodes->length > 0 && ($returnCode = $nodes->item(0)) && $returnCode->textContent == 'SUCCESS') {
 					return $dom;
 				}
 			}
 		}
 	}
 
-    /**
-     * @param $action
-     * @param array $parameters
-     * @return string
-     */
-    private function buildUrl( $action, array $parameters )
+	/**
+	 * @param $action
+	 * @param array $parameters
+	 * @return string
+	 */
+	private function buildUrl($action, array $parameters)
 	{
-		if ( $action ) {
-			if ( $checksum = $this->generateChecksum($action, $parameters) ) {
+		if ($action) {
+			if ($checksum = $this->generateChecksum($action, $parameters)) {
 				$parameters['checksum'] = $checksum;
 			}
 		}
@@ -375,21 +374,21 @@ class BigBlueButtonLib
 		return $url;
 	}
 
-    /**
-     * @param $action
-     * @param array $parameters
-     * @return string
-     */
-    private function generateChecksum( $action, array $parameters )
+	/**
+	 * @param $action
+	 * @param array $parameters
+	 * @return string
+	 */
+	private function generateChecksum($action, array $parameters)
 	{
 		global $prefs;
 
-		if ( $prefs['bigbluebutton_server_salt'] ) {
+		if ($prefs['bigbluebutton_server_salt']) {
 			$query = http_build_query($parameters, '', '&');
 
 			$version = $this->getVersion();
 
-			if ( -1 === version_compare($version, '0.7') ) {
+			if (-1 === version_compare($version, '0.7')) {
 				return sha1($query . $prefs['bigbluebutton_server_salt']);
 			} else {
 				return sha1($action . $query . $prefs['bigbluebutton_server_salt']);
@@ -397,40 +396,40 @@ class BigBlueButtonLib
 		}
 	}
 
-    /**
-     * @return bool
-     */
-    private function isRecordingSupported()
+	/**
+	 * @return bool
+	 */
+	private function isRecordingSupported()
 	{
 		$version = $this->getVersion();
 		return version_compare($version, '0.8') >= 0;
 	}
 
-    /**
-     * @return bool
-     */
-    private function isDynamicConfigurationSupported()
+	/**
+	 * @return bool
+	 */
+	private function isDynamicConfigurationSupported()
 	{
 		global $prefs;
 		return $prefs['bigbluebutton_dynamic_configuration'] == 'y';
 	}
 
-    /**
-     * @param $room
-     * @return array
-     */
-    public function getRecordings( $room )
+	/**
+	 * @param $room
+	 * @return array
+	 */
+	public function getRecordings($room)
 	{
 		if (! $this->isRecordingSupported()) {
-			return array();
+			return [];
 		}
 
 		$result = $this->performRequest(
 			'getRecordings',
-			array('meetingID' => $room,)
+			['meetingID' => $room,]
 		);
 
-		$data = array();
+		$data = [];
 		$recordings = $result->getElementsByTagName('recording');
 
 		foreach ($recordings as $recording) {
@@ -440,13 +439,13 @@ class BigBlueButtonLib
 			} else {
 				$published = true;
 			}
-			$info = array(
+			$info = [
 					'recordID' => (string) $recording->recordID,
-					'startTime' => floor(((string) $recording->startTime)/1000),
-					'endTime' => ceil(((string) $recording->endTime)/1000),
-					'playback' => array(),
+					'startTime' => floor(((string) $recording->startTime) / 1000),
+					'endTime' => ceil(((string) $recording->endTime) / 1000),
+					'playback' => [],
 					'published' => $published,
-			);
+			];
 
 			foreach ($recording->playback as $playback) {
 				$info['playback'][ (string) $playback->format->type ] = (string) $playback->format->url;
@@ -455,16 +454,16 @@ class BigBlueButtonLib
 			$data[] = $info;
 		}
 
-		usort($data, array("BigBlueButtonLib", "cmpStartTime"));
+		usort($data, ["BigBlueButtonLib", "cmpStartTime"]);
 		return $data;
 	}
 
-    /**
-     * @param $a
-     * @param $b
-     * @return int
-     */
-    private static function cmpStartTime( $a, $b )
+	/**
+	 * @param $a
+	 * @param $b
+	 * @return int
+	 */
+	private static function cmpStartTime($a, $b)
 	{
 		if ($a['startTime'] == $b['startTime']) {
 			return 0;
@@ -472,4 +471,3 @@ class BigBlueButtonLib
 		return ($a['startTime'] > $b['startTime']) ? -1 : 1;
 	}
 }
-

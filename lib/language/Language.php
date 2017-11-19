@@ -23,7 +23,7 @@ class Language extends TikiDb_Bridge
 	/**
 	 * Characters at end of translation string that are not a part of the translation
 	 */
-	const punctuations = array(':', '!', ';', '.', ',', '?');
+	const punctuations = [':', '!', ';', '.', ',', '?'];
 
 	/**
 	 * Return a list of languages available in Tiki
@@ -33,7 +33,8 @@ class Language extends TikiDb_Bridge
 	public static function getLanguages()
 	{
 		require_once('lib/init/tra.php');
-		global $langmapping; require_once('lang/langmapping.php');
+		global $langmapping;
+		require_once('lang/langmapping.php');
 		return array_keys($langmapping);
 	}
 
@@ -45,8 +46,8 @@ class Language extends TikiDb_Bridge
 	 */
 	public static function getDbTranslatedLanguages()
 	{
-        $lang = new Language();
-		$languages = array();
+		$lang = new Language();
+		$languages = [];
 		$result = $lang->fetchAll('SELECT DISTINCT `lang` FROM `tiki_language` ORDER BY `lang` asc');
 
 		foreach ($result as $res) {
@@ -73,14 +74,14 @@ class Language extends TikiDb_Bridge
 	 */
 	public static function addPhpSlashes($string)
 	{
-		$addPHPslashes = array(
+		$addPHPslashes = [
 			"\n" => '\n',
 			"\r" => '\r',
 			"\t" => '\t',
 			'\\' => '\\\\',
 			'$'  => '\$',
 			'"'  => '\"'
-		);
+		];
 
 		return strtr($string, $addPHPslashes);
 	}
@@ -96,16 +97,16 @@ class Language extends TikiDb_Bridge
 	 * notation - \{0-7]{1,3} and \x[0-9A-Fa-f]{1,2} - since they
 	 * should not appear in english strings.
 	 */
-	public static function removePhpSlashes ($string)
+	public static function removePhpSlashes($string)
 	{
-		$removePHPslashes = array(
+		$removePHPslashes = [
 			'\n'   => "\n",
 			'\r'   => "\r",
 			'\t'   => "\t",
 			'\\\\' => '\\',
 			'\$'   => '$',
 			'\"'   => '"'
-		);
+		];
 
 		if (preg_match('/\{0-7]{1,3}|\x[0-9A-Fa-f]{1,2}/', $string, $match)) {
 			trigger_error("Octal or hexadecimal string '" . $match[1] . "' not supported", E_WARNING);
@@ -113,7 +114,7 @@ class Language extends TikiDb_Bridge
 
 		return strtr($string, $removePHPslashes);
 	}
-	
+
 	/**
 	 * isLanguageRTL
 	 * Determine if a language is an RTL language
@@ -121,11 +122,10 @@ class Language extends TikiDb_Bridge
 	 * @param mixed $langCode Language code to check, e.g. "en"
 	 * @return bool true if the language is RTL, otherwise false
 	 *
-	 */	
-	public static function isLanguageRTL ($langCode)
+	 */
+	public static function isLanguageRTL($langCode)
 	{
-		switch ($langCode)
-		{
+		switch ($langCode) {
 			case 'ar':
 			case 'fa':
 			case 'he':
@@ -134,9 +134,9 @@ class Language extends TikiDb_Bridge
 				return true;
 		}
 		return false;
-	}	
-	
-	
+	}
+
+
 	/**
 	 * isRTL
 	 * Determine if the current language is RTL
@@ -147,14 +147,14 @@ class Language extends TikiDb_Bridge
 		global $prefs;
 		return self::isLanguageRTL($prefs['language']);
 	}
-	
+
 	/**
 	 * @param bool $path
 	 * @param null $short
 	 * @param bool $all
 	 * @return array|mixed
 	 */
-	static function list_languages($path = false, $short=null, $all=false)
+	static function list_languages($path = false, $short = null, $all = false)
 	{
 		global $prefs;
 
@@ -178,13 +178,15 @@ class Language extends TikiDb_Bridge
 	 */
 	private static function list_disk_languages($path)
 	{
-		$languages = array();
+		$languages = [];
 
-		if (!$path)
+		if (! $path) {
 			$path = "lang";
+		}
 
-		if (!is_dir($path))
-			return array();
+		if (! is_dir($path)) {
+			return [];
+		}
 
 		$h = opendir($path);
 
@@ -206,7 +208,7 @@ class Language extends TikiDb_Bridge
 	{
 		$languages = self::list_languages();
 
-		$map = array();
+		$map = [];
 		foreach ($languages as $lang) {
 			$map[$lang['value']] = $lang['name'];
 		}
@@ -218,12 +220,12 @@ class Language extends TikiDb_Bridge
 	 * @param $language
 	 * @return bool
 	 */
-	function is_valid_language( $language )
+	function is_valid_language($language)
 	{
 		return preg_match("/^[a-zA-Z-_]*$/", $language)
 			&& file_exists('lang/' . $language . '/language.php');
 	}
-	
+
 	/**
 	 * Comparison function used to sort languages by their name in the current locale.
 	 * @param $a
@@ -234,7 +236,7 @@ class Language extends TikiDb_Bridge
 	{
 		return strcasecmp($a['name'], $b['name']);
 	}
-	
+
 	/**
 	 * Returns a list of languages formatted as a twodimensionel array with 'value' being the language code and 'name' being the name of the language. If $short is 'y' returns only the localized language names array
 	 * @param $languages
@@ -242,55 +244,56 @@ class Language extends TikiDb_Bridge
 	 * @param bool $all
 	 * @return array
 	 */
-	static function format_language_list($languages, $short=null, $all=false)
+	static function format_language_list($languages, $short = null, $all = false)
 	{
 		// The list of available languages so far with both English and
 		// translated names.
 		global $langmapping, $prefs;
 		include("lang/langmapping.php");
-		$formatted = array();
+		$formatted = [];
 
 		// run through all the language codes:
 		if (isset($short) && $short == "y") {
 			foreach ($languages as $lc) {
-				if ( $prefs['restrict_language'] === 'n' || empty($prefs['available_languages'] ) || (!$all and in_array($lc, $prefs['available_languages']))) {
-					if (isset($langmapping[$lc]))
-						$formatted[] = array('value' => $lc, 'name' => $langmapping[$lc][0]);
-					else
-						$formatted[] = array('value' => $lc, 'name' => $lc);
+				if ($prefs['restrict_language'] === 'n' || empty($prefs['available_languages']) || (! $all and in_array($lc, $prefs['available_languages']))) {
+					if (isset($langmapping[$lc])) {
+						$formatted[] = ['value' => $lc, 'name' => $langmapping[$lc][0]];
+					} else {
+						$formatted[] = ['value' => $lc, 'name' => $lc];
+					}
 				}
-				usort($formatted, array('language', 'formatted_language_compare'));
+				usort($formatted, ['language', 'formatted_language_compare']);
 			}
 			return $formatted;
 		}
 		foreach ($languages as $lc) {
-			if ( $prefs['restrict_language'] === 'n' || empty($prefs['available_languages']) || (!$all and in_array($lc, $prefs['available_languages'])) or $all) {
+			if ($prefs['restrict_language'] === 'n' || empty($prefs['available_languages']) || (! $all and in_array($lc, $prefs['available_languages'])) or $all) {
 				if (isset($langmapping[$lc])) {
 					// known language
 					if ($langmapping[$lc][0] == $langmapping[$lc][1]) {
 						// Skip repeated text, 'English (English, en)' looks silly.
-						$formatted[] = array(
+						$formatted[] = [
 								'value' => $lc,
 								'name' => $langmapping[$lc][0] . " ($lc)"
-								);
+								];
 					} else {
-						$formatted[] = array(
+						$formatted[] = [
 								'value' => $lc,
 								'name' => $langmapping[$lc][1] . " (" . $langmapping[$lc][0] . ', ' . $lc . ")"
-								);
+								];
 					}
 				} else {
 					// unknown language
-					$formatted[] = array(
+					$formatted[] = [
 							'value' => $lc,
-							'name' => tra("Unknown language"). " ($lc)"
-							);
+							'name' => tra("Unknown language") . " ($lc)"
+							];
 				}
 			}
 		}
 
 		// Sort the languages by their name in the current locale
-		usort($formatted, array('language', 'formatted_language_compare'));
+		usort($formatted, ['language', 'formatted_language_compare']);
 		return $formatted;
 	}
 }

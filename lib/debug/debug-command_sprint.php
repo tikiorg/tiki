@@ -9,7 +9,7 @@
  * \brief Print Smarty vars
  * \author zaufi <zaufi@sendmail.ru>
  */
-require_once ('lib/debug/debugger-ext.php');
+require_once('lib/debug/debugger-ext.php');
 
 /**
  * \brief Debugger command to print smarty vars
@@ -55,10 +55,11 @@ class DbgSPrint extends DebuggerCommand
 			if (strlen($v) != 0) {
 				$tmp = $smarty->getTemplateVars();
 
-				if (is_array($tmp) && isset($tmp[$v]))
-					$result .= $v . ' = ' . print_r($tmp[$v], true). "\n";
-				else
+				if (is_array($tmp) && isset($tmp[$v])) {
+					$result .= $v . ' = ' . print_r($tmp[$v], true) . "\n";
+				} else {
 					$result .= 'Smarty variable "' . $v . '" not found';
+				}
 			}
 		}
 

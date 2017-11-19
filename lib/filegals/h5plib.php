@@ -47,23 +47,18 @@ class H5PLib
 	 */
 	function handle_fileCreation($args)
 	{
-		if (!$this->H5PTiki->isSaving && $metadata = $this->getRequestMetadata($args)) {
-
+		if (! $this->H5PTiki->isSaving && $metadata = $this->getRequestMetadata($args)) {
 			$validator = H5P_H5PTiki::get_h5p_instance('validator');
 
 			if ($validator->isValidPackage()) {
-
 				$storage = H5P_H5PTiki::get_h5p_instance('storage');
 				$storage->savePackage(null, $args['object']);
-
 			} else {
-
 				// TODO: What to do if the file isn't a valid H5P? Seems a bit drastic to delete the file – but then again, why would we host broken files?
 				// @unlink($interface->getUploadedH5pPath());
 
 				Feedback::error($validator->get);
 			}
-
 		}
 	}
 
@@ -80,19 +75,15 @@ class H5PLib
 	 */
 	function handle_fileUpdate($args)
 	{
-		if (!$this->H5PTiki->isSaving && isset($args['object']) && $metadata = $this->getRequestMetadata($args)) {
-
+		if (! $this->H5PTiki->isSaving && isset($args['object']) && $metadata = $this->getRequestMetadata($args)) {
 			$validator = H5P_H5PTiki::get_h5p_instance('validator');
 
 			if ($validator->isValidPackage()) {
-
 				$content = $this->loadContentFromFileId($args['object']);
 
 				$storage = H5P_H5PTiki::get_h5p_instance('storage');
 				$storage->savePackage($content, $args['object']);
-
 			}
-
 		}
 	}
 
@@ -110,7 +101,6 @@ class H5PLib
 	function handle_fileDelete($args)
 	{
 		if (isset($args['object']) && $args['type'] === 'file') {
-
 			$id = $this->getContentIdFromFileId($args['object']);
 
 			if ($id) {
@@ -140,9 +130,6 @@ class H5PLib
 			if (is_array($content) && ! empty($content)) {
 				// no error
 				$content['language'] = substr($prefs['language'], 0, 2);    // TODO better
-
-
-
 			}
 
 			return $content;
@@ -167,7 +154,6 @@ class H5PLib
 		$metadata = null;
 
 		if ($this->isZipFile($args) && $zip = $this->getZipFile($args['object'])) {
-
 			if ($manifest = $this->getH5PManifest($zip)) {
 				$metadata = $this->getMetadata($manifest);
 			}
@@ -184,7 +170,7 @@ class H5PLib
 			return false;
 		}
 
-		return in_array($args['filetype'], array('application/zip', 'application/x-zip', 'application/x-zip-compressed'));
+		return in_array($args['filetype'], ['application/zip', 'application/x-zip', 'application/x-zip-compressed']);
 	}
 
 	private function getZipFile($fileId)
@@ -329,18 +315,18 @@ class H5PLib
 
 		$userId = TikiLib::lib('tiki')->get_user_id($user);
 
-		$settings = array(
+		$settings = [
 			'baseUrl' => $base_url,
 			'url' => $base_url . \H5P_H5PTiki::$h5p_path,
 			'postUserStatistics' => ($prefs['h5p_track_user'] === 'y') && $userId,
-			'ajax' => array(
+			'ajax' => [
 				'setFinished' => 'tiki-ajax_services.php?controller=h5p&action=results',
 				'contentUserData' => 'tiki-ajax_services.php?controller=h5p&action=userdata&contentId=:contentId&dataType=:dataType&subContentId=:subContentId',
-			),
+			],
 			'saveFreq' => $prefs['h5p_save_content_state'] === 'y' ? $prefs['h5p_save_content_frequency'] : false,
 			'siteUrl' => $base_url,
-			'l10n' => array(
-				'H5P' => array(
+			'l10n' => [
+				'H5P' => [
 					'fullscreen' => tra('Fullscreen'),
 					'disableFullscreen' => tra('Disable fullscreen'),
 					'download' => tra('Download'),
@@ -369,15 +355,15 @@ class H5PLib
 					'confirmDialogBody' => tra('Please confirm that you wish to proceed. This action is not reversible.'),
 					'cancelLabel' => tra('Cancel'),
 					'confirmLabel' => tra('Confirm')
-				),
-			),
-		);
+				],
+			],
+		];
 
 		if ($userId) {
-			$settings['user'] = array(
+			$settings['user'] = [
 				'name' => $user,
 				//'mail' => $userId->user_email, // TODO: Used in xAPI statements to uniquely identify the user across systems, i.e. if an LRS is used.
-			);
+			];
 		}
 
 		return $settings;
@@ -396,14 +382,14 @@ class H5PLib
 			$url = $rel_url . $script->path . $script->version;
 			if (! in_array($url, self::$settings['loadedJs'])) {
 				self::$settings['loadedJs'][] = $url;
-				TikiLib::lib('header')->add_jsfile( $rel_url . $script->path);
+				TikiLib::lib('header')->add_jsfile($rel_url . $script->path);
 			}
 		}
 		foreach ($assets['styles'] as $style) {
 			$url = $rel_url . $style->path . $style->version;
 			if (! in_array($url, self::$settings['loadedCss'])) {
 				self::$settings['loadedCss'][] = $url;
-				TikiLib::lib('header')->add_cssfile( $rel_url . $style->path);
+				TikiLib::lib('header')->add_cssfile($rel_url . $style->path);
 			}
 		}
 	}
@@ -520,7 +506,6 @@ class H5PLib
 		$userId = TikiLib::lib('tiki')->get_user_id($user);
 
 		if ($prefs['h5p_save_content_state'] === 'y' && $userId) {
-
 			$results = json_decode(TikiLib::lib('user')->get_user_preference($user, "h5p_content_{$content['id']}"), true);
 
 			if (! empty($results['preload'])) {
@@ -536,7 +521,7 @@ class H5PLib
 	 *
 	 * @param int $id optional content identifier
 	 */
-	public function addEditorAssets($id = NULL)
+	public function addEditorAssets($id = null)
 	{
 		global $tikiroot, $tikipath, $prefs;
 
@@ -544,10 +529,10 @@ class H5PLib
 		$this->addCoreAssets();
 
 		// Use jQuery and styles from core.
-		$assets = array(
+		$assets = [
 			'css' => self::$settings['core']['styles'],
 			'js' => self::$settings['core']['scripts']
-		);
+		];
 
 		// Use relative URL to support both http and https.
 		$editorpath = 'vendor_bundled/vendor/h5p/h5p-editor/';
@@ -576,7 +561,7 @@ class H5PLib
 
 		// Add translation
 		$languagescript = $editorpath . 'language/' . substr($prefs['language'], 0, 2) . '.js';
-		if (!file_exists($tikipath . $languagescript)) {
+		if (! file_exists($tikipath . $languagescript)) {
 			$languagescript = $editorpath . 'language/en.js';
 		}
 		TikiLib::lib('header')->add_jsfile($languagescript);
@@ -586,20 +571,20 @@ class H5PLib
 
 		// Add JavaScript settings
 		$contentvalidator = \H5P_H5PTiki::get_h5p_instance('contentvalidator');
-		self::$settings['editor'] = array(
+		self::$settings['editor'] = [
 			'filesPath' => $tikiroot . \H5P_H5PTiki::$h5p_path . '/editor',
-			'fileIcon' => array(
+			'fileIcon' => [
 				'path' => $url . 'images/binary-file.png',
 				'width' => 50,
 				'height' => 50,
-			),
+			],
 			'ajaxPath' => $ajaxPath,
 			'libraryUrl' => $url,
 			'copyrightSemantics' => $contentvalidator->getCopyrightSemantics(),
 			'assets' => $assets,
-		);
+		];
 
-		if ($id !== NULL) {
+		if ($id !== null) {
 			self::$settings['editor']['nodeVersionId'] = $id;
 		}
 
@@ -616,42 +601,42 @@ class H5PLib
 	{
 		$core = \H5P_H5PTiki::get_h5p_instance('core');
 
-		$oldLibrary = empty($content['library']) ? NULL : $content['library'];
-		$oldParams = empty($content['params']) ? NULL : $content['params'];
+		$oldLibrary = empty($content['library']) ? null : $content['library'];
+		$oldParams = empty($content['params']) ? null : $content['params'];
 
 		// Check title input
 		$content['title'] = $input->title->text();
 		if (empty($content['title'])) {
 			$core->h5pF->setErrorMessage(tr('Missing title.'));
-			return FALSE;
+			return false;
 		}
 
 		// Get content type chosen in editor
 		$content['library'] = $core->libraryFromString($input->library->text());
-		if (!$content['library']) {
+		if (! $content['library']) {
 			$core->h5pF->setErrorMessage(tr('Invalid content type.'));
-			return FALSE;
+			return false;
 		}
 
 		// Check if content type exists
 		$content['library']['libraryId'] = $core->h5pF->getLibraryId($content['library']['machineName'], $content['library']['majorVersion'], $content['library']['minorVersion']);
-		if (!$content['library']['libraryId']) {
+		if (! $content['library']['libraryId']) {
 			$core->h5pF->setErrorMessage(tr("The chosen content type isn't installed."));
-			return FALSE;
+			return false;
 		}
 
 		// Check parameters input
 		$content['params'] = $input->parameters->xss();
 		if (empty($content['params'])) {
 			$core->h5pF->setErrorMessage(tr('Missing content parameters.'));
-			return FALSE;
+			return false;
 		}
 
 		// Decode parameters input
 		$params = json_decode($content['params']);
-		if ($params === NULL) {
+		if ($params === null) {
 			$core->h5pF->setErrorMessage(tr('Invalid content parameters.'));
-			return FALSE;
+			return false;
 		}
 
 		// Set disabled features
@@ -662,7 +647,6 @@ class H5PLib
 
 		$fileId = $input->fileId->int();
 		if (! $fileId) {
-
 			// Prevent extracting and inserting the file we're creating
 			$this->H5PTiki->isSaving = true;
 			$fileId = TikiLib::lib('filegal')->insert_file(
@@ -699,10 +683,10 @@ class H5PLib
 
 	  // Locate files
 		$result = TikiDb::get()->query(
-				'SELECT tf.`path`
+			'SELECT tf.`path`
 FROM `tiki_h5p_tmpfiles` tf
 WHERE tf.`created_at` < ?',
-				$older_than
+			$older_than
 		);
 
 		// Delete files from file system
@@ -712,9 +696,9 @@ WHERE tf.`created_at` < ?',
 
 		// Remove from tmpfiles table
 		TikiDb::get()->query(
-				'DELETE FROM `tiki_h5p_tmpfiles`
+			'DELETE FROM `tiki_h5p_tmpfiles`
 WHERE `created_at` < ?',
-				$older_than
+			$older_than
 		);
 	}
 }

@@ -18,24 +18,23 @@ class mime
 {
 	function __construct()
 	{
-
 	}
 
-    /**
-     * @param $input
-     * @param string $default_ctype
-     * @param string $crlf
-     * @return array|bool
-     */
-    function decode($input,$default_ctype = 'text/plain', $crlf = "\r\n")
+	/**
+	 * @param $input
+	 * @param string $default_ctype
+	 * @param string $crlf
+	 * @return array|bool
+	 */
+	function decode($input, $default_ctype = 'text/plain', $crlf = "\r\n")
 	{
-		$back = array();
+		$back = [];
 
-		$pos = strpos($input, $crlf.$crlf);
-		if (!$pos) {
+		$pos = strpos($input, $crlf . $crlf);
+		if (! $pos) {
 			$crlf = "\n";
-			$pos = strpos($input, $crlf.$crlf);
-			if (!$pos) {
+			$pos = strpos($input, $crlf . $crlf);
+			if (! $pos) {
 				return false;
 			}
 		}
@@ -52,10 +51,11 @@ class mime
 
 		foreach ($heads as $line) {
 			$hdr_name = trim(substr($line, 0, strpos($line, ':')));
-			$hdr_value = trim(substr($line, strpos($line, ':')+1));
+			$hdr_value = trim(substr($line, strpos($line, ':') + 1));
 
-			if (substr($hdr_value, 0, 1) == ' ')
+			if (substr($hdr_value, 0, 1) == ' ') {
 				$hdr_value = substr($hdr_value, 1);
+			}
 
 			$hdr_value = preg_replace('/(=\?[^?]+\?(Q|B|q|b)\?[^?]*\?=)( |' . "\t|" . $crlf . ')+=\?/', '\1=?', $hdr_value);
 
@@ -89,8 +89,8 @@ class mime
 
 			$lname = strtolower($hdr_name);
 
-			if (isset($back['header'][$lname]) and !is_array($back['header'][$lname])) {
-				$back['header'][$lname] = array($back['header'][$lname]);
+			if (isset($back['header'][$lname]) and ! is_array($back['header'][$lname])) {
+				$back['header'][$lname] = [$back['header'][$lname]];
 				$back['header'][$lname][] = $hdr_value;
 			} elseif (isset($back['header'][$lname])) {
 				$back['header'][$lname][] = $hdr_value;
@@ -103,7 +103,7 @@ class mime
 
 		while (list($key, $value) = each($headers)) {
 			$input = $headers[$key];
-			$it = array();
+			$it = [];
 			if (($pos = strpos($input, ';')) !== false) {
 				$it['value'] = trim(substr($input, 0, $pos));
 				$input = trim(substr($input, $pos + 1));
@@ -152,25 +152,25 @@ class mime
 					$type = 'html';
 
 				case 'text/plain':
-					if (!empty($content_disposition) && $content_disposition['value'] == 'attachment') {
+					if (! empty($content_disposition) && $content_disposition['value'] == 'attachment') {
 						$back['attachments'][] = $back['d_parameters'];
 					}
 					$encoding = isset($content_transfer_encoding) ? $content_transfer_encoding['value'] : '7bit';
 					$back['body'] = $this->decodeBody($body, $encoding);
-					if ( array_key_exists('ctype_parameters', $back)
+					if (array_key_exists('ctype_parameters', $back)
 							and isset($back['ctype_parameters'])
 							and $back['ctype_parameters']
-							and (!isset($back['ctype_parameters']['charset']) or strtolower($back['ctype_parameters']['charset']) == 'iso-8858-1')
+							and (! isset($back['ctype_parameters']['charset']) or strtolower($back['ctype_parameters']['charset']) == 'iso-8858-1')
 							and function_exists('utf8_encode')
 					) {
 						$back[$type][] = utf8_encode($back['body']);
-					} elseif ( array_key_exists('ctype_parameters', $back)
+					} elseif (array_key_exists('ctype_parameters', $back)
 										and isset($back['ctype_parameters'])
 										and $back['ctype_parameters']
 										and strtolower($back['ctype_parameters']['charset']) != 'utf-8'
 										and function_exists('mb_convert_encoding')
 					) {
-					$back[$type][] = mb_convert_encoding($back['body'], 'utf-8', $back['ctype_parameters']['charset']);
+						$back[$type][] = mb_convert_encoding($back['body'], 'utf-8', $back['ctype_parameters']['charset']);
 					} else {
 						$back[$type][] = $back['body'];
 					}
@@ -197,7 +197,7 @@ class mime
 					break;
 
 				default:
-					if (!isset($content_transfer_encoding['value'])) {
+					if (! isset($content_transfer_encoding['value'])) {
 						$content_transfer_encoding['value'] = '7bit';
 					}
 					$back['body'] = $this->decodeBody($body, $content_transfer_encoding['value']);
@@ -213,12 +213,12 @@ class mime
 		return $back;
 	}
 
-    /**
-     * @param $input
-     * @param string $encoding
-     * @return mixed|string
-     */
-    function decodeBody($input, $encoding = '7bit')
+	/**
+	 * @param $input
+	 * @param string $encoding
+	 * @return mixed|string
+	 */
+	function decodeBody($input, $encoding = '7bit')
 	{
 		switch ($encoding) {
 			case '7bit':
@@ -257,7 +257,7 @@ class mime
 	{
 		$body = '';
 
-		if (!empty($decodedMail['parts'])) {
+		if (! empty($decodedMail['parts'])) {
 			foreach ($decodedMail['parts'] as $part) {
 				if (isset($part['parts'])) {
 					return $this->getPartBody($part, $type);
@@ -267,9 +267,9 @@ class mime
 					break;
 				}
 			}
-		} else if (isset($decodedMail[$type])) {
+		} elseif (isset($decodedMail[$type])) {
 			$body = $decodedMail[$type];
-		} else if ($type === 'text' && isset($decodedMail['body'])) {
+		} elseif ($type === 'text' && isset($decodedMail['body'])) {
 			$body = $decodedMail['body'];
 		}
 		if (is_array($body)) {
@@ -285,7 +285,7 @@ class mime
 	 */
 	public function cleanQuotes($body)
 	{
-		$quotes = array(        // thanks to http://stackoverflow.com/a/1262210/2459703
+		$quotes = [        // thanks to http://stackoverflow.com/a/1262210/2459703
 			"\xC2\xAB" => '"', // « (U+00AB) in UTF-8
 			"\xC2\xBB" => '"', // » (U+00BB) in UTF-8
 			"\xE2\x80\x98" => "'", // ‘ (U+2018) in UTF-8
@@ -298,55 +298,56 @@ class mime
 			"\xE2\x80\x9F" => '"', // ‟ (U+201F) in UTF-8
 			"\xE2\x80\xB9" => "'", // ‹ (U+2039) in UTF-8
 			"\xE2\x80\xBA" => "'", // › (U+203A) in UTF-8
-		);
+		];
 		$body = strtr($body, $quotes);
 		return $body;
 	}
 
-    /**
-     * @param $output
-     * @return array
-     */
-    function get_bodies($output)
+	/**
+	 * @param $output
+	 * @return array
+	 */
+	function get_bodies($output)
 	{
-			$bodies = array();	/* BUG: only one body for the moment */
-			if (isset($output['text'][0]))
-				$body = $output['text'][0];
-			elseif (isset($output['parts'][0]) && isset($output['parts'][0]['text'][0]))
-				$body = $output['parts'][0]['text'][0];
-			elseif (isset($output['parts'][0]) && isset($output['parts'][0]['parts'][0]) && isset($output['parts'][0]['parts'][0]['text'][0]))
-				$body = $output['parts'][0]['parts'][0]['text'][0];
-			else
-				$body = '';
+			$bodies = [];	/* BUG: only one body for the moment */
+		if (isset($output['text'][0])) {
+			$body = $output['text'][0];
+		} elseif (isset($output['parts'][0]) && isset($output['parts'][0]['text'][0])) {
+			$body = $output['parts'][0]['text'][0];
+		} elseif (isset($output['parts'][0]) && isset($output['parts'][0]['parts'][0]) && isset($output['parts'][0]['parts'][0]['text'][0])) {
+			$body = $output['parts'][0]['parts'][0]['text'][0];
+		} else {
+			$body = '';
+		}
 			$bodies[] = $body;
 			return $bodies;
 	}
 
-    /**
-     * @param $output
-     * @return array
-     */
-    function get_attachments($output)
+	/**
+	 * @param $output
+	 * @return array
+	 */
+	function get_attachments($output)
 	{
 		$cnt = 0;
-		$attachments = array();
+		$attachments = [];
 
-		if (!isset($output['parts'])) {
+		if (! isset($output['parts'])) {
 			return $attachments;
-
 		}
 
-		$att = array();
+		$att = [];
 
 		for ($it = 0, $itcount_output = count($output['parts']); $it < $itcount_output; $it++) {
 			if (isset($output['parts'][$it]['d_parameters']['filename'])) {
 				$attachmentPart = $output['parts'][$it];
 				$att['part'] = $it;
 				$att['name'] = $attachmentPart['d_parameters']['filename'];
-				if (isset($attachmentPart['ctype_primary']))
-					$att['type'] = $attachmentPart['ctype_primary'] .'/'. $attachmentPart['ctype_secondary'];
-				else
+				if (isset($attachmentPart['ctype_primary'])) {
+					$att['type'] = $attachmentPart['ctype_primary'] . '/' . $attachmentPart['ctype_secondary'];
+				} else {
 					$att['type'] = '';
+				}
 				$att['data'] = $attachmentPart['body'];
 				$att['size'] = strlen($att['data']);
 				$attachments[] = $att;
@@ -355,5 +356,4 @@ class mime
 
 		return $attachments;
 	}
-
 }

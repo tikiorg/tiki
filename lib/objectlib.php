@@ -25,14 +25,14 @@ class ObjectLib extends TikiLib
 	 *
 	 * Remember to update get_supported_types if this changes
 	 */
-	function add_object($type, $itemId, $checkHandled = TRUE, $description = NULL, $name = NULL, $href = NULL)
+	function add_object($type, $itemId, $checkHandled = true, $description = null, $name = null, $href = null)
 	{
 		$objectId = $this->get_object_id($type, $itemId);
 
 		if ($objectId) {
-			if (!empty($description) || !empty($name) || !empty($href)) {
+			if (! empty($description) || ! empty($name) || ! empty($href)) {
 				$query = "update `tiki_objects` set `description`=?,`name`=?,`href`=? where `objectId`=?";
-				$this->query($query, array($description, $name, $href, $objectId));
+				$this->query($query, [$description, $name, $href, $objectId]);
 			}
 		} else {
 			if (is_null($description)) {
@@ -79,7 +79,7 @@ class ObjectLib extends TikiLib
 							$description = $info['description'];
 							$name = $info['title'];
 							$href = 'tiki-view_faq.php?faqId=' . $itemId;
-						}
+					}
 						break;
 
 					case 'file':
@@ -159,7 +159,7 @@ class ObjectLib extends TikiLib
 						break;
 
 					case 'wiki page':
-						if (!($info = $this->get_page_info($itemId))) {
+						if (! ($info = $this->get_page_info($itemId))) {
 							return;
 						}
 						$description = $info["description"];
@@ -177,7 +177,7 @@ class ObjectLib extends TikiLib
 
 					default:
 						if ($checkHandled) {
-							return FALSE;
+							return false;
 						} else {
 							$description = '';
 							$name = '';
@@ -196,8 +196,9 @@ class ObjectLib extends TikiLib
 	 *
 	 * @return array
 	 */
-	static function get_supported_types() {
-		return array(
+	static function get_supported_types()
+	{
+		return [
 			'article',
 			'blog',
 			'calendar',
@@ -214,7 +215,7 @@ class ObjectLib extends TikiLib
 			'trackeritem',
 			'wiki page',
 			'template',
-		);
+		];
 	}
 
 	function getSelectorType($type)
@@ -249,7 +250,7 @@ class ObjectLib extends TikiLib
 		$tikilib = TikiLib::lib('tiki');
 		$table = $this->table('tiki_objects');
 		return $table->insert(
-			array(
+			[
 				'type' => $type,
 				'itemId' => (string) $itemId,
 				'description' => $description,
@@ -258,14 +259,14 @@ class ObjectLib extends TikiLib
 				'created' => (int) $tikilib->now,
 				'hits' => 0,
 				'comments_locked' => 'n',
-			)
+			]
 		);
 	}
 
 	function get_object_id($type, $itemId)
 	{
 		$query = "select `objectId` from `tiki_objects` where `type`=? and `itemId`=?";
-		return $this->getOne($query, array($type, $itemId));
+		return $this->getOne($query, [$type, $itemId]);
 	}
 
 	// Returns an array containing the object ids of objects of the same type.
@@ -273,14 +274,14 @@ class ObjectLib extends TikiLib
 	function get_object_ids($type, $itemIds)
 	{
 		if (empty($itemIds)) {
-			return array();
+			return [];
 		}
 
 		$query = 'select `objectId`, `itemId` from `tiki_objects` where `type`=? and `itemId` IN (' .
 						implode(',', array_fill(0, count($itemIds), '?')) . ')';
 
-		$result = $this->query($query, array_merge(array($type), $itemIds));
-		$objectIds = array();
+		$result = $this->query($query, array_merge([$type], $itemIds));
+		$objectIds = [];
 
 		while ($res = $result->fetchRow()) {
 			$objectIds[$res['itemId']] = $res['objectId'];
@@ -291,7 +292,8 @@ class ObjectLib extends TikiLib
 	function get_needed_perm($objectType, $action)
 	{
 		switch ($objectType) {
-			case 'wiki page': case 'wiki':
+			case 'wiki page':
+			case 'wiki':
 				switch ($action) {
 					case 'view':
 					case 'read':
@@ -325,8 +327,8 @@ class ObjectLib extends TikiLib
 					case 'read':
 						return 'tiki_p_read_blog';
 
-				case 'edit':
-					return 'tiki_p_create_blog';
+					case 'edit':
+						return 'tiki_p_create_blog';
 				}
 
 			case 'faq':
@@ -429,7 +431,7 @@ class ObjectLib extends TikiLib
 					case 'edit':
 						return 'tiki_p_edit_content_templates';
 				}
-			default :
+			default:
 				return '';
 		}
 	}
@@ -441,46 +443,45 @@ class ObjectLib extends TikiLib
 			case 'wiki page':
 				$tikilib = TikiLib::lib('tiki');
 				$info = $tikilib->get_page_info($object);
-				return array('title'=>$object, 'data'=>$info['data'], 'is_html'=>$info['is_html']);
+				return ['title' => $object, 'data' => $info['data'], 'is_html' => $info['is_html']];
 
 			case 'article':
 				$artlib = TikiLib::lib('art');
 				$info = $artlib->get_article($object);
-				return array('title'=>$info['title'], 'data'=>$info['body']);
+				return ['title' => $info['title'], 'data' => $info['body']];
 
 			case 'file gallery':
 				$info = TikiLib::lib('filegal')->get_file_gallery_info($object);
-				return array('title' => $info['name']);
+				return ['title' => $info['name']];
 
 			case 'blog':
 				$info = TikiLib::lib('blog')->get_blog($object);
-				return array('title' => $info['title']);
+				return ['title' => $info['title']];
 
 			case 'forum':
 				$info = TikiLib::lib('comments')->get_forum($object);
-				return array('title' => $info['name']);
+				return ['title' => $info['name']];
 
 			case 'forum post':
 				$info = TikiLib::lib('comments')->get_comment($object);
-				return array('title' => $info['title']);
+				return ['title' => $info['title']];
 
 			case 'tracker':
 				$info = TikiLib::lib('trk')->get_tracker($object);
-				return array('title' => $info['name']);
+				return ['title' => $info['name']];
 
 			case 'trackerfield':
 				$info = TikiLib::lib('trk')->get_tracker_field($object);
-				return array('title' => $info['name']);
+				return ['title' => $info['name']];
 
 			case 'goal':
 				return TikiLib::lib('goal')->fetchGoal($object);
 
 			case 'template':
 				$info = TikiLib::lib('template')->get_template($object);
-				return array('title' => $info['name']);
-
+				return ['title' => $info['name']];
 		}
-		return (array('error'=>'true'));
+		return (['error' => 'true']);
 	}
 
 	function set_data($objectType, $object, $data)
@@ -498,26 +499,26 @@ class ObjectLib extends TikiLib
 	function delete_object($type, $itemId)
 	{
 		$query = 'delete from `tiki_objects` where `itemId`=? and `type`=?';
-		$this->query($query, array($itemId, $type));
+		$this->query($query, [$itemId, $type]);
 	}
 
 	function delete_object_via_objectid($objectId)
 	{
 		$query = 'delete from `tiki_objects` where `objectId`=?';
-		$this->query($query, array((int) $objectId));
+		$this->query($query, [(int) $objectId]);
 	}
-	
+
 	function get_object($type, $itemId)
 	{
 		$query = 'select * from `tiki_objects` where `itemId`=? and `type`=?';
-		$result = $this->query($query, array($itemId, $type));
+		$result = $this->query($query, [$itemId, $type]);
 		return $result->fetchRow();
 	}
 
 	function get_object_via_objectid($objectId)
 	{
 		$query = 'select * from `tiki_objects` where `objectId`=?';
-		$result = $this->query($query, array((int) $objectId));
+		$result = $this->query($query, [(int) $objectId]);
 		return $result->fetchRow();
 	}
 
@@ -529,16 +530,16 @@ class ObjectLib extends TikiLib
 	 */
 	function get_title($type, $id, $format = null)
 	{
-        $detail = '';
+		$detail = '';
 		switch ($type) {
-            case 'trackeritemfield':
-                $type = 'trackeritem';
-                $ids = explode(':', $id);
-                $id = (int)$ids[0];
-                $fieldId = (int)$ids[1];
-                $trackerlib = TikiLib::lib('trk');
-                $info = $trackerlib->get_field_info($fieldId);
-                $extra = $info['name'];
+			case 'trackeritemfield':
+				$type = 'trackeritem';
+				$ids = explode(':', $id);
+				$id = (int)$ids[0];
+				$fieldId = (int)$ids[1];
+				$trackerlib = TikiLib::lib('trk');
+				$info = $trackerlib->get_field_info($fieldId);
+				$extra = $info['name'];
 			case 'trackeritem':
 				if ($format) {
 					$lib = TikiLib::lib('unifiedsearch');
@@ -562,19 +563,19 @@ class ObjectLib extends TikiLib
 				} else {
 					$title = TikiLib::lib('trk')->get_isMain_value(null, $id);
 				}
-				if( empty($title) ) {
+				if (empty($title)) {
 					$title = "$type:$id";
 				}
-                if ($extra) {
-                    $title .= ' (' . $extra . ')';
-                }
+				if ($extra) {
+					$title .= ' (' . $extra . ')';
+				}
 				return $title;
 			case 'category':
 				return TikiLib::lib('categ')->get_category_name($id);
 			case 'file':
 				return TikiLib::lib('filegal')->get_file_label($id);
 			case 'topic':
-				$meta=TikiLib::lib('art')->get_topic($id);
+				$meta = TikiLib::lib('art')->get_topic($id);
 				return $meta['name'];
 			case 'group':
 				return $id;
@@ -590,10 +591,10 @@ class ObjectLib extends TikiLib
 
 		$title = $this->table('tiki_objects')->fetchOne(
 			'name',
-			array(
+			[
 				'type' => $type,
 				'itemId' => $id,
-			)
+			]
 		);
 
 		if ($title) {
@@ -612,84 +613,84 @@ class ObjectLib extends TikiLib
 	}
 
 	/**
-     * Gets a wiki parsed content for an object. This is used in case an object can have wiki parsed
-     * content that generates relations (ex: Plugin Include).
-     *
+	 * Gets a wiki parsed content for an object. This is used in case an object can have wiki parsed
+	 * content that generates relations (ex: Plugin Include).
+	 *
 	 * @param string $type
 	 * @param $id
 	 * @return void|string
 	 */
-    function get_wiki_content($type, $objectId)
-    {
-        if (substr($type, -7) == 'comment') {
-            $comment_info = TikiLib::lib('comments')->get_comment((int)$objectId);
-            return $comment_info['data'];
-        }
-        
-        switch($type) {
-            case 'wiki':
-                $type = 'wiki page';
-            case 'wiki page':
-                $info = $this->get_page_info($objectId);
-                return $info['data'];
-            case 'forum post':
-                $comment_info = TikiLib::lib('comments')->get_comment((int)$objectId);
-                return $comment_info['data'];
-            case 'tracker':
-                $tracker_info = TikiLib::lib('trk')->get_tracker((int)$objectId);
-                return $tracker_info['description'];
-            case 'trackerfield':
-                $field_info = TikiLib::lib('trk')->get_field_info((int)$objectId);
-                return $field_info['description'];
-            case 'trackeritemfield':
-                $objectId = explode(':', $objectId);
-                $itemId = (int)$objectId[0];
-                $fieldId = (int)$objectId[1];
-                $trackerlib = TikiLib::lib('trk');
-                $item_info = $trackerlib->get_tracker_item($itemId);
-                return $item_info[$fieldId];
-        }
-    }
+	function get_wiki_content($type, $objectId)
+	{
+		if (substr($type, -7) == 'comment') {
+			$comment_info = TikiLib::lib('comments')->get_comment((int)$objectId);
+			return $comment_info['data'];
+		}
 
-    /**
-     * @param string $type
-     * @return string
-     */
-    function get_verbose_type($type)
-    {
-        if (substr($type, -7) == 'comment') {
-            $isComment = true;
-            $type = substr($type, 0, strlen($type)-8);
-        } else {
-            $isComment = false;
-        }
+		switch ($type) {
+			case 'wiki':
+				$type = 'wiki page';
+			case 'wiki page':
+				$info = $this->get_page_info($objectId);
+				return $info['data'];
+			case 'forum post':
+				$comment_info = TikiLib::lib('comments')->get_comment((int)$objectId);
+				return $comment_info['data'];
+			case 'tracker':
+				$tracker_info = TikiLib::lib('trk')->get_tracker((int)$objectId);
+				return $tracker_info['description'];
+			case 'trackerfield':
+				$field_info = TikiLib::lib('trk')->get_field_info((int)$objectId);
+				return $field_info['description'];
+			case 'trackeritemfield':
+				$objectId = explode(':', $objectId);
+				$itemId = (int)$objectId[0];
+				$fieldId = (int)$objectId[1];
+				$trackerlib = TikiLib::lib('trk');
+				$item_info = $trackerlib->get_tracker_item($itemId);
+				return $item_info[$fieldId];
+		}
+	}
 
-        switch ($type) {
-            case 'trackeritem':
-                $type = 'tracker item';
-                break;
-            case 'trackeritemfield':
-                $type = 'tracker item field';
-                break;
-            case 'trackerfield':
-                $type = 'tracker field';
-                break;
-            case 'wiki':
-                $type = 'wiki page';
-                break;
-        }
+	/**
+	 * @param string $type
+	 * @return string
+	 */
+	function get_verbose_type($type)
+	{
+		if (substr($type, -7) == 'comment') {
+			$isComment = true;
+			$type = substr($type, 0, strlen($type) - 8);
+		} else {
+			$isComment = false;
+		}
 
-        if ($isComment) {
-            $type .= " comment";
-        }
+		switch ($type) {
+			case 'trackeritem':
+				$type = 'tracker item';
+				break;
+			case 'trackeritemfield':
+				$type = 'tracker item field';
+				break;
+			case 'trackerfield':
+				$type = 'tracker field';
+				break;
+			case 'wiki':
+				$type = 'wiki page';
+				break;
+		}
 
-        return tra(ucwords($type));
-    }
+		if ($isComment) {
+			$type .= " comment";
+		}
+
+		return tra(ucwords($type));
+	}
 
 	// Returns a hash indicating which permission is needed for viewing an object of desired type.
 	static function map_object_type_to_permission()
 	{
-		return array(
+		return [
 			'wiki page' => 'tiki_p_view',
 			'wiki' => 'tiki_p_view',
 			'forum' => 'tiki_p_forum_read',
@@ -726,7 +727,7 @@ class ObjectLib extends TikiLib
 			// newsletters can't be categorized, although there's some code in tiki-admin_newsletters.php
 			// 'newsletter' => ?,
 			// 'events' => ?,
-		);
+		];
 	}
 
 	function get_metadata($type, $object, & $classList)
@@ -757,22 +758,21 @@ class ObjectLib extends TikiLib
 
 		return $metadata;
 	}
-	
+
 	function get_typeItemsInfo($type) // Returns information on all items of an object type (eg: menu, article, etc) from tiki_objects table
 	{
 		//get objects
 		$queryObjectInfo = 'select * from `tiki_objects` where `type`=?';
-		$resultObjectInfo = $this->fetchAll($queryObjectInfo, array($type));
-		
+		$resultObjectInfo = $this->fetchAll($queryObjectInfo, [$type]);
+
 		//get object attributes
-		foreach ($resultObjectInfo as &$tempInfo){
+		foreach ($resultObjectInfo as &$tempInfo) {
 			$objectAttributes = TikiLib::lib('attribute')->get_attributes($tempInfo['type'], $tempInfo['objectId']);
-			$tempInfo = array_merge($tempInfo,$objectAttributes); 
+			$tempInfo = array_merge($tempInfo, $objectAttributes);
 		}
 		unset($tempInfo);
-		
+
 		//return information
 		return $resultObjectInfo;
 	}
 }
-

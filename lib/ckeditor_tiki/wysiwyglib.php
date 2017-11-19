@@ -22,9 +22,9 @@ class WYSIWYGLib
 		}
 		// Validate user permissions
 		$tikilib = TikiLib::lib('tiki');
-		if (!$tikilib->user_has_perm_on_object($user, $pageName, 'wiki page', 'edit')) {
+		if (! $tikilib->user_has_perm_on_object($user, $pageName, 'wiki page', 'edit')) {
 			// Check if the user has inline edit permissions
-			if (!$tikilib->user_has_perm_on_object($user, $pageName, 'wiki page', 'edit_inline')) {
+			if (! $tikilib->user_has_perm_on_object($user, $pageName, 'wiki page', 'edit_inline')) {
 				// User has no permission
 				return;
 			}
@@ -35,14 +35,14 @@ class WYSIWYGLib
 		if ($prefs['flaggedrev_approval'] == 'y') {
 			$flaggedrevisionlib = TikiLib::lib('flaggedrevision');
 			if ($flaggedrevisionlib->page_requires_approval($pageName)) {
-				if (!isset($_REQUEST['latest']) || $_REQUEST['latest'] != '1') {
+				if (! isset($_REQUEST['latest']) || $_REQUEST['latest'] != '1') {
 					// The page cannot be edited
 					return;
 				}
 			}
 		}
 
-		if ( !empty(self::$ckEditor) ) {
+		if (! empty(self::$ckEditor)) {
 			// Inline editor is already initialized
 			return;
 		}
@@ -50,9 +50,9 @@ class WYSIWYGLib
 
 		$headerlib = TikiLib::lib('header');
 
-		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'vendor_bundled/vendor/ckeditor/ckeditor/";')
+		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "' . $tikiroot . 'vendor_bundled/vendor/ckeditor/ckeditor/";')
 			->add_jsfile('vendor_bundled/vendor/ckeditor/ckeditor/ckeditor.js', true)
-			->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1);
+			->add_js('window.CKEDITOR.config._TikiRoot = "' . $tikiroot . '";', 1);
 
 		// Inline editing config
 		$skin = $prefs['wysiwyg_toolbar_skin'] != 'default' ? $prefs['wysiwyg_toolbar_skin'] : 'moono';
@@ -61,13 +61,13 @@ class WYSIWYGLib
 		$smarty = TikiLib::lib('smarty');
 
 		$info = $tikilib->get_page_info($pageName, false);	// Don't load page data.
-		$params = array(
+		$params = [
 			'_wysiwyg' => 'y',
 			'area_id' => 'page-data',
 			'comments' => '',
 			'is_html' => $info['is_html'],	// temporary element id
 			'switcheditor' => 'n',
-		);
+		];
 
 		$smarty->loadPlugin('smarty_function_toolbars');
 		$cktools = smarty_function_toolbars($params, $smarty);
@@ -87,9 +87,9 @@ class WYSIWYGLib
 				'// --- config settings for the inlinesave plugin ---
 window.CKEDITOR.config.extraPlugins = "";
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",inlinesave" : "inlinesave" );
-window.CKEDITOR.plugins.addExternal( "inlinesave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/inlinesave/");
+window.CKEDITOR.plugins.addExternal( "inlinesave", "' . $tikiroot . 'lib/ckeditor_tiki/plugins/inlinesave/");
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",inlinecancel" : "inlinecancel" );
-window.CKEDITOR.plugins.addExternal( "inlinecancel", "'.$tikiroot.'lib/ckeditor_tiki/plugins/inlinecancel/");
+window.CKEDITOR.plugins.addExternal( "inlinecancel", "' . $tikiroot . 'lib/ckeditor_tiki/plugins/inlinecancel/");
 window.CKEDITOR.config.ajaxSaveRefreshTime = 30 ;			// RefreshTime
 window.CKEDITOR.config.contentsLangDirection = ' . ($prefs['feature_bidi'] === 'y' ? '"rtl"' : '"ui"') . ';
 // --- plugins
@@ -97,65 +97,63 @@ window.CKEDITOR.config.autoSavePage = "' . addcslashes($pageName, '"') . '";		//
 window.CKEDITOR.config.allowedContent = true;
 // --- other configs
 
-window.CKEDITOR.config.skin = "'.$skin.'";
+window.CKEDITOR.config.skin = "' . $skin . '";
 window.CKEDITOR.disableAutoInline = true;
-window.CKEDITOR.config.toolbar = ' .$cktools.';
+window.CKEDITOR.config.toolbar = ' . $cktools . ';
 //window.CKEDITOR.config.format_tags = "' . $ckeformattags . '";
 
 '
-);
+			);
 		$headerlib->add_jsfile('lib/ckeditor_tiki/tikilink_dialog.js');
 		$headerlib->add_js(
 			'//window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",tikiplugin" : "tikiplugin" );
-//			window.CKEDITOR.plugins.addExternal( "tikiplugin", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiplugin/");',
+//			window.CKEDITOR.plugins.addExternal( "tikiplugin", "' . $tikiroot . 'lib/ckeditor_tiki/plugins/tikiplugin/");',
 			5
 		);
-
 	}
 
 	// According to Jonny Bradley, "the full_page thing was something to do with the unfinished inline editing that is fairly broken now". 2017-06-12
-	function setUpEditor($is_html, $dom_id, $params = array(), $auto_save_referrer = '', $full_page = true)
+	function setUpEditor($is_html, $dom_id, $params = [], $auto_save_referrer = '', $full_page = true)
 	{
 		global $tikiroot, $prefs;
 		$headerlib = TikiLib::lib('header');
 
 		$headerlib->add_js('window.CKEDITOR.config.extraPlugins = "' . $prefs['wysiwyg_extra_plugins'] . '";');
-		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'vendor_bundled/vendor/ckeditor/ckeditor/";')
+		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "' . $tikiroot . 'vendor_bundled/vendor/ckeditor/ckeditor/";')
 			//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
 			//// note, this breaks ajax page load via wikitopline edit icon
 			->add_jsfile('vendor_bundled/vendor/ckeditor/ckeditor/ckeditor.js', true)
-			->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1);
+			->add_js('window.CKEDITOR.config._TikiRoot = "' . $tikiroot . '";', 1);
 
 		if ($full_page) {
 			$headerlib->add_jsfile('lib/ckeditor_tiki/tikilink_dialog.js');
 			$headerlib->add_js(
 				'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",tikiplugin" : "tikiplugin" );
-				window.CKEDITOR.plugins.addExternal( "tikiplugin", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiplugin/");',
+				window.CKEDITOR.plugins.addExternal( "tikiplugin", "' . $tikiroot . 'lib/ckeditor_tiki/plugins/tikiplugin/");',
 				5
 			);
 			$headerlib->add_css('.ui-front {z-index: 9999;}');	// so the plugin edit dialogs show up
 		}
-		if (!$is_html && $full_page) {
+		if (! $is_html && $full_page) {
 			$headerlib->add_js(
 				'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",tikiwiki" : "tikiwiki" );
-				window.CKEDITOR.plugins.addExternal( "tikiwiki", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiwiki/");',
+				window.CKEDITOR.plugins.addExternal( "tikiwiki", "' . $tikiroot . 'lib/ckeditor_tiki/plugins/tikiwiki/");',
 				5
 			);	// before dialog tools init (10)
-
 		}
 		if ($auto_save_referrer && $prefs['feature_ajax'] === 'y' &&
 				$prefs['ajax_autosave'] === 'y' && $params['autosave'] == 'y') {
-
 			$headerlib->add_js(
 				'// --- config settings for the autosave plugin ---
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",autosave" : "autosave" );
-window.CKEDITOR.plugins.addExternal( "autosave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/autosave/");
+window.CKEDITOR.plugins.addExternal( "autosave", "' . $tikiroot . 'lib/ckeditor_tiki/plugins/autosave/");
 window.CKEDITOR.config.ajaxAutoSaveRefreshTime = 30 ;			// RefreshTime
 window.CKEDITOR.config.contentsLangDirection = ' . ($prefs['feature_bidi'] === 'y' ? '"rtl"' : '"ui"') . ';
 window.CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;			// Sensitivity to key strokes
-register_id("'.$dom_id.'","'.addcslashes($auto_save_referrer, '"').'");	// Register auto_save so it gets removed on submit
-ajaxLoadingShow("'.$dom_id.'");
-', 5
+register_id("' . $dom_id . '","' . addcslashes($auto_save_referrer, '"') . '");	// Register auto_save so it gets removed on submit
+ajaxLoadingShow("' . $dom_id . '");
+',
+				5
 			);	// before dialog tools init (10)
 		}
 
@@ -174,9 +172,9 @@ ajaxLoadingShow("'.$dom_id.'");
 
 		// js to initiate the editor
 		$ckoptions = '{
-	toolbar: ' .$cktools.',
+	toolbar: ' . $cktools . ',
 	customConfig: "",
-	autoSaveSelf: "'.addcslashes($auto_save_referrer, '"').'",		// unique reference for each page set up in ensureReferrer()
+	autoSaveSelf: "' . addcslashes($auto_save_referrer, '"') . '",		// unique reference for each page set up in ensureReferrer()
 	font_names: "' . trim($prefs['wysiwyg_fonts']) . '",
 	format_tags: "' . $ckeformattags . '",
 	stylesSet: "tikistyles:' . $tikiroot . 'lib/ckeditor_tiki/tikistyles.js",
@@ -185,7 +183,7 @@ ajaxLoadingShow("'.$dom_id.'");
 	defaultLanguage: "' . $this->languageMap($prefs['language']) . '",
  	contentsLangDirection: "' . ($prefs['feature_bidi'] === 'y' ? 'rtl' : 'ltr') . '",
 	language: "' . ($prefs['feature_detect_language'] === 'y' ? '' : $this->languageMap($prefs['language'])) . '"
-	'. (empty($params['rows']) ? ',height: "' . (empty($params['height']) ? '400' : $params['height']) . '"' : '') .'
+	' . (empty($params['rows']) ? ',height: "' . (empty($params['height']) ? '400' : $params['height']) . '"' : '') . '
 	, resize_dir: "both"
 	, allowedContent: true
 }';
@@ -205,10 +203,10 @@ ajaxLoadingShow("'.$dom_id.'");
 	 * @param string $lang	Tiki language code
 	 * @return string		mapped language code - defaults to the same if not found
 	 */
-	private function languageMap ($lang)
+	private function languageMap($lang)
 	{
 
-		$langMap = array(
+		$langMap = [
 			//'ar' => 'ar',			// Arabic = United Arab Emirates - English ok?
 			//'bg' => 'bg',			// Bulgarian
 			//'ca' => 'ca',			// Catalan
@@ -260,14 +258,11 @@ ajaxLoadingShow("'.$dom_id.'");
 			'tw' => 'zh',			// Taiwan - Traditional Chinese
 			//'uk' => 'uk',			// Ukrainian
 			//'vi' => 'vi',			// Vietnamese
-		);
+		];
 
 		return isset($langMap[$lang]) ? $langMap[$lang] : $lang;
 	}
-
-
 }
 
 global $wysiwyglib;
 $wysiwyglib = new WYSIWYGLib();
-

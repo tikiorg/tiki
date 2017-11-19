@@ -53,9 +53,9 @@ class LanguageTranslations extends TikiDb_Bridge
 	{
 		global $user, $user_preferences;
 
-		if (!is_null($lang)) {
+		if (! is_null($lang)) {
 			$this->lang = $lang;
-		} else if (isset($user) && isset($user_preferences[$user]['language'])) {
+		} elseif (isset($user) && isset($user_preferences[$user]['language'])) {
 			$this->lang = $user_preferences[$user]['language'];
 		} else {
 			global $prefs;
@@ -103,7 +103,7 @@ class LanguageTranslations extends TikiDb_Bridge
 		$userId = $tikilib->get_user_id($user);
 
 		// initialize language (used when this function is called by tiki-interactive_translation.php)
-		if (!isset(${"lang_$this->lang"})) {
+		if (! isset(${"lang_$this->lang"})) {
 			init_language($this->lang);
 		}
 
@@ -111,58 +111,58 @@ class LanguageTranslations extends TikiDb_Bridge
 		if ($originalStr == $translatedStr) {
 			return;
 		}
-		
+
 		// If the translation is not in the database and the new translation is the same as the translation defined by the filesystem, ignore it (do not insert in the database)
 		if (isset(${"lang_$this->lang"}[$originalStr]) && ${"lang_$this->lang"}[$originalStr] == $translatedStr) {
 			{
-				static $initialDatabaseTranslations = array();
+			static $initialDatabaseTranslations = [];
 
 				// Build $initialDatabaseTranslations for the given language
-				if (! isset($initialDatabaseTranslations[$this->lang])) {
-					$initialDatabaseTranslationsForThisLanguage = [];
-					$resultSet = $this->query('SELECT `source`, `tran` FROM `tiki_language` WHERE lang=?', [$this->lang]);
-					while ($row = $resultSet->fetchRow()) {
-						$initialDatabaseTranslationsForThisLanguage[$row['source']] = $row['tran'];
-					}
-					$initialDatabaseTranslations[$this->lang] = $initialDatabaseTranslationsForThisLanguage;
+			if (! isset($initialDatabaseTranslations[$this->lang])) {
+				$initialDatabaseTranslationsForThisLanguage = [];
+				$resultSet = $this->query('SELECT `source`, `tran` FROM `tiki_language` WHERE lang=?', [$this->lang]);
+				while ($row = $resultSet->fetchRow()) {
+					$initialDatabaseTranslationsForThisLanguage[$row['source']] = $row['tran'];
 				}
+				$initialDatabaseTranslations[$this->lang] = $initialDatabaseTranslationsForThisLanguage;
 			}
-			
+			}
+
 			if (! isset($initialDatabaseTranslations[$this->lang][$originalStr])) {
 				return;
 			}
 		}
 
 		$query = 'select * from `tiki_language` where `lang`=? and binary `source` = ?';
-		$result = $this->query($query, array($this->lang, $originalStr));
+		$result = $this->query($query, [$this->lang, $originalStr]);
 
-		if (!$result->numRows()) {
+		if (! $result->numRows()) {
 			$query = 'insert into `tiki_language` (`source`, `lang`, `tran`, `changed`, `general`, `userId`, `lastModif`) values (?, ?, ?, ?, ?, ?, ?)';
-			$result = $this->query($query, array($originalStr, $this->lang, $translatedStr, 1, $general, $userId, $tikilib->now));
+			$result = $this->query($query, [$originalStr, $this->lang, $translatedStr, 1, $general, $userId, $tikilib->now]);
 		} else {
 			if (strlen($translatedStr) == 0) {
 				$query = 'delete from `tiki_language` where binary `source`=? and `lang`=?';
-				$result = $this->query($query, array($originalStr, $this->lang));
+				$result = $this->query($query, [$originalStr, $this->lang]);
 			} else {
 				$query = 'update `tiki_language` set `tran`=?, `changed`=?, `userId`=?, `lastModif`=?';
 				if ($generalDefinedByCaller) {
 					$query .= ', `general`=?';
 				}
 				$query .= ' where binary `source`=? and `lang`=?';
-				
-				$boundVariables = array($translatedStr, 1, $userId, $tikilib->now);
+
+				$boundVariables = [$translatedStr, 1, $userId, $tikilib->now];
 				if ($generalDefinedByCaller) {
 					array_push($boundVariables, $general);
 				}
 				array_push($boundVariables, $originalStr, $this->lang);
-				
+
 				$result = $this->query($query, $boundVariables);
 			}
 		}
 
 		// remove from untranslated table if present
 		$query = 'delete from `tiki_untranslated` where binary `source`=? and `lang`=?';
-		$this->query($query, array($originalStr, $this->lang));
+		$this->query($query, [$originalStr, $this->lang]);
 	}
 
 	/**
@@ -186,12 +186,12 @@ class LanguageTranslations extends TikiDb_Bridge
 				$translationsFilter = '';
 			}
 			$dbTrans = self::PHPEscape($this->_getDbTranslations('source_asc', -1, 0, false, $translationsFilter));
-			$stats = array('modif' => 0, 'new' => 0);
+			$stats = ['modif' => 0, 'new' => 0];
 
 			// add new strings to the language.php
 			$lastStr = array_search(");\n", $langFile);
 
-			if ($lastStr === FALSE) {
+			if ($lastStr === false) {
 				// file has no line with "###end###\"=>\"###end###\") marking the end of the array
 				throw new Language_Exception(
 					tr("The file lang/%0/language.php is not correctly formatted. Run get_strings.php?lang=%0 and then try to export the translations again.", $this->lang)
@@ -223,7 +223,7 @@ class LanguageTranslations extends TikiDb_Bridge
 
 			// convert every entry in the array $dbTrans (translations that are not present in language.php)
 			// to a string in the format '"original string" => "translation"'
-			$newTrans = array();
+			$newTrans = [];
 			foreach ($dbTrans as $orig => $trans) {
 				$newTrans[] = '"' . $orig . '" => "' . $trans . "\",\n";
 				$stats['new']++;
@@ -260,15 +260,20 @@ class LanguageTranslations extends TikiDb_Bridge
 	 * @param string $searchQuery SQL query fragment to limit the results
 	 * @return array
 	 */
-	protected function _getDbTranslations($sort_mode = 'source_asc', $maxRecords = -1,
-					$offset = 0, $originalTranslations = false, $searchQuery = '')
-	{
+	protected function _getDbTranslations(
+		$sort_mode = 'source_asc',
+		$maxRecords = -1,
+		$offset = 0,
+		$originalTranslations = false,
+		$searchQuery = ''
+	) {
+
 		if ($originalTranslations) {
 			// load $lang with all translations excluding database translations to compare changes
 			$lang = $this->getFileTranslations();
 		}
 
-		$bindvars = array($this->lang);
+		$bindvars = [$this->lang];
 
 		$query = "SELECT * FROM `tiki_language` WHERE `lang`=? AND `source` != '' AND `changed` = 1 $searchQuery ORDER BY " .
 								$this->convertSortMode($sort_mode);
@@ -278,7 +283,7 @@ class LanguageTranslations extends TikiDb_Bridge
 			$this->hasDbTranslations = true;
 		}
 
-		$translations = array();
+		$translations = [];
 
 		while ($res = $result->fetchRow()) {
 			if ($res['userId']) {
@@ -336,7 +341,7 @@ class LanguageTranslations extends TikiDb_Bridge
 		if ($generalOnly) {
 			$query .= ' AND `general` = 1';
 		}
-		$this->query($query, array($this->lang));
+		$this->query($query, [$this->lang]);
 	}
 
 	/**
@@ -348,7 +353,7 @@ class LanguageTranslations extends TikiDb_Bridge
 	public function deleteTranslation($source)
 	{
 		$query = 'delete from `tiki_language` where binary `source`=? and `lang`=?';
-		$result = $this->query($query, array($source, $this->lang));
+		$result = $this->query($query, [$source, $this->lang]);
 	}
 
 	/**
@@ -392,8 +397,8 @@ class LanguageTranslations extends TikiDb_Bridge
 	{
 		global $tikilib;
 
-		$translations = array();
-		$bindvars = array($this->lang);
+		$translations = [];
+		$bindvars = [$this->lang];
 		$searchQuery = '';
 
 		if ($search) {
@@ -405,7 +410,7 @@ class LanguageTranslations extends TikiDb_Bridge
 
 		$total = count($translations);
 
-		return array('translations' => $translations, 'total' => $total);
+		return ['translations' => $translations, 'total' => $total];
 	}
 
 	/**
@@ -416,7 +421,7 @@ class LanguageTranslations extends TikiDb_Bridge
 	 */
 	public function deleteAllUntranslated()
 	{
-		$this->query('DELETE FROM `tiki_untranslated` WHERE `lang` = ?', array($this->lang));
+		$this->query('DELETE FROM `tiki_untranslated` WHERE `lang` = ?', [$this->lang]);
 	}
 
 	/**
@@ -439,13 +444,13 @@ class LanguageTranslations extends TikiDb_Bridge
 		}
 
 		$contents = file($this->filePath);
-		$untranslated = array();
+		$untranslated = [];
 
 		foreach ($contents as $line) {
 			// match untranslated string in a language.php file
 			if (preg_match('|^//\s*?"(.+)"\s*=>\s*".+".*|', $line, $matches)) {
 				$source = Language::removePhpSlashes($matches[1]);
-				$untranslated[$source] = array('source' => $source, 'tran' => null);
+				$untranslated[$source] = ['source' => $source, 'tran' => null];
 			}
 		}
 
@@ -478,16 +483,16 @@ class LanguageTranslations extends TikiDb_Bridge
 		global $prefs;
 
 		if ($prefs['record_untranslated'] != 'y') {
-			return array();
+			return [];
 		}
 
-		$translations = array();
+		$translations = [];
 
 		$query = "SELECT `source` FROM `tiki_untranslated` WHERE `lang`=? $searchQuery ORDER BY source asc";
-		$result = $this->query($query, array($this->lang), $maxRecords, $offset);
+		$result = $this->query($query, [$this->lang], $maxRecords, $offset);
 
 		while ($res = $result->fetchRow()) {
-			$translations[$res['source']] = array('source' => $res['source'], 'tran' => null);
+			$translations[$res['source']] = ['source' => $res['source'], 'tran' => null];
 		}
 
 		return $translations;
@@ -505,7 +510,7 @@ class LanguageTranslations extends TikiDb_Bridge
 	{
 		global $prefs;
 
-		$untranslated = array();
+		$untranslated = [];
 		$total = 0;
 
 		if ($prefs['record_untranslated'] == 'y') {
@@ -518,10 +523,10 @@ class LanguageTranslations extends TikiDb_Bridge
 			$untranslated = $this->_getDbUntranslated($maxRecords, $offset, $searchQuery);
 
 			$query = "select count(*) from `tiki_untranslated` where `lang`=? $searchQuery";
-			$total = $this->getOne($query, array($this->lang));
+			$total = $this->getOne($query, [$this->lang]);
 		}
 
-		return array('translations' => $untranslated, 'total' => $total);
+		return ['translations' => $untranslated, 'total' => $total];
 	}
 
 	/**
@@ -560,7 +565,7 @@ class LanguageTranslations extends TikiDb_Bridge
 	 */
 	public function getFileTranslations()
 	{
-		$lang = array();
+		$lang = [];
 
 		if (is_file($this->filePath)) {
 			require($this->filePath);
@@ -572,7 +577,7 @@ class LanguageTranslations extends TikiDb_Bridge
 		}
 
 		global $tikidomain;
-		if (!empty($tikidomain) && is_file("lang/$this->lang/$tikidomain/custom.php")) {
+		if (! empty($tikidomain) && is_file("lang/$this->lang/$tikidomain/custom.php")) {
 			require("lang/$this->lang/$tikidomain/custom.php");
 		}
 
@@ -623,15 +628,15 @@ class LanguageTranslations extends TikiDb_Bridge
 
 			// search source strings
 			$keys = preg_grep($pattern, array_keys($strings));
-			$sources = array();
+			$sources = [];
 			foreach ($keys as $key) {
 				$sources[$key] = $strings[$key];
 			}
 
 			// search translation strings
-			$translations = array();
+			$translations = [];
 			foreach ($strings as $key => $string) {
-				if (!empty($string['tran']) && strpos($string['tran'], $search) !== false) {
+				if (! empty($string['tran']) && strpos($string['tran'], $search) !== false) {
 					$translations[$key] = $strings[$key];
 				}
 			}
@@ -649,7 +654,7 @@ class LanguageTranslations extends TikiDb_Bridge
 		$strings = array_slice($strings, $offset, $length);
 
 		//TODO: key 'translations' should be renamed to 'strings' for consistency
-		return array('translations' => $strings, 'total' => $total);
+		return ['translations' => $strings, 'total' => $total];
 	}
 
 	/**
@@ -663,13 +668,13 @@ class LanguageTranslations extends TikiDb_Bridge
 	 */
 	protected function _convertTranslationsArray($translations)
 	{
-		$newFormat = array();
+		$newFormat = [];
 
 		foreach ($translations as $source => $tran) {
-			$newItem = array(
+			$newItem = [
 				'source' => $source,
 				'tran' => $tran,
-			);
+			];
 
 			$newFormat[$source] = $newItem;
 		}

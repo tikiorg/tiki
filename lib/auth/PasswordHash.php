@@ -35,8 +35,9 @@ class PasswordHash
 	{
 		$this->itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
-		if ($iteration_count_log2 < 4 || $iteration_count_log2 > 31)
+		if ($iteration_count_log2 < 4 || $iteration_count_log2 > 31) {
 			$iteration_count_log2 = 8;
+		}
 		$this->iteration_count_log2 = $iteration_count_log2;
 
 		$this->portable_hashes = $portable_hashes;
@@ -73,16 +74,20 @@ class PasswordHash
 		do {
 			$value = ord($input[$i++]);
 			$output .= $this->itoa64[$value & 0x3f];
-			if ($i < $count)
+			if ($i < $count) {
 				$value |= ord($input[$i]) << 8;
+			}
 			$output .= $this->itoa64[($value >> 6) & 0x3f];
-			if ($i++ >= $count)
+			if ($i++ >= $count) {
 				break;
-			if ($i < $count)
+			}
+			if ($i < $count) {
 				$value |= ord($input[$i]) << 16;
+			}
 			$output .= $this->itoa64[($value >> 12) & 0x3f];
-			if ($i++ >= $count)
+			if ($i++ >= $count) {
 				break;
+			}
 			$output .= $this->itoa64[($value >> 18) & 0x3f];
 		} while ($i < $count);
 
@@ -104,22 +109,26 @@ class PasswordHash
 	function crypt_private($password, $setting)
 	{
 		$output = '*0';
-		if (substr($setting, 0, 2) == $output)
+		if (substr($setting, 0, 2) == $output) {
 			$output = '*1';
+		}
 
 		// SJS modified for compat with phpBB3 hashes - $P$ to $H$
-		if (substr($setting, 0, 3) != '$H$')
+		if (substr($setting, 0, 3) != '$H$') {
 			return $output;
+		}
 
 		$count_log2 = strpos($this->itoa64, $setting[3]);
-		if ($count_log2 < 7 || $count_log2 > 30)
+		if ($count_log2 < 7 || $count_log2 > 30) {
 			return $output;
+		}
 
 		$count = 1 << $count_log2;
 
 		$salt = substr($setting, 4, 8);
-		if (strlen($salt) != 8)
+		if (strlen($salt) != 8) {
 			return $output;
+		}
 
 		# We're kind of forced to use MD5 here since it's the only
 		# cryptographic primitive available in all versions of PHP
@@ -128,9 +137,9 @@ class PasswordHash
 		# consequently in lower iteration counts and hashes that are
 		# quicker to crack (by non-PHP code).
 		if (PHP_VERSION >= '5') {
-			$hash = md5($salt . $password, TRUE);
+			$hash = md5($salt . $password, true);
 			do {
-				$hash = md5($hash . $password, TRUE);
+				$hash = md5($hash . $password, true);
 			} while (--$count);
 		} else {
 			$hash = pack('H*', md5($salt . $password));
@@ -208,30 +217,37 @@ class PasswordHash
 	{
 		$random = '';
 
-		if (CRYPT_BLOWFISH == 1 && !$this->portable_hashes) {
+		if (CRYPT_BLOWFISH == 1 && ! $this->portable_hashes) {
 			$random = $this->get_random_bytes(16);
 			$hash =
 				crypt($password, $this->gensalt_blowfish($random));
-			if (strlen($hash) == 60)
+			if (strlen($hash) == 60) {
 				return $hash;
+			}
 		}
 
-		if (CRYPT_EXT_DES == 1 && !$this->portable_hashes) {
-			if (strlen($random) < 3)
+		if (CRYPT_EXT_DES == 1 && ! $this->portable_hashes) {
+			if (strlen($random) < 3) {
 				$random = $this->get_random_bytes(3);
+			}
 			$hash =
 				crypt($password, $this->gensalt_extended($random));
-			if (strlen($hash) == 20)
+			if (strlen($hash) == 20) {
 				return $hash;
+			}
 		}
 
-		if (strlen($random) < 6)
+		if (strlen($random) < 6) {
 			$random = $this->get_random_bytes(6);
+		}
 		$hash =
-			$this->crypt_private($password,
-			$this->gensalt_private($random));
-		if (strlen($hash) == 34)
+			$this->crypt_private(
+				$password,
+				$this->gensalt_private($random)
+			);
+		if (strlen($hash) == 34) {
 			return $hash;
+		}
 
 		# Returning '*' on error is safe here, but would _not_ be safe
 		# in a crypt(3)-like function used _both_ for generating new
@@ -242,8 +258,9 @@ class PasswordHash
 	function CheckPassword($password, $stored_hash)
 	{
 		$hash = $this->crypt_private($password, $stored_hash);
-		if ($hash[0] == '*')
+		if ($hash[0] == '*') {
 			$hash = crypt($password, $stored_hash);
+		}
 
 		return $hash == $stored_hash;
 	}

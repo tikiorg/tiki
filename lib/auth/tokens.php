@@ -15,18 +15,18 @@ class AuthTokens
 	private $maxHits = 1;
 	public $ok = false;
 
-	public static function build( $prefs )
+	public static function build($prefs)
 	{
 		return new AuthTokens(
 			TikiDb::get(),
-			array(
+			[
 				'maxTimeout' => $prefs['auth_token_access_maxtimeout'],
 				'maxHits' => $prefs['auth_token_access_maxhits'],
-			)
+			]
 		);
 	}
 
-	function __construct( $db, $options = array(), DateTime $dt = null )
+	function __construct($db, $options = [], DateTime $dt = null)
 	{
 		$this->db = $db;
 		$this->table = $this->db->table('tiki_auth_tokens');
@@ -37,31 +37,31 @@ class AuthTokens
 			$this->dt = $dt;
 		}
 
-		if ( isset($options['maxTimeout']) ) {
+		if (isset($options['maxTimeout'])) {
 			$this->maxTimeout = (int) $options['maxTimeout'];
 		}
 
-		if ( isset($options['maxHits']) ) {
+		if (isset($options['maxHits'])) {
 			$this->maxHits = (int) $options['maxHits'];
 		}
 	}
 
-	function getToken( $token )
+	function getToken($token)
 	{
 		$data = $this->db->query(
 			'SELECT * FROM tiki_auth_tokens WHERE token = ? AND token = ' . self::SCHEME,
-			array( $token )
+			[ $token ]
 		)->fetchRow();
 
 		return $data;
 	}
 
-	function getTokens($conditions=array())
+	function getTokens($conditions = [])
 	{
-		return $this->table->fetchAll(array(), $conditions, -1, -1, array('creation' => 'asc'));
+		return $this->table->fetchAll([], $conditions, -1, -1, ['creation' => 'asc']);
 	}
 
-	function getGroups( $token, $entry, $parameters )
+	function getGroups($token, $entry, $parameters)
 	{
 		// Process deletion of temporary users that are created via tokens
 		$usersToDelete = $this->db->fetchAll(
@@ -80,12 +80,11 @@ class AuthTokens
 
 		$data = $this->db->query(
 			'SELECT tokenId, entry, parameters, groups, email, createUser, userPrefix FROM tiki_auth_tokens WHERE token = ? AND token = ' . self::SCHEME,
-			array( $token )
+			[ $token ]
 		)->fetchRow();
 
 		global $prefs, $tikiroot;		// $full defined in route.php
 		if ($prefs['feature_sefurl'] === 'y') {
-
 			$sefurlTypeMap = $this->getSefurlTypeMap();
 			$keys = array_keys($_GET);
 			$seftype = '';
@@ -113,23 +112,22 @@ class AuthTokens
 			$entry_encoded_no_tikiroot = urlencode($entry_no_tikiroot);
 			$full_entry_encoded = $tikiroot . $entry_encoded_no_tikiroot;
 
-			if ($data['entry']  !== $sefurl && $full_entry_encoded !== $sefurl ) {
+			if ($data['entry'] !== $sefurl && $full_entry_encoded !== $sefurl) {
 				return null;	// entry doesn't match
 			}
-
-		} else if ( $data['entry'] != $entry) {
+		} elseif ($data['entry'] != $entry) {
 			return null;	// entry doesn't match
 		}
 
 		$registered = (array) json_decode($data['parameters'], true);
 
-		if ( ! $this->allPresent($registered, $parameters) || ! $this->allPresent($parameters, $registered) ) {
+		if (! $this->allPresent($registered, $parameters) || ! $this->allPresent($parameters, $registered)) {
 			return null;
 		}
 
 		$this->db->query(
 			'UPDATE `tiki_auth_tokens` SET `hits` = `hits` - 1 WHERE `tokenId` = ? AND hits != -1',
-			array( $data['tokenId'] )
+			[ $data['tokenId'] ]
 		);
 
 		// Process autologin of temporary users
@@ -138,9 +136,9 @@ class AuthTokens
 			$tempuser = $data['userPrefix'] . $userlib->autogenerate_login($data['tokenId'], 6);
 			$groups = json_decode($data['groups'], true);
 			$parameters = json_decode($data['parameters'], true);
-			if (!$userlib->user_exists($tempuser)) {
+			if (! $userlib->user_exists($tempuser)) {
 				$randompass = $userlib->genPass();
-				$userlib->add_user($tempuser, $randompass, $data['email'], '', false, NULL, NULL, NULL, $groups);
+				$userlib->add_user($tempuser, $randompass, $data['email'], '', false, null, null, null, $groups);
 			}
 			$userlib->autologin_user($tempuser);
 			$url = basename($data['entry']);
@@ -158,10 +156,10 @@ class AuthTokens
 		return (array) json_decode($data['groups'], true);
 	}
 
-	private function allPresent( $a, $b )
+	private function allPresent($a, $b)
 	{
-		foreach ( $a as $key => $value ) {
-			if ( ! isset($b[$key]) || $value != $b[$key] ) {
+		foreach ($a as $key => $value) {
+			if (! isset($b[$key]) || $value != $b[$key]) {
 				return false;
 			}
 		}
@@ -195,15 +193,15 @@ class AuthTokens
 		];
 	}
 
-	function createToken( $entry, array $parameters, array $groups, array $arguments = array() )
+	function createToken($entry, array $parameters, array $groups, array $arguments = [])
 	{
-		if ( !empty($arguments['timeout']) ) {
+		if (! empty($arguments['timeout'])) {
 			$timeout = min($this->maxTimeout, $arguments['timeout']);
 		} else {
 			$timeout = $this->maxTimeout;
 		}
 
-		if ( !empty($arguments['hits']) ) {
+		if (! empty($arguments['hits'])) {
 			$hits = $arguments['hits'];
 		} else {
 			$hits = $this->maxHits;
@@ -215,7 +213,7 @@ class AuthTokens
 			$email = '';
 		}
 
-		if (!empty($arguments['createUser']) && $arguments['createUser'] !== 'n') {
+		if (! empty($arguments['createUser']) && $arguments['createUser'] !== 'n') {
 			$createUser = 'y';
 		} else {
 			$createUser = 'n';
@@ -229,7 +227,7 @@ class AuthTokens
 
 		$this->db->query(
 			'INSERT INTO tiki_auth_tokens ( timeout, maxhits, hits, entry, parameters, groups, email, createUser, userPrefix ) VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ? )',
-			array(
+			[
 				(int) $timeout,
 				(int) $hits,
 				(int) $hits,
@@ -240,14 +238,14 @@ class AuthTokens
 				$createUser,
 				$userPrefix,
 
-			)
+			]
 		);
 
 		$max = $this->db->getOne('SELECT MAX(tokenId) FROM tiki_auth_tokens');
 
-		$this->db->query('UPDATE tiki_auth_tokens SET token = ' . self::SCHEME . ' WHERE tokenId = ?', array( $max ));
+		$this->db->query('UPDATE tiki_auth_tokens SET token = ' . self::SCHEME . ' WHERE tokenId = ?', [ $max ]);
 
-		return $this->db->getOne('SELECT token FROM tiki_auth_tokens WHERE tokenId = ?', array( $max ));
+		return $this->db->getOne('SELECT token FROM tiki_auth_tokens WHERE tokenId = ?', [ $max ]);
 	}
 
 	/**
@@ -262,18 +260,18 @@ class AuthTokens
 	 * @param string $userPrefix Username of the created users will be a 6 digit number based on the token ID prefixed with this (default is 'guest')
 	 * @return string A URL that has the security token included.
 	 */
-	function includeToken( $url, array $groups = array(), $email = '', $timeout = 0, $hits = 0, $createUser = false, $userPrefix = 'guest')
+	function includeToken($url, array $groups = [], $email = '', $timeout = 0, $hits = 0, $createUser = false, $userPrefix = 'guest')
 	{
 		$data = parse_url($url);
 		$longurl = '';
 
-		if ( isset($data['query']) ) {
+		if (isset($data['query'])) {
 			parse_str($data['query'], $args);
 			unset($args['TOKEN']);
 		} else {
 			global $prefs, $sefurl_regex_out;
 			include_once 'tiki-sefurl.php';
-			if ($prefs['feature_sefurl'] === 'y' && !empty($sefurl_regex_out)) {
+			if ($prefs['feature_sefurl'] === 'y' && ! empty($sefurl_regex_out)) {
 				global $base_url;
 
 				$short = substr($url, strlen($base_url));
@@ -283,7 +281,7 @@ class AuthTokens
 					if ($is_numeric) {
 						$replace = '(\d+)';	// match digits
 					} else {
-						$replace ='(.+)';	// or anything (for wiki pages)
+						$replace = '(.+)';	// or anything (for wiki pages)
 					}
 					$pattern = str_replace('$1', $replace, $regex['right']);
 
@@ -298,19 +296,18 @@ class AuthTokens
 					$longdata = parse_url($longurl);
 					parse_str($longdata['query'], $args);
 				} else {
-					$args = array();
+					$args = [];
 				}
-
 			} else {
-				$args = array();
+				$args = [];
 			}
 		}
 
-		$settings = array('email'=>$email);
-		if (!empty($timeout)) {
+		$settings = ['email' => $email];
+		if (! empty($timeout)) {
 			$settings['timeout'] = $timeout;
 		}
-		if (!empty($hits)) {
+		if (! empty($hits)) {
 			$settings['hits'] = $hits;
 		}
 		$settings['createUser'] = $createUser;
@@ -318,13 +315,13 @@ class AuthTokens
 
 		$token = $this->createToken($data['path'], $args, $groups, $settings);
 		if ($longurl) {	// sefurl was used so the args should be reset now the token has been created
-			$args = array();
+			$args = [];
 		}
 		$args['TOKEN'] = $token;
 
 		$query = '?' . http_build_query($args, '', '&');
 
-		if ( ! isset($data['fragment']) ) {
+		if (! isset($data['fragment'])) {
 			$anchor = '';
 		} else {
 			$anchor = "#{$data['fragment']}";
@@ -337,11 +334,11 @@ class AuthTokens
 	{
 		$userPrefix = $this->table->fetchOne(
 			'userPrefix',
-			array('tokenId' => $tokenId, 'createUser' => 'y')
+			['tokenId' => $tokenId, 'createUser' => 'y']
 		);
 		if ($userPrefix) {
 			TikiLib::lib('user')->remove_temporary_user($userPrefix . $tokenId);
 		}
-		$this->table->delete(array('tokenId' => $tokenId));
+		$this->table->delete(['tokenId' => $tokenId]);
 	}
 }

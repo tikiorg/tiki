@@ -16,7 +16,7 @@ class Captcha_Questions extends Zend\Captcha\AbstractWord
 	 */
 	protected $label = '';
 
-	private $questions = array();    // array for quesiotns and answers passed to ctor
+	private $questions = [];    // array for quesiotns and answers passed to ctor
 	private $current = null;        // int current q & a
 
 	/**#@+
@@ -32,12 +32,12 @@ class Captcha_Questions extends Zend\Captcha\AbstractWord
 	 * Error messages
 	 * @var array
 	 */
-	protected $messageTemplates = array(
+	protected $messageTemplates = [
 		self::MISSING_VALUE => 'Missing captcha fields',
 		self::ERR_CAPTCHA   => 'Failed to validate CAPTCHA',
 		self::BAD_CAPTCHA   => 'Captcha value is wrong: %value%',
 		self::MISSING_ID    => 'missingID',
-	);
+	];
 
 	/**
 	 * Constructor
@@ -57,7 +57,7 @@ class Captcha_Questions extends Zend\Captcha\AbstractWord
 	 */
 	public function generate()
 	{
-		if (!$this->keepSession) {
+		if (! $this->keepSession) {
 			$this->session = null;
 		}
 		$id = $this->generateRandomId();
@@ -91,11 +91,11 @@ class Captcha_Questions extends Zend\Captcha\AbstractWord
 	 */
 	public function isValid($value, $context = null)
 	{
-		if (!is_array($value) && !is_array($context)) {
+		if (! is_array($value) && ! is_array($context)) {
 			$this->_error(self::MISSING_VALUE);
 			return false;
 		}
-		if (!is_array($value) && is_array($context)) {
+		if (! is_array($value) && is_array($context)) {
 			$value = $context;
 		}
 
@@ -105,14 +105,14 @@ class Captcha_Questions extends Zend\Captcha\AbstractWord
 			$value = $value[$name];
 		}
 
-		if (!isset($value['input'])) {
+		if (! isset($value['input'])) {
 			$this->error(self::MISSING_VALUE);
 			return false;
 		}
 		$input = strtolower($value['input']);
 		$this->setValue($input);
 
-		if (!isset($value['id'])) {
+		if (! isset($value['id'])) {
 			$this->error(self::MISSING_ID);
 			return false;
 		}
@@ -125,10 +125,9 @@ class Captcha_Questions extends Zend\Captcha\AbstractWord
 			return false;
 		}
 
-		if (!(preg_match('#^/.*/[imsxADSUXJu]*$#', $word) && preg_match($word, $input)) &&    // regex answer?
+		if (! (preg_match('#^/.*/[imsxADSUXJu]*$#', $word) && preg_match($word, $input)) &&    // regex answer?
 			$input !== $word
 		) {
-
 			$this->error(self::BAD_CAPTCHA);
 			return false;
 		}
@@ -182,7 +181,4 @@ class Captcha_Questions extends Zend\Captcha\AbstractWord
 	{
 		return $this->label;
 	}
-
-
 }
-

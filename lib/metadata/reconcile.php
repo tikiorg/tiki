@@ -23,14 +23,14 @@ class ReconcileExifIptcXmp
 	 *
 	 * @var array
 	 */
-	var $alltypes = array('exif' => '', 'iptc' => '', 'xmp' => '');
+	var $alltypes = ['exif' => '', 'iptc' => '', 'xmp' => ''];
 
 	/**
 	 * Maps IPTC field labels to EXIF field labels
 	 *
 	 * @var array
 	 */
-	var $iptcToExif = array(
+	var $iptcToExif = [
 		'2#055' => 'DateTimeOriginal',	//date
 		'2#060' => 'DateTimeOriginalTime',//fake EXIF field to match IPTC time which is separated into a different field
 		'2#062' => 'DateTimeDigitized',	//date
@@ -38,7 +38,7 @@ class ReconcileExifIptcXmp
 		'2#080' => 'Artist',
 		'2#116' => 'Copyright',
 		'2#120' => 'ImageDescription',
-	);
+	];
 
 	/**
 	 * Maps IPTC field labels to XMP field labels
@@ -46,7 +46,7 @@ class ReconcileExifIptcXmp
 	 *
 	 * @var array
 	 */
-	var $iptcToXmp = array (
+	var $iptcToXmp = [
 		'2#004' => 'IntellectualGenre',		//Iptc4xmpCore
 		'2#005' => 'title',					//dc
 		'2#010' => 'Urgency',				//photoshop
@@ -75,7 +75,7 @@ class ReconcileExifIptcXmp
 		'2#120' => 'description',			//dc
 		'2#122' => 'CaptionWriter',			//photoshop
 		'2#140' => 'Instructions',			//photosho
-	);
+	];
 
 	//Mapping for those fields where the name isn't the same and EXIF is preferred
 	/**
@@ -84,7 +84,7 @@ class ReconcileExifIptcXmp
 	 *
 	 * @var array
 	 */
-	var $xmpToExif = array(
+	var $xmpToExif = [
 		'description'		=> 'ImageDescription',
 		'rights'			=> 'Copyright',
 		'creator'			=> 'Artist',
@@ -97,7 +97,7 @@ class ReconcileExifIptcXmp
 		'DateCreated'		=> 'DateTimeOriginal',
 		'CreateDate'		=> 'DateTimeDigitized',
 		'LensInfo'			=> 'UndefinedTag:0xA432',
-	);
+	];
 
 	/**
 	 * Maps EXIF field labals to XMP labels where the labels don't match and where XMP is preferred
@@ -105,114 +105,114 @@ class ReconcileExifIptcXmp
 	 *
 	 * @var array
 	 */
-	var $xmpPreferred = array(
+	var $xmpPreferred = [
 		'DateTime'			=> 'ModifyDate',
 		'DateTimeOriginal'	=> 'DateCreated',
 		'DateTimeDigitized'	=> 'CreateDate',
-	);
+	];
 
 	/**
 	 * Specifications for summary key information to be placed first in the array of data
 	 *
 	 * @var array
 	 */
-	var $basicSummary = array(
-		'User Data'			=> array(
-			'Title'				=> array(
+	var $basicSummary = [
+		'User Data'			=> [
+			'Title'				=> [
 				'iptc'				=> '2#005',
 				'xmp'				=> 'title',
-			),
-			'Description'		=> array(
+			],
+			'Description'		=> [
 				'exif'				=> 'ImageDescription',
 				'iptc'				=> '2#120',
 				'xmp'				=> 'description',
-			),
-			'Keywords'			=> array(
+			],
+			'Keywords'			=> [
 				'iptc'				=> '2#025',
 				'xmp'				=> 'subject',
-			),
-			'Creator'			=> array(
+			],
+			'Creator'			=> [
 				'exif'				=> 'Artist',
 				'iptc'				=> '2#080',
 				'xmp'				=> 'creator',
-			),
-			'Copyright'			=> array(
+			],
+			'Copyright'			=> [
 				'exif'				=> 'Copyright',
 				'iptc'				=> '2#116',
 				'xmp'				=> 'rights',
-			),
-		),
-		'Dates'				=> array(
-			'Date of Original' => array(
+			],
+		],
+		'Dates'				=> [
+			'Date of Original' => [
 				'exif'				=> 'DateTimeOriginal',
 				'iptc'				=> '2#055',
 				'xmp'				=> 'DateCreated'
-			),
-			'Date Digitized'	 	=> array(
+			],
+			'Date Digitized'	 	=> [
 				'exif'				=> 'DateTimeDigitized',
 				'iptc'				=> '2#062',
 				'xmp'				=> 'CreateDate',
-			),
-			'Date Modified'			=> array(
+			],
+			'Date Modified'			=> [
 				'exif'				=> 'DateTime',
 				'xmp'				=> 'ModifyDate',
-			),
-			'Metadata Date'			=> array(
+			],
+			'Metadata Date'			=> [
 				'xmp'				=> 'MetadataDate',
-			),
-		),
-		'File Data'			=> array(
-			'File Type'			=> array (
+			],
+		],
+		'File Data'			=> [
+			'File Type'			=> [
 				'exif'				=> 'FileType',
 				'xmp'				=> 'format',
-			),
-			'File Size'			=> array(
+			],
+			'File Size'			=> [
 				'exif'				=> 'FileSize',
-			),
-			'Width'				=> array(
+			],
+			'Width'				=> [
 				'exif'				=> 'Width',
 				'xmp'				=> 'PixelXDimension',
-			),
-			'Height'			=> array(
+			],
+			'Height'			=> [
 				'exif'				=> 'Height',
 				'xmp'				=> 'PixelYDimension',
-			),
-			'Resolution'		=> array(
+			],
+			'Resolution'		=> [
 				'exif'				=> 'XResolution',
-			),
-			'Resolution Unit'		=> array(
+			],
+			'Resolution Unit'		=> [
 				'exif'				=> 'ResolutionUnit',
-			),
-		),
-	);
+			],
+		],
+	];
 	/**
 	 * Labels for reconciliation stats
 	 *
 	 * @var array
 	 */
-	var $statspecs = array (
-		'fields'			=> array(
+	var $statspecs = [
+		'fields'			=> [
 			'label'			=> 'Total Fields Shown',
-		),
-		'dupes'				=> array(
+		],
+		'dupes'				=> [
 			'label'			=> 'Duplicate Fields'
-		),
-		'mismatches'		=> array(
+		],
+		'mismatches'		=> [
 			'label'			=> 'Mismatches',
-		),
-	);
+		],
+	];
 
 	/**
 	 * Array used to determine which data types to compare based on which iteration we're on
 	 *
 	 * @var array
 	 */
-	var $repeat = array(
-		2	=> array('exif' => '', 'iptc' => ''),
-		3	=> array('iptc' => '', 'xmp' => ''),
-		4	=> array('exif' => '', 'xmp' => ''),
-		5	=> array('exif' => '', 'xmp' => ''),
-	);
+	var $repeat = [
+		2	=> ['exif' => '', 'iptc' => ''],
+		3	=> ['iptc' => '', 'xmp' => ''],
+		4	=> ['exif' => '', 'xmp' => ''],
+		5	=> ['exif' => '', 'xmp' => ''],
+	];
 
 	/**
 	 * Map between xmp (keys) and exif (values) for the FLash field
@@ -220,40 +220,40 @@ class ReconcileExifIptcXmp
 	 *
 	 * @var array
 	 */
-	var $flashmap = array (
-		'Fired' => array(
+	var $flashmap = [
+		'Fired' => [
 			'False'	=> 0,
 			'True'	=> 1,
-		),
-		'Return' => array(
+		],
+		'Return' => [
 			'0'		=> 0,	//No return detected
 			'2'		=> 4,	//Return not detected
 			'3'		=> 6,	//Return detected
-		),
-		'Mode' => array(
+		],
+		'Mode' => [
 			'0'		=> 0,	//Unknown
 			'1'		=> 8,	//On
 			'2'		=> 16,	//Off
 			'3'		=> 24,	//Auto
-		),
-		'Function' => array(
+		],
+		'Function' => [
 			'False'	=> 0,
 			'True'	=> 32,
-		),
-		'RedEyeMode' => array(
+		],
+		'RedEyeMode' => [
 			'False'	=> 0,
 			'True'	=> 64,
-		),
-	);
+		],
+	];
 
 	/**
 	 * Fields requiring special handling
 	 *
 	 * @var array
 	 */
-	var $special = array(
+	var $special = [
 		'ComponentsConfiguration' => '',
-	);
+	];
 
 	/**
 	 * Reconcile EXIF, IPTC and XMP metadata and return a single reconciled array
@@ -278,7 +278,7 @@ class ReconcileExifIptcXmp
 		} elseif (count($types) == 1) {
 			$omni['all'][key($types)] = $this->flatten($metadata[key($types)]);
 			$basicsum = $this->makeSummaryInfo($omni);
-			$metarray =	array(key($types) => $metadata[key($types)]);
+			$metarray =	[key($types) => $metadata[key($types)]];
 			$metarray = $basicsum + $metarray;
 			return $metarray;
 		//more than one metadata type, so need to reconcile
@@ -307,7 +307,7 @@ class ReconcileExifIptcXmp
 			$omni['stats']['fields']['newval'] = 0;
 			foreach ($types as $type => $val) {
 				if (isset($omni[$type]['left']) && count($omni[$type]['left']) > 0) {
-					if (!isset($omni['all'][$type])) {
+					if (! isset($omni['all'][$type])) {
 						$omni['all'][$type] = $omni[$type]['left'];
 						$omni['stats']['fields']['newval'] += count($omni['all'][$type]);
 					} else {
@@ -364,7 +364,7 @@ class ReconcileExifIptcXmp
 	 */
 	function flatten($multiArray)
 	{
-		$flat = array();
+		$flat = [];
 		foreach ($multiArray as $secondkeys) {
 			$flat = $flat + $secondkeys;
 		}
@@ -409,7 +409,7 @@ class ReconcileExifIptcXmp
 	 */
 	private function makeSummaryInfo($omni)
 	{
-		$basicsum = array();
+		$basicsum = [];
 		foreach ($this->basicSummary as $infogroup => $fields) {
 			foreach ($fields as $label => $infotypes) {
 				foreach ($infotypes as $infotype => $fieldame) {
@@ -438,7 +438,7 @@ class ReconcileExifIptcXmp
 	 */
 	function reconcile($types, $omni, $samekey = false, $i)
 	{
-		$match = array();
+		$match = [];
 		//identify the types and determine matches
 		//for files with all 3 metadata types, first pass checks to see if any fields are triplicated
 		if (count($types) == 3) {
@@ -460,7 +460,7 @@ class ReconcileExifIptcXmp
 			if ($samekey === false) {
 				if (array_key_exists('exif', $types)) {
 					$type1 = 'exif';
-					$type2 = key(array_diff_key($types, array('exif' => '')));
+					$type2 = key(array_diff_key($types, ['exif' => '']));
 				} else {
 					$type1 = 'xmp';
 					$type2 = 'iptc';
@@ -483,22 +483,23 @@ class ReconcileExifIptcXmp
 			foreach ($match as $name => $value) {
 				//set type => fieldname pairs for all metadata types in the file
 				if (count($types) == 3) {
-					$fnames = array(
+					$fnames = [
 						$type1 => $exifmatch[$name],
 						$type2 => $name,
 						$type3 => $xmpmatch[$name],
-					);
+					];
 				} else {
-					$fnames = array(
+					$fnames = [
 						$type1 => $name,
 						$type2 => $samekey === false ? $one2two[$name] : $name,
-					);
+					];
 				}
 				//check to see if duplicate fields have equal values
 				//check exif vs iptc
 				if (array_key_exists('exif', $types) && array_key_exists('iptc', $types)) {
 					$check['exif-iptc'] = $this->compareIptcExifValues(
-						$fnames['exif'], $fnames['iptc'],
+						$fnames['exif'],
+						$fnames['iptc'],
 						$omni['iptc']['left'][$fnames['iptc']]['rawval'],
 						$omni['exif']['left'][$fnames['exif']]['rawval']
 					);
@@ -575,13 +576,13 @@ class ReconcileExifIptcXmp
 					$omni['all'][$type][$fnames[$type]]['check'][$typecheck] = $result;
 					if ($result === false) {
 						$omni['mismatches'][$type][$fnames[$type]][$typecheck] = $result;
-						if (!isset($omni['stats']['mismatches']['newval'])) {
+						if (! isset($omni['stats']['mismatches']['newval'])) {
 							$omni['stats']['mismatches']['newval'] = 1;
 						} else {
 							$omni['stats']['mismatches']['newval'] += 1;
 						}
 						$note = '  (' . strtoupper($typecheck) . '  ' . tra('duplicate fields do not match') . ')';
-						if (!isset($omni['all'][$type][$fnames[$type]]['suffix'])) {
+						if (! isset($omni['all'][$type][$fnames[$type]]['suffix'])) {
 							$omni['all'][$type][$fnames[$type]]['suffix'] = $note;
 						} else {
 							$omni['all'][$type][$fnames[$type]]['suffix'] .= ' ' . $note;
@@ -592,7 +593,7 @@ class ReconcileExifIptcXmp
 			}
 			//collect stats on how many duplicates
 			$count = $i == 1 ? count($match) * 3 : count($match);
-			if (!isset($omni['stats']['dupes']['newval'])) {
+			if (! isset($omni['stats']['dupes']['newval'])) {
 				$omni['stats']['dupes']['newval'] = $count;
 			} else {
 				$omni['stats']['dupes']['newval'] += $count;
@@ -640,7 +641,7 @@ class ReconcileExifIptcXmp
 	 */
 	private function checkIptcHash($iptcflat)
 	{
-		if (!isset($iptcflat['iptchashstored']['newval']) || (strlen($iptcflat['iptchashstored']['newval']) > 0
+		if (! isset($iptcflat['iptchashstored']['newval']) || (strlen($iptcflat['iptchashstored']['newval']) > 0
 			&& $iptcflat['iptchashstored']['newval'] == $iptcflat['iptchashcurrent']['newval'])) {
 			return true;
 		} else {
@@ -659,7 +660,7 @@ class ReconcileExifIptcXmp
 	private function compareIptcExifValues($exifkey, $iptckey, $iptcval, $exifval)
 	{
 		//handle special cases first
-		if (array_key_exists($exifkey, array('DateTimeDigitized' => '', 'DateTimeOriginal' => '', 'DateTimeDigitizedTime' => '', 'DateTimeOriginalTime' => ''))) {
+		if (array_key_exists($exifkey, ['DateTimeDigitized' => '', 'DateTimeOriginal' => '', 'DateTimeDigitizedTime' => '', 'DateTimeOriginalTime' => ''])) {
 			$exifdate = new DateTime($exifval);
 			$iptcdate = new DateTime($iptcval);
 			//time
@@ -705,7 +706,7 @@ class ReconcileExifIptcXmp
 			foreach ($xmpval as $val) {
 				$xmpcheckval .= $val['rawval'];
 			}
-		} elseif (array_key_exists($xmpkey, array('DateCreated' => '', 'CreateDate' => '', 'DateCreatedTime' => '', 'CreateDateTime' => ''))) {
+		} elseif (array_key_exists($xmpkey, ['DateCreated' => '', 'CreateDate' => '', 'DateCreatedTime' => '', 'CreateDateTime' => ''])) {
 			$xmpdate = new DateTime($xmpval);
 			$iptcdate = new DateTime($iptcval);
 			//time
@@ -772,11 +773,11 @@ class ReconcileExifIptcXmp
 				$xmpcheckval = $xmpval;
 			}
 			//set EXIF value to check for all other cases
-			if (!isset($exifcheckval)) {
+			if (! isset($exifcheckval)) {
 				$exifcheckval = $exifval;
 			}
 			//when the XMP value is an array
-			if (is_array($xmpval) && !array_key_exists($exifkey, $this->special)) {
+			if (is_array($xmpval) && ! array_key_exists($exifkey, $this->special)) {
 				//Flash is an array in XMP and a single number code in EXIF
 				if ($exifkey == 'Flash') {
 					$exifcheckval = $exifval;
@@ -790,7 +791,7 @@ class ReconcileExifIptcXmp
 				}
 			}
 			//set XMP value to check for all other cases
-			if (!isset($xmpcheckval)) {
+			if (! isset($xmpcheckval)) {
 				$xmpcheckval = $xmpval;
 			}
 		} else {

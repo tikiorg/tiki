@@ -68,9 +68,9 @@ class TikiImporter
 	 *
 	 * @return array
 	 */
-	static public function importOptions()
+	public static function importOptions()
 	{
-		return array();
+		return [];
 	}
 
 	/**
@@ -82,7 +82,6 @@ class TikiImporter
 	 */
 	function import($filePath = null)
 	{
-
 	}
 
 	/**
@@ -93,7 +92,6 @@ class TikiImporter
 	 */
 	function validateInput()
 	{
-
 	}
 
 	/**
@@ -105,7 +103,6 @@ class TikiImporter
 	 */
 	function parseData()
 	{
-
 	}
 
 	/**
@@ -119,7 +116,6 @@ class TikiImporter
 	 */
 	function insertData($parsedData = null)
 	{
-
 	}
 
 	/**
@@ -133,7 +129,6 @@ class TikiImporter
 	 */
 	function checkRequirements()
 	{
-
 	}
 
 	/**
@@ -151,10 +146,10 @@ class TikiImporter
 	function getOptions()
 	{
 		$class = get_class($this);
-		$importOptions = array();
+		$importOptions = [];
 
 		do {
-			$importOptions = array_merge($importOptions, call_user_func(array($class, 'importOptions')));
+			$importOptions = array_merge($importOptions, call_user_func([$class, 'importOptions']));
 		} while ($class = get_parent_class($class));
 
 		return $importOptions;
@@ -193,14 +188,14 @@ class TikiImporter
 	static function displayPhpUploadError($code)
 	{
 		require_once(dirname(__FILE__) . '/../init/tra.php');
-		$errors = array(1 => tra('The uploaded file exceeds the upload_max_filesize directive in php.ini.') . ' ' . ini_get('upload_max_filesize') . 'B',
+		$errors = [1 => tra('The uploaded file exceeds the upload_max_filesize directive in php.ini.') . ' ' . ini_get('upload_max_filesize') . 'B',
 				2 => tra('The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.'),
 				3 => tra('The uploaded file was only partially uploaded. Please try again.'),
 				4 => tra('No file was uploaded.'),
 				6 => tra('Missing a temporary folder.'),
 				7 => tra('Failed to write file to disk.'),
 				8 => tra('File upload stopped by extension.'),
-				);
+				];
 
 		if (isset($errors[$code])) {
 			return $errors[$code];

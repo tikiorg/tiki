@@ -24,23 +24,23 @@ class RelationLib extends TikiDb_Bridge
 	 * Optionally, the relation searched for can be specified. If the
 	 * relation ends with a dot, it will be used as a wildcard.
 	 */
-	function get_relations_from( $type, $object, $relation = null, $orderBy = '', $max = -1 )
+	function get_relations_from($type, $object, $relation = null, $orderBy = '', $max = -1)
 	{
-		if ( substr($relation, -7) === '.invert' ) {
+		if (substr($relation, -7) === '.invert') {
 			return $this->get_relations_to($type, $object, substr($relation, 0, -7), $orderBy, $max);
 		}
 
-		$cond = array(
+		$cond = [
 			'source_type' => $type,
 			'source_itemId' => $object
-		);
+		];
 
-		$fields = array(
+		$fields = [
 			'relationId',
 			'relation',
 			'type' => 'target_type',
 			'itemId' => 'target_itemId',
-		);
+		];
 
 		$cond = $this->apply_relation_condition($relation, $cond);
 		return $this->table->fetchAll($fields, $cond, $max, -1, $orderBy);
@@ -51,9 +51,9 @@ class RelationLib extends TikiDb_Bridge
 	 * get_relations_from without caring about the object type which might be assumed
 	 */
 
-	function get_object_ids_with_relations_from( $type, $object, $relation = null )
+	function get_object_ids_with_relations_from($type, $object, $relation = null)
 	{
-		$ret = array();
+		$ret = [];
 		$relations = $this->get_relations_from($type, $object, $relation);
 		foreach ($relations as $r) {
 			$ret[] = $r['itemId'];
@@ -66,9 +66,9 @@ class RelationLib extends TikiDb_Bridge
 	 * get_relations_to without caring about the object type which might be assumed
 	 */
 
-	function get_object_ids_with_relations_to( $type, $object, $relation = null )
+	function get_object_ids_with_relations_to($type, $object, $relation = null)
 	{
-		$ret = array();
+		$ret = [];
 		$relations = $this->get_relations_to($type, $object, $relation);
 		foreach ($relations as $r) {
 			$ret[] = $r['itemId'];
@@ -82,23 +82,23 @@ class RelationLib extends TikiDb_Bridge
 	 * @param null $relation
 	 * @return mixed
 	 */
-	function get_relations_to( $type, $object, $relation = null, $orderBy = '', $max = -1)
+	function get_relations_to($type, $object, $relation = null, $orderBy = '', $max = -1)
 	{
-		if ( substr($relation, -7) === '.invert' ) {
+		if (substr($relation, -7) === '.invert') {
 			return $this->get_relations_from($type, $object, substr($relation, 0, -7), $orderBy, $max);
 		}
 
-		$cond = array(
+		$cond = [
 			'target_type' => $type,
 			'target_itemId' => $object
-		);
+		];
 
-		$fields = array(
+		$fields = [
 			'relationId',
 			'relation',
 			'type' => 'source_type',
 			'itemId' => 'source_itemId',
-		);
+		];
 
 		$cond = $this->apply_relation_condition($relation, $cond);
 		return $this->table->fetchAll($fields, $cond, $max, -1, $orderBy);
@@ -111,38 +111,38 @@ class RelationLib extends TikiDb_Bridge
 	 * relation naming, and document new tiki.*.* names that you add.
 	 * (also grep "add_relation" just in case there are undocumented names already used)
 	 */
-	function add_relation( $relation, $src_type, $src_object, $target_type, $target_object, $ignoreExisting = false )
+	function add_relation($relation, $src_type, $src_object, $target_type, $target_object, $ignoreExisting = false)
 	{
 		$relation = TikiFilter::get('attribute_type')->filter($relation);
 
-		if ( substr($relation, -7) === '.invert' ) {
+		if (substr($relation, -7) === '.invert') {
 			return $this->add_relation(substr($relation, 0, -7), $target_type, $target_object, $src_type, $src_object);
 		}
 
-		if ( $relation ) {
+		if ($relation) {
 			if (! $id = $this->get_relation_id($relation, $src_type, $src_object, $target_type, $target_object)) {
 				$id = $this->table->insert(
-					array(
+					[
 						'relation' => $relation,
 						'source_type' => $src_type,
 						'source_itemId' => $src_object,
 						'target_type' => $target_type,
 						'target_itemId' => $target_object,
-					)
+					]
 				);
-			} elseif ( $ignoreExisting ) {
+			} elseif ($ignoreExisting) {
 				return 0;
 			}
 
 			// Array written to match event trigger that was previously in wikiplugin_addrelation
-			TikiLib::events()->trigger('tiki.social.relation.add', array(
+			TikiLib::events()->trigger('tiki.social.relation.add', [
 				'relation' => $relation,
 				'sourcetype' => $src_type,
 				'sourceobject' => $src_object,
 				'type' => $target_type,
 				'object' => $target_object,
 				'user' => $GLOBALS['user'],
-			));
+			]);
 
 			TikiLib::lib('tiki')->refresh_index($src_type, $src_object);
 			TikiLib::lib('tiki')->refresh_index($target_type, $target_object);
@@ -160,25 +160,25 @@ class RelationLib extends TikiDb_Bridge
 	 * @param $target_object
 	 * @return int
 	 */
-	function get_relation_id( $relation, $src_type, $src_object, $target_type, $target_object )
+	function get_relation_id($relation, $src_type, $src_object, $target_type, $target_object)
 	{
 		$relation = TikiFilter::get('attribute_type')->filter($relation);
 
-		if ( substr($relation, -7) === '.invert' ) {
+		if (substr($relation, -7) === '.invert') {
 			return $this->get_relation_id(substr($relation, 0, -7), $target_type, $target_object, $src_type, $src_object);
 		}
 
 		$id = 0;
-		if ( $relation ) {
+		if ($relation) {
 			$id = $this->table->fetchOne(
 				'relationId',
-				array(
+				[
 					'relation' => $relation,
 					'source_type' => $src_type,
 					'source_itemId' => $src_object,
 					'target_type' => $target_type,
 					'target_itemId' => $target_object,
-				)
+				]
 			);
 		}
 		return $id;
@@ -192,19 +192,19 @@ class RelationLib extends TikiDb_Bridge
 	 * @param $target_object
 	 * @return array
 	 */
-	function get_relations_by_prefix( $relation_prefix, $src_type, $src_object, $target_type, $target_object )
+	function get_relations_by_prefix($relation_prefix, $src_type, $src_object, $target_type, $target_object)
 	{
-		$ids = array();
-		if ( $relation_prefix ) {
+		$ids = [];
+		if ($relation_prefix) {
 			$ids = $this->table->fetchAll(
 				[],
-				array(
-					'relation' => $this->table->like($relation_prefix.".%"),
+				[
+					'relation' => $this->table->like($relation_prefix . ".%"),
 					'source_type' => $src_type,
 					'source_itemId' => $src_object,
 					'target_type' => $target_type,
 					'target_itemId' => $target_object,
-				)
+				]
 			);
 		}
 		return $ids;
@@ -217,35 +217,36 @@ class RelationLib extends TikiDb_Bridge
 	 * @param $get_invert default=false
 	 * @return int
 	 */
-	function get_relation_count($relation, $type, $object = null, $get_invert=false )
+	function get_relation_count($relation, $type, $object = null, $get_invert = false)
 	{
 		$relation = TikiFilter::get('attribute_type')->filter($relation);
 
-		if (! $relation ) {
+		if (! $relation) {
 			return 0;
 		}
 
-		if ( $get_invert ) {
+		if ($get_invert) {
 			$count = $this->table->fetchCount(
-				array_filter(array(
+				array_filter([
 					'relation' => $relation,
 					'source_type' => $type,
 					'source_itemId' => $object,
-				))
+				])
 			);
 		} else {
 			$count = $this->table->fetchCount(
-				array_filter(array(
+				array_filter([
 					'relation' => $relation,
 					'target_type' => $type,
 					'target_itemId' => $object,
-				))
+				])
 			);
 		}
 		return $count;
 	}
 
-	public function relation_exists($relation, $type) {
+	public function relation_exists($relation, $type)
+	{
 		return $this->get_relation_count($relation, $type) || $this->get_relation_count($relation, $type, null, true);
 	}
 
@@ -253,41 +254,41 @@ class RelationLib extends TikiDb_Bridge
 	 * @param $id
 	 * @return mixed
 	 */
-	function get_relation( $id )
+	function get_relation($id)
 	{
 		return $this->table->fetchFullRow(
-			array(
+			[
 				'relationId' => $id,
-			)
+			]
 		);
 	}
 
 	/**
 	 * @param $id
 	 */
-	function remove_relation( $id )
+	function remove_relation($id)
 	{
 		$relation_info = $this->get_relation($id);
 		$this->table->delete(
-			array(
+			[
 				'relationId' => $id,
-			)
+			]
 		);
 		$this->table('tiki_object_attributes')->deleteMultiple(
-			array(
+			[
 				'type' => 'relation',
 				'itemId' => $id,
-			)
+			]
 		);
 
-		TikiLib::events()->trigger('tiki.social.relation.remove', array(
+		TikiLib::events()->trigger('tiki.social.relation.remove', [
 			'relation' => $relation_info['relation'],
 			'sourcetype' => $relation_info['source_type'],
 			'sourceobject' => $relation_info['source_itemId'],
-			'type' => $relation_info['target_type'], 
+			'type' => $relation_info['target_type'],
 			'object' => $relation_info['target_itemId'],
 			'user' => $GLOBALS['user'],
-		));
+		]);
 
 		TikiLib::lib('tiki')->refresh_index($relation_info['source_type'], $relation_info['source_itemId']);
 		TikiLib::lib('tiki')->refresh_index($relation_info['target_type'], $relation_info['target_itemId']);
@@ -297,28 +298,30 @@ class RelationLib extends TikiDb_Bridge
 	 * Remove all relations from that type.
 	 * @param $relation - the relation type
 	 */
-	public function remove_relation_type($relation) {
+	public function remove_relation_type($relation)
+	{
 		return $this->table->deleteMultiple(
-			array(
+			[
 				'relation' => $relation,
-			)
+			]
 		);
 	}
 
-    /**
+	/**
 	 * Remove all relations of a type for single object
 	 * @param $fromType - object type
 	 * @param $fromId - object itemId
 	 * @param $relationType - relation type originating from that object
 	 */
-	public function remove_relations_from($fromType, $fromId, $relationType) {
+	public function remove_relations_from($fromType, $fromId, $relationType)
+	{
 		return $this->table->deleteMultiple(
-			array(
+			[
 				'relation' => $relationType,
 				'source_type' => $fromType,
 				'source_itemId' => $fromId
-			)
-		); 
+			]
+		);
 		$this->remove_relation_type($relationType);
 	}
 
@@ -328,12 +331,13 @@ class RelationLib extends TikiDb_Bridge
 	 * @param $from - old relation name
 	 * @param $to - new relation name
 	 */
-	public function update_relation($from, $to) {
-		$this->table->updateMultiple(array(
+	public function update_relation($from, $to)
+	{
+		$this->table->updateMultiple([
 			'relation' => $to
-		), array(
+		], [
 			'relation' => $from
-		));
+		]);
 	}
 
 	/**
@@ -341,12 +345,12 @@ class RelationLib extends TikiDb_Bridge
 	 * @param $cond
 	 * @param $vars
 	 */
-	private function apply_relation_condition( $relation, $cond )
+	private function apply_relation_condition($relation, $cond)
 	{
 		$relation = TikiFilter::get('attribute_type')->filter($relation);
 
-		if ( $relation ) {
-			if ( substr($relation, -1) == '.' ) {
+		if ($relation) {
+			if (substr($relation, -1) == '.') {
 				$relation .= '%';
 			}
 
@@ -356,4 +360,3 @@ class RelationLib extends TikiDb_Bridge
 		return $cond;
 	}
 }
-

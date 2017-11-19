@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 class LogsQueryLib
@@ -35,7 +35,7 @@ class LogsQueryLib
 		return LogsQueryLib::type("wiki page")->id($id);
 	}
 
-	static function wikiPagesFrom($user= "")
+	static function wikiPagesFrom($user = "")
 	{
 		return LogsQueryLib::type("wiki page")->id($id);
 	}
@@ -108,7 +108,7 @@ class LogsQueryLib
 	static function listTypes()
 	{
 		$tikilib = TikiLib::lib('tiki');
-		$result = array();
+		$result = [];
 
 		foreach ($tikilib->fetchAll("SELECT objectType FROM tiki_actionlog GROUP By objectType") as $row) {
 			$result[] = $row['objectType'];
@@ -120,7 +120,7 @@ class LogsQueryLib
 	static function listActions()
 	{
 		$tikilib = TikiLib::lib('tiki');
-		$result = array();
+		$result = [];
 
 		foreach ($tikilib->fetchAll("SELECT action FROM tiki_actionlog GROUP By action") as $row) {
 			$result[] = $row['action'];
@@ -199,17 +199,19 @@ class LogsQueryLib
 		return $this;
 	}
 
-	function countByDateFilterId($ids = array())
+	function countByDateFilterId($ids = [])
 	{
 		$tikilib = TikiLib::lib('tiki');
 
 		$this->countByDate();
 
-		$result = array();
+		$result = [];
 
 		foreach ($ids as $id) {
 			foreach ($this->id($id)->fetchAll() as $log) {
-				if (empty($result[$log['date']])) $result[$log['date']] = 0;
+				if (empty($result[$log['date']])) {
+					$result[$log['date']] = 0;
+				}
 				$result[$log['date']] += $log['count'];
 			}
 		}
@@ -217,17 +219,19 @@ class LogsQueryLib
 		return $result;
 	}
 
-	function countUsersFilterId($ids = array())
+	function countUsersFilterId($ids = [])
 	{
 		$tikilib = TikiLib::lib('tiki');
 
 		$this->groupType = "";
 
-		$result = array();
+		$result = [];
 
 		foreach ($ids as $id) {
 			foreach ($this->id($id)->fetchAll() as $log) {
-				if (empty($result[$log['user']])) $result[$log['user']] = 0;
+				if (empty($result[$log['user']])) {
+					$result[$log['user']] = 0;
+				}
 
 				$result[$log['user']]++;
 			}
@@ -236,17 +240,17 @@ class LogsQueryLib
 		return $result;
 	}
 
-	function countUsersIPFilterId($ids = array())
+	function countUsersIPFilterId($ids = [])
 	{
 		$tikilib = TikiLib::lib('tiki');
 
 		$this->groupType = "";
 
-		$result = array();
+		$result = [];
 
 		foreach ($ids as $id) {
 			foreach ($this->id($id)->fetchAll() as $log) {
-				$result[json_encode(array("ip"=>$log['ip'],"user"=>$log['user']))]++;
+				$result[json_encode(["ip" => $log['ip'],"user" => $log['user']])]++;
 			}
 		}
 
@@ -257,52 +261,63 @@ class LogsQueryLib
 	{
 		$tikilib = TikiLib::lib('tiki');
 
-		if (empty($this->type))
-			return array();
+		if (empty($this->type)) {
+			return [];
+		}
 
 
 		$query = "
 			SELECT
-				".($this->groupType == "count" ? " COUNT(actionId) as count " : "")."
-				".($this->groupType == "countByDate" ? " COUNT(actionId) AS count, DATE_FORMAT(FROM_UNIXTIME(lastModif), '%m/%d/%Y') as date " : "")."
-				".(empty($this->groupType) ? " * " : "")."
+				" . ($this->groupType == "count" ? " COUNT(actionId) as count " : "") . "
+				" . ($this->groupType == "countByDate" ? " COUNT(actionId) AS count, DATE_FORMAT(FROM_UNIXTIME(lastModif), '%m/%d/%Y') as date " : "") . "
+				" . (empty($this->groupType) ? " * " : "") . "
 			FROM
 				tiki_actionlog
 			WHERE
 				objectType = ?
-				".(
-					!empty($this->id) ? " AND object = ? " : ""
-				)."
-				".(
-					!empty($this->action) ? " AND action = ? " : ""
-				)."
-				".(
-					!empty($this->start) ? " AND lastModif > ? " : ""
-				)."
-				".(
-					!empty($this->end) ? " AND lastModif < ? " : ""
-				)."
-				".(
-					!empty($this->client) ? " AND client = ? " : ""
-				)."
+				" . (
+					! empty($this->id) ? " AND object = ? " : ""
+				) . "
+				" . (
+					! empty($this->action) ? " AND action = ? " : ""
+				) . "
+				" . (
+					! empty($this->start) ? " AND lastModif > ? " : ""
+				) . "
+				" . (
+					! empty($this->end) ? " AND lastModif < ? " : ""
+				) . "
+				" . (
+					! empty($this->client) ? " AND client = ? " : ""
+				) . "
 
-			".($this->groupType == "countByDate" ? " GROUP BY DATE_FORMAT(FROM_UNIXTIME(lastModif), '%Y%m%d') " : "")."
+			" . ($this->groupType == "countByDate" ? " GROUP BY DATE_FORMAT(FROM_UNIXTIME(lastModif), '%Y%m%d') " : "") . "
 
-			ORDER BY lastModif ". ($this->desc == true ? "DESC" : "ASC") ."
+			ORDER BY lastModif " . ($this->desc == true ? "DESC" : "ASC") . "
 
-			".(!empty($this->limit) ?
-				" LIMIT ".$this->limit
+			" . (! empty($this->limit) ?
+				" LIMIT " . $this->limit
 				: ""
-			)."
+			) . "
 		";
 
-		$params = array($this->type);
+		$params = [$this->type];
 
-		if (!empty($this->id)) $params[] = $this->id;
-		if (!empty($this->action)) $params[] = $this->action;
-		if (!empty($this->start)) $params[] = $this->start;
-		if (!empty($this->end)) $params[] = $this->end;
-		if (!empty($this->client)) $params[] = $this->client;
+		if (! empty($this->id)) {
+			$params[] = $this->id;
+		}
+		if (! empty($this->action)) {
+			$params[] = $this->action;
+		}
+		if (! empty($this->start)) {
+			$params[] = $this->start;
+		}
+		if (! empty($this->end)) {
+			$params[] = $this->end;
+		}
+		if (! empty($this->client)) {
+			$params[] = $this->client;
+		}
 
 		if ($this->groupType == "count") {
 			return $tikilib->getOne($query, $params);
@@ -311,4 +326,3 @@ class LogsQueryLib
 		}
 	}
 }
-

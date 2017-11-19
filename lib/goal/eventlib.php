@@ -74,7 +74,7 @@ class GoalEventLib
 					}
 				}
 			}
-			
+
 			$list = array_unique($list);
 			$cachelib->cacheItem(self::CACHE_KEY, serialize($list));
 		}
@@ -87,4 +87,3 @@ class GoalEventLib
 		return TikiDb::get()->table('tiki_goal_events');
 	}
 }
-

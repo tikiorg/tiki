@@ -30,64 +30,63 @@ $in_str = '';
  */
 function encode_headers($in_str, $charset)
 {
-   $out_str = $in_str;
-   if ($out_str && $charset) {
+	$out_str = $in_str;
+	if ($out_str && $charset) {
+		// define start delimimter, end delimiter and spacer
+		$end = "?=";
+		$start = "=?" . $charset . "?b?";
+		$spacer = $end . "\r\n" . $start;
 
-	   // define start delimimter, end delimiter and spacer
-	   $end = "?=";
-	   $start = "=?" . $charset . "?b?";
-	   $spacer = $end . "\r\n" . $start;
+		// determine length of encoded text within chunks
+		// and ensure length is even
+		$length = 71 - strlen($spacer); // no idea why 71 but 75 didn't work
+		$length = floor($length / 2) * 2;
 
-	   // determine length of encoded text within chunks
-	   // and ensure length is even
-	   $length = 71 - strlen($spacer); // no idea why 71 but 75 didn't work
-	   $length = floor($length/2) * 2;
+		// encode the string and split it into chunks
+		// with spacers after each chunk
+		$out_str = base64_encode($out_str);
+		$out_str = chunk_split($out_str, $length, $spacer);
 
-	   // encode the string and split it into chunks
-	   // with spacers after each chunk
-	   $out_str = base64_encode($out_str);
-	   $out_str = chunk_split($out_str, $length, $spacer);
-
-	   // remove trailing spacer and
-	   // add start and end delimiters
-	   $spacer = preg_quote($spacer);
-	   $out_str = preg_replace("/" . $spacer . "$/", "", $out_str);
-	   $out_str = $start . $out_str . $end;
-   }
-   return $out_str;
+		// remove trailing spacer and
+		// add start and end delimiters
+		$spacer = preg_quote($spacer);
+		$out_str = preg_replace("/" . $spacer . "$/", "", $out_str);
+		$out_str = $start . $out_str . $end;
+	}
+	return $out_str;
 }// end function encode_headers
 
 function tiki_mail_setup()
 {
 	static $done = false;
-	if ( $done ) {
+	if ($done) {
 		return;
 	}
 
 	global $tiki_maillib__zend_mail_default_transport;
 	global $prefs;
-	if ( $prefs['zend_mail_handler'] == 'smtp' ) {
-		$options = array(
+	if ($prefs['zend_mail_handler'] == 'smtp') {
+		$options = [
 			'host' => $prefs['zend_mail_smtp_server']
-		);
+		];
 
-		if ( $prefs['zend_mail_smtp_auth'] ) {
+		if ($prefs['zend_mail_smtp_auth']) {
 			$options['connection_class'] = $prefs['zend_mail_smtp_auth'];
-			$options['connection_config'] = array(
+			$options['connection_config'] = [
 				'username' => $prefs['zend_mail_smtp_user'],
 				'password' => $prefs['zend_mail_smtp_pass']
-			);
+			];
 		}
 
-		if ( $prefs['zend_mail_smtp_port'] ) {
+		if ($prefs['zend_mail_smtp_port']) {
 			$options['port'] = $prefs['zend_mail_smtp_port'];
 		}
 
-		if ( $prefs['zend_mail_smtp_security'] ) {
+		if ($prefs['zend_mail_smtp_security']) {
 			$options['connection_config']['ssl'] = $prefs['zend_mail_smtp_security'];
 		}
 
-		if ( $prefs['zend_mail_smtp_helo'] ) {
+		if ($prefs['zend_mail_smtp_helo']) {
 			$options['name'] = $prefs['zend_mail_smtp_helo'];
 		}
 
@@ -101,12 +100,12 @@ function tiki_mail_setup()
 	} elseif ($prefs['zend_mail_handler'] == 'file') {
 		$transport = new Zend\Mail\Transport\File();
 		$transportOptions = new Zend\Mail\Transport\FileOptions(
-			array(
+			[
 				'path' => TIKI_PATH . '/temp',
 				'callback' => function ($transport) {
 					return 'Mail_' . date('YmdHis') . '_' . mt_rand() . '.eml';
 				},
-			)
+			]
 		);
 		$transport->setOptions($transportOptions);
 	} elseif ($prefs['zend_mail_handler'] == 'sendmail' && ! empty($prefs['sender_email'])) {
@@ -163,7 +162,7 @@ function tiki_get_admin_mail()
  * @param $subject
  * @param $textBody
  */
-function tiki_send_admin_mail( $email, $recipientName, $subject, $textBody )
+function tiki_send_admin_mail($email, $recipientName, $subject, $textBody)
 {
 	$mail = tiki_get_admin_mail();
 

@@ -21,18 +21,18 @@ class Exif
 	 *
 	 * @var array
 	 */
-	var	$specs = array(
+	var	$specs = [
 		//the PHP function exif_read_data adds the FILE group when returning exif data
-		'FILE' => array(
-			'FileDateTime'	=> array(
+		'FILE' => [
+			'FileDateTime'	=> [
 				'label'		=> 'Data Extraction Time',
-			),
-			'FileSize' => array(
+			],
+			'FileSize' => [
 				'suffix'	=> 'bytes',
-			),
-			'FileType' => array(
+			],
+			'FileType' => [
 				//from http://php.net/manual/function.exif-imagetype.php
-				'options'	=> array(
+				'options'	=> [
 					'1'		=> 'GIF',
 					'2'		=> 'JPEG',
 					'3'		=> 'PNG',
@@ -50,35 +50,35 @@ class Exif
 					'15'	=> 'WBMP',
 					'16'	=> 'XBM',
 					'17'	=> 'ICO',
-				),
-			),
-		),
-		'COMPUTED' => array(
-			'html' => array(
+				],
+			],
+		],
+		'COMPUTED' => [
+			'html' => [
 				'label' => 'HTML',
-			),
-			'Height' => array(
+			],
+			'Height' => [
 				'suffix' => 'pixels',
-			),
-			'Width' => array(
+			],
+			'Width' => [
 				'suffix' => 'pixels',
-			),
-			'IsColor' => array(
-				'options' => array(
+			],
+			'IsColor' => [
+				'options' => [
 					0		=> 'No',
 					1		=> 'Yes',
-				),
-			),
-			'ByteOrderMotorola' => array(
-				'options' => array(
+				],
+			],
+			'ByteOrderMotorola' => [
+				'options' => [
 					0		=> 'No',
 					1		=> 'Yes',
-				),
-			),
-			'Thumbnail.FileType' => array(
+				],
+			],
+			'Thumbnail.FileType' => [
 				'label'		=> 'Thumbnail File Type',
 				//from http://php.net/manual/function.exif-imagetype.php
-				'options' => array(
+				'options' => [
 					'1'		=> 'GIF',
 					'2'		=> 'JPEG',
 					'3'		=> 'PNG',
@@ -96,21 +96,21 @@ class Exif
 					'15'	=> 'WBMP',
 					'16'	=> 'XBM',
 					'17'	=> 'ICO',
-				),
-			),
-			'Thumbnail.MimeType' => array(
+				],
+			],
+			'Thumbnail.MimeType' => [
 				'label'		=> 'Thumbnail Mime Type',
-			),
-		),
-		'IFD0' => array(
-			'ImageWidth' => array(
+			],
+		],
+		'IFD0' => [
+			'ImageWidth' => [
 				'suffix'	=> 'pixels',
-			),
-			'ImageLength' => array(
+			],
+			'ImageLength' => [
 				'suffix'	=> 'pixels',
-			),
-			'Compression' => array(
-				'options' => array(
+			],
+			'Compression' => [
+				'options' => [
 					'1'		=> 'Uncompressed',
 					'2'		=> 'CCITT 1D',
 					'3'		=> 'T4/Group 3 Fax',
@@ -150,10 +150,10 @@ class Exif
 					'34720'	=> 'Microsoft Document Imaging (MDI) Vector',
 					'65000'	=> 'Kodak DCR Compressed',
 					'65535'	=> 'Pentax PEF Compressed)',
-				),
-			),
-			'PhotometricInterpretation' => array(
-				'options' => array(
+				],
+			],
+			'PhotometricInterpretation' => [
+				'options' => [
 					'0'		=> 'WhiteIsZero',
 					'1'		=> 'BlackIsZero',
 					'2'		=> 'RGB',
@@ -168,10 +168,10 @@ class Exif
 					'32844'	=> 'Pixar LogL',
 					'32845'	=> 'Pixar LogLuv',
 					'34892'	=> 'Linear Raw',
-				),
-			),
-			'Orientation' => array(
-				'options' => array(
+				],
+			],
+			'Orientation' => [
+				'options' => [
 					'1'		=> 'Horizontal (normal)',
 					'2'		=> 'Mirror horizontal',
 					'3'		=> 'Rotate 180',
@@ -180,39 +180,39 @@ class Exif
 					'6'		=> 'Rotate 90 CW',
 					'7'		=> 'Mirror horizontal and rotate 90 CW',
 					'8'		=> 'Rotate 270 CW',
-				),
-			),
-			'XResolution' => array(
+				],
+			],
+			'XResolution' => [
 				'format'	=> 'rational',
 				'suffix'	=> 'pixels (dots) per unit',
-			),
-			'YResolution' => array(
-				'format'	=> 	'rational',
+			],
+			'YResolution' => [
+				'format'	=> 'rational',
 				'suffix'	=> 'pixels (dots) per unit',
-			),
-			'PlanarConfiguration' => array(
-				'options' => array(
+			],
+			'PlanarConfiguration' => [
+				'options' => [
 					'1'		=> 'Chunky',
 					'2'		=> 'Planar',
-				),
-			),
-			'ResolutionUnit' => array(
-				'options' => array(
+				],
+			],
+			'ResolutionUnit' => [
+				'options' => [
 					'2'		=> 'inch',
 					'3'		=> 'cm',
-				),
-			),
-			'WhitePoint' => array(
+				],
+			],
+			'WhitePoint' => [
 				'format'	=> 'rational',
-			),
-			'PrimaryChromaticities' => array(
+			],
+			'PrimaryChromaticities' => [
 				'format'	=> 'rational',
-			),
-			'YCbCrCoefficients' => array(
+			],
+			'YCbCrCoefficients' => [
 				'format'	=> 'rational',
-			),
-			'YCbCrSubSampling' => array(
-				'options' => array(
+			],
+			'YCbCrSubSampling' => [
+				'options' => [
 					'1 1'	=> 'YCbCr4:4:4 (1 1)',
 					'1 2'	=> 'YCbCr4:4:0 (1 2)',
 					'1 4'	=> 'YCbCr4:4:1 (1 4)',
@@ -221,39 +221,39 @@ class Exif
 					'2 4'	=> 'YCbCr4:2:1 (2 4)',
 					'4 1'	=> 'YCbCr4:1:1 (4 1)',
 					'4 2'	=> 'YCbCr4:1:0 (4 2)',
-				),
-			),
-			'YCbCrPositioning' => array(
-				'options' => array(
+				],
+			],
+			'YCbCrPositioning' => [
+				'options' => [
 					1		=> 'Centered',
 					2		=> 'Co-sited',
-				),
-			),
-			'ReferenceBlackWhite' => array(
+				],
+			],
+			'ReferenceBlackWhite' => [
 				'format'	=> 'rational',
-			),
-			'JPEGInterchangeFormat' => array(
+			],
+			'JPEGInterchangeFormat' => [
 				'label'		=> 'Thumbnail Offset',
-			),
-			'JPEGInterchangeFormatLength' => array(
+			],
+			'JPEGInterchangeFormatLength' => [
 				'label'		=> 'Thumbnail Length',
-			),
-			'Exif_IFD_Pointer' => array(
+			],
+			'Exif_IFD_Pointer' => [
 				'label'		=> 'EXIF IFD Pointer',
-			),
-			'GPS_IFD_Pointer' => array(
+			],
+			'GPS_IFD_Pointer' => [
 				'label'		=> 'GPS IFD Pointer',
-			),		),
-		'EXIF' => array(
-			'ExposureTime' => array(
+			],		],
+		'EXIF' => [
+			'ExposureTime' => [
 				'format'	=> 'rational',
 				'suffix'	=> 'seconds',
-			),
-			'FNumber' => array(
+			],
+			'FNumber' => [
 				'format'	=> 'rational',
-			),
-			'ExposureProgram' => array(
-				'options' => array(
+			],
+			'ExposureProgram' => [
+				'options' => [
 					'0'		=> 'Not Defined',
 					'1'		=> 'Manual',
 					'2'		=> 'Program AE',
@@ -264,10 +264,10 @@ class Exif
 					'7'		=> 'Portrait',
 					'8'		=> 'Landscape',
 					'9'		=> 'Bulb',
-				),
-			),
-			'SensitivityType' => array(
-				'options' => array(
+				],
+			],
+			'SensitivityType' => [
+				'options' => [
 					'0'		=> 'Unknown',
 					'1'		=> 'Standard Output Sensitivity',
 					'2'		=> 'Recommended Exposure Index',
@@ -276,11 +276,11 @@ class Exif
 					'5'		=> 'Standard Output Sensitivity and ISO Speed',
 					'6'		=> 'Recommended Exposure Index and ISO Speed',
 					'7'		=> 'Standard Output Sensitivity, Recommended Exposure Index and ISO Speed',
-				),
-			),
-			'ComponentsConfiguration' => array(
+				],
+			],
+			'ComponentsConfiguration' => [
 				'binary' => true,
-				'options' => array(
+				'options' => [
 					'00'	=> '- ',
 					'01'	=> 'Y ',
 					'02'	=> 'Cb',
@@ -288,37 +288,37 @@ class Exif
 					'04'	=> 'R ',
 					'05'	=> 'G ',
 					'06'	=> 'B ',
-				),
-			),
-			'CompressedBitsPerPixel' => array(
+				],
+			],
+			'CompressedBitsPerPixel' => [
 				'format'	=> 'rational',
-			),
-			'ShutterSpeedValue' => array(
-				'format'	=> 'rational',
-				'suffix'	=> 'APEX'
-			),
-			'ApertureValue' => array(
+			],
+			'ShutterSpeedValue' => [
 				'format'	=> 'rational',
 				'suffix'	=> 'APEX'
-			),
-			'BrightnessValue' => array(
+			],
+			'ApertureValue' => [
 				'format'	=> 'rational',
 				'suffix'	=> 'APEX'
-			),
-			'ExposureBiasValue' => array(
+			],
+			'BrightnessValue' => [
 				'format'	=> 'rational',
 				'suffix'	=> 'APEX'
-			),
-			'MaxApertureValue' => array(
+			],
+			'ExposureBiasValue' => [
 				'format'	=> 'rational',
 				'suffix'	=> 'APEX'
-			),
-			'SubjectDistance' => array(
+			],
+			'MaxApertureValue' => [
+				'format'	=> 'rational',
+				'suffix'	=> 'APEX'
+			],
+			'SubjectDistance' => [
 				'format'	=> 'rational',
 				'suffix'	=> 'meters'
-			),
-			'MeteringMode' => array(
-				'options' => array(
+			],
+			'MeteringMode' => [
+				'options' => [
 					'0'		=> 'Unknown',
 					'1'		=> 'Average',
 					'2'		=> 'Center-weighted average',
@@ -327,10 +327,10 @@ class Exif
 					'5'		=> 'Multi-segment',
 					'6'		=> 'Partial',
 					'255'	=> 'Other',
-				),
-			),
-			'LightSource' => array(
-				'options' => array(
+				],
+			],
+			'LightSource' => [
+				'options' => [
 					'0'		=> 'Unknown',
 					'1'		=> 'Daylight',
 					'2'		=> 'Fluorescent',
@@ -353,10 +353,10 @@ class Exif
 					'23'	=> 'D50',
 					'24'	=> 'ISO Studio Tungsten',
 					'255'	=> 'Other',
-				),
-			),
-			'Flash' => array(
-				'options' => array(
+				],
+			],
+			'Flash' => [
+				'options' => [
 					'0'		=> 'No Flash',
 					'1'		=> 'Fired',
 					'5'		=> 'Fired, Return not detected',
@@ -384,58 +384,58 @@ class Exif
 					'89'	=> 'Auto, Fired, Red-eye reduction',
 					'93'	=> 'Auto, Fired, Red-eye reduction, Return not detected',
 					'95'	=> 'Auto, Fired, Red-eye reduction, Return detected',
-				),
-			),
-			'FocalLength' => array(
+				],
+			],
+			'FocalLength' => [
 				'format'	=> 'rational',
 				'suffix'	=> 'mm',
-			),
+			],
 			/*				//don't convert since already converted by PHP
 			   'UserComment' => array(
 				   'binary'	=> true,
 			   ),*/
-			'ColorSpace' => array(
-				'options' => array(
+			'ColorSpace' => [
+				'options' => [
 					'1'		=> 'sRGB',
 					'65533'	=> 'Wide Gamut RGB',
 					'65534'	=> 'ICC Profile',
 					'65535'	=> 'Uncalibrated',
-				),
-			),
-			'ExifImageWidth' => array(
+				],
+			],
+			'ExifImageWidth' => [
 				'label'		=> 'Image Width',
 				'suffix'	=> 'pixels',
-			),
-			'ExifImageLength' => array(
+			],
+			'ExifImageLength' => [
 				'label'		=> 'Image Height',
 				'suffix'	=> 'pixels',
-			),
-			'FlashEnergy'	=> array(
+			],
+			'FlashEnergy'	=> [
 				'format'	=> 'rational',
 				'suffix'	=> 'BCPS',
-			),
-			'FocalPlaneXResolution' => array(
+			],
+			'FocalPlaneXResolution' => [
 				'format'	=> 'rational',
 				'suffix'	=> 'pixels per unit',
-			),
-			'FocalPlaneYResolution' => array(
+			],
+			'FocalPlaneYResolution' => [
 				'format'	=> 'rational',
 				'suffix'	=> 'pixels per unit',
-			),
-			'FocalPlaneResolutionUnit' => array(
-				'options'	=> array(
+			],
+			'FocalPlaneResolutionUnit' => [
+				'options'	=> [
 					1		=> 'None',
 					2		=> 'inch',
 					3		=> 'cm',
 					4		=> 'mm',
 					5		=> 'um',
-				),
-			),
-			'ExposureIndex' => array(
+				],
+			],
+			'ExposureIndex' => [
 				'format'	=> 'rational',
-			),
-			'SensingMethod' => array(
-				'options'	=> array(
+			],
+			'SensingMethod' => [
+				'options'	=> [
 					1		=> 'Not defined',
 					2		=> 'One-chip color area',
 					3		=> 'Two-chip color area',
@@ -443,26 +443,26 @@ class Exif
 					5		=> 'Color sequential area',
 					7		=> 'Trilinear',
 					8		=> 'Color sequential linear',
-				),
-			),
-			'FileSource'	=> array(
+				],
+			],
+			'FileSource'	=> [
 				'binary'	=> true,
-				'options'	=> array(
+				'options'	=> [
 					'00'	=> 'Others',
 					'01'	=> 'Film Scanner ',
 					'02'	=> 'Reflection Print Scanner',
 					'03'	=> 'Digital Camera',
-				),
-			),
-			'SceneType'		=> array(
+				],
+			],
+			'SceneType'		=> [
 				'binary'	=> true,
-				'options'	=> array(
+				'options'	=> [
 					'01'	=> 'Directly photographed',
-				),
-			),
-			'CFAPattern'	=> array(
+				],
+			],
+			'CFAPattern'	=> [
 				'binary'	=> true,
-				'options'	=> array(
+				'options'	=> [
 					'00'	=> 'Red',
 					'01'	=> 'Green',
 					'02'	=> 'Blue',
@@ -470,210 +470,210 @@ class Exif
 					'04'	=> 'Magenta',
 					'05'	=> 'Yellow',
 					'06'	=> 'White',
-				),
-			),
-			'CustomRendered' => array(
-				'options' => array(
+				],
+			],
+			'CustomRendered' => [
+				'options' => [
 					'0'	=> 'Normal',
 					'1'	=> 'Custom',
-				),
-			),
-			'ExposureMode' => array(
-				'options' => array(
+				],
+			],
+			'ExposureMode' => [
+				'options' => [
 					'0'	=> 'Auto',
 					'1'	=> 'Manual',
 					'2'	=> 'Auto bracket',
-				),
-			),
-			'WhiteBalance' => array(
-				'options' => array(
+				],
+			],
+			'WhiteBalance' => [
+				'options' => [
 					'0'	=> 'Auto',
 					'1'	=> 'Manual',
-				),
-			),
-			'SceneCaptureType'	=> array(
-				'options'	=> array(
+				],
+			],
+			'SceneCaptureType'	=> [
+				'options'	=> [
 					'0'		=> 'Standard',
 					'1'		=> 'Landscape',
 					'2'		=> 'Portrait',
 					'3'		=> 'Night',
-				),
-			),
-			'GainControl' => array(
-				'options' => array(
+				],
+			],
+			'GainControl' => [
+				'options' => [
 					'0'	=> 'None',
 					'1'	=> 'Low gain up',
 					'2'	=> 'High gain up',
 					'3'	=> 'Low gain down',
 					'4'	=> 'High gain down',
-				),
-			),
-			'Contrast' => array(
-				'options' => array(
+				],
+			],
+			'Contrast' => [
+				'options' => [
 					'0'	=> 'Normal',
 					'1'	=> 'Low',
 					'2'	=> 'High',
-				),
-			),
-			'Saturation' => array(
-				'options' => array(
+				],
+			],
+			'Saturation' => [
+				'options' => [
 					'0'	=> 'Normal',
 					'1'	=> 'Low',
 					'2'	=> 'High',
-				),
-			),
-			'Sharpness' => array(
-				'options' => array(
+				],
+			],
+			'Sharpness' => [
+				'options' => [
 					'0'	=> 'Normal',
 					'1'	=> 'Soft',
 					'2'	=> 'Hard',
-				),
-			),
-			'SubjectDistanceRange' => array(
-				'options' => array(
+				],
+			],
+			'SubjectDistanceRange' => [
+				'options' => [
 					'0'	=> 'Unknown',
 					'1'	=> 'Macro',
 					'2'	=> 'Close',
 					'3'	=> 'Distant',
-				),
-			),
+				],
+			],
 			//some legitimate exif fields are apparently only partially handled by php
 			//an undefined tag is returned instead of the label
-			'UndefinedTag:0xA431' => array(
+			'UndefinedTag:0xA431' => [
 				'label'	=> 'Serial Number',
-			),
-			'UndefinedTag:0xA432' => array(
+			],
+			'UndefinedTag:0xA432' => [
 				'label'	=> 'Lens Specification',
-				'suffix'=> 'Min - max focal length in mm; Min - max Fnumber'
-			),
-			'UndefinedTag:0xA434' => array(
+				'suffix' => 'Min - max focal length in mm; Min - max Fnumber'
+			],
+			'UndefinedTag:0xA434' => [
 				'label'	=> 'Lens Model',
-			),
-		),
-		'GPS' => array(
-			'GPSVersion' => array(
+			],
+		],
+		'GPS' => [
+			'GPSVersion' => [
 				'binary'	=> true,
-			),
-			'GPSLatitudeRef' => array(
-				'options' => array(
+			],
+			'GPSLatitudeRef' => [
+				'options' => [
 					'N'	=> 'North (+)',
 					'S'	=> 'South (-)',
-				),
-			),
-			'GPSLatitude' => array(
+				],
+			],
+			'GPSLatitude' => [
 				'format'	=> 'rational',
-			),
-			'GPSLongitudeRef' => array(
-				'options' => array(
+			],
+			'GPSLongitudeRef' => [
+				'options' => [
 					'E'	=> 'East (+)',
 					'W'	=> 'West (-)',
-				),
-			),
-			'GPSLongitude' => array(
+				],
+			],
+			'GPSLongitude' => [
 				'format'	=> 'rational',
-			),
-			'GPSAltitudeRef' => array(
+			],
+			'GPSAltitudeRef' => [
 				'binary' => true,
-				'options' => array(
+				'options' => [
 					'00'	=> 'Meters above sea level',
 					'01'	=> 'Meters below sea level',
-				),
-			),
-			'GPSAltitude' => array(
+				],
+			],
+			'GPSAltitude' => [
 				'format'	=> 'rational',
-			),
-			'GPSTimeStamp' => array(
+			],
+			'GPSTimeStamp' => [
 				'format'	=> 'rational',
 				'suffix'	=> '(24-hour clock)',
-			),
-			'GPSStatus' => array(
-				'options' => array(
+			],
+			'GPSStatus' => [
+				'options' => [
 					'A'	=> 'Measurement Active',
 					'V'	=> 'Measurement Void',
-				),
-			),
-			'GPSMeasureMode' => array(
-				'options' => array(
+				],
+			],
+			'GPSMeasureMode' => [
+				'options' => [
 					'2'	=> '2-Dimensional Measurement',
 					'3'	=> '3-Dimensional Measurement',
-				),
-			),
-			'GPSSpeedRef' => array(
-				'options' => array(
+				],
+			],
+			'GPSSpeedRef' => [
+				'options' => [
 					'K'	=> 'km/h',
 					'M'	=> 'mph',
 					'N'	=> 'knots',
-				),
-			),
-			'GPSSpeed' => array(
+				],
+			],
+			'GPSSpeed' => [
 				'format'	=> 'rational',
-			),
-			'GPSTrackRef' => array(
-				'options' => array(
+			],
+			'GPSTrackRef' => [
+				'options' => [
 					'M'	=> 'Magnetic North',
 					'T'	=> 'True North',
-				),
-			),
-			'GPSTrack' => array(
+				],
+			],
+			'GPSTrack' => [
 				'format'	=> 'rational',
-			),
-			'GPSImgDirectionRef' => array(
-				'options' => array(
+			],
+			'GPSImgDirectionRef' => [
+				'options' => [
 					'M'	=> 'Magnetic North',
 					'T'	=> 'True North',
-				),
-			),
-			'GPSImgDirection' => array(
+				],
+			],
+			'GPSImgDirection' => [
 				'format'	=> 'rational',
-			),
-			'GPSDifferential' => array(
-				'options' => array(
+			],
+			'GPSDifferential' => [
+				'options' => [
 					'0'	=> 'No Corection',
 					'T'	=> 'Differential Corrected',
-				),
-			),
-			'GPSDestLatitudeRef' => array(
-				'options' => array(
+				],
+			],
+			'GPSDestLatitudeRef' => [
+				'options' => [
 					'N'	=> 'North (+)',
 					'S'	=> 'South (-)',
-				),
-			),
-			'GPSDestLatitude' => array(
+				],
+			],
+			'GPSDestLatitude' => [
 				'format'	=> 'rational',
-			),
-			'GPSDestLongitudeRef' => array(
-				'options' => array(
+			],
+			'GPSDestLongitudeRef' => [
+				'options' => [
 					'E'	=> 'East (+)',
 					'W'	=> 'West (-)',
-				),
-			),
-			'GPSDestLongitude' => array(
+				],
+			],
+			'GPSDestLongitude' => [
 				'format'	=> 'rational',
-			),
-			'GPSDestBearingRef' => array(
-				'options' => array(
+			],
+			'GPSDestBearingRef' => [
+				'options' => [
 					'M'	=> 'Magnetic North',
 					'T'	=> 'True North',
-				),
-			),
-			'GPSDestBearing' => array(
+				],
+			],
+			'GPSDestBearing' => [
 				'format'	=> 'rational',
-			),
-			'GPSDestDistanceRef' => array(
-				'options' => array(
+			],
+			'GPSDestDistanceRef' => [
+				'options' => [
 					'K'	=> 'Kilometers',
 					'M'	=> 'Miles',
 					'N'	=> 'Nautical Miles',
-				),
-			),
-			'GPSDestDistance' => array(
+				],
+			],
+			'GPSDestDistance' => [
 				'format'	=> 'rational',
-			),
-			'GPSHPositioningError' => array(
+			],
+			'GPSHPositioningError' => [
 				'format'	=> 'rational',
-			),
-		),
-	);
+			],
+		],
+	];
 
 	/**
 	 * Process raw EXIF data by converting binary or hex information, replacing legend codes with their meanings,
@@ -732,7 +732,7 @@ class Exif
 								$opt = $specname['options'];
 								$disp = '[' . $opt[substr($str, 8, 2)] . ', ' . $opt[substr($str, 10, 2)] . '] ['
 										. $opt[substr($str, 12, 2)] . ', ' . $opt[substr($str, 14, 2)] . ']';
-								$exif[$group][$name]['newval'] =$disp;
+								$exif[$group][$name]['newval'] = $disp;
 							} else {
 								$exif[$group][$name]['newval'] = $specname['options'][$exif[$group][$name]['newval']];
 							}
@@ -746,7 +746,7 @@ class Exif
 							$exif[$group][$name]['label'] = $filter->filter($name);
 						}
 
-						if (isset($specname['suffix']) && !is_array($exif[$group][$name]['newval'])) {
+						if (isset($specname['suffix']) && ! is_array($exif[$group][$name]['newval'])) {
 							$exif[$group][$name]['suffix'] = $specname['suffix'];
 						}
 					} else {
@@ -767,7 +767,7 @@ class Exif
 		unset($exif['FILE']['FileDateTime']);
 		//No processing of maker notes yet as specific code is needed for each manufacturer
 		//Blank out field since it is very long and will distort the dialog box
-		if (!empty($exif['EXIF']['MakerNote']['newval'])) {
+		if (! empty($exif['EXIF']['MakerNote']['newval'])) {
 			$exif['EXIF']['MakerNote']['newval'] = '(Not processed)';
 			unset($exif['EXIF']['MakerNote']['rawval']);
 		}
@@ -810,7 +810,7 @@ class Exif
 	 */
 	function divide($fractionString)
 	{
-		if (!is_array($fractionString)) {
+		if (! is_array($fractionString)) {
 			$fraction = explode('/', $fractionString);
 			$ret = $fraction[0] / $fraction[1];
 		} else {
@@ -831,7 +831,7 @@ class Exif
 	 *
 	 * @return		string		$ret			field array converted into a string
 	 */
-	function processArray ($array, $fieldname)
+	function processArray($array, $fieldname)
 	{
 		$ret = '';
 		if ($fieldname == 'GPSLatitude' || $fieldname == 'GPSLongitude') {
@@ -842,7 +842,7 @@ class Exif
 			$ret = $array[0] . ':' . $array[1] . ':' . $array[2];
 		} elseif ($fieldname == 'UndefinedTag:0xA432') {
 			$array = $this->divide($array);
-			$ret = $array[0] . ' - ' . $array[1] . '; ' . $array[2] . ' - ' .  $array[3];
+			$ret = $array[0] . ' - ' . $array[1] . '; ' . $array[2] . ' - ' . $array[3];
 		} else {
 			foreach ($array as $value) {
 				$ret .= $value . '; ';

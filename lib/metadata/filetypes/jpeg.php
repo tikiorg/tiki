@@ -61,7 +61,7 @@ class Jpeg extends ImageFile
 		//IPTC
 		//get raw iptc and place in an iptc key so that iptc array has same number of levels as exif and xmp
 		//and to distinguish from digest key added later
-		$metadata['iptcraw']['iptc'] = !empty($this->otherinfo['APP13']) ? iptcparse($this->otherinfo['APP13']) : false;
+		$metadata['iptcraw']['iptc'] = ! empty($this->otherinfo['APP13']) ? iptcparse($this->otherinfo['APP13']) : false;
 		//process raw iptc
 		if (is_array($metadata['iptcraw']['iptc'])) {
 			//first prepare for processing
@@ -91,11 +91,11 @@ class Jpeg extends ImageFile
 				10,
 				2
 			);
-			if (!empty($hashstored)) {
-				$metadata['iptc']['digest']['iptchashstored'] = array(
+			if (! empty($hashstored)) {
+				$metadata['iptc']['digest']['iptchashstored'] = [
 					'newval'    => bin2hex($hashstored),
 					'label'     => 'Stored IPTC Hash'
-				);
+				];
 			}
 			/*
 		 * add calculated current hash of the IPTC block,
@@ -107,14 +107,14 @@ class Jpeg extends ImageFile
 				10,
 				2
 			);
-			if (!empty($iptcblock)) {
-				$metadata['iptc']['digest']['iptchashcurrent'] = array(
+			if (! empty($iptcblock)) {
+				$metadata['iptc']['digest']['iptchashcurrent'] = [
 					'newval'    => md5($iptcblock),
 					'label'     => 'Computed IPTC Hash'
-				);
+				];
 			}
 
-			if (!isset($metadata['iptc']['digest']['iptchashstored']['newval']) ||
+			if (! isset($metadata['iptc']['digest']['iptchashstored']['newval']) ||
 				(strlen($metadata['iptc']['digest']['iptchashstored']['newval']) > 0
 					&& $metadata['iptc']['digest']['iptchashstored']['newval'] ==
 						$metadata['iptc']['digest']['iptchashcurrent']['newval'])) {
@@ -150,7 +150,7 @@ class Jpeg extends ImageFile
 
 		//XMP
 		//get raw xmp DOM, convert to an array add tags and interpret
-		if (!empty($metaObj->content)) {
+		if (! empty($metaObj->content)) {
 			require_once('lib/metadata/datatypes/xmp.php');
 			$xmp = new Xmp;
 			$metadata['xmpraw'] = $xmp->getXmp($metaObj->content, $metaObj->basicraw['type']);

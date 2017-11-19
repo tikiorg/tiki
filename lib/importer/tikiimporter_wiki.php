@@ -29,29 +29,29 @@ class TikiImporter_Wiki extends TikiImporter
 	/**
 	 * @see lib/importer/TikiImporter#importOptions()
 	 */
-	static public function importOptions()
+	public static function importOptions()
 	{
-		$options = array(
-				array(
+		$options = [
+				[
 						'name' => 'wikiRevisions',
 						'type' => 'text',
 						'value' => 1,
 						'label' => tra('Number of page revisions to import (0 for all revisions):')
-				),
-				array(
+				],
+				[
 						'name' => 'alreadyExistentPageName',
 						'type' => 'select',
 						'label' => tra('What to do with page names that already exists in Tiki?'),
-						'options' => array(
-								array('name' => 'doNotImport', 'label' => tra('Do not import')),
-								array('name' => 'override', 'label' => tra('Override')),
-								array(
+						'options' => [
+								['name' => 'doNotImport', 'label' => tra('Do not import')],
+								['name' => 'override', 'label' => tra('Override')],
+								[
 										'name' => 'appendPrefix',
 										'label' => tra('Prepend software name as a prefix to the page name')
-								),
-						)
-				),
-		);
+								],
+						]
+				],
+		];
 
 		return $options;
 	}
@@ -68,16 +68,18 @@ class TikiImporter_Wiki extends TikiImporter
 	function import($filePath = null)
 	{
 		// how many revisions to import for each page
-		if (!empty($_POST['wikiRevisions']) && $_POST['wikiRevisions'] > 0)
+		if (! empty($_POST['wikiRevisions']) && $_POST['wikiRevisions'] > 0) {
 			$this->revisionsNumber = $_POST['wikiRevisions'];
-		else
+		} else {
 			$this->revisionsNumber = 0;
+		}
 
 		// what to do with already existent page names
-		if (!empty($_POST['alreadyExistentPageName']))
+		if (! empty($_POST['alreadyExistentPageName'])) {
 			$this->alreadyExistentPageName = $_POST['alreadyExistentPageName'];
-		else
+		} else {
 			$this->alreadyExistentPageName = 'doNotImport';
+		}
 
 		// child classes must implement those two methods
 		$this->validateInput();
@@ -87,7 +89,8 @@ class TikiImporter_Wiki extends TikiImporter
 
 		$this->saveAndDisplayLog("\nImportation completed!");
 
-		echo "\n\n<b>" . tra("<a href=\"tiki-importer.php\">Click here</a> to finish the import process") . "</b>";;
+		echo "\n\n<b>" . tra("<a href=\"tiki-importer.php\">Click here</a> to finish the import process") . "</b>";
+		;
 		flush();
 
 		$_SESSION['tiki_importer_feedback'] = $importFeedback;
@@ -104,14 +107,14 @@ class TikiImporter_Wiki extends TikiImporter
 	 */
 	function insertData($parsedData = null)
 	{
-		$countData = array();
+		$countData = [];
 		$countPages = 0;
 
 		$countParsedData = count($parsedData);
 
 		$this->saveAndDisplayLog("\n" . tr("%0 pages parsed. Starting to insert those pages into Tiki:", $countParsedData) . "\n");
 
-		if (!empty($parsedData)) {
+		if (! empty($parsedData)) {
 			foreach ($parsedData as $page) {
 				if ($this->insertPage($page)) {
 					$countPages++;
@@ -169,11 +172,11 @@ class TikiImporter_Wiki extends TikiImporter
 			}
 		}
 
-		if (!empty($page)) {
+		if (! empty($page)) {
 			$first = true;
 			foreach ($page['revisions'] as $rev) {
 				if (isset($_POST['maketoc']) && $_POST['maketoc'] == 'on') {
-					$rev['data'] = "{maketoc showhide=y}\n".$rev['data'];
+					$rev['data'] = "{maketoc showhide=y}\n" . $rev['data'];
 				}
 				if ($first) {
 					$tikilib->create_page(
@@ -208,7 +211,7 @@ class TikiImporter_Wiki extends TikiImporter
 				}
 				$first = false;
 			}
-			if (!empty($rev['categories'])) {
+			if (! empty($rev['categories'])) {
 				$categlib = TikiLib::lib('categ');
 				foreach ($rev['categories'] as $cat) {
 					$categId = $categlib->get_category_id($cat);

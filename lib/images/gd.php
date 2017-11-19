@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -16,22 +16,22 @@ class Image extends ImageAbstract
 	var $gdversion;
 	var $havegd = false;
 
-    /**
-     * @param $image
-     * @param bool $isfile
-     * @param string $format
-     */
-    function __construct($image, $isfile = false, $format = 'jpeg')
+	/**
+	 * @param $image
+	 * @param bool $isfile
+	 * @param string $format
+	 */
+	function __construct($image, $isfile = false, $format = 'jpeg')
 	{
 
 		// Which GD Version do we have?
 		$exts = get_loaded_extensions();
-		if ( in_array('gd', $exts) && ! empty($image) ) {
+		if (in_array('gd', $exts) && ! empty($image)) {
 			$this->havegd = true;
 			$this->get_gdinfo();
 			if ($isfile) {
 				$this->filename = $image;
-				parent::__construct(NULL, false);
+				parent::__construct(null, false);
 				$this->loaded = false;
 			} else {
 				parent::__construct($image, false);
@@ -40,29 +40,30 @@ class Image extends ImageAbstract
 			}
 		} else {
 			$this->havegd = false;
-			$this->gdinfo = array();
+			$this->gdinfo = [];
 		}
 	}
 
-	function _load_data() 
+	function _load_data()
 	{
-		if (!$this->loaded && $this->havegd) {
-			if (!empty($this->filename) && is_file($this->filename)) {
+		if (! $this->loaded && $this->havegd) {
+			if (! empty($this->filename) && is_file($this->filename)) {
 				$this->format = strtolower(substr($this->filename, strrpos($this->filename, '.') + 1));
 				list($this->width, $this->height, $type) = getimagesize($this->filename);
 				if (function_exists("image_type_to_extension")) {
 					$this->format = image_type_to_extension($type, false);
 				} else {
 					$tmp = image_type_to_mime_type($type);
-					$this->format = strtolower(substr($tmp, strrpos($tmp, "/")+1));
+					$this->format = strtolower(substr($tmp, strrpos($tmp, "/") + 1));
 				}
-				if ( $this->is_supported($this->format) ) {
-					if ( $this->format == 'jpg' ) $this->format = 'jpeg';
-					$this->data = call_user_func('imagecreatefrom'.$this->format, $this->filename);
+				if ($this->is_supported($this->format)) {
+					if ($this->format == 'jpg') {
+						$this->format = 'jpeg';
+					}
+					$this->data = call_user_func('imagecreatefrom' . $this->format, $this->filename);
 					$this->loaded = true;
 				}
-			} elseif (
-				!empty($this->data) &&
+			} elseif (! empty($this->data) &&
 				$this->data != 'REFERENCE' &&
 				preg_match('/^[<]svg/', $this->data) == false //In some cases, an svg will be recognized as an alternate picture type, here we simply check the beginning for "<svg" and if it is found, it is an svg
 			) {
@@ -74,16 +75,16 @@ class Image extends ImageAbstract
 		}
 	}
 
-    /**
-     * @param $x
-     * @param $y
-     */
-    function _resize($x, $y)
+	/**
+	 * @param $x
+	 * @param $y
+	 */
+	function _resize($x, $y)
 	{
 		if ($this->data) {
 			if ($this->format == 'svg') {
 				$svgAttributes = ' width="' . $x . '" height="' . $y . '" viewBox="0 0 ' . $this->width . ' ' . $this->height . '" preserveAspectRatio="xMinYMin meet"';
-				$this->data = preg_replace('/width="'.$this->width.'" height="'.$this->height.'"/', $svgAttributes, $this->data);
+				$this->data = preg_replace('/width="' . $this->width . '" height="' . $this->height . '"/', $svgAttributes, $this->data);
 			} else {
 				$t = imagecreatetruecolor($x, $y);
 				// trick to have a transparent background for png instead of black
@@ -98,9 +99,9 @@ class Image extends ImageAbstract
 		}
 	}
 
-	function resizethumb() 
+	function resizethumb()
 	{
-		if ( $this->thumb !== null ) {
+		if ($this->thumb !== null) {
 			$this->data = imagecreatefromstring($this->thumb);
 			$this->loaded = true;
 		} else {
@@ -109,10 +110,10 @@ class Image extends ImageAbstract
 		return parent::resizethumb();
 	}
 
-    /**
-     * @return null|string
-     */
-    function display()
+	/**
+	 * @return null|string
+	 */
+	function display()
 	{
 
 		$this->_load_data();
@@ -145,15 +146,15 @@ class Image extends ImageAbstract
 
 			return $image;
 		} else {
-			return NULL;
+			return null;
 		}
 	}
 
-    /**
-     * @param $angle
-     * @return bool
-     */
-    function rotate($angle)
+	/**
+	 * @param $angle
+	 * @return bool
+	 */
+	function rotate($angle)
 	{
 		$this->_load_data();
 		if ($this->data) {
@@ -164,15 +165,15 @@ class Image extends ImageAbstract
 		}
 	}
 
-    /**
-     * @return array
-     */
-    function get_gdinfo()
+	/**
+	 * @return array
+	 */
+	function get_gdinfo()
 	{
-		$gdinfo = array();
+		$gdinfo = [];
 		$gdversion = '';
 
-		if ( function_exists("gd_info") ) {
+		if (function_exists("gd_info")) {
 			$gdinfo = gd_info();
 			preg_match("/[0-9]+\.[0-9]+/", $gdinfo["GD Version"], $gdversiontmp);
 			$gdversion = $gdversiontmp[0];
@@ -189,53 +190,53 @@ class Image extends ImageAbstract
 			ob_end_clean();
 		}
 
-		if ( isset($this) ) {
+		if (isset($this)) {
 			$this->gdinfo = $gdinfo;
 			$this->gdversion = $gdversion;
-		} 
+		}
 		return $gdinfo;
 	}
 
 	// This method do not need to be called on an instance
-    /**
-     * @param $format
-     * @return bool|int
-     */
-    function is_supported($format)
+	/**
+	 * @param $format
+	 * @return bool|int
+	 */
+	function is_supported($format)
 	{
 
-		if ( ! function_exists('imagetypes') ) {
+		if (! function_exists('imagetypes')) {
 			$gdinfo = isset($this) ? $this->gdinfo : Image::get_gdinfo();
 		}
 
-		switch ( strtolower($format) ) {
+		switch (strtolower($format)) {
 			case 'jpeg':
 			case 'jpg':
-				if ( isset($gdinfo) && $gdinfo['JPG Support'] ) {
+				if (isset($gdinfo) && $gdinfo['JPG Support']) {
 					return true;
 				} else {
 					return ( imagetypes() & IMG_JPG );
 				}
 			case 'png':
-				if ( isset($gdinfo) && $gdinfo['PNG Support'] ) {
+				if (isset($gdinfo) && $gdinfo['PNG Support']) {
 					return true;
 				} else {
 					return ( imagetypes() & IMG_PNG );
 				}
 			case 'gif':
-				if ( isset($gdinfo) && $gdinfo['GIF Create Support'] ) {
+				if (isset($gdinfo) && $gdinfo['GIF Create Support']) {
 					return true;
 				} else {
 					return ( imagetypes() & IMG_GIF );
 				}
 			case 'wbmp':
-				if ( isset($gdinfo) && $gdinfo['WBMP Support']) {
+				if (isset($gdinfo) && $gdinfo['WBMP Support']) {
 					return true;
 				} else {
 					return ( imagetypes() & IMG_WBMP );
 				}
 			case 'xpm':
-				if ( isset($gdinfo) && $gdinfo['XPM Support']) {
+				if (isset($gdinfo) && $gdinfo['XPM Support']) {
 					return true;
 				} else {
 					return ( imagetypes() & IMG_XPM );
@@ -247,10 +248,10 @@ class Image extends ImageAbstract
 		return false;
 	}
 
-    /**
-     * @return int|null
-     */
-    function _get_height()
+	/**
+	 * @return int|null
+	 */
+	function _get_height()
 	{
 		if ($this->loaded && $this->data) {
 			if ($this->format == 'svg') {
@@ -260,15 +261,15 @@ class Image extends ImageAbstract
 			} else {
 				return @imagesy($this->data);
 			}
-		} else if ($this->height) {
+		} elseif ($this->height) {
 			return $this->height;
-		} else if ($this->filename && is_readable($this->filename)) {
+		} elseif ($this->filename && is_readable($this->filename)) {
 			list($this->width, $this->height, $type) = getimagesize($this->filename);
 			if ($this->height) {
 				return $this->height;
 			}
 		}
-		if (!$this->loaded || !$this->data) {
+		if (! $this->loaded || ! $this->data) {
 			$this->_load_data();
 		}
 		if ($this->data) {
@@ -276,10 +277,10 @@ class Image extends ImageAbstract
 		}
 	}
 
-    /**
-     * @return int|null
-     */
-    function _get_width()
+	/**
+	 * @return int|null
+	 */
+	function _get_width()
 	{
 		if ($this->loaded && $this->data) {
 			if ($this->format == 'svg') {
@@ -289,15 +290,15 @@ class Image extends ImageAbstract
 			} else {
 				return @imagesx($this->data);
 			}
-		} else if ($this->width) {
+		} elseif ($this->width) {
 			return $this->width;
-		} else if ($this->filename && is_readable($this->filename)) {
+		} elseif ($this->filename && is_readable($this->filename)) {
 			list($this->width, $this->height, $type) = getimagesize($this->filename);
 			if ($this->width) {
 				return $this->width;
 			}
 		}
-		if (!$this->loaded || !$this->data) {
+		if (! $this->loaded || ! $this->data) {
 			$this->_load_data();
 		}
 		if ($this->data) {
@@ -313,11 +314,11 @@ class Image extends ImageAbstract
 	 */
 	function addTextToImage($text)
 	{
-		if (!$this->loaded) {
+		if (! $this->loaded) {
 			$this->_load_data();
 		}
 
-		if (!$this->data) {
+		if (! $this->data) {
 			return false;
 		}
 
@@ -332,7 +333,7 @@ class Image extends ImageAbstract
 
 		putenv('GDFONTPATH=' . realpath('.'));
 		$result = $this->imageTtfStrokeText($this->data, $fontSize, $textAngle, $padLeft, $padBottom, $fontColor, $fontStroke, $fontFile, $text, $fontStrokeWidth);
-		if (!$result) {
+		if (! $result) {
 			return false;
 		}
 
@@ -356,13 +357,12 @@ class Image extends ImageAbstract
 	 */
 	protected function imageTtfStrokeText(&$image, $size, $angle, $x, $y, $textcolor, $strokecolor, $fontfile, $text, $px)
 	{
-		for($c1 = ($x-abs($px)); $c1 <= ($x+abs($px)); $c1++){
-			for($c2 = ($y-abs($px)); $c2 <= ($y+abs($px)); $c2++){
+		for ($c1 = ($x - abs($px)); $c1 <= ($x + abs($px)); $c1++) {
+			for ($c2 = ($y - abs($px)); $c2 <= ($y + abs($px)); $c2++) {
 				imagettftext($image, $size, $angle, $c1, $c2, $strokecolor, $fontfile, $text);
 			}
 		}
 
 		return imagettftext($image, $size, $angle, $x, $y, $textcolor, $fontfile, $text);
 	}
-
 }

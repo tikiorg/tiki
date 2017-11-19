@@ -36,4 +36,3 @@ class ImageFile
 			$this->otherinfo = $otherinfo;
 	}
 }
-

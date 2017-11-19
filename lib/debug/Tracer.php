@@ -33,43 +33,39 @@ class Tracer
 {
 
 	public $traces_are_on = false;
-	public $trace_file_path = NULL;
-	public $tiki_trace_active_ids = array();
+	public $trace_file_path = null;
+	public $tiki_trace_active_ids = [];
 
-	public function __construct($trace_file_path, $traces_are_on=false, $traces_active_ids = null)
+	public function __construct($trace_file_path, $traces_are_on = false, $traces_active_ids = null)
 	{
-        if ($traces_active_ids == null)
-        {
-            $traces_active_ids = array();
-        }
+		if ($traces_active_ids == null) {
+			$traces_active_ids = [];
+		}
 		$this->trace_file_path = $trace_file_path;
 		$this->traces_are_on = $traces_are_on;
-        if (isset($traces_active_ids))
-        {
-            $this->tiki_trace_active_ids = array_merge($traces_active_ids, array());
-        }
-        else
-        {
-            $this->tiki_trace_active_ids = array();
-        }
-		$this->tiki_trace_active_ids = array_merge($traces_active_ids, array());
-		if ($trace_file_path != NULL) {
+		if (isset($traces_active_ids)) {
+			$this->tiki_trace_active_ids = array_merge($traces_active_ids, []);
+		} else {
+			$this->tiki_trace_active_ids = [];
+		}
+		$this->tiki_trace_active_ids = array_merge($traces_active_ids, []);
+		if ($trace_file_path != null) {
 			file_put_contents($this->trace_file_path, '');
 		}
 	}
 
 	public function trace($trace_id, $message)
 	{
-		if ($this->traces_are_on && $this->trace_file_path != NULL &&
+		if ($this->traces_are_on && $this->trace_file_path != null &&
 			in_array($trace_id, $this->tiki_trace_active_ids)) {
 			file_put_contents($this->trace_file_path, "-- $trace_id: $message\n", FILE_APPEND);
 		}
 	}
 
-    public function clear_trace_file()
-    {
-        file_put_contents($this->trace_file_path, "");
-    }
+	public function clear_trace_file()
+	{
+		file_put_contents($this->trace_file_path, "");
+	}
 
 	//
 	// Method for pretty printing a data structure as a "human readable"
@@ -77,20 +73,20 @@ class Tracer
 	//
 	function pretty_print($in, $indent = 0, Closure $_escape = null)
 	{
-        //
-        // Pretty printing of a large data structure can consume time if it is called often.
-        // We wouldn't want that to happen in a production context where some traces were
-        // left behind in the code.
-        // To avoid this, we only do the pretty_print if traces are on.
-        //
-		if (!$this->traces_are_on) {
+		//
+		// Pretty printing of a large data structure can consume time if it is called often.
+		// We wouldn't want that to happen in a production context where some traces were
+		// left behind in the code.
+		// To avoid this, we only do the pretty_print if traces are on.
+		//
+		if (! $this->traces_are_on) {
 			return "WARNING: Pretty print not carried out because traces are not active.";
 		}
 
 		if (__CLASS__ && isset($this)) {
-			$_myself = array($this, __FUNCTION__);
+			$_myself = [$this, __FUNCTION__];
 		} elseif (__CLASS__) {
-			$_myself = array('self', __FUNCTION__);
+			$_myself = ['self', __FUNCTION__];
 		} else {
 			$_myself = __FUNCTION__;
 		}
@@ -98,8 +94,8 @@ class Tracer
 		if (is_null($_escape)) {
 			$_escape = function ($str) {
 				return str_replace(
-					array('\\', '"', "\n", "\r", "\b", "\f", "\t", '/', '\\\\u'),
-					array('\\\\', '\\"', "\\n", "\\r", "\\b", "\\f", "\\t", '\\/', '\\u'),
+					['\\', '"', "\n", "\r", "\b", "\f", "\t", '/', '\\\\u'],
+					['\\\\', '\\"', "\\n", "\\r", "\\b", "\\f", "\\t", '\\/', '\\u'],
 					$str
 				);
 			};
@@ -127,7 +123,7 @@ class Tracer
 			$out .= ",\n";
 		}
 
-		if (!empty($out)) {
+		if (! empty($out)) {
 			$out = substr($out, 0, -2);
 		}
 
@@ -139,7 +135,7 @@ class Tracer
 }
 
 if (file_exists('db/local.php')) {
-  include 'db/local.php';
+	include 'db/local.php';
 }
 global $tiki_traces_fpath, $tiki_traces_are_on, $tiki_traces_active_ids;
 $tracer = new Tracer($tiki_traces_fpath, $tiki_traces_are_on, $tiki_traces_active_ids);

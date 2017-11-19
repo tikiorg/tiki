@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) != FALSE) {
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) != false) {
 	header('location: index.php');
 	exit;
 }
@@ -40,20 +40,20 @@ class Captcha
 	 *
 	 * @param string $type recaptcha|questions|default|dumb
 	 */
-	function __construct( $type = '' )
+	function __construct($type = '')
 	{
 		global $prefs;
 
 		if (empty($type)) {
-			if ($prefs['recaptcha_enabled'] == 'y' && !empty($prefs['recaptcha_privkey']) && !empty($prefs['recaptcha_pubkey'])) {
+			if ($prefs['recaptcha_enabled'] == 'y' && ! empty($prefs['recaptcha_privkey']) && ! empty($prefs['recaptcha_pubkey'])) {
 				if ($prefs['recaptcha_version'] == '2') {
 					$type = 'recaptcha20';
 				} else {
 					$type = 'recaptcha';
 				}
-			} else if ($prefs['captcha_questions_active'] == 'y' && !empty($prefs['captcha_questions'])) {
+			} elseif ($prefs['captcha_questions_active'] == 'y' && ! empty($prefs['captcha_questions'])) {
 				$type = 'questions';
-			} else if (extension_loaded('gd') && function_exists('imagepng') && function_exists('imageftbbox')) {
+			} elseif (extension_loaded('gd') && function_exists('imagepng') && function_exists('imageftbbox')) {
 				$type = 'default';
 			} else {
 				$type = 'dumb';
@@ -62,10 +62,10 @@ class Captcha
 
 		if ($type === 'recaptcha') {
 			$this->captcha = new Zend\Captcha\ReCaptcha(
-				array(
+				[
 					'private_key' => $prefs['recaptcha_privkey'],
 					'public_key' => $prefs['recaptcha_pubkey'],
-				)
+				]
 			);
 			$httpClient = TikiLib::lib('tiki')->get_http_client();
 			$this->captcha->getService()->setHttpClient($httpClient);
@@ -77,16 +77,15 @@ class Captcha
 			$this->type = $type;
 
 			$this->recaptchaCustomTranslations();
-		} else if ($type === 'recaptcha20') {
-
+		} elseif ($type === 'recaptcha20') {
 			include_once('lib/captcha/Captcha_ReCaptcha20.php');
 
 			$this->captcha = new Captcha_ReCaptcha20(
-				array(
+				[
 					'privkey' => $prefs['recaptcha_privkey'],
 					'pubkey' => $prefs['recaptcha_pubkey'],
 					'theme' => isset($prefs['recaptcha_theme']) ? $prefs['recaptcha_theme'] : 'clean',
-				)
+				]
 			);
 			$httpClient = TikiLib::lib('tiki')->get_http_client();
 			$this->captcha->getService()->setHttpClient($httpClient);
@@ -96,9 +95,9 @@ class Captcha
 			$this->type = $type;
 
 			$this->recaptchaCustomTranslations();
-		} else if ($type === 'default') {
+		} elseif ($type === 'default') {
 			$this->captcha = new Zend\Captcha\Image(
-				array(
+				[
 					'wordLen' => $prefs['captcha_wordLen'],
 					'timeout' => 600,
 					'font' => dirname(__FILE__) . '/DejaVuSansMono.ttf',
@@ -106,28 +105,24 @@ class Captcha
 					'suffix' => '.captcha.png',
 					'width' => $prefs['captcha_width'],
 					'dotNoiseLevel' => $prefs['captcha_noise'],
-				)
+				]
 			);
 			$this->type = 'default';
-		} else if ($type === 'questions') {
-
+		} elseif ($type === 'questions') {
 			$this->type = 'questions';
 
-			$questions = array();
+			$questions = [];
 			$lines = explode("\n", $prefs['captcha_questions']);
 
 			foreach ($lines as $line) {
 				$line = explode(':', $line, 2);
 				if (count($line) === 2) {
-					$questions[] = array(trim($line[0]), trim($line[1]));
+					$questions[] = [trim($line[0]), trim($line[1])];
 				}
 			}
 
 			include_once('lib/captcha/Captcha_Questions.php');
 			$this->captcha = new Captcha_Questions($questions);
-
-
-
 		} else {		// implied $type==='dumb'
 			$this->captcha = new Zend\Captcha\Dumb;
 			$this->captcha->setWordlen($prefs['captcha_wordLen']);
@@ -181,7 +176,7 @@ class Captcha
 		if ($access->is_xml_http_request()) {
 			if ($this->type == 'recaptcha20') {
 				return $this->captcha->renderAjax();
-			} else if ($this->type == 'recaptcha') {
+			} elseif ($this->type == 'recaptcha') {
 				$params = json_encode($this->captcha->getService()->getOptions());
 				$id = 1;
 				TikiLib::lib('header')->add_js('
@@ -196,9 +191,9 @@ Recaptcha.create("' . $this->captcha->getPubKey() . '",
 		} else {
 			if ($this->captcha instanceof Captcha_ReCaptcha20) {
 				return $this->captcha->render();
-			} else if ($this->captcha instanceof Zend\Captcha\ReCaptcha){
+			} elseif ($this->captcha instanceof Zend\Captcha\ReCaptcha) {
 				return $this->captcha->getService()->getHtml();
-			} else if ($this->captcha instanceof Zend\Captcha\Dumb){
+			} elseif ($this->captcha instanceof Zend\Captcha\Dumb) {
 				return $this->captcha->getLabel() . ': <b>'
 				. strrev($this->captcha->getWord())
 				. '</b>';
@@ -228,7 +223,7 @@ Recaptcha.create("' . $this->captcha->getPubKey() . '",
 			$result = $this->captcha->isValid($input);
 			ini_set('arg_separator.output', $oldVal);
 			return $result;
-		}	else {
+		} else {
 			return $this->captcha->isValid($input['captcha']);
 		}
 	}
@@ -255,15 +250,16 @@ Recaptcha.create("' . $this->captcha->getPubKey() . '",
 	 */
 	function setErrorMessages()
 	{
-		$errors = array(
+		$errors = [
 			'missingValue' => tra('Empty CAPTCHA value'),
 			'badCaptcha' => tra('You have mistyped the anti-bot verification code. Please try again.')
-		);
+		];
 
-		if ($this->type == 'recaptcha' || $this->type == 'recaptcha20')
+		if ($this->type == 'recaptcha' || $this->type == 'recaptcha20') {
 			$errors['errCaptcha'] = tra('Failed to validate CAPTCHA');
-		else
+		} else {
 			$errors['missingID'] = tra('CAPTCHA ID field is missing');
+		}
 
 		$this->captcha->setMessages($errors);
 	}
@@ -288,7 +284,7 @@ Recaptcha.create("' . $this->captcha->getPubKey() . '",
 		$recaptchaService = $this->captcha->getService();
 		$recaptchaService->setOption(
 			'custom_translations',
-			array(
+			[
 				'visual_challenge' => tra('Get a visual challenge'),
 				'audio_challenge' => tra('Get an audio challenge'),
 				'refresh_btn' => tra('Get a new challenge'),
@@ -298,9 +294,7 @@ Recaptcha.create("' . $this->captcha->getPubKey() . '",
 				'play_again' => tra('Play sound again'),
 				'cant_hear_this' => tra('Download audio as an MP3 file'),
 				'incorrect_try_again' => tra('Incorrect. Try again.')
-			)
+			]
 		);
 	}
 }
-
-

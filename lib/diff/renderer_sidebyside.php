@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -14,116 +14,115 @@
  */
 class Text_Diff_Renderer_sidebyside extends Tiki_Text_Diff_Renderer
 {
-    function __construct($context_lines = 4, $words = 1)
-    {
-        $this->_leading_context_lines = $context_lines;
-        $this->_trailing_context_lines = $context_lines;
-	$this->_words = $words;
-    }
-    
-    function _startDiff()
-    {
-        ob_start();
-        //echo '<table class="table-bordered diff">';
-    }
+	function __construct($context_lines = 4, $words = 1)
+	{
+		$this->_leading_context_lines = $context_lines;
+		$this->_trailing_context_lines = $context_lines;
+		$this->_words = $words;
+	}
 
-    function _endDiff()
-    {
-        $val = ob_get_contents();
-        ob_end_clean();
-        return $val;
-    }
+	function _startDiff()
+	{
+		ob_start();
+		//echo '<table class="table-bordered diff">';
+	}
 
-    function _blockHeader($xbeg, $xlen, $ybeg, $ylen)
-    {
-        return "$xbeg,$xlen,$ybeg,$ylen";
-    }
+	function _endDiff()
+	{
+		$val = ob_get_contents();
+		ob_end_clean();
+		return $val;
+	}
 
-    function _startBlock($header)
-    {
-        $h = explode(",", $header);
-        echo '<tr class="diffheader"><td colspan="2">';
-        if ($h[1] == 1)
-           echo tra('Line:')."&nbsp;".$h[0];
-        else {
-           $h[1] = $h[0]+$h[1]-1;
-           echo tra('Lines:')."&nbsp;".$h[0].'-'.$h[1];
-        }
-        echo '</td><td colspan="2">';
-        if ($h[3] == 1)
-           echo tra('Line:')."&nbsp;".$h[2];
-        else {
-           $h[3] = $h[2]+$h[3]-1;
-           echo tra('Lines:')."&nbsp;".$h[2].'-'.$h[3];
-        }
+	function _blockHeader($xbeg, $xlen, $ybeg, $ylen)
+	{
+		return "$xbeg,$xlen,$ybeg,$ylen";
+	}
 
-        echo '</td></tr>';
-    }
+	function _startBlock($header)
+	{
+		$h = explode(",", $header);
+		echo '<tr class="diffheader"><td colspan="2">';
+		if ($h[1] == 1) {
+			echo tra('Line:') . "&nbsp;" . $h[0];
+		} else {
+			$h[1] = $h[0] + $h[1] - 1;
+			echo tra('Lines:') . "&nbsp;" . $h[0] . '-' . $h[1];
+		}
+		echo '</td><td colspan="2">';
+		if ($h[3] == 1) {
+			echo tra('Line:') . "&nbsp;" . $h[2];
+		} else {
+			$h[3] = $h[2] + $h[3] - 1;
+			echo tra('Lines:') . "&nbsp;" . $h[2] . '-' . $h[3];
+		}
 
-    function _endBlock()
-    {
-    }
+		echo '</td></tr>';
+	}
 
-    function _lines($type, $lines, $prefix = '')
-    {
-    	// MODIFIED BY THE TIKI PROJECT
-    	if ($type == 'context') {
-	        foreach ($lines as $line) {
-	        	if (! empty($line)) {
-	            	echo "<tr class='diffbody'><td>&nbsp;</td><td>" . htmlspecialchars($line) . "</td><td>&nbsp;</td><td>" . htmlspecialchars($line) . "</td></tr>\n";
-	        	}
-	        }
-    	} elseif ($type == 'added') {
-	        foreach ($lines as $line) {
-	        	if (! empty($line)) {
-	        		echo "<tr><td colspan='2'>&nbsp;</td><td class='diffadded'>$prefix</td><td class='diffadded'>" . htmlspecialchars($line) . "</td></tr>\n";
-	        	}
-	        }
-    	} elseif ($type == 'deleted') {
-	        foreach ($lines as $line) {
-	        	if (! empty($line)) {
-	            	echo "<tr><td class='diffdeleted'>$prefix</td><td class='diffdeleted'>" . htmlspecialchars($line) . "</td><td colspan='2'>&nbsp;</td></tr>\n";
-	        	}
-	        }
-    	} elseif ($type == 'change-deleted') {
-    		echo '<tr><td class="diffdeleted">'.$prefix.'</td><td class="diffdeleted">'.implode("<br />", $lines)."</td>\n";
-    	} elseif ($type == 'change-added') {
-    		echo '<td class="diffadded">'.$prefix.'</td><td class="diffadded">'.implode("<br />", $lines)."</td></tr>\n";
-    	}
-    }
+	function _endBlock()
+	{
+	}
 
-    function _context($lines)
-    {
-        $this->_lines('context', $lines);
-    }
+	function _lines($type, $lines, $prefix = '')
+	{
+		// MODIFIED BY THE TIKI PROJECT
+		if ($type == 'context') {
+			foreach ($lines as $line) {
+				if (! empty($line)) {
+					echo "<tr class='diffbody'><td>&nbsp;</td><td>" . htmlspecialchars($line) . "</td><td>&nbsp;</td><td>" . htmlspecialchars($line) . "</td></tr>\n";
+				}
+			}
+		} elseif ($type == 'added') {
+			foreach ($lines as $line) {
+				if (! empty($line)) {
+					echo "<tr><td colspan='2'>&nbsp;</td><td class='diffadded'>$prefix</td><td class='diffadded'>" . htmlspecialchars($line) . "</td></tr>\n";
+				}
+			}
+		} elseif ($type == 'deleted') {
+			foreach ($lines as $line) {
+				if (! empty($line)) {
+					echo "<tr><td class='diffdeleted'>$prefix</td><td class='diffdeleted'>" . htmlspecialchars($line) . "</td><td colspan='2'>&nbsp;</td></tr>\n";
+				}
+			}
+		} elseif ($type == 'change-deleted') {
+			echo '<tr><td class="diffdeleted">' . $prefix . '</td><td class="diffdeleted">' . implode("<br />", $lines) . "</td>\n";
+		} elseif ($type == 'change-added') {
+			echo '<td class="diffadded">' . $prefix . '</td><td class="diffadded">' . implode("<br />", $lines) . "</td></tr>\n";
+		}
+	}
 
-    function _added($lines, $changemode = FALSE)
-    {
-        if ($changemode) {
-        	$this->_lines('change-added', $lines, '+');
-        } else {
-        	$this->_lines('added', $lines, '+');
-        }
-    }
+	function _context($lines)
+	{
+		$this->_lines('context', $lines);
+	}
 
-    function _deleted($lines, $changemode = FALSE)
-    {
-        if ($changemode) {
-        	$this->_lines('change-deleted', $lines, '-');
-        } else {
-	        $this->_lines('deleted', $lines, '-');
-        }
-    }
+	function _added($lines, $changemode = false)
+	{
+		if ($changemode) {
+			$this->_lines('change-added', $lines, '+');
+		} else {
+			$this->_lines('added', $lines, '+');
+		}
+	}
 
-    function _changed($orig, $final)
-    {
-        $lines = diffChar($orig, $final, $this->_words);
-        $this->_deleted(array($lines[0]), TRUE);
-        $this->_added(array($lines[1]), TRUE);
+	function _deleted($lines, $changemode = false)
+	{
+		if ($changemode) {
+			$this->_lines('change-deleted', $lines, '-');
+		} else {
+			$this->_lines('deleted', $lines, '-');
+		}
+	}
+
+	function _changed($orig, $final)
+	{
+		$lines = diffChar($orig, $final, $this->_words);
+		$this->_deleted([$lines[0]], true);
+		$this->_added([$lines[1]], true);
 /* switch with these lines for no character diff
         $this->_deleted($orig, TRUE);
         $this->_added($final, TRUE);
 */
-    }
-
+	}
 }

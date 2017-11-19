@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
-header('location: index.php');
-exit;
+	header('location: index.php');
+	exit;
 }
 
 /**
@@ -21,21 +21,21 @@ class BasicInfo
 	 *
 	 * @var array
 	 */
-	var	$specs = array(
-		'size' => array(
+	var	$specs = [
+		'size' => [
 			'label' => 'File Size',
 			'suffix' => 'bytes',
-		),
-		'type' => array(
+		],
+		'type' => [
 			'label' => 'File Type',
-		),
-		'charset' => array(
+		],
+		'charset' => [
 			'label' => 'Character Set',
-		),
-		'devices' => array(
+		],
+		'devices' => [
 			'label' => 'Devices',
-		),
-	);
+		],
+	];
 
 	/**
 	 * Process raw basic metadata to ready for table presentations by adding labels and suffixes and expected fields

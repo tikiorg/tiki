@@ -9,7 +9,7 @@
  * \brief Show features state in a convenient way
  * \author zaufi <zaufi@sendmail.ru>
  */
-require_once ('lib/debug/debugger-ext.php');
+require_once('lib/debug/debugger-ext.php');
 
 /**
  * \brief Debugger command to show features on/off state
@@ -53,15 +53,16 @@ class DbgFeatures extends DebuggerCommand
 		$smarty = TikiLib::lib('smarty');
 		$tpl_vars = $smarty->getTemplateVars();
 		// convert to vector of names, filter permissions only, and sort
-		$perms = array();
+		$perms = [];
 		$len = strlen($mask);
 
 		foreach ($tpl_vars as $key => $val) {
-			if ((!$len || $len && preg_match('/' . $mask . '/', $key)) && preg_match('/feature_/', $key))
-				$perms[] = array(
+			if ((! $len || $len && preg_match('/' . $mask . '/', $key)) && preg_match('/feature_/', $key)) {
+				$perms[] = [
 					'name' => $key,
 					'value' => $val
-				);
+				];
+			}
 		}
 
 		return $perms;

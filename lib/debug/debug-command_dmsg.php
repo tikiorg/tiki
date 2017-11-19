@@ -9,10 +9,10 @@
  * \brief 'debugger command' to show user messages in tab
  * \author zaufi <zaufi@sendmail.ru>
  */
-require_once ('lib/debug/debugger-ext.php');
+require_once('lib/debug/debugger-ext.php');
 
 global $debugger;
-require_once ('lib/debug/debugger.php');
+require_once('lib/debug/debugger.php');
 
 /**
  * \brief Command 'watch'

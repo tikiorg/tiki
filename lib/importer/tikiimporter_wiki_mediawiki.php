@@ -28,7 +28,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 	 * Array of the valid mime types for the
 	 * input file
 	 */
-	public $validTypes = array('application/xml', 'text/xml');
+	public $validTypes = ['application/xml', 'text/xml'];
 
 	/**
 	 * The directory used to save the attachments.
@@ -45,20 +45,20 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 	/**
 	 * @see lib/importer/TikiImporter#importOptions()
 	 */
-	static public function importOptions()
+	public static function importOptions()
 	{
-		$options = array(
-				array(
+		$options = [
+				[
 						'name' => 'importAttachments',
 						'type' => 'checkbox',
 						'label' => tra('Import images and attachments (see documentation for more information)')
-				),
-				array(
+				],
+				[
 						'name' => 'maketoc',
 						'type' => 'checkbox',
 						'label' => tra('Add a maketoc at the top of each page')
-				),
-		);
+				],
+		];
 
 		return $options;
 	}
@@ -73,7 +73,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 	 */
 	function checkRequirements()
 	{
-		if (!class_exists('DOMDocument')) {
+		if (! class_exists('DOMDocument')) {
 			throw new Exception(tra('Class DOMDocument not available, check your PHP installation. For more information see http://php.net/manual/en/book.dom.php'));
 		}
 	}
@@ -89,16 +89,15 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 	 */
 	function import($filePath = null)
 	{
-        if ($filePath == null)
-        {
-            die("This particular implementation of the method requires an explicity file path.");
-        }
+		if ($filePath == null) {
+			die("This particular implementation of the method requires an explicity file path.");
+		}
 
-		if (isset($_FILES['importFile']) && !in_array($_FILES['importFile']['type'], $this->validTypes)) {
+		if (isset($_FILES['importFile']) && ! in_array($_FILES['importFile']['type'], $this->validTypes)) {
 			throw new UnexpectedValueException(tra('Invalid file MIME type'));
 		}
 
-		if (!empty($_POST['importAttachments']) && $_POST['importAttachments'] == 'on') {
+		if (! empty($_POST['importAttachments']) && $_POST['importAttachments'] == 'on') {
 			$this->checkRequirementsForAttachments();
 		}
 
@@ -109,7 +108,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 
 		$this->configureParser();
 
-		if (!empty($_POST['importAttachments']) && $_POST['importAttachments'] == 'on') {
+		if (! empty($_POST['importAttachments']) && $_POST['importAttachments'] == 'on') {
 			$this->downloadAttachments();
 		}
 
@@ -130,7 +129,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 
 		// define possible localized namespace for image and files in the wikilink syntax
 		$namespaces = $this->dom->getElementsByTagName('namespace');
-		$prefix = array('Image', 'image');
+		$prefix = ['Image', 'image'];
 		if ($namespaces->length > 0) {
 			foreach ($namespaces as $namespace) {
 				if ($namespace->getAttribute('key') == '-2' || $namespace->getAttribute('key') == '6') {
@@ -192,8 +191,9 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 		global $tikidomain;
 
 		$this->attachmentsDestDir = dirname(__FILE__) . '/../../img/wiki_up/';
-		if ($tikidomain)
+		if ($tikidomain) {
 			$this->attachmentsDestDir .= $tikidomain;
+		}
 
 		if (ini_get('allow_url_fopen') === false) {
 			$this->saveAndDisplayLog(
@@ -204,7 +204,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 			die;
 		}
 
-		if (!file_exists($this->attachmentsDestDir)) {
+		if (! file_exists($this->attachmentsDestDir)) {
 			$this->saveAndDisplayLog(
 				tr(
 					'Aborting: the destination directory for attachments (%0) does not exist. Correct this problem or try to import without the attachments.',
@@ -212,10 +212,11 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 				) . '\n'
 			);
 			die;
-		} elseif (!is_writable($this->attachmentsDestDir)) {
+		} elseif (! is_writable($this->attachmentsDestDir)) {
 			$this->saveAndDisplayLog(
 				tr(
-					'Aborting: the destination directory for attachments (%0) is not writable. Correct this problem or try to import without attachments.', $this->attachmentsDestDir
+					'Aborting: the destination directory for attachments (%0) is not writable. Correct this problem or try to import without attachments.',
+					$this->attachmentsDestDir
 				) . "\n"
 			);
 			die;
@@ -234,7 +235,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 	 */
 	function parseData()
 	{
-		$parsedData = array();
+		$parsedData = [];
 		$pages = $this->dom->getElementsByTagName('page');
 
 		$this->saveAndDisplayLog("\n" . tra("Parsing pages:") . "\n");
@@ -272,7 +273,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 
 		if ($this->dom->getElementsByTagName('upload')->length == 0) {
 			$this->saveAndDisplayLog(
-				"\n\n".
+				"\n\n" .
 				tra("No attachments were found to import. Be sure to create the XML file with the dumpDump.php script and with the option --uploads. This is the only way to import attachments.") .
 				"\n",
 				true
@@ -332,8 +333,8 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 	 */
 	function extractInfo(DOMElement $page)
 	{
-		$data = array();
-		$data['revisions'] = array();
+		$data = [];
+		$data['revisions'] = [];
 
 		$totalRevisions = $page->getElementsByTagName('revision')->length;
 		if ($this->revisionsNumber != 0 && $totalRevisions > $this->revisionsNumber) {
@@ -343,8 +344,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 		$i = 0;
 		foreach ($page->childNodes as $node) {
 			if ($node instanceof DOMElement) {
-				switch ($node->tagName)
-				{
+				switch ($node->tagName) {
 					case 'id':
 						break;
 
@@ -354,7 +354,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 
 					case 'revision':
 						$i++;
-						if (!isset($j) || ($i > ($totalRevisions - $this->revisionsNumber))) {
+						if (! isset($j) || ($i > ($totalRevisions - $this->revisionsNumber))) {
 							try {
 								$data['revisions'][] = $this->extractRevision($node);
 							} catch (ImporterParserException $e) {
@@ -405,14 +405,13 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 	function extractRevision(DOMElement $revision)
 	{
 		global $prefs;
-		$data = array();
+		$data = [];
 		$data['minor'] = false;
 		$data['comment'] = '';
 
 		foreach ($revision->childNodes as $node) {
 			if ($node instanceof DOMElement) {
-				switch ($node->tagName)
-				{
+				switch ($node->tagName) {
 					case 'id':
 						break;
 
@@ -422,7 +421,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 
 					case 'text':
 						$text = $this->convertMarkup($node->textContent);
-						if ( $text instanceof PEAR_Error ) {
+						if ($text instanceof PEAR_Error) {
 							throw new ImporterParserException($text->message);
 						} else {
 							$data['data'] = $text;
@@ -472,7 +471,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 	 */
 	function extractContributor(DOMElement $contributor)
 	{
-		$data = array();
+		$data = [];
 
 		foreach ($contributor->childNodes as $node) {
 			if ($node instanceof DOMElement) {
@@ -491,11 +490,13 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 			}
 		}
 
-		if (!isset($data['user']))
+		if (! isset($data['user'])) {
 			$data['user'] = 'anonymous';
+		}
 
-		if (!isset($data['ip']))
+		if (! isset($data['ip'])) {
 			$data['ip'] = '0.0.0.0';
+		}
 
 		return $data;
 	}
@@ -509,10 +510,9 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 	 */
 	function convertMarkup($mediawikiText)
 	{
-		if (!empty($mediawikiText)) {
+		if (! empty($mediawikiText)) {
 			$tikiText = $this->parser->transform($mediawikiText, 'Tiki');
 			return $tikiText;
 		}
 	}
 }
-

@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -30,7 +30,8 @@ class FilegalCopyLib extends FileGalLib
 	 * @return array					feedback messages
 	 */
 
-	function processCopy($files, $destinationPath, $sourcePath = '', $move = false) {
+	function processCopy($files, $destinationPath, $sourcePath = '', $move = false)
+	{
 
 		$feedback = [];
 		$operation = ($move) ? "Move" : "Copy";
@@ -50,7 +51,6 @@ class FilegalCopyLib extends FileGalLib
 				} else {
 					$feedback[] = tra('Copy was successful') . ': ' . $file['filename'];
 				}
-
 			}
 		}
 		return $feedback;
@@ -74,23 +74,23 @@ class FilegalCopyLib extends FileGalLib
 
 		if (! empty($filePath)) { // i.e., fgal_use_db !== 'y'
 			if ($sourcePath == '') {
-				return array('error' => tra('Source path empty'));
+				return ['error' => tra('Source path empty')];
 			}
 			if (! copy($sourcePath . $filePath, $destinationPath . $fileName)) {
 				if (! is_writable($destinationPath)) {
-					return array('error' => tra('Cannot write to this path: ') . $destinationPath);
+					return ['error' => tra('Cannot write to this path: ') . $destinationPath];
 				} else {
-					return array('error' => tra('Cannot read this file: ') . $sourcePath . $filePath);
+					return ['error' => tra('Cannot read this file: ') . $sourcePath . $filePath];
 				}
 			}
 		} else {
 			$filesTable = $this->table('tiki_files');
-			$fileData = $filesTable->fetchOne('data', array('fileId' => (int)$fileId));
+			$fileData = $filesTable->fetchOne('data', ['fileId' => (int)$fileId]);
 			if (file_put_contents($destinationPath . $fileName, $fileData) === false) {
 				if (! is_writable($destinationPath)) {
-					return array('error' => tra('Cannot write to this path: ') . $destinationPath);
+					return ['error' => tra('Cannot write to this path: ') . $destinationPath];
 				} else {
-					return array('error' => tra('Cannot get filedata from db'));
+					return ['error' => tra('Cannot get filedata from db')];
 				}
 			}
 		}
@@ -103,12 +103,12 @@ class FilegalCopyLib extends FileGalLib
 			$file['data'] = null;
 
 			if ($this->remove_file($file, '', true) === false) {
-				return array('error' => tra('Cannot remove file from gallery'));
+				return ['error' => tra('Cannot remove file from gallery')];
 			}
 		}
 
-		return array(
+		return [
 			'fileName' => $fileName,
-		);
+		];
 	}
 }

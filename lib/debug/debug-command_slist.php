@@ -9,7 +9,7 @@
  * \brief List of Smarty vars
  * \author zaufi <zaufi@sendmail.ru>
  */
-require_once ('lib/debug/debugger-ext.php');
+require_once('lib/debug/debugger-ext.php');
 
 /**
  * \brief Debugger command to list smatry vars
@@ -52,12 +52,14 @@ class DbgSList extends DebuggerCommand
 		$smarty = TikiLib::lib('smarty');
 		$tpl_vars = $smarty->getTemplateVars();
 		// convert to vector of names and sort
-		$vars = array();
+		$vars = [];
 		$len = strlen($mask);
 
-		foreach ($tpl_vars as $key => $val)
-			if (!$len || $len && preg_match('/' . $mask . '/', $key))
+		foreach ($tpl_vars as $key => $val) {
+			if (! $len || $len && preg_match('/' . $mask . '/', $key)) {
 				$vars[] = $key;
+			}
+		}
 
 		sort($vars);
 		//

@@ -13,14 +13,14 @@ require_once('lib/images/abstract.php');
 class Image extends ImageAbstract
 {
 
-    /**
-     * @param $image
-     * @param bool $isfile
-     * @param string $format
-     */
-    function __construct($image, $isfile = false, $format = 'jpeg')
+	/**
+	 * @param $image
+	 * @param bool $isfile
+	 * @param string $format
+	 */
+	function __construct($image, $isfile = false, $format = 'jpeg')
 	{
-		if ( $isfile ) {
+		if ($isfile) {
 			$this->filename = $image;
 			parent::__construct($image, $isfile);
 		} else {
@@ -31,26 +31,24 @@ class Image extends ImageAbstract
 
 	function _load_data()
 	{
-		if (!$this->loaded) {
-			if (!empty($this->filename)) {
+		if (! $this->loaded) {
+			if (! empty($this->filename)) {
 				$this->data = new Imagick();
 				try {
 					$this->data->readImage($this->filename);
 					$this->loaded = true;
 					$this->filename = null;
-				}
-				catch (ImagickException $e) {
+				} catch (ImagickException $e) {
 					$this->loaded = true;
 					$this->data = null;
 				}
-			} elseif (!empty($this->data)) {
+			} elseif (! empty($this->data)) {
 				$tmp = new Imagick();
 				try {
 					$tmp->readImageBlob($this->data);
 					$this->data =& $tmp;
 					$this->loaded = true;
-				}
-				catch (ImagickException $e) {
+				} catch (ImagickException $e) {
 					$this->data = null;
 				}
 			}
@@ -60,12 +58,12 @@ class Image extends ImageAbstract
 		}
 	}
 
-    /**
-     * @param $x
-     * @param $y
-     * @return mixed
-     */
-    function _resize($x, $y)
+	/**
+	 * @param $x
+	 * @param $y
+	 * @return mixed
+	 */
+	function _resize($x, $y)
 	{
 		if ($this->data) {
 			return $this->data->scaleImage($x, $y);
@@ -74,13 +72,12 @@ class Image extends ImageAbstract
 
 	function resizethumb()
 	{
-		if ( $this->thumb !== null ) {
+		if ($this->thumb !== null) {
 			$this->data = new Imagick();
 			try {
 				$this->data->readImageBlob($this->thumb);
 				$this->loaded = true;
-			}
-			catch (ImagickException $e) {
+			} catch (ImagickException $e) {
 				$this->loaded = true;
 				$this->data = null;
 			}
@@ -92,10 +89,10 @@ class Image extends ImageAbstract
 		}
 	}
 
-    /**
-     * @param $format
-     */
-    function set_format($format)
+	/**
+	 * @param $format
+	 */
+	function set_format($format)
 	{
 		$this->_load_data();
 		if ($this->data) {
@@ -104,18 +101,18 @@ class Image extends ImageAbstract
 		}
 	}
 
-    /**
-     * @return string
-     */
-    function get_format()
+	/**
+	 * @return string
+	 */
+	function get_format()
 	{
 		return $this->format;
 	}
 
-    /**
-     * @return mixed
-     */
-    function display()
+	/**
+	 * @return mixed
+	 */
+	function display()
 	{
 		$this->_load_data();
 		if ($this->data) {
@@ -123,11 +120,11 @@ class Image extends ImageAbstract
 		}
 	}
 
-    /**
-     * @param $angle
-     * @return bool
-     */
-    function rotate($angle)
+	/**
+	 * @param $angle
+	 * @return bool
+	 */
+	function rotate($angle)
 	{
 		$this->_load_data();
 		if ($this->data) {
@@ -138,11 +135,11 @@ class Image extends ImageAbstract
 		}
 	}
 
-    /**
-     * @param $format
-     * @return bool
-     */
-    function is_supported($format)
+	/**
+	 * @param $format
+	 * @return bool
+	 */
+	function is_supported($format)
 	{
 		$image = new Imagick();
 		$format = strtoupper(trim($format));
@@ -157,24 +154,26 @@ class Image extends ImageAbstract
 		return in_array($format, $image->queryFormats());
 	}
 
-    /**
-     * @return mixed
-     */
-    function get_height()
+	/**
+	 * @return mixed
+	 */
+	function get_height()
 	{
 		$this->_load_data();
-		if ($this->data)
+		if ($this->data) {
 			return $this->data->getImageHeight();
+		}
 	}
 
-    /**
-     * @return mixed
-     */
-    function get_width()
+	/**
+	 * @return mixed
+	 */
+	function get_width()
 	{
 		$this->_load_data();
-		if ($this->data)
+		if ($this->data) {
 			return $this->data->getImageWidth();
+		}
 	}
 
 	/**
@@ -216,5 +215,4 @@ class Image extends ImageAbstract
 		$this->data = $image;
 		return $image->getImageBlob();
 	}
-	
 }

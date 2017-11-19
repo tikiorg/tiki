@@ -21,7 +21,7 @@ class AttributeLib extends TikiDb_Bridge
 	function __construct()
 	{
 		$this->attributes = $this->table('tiki_object_attributes');
-		$this->cache = array();
+		$this->cache = [];
 	}
 
 	/**
@@ -31,19 +31,19 @@ class AttributeLib extends TikiDb_Bridge
 	 * @param $objectId mixed   Object id (or name for wiki pages)
 	 * @return array            Array [attribute => value]
 	 */
-	function get_attributes( $type, $objectId )
+	function get_attributes($type, $objectId)
 	{
 		if (count($this->cache) > 2048) {
-			$this->cache = array();
+			$this->cache = [];
 		}
-		if (!isset($this->cache[$type.$objectId])) {
-			$this->cache[$type.$objectId] = $this->attributes->fetchMap(
+		if (! isset($this->cache[$type . $objectId])) {
+			$this->cache[$type . $objectId] = $this->attributes->fetchMap(
 				'attribute',
 				'value',
-				array('type' => $type,'itemId' => $objectId,)
+				['type' => $type,'itemId' => $objectId,]
 			);
 		}
-		return $this->cache[$type.$objectId];
+		return $this->cache[$type . $objectId];
 	}
 
 	/**
@@ -58,7 +58,7 @@ class AttributeLib extends TikiDb_Bridge
 	{
 		return $this->attributes->fetchOne(
 			'value',
-			array('type' => $type, 'itemId' => $objectId, 'attribute' => $attribute)
+			['type' => $type, 'itemId' => $objectId, 'attribute' => $attribute]
 		);
 	}
 
@@ -72,28 +72,28 @@ class AttributeLib extends TikiDb_Bridge
 	 * attribute naming, and document new tiki.*.* names that you add
 	 * (also grep "set_attribute" just in case there are undocumented names already used)
 	 */
-	function set_attribute( $type, $objectId, $attribute, $value )
+	function set_attribute($type, $objectId, $attribute, $value)
 	{
-		if ( false === $name = $this->get_valid($attribute) ) {
+		if (false === $name = $this->get_valid($attribute)) {
 			return false;
 		}
 
-		if ( $value == '' ) {
+		if ($value == '') {
 			$this->attributes->delete(
-				array(
+				[
 					'type' => $type,
 					'itemId' => $objectId,
 					'attribute' => $name,
-				)
+				]
 			);
 		} else {
 			$this->attributes->insertOrUpdate(
-				array('value' => $value),
-				array(
+				['value' => $value],
+				[
 					'type' => $type,
 					'itemId' => $objectId,
 					'attribute' => $name,
-				)
+				]
 			);
 		}
 
@@ -104,7 +104,7 @@ class AttributeLib extends TikiDb_Bridge
 		 * @param $name
 		 * @return mixed
 		 */
-		private function get_valid( $name )
+	private function get_valid($name)
 	{
 		$filter = TikiFilter::get('attribute_type');
 		return $filter->filter($name);
@@ -115,14 +115,13 @@ class AttributeLib extends TikiDb_Bridge
 		 * @param $value
 		 * @return mixed
 		 */
-		function find_objects_with($attribute, $value)
+	function find_objects_with($attribute, $value)
 	{
 		$attribute = $this->get_valid($attribute);
 
 		return $this->attributes->fetchAll(
-			array('type', 'itemId'),
-			array('attribute' => $attribute, 'value' => $value,)
+			['type', 'itemId'],
+			['attribute' => $attribute, 'value' => $value,]
 		);
 	}
 }
-

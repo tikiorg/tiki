@@ -16,8 +16,8 @@ use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
-  header('location: index.php');
-  exit;
+	header('location: index.php');
+	exit;
 }
 
 if (! file_exists(__DIR__ . '/../../vendor_bundled/vendor/autoload.php')) {
@@ -35,9 +35,9 @@ if (file_exists(__DIR__ . '/../../vendor/autoload.php')) {
 }
 
 // vendor libraries managed by the user, packaged (if any)
-if (is_dir(__DIR__ . '/../../vendor_custom')){
+if (is_dir(__DIR__ . '/../../vendor_custom')) {
 	foreach (new DirectoryIterator(__DIR__ . '/../../vendor_custom') as $fileInfo) {
-		if (!$fileInfo->isDir() || $fileInfo->isDot()) {
+		if (! $fileInfo->isDir() || $fileInfo->isDot()) {
 			continue;
 		}
 		if (file_exists($fileInfo->getPathname() . '/autoload.php')) {
@@ -82,14 +82,12 @@ class TikiInit
 				// mangled or otherwise invalid container
 				unlink($cache);
 			} else {
-
 				$container = new TikiCachedContainer;
 
 				/* If the server moved or was upgraded, the container must be recreated */
 				if (TIKI_PATH == $container->getParameter('kernel.root_dir') &&
 						$container->hasParameter('tiki.version') &&					// no version before 15.0
-						$container->getParameter('tiki.version') === $version)
-				{
+						$container->getParameter('tiki.version') === $version) {
 					if (TikiDb::get()) {
 						$container->set('tiki.lib.db', TikiDb::get());
 					}
@@ -99,8 +97,6 @@ class TikiInit
 					unlink($cache);
 				}
 			}
-
-
 		}
 
 		$path = TIKI_PATH . '/db/config';
@@ -126,7 +122,7 @@ class TikiInit
 			// Do nothing, absence of custom.xml file is expected
 		}
 
-		foreach ( glob( TIKI_PATH . '/addons/*/lib/libs.xml' ) as $file ) {
+		foreach (glob(TIKI_PATH . '/addons/*/lib/libs.xml') as $file) {
 			try {
 				$loader->load($file);
 			} catch (InvalidArgumentException $e) {
@@ -154,7 +150,7 @@ class TikiInit
 	function os()
 	{
 		static $os;
-		if (!isset($os)) {
+		if (! isset($os)) {
 			if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
 				$os = 'windows';
 			} else {
@@ -171,7 +167,7 @@ class TikiInit
 	static function isWindows()
 	{
 		static $windows;
-		if (!isset($windows)) {
+		if (! isset($windows)) {
 			$windows = strtoupper(substr(PHP_OS, 0, 3)) == 'WIN';
 		}
 		return $windows;
@@ -196,47 +192,49 @@ class TikiInit
 	/**
 	 * From the php is_writable manual (thanks legolas558 d0t users dot sf dot net)
 	 * Note the two underscores and no "e".
-	 * 
+	 *
 	 * will work in despite of Windows ACLs bug
 	 * NOTE: use a trailing slash for folders!!!
 	 * {@see http://bugs.php.net/bug.php?id=27609}
 	 * {@see http://bugs.php.net/bug.php?id=30931}
-	 * 
+	 *
 	 * @param string $path	directory to test	NOTE: use a trailing slash for folders!!!
 	 * @return bool
 	 */
 	static function is__writable($path)
 	{
-		if ($path{strlen($path)-1}=='/') { // recursively return a temporary file path
-			return self::is__writable($path.uniqid(mt_rand()).'.tmp');
-		} else if (is_dir($path)) {
-			return self::is__writable($path.'/'.uniqid(mt_rand()).'.tmp');
+		if ($path{strlen($path) - 1} == '/') { // recursively return a temporary file path
+			return self::is__writable($path . uniqid(mt_rand()) . '.tmp');
+		} elseif (is_dir($path)) {
+			return self::is__writable($path . '/' . uniqid(mt_rand()) . '.tmp');
 		}
 		// check tmp file for read/write capabilities
 		$rm = file_exists($path);
 		$f = @fopen($path, 'a');
-		if ($f===false)
+		if ($f === false) {
 			return false;
+		}
 		fclose($f);
-		if (!$rm)
+		if (! $rm) {
 			unlink($path);
+		}
 		return true;
 	}
 
 
-    /** Prepend $path to the include path
-     * @static          
-     * @param string $path the path to prepend
-     * @return string
-     */
+	/** Prepend $path to the include path
+	 * @static
+	 * @param string $path the path to prepend
+	 * @return string
+	 */
 	static function prependIncludePath($path)
 	{
 		$include_path = ini_get('include_path');
 		$paths = explode(PATH_SEPARATOR, $include_path);
 
-		if ($include_path && !in_array($path, $paths)) {
+		if ($include_path && ! in_array($path, $paths)) {
 			$include_path = $path . PATH_SEPARATOR . $include_path;
-		} else if (!$include_path) {
+		} elseif (! $include_path) {
 			$include_path = $path;
 		}
 
@@ -244,18 +242,18 @@ class TikiInit
 	}
 
 
-    /** Append $path to the include path
-     * @static 
-     * @param mixed $path
-     */
+	/** Append $path to the include path
+	 * @static
+	 * @param mixed $path
+	 */
 	static function appendIncludePath($path)
 	{
 		$include_path = ini_get('include_path');
 		$paths = explode(PATH_SEPARATOR, $include_path);
 
-		if ($include_path && !in_array($path, $paths)) {
+		if ($include_path && ! in_array($path, $paths)) {
 			$include_path .= PATH_SEPARATOR . $path;
-		} else if (!$include_path) {
+		} elseif (! $include_path) {
 			$include_path = $path;
 		}
 
@@ -263,12 +261,12 @@ class TikiInit
 	}
 
 
-    /** Return system defined temporary directory.
-     * In Unix, this is usually /tmp
-     * In Windows, this is usually c:\windows\temp or c:\winnt\temp
-     * @static
+	/** Return system defined temporary directory.
+	 * In Unix, this is usually /tmp
+	 * In Windows, this is usually c:\windows\temp or c:\winnt\temp
+	 * @static
 	 * @deprecated by sys_get_temp_dir()
-     */
+	 */
 	static function tempdir()
 	{
 		return sys_get_temp_dir();
@@ -281,9 +279,9 @@ class TikiInit
 	 * @param string String to be converted
 	 * @return UTF-8 representation of the string
 	 */
-	static function to_utf8( $string )
+	static function to_utf8($string)
 	{
-		if ( preg_match(
+		if (preg_match(
 			'%^(?:
 	  		   [\x09\x0A\x0D\x20-\x7E]            # ASCII
    		 | [\xC2-\xDF][\x80-\xBF]             # non-overlong 2-byte
@@ -306,14 +304,14 @@ class TikiInit
 	/**
 	 * Determine if the web server is an IIS server
 	 * @return true if IIS server, else false
-  	 * @static
+	   * @static
 	 */
 	static function isIIS()
 	{
 		static $IIS;
 
 		// Sample value Microsoft-IIS/7.5
-		if (!isset($IIS) && isset($_SERVER['SERVER_SOFTWARE'])) {
+		if (! isset($IIS) && isset($_SERVER['SERVER_SOFTWARE'])) {
 			$IIS = substr($_SERVER['SERVER_SOFTWARE'], 0, 13) == 'Microsoft-IIS';
 		}
 
@@ -323,7 +321,7 @@ class TikiInit
 	/**
 	 * Determine if the web server is an IIS server
 	 * @return true if IIS server, else false
-  	 * \static
+	   * \static
 	 */
 	static function hasIIS_UrlRewriteModule()
 	{
@@ -382,31 +380,31 @@ class TikiInit
 
 		*/
 
-		if (!isset($local_php) or !is_file($local_php)) {
+		if (! isset($local_php) or ! is_file($local_php)) {
 			$local_php = 'db/local.php';
 		} else {
-			$local_php = preg_replace(array('/\.\./', '/^db\//'), array('',''), $local_php);
+			$local_php = preg_replace(['/\.\./', '/^db\//'], ['',''], $local_php);
 		}
 		$tikidomain = '';
 		if (is_file('db/virtuals.inc')) {
-			if (isset($_SERVER['TIKI_VIRTUAL']) and is_file('db/'.$_SERVER['TIKI_VIRTUAL'].'/local.php')) {
+			if (isset($_SERVER['TIKI_VIRTUAL']) and is_file('db/' . $_SERVER['TIKI_VIRTUAL'] . '/local.php')) {
 				$tikidomain = $_SERVER['TIKI_VIRTUAL'];
-			} elseif (isset($_SERVER['SERVER_NAME']) and is_file('db/'.$_SERVER['SERVER_NAME'].'/local.php')) {
+			} elseif (isset($_SERVER['SERVER_NAME']) and is_file('db/' . $_SERVER['SERVER_NAME'] . '/local.php')) {
 				$tikidomain = $_SERVER['SERVER_NAME'];
-			} else if (isset($_REQUEST['multi']) && is_file('db/'.$_REQUEST['multi'].'/local.php')) {
+			} elseif (isset($_REQUEST['multi']) && is_file('db/' . $_REQUEST['multi'] . '/local.php')) {
 				$tikidomain = $_REQUEST['multi'];
 			} elseif (isset($_SERVER['HTTP_HOST'])) {
-				if (is_file('db/'.$_SERVER['HTTP_HOST'].'/local.php')) {
+				if (is_file('db/' . $_SERVER['HTTP_HOST'] . '/local.php')) {
 					$tikidomain = $_SERVER['HTTP_HOST'];
-				} else if (is_file('db/'.preg_replace('/^www\./', '', $_SERVER['HTTP_HOST']).'/local.php')) {
+				} elseif (is_file('db/' . preg_replace('/^www\./', '', $_SERVER['HTTP_HOST']) . '/local.php')) {
 					$tikidomain = preg_replace('/^www\./', '', $_SERVER['HTTP_HOST']);
 				}
 			}
-			if (!empty($tikidomain)) {
+			if (! empty($tikidomain)) {
 				$local_php = "db/$tikidomain/local.php";
 			}
 		}
-		$tikidomainslash = (!empty($tikidomain) ? $tikidomain . '/' : '');
+		$tikidomainslash = (! empty($tikidomain) ? $tikidomain . '/' : '');
 
 		$default_api_tiki = $api_tiki;
 		$api_tiki = '';
@@ -418,7 +416,7 @@ class TikiInit
 	{
 		// Load connection strings from environment variables, as used by Azure and possibly other hosts
 		$connectionString = null;
-		foreach (array('MYSQLCONNSTR_Tiki', 'MYSQLCONNSTR_DefaultConnection') as $envVar) {
+		foreach (['MYSQLCONNSTR_Tiki', 'MYSQLCONNSTR_DefaultConnection'] as $envVar) {
 			if (isset($_SERVER[$envVar])) {
 				$connectionString = $_SERVER[$envVar];
 				continue;
@@ -445,12 +443,12 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline)
 {
 	global $prefs, $phpErrors;
 
-	if ( 0 === error_reporting() ) {
+	if (0 === error_reporting()) {
 		// This error was triggered when evaluating an expression prepended by the at sign (@) error control operator, but since we are in a custom error handler, we have to ignore it manually.
 		// See http://ca3.php.net/manual/en/language.operators.errorcontrol.php#98895 and http://php.net/set_error_handler
 		return;
 	}
-	
+
 	// FIXME: Optionally return false so errors are still logged
 	$err[E_ERROR]           = 'E_ERROR';
 	$err[E_CORE_ERROR]      = 'E_CORE_ERROR';
@@ -470,39 +468,39 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline)
 	global $tikipath;
 	$errfile = str_replace($tikipath, '', $errfile);
 	switch ($errno) {
-	case E_ERROR:
-	case E_CORE_ERROR:
-	case E_USER_ERROR:
-	case E_COMPILE_ERROR:
-	case E_WARNING:
-	case E_CORE_WARNING:
-	case E_USER_WARNING:
-	case E_COMPILE_WARNING:
-	case E_PARSE:
-	case E_RECOVERABLE_ERROR:
-		$type = 'ERROR';
-		break;
-	case E_STRICT:
-	case E_NOTICE:
-	case E_USER_NOTICE:
-	case E_DEPRECATED:
-	case E_USER_DEPRECATED:
-		if (!  defined('THIRD_PARTY_LIBS_PATTERN') ||  ! preg_match(THIRD_PARTY_LIBS_PATTERN, $errfile) ) {
-			if ( ! empty($prefs['smarty_notice_reporting']) && $prefs['smarty_notice_reporting'] != 'y' && strstr($errfile, '.tpl.php')) {
-				return;
+		case E_ERROR:
+		case E_CORE_ERROR:
+		case E_USER_ERROR:
+		case E_COMPILE_ERROR:
+		case E_WARNING:
+		case E_CORE_WARNING:
+		case E_USER_WARNING:
+		case E_COMPILE_WARNING:
+		case E_PARSE:
+		case E_RECOVERABLE_ERROR:
+			$type = 'ERROR';
+			break;
+		case E_STRICT:
+		case E_NOTICE:
+		case E_USER_NOTICE:
+		case E_DEPRECATED:
+		case E_USER_DEPRECATED:
+			if (! defined('THIRD_PARTY_LIBS_PATTERN') ||  ! preg_match(THIRD_PARTY_LIBS_PATTERN, $errfile)) {
+				if (! empty($prefs['smarty_notice_reporting']) && $prefs['smarty_notice_reporting'] != 'y' && strstr($errfile, '.tpl.php')) {
+					return;
+				}
+				$type = 'NOTICE';
 			}
-			$type = 'NOTICE';
-		}
-		break;
-	default:
-    	return;
+			break;
+		default:
+			return;
 	}
-	
+
 	$back = "<div class='rbox-data' style='font-size:10px;border:1px solid'>";
-	$back.= $type . " ($err[$errno]): <b>" . $errstr . "</b><br />";
-	$back.= "At line $errline in $errfile"; // $errfile comes after $errline to ease selection for copy-pasting.
-	$back.= "</div>";
-	
+	$back .= $type . " ($err[$errno]): <b>" . $errstr . "</b><br />";
+	$back .= "At line $errline in $errfile"; // $errfile comes after $errline to ease selection for copy-pasting.
+	$back .= "</div>";
+
 	$phpErrors[] = $back;
 }
 
@@ -512,4 +510,3 @@ if (empty($_SERVER['REQUEST_URI'])) {
 		$_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'];
 	}
 }
-

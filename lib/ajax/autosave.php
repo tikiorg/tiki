@@ -7,8 +7,8 @@
 
 // This script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
-  header('location: index.php');
-  exit;
+	header('location: index.php');
+	exit;
 }
 
 class AutoSaveLib
@@ -17,7 +17,7 @@ class AutoSaveLib
 	{
 		$access = TikiLib::lib('access');
 
-		$access->check_feature(array('feature_ajax', 'ajax_autosave'));
+		$access->check_feature(['feature_ajax', 'ajax_autosave']);
 	}
 
 	/**
@@ -102,7 +102,7 @@ class AutoSaveLib
 				if (isset($_REQUEST['page'])) {
 					$referer .= 'wiki_page:' . rawurlencode($_REQUEST['page']);
 				}
-			} else if ($section == 'blogs') {
+			} elseif ($section == 'blogs') {
 				if (isset($_REQUEST['postId'])) {
 					$referer .= 'blog:' . $_REQUEST['postId'];
 				}
@@ -126,7 +126,7 @@ class AutoSaveLib
 		global $user;
 		$referer = preg_replace('/(\?|\&)noautosave=y/', '', $this->ensureReferrer($referer));
 		$referer = rawurldecode($referer); // this is needed to ensure consistency whether coming from js or php
-		return ($only_md5 ? '' : 'temp/cache/auto_save-').md5("$user:$referer:$id");
+		return ($only_md5 ? '' : 'temp/cache/auto_save-') . md5("$user:$referer:$id");
 	}
 
 	/**
@@ -139,7 +139,6 @@ class AutoSaveLib
 	private function auto_save_log($id, $referer = '', $action = '')
 	{
 		global $user;
-		file_put_contents('temp/cache/auto_save-log-'.($this->auto_save_name($id, $referer, true)), $user.' : '.$this->ensureReferrer($referer)." : $id : $action\n", FILE_APPEND);
+		file_put_contents('temp/cache/auto_save-log-' . ($this->auto_save_name($id, $referer, true)), $user . ' : ' . $this->ensureReferrer($referer) . " : $id : $action\n", FILE_APPEND);
 	}
-
 }

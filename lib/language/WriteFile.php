@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -20,19 +20,19 @@ class Language_WriteFile
 	 * @var Language_File
 	 */
 	protected $parseFile;
-	
+
 	/**
 	 * Path to a language.php file
 	 * @var string
 	 */
 	protected $filePath;
-	
+
 	/**
 	 * Path to temporary language file.
 	 * @var string
 	 */
 	protected $tmpFilePath;
-	
+
 	/**
 	 * Current language translations.
 	 * @var array
@@ -44,15 +44,15 @@ class Language_WriteFile
 		$this->parseFile = $parseFile;
 		$this->filePath = $parseFile->filePath;
 		$this->tmpFilePath = $this->filePath . '.tmp';
-		
-		if (!is_writable($this->filePath)) {
+
+		if (! is_writable($this->filePath)) {
 			throw new Language_Exception("Can't write to file $this->filePath.");
 		}
 	}
-	
+
 	/**
 	 * Update language.php file with new strings.
-	 * 
+	 *
 	 * @param array $strings English strings collected from source files
 	 * @param bool $outputFiles whether file paths were string was found should be included or not in the output
 	 * @return null
@@ -62,13 +62,13 @@ class Language_WriteFile
 		if (empty($strings)) {
 			return false;
 		}
-		
+
 		// backup original language file
 		copy($this->filePath, $this->filePath . '.old');
-		
+
 		$this->translations = $this->parseFile->getTranslations();
 
-		$entries = array();
+		$entries = [];
 		foreach ($strings as $string) {
 			if (isset($this->translations[$string['name']])) {
 				$string['translation'] = $this->translations[$string['name']];
@@ -79,7 +79,7 @@ class Language_WriteFile
 				$stringLength = strlen($string['name']);
 				$stringLastChar = $string['name'][$stringLength - 1];
 
-				if (in_array($stringLastChar, Language::punctuations) ) {
+				if (in_array($stringLastChar, Language::punctuations)) {
 					$trimmedString = substr($string['name'], 0, $stringLength - 1);
 					$string['name'] = $trimmedString;
 					if (isset($this->translations[$trimmedString])) {
@@ -92,21 +92,21 @@ class Language_WriteFile
 
 
 		$handle = fopen($this->tmpFilePath, 'w');
-		
+
 		if ($handle) {
 			fwrite($handle, "<?php\n");
 			fwrite($handle, $this->fileHeader());
 			fwrite($handle, "\$lang = array(\n");
-			
+
 			foreach ($entries as $entry) {
 				fwrite($handle, $this->formatString($entry, $outputFiles));
 			}
-			
+
 			fwrite($handle, ");\n");
 			fclose($handle);
 		}
-		
-		rename($this->tmpFilePath, $this->filePath);	
+
+		rename($this->tmpFilePath, $this->filePath);
 	}
 
 	/**
@@ -142,15 +142,15 @@ class Language_WriteFile
  */
 
 TXT;
-		
+
 		return $header;
 	}
 
 	/**
 	 * Format a pair source and translation as
 	 * a string to be written to a language.php file
-	 * 
-	 * @param array $entry an array with the English source string and the translation if any 
+	 *
+	 * @param array $entry an array with the English source string and the translation if any
 	 * @param bool $outputFiles whether file paths were string was found should be included or not in the output
 	 * @return string
 	 */
@@ -158,20 +158,20 @@ TXT;
 	{
 		// final formated string
 		$string = '';
-		
-		if ($outputFiles && (isset($entry['files']) && !empty($entry['files']))) {
+
+		if ($outputFiles && (isset($entry['files']) && ! empty($entry['files']))) {
 			$string .= '/* ' . join(', ', $entry['files']) . " */\n";
 		}
-		
+
 		$source = Language::addPhpSlashes($entry['name']);
-		
+
 		if (isset($entry['translation'])) {
-			$trans = Language::addPhpSlashes($entry['translation']);			
+			$trans = Language::addPhpSlashes($entry['translation']);
 			$string .= "\"$source\" => \"$trans\",\n";
 		} else {
 			$string .= "// \"$source\" => \"$source\",\n";
 		}
-		
+
 		return $string;
 	}
 }

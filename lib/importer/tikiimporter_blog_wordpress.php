@@ -28,14 +28,14 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * input file
 	 * @var array
 	 */
-	public $validTypes = array('application/xml', 'text/xml');
+	public $validTypes = ['application/xml', 'text/xml'];
 
 	/**
 	 * List of the imported attachments used
 	 * to parse post and page content to change the links
 	 * @var array
 	 */
-	public $newFiles = array();
+	public $newFiles = [];
 
 	/**
 	 * List	of permanent links to pages and posts
@@ -44,30 +44,30 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * the refered object is created in Tiki.
 	 * @var array
 	 */
-	public $permalinks = array();
+	public $permalinks = [];
 
 	/**
 	 * @see lib/importer/TikiImporter#importOptions()
 	 */
-	static public function importOptions()
+	public static function importOptions()
 	{
-		$options = array(
-			array(
+		$options = [
+			[
 					'name' => 'importAttachments',
 					'type' => 'checkbox',
 					'label' => tra('Import images and other attachments')
-			),
-			array(
+			],
+			[
 					'name' => 'replaceInternalLinks',
 					'type' => 'checkbox',
 					'label' => tra('Update internal links (experimental)')
-			),
-			array(
+			],
+			[
 					'name' => 'htaccessRules',
 					'type' => 'checkbox',
 					'label' => tra('Suggest .htaccess rules to redirect from old WordPress URLs to new Tiki URLs (experimental)')
-			)
-		);
+			]
+		];
 
 		return $options;
 	}
@@ -82,7 +82,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 */
 	function checkRequirements()
 	{
-		if (!class_exists('DOMDocument')) {
+		if (! class_exists('DOMDocument')) {
 			throw new Exception(tra('Class DOMDocument not available, check your PHP installation. For more information see http://php.net/manual/en/book.dom.php'));
 		}
 	}
@@ -117,21 +117,20 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 */
 	function import($filePath = null)
 	{
-        if ($filePath == null)
-        {
-            die("This particular implementation of the method requires an explicity file path.");
-        }
-		if (isset($_FILES['importFile']) && !in_array($_FILES['importFile']['type'], $this->validTypes)) {
+		if ($filePath == null) {
+			die("This particular implementation of the method requires an explicity file path.");
+		}
+		if (isset($_FILES['importFile']) && ! in_array($_FILES['importFile']['type'], $this->validTypes)) {
 			throw new UnexpectedValueException(tra('Invalid file MIME type'));
 		}
 
-		if (!empty($_POST['importAttachments']) && $_POST['importAttachments'] == 'on') {
+		if (! empty($_POST['importAttachments']) && $_POST['importAttachments'] == 'on') {
 			$this->checkRequirementsForAttachments();
 		}
 
 		$this->dom = new DOMDocument;
 
-		if (!$this->dom->load($filePath)) {
+		if (! $this->dom->load($filePath)) {
 			throw new DOMException(tra('There was an error while loading the XML file. Probably the XML file is malformed. Some versions of WordPress generate a malformed XML file. See the Tiki Importer documentation for more information.'));
 		}
 
@@ -141,7 +140,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 		$this->extractBlogInfo();
 
-		if (!empty($_POST['importAttachments']) && $_POST['importAttachments'] == 'on') {
+		if (! empty($_POST['importAttachments']) && $_POST['importAttachments'] == 'on') {
 			$this->downloadAttachments();
 		}
 
@@ -149,7 +148,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 		parent::import();
 
-		if (!empty($_POST['htaccessRules']) && $_POST['htaccessRules'] == 'on' && !empty($this->permalinks)) {
+		if (! empty($_POST['htaccessRules']) && $_POST['htaccessRules'] == 'on' && ! empty($this->permalinks)) {
 			$_SESSION['tiki_importer_wordpress_urls'] = $this->getHtaccessRules();
 		}
 	}
@@ -221,10 +220,10 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	function extractPermalinks()
 	{
 		$data = $this->dom->getElementsByTagName('item');
-		$permalinks = array();
+		$permalinks = [];
 
 		foreach ($data as $item) {
-			$oldLinks = array();
+			$oldLinks = [];
 			$type = $item->getElementsByTagName('post_type')->item(0)->nodeValue;
 			$status = $item->getElementsByTagName('status')->item(0)->nodeValue;
 
@@ -237,24 +236,24 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 								break;
 							case 'link':
 							case 'guid':
-								if (!in_array($node->textContent, $oldLinks)) {
+								if (! in_array($node->textContent, $oldLinks)) {
 									$oldLinks[] = $node->textContent;
 								}
 								if (strpos($node->textContent, $this->blogInfo['link']) !== false) {
 									$relativePath = str_replace($this->blogInfo['link'], '', $node->textContent);
-									if (!in_array($relativePath, $oldLinks)) {
+									if (! in_array($relativePath, $oldLinks)) {
 										$oldLinks[] = $relativePath;
 									}
 								}
 								break;
-						default:
-							break;
+							default:
+								break;
 						}
 					}
 				}
 			}
 
-			if (!empty($oldLinks)) {
+			if (! empty($oldLinks)) {
 				$permalinks[$id]['oldLinks'] = $oldLinks;
 			}
 		}
@@ -271,10 +270,10 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	{
 		$data = $this->dom->getElementsByTagName('item');
 
-		$items = array(
-			'posts' => array(),
-			'pages' => array(),
-		);
+		$items = [
+			'posts' => [],
+			'pages' => [],
+		];
 
 		foreach ($data as $item) {
 			$type = $item->getElementsByTagName('post_type')->item(0)->nodeValue;
@@ -300,14 +299,14 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 */
 	function extractTags()
 	{
-		$tags = array();
+		$tags = [];
 
 		$data = $this->dom->getElementsByTagName('tag');
 
 		foreach ($data as $tag) {
 			if ($tag->getElementsByTagName('tag_name')->length != 0) {
 				$tags[] = $tag->getElementsByTagName('tag_name')->item(0)->nodeValue;
-			} else if ($tag->getElementsByTagName('tag_slug')->length != 0) {
+			} elseif ($tag->getElementsByTagName('tag_slug')->length != 0) {
 				$tags[] = $tag->getElementsByTagName('tag_slug')->item(0)->nodeValue;
 			}
 		}
@@ -325,12 +324,12 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 */
 	function extractCategories()
 	{
-		$categories = array();
+		$categories = [];
 
 		$data = $this->dom->getElementsByTagName('category');
 
 		foreach ($data as $category) {
-			$categ = array();
+			$categ = [];
 
 			if ($category->getElementsByTagName('cat_name')->length == 0) {
 				// if category name is not set we don't create it
@@ -376,11 +375,11 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 		$this->saveAndDisplayLog("\n\n" . tra('Importing attachments:') . "\n");
 
-		if (!empty($attachments)) {
+		if (! empty($attachments)) {
 			$galleryId = $this->createFileGallery();
 		}
 
-		$feedback = array('success' => 0, 'error' => 0);
+		$feedback = ['success' => 0, 'error' => 0];
 
 		$client = $this->getHttpClient();
 
@@ -417,11 +416,11 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 					$attachment['author']
 				);
 
-				$this->newFiles[] = array(
+				$this->newFiles[] = [
 								'fileId' => $fileId,
 								'oldUrl' => $attachment['link'],
 								'sizes' => isset($attachment['sizes']) ? $attachment['sizes'] : ''
-				);
+				];
 
 				$this->saveAndDisplayLog(tr('Attachment %0 successfully imported!', $attachment['fileName']) . "\n");
 				$feedback['success']++;
@@ -458,7 +457,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		$filegallib = TikiLib::lib('filegal');
 		global $user;
 
-		$gal_info = array(
+		$gal_info = [
 			'galleryId' => '',
 			'parentId' => 1,
 			'name' => $this->blogInfo['title'],
@@ -466,7 +465,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 			'user' => $user,
 			'public' => 'y',
 			'visible' => 'y',
-		);
+		];
 
 		$id = $filegallib->replace_file_gallery($gal_info);
 
@@ -481,12 +480,12 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 */
 	function extractAttachmentsInfo()
 	{
-		$attachments = array();
+		$attachments = [];
 		$items = $this->dom->getElementsByTagName('item');
 
 		foreach ($items as $item) {
 			if ($item->getElementsByTagName('post_type')->item(0)->textContent == 'attachment') {
-				$attachment = array();
+				$attachment = [];
 
 				$attachment['name'] = $item->getElementsByTagName('title')->item(0)->textContent;
 				$attachment['link'] = $item->getElementsByTagName('attachment_url')->item(0)->textContent;
@@ -501,17 +500,17 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 						// remove year and month from file name (e.g. 2009/10/fileName.jpg becomes fileName.jpg)
 						$attachment['fileName'] = preg_replace('|.+/|', '', $fileName);
-					} else if ($tag->getElementsByTagName('meta_key')->item(0)->textContent == '_wp_attachment_metadata') {
+					} elseif ($tag->getElementsByTagName('meta_key')->item(0)->textContent == '_wp_attachment_metadata') {
 						$metadata = unserialize($tag->getElementsByTagName('meta_value')->item(0)->textContent);
 
 						if (is_array($metadata) && isset($metadata['sizes'])) {
-							$sizes = array();
+							$sizes = [];
 							foreach ($metadata['sizes'] as $key => $size) {
-								$sizes[$key] = array(
+								$sizes[$key] = [
 									'name' => $size['file'],
 									'width' => $size['width'],
 									'height' => $size['height'],
-								);
+								];
 							}
 							$attachment['sizes'] = $sizes;
 						}
@@ -535,10 +534,10 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 */
 	function extractInfo(DOMElement $item)
 	{
-		$data = array();
-		$data['categories'] = array();
-		$data['tags'] = array();
-		$data['comments'] = array();
+		$data = [];
+		$data['categories'] = [];
+		$data['tags'] = [];
+		$data['comments'] = [];
 
 		$i = 0;
 		foreach ($item->childNodes as $node) {
@@ -563,7 +562,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 						if ($node->hasAttribute('nicename')) {
 							if ($node->getAttribute('domain') == 'tag') {
 								$data['tags'][] = $node->textContent;
-							} else if ($node->getAttribute('domain') == 'category') {
+							} elseif ($node->getAttribute('domain') == 'category') {
 								$data['categories'][] = $node->textContent;
 							}
 						}
@@ -586,13 +585,13 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 			}
 		}
 
-		if (!empty($this->permalinks)) {
+		if (! empty($this->permalinks)) {
 			$data['hasInternalLinks'] = $this->identifyInternalLinks($data);
 		}
 
 		// create revision key to reuse TikiImporter_Wiki::insertPage()
 		if ($data['type'] == 'page') {
-			$revision = array();
+			$revision = [];
 			$revision['data'] = $data['content'];
 			$revision['lastModif'] = $data['created'];
 			$revision['comment'] = '';
@@ -604,7 +603,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 		if ($data['type'] == 'page') {
 			$msg = tr('Page "%0" successfully extracted.', $data['name']) . "\n";
-		} else if ($data['type'] == 'post') {
+		} elseif ($data['type'] == 'post') {
 			$msg = tr('Post "%0" successfully extracted.', $data['name']) . "\n";
 		}
 
@@ -639,18 +638,18 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	{
 		$filegallib = TikiLib::lib('filegal');
 
-		if (!empty($this->newFiles)) {
+		if (! empty($this->newFiles)) {
 			foreach ($this->newFiles as $file) {
 				$baseOldUrl = preg_replace('|(.+/).*|', '\\1', $file['oldUrl']);
 				$baseNewUrl = 'tiki-download_file.php?fileId=' . $file['fileId'] . '&display';
 
-				$newUrls = array();
-				$oldUrls = array();
+				$newUrls = [];
+				$oldUrls = [];
 
 				$newUrls[] = $baseNewUrl;
 				$oldUrls[] = $file['oldUrl'];
 
-				if (!empty($file['sizes'])) {
+				if (! empty($file['sizes'])) {
 					foreach ($file['sizes'] as $size) {
 						$newUrls[] = $baseNewUrl . '&x=' . $size['width'] . '&y=' . $size['height'];
 						$oldUrls[] = $baseOldUrl . $size['name'];
@@ -712,7 +711,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 */
 	function matchWordpressShortcodes($content)
 	{
-		$matches = array();
+		$matches = [];
 
 		// match all forms of wordpress shortcodes
 		$regex = '|\[([^\s\]/]*)\b(.*?)/?](?:(.*?)\[/\1])?|s';
@@ -721,7 +720,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 		// check for shortcodes inside other shortcodes
 		foreach ($matches as $match) {
-			if (!empty($match[3]) && preg_match($regex, $match[3])) {
+			if (! empty($match[3]) && preg_match($regex, $match[3])) {
 				$matches = array_merge($matches, $this->matchWordpressShortcodes($match[3]));
 			}
 		}
@@ -729,7 +728,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		// order matches array with the biggest shortcode string first
 		// to avoid problems when replacing it (the smallest shortcode string
 		// migth be the same as part of another shortcode string)
-		usort($matches, array($this, 'compareShortcodes'));
+		usort($matches, [$this, 'compareShortcodes']);
 
 		return $matches;
 	}
@@ -762,13 +761,12 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 */
 	function extractComment(DOMElement $commentNode)
 	{
-		$comment = array();
+		$comment = [];
 
 		// if comment is marked as spam, trash or pigback we ignore it
 		if ($commentNode->getElementsByTagName('comment_approved')->item(0)->textContent == 'spam'
 			|| $commentNode->getElementsByTagName('comment_approved')->item(0)->textContent == 'trash'
 			|| $commentNode->getElementsByTagName('comment_type')->item(0)->textContent == 'pingback') {
-
 			return false;
 		}
 
@@ -857,7 +855,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 */
 	function extractBlogCreatedDate()
 	{
-		$dates = array();
+		$dates = [];
 		$created = 0;
 
 		$nodes = $this->dom->getElementsByTagName('post_date');
@@ -868,7 +866,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 		sort($dates);
 
-		if (!empty($dates)) {
+		if (! empty($dates)) {
 			$created = $dates[0];
 		}
 
@@ -941,9 +939,9 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * Call $this->replaceInternalLinks() and leave the
 	 * rest with the parent method.
 	 *
-     * Note: The $parsedData argument is not used. It's just there to make the signatures
-     *       of insertData() uniform across implementations.
-     *
+	 * Note: The $parsedData argument is not used. It's just there to make the signatures
+	 *       of insertData() uniform across implementations.
+	 *
 	 * @see lib/importer/TikiImporter_Blog#insertData()
 	 */
 	function insertData($parsedData = null)
@@ -995,10 +993,10 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 				if ($changed) {
 					if ($item['type'] == 'page') {
-						TikiDb::get()->query('UPDATE `tiki_pages` SET `data` = ? WHERE `pageName` = ?', array($content, $item['objId']));
+						TikiDb::get()->query('UPDATE `tiki_pages` SET `data` = ? WHERE `pageName` = ?', [$content, $item['objId']]);
 					} else {
 						// post
-						TikiDb::get()->query('UPDATE `tiki_blog_posts` SET `data` = ? WHERE `postId` = ?', array($content, $item['objId']));
+						TikiDb::get()->query('UPDATE `tiki_blog_posts` SET `data` = ? WHERE `postId` = ?', [$content, $item['objId']]);
 					}
 				}
 			}

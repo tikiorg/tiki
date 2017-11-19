@@ -9,7 +9,7 @@
  * \brief Exec SQL query on Tiki DB
  * \author zaufi <zaufi@sendmail.ru>
  */
-require_once ('lib/debug/debugger-ext.php');
+require_once('lib/debug/debugger-ext.php');
 
 /**
  * \brief Debugger command to exec SQL
@@ -62,9 +62,9 @@ class DbgSQLQuery extends DebuggerCommand
 
 			$qr = $tikilib->db->query($params);
 
-			if (DB::isError($qr))
-				$result = '<span class="dbgerror">' . $qr->getMessage(). '</span>';
-			else {
+			if (DB::isError($qr)) {
+				$result = '<span class="dbgerror">' . $qr->getMessage() . '</span>';
+			} else {
 				// Check if result value an array or smth else
 				if (is_object($qr)) {
 					// Looks like 'SELECT...' return table to us...
@@ -78,8 +78,9 @@ class DbgSQLQuery extends DebuggerCommand
 					while ($res = $qr->fetchRow(DB_FETCHMODE_ASSOC)) {
 						if ($first_time) {
 							// Form 1st element with field names
-							foreach ($res as $key => $val)
+							foreach ($res as $key => $val) {
 								$result .= '<td class="heading">' . $key . '</td>';
+							}
 
 							$first_time = false;
 						}
@@ -91,7 +92,7 @@ class DbgSQLQuery extends DebuggerCommand
 						foreach ($res as $val) {
 							$result .= '<td class=' . ($td_eo_class ? "even" : "odd") . '>' . $val . '</td>';
 
-							$td_eo_class = !$td_eo_class;
+							$td_eo_class = ! $td_eo_class;
 						}
 
 						//
@@ -104,8 +105,9 @@ class DbgSQLQuery extends DebuggerCommand
 					$result = 'Query result: ' . print_r($qr, true);
 				}
 			}
-		} else
+		} else {
 			$result = "Empty query to tiki DB";
+		}
 
 		//
 		return $result;

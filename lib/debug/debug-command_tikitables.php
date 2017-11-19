@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,7 +9,7 @@
  * \brief Show list of Tiki tables in DB schema
  * \author zaufi <zaufi@sendmail.ru>
  */
-require_once ('lib/debug/debugger-ext.php');
+require_once('lib/debug/debugger-ext.php');
 
 /**
  * \brief Show list of Tiki tables in DB schema
@@ -54,7 +54,7 @@ class DbgSQLTables extends DebuggerCommand
 		$len = strlen($mask);
 		// Get list of all tables
 		$qr = $tikilib->query("show tables;");
-		$tbls = array();
+		$tbls = [];
 
 		while ($res = $qr->fetchRow(DB_FETCHMODE_ASSOC)) {
 			/*
@@ -78,8 +78,9 @@ class DbgSQLTables extends DebuggerCommand
 			 *  }
 				 *  ...
 				 */
-			if (!$len || $len && preg_match('/' . $mask . '/', current($res)))
+			if (! $len || $len && preg_match('/' . $mask . '/', current($res))) {
 				$tbls[] = current($res);
+			}
 		}
 
 		return $tbls;

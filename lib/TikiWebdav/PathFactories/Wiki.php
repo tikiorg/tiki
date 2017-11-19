@@ -9,7 +9,7 @@ class TikiWebdav_PathFactories_Wiki implements ezcWebdavPathFactory
 {
 	protected $baseUri = '';
 	protected $baseUriLength = 0;
-	protected $collectionPathes = array();
+	protected $collectionPathes = [];
 
 	public function parseUriToPath($uri)
 	{

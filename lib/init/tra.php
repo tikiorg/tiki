@@ -12,7 +12,7 @@
 require_once('lib/init/typography.php');
 
 global $interactive_collected_strings;
-$interactive_collected_strings = array();
+$interactive_collected_strings = [];
 
 /**
  * needs a description
@@ -33,15 +33,15 @@ $interactive_collected_strings = array();
  *
  * @return mixed|string
  */
-function tra($content, $lg = '', $unused = false, $args = array())
+function tra($content, $lg = '', $unused = false, $args = [])
 {
 	global $prefs;
-	static $languages = array();
+	static $languages = [];
 
 	if ($lg == '') {
 		if (! empty($prefs['language'])) {
 			$lang = $prefs['language'];
-		} elseif(! empty($prefs['site_language'])) {
+		} elseif (! empty($prefs['site_language'])) {
 			$lang = $prefs['site_language'];
 		} else {
 			$lang = 'en';
@@ -50,7 +50,7 @@ function tra($content, $lg = '', $unused = false, $args = array())
 		$lang = $lg;
 	}
 
-	if ( ! isset($languages[$lang]) ) {
+	if (! isset($languages[$lang])) {
 		$languages[ $lang ] = true;
 		init_language($lang);
 	}
@@ -67,13 +67,13 @@ function tra($content, $lg = '', $unused = false, $args = array())
  * initialize language $lg
  * @param string $lg
  */
-function init_language( $lg )
+function init_language($lg)
 {
 	global $tikidomain, $prefs;
 	if (is_file("lang/$lg/language.php")) {
 		global ${"lang_$lg"};
 
-		$lang = array();
+		$lang = [];
 		include("lang/$lg/language.php");
 
 		// include mods language files if any
@@ -94,7 +94,7 @@ function init_language( $lg )
 		}
 
 		$customfile = "lang/$lg/$tikidomain/custom.php";
-		if (!empty($tikidomain) && is_file($customfile)) {
+		if (! empty($tikidomain) && is_file($customfile)) {
 			if (! check_file_BOM($customfile)) {
 				include_once($customfile);
 			}
@@ -109,14 +109,13 @@ function init_language( $lg )
 			}
 		}
 
-		if ( isset( $prefs['lang_use_db'] ) && $prefs['lang_use_db'] == 'y' ) {
-
+		if (isset($prefs['lang_use_db']) && $prefs['lang_use_db'] == 'y') {
 			$tikilib = TikiLib::lib('tiki');
 			if (isset($tikilib)) {
 				$query = "select `source`, `tran` from `tiki_language` where `lang`=?";
-				$result = $tikilib->fetchAll($query, array($lg));
+				$result = $tikilib->fetchAll($query, [$lg]);
 
-				foreach ( $result as $row ) {
+				foreach ($result as $row) {
 					$lang[ $row['source'] ] = $row['tran'];
 				}
 			}
@@ -134,7 +133,7 @@ function init_language( $lg )
  *
  * @return mixed|string
  */
-function tra_impl($content, $lg = '', $args = array())
+function tra_impl($content, $lg = '', $args = [])
 {
 	global $prefs, $tikilib;
 
@@ -155,11 +154,12 @@ function tra_impl($content, $lg = '', $args = array())
 		$lastCharacter = $content[strlen($content) - 1];
 		if (in_array($lastCharacter, Language::punctuations)) { // Should stay synchronized with Language_WriteFile::writeStringsToFile()
 			$new_content = substr($content, 0, -1);
-			if ( isset(${"lang_$lg"}[$new_content]) ) {
+			if (isset(${"lang_$lg"}[$new_content])) {
 				return tr_replace(
 					${"lang_$lg"}[$new_content] . ( isset(${"lang_$lg"}[$lastCharacter])
 					? ${"lang_$lg"}[$lastCharacter]
-					: $lastCharacter ), $args
+					: $lastCharacter ),
+					$args
 				);
 			}
 		}
@@ -168,9 +168,9 @@ function tra_impl($content, $lg = '', $args = array())
 	// ### Trebly:B00624-01:added test on tikilib existence : on the first launch of tra tikilib is not yet set
 	if (isset($prefs['record_untranslated']) && $prefs['record_untranslated'] == 'y' && $lg != 'en' && isset($tikilib)) {
 		$query = 'select `id` from `tiki_untranslated` where `source`=? and `lang`=?';
-		if (!$tikilib->getOne($query, array($content, $lg))) {
+		if (! $tikilib->getOne($query, [$content, $lg])) {
 			$query = "insert into `tiki_untranslated` (`source`,`lang`) values (?,?)";
-			$tikilib->query($query, array($content, $lg), -1, -1, false);
+			$tikilib->query($query, [$content, $lg], -1, -1, false);
 		}
 	}
 
@@ -184,16 +184,16 @@ function tra_impl($content, $lg = '', $args = array())
  *
  * @return mixed
  */
-function tr_replace( $content, $args )
+function tr_replace($content, $args)
 {
-	if ( ! count($args) ) {
+	if (! count($args)) {
 		$out = $content;
 	} else {
-		$needles = array();
+		$needles = [];
 		// reverse makes sure %11, %12, etc. are translated
 		$replacements = array_reverse($args);
 		$keys = array_reverse(array_keys($args));
-		foreach ( $keys as $num ) {
+		foreach ($keys as $num) {
 			$needles[] = "%$num";
 		}
 
@@ -208,11 +208,11 @@ function tr_replace( $content, $args )
  * @param $original
  * @param $printed
  */
-function record_string( $original, $printed )
+function record_string($original, $printed)
 {
 	global $interactive_collected_strings;
-	if ( interactive_enabled() ) {
-		$interactive_collected_strings[ md5($original . '___' . $printed) ] = array( $original, html_entity_decode($printed) );
+	if (interactive_enabled()) {
+		$interactive_collected_strings[ md5($original . '___' . $printed) ] = [ $original, html_entity_decode($printed) ];
 	}
 }
 
@@ -222,7 +222,7 @@ function record_string( $original, $printed )
  */
 function interactive_enabled()
 {
-	return isset( $_SESSION['interactive_translation_mode'] ) && $_SESSION['interactive_translation_mode'] != 'off';
+	return isset($_SESSION['interactive_translation_mode']) && $_SESSION['interactive_translation_mode'] != 'off';
 }
 
 /**
@@ -243,7 +243,8 @@ function get_collected_strings()
  *
  * @return bool					true if file still has a BOM
  */
-function check_file_BOM($filename, $try_to_fix = true) {
+function check_file_BOM($filename, $try_to_fix = true)
+{
 	$BOM_found = false;
 
 	if (is_readable($filename)) {
@@ -270,4 +271,3 @@ function check_file_BOM($filename, $try_to_fix = true) {
 
 	return $BOM_found;
 }
-

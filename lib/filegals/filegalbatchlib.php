@@ -8,8 +8,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -43,8 +43,9 @@ class FilegalBatchLib extends FileGalLib
 	 * @return array				feedback messages
 	 */
 
-	function processBatchUpload($files, $galleryId = null, $options = []) {
-		include_once ('lib/mime/mimetypes.php');
+	function processBatchUpload($files, $galleryId = null, $options = [])
+	{
+		include_once('lib/mime/mimetypes.php');
 		global $mimetypes, $user, $prefs;
 
 		$userlib = TikiLib::lib('user');
@@ -80,14 +81,13 @@ class FilegalBatchLib extends FileGalLib
 
 		// cycle through all files to upload
 		foreach ($files as $file) {
-
 			//add meadata
 			$metadata = $this->extractMetadataJson($file);
 
 			$path_parts = pathinfo($file);
 
 			$type = 'application/octet-stream';
-			if (!empty($path_parts['extension'])) {
+			if (! empty($path_parts['extension'])) {
 				$ext = strtolower($path_parts['extension']);
 
 				if (isset($mimetypes["$ext"])) {
@@ -101,7 +101,6 @@ class FilegalBatchLib extends FileGalLib
 
 			// if the same file creator user matches a tiki user then set the creator to that
 			if (function_exists('posix_getpwuid')) {
-
 				$info = posix_getpwuid(fileowner($file));
 
 				if ($userlib->user_exists($info['name'])) {
@@ -112,48 +111,43 @@ class FilegalBatchLib extends FileGalLib
 			$destinationGalleryId = $galleryId;
 
 			if ($options['fileUser']) {
-				if (!chown($file, $options['fileUser'])) {
+				if (! chown($file, $options['fileUser'])) {
 					$feedback[] = '<span class="text-danger">' . tr('Problem setting user for "%0"', $path_parts['basename']);
 				}
 			}
 			if ($options['fileGroup']) {
-				if (!chgrp($file, $options['fileGroup'])) {
+				if (! chgrp($file, $options['fileGroup'])) {
 					$feedback[] = '<span class="text-danger">' . tr('Problem setting group for "%0"', $path_parts['basename']);
 				}
 			}
 			if ($options['fileMode']) {
-				if (!chmod($file, octdec($options['fileMode']))) {
+				if (! chmod($file, octdec($options['fileMode']))) {
 					$feedback[] = '<span class="text-danger">' . tr('Problem setting mode for "%0"', $path_parts['basename']);
 				}
 			}
 
 			if ($options['subdirToSubgal']) {
-
 				$foundDir = true;
 
 				$dirs = array_filter(
-						explode(DIRECTORY_SEPARATOR,
-								substr($path_parts['dirname'], strlen($filesPath))
-						)
+					explode(
+						DIRECTORY_SEPARATOR,
+						substr($path_parts['dirname'], strlen($filesPath))
+					)
 				);
 
 				if ($options['subdirIntegerToSubgalId']) {
-
 					$foundDir = false;
 
 					// if there is only one subdir and it's a number, check if there's a gallery with that id to use
 					if (count($dirs) > 1) {
-
 						$feedback[] = '<span class="text-danger">' .
 								tr('Upload was not successful for "%0"', $path_parts['basename']) .
 								'<br>' . tr('Subgallery number to galleryId error: Too many subdirs (%0)</span>', count($dirs));
-
-					} else if (count($dirs) === 1 && ! ctype_digit($dirs[0])) {
-
+					} elseif (count($dirs) === 1 && ! ctype_digit($dirs[0])) {
 						$feedback[] = '<span class="text-danger">' .
 								tr('Upload was not successful for "%0"', $path_parts['basename']) .
 								'<br>' . tr('Subgallery number to galleryId error: Not an integer (%0)</span>', $dirs[0]);
-
 					} else {
 						foreach ($subgals['data'] as $subgal) {
 							if ($subgal['id'] == $dirs[0] || $galleryId == $dirs[0]) {
@@ -163,27 +157,22 @@ class FilegalBatchLib extends FileGalLib
 						}
 						if ($foundDir) {
 							$destinationGalleryId = (int)$dirs[0];
-
-						} else if (count($dirs) === 0) {	// in root
+						} elseif (count($dirs) === 0) {	// in root
 							$destinationGalleryId = $galleryId;
 							$foundDir = true;
-
 						} else {
-
 							$feedback[] = '<span class="text-danger">' .
 								tr('Upload was not successful for "%0"', $path_parts['basename']) .
 								'<br>' . tr('Subgallery number to galleryId error: Gallery with ID %0 not found</span>', $dirs[0]);
-
 						}
 					}
-
 				} else {	// not subdirIntegerToSubgalId
 
-					foreach($dirs as $dir) {
+					foreach ($dirs as $dir) {
 						$foundDir = false;
 
-						$subgals = $this->getSubGalleries($destinationGalleryId, false,'batch_upload_file_dir');
-						foreach($subgals['data'] as $subgal) {
+						$subgals = $this->getSubGalleries($destinationGalleryId, false, 'batch_upload_file_dir');
+						foreach ($subgals['data'] as $subgal) {
 							if ($subgal['parentId'] == $destinationGalleryId && $subgal['name'] == $dir) {
 								$destinationGalleryId = (int) $subgal['id'];
 								$foundDir = true;
@@ -194,7 +183,6 @@ class FilegalBatchLib extends FileGalLib
 							if ($options['createSubgals']) {
 								$perms = $this->get_perm_object($destinationGalleryId, 'file gallery', $this->get_file_gallery_info($destinationGalleryId), false);
 								if ($perms['tiki_p_create_file_galleries'] === 'y') {
-
 									$new_info = $this->default_file_gallery();
 									$new_info['name'] = $dir;
 									$new_info['description'] = tr('Created by batch upload by user "%0" on %1', $user, $this->get_short_datetime($this->now, $user));
@@ -234,14 +222,14 @@ class FilegalBatchLib extends FileGalLib
 			}
 
 			$result = $this->handle_batch_upload(
-					$destinationGalleryId,
-					[
+				$destinationGalleryId,
+				[
 							'source' => $file,
 							'size' => $filesize,
 							'type' => $type,
 							'name' => $path_parts['basename'],
 					],
-					$ext
+				$ext
 			);
 
 			if (isset($result['error'])) {
@@ -258,13 +246,27 @@ class FilegalBatchLib extends FileGalLib
 				$name = $path_parts['basename'];
 
 				$fileId = $this->insert_file(
-						$destinationGalleryId, $name, $tmpDesc, $name, $result['data'], $filesize, $type,
-						$creator, $result['fhash'], null, null, null, null, $options['deleteAfter'], null, $metadata
+					$destinationGalleryId,
+					$name,
+					$tmpDesc,
+					$name,
+					$result['data'],
+					$filesize,
+					$type,
+					$creator,
+					$result['fhash'],
+					null,
+					null,
+					null,
+					null,
+					$options['deleteAfter'],
+					null,
+					$metadata
 				);
 				if ($fileId) {
 					$feedback[] = tra('Upload was successful') . ': ' . $name;
 					@unlink($file);    // seems to return false sometimes even if the file was deleted
-					if (!file_exists($file)) {
+					if (! file_exists($file)) {
 						$feedback[] = sprintf(tra('File %s removed from Batch directory.'), $file);
 					} else {
 						$feedback[] = '<span class="text-danger">' . sprintf(tra('Impossible to remove file %s from Batch directory.'), $file) . '</span>';
@@ -294,29 +296,29 @@ class FilegalBatchLib extends FileGalLib
 		if ($savedir) {
 			$fhash = $this->find_unique_name($savedir, $info['name']);
 
-			if (in_array($ext, array("m4a", "mp3", "mov", "mp4", "m4v", "pdf"))) {
-				$fhash.= "." . $ext;
+			if (in_array($ext, ["m4a", "mp3", "mov", "mp4", "m4v", "pdf"])) {
+				$fhash .= "." . $ext;
 			}
 
 			if (! rename($info['source'], $savedir . $fhash)) {
 				if (is_writable(dirname($info['source']))) {
-					return array('error' => tra('Cannot write to this file:') . $savedir . $fhash);
+					return ['error' => tra('Cannot write to this file:') . $savedir . $fhash];
 				} else {
-					return array('error' => tra('Cannot move this file:') . $info['source']);
+					return ['error' => tra('Cannot move this file:') . $info['source']];
 				}
 			}
 		} else {
 			$data = file_get_contents($info['source']);
 
 			if (false === $data) {
-				return array('error' => tra('Cannot read file on disk.'));
+				return ['error' => tra('Cannot read file on disk.')];
 			}
 		}
 
-		return array(
+		return [
 			'data' => $data,
 			'fhash' => $fhash,
-		);
+		];
 	}
 
 	/**
@@ -344,7 +346,6 @@ class FilegalBatchLib extends FileGalLib
 
 		// build file data array
 		foreach ($files as $file) {
-
 			// get file information
 			$filesize = @filesize($file);
 
@@ -381,12 +382,10 @@ class FilegalBatchLib extends FileGalLib
 
 			if (is_dir($dir . "/" . $filefile)) {
 				$files = array_merge($this->batchUploadDirContent($dir . DIRECTORY_SEPARATOR . $filefile), $files);
-
-			} elseif (!in_array(strtolower(substr($filefile, -(strlen($filefile) - strrpos($filefile, ".") - 1))), $this->disallowed_types)) {
-				$files[] =  $dir . DIRECTORY_SEPARATOR . $filefile;
+			} elseif (! in_array(strtolower(substr($filefile, -(strlen($filefile) - strrpos($filefile, ".") - 1))), $this->disallowed_types)) {
+				$files[] = $dir . DIRECTORY_SEPARATOR . $filefile;
 			}
 		}
 		return $files;
 	}
-
 }

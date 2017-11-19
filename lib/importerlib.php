@@ -12,7 +12,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 }
 
 //comments lib and Comments class needed for use by tiki-forum_import.php
-require_once ('lib/comments/commentslib.php');
+require_once('lib/comments/commentslib.php');
 
 /**
  * Importer
@@ -29,8 +29,8 @@ class Importer extends Comments
 	// in the template. As support for more imports grows, add the type to
 	// the below two arrays, in addition to writing the functions to
 	// support them.
-	public $fi_types    = array('TikiWiki');
-	public $fi_prefixes = array('tiki_');
+	public $fi_types    = ['TikiWiki'];
+	public $fi_prefixes = ['tiki_'];
 
 
 	/*
@@ -56,9 +56,9 @@ class Importer extends Comments
 	 */
 	function importSQLForum($dbType, $dbPrefix, $sqlFile, $fF, $tF)
 	{
-		$fHash = array();
-		$row = array();
-		$hash = array();	// If part of a thread, this is the new parent threadId.
+		$fHash = [];
+		$row = [];
+		$hash = [];	// If part of a thread, this is the new parent threadId.
 
 		// Select the table for the main forum information.
 		if ($dbType == 'TikiWiki') {
@@ -82,11 +82,11 @@ class Importer extends Comments
 			$row = array_shift($fHash);
 
 			$pid = 0;
-			if ($row['parentId'] != 0 && !$hash[$row['parentId']]) {
+			if ($row['parentId'] != 0 && ! $hash[$row['parentId']]) {
 				array_push($fHash, $row);
 				$fPosts2++;
 				continue;
-			} else if ($row['parentId'] != 0) {
+			} elseif ($row['parentId'] != 0) {
 				$pid = $hash[$row['parentId']];
 			}
 
@@ -98,7 +98,7 @@ class Importer extends Comments
 								`message_id`, `in_reply_to`)
 								values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
-				$result = $this->query($query, array(
+				$result = $this->query($query, [
 						'forum',
 						$tF,
 						$row["commentDate"],
@@ -116,28 +116,27 @@ class Importer extends Comments
 						$row["user_ip"],
 						$row["message_id"],
 						$row["in_reply_to"]
-					)
-				);
+					]);
 
 				$abbb = $this->getOne("SELECT LAST_INSERT_ID() from $ftable");
 
-				if (!$abbb) {
+				if (! $abbb) {
 					$abbb = $this->getOne("SELECT max(tableId) from $ftable");
 				}
 				$hash[$row['threadId']] = $abbb;
 			} else {
-				die ("Only TikiWiki is supported at this time.\n");
+				die("Only TikiWiki is supported at this time.\n");
 			}
 		}
 		// Update forum counters.
 		$query = "select count(*) from `tiki_comments` where `objectType` = 'forum' and `object` = ?";
-		$tComments = $this->getOne($query, array( (int) $tF ));
+		$tComments = $this->getOne($query, [ (int) $tF ]);
 
 		$query = "select count(*) from `tiki_comments` where `objectType` = 'forum' and `object` = ? and `parentId` = 0";
-		$tThreads = $this->getOne($query, array( (int) $tF ));
+		$tThreads = $this->getOne($query, [ (int) $tF ]);
 
 		$query = 'update `tiki_forums` set `comments` = ?, `threads` = ? where `forumId` = ?';
-		$result = $this->query($query, array( (int) $tComments, (int) $tThreads, (int) $tF ));
+		$result = $this->query($query, [ (int) $tComments, (int) $tThreads, (int) $tF ]);
 
 		// Force an index refresh on comments table.
 		include_once('lib/search/refresh-functions.php');
@@ -159,7 +158,7 @@ class Importer extends Comments
 	 */
 	function parseFields($record)
 	{
-		$fields = array();
+		$fields = [];
 		$moo = "\'";
 
 		while ($a = strpos($record, ',')) {
@@ -182,7 +181,7 @@ class Importer extends Comments
 			} else {
 				$field = substr($record, 0, $a);
 				if (strpos($field, 'NULL') !== false && strlen($field) == 4) {
-					$field = NULL;
+					$field = null;
 				}
 				array_push($fields, $field);
 				$record = substr($record, $a + 1);
@@ -210,9 +209,9 @@ class Importer extends Comments
 	function parseSQL($dbType, $dbPrefix, $table, $sqlFile, $fId)
 	{
 
-		$headings = array();
-		$rec = array();
-		$thash = array();
+		$headings = [];
+		$rec = [];
+		$thash = [];
 
 		$fH = fopen($sqlFile, 'r');
 
@@ -222,7 +221,7 @@ class Importer extends Comments
 		while ($fL = fgets($fH)) {
 			// If we find a create table block, parse the
 			// entire block.
-			if (preg_match('/'.$lookFor1.'/', $fL)) {
+			if (preg_match('/' . $lookFor1 . '/', $fL)) {
 				$fL = fgets($fH);
 				while (preg_match('/^  `/', $fL)) {
 					$a = substr($fL, 3);
@@ -235,8 +234,8 @@ class Importer extends Comments
 
 			// Now that we've parsed the create table block,
 			// look for the insert block.
-			if (preg_match('/'.$lookFor2.'/', $fL)) {
-				while (preg_match('/'.$lookFor2.'/', $fL)) {
+			if (preg_match('/' . $lookFor2 . '/', $fL)) {
+				while (preg_match('/' . $lookFor2 . '/', $fL)) {
 					$a = strpos($fL, '(');
 					$b = strpos($fL, ");\n");
 					$c = substr($fL, $a + 1, $b - $a - 1);
@@ -265,7 +264,7 @@ class Importer extends Comments
 						// the next record, and skip the current one. Repeat
 						// checking the next record until both the current one
 						// and its follower are proper.
-						while (isset($records[$count + 1]) && !preg_match('/^[0-9]/', $records[$count + 1])) {
+						while (isset($records[$count + 1]) && ! preg_match('/^[0-9]/', $records[$count + 1])) {
 							$newrec = $records[$count] . '),(' . $records[$count + 1];
 							$count++;
 							$records[$count] = $newrec;
@@ -282,7 +281,7 @@ class Importer extends Comments
 								continue;
 								// If a source forum has been specified, ignore
 								// records that are not for that specific forum.
-							} else if ($fId && $fields[1] != "$fId" && $table == 'comments') {
+							} elseif ($fId && $fields[1] != "$fId" && $table == 'comments') {
 								// Do nothing... NEXT!
 								continue;
 							} else {
@@ -312,10 +311,10 @@ class Importer extends Comments
 	 */
 	function parseForumList($dbType, $dbPrefix, $sqlFile)
 	{
-		$tHash  = array();
-		$fields = array();
-		$forum  = array();
-		$forums = array();
+		$tHash  = [];
+		$fields = [];
+		$forum  = [];
+		$forums = [];
 
 		// Select the table for the main forum information.
 		if ($dbType == 'TikiWiki') {

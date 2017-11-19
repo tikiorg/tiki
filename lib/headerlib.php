@@ -16,48 +16,48 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * Javascript and CSS can be added:
  * - as files (filename including relative path to tikiroot)
  * - as scripts (string)
- * - as a url to load from a cdn (Note: use $tikilib->httpScheme() to build the url. It considers reverse proxies and returns correctly 'http' or 'https') 
- * Note: there are 2 prefs to add additional cdns. one for http and one for https. 
- *  
+ * - as a url to load from a cdn (Note: use $tikilib->httpScheme() to build the url. It considers reverse proxies and returns correctly 'http' or 'https')
+ * Note: there are 2 prefs to add additional cdns. one for http and one for https.
+ *
  * To maintain the order of loading Javascript and to allow minifying, the following "ranks" are supported:
  * '10dynamic': loaded first to allow minification of the other ranks. Usally module and plugin descriptions.
  * '20cdn' : loaded after 'dynamic', no minification possible // main libs like jquery from jquery/google cdn (no user cdns)
  * '30dependancy': loaded after 'cdn', minification possible  // main libs like jquery, codemirror
  * '40external': loaded after 'dependancy', minification possible // custom libs that require main libs
  * '50standard': loaded after 'external', minification possible // standard js that might require main / custom libs
- * '60late': loaded after 'standard', minification possible // page specific js 
+ * '60late': loaded after 'standard', minification possible // page specific js
  *   Note: this rank is activated in tiki-setup.php to seperate page specific JS from common JS
  *   So any JS loaded after tiki-setup.php that has no rank 'external' is put into 'late'.
  *   If minification is activated for late, any new combination of late files will be created automaically if needed.
- *   When using user specific CDNs AND minification for late is enabled, any possible minified file must be avaliable via that CDN! 
- * 
- * The order of files within each section will be maintained. What adds first will be processed first. 
- *  
+ *   When using user specific CDNs AND minification for late is enabled, any possible minified file must be avaliable via that CDN!
+ *
+ * The order of files within each section will be maintained. What adds first will be processed first.
+ *
  * Note: cdns (google/jquery, not user cdns), files and scripts (strings) willl be handled seperatetly.
- * 
+ *
  * To add JS the follwoing methods are available. Note: if $skip_minify == true, this file will not be processed for further minification.
  * This could be used to avoid screwing up the JS file in the rare case minification on that particular file does not work.
- * It will however be concated to one single JS file. 
+ * It will however be concated to one single JS file.
  * Useful methods to ad JS files:
  * add_jsfile_cdn($url) - add a JS File from a CDN
  * add_jsfile_dependancy($filename, $skip_minify) - add a JS File to the section dependancy
  * add_jsfile_external($filename, $skip_minify) - add a JS File to the section external
- * add_jsfile($filename, $skip_minify) - add a JS File to the section standard 
+ * add_jsfile($filename, $skip_minify) - add a JS File to the section standard
  * add_jsfile_late($filename, $skip_minify) - add a JS File to the section late
 
- * 
+ *
  * These functions allow to add JS as scripts/strings. No minification on them:
  * add_js($script, $rank) - add JS as string
  * add_jq_onready($script, $rank) - add JS as string and add to the onready event
  * add_js_config($script, $rank) - add JS that usally represents a config object
- * 
+ *
  * @TODO CSS handling
- * 
+ *
  */
 class HeaderLib
 {
 	public $title;
-	
+
 	/**
 	 * Array of js files arrays or js urls arrays to load
 	 * key = rank, value = array of filenames with relative path or urls
@@ -65,7 +65,7 @@ class HeaderLib
 	 * @var array()
 	 */
 	public $jsfiles;
-	
+
 
 	/**
 	 * Array of js files that are already minified or should not be minified
@@ -74,8 +74,8 @@ class HeaderLib
 	 * @var array
 	 */
 	public $skip_minify;
-	
-	
+
+
 	/**
 	 * Array of JS scripts arrays as strings to load
 	 * key = rank (load order), value = array of scripts.
@@ -83,17 +83,17 @@ class HeaderLib
 	 * @var array
 	 */
 	public $js;
-	
-	
+
+
 	/**
 	 * Array of JS Scripts arrays as string that act as config
-	 * Usally created dynamically 
+	 * Usally created dynamically
 	 * js_config[$rank][] = $script;
 	 * @var array
 	 */
 	public $js_config;
-	
-	
+
+
 	/**
 	 * Array of JS Scripts arrays as string that should be called onReady().
 	 * Key = rank (load order), value = array of scripts.
@@ -101,17 +101,17 @@ class HeaderLib
 	 * @var array
 	 */
 	public $jq_onready;
-	
+
 	public $cssfiles;
 	public $css;
 	public $rssfeeds;
 	public $metatags;
 	public $linktags;
-	
+
 	public $wysiwyg_parsing;
-	
-	
-	/* If set to true, any js added through add_jsfile() that has not rank 'external' will be put to rank 'late' 
+
+
+	/* If set to true, any js added through add_jsfile() that has not rank 'external' will be put to rank 'late'
 	 * Only set once in tiki-setup.php to separate wiki page specific js from common js.
 	 * @var boolean
 	 */
@@ -129,49 +129,49 @@ class HeaderLib
 		$smarty->assign('headerlib', $this);
 
 		$this->title = '';
-		$this->jsfiles = array();
-		$this->skip_minify = array();
-		$this->js = array();
-		$this->js_config = array();
-		$this->jq_onready = array();
-		$this->cssfiles = array();
-		$this->css = array();
-		$this->rssfeeds = array();
-		$this->metatags = array();
+		$this->jsfiles = [];
+		$this->skip_minify = [];
+		$this->js = [];
+		$this->js_config = [];
+		$this->jq_onready = [];
+		$this->cssfiles = [];
+		$this->css = [];
+		$this->rssfeeds = [];
+		$this->metatags = [];
 		$this->rawhtml = '';
 
 		$this->wysiwyg_parsing = false;
 		$this->forceJsRankLate = false;
 	}
 
-	
+
 	/**
 	 * user cdn and feature multi_cdn see r46854
 	 * @param string $file
 	 * @param string $rank
 	 * @return string $file
 	 */
-	function convert_cdn( $file, $rank = null )
+	function convert_cdn($file, $rank = null)
 	{
 		global $prefs, $tikiroot;
 
 		// using this method, also reverse proxy / ssl offloading will continue to work
 		$httpScheme = Tikilib::httpScheme();
-		$https_mode = ($httpScheme == 'https') ? true : false; 
+		$https_mode = ($httpScheme == 'https') ? true : false;
 
 		$cdn_ssl_uri = array_filter(preg_split('/\s+/', $prefs['tiki_cdn_ssl']));
 		$cdn_uri = array_filter(preg_split('/\s+/', $prefs['tiki_cdn']));
 
-		if ($https_mode && !empty($cdn_ssl_uri)) {
+		if ($https_mode && ! empty($cdn_ssl_uri)) {
 			$cdn_pref = &$cdn_ssl_uri;
-		} elseif (!empty($cdn_uri)) {
+		} elseif (! empty($cdn_uri)) {
 			$cdn_pref = &$cdn_uri;
 		}
 
 		// feature multi_cdn see r46854 - quote from commit:
-		// filename hash is used to select/assign one CDN URI from the list. 
+		// filename hash is used to select/assign one CDN URI from the list.
 		// It ensure a same file will always point/use the same CDN and ensure proper caching.
-		if ( !empty($cdn_pref) && 'http' != substr($file, 0, 4) && $rank !== 'dynamic' ) {
+		if (! empty($cdn_pref) && 'http' != substr($file, 0, 4) && $rank !== 'dynamic') {
 			$index = hexdec(hash("crc32b", $file)) % count($cdn_pref);
 			$file = $cdn_pref[$index] . $tikiroot . $file;
 		}
@@ -179,7 +179,7 @@ class HeaderLib
 		return $file;
 	}
 
-	
+
 	function set_title($string)
 	{
 		$this->title = urlencode($string);
@@ -197,12 +197,12 @@ class HeaderLib
 		$this->add_jsfile_by_rank($url, '10dynamic', true);
 		return $this;
 	}
-		
-	
+
+
 	/**
 	 * Add a js url to top priority load order. That url must be loaded from an external source.
 	 * These are usually libraries like jquery that are loaded from a cdn = content delivery network.
- 	 * Urls added here will not be further processed (like minified or put into a single file)
+	  * Urls added here will not be further processed (like minified or put into a single file)
 	 *
 	 * N.B. skip_minify needs to be set to true here for when tiki_minify_late_js_files is active
 	 * and cdn files are added after page setup by plugins etc
@@ -215,8 +215,8 @@ class HeaderLib
 		$this->add_jsfile_by_rank($url, '20cdn', true);
 		return $this;
 	}
-	
-	
+
+
 	/**
 	 * Add a js file to top priority load order, right after cdns and dynamics. That file must not be loaded from an external source.
 	 * Theses are usally libraries like jquery or codemirror, so files where other js file depend on.
@@ -230,8 +230,8 @@ class HeaderLib
 		$this->add_jsfile_by_rank($file, '30dependancy', $skip_minify);
 		return $this;
 	}
-	
-	
+
+
 	/**
 	 * Add a js file to load after dependancy . That file must not be loaded from an external source.
 	 * Theses are usally custom libraries like raphael, gaffle etc.
@@ -245,7 +245,7 @@ class HeaderLib
 		$this->add_jsfile_by_rank($file, '40external', $skip_minify);
 		return $this;
 	}
-	
+
 
 	/**
 	 * Adds a js file to load after external. That file must not be loaded from an external source.
@@ -254,16 +254,17 @@ class HeaderLib
 	 * @param bool $skip_minify true if the file must not be minified, false if it can
 	 * @return HeaderLib Current object
 	 */
-	function add_jsfile($file, $skip_minify=false) {
+	function add_jsfile($file, $skip_minify = false)
+	{
 		$this->add_jsfile_by_rank($file, '50standard', $skip_minify);
 		return $this;
 	}
 
-	
+
 	/**
 	 * Add a js file to load after standard . That file must not be loaded from an external source.
-	 * Use this method to add page specific js files. They will be minified separatly. 
-	 * @see $this->forceJsRankLate() 
+	 * Use this method to add page specific js files. They will be minified separatly.
+	 * @see $this->forceJsRankLate()
 	 * Depending on prefs, it could be minified and put into a single js file.
 	 * @param string $filename with path relative to tiki dir
 	 * @param bool $skip_minify true if the file must not be minified, false if it can
@@ -273,25 +274,26 @@ class HeaderLib
 	{
 		$this->add_jsfile_by_rank($file, '60late', $skip_minify);
 		return $this;
-	}	
-	
-	
+	}
+
+
 	/**
-	 * Add a jf file by rank. Do not use this function directly! 
+	 * Add a jf file by rank. Do not use this function directly!
 	 * Only reason that it is public, is for access from lib/core/tiki/PageCache.php
 	 * @param string $file
 	 * @param string $rank
 	 * @param bool $skip_minify true if the file must not be minified, false if it can
 	 * @return HeaderLib Current object
 	 */
-	function add_jsfile_by_rank($file, $rank, $skip_minify = false) {
+	function add_jsfile_by_rank($file, $rank, $skip_minify = false)
+	{
 		// if js is added after tiki-setup.php is run, add those js files to 'late'
 		// need to check wether this is really needed
 		if ($this->forceJsRankLate == true && $rank !== '40external') {
 			$rank = '60late';
 		}
-		
-		if (!$this->wysiwyg_parsing && (empty($this->jsfiles[$rank]) or !in_array($file, $this->jsfiles[$rank]))) {
+
+		if (! $this->wysiwyg_parsing && (empty($this->jsfiles[$rank]) or ! in_array($file, $this->jsfiles[$rank]))) {
 			$this->jsfiles[$rank][] = $file;
 			if ($skip_minify) {
 				$this->skip_minify[$file] = $skip_minify;
@@ -307,9 +309,9 @@ class HeaderLib
 	 * @param integer $rank - loadorder optional, default 0
 	 * @return HeaderLib Current object
 	 */
-	function add_js_config($script, $rank=0)
+	function add_js_config($script, $rank = 0)
 	{
-		if (!$this->wysiwyg_parsing && (empty($this->js_config[$rank]) or !in_array($script, $this->js_config[$rank]))) {
+		if (! $this->wysiwyg_parsing && (empty($this->js_config[$rank]) or ! in_array($script, $this->js_config[$rank]))) {
 			$this->js_config[$rank][] = $script;
 		}
 		return $this;
@@ -317,14 +319,14 @@ class HeaderLib
 
 
 	/**
-	 * JS scripts to add as string 
+	 * JS scripts to add as string
 	 * @param string $script
 	 * @param integer $rank loadorder optional, default = 0
 	 * @return HeaderLib Current object
 	 */
 	function add_js($script, $rank = 0)
 	{
-		if (!$this->wysiwyg_parsing && (empty($this->js[$rank]) or !in_array($script, $this->js[$rank]))) {
+		if (! $this->wysiwyg_parsing && (empty($this->js[$rank]) or ! in_array($script, $this->js[$rank]))) {
 			$this->js[$rank][] = $script;
 		}
 		return $this;
@@ -336,17 +338,17 @@ class HeaderLib
 	 * @param number $rank - load order (default=0)
 	 * @return HeaderLib Current object
 	 */
-	function add_jq_onready($script,$rank=0)
+	function add_jq_onready($script, $rank = 0)
 	{
-		if (!$this->wysiwyg_parsing && (empty($this->jq_onready[$rank]) or !in_array($script, $this->jq_onready[$rank]))) {
+		if (! $this->wysiwyg_parsing && (empty($this->jq_onready[$rank]) or ! in_array($script, $this->jq_onready[$rank]))) {
 			$this->jq_onready[$rank][] = $script;
 		}
 		return $this;
 	}
 
-	function add_cssfile($file, $rank=0)
+	function add_cssfile($file, $rank = 0)
 	{
-		if (empty($this->cssfiles[$rank]) or !in_array($file, $this->cssfiles[$rank])) {
+		if (empty($this->cssfiles[$rank]) or ! in_array($file, $this->cssfiles[$rank])) {
 			$this->cssfiles[$rank][] = $file;
 		}
 		return $this;
@@ -354,7 +356,7 @@ class HeaderLib
 
 	function replace_cssfile($old, $new, $rank)
 	{
-		foreach ($this->cssfiles[$rank] as $i=>$css) {
+		foreach ($this->cssfiles[$rank] as $i => $css) {
 			if ($css == $old) {
 				$this->cssfiles[$rank][$i] = $new;
 				break;
@@ -365,8 +367,8 @@ class HeaderLib
 
 	function drop_cssfile($file)
 	{
-		$out = array();
-		foreach ($this->cssfiles as $rank=>$data) {
+		$out = [];
+		foreach ($this->cssfiles as $rank => $data) {
 			foreach ($data as $f) {
 				if ($f != $file) {
 					$out[$rank][] = $f;
@@ -377,23 +379,23 @@ class HeaderLib
 		return $this;
 	}
 
-	function add_css($rules,$rank=0)
+	function add_css($rules, $rank = 0)
 	{
-		if (empty($this->css[$rank]) or !in_array($rules, $this->css[$rank])) {
+		if (empty($this->css[$rank]) or ! in_array($rules, $this->css[$rank])) {
 			$this->css[$rank][] = $rules;
 		}
 		return $this;
 	}
 
-	function add_rssfeed($href,$title,$rank=0)
+	function add_rssfeed($href, $title, $rank = 0)
 	{
-		if (empty($this->rssfeeds[$rank]) or !in_array($href, array_keys($this->rssfeeds[$rank]))) {
+		if (empty($this->rssfeeds[$rank]) or ! in_array($href, array_keys($this->rssfeeds[$rank]))) {
 			$this->rssfeeds[$rank][$href] = $title;
 		}
 		return $this;
 	}
 
-	function add_meta($tag,$value)
+	function add_meta($tag, $value)
 	{
 		$tag = addslashes($tag);
 		$this->metatags[$tag] = $value;
@@ -406,15 +408,21 @@ class HeaderLib
 		return $this;
 	}
 
-    function add_link($rel,$href, $sizes='', $type ='',$color='')
-    {
-        $this->linktags[$href]['href'] = $href;
-        $this->linktags[$href]['rel'] = $rel;
-        if ($sizes) $this->linktags[$href]['sizes'] = $sizes;
-        if ($type) $this->linktags[$href]['type'] = $type;
-        if ($color) $this->linktags[$href]['color'] = $color;
-        return $this;
-    }
+	function add_link($rel, $href, $sizes = '', $type = '', $color = '')
+	{
+		$this->linktags[$href]['href'] = $href;
+		$this->linktags[$href]['rel'] = $rel;
+		if ($sizes) {
+			$this->linktags[$href]['sizes'] = $sizes;
+		}
+		if ($type) {
+			$this->linktags[$href]['type'] = $type;
+		}
+		if ($color) {
+			$this->linktags[$href]['color'] = $color;
+		}
+		return $this;
+	}
 
 	function output_headers()
 	{
@@ -428,7 +436,7 @@ class HeaderLib
 
 		$back = "\n";
 		if ($this->title) {
-			$back = '<title>'.smarty_modifier_escape($this->title)."</title>\n\n";
+			$back = '<title>' . smarty_modifier_escape($this->title) . "</title>\n\n";
 		}
 
 		if ($this->rawhtml) {
@@ -436,66 +444,72 @@ class HeaderLib
 		}
 
 		if (count($this->metatags)) {
-			foreach ($this->metatags as $n=>$m) {
+			foreach ($this->metatags as $n => $m) {
 				// check if the meta name starts with OpenGraph protocol prefix and use property instead of name if true
 				$nameattrib = preg_match('/^og\:/', $n) ? 'property' : 'name';
-				$back.= '<meta ' . $nameattrib . '="' . smarty_modifier_escape($n) . '" content="' . smarty_modifier_escape($m) . "\">\n";
+				$back .= '<meta ' . $nameattrib . '="' . smarty_modifier_escape($n) . '" content="' . smarty_modifier_escape($m) . "\">\n";
 			}
-			$back.= "\n";
+			$back .= "\n";
 		}
-        if (count($this->linktags)) {
-            foreach ($this->linktags as $link) {
-                $back.= '<link rel="' . $link['rel'] . '" href="' . $link['href'] . '"';
-                if (isset($link['sizes'])) $back.= ' sizes="' . $link['sizes'] . '"' ;
-                if (isset($link['type'])) $back.= ' type="' . $link['type'] . '"' ;
-                if (isset($link['color'])) $back.= ' color="' . $link['color'] . '"' ;
-                $back.= ">\n";
-            }
-        }
+		if (count($this->linktags)) {
+			foreach ($this->linktags as $link) {
+				$back .= '<link rel="' . $link['rel'] . '" href="' . $link['href'] . '"';
+				if (isset($link['sizes'])) {
+					$back .= ' sizes="' . $link['sizes'] . '"' ;
+				}
+				if (isset($link['type'])) {
+					$back .= ' type="' . $link['type'] . '"' ;
+				}
+				if (isset($link['color'])) {
+					$back .= ' color="' . $link['color'] . '"' ;
+				}
+				$back .= ">\n";
+			}
+		}
 
 
 		$back .= $this->output_css_files();
 
 		if (count($this->css)) {
-			$back.= "<style type=\"text/css\"><!--\n";
-			foreach ($this->css as $x=>$css) {
-				$back.= "/* css $x */\n";
+			$back .= "<style type=\"text/css\"><!--\n";
+			foreach ($this->css as $x => $css) {
+				$back .= "/* css $x */\n";
 				foreach ($css as $c) {
-					$back.= "$c\n";
+					$back .= "$c\n";
 				}
 			}
-			$back.= "-->\n</style>\n";
+			$back .= "-->\n</style>\n";
 		}
 
 		// Handle theme's special CSS file for IE8 or IE9 hacks
 		$back .= "<!--[if IE 8]>\n"
-				.'<link rel="stylesheet" href="themes/base_files/feature_css/ie8.css" type="text/css">'."\n";
-		if ( $style_ie8_css != '' ) {
-			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($this->convert_cdn($style_ie8_css)).'" type="text/css" />'."\n";
+				. '<link rel="stylesheet" href="themes/base_files/feature_css/ie8.css" type="text/css">' . "\n";
+		if ($style_ie8_css != '') {
+			$back .= '<link rel="stylesheet" href="' . smarty_modifier_escape($this->convert_cdn($style_ie8_css)) . '" type="text/css" />' . "\n";
 		}
 		$back .= "<![endif]-->\n";
 		$back .= "<!--[if IE 9]>\n"
-				.'<link rel="stylesheet" href="themes/base_files/feature_css/ie9.css" type="text/css">'."\n";
-		if ( $style_ie9_css != '' ) {
-			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($this->convert_cdn($style_ie9_css)).'" type="text/css" />'."\n";
+				. '<link rel="stylesheet" href="themes/base_files/feature_css/ie9.css" type="text/css">' . "\n";
+		if ($style_ie9_css != '') {
+			$back .= '<link rel="stylesheet" href="' . smarty_modifier_escape($this->convert_cdn($style_ie9_css)) . '" type="text/css" />' . "\n";
 		}
 		$back .= "<![endif]-->\n";
 
 		if (count($this->rssfeeds)) {
-			foreach ($this->rssfeeds as $x=>$rssf) {
-				$back.= "<!-- rss $x -->\n";
-				foreach ($rssf as $rsstitle=>$rssurl) {
-					$back.= "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"".smarty_modifier_escape($this->convert_cdn($rsstitle))."\" href=\"".smarty_modifier_escape($rssurl)."\">\n";
+			foreach ($this->rssfeeds as $x => $rssf) {
+				$back .= "<!-- rss $x -->\n";
+				foreach ($rssf as $rsstitle => $rssurl) {
+					$back .= "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"" . smarty_modifier_escape($this->convert_cdn($rsstitle)) . "\" href=\"" . smarty_modifier_escape($rssurl) . "\">\n";
 				}
 			}
-			$back.= "\n";
+			$back .= "\n";
 		}
 		return $back;
 	}
 
 
 	/**
-	 * Force JS Files being added after tiki-setup.php is done to the rank/loadorder 'late' if rank is not 'external'. 
+	 * Force JS Files being added after tiki-setup.php is done to the rank/loadorder 'late' if rank is not 'external'.
 	 * Used to seperate page specific JS Files from the rest.
 	 * @return HeaderLib Current object
 	 */
@@ -515,14 +529,14 @@ class HeaderLib
 	{
 		/*
 		 // MISCONCEPTION: user cdns are supposed to work as entire tiki cdns - not user based additional url sources
-		
+
 		 // check for user defined cdns: prefs: tiki_cdn_ssl, tiki_cdn
 		 // the current prefs ask for complete urls including the scheme-name (http / https)
-		
+
 		 $httpScheme = Tikilib::httpScheme();
 		 $cdnType  = ($httpScheme == 'http') ? 'tiki_cdn' : 'tiki_cdn_ssl';
 		 if (isset($prefs[$cdnType])) {
-		
+
 		 $customCdns = array_filter(preg_split('/\s+/', $prefs[$cdnType]));
 		 $rank = 'customCdn';
 		 foreach ($customCdns as $entry) {
@@ -533,29 +547,29 @@ class HeaderLib
 		 }
 		 }
 		 */
-		
-		
+
+
 		global $prefs;
 		if ($prefs['javascript_enabled'] == 'n') {
 			return [];
 		}
-		
+
 		if (count($this->jsfiles) == 0) {
 			return [];
 		}
-		
+
 		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_modifier_escape');
-		
+
 		ksort($this->jsfiles);
 		$jsfiles = $this->jsfiles;
-		
-		
+
+
 		// array that holds a sorted list for all JS files including script tags in the correct order
-		$output = array();
+		$output = [];
 
 		// output dynamic and cdn first - they cannot be minified anyway
-		$ranks = array('10dynamic', '20cdn');
+		$ranks = ['10dynamic', '20cdn'];
 		foreach ($ranks as $rank) {
 			if (isset($jsfiles[$rank])) {
 				foreach ($jsfiles[$rank] as $entry) {
@@ -563,14 +577,14 @@ class HeaderLib
 				}
 			}
 		}
-		
+
 		// all other ranks could be minified - minification only happens if activated and if the file was not blocked by $skip_minify
-		
+
 		//  check wether we need to minify. minify also includes to put the minified files into one single file
 		$minifyActive = isset($prefs['tiki_minify_javascript']) && $prefs['tiki_minify_javascript'] == 'y' ? true : false;
-		
-		if (!$minifyActive) {
-			$ranks = array('30dependancy', '40external', '50standard', '60late');
+
+		if (! $minifyActive) {
+			$ranks = ['30dependancy', '40external', '50standard', '60late'];
 			foreach ($ranks as $rank) {
 				if (isset($jsfiles[$rank])) {
 					foreach ($jsfiles[$rank] as $entry) {
@@ -581,20 +595,20 @@ class HeaderLib
 			}
 		} else {
 			// minify (each set of ranks will be compressed into one file).
-			
+
 			// late stuff can vary by page. if we would include it in main, then we get multiple big js files.
 			// better to accept 2 js request: a big one wich rarely changes and small ones that include (page specific) late stuff.
 			// at the end we could get rid of this pref though
-			
-			$ranks = array('30dependancy', '40external', '50standard');
- 			$entry =  $this->minifyJSFiles($jsfiles, $ranks);
+
+			$ranks = ['30dependancy', '40external', '50standard'];
+			 $entry = $this->minifyJSFiles($jsfiles, $ranks);
 			$output[] .= '<script type="text/javascript" src="' . smarty_modifier_escape($entry) . '"></script>';
 
 			$minifyLateActive = isset($prefs['tiki_minify_late_js_files']) && $prefs['tiki_minify_late_js_files'] == 'y' ? true : false;
 			$rank = '60late';
 			if ($minifyLateActive) {
 				// handling of user defined cdn servers is done inside minifyJSFiles()
-				$entry =  $this->minifyJSFiles($jsfiles, array($rank));
+				$entry = $this->minifyJSFiles($jsfiles, [$rank]);
 				$output[] .= '<script type="text/javascript" src="' . smarty_modifier_escape($entry) . '"></script>';
 			} else {
 				foreach ($jsfiles[$rank] as $entry) {
@@ -602,61 +616,62 @@ class HeaderLib
 				}
 			}
 		}
-		
+
 		return $output;
 	}
-	
-	
+
+
 	/**
-	 * Minify multiple JS files over multiple ranks into one single JS file. 
+	 * Minify multiple JS files over multiple ranks into one single JS file.
 	 * The file is identified by a hash over the given $jsfiles array and automatically created if needed.
 	 * @param array $allJsfiles array of jsfiles ordered by ranks
-	 * @param array $ranks simple array of ranks that needs to be processed. 
+	 * @param array $ranks simple array of ranks that needs to be processed.
 	 * @return string $filename - name and relative path of the final js file.
 	 */
-	private function minifyJSFiles($allJsfiles, $ranks) {
+	private function minifyJSFiles($allJsfiles, $ranks)
+	{
 		global $tikidomainslash;
-		
+
 		// build hash to identify minified file based on the _requested_ ranks, NOT on the entire jsfiles array
 		// $jsfiles contains only those keys defined in $ranks
 		$jsfiles = array_intersect_key($allJsfiles, array_flip($ranks));
 		$hash = md5(serialize($jsfiles));
 		$tempDir = 'temp/public/' . $tikidomainslash;
-		$file = $tempDir . "min_main_". $hash. ".js";
+		$file = $tempDir . "min_main_" . $hash . ".js";
 		$cdnFile = $this->convert_cdn($file);
-		
-		// check if we are on a user defined CDN. 
+
+		// check if we are on a user defined CDN.
 		if ($file != $cdnFile) {
 			return $cdnFile;
 		}
-		
- 		if (file_exists($file)) {
-			return $file;
- 		}
 
- 		// file does not exist - create it
- 		$minifiedAll = '';
- 		// show all relevant messages about the JS files on top - will be prepended to the output
- 		$topMsg = "/**** start overview of included js files *****/\n";
- 		foreach ($ranks as $rank) {
+		if (file_exists($file)) {
+			return $file;
+		}
+
+		 // file does not exist - create it
+		 $minifiedAll = '';
+		 // show all relevant messages about the JS files on top - will be prepended to the output
+		 $topMsg = "/**** start overview of included js files *****/\n";
+		foreach ($ranks as $rank) {
 		// add list of minfied js files to output
- 			$topMsg .= "\n/* list of files for rank:$rank */\n";
+			$topMsg .= "\n/* list of files for rank:$rank */\n";
 			$topMsg .= '/* ' . print_r($jsfiles[$rank], true) . ' */' . "\n";
 			foreach ($jsfiles[$rank] as $f) {
 				// important - some scripts like vendor_bundled/vendor/jquery/plugins/async/jquery.async.js do not terminate their last bits with a ';'
-				// this is bad practise and that causes issues when putting them all in one file! 
+				// this is bad practise and that causes issues when putting them all in one file!
 				$minified = ';';
 				$msg = '';
 				// if the name contains not  'min' and that file is not blacklisted for minification assume it is minified
 				// preferable is to set $skip_minify proper
-				if (!preg_match('/\bmin\./', $f) && $this->skip_minify[$f] !== true) {
+				if (! preg_match('/\bmin\./', $f) && $this->skip_minify[$f] !== true) {
 					set_time_limit(600);
 					try {
 						// to optimize processing time for changed js requirements, cache the minified version of each file
 						$hash = md5($f);
 						// filename without extension - makes it easier to identify the compressed files if needed.
 						$prefix = basename($f, '.js');
-						$minifyFile = $tempDir. "min_s_". $prefix. "_". $hash. ".js";
+						$minifyFile = $tempDir . "min_s_" . $prefix . "_" . $hash . ".js";
 						if (file_exists($minifyFile)) {
 							$temp = file_get_contents($minifyFile);
 						} else {
@@ -689,20 +704,19 @@ class HeaderLib
 					$minified .= $msg;
 					$minified .= $content;
 				}
-				
+
 				$minifiedAll .= $minified;
 			}
-			
- 		}
- 		
- 		$topMsg .= "\n/**** end overview of included js files *****/\n";
- 		file_put_contents($file, $topMsg. $minifiedAll);
- 		chmod($file, 0644); 		
+		}
+
+		  $topMsg .= "\n/**** end overview of included js files *****/\n";
+		 file_put_contents($file, $topMsg . $minifiedAll);
+		 chmod($file, 0644);
 		return $file;
 	}
 
-	
-	
+
+
 	/**
 	 * Output script tags for all javascript files being used.
 	 * If minification is activated, file based JS (so not from a CDN) will bi minified und put into one single file
@@ -710,19 +724,19 @@ class HeaderLib
 	 */
 	function output_js_files()
 	{
-	
+
 		// we get one sorted array with script tags
 		$js_files = $this->getJsFilesWithScriptTags();
 		$output = '';
-	
+
 		foreach ($js_files as $entry) {
 			$output .= "\n$entry";
 		}
-	
+
 		return $output;
 	}
-	
-	
+
+
 
 	function output_js_config($wrap = true)
 	{
@@ -737,35 +751,35 @@ class HeaderLib
 			ksort($this->js_config);
 			$back = "\n<!-- js_config before loading JSfile -->\n";
 			$b = "";
-			foreach ($this->js_config as $x=>$js) {
-				$b.= "// js $x \n";
+			foreach ($this->js_config as $x => $js) {
+				$b .= "// js $x \n";
 				foreach ($js as $j) {
-					$b.= "$j\n";
+					$b .= "$j\n";
 				}
 			}
-			if ( $wrap === true ) {
-   	     $back .= $this->wrap_js($b);
+			if ($wrap === true) {
+				$back .= $this->wrap_js($b);
 			} else {
 				$back .= $b;
 			}
 		}
 
 		return $back;
-
 	}
 
 	function clear_js($clear_js_files = false)
 	{
-		$this->js = array();
-		$this->jq_onready = array();
+		$this->js = [];
+		$this->jq_onready = [];
 		if ($clear_js_files) {
-			$this->jsfiles = array();
+			$this->jsfiles = [];
 		}
 		return $this;
 	}
 
 	function output_js($wrap = true)
-	{	// called in tiki.tpl - JS output at end of file now (pre 5.0)
+	{
+	// called in tiki.tpl - JS output at end of file now (pre 5.0)
 		global $prefs;
 
 		if ($prefs['javascript_enabled'] == 'n') {
@@ -779,13 +793,13 @@ class HeaderLib
 
 		if (count($this->js)) {
 			$b = '';
-			foreach ($this->js as $x=>$js) {
-				$b.= "// js $x \n";
+			foreach ($this->js as $x => $js) {
+				$b .= "// js $x \n";
 				foreach ($js as $j) {
-					$b.= "$j\n";
+					$b .= "$j\n";
 				}
 			}
-			if ( $wrap === true ) {
+			if ($wrap === true) {
 				$back .= $this->wrap_js($b);
 			} else {
 				$back .= $b;
@@ -793,15 +807,15 @@ class HeaderLib
 		}
 
 		if (count($this->jq_onready)) {
-			$b = '$(document).ready(function(){'."\n";
-			foreach ($this->jq_onready as $x=>$js) {
-				$b.= "// jq_onready $x \n";
+			$b = '$(document).ready(function(){' . "\n";
+			foreach ($this->jq_onready as $x => $js) {
+				$b .= "// jq_onready $x \n";
 				foreach ($js as $j) {
-					$b.= "$j\n";
+					$b .= "$j\n";
 				}
 			}
 			$b .= "});\n";
-			if ( $wrap === true ) {
+			if ($wrap === true) {
 				$back .= $this->wrap_js($b);
 			} else {
 				$back .= $b;
@@ -820,21 +834,21 @@ class HeaderLib
 
 		ksort($this->js);
 		ksort($this->jq_onready);
-		$out = array();
+		$out = [];
 
 		if (count($this->js)) {
-			foreach ($this->js as $x=>$js) {
+			foreach ($this->js as $x => $js) {
 				foreach ($js as $j) {
 					$out[] = "$j\n";
 				}
 			}
 		}
 		if (count($this->jq_onready)) {
-			$b = '$(document).ready(function(){'."\n";
-			foreach ($this->jq_onready as $x=>$js) {
-				$b.= "// jq_onready $x \n";
+			$b = '$(document).ready(function(){' . "\n";
+			foreach ($this->jq_onready as $x => $js) {
+				$b .= "// jq_onready $x \n";
 				foreach ($js as $j) {
-					$b.= "$j\n";
+					$b .= "$j\n";
 				}
 			}
 			$b .= "}) /* end on ready */;\n";
@@ -846,7 +860,7 @@ class HeaderLib
 
 	function wrap_js($inJs)
 	{
-		return "<script type=\"text/javascript\">\n<!--//--><![CDATA[//><!--\n".$inJs."//--><!]]>\n</script>\n";
+		return "<script type=\"text/javascript\">\n<!--//--><![CDATA[//><!--\n" . $inJs . "//--><!]]>\n</script>\n";
 	}
 
 	/**
@@ -858,10 +872,10 @@ class HeaderLib
 	 *
 	 * @return array of JavaScript strings
 	 */
-	function getJsFromHTML( $html, $switch_fn_definition = false, $isFiles = false )
+	function getJsFromHTML($html, $switch_fn_definition = false, $isFiles = false)
 	{
-		$jsarr = array();
-		$js_script = array();
+		$jsarr = [];
+		$js_script = [];
 
 		preg_match_all('/(?:<script.*type=[\'"]?text\/javascript[\'"]?.*>\s*?)(.*)(?:\s*<\/script>)/Umis', $html, $jsarr);
 		if ($isFiles == false) {
@@ -876,12 +890,13 @@ class HeaderLib
 				$js_script = array_merge($js_script, $js);
 			}
 		} else {
-			foreach ($jsarr[0] as $key=>$tag) {
+			foreach ($jsarr[0] as $key => $tag) {
 				if (empty($jsarr[1][$key])) { //if there was no content in the script, it is a src file
 					//we load the js as a xml element, then look to see if it has a "src" tag, if it does, we push it to array for end back
 					$js = simplexml_load_string($tag);
-					if (!empty($js['src']))
+					if (! empty($js['src'])) {
 						array_push($js_script, (string)$js['src']);
+					}
 				}
 			}
 		}
@@ -893,7 +908,7 @@ class HeaderLib
 		return array_filter($js_script);
 	}
 
-	function removeJsFromHTML( $html )
+	function removeJsFromHTML($html)
 	{
 		$html = preg_replace('/(?:<script.*type=[\'"]?text\/javascript[\'"]?.*>\s*?)(.*)(?:\s*<\/script>)/Umis', "", $html);
 		return $html;
@@ -904,7 +919,7 @@ class HeaderLib
 		$files = $this->collect_css_files();
 		$minifier = new MatthiasMullie\Minify\CSS();
 
-		foreach ( array_merge($files['screen'], $files['default']) as $file) {
+		foreach (array_merge($files['screen'], $files['default']) as $file) {
 			$minifier->add($file);
 		}
 
@@ -923,7 +938,7 @@ class HeaderLib
 		return $back;
 	}
 
-	private function output_css_files_list( $files, $media = '' )
+	private function output_css_files_list($files, $media = '')
 	{
 		global $prefs;
 		$smarty = TikiLib::lib('smarty');
@@ -931,18 +946,18 @@ class HeaderLib
 
 		$back = '';
 
-		if ( $prefs['tiki_minify_css'] == 'y' && !empty($files)) {
-			if ( $prefs['tiki_minify_css_single_file'] == 'y' ) {
+		if ($prefs['tiki_minify_css'] == 'y' && ! empty($files)) {
+			if ($prefs['tiki_minify_css_single_file'] == 'y') {
 				$files = $this->get_minified_css_single($files);
 			} else {
 				$files = $this->get_minified_css($files);
 			}
 		}
 
-		foreach ( $files as $file ) {
+		foreach ($files as $file) {
 			$file = $this->convert_cdn($file);
 			$back .= "<link rel=\"stylesheet\" href=\"" . smarty_modifier_escape($file) . "\" type=\"text/css\"";
-			if (!empty($media)) {
+			if (! empty($media)) {
 				$back .= " media=\"" . smarty_modifier_escape($media) . "\"";
 			}
 			$back .= ">\n";
@@ -951,19 +966,19 @@ class HeaderLib
 		return $back;
 	}
 
-	private function get_minified_css( $files )
+	private function get_minified_css($files)
 	{
 		global $tikidomainslash;
-		$out = array();
-			$target = 'temp/public/'.$tikidomainslash;
+		$out = [];
+			$target = 'temp/public/' . $tikidomainslash;
 
-		foreach ( $files as $file ) {
+		foreach ($files as $file) {
 			$hash = md5($file);
 			$min = $target . "minified_$hash.css";
 
 			$minifier = new MatthiasMullie\Minify\CSS($file);
 
-			if ( ! file_exists($min) ) {
+			if (! file_exists($min)) {
 				$minifier->minify($min);
 				chmod($min, 0644);
 			}
@@ -974,17 +989,17 @@ class HeaderLib
 		return $out;
 	}
 
-	private function get_minified_css_single( $files )
+	private function get_minified_css_single($files)
 	{
 		global $tikidomainslash;
 		$hash = md5(serialize($files));
-		$target = 'temp/public/'.$tikidomainslash;
+		$target = 'temp/public/' . $tikidomainslash;
 		$file = $target . "minified_$hash.css";
 
-		if ( ! file_exists($file)) {
+		if (! file_exists($file)) {
 			$minifier = new MatthiasMullie\Minify\CSS();
 
-			foreach ( $files as $f ) {
+			foreach ($files as $f) {
 				$minifier->add($f);
 			}
 
@@ -992,7 +1007,7 @@ class HeaderLib
 			chmod($file, 0644);
 		}
 
-		return array( $file );
+		return [ $file ];
 	}
 
 
@@ -1000,11 +1015,11 @@ class HeaderLib
 	{
 		global $tikipath;
 
-		$files = array(
-			'default' => array(),
-			'screen' => array(),
-			'print' => array(),
-		);
+		$files = [
+			'default' => [],
+			'screen' => [],
+			'print' => [],
+		];
 
 		$pushFile = function ($section, $file) use (& $files) {
 			global $prefs;
@@ -1019,10 +1034,10 @@ class HeaderLib
 			}
 		};
 
-		foreach ($this->cssfiles as $x=>$cssf) {
+		foreach ($this->cssfiles as $x => $cssf) {
 			foreach ($cssf as $cf) {
 				$cfprint = str_replace('.css', '', $cf) . '-print.css';
-				if (!file_exists($tikipath . $cfprint)) {
+				if (! file_exists($tikipath . $cfprint)) {
 					$pushFile('default', $cf);
 				} else {
 					$pushFile('screen', $cf);
@@ -1049,17 +1064,17 @@ class HeaderLib
 	 * @param bool $use_cache            (for future use and testing)
 	 * @return array                     Array of CSS file paths out (can be theme and option if there's an error)
 	 */
-	function compile_custom_less($custom_less, $themename, $themeoptionname = '', $use_cache = true) {
+	function compile_custom_less($custom_less, $themename, $themeoptionname = '', $use_cache = true)
+	{
 
 		global $tikidomainslash, $tikiroot;
 
 		$hash = md5($custom_less . $themename . $themeoptionname);
 		$target = "temp/public/$tikidomainslash";
 		$css_file = $target . "custom_less_$hash.css";
-		$css_files = array($css_file);
+		$css_files = [$css_file];
 
-		if ( ! file_exists($css_file) || ! $use_cache) {
-
+		if (! file_exists($css_file) || ! $use_cache) {
 			$themeLib = TikiLib::lib('theme');
 
 			$theme_less_file = $themeLib->get_theme_path($themename, '', $themename . '.less');
@@ -1069,15 +1084,14 @@ class HeaderLib
 				$themeoption_less_file = '';	// some theme options are CSS only
 			}
 
-			$options = array(
+			$options = [
 				'compress' => true,
 				'cache_dir' => realpath($target),
-			);
+			];
 
 			$parser = new Less_Parser($options);
 
 			try {
-
 				$nesting = count(array_filter(explode(DIRECTORY_SEPARATOR, $tikiroot)));
 				$depth = count(array_filter(explode(DIRECTORY_SEPARATOR, $target)));
 				$offset = $nesting ? str_repeat('../', $depth) : '';
@@ -1093,21 +1107,18 @@ class HeaderLib
 				file_put_contents($css_file, $css);
 				chmod($css_file, 0644);
 
-				$css_files = array($css_file);
-
+				$css_files = [$css_file];
 			} catch (Exception $e) {
 				if (is_writeable($css_file)) {
 					unlink($css_file);
 				}
 
 				Feedback::error(tra('Custom Less compilation failed with error:') . $e->getMessage(), 'sessiom');
-				$css_files = array(
+				$css_files = [
 					$themeLib->get_theme_path($themename, '', $themename . '.css'),
 					$themeLib->get_theme_path($themename, $themeoptionname, ($themeoptionname ?: $themename) . '.css'),
-				);
-
+				];
 			}
-
 		}
 
 		return $css_files;
@@ -1122,13 +1133,13 @@ class HeaderLib
 		}
 
 		$tikilib = TikiLib::lib('tiki');
-		$enabled = $tikilib->get_preference('geo_tilesets', array('openstreetmap'), true);
+		$enabled = $tikilib->get_preference('geo_tilesets', ['openstreetmap'], true);
 
-		$google = array_intersect(array('google_street', 'google_physical', 'google_satellite', 'google_hybrid'), $enabled);
+		$google = array_intersect(['google_street', 'google_physical', 'google_satellite', 'google_hybrid'], $enabled);
 		if (count($google) > 0 || $prefs['geo_google_streetview'] == 'y') {
-			$args = array(
+			$args = [
 				'v' => '3',
-			);
+			];
 
 			if (! empty($prefs['gmap_key'])) {
 				$args['key'] = $prefs['gmap_key'];
@@ -1160,19 +1171,19 @@ window.onload = loadScript;');
 		if ($prefs['geo_openlayers_version'] === 'ol3') {
 			$this->add_jsfile_external('vendor_bundled/vendor/openlayers/ol3/ol-debug.js', true);
 			$this->add_js(
-			    ''
-	        );
+				''
+			);
 		} else {
 			$this->add_jsfile_external('lib/openlayers/OpenLayers.js', true);
 		}
 
 		$this->add_js(
-		    '$(".map-container:not(.done)")
+			'$(".map-container:not(.done)")
 		        .addClass("done")
 		        .visible(function() {
 		            $(this).createMap();
 		    });'
-        );
+		);
 
 		return $this;
 	}
@@ -1183,4 +1194,3 @@ window.onload = loadScript;');
 		return '';
 	}
 }
-

@@ -15,38 +15,37 @@ function createCodemirrorModes()
 	$js = '';
 	$css = '';
 
-	$target = 'temp/public/'.$tikidomainslash;
+	$target = 'temp/public/' . $tikidomainslash;
 	$jsModes = $target . 'codemirror_modes.js';
 	$cssModes = $target . 'codemirror_modes.css';
 
-	if (!file_exists($jsModes) || !file_exists($cssModes)) {
+	if (! file_exists($jsModes) || ! file_exists($cssModes)) {
 		//codemirror theme
-		$js .= 'window.codeMirrorTheme = "' . $prefs['feature_syntax_highlighter_theme'] .'";
+		$js .= 'window.codeMirrorTheme = "' . $prefs['feature_syntax_highlighter_theme'] . '";
 test = { mode: function () {}, indentation: function() {} }
 ';	// test is a dummy line to supress exceptions from mode tests in cm 3
 
 		//load modes first
 		//tiki first, where are our priorities!
 		$js .= @file_get_contents("lib/codemirror_tiki/mode/tiki/tiki.js");
- 		$css .= @file_get_contents("themes/base_files/feature_css/codemirror_mode_tiki.css");
+		 $css .= @file_get_contents("themes/base_files/feature_css/codemirror_mode_tiki.css");
 
 		foreach (glob('vendor_bundled/vendor/codemirror/codemirror/mode/*', GLOB_ONLYDIR) as $dir) {
-			foreach (glob($dir.'/*.js', GLOB_NOCHECK) as $jsFile) {
-				if(
-					is_file($jsFile) && (
+			foreach (glob($dir . '/*.js', GLOB_NOCHECK) as $jsFile) {
+				if (is_file($jsFile) && (
 						$prefs['tiki_minify_javascript'] !== 'y' ||
 						(
 							strpos($jsFile, 'powershell.js') === false		// FIXME temporary workaound for errors in codemirror 5.19.0
 							&& strpos($jsFile, 'swift.js') === false		// FIXME temporary workaound for errors in codemirror 5.19.0
 						)
 					)
-				){
+				) {
 					$js .= "//" . $jsFile . "\n";
 					$js .= "try {\n" . @file_get_contents($jsFile) . "\n} catch (e) { };\n";
 				}
 			}
-			foreach (glob($dir.'/*.css', GLOB_NOCHECK) as $cssFile) {
-				if(is_file($cssFile)){
+			foreach (glob($dir . '/*.css', GLOB_NOCHECK) as $cssFile) {
+				if (is_file($cssFile)) {
 					$css .= "/*" . $cssFile . "*/\n";
 					$css .= @file_get_contents($cssFile);
 				}
@@ -63,7 +62,6 @@ test = { mode: function () {}, indentation: function() {} }
 
 		file_put_contents($cssModes, $css);
 		chmod($cssModes, 0644);
-		
 	}
 
 	// creation upfront is ok, but only include them if the feature is enabled. Otherwise we would get js errors bc codemirror itself would be missing

@@ -30,23 +30,23 @@ class Memcachelib
 	 * @param bool $memcached_servers
 	 * @param bool $memcached_options
 	 */
-	function __construct($memcached_servers=FALSE, $memcached_options=FALSE)
+	function __construct($memcached_servers = false, $memcached_options = false)
 	{
 		global $prefs, $tikidomainslash;
 
 		if ($memcached_servers === false && $memcached_options === false) {
-			if ( is_array($prefs['memcache_servers']) ) {
+			if (is_array($prefs['memcache_servers'])) {
 				$memcached_servers = $prefs['memcache_servers'];
 			} else {
 				$memcached_servers = unserialize($prefs['memcache_servers']);
 			}
 
-			$memcached_options = array(
+			$memcached_options = [
 				'enabled' => true,
 				'expiration' => (int) $prefs['memcache_expiration'],
 				'key_prefix' => $prefs['memcache_prefix'],
 				'compress' => $prefs['memcache_compress'],
-			);
+			];
 		}
 
 		$localphp = "db/{$tikidomainslash}local.php";
@@ -59,13 +59,13 @@ class Memcachelib
 			require($localphp);
 		}
 
-		if (!$memcached_servers || (!empty($memcached_options) && !$memcached_options['enabled']) || ! class_exists('Memcache') ) {
-			$this->memcache = FALSE;
-			$this->options  = array( 'enabled' => FALSE );
+		if (! $memcached_servers || (! empty($memcached_options) && ! $memcached_options['enabled']) || ! class_exists('Memcache')) {
+			$this->memcache = false;
+			$this->options  = [ 'enabled' => false ];
 		} else {
-			if ( $memcached_options['compress'] == 'y' ) {
+			if ($memcached_options['compress'] == 'y') {
 				$memcached_options['flags'] = MEMCACHE_COMPRESSED;
-				unset( $memcached_options['compress'] );
+				unset($memcached_options['compress']);
 			} else {
 				$memcached_options['flags'] = 0;
 			}
@@ -73,20 +73,20 @@ class Memcachelib
 			$this->options  = $memcached_options;
 			$this->memcache = new Memcache();
 			foreach ($memcached_servers as $server) {
-				if ( $server['host'] == 'localhost' ) {
+				if ($server['host'] == 'localhost') {
 					$server['host'] = '127.0.0.1';
 				}
 
 				$this->memcache->addServer(
-					$server['host'], (int) $server['port'],
-					isset($server['persistent']) ? $server['persistent'] : FALSE,
+					$server['host'],
+					(int) $server['port'],
+					isset($server['persistent']) ? $server['persistent'] : false,
 					isset($server['weight']) ? (int)$server['weight'] : 1
 				);
 			}
 		}
 
 		$this->key_prefix = $this->getOption('key_prefix', '');
-
 	}
 
 	/**
@@ -104,7 +104,7 @@ class Memcachelib
 	 * @param  mixed  $default value
 	 * @return mixed  value of the option, or default.
 	 */
-	function getOption($name, $default=NULL)
+	function getOption($name, $default = null)
 	{
 		return isset($this->options[$name]) ?
 			$this->options[$name] : $default;
@@ -117,8 +117,8 @@ class Memcachelib
 	function isEnabled()
 	{
 		global $prefs;
-		if ( isset($prefs['memcache_enabled']) && $prefs['memcache_enabled'] == 'y' ) {
-			return $this->memcache && $this->getOption('enabled', FALSE);
+		if (isset($prefs['memcache_enabled']) && $prefs['memcache_enabled'] == 'y') {
+			return $this->memcache && $this->getOption('enabled', false);
 		} else {
 			return false;
 		}
@@ -131,11 +131,11 @@ class Memcachelib
 	 * @param  mixed $default value returned if result from memcache is NULL
 	 * @return mixed Value from memcache, or the default
 	 */
-	function get($key, $default=NULL)
+	function get($key, $default = null)
 	{
 		$key = $this->buildKey($key);
 		$val = $this->memcache->get($key);
-		return ($val !== NULL) ? $val : $default;
+		return ($val !== null) ? $val : $default;
 	}
 
 	/**
@@ -152,7 +152,7 @@ class Memcachelib
 	{
 
 		// Run each key passed in through the buildKey() method.
-		$keys_built = array();
+		$keys_built = [];
 		foreach ($keys as $key) {
 			$keys_built[] = $this->buildKey($key);
 		}
@@ -161,9 +161,9 @@ class Memcachelib
 		$values_in = $this->memcache->get($keys_built);
 
 		// Construct a list of values corresponding to the keys passed in.
-		$values_out = array();
+		$values_out = [];
 		foreach ($keys_built as $kb) {
-			$values_out[] = (isset($values_in[$kb])) ? $values_in[$kb] : NULL;
+			$values_out[] = (isset($values_in[$kb])) ? $values_in[$kb] : null;
 		}
 
 		return $values_out;
@@ -178,7 +178,7 @@ class Memcachelib
 	 * @param bool $expiration  Optional expiration time
 	 * @return bool
 	 */
-	function set($key, $value, $flags=FALSE, $expiration=FALSE)
+	function set($key, $value, $flags = false, $expiration = false)
 	{
 		$key = $this->buildKey($key);
 		$flags = ($flags) ?
@@ -225,7 +225,7 @@ class Memcachelib
 	 * @param bool $use_md5
 	 * @return string               the cache key
 	 */
-	function buildKey($key, $use_md5=false)
+	function buildKey($key, $use_md5 = false)
 	{
 
 		if (is_string($key)) {
@@ -234,22 +234,20 @@ class Memcachelib
 		}
 
 		if (is_array($key)) {
-
 			$keys = array_keys($key);
 			sort($keys);
 
-			$parts = array();
+			$parts = [];
 			foreach ($keys as $name) {
 				$val = $key[$name];
-				if ($val !== NULL)
+				if ($val !== null) {
 					$parts[] = $name . '=' . $val;
+				}
 			}
 
 			$str_key = join(':', $parts);
 			return $this->key_prefix .
-				( $use_md5 ? md5($str_key) : '['.$str_key.']' );
-
+				( $use_md5 ? md5($str_key) : '[' . $str_key . ']' );
 		}
 	}
 }
-

@@ -13,152 +13,157 @@ $calendarlib = TikiLib::lib('calendar');
 class TikiCalendarLib extends CalendarLib
 {
 
-    /**
-     * @param $tikiobj
-     * @param $user
-     * @param $tstart
-     * @param $tstop
-     * @param $offset
-     * @param $maxRecords
-     * @param string $sort_mode
-     * @param string $find
-     * @return array
-     */
-    function list_items_by_day($tikiobj, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode = 'name_desc', $find = '')
+	/**
+	 * @param $tikiobj
+	 * @param $user
+	 * @param $tstart
+	 * @param $tstop
+	 * @param $offset
+	 * @param $maxRecords
+	 * @param string $sort_mode
+	 * @param string $find
+	 * @return array
+	 */
+	function list_items_by_day($tikiobj, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode = 'name_desc', $find = '')
 	{
 		return $this->list_tiki_items($tikiobj, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode, $find);
 	}
 
-    /**
-     * @param $calIds
-     * @param $viewstart
-     * @param $viewend
-     * @param string $group_by
-     * @param string $item_name
-     * @return array
-     */
+	/**
+	 * @param $calIds
+	 * @param $viewstart
+	 * @param $viewend
+	 * @param string $group_by
+	 * @param string $item_name
+	 * @return array
+	 */
 	function getCalendar($calIds, &$viewstart, &$viewend, $group_by = '', $item_name = 'actions')
 	{
 		return parent::getCalendar($calIds, $viewstart, $viewend, $group_by, $item_name);
 	}
 
-    /**
-     * @param $tikiobj
-     * @param $user
-     * @param $tstart
-     * @param $tstop
-     * @param $offset
-     * @param $maxRecords
-     * @param string $sort_mode
-     * @param string $find
-     * @return array
-     */
-    function list_tiki_items($tikiobj, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode = 'name_desc', $find = '')
+	/**
+	 * @param $tikiobj
+	 * @param $user
+	 * @param $tstart
+	 * @param $tstop
+	 * @param $offset
+	 * @param $maxRecords
+	 * @param string $sort_mode
+	 * @param string $find
+	 * @return array
+	 */
+	function list_tiki_items($tikiobj, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode = 'name_desc', $find = '')
 	{
 		global $user;
-		$ret = array();
+		$ret = [];
 
-		if ( ! is_array($tikiobj) )
+		if (! is_array($tikiobj)) {
 			return $ret;
+		}
 
 		$tikiobj = array_unique($tikiobj);
 
-		if ( in_array('wiki', $tikiobj) ) {
+		if (in_array('wiki', $tikiobj)) {
 			$tikiobj[] = 'wiki page';
 			$tikiobj[] = 'wiki comment';
 		}
 
-		foreach ( $tikiobj as $type ) {
-			if ( $type != '' && $type != 'wiki' ) {
+		foreach ($tikiobj as $type) {
+			if ($type != '' && $type != 'wiki') {
 				$objectType = ( $type == 'wiki comment' ) ? 'wiki page' : $type;
-				$result = $this->get_object_cal_infos($type, array($tstart, $tstop, $objectType));
+				$result = $this->get_object_cal_infos($type, [$tstart, $tstop, $objectType]);
 
-				if ( is_object($result) ) {
+				if (is_object($result)) {
 					while ($res = $result->fetchRow()) {
-						if ( $res['start'] > 0 ) {
-						$res['show_description'] = 'y';
-						$res['visible'] = 'y';
-						$res['type'] = $type;
-						$dstart = TikiLib::make_time(
-							0,
-							0,
-							0,
-							TikiLib::date_format('%m', $res['start']),
-							TikiLib::date_format('%d', $res['start']),
-							TikiLib::date_format('%Y', $res['start'])
-						);
-						$res['time'] = TikiLib::date_format('%H%M', $res['start']);
-						$res['when'] = TikiLib::date_format('%H:%M', $res['start']);
-						$when = '<b>'.$res['when'].'</b>';
-						$url_vars = array($res['id'], $res['id2']);
+						if ($res['start'] > 0) {
+							$res['show_description'] = 'y';
+							$res['visible'] = 'y';
+							$res['type'] = $type;
+							$dstart = TikiLib::make_time(
+								0,
+								0,
+								0,
+								TikiLib::date_format('%m', $res['start']),
+								TikiLib::date_format('%d', $res['start']),
+								TikiLib::date_format('%Y', $res['start'])
+							);
+							$res['time'] = TikiLib::date_format('%H%M', $res['start']);
+							$res['when'] = TikiLib::date_format('%H:%M', $res['start']);
+							$when = '<b>' . $res['when'] . '</b>';
+							$url_vars = [$res['id'], $res['id2']];
 
-						switch ( $res['type'] ) {
-							case 'art':
-								$res['description'] = TikiLib::lib('parser')->parse_data($res['description']);
-								break;
+							switch ($res['type']) {
+								case 'art':
+									$res['description'] = TikiLib::lib('parser')->parse_data($res['description']);
+									break;
 
-							case 'blog':
-								$res['name'] = $res['parent'].' :: '.$res['name'];
-								break;
+								case 'blog':
+									$res['name'] = $res['parent'] . ' :: ' . $res['name'];
+									break;
 
-							case 'dir':
-								$res['description'] = addslashes($res['dir_url']).'<br />'.$res['description'];
-								break;
+								case 'dir':
+									$res['description'] = addslashes($res['dir_url']) . '<br />' . $res['description'];
+									break;
 
-							case 'forum':
-								if ( $res['fid'] > 0 )
-									$url_vars = array($res['fid'], $res['id2'], 'threadId'.$res['id']);
-								break;
+								case 'forum':
+									if ($res['fid'] > 0) {
+										$url_vars = [$res['fid'], $res['id2'], 'threadId' . $res['id']];
+									}
+									break;
 
-							case 'gal':
-								$res['description'] = tra('New Image Uploaded by').' %s';
-								break;
+								case 'gal':
+									$res['description'] = tra('New Image Uploaded by') . ' %s';
+									break;
 
-							case 'nl':
-								$res['description'] = tra('New Subscriptions');
-								$res['head'] = ' ... '.$res['head'];
-								break;
+								case 'nl':
+									$res['description'] = tra('New Subscriptions');
+									$res['head'] = ' ... ' . $res['head'];
+									break;
 
-							case 'track':
-								$res['description'] = tra('New Item in Tracker');
-								$res['parent'] = tra('tracker');
-								break;
-							case 'wiki page':
-								$res['parent'] = 'wiki';
-								break;
-						}
-
-						$res['url'] = $this->get_object_url($res['type'], $url_vars);
-
-						if ( $res['user'] != '' ) {
-							include_once('lib/smarty_tiki/modifier.username.php');
-							$res['user'] = smarty_modifier_username($res['user']);
-							if ( ! strpos($res['description'], '%s') ) {
-								$br = ( $res['description'] == '' ) ? '' : '<br />';
-								$res['description'] = '<i>'.tra('by').' %s</i>'.$br.$res['description'];
+								case 'track':
+									$res['description'] = tra('New Item in Tracker');
+									$res['parent'] = tra('tracker');
+									break;
+								case 'wiki page':
+									$res['parent'] = 'wiki';
+									break;
 							}
-							$res['description'] = sprintf($res['description'], $res['user']);
-						}
 
-						$res['description'] = str_replace(array('"',"\n|\r"), array("'",''), $res['description']);
+							$res['url'] = $this->get_object_url($res['type'], $url_vars);
 
-						if ( $res['name'] == '' )
-							$res['name'] = $res['id'];
+							if ($res['user'] != '') {
+								include_once('lib/smarty_tiki/modifier.username.php');
+								$res['user'] = smarty_modifier_username($res['user']);
+								if (! strpos($res['description'], '%s')) {
+									$br = ( $res['description'] == '' ) ? '' : '<br />';
+									$res['description'] = '<i>' . tra('by') . ' %s</i>' . $br . $res['description'];
+								}
+								$res['description'] = sprintf($res['description'], $res['user']);
+							}
 
-						$res['where'] = str_replace("\n|\r", '', addslashes($res['parent']));
+							$res['description'] = str_replace(['"',"\n|\r"], ["'",''], $res['description']);
 
-						if ( ( ! isset($where) || $where == '' ) && $res['parent'] != '' ) {
-							$where = ' '.tra('in').' <b>'.$res['where'].'</b>';
-						}
+							if ($res['name'] == '') {
+								$res['name'] = $res['id'];
+							}
 
-						if ( $res['head'] == '' ) $res['head'] = $when.$where;
+							$res['where'] = str_replace("\n|\r", '', addslashes($res['parent']));
 
-						$res['group_description'] = $res['name'];
+							if (( ! isset($where) || $where == '' ) && $res['parent'] != '') {
+								$where = ' ' . tra('in') . ' <b>' . $res['where'] . '</b>';
+							}
 
-						$ret[$dstart][] = $res;
+							if ($res['head'] == '') {
+								$res['head'] = $when . $where;
+							}
 
-						unset($where);
-						unset($when);
+							$res['group_description'] = $res['name'];
+
+							$ret[$dstart][] = $res;
+
+							unset($where);
+							unset($when);
 						}
 					}
 				}
@@ -167,14 +172,14 @@ class TikiCalendarLib extends CalendarLib
 		return $ret;
 	}
 
-    /**
-     * @param $type
-     * @param null $bindvars
-     * @return mixed
-     */
-    function get_object_cal_infos($type, $bindvars = null)
+	/**
+	 * @param $type
+	 * @param null $bindvars
+	 * @return mixed
+	 */
+	function get_object_cal_infos($type, $bindvars = null)
 	{
-		switch ( $type ) {
+		switch ($type) {
 			case 'art':
 				$query = 'select `articleId` as `id`, `title` as `name`, `heading` as `description`, `authorName` as `user`,' .
 								' `topicName` as `parent`, `publishDate` as `start`' .
@@ -250,8 +255,8 @@ class TikiCalendarLib extends CalendarLib
 									' from `tiki_actionlog` where (`lastModif`>? and `lastModif`<?) and `objectType`=?';
 				break;
 		}
-		if ( $query != '' ) {
-			if ( is_array($bindvars) && ($nb_vars = substr_count($query, '?')) > 0 ) {
+		if ($query != '') {
+			if (is_array($bindvars) && ($nb_vars = substr_count($query, '?')) > 0) {
 				return $this->query($query, array_slice($bindvars, 0, $nb_vars));
 			} else {
 				return $this->query($query);
@@ -259,15 +264,14 @@ class TikiCalendarLib extends CalendarLib
 		}
 	}
 
-    /**
-     * @param $type
-     * @param null $bindvars
-     * @return string
-     */
-    function get_object_url($type, $bindvars = null)
+	/**
+	 * @param $type
+	 * @param null $bindvars
+	 * @return string
+	 */
+	function get_object_url($type, $bindvars = null)
 	{
-		switch ( $type ) {
-
+		switch ($type) {
 			case 'art':
 				$url = 'tiki-read_article.php?articleId=%s';
 				break;
@@ -324,18 +328,20 @@ class TikiCalendarLib extends CalendarLib
 				$url = 'tiki-index.php?page=%s';
 				break;
 		}
-		if ( $url != '' ) {
-			if ( is_array($bindvars) && ($nb_vars = substr_count($url, '%s')) > 0 ) {
+		if ($url != '') {
+			if (is_array($bindvars) && ($nb_vars = substr_count($url, '%s')) > 0) {
 				return vsprintf($url, array_map('urlencode', array_slice($bindvars, 0, $nb_vars)));
-			} else return $url;
+			} else {
+				return $url;
+			}
 		}
 	}
 
-    /**
-     * @param bool $with_infos
-     * @return array
-     */
-    function getTikiItems($with_infos = true)
+	/**
+	 * @param bool $with_infos
+	 * @return array
+	 */
+	function getTikiItems($with_infos = true)
 	{
 		global $prefs;
 		global $tiki_p_view, $tiki_p_view_image_gallery, $tiki_p_read_article;
@@ -343,78 +349,78 @@ class TikiCalendarLib extends CalendarLib
 		global $tiki_p_view_file_gallery, $tiki_p_view_faqs, $tiki_p_take_quiz;
 		global $tiki_p_view_trackers, $tiki_p_take_survey, $tiki_p_subscribe_newsletters;
 
-		$return = array(
-			'wiki' => array(
+		$return = [
+			'wiki' => [
 					'label' => tra('Wiki'),
 					'feature' => '' . $prefs['feature_wiki'],
 					'right' => "$tiki_p_view"
-			),
+			],
 
-			'gal' => array(
+			'gal' => [
 					'label' => tra('Image Gallery'),
 					'feature' => '' . $prefs['feature_galleries'],
 					'right' => "$tiki_p_view_image_gallery"
-			),
+			],
 
-			'art' => array(
+			'art' => [
 					'label' => tra('Articles'),
 					'feature' => '' . $prefs['feature_articles'],
 					'right' => "$tiki_p_read_article"
-			),
+			],
 
-			'blog' => array(
+			'blog' => [
 					'label' => tra('Blogs'),
 					'feature' => '' . $prefs['feature_blogs'],
-					'right' => "$tiki_p_read_blog"),
+					'right' => "$tiki_p_read_blog"],
 
-			'forum' => array(
+			'forum' => [
 					'label' => tra('Forums'),
 					'feature' => '' . $prefs['feature_forums'],
 					'right' => "$tiki_p_forum_read"
-			),
+			],
 
-			'dir' => array(
+			'dir' => [
 					'label' => tra('Directory'),
 					'feature' => '' . $prefs['feature_directory'],
 					'right' => "$tiki_p_view_directory"
-			),
+			],
 
-			'fgal' => array(
+			'fgal' => [
 					'label' => tra('File Gallery'),
 					'feature' => '' . $prefs['feature_file_galleries'],
 					'right' => "$tiki_p_view_file_gallery"
-			),
+			],
 
-			'faq' => array(
+			'faq' => [
 					'label' => tra('FAQs'),
 					'feature' => '' . $prefs['feature_faqs'],
 					'right' => $tiki_p_view_faqs
-			),
+			],
 
-			'quiz' => array(
+			'quiz' => [
 					'label' => tra('Quizzes'),
 					'feature' => '' . $prefs['feature_quizzes'],
 					'right' => $tiki_p_take_quiz
-			),
+			],
 
-			'track' => array(
+			'track' => [
 					'label' => tra('Trackers'),
 					'feature' => '' . $prefs['feature_trackers'],
 					'right' => "$tiki_p_view_trackers"
-			),
+			],
 
-			'surv' => array(
+			'surv' => [
 					'label' => tra('Survey'),
 					'feature' => '' . $prefs['feature_surveys'],
 					'right' => "$tiki_p_take_survey"
-			),
+			],
 
-			'nl' => array(
+			'nl' => [
 					'label' => tra('Newsletter'),
 					'feature' => '' . $prefs['feature_newsletters'],
 					'right' => "$tiki_p_subscribe_newsletters"
-			)
-		);
+			]
+		];
 		return ( $with_infos ? $return : array_keys($return) );
 	}
 }

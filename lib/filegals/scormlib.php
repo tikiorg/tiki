@@ -6,13 +6,13 @@
 // $Id$
 
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 class ScormLib
 {
-	private $unlinkList = array();
+	private $unlinkList = [];
 
 	function __destruct()
 	{
@@ -26,9 +26,9 @@ class ScormLib
 		if ($metadata = $this->getRequestMetadata($args)) {
 			$this->createItem(
 				$metadata,
-				array(
+				[
 					'scormPackage' => $args['object'],
-				)
+				]
 			);
 		}
 	}
@@ -41,14 +41,14 @@ class ScormLib
 
 			$transaction = TikiDb::get()->begin();
 
-			foreach ($items as $item ) {
+			foreach ($items as $item) {
 				if ($item['type'] == 'trackeritem') {
 					$this->updateItem(
 						$item['itemId'],
 						$metadata,
-						array(
+						[
 							'scormPackage' => $args['object'],
-						)
+						]
 					);
 				}
 			}
@@ -63,7 +63,6 @@ class ScormLib
 
 		if ($this->isZipFile($args)
 			&& $zip = $this->getZipFile($args['object'])) {
-
 			if ($manifest = $this->getScormManifest($zip)) {
 				$metadata = $this->getMetadata($manifest);
 			}
@@ -80,7 +79,7 @@ class ScormLib
 			return false;
 		}
 
-		return in_array($args['filetype'], array('application/zip', 'application/x-zip', 'application/x-zip-compressed'));
+		return in_array($args['filetype'], ['application/zip', 'application/x-zip', 'application/x-zip-compressed']);
 	}
 
 	private function getZipFile($fileId)
@@ -107,7 +106,7 @@ class ScormLib
 			$this->unlinkList[] = $filepath;
 		}
 
-		if ($zip->open($filepath) === TRUE) {
+		if ($zip->open($filepath) === true) {
 			return $zip;
 		}
 	}
@@ -122,7 +121,7 @@ class ScormLib
 		$dom = new DOMDocument;
 		$dom->loadXML($manifest);
 
-		$metadata = array();
+		$metadata = [];
 		foreach ($dom->getElementsByTagName('general')->item(0)->childNodes as $node) {
 			if ($node instanceof DOMElement) {
 				$metadata[$this->getKey($node)][] = $this->getData($node);
@@ -140,7 +139,7 @@ class ScormLib
 
 	private function getData($node)
 	{
-		$data = array();
+		$data = [];
 		foreach ($node->getElementsByTagName('langstring') as $text) {
 			$data[$text->getAttribute('xml:lang')] = trim($text->textContent);
 		}
@@ -156,10 +155,10 @@ class ScormLib
 		$utilities = new Services_Tracker_Utilities;
 		$utilities->insertItem(
 			$definition,
-			array(
+			[
 				'status' => 'o',
 				'fields' => $fields,
-			)
+			]
 		);
 	}
 
@@ -171,11 +170,11 @@ class ScormLib
 		$utilities = new Services_Tracker_Utilities;
 		$utilities->updateItem(
 			$definition,
-			array(
+			[
 				'itemId' => (int) $itemId,
 				'status' => 'o',
 				'fields' => $fields,
-			)
+			]
 		);
 	}
 
@@ -188,7 +187,7 @@ class ScormLib
 
 	private function buildFields($definition, $metadata, $additional)
 	{
-		$fields = array();
+		$fields = [];
 
 		foreach ($metadata as $key => $values) {
 			if ($field = $definition->getFieldFromPermName($key)) {
@@ -207,7 +206,7 @@ class ScormLib
 
 	private function getTagString($values)
 	{
-		$completeSet = array();
+		$completeSet = [];
 		foreach ($values as $val) {
 			$completeSet = array_merge($completeSet, array_values($val));
 		}
@@ -230,4 +229,3 @@ class ScormLib
 		return reset(reset($values));
 	}
 }
-

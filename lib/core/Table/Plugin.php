@@ -24,7 +24,7 @@ class Table_Plugin
 	 * Standard tablesorter parameters for a plugin
 	 * @var array
 	 */
-	public $params = array();
+	public $params = [];
 
 	/**
 	 * Holds the settings created by setSettings function below
@@ -68,8 +68,8 @@ class Table_Plugin
 	 */
 	public function createParams()
 	{
-		$this->params = array(
-			'server' => array(
+		$this->params = [
+			'server' => [
 				'required' => false,
 				'name' => tra('Server-side Processing'),
 				'description' => tr(
@@ -84,8 +84,8 @@ class Table_Plugin
 				'doctype' => 'tablesorter',
 				'default' => 'n',
 				'filter' => 'striptags',
-			),
-			'sortable' => array(
+			],
+			'sortable' => [
 				'required' => false,
 				'name' => tra('Overall Sort Settings'),
 				'description' => tr(
@@ -103,8 +103,8 @@ class Table_Plugin
 				'doctype' => 'tablesorter',
 				'default' => 'n',
 				'filter' => 'striptags',
-			),
-			'sortList' => array(
+			],
+			'sortList' => [
 				'required' => false,
 				'name' => tra('Pre-sorted Columns'),
 				'description' => tr(
@@ -122,8 +122,8 @@ class Table_Plugin
 				'default' => '',
 				'filter' => 'striptags',
 				'advanced' => true,
-			),
-			'tsortcolumns' => array(
+			],
+			'tsortcolumns' => [
 				'required' => false,
 				'name' => tra('Sort Settings by Column'),
 				'description' => tr(
@@ -170,8 +170,8 @@ class Table_Plugin
 				'default' => '',
 				'filter' => 'striptags',
 				'advanced' => true,
-			),
-			'tsfilters' => array(
+			],
+			'tsfilters' => [
 				'required' => false,
 				'name' => tra('Column Filters'),
 				'description' =>
@@ -227,8 +227,8 @@ class Table_Plugin
 				'default' => '',
 				'filter' => 'striptags',
 				'advanced' => true,
-			),
-			'tsfilteroptions' => array(
+			],
+			'tsfilteroptions' => [
 				'required' => false,
 				'name' => tra('Filter Options'),
 				'description' => tr(
@@ -243,8 +243,8 @@ class Table_Plugin
 				'default' => '',
 				'filter' => 'striptags',
 				'advanced' => true,
-			),
-			'tspaginate' => array(
+			],
+			'tspaginate' => [
 				'required' => false,
 				'name' => tra('Paginate'),
 				'description' =>
@@ -261,8 +261,8 @@ class Table_Plugin
 				'default' => '',
 				'filter' => 'striptags',
 				'advanced' => true,
-			),
-			'tscolselect' => array(
+			],
+			'tscolselect' => [
 				'required' => false,
 				'name' => tra('Column Select'),
 				'description' =>
@@ -279,8 +279,8 @@ class Table_Plugin
 				'default' => '',
 				'filter' => 'striptags',
 				'advanced' => true,
-			),
-			'tstotals' => array(
+			],
+			'tstotals' => [
 				'required' => false,
 				'name' => tra('Totals'),
 				'description' =>
@@ -341,8 +341,8 @@ class Table_Plugin
 				'default' => '',
 				'filter' => 'striptags',
 				'advanced' => true,
-			),
-			'tstotalformat' => array(
+			],
+			'tstotalformat' => [
 				'required' => false,
 				'name' => tra('Total Format'),
 				'description' =>
@@ -351,8 +351,8 @@ class Table_Plugin
 						'<a href="http://mottie.github.io/tablesorter/docs/example-widget-math.html#mask_examples">here</a>'
 					)
 					. ' <code>#,###.</code><br>',
-			),
-			'tstotaloptions' => array(
+			],
+			'tstotaloptions' => [
 				'required' => false,
 				'name' => tra('Total Options'),
 				'description' =>
@@ -372,8 +372,8 @@ class Table_Plugin
 				'default' => '',
 				'filter' => 'striptags',
 				'advanced' => true,
-			),
-		);
+			],
+		];
 	}
 
 	/**
@@ -410,7 +410,7 @@ class Table_Plugin
 		$tstotalformat = null,
 		$tstotaloptions = null
 	) {
-		$s = array();
+		$s = [];
 
 		//id
 		if (! empty($id)) {
@@ -549,7 +549,7 @@ class Table_Plugin
 					$s['pager'] = $tsp[0];
 					if (isset($s['pager']['expand']) && is_array($s['pager']['expand'])) {
 						if (isset($s['pager']['max']) && $s['pager']['max'] > 0) {
-							$s['pager']['expand'] = array_merge(array($s['pager']['max']), $s['pager']['expand']);
+							$s['pager']['expand'] = array_merge([$s['pager']['max']], $s['pager']['expand']);
 						} else {
 							$s['pager']['max'] = min($s['pager']['expand']);
 						}

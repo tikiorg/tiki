@@ -29,8 +29,8 @@
 function HTMLPurifier($html, $config = null)
 {
 	static $purifier = false;
-	if (!$purifier || !$config) {
-		if (!$config) {	// mod for tiki temp files location
+	if (! $purifier || ! $config) {
+		if (! $config) {	// mod for tiki temp files location
 			$config = getHTMLPurifierTikiConfig();
 		}
 		$purifier = new HTMLPurifier();
@@ -45,10 +45,10 @@ function getHTMLPurifierTikiConfig()
 {
 	global $tikipath, $prefs;
 
-	$d = $tikipath.'temp/cache/HTMLPurifierCache';
-	if (!is_dir($d)) {
-		if (!mkdir($d)) {
-			$d = $tikipath.'temp/cache';
+	$d = $tikipath . 'temp/cache/HTMLPurifierCache';
+	if (! is_dir($d)) {
+		if (! mkdir($d)) {
+			$d = $tikipath . 'temp/cache';
 		} else {
 			chmod($d, (int) $prefs['smarty_cache_perms']);
 		}
@@ -61,13 +61,13 @@ function getHTMLPurifierTikiConfig()
 		$conf->set('Attr.EnableID', 1);
 		$conf->set('HTML.Doctype', 'XHTML 1.0 Transitional');
 		$conf->set('HTML.TidyLevel', 'light');
-		if ( $def = $conf->maybeGetRawHTMLDefinition() ) {
+		if ($def = $conf->maybeGetRawHTMLDefinition()) {
 			$def->addAttribute('a', 'target', 'Enum#_blank,_self,_target,_top');
 			$def->addAttribute('a', 'name', 'CDATA');
 			// Add usemap attribute to img tag
 			$def->addAttribute('img', 'usemap', 'CDATA');
 		// rel attribute for anchors
-		$def->addAttribute('a', 'rel', 'CDATA');
+			$def->addAttribute('a', 'rel', 'CDATA');
 
 			// Add map tag
 			$map = $def->addElement(
@@ -75,13 +75,13 @@ function getHTMLPurifierTikiConfig()
 				'Block', // content set
 				'Flow', // allowed children
 				'Common', // attribute collection
-				array( // attributes
+				[ // attributes
 					'name' => 'CDATA',
 					'id' => 'ID',
 					'title' => 'CDATA',
-				)
+				]
 			);
-			$map->excludes = array('map' => true);
+			$map->excludes = ['map' => true];
 
 			// Add area tag
 			$area = $def->addElement(
@@ -89,20 +89,20 @@ function getHTMLPurifierTikiConfig()
 				'Block', // content set
 				'Empty', // don't allow children
 				'Common', // attribute collection
-				array( // attributes
+				[ // attributes
 					'name' => 'CDATA',
 					'id' => 'ID',
 					'alt' => 'Text',
 					'coords' => 'CDATA',
 					'accesskey' => 'Character',
-					'nohref' => new HTMLPurifier_AttrDef_Enum(array('nohref')),
+					'nohref' => new HTMLPurifier_AttrDef_Enum(['nohref']),
 					'href' => 'URI',
-					'shape' => new HTMLPurifier_AttrDef_Enum(array('rect','circle','poly','default')),
+					'shape' => new HTMLPurifier_AttrDef_Enum(['rect','circle','poly','default']),
 					'tabindex' => 'Number',
-					'target' => new HTMLPurifier_AttrDef_Enum(array('_blank','_self','_target','_top'))
-				)
+					'target' => new HTMLPurifier_AttrDef_Enum(['_blank','_self','_target','_top'])
+				]
 			);
-			$area->excludes = array('area' => true);
+			$area->excludes = ['area' => true];
 		}
 	}
 	return $conf;

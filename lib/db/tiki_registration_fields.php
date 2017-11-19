@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -24,42 +24,42 @@ class TikiRegistrationFields extends TikiLib
 	{
 	}
 
-    /**
-     * @param bool $user
-     * @return array
-     */
-    function getVisibleFields2($user=false)
+	/**
+	 * @param bool $user
+	 * @return array
+	 */
+	function getVisibleFields2($user = false)
 	{
-        global $tikilib;
+		global $tikilib;
 
 		$query = 'SELECT `id`, `field` as `prefName`, `name` as `label`, `type`, `show`, `size` FROM `tiki_registration_fields` WHERE `show`=?';
-        $result = $tikilib->query($query, array(1));
+		$result = $tikilib->query($query, [1]);
 
-        $ret = array();
+		$ret = [];
 
-        while ($res = $result->fetchRow()) {
-            if ($user) {
-                $res['value'] = $tikilib->get_user_preference($user, $res['prefName'], '');
-            }
-            $ret[] = $res;
-        }
-        return $ret;
+		while ($res = $result->fetchRow()) {
+			if ($user) {
+				$res['value'] = $tikilib->get_user_preference($user, $res['prefName'], '');
+			}
+			$ret[] = $res;
+		}
+		return $ret;
 	}
 
-    /**
-     * @return array
-     */
-    function getHiddenFields()
+	/**
+	 * @return array
+	 */
+	function getHiddenFields()
 	{
-        global $tikilib;
+		global $tikilib;
 		$query = 'SELECT `field` FROM `tiki_registration_fields` WHERE `show`=?';
-		$result = $tikilib->query($query, array(0));
+		$result = $tikilib->query($query, [0]);
 
-        $ret = array();
+		$ret = [];
 
-        while ($res = $result->fetchRow()) {
-            $ret[] = $res['field'];
-        }
-        return $ret;
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res['field'];
+		}
+		return $ret;
 	}
 }

@@ -105,8 +105,9 @@ class OAuthLib extends TikiDb_Bridge
 			} catch (ZendOAuth\Exception\ExceptionInterface $e) {
 				$oauth_ex = $e->getPrevious();
 				$prevErr = '';
-				if ($oauth_ex != null)
+				if ($oauth_ex != null) {
 					$prevErr = $oauth_ex->getMessage();
+				}
 				die($e->getMessage() . '. Origin: ' . $prevErr);
 			}
 		}
@@ -130,10 +131,10 @@ class OAuthLib extends TikiDb_Bridge
 		if (! empty($config['accessToken']) && ! empty($config['accessTokenSecret'])) {
 			$token = new ZendOAuth\Token\Access();
 			$token->setParams(
-				array(
+				[
 					'oauth_token' => $config['accessToken'],
 					'oauth_token_secret' => $config['accessTokenSecret'],
-				)
+				]
 			);
 
 			return $token;
@@ -151,16 +152,16 @@ class OAuthLib extends TikiDb_Bridge
 		$tikilib = TikiLib::lib('tiki');
 		$servicelib = TikiLib::lib('service');
 		$callback = $servicelib->getUrl(
-			array(
+			[
 				'controller' => 'oauth',
 				'action' => 'callback',
 				'oauth_callback' => $provider_key,
-			)
+			]
 		);
 
 		switch ($provider_key) {
-		case 'vimeo':
-			return array(
+			case 'vimeo':
+				return [
 				'callbackUrl' => $tikilib->tikiUrl($callback),
 				'siteUrl' => 'https://api.vimeo.com/oauth',
 				'requestTokenUrl' => 'https://api.vimeo.com/oauth/request_token',
@@ -169,9 +170,9 @@ class OAuthLib extends TikiDb_Bridge
 				'consumerKey' => $prefs['vimeo_consumer_key'],
 				'consumerSecret' => $prefs['vimeo_consumer_secret'],
 				'oauth2Token' => $prefs['vimeo_access_token'],
-			);
-		case 'zotero':
-			return array(
+				];
+			case 'zotero':
+				return [
 				'callbackUrl' => $tikilib->tikiUrl($callback),
 				'siteUrl' => 'https://www.zotero.org/oauth',
 				'requestTokenUrl' => 'https://www.zotero.org/oauth/request',
@@ -180,7 +181,7 @@ class OAuthLib extends TikiDb_Bridge
 				'consumerKey' => $prefs['zotero_client_key'],
 				'consumerSecret' => $prefs['zotero_client_secret'],
 				'secretAsGet' => 'key', // Tiki-specific
-			);
+				];
 		}
 	}
 
@@ -194,4 +195,3 @@ class OAuthLib extends TikiDb_Bridge
 		}
 	}
 }
-

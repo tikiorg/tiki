@@ -16,58 +16,58 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class ContributionLib extends TikiLib
 {
-    /**
-     * @param $name
-     * @param string $description
-     */
-    function add_contribution($name, $description = '')
+	/**
+	 * @param $name
+	 * @param string $description
+	 */
+	function add_contribution($name, $description = '')
 	{
 		$query = 'insert into `tiki_contributions`(`name`, `description`) values(?, ?)';
-		$this->query($query, array($name, $description));
+		$this->query($query, [$name, $description]);
 	}
 
-    /**
-     * @param $contributionId
-     * @return mixed
-     */
-    function get_contribution($contributionId)
+	/**
+	 * @param $contributionId
+	 * @return mixed
+	 */
+	function get_contribution($contributionId)
 	{
 		$query = 'select * from `tiki_contributions` where `contributionId`=?';
-		$result = $this->query($query, array((int)$contributionId));
+		$result = $this->query($query, [(int)$contributionId]);
 		$ret = $result->fetchRow();
 		return $ret;
 	}
 
-    /**
-     * @param $contributionId
-     * @param $name
-     * @param string $description
-     */
-    function replace_contribution($contributionId, $name, $description='')
+	/**
+	 * @param $contributionId
+	 * @param $name
+	 * @param string $description
+	 */
+	function replace_contribution($contributionId, $name, $description = '')
 	{
 		$query = 'update `tiki_contributions` set `name`= ?, `description`=? where `contributionId`=?';
-		$this->query($query, array($name, $description, (int)$contributionId));
+		$this->query($query, [$name, $description, (int)$contributionId]);
 	}
 
-    /**
-     * @param $contributionId
-     */
-    function remove_contribution($contributionId)
+	/**
+	 * @param $contributionId
+	 */
+	function remove_contribution($contributionId)
 	{
 		$query = 'delete from `tiki_contributions`where `contributionId`=?';
-		$this->query($query, array($contributionId));
+		$this->query($query, [$contributionId]);
 	}
 
-    /**
-     * @param int $offset
-     * @param $maxRecords
-     * @param string $sort_mode
-     * @param string $find
-     * @return array
-     */
-    function list_contributions($offset=0, $maxRecords=-1, $sort_mode='name_asc', $find='')
+	/**
+	 * @param int $offset
+	 * @param $maxRecords
+	 * @param string $sort_mode
+	 * @param string $find
+	 * @return array
+	 */
+	function list_contributions($offset = 0, $maxRecords = -1, $sort_mode = 'name_asc', $find = '')
 	{
-		$bindvars = array();
+		$bindvars = [];
 
 		if ($find) {
 			$mid = ' where (`name` like ?)';
@@ -82,28 +82,28 @@ class ContributionLib extends TikiLib
 		$query_cant = "select count(*) from `tiki_contributions` $mid";
 		$cant = $this->getOne($query_cant, $bindvars);
 
-		$ret = array();
+		$ret = [];
 
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
-		$retval = array();
+		$retval = [];
 		$retval['data'] = $ret;
 		$retval['cant'] = $cant;
 
 		return $retval;
 	}
 
-    /**
-     * @param $contributions
-     * @param $itemId
-     * @param $objectType
-     * @param string $description
-     * @param string $name
-     * @param string $href
-     */
-    function assign_contributions($contributions, $itemId, $objectType, $description='', $name='', $href='')
+	/**
+	 * @param $contributions
+	 * @param $itemId
+	 * @param $objectType
+	 * @param string $description
+	 * @param string $name
+	 * @param string $href
+	 */
+	function assign_contributions($contributions, $itemId, $objectType, $description = '', $name = '', $href = '')
 	{
 		$objectlib = TikiLib::lib('object');
 
@@ -111,31 +111,32 @@ class ContributionLib extends TikiLib
 			$objectId = $objectlib->insert_object($objectType, $itemId, $description, $name, $href);
 		} else {
 			$query = 'delete from `tiki_contributions_assigned` where `objectId`=?';
-			$this->query($query, array((int)$objectId));
+			$this->query($query, [(int)$objectId]);
 		}
 
-		if (!empty($contributions)) {
+		if (! empty($contributions)) {
 			$query = 'insert `tiki_contributions_assigned` (`contributionId`, `objectId`) values(?,?)';
 			foreach ($contributions as $contribution) {
-				if ($contribution)
-					$this->query($query, array((int)$contribution, (int)$objectId));
+				if ($contribution) {
+					$this->query($query, [(int)$contribution, (int)$objectId]);
+				}
 			}
 		}
 	}
 
-    /**
-     * @param $itemId
-     * @param $objectType
-     * @return array
-     */
-    function get_assigned_contributions($itemId, $objectType)
+	/**
+	 * @param $itemId
+	 * @param $objectType
+	 * @return array
+	 */
+	function get_assigned_contributions($itemId, $objectType)
 	{
 		$query = 'select tc.* from `tiki_contributions` tc, `tiki_contributions_assigned` tca, `tiki_objects` tob' .
 						' where tob.`itemId`=? and tob.`type`=? and tca.`objectId`=tob.`objectId` and tca.`contributionId`= tc.`contributionId`' .
 						' order by tob.`type`desc, tc.`name` asc';
 
-		$result = $this->query($query, array($itemId, $objectType));
-		$ret = array();
+		$result = $this->query($query, [$itemId, $objectType]);
+		$ret = [];
 
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
@@ -144,35 +145,36 @@ class ContributionLib extends TikiLib
 		return $ret;
 	}
 
-    /**
-     * @param $itemIdOld
-     * @param $objectTypeOld
-     * @param $itemIdNew
-     * @param $objectTypeNew
-     * @param $description
-     * @param $name
-     * @param $href
-     */
-    function change_assigned_contributions($itemIdOld, $objectTypeOld, $itemIdNew, $objectTypeNew, $description, $name, $href)
+	/**
+	 * @param $itemIdOld
+	 * @param $objectTypeOld
+	 * @param $itemIdNew
+	 * @param $objectTypeNew
+	 * @param $description
+	 * @param $name
+	 * @param $href
+	 */
+	function change_assigned_contributions($itemIdOld, $objectTypeOld, $itemIdNew, $objectTypeNew, $description, $name, $href)
 	{
 		if ($this->get_assigned_contributions($itemIdOld, $objectTypeOld)) {
 			$objectlib = TikiLib::lib('object');
-			if (($objectId = $objectlib->get_object_id($objectTypeNew, $itemIdNew)) == 0)// create object
+			if (($objectId = $objectlib->get_object_id($objectTypeNew, $itemIdNew)) == 0) { // create object
 				$objectId = $objectlib->insert_object($objectTypeNew, $itemIdNew, $description, $name, $href);
+			}
 
 			$query = 'update `tiki_contributions_assigned` tca' .
 							' left join `tiki_objects` tob on tob.`objectId`= tca.`objectId` set tca.`objectId`=?' .
 							' where tob.`itemId`=? and tob.`type`=?';
 
-			$this->query($query, array((int)$objectId, $itemIdOld, $objectTypeOld));
+			$this->query($query, [(int)$objectId, $itemIdOld, $objectTypeOld]);
 		}
 	}
 
-    /**
-     * @param $itemId
-     * @param $objectType
-     */
-    function remove_assigned_contributions($itemId, $objectType)
+	/**
+	 * @param $itemId
+	 * @param $objectType
+	 */
+	function remove_assigned_contributions($itemId, $objectType)
 	{
 		// works only if mysql> 4
 		// $query = 'delete tca from `tiki_contributions_assigned` tca left join `tiki_objects`tob on tob.`objectId`=tca.`objectId` where tob.`itemId`= ? and tob.`type`= ?';
@@ -180,17 +182,17 @@ class ContributionLib extends TikiLib
 		$objectlib = TikiLib::lib('object');
 		$objectId = $objectlib->get_object_id($objectType, $itemId);
 		$query = 'delete from `tiki_contributions_assigned` where `objectId`= ?';
-		$this->query($query, array($objectId));
+		$this->query($query, [$objectId]);
 	}
 
-    /**
-     * @param $page
-     */
-    function remove_page($page)
+	/**
+	 * @param $page
+	 */
+	function remove_page($page)
 	{
 		$objectlib = TikiLib::lib('object');
 		$query = 'select * from `tiki_history` where `pageName` = ?';
-		$result = $this->query($query, array($page));
+		$result = $this->query($query, [$page]);
 
 		while ($res = $result->fetchRow()) {
 			$this->remove_history($res['historyId']);
@@ -199,10 +201,10 @@ class ContributionLib extends TikiLib
 		$this->remove_assigned_contributions($page, 'wiki page');
 	}
 
-    /**
-     * @param $historyId
-     */
-    function remove_history($historyId)
+	/**
+	 * @param $historyId
+	 */
+	function remove_history($historyId)
 	{
 			//history object only created for contribution yet. You can remove object
 		$objectlib = TikiLib::lib('object');
@@ -211,10 +213,10 @@ class ContributionLib extends TikiLib
 		$objectlib->delete_object('history', $historyId);
 	}
 
-    /**
-     * @param $commentId
-     */
-    function remove_comment($commentId)
+	/**
+	 * @param $commentId
+	 */
+	function remove_comment($commentId)
 	{
 			//history object only created for contribution yet. You can remove object
 		$objectlib = TikiLib::lib('object');
@@ -223,17 +225,17 @@ class ContributionLib extends TikiLib
 		$objectlib->delete_object('comment', $commentId);
 	}
 
-    /**
-     * @param $contributions
-     * @return string
-     */
-    function print_contributions($contributions)
+	/**
+	 * @param $contributions
+	 * @return string
+	 */
+	function print_contributions($contributions)
 	{
 		$print = '';
 
 		foreach ($contributions as $contribution) {
-			if ( !empty($print) ) {
-				$print.= ',';
+			if (! empty($print)) {
+				$print .= ',';
 			}
 
 			$res = $this->get_contribution($contribution);
@@ -243,13 +245,13 @@ class ContributionLib extends TikiLib
 		return $print;
 	}
 
-    /**
-     * @param $action
-     * @param $contributions
-     * @param int $delay
-     * @return bool
-     */
-    function update($action, $contributions, $delay=15)
+	/**
+	 * @param $action
+	 * @param $contributions
+	 * @param int $delay
+	 * @return bool
+	 */
+	function update($action, $contributions, $delay = 15)
 	{
 		$tikilib = TikiLib::lib('tiki');
 		$logslib = TikiLib::lib('logs');
@@ -260,7 +262,7 @@ class ContributionLib extends TikiLib
 
 			$result = $tikilib->query(
 				$query,
-				array($action['object'], $action['lastModif']+$delay, $action['lastModif'], $action['user'])
+				[$action['object'], $action['lastModif'] + $delay, $action['lastModif'], $action['user']]
 			);
 
 			if (($nb = $result->numRows()) == 1) {
@@ -270,19 +272,22 @@ class ContributionLib extends TikiLib
 				$info = $tikilib->get_page_info($action['object']);
 				if ($info['lastModif'] <= $action['lastModif']) { //it is the page
 					$this->assign_contributions($contributions, $info['pageName'], 'wiki page');
-				} else
+				} else {
 					return false;
-			} else
+				}
+			} else {
 				return false;
+			}
 		} else {
-			if ($action['objectType'] == 'comment' || $action['objectType'] == 'forum' )
+			if ($action['objectType'] == 'comment' || $action['objectType'] == 'forum') {
 				if ($commentId = $logslib->get_comment_action($action)) {
 					$this->assign_contributions($contributions, $commentId, 'comment');
 				} else {
 					return false;
 				}
-			else
+			} else {
 				$this->assign_contributions($contributions, $action['object'], $action['objectType']);
+			}
 		}
 
 		return true;

@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 class LdapLib extends TikiLib
@@ -33,7 +33,7 @@ class LdapLib extends TikiLib
 		$ldaplink = ADONewConnection($dsn);
 		$return = null;
 
-		if (!$ldaplink) {
+		if (! $ldaplink) {
 			// Wrong DSN
 			return $return;
 		}
@@ -45,7 +45,9 @@ class LdapLib extends TikiLib
 				if (isset($arr[$field])) {
 					// Retrieve field
 					$return[] = $arr[$field];
-					if ( $all === false ) break;
+					if ($all === false) {
+						break;
+					}
 				}
 			}
 		}
@@ -56,4 +58,3 @@ class LdapLib extends TikiLib
 		return ($all ? $return : array_shift($return)) ;
 	}
 }
-

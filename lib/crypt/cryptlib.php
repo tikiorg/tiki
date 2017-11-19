@@ -28,7 +28,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * Before Tiki 18, CryptLib used the mcrypt library, which is being deprecated in PHP 7.1 and removed from the standard installation starting with PHP 7.2.
  * See http://php.net/manual/en/migration71.deprecated.php for details.
  * In order to convert existing, encrypted data, the mcrypt must be used.
- * Thus CryptLib still may attempt to use mcrypt if such data is found. 
+ * Thus CryptLib still may attempt to use mcrypt if such data is found.
  *
  * The method setUserData encrypts the value and stores a user preference
  * getUserData reads it back into cleartext
@@ -82,7 +82,7 @@ class CryptLib extends TikiLib
 
 	function init()
 	{
-		if (!isset($_SESSION['cryptphrase'])) {
+		if (! isset($_SESSION['cryptphrase'])) {
 			throw new Exception(tra('Unable to locate cryptphrase'));
 		}
 		$phraseMD5 = $_SESSION['cryptphrase'];
@@ -105,12 +105,12 @@ class CryptLib extends TikiLib
 	}
 	function makeCryptPhrase($username, $cleartextPwd)
 	{
-		return md5($username.$cleartextPwd);
+		return md5($username . $cleartextPwd);
 	}
 
 	function release()
 	{
-		if ($this->hasOpenSSL){
+		if ($this->hasOpenSSL) {
 			$this->key = null;
 		}
 		if ($this->mcrypt != null) {
@@ -143,14 +143,14 @@ class CryptLib extends TikiLib
 	{
 		global $user;
 
-		if (!empty($paramName)) {
-			$paramName = '.'.$paramName;
+		if (! empty($paramName)) {
+			$paramName = '.' . $paramName;
 		}
-		$storedPwd64 = $this->get_user_preference($user, $this->prefprefix.'.'.$userprefKey.$paramName);
+		$storedPwd64 = $this->get_user_preference($user, $this->prefprefix . '.' . $userprefKey . $paramName);
 		if (empty($storedPwd64)) {
 			// Check if old, mcrypt encrypted data exist
 			// Decryption is done when getting data
-			$storedPwdMCrypt = $this->get_user_preference($user, $this->mcrypt_prefprefix.'.'.$userprefKey.$paramName);
+			$storedPwdMCrypt = $this->get_user_preference($user, $this->mcrypt_prefprefix . '.' . $userprefKey . $paramName);
 			if (empty($storedPwdMCrypt)) {
 				return false;
 			}
@@ -201,10 +201,10 @@ class CryptLib extends TikiLib
 			return false;
 		}
 		$storedPwd64 = $this->encryptData($cleartext);
-		if (!empty($paramName)) {
-			$paramName = '.'.$paramName;
+		if (! empty($paramName)) {
+			$paramName = '.' . $paramName;
 		}
-		$this->set_user_preference($user, $this->prefprefix.'.'.$userprefKey.$paramName, $storedPwd64);
+		$this->set_user_preference($user, $this->prefprefix . '.' . $userprefKey . $paramName, $storedPwd64);
 
 		return $storedPwd64;
 	}
@@ -229,10 +229,10 @@ class CryptLib extends TikiLib
 			return false;
 		}
 		$storedPwd64 = $this->encryptData($cleartext);
-		if (!empty($paramName)) {
-			$paramName = '.'.$paramName;
+		if (! empty($paramName)) {
+			$paramName = '.' . $paramName;
 		}
-		$this->set_user_preference($username, $this->prefprefix.'.'.$userprefKey.$paramName, $storedPwd64);
+		$this->set_user_preference($username, $this->prefprefix . '.' . $userprefKey . $paramName, $storedPwd64);
 
 		return $storedPwd64;
 	}
@@ -244,10 +244,10 @@ class CryptLib extends TikiLib
 	{
 		global $user;
 
-		if (!empty($paramName)) {
-			$paramName = '.'.$paramName;
+		if (! empty($paramName)) {
+			$paramName = '.' . $paramName;
 		}
-		$storedPwd64 = $this->get_user_preference($user, $this->prefprefix.'.'.$userprefKey.$paramName);
+		$storedPwd64 = $this->get_user_preference($user, $this->prefprefix . '.' . $userprefKey . $paramName);
 		if (empty($storedPwd64)) {
 			return false;
 		} else {
@@ -256,7 +256,7 @@ class CryptLib extends TikiLib
 
 		// Check if the cleartext contain any illigal password character.
 		// 	If found, it indicates that the decryption has failed.
-		if (!ctype_print ($cleartext)) {
+		if (! ctype_print($cleartext)) {
 			return false;
 		}
 
@@ -315,8 +315,8 @@ class CryptLib extends TikiLib
 
 		// Add prefix
 		if ($use_prefix) {
-			foreach($domains as &$dom) {
-				$dom = $this->prefprefix.'.'.$dom;
+			foreach ($domains as &$dom) {
+				$dom = $this->prefprefix . '.' . $dom;
 			}
 		}
 		return $domains;
@@ -341,7 +341,7 @@ class CryptLib extends TikiLib
 		}
 		// Make sure the data is at least 20 characters long
 		// The spaces are trimmed when decrypting
-		while(mb_strlen($cleartextData) < 20) {
+		while (mb_strlen($cleartextData) < 20) {
 			$cleartextData .= ' ';
 		}
 
@@ -401,11 +401,11 @@ class CryptLib extends TikiLib
 
 		// Rehash encrypted preferences
 		foreach ($domains as $userprefKey) {
-			$rc = $this->changeUserPassword($userprefKey, md5($user.$oldCleartextPwd), md5($user.$newCleartextPwd));
+			$rc = $this->changeUserPassword($userprefKey, md5($user . $oldCleartextPwd), md5($user . $newCleartextPwd));
 
 			// Also update the username, if defined
 			if ($rc && $this->hasUserData($userprefKey, 'usr')) {
-				$this->changeUserPassword($userprefKey.'.usr', md5($user.$oldCleartextPwd), md5($user.$newCleartextPwd));
+				$this->changeUserPassword($userprefKey . '.usr', md5($user . $oldCleartextPwd), md5($user . $newCleartextPwd));
 			}
 		}
 
@@ -421,7 +421,7 @@ class CryptLib extends TikiLib
 		// Retrieve the old password
 		$cryptOld = new CryptLib();
 		$cryptOld->initSeed($oldPhraseMD5);
-		if (!$cryptOld->hasCrypt()) {
+		if (! $cryptOld->hasCrypt()) {
 			// Crypt is not available.
 			// Only Base64 encoding. No conversion needed
 			return false;
@@ -435,7 +435,7 @@ class CryptLib extends TikiLib
 		// Check if the cleartext contain any illigal password character.
 		// 	If found, it indicates that the decryption has failed. The $oldPhraseMD5 may be incorrect?
 		//  Then, do not proceed to rehash the password
-		if (!ctype_print ($cleartextPwd)) {
+		if (! ctype_print($cleartextPwd)) {
 			return false;
 		}
 
@@ -474,8 +474,7 @@ class CryptLib extends TikiLib
 			);
 
 			// Prepend the iv
-			$crypttext = $iv.$crypttext;
-
+			$crypttext = $iv . $crypttext;
 		} else {
 			$crypttext = base64_encode($cleartext);
 		}
@@ -542,11 +541,10 @@ class CryptLib extends TikiLib
 
 		// Convert encrypted data, if OpenSSL is installed
 		if ($this->hasCrypt()) {
-
 			$query = 'SELECT `prefName` , `value` FROM `tiki_user_preferences` WHERE `prefName` like \'dp.%\' and  `user` = ?';
-			$result = $this->query($query, array($login));
+			$result = $this->query($query, [$login]);
 
-			while ( $row = $result->fetchRow() ) {
+			while ($row = $result->fetchRow()) {
 				$orgPrefName = $row['prefName'];
 				$storedPwdMCrypt64 = $row['value'];
 
@@ -562,7 +560,7 @@ class CryptLib extends TikiLib
 
 				// Delete old Mcrypt coded user data
 				$userPreferences = $this->table('tiki_user_preferences');
-				$userPreferences->delete(array('user' => $login, 'prefName' => $orgPrefName));
+				$userPreferences->delete(['user' => $login, 'prefName' => $orgPrefName]);
 			}
 		}
 	}

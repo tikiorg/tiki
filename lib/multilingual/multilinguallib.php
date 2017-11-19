@@ -21,16 +21,16 @@ class MultilingualLib extends TikiLib
 	public $mtEnabled = 'y';
 
 
-    /*
+	/*
      * Create the translation of wiki page $srcPageName.
      */
-    function createTranslationOfPage($srcPageName, $srcLang, $targPageName, $targLang, $targPageContent)
-    {
-        global $tikilib, $user;
+	function createTranslationOfPage($srcPageName, $srcLang, $targPageName, $targLang, $targPageContent)
+	{
+		global $tikilib, $user;
 
-        $tikilib->create_page($targPageName, 0, $targPageContent, null, '', null, $user, '', $targLang);
-        $this->insertTranslation('wiki page', $srcPageName, $srcLang, $targPageName, $targLang);
-    }
+		$tikilib->create_page($targPageName, 0, $targPageContent, null, '', null, $user, '', $targLang);
+		$this->insertTranslation('wiki page', $srcPageName, $srcLang, $targPageName, $targLang);
+	}
 
 	/**
 	 * @brief add an object and its transaltion set into the set of translations of another one
@@ -48,27 +48,27 @@ class MultilingualLib extends TikiLib
 		$srcTrads = $this->getTrads($type, $srcId);
 		$objTrads = $this->getTrads($type, $objId);
 
-		if (!$srcTrads && !$objTrads) {
+		if (! $srcTrads && ! $objTrads) {
 			$query = "insert into `tiki_translated_objects` (`type`,`objId`,`lang`) values (?,?,?)";
-			$this->query($query, array($type, $srcId, $srcLang));
+			$this->query($query, [$type, $srcId, $srcLang]);
 			$query = "select max(`traId`) from `tiki_translated_objects` where `type`=? and `objId`=?";
-			$tmp_traId = $this->getOne($query, array( $type, $srcId ));
+			$tmp_traId = $this->getOne($query, [ $type, $srcId ]);
 			$query = "insert into `tiki_translated_objects` (`type`,`objId`,`traId`,`lang`) values (?,?,?,?)";
-			$this->query($query, array($type, $objId, $tmp_traId, $objLang));
+			$this->query($query, [$type, $objId, $tmp_traId, $objLang]);
 			return null;
-		} elseif (!$srcTrads) {
+		} elseif (! $srcTrads) {
 			if ($this->exist($objTrads, $srcLang, 'lang')) {
 				return "alreadyTrad";
 			}
 			$query = "insert into `tiki_translated_objects` (`type`,`objId`,`traId`,`lang`) values (?,?,?,?)";
-			$this->query($query, array($type, $srcId, $objTrads[0]['traId'], $srcLang));
+			$this->query($query, [$type, $srcId, $objTrads[0]['traId'], $srcLang]);
 			return null;
-		} elseif (!$objTrads) {
+		} elseif (! $objTrads) {
 			if ($this->exist($srcTrads, $objLang, 'lang')) {
 				return "alreadyTrad";
 			}
 			$query = "insert into `tiki_translated_objects` (`type`,`objId`,`traId`,`lang`) values (?,?,?,?)";
-			$this->query($query, array($type, $objId, $srcTrads[0]['traId'], $objLang));
+			$this->query($query, [$type, $objId, $srcTrads[0]['traId'], $objLang]);
 			return null;
 		} elseif ($srcTrads[0]['traId'] == $objTrads[0]['traId']) {
 			return "alreadySet";
@@ -79,7 +79,7 @@ class MultilingualLib extends TikiLib
 				}
 			}
 			$query = "update `tiki_translated_objects`set `traId`=? where `traId`=?";
-			$this->query = $this->query($query, array($srcTrads[0]['traId'], $objTrads[0]['traId']));
+			$this->query = $this->query($query, [$srcTrads[0]['traId'], $objTrads[0]['traId']]);
 			return null;
 		}
 	}
@@ -91,7 +91,7 @@ class MultilingualLib extends TikiLib
 	function updateTranslation($type, $srcId, $objId, $objLang)
 	{
 		$query = "update `tiki_translated_objects` set `objId`=? where `type`=? and `srcId`=? and `lang`=?";
-		$this->query($query, array($objId, $type, $srcId, $objLang));
+		$this->query($query, [$objId, $type, $srcId, $objLang]);
 	}
 
 	/**
@@ -105,23 +105,23 @@ class MultilingualLib extends TikiLib
 						" from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2" .
 						" where t1.`traId`=t2.`traId` and t1.`type`=? and t1.`objId`=? and t2.`lang`=?";
 
-		return $this->getOne($query, array($type, $srcId, $objLang));
+		return $this->getOne($query, [$type, $srcId, $objLang]);
 	}
 
-    /**
-     * @param $type
-     * @param $objId
-     * @return array
-     */
-    function getTrads($type, $objId)
+	/**
+	 * @param $type
+	 * @param $objId
+	 * @return array
+	 */
+	function getTrads($type, $objId)
 	{
 		$query =
 						"select t2.`traId`, t2.`objId`, t2.`lang`" .
 						" from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2" .
 						" where t1.`traId`=t2.`traId` and t1.`type`=? and t1.`objId`=?";
 
-		$result = $this->query($query, array($type, (string) $objId));
-		$ret = array();
+		$result = $this->query($query, [$type, (string) $objId]);
+		$ret = [];
 
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
@@ -137,16 +137,16 @@ class MultilingualLib extends TikiLib
 	 * @param long = Whether the language name returned (langName) should be in long format
 	 * @return: array(objId, objName, lang, langName) with langName=localized language name
 	 */
-    /**
-     * @param $type
-     * @param $objId
-     * @param string $objName
-     * @param string $objLang
-     * @param bool $long
-     * @return array
-     * @throws Exception
-     */
-    function getTranslations($type, $objId, $objName='', $objLang='', $long=false)
+	/**
+	 * @param $type
+	 * @param $objId
+	 * @param string $objName
+	 * @param string $objLang
+	 * @param bool $long
+	 * @return array
+	 * @throws Exception
+	 */
+	function getTranslations($type, $objId, $objName = '', $objLang = '', $long = false)
 	{
 		if ($type == 'wiki page') {
 			$query =
@@ -165,17 +165,17 @@ class MultilingualLib extends TikiLib
 			//$query = "select t2.`objId`, t2.`lang` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and t1.`objId`=?";
 		}
 
-		$result = $this->query($query, array($type, $objId));
-		$ret = array();
+		$result = $this->query($query, [$type, $objId]);
+		$ret = [];
 		$langLib = TikiLib::lib('language');
-		$l = $langLib->format_language_list(array($objLang), $long ? 'n' : 'y');
-		$ret0 = array('objId'=>$objId, 'objName'=>$objName, 'lang'=> $objLang, 'langName'=>empty($l)?'':$l[0]['name']);
+		$l = $langLib->format_language_list([$objLang], $long ? 'n' : 'y');
+		$ret0 = ['objId' => $objId, 'objName' => $objName, 'lang' => $objLang, 'langName' => empty($l) ? '' : $l[0]['name']];
 		while ($res = $result->fetchRow()) {
-			$l = $langLib->format_language_list(array($res['lang']), $long ? 'n' : 'y');
+			$l = $langLib->format_language_list([$res['lang']], $long ? 'n' : 'y');
 			$res['langName'] = $l[0]['name'];
 			$ret[] = $res;
 		}
-		usort($ret, array('MultilingualLib', 'compare_lang'));
+		usort($ret, ['MultilingualLib', 'compare_lang']);
 		array_unshift($ret, $ret0);
 		return $ret;
 	}
@@ -197,18 +197,18 @@ class MultilingualLib extends TikiLib
 			return 'alreadyTrad';
 		}
 
-		if (!$optimisation) {
+		if (! $optimisation) {
 			if ($type == 'wiki page') {
 				$query = "update `tiki_pages` set `lang`=? where `page_id`=?";
-				$this->query($query, array($lang, $objId));
+				$this->query($query, [$lang, $objId]);
 			} elseif ($type == 'article') {
 				$query = "update `tiki_articles` set `lang`=? where `articleId`=?";
-				$this->query($query, array($lang, $objId));
+				$this->query($query, [$lang, $objId]);
 			}
 		}
 
 		$query = "update `tiki_translated_objects` set `lang`=? where `objId`=? and `type`=?";
-		$this->query($query, array($lang, $objId, $type));
+		$this->query($query, [$lang, $objId, $type]);
 		return null;
 	}
 
@@ -218,7 +218,7 @@ class MultilingualLib extends TikiLib
 	function detachTranslation($type, $objId)
 	{
 		$query = "delete from `tiki_translated_objects` where `type`= ? and `objId`=?";
-		$this->query($query, array($type, $objId));
+		$this->query($query, [$type, $objId]);
 		//@@TODO: delete the set if only one remaining object - not necesary but will clean the table
 	}
 
@@ -242,7 +242,7 @@ class MultilingualLib extends TikiLib
 	function preferredLangs($langContext = null, $include_browser_lang = null)
 	{
 		global $user, $prefs, $tikilib;
-		$langs = array();
+		$langs = [];
 
 		if ($include_browser_lang === null) {
 			$include_browser_lang = ($prefs['feature_detect_language'] === 'y');
@@ -255,10 +255,10 @@ class MultilingualLib extends TikiLib
 			}
 		}
 
-		if ($prefs['language'] && !in_array($prefs['language'], $langs)) {
+		if ($prefs['language'] && ! in_array($prefs['language'], $langs)) {
 			$langs[] = $prefs['language'];
 			$l = $this->rootLang($prefs['language']);
-			if (!in_array($l, $langs)) {
+			if (! in_array($l, $langs)) {
 				$langs[] = $l;
 			}
 		}
@@ -266,11 +266,11 @@ class MultilingualLib extends TikiLib
 		if (isset($prefs['read_language'])) {
 			$tok = strtok($prefs['read_language'], ' ');
 			while (false !== $tok) {
-				if (!in_array($tok, $langs) ) {
+				if (! in_array($tok, $langs)) {
 					$langs[] = $tok;
 				}
 				$l = $this->rootLang($tok);
-				if (!in_array($l, $langs)) {
+				if (! in_array($l, $langs)) {
 					$langs[] = $l;
 				}
 				$tok = strtok(' ');
@@ -280,10 +280,10 @@ class MultilingualLib extends TikiLib
 		if (($include_browser_lang)&&(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))) {
 			$ls = preg_split('/\s*,\s*/', preg_replace('/;q=[0-9.]+/', '', $_SERVER['HTTP_ACCEPT_LANGUAGE'])); // browser
 			foreach ($ls as $l) {
-				if (!in_array($l, $langs)) {
+				if (! in_array($l, $langs)) {
 					$langs[] = $l;
 					$l = $this->rootLang($l);
-					if (!in_array($l, $langs)) {
+					if (! in_array($l, $langs)) {
 						$langs[] = $l;
 					}
 				}
@@ -291,16 +291,16 @@ class MultilingualLib extends TikiLib
 		}
 
 		$l = $prefs['site_language'];
-		if (!in_array($l, $langs)) {
+		if (! in_array($l, $langs)) {
 			$langs[] = $l; // site language
 			$l = $this->rootLang($l);
-			if (!in_array($l, $langs)) {
+			if (! in_array($l, $langs)) {
 				$langs[] = $l;
 			}
 		}
 
-		if ( $prefs['restrict_language'] === 'y' && $prefs['available_languages'] && $prefs['language_inclusion_threshold'] >= count($prefs['available_languages']) ) {
-			foreach ( array_diff($prefs['available_languages'], $langs) as $lang ) {
+		if ($prefs['restrict_language'] === 'y' && $prefs['available_languages'] && $prefs['language_inclusion_threshold'] >= count($prefs['available_languages'])) {
+			foreach (array_diff($prefs['available_languages'], $langs) as $lang) {
 				$langs[] = $lang;
 			}
 		}
@@ -321,7 +321,7 @@ class MultilingualLib extends TikiLib
 	 */
 	function selectLangList($type, $listObjs, $langContext = null)
 	{
-		if (!$listObjs || count($listObjs) <= 1) {
+		if (! $listObjs || count($listObjs) <= 1) {
 			return $listObjs;
 		}
 
@@ -329,30 +329,30 @@ class MultilingualLib extends TikiLib
 		$max = count($listObjs);
 
 		for ($i = 0; $i < $max; ++$i) {
-			if (!isset($listObjs[$i]) || !isset($listObjs[$i]['lang'])) {
+			if (! isset($listObjs[$i]) || ! isset($listObjs[$i]['lang'])) {
 				continue; // previously withdrawn or no language
 			}
 
 			if ($type == 'wiki page') {
 				$objId = $listObjs[$i]['page_id'];
-			} else if ($type == 'objId') {
+			} elseif ($type == 'objId') {
 				$objId = $listObjs[$i]['objId'];
 			} else {
 				$objId = $listObjs[$i]['articleId'];
 			}
 
 			$trads = $this->getTrads($type, $objId);
-			if (!$trads) {
+			if (! $trads) {
 				continue;
 			}
 
 			for ($j = $i + 1; $j < $max; ++$j) {
-				if (!isset($listObjs[$j])) {
+				if (! isset($listObjs[$j])) {
 					continue;
 				}
 				if ($type == 'wiki page') {
 					$objId2 = $listObjs[$j]['page_id'];
-				} else if ($type == 'objId') {
+				} elseif ($type == 'objId') {
 					$objId2 = $listObjs[$j]['objId'];
 				} else {
 					$objId2 = $listObjs[$j]['articleId'];
@@ -360,21 +360,21 @@ class MultilingualLib extends TikiLib
 
 				if ($this->exist($trads, $objId2, 'objId')) {
 					$iord = array_search($listObjs[$i]['lang'], $langs);
-					if (!$iord && strchr($listObjs[$i]['lang'], "-")) {
+					if (! $iord && strchr($listObjs[$i]['lang'], "-")) {
 						$iord = array_search($this->rootLang($listObjs[$i]['lang']), $langs);
 					}
 
 					$jord = array_search($listObjs[$j]['lang'], $langs);
-					if (!$jord && strchr($listObjs[$j]['lang'], "-")) {
+					if (! $jord && strchr($listObjs[$j]['lang'], "-")) {
 						$jord = array_search($this->rootLang($listObjs[$j]['lang']), $langs);
 					}
 
 					if ($jord === false) {
 						unset($listObjs[$j]); // not in the pref langs
-					} else if ($iord === false) {
+					} elseif ($iord === false) {
 						unset($listObjs[$i]);
 						break;
-					} else if ($iord > $jord) {
+					} elseif ($iord > $jord) {
 						unset($listObjs[$i]);
 						break;
 					} else {
@@ -393,7 +393,7 @@ class MultilingualLib extends TikiLib
 	function selectLangObj($type, $objId, $langContext = null)
 	{
 		$trads = $this->getTrads($type, $objId);
-		if (!$trads) {
+		if (! $trads) {
 			return $objId;
 		}
 		$langs = $this->preferredLangs($langContext);
@@ -422,7 +422,7 @@ class MultilingualLib extends TikiLib
 			return false;
 		}
 
-		if ($prefs['feature_best_language'] == 'n' && !isset($_REQUEST['bl'])) {
+		if ($prefs['feature_best_language'] == 'n' && ! isset($_REQUEST['bl'])) {
 			// If bl is explicitly set then for backward compatibility reasons let through even if feature is off.
 			return false;
 		}
@@ -456,41 +456,41 @@ class MultilingualLib extends TikiLib
 		return true;
 	}
 
-    /**
-     * @param $url
-     * @param $no_bl_value
-     * @return mixed|string
-     */
-    function setUrlNoBestLanguageArg($url, $no_bl_value)
+	/**
+	 * @param $url
+	 * @param $no_bl_value
+	 * @return mixed|string
+	 */
+	function setUrlNoBestLanguageArg($url, $no_bl_value)
 	{
 		if (preg_match('/[?&]no_bl=/', $url)) {
 			$url = preg_replace('/([?&])no_bl=[yn]{0,1}/', '$1no_bl=$no_bl_value', $url);
-		} elseif (!preg_match('/[?&]lang=/', $url)) {
+		} elseif (! preg_match('/[?&]lang=/', $url)) {
 			if (strstr($url, '?')) {
-				$url.= '&no_bl=$no_bl_value';
+				$url .= '&no_bl=$no_bl_value';
 			} else {
-				$url.= '?no_bl=$no_bl_value';
+				$url .= '?no_bl=$no_bl_value';
 			}
 		}
 
 		return $url;
 	}
 
-    /**
-     * @return array
-     */
-    function getSupportedTranslationBitFlags()
+	/**
+	 * @return array
+	 */
+	function getSupportedTranslationBitFlags()
 	{
-		return array( 'critical' );
+		return [ 'critical' ];
 	}
 
-    /**
-     * @param $flags
-     * @return array
-     */
-    function normalizeTranslationBitFlags( $flags )
+	/**
+	 * @param $flags
+	 * @return array
+	 */
+	function normalizeTranslationBitFlags($flags)
 	{
-		if ( !is_array($flags) ) {
+		if (! is_array($flags)) {
 			$flags = explode(',', $flags);
 		}
 
@@ -498,22 +498,22 @@ class MultilingualLib extends TikiLib
 		return array_intersect($flags, $this->getSupportedTranslationBitFlags());
 	}
 
-    /**
-     * @param $type
-     * @param $objId
-     * @param int $version
-     * @param array $flags
-     */
-    function createTranslationBit($type, $objId, $version = 0, $flags = array())
+	/**
+	 * @param $type
+	 * @param $objId
+	 * @param int $version
+	 * @param array $flags
+	 */
+	function createTranslationBit($type, $objId, $version = 0, $flags = [])
 	{
-		if ( $type != 'wiki page' ) {
+		if ($type != 'wiki page') {
 			die('Translation sync only available for wiki pages.');
 		}
 
 		$flags = $this->normalizeTranslationBitFlags($flags);
 		$flags = implode(',', $flags);
 
-		if ( $version == 0 ) {
+		if ($version == 0) {
 			$info = $this->get_page_info_from_id($objId);
 			$version = $info['version'];
 		}
@@ -522,20 +522,20 @@ class MultilingualLib extends TikiLib
 			"INSERT
 			INTO tiki_pages_translation_bits (`page_id`, `version`,`flags` )
 			VALUES(?, ?, ?)",
-			array( (int) $objId, (int) $version, $flags )
+			[ (int) $objId, (int) $version, $flags ]
 		);
 	}
 
-    /**
-     * @param $type
-     * @param $sourceId
-     * @param $targetId
-     * @param int $sourceVersion
-     * @param int $targetVersion
-     */
-    function propagateTranslationBits( $type, $sourceId, $targetId, $sourceVersion = 0, $targetVersion = 0 )
+	/**
+	 * @param $type
+	 * @param $sourceId
+	 * @param $targetId
+	 * @param int $sourceVersion
+	 * @param int $targetVersion
+	 */
+	function propagateTranslationBits($type, $sourceId, $targetId, $sourceVersion = 0, $targetVersion = 0)
 	{
-		if ( $type != 'wiki page' ) {
+		if ($type != 'wiki page') {
 			die('Translation sync only available for wiki pages.');
 		}
 
@@ -546,12 +546,12 @@ class MultilingualLib extends TikiLib
 		$targetId = (int) $targetId;
 		$targetVersion = (int) $targetVersion;
 
-		if ( $sourceVersion == 0 ) {
+		if ($sourceVersion == 0) {
 			$info = $this->get_page_info_from_id($sourceId);
 			$sourceVersion = (int) $info['version'];
 		}
 
-		if ( $targetVersion == 0 ) {
+		if ($targetVersion == 0) {
 			$info = $this->get_page_info_from_id($targetId);
 			$targetVersion = (int) $info['version'];
 		}
@@ -590,7 +590,7 @@ class MultilingualLib extends TikiLib
 						FROM tiki_pages_translation_bits
 						WHERE page_id = ? AND original_translation_bit IS NOT NULL
 				)",
-			array( $sourceId, $sourceVersion, $targetId, $sourceId, $sourceVersion, $targetId, $targetId )
+			[ $sourceId, $sourceVersion, $targetId, $sourceId, $sourceVersion, $targetId, $targetId ]
 		);
 
 		$query =
@@ -602,53 +602,53 @@ class MultilingualLib extends TikiLib
 					flags)
 			VALUES( ?, ?, ?, ?, ? )";
 
-		while ( $row = $result->fetchRow() ) {
-			if ( empty( $row['original_translation_bit'] ) ) {
+		while ($row = $result->fetchRow()) {
+			if (empty($row['original_translation_bit'])) {
 				// The translation bit is the original one
 				$this->query(
 					$query,
-					array(
+					[
 						$targetId,
 						$targetVersion,
 						$row['translation_bit_id'],
 						$row['translation_bit_id'],
 						$row['flags']
-					)
+					]
 				);
 			} else {
 				// The transation bit was propagated to the source
 				$this->query(
 					$query,
-					array(
+					[
 						$targetId,
 						$targetVersion,
 						$row['translation_bit_id'],
 						$row['original_translation_bit'],
 						$row['flags']
-					)
+					]
 				);
 			}
 		}
 	}
 
-    /**
-     * @param $type
-     * @param $objId
-     * @param array $flags
-     * @param bool $page_unique
-     * @return array
-     */
-    function getMissingTranslationBits( $type, $objId, $flags = array(), $page_unique = false )
+	/**
+	 * @param $type
+	 * @param $objId
+	 * @param array $flags
+	 * @param bool $page_unique
+	 * @return array
+	 */
+	function getMissingTranslationBits($type, $objId, $flags = [], $page_unique = false)
 	{
-		if ( $type != 'wiki page' ) {
+		if ($type != 'wiki page') {
 			die('Translation sync only available for wiki pages.');
 		}
 
 		$objId = (int) $objId;
 		$flags = $this->normalizeTranslationBitFlags($flags);
 
-		$conditions = array( '1 = 1' );
-		foreach ( $flags as $flag ) {
+		$conditions = [ '1 = 1' ];
+		foreach ($flags as $flag) {
 			$conditions[] = "( FIND_IN_SET('$flag', bits.flags) > 0 )";
 		}
 
@@ -669,11 +669,11 @@ class MultilingualLib extends TikiLib
 				AND bits.`original_translation_bit` IS NULL
 				AND self.`original_translation_bit` IS NULL
 				AND $conditions",
-			array( $objId, $objId )
+			[ $objId, $objId ]
 		);
 
-		$bits = array();
-		while ( $row = $result->fetchRow() ) {
+		$bits = [];
+		while ($row = $result->fetchRow()) {
 			if ($page_unique) {
 				$bits[$row['bits.page_id']] = $row['translation_bit_id'];
 			} else {
@@ -684,12 +684,12 @@ class MultilingualLib extends TikiLib
 		return $bits;
 	}
 
-    /**
-     * @param $translationBit
-     * @param $pageIdToUpdate
-     * @return array
-     */
-    function getTranslationsWithBit( $translationBit, $pageIdToUpdate )
+	/**
+	 * @param $translationBit
+	 * @param $pageIdToUpdate
+	 * @return array
+	 */
+	function getTranslationsWithBit($translationBit, $pageIdToUpdate)
 	{
 		$pageIdToUpdate = (int) $pageIdToUpdate;
 		$translationBit = (int) $translationBit;
@@ -705,14 +705,14 @@ class MultilingualLib extends TikiLib
 					INNER JOIN tiki_pages pages ON pages.page_id = bits.page_id
 				WHERE
 					translation_bit_id = ? OR original_translation_bit = ?",
-			array( $pageIdToUpdate, $translationBit, $translationBit )
+			[ $pageIdToUpdate, $translationBit, $translationBit ]
 		);
 
-		$pages = array();
+		$pages = [];
 		global $prefs;
 
-		while ( $row = $result->fetchRow() ) {
-			if ( $row['lang'] == $prefs['site_language'] ) {
+		while ($row = $result->fetchRow()) {
+			if ($row['lang'] == $prefs['site_language']) {
 				$pages[] = $row;
 			}
 		}
@@ -720,11 +720,11 @@ class MultilingualLib extends TikiLib
 		return $pages;
 	}
 
-    /**
-     * @param $pageId
-     * @return array
-     */
-    function getSourceHistory( $pageId )
+	/**
+	 * @param $pageId
+	 * @return array
+	 */
+	function getSourceHistory($pageId)
 	{
 		$result = $this->query(
 			"SELECT DISTINCT
@@ -739,16 +739,16 @@ class MultilingualLib extends TikiLib
 			WHERE
 				target.page_id = ?
 			GROUP BY target.version, page.page_id, page.pageName",
-			array( $pageId )
+			[ $pageId ]
 		);
 
-		$list = array();
+		$list = [];
 
-		while ( $row = $result->fetchRow() ) {
+		while ($row = $result->fetchRow()) {
 			$group = $row['group'];
 
-			if ( ! array_key_exists($group, $list) ) {
-				$list[$group] = array();
+			if (! array_key_exists($group, $list)) {
+				$list[$group] = [];
 			}
 			$list[$group][] = $row;
 		}
@@ -756,11 +756,11 @@ class MultilingualLib extends TikiLib
 		return $list;
 	}
 
-    /**
-     * @param $pageId
-     * @return array
-     */
-    function getTargetHistory( $pageId )
+	/**
+	 * @param $pageId
+	 * @return array
+	 */
+	function getTargetHistory($pageId)
 	{
 		$result = $this->query(
 			"SELECT DISTINCT
@@ -775,16 +775,16 @@ class MultilingualLib extends TikiLib
 			WHERE
 				source.page_id = ?
 			GROUP BY page.page_id, target.version, page.pageName",
-			array( $pageId )
+			[ $pageId ]
 		);
 
-		$list = array();
+		$list = [];
 
-		while ( $row = $result->fetchRow() ) {
+		while ($row = $result->fetchRow()) {
 			$group = $row['group'];
 
-			if ( ! array_key_exists($group, $list) ) {
-				$list[$group] = array();
+			if (! array_key_exists($group, $list)) {
+				$list[$group] = [];
 			}
 
 			$list[$group][] = $row;
@@ -793,12 +793,12 @@ class MultilingualLib extends TikiLib
 		return $list;
 	}
 
-    /**
-     * @param $sourcePage
-     * @param $targetPage
-     * @return string
-     */
-    function subqueryObtainUpdateVersion( $sourcePage, $targetPage )
+	/**
+	 * @param $sourcePage
+	 * @param $targetPage
+	 * @return string
+	 */
+	function subqueryObtainUpdateVersion($sourcePage, $targetPage)
 	{
 		// Meant to be inlined in an other query. Useful in many cases.
 
@@ -825,11 +825,11 @@ class MultilingualLib extends TikiLib
 			)";
 	}
 
-    /**
-     * @param $pageId
-     * @return array
-     */
-    function getBetterPages( $pageId )
+	/**
+	 * @param $pageId
+	 * @return array
+	 */
+	function getBetterPages($pageId)
 	{
 		$pageId = (int) $pageId;
 
@@ -854,21 +854,21 @@ class MultilingualLib extends TikiLib
 							FROM tiki_pages_translation_bits
 							WHERE page_id = b.objId
 					)";
-		$result = $this->query($query, array( $pageId ));
+		$result = $this->query($query, [ $pageId ]);
 
-		$pages = array();
-		while ( $row = $result->fetchRow() ) {
+		$pages = [];
+		while ($row = $result->fetchRow()) {
 			$pages[] = $row;
 		}
 
 		return $pages;
 	}
 
-    /**
-     * @param $pageId
-     * @return array
-     */
-    function getWorstPages( $pageId )
+	/**
+	 * @param $pageId
+	 * @return array
+	 */
+	function getWorstPages($pageId)
 	{
 		$pageId = (int) $pageId;
 
@@ -901,49 +901,49 @@ class MultilingualLib extends TikiLib
 					WHERE
 						self.page_id = b.objId AND candidate.page_id = a.objId
 				)",
-			array( $pageId )
+			[ $pageId ]
 		);
 
-		$pages = array();
-		while ( $row = $result->fetchRow() ) {
+		$pages = [];
+		while ($row = $result->fetchRow()) {
 			$pages[] = $row;
 		}
 
 		return $pages;
 	}
 
-    /**
-     * @param $pageId
-     * @param $version
-     * @return array
-     */
-    function get_page_bit_flags( $pageId, $version )
+	/**
+	 * @param $pageId
+	 * @param $version
+	 * @return array
+	 */
+	function get_page_bit_flags($pageId, $version)
 	{
 		$query = "select distinct `flags` from `tiki_pages_translation_bits` where `page_id`=? and `version`=?";
-		$result = $this->query($query, array($pageId, $version));
-		$flags = array();
-		while ( $row = $result->fetchRow() ) {
+		$result = $this->query($query, [$pageId, $version]);
+		$flags = [];
+		while ($row = $result->fetchRow()) {
 			$flags[] = $row['flags'];
 		}
 
 		return $flags;
 	}
 
-    /**
-     * @param $pageName
-     * @return mixed
-     */
-    function getLangOfPage($pageName)
+	/**
+	 * @param $pageName
+	 * @return mixed
+	 */
+	function getLangOfPage($pageName)
 	{
 		$pageInfo = $this->get_page_info($pageName);
 		$lang = $pageInfo['lang'];
 		return $lang;
 	}
 
-    /**
-     * @return string
-     */
-    function currentPageSearchLanguage()
+	/**
+	 * @return string
+	 */
+	function currentPageSearchLanguage()
 	{
 		/*
 		 * Returns the language to be used for a normal page find.
@@ -983,19 +983,19 @@ class MultilingualLib extends TikiLib
 	}
 
 
-    /**
-     * @param $lang
-     */
-    function storeCurrentTermSearchLanguageInSession($lang)
+	/**
+	 * @param $lang
+	 */
+	function storeCurrentTermSearchLanguageInSession($lang)
 	{
 		global $_SESSION;
 		$_SESSION['find_term_last_done_in_lang'] = $lang;
 	}
 
-    /**
-     * @return array
-     */
-    function preferredLangsInfo()
+	/**
+	 * @return array
+	 */
+	function preferredLangsInfo()
 	{
 		global $tikilib, $tracer;
 
@@ -1007,37 +1007,37 @@ class MultilingualLib extends TikiLib
 		$allLangsInfo = $langLib->list_languages(false, 'y');
 
 		// Create a map of language ID (ex: 'en') to language info
-		$langIDs2Info = array();
+		$langIDs2Info = [];
 		foreach ($allLangsInfo as $someLangInfo) {
 			$langIDs2Info[$someLangInfo['value']] = $someLangInfo;
 		}
 
 		// Create list of language IDs AND names for user's preferred
 		// languages.
-		$userLangsInfo = array();
+		$userLangsInfo = [];
 		$lang_index = 0;
 		foreach ($userLangIDs as $index => $someUserLangID) {
-			if ($langIDs2Info[$someUserLangID] != NULL) {
+			if ($langIDs2Info[$someUserLangID] != null) {
 				$userLangsInfo[$lang_index] = $langIDs2Info[$someUserLangID];
 				$lang_index++;
 			}
 		}
 
-        return $userLangsInfo;
+		return $userLangsInfo;
 	}
 
-    /**
-     * @param $section
-     * @param $template_name
-     * @param $language
-     * @return null
-     */
-    function getTemplateIDInLanguage($section, $template_name, $language)
+	/**
+	 * @param $section
+	 * @param $template_name
+	 * @param $language
+	 * @return null
+	 */
+	function getTemplateIDInLanguage($section, $template_name, $language)
 	{
 		$templateslib = TikiLib::lib('template');
 
 		$all_templates = $templateslib->list_templates($section, 0, -1, 'name_asc', '');
-		$looking_for_templates_named = array("$template_name-$language");
+		$looking_for_templates_named = ["$template_name-$language"];
 
 		foreach ($looking_for_templates_named as $looking_for_this_template) {
 			$looking_for_this_template = "$template_name-$language";
@@ -1054,24 +1054,24 @@ class MultilingualLib extends TikiLib
 	}
 
 
-    /**
-     * @param $on_or_off
-     */
-    function setMachineTranslationFeatureTo($on_or_off)
+	/**
+	 * @param $on_or_off
+	 */
+	function setMachineTranslationFeatureTo($on_or_off)
 	{
 		$this->mtEnabled = $on_or_off;
 	}
 
-    /**
-     * @param $page_id
-     * @param null $language
-     * @return mixed
-     */
-    function getTranslationsInProgressFlags($page_id, $language=NULL)
+	/**
+	 * @param $page_id
+	 * @param null $language
+	 * @return mixed
+	 */
+	function getTranslationsInProgressFlags($page_id, $language = null)
 	{
 		$fields = '`page_id`';
 		$valuesSpec = "?";
-		$values = array($page_id);
+		$values = [$page_id];
 		if ($language) {
 			$fields .= ', `language`';
 			$valuesSpec .= ", ?";
@@ -1084,11 +1084,11 @@ class MultilingualLib extends TikiLib
 		return $flags;
 	}
 
-    /**
-     * @param $page_id
-     * @param $language
-     */
-    function addTranslationInProgressFlags($page_id, $language)
+	/**
+	 * @param $page_id
+	 * @param $language
+	 */
+	function addTranslationInProgressFlags($page_id, $language)
 	{
 		//
 		// First, make sure that there isn't already a row in the table
@@ -1097,43 +1097,45 @@ class MultilingualLib extends TikiLib
 		$translationInProgressForThatLanguage = $this->getTranslationsInProgressFlags($page_id, $language);
 		if (count($translationInProgressForThatLanguage) == 0) {
 			$query = "insert into `tiki_translations_in_progress` (`page_id`,`language`) values (?,?)";
-			$results = $this->query($query, array($page_id, $language));
+			$results = $this->query($query, [$page_id, $language]);
 		}
 	}
 
-    /**
-     * @param $page_id
-     * @param $language
-     */
-    function deleteTranslationInProgressFlags($page_id, $language)
+	/**
+	 * @param $page_id
+	 * @param $language
+	 */
+	function deleteTranslationInProgressFlags($page_id, $language)
 	{
 		$query =
-			"DELETE FROM `tiki_translations_in_progress`\n".
+			"DELETE FROM `tiki_translations_in_progress`\n" .
 			" WHERE (`page_id`, `language`) = (?, ?)";
-		$results = $this->query($query, array($page_id, $language));
+		$results = $this->query($query, [$page_id, $language]);
 	}
 
-    /**
-     * @param $objectType
-     * @param $sqlObjectId
-     * @param $columnObjectId
-     * @param $langs
-     * @param $join
-     * @param $mid
-     * @param $bindvars
-     */
-    function sqlTranslationOrphan($objectType, $sqlObjectId, $columnObjectId, $langs, &$join, &$mid, &$bindvars)
+	/**
+	 * @param $objectType
+	 * @param $sqlObjectId
+	 * @param $columnObjectId
+	 * @param $langs
+	 * @param $join
+	 * @param $mid
+	 * @param $bindvars
+	 */
+	function sqlTranslationOrphan($objectType, $sqlObjectId, $columnObjectId, $langs, &$join, &$mid, &$bindvars)
 	{
 		$join .= " left join `tiki_translated_objects` tro on (tro.`type` = '$objectType' AND tro.`objId` = $sqlObjectId.`$columnObjectId`) ";
 		$translationOrphan_mid = " tro.`traId` IS NULL OR $sqlObjectId.`lang`IS NULL ";
 
-		foreach ($langs as $i=>$lg) {
+		foreach ($langs as $i => $lg) {
 			$join .= " left join `tiki_translated_objects` tro_$i on (tro_$i.`traId` = tro.`traId` AND tro_$i.`lang`=?) ";
 			$translationOrphan_mid .= " OR tro_$i.`traId` IS NULL ";
 			$bindvars[] = $lg;
 		}
 
-		if (!empty($mid)) $mid .= ' AND ';
+		if (! empty($mid)) {
+			$mid .= ' AND ';
+		}
 
 		$mid .= "($translationOrphan_mid)";
 
@@ -1143,110 +1145,100 @@ class MultilingualLib extends TikiLib
 		}
 	}
 
-    function translateLinksInPageContent($src_content, $targ_lang)
-    {
-        $targ_content = $src_content;
+	function translateLinksInPageContent($src_content, $targ_lang)
+	{
+		$targ_content = $src_content;
 
-        $regex_link = '/\(\(([^\)]*?)(\|[^\)]*)*\)\)/';
+		$regex_link = '/\(\(([^\)]*?)(\|[^\)]*)*\)\)/';
 
-        preg_match_all($regex_link, $src_content, $src_link_matches, PREG_SET_ORDER);
+		preg_match_all($regex_link, $src_content, $src_link_matches, PREG_SET_ORDER);
 
-        $callback =
-            function($match) use ($targ_lang)
-            {
-                $link_src_page = $match[1];
-                $link_targ_page = $this->getTranslation('wiki page', $link_src_page, $targ_lang);
-                if (isset($link_targ_page) && $link_targ_page != '')
-                {
-                    $anchor_text = "";
-                    if (count($match) > 2)
-                    {
-                        $anchor_text = $match[2];
-                    }
-                    $a_targ_link= "(($link_targ_page$anchor_text))";
-                }
-                else
-                {
-                    $a_targ_link = "{TranslationOf(orig_page=\"$link_src_page\" translation_lang=\"$targ_lang\" translation_page=\"\") /}";
-                }
-                return $a_targ_link;
-            };
+		$callback =
+			function ($match) use ($targ_lang) {
+				$link_src_page = $match[1];
+				$link_targ_page = $this->getTranslation('wiki page', $link_src_page, $targ_lang);
+				if (isset($link_targ_page) && $link_targ_page != '') {
+					$anchor_text = "";
+					if (count($match) > 2) {
+						$anchor_text = $match[2];
+					}
+					$a_targ_link = "(($link_targ_page$anchor_text))";
+				} else {
+					$a_targ_link = "{TranslationOf(orig_page=\"$link_src_page\" translation_lang=\"$targ_lang\" translation_page=\"\") /}";
+				}
+				return $a_targ_link;
+			};
 
-        $targ_content = preg_replace_callback($regex_link, $callback, $src_content);
+		$targ_content = preg_replace_callback($regex_link, $callback, $src_content);
 
-        return $targ_content;
-    }
+		return $targ_content;
+	}
 
-    /**
-     * Fetches the content of $source_page, and does some partial pretranslation
-     * of it into $target_lang.
-     *
-     * For now, pre-translation is limited to translating links to pages, but
-     * eventually, we could pretranslate standard terminology captured with
-     * Tiki's Collaborative Multilingual Terminology profile.
-     */
-    function partiallyPretranslateContentOfPage($source_page, $target_lang)
-    {
-        global $tikilib, $tracer;
+	/**
+	 * Fetches the content of $source_page, and does some partial pretranslation
+	 * of it into $target_lang.
+	 *
+	 * For now, pre-translation is limited to translating links to pages, but
+	 * eventually, we could pretranslate standard terminology captured with
+	 * Tiki's Collaborative Multilingual Terminology profile.
+	 */
+	function partiallyPretranslateContentOfPage($source_page, $target_lang)
+	{
+		global $tikilib, $tracer;
 
 
-        $orig_page_info = $tikilib->get_page_info($source_page);
-        $orig_page_content = $orig_page_info['data'];
+		$orig_page_info = $tikilib->get_page_info($source_page);
+		$orig_page_content = $orig_page_info['data'];
 
-        $pretranslated_content = $this->translateLinksInPageContent($orig_page_content, $target_lang);
+		$pretranslated_content = $this->translateLinksInPageContent($orig_page_content, $target_lang);
 
-        return $pretranslated_content;
-    }
+		return $pretranslated_content;
+	}
 
-    /**
-     * Determines which language should be used by default for a new translation of a page
-     * See test MultilingualLibTest.test_defaultTargetLanguageForNewTranslation() for
-     * examples of use.
-     */
-    function defaultTargetLanguageForNewTranslation($src_lang, $langs_already_translated, $user_langs)
-    {
-        global $tracer;
+	/**
+	 * Determines which language should be used by default for a new translation of a page
+	 * See test MultilingualLibTest.test_defaultTargetLanguageForNewTranslation() for
+	 * examples of use.
+	 */
+	function defaultTargetLanguageForNewTranslation($src_lang, $langs_already_translated, $user_langs)
+	{
+		global $tracer;
 
-        $default_lang = '';
+		$default_lang = '';
 		//make sure $user_langs is an array
-		if(isset($user_langs) && is_array($user_langs)){
+		if (isset($user_langs) && is_array($user_langs)) {
 			$user_langs = $user_langs;
-		}
-		else {
+		} else {
 			$user_langs = $this->preferredLangs(null, null);
 		}
 
-        foreach ($user_langs as $a_user_lang)
-        {
-            if ($a_user_lang == $src_lang)
-            {
-                continue;
-            }
-            $tracer->trace('MultilingualLib.defaultTargetLanguageForNewTranslation', "** Looking at \$a_user_lang=$a_user_lang");
-            if (! in_array($a_user_lang, $langs_already_translated))
-            {
-                $default_lang = $a_user_lang;
-                break;
-            }
-        }
+		foreach ($user_langs as $a_user_lang) {
+			if ($a_user_lang == $src_lang) {
+				continue;
+			}
+			$tracer->trace('MultilingualLib.defaultTargetLanguageForNewTranslation', "** Looking at \$a_user_lang=$a_user_lang");
+			if (! in_array($a_user_lang, $langs_already_translated)) {
+				$default_lang = $a_user_lang;
+				break;
+			}
+		}
 
-        return $default_lang;
-    }
+		return $default_lang;
+	}
 
-	function setupBiDi() {
+	function setupBiDi()
+	{
 		global $prefs;
 
 		if ($prefs['feature_multilingual'] === 'y') {
 			// Some languages need BiDi support. Add their code names here ...
 			if (Language::isRTL()) {
-				$prefs['feature_bidi'] =  'y';
+				$prefs['feature_bidi'] = 'y';
 				TikiLib::lib('header')->add_cssfile('vendor_bundled/vendor/morteza/bootstrap-rtl/dist/css/bootstrap-rtl.min.css', 99); // 99 is high rank order as it should load after all other css files
 			} else {
-				$prefs['feature_bidi'] =  'n';
+				$prefs['feature_bidi'] = 'n';
 				TikiLib::lib('header')->drop_cssfile('vendor_bundled/vendor/morteza/bootstrap-rtl/dist/css/bootstrap-rtl.min.css');
 			}
 		}
 	}
-
 }
-

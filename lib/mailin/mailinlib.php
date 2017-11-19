@@ -32,30 +32,30 @@ class MailinLib extends TikiDb_Bridge
 		return $out;
 	}
 
-    /**
-     * @param $offset
-     * @param $maxRecords
-     * @param $sort_mode
-     * @param $find
-     * @return array
-     */
-    function list_mailin_accounts($offset, $maxRecords, $sort_mode, $find)
+	/**
+	 * @param $offset
+	 * @param $maxRecords
+	 * @param $sort_mode
+	 * @param $find
+	 * @return array
+	 */
+	function list_mailin_accounts($offset, $maxRecords, $sort_mode, $find)
 	{
 
 		if ($find) {
-			$findesc = '%'.$find.'%';
+			$findesc = '%' . $find . '%';
 			$mid = " where `account` like ?";
-			$bindvars = array($findesc);
+			$bindvars = [$findesc];
 		} else {
 			$mid = "	";
-			$bindvars = array();
+			$bindvars = [];
 		}
 
-		$query = "select * from `tiki_mailin_accounts` $mid order by ".$this->convertSortMode($sort_mode);
+		$query = "select * from `tiki_mailin_accounts` $mid order by " . $this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_mailin_accounts` $mid";
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
-		$ret = array();
+		$ret = [];
 
 		while ($res = $result->fetchRow('DB_FETCHMODE_ASSOC')) {
 			// Decrypt the password
@@ -65,36 +65,36 @@ class MailinLib extends TikiDb_Bridge
 			$ret[] = $res;
 		}
 
-		$retval = array();
+		$retval = [];
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
 		return $retval;
 	}
 
-    /**
-     * @param $offset
-     * @param $maxRecords
-     * @param $sort_mode
-     * @param $find
-     * @return array
-     */
-    function list_active_mailin_accounts($offset, $maxRecords, $sort_mode, $find)
+	/**
+	 * @param $offset
+	 * @param $maxRecords
+	 * @param $sort_mode
+	 * @param $find
+	 * @return array
+	 */
+	function list_active_mailin_accounts($offset, $maxRecords, $sort_mode, $find)
 	{
 
 		if ($find) {
-			$findesc = '%'.$find.'%';
+			$findesc = '%' . $find . '%';
 			$mid = " where `active`=? and `account` like ?";
-			$bindvars = array("y",$findesc);
+			$bindvars = ["y",$findesc];
 		} else {
 			$mid = " where `active`=?";
-			$bindvars = array("y");
+			$bindvars = ["y"];
 		}
 
-		$query = "select * from `tiki_mailin_accounts` $mid order by ".$this->convertSortMode($sort_mode);
+		$query = "select * from `tiki_mailin_accounts` $mid order by " . $this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_mailin_accounts` $mid";
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
-		$ret = array();
+		$ret = [];
 
 		while ($res = $result->fetchRow('DB_FETCHMODE_ASSOC')) {
 			// Decrypt the password
@@ -104,43 +104,43 @@ class MailinLib extends TikiDb_Bridge
 			$ret[] = $res;
 		}
 
-		$retval = array();
+		$retval = [];
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
 		return $retval;
 	}
 
-    /**
-     * @param $accountId
-     * @param $account
+	/**
+	 * @param $accountId
+	 * @param $account
 	 * @param $protocol
-     * @param $host
-     * @param $port
-     * @param $username
-     * @param $pass
-     * @param $type
-     * @param $active
-     * @param $anonymous
+	 * @param $host
+	 * @param $port
+	 * @param $username
+	 * @param $pass
+	 * @param $type
+	 * @param $active
+	 * @param $anonymous
 	 * @param $admin
 	 * @param $attachments
-     * @param null $article_topicId
-     * @param null $article_type
-     * @param null $discard_after
+	 * @param null $article_topicId
+	 * @param null $article_type
+	 * @param null $discard_after
 	 * @param null $show_inlineImages
 	*  @param 0 $categoryId
 	* @return bool
 	 */
-	function replace_mailin_account($accountId, $account, $protocol, $host, $port, $username, $clearpass, $type, $active, $anonymous, $admin, $attachments, $routing, $article_topicId = NULL, $article_type = NULL, $discard_after=NULL, $show_inlineImages='n', $save_html='y', $categoryId = 0, $namespace='', $respond_email = 'y', $leave_email = 'n')
+	function replace_mailin_account($accountId, $account, $protocol, $host, $port, $username, $clearpass, $type, $active, $anonymous, $admin, $attachments, $routing, $article_topicId = null, $article_type = null, $discard_after = null, $show_inlineImages = 'n', $save_html = 'y', $categoryId = 0, $namespace = '', $respond_email = 'y', $leave_email = 'n')
 	{
 		// Fix values
 		if ($attachments == null) {
 			$attachments = 'n';
 		}
-		
+
 		// Encrypt password
 		$pass = $this->encryptPassword($clearpass);
-		
-		$data = array(
+
+		$data = [
 			'account' => $account,
 			'protocol' => $protocol,
 			'host' => $host,
@@ -162,7 +162,7 @@ class MailinLib extends TikiDb_Bridge
 			'namespace' => $namespace,
 			'respond_email' => $respond_email,
 			'leave_email' => $leave_email,
-		);
+		];
 		$table = $this->table('tiki_mailin_accounts');
 		if ($accountId) {
 			$table->update($data, [
@@ -175,46 +175,47 @@ class MailinLib extends TikiDb_Bridge
 		}
 	}
 
-    /**
-     * @param $accountId
-     * @return bool
-     */
-    function remove_mailin_account($accountId)
+	/**
+	 * @param $accountId
+	 * @return bool
+	 */
+	function remove_mailin_account($accountId)
 	{
 		$query = "delete from `tiki_mailin_accounts` where `accountId`=?";
-		$result = $this->query($query, array((int)$accountId));
+		$result = $this->query($query, [(int)$accountId]);
 		return true;
 	}
 
-    /**
-     * @param $accountId
-     * @return bool
-     */
-    function get_mailin_account($accountId)
+	/**
+	 * @param $accountId
+	 * @return bool
+	 */
+	function get_mailin_account($accountId)
 	{
 		$query = "select * from `tiki_mailin_accounts` where `accountId`=?";
-		$result = $this->query($query, array((int)$accountId));
-		if (!$result->numRows()) {
+		$result = $this->query($query, [(int)$accountId]);
+		if (! $result->numRows()) {
 			return false;
 		}
 		$res = $result->fetchRow('DB_FETCHMODE_ASSOC');
-		
+
 		// Decrypt the password
 		$pwd = $this->decryptPassword($res['pass']);
 		$res['pass'] = $pwd;
 
 		return $res;
 	}
-	
+
 	/**
 	 * encryptPassword the email account password
 	 *
 	 * @param string $pwd Password in clear-text
 	 * @return crypt Encoded password
 	 *
-	 */	
-	function encryptPassword($pwd) {
-		$encoded =  base64_encode($pwd);
+	 */
+	function encryptPassword($pwd)
+	{
+		$encoded = base64_encode($pwd);
 		return $encoded;
 	}
 
@@ -224,9 +225,10 @@ class MailinLib extends TikiDb_Bridge
 	 * @param crypt $$encrypted Encoded password
 	 * @return string Return clear text password
 	 *
-	 */	
-	function decryptPassword($encoded) {
-		$plaintext =  base64_decode($encoded);
+	 */
+	function decryptPassword($encoded)
+	{
+		$plaintext = base64_decode($encoded);
 		return $plaintext;
 	}
 }

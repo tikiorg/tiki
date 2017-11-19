@@ -24,10 +24,10 @@ class FileMetadata
 	public $basicinfo = null;		//processed basic file information
 	public $typemeta = null;		//array used to store metadata beyond generic file data
 	public $error = null;			//error messages stored here
-	public $types = array (			//files types handled for extended metadata with values used for class and file name
+	public $types = [			//files types handled for extended metadata with values used for class and file name
 		'image/jpeg' => 'jpeg',
 		'image/jpg' => 'jpeg',
-	);
+	];
 
 	/**
 	 * Get basic and extended metadata included in the file itself
@@ -43,15 +43,16 @@ class FileMetadata
 		if (empty($file)) {
 			return false;
 		//set contents and current name as well as type in some situations
-		} elseif (!$ispath) {
+		} elseif (! $ispath) {
 			//when $file is actual file contents rather than a path - create a temporary file name
 			// needed for some php functions
 			$temppath = $this->temppathFromContent($file);
 			$leavelink = false;
-			if (!$temppath) {
+			if (! $temppath) {
 				$this->error = 'The file is empty';
 			} else {
-				$this->filesize = @filesize($temppath);;
+				$this->filesize = @filesize($temppath);
+				;
 				$this->currname = $temppath;
 			}
 		} else {
@@ -70,7 +71,7 @@ class FileMetadata
 				$externalinfo = $filegallib->get_info_from_url($file);
 				$temppath = $this->temppathFromContent($externalinfo['data']);
 				$leavelink = false;
-				if (!$temppath) {
+				if (! $temppath) {
 					$this->error = 'The file is not readable';
 				} else {
 					$this->currname = $file;
@@ -94,7 +95,7 @@ class FileMetadata
 			$type_charset = $finfo->file($temppath);
 			$type_charset = explode(';', $type_charset);
 			//external file types may already be set at this point
-			$this->basicraw['type'] = empty($this->type) ?  $type_charset[0] : $this->type;
+			$this->basicraw['type'] = empty($this->type) ? $type_charset[0] : $this->type;
 			$this->basicraw['charset'] = trim($type_charset[1]);
 			$finfo = new finfo(FILEINFO_DEVICES);
 			$this->basicraw['devices'] = $finfo->file($temppath);
@@ -126,7 +127,7 @@ class FileMetadata
 			$this->content = null;
 		}
 		$this->setBestMetadata();
-		if (!$leavelink) {
+		if (! $leavelink) {
 			unlink($temppath);
 		}
 		return $this;
@@ -142,8 +143,8 @@ class FileMetadata
 		} elseif (isset($this->typemeta['combined']) && count($this->typemeta['combined']) > 0) {
 			$this->typemeta['best'] = $this->typemeta['combined'];
 		} elseif (isset($this->basicinfo) && count($this->basicinfo) > 0) {
-			$this->typemeta['best'] = array('basiconly' => true, 'Basic Information' =>
-				array ('File Data' => $this->basicinfo));
+			$this->typemeta['best'] = ['basiconly' => true, 'Basic Information' =>
+				 ['File Data' => $this->basicinfo]];
 		} else {
 			$this->typemeta['best'] = false;
 		}
@@ -166,14 +167,14 @@ class FileMetadata
 		//set time of data extraction as now
 		global $tikilib, $user;
 		$extracttime = $tikilib->get_long_datetime(null, $user);
-		$extractarray = array (
-			$timeheader => array(
-				'Extraction Time' => array(
+		$extractarray = [
+			$timeheader => [
+				'Extraction Time' => [
 					'label' 	=> '',
 					'newval'	=> $extracttime,
-				)
-			)
-		);
+				]
+			]
+		];
 
 		if (isset($metaObj->basicinfo) && $metaObj->basicinfo !== false) {
 			if (isset($metarray['reconciled']) && $metarray['reconciled'] !== false) {
@@ -183,14 +184,14 @@ class FileMetadata
 					array_merge($metarray['reconciled'][$sumtab][$bheader], $metaObj->basicinfo);
 				} else {
 					$metarray['reconciled'] =
-						array($sumtab => array($bheader => $metaObj->basicinfo)) + $metarray['reconciled'];
+						[$sumtab => [$bheader => $metaObj->basicinfo]] + $metarray['reconciled'];
 					$metarray['reconciled'][$sumtab][$bheader] = $metaObj->basicinfo;
 				}
 				//add extraction time
 				$metarray['reconciled'][$sumtab] = $extractarray + $metarray['reconciled'][$sumtab];
 			}
 			if (is_array($metarray['combined'])) {
-				$metarray['combined'] = array($sumtab => array($bheader => $metaObj->basicinfo)) + $metarray['combined'];
+				$metarray['combined'] = [$sumtab => [$bheader => $metaObj->basicinfo]] + $metarray['combined'];
 			} else {
 				$metarray['combined'][$sumtab][$bheader] = $metaObj->basicinfo;
 			}
@@ -209,10 +210,10 @@ class FileMetadata
 	 */
 	private function temppathFromContent($content)
 	{
-		if (!empty($content)) {
+		if (! empty($content)) {
 			$cwd = getcwd();
 			$temppath = tempnam("$cwd/temp", 'temp_file_');
-			if (!is_writeable($temppath)) {
+			if (! is_writeable($temppath)) {
 				return false;
 			}
 			$temphandle = fopen($temppath, 'w');
@@ -288,7 +289,7 @@ class FileMetadata
 		$smarty->assign('filename', $filename);
 		if (is_array($metadata) && count($metadata) > 0) {
 			$metarray = $metadata;
-		} elseif (!empty($metadata)) {
+		} elseif (! empty($metadata)) {
 			$metarray = json_decode($metadata, true);
 		}
 		if (is_array($metarray) && count($metarray) > 0) {
@@ -305,7 +306,7 @@ class FileMetadata
 		$smarty = TikiLib::lib('smarty');
 		if (is_array($metadata) && count($metadata) > 0) {
 			$metarray = $metadata;
-		} elseif (!empty($metadata)) {
+		} elseif (! empty($metadata)) {
 			$metarray = json_decode($metadata, true);
 		}
 		if (is_array($metarray) && count($metarray) > 0) {
@@ -317,5 +318,4 @@ class FileMetadata
 		$smarty->assign('extended', $this->canProcessExtended() ? 'y' : 'n');
 		$smarty->display('metadata/meta_view_tabs.tpl');
 	}
-
 } //end of class

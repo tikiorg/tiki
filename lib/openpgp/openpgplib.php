@@ -30,7 +30,7 @@
 // v0.11
 // 2014-11-04	hollmeer: Protected function naming to _xxxx
 // v0.12
-// 2014-12-01	hollmeer: Changed all OpenGPG functionality configuration to use 
+// 2014-12-01   hollmeer: Changed all OpenGPG functionality configuration to use
 //		preferences
 //
 //
@@ -40,23 +40,23 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 class OpenPGPLib
 {
 
 	//PGP/MIME HEADER CONSTANTS
-	const MULTIPART_PGP_ENCRYPTED = 		'multipart/encrypted';
-	const TYPE_PGP_PROTOCOL = 			'application/pgp-encrypted';
-	const PGP_MIME_NOTE = 				'This is an OpenPGP/MIME encrypted message (RFC 2440 and 3156)';
-	const TYPE_PGP_CONTENT_VERSION = 		'application/pgp-encrypted';
-	const DESCRIPTION_PGP_CONTENT_VERSION = 	'PGP/MIME version identification';
-	const PGP_MIME_VERSION_IDENTIFICATION = 	'Version: 1';
-	const TYPE_PGP_CONTENT_ENCRYPTED = 		'application/octet-stream; name="encrypted.asc"';
-	const DESCRIPTION_PGP_CONTENT_ENCRYPTED = 	'OpenPGP encrypted message';
-	const DISPOSITION_PGP_CONTENT_INLINE = 		'inline; filename="encrypted.asc"';
+	const MULTIPART_PGP_ENCRYPTED = 'multipart/encrypted';
+	const TYPE_PGP_PROTOCOL = 'application/pgp-encrypted';
+	const PGP_MIME_NOTE = 'This is an OpenPGP/MIME encrypted message (RFC 2440 and 3156)';
+	const TYPE_PGP_CONTENT_VERSION = 'application/pgp-encrypted';
+	const DESCRIPTION_PGP_CONTENT_VERSION = 'PGP/MIME version identification';
+	const PGP_MIME_VERSION_IDENTIFICATION = 'Version: 1';
+	const TYPE_PGP_CONTENT_ENCRYPTED = 'application/octet-stream; name="encrypted.asc"';
+	const DESCRIPTION_PGP_CONTENT_ENCRYPTED = 'OpenPGP encrypted message';
+	const DISPOSITION_PGP_CONTENT_INLINE = 'inline; filename="encrypted.asc"';
 
 	/**
 	 * EOL character string used by transport
@@ -137,11 +137,11 @@ class OpenPGPLib
 	*/
 	function setCrlf($crlf = "\n")
 	{
-		if (!defined('CRLF')) {
+		if (! defined('CRLF')) {
 			define('CRLF', $crlf, true);
 		}
 
-		if (!defined('MAIL_MIMEPART_CRLF')) {
+		if (! defined('MAIL_MIMEPART_CRLF')) {
 			define('MAIL_MIMEPART_CRLF', $crlf, true);
 		}
 	}
@@ -163,8 +163,8 @@ class OpenPGPLib
 		// open the GnuPG process and get the reply
 		// we're only concerned with the first line of output, so use "false" as last argument
 		$commandline = $this->_gpg_path
-					.' --version';
-		$ret = $this->_gpg_exec_proc($commandline, NULL, false);
+					. ' --version';
+		$ret = $this->_gpg_exec_proc($commandline, null, false);
 
 		/////////////////////////////////////////////////////
 		// get the version (we are only concerned with the first line of output,
@@ -174,7 +174,7 @@ class OpenPGPLib
 		///////////////////////////////////////////////
 		// sanity check - see if we're working with gpg
 		if (preg_match('/^gpg /', $gpg_version_output) == 0) {
-			$error_msg = 'gpg executable is not GnuPG: "'.$this->_gpg_path.'"';
+			$error_msg = 'gpg executable is not GnuPG: "' . $this->_gpg_path . '"';
 			trigger_error($error_msg, E_USER_ERROR);
 			// if an error message directs you to the line above please
 			// double check that your path to gpg is really GnuPG
@@ -198,15 +198,16 @@ class OpenPGPLib
 
 		/////////////////////////////////////////////
 		// unset variables that we don't need anymore
-		unset($gpg_version_output,
+		unset(
+			$gpg_version_output,
 			$gpg_gpg_version,
-			$commandline);
+			$commandline
+		);
 
 		////////////////////////////////////////
 		// we're done checking the GnuPG version
 		////////////////////////////////////////
 		return;
-
 	}
 
 	/**
@@ -221,18 +222,20 @@ class OpenPGPLib
 	 *		1 => warnings and notices (STDERR)
 	 *		2 => exit status
 	 */
-	protected function _gpg_exec_proc($gpg_proc_call = '', $gpg_proc_input = NULL, $read_multilines = true)
+	protected function _gpg_exec_proc($gpg_proc_call = '', $gpg_proc_input = null, $read_multilines = true)
 	{
 
-		if ($gpg_proc_call == '') die;
+		if ($gpg_proc_call == '') {
+			die;
+		}
 
 		//////////////////////////////////////////////
 		// set up pipes for handling I/O to/from GnuPG
-		$gpg_descriptorspec = array(
-			0 => array("pipe", "r"),  // STDIN is a pipe that GnuPG will read from
-			1 => array("pipe", "w"),  // STDOUT is a pipe that GnuPG will write to
-			2 => array("pipe", "w")   // STDERR is a pipe that GnuPG will write to
-		);
+		$gpg_descriptorspec = [
+			0 => ["pipe", "r"],  // STDIN is a pipe that GnuPG will read from
+			1 => ["pipe", "w"],  // STDOUT is a pipe that GnuPG will write to
+			2 => ["pipe", "w"]   // STDERR is a pipe that GnuPG will write to
+		];
 
 		///////////////////////////////
 		// this opens the GnuPG process
@@ -245,7 +248,7 @@ class OpenPGPLib
 		//////////////////////////////////////////////////////////////////
 		// this writes the "$gpg_encrypt_secret_message" to GnuPG on STDIN
 		if (is_resource($gpg_process)) {
-			if ($gpg_proc_input != NULL) {
+			if ($gpg_proc_input != null) {
 				fwrite($gpg_pipes[0], $gpg_proc_input);
 			}
 			fclose($gpg_pipes[0]);
@@ -254,7 +257,7 @@ class OpenPGPLib
 			// this reads the output from GnuPG from STDOUT
 			$gpg_proc_output = '';
 			if ($read_multilines) {
-				while (!feof($gpg_pipes[1])) {
+				while (! feof($gpg_pipes[1])) {
 					$gpg_proc_output .= fgets($gpg_pipes[1], 1024);
 				}
 				fclose($gpg_pipes[1]);
@@ -265,7 +268,7 @@ class OpenPGPLib
 			/////////////////////////////////////////////////////////
 			// this reads warnings and notices from GnuPG from STDERR
 			$gpg_error_message = '';
-			while (!feof($gpg_pipes[2])) {
+			while (! feof($gpg_pipes[2])) {
 				$gpg_error_message .= fgets($gpg_pipes[2], 1024);
 			}
 			fclose($gpg_pipes[2]);
@@ -277,32 +280,35 @@ class OpenPGPLib
 			////////////////////////////////////////////
 			// unset variables that are no longer needed
 			// and can only cause trouble
-			unset($gpg_descriptorspec,
+			unset(
+				$gpg_descriptorspec,
 				$gpg_process,
-				$gpg_pipes);
+				$gpg_pipes
+			);
 
 			////////////////////////////////////
 			// this returns an array containing:
 			// [0] encrypted output (STDOUT)
 			// [1] warnings and notices (STDERR)
 			// [2] exit status
-			return array($gpg_proc_output, $gpg_error_message,  $gpg_exit_status);
+			return [$gpg_proc_output, $gpg_error_message,  $gpg_exit_status];
 		} else {
 			////////////////////////////////////////////
 			// unset variables that are no longer needed
 			// and can only cause trouble
-			unset($gpg_descriptorspec,
+			unset(
+				$gpg_descriptorspec,
 				$gpg_process,
-				$gpg_pipes);
+				$gpg_pipes
+			);
 
 			//////////////////////////////
 			// set output as otherwise nothing
 			$gpg_proc_output = '';
 			$gpg_error_message = 'Fatal process call error: Process call failed!';
 			$gpg_exit_status = 99;
-			return array($gpg_proc_output, $gpg_error_message,  $gpg_exit_status);
+			return [$gpg_proc_output, $gpg_error_message,  $gpg_exit_status];
 		}
-
 	}
 
 
@@ -370,35 +376,37 @@ class OpenPGPLib
 		///////////////////////////////
 		// open the GnuPG process and get the reply
 		$commandline = '';
-		if ($prefs['openpgp_gpg_signer_passphrase_store'] == 'file') { 
+		if ($prefs['openpgp_gpg_signer_passphrase_store'] == 'file') {
 			// get signer-key passphrase from a file
 			$commandline .= $this->_gpg_path
-					.' --no-random-seed-file'
-					.' --homedir '.$this->_gpg_home
-					.' '.$this->_gpg_trust
-					.' --batch'
-					.' --local-user '.$this->_gpg_sgn_id
-					.' --passphrase-file '.$this->_gpg_sgn_passfile_path
-					.' -sea '.$gpg_recipient_list
-					.' ';
-		} else { 
+					. ' --no-random-seed-file'
+					. ' --homedir ' . $this->_gpg_home
+					. ' ' . $this->_gpg_trust
+					. ' --batch'
+					. ' --local-user ' . $this->_gpg_sgn_id
+					. ' --passphrase-file ' . $this->_gpg_sgn_passfile_path
+					. ' -sea ' . $gpg_recipient_list
+					. ' ';
+		} else {
 			// get signer-key passphrase from preferences
 			$commandline .= $this->_gpg_path
-					.' --no-random-seed-file'
-					.' --homedir '.$this->_gpg_home
-					.' '.$this->_gpg_trust
-					.' --batch'
-					.' --local-user '.$this->_gpg_sgn_id
-					.' --passphrase '.$this->_gpg_sgn_passphrase
-					.' -sea '.$gpg_recipient_list
-					.' ';
+					. ' --no-random-seed-file'
+					. ' --homedir ' . $this->_gpg_home
+					. ' ' . $this->_gpg_trust
+					. ' --batch'
+					. ' --local-user ' . $this->_gpg_sgn_id
+					. ' --passphrase ' . $this->_gpg_sgn_passphrase
+					. ' -sea ' . $gpg_recipient_list
+					. ' ';
 		}
 		$ret = $this->_gpg_exec_proc($commandline, $gpg_secret_message);
 
-		unset($gpg_args,
+		unset(
+			$gpg_args,
 			$gpg_secret_message,
 			$gpg_recipient_list,
-			$commandline);
+			$commandline
+		);
 
 		////////////////////////////////////
 		// this returns an array containing:
@@ -406,7 +414,6 @@ class OpenPGPLib
 		// [1] warnings and notices (STDERR)
 		// [2] exit status
 		return $ret;
-
 	}
 
 	/////////////////////////////////////////////////////////////
@@ -425,12 +432,12 @@ class OpenPGPLib
 	 *		1 => warnings and notices (STDERR)
 	 *		2 => exit status
 	 */
-	function gpg_getFingerprint($gpg_key_id = NULL)
+	function gpg_getFingerprint($gpg_key_id = null)
 	{
 
 		//////////////////////////////////////////////////////////
 		// sanity check - make sure there is 1 argument
-		if ($gpg_key_id == NULL) {
+		if ($gpg_key_id == null) {
 			trigger_error("gpg_getFingerprint() requires 1 argument", E_USER_ERROR);
 			// if an error message directs you to the line above please
 			// double check that you are providing 1 argument
@@ -459,15 +466,17 @@ class OpenPGPLib
 		///////////////////////////////
 		// open the GnuPG process and get the reply
 		$commandline = $this->_gpg_path
-					.' --homedir '.$this->_gpg_home
-					.' '.$this->_gpg_trust
-					.' --fingerprint'
-					.' --list-sigs '.$gpg_key_id_to_return
-					.' ';
+					. ' --homedir ' . $this->_gpg_home
+					. ' ' . $this->_gpg_trust
+					. ' --fingerprint'
+					. ' --list-sigs ' . $gpg_key_id_to_return
+					. ' ';
 		$ret = $this->_gpg_exec_proc($commandline);
 
-		unset($gpg_key_id_to_return,
-			$commandline);
+		unset(
+			$gpg_key_id_to_return,
+			$commandline
+		);
 
 		////////////////////////////////////
 		// this returns an array containing:
@@ -475,7 +484,6 @@ class OpenPGPLib
 		// [1] warnings and notices (STDERR)
 		// [2] exit status
 		return $ret;
-
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
@@ -494,12 +502,12 @@ class OpenPGPLib
 	 *		1 => warnings and notices (STDERR)
 	 *		2 => exit status
 	 */
-	function gpg_getPublicKey($gpg_key_id = NULL)
+	function gpg_getPublicKey($gpg_key_id = null)
 	{
 
 		//////////////////////////////////////////////////////////
 		// sanity check - make sure there is 1 argument
-		if ($gpg_key_id == NULL) {
+		if ($gpg_key_id == null) {
 			trigger_error("gpg_getPublicKey() requires 1 argument", E_USER_ERROR);
 			// if an error message directs you to the line above please
 			// double check that you are providing 1 argument
@@ -528,14 +536,16 @@ class OpenPGPLib
 		///////////////////////////////
 		// open the GnuPG process and get the reply
 		$commandline = $this->_gpg_path
-					.' --homedir '.$this->_gpg_home
-					.' '.$this->_gpg_trust
-					.' --export --armor '.$gpg_key_id_to_return
-					.' ';
+					. ' --homedir ' . $this->_gpg_home
+					. ' ' . $this->_gpg_trust
+					. ' --export --armor ' . $gpg_key_id_to_return
+					. ' ';
 		$ret = $this->_gpg_exec_proc($commandline);
 
-		unset($gpg_key_id_to_return,
-			$commandline);
+		unset(
+			$gpg_key_id_to_return,
+			$commandline
+		);
 
 		////////////////////////////////////
 		// this returns an array containing:
@@ -543,7 +553,6 @@ class OpenPGPLib
 		// [1] warnings and notices (STDERR)
 		// [2] exit status
 		return $ret;
-
 	}
 
 	/////////////////////////////////////////////////////////////////
@@ -578,7 +587,7 @@ class OpenPGPLib
 	 *		0 => $prepend_email_body
 	 *		1 => $user_armor
 	 */
-	function getPublickeyArmorBlock($req_priority,$req_to,$req_cc)
+	function getPublickeyArmorBlock($req_priority, $req_to, $req_cc)
 	{
 
 		global $user;
@@ -604,10 +613,10 @@ class OpenPGPLib
 			// test gpg's exit status
 			if ("$gpg[2]" == '0') {
 				// if the gpg command returned zero
-				$user_armor = "\n\n--original sender public key below--\n\n".$gpg[0];
+				$user_armor = "\n\n--original sender public key below--\n\n" . $gpg[0];
 			} else {
 				// if the gpg command returned non-zero
-				$error_msg = 'OpenPGPLib: _getPublickeyArmorBlock() returned error code: '.$gpg[2];
+				$error_msg = 'OpenPGPLib: _getPublickeyArmorBlock() returned error code: ' . $gpg[2];
 				trigger_error($error_msg, E_USER_ERROR);
 				// if an error message directs you to the line above please
 				// double check that your gnupg-configuration, process-call commandline input, and other parameters are correct
@@ -626,7 +635,7 @@ class OpenPGPLib
 							  . "\n----------------------------------\n\n";
 			} else {
 				// if the gpg command returned non-zero
-				$error_msg = 'OpenPGPLib: _getPublickeyArmorBlock() returned error code: '.$gpg[2];
+				$error_msg = 'OpenPGPLib: _getPublickeyArmorBlock() returned error code: ' . $gpg[2];
 				trigger_error($error_msg, E_USER_ERROR);
 				// if an error message directs you to the line above please
 				// double check that your gnupg-configuration, process-call commandline input, and other parameters are correct
@@ -634,17 +643,17 @@ class OpenPGPLib
 		}
 		// generate a message has ID to be used as a consistent message referenceID across all recipients
 		// and prepend it into message body
-		$tmpstr = chunk_split(md5(rand().microtime()), 8, '-');
-		$tmpstr = substr($tmpstr, 0, strlen($tmpstr)-1);
+		$tmpstr = chunk_split(md5(rand() . microtime()), 8, '-');
+		$tmpstr = substr($tmpstr, 0, strlen($tmpstr) - 1);
 		$prepend_email_body = "ID:      "
 					. $tmpstr
 					. " (use this for message reference)\n"
 					. "Prio:    " . $req_priority . "\n"
-					. "From:    " . $user . " (".$user_email.")\n"
+					. "From:    " . $user . " (" . $user_email . ")\n"
 					. "To:      " . $req_to . "\n"
 					. "Cc:      " . $req_cc . "\n\n";
 
-		return array($prepend_email_body,$user_armor);
+		return [$prepend_email_body,$user_armor];
 	}
 
 	/////////////////////////////////////////////////////////////////
@@ -696,11 +705,23 @@ class OpenPGPLib
 	 * @access public
 	 * @return boolean	true/false
 	 */
-	function post_message_with_pgparmor_attachment($user, $from, $to, $cc, $subject, $body,
-							$prepend_email_body, // NOTE this
-							$user_pubkeyarmor,   // NOTE this
-							$priority, $replyto_hash='', $replyto_email='', $bcc_sender = '')
-	{
+	function post_message_with_pgparmor_attachment(
+		$user,
+		$from,
+		$to,
+		$cc,
+		$subject,
+		$body,
+		$prepend_email_body,
+		// NOTE this
+		$user_pubkeyarmor,
+		// NOTE this
+		$priority,
+		$replyto_hash = '',
+		$replyto_email = '',
+		$bcc_sender = ''
+	) {
+
 		global $prefs;
 		$userlib = TikiLib::lib('user');
 		$tikilib = TikiLib::lib('tiki');
@@ -711,19 +732,19 @@ class OpenPGPLib
 		// Prevent duplicates
 		$hash = md5($subject . $body);
 
-		if ($tikilib->getOne("select count(*) from `messu_messages` where `user`=? and `user_from`=? and `hash`=?", array($user,$from,$hash))) {
+		if ($tikilib->getOne("select count(*) from `messu_messages` where `user`=? and `user_from`=? and `hash`=?", [$user,$from,$hash])) {
 			return false;
 		}
 
 		$query = "insert into `messu_messages`(`user`,`user_from`,`user_to`,`user_cc`,`subject`,`body`,`date`,`isRead`,`isReplied`,`isFlagged`,`priority`,`hash`,`replyto_hash`) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		$tikilib->query($query, array($user,$from,$to,$cc,$subject,$body,(int) $tikilib->now,'n','n','n',(int) $priority,$hash,$replyto_hash));
+		$tikilib->query($query, [$user,$from,$to,$cc,$subject,$body,(int) $tikilib->now,'n','n','n',(int) $priority,$hash,$replyto_hash]);
 
 		// Now check if the user should be notified by email
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$machine = $tikilib->httpPrefix(true). $foo["path"];
+		$machine = $tikilib->httpPrefix(true) . $foo["path"];
 		$machine = str_replace('messu-compose', 'messu-mailbox', $machine);
 		if ($tikilib->get_user_preference($user, 'minPrio', 6) <= $priority) {
-			if (!isset($_SERVER["SERVER_NAME"])) {
+			if (! isset($_SERVER["SERVER_NAME"])) {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 			}
 			$email = $userlib->get_user_email($user);
@@ -768,21 +789,21 @@ class OpenPGPLib
 
 				if ($userlib->user_exists($from)) {
 					$from_email = $userlib->get_user_email($from);
-					if ($bcc_sender === 'y' && !empty($from_email)) {
+					if ($bcc_sender === 'y' && ! empty($from_email)) {
 						$mail->setBcc($from_email);
 					}
 					if ($replyto_email !== 'y' && $userlib->get_user_preference($from, 'email is public', 'n') == 'n') {
 						$from_email = '';	// empty $from_email if not to be used - saves getting it twice
 					}
-					if (!empty($from_email)) {
+					if (! empty($from_email)) {
 						$mail->setReplyTo($from_email);
 					}
 				}
-				if (!empty($from_email)) {
+				if (! empty($from_email)) {
 					$mail->setFrom($from_email);
 				}
 
-				if (!$mail->send(array($email), 'mail')) {
+				if (! $mail->send([$email], 'mail')) {
 					return false; //TODO echo $mail->errors;
 				}
 			}
@@ -799,7 +820,7 @@ class OpenPGPLib
 	 * @access public
 	 * @return string	$text / The text body of the message prepended with original subject
 	 */
-	function prependSubjectToText($mail_headers,$text)
+	function prependSubjectToText($mail_headers, $text)
 	{
 
 		// AS THE Subject-header is hidden and contains a hash only in a pgp/mime encrypted message subject-header
@@ -808,13 +829,13 @@ class OpenPGPLib
 		// do not set Subject yet at this point so no adjustment is generated for them;
 		// what is the problem and solution?
 		$subject = '';
-		if (!empty($mail_headers['Subject'])) {
+		if (! empty($mail_headers['Subject'])) {
 			$subject = $mail_headers['Subject'];
 		}
 		$ret = "******** PGP/MIME-ENCRYPTED MESSAGE ********\n"
-			      . "Subject: " . $subject
-			      . "\n\n"
-			      . $text;
+				  . "Subject: " . $subject
+				  . "\n\n"
+				  . $text;
 		return $ret;
 	}
 
@@ -829,7 +850,7 @@ class OpenPGPLib
 	 *		0 => $html / The html body of the message prepended with original subject
 	 *		1 => $html_text / The html_text body of the message prepended with original subject
 	 */
-	function prependSubjectToHtml($mail_headers,$html,$text)
+	function prependSubjectToHtml($mail_headers, $html, $text)
 	{
 
 		// AS THE Subject-header is hidden and contains a hash only in a pgp/mime encrypted message subject-header
@@ -838,11 +859,11 @@ class OpenPGPLib
 		// do not set Subject yet at this point so no adjustment is generated for them;
 		// what is the problem and solution?
 		$subject = '';
-		if (!empty($mail_headers['Subject'])) {
+		if (! empty($mail_headers['Subject'])) {
 			$subject = $mail_headers['Subject'];
 		}
 		$ret_html = "******** PGP/MIME-ENCRYPTED MESSAGE ********<br>"
-					. "Subject: "  .$subject
+					. "Subject: " . $subject
 					. "<br>"
 					. $html;
 
@@ -850,7 +871,7 @@ class OpenPGPLib
 					. "Subject: " . $subject
 					. "<br>"
 					. $text;
-		return array($ret_html,$ret_html_text);
+		return [$ret_html,$ret_html_text];
 	}
 
 	/////////////////////////////////////////////////////////////////
@@ -867,23 +888,23 @@ class OpenPGPLib
 	 *		1 => string $gnupg_subject
 	 *		2 => string $pgpmime_encrypted_message_body
 	 */
-	function prepareEncryptWithMailSender($original_mail_headers,$original_mail_body,$mail_build_params_head_charset,$mail_recipients)
+	function prepareEncryptWithMailSender($original_mail_headers, $original_mail_body, $mail_build_params_head_charset, $mail_recipients)
 	{
 
-	    	// Define gnupg/mime header variables; see constants above in this class
-	    	$gnupg_mpe = OpenPGPLib::MULTIPART_PGP_ENCRYPTED;
-	    	$gnupg_tpp = OpenPGPLib::TYPE_PGP_PROTOCOL;
-	    	$gnupg_pmn = OpenPGPLib::PGP_MIME_NOTE;
-	    	$gnupg_tpcv = OpenPGPLib::TYPE_PGP_CONTENT_VERSION;
-	    	$gnupg_dpcv = OpenPGPLib::DESCRIPTION_PGP_CONTENT_VERSION;
-	    	$gnupg_pmvi = OpenPGPLib::PGP_MIME_VERSION_IDENTIFICATION;
-	    	$gnupg_tpce = OpenPGPLib::TYPE_PGP_CONTENT_ENCRYPTED;
-	    	$gnupg_dpce = OpenPGPLib::DESCRIPTION_PGP_CONTENT_ENCRYPTED;
-	    	$gnupg_dpci = OpenPGPLib::DISPOSITION_PGP_CONTENT_INLINE;
+			// Define gnupg/mime header variables; see constants above in this class
+			$gnupg_mpe = OpenPGPLib::MULTIPART_PGP_ENCRYPTED;
+			$gnupg_tpp = OpenPGPLib::TYPE_PGP_PROTOCOL;
+			$gnupg_pmn = OpenPGPLib::PGP_MIME_NOTE;
+			$gnupg_tpcv = OpenPGPLib::TYPE_PGP_CONTENT_VERSION;
+			$gnupg_dpcv = OpenPGPLib::DESCRIPTION_PGP_CONTENT_VERSION;
+			$gnupg_pmvi = OpenPGPLib::PGP_MIME_VERSION_IDENTIFICATION;
+			$gnupg_tpce = OpenPGPLib::TYPE_PGP_CONTENT_ENCRYPTED;
+			$gnupg_dpce = OpenPGPLib::DESCRIPTION_PGP_CONTENT_ENCRYPTED;
+			$gnupg_dpci = OpenPGPLib::DISPOSITION_PGP_CONTENT_INLINE;
 
 
 		// Define gnupg boundary
-		$gnupg_boundary = '------gnupg-' . md5(rand().microtime());
+		$gnupg_boundary = '------gnupg-' . md5(rand() . microtime());
 
 		// Get flat representation of headers
 		foreach ($original_mail_headers as $name => $value) {
@@ -924,43 +945,43 @@ class OpenPGPLib
 		$tmpstr = chunk_split(
 			md5(
 				$pgpmime_header
-				.rand()
-				.microtime()
+				. rand()
+				. microtime()
 			),
 			8,
 			'-'
 		);
-		$tmpstr = substr($tmpstr, 0, strlen($tmpstr)-1);
-        	$replace_subject_with_msgID = '[PGP/MIME] ' . $tmpstr;
+		$tmpstr = substr($tmpstr, 0, strlen($tmpstr) - 1);
+			$replace_subject_with_msgID = '[PGP/MIME] ' . $tmpstr;
 		//////////////////////////////////////////////////////////////////////////
 		// NOTE: pgpmime subject; this must be returned as subject for the mail() function
-        	$pgpmime_subject = $replace_subject_with_msgID;
+			$pgpmime_subject = $replace_subject_with_msgID;
 
-	    	// gnupg pgp/mime note
-	    	$gnupg = "{$gnupg_pmn}{$this->EOL}";
+			// gnupg pgp/mime note
+			$gnupg = "{$gnupg_pmn}{$this->EOL}";
 
-	    	// gnupg part 1 header
-	    	$gnupg .= "--{$gnupg_boundary}{$this->EOL}Content-Type: {$gnupg_tpcv}{$this->EOL}Content-Description: {$gnupg_dpcv}{$this->EOL}{$this->EOL}{$gnupg_pmvi}{$this->EOL}{$this->EOL}";
+			// gnupg part 1 header
+			$gnupg .= "--{$gnupg_boundary}{$this->EOL}Content-Type: {$gnupg_tpcv}{$this->EOL}Content-Description: {$gnupg_dpcv}{$this->EOL}{$this->EOL}{$gnupg_pmvi}{$this->EOL}{$this->EOL}";
 
-	    	// gnupg part 2 header
-	    	$gnupg .= "--{$gnupg_boundary}{$this->EOL}Content-Type: {$gnupg_tpce}{$this->EOL}Content-Description: {$gnupg_dpce}{$this->EOL}Content-Disposition: {$gnupg_dpci}{$this->EOL}{$this->EOL}";
+			// gnupg part 2 header
+			$gnupg .= "--{$gnupg_boundary}{$this->EOL}Content-Type: {$gnupg_tpce}{$this->EOL}Content-Description: {$gnupg_dpce}{$this->EOL}Content-Disposition: {$gnupg_dpci}{$this->EOL}{$this->EOL}";
 
-	    	// gnupg encrypted/signed message body
-	    	// original header to be added into encrypted part (use here the prepared/imploded orig_header from above)
+			// gnupg encrypted/signed message body
+			// original header to be added into encrypted part (use here the prepared/imploded orig_header from above)
 		// NOTE: signer and signer passphrase are set ready in this class instantiation,
 		// and used in the following function directly from there
-	    	$gnupg .= $this->_encryptSignGnuPG($orig_header."{$this->EOL}{$this->EOL}".$original_mail_body, $mail_recipients);
-	    	// gnupg end boundary
-	    	$gnupg .= "{$this->EOL}--{$gnupg_boundary}--{$this->EOL}";
+			$gnupg .= $this->_encryptSignGnuPG($orig_header . "{$this->EOL}{$this->EOL}" . $original_mail_body, $mail_recipients);
+			// gnupg end boundary
+			$gnupg .= "{$this->EOL}--{$gnupg_boundary}--{$this->EOL}";
 
 		//////////////////////////////////////////////////////////////////////////
 		// NOTE: gnupg into mail body; this must be returned as encrypted body for the mail() function
-	    	$pgpmime_encrypted_message_body = $gnupg;
+			$pgpmime_encrypted_message_body = $gnupg;
 
-		return array(
+		return [
 				0 => $pgpmime_header,
 				1 => $pgpmime_subject,
-				2 => $pgpmime_encrypted_message_body);
+				2 => $pgpmime_encrypted_message_body];
 	}
 
 
@@ -977,25 +998,25 @@ class OpenPGPLib
 	*		0 => array $gnupg_header_array
 	*		1 => string $pgpmime_encrypted_message_body
 	*/
-	function prepareEncryptWithSmtpSender($original_mail_headers,$original_mail_body,$mail_build_params_head_charset,$mail_recipients)
+	function prepareEncryptWithSmtpSender($original_mail_headers, $original_mail_body, $mail_build_params_head_charset, $mail_recipients)
 	{
 
-	    	// Define gnupg/mime header variables; see constants above in this class
-	    	$gnupg_mpe = OpenPGPLib::MULTIPART_PGP_ENCRYPTED;
-	    	$gnupg_tpp = OpenPGPLib::TYPE_PGP_PROTOCOL;
-	    	$gnupg_pmn = OpenPGPLib::PGP_MIME_NOTE;
-	    	$gnupg_tpcv = OpenPGPLib::TYPE_PGP_CONTENT_VERSION;
-	    	$gnupg_dpcv = OpenPGPLib::DESCRIPTION_PGP_CONTENT_VERSION;
-	    	$gnupg_pmvi = OpenPGPLib::PGP_MIME_VERSION_IDENTIFICATION;
-	    	$gnupg_tpce = OpenPGPLib::TYPE_PGP_CONTENT_ENCRYPTED;
-	    	$gnupg_dpce = OpenPGPLib::DESCRIPTION_PGP_CONTENT_ENCRYPTED;
-	    	$gnupg_dpci = OpenPGPLib::DISPOSITION_PGP_CONTENT_INLINE;
+			// Define gnupg/mime header variables; see constants above in this class
+			$gnupg_mpe = OpenPGPLib::MULTIPART_PGP_ENCRYPTED;
+			$gnupg_tpp = OpenPGPLib::TYPE_PGP_PROTOCOL;
+			$gnupg_pmn = OpenPGPLib::PGP_MIME_NOTE;
+			$gnupg_tpcv = OpenPGPLib::TYPE_PGP_CONTENT_VERSION;
+			$gnupg_dpcv = OpenPGPLib::DESCRIPTION_PGP_CONTENT_VERSION;
+			$gnupg_pmvi = OpenPGPLib::PGP_MIME_VERSION_IDENTIFICATION;
+			$gnupg_tpce = OpenPGPLib::TYPE_PGP_CONTENT_ENCRYPTED;
+			$gnupg_dpce = OpenPGPLib::DESCRIPTION_PGP_CONTENT_ENCRYPTED;
+			$gnupg_dpci = OpenPGPLib::DISPOSITION_PGP_CONTENT_INLINE;
 
 		// Define gnupg boundary
-		$gnupg_boundary = '------gnupg-' . md5(rand().microtime());
+		$gnupg_boundary = '------gnupg-' . md5(rand() . microtime());
 
 		// Define a boundary for orig body, if needed
-		$add_boundary_for_orig = '------orig--' . md5(rand().microtime());
+		$add_boundary_for_orig = '------orig--' . md5(rand() . microtime());
 
 		// set discard-flag originally false; see below foreach loop and later the origheader implode
 		$discard_orig_header = true;
@@ -1029,8 +1050,8 @@ class OpenPGPLib
 			$orig_header = implode(CRLF, $orig_headers);
 		}
 
-	    	// gnupg pgp/mime headers; original headers from call-parameters to be added into encrypted part (see above/below)
-	    	$pgpmime_header = "Content-Type: {$gnupg_mpe};{$this->EOL} protocol=\"{$gnupg_tpp}\";{$this->EOL} boundary=\"{$gnupg_boundary}\"{$this->EOL}{$this->EOL}";
+			// gnupg pgp/mime headers; original headers from call-parameters to be added into encrypted part (see above/below)
+			$pgpmime_header = "Content-Type: {$gnupg_mpe};{$this->EOL} protocol=\"{$gnupg_tpp}\";{$this->EOL} boundary=\"{$gnupg_boundary}\"{$this->EOL}{$this->EOL}";
 
 		//////////////////////////////////////////////////////////////////////////
 		// Instead of original Subject, use this to hide even the subject:
@@ -1039,49 +1060,49 @@ class OpenPGPLib
 		$tmpstr = chunk_split(
 			md5(
 				$pgpmime_header
-				.rand()
-				.microtime()
+				. rand()
+				. microtime()
 			),
 			8,
 			'-'
 		);
-		$tmpstr = substr($tmpstr, 0, strlen($tmpstr)-1);
-        	$replace_subject_with_msgID = '[PGP/MIME] ' . $tmpstr;
+		$tmpstr = substr($tmpstr, 0, strlen($tmpstr) - 1);
+			$replace_subject_with_msgID = '[PGP/MIME] ' . $tmpstr;
 		//////////////////////////////////////////////////////////////////////////
 		// NOTE: pgpmime_header_array; this must be returned as header array (NOTE: array here) for the mail() function
 		// prepend the opaque Subject before other PGP/MIME headers
-        	$pgpmime_header_array[] = "Subject: " . $replace_subject_with_msgID;
+			$pgpmime_header_array[] = "Subject: " . $replace_subject_with_msgID;
 		// instead of the original, set this pgp/mime-required header into $gnupg_header_array -return array
 		$pgpmime_header_array[] = $pgpmime_header;
 
-	    	// Create gnupg pgp/mime parts etc below and set/repalced to message body by caller
+			// Create gnupg pgp/mime parts etc below and set/repalced to message body by caller
 		// NOTE: here we do not need to create directly the $gpgpmime_header, because the $gnupg_header_array is returned back
 		// to caller in array format (caller is htmlMimeMail)
 
-	    	// gnupg pgp/mime note
-	    	$gnupg = "{$gnupg_pmn}{$this->EOL}";
+			// gnupg pgp/mime note
+			$gnupg = "{$gnupg_pmn}{$this->EOL}";
 
-	    	// gnupg part 1 header
-	    	$gnupg .= "--{$gnupg_boundary}{$this->EOL}Content-Type: {$gnupg_tpcv}{$this->EOL}Content-Description: {$gnupg_dpcv}{$this->EOL}{$this->EOL}{$gnupg_pmvi}{$this->EOL}{$this->EOL}";
+			// gnupg part 1 header
+			$gnupg .= "--{$gnupg_boundary}{$this->EOL}Content-Type: {$gnupg_tpcv}{$this->EOL}Content-Description: {$gnupg_dpcv}{$this->EOL}{$this->EOL}{$gnupg_pmvi}{$this->EOL}{$this->EOL}";
 
-	    	// gnupg part 2 header
-	    	$gnupg .= "--{$gnupg_boundary}{$this->EOL}Content-Type: {$gnupg_tpce}{$this->EOL}Content-Description: {$gnupg_dpce}{$this->EOL}Content-Disposition: {$gnupg_dpci}{$this->EOL}{$this->EOL}";
+			// gnupg part 2 header
+			$gnupg .= "--{$gnupg_boundary}{$this->EOL}Content-Type: {$gnupg_tpce}{$this->EOL}Content-Description: {$gnupg_dpce}{$this->EOL}Content-Disposition: {$gnupg_dpci}{$this->EOL}{$this->EOL}";
 
-	    	// gnupg encrypted/signed message body
-	    	// original header to be added into encrypted part (use here the prepared/imploded orig_header from above)
+			// gnupg encrypted/signed message body
+			// original header to be added into encrypted part (use here the prepared/imploded orig_header from above)
 		// NOTE: signer and signer passphrase are set ready in this class instantiation,
 		// and used in the following function directly from there
-	    	$gnupg .= $this->_encryptSignGnuPG($orig_header."{$this->EOL}{$this->EOL}".$original_mail_body, $mail_recipients);
-	    	// gnupg end boundary
-	    	$gnupg .= "{$this->EOL}--{$gnupg_boundary}--{$this->EOL}";
+			$gnupg .= $this->_encryptSignGnuPG($orig_header . "{$this->EOL}{$this->EOL}" . $original_mail_body, $mail_recipients);
+			// gnupg end boundary
+			$gnupg .= "{$this->EOL}--{$gnupg_boundary}--{$this->EOL}";
 
 		//////////////////////////////////////////////////////////////////////////
 		// NOTE: gnupg into mail body; this must be returned as encrypted body for the mail() function
-	    	$pgpmime_encrypted_message_body = $gnupg;
+			$pgpmime_encrypted_message_body = $gnupg;
 
-		return array(
+		return [
 				0 => $pgpmime_header_array,
-				1 => $pgpmime_encrypted_message_body);
+				1 => $pgpmime_encrypted_message_body];
 	}
 
 	//////////////////////////////////////////////////////////
@@ -1103,7 +1124,7 @@ class OpenPGPLib
 	 */
 	protected static function _formatHeader(&$item, $key, $prefix)
 	{
-        	$item = $prefix . ': ' . $item;
+			$item = $prefix . ': ' . $item;
 	}
 
 	//////////////////////////////////////////////////////////
@@ -1118,34 +1139,34 @@ class OpenPGPLib
 	 *		0 => string $pgpmime_header
 	 *		1 => string $pgpmime_encrypted_message_body
 	 */
-	function prepareEncryptWithZendMail($original_mail_header = '', $original_mail_body = NULL, $recipients)
+	function prepareEncryptWithZendMail($original_mail_header = '', $original_mail_body = null, $recipients)
 	{
 
-	    	// Define gnupg/mime header variables; see constants above in this class
-	    	$gnupg_mpe = OpenPGPLib::MULTIPART_PGP_ENCRYPTED;
-	    	$gnupg_tpp = OpenPGPLib::TYPE_PGP_PROTOCOL;
-	    	$gnupg_pmn = OpenPGPLib::PGP_MIME_NOTE;
-	    	$gnupg_tpcv = OpenPGPLib::TYPE_PGP_CONTENT_VERSION;
-	    	$gnupg_dpcv = OpenPGPLib::DESCRIPTION_PGP_CONTENT_VERSION;
-	    	$gnupg_pmvi = OpenPGPLib::PGP_MIME_VERSION_IDENTIFICATION;
-	    	$gnupg_tpce = OpenPGPLib::TYPE_PGP_CONTENT_ENCRYPTED;
-	    	$gnupg_dpce = OpenPGPLib::DESCRIPTION_PGP_CONTENT_ENCRYPTED;
-	    	$gnupg_dpci = OpenPGPLib::DISPOSITION_PGP_CONTENT_INLINE;
+			// Define gnupg/mime header variables; see constants above in this class
+			$gnupg_mpe = OpenPGPLib::MULTIPART_PGP_ENCRYPTED;
+			$gnupg_tpp = OpenPGPLib::TYPE_PGP_PROTOCOL;
+			$gnupg_pmn = OpenPGPLib::PGP_MIME_NOTE;
+			$gnupg_tpcv = OpenPGPLib::TYPE_PGP_CONTENT_VERSION;
+			$gnupg_dpcv = OpenPGPLib::DESCRIPTION_PGP_CONTENT_VERSION;
+			$gnupg_pmvi = OpenPGPLib::PGP_MIME_VERSION_IDENTIFICATION;
+			$gnupg_tpce = OpenPGPLib::TYPE_PGP_CONTENT_ENCRYPTED;
+			$gnupg_dpce = OpenPGPLib::DESCRIPTION_PGP_CONTENT_ENCRYPTED;
+			$gnupg_dpci = OpenPGPLib::DISPOSITION_PGP_CONTENT_INLINE;
 
-	    	// Define gnupg boundary
-	    	$gnupg_boundary = '------gnupg-' . md5(rand().microtime());
+			// Define gnupg boundary
+			$gnupg_boundary = '------gnupg-' . md5(rand() . microtime());
 
-	    	//*********************
-	    	// NOTE: in smtp, $mail_recipients includes the Cc and Bcc recipients.
-	    	// so the message gets properly encrypted for them also;
-	    	// the problem is still with the Sendmail for such cases / see above...?
-	    	// What is the case in Zend Abstract, Sendmail and Smtp...?
-	    	//*********************
+			//*********************
+			// NOTE: in smtp, $mail_recipients includes the Cc and Bcc recipients.
+			// so the message gets properly encrypted for them also;
+			// the problem is still with the Sendmail for such cases / see above...?
+			// What is the case in Zend Abstract, Sendmail and Smtp...?
+			//*********************
 
-	    	// Create gnupg pgp/mime parts etc below and set to this->output
+			// Create gnupg pgp/mime parts etc below and set to this->output
 
-	    	// gnupg pgp/mime headers; original headers from call-parameters to be added into encrypted part (see below)
-	    	$pgpmime_header = "Content-Type: {$gnupg_mpe};{$this->EOL} protocol=\"{$gnupg_tpp}\";{$this->EOL} boundary=\"{$gnupg_boundary}\"{$this->EOL}{$this->EOL}";
+			// gnupg pgp/mime headers; original headers from call-parameters to be added into encrypted part (see below)
+			$pgpmime_header = "Content-Type: {$gnupg_mpe};{$this->EOL} protocol=\"{$gnupg_tpp}\";{$this->EOL} boundary=\"{$gnupg_boundary}\"{$this->EOL}{$this->EOL}";
 
 		// Instead of original Subject, use this to hide even the subject:
 		// - generate a message hash ID to be used instead of orig subject;
@@ -1153,40 +1174,40 @@ class OpenPGPLib
 		$tmpstr = chunk_split(
 			md5(
 				$pgpmime_header
-				.rand()
-     	  		.microtime()
+				. rand()
+				   . microtime()
 			),
 			8,
 			'-'
 		);
-		$tmpstr = substr($tmpstr, 0, strlen($tmpstr)-1);
-        	$replace_subject_with_msgID = '[PGP/MIME] ' . $tmpstr;
+		$tmpstr = substr($tmpstr, 0, strlen($tmpstr) - 1);
+			$replace_subject_with_msgID = '[PGP/MIME] ' . $tmpstr;
 		// prepend the opaque Subject before other PGP/MIME headers
-        	$pgpmime_header = "Subject: " . $replace_subject_with_msgID . $this->EOL . $pgpmime_header;
+			$pgpmime_header = "Subject: " . $replace_subject_with_msgID . $this->EOL . $pgpmime_header;
 
-	    	// gnupg pgp/mime note
-	    	$gnupg = "{$gnupg_pmn}{$this->EOL}";
+			// gnupg pgp/mime note
+			$gnupg = "{$gnupg_pmn}{$this->EOL}";
 
-	    	// gnupg part 1 header
-	    	$gnupg .= "--{$gnupg_boundary}{$this->EOL}Content-Type: {$gnupg_tpcv}{$this->EOL}Content-Description: {$gnupg_dpcv}{$this->EOL}{$this->EOL}{$gnupg_pmvi}{$this->EOL}{$this->EOL}";
+			// gnupg part 1 header
+			$gnupg .= "--{$gnupg_boundary}{$this->EOL}Content-Type: {$gnupg_tpcv}{$this->EOL}Content-Description: {$gnupg_dpcv}{$this->EOL}{$this->EOL}{$gnupg_pmvi}{$this->EOL}{$this->EOL}";
 
-	    	// gnupg part 2 header
-	    	$gnupg .= "--{$gnupg_boundary}{$this->EOL}Content-Type: {$gnupg_tpce}{$this->EOL}Content-Description: {$gnupg_dpce}{$this->EOL}Content-Disposition: {$gnupg_dpci}{$this->EOL}{$this->EOL}";
+			// gnupg part 2 header
+			$gnupg .= "--{$gnupg_boundary}{$this->EOL}Content-Type: {$gnupg_tpce}{$this->EOL}Content-Description: {$gnupg_dpce}{$this->EOL}Content-Disposition: {$gnupg_dpci}{$this->EOL}{$this->EOL}";
 
-	    	// gnupg encrypted/signed message body
-	    	// original header to be added into encrypted part
+			// gnupg encrypted/signed message body
+			// original header to be added into encrypted part
 		// NOTE: signer and signer passphrase are set ready in this class instantiation,
 		// and used in the following function directly from there
-	    	$gnupg .= $this->_encryptSignGnuPG($original_mail_header."{$this->EOL}{$this->EOL}".$original_mail_body, $recipients);
-	    	// gnupg end boundary
-	    	$gnupg .= "{$this->EOL}--{$gnupg_boundary}--{$this->EOL}";
+			$gnupg .= $this->_encryptSignGnuPG($original_mail_header . "{$this->EOL}{$this->EOL}" . $original_mail_body, $recipients);
+			// gnupg end boundary
+			$gnupg .= "{$this->EOL}--{$gnupg_boundary}--{$this->EOL}";
 
-	    	// gnupg into mail body
-	    	$pgpmime_encrypted_message_body = $gnupg;
+			// gnupg into mail body
+			$pgpmime_encrypted_message_body = $gnupg;
 
-		return array(
+		return [
 				0 => $pgpmime_header,
-				1 => $pgpmime_encrypted_message_body);
+				1 => $pgpmime_encrypted_message_body];
 	}
 
 	//////////////////////////////////////////////////////////
@@ -1201,32 +1222,30 @@ class OpenPGPLib
 	protected function _encryptSignGnuPG($unencrypted_message, $recipients)
 	{
 
-    		$encrypted_message = '';
+			$encrypted_message = '';
 
-    		// encrypt $message to recipients
-    		// sign wth signer
+			// encrypt $message to recipients
+			// sign wth signer
 		$gpg = $this->gpg_encrypt("${unencrypted_message}", $recipients);
 
-    		// $gpg is an array containing
-    		// $gpg[0] encrypted output (STDOUT)
+			// $gpg is an array containing
+			// $gpg[0] encrypted output (STDOUT)
 		// $gpg[1] warnings and notices (STDERR)
-    		// $gpg[2] exit status from gpg
+			// $gpg[2] exit status from gpg
 
-    		// test gpg's exit status
-    		if ("$gpg[2]" == '0') {
-    			// if the gpg command returned zero
-    			$encrypted_message = $gpg[0];
-    		} else {
-		    	// if the gpg command returned non-zero
-			$error_msg = 'OpenPGPLib: _encryptSignGnuPG() returned error code: '.$gpg[2];
+			// test gpg's exit status
+		if ("$gpg[2]" == '0') {
+			// if the gpg command returned zero
+			$encrypted_message = $gpg[0];
+		} else {
+			// if the gpg command returned non-zero
+			$error_msg = 'OpenPGPLib: _encryptSignGnuPG() returned error code: ' . $gpg[2];
 			trigger_error($error_msg, E_USER_ERROR);
 			// if an error message directs you to the line above please
 			// double check that your gnupg-configuration, process-call commandline input, and other parameters are correct
-    		}
+		}
 
-    		return $encrypted_message;
-
+			return $encrypted_message;
 	}
-
 }
 $openpgplib = new OpenPGPLib;

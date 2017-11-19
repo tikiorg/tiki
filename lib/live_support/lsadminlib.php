@@ -10,33 +10,33 @@ class LsAdminlib extends TikiLib
 
 	function add_operator($user)
 	{
-		$this->getOne('delete from `tiki_live_support_operators` where `user`=?', array($user), false);
+		$this->getOne('delete from `tiki_live_support_operators` where `user`=?', [$user], false);
 		$query = 'insert into `tiki_live_support_operators`' .
 							' (`user`,`accepted_requests`,`status`,`longest_chat`,`shortest_chat`' .
 							',`average_chat`,`last_chat`,`time_online`,`votes`,`points`,`status_since`)' .
 							' values(?,?,?,?,?,?,?,?,?,?,?)';
 
-		$this->query($query, array($user, 0, 'offline', 0, 0, 0, 0, 0, 0, 0, 0));
+		$this->query($query, [$user, 0, 'offline', 0, 0, 0, 0, 0, 0, 0, 0]);
 	}
 
 	function remove_operator($user)
 	{
 		$query = 'delete from `tiki_live_support_operators` where `user`=?';
 
-		$this->query($query, array($user));
+		$this->query($query, [$user]);
 	}
 
 	function is_operator($user)
 	{
-		return $this->getOne('select count(*) from `tiki_live_support_operators` where `user`=?', array($user));
+		return $this->getOne('select count(*) from `tiki_live_support_operators` where `user`=?', [$user]);
 	}
 
 	function get_operators($status)
 	{
 		$query = 'select * from `tiki_live_support_operators` where `status`=?';
 
-		$result = $this->query($query, array($status));
-		$ret = array();
+		$result = $this->query($query, [$status]);
+		$ret = [];
 		while ($res = $result->fetchRow()) {
 			$res['elapsed'] = $this->now - $res['status_since'];
 
@@ -49,7 +49,7 @@ class LsAdminlib extends TikiLib
 	function post_support_message($username, $user, $user_email, $title, $data, $priority, $module, $resolution, $assigned_to = '')
 	{
 		// very nice that (redflo)
-		die ('MISSING CODE');
+		die('MISSING CODE');
 	}
 
 	function list_support_messages($offset, $maxRecords, $sort_mode, $find, $where)
@@ -58,10 +58,10 @@ class LsAdminlib extends TikiLib
 			$findesc = '%' . $find . '%';
 
 			$mid = " where (`data` like $findesc or `username` like $findesc)";
-			$bindvars=array($findesc,$findesc);
+			$bindvars = [$findesc,$findesc];
 		} else {
 			$mid = '';
-			$bindvars=array();
+			$bindvars = [];
 		}
 
 		if ($where) {
@@ -76,13 +76,13 @@ class LsAdminlib extends TikiLib
 		$query_cant = "select count(*) from `tiki_live_support_messages` $mid";
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
-		$ret = array();
+		$ret = [];
 
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
-		$retval = array();
+		$retval = [];
 		$retval['data'] = $ret;
 		$retval['cant'] = $cant;
 
@@ -93,8 +93,8 @@ class LsAdminlib extends TikiLib
 	{
 		$query = 'select * from `tiki_live_support_modules`';
 
-		$result = $this->query($query, array());
-		$ret = array();
+		$result = $this->query($query, []);
+		$ret = [];
 
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
@@ -110,10 +110,10 @@ class LsAdminlib extends TikiLib
 			$findesc = '%' . $find . '%';
 
 			$mid = ' where (`reason` like ? or `user` like ? or `operator` like ?)';
-			$bindvars=array($findesc,$findesc,$findesc);
+			$bindvars = [$findesc,$findesc,$findesc];
 		} else {
 			$mid = '';
-			$bindvars=array();
+			$bindvars = [];
 		}
 
 		if ($where) {
@@ -128,15 +128,15 @@ class LsAdminlib extends TikiLib
 		$query_cant = "select count(*) from `tiki_live_support_requests` $mid";
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
-		$ret = array();
+		$ret = [];
 
 		while ($res = $result->fetchRow()) {
-			$res['msgs'] = $this->getOne('select count(*) from `tiki_live_support_events` where `reqId`=?', array($res['reqId']));
+			$res['msgs'] = $this->getOne('select count(*) from `tiki_live_support_events` where `reqId`=?', [$res['reqId']]);
 
 			$ret[] = $res;
 		}
 
-		$retval = array();
+		$retval = [];
 		$retval['data'] = $ret;
 		$retval['cant'] = $cant;
 		return $retval;
@@ -146,8 +146,8 @@ class LsAdminlib extends TikiLib
 	{
 		$query = 'select distinct(`tiki_user`) from `tiki_live_support_requests`';
 
-		$result = $this->query($query, array());
-		$ret = array();
+		$result = $this->query($query, []);
+		$ret = [];
 
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res['tiki_user'];
@@ -160,8 +160,8 @@ class LsAdminlib extends TikiLib
 	{
 		$query = 'select distinct(`operator`) from `tiki_live_support_requests`';
 
-		$result = $this->query($query, array());
-		$ret = array();
+		$result = $this->query($query, []);
+		$ret = [];
 
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res['operator'];
@@ -176,8 +176,8 @@ class LsAdminlib extends TikiLib
 						' from `tiki_live_support_events` tle, `tiki_live_support_requests` tlr' .
 						' where tle.`reqId`=tlr.`reqId` and (`senderId`=tlr.`user_id` or tle.`senderId`=tlr.`operator_id`) and tlr.`reqId`=?';
 
-		$result = $this->query($query, array($reqId));
-		$ret = array();
+		$result = $this->query($query, [$reqId]);
+		$ret = [];
 
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;

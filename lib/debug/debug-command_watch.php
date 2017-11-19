@@ -9,7 +9,7 @@
  * \brief Watch command for debugger
  * \author zaufi <zaufi@sendmail.ru>
  */
-require_once ('lib/debug/debugger-ext.php');
+require_once('lib/debug/debugger-ext.php');
 
 /**
  * \brief Command 'watch'
@@ -24,15 +24,16 @@ class DbgCmd_Watch extends DebuggerCommand
 	{
 		global $user;
 
-		$this->watches = array();
+		$this->watches = [];
 
 		if (is_readable($this->watchfile())) {
 			$s = implode('', @file($this->watchfile()));
 
 			$a = unserialize($s);
 
-			if (count($a) > 0)
+			if (count($a) > 0) {
 				$this->watches = (array)$a;
+			}
 		}
 	}
 
@@ -75,7 +76,7 @@ class DbgCmd_Watch extends DebuggerCommand
 				array_shift($args);
 
 				if (count($args) > 0) {
-					foreach ($args as $a)
+					foreach ($args as $a) {
 						if (strlen(trim(str_replace('$', '', $a))) > 0) { // Is there smth 'cept '$'??
 							$a = trim($a);
 
@@ -85,24 +86,28 @@ class DbgCmd_Watch extends DebuggerCommand
 							} else {
 								$result .= "remove '" . $a . "' from watch list\n";
 
-								if (isset($this->watches[md5($a)]))
-									unset ($this->watches[md5($a)]);
-								else
+								if (isset($this->watches[md5($a)])) {
+									unset($this->watches[md5($a)]);
+								} else {
 									$result .= "ERROR: No such variable in watch list\n";
+								}
 							}
 						}
+					}
 
 					// Store changes in watchlist to disk
 					$this->store_watches();
-				} else
+				} else {
 					$result .= "ERROR: No variable to add given";
-			}
-			elseif (strlen(trim($args[0])) > 0)
+				}
+			} elseif (strlen(trim($args[0])) > 0) {
 				$result .= "ERROR: Unknown subcommand '$arg[0]'";
-			else
+			} else {
 				$result .= "ERROR: No subcommand for 'watch' given";
-		} else
+			}
+		} else {
 			$result .= "ERROR: No subcommand for 'watch' given";
+		}
 
 		return $result;
 	}
@@ -125,23 +130,25 @@ class DbgCmd_Watch extends DebuggerCommand
 			fputs($fp, $s);
 			fclose($fp);
 		} else {
-			if (is_writable($this->watchfile()))
+			if (is_writable($this->watchfile())) {
 				unlink($this->watchfile());
+			}
 		}
 	}
 
 	/// Function to create interface part of command: return ["button name"] = <html code>
 	function draw_interface()
 	{
-		$result = array();
+		$result = [];
 
 		// Iterate through all variables
-		foreach ($this->watches as $v)
+		foreach ($this->watches as $v) {
 			// NOTE: PHP variables must start with '$', else assumed smarty variable
-			$result[] = array(
+			$result[] = [
 				'var' => $v,
 				'value' => ((substr($v, 0, 1) == '$') ? $this->value_of_php_var($v) : $this->value_of_smarty_var($v))
-			);
+			];
+		}
 
 		//
 		$smarty = TikiLib::lib('smarty');
@@ -159,10 +166,11 @@ class DbgCmd_Watch extends DebuggerCommand
 		if (strlen($v) != 0) {
 			$tmp = $smarty->getTemplateVars();
 
-			if (is_array($tmp) && isset($tmp[$v]))
-				$result .= print_r($tmp[$v], true). "\n";
-			else
+			if (is_array($tmp) && isset($tmp[$v])) {
+				$result .= print_r($tmp[$v], true) . "\n";
+			} else {
 				$result .= 'Smarty variable "' . $v . '" not found';
+			}
 		}
 
 		return $result;
@@ -173,7 +181,7 @@ class DbgCmd_Watch extends DebuggerCommand
 	{
 		global $debugger;
 
-		require_once ('lib/debug/debugger.php');
+		require_once('lib/debug/debugger.php');
 		return $debugger->str_var_dump($v);
 	}
 

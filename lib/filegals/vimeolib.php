@@ -43,7 +43,7 @@ class VimeoLib
 	{
 		$data = $this->callMethod(
 			'/me/videos',
-			array('type' => 'streaming'),
+			['type' => 'streaming'],
 			'post'
 		);
 		return $data;
@@ -53,7 +53,7 @@ class VimeoLib
 	{
 		$data = $this->callMethod(
 			$completeUri,
-			array(),
+			[],
 			'delete'
 		);
 		return $data;
@@ -63,9 +63,9 @@ class VimeoLib
 	{
 		$data = $this->callMethod(
 			'/videos/' . $videoId,
-			array(
+			[
 				'name' => $title,
-			),
+			],
 			'patch'
 		);
 		return $data;
@@ -75,32 +75,31 @@ class VimeoLib
 	{
 		$data = $this->callMethod(
 			'/videos/' . $videoId,
-			array(),
+			[],
 			'delete'
 		);
 		return $data;
 	}
 
-	private function callMethod($method, array $arguments = array(), $httpmethod = 'get')
+	private function callMethod($method, array $arguments = [], $httpmethod = 'get')
 	{
 		$oldVal = ini_get('arg_separator.output');
 		ini_set('arg_separator.output', '&');
 		$response = $this->oauth->do_request(
 			'vimeo',
-			array(
+			[
 				'url' => 'https://api.vimeo.com' . $method,
 				$httpmethod => $arguments,
-			)
+			]
 		);
 
 		ini_set('arg_separator.output', $oldVal);
 
 		if ($httpmethod == 'delete' || $httpmethod == 'patch') {
-			$headers = $response->getHeaders();	
+			$headers = $response->getHeaders();
 			return $headers->toArray();
 		} else {
 			return json_decode($response->getBody(), true);
 		}
 	}
 }
-

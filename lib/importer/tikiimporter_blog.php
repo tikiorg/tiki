@@ -34,7 +34,7 @@ class TikiImporter_Blog extends TikiImporter
 	 * Blog information extracted from the XML file (title, description, created etc)
 	 * @var array
 	 */
-	public $blogInfo = array();
+	public $blogInfo = [];
 
 	/**
 	 * Instance of TikiImporter_Wiki
@@ -53,16 +53,16 @@ class TikiImporter_Blog extends TikiImporter
 	 * XML file.
 	 * @var array
 	 */
-	public $parsedData = array();
+	public $parsedData = [];
 
 	/**
 	 * @see lib/importer/TikiImporter#importOptions()
 	 */
-	static public function importOptions()
+	public static function importOptions()
 	{
-		$options = array(
-			array('name' => 'setAsHomePage', 'type' => 'checkbox', 'label' => tra('Set new blog as Tiki homepage')),
-		);
+		$options = [
+			['name' => 'setAsHomePage', 'type' => 'checkbox', 'label' => tra('Set new blog as Tiki homepage')],
+		];
 
 		return $options;
 	}
@@ -119,7 +119,7 @@ class TikiImporter_Blog extends TikiImporter
 	 */
 	function insertData($parsedData = null)
 	{
-		$countData = array();
+		$countData = [];
 
 		$countPosts = count($this->parsedData['posts']);
 		$countPages = count($this->parsedData['pages']);
@@ -136,22 +136,22 @@ class TikiImporter_Blog extends TikiImporter
 			) . "\n"
 		);
 
-		if (!empty($this->parsedData['posts'])) {
+		if (! empty($this->parsedData['posts'])) {
 			$this->createBlog();
 		}
 
-		if (!empty($this->parsedData)) {
-			if (!empty($this->parsedData['tags'])) {
+		if (! empty($this->parsedData)) {
+			if (! empty($this->parsedData['tags'])) {
 				$this->createTags($this->parsedData['tags']);
 			}
 
-			if (!empty($this->parsedData['categories'])) {
+			if (! empty($this->parsedData['categories'])) {
 				$this->createCategories($this->parsedData['categories']);
 			}
 
 			$items = array_merge($this->parsedData['posts'], $this->parsedData['pages']);
 
-			if (!empty($items)) {
+			if (! empty($items)) {
 				foreach ($items as $key => $item) {
 					if ($objId = $this->insertItem($item)) {
 						// discover the item key in the $this->parsedData array
@@ -194,20 +194,20 @@ class TikiImporter_Blog extends TikiImporter
 			if ($item['type'] == 'page') {
 				$type = 'wiki page';
 				$msg = tr('Page "%0" sucessfully imported', $item['name']);
-			} else if ($item['type'] == 'post') {
+			} elseif ($item['type'] == 'post') {
 				$type = 'blog post';
 				$msg = tr('Post "%0" sucessfully imported', $item['name']);
 			}
 
-			if (!empty($item['comments'])) {
+			if (! empty($item['comments'])) {
 				$this->insertComments($objId, $type, $item['comments']);
 			}
 
-			if (!empty($item['tags'])) {
+			if (! empty($item['tags'])) {
 				$this->linkObjectWithTags($objId, $type, $item['tags']);
 			}
 
-			if (!empty($item['categories'])) {
+			if (! empty($item['categories'])) {
 				$this->linkObjectWithCategories($objId, $type, $item['categories']);
 			}
 
@@ -312,7 +312,7 @@ class TikiImporter_Blog extends TikiImporter
 		$categlib = TikiLib::lib('categ');
 
 		foreach ($categories as $categ) {
-			if (!empty($categ['parent'])) {
+			if (! empty($categ['parent'])) {
 				$categ['parentId'] = $categlib->get_category_id($categ['parent']);
 			} else {
 				$categ['parentId'] = 0;
@@ -379,7 +379,7 @@ class TikiImporter_Blog extends TikiImporter
 		$bloglib = TikiLib::lib('blog');
 		$objectlib = TikiLib::lib('object');
 
-		$post = array_merge(array('content' => '', 'excerpt' => '', 'author' => '', 'name' => '', 'created' => 0), $post);	// set defaults
+		$post = array_merge(['content' => '', 'excerpt' => '', 'author' => '', 'name' => '', 'created' => 0], $post);	// set defaults
 
 		$postId = $bloglib->blog_post(
 			$this->blogId,
@@ -424,13 +424,13 @@ class TikiImporter_Blog extends TikiImporter
 
 		foreach ($comments as $comment) {
 			// set empty values for comments properties if they are not set
-			if (!isset($comment['author'])) {
+			if (! isset($comment['author'])) {
 				$comment['author'] = '';
 			}
-			if (!isset($comment['author_email'])) {
+			if (! isset($comment['author_email'])) {
 				$comment['author_email'] = '';
 			}
-			if (!isset($comment['author_url'])) {
+			if (! isset($comment['author_url'])) {
 				$comment['author_url'] = '';
 			}
 
@@ -471,5 +471,4 @@ class TikiImporter_Blog extends TikiImporter
 		$this->importerWiki->alreadyExistentPageName = 'appendPrefix';
 		$this->importerWiki->softwareName = $this->softwareName;
 	}
-
 }

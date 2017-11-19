@@ -15,12 +15,12 @@ class TikiLdapLib
 {
 
 	// var to hold a established connection
-	protected $ldaplink = NULL;
+	protected $ldaplink = null;
 
 	// var for ldap configuration parameters
-	protected $options = array(
+	protected $options = [
 		'host' => 'localhost',
-		'port' => NULL,
+		'port' => null,
 		'version' => 3,
 		'starttls' => false,
 		'ssl'	=> false,
@@ -46,9 +46,9 @@ class TikiLdapLib
 		'usergroupattr' => '',
 		'groupgroupattr' => '',
 		'debug' => false
-	);
+	];
 
-	protected $logslib = NULL;
+	protected $logslib = null;
 
 	/**
 	 * @var array The user attributes
@@ -60,7 +60,7 @@ class TikiLdapLib
 	{
 		// debug setting
 		$logslib = TikiLib::lib('logs');
-		if (isset($options['debug']) && ($options['debug']===true || $options['debug']=='y' )&& ($logslib instanceof LogsLib)) {
+		if (isset($options['debug']) && ($options['debug'] === true || $options['debug'] == 'y' )&& ($logslib instanceof LogsLib)) {
 			$this->options['debug'] = true;
 			$this->logslib = $logslib;
 		}
@@ -68,26 +68,26 @@ class TikiLdapLib
 
 		// host can be a list of hostnames.
 		// It is easier to create URIs because if we use ssl, we have to create a URI
-		if (isset($options['host']) && !empty($options['host'])) {
+		if (isset($options['host']) && ! empty($options['host'])) {
 			$h = $options['host'];
 		} else { // use default
 			$h = $this->options['host'];
 		}
 
 		$t = preg_split('#[\s,]#', $h);
-		if (isset($options['ssl']) && ($options['ssl']=='y' || $options['ssl']===true)) {
+		if (isset($options['ssl']) && ($options['ssl'] == 'y' || $options['ssl'] === true)) {
 			$prefix = 'ldaps://';
 			$port = 636;
 		} else {
 			$prefix = 'ldap://';
 			$port = 389;
 		}
-		if (isset($options['port']) && !empty($options['port'])) {
+		if (isset($options['port']) && ! empty($options['port'])) {
 			$port = intval($options['port']);
 		}
-		$this->options['port'] = NULL; // its save to set port in URI
+		$this->options['port'] = null; // its save to set port in URI
 
-		$this->options['host'] = array();
+		$this->options['host'] = [];
 		foreach ($t as $h) {
 			if (preg_match('#^ldaps?://#', $h)) { // entry is already URI
 				$this->options['host'][] = $h;
@@ -96,35 +96,37 @@ class TikiLdapLib
 			}
 		}
 
-		if (isset($options['version']) && !empty($options['version'])) {
+		if (isset($options['version']) && ! empty($options['version'])) {
 			$this->options['version'] = intval($options['version']);
 		}
 
-		if (isset($options['starttls']) && !empty($options['starttls'])) {
+		if (isset($options['starttls']) && ! empty($options['starttls'])) {
 			$this->options['starttls'] = ($options['starttls'] === true || $options['starttls'] == 'y');
 		}
 
-		if (isset($options['groupmemberisdn']) && !empty($options['groupmemberisdn'])) {
+		if (isset($options['groupmemberisdn']) && ! empty($options['groupmemberisdn'])) {
 			$this->options['groupmemberisdn'] = ($options['groupmemberisdn'] === true || $options['groupmemberisdn'] == 'y');
 		}
 
 		// only string checking fo these ones
-		foreach (array('basedn', 'username', 'password', 'userdn', 'useroc', 'userattr',
+		foreach (['basedn', 'username', 'password', 'userdn', 'useroc', 'userattr',
 				'fullnameattr', 'emailattr', 'groupdn', 'groupattr', 'groupoc', 'groupnameattr',
-				'groupdescattr', 'groupmemberattr', 'usergroupattr', 'groupgroupattr', 'binddn', 'bindpw') as $n) {
-			if (isset($options[$n]) && !empty($options[$n])) {
+				'groupdescattr', 'groupmemberattr', 'usergroupattr', 'groupgroupattr', 'binddn', 'bindpw'] as $n) {
+			if (isset($options[$n]) && ! empty($options[$n])) {
 				$this->options[$n] = $options[$n];
 			}
 		}
 
-		if (empty($this->options['groupgroupattr']))
+		if (empty($this->options['groupgroupattr'])) {
 			$this->options['groupgroupattr'] = $this->options['usergroupattr'];
+		}
 
-		if (isset($options['password']))
+		if (isset($options['password'])) {
 			$this->options['bindpw'] = $options['password'];
+		}
 
-		if (isset($options['scope']) && !empty($options['scope'])) {
-			switch($options['scope']) {
+		if (isset($options['scope']) && ! empty($options['scope'])) {
+			switch ($options['scope']) {
 				case 'sub':
 				case 'one':
 				case 'base':
@@ -136,8 +138,8 @@ class TikiLdapLib
 			}
 		}
 
-		if (isset($options['bind_type']) && !empty($options['bind_type'])) {
-			switch($options['bind_type']) {
+		if (isset($options['bind_type']) && ! empty($options['bind_type'])) {
+			switch ($options['bind_type']) {
 				case 'ad':
 				case 'ol':
 				case 'full':
@@ -159,17 +161,17 @@ class TikiLdapLib
 	}
 
 	// Do a ldap bind
-	public function bind( $reconnect = false )
+	public function bind($reconnect = false)
 	{
 		global $prefs;
 
 		// Force the reconnection
 		if ($this->ldaplink instanceof Net_LDAP2) {
-				if ($reconnect === true) {
-						$this->ldaplink->disconnect();
-				} else {
-						return (true); // do not try to reconnect since this may lead to huge timeouts
-				}
+			if ($reconnect === true) {
+					$this->ldaplink->disconnect();
+			} else {
+					return (true); // do not try to reconnect since this may lead to huge timeouts
+			}
 		}
 
 		// Set the bindpw with the options['password']
@@ -181,11 +183,11 @@ class TikiLdapLib
 		switch ($this->options['bind_type']) {
 			case 'ad': // active directory
 				preg_match_all('/\s*,?dc=\s*([^,]+)/i', $this->options['basedn'], $t);
-				$this->options['binddn'] = $user.'@';
+				$this->options['binddn'] = $user . '@';
 
 				if (isset($t[1]) && is_array($t[1])) {
 					foreach ($t[1] as $domainpart) {
-						$this->options['binddn'] .= $domainpart.'.';
+						$this->options['binddn'] .= $domainpart . '.';
 					}
 					// cut trailing dot
 					$this->options['binddn'] = substr($this->options['binddn'], 0, -1);
@@ -222,17 +224,17 @@ class TikiLdapLib
 
 		$this->add_log(
 			'ldap',
-			'Connect Host: ' . implode($this->options['host']) . '. Binddn: '. $this->options['binddn'] . ' at line ' . __LINE__ . ' in ' . __FILE__
+			'Connect Host: ' . implode($this->options['host']) . '. Binddn: ' . $this->options['binddn'] . ' at line ' . __LINE__ . ' in ' . __FILE__
 		);
 
 		//create options array to handle it to Net_LDAP2
-		foreach (array('host', 'port', 'version', 'starttls', 'basedn', 'filter', 'scope', 'binddn', 'bindpw', 'options') as $o) {
+		foreach (['host', 'port', 'version', 'starttls', 'basedn', 'filter', 'scope', 'binddn', 'bindpw', 'options'] as $o) {
 			if (isset($this->options[$o])) {
 				$options[$o] = $this->options[$o];
 			}
 		}
 
-		$this->ldaplink= Net_LDAP2::connect($options);
+		$this->ldaplink = Net_LDAP2::connect($options);
 		if (Net_LDAP2::isError($this->ldaplink)) {
 			$this->add_log('ldap', 'Error: ' . $this->ldaplink->getMessage() . ' at line ' . __LINE__ . ' in ' . __FILE__);
 			// return Net_LDAP2 Error codes. No need to redefine this.
@@ -251,7 +253,7 @@ class TikiLdapLib
 			unset($this->user_attributes);
 		}
 
-		if (!empty($this->user_attributes)) {
+		if (! empty($this->user_attributes)) {
 			return $this->user_attributes;
 		}
 
@@ -274,8 +276,8 @@ class TikiLdapLib
 		if ($force_reload || Net_LDAP2::isError($entry)) { // wrong userdn. So we have to search
 			// prepare Search Filter
 			$filter = Net_LDAP2_Filter::create($this->options['userattr'], 'equals', $this->options['username']);
-			$searchoptions = array('scope' => $this->options['scope']);
-			$this->add_log('ldap', 'Searching for user information with filter: '.$filter->asString().' at line '.__LINE__.' in '.__FILE__);
+			$searchoptions = ['scope' => $this->options['scope']];
+			$this->add_log('ldap', 'Searching for user information with filter: ' . $filter->asString() . ' at line ' . __LINE__ . ' in ' . __FILE__);
 			$searchresult = $this->ldaplink->search($this->userbase_dn(), $filter, $searchoptions);
 			if (Net_LDAP2::isError($searchresult)) {
 				$this->add_log('ldap', 'Search failed: ' . $searchresult->getMessage() . ' at line ' . __LINE__ . ' in ' . __FILE__);
@@ -297,7 +299,6 @@ class TikiLdapLib
 		}
 
 		return($this->user_attributes);
-
 	} // End: public function get_user_attributes()
 
 	// Request all users attributes
@@ -311,7 +312,7 @@ class TikiLdapLib
 
 		// Prepare Search Filter
 		$filter = Net_LDAP2_Filter::create('objectclass', 'equals', $this->options['useroc']);
-		$searchoptions = array('scope' => $this->options['scope']);
+		$searchoptions = ['scope' => $this->options['scope']];
 		$this->add_log('ldap', 'Searching for user information with filter: ' . $filter->asString() . ' at line ' . __LINE__ . ' in ' . __FILE__);
 
 		$searchresult = $this->ldaplink->search($this->userbase_dn(), $filter, $searchoptions);
@@ -327,7 +328,7 @@ class TikiLdapLib
 		}
 
 		$entries = $searchresult->entries();
-		$users_attributes = array();
+		$users_attributes = [];
 
 		foreach ($entries as $entry) {
 			$user_attributes = $entry->getValues();
@@ -342,7 +343,6 @@ class TikiLdapLib
 		}
 
 		return ($users_attributes);
-
 	} // End: public function get_user_attributes()
 
 	// return dn of all groups a user belongs to
@@ -359,7 +359,7 @@ class TikiLdapLib
 
 		$filter1 = Net_LDAP2_Filter::create('objectClass', 'equals', $this->options['groupoc']);
 
-		if (!empty($this->options['groupmemberattr'])) {
+		if (! empty($this->options['groupmemberattr'])) {
 			// get membership from group information
 			if ($this->options['groupmemberisdn']) {
 				if ($this->user_attributes['dn'] == null) {
@@ -369,35 +369,33 @@ class TikiLdapLib
 			} else {
 				$filter2 = Net_LDAP2_Filter::create($this->options['groupmemberattr'], 'equals', $this->options['username']);
 			}
-			$filter = Net_LDAP2_Filter::combine('and', array($filter1, $filter2));
-
-		} else if (!empty($this->options['usergroupattr'])) {
+			$filter = Net_LDAP2_Filter::combine('and', [$filter1, $filter2]);
+		} elseif (! empty($this->options['usergroupattr'])) {
 			// get membership from user information
 
 			$ugi = &$this->user_attributes[$this->options['usergroupattr']];
-			if (!empty($ugi)) {
-
-				if (!is_array($ugi)) {
-					$ugi = array($ugi);
+			if (! empty($ugi)) {
+				if (! is_array($ugi)) {
+					$ugi = [$ugi];
 				}
 
 				if (count($ugi) == 1) { // one gid
 					$filter3 = Net_LDAP2_Filter::create($this->options['groupgroupattr'], 'equals', $ugi[0]);
 				} else { // mor gids
-					$filtertmp = array();
+					$filtertmp = [];
 					foreach ($ugi as $g) {
 						$filtertmp[] = Net_LDAP2_Filter::create($this->options['groupgroupattr'], 'equals', $g);
 					}
 					$filter3 = Net_LDAP2_Filter::combine('or', $filtertmp);
 				}
 
-				$filter = Net_LDAP2_Filter::combine('and', array($filter1, $filter3));
+				$filter = Net_LDAP2_Filter::combine('and', [$filter1, $filter3]);
 			} else { // User has no group
-				$filter = NULL;
+				$filter = null;
 			}
 		} else {
 			// not possible to get groups - return empty array
-			return(array());
+			return([]);
 		}
 
 		if (Net_LDAP2::isError($filter)) {
@@ -411,7 +409,7 @@ class TikiLdapLib
 			$this->groupbase_dn() . ' at line ' . __LINE__ . ' in ' . __FILE__
 		);
 
-		$searchoptions = array('scope' => $this->options['scope']);
+		$searchoptions = ['scope' => $this->options['scope']];
 		$searchresult = $this->ldaplink->search($this->groupbase_dn(), $filter, $searchoptions);
 
 		if (Net_LDAP2::isError($searchresult)) {
@@ -420,7 +418,7 @@ class TikiLdapLib
 		}
 		$this->add_log('ldap', 'Found ' . $searchresult->count() . ' entries. Extracting entries now.');
 
-		$this->groups = array();
+		$this->groups = [];
 		while ($entry = $searchresult->shiftEntry()) {
 			if (Net_LDAP2::isError($entry)) {
 				$this->add_log('ldap', 'Error fetching group entries: ' . $entry->getMessage() . ' at line ' . __LINE__ . ' in ' . __FILE__);
@@ -431,7 +429,6 @@ class TikiLdapLib
 		$this->add_log('ldap', count($this->groups) . ' groups found at line ' . __LINE__ . ' in ' . __FILE__);
 
 		return($this->groups);
-
 	} // End: private function get_group_dns()
 
 
@@ -440,8 +437,9 @@ class TikiLdapLib
 	// helper functions
 	private function userbase_dn()
 	{
-		if (empty($this->options['userdn']))
+		if (empty($this->options['userdn'])) {
 			return($this->options['basedn']);
+		}
 		return($this->options['userdn'] . ',' . $this->options['basedn']);
 	}
 
@@ -456,20 +454,22 @@ class TikiLdapLib
 		} else {
 			$ua = $this->options['userattr'] . '=';
 		}
-		return($ua.$this->options['username'] . ',' . $this->userbase_dn());
+		return($ua . $this->options['username'] . ',' . $this->userbase_dn());
 	}
 
 	private function groupbase_dn()
 	{
-		if (empty($this->options['groupdn']))
+		if (empty($this->options['groupdn'])) {
 			return($this->options['basedn']);
+		}
 		return($this->options['groupdn'] . ',' . $this->options['basedn']);
 	}
 
 	private function add_log($facility, $message)
 	{
-		if ($this->options['debug'])
+		if ($this->options['debug']) {
 			$this->logslib->add_log($facility, $message);
+		}
 	}
 
 	/**
@@ -479,7 +479,7 @@ class TikiLdapLib
 	 * @return void
 	 * @throw Exception
 	 */
-	public function setOption ($name, $value = null)
+	public function setOption($name, $value = null)
 	{
 		if (isset($this->options[$name])) {
 			$this->options[$name] = $value;
@@ -494,7 +494,7 @@ class TikiLdapLib
 	 * @return mixed
 	 * @throw Exception
 	 */
-	public function getUserAttribute ($name)
+	public function getUserAttribute($name)
 	{
 		$value = '';
 		try {
@@ -505,7 +505,6 @@ class TikiLdapLib
 				throw new Exception(sprintf("Undefined attribute %s \n", $name), E_USER_WARNING);
 			}
 		} catch (Exception $e) {
-
 		}
 		return $value;
 	}

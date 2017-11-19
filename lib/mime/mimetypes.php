@@ -1,14 +1,14 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 // bashscript to create mimetypes.php:
@@ -20,7 +20,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 // echo ");" >> mimetypes.php.new
 //
 global $mimetypes;
-$mimetypes = array(
+$mimetypes = [
 	"323" => "text/h323",
 	"3gp" => "video/3gpp",
 	"7z" => "application/x-7z-compressed",
@@ -493,4 +493,4 @@ $mimetypes = array(
 	"xlsb" => "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
 
 	'vimeo' => 'video/vimeo'
-);
+];

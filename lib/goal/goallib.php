@@ -48,9 +48,9 @@ class GoalLib
 	{
 		$table = $this->table();
 		return $table->deleteMultiple(
-			array(
+			[
 				'goalId' => $table->notIn($ids),
-			)
+			]
 		);
 	}
 
@@ -256,10 +256,10 @@ class GoalLib
 	{
 		if (! self::$runner) {
 			self::$runner = new Math_Formula_Runner(
-				array(
+				[
 					'Math_Formula_Function_' => '',
 					'Tiki_Formula_Function_' => '',
-				)
+				]
 			);
 		}
 
@@ -269,45 +269,45 @@ class GoalLib
 	private function prepareMetric($metric, $goal)
 	{
 		switch ($metric) {
-		case 'event-count':
-			$metric = '(result-count
+			case 'event-count':
+				$metric = '(result-count
 				(filter-date)
 				(filter-target)
 				(filter (content eventType) (field "event_type"))
 				(filter (type "goalevent"))
 			)';
-			break;
-		case 'event-count-unbounded':
-			$metric = '(result-count
+				break;
+			case 'event-count-unbounded':
+				$metric = '(result-count
 				(filter-target)
 				(filter (content eventType) (field "event_type"))
 				(filter (type "goalevent"))
 			)';
-			break;
-		case 'goal-count':
-			$metric = '(result-count
+				break;
+			case 'goal-count':
+				$metric = '(result-count
 				(filter-date)
 				(filter-target)
 				(filter (content "tiki.goal.reached") (field "event_type"))
 				(filter (type "goalevent"))
 				(filter (content (concat "goal:" goalId)) (field "target"))
 			)';
-			break;
-		case 'goal-count-unbounded':
-			$metric = '(result-count
+				break;
+			case 'goal-count-unbounded':
+				$metric = '(result-count
 				(filter-target)
 				(filter (content "tiki.goal.reached") (field "event_type"))
 				(filter (type "goalevent"))
 				(filter (content (concat "goal:" goalId)) (field "target"))
 			)';
-			break;
-		case 'has-badge':
-			$metric = '(relation-present
+				break;
+			case 'has-badge':
+				$metric = '(relation-present
 				(qualifier "tiki.badge.received")
 				(from type (if (equals type "user") user group))
 				(to "trackeritem" trackerItemBadge)
 			)';
-			break;
+				break;
 		}
 
 		if ($goal['daySpan']) {
@@ -348,4 +348,3 @@ class GoalLib
 		return TikiDb::get()->table('tiki_goals');
 	}
 }
-

@@ -31,7 +31,7 @@ class DbgPrint extends DebuggerCommand
 	/// \b Must have functio to show exampla of usage of given command
 	function example()
 	{
-		return 'print $_REQUEST'."\n".'print $_SERVER["REQUEST_URI"] $my_private_variable';
+		return 'print $_REQUEST' . "\n" . 'print $_SERVER["REQUEST_URI"] $my_private_variable';
 	}
 	/// Execute command with given set of arguments.
 	function execute($params)
@@ -43,9 +43,11 @@ class DbgPrint extends DebuggerCommand
 		$result = '';
 		$vars = explode(" ", $params);
 		foreach ($vars as $v) {
-			if (strlen(str_replace('$', '', trim($v))) == 0) continue;
-			$result .= $v.' = ';
-			$result .= trim($debugger->str_var_dump($v))."\n";
+			if (strlen(str_replace('$', '', trim($v))) == 0) {
+				continue;
+			}
+			$result .= $v . ' = ';
+			$result .= trim($debugger->str_var_dump($v)) . "\n";
 		}
 		return $result;
 	}

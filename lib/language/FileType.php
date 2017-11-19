@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -17,22 +17,22 @@ abstract class Language_FileType
 	 * translatable strings from a file.
 	 * @var array
 	 */
-	protected $regexes = array();
-	
+	protected $regexes = [];
+
 	/**
 	 * List of valid file extensions for a
 	 * specific file type.
 	 * @var array
 	 */
-	protected $extensions = array();
-	
+	protected $extensions = [];
+
 	/**
 	 * List of regexes used to clean a file
 	 * before searching for translatable strings.
 	 * @var array
 	 */
-	protected $cleanupRegexes = array();
-	
+	protected $cleanupRegexes = [];
+
 	/**
 	 * Getter for $this->regexes
 	 * @return array
@@ -41,7 +41,7 @@ abstract class Language_FileType
 	{
 		return $this->regexes;
 	}
-	
+
 	/**
 	 * Getter for $this->extensions
 	 * @return array

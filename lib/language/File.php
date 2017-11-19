@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -13,49 +13,49 @@ require_once('Exception.php');
 class Language_File
 {
 	public $filePath;
-	
+
 	/**
 	 * Language file parsed content.
-	 * 
+	 *
 	 * @var array
 	 */
-	protected $content = array();
-	
+	protected $content = [];
+
 	/**
 	 * Wheter $this->paser() has been called and
 	 * the content for the file is already loaded.
-	 * 
+	 *
 	 * @var bool
 	 */
 	protected $contentLoaded = false;
-	
+
 	public function __construct($filePath)
 	{
-		if (!file_exists($filePath)) {
+		if (! file_exists($filePath)) {
 			throw new Language_Exception("Path $filePath does not exist.");
 		}
-				
+
 		$this->filePath = $filePath;
 	}
-	
+
 	/**
 	 * Read a language file and return an array with
 	 * the data collected from it. Each entry has the
 	 * following format:
-	 * 
+	 *
 	 * 'String key in English' => array('key' => 'String key in English', 'translation' => 'Translation to some language', 'translated' => true)
-	 * 
+	 *
 	 * @return array
 	 */
 	public function parse()
 	{
 		$lines = file($this->filePath);
-		$content = array(); 
-		
+		$content = [];
+
 		foreach ($lines as $line) {
-			$matches = array();
-			$entry = array();
-			
+			$matches = [];
+			$entry = [];
+
 			// build an array with all the translations from the source file
 			if (preg_match('|^(//)?\s*\"(.*)\"\s*\=\>\s*\"(.*)\"\s*\,\s*$|', $line, $matches)) {
 				$entry['key'] = $matches[2];
@@ -66,14 +66,14 @@ class Language_File
 				} else {
 					$entry['translated'] = false;
 				}
-				
+
 				$content[$matches[2]] = $entry;
 			}
 		}
-		
+
 		$this->content = $content;
 		$this->contentLoaded = true;
-		
+
 		return $content;
 	}
 
@@ -82,53 +82,53 @@ class Language_File
 	 * Information available is total number of strings,
 	 * number of untranslated strings, number of translated strings
 	 * and translation percentage.
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getStats()
 	{
-		if (!$this->contentLoaded) {
+		if (! $this->contentLoaded) {
 			$this->parse();
 		}
-		
-		$stats = array(
+
+		$stats = [
 			'total' => 0,
 			'translated' => 0,
 			'untranslated' => 0,
-			'percentage' =>  0,
-		);
-		
+			'percentage' => 0,
+		];
+
 		foreach ($this->content as $entry) {
 			if ($entry['translated']) {
 				$stats['translated']++;
 			} else {
 				$stats['untranslated']++;
 			}
-			
+
 			$stats['total']++;
 		}
-		
-		if (!empty($stats['total'])) {
+
+		if (! empty($stats['total'])) {
 			$stats['percentage'] = round($stats['translated'] / $stats['total'], 4) * 100;
 		}
-		
+
 		return $stats;
 	}
-	
+
 	/**
 	 * Return an array with translations extracted from
 	 * language file.
-	 * 
+	 *
 	 * @return array translations
 	 */
 	public function getTranslations()
 	{
 		require($this->filePath);
 
-		if (isset($lang) && !empty($lang)) {
+		if (isset($lang) && ! empty($lang)) {
 			return $lang;
 		} else {
-			return array();
+			return [];
 		}
 	}
 }

@@ -20,10 +20,10 @@ class Xmp
 	 *
 	 * @var array
 	 */
-	var	$specs = array(
-		'photoshop'			=> array(
-			'ColorMode' 	=> array(
-				'options' 	=> array(
+	var	$specs = [
+		'photoshop'			=> [
+			'ColorMode' 	=> [
+				'options' 	=> [
 					'0'		=> 'Bitmap',
 					'1'		=> 'Gray scale',
 					'2'		=> 'Indexed color',
@@ -32,39 +32,39 @@ class Xmp
 					'7'		=> 'Multi-channel',
 					'8'		=> 'Duotone',
 					'9'		=> 'LAB color',
-				),
-			),
-		),
-		'dc'				=> array(
-			'rights'		=> array(
+				],
+			],
+		],
+		'dc'				=> [
+			'rights'		=> [
 				'label'		=> 'Rights',
-			),
-			'description'	=> array(
+			],
+			'description'	=> [
 				'label'		=> 'Description',
-			),
-			'title'			=> array(
+			],
+			'title'			=> [
 				'label'		=> 'Title',
-			),
-			'subject'		=> array(
+			],
+			'subject'		=> [
 				'label'		=> 'Subject',
-			),
-			'format'		=> array(
+			],
+			'format'		=> [
 				'label'		=> 'Format',
-			),
-			'creator'		=> array(
+			],
+			'creator'		=> [
 				'label'		=> 'Creator',
-			),
-		),
-	);
+			],
+		],
+	];
 
 	/**
 	 * Fields requiring special handling
 	 *
 	 * @var array
 	 */
-	var $special = array(
+	var $special = [
 		'ComponentsConfiguration' => '',
-	);
+	];
 
 	/**
 	 * Process raw XMP string by converting to a DOM document, replacing legend codes with their meanings,
@@ -77,7 +77,7 @@ class Xmp
 	function processRawData($xmpstring)
 	{
 		//need to do a little preparation before processing fields
-		if (!empty($xmpstring)) {
+		if (! empty($xmpstring)) {
 			$xmp = new DOMDocument();
 			//create a DOM Document from the XML string
 			$xmp->loadXML($xmpstring);
@@ -86,7 +86,7 @@ class Xmp
 			$xmparray = $this->xmpDomToArray($xmp);
 			//re-label Native Digest fields in tiff and exif sections to keep from overwriting when arrays are flattened
 			//in other functions
-			$sections = array('exif', 'tiff');
+			$sections = ['exif', 'tiff'];
 			foreach ($sections as $section) {
 				if (isset($xmparray[$section]['NativeDigest'])) {
 					$temp = explode(',', $xmparray[$section]['NativeDigest']['rawval']);
@@ -142,12 +142,12 @@ class Xmp
 					//convert dates
 					if (array_key_exists(
 						$name,
-						array(
+						[
 							'ModifyDate' => '',
 							'DateCreated' => '',
 							'CreateDate' => '',
 							'MetadataDate' => ''
-						)
+						]
 					)
 					) {
 						$dateObj = new DateTime($xmparray[$group][$name]['newval']);
@@ -179,7 +179,7 @@ class Xmp
 			while ($done === false) {
 				//search for hexadecimal marker for segment APP1 used for xmp data, and note position
 				$app1_hit		= strpos($filecontent, "\xFF\xE1", $start);
-				if ($app1_hit	!== false) {
+				if ($app1_hit !== false) {
 					//next two bytes after marker indicate the segment size
 					$size_raw	= substr($filecontent, $app1_hit + 2, 2);
 					$size		= unpack('nsize', $size_raw);
@@ -201,7 +201,7 @@ class Xmp
 					$done = true;
 				}
 			}
-			if (!isset($xmp_text)) {
+			if (! isset($xmp_text)) {
 				$xmp_text = false;
 			}
 		} else {
@@ -241,7 +241,7 @@ class Xmp
 							//if $child has at least one child that is not a single DOMText field, then send back
 							//through to process children
 							if ($child->childNodes->length > 0
-								&& !($child->childNodes->length == 1 && $child->firstChild->nodeType != 1)
+								&& ! ($child->childNodes->length == 1 && $child->firstChild->nodeType != 1)
 							) {
 								$xmparray[$child->prefix][$child->localName]['rawval']
 									= $this->xmpDomToArray($child->childNodes);
@@ -279,20 +279,20 @@ class Xmp
 										//3 items indicates there is really only one list item (li) with content since
 										//an empty text field precedes and succeeds every content field
 										if ($listlen == 3) {
-											$xmparray			= array(
+											$xmparray			= [
 												'key'			=> $listitem->prefix,
 												'label'			=> $listitem->localName,
 												'rawval'		=> $listitem->nodeValue,
 												'locator'		=> $listitem->getNodePath(),
-											);
+											];
 										//multiple list (li) items go in an array here
 										} else {
-											$xmparray[]			= array(
+											$xmparray[]			= [
 												'key'			=> $listitem->prefix,
 												'label'			=> $listitem->localName,
 												'rawval'		=> $listitem->nodeValue,
 												'locator'		=> $listitem->getNodePath(),
-											);
+											];
 										}
 									}
 								}
