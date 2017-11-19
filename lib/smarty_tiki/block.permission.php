@@ -14,43 +14,45 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 function smarty_block_permission($params, $content, $smarty, &$repeat)
 {
-	if ( $repeat ) return;
+	if ($repeat) {
+		return;
+	}
 
 	// Removing and Modifying a tracker item require a special permissions check
-	if ( !empty($params['type']) && $params['type'] == 'trackeritem' ) {
+	if (! empty($params['type']) && $params['type'] == 'trackeritem') {
 		$removePerms = ['remove_tracker_items','remove_tracker_items_pending','remove_tracker_items_closed'];
 		$modifyPerms = ['modify_tracker_items','modify_tracker_items_pending','modify_tracker_items_closed'];
 
 		$trklib = TikiLib::lib('trk');
 		$itemInfo = $trklib->get_tracker_item($params['object']);
 
-		if (!$itemInfo){
+		if (! $itemInfo) {
 			return ""; //invalid tracker item.
 		}
 
 		$itemObject = Tracker_Item::fromInfo($itemInfo);
 
-		if ( in_array($params['name'],$removePerms) ){
+		if (in_array($params['name'], $removePerms)) {
 			if ($itemObject->canRemove()) {
 				return $content;
 			}
-		} elseif ( in_array($params['name'], $modifyPerms) ) {
-			if ( $itemObject->canModify() ) {
+		} elseif (in_array($params['name'], $modifyPerms)) {
+			if ($itemObject->canModify()) {
 				return $content;
 			}
 		}
 	}
 
 	//Standard permissions check
-	$context = array();
+	$context = [];
 
-	if ( isset( $params['type'], $params['object'] ) ) {
+	if (isset($params['type'], $params['object'])) {
 		$context['type'] = $params['type'];
 		$context['object'] = $params['object'];
 	}
@@ -58,7 +60,7 @@ function smarty_block_permission($params, $content, $smarty, &$repeat)
 	$perms = Perms::get($context);
 	$name = $params['name'];
 
-	if ( $perms->$name ) {
+	if ($perms->$name) {
 		return $content;
 	} else {
 		return '';

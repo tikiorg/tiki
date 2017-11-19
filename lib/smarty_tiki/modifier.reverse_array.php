@@ -18,5 +18,5 @@
 
 function smarty_modifier_reverse_array($array)
 {
-    return array_reverse($array);
+	return array_reverse($array);
 }

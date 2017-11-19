@@ -5,22 +5,23 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
-function smarty_modifier_forumname($commentid, $retrun_forumid = 'n') {
+function smarty_modifier_forumname($commentid, $retrun_forumid = 'n')
+{
 	global $tikilib;
 	$cachelib = TikiLib::lib('cache');
 	require_once 'lib/comments/commentslib.php';
 	$comments = new Comments;
-	
-	if($retrun_forumid == 'y') {
-		$cacheItem = "retrun_forumid". $commentid;
+
+	if ($retrun_forumid == 'y') {
+		$cacheItem = "retrun_forumid" . $commentid;
 	} else {
-		$cacheItem = "retrun_forumname". $commentid;
+		$cacheItem = "retrun_forumname" . $commentid;
 	}
-	
-	if ( $cached = $cachelib->getCached($cacheItem) ) {
+
+	if ($cached = $cachelib->getCached($cacheItem)) {
 		return $cached;
 	}
-	
+
 	$forum_id = $comments->get_comment_forum_id($commentid);
 	$cachelib->cacheItem($cacheItem, $forum_id);
 	if ($retrun_forumid == 'y') {

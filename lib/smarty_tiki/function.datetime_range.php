@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 function smarty_function_datetime_range($params, $smarty)
@@ -17,7 +17,7 @@ function smarty_function_datetime_range($params, $smarty)
 	$smarty = TikiLib::lib('smarty');
 	$smarty->loadPlugin('smarty_modifier_tiki_date_format');
 
-	if ( ! is_array($params) || ! isset($params['from']) || ! isset($params['to']) ) {
+	if (! is_array($params) || ! isset($params['from']) || ! isset($params['to'])) {
 		trigger_error(tra("Missing 'to' or 'from' parameter"));
 		return;
 	}
@@ -33,8 +33,8 @@ function smarty_function_datetime_range($params, $smarty)
 	} else {
 		$range_separator = tra("to");
 	}
-	
-	if ($params['type']  == 'long'){
+
+	if ($params['type'] == 'long') {
 		$fromDate = smarty_modifier_tiki_date_format($params['from'], $prefs['long_date_format']);
 		$fromTime = smarty_modifier_tiki_date_format($params['from'], $prefs['long_time_format']);
 		$toDate = smarty_modifier_tiki_date_format($params['to'], $prefs['long_date_format']);
@@ -47,9 +47,9 @@ function smarty_function_datetime_range($params, $smarty)
 	}
 
 	if ($fromDate == $toDate && $prefs['tiki_same_day_time_only'] == 'y') {
-		$range = $fromDate.' '.$datetime_separator.' '.$fromTime.' '.$range_separator.' '.$toTime;
+		$range = $fromDate . ' ' . $datetime_separator . ' ' . $fromTime . ' ' . $range_separator . ' ' . $toTime;
 	} else {
-		$range = $fromDate.' '.$datetime_separator.' '.$fromTime.' '.$range_separator.' '.$toDate.' '.$datetime_separator.' '.$toTime;
+		$range = $fromDate . ' ' . $datetime_separator . ' ' . $fromTime . ' ' . $range_separator . ' ' . $toDate . ' ' . $datetime_separator . ' ' . $toTime;
 	}
 	return $range;
 }

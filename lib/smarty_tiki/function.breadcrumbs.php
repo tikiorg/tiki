@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 function smarty_function_breadcrumbs($params, $smarty)
@@ -46,7 +46,7 @@ function smarty_function_breadcrumbs($params, $smarty)
 		default:
 			$text_to_display = breadcrumb_buildTrail($crumbs, $loc, $showLinks);
 			break;
-    }
+	}
 
-    return $text_to_display;
+	return $text_to_display;
 }

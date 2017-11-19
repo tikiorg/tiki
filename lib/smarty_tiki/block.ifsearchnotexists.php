@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 function smarty_block_ifsearchnotexists($params, $content, $smarty, &$repeat)
@@ -25,7 +25,7 @@ function smarty_block_ifsearchnotexists($params, $content, $smarty, &$repeat)
 	$result = $query->search($index);
 
 	if ($result->count() > 0) {
-	  return '';
+		return '';
 	} else {
 		return $content;
 	}

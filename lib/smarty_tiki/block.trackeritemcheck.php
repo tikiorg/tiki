@@ -14,8 +14,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /***
@@ -34,9 +34,11 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_block_trackeritemcheck($params, $content, $smarty, $repeat)
 {
-	if ( $repeat ) return;
+	if ($repeat) {
+		return;
+	}
 
-	if ( empty( $params['itemId'] ) ) {
+	if (empty($params['itemId'])) {
 		return tra('itemId required');
 	}
 	if (empty($params['mode'])) {
@@ -60,7 +62,7 @@ function smarty_block_trackeritemcheck($params, $content, $smarty, $repeat)
 			break;
 	}
 
-	if ( $allowed ) {
+	if ($allowed) {
 		return $content;
 	} else {
 		return '';

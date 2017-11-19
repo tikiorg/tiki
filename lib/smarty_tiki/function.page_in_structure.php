@@ -16,24 +16,24 @@
 */
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
-  header('location: index.php');
-  exit;
+	header('location: index.php');
+	exit;
 }
 
 function smarty_function_page_in_structure($params, $smarty)
-{					
+{
 	$structlib = TikiLib::lib('struct');
 	extract($params, EXTR_SKIP);
-	
-	if ( !isset($pagechecked) ) {
+
+	if (! isset($pagechecked)) {
 		return ('<b>missing pagechecked parameter for Smarty function testing whether page is in a structure</b><br/>');
 	}
-	
-	if ($structlib->page_is_in_structure($pagechecked)) {									
-		$result = true;	
+
+	if ($structlib->page_is_in_structure($pagechecked)) {
+		$result = true;
 		$smarty->assign('page_in_structure', $result);
 		return;
 	}
 	$result = false;
 	$smarty->assign('page_in_structure', $result);
-}	
+}

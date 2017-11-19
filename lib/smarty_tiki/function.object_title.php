@@ -7,17 +7,17 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
-function smarty_function_object_title( $params, $smarty )
+function smarty_function_object_title($params, $smarty)
 {
-	if ( ! isset( $params['type'], $params['id'] ) && ! isset( $params['identifier'] ) ) {
+	if (! isset($params['type'], $params['id']) && ! isset($params['identifier'])) {
 		return tra('No object information provided.');
 	}
 
-	if ( isset( $params['type'], $params['id'] ) ) {
+	if (isset($params['type'], $params['id'])) {
 		$type = $params['type'];
 		$object = $params['id'];
 	} else {

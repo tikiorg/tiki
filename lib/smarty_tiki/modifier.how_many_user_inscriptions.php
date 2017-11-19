@@ -21,7 +21,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  *           then return 48 (=13+1+15+1+17+1)
  * -------------------------------------------------------------
  */
-function smarty_modifier_how_many_user_inscriptions( $text )
+function smarty_modifier_how_many_user_inscriptions($text)
 {
 
 	$pattern = "/\d+\[(\d+)\]/";
@@ -30,7 +30,7 @@ function smarty_modifier_how_many_user_inscriptions( $text )
 	$nb = 0;
 
 	foreach ($match[1] as $n) {
-		$nb += ($n+1);
+		$nb += ($n + 1);
 	}
 
 	return $nb;

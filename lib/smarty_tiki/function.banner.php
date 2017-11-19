@@ -7,23 +7,23 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 function smarty_function_banner($params, $smarty)
 {
-    $bannerlib = TikiLib::lib('banner');
-	$default = array('zone'=>'', 'target'=>'', 'id'=>'');
+	$bannerlib = TikiLib::lib('banner');
+	$default = ['zone' => '', 'target' => '', 'id' => ''];
 	$params = array_merge($default, $params);
 
-    extract($params);
+	extract($params);
 
-    if (empty($zone) && empty($id)) {
-        trigger_error("assign: missing 'zone' parameter");
-        return;
-    }
+	if (empty($zone) && empty($id)) {
+		trigger_error("assign: missing 'zone' parameter");
+		return;
+	}
 	$banner = $bannerlib->select_banner($zone, $target, $id);
 
-    print($banner);
+	print($banner);
 }

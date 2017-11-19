@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function smarty_function_rating_result_avg( $params, $smarty )
+function smarty_function_rating_result_avg($params, $smarty)
 {
 	global $prefs;
 	$ratinglib = TikiLib::lib('rating');
@@ -19,13 +19,12 @@ function smarty_function_rating_result_avg( $params, $smarty )
 
 	if (count($votings)) {
 		foreach ($votings as $vote => $voting) {
-            if ($vote != 0){
-                $vote_sum += $vote * $voting['votes'];
-            }
-            else{
-               continue;
-            }
-            $vote_count_total += $voting['votes'];
+			if ($vote != 0) {
+				$vote_sum += $vote * $voting['votes'];
+			} else {
+				continue;
+			}
+			$vote_count_total += $voting['votes'];
 		}
 
 		$vote_avg = number_format($vote_sum / $vote_count_total, 1);
@@ -37,14 +36,13 @@ function smarty_function_rating_result_avg( $params, $smarty )
 	//Why $vote_collect yields a different value than $vote_avg?
 	//$vote_collect = $ratinglib->collect($params['type'], $params['id'], 'avg', array_filter($votings));
 
-    if (isset($options[0]) && $options[0] == "0") {
-        unset($options[0]);
-    }
+	if (isset($options[0]) && $options[0] == "0") {
+		unset($options[0]);
+	}
 
-    if ($vote_avg != 0){
-        return "<span class='score'>" . $vote_avg . " / " . max($options) . "</span>";
-    }
-    else{
-        return "<span class='score'>" . "-" . " / " . max($options) . "</span>";
-    }
+	if ($vote_avg != 0) {
+		return "<span class='score'>" . $vote_avg . " / " . max($options) . "</span>";
+	} else {
+		return "<span class='score'>" . "-" . " / " . max($options) . "</span>";
+	}
 }

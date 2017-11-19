@@ -22,4 +22,3 @@ function smarty_function_service($params, $smarty)
 	$url = $servicelib->getUrl($params);
 	return smarty_modifier_escape($url);
 }
-

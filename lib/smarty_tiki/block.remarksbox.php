@@ -38,21 +38,21 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 {
 	global $prefs;
 
-	if ( $repeat ) {
+	if ($repeat) {
 		return '';
 	}
 
 	static $remarksboxInstance = 0;
 	$remarksboxInstance++;
-	
+
 	$params = array_merge([	// default params
 		'type' => 'tip',
 		'title' => '',
@@ -66,7 +66,7 @@ function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 	if ($params['close'] != 'y' || $prefs['remember_closed_rboxes'] === 'n') {
 		$params['store_cookie'] = 'n';
 	}
-	
+
 	if (isset($params['highlight']) && $params['highlight'] == 'y') {
 		$highlightClass = ' highlight';
 	} else {
@@ -99,13 +99,13 @@ function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 			$icon = 'information';
 			break;
 	}
-	
+
 	if ($prefs['javascript_enabled'] != 'y') {
 		$params['close'] = false;
 		$params['store_cookie'] = false;
 		$cookie_hash = '';
 		$hidden = false;
-	} else if ($params['store_cookie'] === 'y') {
+	} elseif ($params['store_cookie'] === 'y') {
 		$params['close'] = $params['close'] !== 'n';
 		$params['store_cookie'] = $params['store_cookie'] !== 'n';
 		$cookie_hash = md5($params['title'] . $params['version'] . $content);

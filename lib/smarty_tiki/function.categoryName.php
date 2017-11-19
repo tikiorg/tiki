@@ -7,16 +7,16 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 function smarty_function_categoryName($params, $smarty)
 {
-    if ( ! isset( $params['id'] ) ) {
-        trigger_error("categoryName: missing 'id' parameter");
-        return;
-    }
+	if (! isset($params['id'])) {
+		trigger_error("categoryName: missing 'id' parameter");
+		return;
+	}
 
 	$categlib = TikiLib::lib('categ');
 	return $categlib->get_category_name($params['id']);

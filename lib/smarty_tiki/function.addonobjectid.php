@@ -12,25 +12,25 @@ function smarty_function_addonobjectid($params, $smarty)
 		return '';
 	}
 
-	if (!empty($params['ref'])) {
+	if (! empty($params['ref'])) {
 		$ref = $params['ref'];
 	} else {
 		$ref = $params['reference'];
 	}
 
-	if (!empty($params['profile'])) {
+	if (! empty($params['profile'])) {
 		$profile = $params['profile'];
 	} else {
 		$profile = '';
 	}
 
-	if (!empty($params['package'])) {
+	if (! empty($params['package'])) {
 		$package = $params['package'];
 	} else {
 		$package = $smarty->getTemplateVars('tikiaddon_package');
 	}
 
-	if (!$package) {
+	if (! $package) {
 		return tra('Package is not specified');
 	}
 

@@ -14,15 +14,17 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 function smarty_block_filter($params, $content, $smarty, &$repeat)
 {
 	global $prefs;
 
-	if ( $repeat ) return;
+	if ($repeat) {
+		return;
+	}
 
 	$tikilib = TikiLib::lib('tiki');
 	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
@@ -33,7 +35,7 @@ function smarty_block_filter($params, $content, $smarty, &$repeat)
 
 	$types = $unifiedsearchlib->getSupportedTypes();
 
-	$filter = isset($_REQUEST['filter']) ? $_REQUEST['filter'] : array();
+	$filter = isset($_REQUEST['filter']) ? $_REQUEST['filter'] : [];
 	if (isset($params['filter'])) {
 		$filter = array_merge($filter, $params['filter']);
 	}
@@ -46,13 +48,13 @@ function smarty_block_filter($params, $content, $smarty, &$repeat)
 	$smarty->assign('filter_types', $types);
 
 	$sort_mode = isset($_REQUEST['sort_mode']) ? $_REQUEST['sort_mode'] : 'score_ndesc';
-	$sort_modes = array(
+	$sort_modes = [
 		'score_ndesc' => tra('Relevance'),
 		'object_type_asc' => tra('Type'),
 		'title_asc' => tra('Title'),
 		'modification_date_ndesc' => tra('Modified date'),
 		'visits_ndesc' => tra('Visits'),
-	);
+	];
 	$smarty->assign('sort_mode', $sort_mode);
 	$smarty->assign('sort_modes', $sort_modes);
 
@@ -71,7 +73,7 @@ function smarty_block_filter($params, $content, $smarty, &$repeat)
 			$ctall = array_diff_key($ctall, array_flip($prefs['unified_excluded_categories']));
 		}
 
-		$tree_nodes = array();
+		$tree_nodes = [];
 		foreach ($ctall as $c) {
 			$name = htmlentities($c['name'], ENT_QUOTES, 'UTF-8');
 
@@ -82,11 +84,11 @@ function smarty_block_filter($params, $content, $smarty, &$repeat)
 </label>
 BODY;
 
-			$tree_nodes[] = array(
+			$tree_nodes[] = [
 				'id' => $c['categId'],
 				'parent' => $c['parentId'],
 				'data' => $body,
-			);
+			];
 		}
 
 		$tm = new BrowseTreeMaker('categ');

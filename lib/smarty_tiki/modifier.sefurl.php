@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
-function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_langs='', $with_title='y', $title='' )
+function smarty_modifier_sefurl($source, $type = 'wiki', $with_next = '', $all_langs = '', $with_title = 'y', $title = '')
 {
 	global $prefs;
 	$wikilib = TikiLib::lib('wiki');
@@ -32,11 +32,11 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 			break;
 	}
 
-    if (substr($type, -7) == 'comment') {
-        $type = substr($type, 0, strlen($type)-8);
-        $info = TikiLib::lib('comments')->get_comment((int)$source);
-        $source = $info['object'];
-    }
+	if (substr($type, -7) == 'comment') {
+		$type = substr($type, 0, strlen($type) - 8);
+		$info = TikiLib::lib('comments')->get_comment((int)$source);
+		$source = $info['object'];
+	}
 
 	switch ($type) {
 		case 'wiki':
@@ -54,7 +54,7 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 			break;
 
 		case 'gallery':
-			$href = 'tiki-browse_gallery.php?galleryId='. $source;
+			$href = 'tiki-browse_gallery.php?galleryId=' . $source;
 			break;
 
 		case 'article':
@@ -89,7 +89,7 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 			break;
 
 		case 'draft':
-			$href = 'tiki-download_file.php?fileId='. $source.'&amp;draft';
+			$href = 'tiki-download_file.php?fileId=' . $source . '&amp;draft';
 			break;
 
 		case 'tracker item':
@@ -104,7 +104,7 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 			if ($replacementpage) {
 				return TikiLib::tikiUrlOpt($wikilib->sefurl($replacementpage, $with_next, $all_langs));
 			} else {
-				$href = 'tiki-view_tracker_item.php?itemId='. $source;
+				$href = 'tiki-view_tracker_item.php?itemId=' . $source;
 			}
 			break;
 
@@ -116,28 +116,28 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 			}
 			break;
 
-        case 'trackerfield':
-            $trklib = TikiLib::lib('trk');
-            $trackerId = TikiLib::lib('trk')->get_field_info((int)$source)['trackerId'];
-            $href = 'tiki-admin_tracker_fields.php?trackerId=' . $trackerId;
-            break;
+		case 'trackerfield':
+			$trklib = TikiLib::lib('trk');
+			$trackerId = TikiLib::lib('trk')->get_field_info((int)$source)['trackerId'];
+			$href = 'tiki-admin_tracker_fields.php?trackerId=' . $trackerId;
+			break;
 		case 'filegallery':
 		case 'file gallery':
 			$type = 'file gallery';
-			$href = 'tiki-list_file_gallery.php?galleryId='.$source;
+			$href = 'tiki-list_file_gallery.php?galleryId=' . $source;
 			break;
 
 		case 'forum':
-			$href = $sefurl ? "forum$source" : 'tiki-view_forum.php?forumId='.$source;
+			$href = $sefurl ? "forum$source" : 'tiki-view_forum.php?forumId=' . $source;
 			break;
 
 		case 'forumthread':
 		case 'forum post':	// used in unified search getSupportedTypes()
-			$href = $sefurl ? "forumthread$source" : 'tiki-view_forum_thread.php?comments_parentId='.$source;
+			$href = $sefurl ? "forumthread$source" : 'tiki-view_forum_thread.php?comments_parentId=' . $source;
 			break;
 
 		case 'image':
-			$href = 'tiki-browse_image.php?imageId='.$source;
+			$href = 'tiki-browse_image.php?imageId=' . $source;
 			break;
 
 		case 'sheet':
@@ -145,7 +145,7 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 			break;
 
 		case 'category':
-			$href = $sefurl ? "cat$source": "tiki-browse_categories.php?parentId=$source";
+			$href = $sefurl ? "cat$source" : "tiki-browse_categories.php?parentId=$source";
 			break;
 
 		case 'freetag':

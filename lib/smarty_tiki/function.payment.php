@@ -7,7 +7,7 @@
 
 // @param numeric $id: id of the payment
 // @params url $returnurl: optional return url
-function smarty_function_payment( $params, $smarty )
+function smarty_function_payment($params, $smarty)
 {
 	global $prefs, $user, $globalperms;
 	$userlib = TikiLib::lib('user');
@@ -26,8 +26,7 @@ function smarty_function_payment( $params, $smarty )
 
 	// Unpaid payments can be seen by anyone as long as they know the number
 	// Just like your bank account, anyone can drop money in it.
-	if (
-		$info &&
+	if ($info &&
 		$objectperms->payment_view &&
 		(
 			(
@@ -54,7 +53,8 @@ function smarty_function_payment( $params, $smarty )
 		)
 	) {
 		if ($prefs['payment_system'] == 'cclite' && isset($_POST['cclite_payment_amount']) && $_POST['cclite_payment_amount'] == $info['amount_remaining']) {
-			global $cclitelib; require_once 'lib/payment/cclitelib.php';
+			global $cclitelib;
+			require_once 'lib/payment/cclitelib.php';
 			$access = TikiLib::lib('access');
 			$cartlib = TikiLib::lib('cart');
 
@@ -86,7 +86,7 @@ function smarty_function_payment( $params, $smarty )
 			} else {
 				$smarty->assign('ccresult', tr('Payment was sent but verification is not currently available (this feature is a work in progress)'));
 			}
-		} else if ( $prefs['payment_system'] == 'tikicredits') {
+		} elseif ($prefs['payment_system'] == 'tikicredits') {
 			require_once 'lib/payment/creditspaylib.php';
 			$userpaycredits = new UserPayCredits;
 			$userpaycredits->setPrice($info['amount_remaining']);
@@ -96,21 +96,20 @@ function smarty_function_payment( $params, $smarty )
 
 		$info['fullview'] = $objectperms->payment_view || $theguy;
 
-		if (!empty($smarty->tpl_vars['returnurl']->value)) {
+		if (! empty($smarty->tpl_vars['returnurl']->value)) {
 			$returl = $smarty->tpl_vars['returnurl'];
 			$info['returnurl'] = TikiLib::tikiUrl($returl);
 		}
 
-		if (!empty($params['returnurl']) && empty($result)) {
+		if (! empty($params['returnurl']) && empty($result)) {
 			$info['url'] = TikiLib::tikiUrl($params['returnurl']);
-			$info['url'] .= (strstr($params['returnurl'], '.php?') || !strstr($params['returnurl'], '.php')? '&':'?') . "invoice=$invoice";
+			$info['url'] .= (strstr($params['returnurl'], '.php?') || ! strstr($params['returnurl'], '.php') ? '&' : '?') . "invoice=$invoice";
 		}
 		$smarty->assign('payment_info', $info);
 		$smarty->assign('payment_detail', TikiLib::lib('parser')->parse_data(htmlspecialchars($info['detail'])));
 
 		$smarty_cache_id = $smarty_compile_id = $prefs['language'] . md5('tiki-payment-single.tpl');
 		return $smarty->fetch('tiki-payment-single.tpl', $smarty_cache_id, $smarty_compile_id);
-
 	} else {
 		$smarty->loadPlugin('smarty_block_remarksbox');
 		$repeat = false;

@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /* params
@@ -30,7 +30,7 @@ function smarty_function_menu($params, $smarty)
 {
 	global $prefs;
 
-	$default = array('css' => 'y');
+	$default = ['css' => 'y'];
 	if (isset($params['params'])) {
 		$params = array_merge($params, $params['params']);
 		unset($params['params']);
@@ -64,7 +64,7 @@ function smarty_function_menu($params, $smarty)
 	$smarty->assign('menu_info', $menu_info);
 
 	if (isset($params['bootstrap']) && $params['bootstrap'] !== 'n' && $prefs['javascript_enabled'] === 'y') {
-		$structured = array();
+		$structured = [];
 		$activeSection = null;
 		foreach ($channels['data'] as $element) {
 			if ($element['type'] == 's') {
@@ -73,14 +73,14 @@ function smarty_function_menu($params, $smarty)
 				}
 
 				$activeSection = $element;
-				$activeSection['children'] = array();
+				$activeSection['children'] = [];
 			} elseif ($element['type'] == 'o') {
 				if ($activeSection) {
 					$activeSection['children'][] = $element;
 				} else {
 					$structured[] = $element;
 				}
-			} elseif($element['type'] == '-') {
+			} elseif ($element['type'] == '-') {
 				if ($activeSection) {
 					$structured[] = $activeSection;
 				}
@@ -96,7 +96,7 @@ function smarty_function_menu($params, $smarty)
 			case 'navbar':
 				return $smarty->fetch('bootstrap_menu_navbar.tpl');
 			case 'y':
-				if (isset($params['type']) && $params['type'] == "horiz"){
+				if (isset($params['type']) && $params['type'] == "horiz") {
 					return $smarty->fetch('bootstrap_menu_navbar.tpl');
 				} else {
 					return $smarty->fetch('bootstrap_menu.tpl');
@@ -143,49 +143,49 @@ function get_menu_with_selections($params)
 	$menulib = TikiLib::lib('menu');
 	$cachelib = TikiLib::lib('cache');
 	$cacheName = isset($prefs['mylevel']) ? $prefs['mylevel'] : 0;
-	$cacheName .= '_'.$prefs['language'].'_'.md5(implode("\n", $tikilib->get_user_groups($user)));
+	$cacheName .= '_' . $prefs['language'] . '_' . md5(implode("\n", $tikilib->get_user_groups($user)));
 
 	extract($params, EXTR_SKIP);
 
 	if (isset($structureId)) {
-		$cacheType = 'structure_'.$structureId . '_';
+		$cacheType = 'structure_' . $structureId . '_';
 	} else {
-		$cacheType = 'menu_'. $id .'_';
+		$cacheType = 'menu_' . $id . '_';
 	}
 
-	if ( $cdata = $cachelib->getSerialized($cacheName, $cacheType) ) {
+	if ($cdata = $cachelib->getSerialized($cacheName, $cacheType)) {
 		list($menu_info, $channels) = $cdata;
-	} elseif (!empty($structureId)) {
+	} elseif (! empty($structureId)) {
 		$structlib = TikiLib::lib('struct');
 
-		if (!is_numeric($structureId)) {
+		if (! is_numeric($structureId)) {
 			$structureId = $structlib->get_struct_ref_id($structureId);
 		}
 
 		$channels = $structlib->build_subtree_toc($structureId);
-		$structure_info =  $structlib->s_get_page_info($structureId);
+		$structure_info = $structlib->s_get_page_info($structureId);
 		$channels = $structlib->to_menu($channels, $structure_info['pageName'], 0, 0, $params);
-		$menu_info = array('type'=>'d', 'menuId'=> $structureId, 'structure' => 'y');
-	} else if (!empty($id)) {
+		$menu_info = ['type' => 'd', 'menuId' => $structureId, 'structure' => 'y'];
+	} elseif (! empty($id)) {
 		$menu_info = $menulib->get_menu($id);
-		$channels = $menulib->list_menu_options($id, 0, -1, 'position_asc', '', '', isset($prefs['mylevel'])?$prefs['mylevel']:0);
+		$channels = $menulib->list_menu_options($id, 0, -1, 'position_asc', '', '', isset($prefs['mylevel']) ? $prefs['mylevel'] : 0);
 		$channels = $menulib->sort_menu_options($channels);
 	} else {
 		return '<span class="alert-warning">menu function: Menu or Structure ID not set</span>';
 	}
 	if (strpos($_SERVER['SCRIPT_NAME'], 'tiki-register') === false) {
-		$cachelib->cacheItem($cacheName, serialize(array($menu_info, $channels)), $cacheType);
+		$cachelib->cacheItem($cacheName, serialize([$menu_info, $channels]), $cacheType);
 	}
-	if (!isset($setSelected) || $setSelected !== 'n') {
+	if (! isset($setSelected) || $setSelected !== 'n') {
 		$channels = $menulib->setSelected($channels, isset($sectionLevel) ? $sectionLevel : '', isset($toLevel) ? $toLevel : '', $params);
 	}
 
 	foreach ($channels['data'] as & $item) {
-		if (!empty($menu_info['parse']) && $menu_info['parse'] === 'y') {
+		if (! empty($menu_info['parse']) && $menu_info['parse'] === 'y') {
 			$item['block'] = TikiLib::lib('parser')->contains_html_block($item['name']); // Only used for CSS menus
 			$item['name'] = preg_replace('/(.*)\n$/', '$1', $item['name']);	// parser adds a newline to everything
 		}
 	}
 
-	return array($menu_info, $channels);
+	return [$menu_info, $channels];
 }

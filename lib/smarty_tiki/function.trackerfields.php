@@ -7,17 +7,17 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 
 /*
  * Render fields of a trackeritem when called from the tracker
  * @param array $params - params passed from tempate as key/value pairs
- * Added keys to set the view/edit item template in tiki14. Format as defined in the tracker, i.e. 'wiki:myPageName, 'tpl:myTpl.tpl' 
- * 'viewItemPretty': define a template to view the item. 
- * 'editItemPretty': define a template to edit the item. 
+ * Added keys to set the view/edit item template in tiki14. Format as defined in the tracker, i.e. 'wiki:myPageName, 'tpl:myTpl.tpl'
+ * 'viewItemPretty': define a template to view the item.
+ * 'editItemPretty': define a template to edit the item.
  * These keys treat the template setting in the tracker as a default value and will therefore override if present.
  * They only apply if the default setting would apply - i.e sectionformat must be set to configured.
  */
@@ -60,14 +60,15 @@ function smarty_function_trackerfields($params, $smarty)
 			$sections[$title][] = $field;
 		}
 		$permName = $field['permName'];
-		
+
 		$itemId = isset($params['itemId']) ? $params['itemId'] : null;
-		if( $itemId )
-			$item = array('itemId' => $itemId);
-		else
-			$item = array();
+		if ($itemId) {
+			$item = ['itemId' => $itemId];
+		} else {
+			$item = [];
+		}
 		$smarty->assign('item', $item);
-		
+
 		$auto['input'][$permName] = new Tiki_Render_Lazy(function () use ($field, $smarty, $item) {
 			return smarty_function_trackerinput([
 				'field' => $field,
@@ -76,8 +77,8 @@ function smarty_function_trackerfields($params, $smarty)
 				'item' => $item,
 			], $smarty);
 		});
-		
-		
+
+
 		// the item-list field needs the itemId here - passed via the template - otherwise it does not show a value in the template
 		$auto['output'][$permName] = new Tiki_Render_Lazy(function () use ($field, $smarty, $itemId) {
 			return smarty_function_trackeroutput([
@@ -87,8 +88,8 @@ function smarty_function_trackerfields($params, $smarty)
 				'itemId' => $itemId,
 			], $smarty);
 		});
-		
-		
+
+
 		// not sure wether we can always pass itemId bc i do not know wether the key or the value is checked
 		if ($itemId) {
 			$auto['inline'][$permName] = new Tiki_Render_Lazy(function () use ($field, $smarty, $itemId) {
@@ -107,12 +108,12 @@ function smarty_function_trackerfields($params, $smarty)
 		}
 	}
 
-	$out = array();
+	$out = [];
 	foreach ($sections as $title => $fields) {
-		$out[md5($title)] = array(
+		$out[md5($title)] = [
 			'heading' => $title,
 			'fields' => $fields,
-		);
+		];
 	}
 
 	if ($params['mode'] == 'view') {
@@ -120,7 +121,7 @@ function smarty_function_trackerfields($params, $smarty)
 	} else {
 		$auto['default'] = $auto['input'];
 	}
-	
+
 	// Compatibility attempt with the legacy $f_X format.
 	// Note: Here we set the the closures for the field, NOT the final values!
 	// The final values are set in trackerlib.php using field_render_value()
@@ -129,11 +130,11 @@ function smarty_function_trackerfields($params, $smarty)
 		$id = $field['fieldId'];
 		$permName = $field['permName'];
 		$smarty->assign('f_' . $id, $auto['default'][$permName]);
-		// https://doc.tiki.org/Pretty+Tracker states that next to {f_id} also {f_fieldname} can be used. 
-		// Somehow there is the support missing here - so add it		
+		// https://doc.tiki.org/Pretty+Tracker states that next to {f_id} also {f_fieldname} can be used.
+		// Somehow there is the support missing here - so add it
 		$smarty->assign('f_' . $permName, $auto['default'][$permName]);
 	}
-	
+
 	// https://doc.tiki.org/Pretty+Tracker states that also that internal trackerfield names can be used
 	/*
 	{$f_created}: created date
@@ -145,8 +146,8 @@ function smarty_function_trackerfields($params, $smarty)
 	{$tr_offset}: the offset of the item, i.e. this is the nth item of the total number of x items
 	*/
 	// @TODO need to add support
-	
-	
+
+
 
 	$smarty->assign('sections', array_values($out));
 	$smarty->assign('fields', $params['fields']);
@@ -169,18 +170,17 @@ function smarty_function_trackerfields($params, $smarty)
 		$result = $smarty->fetch($template);
 	} catch (Exception $e) {
 		// catch any exception probably casued by a pretty tracker template issue
-		Feedback::error(tr('Tracker rendering error (section="%0" mode="%1")', $sectionFormat, $params['mode']) . 
+		Feedback::error(tr('Tracker rendering error (section="%0" mode="%1")', $sectionFormat, $params['mode']) .
 			'<br><br>' . htmlentities($e->getMessage(), 'session'));
 		// try again with the default section format "flat"
 		$template = $trklib->getSectionFormatTemplate('flat', $params['mode']);
 		$result = $smarty->fetch($template);
 	}
 
-	if ( $datepicker ) {
+	if ($datepicker) {
 		$smarty->loadPlugin('smarty_function_js_insert_icon');
-		$result .= smarty_function_js_insert_icon(array('type'=>"jscalendar"), $smarty);
+		$result .= smarty_function_js_insert_icon(['type' => "jscalendar"], $smarty);
 	}
 
 	return $result;
 }
-

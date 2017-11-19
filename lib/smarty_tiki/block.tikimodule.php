@@ -37,24 +37,44 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 function smarty_block_tikimodule($params, $content, $smarty, &$repeat)
 {
-	if ( $repeat ) return;
+	if ($repeat) {
+		return;
+	}
 
 	extract($params);
-	if (!isset($content))   return "";
-	if (!isset($error))  $error = '';
-	if (!isset($overflow))  $overflow = false;
-	if (!isset($title))     $title = substr(strip_tags($content), 0, 12). (strlen(strip_tags($content)) > 12 ? "..." : "");
-	if (!isset($name))		$name  = $title; else $name  = $name;
+	if (! isset($content)) {
+		return "";
+	}
+	if (! isset($error)) {
+		$error = '';
+	}
+	if (! isset($overflow)) {
+		$overflow = false;
+	}
+	if (! isset($title)) {
+		$title = substr(strip_tags($content), 0, 12) . (strlen(strip_tags($content)) > 12 ? "..." : "");
+	}
+	if (! isset($name)) {
+		$name  = $title;
+	} else {
+		$name  = $name;
+	}
 	$name = urlencode($name);
-	if (!isset($flip) || ($flip != 'y' && $flip != 'yc')) $flip = 'n';
-	if (!isset($nobox))      $nobox = 'n';
-	if (!isset($notitle))      $notitle = 'n';
+	if (! isset($flip) || ($flip != 'y' && $flip != 'yc')) {
+		$flip = 'n';
+	}
+	if (! isset($nobox)) {
+		$nobox = 'n';
+	}
+	if (! isset($notitle)) {
+		$notitle = 'n';
+	}
 	if ($flip == 'yc') {
 		// can be switched but initially closed
 		$flip = 'y';
@@ -62,7 +82,9 @@ function smarty_block_tikimodule($params, $content, $smarty, &$repeat)
 	} else {
 		$dstate = 'o';
 	}
-	if (!isset($decorations) || $decorations != 'n') $decorations = 'y';
+	if (! isset($decorations) || $decorations != 'n') {
+		$decorations = 'y';
+	}
 
 	$smarty->assign('module_error', $error);
 	$smarty->assign('module_overflow', $overflow);
@@ -73,7 +95,9 @@ function smarty_block_tikimodule($params, $content, $smarty, &$repeat)
 	$smarty->assign('module_nobox', $nobox);
 	$smarty->assign('module_notitle', $notitle);
 	$smarty->assign('module_decorations', $decorations);
-	if ( empty($type) ) $type = "module";
+	if (empty($type)) {
+		$type = "module";
+	}
 	$smarty->assign('module_type', $type);
 	$smarty->assignByRef('module_content', $content);
 	return $smarty->fetch('module.tpl');

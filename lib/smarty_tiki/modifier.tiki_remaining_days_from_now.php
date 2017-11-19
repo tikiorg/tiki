@@ -29,7 +29,7 @@ function smarty_modifier_tiki_remaining_days_from_now($time, $format)
 			'<b>' . round($iNbDayBetween) . '</b>',
 			$tikilib->date_format($format, $time)
 		);
-	} else if ($iNbDayBetween > 0) {
+	} elseif ($iNbDayBetween > 0) {
 		$result = tra('Today');
 	} else {
 		$result = '-';

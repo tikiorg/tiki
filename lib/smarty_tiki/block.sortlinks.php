@@ -21,22 +21,22 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 
 function smarty_block_sortlinks($params, $content, $smarty, &$repeat)
 {
-	if ( $repeat || !empty($content) ) {
-		$links=preg_split("/\n/", $content);
-		$links2=array();
+	if ($repeat || ! empty($content)) {
+		$links = preg_split("/\n/", $content);
+		$links2 = [];
 		foreach ($links as $value) {
 			preg_match('/.*(<[^>]*>)(.*)(<\/[^¨>]*>)/U', $value, $splitted);
 //    $splitted=preg_split("/[<>]/",$value,-1,PREG_SPLIT_NO_EMPTY);
 			if (isset($splitted[2])) {
-				$splitted[2] = str_replace(array("Î","É","È"), array('I','E','E'), $splitted[2]);
-				$links2[$splitted[2]]=$value;
+				$splitted[2] = str_replace(["Î","É","È"], ['I','E','E'], $splitted[2]);
+				$links2[$splitted[2]] = $value;
 			}
 		}
 
@@ -46,7 +46,7 @@ function smarty_block_sortlinks($params, $content, $smarty, &$repeat)
 			ksort($links2);
 		}
 		foreach ($links2 as $value) {
-    	echo $value;
+			echo $value;
 		}
 	}
 }

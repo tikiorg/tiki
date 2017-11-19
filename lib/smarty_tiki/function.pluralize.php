@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-    header("location: index.php");
-    exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -18,13 +18,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function smarty_function_pluralize($params, &$smarty)
 {
-    if (empty($params['singular_form']) || !isset($params['word_count'])) {
-        return;
-    }
+	if (empty($params['singular_form']) || ! isset($params['word_count'])) {
+		return;
+	}
 
-    if (empty($params['plural_form'])) {
-        $params['plural_form'] = $params['singular_form'] . 's';
-    }
+	if (empty($params['plural_form'])) {
+		$params['plural_form'] = $params['singular_form'] . 's';
+	}
 
-    return ($params['word_count'] == 1) ? $params['singular_form'] : $params['plural_form'];
+	return ($params['word_count'] == 1) ? $params['singular_form'] : $params['plural_form'];
 }

@@ -46,7 +46,7 @@ function smarty_modifier_iconify($string, $filetype = null, $fileId = null, $siz
 
 		return "<img src=\"$icon\" width=\"16\"/>";
 	} else {
-		include_once ('lib/mime/mimetypes.php');
+		include_once('lib/mime/mimetypes.php');
 		global $mimetypes;
 		$mimes = array_keys($mimetypes, $filetype);
 		if ($prefs['theme_iconset'] === 'legacy') {
@@ -68,20 +68,20 @@ function smarty_modifier_iconify($string, $filetype = null, $fileId = null, $siz
 				return $m;
 			} elseif ($return === 'icon') {
 				return smarty_function_icon(
-					array(
-						'_id' => 'img/icons/mime/'.$icon.'.png',
+					[
+						'_id' => 'img/icons/mime/' . $icon . '.png',
 						'alt' => ( $filetype === null ? $icon : $filetype ),
 						'class' => '',
 						'size' => $size
-					),
+					],
 					$smarty
 				);
 			}
 		//iconsets introduced with Tiki14
 		} else {
-			if (!empty($filetype)) {
+			if (! empty($filetype)) {
 				$type = $filetype;
-			} elseif (!empty($mimetypes[$ext])) {
+			} elseif (! empty($mimetypes[$ext])) {
 				$type = $mimetypes[$ext];
 			} else {
 				$type = 'file';
@@ -106,19 +106,19 @@ function smarty_modifier_iconify($string, $filetype = null, $fileId = null, $siz
 					|| strpos($type, 'application/vnd.openxmlformats-officedocument.presentationml') === 0:
 					$iconname = 'powerpoint';
 					break;
-				case strpos($type,'audio/') === 0:
+				case strpos($type, 'audio/') === 0:
 					$iconname = 'audio';
 					break;
-				case strpos($type,'image/') === 0:
+				case strpos($type, 'image/') === 0:
 					$iconname = 'image';
 					break;
-				case strpos($type,'text/') === 0:
+				case strpos($type, 'text/') === 0:
 					$iconname = 'textfile';
 					break;
-				case strpos($type,'video/') === 0:
+				case strpos($type, 'video/') === 0:
 					$iconname = 'video_file';
 					break;
-				case strpos($type,'application/') === 0:
+				case strpos($type, 'application/') === 0:
 					$iconname = 'code_file';
 					break;
 				default:
@@ -127,10 +127,9 @@ function smarty_modifier_iconify($string, $filetype = null, $fileId = null, $siz
 			}
 			if ($return === 'filetype') {
 				return $type;
-			} else  {
+			} else {
 				return smarty_function_icon(['name' => $iconname, 'size' => $size], $smarty);
 			}
-
 		}
 	}
 }

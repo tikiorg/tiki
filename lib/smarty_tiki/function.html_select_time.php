@@ -60,13 +60,13 @@ function smarty_function_html_select_time($params, $smarty)
 	$all_empty = null;
 
 	extract($params);
-	if (!empty($all_empty)) {
+	if (! empty($all_empty)) {
 		$hour_empty = $minute_empty = $second_empty = $all_empty;
 	}
 
-	if (!isset($time) or !$time) {
+	if (! isset($time) or ! $time) {
 		$time = $tikilib->now;
-	} else if (is_string($time) && strpos($time, ':') !== false) {
+	} elseif (is_string($time) && strpos($time, ':') !== false) {
 		$e = explode(':', $time, 3);
 		$time = $tikilib->make_time(
 			isset($e[0]) ? $e[0] : 0,
@@ -77,7 +77,7 @@ function smarty_function_html_select_time($params, $smarty)
 			$tikilib->date_format('%Y')
 		);
 	}
-	if (empty($hour_minmax) || !preg_match('/^[0-2]?[0-9]-[0-2]?[0-9]$/', $hour_minmax)) {
+	if (empty($hour_minmax) || ! preg_match('/^[0-2]?[0-9]-[0-2]?[0-9]$/', $hour_minmax)) {
 		$hour_minmax = '0-23';
 	}
 	//only needed for end_ and the static variable in the date_format functions seem to cause problems without the if
@@ -107,9 +107,9 @@ function smarty_function_html_select_time($params, $smarty)
 			$selected = $latest;
 		} elseif ($prefix == 'duration_' || $prefix == 'startday_' || $prefix == 'endday_') {
 			if ($use_24_hours) {
-				$selected = floor($time / (60*60));
+				$selected = floor($time / (60 * 60));
 			} else {
-				$selected = date('h', strtotime(floor($time / (60*60)) . ':00 '));
+				$selected = date('h', strtotime(floor($time / (60 * 60)) . ':00 '));
 			}
 		} else {
 			$selected = $time == '--' ? $hour_empty : TikiLib::date_format($hour_fmt, $time);
@@ -131,19 +131,19 @@ function smarty_function_html_select_time($params, $smarty)
 			$html_result .= ' ' . $all_extra;
 		}
 
-		$html_result .= '>'."\n";
+		$html_result .= '>' . "\n";
 
-		if (!empty($hour_empty)) {
-			$hours = array_merge(array($hour_empty==' '?'':$hour_empty), $hours);
+		if (! empty($hour_empty)) {
+			$hours = array_merge([$hour_empty == ' ' ? '' : $hour_empty], $hours);
 		}
 
 		$html_result .= smarty_function_html_options(
-			array(
-				'output'		=>	$hours,
-				'values'		=>	$hours,
-				'selected'		=>	$selected,
-				'print_result'	=>	false
-			),
+			[
+				'output'		=> $hours,
+				'values'		=> $hours,
+				'selected'		=> $selected,
+				'print_result'	=> false
+			],
 			$smarty
 		);
 
@@ -152,7 +152,7 @@ function smarty_function_html_select_time($params, $smarty)
 
 	if ($display_minutes) {
 		$all_minutes = range(0, 59);
-		for ($i = 0, $for_max = count($all_minutes); $i < $for_max; $i+= $minute_interval) {
+		for ($i = 0, $for_max = count($all_minutes); $i < $for_max; $i += $minute_interval) {
 			$minutes[] = sprintf('%02d', $all_minutes[$i]);
 		}
 
@@ -167,8 +167,7 @@ function smarty_function_html_select_time($params, $smarty)
 		}
 		if (in_array($minute, $minutes) == false) {
 			for ($i = 0, $for_max = count($minutes); $i < $for_max; $i++) {
-				if (
-					(int) $minute > (int) $minutes[$i] &&
+				if ((int) $minute > (int) $minutes[$i] &&
 					(
 						(int) $minute < (int) $minutes[$i + 1] ||
 						empty($minutes[$i + 1])
@@ -185,7 +184,7 @@ function smarty_function_html_select_time($params, $smarty)
 		} else {
 			if ($time == '--') {
 				$selected = $minute_empty;
-			} else if (in_array($minute, $minutes)) {
+			} elseif (in_array($minute, $minutes)) {
 				$selected = $minute;
 			} else {
 				$selected = intval(floor(strftime('%M', $time) / $minute_interval) * $minute_interval);
@@ -194,7 +193,7 @@ function smarty_function_html_select_time($params, $smarty)
 
 		//minute intervals less than 10 are followed by a '0', here we ensure that they are selectable
 		if (strlen($selected) == 1) {
-			$selected = '0'.$selected;
+			$selected = '0' . $selected;
 		}
 
 		$html_result .= '<select class="form-control date" name=';
@@ -209,19 +208,19 @@ function smarty_function_html_select_time($params, $smarty)
 		if (null !== $all_extra) {
 			$html_result .= ' ' . $all_extra;
 		}
-		$html_result .= '>'."\n";
+		$html_result .= '>' . "\n";
 
-		if (!empty($minute_empty)) {
-			$minutes = array_merge(array($minute_empty==' '?'':$minute_empty), $minutes);
+		if (! empty($minute_empty)) {
+			$minutes = array_merge([$minute_empty == ' ' ? '' : $minute_empty], $minutes);
 		}
 
 		$html_result .= smarty_function_html_options(
-			array(
-				'output'		=>	$minutes,
-				'values'		=>	$minutes,
-				'selected'		=>	$selected,
-				'print_result'	=>	false
-			),
+			[
+				'output'		=> $minutes,
+				'values'		=> $minutes,
+				'selected'		=> $selected,
+				'print_result'	=> false
+			],
 			$smarty
 		);
 		$html_result .= "</select>\n";
@@ -229,7 +228,7 @@ function smarty_function_html_select_time($params, $smarty)
 
 	if ($display_seconds) {
 		$all_seconds = range(0, 59);
-		for ($i = 0, $for_max = count($all_seconds); $i < $for_max; $i+= $second_interval) {
+		for ($i = 0, $for_max = count($all_seconds); $i < $for_max; $i += $second_interval) {
 			$seconds[] = sprintf('%02d', $all_seconds[$i]);
 		}
 
@@ -237,10 +236,10 @@ function smarty_function_html_select_time($params, $smarty)
 			$seconds[] = 59;
 		}
 
-		if ($prefix == 'end_' && ($time_hr24 ==  '000000' || strftime('%M', $time) == 59)) {
+		if ($prefix == 'end_' && ($time_hr24 == '000000' || strftime('%M', $time) == 59)) {
 			$selected = 59;
 		} else {
-			$selected = $time =='--'?$second_empty:intval(floor(strftime('%S', $time) / $second_interval) * $second_interval);
+			$selected = $time == '--' ? $second_empty : intval(floor(strftime('%S', $time) / $second_interval) * $second_interval);
 		}
 
 		$html_result .= '<select class="form-control date" name=';
@@ -259,25 +258,25 @@ function smarty_function_html_select_time($params, $smarty)
 			$html_result .= ' ' . $all_extra;
 		}
 
-		$html_result .= '>'."\n";
+		$html_result .= '>' . "\n";
 
-		if (!empty($seconde_empty)) {
-			$secondes = array_merge(array($seconde_empty==' '?'':$seconde_empty), $secondes);
+		if (! empty($seconde_empty)) {
+			$secondes = array_merge([$seconde_empty == ' ' ? '' : $seconde_empty], $secondes);
 		}
 
 		$html_result .= smarty_function_html_options(
-			array(
-				'output'		=>	$seconds,
-				'values'		=>	$seconds,
-				'selected'		=>	$selected,
-				'print_result'	=>	false
-			),
+			[
+				'output'		=> $seconds,
+				'values'		=> $seconds,
+				'selected'		=> $selected,
+				'print_result'	=> false
+			],
 			$smarty
 		);
 		$html_result .= "</select>\n";
 	}
 
-	if (!$use_24_hours) {
+	if (! $use_24_hours) {
 		$html_result .= '<select class="form-control date" name=';
 		if (null !== $field_array) {
 			$html_result .= '"' . $field_array . '[' . $prefix . 'Meridian]"';
@@ -291,15 +290,15 @@ function smarty_function_html_select_time($params, $smarty)
 		if (null !== $all_extra) {
 			$html_result .= ' ' . $all_extra;
 		}
-		$html_result .= '>'."\n";
+		$html_result .= '>' . "\n";
 
 		$html_result .= smarty_function_html_options(
-			array(
-				'output'		=>	array('AM', 'PM'),
-				'values'		=>	array('am', 'pm'),
-				'selected'		=>	TikiLib::date_format('%p', $time),
-				'print_result'	=>	false
-			),
+			[
+				'output'		=> ['AM', 'PM'],
+				'values'		=> ['am', 'pm'],
+				'selected'		=> TikiLib::date_format('%p', $time),
+				'print_result'	=> false
+			],
 			$smarty
 		);
 		$html_result .= "</select>\n";

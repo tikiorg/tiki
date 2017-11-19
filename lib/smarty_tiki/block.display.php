@@ -18,37 +18,41 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 function smarty_block_display($params, $content, $smarty, &$repeat)
 {
 	global $prefs, $user;
 	$userlib = TikiLib::lib('user');
-	
-	if ( $repeat ) return;
+
+	if ($repeat) {
+		return;
+	}
 	$ok = true;
-	if (!empty($params['groups'])) {
+	if (! empty($params['groups'])) {
 		$groups = explode(',', $params['groups']);
 		$userGroups = $userlib->get_user_groups($user);
 	}
 
 	$content = explode('///else///', $content);
-	
-	if (!empty($params['error'])) {
+
+	if (! empty($params['error'])) {
 		$errmsg = $params['error'];
 	} elseif (empty($params['error']) && isset($groups)) {
 		$errmsg = '';
 	} else {
 		$errmsg = 'Smarty block.display.php: Missing error param';
 	}
-	
+
 	$anon = false; // see the workaround to exclude Registered below
 
 	foreach ($groups as $gr) {
 		$gr = trim($gr);
-		if ($gr == 'Anonymous') $anon = true;
+		if ($gr == 'Anonymous') {
+			$anon = true;
+		}
 		if (substr($gr, 0, 1) == '-') {
 			$nogr = substr($gr, 1);
 			if ((in_array($nogr, $userGroups) && $nogr != 'Registered') or (in_array($nogr, $userGroups) && $nogr == 'Registered' && $anon == true)) {
@@ -56,15 +60,15 @@ function smarty_block_display($params, $content, $smarty, &$repeat)
 				$ok = false;
 				$anon = false;
 			}
-		} elseif (!in_array($gr, $userGroups) && $anon == false) {
+		} elseif (! in_array($gr, $userGroups) && $anon == false) {
 			$ok = false;
 		} else {
 			$ok = true;
 		}
 	}
-	
+
 	/* is it ok ? */
-	if (!$ok) {
+	if (! $ok) {
 		if (isset($content[1])) {
 			return $content[1];
 		} else {

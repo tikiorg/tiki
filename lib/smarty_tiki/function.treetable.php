@@ -68,8 +68,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -98,7 +98,7 @@ function smarty_function_treetable($params, $smarty)
 	if (is_string($_checkbox) && strpos($_checkbox, ',') !== false) {
 		$_checkbox = preg_split('/,/', trim($_checkbox));
 	}
-	if (!empty($_checkboxColumnIndex)) {
+	if (! empty($_checkboxColumnIndex)) {
 		if (is_string($_checkboxColumnIndex) && strpos($_checkboxColumnIndex, ',') !== false) {
 			$_checkboxColumnIndex = preg_split('/,/', trim($_checkboxColumnIndex));
 		}
@@ -106,12 +106,12 @@ function smarty_function_treetable($params, $smarty)
 			return 'Number of items in _checkboxColumnIndex doesn not match items in _checkbox';
 		}
 	}
-	if (!empty($_checkboxTitles)) {
+	if (! empty($_checkboxTitles)) {
 		if (is_string($_checkboxTitles)) {
 			if (strpos($_checkboxTitles, ',') !== false) {
 				$_checkboxTitles = preg_split('/,/', trim($_checkboxTitles));
 			} else {
-				$_checkboxTitles = array(trim($_checkboxTitles));
+				$_checkboxTitles = [trim($_checkboxTitles)];
 			}
 		}
 		if (count($_checkbox) != count($_checkboxTitles)) {
@@ -121,9 +121,9 @@ function smarty_function_treetable($params, $smarty)
 	$_checkboxColumnIndex = empty($_checkboxColumnIndex) ? 0 : $_checkboxColumnIndex;
 	$_valueColumnIndex = empty($_valueColumnIndex) ? 0 : $_valueColumnIndex;
 
-	if (!empty($_checkbox) && !is_array($_checkbox)) {
-			$_checkbox = array($_checkbox);
-			$_checkboxColumnIndex = array($_checkboxColumnIndex);
+	if (! empty($_checkbox) && ! is_array($_checkbox)) {
+			$_checkbox = [$_checkbox];
+			$_checkboxColumnIndex = [$_checkboxColumnIndex];
 	}
 
 	$_columnsContainHtml = isset($_columnsContainHtml) ? $_columnsContainHtml : 'n';
@@ -136,10 +136,10 @@ function smarty_function_treetable($params, $smarty)
 	$_filterMinRows = empty($_filterMinRows) ? 12 : $_filterMinRows;
 	$_collapseMaxSections = empty($_collapseMaxSections) ? 4 : $_collapseMaxSections;
 
-	$_rowClasses = !isset($_rowClasses) ? array('odd', 'even') :
-		(is_array($_rowClasses) ? $_rowClasses : array($_rowClasses));
+	$_rowClasses = ! isset($_rowClasses) ? ['odd', 'even'] :
+		(is_array($_rowClasses) ? $_rowClasses : [$_rowClasses]);
 
-	if (!empty($_rowClasses)) {
+	if (! empty($_rowClasses)) {
 		$oddEvenCounter = 0;
 	} else {
 		$oddEvenCounter = -1;
@@ -147,25 +147,25 @@ function smarty_function_treetable($params, $smarty)
 
 	// auto-increment val for unique id's etc
 	if (empty($id)) {
-		if (!isset($tree_table_id)) {
+		if (! isset($tree_table_id)) {
 			$tree_table_id = 1;
 		} else {
 			$tree_table_id++;
 		}
-		$id = 'treetable_'. $tree_table_id;
+		$id = 'treetable_' . $tree_table_id;
 	}
 	// TODO - check this? add key/val pairs?
 	if (empty($_columns)) {
-		$keys =  array_keys($_data[0]);
-		$_columns = array();
+		$keys = array_keys($_data[0]);
+		$_columns = [];
 		foreach ($keys as $key) {
-			if (!is_numeric($key)) {
+			if (! is_numeric($key)) {
 				$_columns[$key] = htmlspecialchars($key);
 			}
 		}
-	} else if (is_string($_columns)) {
+	} elseif (is_string($_columns)) {
 		$ar = preg_split('/,/', $_columns);
-		$_columns = array();
+		$_columns = [];
 		foreach ($ar as $str) {
 			$ar2 = preg_split('/=/', trim($str));
 			$_columns[trim($ar2[0], ' "')] = trim($ar2[1], ' "');
@@ -194,12 +194,12 @@ function smarty_function_treetable($params, $smarty)
 	if ($_listFilter == 'y' && count($_data) > $_filterMinRows) {
 		$smarty->loadPlugin('smarty_function_listfilter');
 		$html .= smarty_function_listfilter(
-			array(
-				'id' => $id.'_filter',
+			[
+				'id' => $id . '_filter',
 				'selectors' => "#$id tbody tr",
 				'parentSelector' => "#$id .collapsed, #$id .expanded",
 				'exclude' => ".subHeader"
-			),
+			],
 			$smarty
 		);
 	}
@@ -208,28 +208,28 @@ function smarty_function_treetable($params, $smarty)
 		$smarty->loadPlugin('smarty_function_icon');
 		$html .= '&nbsp;<label id="' . $id . '_openall" style="cursor:pointer">'
 			. smarty_function_icon(
-				array(
+				[
 					'name' => 'file-archive',
-				),
+				],
 				$smarty
 			)
 			. smarty_function_icon(
-				array(
+				[
 					'name' => 'file-archive-open',
 					'istyle' => 'display:none'
-				),
+				],
 				$smarty
 			)
 			. ' ' . tra('Toggle sections') . '</label>';
 
 		$headerlib->add_jq_onready(
 			'
-$("#'.$id.'_openall").click( function () {
+$("#' . $id . '_openall").click( function () {
 	$this = $(this).tikiModal(" ");
 	var visible = $(this).find(".icon:visible")
 	if ($(visible).hasClass("icon-file-archive-open")) {
 
-		$(".expanded .indenter", "#'.$id.'").eachAsync({
+		$(".expanded .indenter", "#' . $id . '").eachAsync({
 			delay: 20,
 			bulk: 0,
 			loop: function () {
@@ -242,7 +242,7 @@ $("#'.$id.'_openall").click( function () {
 		$(this).find(".icon-file-archive-open").hide();
 		$(this).find(".icon-file-archive").show();
 	} else {
-		$(".collapsed .indenter", "#'.$id.'").eachAsync({
+		$(".collapsed .indenter", "#' . $id . '").eachAsync({
 			delay: 20,
 			bulk: 0,
 			loop: function () {
@@ -262,12 +262,12 @@ $("#'.$id.'_openall").click( function () {
 
 	if ($_showSelected == 'y') {
 		$smarty->loadPlugin('smarty_function_icon');
-		$html .= ' <input type="checkbox" id="'.$id.'_showSelected" title="'.tra('Show only selected').'" />';
-		$html .= ' <label for="'.$id.'_showSelected">' . tra('Show only selected') . '</label>';
+		$html .= ' <input type="checkbox" id="' . $id . '_showSelected" title="' . tra('Show only selected') . '" />';
+		$html .= ' <label for="' . $id . '_showSelected">' . tra('Show only selected') . '</label>';
 
 		$headerlib->add_jq_onready(
 			'
-$("#'.$id.'_showSelected").click( function () {
+$("#' . $id . '_showSelected").click( function () {
 	if (!$(this).prop("checked")) {
 		$("#treetable_1 tr td.checkBoxCell input:checkbox").parent().parent().show()
 	} else {
@@ -283,16 +283,16 @@ $("#'.$id.'_showSelected").click( function () {
 
 	// write the table header
 	$html .= '<thead><tr>';
-	if (!empty($_checkbox)) {
+	if (! empty($_checkbox)) {
 		$smarty->loadPlugin('smarty_function_select_all');
 		for ($i = 0, $icount_checkbox = count($_checkbox); $i < $icount_checkbox; $i++) {
 			$html .= '<th class="checkBoxHeader">';
 			$html .= smarty_function_select_all(
-				array(
-					'checkbox_names'=>array($_checkbox[$i] . '[]'),
+				[
+					'checkbox_names' => [$_checkbox[$i] . '[]'],
 					'label' => empty($_checkboxTitles) ? '' : htmlspecialchars(tra($_checkboxTitles[$i])),
 					'hidden_too' => $_selectAllHiddenToo,
-				),
+				],
 				$smarty
 			);
 			$html .= '</th>';
@@ -304,10 +304,10 @@ $("#'.$id.'_showSelected").click( function () {
 		$html .= htmlspecialchars($columnName);
 		$html .= '</th>';
 	}
-	$html .= '</tr></thead>'.$nl;
-	$html .= '<tbody>'.$nl;
+	$html .= '</tr></thead>' . $nl;
+	$html .= '<tbody>' . $nl;
 
-	$treeSectionsAdded = array();
+	$treeSectionsAdded = [];
 	$rowCounter = 1;
 
 		// for each row
@@ -317,7 +317,7 @@ $("#'.$id.'_showSelected").click( function () {
 			$treeType = htmlspecialchars(trim($row[$_sortColumn]));
 			$childRowClass = '';
 
-			if (!empty($_sortColumnDelimiter)) {	// nested
+			if (! empty($_sortColumnDelimiter)) {	// nested
 				$parts = array_reverse(explode($_sortColumnDelimiter, $treeType));
 
 				for ($i = 0, $icount_parts = count($parts); $i < $icount_parts; $i++) {
@@ -335,27 +335,26 @@ $("#'.$id.'_showSelected").click( function () {
 				$tt_id = $id . '_' . $treeTypeId;
 
 				$treeSectionsAdded[] = $treeTypeId;
-
 			} else {
 				$treeTypeId = preg_replace('/\s+/', '_', $treeType);
 				$tt_parent_id = $id . '_' . $treeTypeId;
 				$tt_id = 'child_of_' . $id . '_' . $treeTypeId . '_' . $oddEvenCounter;
 
-				if (!empty($treeType) && !in_array($treeTypeId, $treeSectionsAdded)) {
+				if (! empty($treeType) && ! in_array($treeTypeId, $treeSectionsAdded)) {
 					$html .= '<tr data-tt-id="' . $tt_parent_id . '"><td colspan="' . (count($_columns) + count($_checkbox)) . '">';
-					$html .= $treeType.'</td></tr>'.$nl;
+					$html .= $treeType . '</td></tr>' . $nl;
 
 					// Courtesy message to help category perms configurators
 					if ($treeType == 'category') {
-						$html .= '<tr class="' . $childRowClass . '" data-tt-parent-id="' . $tt_parent_id . '" data-tt-id="cat_subHeader_'.$rowCounter.'">' .
+						$html .= '<tr class="' . $childRowClass . '" data-tt-parent-id="' . $tt_parent_id . '" data-tt-id="cat_subHeader_' . $rowCounter . '">' .
 							'<td colspan="' . (count($_columns) + count($_checkbox)) . '">';
 						$html .= '<em>' . tra('You might want to also set the tiki_p_modify_object_categories permission under the tiki section') . '</em></td></tr>' . $nl;
 					}
 					$treeSectionsAdded[] = $treeTypeId;
 
 					// write a sub-header
-					$html .= '<tr data-tt-id="subHeader_'.$rowCounter.'" data-tt-parent-id="'.$tt_parent_id.'" class="subHeader' . $childRowClass . '">';
-					if (!empty($_checkbox)) {
+					$html .= '<tr data-tt-id="subHeader_' . $rowCounter . '" data-tt-parent-id="' . $tt_parent_id . '" class="subHeader' . $childRowClass . '">';
+					if (! empty($_checkbox)) {
 						for ($i = 0, $icount_checkbox = count($_checkbox); $i < $icount_checkbox; $i++) {
 							$html .= '<td class="checkBoxHeader"><span class="checkBoxLabel">';
 							$html .= empty($_checkboxTitles) ? '' : htmlspecialchars(tra($_checkboxTitles[$i]));
@@ -378,17 +377,17 @@ $("#'.$id.'_showSelected").click( function () {
 
 		// work out row class (odd/even etc)
 		if ($oddEvenCounter > -1) {
-			$rowClass = $_rowClasses[$oddEvenCounter % 2].$childRowClass;
+			$rowClass = $_rowClasses[$oddEvenCounter % 2] . $childRowClass;
 			$oddEvenCounter++;
 		} else {
 			$rowClass = $childRowClass;
 		}
 
-		$html .= '<tr data-tt-id="'.$tt_id . '"' .
-			(!empty($tt_parent_id) ? ' data-tt-parent-id="' . $tt_parent_id . '"' : '') .
+		$html .= '<tr data-tt-id="' . $tt_id . '"' .
+			(! empty($tt_parent_id) ? ' data-tt-parent-id="' . $tt_parent_id . '"' : '') .
 			' class="' . $rowClass . '">';
 		// add the checkbox
-		if (!empty($_checkbox)) {
+		if (! empty($_checkbox)) {
 			for ($i = 0, $icount_checkbox = count($_checkbox); $i < $icount_checkbox; $i++) {
 				// get checkbox's "value"
 				$cbxVal = htmlspecialchars($row[$_checkboxColumnIndex[$i]]);
@@ -401,7 +400,7 @@ $("#'.$id.'_showSelected").click( function () {
 					foreach ($_checkboxTooltips as $col) {
 						if (isset($row[$col])) {
 							$cbxTit[] = tra($row[$col]);
-						} else if ($col = '_checkboxTitles') {
+						} elseif ($col = '_checkboxTitles') {
 							$cbxTit[] = tra($_checkboxTitles[$i]);
 						}
 					}
@@ -414,7 +413,7 @@ $("#'.$id.'_showSelected").click( function () {
 
 				$html .= '<td class="checkBoxCell" style="white-space: nowrap;">';
 				$html .= '<input type="checkbox" name="' . htmlspecialchars($_checkbox[$i]) . '[]" value="' . $rowVal . '"' .
-									($cbxVal=='y' ? ' checked="checked"' : '') . ' title="' . $cbxTit . '" />';
+									($cbxVal == 'y' ? ' checked="checked"' : '') . ' title="' . $cbxTit . '" />';
 				if ($cbxVal == 'y') {
 					$html .= '<input type="hidden" name="old_' . htmlspecialchars($_checkbox[$i]) . '[]" value="' . $rowVal . '" />';
 				}
@@ -454,7 +453,6 @@ $("#'.$id.'_showSelected").click( function () {
 //		});');
 
 	return $html;
-
 }
 
 
@@ -463,12 +461,12 @@ $("#'.$id.'_showSelected").click( function () {
 
 // $sort used as variable function--can be natcasesort, for example
 // WARNING: $sort must be associative
-function sort2d( &$arrIn, $index = null, $sort = 'asort')
+function sort2d(&$arrIn, $index = null, $sort = 'asort')
 {
 	// pseudo-secure--never allow user input into $sort
-	$arrTemp = Array();
-	$arrOut = Array();
-	foreach ( $arrIn as $key=>$value ) {
+	$arrTemp = [];
+	$arrOut = [];
+	foreach ($arrIn as $key => $value) {
 		$arrTemp[$key] = is_null($index) ? reset($value) : $value[$index];
 	}
 
@@ -479,7 +477,7 @@ function sort2d( &$arrIn, $index = null, $sort = 'asort')
 		$sort($arrTemp);
 	}
 
-	foreach ( $arrTemp as $key=>$value ) {
+	foreach ($arrTemp as $key => $value) {
 		$arrOut[$key] = $arrIn[$key];
 	}
 	$arrIn = $arrOut;

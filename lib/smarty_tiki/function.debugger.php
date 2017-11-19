@@ -6,8 +6,8 @@
 // $Id$
 
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 function smarty_function_debugger($params, $smarty)
@@ -17,7 +17,7 @@ function smarty_function_debugger($params, $smarty)
 	if ($prefs['feature_debug_console'] == 'y') {
 		global $debugger;
 
-		require_once ('lib/debug/debugger.php');
+		require_once('lib/debug/debugger.php');
 
 		// Get current URL
 		$smarty->assign('console_father', $_SERVER["REQUEST_URI"]);
@@ -51,7 +51,7 @@ function smarty_function_debugger($params, $smarty)
 		// Add results tab which is always exists...
 		$tabs_list["console"] = $smarty->fetch("debug/tiki-debug_console_tab.tpl");
 		ksort($tabs_list);
-		$tabs = array();
+		$tabs = [];
 
 		// TODO: Use stupid dbl loop to generate links code and divs,
 		//       but it is quite suitable for
@@ -59,16 +59,17 @@ function smarty_function_debugger($params, $smarty)
 			// Generate href code for current button
 			$href = '';
 
-			foreach ($tabs_list as $tn => $t)
-				$href .= (($tn == $tname) ? 'show' : 'hide') . "('" . md5($tn). "');";
+			foreach ($tabs_list as $tn => $t) {
+				$href .= (($tn == $tname) ? 'show' : 'hide') . "('" . md5($tn) . "');";
+			}
 
 			//
-			$tabs[] = array(
+			$tabs[] = [
 				"button_caption" => $tname,
 				"tab_id" => md5($tname),
 				"button_href" => $href . 'return false;',
 				"tab_code" => $tcode
-			);
+			];
 		}
 
 		// Debug console open/close

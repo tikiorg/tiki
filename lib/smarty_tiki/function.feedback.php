@@ -14,4 +14,3 @@ function smarty_function_feedback($params, $smarty)
 	$ret = $smarty->fetch('feedback/default.tpl');
 	return $ret;
 }
-

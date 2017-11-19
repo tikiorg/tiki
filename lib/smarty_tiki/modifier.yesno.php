@@ -13,16 +13,16 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_modifier_yesno($string)
 {
-	switch ( $string ) {
-		case 'y': 
-			return tra('Yes'); 
+	switch ($string) {
+		case 'y':
+			return tra('Yes');
 						break;
 
-		case 'n': 
-			return tra('No'); 
+		case 'n':
+			return tra('No');
 						break;
 
-		default: 
+		default:
 			return $string;
 	}
 }

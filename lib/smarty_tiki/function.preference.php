@@ -5,29 +5,29 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function smarty_function_preference( $params, $smarty )
+function smarty_function_preference($params, $smarty)
 {
 	global $prefs, $user_overrider_prefs;
 	$prefslib = TikiLib::lib('prefs');
-	if ( ! isset( $params['name'] ) ) {
+	if (! isset($params['name'])) {
 		return 'Preference name not specified.';
 	}
 
 	$source = null;
-	if ( isset( $params['source'] ) ) {
+	if (isset($params['source'])) {
 		$source = $params['source'];
 	}
-	$get_pages = isset( $params['get_pages']) && $params['get_pages'] != 'n' ? true : false;
+	$get_pages = isset($params['get_pages']) && $params['get_pages'] != 'n' ? true : false;
 
-	if ( $info = $prefslib->getPreference($params['name'], true, $source, $get_pages) ) {
-		if ( isset($params['label']) ) {
+	if ($info = $prefslib->getPreference($params['name'], true, $source, $get_pages)) {
+		if (isset($params['label'])) {
 			$info['name'] = $params['label'];
 		}
 		if ($source === null && in_array($params['name'], $user_overrider_prefs) && isset($prefs[$params['name']])) {
 			$info['value'] = $prefs['site_' . $params['name']];
 		}
 
-		if (isset($info['autocomplete']) ) {
+		if (isset($info['autocomplete'])) {
 			$info['params'] .= ' autocomplete="' . $info['autocomplete'] . '" ';
 		}
 
@@ -39,10 +39,10 @@ function smarty_function_preference( $params, $smarty )
 
 		if ($get_pages) {
 			if (count($info['pages']) > 0) {
-			foreach ($info['pages'] as $pg) {
-				$ct_string = $pg[1] > 1 ? '&amp;cookietab=' . $pg[1] : '';
-				$pages_string = '<a class="lm_result label label-default" href="tiki-admin.php?page=' . $pg[0] . $ct_string . '&amp;highlight=' . $info['preference'] . '">' . $pg[0] . '</a> ';
-			}
+				foreach ($info['pages'] as $pg) {
+					$ct_string = $pg[1] > 1 ? '&amp;cookietab=' . $pg[1] : '';
+					$pages_string = '<a class="lm_result label label-default" href="tiki-admin.php?page=' . $pg[0] . $ct_string . '&amp;highlight=' . $info['preference'] . '">' . $pg[0] . '</a> ';
+				}
 			} else {
 				$pages_string = tra('(not found in an admin panel)');
 			}
@@ -51,45 +51,45 @@ function smarty_function_preference( $params, $smarty )
 		}
 		$info['pages'] = $pages_string;
 
-		if ( !isset($info['separator']) ) { 
-			$info['separator'] = array();
+		if (! isset($info['separator'])) {
+			$info['separator'] = [];
 		}
-		if ( isset($params['size']) ) { 
+		if (isset($params['size'])) {
 			$info['size'] = $params['size'];
 		}
 
 		$smarty->assign('p', $info);
 
 
-		if ( isset($params['mode']) && in_array($params['mode'], ['invert', 'notempty']) ) {
+		if (isset($params['mode']) && in_array($params['mode'], ['invert', 'notempty'])) {
 			$smarty->assign('mode', $params['mode']);
 		} else {
 			$smarty->assign('mode', 'normal');
 		}
-		
+
 		//we reset the codemirror/syntax vars so that they are blank because they are reused for other params
 		$smarty->assign('codemirror');
 		$smarty->assign('syntax');
-		
-		if ( !empty($params['syntax']) ) {
+
+		if (! empty($params['syntax'])) {
 			$smarty->assign('codemirror', 'true');
 			$smarty->assign('syntax', $params['syntax']);
 		}
 
-        if (file_exists('templates/prefs/' . $info['type'] . '.tpl')) {
-		    return $smarty->fetch('prefs/' . $info['type'] . '.tpl', $params['name']);
-        } else {
-            return $smarty->fetch('prefs/text.tpl');
-        }
+		if (file_exists('templates/prefs/' . $info['type'] . '.tpl')) {
+			return $smarty->fetch('prefs/' . $info['type'] . '.tpl', $params['name']);
+		} else {
+			return $smarty->fetch('prefs/text.tpl');
+		}
 	} else {
-		$info = array(
+		$info = [
 			'value' => tra('Error'),
 			'default_val' => tra('Error'),
 			'name' => tr('Preference %0 is not defined', $params['name']),
-			'tags' => array('modified', 'basic', 'all'),
+			'tags' => ['modified', 'basic', 'all'],
 			'tagstring' => 'modified basic all',
 			'separator' => null,
-		);
+		];
 		if (strpos($_SERVER["SCRIPT_NAME"], 'tiki-edit_perspective.php') !== false) {
 			$info['hint'] = tra('Drag this out of the perspective and resave the perspective.');
 		}

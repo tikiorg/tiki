@@ -17,6 +17,6 @@ function smarty_function_defaultmapcenter($params, $smarty)
 	global $prefs;
 	$geolib = TikiLib::lib('geo');
 	$coords = $geolib->parse_coordinates($prefs['gmap_defaultx'] . ',' . $prefs['gmap_defaulty'] . ',' . $prefs['gmap_defaultz']);
-	$center = $geolib->build_location_string($coords); 
+	$center = $geolib->build_location_string($coords);
 	return smarty_modifier_escape($center);
 }

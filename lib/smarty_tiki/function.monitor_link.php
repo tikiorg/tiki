@@ -27,4 +27,3 @@ function smarty_function_monitor_link($params)
 	$smarty->assign('monitor_link', $params);
 	return $smarty->fetch('monitor/link.tpl');
 }
-

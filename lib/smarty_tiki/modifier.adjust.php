@@ -23,28 +23,29 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * -------------------------------------------------------------
  */
 function smarty_modifier_adjust(
-		$string,
-		$length = 80,
-		$pad = '&nbsp;',
-		$etc = '...',
-		$break_words = false
-		)
-{
-	if ($length == 0)
+	$string,
+	$length = 80,
+	$pad = '&nbsp;',
+	$etc = '...',
+	$break_words = false
+) {
+
+	if ($length == 0) {
 		return '';
+	}
 
 	if (strlen($string) > $length) {
 		$length -= strlen($etc);
-		$fragment = substr($string, 0, $length+1);
-		if ($break_words)
+		$fragment = substr($string, 0, $length + 1);
+		if ($break_words) {
 			$fragment = substr($fragment, 0, -1);
-		else
+		} else {
 			$fragment = preg_replace('/\s+(\S+)?$/', '', $fragment);
+		}
 		return $fragment . $etc;
-	} elseif (strlen($string)<$length) {
+	} elseif (strlen($string) < $length) {
 		return $string . str_repeat($pad, $length - strlen($string));
 	} else {
 		return $string;
 	}
-
 }

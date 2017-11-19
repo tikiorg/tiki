@@ -28,20 +28,19 @@ function smarty_function_categoryselector($params, $smarty)
 		)
 	);
 
-	$url = array(
+	$url = [
 		'controller' => 'category',
 		'action' => 'select',
 		'type' => $params['type'],
 		'object' => $params['object'],
 		'subset' => implode(',', $params['categories']),
-	);
+	];
 	return new Tiki_Render_Editable(
 		$data,
-		array(
+		[
 			'layout' => 'block',
 			'object_store_url' => $url,
 			'field_fetch_url' => $url,
-		)
+		]
 	);
 }
-

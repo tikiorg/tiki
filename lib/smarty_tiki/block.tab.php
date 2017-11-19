@@ -12,16 +12,16 @@
  *
  * \brief smarty_block_tabs : add tabs to a template
  *
- *  
+ *
  * @param array $params - params are passed through the array params and available under their key. i.e $params['name']
  * The following params are supported via $params as keys:
  * string name - name of the tab
- * string print - 'y' this tab will be printed (by setting the class active flag) 
- * integer key  ???? 
+ * string print - 'y' this tab will be printed (by setting the class active flag)
+ * integer key  ????
  * @param string $content - content of the tab
  * @param object $smarty - ref to smarty instance
  * @param ref $repeat - ????
- * 
+ *
 
  *
  * usage:
@@ -34,15 +34,15 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 function smarty_block_tab($params, $content, $smarty, &$repeat)
 {
 	global $prefs, $smarty_tabset, $cookietab, $smarty_tabset_i_tab, $tabset_index;
 	$smarty = TikiLib::lib('smarty');
-	if ( $repeat ) {
+	if ($repeat) {
 		return;
 	} else {
 		$print_page = $smarty->getTemplateVars('print_page');
@@ -77,11 +77,11 @@ function smarty_block_tab($params, $content, $smarty, &$repeat)
 			// if we print a page then then all tabs would be "not active" so hidden and we would print nothing.
 			// we cannot click something so no js handler involed. thats we use the defaultActive
 			// so get the cookietab as the enabled tab.
-			$active =  (isset($params['print']) && $params['print'] == 'y') ? 'active' : '';
+			$active = (isset($params['print']) && $params['print'] == 'y') ? 'active' : '';
 		}
-		
+
 		$ret = "<div id='{$id}' class='tab-pane $active'>$content</div>";
-		
+
 		return $ret;
 	}
 }

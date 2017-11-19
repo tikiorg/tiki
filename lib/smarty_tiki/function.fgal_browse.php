@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /*
@@ -22,33 +22,63 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function smarty_function_fgal_browse($params, $smarty)
 {
-	if ( ! is_array($params) || ! isset($params['_id']) ) return;
+	if (! is_array($params) || ! isset($params['_id'])) {
+		return;
+	}
 	global $tiki_p_view_file_gallery, $prefs;
 	$userlib = TikiLib::lib('user');
 	$tikilib = TikiLib::lib('tiki');
 
-	if ( ! isset($params['nbCols']) ) $params['nbCols'] = 0;
-	if ( ! isset($params['show_selectall']) ) $params['show_selectall'] = 'y';
-	if ( ! isset($params['show_infos']) ) $params['show_infos'] = 'y';
-	if ( ! isset($params['show_details']) ) $params['show_details'] = 'y';
-	if ( ! isset($params['thumbnail_size']) ) $params['thumbnail_size'] = $prefs['fgal_thumb_max_size'];
-	if ( ! isset($params['checkbox_label']) ) $params['checkbox_label'] = '';
-	if ( ! isset($params['file_checkbox_name']) ) $params['file_checkbox_name'] = '';
-	if ( ! isset($params['parentId']) ) $params['parentId'] = 0;
-	if ( ! isset($params['view']) ) $params['view'] = '';
-	if ( ! isset($params['show_details']) ) $params['show_details'] = '';
+	if (! isset($params['nbCols'])) {
+		$params['nbCols'] = 0;
+	}
+	if (! isset($params['show_selectall'])) {
+		$params['show_selectall'] = 'y';
+	}
+	if (! isset($params['show_infos'])) {
+		$params['show_infos'] = 'y';
+	}
+	if (! isset($params['show_details'])) {
+		$params['show_details'] = 'y';
+	}
+	if (! isset($params['thumbnail_size'])) {
+		$params['thumbnail_size'] = $prefs['fgal_thumb_max_size'];
+	}
+	if (! isset($params['checkbox_label'])) {
+		$params['checkbox_label'] = '';
+	}
+	if (! isset($params['file_checkbox_name'])) {
+		$params['file_checkbox_name'] = '';
+	}
+	if (! isset($params['parentId'])) {
+		$params['parentId'] = 0;
+	}
+	if (! isset($params['view'])) {
+		$params['view'] = '';
+	}
+	if (! isset($params['show_details'])) {
+		$params['show_details'] = '';
+	}
 
-	if ( ! isset($params['_offset']) ) $params['_offset'] = 0;
-	if ( ! isset($params['_maxRecords']) ) $params['_maxRecords'] = -1;
-	if ( ! isset($params['_sort_mode']) ) $params['_sort_mode'] = '';
-	if ( ! isset($params['_find']) ) $params['_find'] = '';
+	if (! isset($params['_offset'])) {
+		$params['_offset'] = 0;
+	}
+	if (! isset($params['_maxRecords'])) {
+		$params['_maxRecords'] = -1;
+	}
+	if (! isset($params['_sort_mode'])) {
+		$params['_sort_mode'] = '';
+	}
+	if (! isset($params['_find'])) {
+		$params['_find'] = '';
+	}
 
-	if ( $params['_id'] > 0 && $tiki_p_view_file_gallery == 'y' ) {
+	if ($params['_id'] > 0 && $tiki_p_view_file_gallery == 'y') {
 		$filegallib = TikiLib::lib('filegal');
 
-		if ( $gal_info = $filegallib->get_file_gallery($params['_id']) ) {
+		if ($gal_info = $filegallib->get_file_gallery($params['_id'])) {
 			$tikilib->get_perm_object($params['_id'], 'file gallery', $gal_info);
-			if ( $userlib->object_has_one_permission($params['_id'], 'file gallery') ) {
+			if ($userlib->object_has_one_permission($params['_id'], 'file gallery')) {
 				$smarty->assign('individual', 'y'); ///TO CHECK
 			}
 			///FIXME        $podCastGallery = $filegallib->isPodCastGallery($_REQUEST['galleryId'], $gal_info);
@@ -65,12 +95,13 @@ function smarty_function_fgal_browse($params, $smarty)
 		$smarty->assignByRef('files', $files['data']);
 		$smarty->assign('cant', $files['cant']); ///FIXME
 
-		foreach ( $params as $k => $v ) {
-			if ( $k[0] == '_' ) continue;
+		foreach ($params as $k => $v) {
+			if ($k[0] == '_') {
+				continue;
+			}
 			$smarty->assign($k, $v);
 		}
-
 	}
 
-	return '<div style="padding: 1px; overflow-y: hidden; overflow-x: auto;">'."\n".$smarty->fetch('browse_file_gallery.tpl')."\n</div>";
+	return '<div style="padding: 1px; overflow-y: hidden; overflow-x: auto;">' . "\n" . $smarty->fetch('browse_file_gallery.tpl') . "\n</div>";
 }

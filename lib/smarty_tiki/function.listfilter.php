@@ -7,8 +7,8 @@
 
 // this script may only be included - so it's better to die if called directly
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  die;
+	header("location: index.php");
+	die;
 }
 
 /**
@@ -50,13 +50,13 @@ function smarty_function_listfilter($params, $smarty)
 
 		$input = ' <div class="form-horizontal"><div class="form-group"><label class="col-sm-2 control-label">';
 
-		if (!isset($prefix)) {
+		if (! isset($prefix)) {
 			$input .= tra("Filter:");
 		} else {
 			$input .= tra($prefix);
 		}
 		$input .= '</label><div class="col-sm-5"><input type="text" class="form-control listfilter"';
-		if (!isset($id)) {
+		if (! isset($id)) {
 			if (isset($listfilter_id)) {
 				$listfilter_id++;
 			} else {
@@ -67,22 +67,26 @@ function smarty_function_listfilter($params, $smarty)
 		} else {
 			$input .= " id='$id'";
 		}
-		if (isset($size)) $input .= " size='$size'";
-		if (isset($maxlength)) $input .= " maxlength='$maxlength'";
+		if (isset($size)) {
+			$input .= " size='$size'";
+		}
+		if (isset($maxlength)) {
+			$input .= " maxlength='$maxlength'";
+		}
 
 		// value from url
-		if (!isset($query)) {
+		if (! isset($query)) {
 			$query = 'textFilter';
 		}
-		if (!empty($query) && !empty($_REQUEST[$query])) {
+		if (! empty($query) && ! empty($_REQUEST[$query])) {
 			$input .= ' value="' . $_REQUEST[$query] . '"';
-		} elseif (!empty($editorId)) {
+		} elseif (! empty($editorId)) {
 			$parentTabId = (empty($parentTabId) ? "" : $parentTabId);
 
 			$headerlib->add_jq_onready(
 				"
 				$(document).bind('editHelpOpened', function() {
-					var text = getTASelection('#".$editorId."'),
+					var text = getTASelection('#" . $editorId . "'),
 					possiblePlugin = text.split(/[ \(}]/)[0];
 					if (possiblePlugin.charAt(0) == '{') { //we have a plugin here
 						possiblePlugin = possiblePlugin.substring(1);
@@ -90,7 +94,7 @@ function smarty_function_listfilter($params, $smarty)
 							.val(possiblePlugin)
 							.trigger('keyup');
 
-						var parentTabId = '".$parentTabId."';
+						var parentTabId = '" . $parentTabId . "';
 						if (parentTabId) {
 							$('#help_sections a[href=#$parentTabId]').trigger('click');
 							var pluginTr = $('#plugins_help_table tr').not(':hidden');
@@ -113,7 +117,9 @@ function smarty_function_listfilter($params, $smarty)
 				. tr('Clear fiilter') . "'>$icon</a>";
 		$input .= '</div></div></div>';
 
-		if (!isset($selectors)) $selectors = ".$id table tr";
+		if (! isset($selectors)) {
+			$selectors = ".$id table tr";
+		}
 
 		$content = "
 $('#$id').keyup( function() {
@@ -130,7 +136,7 @@ $('#$id').keyup( function() {
 		$(this).show();
 	} );
 ";
-		if (!empty($parentSelector)) {
+		if (! empty($parentSelector)) {
 			$content .= "
 	\$('$parentSelector').show().each( function() {
 		if (\$('{$selectors}[data-tt-parent-id=' + \$(this).data('tt-id') + ']:visible:not(\"$exclude\")').length == 0) {	// excluded things don't count
@@ -145,7 +151,7 @@ $('#$id').keyup( function() {
 		$content .= '
 } );	// end keyup
 ';
-		if (!empty($query) && !empty($_REQUEST[$query])) {
+		if (! empty($query) && ! empty($_REQUEST[$query])) {
 			$content .= "
 setTimeout(function () {
 	if ($('#$id').val() != '') {

@@ -36,65 +36,68 @@ function smarty_outputfilter_highlight($source, $smarty)
 	$highlight = $_REQUEST['highlight'];
 
 	if (isset($_REQUEST['boolean']) && ($_REQUEST['boolean'] == 'on' || $_REQUEST['boolean'] == 'y')) {
-		$highlight = str_replace(array('(', ')', '*', '-', '"', '~', '<', '>'), ' ', $highlight);
+		$highlight = str_replace(['(', ')', '*', '-', '"', '~', '<', '>'], ' ', $highlight);
 	}
 
 	if ($prefs['feature_referer_highlight'] == 'y') {
 		$refererhi = _refererhi();
-		if (isset($refererhi) && !empty($refererhi)) {
-			if (isset($highlight) && !empty($highlight)) {
-				$highlight = $highlight." ".$refererhi;
+		if (isset($refererhi) && ! empty($refererhi)) {
+			if (isset($highlight) && ! empty($highlight)) {
+				$highlight = $highlight . " " . $refererhi;
 			} else {
 				$highlight = $refererhi;
 			}
 		}
 	}
-	if (!isset($highlight) || empty($highlight)) {
+	if (! isset($highlight) || empty($highlight)) {
 		return $source;
 	}
 
-	$matches = array();
+	$matches = [];
 
 	$end = 0;
 
-	if ( $end = strrpos($source, 'id="col2"') )
+	if ($end = strrpos($source, 'id="col2"')) {
 		$stop_pattern = '(<div[^>]*\s+id="col2".*)';
-	elseif ( $end = strrpos($source, 'id="col3"') )
+	} elseif ($end = strrpos($source, 'id="col3"')) {
 		$stop_pattern = '(<div[^>]*\s+id="col3".*)';
-	else
+	} else {
 		$stop_pattern = '';
+	}
 
 	$result = false;
 
-	if ( function_exists('mb_eregi') ) {
+	if (function_exists('mb_eregi')) {
 		// UTF8 support enabled
 		$result = mb_eregi('^(.*<article [^>]*>)(.*)' . $stop_pattern . '$', $source, $matches);
 	} else {
 		// We do not fallback on the preg_match function, since it is limited by 'pcre.backtrack_limit' which is too low by default (100K)
 		//  and this script will not be allowed to change its value on most systems
 		//
-		if ( ( $start = strpos($source, '<article ') ) > 0 ) {
-			$matches = array(
+		if (( $start = strpos($source, '<article ') ) > 0) {
+			$matches = [
 				$source,
 				substr($source, 0, $start),
 				( $end > $start ? substr($source, $start, $end - $start) : substr($source, $start) ),
 				( $end > $start ? substr($source, $end) : '' )
-			);
+			];
 			$result = true;
 		}
 	}
 
-	if ( ! $result )
+	if (! $result) {
 		return $source;
+	}
 	if (strlen($matches[2]) > ini_get('pcre.backtrack_limit')) {
 		return $source;
 	}
 
-	if ( ! isset( $matches[3] ) )
+	if (! isset($matches[3])) {
 		$matches[3] = '';
+	}
 
 	// Avoid highlight parsing in unknown cases where $matches[2] is empty, which will result in an empty page.
-	if ( $matches[2] != '' )
+	if ($matches[2] != '') {
 		$source = preg_replace_callback(
 			'~(?:<head>.*</head>                            # head blocks
 		|<div[^>]*nohighlight.*</div><!--nohighlight--> # div with nohightlight
@@ -105,13 +108,14 @@ function smarty_outputfilter_highlight($source, $smarty)
 			'_enlightColor',
 			$matches[2]
 		);
+	}
 
-	return $matches[1].$source.$matches[3];
+	return $matches[1] . $source . $matches[3];
 }
 
 function _enlightColor($matches)
 {
-	static $colword = array();
+	static $colword = [];
 	if (is_string($matches)) { // just to set the color array
 		// Wrap all the highlight words with tags bolding them and changing
 		// their background colors
@@ -119,18 +123,19 @@ function _enlightColor($matches)
 		$seaword = $seasep = '';
 		$wordArr = preg_split('~%20|\+|\s+~', $matches);
 		foreach ($wordArr as $word) {
-			if ($word == '')
+			if ($word == '') {
 				continue;
-			$seaword .= $seasep.preg_quote($word, '~');
-			$seasep ='|';
-			$colword[strtolower($word)] = 'highlight_word highlight_word_'.$i%5;
+			}
+			$seaword .= $seasep . preg_quote($word, '~');
+			$seasep = '|';
+			$colword[strtolower($word)] = 'highlight_word highlight_word_' . $i % 5;
 			$i++;
 		}
 		return $seaword;
 	}
 	// actual replacement callback
 	if (isset($matches[1])) {
-		return '<span class= "'.$colword[strtolower($matches[1])].'">' . $matches[1] . '</span>';
+		return '<span class= "' . $colword[strtolower($matches[1])] . '">' . $matches[1] . '</span>';
 	}
 	return $matches[0];
 }
@@ -146,7 +151,7 @@ function _refererhi()
 	parse_str($referer['query'], $vars);
 	if (isset($vars['q'])) {
 		return $vars['q'];
-	} else if (isset($vars['p'])) {
+	} elseif (isset($vars['p'])) {
 		return $vars['p'];
 	}
 	return '';

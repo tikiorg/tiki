@@ -5,7 +5,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
-function smarty_modifier_addongroupname($token) {
+function smarty_modifier_addongroupname($token)
+{
 	$api = new TikiAddons_Api_Group;
 	if ($ret = $api->getOrganicGroupName($token)) {
 		return $ret;

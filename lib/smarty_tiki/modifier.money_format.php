@@ -35,9 +35,9 @@
 function smarty_modifier_money_format($number, $local, $currency, $format = '%(#10n', $display = 0)
 {
 
-	if (!empty($local)) {
+	if (! empty($local)) {
 		$ret = setlocale(LC_MONETARY, $local);
-		if ($ret===false) {
+		if ($ret === false) {
 			echo "'$local' is not supported by this system.\n";
 			return;
 		}
@@ -45,17 +45,17 @@ function smarty_modifier_money_format($number, $local, $currency, $format = '%(#
 
 	$locale = localeconv();
 
-	if (!empty($currency)) {
+	if (! empty($currency)) {
 		$locale['int_curr_symbol'] = $currency;
 	}
 
 	//regex for format string
-	$regex = '/%((?:[\^!\-]|\+|\(|\=.)*)([0-9]+)?'.
+	$regex = '/%((?:[\^!\-]|\+|\(|\=.)*)([0-9]+)?' .
 				'(?:#([0-9]+))?(?:\.([0-9]+))?([in%])/';
 	preg_match_all($regex, $format, $matches, PREG_SET_ORDER);
 	foreach ($matches as $fmatch) {
 		$value = floatval($number);
-		$flags = array(
+		$flags = [
 			'fillchar' => preg_match('/\=(.)/', $fmatch[1], $match) ?
 							$match[1] : ' ',
 			'nogroup' => preg_match('/\^/', $fmatch[1]) > 0,
@@ -63,7 +63,7 @@ function smarty_modifier_money_format($number, $local, $currency, $format = '%(#
 							$match[0] : '+',
 			'nosimbol' => preg_match('/\!/', $fmatch[1]) > 0,
 			'isleft' => preg_match('/\-/', $fmatch[1]) > 0,
-		);
+		];
 		$width = trim($fmatch[2]) ? (int) $fmatch[2] : 0;
 		$left = trim($fmatch[3]) ? (int) $fmatch[3] : 0;
 		$right = trim($fmatch[4]) ? (int) $fmatch[4] : $locale['int_frac_digits'];
@@ -101,17 +101,17 @@ function smarty_modifier_money_format($number, $local, $currency, $format = '%(#
 				break;
 		}
 
-		if (!$flags['nosimbol']) {
+		if (! $flags['nosimbol']) {
 			$currency = $cprefix . ($conversion == 'i' ? $locale['int_curr_symbol'] : $locale['currency_symbol']) . $csuffix;
 		} else {
 			$currency = '';
 		}
 
-		if (!empty($currency) && $display == 0) {
-			$currency = '<span style="visibility:hidden">' . $currency .  '</span>';
+		if (! empty($currency) && $display == 0) {
+			$currency = '<span style="visibility:hidden">' . $currency . '</span>';
 		}
 
-		$space = $locale["{$letter}_sep_by_space"] && !empty($currency) && $display == 1 ? ' ' : '';
+		$space = $locale["{$letter}_sep_by_space"] && ! empty($currency) && $display == 1 ? ' ' : '';
 
 		$value = number_format(
 			$value,
@@ -141,7 +141,7 @@ function smarty_modifier_money_format($number, $local, $currency, $format = '%(#
 		}
 
 		$format = str_replace($fmatch[0], $value, $format);
-		if (!empty($rightpad) && $display == 0) {
+		if (! empty($rightpad) && $display == 0) {
 			$format .= '<span style="visibility:hidden">' . $rightpad . '</span>';
 		}
 	}

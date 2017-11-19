@@ -30,24 +30,27 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 function smarty_block_modules_list($params, $content, $smarty, &$repeat)
 {
-	if ( $repeat ) return;
+	if ($repeat) {
+		return;
+	}
 
-	if ( count($params["list"]) > 0 ) {
-		if ( $params["nonums"] == "y") {
+	if (count($params["list"]) > 0) {
+		if ($params["nonums"] == "y") {
 			$ret = '<ul>' . $content . '</ul>';
 		} else {
 			$ret = '<ol>' . $content . '</ol>';
 		}
 	} else {
-		if (empty($params['none']))
+		if (empty($params['none'])) {
 			$params['none'] = 'No records to display'; //get_strings tra('No records to display');
-		$ret = '<em>'.tra($params['none']).'</em>';
-	}		
+		}
+		$ret = '<em>' . tra($params['none']) . '</em>';
+	}
 	return $ret;
 }

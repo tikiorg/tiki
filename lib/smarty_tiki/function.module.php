@@ -20,18 +20,18 @@ function smarty_function_module($params, $smarty)
 		return tr("Missing %0 parameter", 'module');
 	}
 
-	$module_reference = array(
+	$module_reference = [
 		'moduleId' => $moduleId,
 		'name' => $params['module'],
 		'params' => $params,
 		'rows' => 10,
 		'position' => null,
 		'ord' => null,
-		'cache_time'=> 0,
-	);
+		'cache_time' => 0,
+	];
 
-	foreach (array('module_style', 'rows') as $key) {
-		if (!empty($params[$key])) {
+	foreach (['module_style', 'rows'] as $key) {
+		if (! empty($params[$key])) {
 			$module_reference[$key] = $params[$key];
 		}
 	}

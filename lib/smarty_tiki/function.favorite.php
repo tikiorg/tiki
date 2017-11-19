@@ -18,28 +18,27 @@ function smarty_function_favorite($params, $smarty)
 	$smarty = TikiLib::lib('smarty');
 	$smarty->loadPlugin('smarty_modifier_escape');
 
-	$url = $servicelib->getUrl(array(
+	$url = $servicelib->getUrl([
 		'controller' => 'favorite',
 		'action' => 'toggle',
 		'type' => $params['type'],
 		'object' => $params['object'],
-	));
+	]);
 
 	$url = smarty_modifier_escape($url);
 	$e_user = smarty_modifier_escape($user);
 
-	if (isset($params['label'])){
+	if (isset($params['label'])) {
 		$label = $params['label'];
-	}else{
+	} else {
 		$label = tr('Favorite');
 	}
 
-	if (isset($params['button_classes'])){
-		$button_classes= $params['button_classes'];
-	}else{
+	if (isset($params['button_classes'])) {
+		$button_classes = $params['button_classes'];
+	} else {
 		$button_classes = "btn btn-default";
 	}
 
-	return '<a class="'. $button_classes .' favorite-toggle" href="' . $url . '" data-key="favorite_' . $e_user . '"> ' . $label . '</a>';
+	return '<a class="' . $button_classes . ' favorite-toggle" href="' . $url . '" data-key="favorite_' . $e_user . '"> ' . $label . '</a>';
 }
-

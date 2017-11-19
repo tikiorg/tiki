@@ -26,15 +26,15 @@ function smarty_function_memusage($params, $smarty)
 	if ($memusage > 0) {
 		$memunit = "B";
 		if ($memusage > 1024) {
-			$memusage = $memusage/1024;
+			$memusage = $memusage / 1024;
 			$memunit = "kB";
 		}
-		if ($memusage>1024) {
-			$memusage = $memusage/1024;
+		if ($memusage > 1024) {
+			$memusage = $memusage / 1024;
 			$memunit = "MB";
 		}
-		if ($memusage>1024) {
-			$memusage = $memusage/1024;
+		if ($memusage > 1024) {
+			$memusage = $memusage / 1024;
 			$memunit = "GB";
 		}
 		print(number_format($memusage, 2) . $memunit);

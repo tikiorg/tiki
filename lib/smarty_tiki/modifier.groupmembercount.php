@@ -5,6 +5,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
-function smarty_modifier_groupmembercount($group) {
+function smarty_modifier_groupmembercount($group)
+{
 	return TikiLib::lib('user')->nb_users_in_group($group);
 }

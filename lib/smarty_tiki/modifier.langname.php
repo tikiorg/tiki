@@ -13,8 +13,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_modifier_langname($lang)
 {
-	if ( empty($lang) )
+	if (empty($lang)) {
 		return '';
+	}
 
 	include('lang/langmapping.php');
 	return empty($langmapping[$lang]) ? $lang : tra($langmapping[$lang][0]);

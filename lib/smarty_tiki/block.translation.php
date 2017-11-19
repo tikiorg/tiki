@@ -15,7 +15,7 @@
  * Type:     block function<br>
  * Name:     translation<br>
  * Purpose:  Support many languages in a template, only showing block
-             if language matches
+			 if language matches
  * @param array
  * <pre>
  * Params:   lang: string (language, ex: en, pt-br)
@@ -27,8 +27,8 @@
 
 function smarty_block_translation($params, $content, $smarty, &$repeat)
 {
-	if ( !$repeat && !empty($content) ) {
-  	$lang = $params['lang'];
+	if (! $repeat && ! empty($content)) {
+		$lang = $params['lang'];
 		if ($smarty->getTemplateVars('language') == $lang) {
 			return $content;
 		} else {

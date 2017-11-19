@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function smarty_function_multilike( $params, $smarty )
+function smarty_function_multilike($params, $smarty)
 {
 	global $prefs, $user;
 
@@ -13,7 +13,7 @@ function smarty_function_multilike( $params, $smarty )
 
 	$multivalues = get_multivalues_from_pref($params['relation_prefix']);
 
-	$item = array();
+	$item = [];
 	foreach ($multivalues as $mv) {
 		if ($mv['relation_prefix'] == $params['relation_prefix']) {
 			$config = $mv;
@@ -25,16 +25,16 @@ function smarty_function_multilike( $params, $smarty )
 	}
 	$totalCount = 0;
 	$totalPoints = 0;
-	$buttons = array();
-	foreach ($config['labels'] as $key=>$label) {
-		$button = array();
+	$buttons = [];
+	foreach ($config['labels'] as $key => $label) {
+		$button = [];
 		$button['index'] = $key;
 		$button['id'] = $config['ids'][$key];
 		if (isset($config['values'])) {
 			$button['value'] = $config['values'][$key];
 		}
 		$button['label'] = $label;
-		$button['relation'] = $params['relation_prefix'].".".$button['id'];
+		$button['relation'] = $params['relation_prefix'] . "." . $button['id'];
 
 		//get existing stats
 		$button['count'] = $relationlib->get_relation_count($button['relation'], $params['type'], $params['object']);
@@ -45,7 +45,7 @@ function smarty_function_multilike( $params, $smarty )
 		}
 
 		// set whether already selected
-		if ($relationlib->get_relation_id( $button['relation'], "user", $user, $params['type'], $params['object'] )) {
+		if ($relationlib->get_relation_id($button['relation'], "user", $user, $params['type'], $params['object'])) {
 			$button['selected'] = 1;
 			$smarty->assign('has_selection', 1);
 		} else {
@@ -54,43 +54,43 @@ function smarty_function_multilike( $params, $smarty )
 		$buttons[] = $button;
 	}
 
-	if(!empty($params['onlyShowTotalPoints'])) {
+	if (! empty($params['onlyShowTotalPoints'])) {
 		return $totalPoints;
 	}
 
-	if(!empty($params['onlyShowTotalLikes'])) {
+	if (! empty($params['onlyShowTotalLikes'])) {
 		return $totalCount;
 	}
 
-	if(!empty($params['showOptionTotals'])) {
+	if (! empty($params['showOptionTotals'])) {
 		$smarty->assign("show_option_totals", true);
 	}
 
-	if(!empty($params['showInPopup']) && $params['showInPopup'] == 'y') {
+	if (! empty($params['showInPopup']) && $params['showInPopup'] == 'y') {
 		$smarty->assign("show_in_popup", true);
 	}
-	$smarty->assign("popup_placement","left"); //default
-	if(!empty($params['popupPlacement'])) {
+	$smarty->assign("popup_placement", "left"); //default
+	if (! empty($params['popupPlacement'])) {
 		$smarty->assign("popup_placement", $params['popupPlacement']);
 	}
 
-	if(!empty($params['showPoints']) && strtolower($params['showPoints']) != 'n') {
+	if (! empty($params['showPoints']) && strtolower($params['showPoints']) != 'n') {
 		$smarty->assign("show_points", true);
 	}
 
-	if(!empty($params['showLikes']) && strtolower($params['showLikes']) == 'n') {
+	if (! empty($params['showLikes']) && strtolower($params['showLikes']) == 'n') {
 		$smarty->assign("show_likes", false);
 	} else {
 		$smarty->assign("show_likes", true);
 	}
 
-	if(!empty($params['choiceLabel'])) {
+	if (! empty($params['choiceLabel'])) {
 		$smarty->assign("choice_label", $params['choiceLabel']);
 	} else {
 		$smarty->assign("choice_label", "I found this:");
 	}
 
-	if(!empty($params['orientation']) && strtolower($params['orientation']) == 'vertical') {
+	if (! empty($params['orientation']) && strtolower($params['orientation']) == 'vertical') {
 		$smarty->assign("orientation", 'vertical');
 	} else {
 		$smarty->assign("orientation", 'horizontal');
@@ -120,22 +120,23 @@ function smarty_function_multilike( $params, $smarty )
  * @param $mv
  * @return array
  */
-function get_multivalues_from_pref() {
+function get_multivalues_from_pref()
+{
 	global $prefs;
-	$data = (explode("\n\n",trim($prefs['user_multilike_config'])));
-	$configurations = array();
+	$data = (explode("\n\n", trim($prefs['user_multilike_config'])));
+	$configurations = [];
 	foreach ($data as $config) {
 		preg_match_all("/(\S*)\s*=\s*(.*)/", $config, $temp_arr);
-		$config = array_combine($temp_arr[1],$temp_arr[2]);
+		$config = array_combine($temp_arr[1], $temp_arr[2]);
 		if ($config['values']) {
 			$config['values'] = array_map('trim', explode(',', $config['values']));
 		}
 		$config['labels'] = array_map('trim', explode(',', $config['labels']));
 		foreach ($config['labels'] as &$label) {
-		       $label = tra($label);   
+			   $label = tra($label);
 		}
 		unset($label);
-		if (empty($config['ids'])){
+		if (empty($config['ids'])) {
 			return;
 		}
 		$config['ids'] = array_map('trim', explode(',', $config['ids']));

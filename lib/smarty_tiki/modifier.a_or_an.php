@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /*
@@ -25,12 +25,12 @@ function smarty_modifier_a_or_an($string, $caps = false)
 	if (substr($prefs['language'], 0, 2) != 'en') {
 		return $string;
 	}
-	$vowels = array('a', 'e', 'i', 'o', 'u');
+	$vowels = ['a', 'e', 'i', 'o', 'u'];
 	$initial = strtolower(substr($string, 0, 1));
 	if (in_array($initial, $vowels)) {
 		$prefix = $caps ? 'An ' : 'an ';
 	} else {
-		$prefix = $caps ? 'A ' : 'a ';	
+		$prefix = $caps ? 'A ' : 'a ';
 	}
 	return $prefix . $string;
 }

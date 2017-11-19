@@ -7,8 +7,10 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_block_addonview($params, $content, $smarty, &$repeat)
 {
-	if ( $repeat ) return;
-	
+	if ($repeat) {
+		return;
+	}
+
 	extract($params, EXTR_SKIP);
 
 	if (empty($params['package']) || empty($params['view'])) {
@@ -18,7 +20,7 @@ function smarty_block_addonview($params, $content, $smarty, &$repeat)
 	$parts = explode('/', $params['package']);
 	$path = TIKI_PATH . '/addons/' . $parts[0] . '_' . $parts[1] . '/views/' . $params['view'] . '.php';
 
-	if (!file_exists($path)) {
+	if (! file_exists($path)) {
 		return tra("Error: Unable to locate view file for the package.");
 	}
 
@@ -26,16 +28,16 @@ function smarty_block_addonview($params, $content, $smarty, &$repeat)
 
 	$functionname = "tikiaddon\\" . $parts[0] . "\\" . $parts[1] . "\\" . $params['view'];
 
-	if (!function_exists($functionname)) {
+	if (! function_exists($functionname)) {
 		return tra("Error: Unable to locate function name for the view.");
 	}
 
 	$prefname = 'ta_' . $parts[0] . '_' . $parts[1] . '_on';
 	$folder = $parts[0] . '_' . $parts[1];
-	if (!isset($GLOBALS['prefs'][$prefname]) || $GLOBALS['prefs'][$prefname] != 'y') {
+	if (! isset($GLOBALS['prefs'][$prefname]) || $GLOBALS['prefs'][$prefname] != 'y') {
 		return tra('Addon is not activated: ') . $folder;
 	}
-	
+
 	if ($params['assign']) {
 		$smarty->assign($params['assign'], $functionname($content, $params, $smarty));
 	} else {

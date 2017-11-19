@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
-function smarty_modifier_tasklink($taskId, $class_name="link", $offset="0", $sort_mode="priority_desc")
+function smarty_modifier_tasklink($taskId, $class_name = "link", $offset = "0", $sort_mode = "priority_desc")
 {
 	global $tasklib, $user, $prefs, $smarty;
 	$tikilib = TikiLib::lib('tiki');
@@ -23,20 +23,20 @@ function smarty_modifier_tasklink($taskId, $class_name="link", $offset="0", $sor
 		$description = "";
 
 		$my_length = strlen($info['description']);
-		$my_pos=0;
+		$my_pos = 0;
 		$line = 0;
-		if ( $my_length > 0 ) {
+		if ($my_length > 0) {
 			do {
 				$line++;
-				$my_pos = strpos($info['description'], "\n", ($my_pos+1));
-			} while (($line <= 15) && ($my_pos!=''));
+				$my_pos = strpos($info['description'], "\n", ($my_pos + 1));
+			} while (($line <= 15) && ($my_pos != ''));
 		}
 
 		if (($my_length >= 1300) || ($line >= 16)) {
 			if ($line < 15) {
 				$my_pos = 1300;
 			}
-			$description .= substr($info['description'], 0, min(1300, $my_pos+1));
+			$description .= substr($info['description'], 0, min(1300, $my_pos + 1));
 			$append = "<br /><center><span class=\'highlight\'>" . tra("Text cut here") . "</span></center>";
 		} else {
 			$description = $info['description'];
@@ -50,7 +50,7 @@ function smarty_modifier_tasklink($taskId, $class_name="link", $offset="0", $sor
 			' <b>' . $info['user'] . '</b>.<br />' . tra("Priority") . ': <b>' . $info['priority'] . '</b>, (<b>' .
 					$info['percentage'] . '%</b>) ' . tra('done') . '.<br />';
 
-		if ($info['start'] != 0 ) {
+		if ($info['start'] != 0) {
 			$tooltipContent .= tra("Start date:") . " " . $tikilib->date_format("%H:%M -- %d. %e. %Y", $info['start']) . "<br />";
 		} else {
 			$tooltipContent .= tra("Start date:") . " -<br />";
@@ -65,7 +65,7 @@ function smarty_modifier_tasklink($taskId, $class_name="link", $offset="0", $sor
 		$tooltipContent .= "<hr />" . $description;
 
 		$smarty->loadPlugin('smarty_function_popup');
-		$popupAttributes = smarty_function_popup(array('text' => $tooltipContent, 'fullhtml' => true), $smarty);
+		$popupAttributes = smarty_function_popup(['text' => $tooltipContent, 'fullhtml' => true], $smarty);
 	} else {
 		$popupAttributes = '';
 	}

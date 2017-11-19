@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 // Param: 'id' or 'label'
@@ -17,7 +17,7 @@ function smarty_function_interactivetranslation($params, $smarty)
 	$headerlib = TikiLib::lib('header');
 
 	$strings = get_collected_strings();
-	if ( count($strings) == 0 ) {
+	if (count($strings) == 0) {
 		return;
 	}
 
@@ -28,11 +28,11 @@ function smarty_function_interactivetranslation($params, $smarty)
 	// add wrench icon link
 	$smarty->loadPlugin('smarty_block_self_link');
 	$help .= smarty_block_self_link(
-		array(
-			'_icon'=>'wrench',
-			'_script'=>'tiki-edit_languages.php',
-			'_title'=>tra('Click here to go to Edit Languages')
-		),
+		[
+			'_icon' => 'wrench',
+			'_script' => 'tiki-edit_languages.php',
+			'_title' => tra('Click here to go to Edit Languages')
+		],
 		'',
 		$smarty
 	);
@@ -47,14 +47,14 @@ JS;
 	return $smarty->fetch('interactive_translation_box.tpl');
 }
 
-function sort_strings_by_length( $a, $b )
+function sort_strings_by_length($a, $b)
 {
 	$a = strlen($a[1]);
 	$b = strlen($b[1]);
 
-	if ( $a == $b ) {
+	if ($a == $b) {
 		return 0;
-	} elseif ( $a > $b ) {
+	} elseif ($a > $b) {
 		return -1;
 	} else {
 		return 1;

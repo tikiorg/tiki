@@ -17,7 +17,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * @throws Exception
  */
 
-function smarty_modifier_in_group($group, $auser = '') {
+function smarty_modifier_in_group($group, $auser = '')
+{
 	global $user;
 
 	if (! $auser) {

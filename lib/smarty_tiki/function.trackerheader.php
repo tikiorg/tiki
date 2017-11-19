@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /* params
@@ -22,29 +22,29 @@ function smarty_function_trackerheader($params, $smarty)
 	global $prefs;
 	$headerlib = TikiLib::lib('header');
 	$output = $js = '';
-	static $trackerheaderStack = array();
+	static $trackerheaderStack = [];
 	static $iTrackerHeader = 0;
 	$last = count($trackerheaderStack);
-	$default = array('level'=>3, 'inTable'=>'');
+	$default = ['level' => 3, 'inTable' => ''];
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
 
-	if (!empty($inTable)) {
+	if (! empty($inTable)) {
 		$output .= '</table>';
 	}
-	while (! empty($last) && $level <= $trackerheaderStack[$last -1]) { // need to close block
+	while (! empty($last) && $level <= $trackerheaderStack[$last - 1]) { // need to close block
 		$output .= "</div>";
 		array_pop($trackerheaderStack);
 		--$last;
 	}
-	if (!empty($title)) { // new header
+	if (! empty($title)) { // new header
 		array_push($trackerheaderStack, $level);
-		$output .= "<!--PUSH".count($trackerheaderStack)." -->";
+		$output .= "<!--PUSH" . count($trackerheaderStack) . " -->";
 		$id = "trackerHeader_$iTrackerHeader";
 		$div_id = "block_$id";
 		$output .= "<h$level id=\"$id\"";
 		if ($prefs['javascript_enabled'] == 'y' && ($toggle == 'o' || $toggle == 'c')) {
-			$output .= ' class="'.($toggle == 'c'?'trackerHeaderClose':'trackerHeaderOpen').'"';
+			$output .= ' class="' . ($toggle == 'c' ? 'trackerHeaderClose' : 'trackerHeaderOpen') . '"';
 		}
 		$output .= '>';
 		$output .= "$title";
@@ -58,17 +58,17 @@ function smarty_function_trackerheader($params, $smarty)
 			$headerlib->add_jq_onready($js);
 			if ($toggle == 'c') {
 				$headerlib->add_jq_onready("\$('#$div_id').hide();");
-			}			
+			}
 		}
 		$output .= '<';
-		$output .= (isset($inTable) && $inTable == 'y')?'tbody': 'div';
+		$output .= (isset($inTable) && $inTable == 'y') ? 'tbody' : 'div';
 		$output .= " id=\"$div_id\">";
 		++$iTrackerHeader;
 	} else {
 		$last = 0;
-		$trackerheaderStack = array();
+		$trackerheaderStack = [];
 	}
-	if (!empty($inTable)) {
+	if (! empty($inTable)) {
 		$output .= "<table class=\"$inTable\">";
 	}
 	return $output;

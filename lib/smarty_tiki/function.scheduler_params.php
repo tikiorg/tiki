@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 function smarty_function_scheduler_params($params, $smarty)
@@ -19,7 +19,7 @@ function smarty_function_scheduler_params($params, $smarty)
 
 	$className = 'Scheduler_Task_' . $params['name'];
 
-	if(!class_exists($className)) {
+	if (! class_exists($className)) {
 		return;
 	}
 
@@ -32,29 +32,28 @@ function smarty_function_scheduler_params($params, $smarty)
 	$html = '';
 
 	foreach ($inputParams as $key => $param) {
-
 		$escapedParam = smarty_modifier_escape($schedulerParams[$key]);
-		$inputKey = $taskName .'_' . $key;
+		$inputKey = $taskName . '_' . $key;
 
 		switch ($param['type']) {
 			case 'text':
-				$input = '<input type="text" id="'. $inputKey .'" class="form-control" name="'. $inputKey .'" value="' . $escapedParam . '">';
+				$input = '<input type="text" id="' . $inputKey . '" class="form-control" name="' . $inputKey . '" value="' . $escapedParam . '">';
 				break;
 			case 'password':
-				$input = '<input type="password" id="'. $inputKey .'" class="form-control" name="'. $inputKey .'" value="' . $escapedParam . '">';
+				$input = '<input type="password" id="' . $inputKey . '" class="form-control" name="' . $inputKey . '" value="' . $escapedParam . '">';
 				break;
 			case 'textarea':
-				$input = '<textarea id="'. $inputKey .'" class="form-control" name="'. $inputKey .'"">' . $escapedParam .'</textarea>';
+				$input = '<textarea id="' . $inputKey . '" class="form-control" name="' . $inputKey . '"">' . $escapedParam . '</textarea>';
 				break;
 			case 'select':
 				//@todo implement
 				break;
 		}
 
-		$required = !empty($param['required']) ? ' *' : '';
+		$required = ! empty($param['required']) ? ' *' : '';
 
 		$infoHtml = '';
-		if (!empty($param['description'])) {
+		if (! empty($param['description'])) {
 			$description = smarty_modifier_escape($param['description']);
 			$icon = smarty_function_icon(['name' => 'information'], $smarty);
 
@@ -63,7 +62,6 @@ function smarty_function_scheduler_params($params, $smarty)
 	{$icon}
 </a>
 HTML;
-
 		}
 
 		$html .= <<<HTML
@@ -78,5 +76,4 @@ HTML;
 	}
 
 	echo $html;
-
 }

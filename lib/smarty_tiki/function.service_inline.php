@@ -38,4 +38,3 @@ function smarty_function_service_inline($params, $smarty)
 		}
 	}
 }
-

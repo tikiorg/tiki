@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -18,7 +18,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * @return string
  */
 
-function smarty_modifier_tiki_short_date($string, $same='y')
+function smarty_modifier_tiki_short_date($string, $same = 'y')
 {
 	global $prefs;
 	$smarty = TikiLib::lib('smarty');
@@ -27,8 +27,8 @@ function smarty_modifier_tiki_short_date($string, $same='y')
 
 	if ($prefs['jquery_timeago'] === 'y' && $same === 'y') {
 		TikiLib::lib('header')->add_jq_onready('$("time.timeago").timeago();');
-		return '<time class="timeago" datetime="' . TikiLib::date_format('c', $string, false, 5, false) .  '">' . $date . '</time>';
-	} else  {
+		return '<time class="timeago" datetime="' . TikiLib::date_format('c', $string, false, 5, false) . '">' . $date . '</time>';
+	} else {
 		return $date;
 	}
 }

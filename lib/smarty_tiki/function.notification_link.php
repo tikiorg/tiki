@@ -23,4 +23,3 @@ function smarty_function_notification_link($params)
 	$smarty->assign('monitor_link', $params);
 	return $smarty->fetch('monitor/notification_link.tpl');
 }
-

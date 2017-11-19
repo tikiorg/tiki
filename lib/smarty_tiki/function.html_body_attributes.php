@@ -20,24 +20,24 @@ function smarty_function_html_body_attributes($params, $smarty)
 
 	//filename of script called (i.e. tiki-index, tiki-user_information, tiki-view_forum, etc), then sanitize chars
 	$script_filename = pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_FILENAME);
-	$class .= ' ' . filter_var($script_filename, FILTER_SANITIZE_SPECIAL_CHARS, array(FILTER_FLAG_STRIP_LOW,FILTER_FLAG_STRIP_HIGH)) . ' ';
-	
+	$class .= ' ' . filter_var($script_filename, FILTER_SANITIZE_SPECIAL_CHARS, [FILTER_FLAG_STRIP_LOW,FILTER_FLAG_STRIP_HIGH]) . ' ';
+
 	if (isset($section_class)) {
 		$class .= $section_class;
 	}
-	
+
 	if ($prefs['feature_fixed_width'] == 'y') {
 		$class .= ' fixed_width ';
 	}
 
-    if ($prefs['site_layout']) {
-        $class .= ' layout_' . $prefs['site_layout'];
-    }
-	
-	if (!empty($_REQUEST['filegals_manager'])) {
+	if ($prefs['site_layout']) {
+		$class .= ' layout_' . $prefs['site_layout'];
+	}
+
+	if (! empty($_REQUEST['filegals_manager'])) {
 		$class .= ' filegal_popup ';
 	}
-		
+
 	if (isset($_SESSION['fullscreen']) && $_SESSION['fullscreen'] == 'y') {
 		$class .= empty($class) ? ' ' : '';
 		$class .= ' fullscreen';
@@ -46,7 +46,7 @@ function smarty_function_html_body_attributes($params, $smarty)
 	if (isset($prefs['layout_add_body_group_class']) && $prefs['layout_add_body_group_class'] === 'y') {
 		if (empty($user)) {
 			$class .= ' grp_Anonymous';
-		} else if (TikiLib::lib('user')->user_is_in_group($user, 'Registered')) {
+		} elseif (TikiLib::lib('user')->user_is_in_group($user, 'Registered')) {
 			$class .= ' grp_Registered';
 			if (TikiLib::lib('user')->user_is_in_group($user, 'Admins')) {
 				$class .= ' grp_Admins';
@@ -54,7 +54,7 @@ function smarty_function_html_body_attributes($params, $smarty)
 		}
 	}
 
-	if ($prefs['feature_perspective'] == 'y' && !empty($_SESSION['current_perspective'])) {
+	if ($prefs['feature_perspective'] == 'y' && ! empty($_SESSION['current_perspective'])) {
 		$class .= ' perspective' . $_SESSION['current_perspective'];
 		$class .= ' perspective_' . preg_replace("/[^a-z0-9]/", "_", strtolower($_SESSION['current_perspective_name']));
 	}
@@ -67,11 +67,11 @@ function smarty_function_html_body_attributes($params, $smarty)
 		}
 	}
 
-	if (!empty($page) && $page == $prefs['tikiIndex']) {
+	if (! empty($page) && $page == $prefs['tikiIndex']) {
 		$class .= ' homepage';
 	}
 
-	if (!empty($pageLang)) {
+	if (! empty($pageLang)) {
 		$class .= ' ' . $pageLang;
 	} else {
 		$class .= ' ' . $prefs['language'];
@@ -85,14 +85,13 @@ function smarty_function_html_body_attributes($params, $smarty)
 		$class .= ' hide_zone_right';
 	}
 
-	if (!empty($onload)) {
+	if (! empty($onload)) {
 		$back .= ' onload="' . $onload . '"';
 	}
-	
-	if (!empty($class)) {
+
+	if (! empty($class)) {
 		$back .= ' class="' . $class . '"';
 	}
-	
+
 	return $back;
-	
 }

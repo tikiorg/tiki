@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /*
@@ -19,6 +19,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function smarty_function_cookie_jar($params, $smarty)
 {
-	if ( empty($params['name']) ) return;
+	if (empty($params['name'])) {
+		return;
+	}
 	return getCookie($params['name']);
 }

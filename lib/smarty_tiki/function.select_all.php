@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /*
@@ -23,8 +23,10 @@ function smarty_function_select_all($params, $smarty)
 {
 	global $prefs;
 	static $checkbox_count = -1;
-	
-	if ( $prefs['javascript_enabled'] == 'n' || ! is_array($params) || empty($params['checkbox_names']) ) return;
+
+	if ($prefs['javascript_enabled'] == 'n' || ! is_array($params) || empty($params['checkbox_names'])) {
+		return;
+	}
 
 	$checkbox_count++;
 	if ($checkbox_count > 0) {
@@ -34,7 +36,7 @@ function smarty_function_select_all($params, $smarty)
 	}
 	$onclick = '';
 	$checkbox_names = $params['checkbox_names'];
-	if (!is_array($checkbox_names)) {
+	if (! is_array($checkbox_names)) {
 		$checkbox_names = explode(',', $checkbox_names);
 	}
 	if (isset($params['hidden_too']) && $params['hidden_too'] === 'y') {
@@ -43,16 +45,16 @@ function smarty_function_select_all($params, $smarty)
 		$hidden_too = '';
 	}
 
-  $smarty->loadPlugin('smarty_modifier_escape');
+	$smarty->loadPlugin('smarty_modifier_escape');
 
-	foreach ( $checkbox_names as $cn ) {
+	foreach ($checkbox_names as $cn) {
 		$onclick .= "switchCheckboxes(this.form,'" . htmlspecialchars(smarty_modifier_escape($cn, 'javascript')) . "',this.checked$hidden_too);";
 	}
 
-	return "<div>\n" . 
-			'<input name="switcher'.$id.'" id="clickall'.$id.'" type="checkbox" onclick="' . $onclick . '"' . 
+	return "<div>\n" .
+			'<input name="switcher' . $id . '" id="clickall' . $id . '" type="checkbox" onclick="' . $onclick . '"' .
 			( empty($params['label']) ? ' title="' . tra('Select All') . '"' : '' ) .
 			'/>' . "\n" .
-			( ! empty($params['label']) ? '<label for="clickall'.$id.'">' . $params['label'] . "</label>\n" : '' ) . 
+			( ! empty($params['label']) ? '<label for="clickall' . $id . '">' . $params['label'] . "</label>\n" : '' ) .
 			"</div>\n";
 }

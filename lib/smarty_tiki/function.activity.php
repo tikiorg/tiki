@@ -8,7 +8,7 @@
 function smarty_function_activity($params)
 {
 	$smarty = TikiLib::lib('smarty');
-	
+
 	if (isset($params['info'])) {
 		$activity = $params['info'];
 	} else {
@@ -25,7 +25,7 @@ function smarty_function_activity($params)
 	}
 
 	$smarty->assign('activity', $activity);
-	$smarty->assign('activity_format', !empty($params['format']) ? $params['format'] : 'default');
+	$smarty->assign('activity_format', ! empty($params['format']) ? $params['format'] : 'default');
 	$templateName = 'activity/' . $activity['event_type'] . '.tpl';
 
 	if (empty($smarty->get_filename($templateName))) {
@@ -33,4 +33,3 @@ function smarty_function_activity($params)
 	}
 	return $smarty->fetch($templateName);
 }
-
