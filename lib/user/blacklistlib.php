@@ -42,8 +42,7 @@ class blacklistLib extends TikiLib
 	{
 		$query = 'DROP TABLE IF EXISTS tiki_password_index;';
 
-		$this->query($query, array());
-
+		$this->query($query, []);
 	}
 
 	/**
@@ -58,7 +57,7 @@ class blacklistLib extends TikiLib
 `numchar` BOOLEAN NULL DEFAULT NULL ,
 `special` BOOLEAN NULL , PRIMARY KEY (`id`), UNIQUE (`password`)) ENGINE = InnoDB;';
 
-		$this->query($query, array());
+		$this->query($query, []);
 	}
 
 	/**
@@ -71,13 +70,13 @@ class blacklistLib extends TikiLib
 	 *                          be running mysql locally and have permission to use it
 	 *                          however it can handle much larger sets of data.
 	 */
-	public function loadPassIndex($filename,$load=false)
+	public function loadPassIndex($filename, $load = false)
 	{
 
 		if ($load) {
 			$query = "LOAD DATA INFILE '" . $filename . "' IGNORE INTO TABLE `tiki_password_index` LINES TERMINATED BY '\n' (`password`);";
-			$this->query($query, array());
-		}else {
+			$this->query($query, []);
+		} else {
 			$passwords = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 			$passwords = array_map('strtolower', $passwords);
 			$passwords = array_map('trim', $passwords);
@@ -93,8 +92,7 @@ class blacklistLib extends TikiLib
 		$query = 'UPDATE tiki_password_index SET password = LOWER(password), length = CHAR_LENGTH(password), numchar = IF(password REGEXP \'[a-z]\' && password REGEXP \'[0-9]\',1,0), special = password REGEXP \'[!@#$%^&*()=+?><\\,.`;:{}~\\\'/"]\'';
 // the above indexes the password list with length, if the pasword contains both a letter and number, and if it contains special charactes (except for [], casue i couldnt figure it out!
 
-		$this->query($query, array());
-
+		$this->query($query, []);
 	}
 
 	/**
@@ -110,13 +108,15 @@ class blacklistLib extends TikiLib
 		$query = 'SELECT 1 FROM information_schema.COLUMNS
 WHERE table_name = \'tiki_password_index\'
 LIMIT 1;';
-		$result = $this->query($query, array());
+		$result = $this->query($query, []);
 		$tableExists = $result->fetchRow();
-		if ($tableExists[1] != 1) return 0;
+		if ($tableExists[1] != 1) {
+			return 0;
+		}
 
 // if table does exits, find number of results and return.
 		$query = 'SELECT MAX(id) FROM tiki_password_index';
-		$result = $this->query($query, array());
+		$result = $this->query($query, []);
 		$num_rows = $result->fetchRow();
 
 		return $num_rows['MAX(id)'];
@@ -135,45 +135,51 @@ LIMIT 1;';
 		global $prefs;
 
 		$query = 'SELECT password FROM tiki_password_index WHERE length >= ?';
-		if ($prefs['pass_chr_special']) $query .= ' && special';
-		if ($prefs['pass_chr_num']) $query .= ' && numchar';
+		if ($prefs['pass_chr_special']) {
+			$query .= ' && special';
+		}
+		if ($prefs['pass_chr_num']) {
+			$query .= ' && numchar';
+		}
 		$query .= ' ORDER BY id ASC LIMIT ' . $this->limit;
 
-		$result = $this->query($query, array($prefs['min_pass_length']));
+		$result = $this->query($query, [$prefs['min_pass_length']]);
 		$this->actual = $result->NumRows();
-		if ($this->actual == 0 ){
+		if ($this->actual == 0) {
 			Feedback::error(tr('There is no passwords that fit your criteria. You will need a more extensive word list to generate a password list.'));
-		}elseif ($this->actual < $this->limit){
+		} elseif ($this->actual < $this->limit) {
 			Feedback::warning("There wasn't enough words to meet your password limit. There was $this->actual passwords blacklisted.");
 		}
 
-		if ($toDisk){
+		if ($toDisk) {
 			$filename = $this->generateBlacklistName();
-			if (!is_dir(dirname($filename)))
-				if (!mkdir(dirname($filename))){	// if the directory isnt there create it.
+			if (! is_dir(dirname($filename))) {
+				if (! mkdir(dirname($filename))) {	// if the directory isnt there create it.
 					Feedback::error(tr('Could not create /storage/pass_blacklists directory.'));
-				return false;
+					return false;
+				}
 			}
-			if (file_exists($filename))
-				if (unlink($filename)){			// if the file already exists, then delete.
+			if (file_exists($filename)) {
+				if (unlink($filename)) {			// if the file already exists, then delete.
 					Feedback::warning(tr('Existing password blacklist file was overwritten.'));
-				}else{
+				} else {
 					Feedback::error(tr('Existing password blacklist file could not be overwritten.'));
 					return false;
 				}
-			$pointer = @fopen($filename,'x');
-			if (!$pointer){
+			}
+			$pointer = @fopen($filename, 'x');
+			if (! $pointer) {
 				Feedback::error(tr('File Error. Password file not created.'));
 				return false;
 			};
 			while ($foo = $result->fetchrow()) {
-				if (!fwrite($pointer, $foo['password'] . PHP_EOL)){
+				if (! fwrite($pointer, $foo['password'] . PHP_EOL)) {
 					Feedback::error(tr('File Error. Password file generation interrupted.'));
 					return false;
 				}
 			}
 			fclose($pointer);
-		}else{
+		} else {
 			while ($foo = $result->fetchrow()) {
 				echo $foo['password'] . PHP_EOL;
 			}
@@ -195,13 +201,17 @@ LIMIT 1;';
 		global $prefs;
 
 		$filename = '';
-		if ($asFile) $filename = 'storage/pass_blacklists/'; // directory
+		if ($asFile) {
+			$filename = 'storage/pass_blacklists/'; // directory
+		}
 		$filename .= $prefs['pass_chr_num'];
 		$filename .= '-' . $prefs['pass_chr_special'];
 		$filename .= '-' . $prefs['min_pass_length'];
 		$filename .= '-1-'; // indicates user created file
 		$filename .= $this->actual;
-		if (!$asFile) return $filename;
+		if (! $asFile) {
+			return $filename;
+		}
 		$filename .= '.txt';
 
 		return $filename;
@@ -209,10 +219,13 @@ LIMIT 1;';
 
 	public function whatFileUsing()
 	{
-		if ($GLOBALS['prefs']['pass_blacklist'] == 'n' || !isset($GLOBALS['prefs']['pass_blacklist'])) return 'Disabled';
-		else if ($GLOBALS['prefs']['pass_blacklist_file'] == 'auto') return $this->readableBlackName(explode('-',$GLOBALS['prefs']['pass_auto_blacklist'])).' - Auto Selected';
-		else return $this->readableBlackName(explode('-',$GLOBALS['prefs']['pass_blacklist_file']));
-
+		if ($GLOBALS['prefs']['pass_blacklist'] == 'n' || ! isset($GLOBALS['prefs']['pass_blacklist'])) {
+			return 'Disabled';
+		} elseif ($GLOBALS['prefs']['pass_blacklist_file'] == 'auto') {
+			return $this->readableBlackName(explode('-', $GLOBALS['prefs']['pass_auto_blacklist'])) . ' - Auto Selected';
+		} else {
+			return $this->readableBlackName(explode('-', $GLOBALS['prefs']['pass_blacklist_file']));
+		}
 	}
 
 	/**
@@ -224,7 +237,8 @@ LIMIT 1;';
 	 *
 	 */
 
-	private function readableBlackName($NameArray){
+	private function readableBlackName($NameArray)
+	{
 
 		$readable = 'Num & Let: ' . $NameArray['0'];
 		$readable .= ', Special: ' . $NameArray['1'];
@@ -232,7 +246,6 @@ LIMIT 1;';
 		$readable .= ', Custom: ' . $NameArray['3'];
 		$readable .= ', Word Count: ' . $NameArray['4'];
 		return $readable;
-
 	}
 
 	/**
@@ -241,24 +254,27 @@ LIMIT 1;';
 	 *
 	 * @param $filename string the name & path of the saved password
 	 */
-	public function loadBlacklist($filename){
-		if (is_readable($filename)){
+	public function loadBlacklist($filename)
+	{
+		if (is_readable($filename)) {
 			$passwords = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 			$passwords = array_map('strtolower', $passwords);
 			$passwords = array_map('trim', $passwords);
 			$passwords = array_unique($passwords);
 			$passwords = array_map('addslashes', $passwords);
-			$passwords = "('".implode("'),('",$passwords)."')";
+			$passwords = "('" . implode("'),('", $passwords) . "')";
 
 			$tikiDb = new TikiDb_Bridge();
 			$query = 'DROP TABLE IF EXISTS tiki_password_blacklist;';
-			$tikiDb->query($query, array());
+			$tikiDb->query($query, []);
 			$query = 'CREATE TABLE `tiki_password_blacklist` ( `password` VARCHAR(30) NOT NULL , PRIMARY KEY (`password`) USING HASH)';
-			$tikiDb->query($query, array());
+			$tikiDb->query($query, []);
 
 			$query = "INSERT INTO tiki_password_blacklist (password) VALUES $passwords";
 			$tikiDb->query($query);
-		}else Feedback::error(tr('Unable to Populate Blacklist: File dose not exist or is not readable.'));
+		} else {
+			Feedback::error(tr('Unable to Populate Blacklist: File dose not exist or is not readable.'));
+		}
 	}
 
 	/**
@@ -279,24 +295,33 @@ LIMIT 1;';
 	 *
 	 * @return array|bool the file name (without extension) that is best suited to govern the blacklist, or false on no suitable files.
 	 */
-	public function selectBestBlacklist($pass_chr_num,$pass_chr_special,$length){
+	public function selectBestBlacklist($pass_chr_num, $pass_chr_special, $length)
+	{
 		$fileIndex = $this->genIndexedBlacks(false);
 		$bestFile = false;
 		$chrnum = false;
 		$special = false;
-		if ($pass_chr_num == 'on') $chrnum = true;
-		if ($pass_chr_special == 'on') $special = true;
+		if ($pass_chr_num == 'on') {
+			$chrnum = true;
+		}
+		if ($pass_chr_special == 'on') {
+			$special = true;
+		}
 
-		foreach ($fileIndex as $file){
+		foreach ($fileIndex as $file) {
 			if ($file[0] == $chrnum &&       // first qualify the options
 				$file[1] == $special &&
-				$file[2] <= $length ){
+				$file[2] <= $length ) {
 				$count = 2;
 				while ($count < 5) {         // then pick the best option
 					if ($file[$count] >= $bestFile[$count]) {
-						if ($file[$count] > $bestFile[$count]) $bestFile = $file;
+						if ($file[$count] > $bestFile[$count]) {
+							$bestFile = $file;
+						}
 						$count++;
-					} else $count = 5;
+					} else {
+						$count = 5;
+					}
 				}
 			}
 		}
@@ -312,21 +337,23 @@ LIMIT 1;';
 		 * @return array
 		 */
 
-	public function genIndexedBlacks($returnFormatted = true){
+	public function genIndexedBlacks($returnFormatted = true)
+	{
 
-		$blacklist_options = array_diff(scandir(__DIR__ .'/../pass_blacklists'), array('..', '.', 'index.php', '.htaccess', '.svn', '.DS_Store', 'readme.txt'));
+		$blacklist_options = array_diff(scandir(__DIR__ . '/../pass_blacklists'), ['..', '.', 'index.php', '.htaccess', '.svn', '.DS_Store', 'readme.txt']);
 		if (is_dir('storage/pass_blacklists')) {
-			$blacklist_options = array_merge($blacklist_options,array_diff(scandir(__DIR__ .'/../../storage/pass_blacklists'), array('..', '.', 'index.php', '.htaccess', '.svn', '.DS_Store', 'readme.txt')));
+			$blacklist_options = array_merge($blacklist_options, array_diff(scandir(__DIR__ . '/../../storage/pass_blacklists'), ['..', '.', 'index.php', '.htaccess', '.svn', '.DS_Store', 'readme.txt']));
 		}
 		sort($blacklist_options);
 
-		$fileindex = array();
+		$fileindex = [];
 		foreach ($blacklist_options as $blacklist_file) {
 			$blacklist_file = substr($blacklist_file, 0, -4);
 			$fileindex[$blacklist_file] = explode('-', $blacklist_file);
-			if ($returnFormatted) $fileindex[$blacklist_file] =$this->readableBlackName($fileindex[$blacklist_file]);
+			if ($returnFormatted) {
+				$fileindex[$blacklist_file] = $this->readableBlackName($fileindex[$blacklist_file]);
+			}
 		}
 		return $fileindex;
 	}
-
 }

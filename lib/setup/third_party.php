@@ -1,7 +1,7 @@
 <?php
 /**
  * sets some constants for use in connecting to Third Party libraries.
- * 
+ *
  * this script may only be included, it will die if called directly.
  *
  * @package TikiWiki
@@ -12,9 +12,9 @@
 // $Id$
 
 // die if called directly.
-if ( basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__) ) {
-  header("location: index.php");
-  exit;
+if (basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__)) {
+	header("location: index.php");
+	exit;
 }
 
 // The following constant is at least used in the release.php script and in the error handling functions
@@ -22,4 +22,6 @@ define('THIRD_PARTY_LIBS_PATTERN', '#(lib/pear|lib/ajax|vendor_bundled/vendor|ve
 
 define('TIKI_SMARTY_DIR', 'lib/smarty_tiki/');
 // add a line like the following in db/local.php to use an external smarty installation: $smarty_path='/usr/share/php/smarty/'
-if ( isset($smarty_path) && $smarty_path != '' && file_exists($smarty_path.'Smarty.class.php') ) define('SMARTY_DIR', $smarty_path);
+if (isset($smarty_path) && $smarty_path != '' && file_exists($smarty_path . 'Smarty.class.php')) {
+	define('SMARTY_DIR', $smarty_path);
+}

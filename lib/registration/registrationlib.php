@@ -23,7 +23,7 @@ require_once('lib/tikilib.php'); // httpScheme(), get_user_preference
 require_once('lib/webmail/tikimaillib.php');
 require_once('lib/db/tiki_registration_fields.php');
 
-if (!isset($Debug)) {
+if (! isset($Debug)) {
 	$Debug = false;
 }
 
@@ -35,25 +35,25 @@ class RegistrationLib extends TikiLib
 
 	public function __construct()
 	{
-		$this->merged_prefs=$this->init_registration_prefs();
+		$this->merged_prefs = $this->init_registration_prefs();
 	}
 
 	// Validate emails...
-	public function SnowCheckMail($Email, $sender_email, $novalidation, $Debug=false)
+	public function SnowCheckMail($Email, $sender_email, $novalidation, $Debug = false)
 	{
 		global $prefs;
 
-		if (!isset($_SERVER['SERVER_NAME'])) {
+		if (! isset($_SERVER['SERVER_NAME'])) {
 			$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
 		}
 
-		$HTTP_HOST=$_SERVER['SERVER_NAME'];
-		$Return =array();
+		$HTTP_HOST = $_SERVER['SERVER_NAME'];
+		$Return = [];
 		// Variable for return.
 		// $Return[0] : [true|false]
 		// $Return[1] : Processing result save.
 
-		if (!preg_match('/^[-_a-z0-9+]+(\\.[-_a-z0-9+]+)*\\@([-a-z0-9]+\\.)*([a-z]{2,4})$/i', $Email)) {
+		if (! preg_match('/^[-_a-z0-9+]+(\\.[-_a-z0-9+]+)*\\@([-a-z0-9]+\\.)*([a-z]{2,4})$/i', $Email)) {
 			$Return[0] = false;
 			$Return[1] = "${Email} is E-Mail form that is not right.";
 
@@ -76,19 +76,19 @@ class RegistrationLib extends TikiLib
 		if ($prefs['validateEmail'] == 'n') {
 			$Return[0] = true;
 			$Return[1] = 'The email appears to be correct.';
-			Return $Return;
+			return $Return;
 		}
 
 		// That MX(mail exchanger) record exists in domain check .
 		// checkdnsrr function reference : http://www.php.net/manual/en/function.checkdnsrr.php
-		if ( checkdnsrr($Domain, 'MX') ) {
+		if (checkdnsrr($Domain, 'MX')) {
 			if ($Debug) {
 				echo "Confirmation : MX record about {$Domain} exists.<br>";
 			}
 
 			// If MX record exists, save MX record address.
 			// getmxrr function reference : http://www.php.net/manual/en/function.getmxrr.php
-			if ( getmxrr($Domain, $MXHost)) {
+			if (getmxrr($Domain, $MXHost)) {
 				if ($Debug) {
 					echo 'Confirmation : Is confirming address by MX LOOKUP.<br>';
 					$j = 0;
@@ -120,14 +120,13 @@ class RegistrationLib extends TikiLib
 
 			// Success in socket connection
 			if ($Connect) {
-
 				if ($Debug) {
 					echo "Connection succeeded to {$ConnectAddress} SMTP.<br>";
 				}
 
 				// Judgment is that service is preparing though begin by 220 getting string after connection .
 				// fgets function reference : http://www.php.net/manual/en/function.fgets.php
-				if ( preg_match('/^220/', $Out = fgets($Connect, 1024))) {
+				if (preg_match('/^220/', $Out = fgets($Connect, 1024))) {
 					// Inform client's reaching to server who connect.
 					fputs($Connect, "HELO $HTTP_HOST\r\n");
 
@@ -166,7 +165,7 @@ class RegistrationLib extends TikiLib
 					// Server's answering cord about MAIL and TO command checks.
 					// Server about listener's address reacts to 550 codes if there does not exist
 					// checking that mailbox is in own E-Mail account.
-					if (!preg_match('/^250/', $From) || !preg_match('/^250/', $To)) {
+					if (! preg_match('/^250/', $From) || ! preg_match('/^250/', $To)) {
 						$Return[0] = false;
 						$Return[1] = 'not_recognized';
 						if ($Debug) {
@@ -208,26 +207,26 @@ class RegistrationLib extends TikiLib
 		$userlib = TikiLib::lib('user');
 		$captchalib = TikiLib::lib('captcha');
 
-		$errors = array();
+		$errors = [];
 
 		//do not recheck if already validated
-		if (!isset($registration['valerror']) || $registration['valerror'] !== false) {
+		if (! isset($registration['valerror']) || $registration['valerror'] !== false) {
 			$validateName = 1;
 			if ($prefs['login_autogenerate'] == 'y') {
 				$validateName = 0;
 			}
-			
+
 			if (empty($registration['name']) && $validateName) {
 				$errors[] = new RegistrationError('name', tra('Username is required'));
 			}
 
-			if (empty($registration['pass']) && !isset($_SESSION['openid_url'])) {
+			if (empty($registration['pass']) && ! isset($_SESSION['openid_url'])) {
 				$errors[] = new RegistrationError('pass', tra('Password is required'));
 			}
 
 			// novalidation is set to yes if a user confirms his email is correct after tiki fails to validate it
-			$novalidation=isset($_REQUEST['novalidation']) ? $registration['novalidation'] : '';
-			if ($novalidation != 'yes' and ($registration['pass'] != $registration['passAgain']) and !isset($_SESSION['openid_url'])) {
+			$novalidation = isset($_REQUEST['novalidation']) ? $registration['novalidation'] : '';
+			if ($novalidation != 'yes' and ($registration['pass'] != $registration['passAgain']) and ! isset($_SESSION['openid_url'])) {
 				$errors[] = new RegistrationError('passAgain', tra("The passwords don't match"));
 			}
 
@@ -235,8 +234,8 @@ class RegistrationLib extends TikiLib
 				$errors[] = new RegistrationError('name', tra('User already exists'));
 			}
 
-			if (!$from_intertiki && $prefs['feature_antibot'] == 'y') {
-				if (!$captchalib->validate($registration)) {
+			if (! $from_intertiki && $prefs['feature_antibot'] == 'y') {
+				if (! $captchalib->validate($registration)) {
 					$errors[] = new RegistrationError('antibotcode', $captchalib->getErrors());
 				}
 			}
@@ -279,11 +278,11 @@ class RegistrationLib extends TikiLib
 			$newPass = $registration['pass'] ? $registration['pass'] : $registration['genepass'];
 			$polerr = $userlib->check_password_policy($newPass);
 
-			if (!isset($_SESSION['openid_url']) && (strlen($polerr) > 0)) {
+			if (! isset($_SESSION['openid_url']) && (strlen($polerr) > 0)) {
 				$errors[] = new RegistrationError('pass', $polerr);
 			}
 
-			if (!empty($this->merged_prefs['username_pattern']) && !preg_match($this->merged_prefs['username_pattern'], $registration['name']) && $validateName) {
+			if (! empty($this->merged_prefs['username_pattern']) && ! preg_match($this->merged_prefs['username_pattern'], $registration['name']) && $validateName) {
 				$errors[] = new RegistrationError('name', tra('Invalid username'));
 			}
 
@@ -303,7 +302,7 @@ class RegistrationLib extends TikiLib
 			}
 
 			$email_valid = 'y';
-			if (!validate_email($registration['email'], $this->merged_prefs['validateEmail'])) {
+			if (! validate_email($registration['email'], $this->merged_prefs['validateEmail'])) {
 				$errors[] = new RegistrationError('email', tra('Email not valid. Should be in the format "mailbox@example.com".'));
 			}
 		}
@@ -339,7 +338,7 @@ class RegistrationLib extends TikiLib
 
 		if ($prefs['userTracker'] === 'y') {
 			// this gets called twice if there's a user tracker
-			if (!$userlib->get_user_real_case($registration['name'])) {
+			if (! $userlib->get_user_real_case($registration['name'])) {
 				$pending = true;				// first time to just create the basic user record for the tracker to attach to
 			} else {
 				$confirmed = true;				// second time to send notifications, join groups etc
@@ -357,7 +356,7 @@ class RegistrationLib extends TikiLib
 				$apass = md5($tikilib->genPass());
 			}
 
-			if (!$pending) {
+			if (! $pending) {
 				// don't send validation until user tracker has been validated
 				$userlib->send_validation_email(
 					$registration['name'],
@@ -369,7 +368,7 @@ class RegistrationLib extends TikiLib
 				);
 			}
 
-			if (!$confirmed) {
+			if (! $confirmed) {
 				$registration['name'] = $userlib->add_user(
 					$registration['name'],
 					$newPass,
@@ -378,33 +377,33 @@ class RegistrationLib extends TikiLib
 					false,
 					$apass,
 					$openid_url,
-					$this->merged_prefs['validateRegistration'] == 'y'?'a':'u'
+					$this->merged_prefs['validateRegistration'] == 'y' ? 'a' : 'u'
 				); //returns the user login and set as name. this is in case the name is generated in the add user (autogenerated login for eg)
 				if ($registration['name']) {
 					$_REQUEST['name'] = $registration['name']; // update in case auto-generated
 				}
 			}
 
-			if (!$pending) {
+			if (! $pending) {
 				$smarty->assign('username', $registration['name']);
 				$logslib->add_log('register', 'created account ' . $registration['name']);
 				if ($this->merged_prefs['validateRegistration'] == 'y') {
-					$result=nl2br($smarty->fetch('mail/user_validation_waiting_msg.tpl'));
+					$result = nl2br($smarty->fetch('mail/user_validation_waiting_msg.tpl'));
 				} else {
-					$result=$smarty->fetch('mail/user_validation_msg.tpl');
+					$result = $smarty->fetch('mail/user_validation_msg.tpl');
 				}
 			}
 		} else {
-			if (!$confirmed) {
+			if (! $confirmed) {
 				$registration['name'] = $userlib->add_user($registration['name'], $newPass, $registration['email'], '', false, null, $openid_url);
 				if ($registration['name']) {
 					$_REQUEST['name'] = $registration['name']; // update in case auto-generated
 				}
 			}
-			if (!$pending) {
+			if (! $pending) {
 				$smarty->assign('username', $registration['name']);
 				$logslib->add_log('register', 'created account ' . $registration['name']);
-				$result=$smarty->fetch('mail/user_welcome_msg.tpl');
+				$result = $smarty->fetch('mail/user_welcome_msg.tpl');
 			}
 		}
 
@@ -438,7 +437,7 @@ class RegistrationLib extends TikiLib
 		$watches = $tikilib->get_event_watches('user_registers', '*');
 
 		if (count($watches)) {
-			require_once ("lib/notifications/notificationemaillib.php");
+			require_once("lib/notifications/notificationemaillib.php");
 			$smarty->assign('mail_user', $registration['name']);
 			$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 			sendEmailNotification($watches, null, 'new_user_notification_subject.tpl', null, 'new_user_notification.tpl');
@@ -462,13 +461,13 @@ class RegistrationLib extends TikiLib
 
 		$msg = new XML_RPC_Message(
 			'intertiki.registerUser',
-			array(new XML_RPC_Value($prefs['tiki_key'], 'string'),
-			XML_RPC_encode($registration))
+			[new XML_RPC_Value($prefs['tiki_key'], 'string'),
+			XML_RPC_encode($registration)]
 		);
 
 		$result = $client->send($msg);
 
-		if (!$result || $result->faultCode()) {
+		if (! $result || $result->faultCode()) {
 			return new RegistrationError('intertiki', 'Master returned an error : ' . ($result ? $result->faultString() : $result));
 		}
 
@@ -493,7 +492,7 @@ class RegistrationLib extends TikiLib
 	 * @param $from_intertiki bool
 	 * @return array|string RegistrationError if error, string with message if ok
 	 */
-	public function register_new_user($registration, $from_intertiki=false)
+	public function register_new_user($registration, $from_intertiki = false)
 	{
 		global $prefs;
 		$tikilib = TikiLib::lib('tiki');
@@ -502,12 +501,12 @@ class RegistrationLib extends TikiLib
 			$registration['email'] = $registration['name'];
 		}
 		//result is empty if validation (including antibot) is successful
-		$result=$this->local_check_registration($registration, $from_intertiki);
-		if (!empty($result)) {
+		$result = $this->local_check_registration($registration, $from_intertiki);
+		if (! empty($result)) {
 			return $result;
 		}
 		//initialize the name as an empty string
-		if (!isset($registration['name'])) {
+		if (! isset($registration['name'])) {
 			$registration['name'] = "";
 		}
 
@@ -515,47 +514,47 @@ class RegistrationLib extends TikiLib
 			unset($registration['invitedid']);
 			$invite = 0;
 
-			if (!$from_intertiki && array_key_exists('invite', $registration)) {
+			if (! $from_intertiki && array_key_exists('invite', $registration)) {
 				$invite = (int) $registration['invite'];
 
 				$res = $tikilib->query(
 					'SELECT * FROM tiki_invited WHERE id_invite=? AND email=? AND used=?',
-					array($invite, $registration['email'], 'no')
+					[$invite, $registration['email'], 'no']
 				);
 
-				$invited=$res->fetchRow();
+				$invited = $res->fetchRow();
 
-				if (!is_array($invited)) {
+				if (! is_array($invited)) {
 					return new RegistrationError('invite', tra("This invitation does not exist or is deprecated or wrong email"));
 				} else {
-					$registration['invitedid']=$invited['id'];
+					$registration['invitedid'] = $invited['id'];
 				}
 			} else {
 				unset($registration['invite']);
 			}
 		}
 		//user account created here
-		if ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster'])) {
+		if ($prefs['feature_intertiki'] == 'y' && ! empty($prefs['feature_intertiki_mymaster'])) {
 			// register to main
-			$result=$this->register_new_user_to_intertiki($registration, $from_intertiki);
+			$result = $this->register_new_user_to_intertiki($registration, $from_intertiki);
 		} else {
-			$result=$this->register_new_user_local($registration, $from_intertiki);
+			$result = $this->register_new_user_local($registration, $from_intertiki);
 		}
 
 		if ($prefs['feature_invite'] == 'y') {
 			if ($invite > 0) {
-				$res=$tikilib->query('SELECT * FROM tiki_invite WHERE id=?', array($invite));
-				$inviterow=$res->fetchRow();
-				if (!is_array($inviterow)) {
+				$res = $tikilib->query('SELECT * FROM tiki_invite WHERE id=?', [$invite]);
+				$inviterow = $res->fetchRow();
+				if (! is_array($inviterow)) {
 					die('(bug) This invitation does not exist or is deprecated');
 				}
 
 				$tikilib->query(
 					'UPDATE tiki_invited SET used=? , used_on_user=? WHERE id=?',
-					array('registered', $registration['name'], $registration['invitedid'])
+					['registered', $registration['name'], $registration['invitedid']]
 				);
 
-				if (!empty($inviterow['wikipageafter'])) {
+				if (! empty($inviterow['wikipageafter'])) {
 					$GLOBALS['redirect'] =
 									str_replace('tiki-register.php', 'tiki-index.php?page=', $_SERVER['SCRIPT_URI']) .
 										urlencode($inviterow['wikipageafter']);
@@ -671,9 +670,9 @@ class RegistrationLib extends TikiLib
 		global $prefs;
 		$userlib = TikiLib::lib('user');
 
-		if (!is_array($this->merged_prefs)) {
+		if (! is_array($this->merged_prefs)) {
 			// local tiki prefs
-			$this->local_prefs = array(
+			$this->local_prefs = [
 							'feature_antibot' => $prefs['feature_antibot'],
 							'lowercase_username' => $prefs['lowercase_username'],
 							'min_username_length' => $prefs['min_username_length'],
@@ -688,10 +687,10 @@ class RegistrationLib extends TikiLib
 							'user_register_prettytracker' => $prefs['user_register_prettytracker'],
 							'user_register_prettytracker_tpl' => $prefs['user_register_prettytracker_tpl'],
 							'http_referer_registration_check' => $prefs['http_referer_registration_check'],
-			);
+			];
 
 			// local groups
-			$this->local_prefs['choosable_groups']=array();
+			$this->local_prefs['choosable_groups'] = [];
 			$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 			$this->local_prefs['mandatoryChoiceGroups'] = ($prefs['user_must_choose_group'] === 'y');
 
@@ -704,20 +703,20 @@ class RegistrationLib extends TikiLib
 				}
 			}
 
-			if ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster'])) {
+			if ($prefs['feature_intertiki'] == 'y' && ! empty($prefs['feature_intertiki_mymaster'])) {
 				$remote = $prefs['interlist'][$prefs['feature_intertiki_mymaster']];
 				$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
 				$client->setDebug(0);
 
 				$msg = new XML_RPC_Message(
 					'intertiki.getRegistrationPrefs',
-					array(new XML_RPC_Value($prefs['tiki_key'], 'string'))
+					[new XML_RPC_Value($prefs['tiki_key'], 'string')]
 				);
 
 				$result = $client->send($msg);
 
-				if (!$result || $result->faultCode()) {
-					return new RegistrationError('', 'Master returned an error : '.($result ? $result->faultString() : $result));
+				if (! $result || $result->faultCode()) {
+					return new RegistrationError('', 'Master returned an error : ' . ($result ? $result->faultString() : $result));
 				}
 
 				$result = $result->value();
@@ -736,7 +735,7 @@ class RegistrationLib extends TikiLib
 
 				// merge master and local
 
-				$this->merged_prefs=array();
+				$this->merged_prefs = [];
 				$this->merged_prefs['feature_antibot'] = $this->local_prefs['feature_antibot']; // slave choice
 
 				$this->merged_prefs['lowercase_username'] =
@@ -776,7 +775,6 @@ class RegistrationLib extends TikiLib
 		}
 		return $this->merged_prefs;
 	}
-
 }
 
 /**

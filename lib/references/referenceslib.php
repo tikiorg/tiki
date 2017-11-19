@@ -17,18 +17,18 @@ class ReferencesLib extends TikiLib
 	{
 		$query = 'select * from `tiki_page_references` WHERE `page_id`=? ORDER BY `biblio_code`';
 		$query_cant = 'select count(*) from `tiki_page_references` WHERE `page_id`=?';
-		$result = $this->query($query, array($page));
-		$cant = $this->getOne($query_cant, array($page));
-		$ret = array();
+		$result = $this->query($query, [$page]);
+		$cant = $this->getOne($query_cant, [$page]);
+		$ret = [];
 
 		while ($res = $result->fetchRow()) {
 			$query_1 = 'select * from `tiki_page_references` WHERE `biblio_code`=? AND page_id IS NULL';
-			$result_1 = $this->query($query_1, array($res['biblio_code']));
+			$result_1 = $this->query($query_1, [$res['biblio_code']]);
 			$res['is_library'] = $result_1->numrows;
 			$ret[] = $res;
 		}
 
-		$retval = array();
+		$retval = [];
 		$retval['data'] = $ret;
 		$retval['cant'] = $cant;
 
@@ -39,15 +39,15 @@ class ReferencesLib extends TikiLib
 	{
 		$query = 'select * from `tiki_page_references` WHERE `page_id`=? ORDER BY `biblio_code`';
 		$query_cant = 'select count(*) from `tiki_page_references` WHERE `page_id`=?';
-		$result = $this->query($query, array($page));
-		$cant = $this->getOne($query_cant, array($page));
-		$ret = array();
+		$result = $this->query($query, [$page]);
+		$cant = $this->getOne($query_cant, [$page]);
+		$ret = [];
 
 		while ($res = $result->fetchRow()) {
 			$ret[$res['biblio_code']] = $res;
 		}
 
-		$retval = array();
+		$retval = [];
 		$retval['data'] = $ret;
 		$retval['cant'] = $cant;
 
@@ -58,15 +58,15 @@ class ReferencesLib extends TikiLib
 	{
 		$query = 'select * from `tiki_page_references` WHERE `biblio_code`=?';
 		$query_cant = 'select count(*) from `tiki_page_references` WHERE `biblio_code`=?';
-		$result = $this->query($query, array($code));
-		$cant = $this->getOne($query_cant, array($code));
-		$ret = array();
+		$result = $this->query($query, [$code]);
+		$cant = $this->getOne($query_cant, [$code]);
+		$ret = [];
 
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
-		$retval = array();
+		$retval = [];
 		$retval['data'] = $ret;
 		$retval['cant'] = $cant;
 
@@ -76,14 +76,14 @@ class ReferencesLib extends TikiLib
 	public function get_reference_from_code($code)
 	{
 		$query = 'select * from `tiki_page_references` WHERE `biblio_code`=?';
-		$result = $this->query($query, array($code));
-		$ret = array();
+		$result = $this->query($query, [$code]);
+		$ret = [];
 
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
-		$retval = array();
+		$retval = [];
 		$retval['data'] = $ret;
 		return $retval;
 	}
@@ -91,14 +91,14 @@ class ReferencesLib extends TikiLib
 	public function get_reference_from_id($ref_id)
 	{
 		$query = 'select * from `tiki_page_references` WHERE `ref_id`=?';
-		$result = $this->query($query, array($ref_id));
-		$ret = array();
+		$result = $this->query($query, [$ref_id]);
+		$ret = [];
 
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
-		$retval = array();
+		$retval = [];
 		$retval['data'] = $ret;
 		return $retval;
 	}
@@ -113,19 +113,19 @@ class ReferencesLib extends TikiLib
 				$biblios .= '\'' . $code . '\'' . ',';
 			}
 		}
-		$biblios = substr($biblios, 0, strlen($biblios)-1);
+		$biblios = substr($biblios, 0, strlen($biblios) - 1);
 
-		$codes = "'first'".','.'second';
+		$codes = "'first'" . ',' . 'second';
 		$query = "select * from `tiki_page_references` WHERE `biblio_code` IN ($biblios) AND `page_id`=?";
-		$result = $this->query($query, array($page));
+		$result = $this->query($query, [$page]);
 
-		$ret = array();
+		$ret = [];
 
 		while ($res = $result->fetchRow()) {
 			$ret[$res['biblio_code']] = $res;
 		}
 
-		$retval = array();
+		$retval = [];
 		$retval['data'] = $ret;
 
 		return $retval;
@@ -137,25 +137,36 @@ class ReferencesLib extends TikiLib
 
 		$query = 'select * from `tiki_page_references` WHERE `page_id` IS NULL ORDER BY `biblio_code`';
 		$query_cant = 'select count(*) from `tiki_page_references` WHERE `page_id` IS NULL';
-		$result = $this->query($query, array($page));
-		$cant = $this->getOne($query_cant, array($page));
-		$ret = array();
+		$result = $this->query($query, [$page]);
+		$cant = $this->getOne($query_cant, [$page]);
+		$ret = [];
 
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
-		$retval = array();
+		$retval = [];
 		$retval['data'] = $ret;
 		$retval['cant'] = $cant;
 
 		return $retval;
 	}
 
-	public function add_reference($page, $biblio_code, $author, $title,
-													$part, $uri, $code, $year, $style,
-													$template, $publisher, $location)
-	{
+	public function add_reference(
+		$page,
+		$biblio_code,
+		$author,
+		$title,
+		$part,
+		$uri,
+		$code,
+		$year,
+		$style,
+		$template,
+		$publisher,
+		$location
+	) {
+
 		$query = 'insert `tiki_page_references`' .
 							' (`page_id`, `biblio_code`, `author`, `title`, `part`, `uri`,' .
 							' `code`, `year`, `style`, `template`, `publisher`, `location`)' .
@@ -163,7 +174,7 @@ class ReferencesLib extends TikiLib
 
 		$this->query(
 			$query,
-			array(
+			[
 				$page,
 				$biblio_code,
 				$author,
@@ -176,7 +187,7 @@ class ReferencesLib extends TikiLib
 				$template,
 				$publisher,
 				$location
-			)
+			]
 		);
 
 		return $this->lastInsertId();
@@ -186,7 +197,7 @@ class ReferencesLib extends TikiLib
 	{
 
 		$query = 'select * from `tiki_page_references` WHERE `ref_id`=?';
-		$result = $this->query($query, array($ref_id));
+		$result = $this->query($query, [$ref_id]);
 
 		$exists = $this->check_existence($page, $result->result[0]['biblio_code']);
 
@@ -200,7 +211,7 @@ class ReferencesLib extends TikiLib
 
 			$this->query(
 				$query,
-				array(
+				[
 					$page,
 					$result->result[0]['biblio_code'],
 					$result->result[0]['author'],
@@ -213,16 +224,28 @@ class ReferencesLib extends TikiLib
 					$result->result[0]['template'],
 					$result->result[0]['publisher'],
 					$result->result[0]['location']
-				)
+				]
 			);
 
 			return $this->lastInsertId();
 		}
 	}
 
-	public function edit_reference($ref_id, $biblio_code, $author, $title, $part, $uri,
-													$code, $year, $style, $template, $publisher, $location)
-	{
+	public function edit_reference(
+		$ref_id,
+		$biblio_code,
+		$author,
+		$title,
+		$part,
+		$uri,
+		$code,
+		$year,
+		$style,
+		$template,
+		$publisher,
+		$location
+	) {
+
 		$query = 'update `tiki_page_references`' .
 							' SET `biblio_code`=?, `author`=?, `title`=?, `part`=?, `uri`=?,' .
 							' `code`=?, `year`=?, `style`=?, `template`=?, `publisher`=?, `location`=?' .
@@ -230,7 +253,7 @@ class ReferencesLib extends TikiLib
 
 		$this->query(
 			$query,
-			array(
+			[
 					$biblio_code,
 					$author,
 					$title,
@@ -243,7 +266,7 @@ class ReferencesLib extends TikiLib
 					$publisher,
 					$location,
 					(int) $ref_id
-			)
+			]
 		);
 
 		return true;
@@ -252,21 +275,21 @@ class ReferencesLib extends TikiLib
 	public function remove_reference($id)
 	{
 		$query = 'delete from `tiki_page_references` where `ref_id`=?';
-		$this->query($query, array((int) $id));
+		$this->query($query, [(int) $id]);
 		return true;
 	}
 
 	public function check_existence($page_id, $biblio_code)
 	{
 		$query = 'select * from `tiki_page_references` WHERE `biblio_code`=? AND `page_id`=?';
-		$result = $this->query($query, array($biblio_code, $page_id));
+		$result = $this->query($query, [$biblio_code, $page_id]);
 		return $result->numrows;
 	}
 
 	public function check_lib_existence($biblio_code)
 	{
 		$query = 'select * from `tiki_page_references` WHERE `biblio_code`=? AND `page_id` IS NULL';
-		$result = $this->query($query, array($biblio_code));
+		$result = $this->query($query, [$biblio_code]);
 
 		return $result->numrows;
 	}

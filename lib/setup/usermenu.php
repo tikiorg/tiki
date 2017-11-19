@@ -10,8 +10,8 @@ if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
 }
 
 // User menus
-if ( $user ) {
-	if ( ! isset($_SESSION['usermenu']) ) {
+if ($user) {
+	if (! isset($_SESSION['usermenu'])) {
 		include_once('lib/usermenu/usermenulib.php');
 		$user_menus = $usermenulib->list_usermenus($user, 0, -1, 'position_asc', '');
 		$smarty->assign('usr_user_menus', $user_menus['data']);

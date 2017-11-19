@@ -49,7 +49,7 @@ class CCLiteLib extends TikiDb_Bridge
 
 	public function get_registry()
 	{
-		if (!empty($this->registries)) {
+		if (! empty($this->registries)) {
 			return $this->registries[0];	// default if not specified in plugins etc
 		} else {
 			Feedback::error(tra('No registries specified in admin/payment/cclite.'), 'session');
@@ -81,43 +81,43 @@ class CCLiteLib extends TikiDb_Bridge
 		}
 	}
 
-	public function get_invoice( $ipn_data )
+	public function get_invoice($ipn_data)
 	{
-		return isset( $ipn_data['invoice'] ) ? $ipn_data['invoice'] : 0;
+		return isset($ipn_data['invoice']) ? $ipn_data['invoice'] : 0;
 	}
 
-	public function get_amount( $ipn_data )
+	public function get_amount($ipn_data)
 	{
 		return $ipn_data['mc_gross'];
 	}
 
-	public function is_valid( $ipn_data, $payment_info )
+	public function is_valid($ipn_data, $payment_info)
 	{
 		global $prefs;
 
-		if ( ! is_array($payment_info) ) {
+		if (! is_array($payment_info)) {
 			return false;
 		}
 
 		// Skip other events
-		if ( $ipn_data['payment_status'] != 'Completed' ) {
+		if ($ipn_data['payment_status'] != 'Completed') {
 			return false;
 		}
 
 		// Make sure it is addressed to the right account
-		if ( $ipn_data['receiver_email'] != $prefs['payment_cclite_business'] ) {
+		if ($ipn_data['receiver_email'] != $prefs['payment_cclite_business']) {
 			return false;
 		}
 
 		// Require same currency
-		if ( $ipn_data['mc_currency'] != $payment_info['currency'] ) {
+		if ($ipn_data['mc_currency'] != $payment_info['currency']) {
 			return false;
 		}
 
 		// Skip duplicate translactions
-		foreach ( $payment_info['payments'] as $payment ) {
-			if ( $payment['type'] == 'cclite' ) {
-				if ( $payment['details']['txn_id'] == $ipn_data['txn_id'] ) {
+		foreach ($payment_info['payments'] as $payment) {
+			if ($payment['type'] == 'cclite') {
+				if ($payment['details']['txn_id'] == $ipn_data['txn_id']) {
 					return false;
 				}
 			}
@@ -146,7 +146,7 @@ class CCLiteLib extends TikiDb_Bridge
 
 		$msg = tr('Cclite payment initiated on %0', $tikilib->get_short_datetime($tikilib->now));
 
-		$paymentlib->enter_payment($invoice, $amount, 'cclite', array('info' => $msg));
+		$paymentlib->enter_payment($invoice, $amount, 'cclite', ['info' => $msg]);
 
 		return $msg;
 	}
@@ -162,7 +162,7 @@ class CCLiteLib extends TikiDb_Bridge
 	 *
 	 * @return string result from cclite
 	 */
-	public function pay_user( $amount, $currency = '', $registry = '', $destination_user = '', $source_user = '')
+	public function pay_user($amount, $currency = '', $registry = '', $destination_user = '', $source_user = '')
 	{
 		global $user, $prefs;
 		$paymentlib = TikiLib::lib('payment');
@@ -191,7 +191,7 @@ class CCLiteLib extends TikiDb_Bridge
 	 * @return		result from cclite server (html hopefully)
 	 */
 
-	function cclite_send_request( $command, $other_user = '', $registry = '', $amount = 0, $currency = '', $main_user = '')
+	function cclite_send_request($command, $other_user = '', $registry = '', $amount = 0, $currency = '', $main_user = '')
 	{
 		global $user, $prefs;
 
@@ -299,8 +299,7 @@ class CCLiteLib extends TikiDb_Bridge
 		}
 
 		// not worth trying if no user name
-		if (!empty($username)) {
-
+		if (! empty($username)) {
 			if (empty($registry)) {
 				$registry = $this->get_registry();
 			}
@@ -326,16 +325,16 @@ class CCLiteLib extends TikiDb_Bridge
 			$logon = curl_exec($ch);
 			curl_close($ch);
 
-			$results = array();	// for response & cookies on success
+			$results = [];	// for response & cookies on success
 			$err_msg = '';		// error message on failure
 
 			if ($logon) {
 				// e.g. login failed for jonny_tiki at c2c1:  <a href="http://c2c.ourproject.org/cgi-bin/cclite.cgi">Try again?</a>
-				if (preg_match('/^(login failed for '.$username.'.*'.$registry.'[^<]*)/mi', $logon, $results)) {	// no user there?
+				if (preg_match('/^(login failed for ' . $username . '.*' . $registry . '[^<]*)/mi', $logon, $results)) {	// no user there?
 					$email = $userlib->get_user_email($username);
 					if ($email) {	// required
 						$res = $this->cclite_send_request('adduser', $username, $registry, $email);	// not currently working cclite 0.7.0
-						if ($res && !preg_match('/404 Not Found/', $res)) {							// seems to return a 404 :(
+						if ($res && ! preg_match('/404 Not Found/', $res)) {							// seems to return a 404 :(
 							$logon = curl_exec($ch);	// retry login
 						} else {
 							$err_msg = trim($results[0]);
@@ -349,7 +348,7 @@ class CCLiteLib extends TikiDb_Bridge
 				if (preg_match('/^(.*?' . $username . '.*' . $registry . '[^<]*)/mi', $logon, $results)) {
 					$err_msg = trim($results[0]);
 					$logon = 'failed';	// error in $results[0]
-				} else if (preg_match('/HTTP\/1.1 302/mis', $logon) && preg_match('/<BODY.*?>(.*)<\/BODY>/mis', $logon, $results)) {
+				} elseif (preg_match('/HTTP\/1.1 302/mis', $logon) && preg_match('/<BODY.*?>(.*)<\/BODY>/mis', $logon, $results)) {
 					$err_msg = trim(strip_tags($results[0], '<br />'));
 					//$logon = 'failed';
 				}
@@ -358,35 +357,33 @@ class CCLiteLib extends TikiDb_Bridge
 			if ($logon && $logon != 'failed') {
 				preg_match_all('|Set-Cookie: (.*);|U', $logon, $results);
 				$cookies = implode("; ", $results[1]);
-				return array($logon, $cookies);
+				return [$logon, $cookies];
 			}
 		} else {
 			$err_msg = 'No result from cclite server.';
 		}
 
-		return array('failed', $err_msg);
+		return ['failed', $err_msg];
 	}
 
 	// used to transport merchant key hash - probably duplicates of tiki fns REFACTOR?
 	static function urlsafe_b64encode($string)
 	{
 		$data = base64_encode($string);
-		$data = str_replace(array('+', '/', '='), array('-', '_', ''), $data);
+		$data = str_replace(['+', '/', '='], ['-', '_', ''], $data);
 		return $data;
 	}
 
 	static function urlsafe_b64decode($string)
 	{
-		$data = str_replace(array('-', '_'), array('+', '/'), $string);
+		$data = str_replace(['-', '_'], ['+', '/'], $string);
 		$mod4 = strlen($data) % 4;
 		if ($mod4) {
 			$data .= substr('====', $mod4);
 		}
 		return base64_decode($data);
 	}
-
 }
 
 global $cclitelib;
 $cclitelib = new CCLiteLib;
-

@@ -1,11 +1,11 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function payment_behavior_execute_datachannel( $data, $params, $posts, $executionId )
+function payment_behavior_execute_datachannel($data, $params, $posts, $executionId)
 {
 	include 'lib/wiki-plugins/wikiplugin_datachannel.php';
 	unset($params['price']);
@@ -18,4 +18,3 @@ function payment_behavior_execute_datachannel( $data, $params, $posts, $executio
 
 	wikiplugin_datachannel($data, $params);
 }
-

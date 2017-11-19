@@ -56,23 +56,23 @@ class SocialLib
 			$this->addRelation('follow', $user, $newFriend);
 			TikiLib::events()->trigger(
 				'tiki.user.follow.add',
-				array(
+				[
 					'type' => 'user',
 					'object' => $user,
 					'user' => $user,
 					'follow_id' => $newFriend,
 					'aggregate' => $hash,
-				)
+				]
 			);
 			TikiLib::events()->trigger(
 				'tiki.user.follow.incoming',
-				array(
+				[
 					'type' => 'user',
 					'object' => $newFriend,
 					'user' => $newFriend,
 					'follow_id' => $user,
 					'aggregate' => $hash,
-				)
+				]
 			);
 		} elseif ($this->networkType == 'follow_approval' || $this->networkType == 'friend') {
 			$request = $this->getRelation('request.invert', $user, $newFriend);
@@ -90,23 +90,23 @@ class SocialLib
 				$event = ($this->networkType == 'friend') ? 'tiki.user.friend.add' : 'tiki.user.follow.add';
 				TikiLib::events()->trigger(
 					$event,
-					array(
+					[
 						'type' => 'user',
 						'object' => $user,
 						'user' => $user,
 						'follow_id' => $newFriend,
 						'aggregate' => $hash,
-					)
+					]
 				);
 				TikiLib::events()->trigger(
 					$event,
-					array(
+					[
 						'type' => 'user',
 						'object' => $newFriend,
 						'user' => $newFriend,
 						'follow_id' => $user,
 						'aggregate' => $hash,
-					)
+					]
 				);
 			} else {
 				// New request
@@ -141,21 +141,21 @@ class SocialLib
 
 			TikiLib::events()->trigger(
 				'tiki.user.follow.add',
-				array(
+				[
 					'type' => 'user',
 					'object' => $newFriend,
 					'user' => $newFriend,
 					'follow_id' => $user,
-				)
+				]
 			);
 			TikiLib::events()->trigger(
 				'tiki.user.follow.incoming',
-				array(
+				[
 					'type' => 'user',
 					'object' => $user,
 					'user' => $user,
 					'follow_id' => $newFriend,
-				)
+				]
 			);
 
 			$tx->commit();
@@ -163,7 +163,7 @@ class SocialLib
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('user', $user);
 			refresh_index('user', $newFriend);
-			
+
 			return true;
 		}
 
@@ -206,10 +206,11 @@ class SocialLib
 
 		return array_map(
 			function ($relation) {
-				return array(
+				return [
 					'user' => $relation['itemId'],
-				);
-			}, $relations
+				];
+			},
+			$relations
 		);
 	}
 
@@ -243,11 +244,11 @@ class SocialLib
 			$this->relationlib->add_relation('tiki.social.like', 'user', $user, $type, $id);
 			TikiLib::events()->trigger(
 				'tiki.social.like.add',
-				array(
+				[
 					'type' => $type,
 					'object' => $id,
 					'user' => $user,
-				)
+				]
 			);
 			return true;
 		}
@@ -263,11 +264,11 @@ class SocialLib
 			$this->relationlib->remove_relation($like);
 			TikiLib::events()->trigger(
 				'tiki.social.like.remove',
-				array(
+				[
 					'type' => $type,
 					'object' => $id,
 					'user' => $user,
-				)
+				]
 			);
 			return true;
 		}
@@ -292,4 +293,3 @@ class SocialLib
 		return $this->relationlib->get_relation_id('tiki.social.like', 'user', $user, $type, $id);
 	}
 }
-

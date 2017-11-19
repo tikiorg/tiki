@@ -34,15 +34,15 @@ class IconsetLib
 				$iconset1 = new Iconset($this->loadFile($filename));
 				$iconset->merge($iconset1);
 			}
-		} else if (isset($prefs['theme_iconset']) && $prefs['theme_iconset'] !== 'default') {
+		} elseif (isset($prefs['theme_iconset']) && $prefs['theme_iconset'] !== 'default') {
 			$filename = "themes/base_files/iconsets/{$prefs['theme_iconset']}.php";
 			$iconset1 = new Iconset($this->loadFile($filename));
 			$iconset->merge($iconset1);
 		}
 
 		//when a theme option is used, first override with the main theme's custom icons
-		if(!empty($theme_option)){
-			$filename = $themelib->get_theme_path($theme, '', str_replace('-', '_', $theme).'_custom.php', 'icons/');
+		if (! empty($theme_option)) {
+			$filename = $themelib->get_theme_path($theme, '', str_replace('-', '_', $theme) . '_custom.php', 'icons/');
 			if ($filename) {
 				$iconset1 = new Iconset($this->loadFile($filename));
 				$iconset->merge($iconset1);
@@ -50,7 +50,7 @@ class IconsetLib
 		}
 
 		//finally override with custom icons of the displayed theme
-		$filename = $themelib->get_theme_path($theme, $theme_option, str_replace('-', '_', $theme_option).'_custom.php', 'icons/');
+		$filename = $themelib->get_theme_path($theme, $theme_option, str_replace('-', '_', $theme_option) . '_custom.php', 'icons/');
 		if ($filename) {
 			$iconset1 = new Iconset($this->loadFile($filename));
 			$iconset->merge($iconset1);
@@ -75,7 +75,6 @@ class IconsetLib
 		}
 		return $data;
 	}
-
 }
 
 class Iconset
@@ -108,7 +107,7 @@ class Iconset
 		$this->icons = isset($data['icons']) ? $data['icons'] : [];
 		$this->defaults = isset($data['defaults']) ? $data['defaults'] : [];
 
-		if (!empty($data['source'])) {
+		if (! empty($data['source'])) {
 			$source = new Iconset(TikiLib::lib('iconset')->loadFile($data['source']));
 			$this->merge($source, false);
 		}
@@ -123,23 +122,23 @@ class Iconset
 
 		foreach ($iconset->icons() as $name => $icon) {
 			if (! isset($this->icons[$name]) || $over) {
-				if (!isset($icon['tag']) && $tag && $this->tag !== $tag) {
+				if (! isset($icon['tag']) && $tag && $this->tag !== $tag) {
 					$icon['tag'] = $tag;
 				}
-				if (!isset($icon['prepend']) && $this->prepend !== $prepend) {
+				if (! isset($icon['prepend']) && $this->prepend !== $prepend) {
 					$icon['prepend'] = $prepend;
 				}
-				if (!isset($icon['append']) && $this->append !== $append) {
+				if (! isset($icon['append']) && $this->append !== $append) {
 					$icon['append'] = $append;
 				}
-				if (!isset($icon['class']) && $this->class !== $class) {
+				if (! isset($icon['class']) && $this->class !== $class) {
 					$icon['class'] = $class;
 				}
 				$this->icons[$name] = $icon;
 			}
 		}
 
-		if (!empty($iconset->defaults)) {
+		if (! empty($iconset->defaults)) {
 			foreach ($iconset->defaults as $defname) {
 				if (! isset($this->icons[$defname]) || $over) {
 					$deficon['id'] = $defname;
@@ -152,7 +151,8 @@ class Iconset
 		}
 	}
 
-	function getIcon($name) {
+	function getIcon($name)
+	{
 		if (isset($this->icons[$name])) {
 			return $this->icons[$name];
 		}
@@ -197,13 +197,13 @@ class Iconset
 	}
 
 
-	public function getHtml($name, array $params = []) {
+	public function getHtml($name, array $params = [])
+	{
 
 		global $prefs;
 		$params = new JitFilter($params);
 
 		if ($icon = $this->getIcon($name)) {
-
 			$tag = isset($icon['tag']) ? $icon['tag'] : $this->tag;
 			$prepend = isset($icon['prepend']) ? $icon['prepend'] : $this->prepend;
 			$append = isset($icon['append']) ? $icon['append'] : $this->append;
@@ -213,17 +213,17 @@ class Iconset
 			$id = isset($params['id']) ? 'id="' . $params->id->striptags() . '"' : '';
 			//apply both user defined style and any style from the icon definition
 			$styleparams = [];
-			if (!empty($icon['style'])) {
+			if (! empty($icon['style'])) {
 				$styleparams[] = $icon['style'];
 			}
-			if (!empty($params['istyle'])) {
+			if (! empty($params['istyle'])) {
 				$styleparams[] = $params->istyle->striptags();
 			}
-			$size = !empty($params['size']) && $params['size'] < 10 ? abs($params->size->int()) : 1;
+			$size = ! empty($params['size']) && $params['size'] < 10 ? abs($params->size->int()) : 1;
 			//only used in legacy icon definition
 			$sizedef = isset($icon['size']) ? $icon['size'] : 1;
 			$rotate = '';
-			if (!empty($params['rotate'])) {
+			if (! empty($params['rotate'])) {
 				if (isset($this->rotate[$params['rotate']])) {
 					$rotate = $this->rotate[$params['rotate']];
 				}
@@ -232,7 +232,7 @@ class Iconset
 			if ($tag == 'img') { //manage legacy image icons (eg: png, gif, etc)
 				//some ability to use larger legacy icons based on size setting
 				// 1 = 16px x 16px; 2 = 32px x 32px; 3 = 48px x 48px
-				if ($size != 1 && $sizedef != $size && !empty($icon['sizes'][$size])) {
+				if ($size != 1 && $sizedef != $size && ! empty($icon['sizes'][$size])) {
 					$file = $icon['sizes'][$size]['id'];
 					if (isset($icon['sizes'][$size]['prepend'])) {
 						$prepend = $icon['sizes'][$size]['prepend'];
@@ -250,12 +250,12 @@ class Iconset
 				$html = "<span class=\"icon icon-$name$icon_class$custom_class $file\" $title $style $id><img src=\"$src\" alt=\"$alt\"></span>";
 			} else {
 				if (isset($icon['id'])) { //use class defined for the icon if set
-					$space = !empty($icon_class) ? ' ' : '';
+					$space = ! empty($icon_class) ? ' ' : '';
 					$icon_class .= $space . $prepend . $icon['id'] . $append . $rotate;
 				} else {
 					Feedback::error(tr('Icon set: Class not defined for icon %0', $name), 'session');
 				}
-				if ((!empty($size) && $size != 1)) {
+				if ((! empty($size) && $size != 1)) {
 					$styleparams[] = 'font-size:' . ($size * 100) . '%';
 				}
 				$style = $this->setStyle($styleparams);
@@ -263,18 +263,17 @@ class Iconset
 			}
 
 			return $html;
-
 		} else { //if icon is not found in $iconset, then display warning sign. Helps to detect missing icon definitions, typos
 			return $this->getHtml('warning');
 		}
-
 	}
 
 	/**
 	 * Get an array representation of the iconset for encoding as JSON
 	 *
 	 */
-	public function getJS() {
+	public function getJS()
+	{
 		$return = [
 			'defaults' => $this->defaults,
 			'icons' => $this->icons,
@@ -290,9 +289,9 @@ class Iconset
 	private function setStyle(array $styleparams)
 	{
 		$style = '';
-		if (!empty($styleparams)) {
+		if (! empty($styleparams)) {
 			foreach ($styleparams as $sparam) {
-				if (!empty($sparam)) {
+				if (! empty($sparam)) {
 					if (empty($style)) {
 						$style = 'style="' . $sparam . ';';
 					} else {
@@ -304,5 +303,4 @@ class Iconset
 		}
 		return $style;
 	}
-
 }

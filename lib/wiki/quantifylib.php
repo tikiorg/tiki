@@ -10,12 +10,13 @@ require_once 'lib/diff.php';
 class QuantifyLib extends TikiLib
 {
 
-	function recordChangeSize( $pageId, $version, $oldData, $newData )
+	function recordChangeSize($pageId, $version, $oldData, $newData)
 	{
 		global $prefs;
 
-		if ( $prefs['quantify_changes'] != 'y' || $prefs['feature_multilingual'] != 'y' )
+		if ($prefs['quantify_changes'] != 'y' || $prefs['feature_multilingual'] != 'y') {
 			return;
+		}
 
 		list($added, $removed, $complete) = $this->calculateChangeSize($oldData, $newData);
 
@@ -24,11 +25,11 @@ class QuantifyLib extends TikiLib
 			' (page_id, version, segments_added, segments_removed, segments_total)' .
 			' VALUES(?,?,?,?,?)' .
 			' ON DUPLICATE KEY update segments_added = ?, segments_removed = ?, segments_total = ?',
-			array( $pageId, $version, $added, $removed, $complete, $added, $removed, $complete )
+			[ $pageId, $version, $added, $removed, $complete, $added, $removed, $complete ]
 		);
 	}
 
-	function calculateChangeSize( $oldData, $newData )
+	function calculateChangeSize($oldData, $newData)
 	{
 		$oldData = $this->segmentData($oldData);
 		$newData = $this->segmentData($newData);
@@ -38,31 +39,34 @@ class QuantifyLib extends TikiLib
 		$added = 0;
 		$removed = 0;
 
-		foreach ( $engine->edits as $key => $modif ) {
-			if ( is_array($modif) )
+		foreach ($engine->edits as $key => $modif) {
+			if (is_array($modif)) {
 				$added += count($modif);
-			elseif ( is_int($modif) && $modif < 0 )
+			} elseif (is_int($modif) && $modif < 0) {
 				$removed -= $modif;
+			}
 		}
 
-		return array( $added, $removed, count($newData) );
+		return [ $added, $removed, count($newData) ];
 	}
 
-	function segmentData( $data )
+	function segmentData($data)
 	{
 		$data = preg_replace('/\.\s/', "\n", $data);
 		$segments = explode("\n", $data);
 		$segments = array_map('trim', $segments);
 
-		$final = array();
-		foreach ( $segments as $seg )
-			if ( ! empty( $seg ) )
+		$final = [];
+		foreach ($segments as $seg) {
+			if (! empty($seg)) {
 				$final[] = $seg;
+			}
+		}
 
 		return $final;
 	}
 
-	function getCompleteness( $pageId )
+	function getCompleteness($pageId)
 	{
 		$value = $this->getOne(
 			"SELECT" .
@@ -86,7 +90,7 @@ class QuantifyLib extends TikiLib
 			" WHERE" .
 			" tpc.page_id = ?" .
 			" GROUP BY tpc.page_id, tpc.segments_total, tpc.version",
-			array( $pageId, $pageId )
+			[ $pageId, $pageId ]
 		);
 
 		return floor($value * 100);
@@ -98,4 +102,3 @@ class QuantifyLib extends TikiLib
 		$this->recordChangeSize($arguments['page_id'], $arguments['version'], $arguments['old_data'], $arguments['data']);
 	}
 }
-

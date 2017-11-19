@@ -7,12 +7,12 @@
 
 //this script may only be included - so its better to die if called directly.
 global $prefs, $tiki_p_admin;
-if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) != FALSE) {
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) != false) {
 	header('location: index.php');
 	exit;
 }
 $smarty = TikiLib::lib('smarty');
-if ( $prefs['error_reporting_adminonly'] == 'y' and $tiki_p_admin != 'y' ) {
+if ($prefs['error_reporting_adminonly'] == 'y' and $tiki_p_admin != 'y') {
 	$errorReportingLevel = 0;
 } elseif ($prefs['error_reporting_level'] == 2047) {
 	$errorReportingLevel = E_ALL & ~E_STRICT;
@@ -27,15 +27,15 @@ if ( $prefs['error_reporting_adminonly'] == 'y' and $tiki_p_admin != 'y' ) {
 }
 
 // Handle Smarty notices
-if (!empty($prefs['smarty_notice_reporting']) and $prefs['smarty_notice_reporting'] === 'y' ) {
-	// FIXME: This reports all notices, whether or not they are from Smarty. But if we don't do it, we get no Smarty notices if they are enabled and notices are not. Solving involves clarifying the interface so that $prefs['smarty_notice_reporting'] depends on notices being reported. 
+if (! empty($prefs['smarty_notice_reporting']) and $prefs['smarty_notice_reporting'] === 'y') {
+	// FIXME: This reports all notices, whether or not they are from Smarty. But if we don't do it, we get no Smarty notices if they are enabled and notices are not. Solving involves clarifying the interface so that $prefs['smarty_notice_reporting'] depends on notices being reported.
 	$errorReportingLevel = $errorReportingLevel | E_NOTICE | E_USER_NOTICE ;
 }
 
 set_error_handler('tiki_error_handling', $errorReportingLevel);
 error_reporting($errorReportingLevel);
 
-if ( $prefs['log_sql'] == 'y' && $api_tiki == 'adodb' ) {
+if ($prefs['log_sql'] == 'y' && $api_tiki == 'adodb') {
 	$dbTiki->LogSQL();
 	global $ADODB_PERF_MIN;
 	$ADODB_PERF_MIN = $prefs['log_sql_perf_min'];
@@ -44,5 +44,7 @@ if ( $prefs['log_sql'] == 'y' && $api_tiki == 'adodb' ) {
 // TODO: check this only once per session or only if a feature ask for it
 TikiSetup::check($tikidomain);
 
-if ( ! isset($phpErrors) ) $phpErrors = array();
+if (! isset($phpErrors)) {
+	$phpErrors = [];
+}
 $smarty->assign_by_ref('phpErrors', $phpErrors);

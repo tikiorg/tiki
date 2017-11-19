@@ -5,12 +5,12 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function payment_behavior_cart_exchange_product( $exchangeorderitemid = 0, $exchangetoproductid = 0 )
+function payment_behavior_cart_exchange_product($exchangeorderitemid = 0, $exchangetoproductid = 0)
 {
 
 	global $prefs;
 
-	if (!($exchangeorderitemid) || !($exchangetoproductid) || $prefs['payment_cart_exchange'] != 'y') {
+	if (! ($exchangeorderitemid) || ! ($exchangetoproductid) || $prefs['payment_cart_exchange'] != 'y') {
 		return false;
 	}
 
@@ -54,16 +54,15 @@ function payment_behavior_cart_exchange_product( $exchangeorderitemid = 0, $exch
 		// Update real associated event id if necessary
 		$eventId = $trklib->get_item_value($productsTrackerId, $exchangetoproductid, $producteventFieldId);
 		if ($eventId) {
-			$ins_fields["data"][] = array('type' => 't', 'fieldId' => $realEventFieldId, 'value' => $eventId);
-			$ins_fields["data"][] = array('type' => 'r', 'fieldId' => $eventFieldId, 'value' => $eventId);
+			$ins_fields["data"][] = ['type' => 't', 'fieldId' => $realEventFieldId, 'value' => $eventId];
+			$ins_fields["data"][] = ['type' => 'r', 'fieldId' => $eventFieldId, 'value' => $eventId];
 			$eventStartDate = $trklib->get_item_value($eventsTrackerId, $eventId, $eventStartFieldId);
 			$eventEndDate = $trklib->get_item_value($eventsTrackerId, $eventId, $eventEndFieldId);
-			$ins_fields["data"][] = array('type' => 'f', 'fieldId' => $itemeventStartFieldId, 'value' => $eventStartDate);
-			$ins_fields["data"][] = array('type' => 'f', 'fieldId' => $itemeventEndFieldId, 'value' => $eventEndDate);
-
+			$ins_fields["data"][] = ['type' => 'f', 'fieldId' => $itemeventStartFieldId, 'value' => $eventStartDate];
+			$ins_fields["data"][] = ['type' => 'f', 'fieldId' => $itemeventEndFieldId, 'value' => $eventEndDate];
 		}
 	}
-	$ins_fields["data"][] = array('type' => 'r', 'fieldId' => $associatedproductFieldId, 'value' => $exchangetoproductid);
+	$ins_fields["data"][] = ['type' => 'r', 'fieldId' => $associatedproductFieldId, 'value' => $exchangetoproductid];
 	$trklib->replace_item($orderitemsTrackerId, $orderItemId, $ins_fields);
 
 	// Replace inventory for original product

@@ -13,19 +13,19 @@ if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
 $smarty->assign('gzip', 'Disabled');
 $smarty->assign('gzip_handler', 'none');
 
-if ( ! empty($force_no_compression) && $force_no_compression ) {
+if (! empty($force_no_compression) && $force_no_compression) {
 	ini_set('zlib.output_compression', 'off');
 } else {
 	// php compression enabled?
-	if ( ini_get('zlib.output_compression') == 1 ) {
+	if (ini_get('zlib.output_compression') == 1) {
 		$smarty->assign('gzip', 'Enabled');
 		$smarty->assign('gzip_handler', 'php');
 	// if not, check if tiki compression is enabled
-	} elseif ( $prefs['feature_obzip'] == 'y' ) {
+	} elseif ($prefs['feature_obzip'] == 'y') {
 		// tiki compression is enabled, then let activate the handler
 		@ob_clean();					// but make sure it's empty first
 		ob_start('ob_gzhandler');
 		$smarty->assign('gzip_handler', 'tiki');
 		$smarty->assign('gzip', 'Enabled');
 	}
-} 
+}

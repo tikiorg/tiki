@@ -55,7 +55,7 @@ class SchedulersLib extends TikiLib
 	function set_scheduler($name, $description = null, $task, $params = null, $run_time, $status, $re_run, $scheduler_id = null)
 	{
 
-		$values = array(
+		$values = [
 			'name' => $name,
 			'description' => $description,
 			'task' => $task,
@@ -63,11 +63,11 @@ class SchedulersLib extends TikiLib
 			'run_time' => $run_time,
 			'status' => $status,
 			're_run' => $re_run,
-		);
+		];
 
 		$schedulersTable = $this->table('tiki_scheduler');
 
-		if (!$scheduler_id) {
+		if (! $scheduler_id) {
 			$schedulersTable->insert($values);
 		} else {
 			$schedulersTable->update($values, ['id' => $scheduler_id]);
@@ -85,7 +85,7 @@ class SchedulersLib extends TikiLib
 	 */
 	function get_scheduler_runs($scheduler_id, $limit = 10)
 	{
-		if (!is_numeric($limit)) {
+		if (! is_numeric($limit)) {
 			$limit = -1;
 		}
 
@@ -167,7 +167,8 @@ class SchedulersLib extends TikiLib
 	 *
 	 * @param $scheduler_id
 	 */
-	function remove_scheduler($scheduler_id) {
+	function remove_scheduler($scheduler_id)
+	{
 
 		$schedulersRunTable = $this->table('tiki_scheduler_run');
 		$schedulersRunTable->delete(['scheduler_id' => $scheduler_id]);

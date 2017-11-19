@@ -20,12 +20,12 @@ class MemcacheSession
 
 		session_module_name('user');
 		session_set_save_handler(
-			array( $this, 'open' ),
-			array( $this, 'close' ),
-			array( $this, 'read' ),
-			array( $this, 'write' ),
-			array( $this, 'destroy' ),
-			array( $this, 'gc' )
+			[ $this, 'open' ],
+			[ $this, 'close' ],
+			[ $this, 'read' ],
+			[ $this, 'write' ],
+			[ $this, 'destroy' ],
+			[ $this, 'gc' ]
 		);
 
 		$this->enabled = TikiLib::lib("memcache")->isEnabled();
@@ -38,9 +38,9 @@ class MemcacheSession
 	 * @param  string Session key
 	 * @return string Memcache key
 	 */
-	function _buildCacheKey( $session_key )
+	function _buildCacheKey($session_key)
 	{
-		return $this->lib ? $this->lib->buildKey(array('role' => 'session-cache', 'session_key' => $session_key)) : false;
+		return $this->lib ? $this->lib->buildKey(['role' => 'session-cache', 'session_key' => $session_key]) : false;
 	}
 
 	function __destruct()
@@ -48,7 +48,7 @@ class MemcacheSession
 		session_write_close();
 	}
 
-	function open( $save_path, $session_name, $persist = NULL )
+	function open($save_path, $session_name, $persist = null)
 	{
 		return $this->enabled;
 	}
@@ -58,36 +58,36 @@ class MemcacheSession
 		return $this->enabled;
 	}
 
-	function read( $key )
+	function read($key)
 	{
 		$cache_key = $this->_buildCacheKey($key);
 
-		if ( $this->enabled ) {
+		if ($this->enabled) {
 			return $this->lib->get($cache_key);
 		}
 	}
 
-	function write( $key, $val )
+	function write($key, $val)
 	{
 		global $prefs;
 
-		if ( $this->enabled ) {
+		if ($this->enabled) {
 			$this->lib->set($this->_buildCacheKey($key), $val, 60 * $prefs['session_lifetime']);
 		}
 
 		return $this->enabled;
 	}
 
-	function destroy( $key )
+	function destroy($key)
 	{
-		if ( $this->enabled ) {
+		if ($this->enabled) {
 			$this->lib->delete($this->_buildCacheKey($key));
 		}
 
 		return $this->enabled;
 	}
 
-	function gc( $maxlifetime )
+	function gc($maxlifetime)
 	{
 		return $this->enabled;
 	}
@@ -95,4 +95,3 @@ class MemcacheSession
 
 $memcache_session = new MemcacheSession;
 $memcache_session->_init();
-

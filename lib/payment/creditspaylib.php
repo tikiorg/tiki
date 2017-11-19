@@ -16,11 +16,11 @@ class UserPayCredits extends CreditsLib
 		$userId = $this->get_user_id($user);
 		$uc = $this->getScaledCredits($userId);
 
-		$ret = array();
-		for ($i = 0, $cvalid_credits = count($valid_credits); $i < $cvalid_credits ; $i++) {
-			$one = array();
+		$ret = [];
+		for ($i = 0, $cvalid_credits = count($valid_credits); $i < $cvalid_credits; $i++) {
+			$one = [];
 			$k = $valid_credits[$i];
-			if (!empty($credits_xcrates[$i])) {
+			if (! empty($credits_xcrates[$i])) {
 				$one['xcrate'] = $credits_xcrates[$i];
 			} else {
 				$one['xcrate'] = 1;
@@ -67,12 +67,12 @@ class UserPayCredits extends CreditsLib
 				$invoice,
 				$amount,
 				'tikicredits',
-				array(
+				[
 					'info' => $msg,
 					'username' => $user,
 					'creditType' => $creditType,
 					'creditAmount' => $credits_amount
-				)
+				]
 			);
 			return true;
 		} else {

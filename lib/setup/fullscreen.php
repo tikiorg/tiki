@@ -11,13 +11,13 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
-if ( isset($_GET['fullscreen']) ) {
+if (isset($_GET['fullscreen'])) {
 	if ($_GET['fullscreen'] == 'y') {
 		$_SESSION['fullscreen'] = 'y';
 	} else {
 		$_SESSION['fullscreen'] = 'n';
 	}
 }
-if ( ! isset($_SESSION['fullscreen']) ) {
+if (! isset($_SESSION['fullscreen'])) {
 	$_SESSION['fullscreen'] = 'n';
 }

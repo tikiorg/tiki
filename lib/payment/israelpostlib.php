@@ -37,11 +37,11 @@ class IsraelPostLib
 		global $prefs;
 
 		$url = $prefs['payment_israelpost_environment'] . 'genericJ4afterJ5?OpenAgent';
-		$url .= '&' . http_build_query(array(
+		$url .= '&' . http_build_query([
 			'Business' => $prefs['payment_israelpost_business_id'],
 			'PreOrderID' => $payment['paymentRequestId'],
 			'cid' => $received['details']['CARTID'],
-		), '', '&');
+		], '', '&');
 
 		$tikilib = TikiLib::lib('tiki');
 		$out = $tikilib->httprequest($url);
@@ -75,16 +75,14 @@ class IsraelPostLib
 			$entered = false;
 			foreach ($response->ORDERS as $order) {
 				if ($order->STATUS == 2) { // Order approved
-					if (
-						! in_array($order->ORDERID, $existingOrders) // Order not already entered
+					if (! in_array($order->ORDERID, $existingOrders) // Order not already entered
 						&& $order->CURRENCY_CODE == $payment['currency'] // Same currency - we do not deal with conversions
 					) {
 						$this->payment->enter_payment($paymentId, $order->TOTAL_PAID, 'israelpost', (array) $order);
 						$entered = true;
 					}
 				} elseif ($order->STATUS == 5) { // Pre-auth
-					if (
-						! in_array($order->AUTHORISAT, $existingAuth) // Order not already entered
+					if (! in_array($order->AUTHORISAT, $existingAuth) // Order not already entered
 						&& $order->CURRENCY_CODE == $payment['currency'] // Same currency - we do not deal with conversions
 					) {
 						$this->payment->enter_authorization($paymentId, 'israelpost', 3, (array) $order);
@@ -103,7 +101,7 @@ class IsraelPostLib
 	{
 		global $prefs;
 
-		$combined = array($prefs['payment_israelpost_business_id'], $prefs['payment_israelpost_api_password']);
+		$combined = [$prefs['payment_israelpost_business_id'], $prefs['payment_israelpost_api_password']];
 
 		if ($prefs['payment_israelpost_request_preauth'] == 'y') {
 			$combined[] = $jitGet->authorisat->digits();
@@ -120,13 +118,12 @@ class IsraelPostLib
 	private function getClient()
 	{
 		global $prefs;
-		
+
 		$wsdl = $prefs['payment_israelpost_environment'] . 'GetGenericStatus?wsdl';
-		$client = new Zend\Soap\Client($wsdl, array(
+		$client = new Zend\Soap\Client($wsdl, [
 			'soap_version' => SOAP_1_1,
-		));
+		]);
 
 		return $client;
 	}
 }
-

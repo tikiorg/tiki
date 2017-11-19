@@ -19,52 +19,53 @@ class StatsLib extends TikiLib
 	/**
 	 *  Check if the prerequisites for recording a statistics hit are fulfilled
 	 */
-	public static function is_stats_hit() {
+	public static function is_stats_hit()
+	{
 		global $prefs, $user;
 		return $prefs['feature_stats'] === 'y' && ( $prefs['count_admin_pvs'] === 'y' || $user != 'admin' );
 	}
 
 	// obsolete, but keeped for compatibility purposes
 	// use Tikilib::list_pages() instead
-    /**
-     * @param int $offset
-     * @param $maxRecords
-     * @param string $sort_mode
-     * @param string $find
-     * @param bool $onlyCant
-     * @return array
-     */
-    public function list_orphan_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $onlyCant=false)
+	/**
+	 * @param int $offset
+	 * @param $maxRecords
+	 * @param string $sort_mode
+	 * @param string $find
+	 * @param bool $onlyCant
+	 * @return array
+	 */
+	public function list_orphan_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $onlyCant = false)
 	{
 		return $this->list_pages($offset, $maxRecords, $sort_mode, $find, '', true, true, true, true, false, '', $onlyCant);
 	}
 
-    /**
-     * @return array
-     */
-    public function wiki_stats()
+	/**
+	 * @return array
+	 */
+	public function wiki_stats()
 	{
-		$stats = array();
+		$stats = [];
 
-		$stats["pages"] = $this->getOne("select count(*) from `tiki_pages`", array());
-		$stats["versions"] = $this->getOne("select count(*) from `tiki_history`", array());
+		$stats["pages"] = $this->getOne("select count(*) from `tiki_pages`", []);
+		$stats["versions"] = $this->getOne("select count(*) from `tiki_history`", []);
 
 		if ($stats["pages"]) {
 			$stats["vpp"] = $stats["versions"] / $stats["pages"];
 		} else {
 			$stats["vpp"] = 0;
 		}
-		$stats["visits"] = $this->getOne("select sum(`hits`) from `tiki_pages`", array());
+		$stats["visits"] = $this->getOne("select sum(`hits`) from `tiki_pages`", []);
 		$or = $this->list_orphan_pages(0, -1, 'pageName_desc', '', true);
 		$stats["orphan"] = $or["cant"];
-		$links = $this->getOne("select count(*) from `tiki_links`", array());
+		$links = $this->getOne("select count(*) from `tiki_links`", []);
 
 		if ($stats["pages"]) {
 			$stats["lpp"] = $links / $stats["pages"];
 		} else {
 			$stats["lpp"] = 0;
 		}
-		$stats["size"] = $this->getOne("select sum(`page_size`) from `tiki_pages`", array());
+		$stats["size"] = $this->getOne("select sum(`page_size`) from `tiki_pages`", []);
 
 		if ($stats["pages"]) {
 			$stats["bpp"] = $stats["size"] / $stats["pages"];
@@ -75,158 +76,158 @@ class StatsLib extends TikiLib
 		return $stats;
 	}
 
-    /**
-     * @return array
-     */
-    public function quiz_stats()
+	/**
+	 * @return array
+	 */
+	public function quiz_stats()
 	{
 		TikiLib::lib('quiz')->compute_quiz_stats();
 
-		$stats = array();
-		$stats["quizzes"] = $this->getOne("select count(*) from `tiki_quizzes`", array());
-		$stats["questions"] = $this->getOne("select count(*) from `tiki_quiz_questions`", array());
+		$stats = [];
+		$stats["quizzes"] = $this->getOne("select count(*) from `tiki_quizzes`", []);
+		$stats["questions"] = $this->getOne("select count(*) from `tiki_quiz_questions`", []);
 		if ($stats["quizzes"]) {
 			$stats["qpq"] = $stats["questions"] / $stats["quizzes"];
 		} else {
 			$stats["qpq"] = 0;
 		}
-		$stats["visits"] = $this->getOne("select sum(`timesTaken`) from `tiki_quiz_stats_sum`", array());
-		$stats["avg"] = $this->getOne("select avg(`avgavg`) from `tiki_quiz_stats_sum`", array());
-		$stats["avgtime"] = $this->getOne("select avg(`avgtime`) from `tiki_quiz_stats_sum`", array());
+		$stats["visits"] = $this->getOne("select sum(`timesTaken`) from `tiki_quiz_stats_sum`", []);
+		$stats["avg"] = $this->getOne("select avg(`avgavg`) from `tiki_quiz_stats_sum`", []);
+		$stats["avgtime"] = $this->getOne("select avg(`avgtime`) from `tiki_quiz_stats_sum`", []);
 		return $stats;
 	}
 
-    /**
-     * @return array
-     */
-    public function image_gal_stats()
+	/**
+	 * @return array
+	 */
+	public function image_gal_stats()
 	{
-		$stats = array();
-		$stats["galleries"] = $this->getOne("select count(*) from `tiki_galleries`", array());
-		$stats["images"] = $this->getOne("select count(*) from `tiki_images`", array());
+		$stats = [];
+		$stats["galleries"] = $this->getOne("select count(*) from `tiki_galleries`", []);
+		$stats["images"] = $this->getOne("select count(*) from `tiki_images`", []);
 		$stats["ipg"] = ($stats["galleries"] ? $stats["images"] / $stats["galleries"] : 0);
-		$stats["size"] = $this->getOne("select sum(`filesize`) from `tiki_images_data` where `type`=?", array('o'));
+		$stats["size"] = $this->getOne("select sum(`filesize`) from `tiki_images_data` where `type`=?", ['o']);
 		$stats["bpi"] = ($stats["images"] ? $stats["size"] / $stats["images"] : 0);
 		$stats["size"] = $stats["size"] / 1000000;
-		$stats["visits"] = $this->getOne("select sum(`hits`) from `tiki_galleries`", array());
+		$stats["visits"] = $this->getOne("select sum(`hits`) from `tiki_galleries`", []);
 		return $stats;
 	}
 
-    /**
-     * @return array
-     */
-    public function file_gal_stats()
+	/**
+	 * @return array
+	 */
+	public function file_gal_stats()
 	{
-		$stats = array();
-		$stats["galleries"] = $this->getOne("select count(*) from `tiki_file_galleries`", array());
-		$stats["files"] = $this->getOne("select count(*) from `tiki_files`", array());
+		$stats = [];
+		$stats["galleries"] = $this->getOne("select count(*) from `tiki_file_galleries`", []);
+		$stats["files"] = $this->getOne("select count(*) from `tiki_files`", []);
 		$stats["fpg"] = ($stats["galleries"] ? $stats["files"] / $stats["galleries"] : 0);
-		$stats["size"] = $this->getOne("select sum(`filesize`) from `tiki_files`", array());
+		$stats["size"] = $this->getOne("select sum(`filesize`) from `tiki_files`", []);
 		$stats["size"] = $stats["size"] / 1000000;
 		$stats["bpf"] = ($stats["files"] ? $stats["size"] / $stats["files"] : 0);
-		$stats["visits"] = $this->getOne("select sum(`hits`) from `tiki_file_galleries`", array());
-		$stats["hits"] = $this->getOne("select sum(`hits`) from `tiki_files`", array());
+		$stats["visits"] = $this->getOne("select sum(`hits`) from `tiki_file_galleries`", []);
+		$stats["hits"] = $this->getOne("select sum(`hits`) from `tiki_files`", []);
 		return $stats;
 	}
 
-    /**
-     * @return array
-     */
-    public function cms_stats()
+	/**
+	 * @return array
+	 */
+	public function cms_stats()
 	{
-		$stats = array();
+		$stats = [];
 
-		$stats["articles"] = $this->getOne("select count(*) from `tiki_articles`", array());
-		$stats["reads"] = $this->getOne("select sum(`nbreads`) from `tiki_articles`", array());
+		$stats["articles"] = $this->getOne("select count(*) from `tiki_articles`", []);
+		$stats["reads"] = $this->getOne("select sum(`nbreads`) from `tiki_articles`", []);
 		$stats["rpa"] = ($stats["articles"] ? $stats["reads"] / $stats["articles"] : 0);
-		$stats["size"] = $this->getOne("select sum(`size`) from `tiki_articles`", array());
+		$stats["size"] = $this->getOne("select sum(`size`) from `tiki_articles`", []);
 		$stats["bpa"] = ($stats["articles"] ? $stats["size"] / $stats["articles"] : 0);
-		$stats["topics"] = $this->getOne("select count(*) from `tiki_topics` where `active`=?", array('y'));
+		$stats["topics"] = $this->getOne("select count(*) from `tiki_topics` where `active`=?", ['y']);
 		return $stats;
 	}
 
-    /**
-     * @return array
-     */
-    public function forum_stats()
+	/**
+	 * @return array
+	 */
+	public function forum_stats()
 	{
-		$stats = array();
-		$stats["forums"] = $this->getOne("select count(*) from `tiki_forums`", array());
+		$stats = [];
+		$stats["forums"] = $this->getOne("select count(*) from `tiki_forums`", []);
 		$stats["topics"] = $this->getOne(
 			"select count(*) from `tiki_comments`,`tiki_forums`" .
 			" where `object`=`forumId` and `objectType`=? and `parentId`=?",
-			array('forum',0)
+			['forum',0]
 		);
 		$stats["threads"] = $this->getOne(
 			"select count(*) from `tiki_comments`,`tiki_forums`" .
 			" where `object`=`forumId` and `objectType`=? and `parentId`<>?",
-			array('forum',0)
+			['forum',0]
 		);
 		$stats["tpf"] = ($stats["forums"] ? $stats["topics"] / $stats["forums"] : 0);
 		$stats["tpt"] = ($stats["topics"] ? $stats["threads"] / $stats["topics"] : 0);
-		$stats["visits"] = $this->getOne("select sum(`hits`) from `tiki_forums`", array());
+		$stats["visits"] = $this->getOne("select sum(`hits`) from `tiki_forums`", []);
 		return $stats;
 	}
 
-    /**
-     * @return array
-     */
-    public function blog_stats()
+	/**
+	 * @return array
+	 */
+	public function blog_stats()
 	{
-		$stats = array();
-		$stats["blogs"] = $this->getOne("select count(*) from `tiki_blogs`", array());
-		$stats["posts"] = $this->getOne("select count(*) from `tiki_blog_posts`", array());
+		$stats = [];
+		$stats["blogs"] = $this->getOne("select count(*) from `tiki_blogs`", []);
+		$stats["posts"] = $this->getOne("select count(*) from `tiki_blog_posts`", []);
 		$stats["ppb"] = ($stats["blogs"] ? $stats["posts"] / $stats["blogs"] : 0);
-		$stats["size"] = $this->getOne("select sum(`data_size`) from `tiki_blog_posts`", array());
+		$stats["size"] = $this->getOne("select sum(`data_size`) from `tiki_blog_posts`", []);
 		$stats["bpp"] = ($stats["posts"] ? $stats["size"] / $stats["posts"] : 0);
-		$stats["visits"] = $this->getOne("select sum(`hits`) from `tiki_blogs`", array());
+		$stats["visits"] = $this->getOne("select sum(`hits`) from `tiki_blogs`", []);
 		return $stats;
 	}
 
-    /**
-     * @return array
-     */
-    public function poll_stats()
+	/**
+	 * @return array
+	 */
+	public function poll_stats()
 	{
-		$stats = array();
-		$stats["polls"] = $this->getOne("select count(*) from `tiki_polls`", array());
-		$stats["votes"] = $this->getOne("select sum(`votes`) from `tiki_poll_options`", array());
+		$stats = [];
+		$stats["polls"] = $this->getOne("select count(*) from `tiki_polls`", []);
+		$stats["votes"] = $this->getOne("select sum(`votes`) from `tiki_poll_options`", []);
 		$stats["vpp"] = ($stats["polls"] ? $stats["votes"] / $stats["polls"] : 0);
 		return $stats;
 	}
 
-    /**
-     * @return array
-     */
-    public function faq_stats()
+	/**
+	 * @return array
+	 */
+	public function faq_stats()
 	{
-		$stats = array();
-		$stats["faqs"] = $this->getOne("select count(*) from `tiki_faqs`", array());
-		$stats["questions"] = $this->getOne("select count(*) from `tiki_faq_questions`", array());
+		$stats = [];
+		$stats["faqs"] = $this->getOne("select count(*) from `tiki_faqs`", []);
+		$stats["questions"] = $this->getOne("select count(*) from `tiki_faq_questions`", []);
 		$stats["qpf"] = ($stats["faqs"] ? $stats["questions"] / $stats["faqs"] : 0);
 		return $stats;
 	}
 
-    /**
-     * @return array
-     */
-    public function user_stats()
+	/**
+	 * @return array
+	 */
+	public function user_stats()
 	{
-		$stats = array();
-		$stats["users"] = $this->getOne("select count(*) from `users_users`", array());
-		$stats["bookmarks"] = $this->getOne("select count(*) from `tiki_user_bookmarks_urls`", array());
+		$stats = [];
+		$stats["users"] = $this->getOne("select count(*) from `users_users`", []);
+		$stats["bookmarks"] = $this->getOne("select count(*) from `tiki_user_bookmarks_urls`", []);
 		$stats["bpu"] = ($stats["users"] ? $stats["bookmarks"] / $stats["users"] : 0);
 		return $stats;
 	}
 
-    /**
-     * @return array
-     */
-    public function site_stats()
+	/**
+	 * @return array
+	 */
+	public function site_stats()
 	{
 		$tikilib = TikiLib::lib('tiki');
-		$stats = array();
-		$rows = $this->getOne("select count(*) from `tiki_pageviews`", array());
+		$stats = [];
+		$rows = $this->getOne("select count(*) from `tiki_pageviews`", []);
 
 		if ($rows > 0) {
 			//get max pageview number
@@ -259,9 +260,9 @@ class StatsLib extends TikiLib
 				" ORDER BY date ASC"
 			);
 
-			$start = $this->getOne("select min(`day`) from `tiki_pageviews`", array());
+			$start = $this->getOne("select min(`day`) from `tiki_pageviews`", []);
 			$stats['started'] = $start;
-			$stats['days'] = floor(($tikilib->now - $start)/86400);
+			$stats['days'] = floor(($tikilib->now - $start) / 86400);
 			$stats['pageviews'] = $this->getOne("select sum(`pageviews`) from `tiki_pageviews`");
 			$stats['ppd'] = sprintf("%.2f", ($stats['days'] ? $stats['pageviews'] / $stats['days'] : 0));
 			$b = 0;
@@ -292,50 +293,50 @@ class StatsLib extends TikiLib
 		return $stats;
 	}
 
-    /**
-     * @param $object
-     * @param $type
-     * @param null $id
-     * @return bool
-     */
-    public function stats_hit($object, $type, $id = null)
+	/**
+	 * @param $object
+	 * @param $type
+	 * @param null $id
+	 * @return bool
+	 */
+	public function stats_hit($object, $type, $id = null)
 	{
-		if ( empty($object) || empty($type) || !StatsLib::is_stats_hit() ) {
+		if (empty($object) || empty($type) || ! StatsLib::is_stats_hit()) {
 			return false;
 		}
 
 		list($month, $day, $year) = explode(',', $this->date_format("%m,%d,%Y"));
 		$dayzero = $this->make_time(0, 0, 0, $month, $day, $year);
 
-		if ( ! is_null($id) ) {
-			$object = $id."?".$object;
+		if (! is_null($id)) {
+			$object = $id . "?" . $object;
 		}
 
 		$cant = $this->getOne(
 			"select count(*) from `tiki_stats` where `object`=? and `type`=? and `day`=?",
-			array($object, $type, (int) $dayzero)
+			[$object, $type, (int) $dayzero]
 		);
 
-		if ( $cant ) {
+		if ($cant) {
 			$query = "update `tiki_stats` set `hits`=`hits`+1 where `object`=? and `type`=? and `day`=?";
 		} else {
 			$query = "insert into `tiki_stats` (`object`,`type`,`day`,`hits`) values(?,?,?,1)";
 		}
 
-		return $this->query($query, array($object, $type, (int) $dayzero), -1, -1, false);
+		return $this->query($query, [$object, $type, (int) $dayzero], -1, -1, false);
 	}
 
-    /**
-     * @param int $max
-     * @param int $days
-     * @param int $startDate
-     * @param int $endDate
-     * @return array
-     */
-    public function best_overall_object_stats($max=20, $days=0, $startDate=0, $endDate=0 )
+	/**
+	 * @param int $max
+	 * @param int $days
+	 * @param int $startDate
+	 * @param int $endDate
+	 * @return array
+	 */
+	public function best_overall_object_stats($max = 20, $days = 0, $startDate = 0, $endDate = 0)
 	{
-		$stats = array();
-		$bindvars = array();
+		$stats = [];
+		$bindvars = [];
 		if ($days != 0) {
 			$mid = "WHERE `day` >= ?";
 			$bindvars[] = $this->make_time(
@@ -377,17 +378,17 @@ class StatsLib extends TikiLib
 		return $stats;
 	}
 
-    /**
-     * @param $object
-     * @param $type
-     * @param int $days
-     * @param int $startDate
-     * @param int $endDate
-     * @return mixed
-     */
-    public function object_hits($object, $type, $days=0, $startDate=0, $endDate=0 )
+	/**
+	 * @param $object
+	 * @param $type
+	 * @param int $days
+	 * @param int $startDate
+	 * @param int $endDate
+	 * @return mixed
+	 */
+	public function object_hits($object, $type, $days = 0, $startDate = 0, $endDate = 0)
 	{
-		$bindvars = array($object, $type);
+		$bindvars = [$object, $type];
 		if ($days != 0) {
 			$mid = "AND `day` >= ? ";
 			$bindvars[] = $this->make_time(
@@ -416,13 +417,13 @@ class StatsLib extends TikiLib
 		return $cant;
 	}
 
-    /**
-     * @param int $days
-     * @return array
-     */
-    public function get_daily_usage_chart_data($days = 30)
+	/**
+	 * @param int $days
+	 * @return array
+	 */
+	public function get_daily_usage_chart_data($days = 30)
 	{
-		$bindvars = array();
+		$bindvars = [];
 
 		if ($days != 0) {
 			$mid = "WHERE `day` >= ? ";
@@ -440,7 +441,7 @@ class StatsLib extends TikiLib
 
 		$query = "SELECT `day`,sum(`hits`) AS `hits` FROM `tiki_stats` " . $mid . " GROUP BY `day`";
 		$result = $this->query($query, $bindvars, -1, 0);
-		$data = array();
+		$data = [];
 
 		while ($res = $result->fetchRow()) {
 			$data['xdata'][] = $this->date_format("%Y/%m/%d", $res['day']);
@@ -467,7 +468,7 @@ class StatsLib extends TikiLib
 		$year = TikiLib::date_format("%Y", $now);
 		switch ($when) {
 			case 'lasthour':
-				$begin = $now - 60*60;
+				$begin = $now - 60 * 60;
 				break;
 
 			case 'day':
@@ -475,7 +476,7 @@ class StatsLib extends TikiLib
 				break;
 
 			case 'lastday':
-				$begin = Tikilib::make_time($hour-24, $min, $sec, $month, $day, $year);
+				$begin = Tikilib::make_time($hour - 24, $min, $sec, $month, $day, $year);
 				break;
 
 			case 'week':
@@ -486,11 +487,11 @@ class StatsLib extends TikiLib
 				if ($iweek < 0) {
 					$iweek += 7;
 				}
-				$begin = TikiLib::make_time(0, 0, 0, $month, $day-($iweek ), $year);
+				$begin = TikiLib::make_time(0, 0, 0, $month, $day - ($iweek ), $year);
 				break;
 
 			case 'lastweek':
-				$begin = Tikilib::make_time($hour, $min, $sec, $month, $day-7, $year);
+				$begin = Tikilib::make_time($hour, $min, $sec, $month, $day - 7, $year);
 				break;
 
 			case 'month':
@@ -498,7 +499,7 @@ class StatsLib extends TikiLib
 				break;
 
 			case 'lastmonth':
-				$begin = TikiLib::make_time($hour, $min, $sec, $month-1, $day, $year);
+				$begin = TikiLib::make_time($hour, $min, $sec, $month - 1, $day, $year);
 				break;
 
 			case 'year':
@@ -506,25 +507,25 @@ class StatsLib extends TikiLib
 				break;
 
 			case 'lastyear':
-				$begin = TikiLib::make_time($hour, $min, $sec, $month, $day, $year-1);
+				$begin = TikiLib::make_time($hour, $min, $sec, $month, $day, $year - 1);
 				break;
 
-			default :
+			default:
 				$begin = $now;
 				break;
 		}
-		return array((int) $begin, (int) $now);
+		return [(int) $begin, (int) $now];
 	}
 
 	/**
 	 * count the number of created or modified for this day, this month, this year
 	 *
 	 */
-	public function count_this_period($table = 'tiki_pages', $column ='created', $when='daily', $parentColumn ='', $parentId='')
+	public function count_this_period($table = 'tiki_pages', $column = 'created', $when = 'daily', $parentColumn = '', $parentId = '')
 	{
 		$bindvars = $this->period2dates($when);
 		$where = '';
-		if (!empty($parentColumn) && !empty($parentId)) {
+		if (! empty($parentColumn) && ! empty($parentId)) {
 			$where = " and `$parentColumn` = ?";
 			$bindvars[] = (int) $parentId;
 		}
@@ -537,7 +538,7 @@ class StatsLib extends TikiLib
 	 *  count the number of viewed for this day, this month, this year
 	 *
 	 */
-	public function hit_this_period($type='wiki', $when='daily')
+	public function hit_this_period($type = 'wiki', $when = 'daily')
 	{
 		$bindvars = $this->period2dates($when);
 		$bindvars[1] = $type;
@@ -560,23 +561,23 @@ class StatsLib extends TikiLib
 			$this->date_format("%Y", $this->now)
 		);
 
-		$conditions = array('day' => (int) $dayzero,);
+		$conditions = ['day' => (int) $dayzero,];
 
 		$pageviews = $this->table('tiki_pageviews');
 		$cant = $pageviews->fetchCount($conditions);
 
 		if ($cant) {
-			$pageviews->update(array('pageviews' => $pageviews->increment(1),), $conditions);
+			$pageviews->update(['pageviews' => $pageviews->increment(1),], $conditions);
 		} else {
-			$pageviews->insert(array('day' => (int) $dayzero,'pageviews' => 1,));
+			$pageviews->insert(['day' => (int) $dayzero,'pageviews' => 1,]);
 		}
 	}
 
-    /**
-     * @param $days
-     * @return array
-     */
-    public function get_pv_chart_data($days)
+	/**
+	 * @param $days
+	 * @return array
+	 */
+	public function get_pv_chart_data($days)
 	{
 		$now = $this->make_time(0, 0, 0, $this->date_format("%m"), $this->date_format("%d"), $this->date_format("%Y"));
 		$dfrom = 0;
@@ -585,12 +586,12 @@ class StatsLib extends TikiLib
 		}
 
 		$query = "select `day`, `pageviews` from `tiki_pageviews` where `day`<=? and `day`>=?";
-		$result = $this->fetchAll($query, array((int) $now, (int) $dfrom));
-		$ret = array();
+		$result = $this->fetchAll($query, [(int) $now, (int) $dfrom]);
+		$ret = [];
 		$n = ceil(count($result) / 10);
 		$i = 0;
-		$xdata = array();
-		$ydata = array();
+		$xdata = [];
+		$ydata = [];
 
 		foreach ($result as $res) {
 			if ($i % $n == 0) {

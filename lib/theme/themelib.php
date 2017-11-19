@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -12,22 +12,22 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 }
 
 /*
-ThemeLib 
+ThemeLib
 @uses TikiLib
 */
 
 class ThemeLib extends TikiLib
 {
 
-	/* 
+	/*
 	@return array of folder names in themes directory
 	*/
 	function get_themes($theme_base_path = '')
 	{
-		$themes = array();
+		$themes = [];
 		$list_css = glob("{$theme_base_path}themes/*/css/*.css");
-		if( $list_css == FALSE ) {
-			return array();
+		if ($list_css == false) {
+			return [];
 		}
 		foreach ($list_css as $css) {
 			$css = dirname(dirname($css));
@@ -65,7 +65,7 @@ class ThemeLib extends TikiLib
 	*/
 	function get_options()
 	{
-		$options = array();
+		$options = [];
 		foreach (glob("themes/*/options/*/css/*.css") as $css) {
 			$css = dirname(dirname($css));
 			$option = basename($css);
@@ -80,12 +80,12 @@ class ThemeLib extends TikiLib
 	*/
 	function list_theme_options($theme)
 	{
-		$theme_options = array();
+		$theme_options = [];
 		if (isset($theme) and $theme != 'custom_url') { //don't consider custom URL themes to have options
 			$option_base_path = $this->get_theme_path($theme);
 			$list_css = glob("{$option_base_path}/options/*/css/*.css");
-			if( $list_css == FALSE ) {
-				return array();
+			if ($list_css == false) {
+				return [];
 			}
 			foreach ($list_css as $css) {
 				$css = dirname(dirname($css));
@@ -126,7 +126,7 @@ class ThemeLib extends TikiLib
 		} else {
 			$option = '';
 		}
-		return array($theme, $option);
+		return [$theme, $option];
 	}
 
 	/* get thumbnail for theme if there is one. The thumbnail should be a png file.
@@ -136,9 +136,8 @@ class ThemeLib extends TikiLib
 	*/
 	function get_thumbnail_file($theme, $option = '')
 	{
-		if (!empty($option) && $option != tr('None')) {
+		if (! empty($option) && $option != tr('None')) {
 			$filename = $option . '.png'; // add .png
-
 		} else {
 			$filename = $theme . '.png'; // add .png
 			$option = '';
@@ -165,15 +164,15 @@ class ThemeLib extends TikiLib
 		}
 
 		$theme_base = '';
-		if (!empty($theme)) {
+		if (! empty($theme)) {
 			$theme_base = $theme . '/';
 		}
 
-		if (!empty($option)) {
+		if (! empty($option)) {
 			$option_base = 'options/' . $option . '/';
 		}
 
-		if (empty($subdir) && !empty($filename)) {
+		if (empty($subdir) && ! empty($filename)) {
 			$extension = substr($filename, strrpos($filename, '.') + 1);
 			switch ($extension) {
 				case 'css':
@@ -186,7 +185,7 @@ class ThemeLib extends TikiLib
 				case 'gif':
 				case 'jpg':
 				case 'jpeg':
-                case 'svg':
+				case 'svg':
 					$subdir = 'images/';
 					break;
 				case 'less':
@@ -205,29 +204,29 @@ class ThemeLib extends TikiLib
 		if (empty($filename)) {
 			if (isset($option_base) && is_dir('themes/' . $dir_base . $theme_base . $option_base . $subdir)) {
 				$path = 'themes/' . $dir_base . $theme_base . $option_base . $subdir;
-			} else if (is_dir('themes/' . $dir_base . $theme_base . $subdir)) {
+			} elseif (is_dir('themes/' . $dir_base . $theme_base . $subdir)) {
 				$path = 'themes/' . $dir_base . $theme_base . $subdir;                // try "parent" theme dir if no option one
-			} else if (isset($option_base) && is_dir('themes/' . $theme_base . $option_base . $subdir)) {
+			} elseif (isset($option_base) && is_dir('themes/' . $theme_base . $option_base . $subdir)) {
 				$path = 'themes/' . $theme_base . $option_base . $subdir;                // try non-tikidomain theme dirs if no domain one
-			} else if (is_dir('themes/' . $theme_base . $subdir)) {
+			} elseif (is_dir('themes/' . $theme_base . $subdir)) {
 				$path = 'themes/' . $theme_base . $subdir;                            // try root theme dir if no domain one
-			} else if (is_dir('themes/' . $theme_base)) {
+			} elseif (is_dir('themes/' . $theme_base)) {
 				$path = 'themes/' . $theme_base;                                    // fall back to "parent" theme dir with no subdir if not
 			}
 		} else {
 			if (isset($option_base) && is_file('themes/' . $dir_base . $theme_base . $option_base . $subdir . $filename)) {
 				$path = 'themes/' . $dir_base . $theme_base . $option_base . $subdir . $filename;
-			} else if (is_file('themes/' . $dir_base . $theme_base . $subdir . $filename)) {    // try "parent" themes dir if no option one
+			} elseif (is_file('themes/' . $dir_base . $theme_base . $subdir . $filename)) {    // try "parent" themes dir if no option one
 				$path = 'themes/' . $dir_base . $theme_base . $subdir . $filename;
-			} else if (isset($option_base) && is_file('themes/' . $theme_base . $option_base . $subdir . $filename)) {    // try non-tikidomain dirs if not found
+			} elseif (isset($option_base) && is_file('themes/' . $theme_base . $option_base . $subdir . $filename)) {    // try non-tikidomain dirs if not found
 				$path = 'themes/' . $theme_base . $option_base . $subdir . $filename;
-			} else if (is_file('themes/' . $theme_base . $subdir . $filename)) {
+			} elseif (is_file('themes/' . $theme_base . $subdir . $filename)) {
 				$path = 'themes/' . $theme_base . $subdir . $filename;                        // fall back to "parent" themes dir if no option
-			} else if (is_file('themes/' . $dir_base . $subdir . $filename)) {
+			} elseif (is_file('themes/' . $dir_base . $subdir . $filename)) {
 				$path = 'themes/' . $dir_base . $subdir . $filename;                            // tikidomain root themes dir?
-			} else if (is_file('themes/' . $subdir . $filename)) {
+			} elseif (is_file('themes/' . $subdir . $filename)) {
 				$path = 'themes/' . $subdir . $filename;                                    // root themes subdir?
-			} else if (is_file('themes/' . $filename)) {
+			} elseif (is_file('themes/' . $filename)) {
 				$path = 'themes/' . $filename;                                            // root themes dir?
 			}
 		}
@@ -242,8 +241,8 @@ class ThemeLib extends TikiLib
 			return $this->get_theme_path($theme, $option, $theme . '.css');
 		}
 	}
-	
-	/* get list of base iconsets 
+
+	/* get list of base iconsets
 	@return $base_iconsets - an array containing all icon set names from themes/base_files/iconsets folder
 	*/
 	function list_base_iconsets()
@@ -262,54 +261,52 @@ class ThemeLib extends TikiLib
 		return $base_iconsets;
 	}
 
-	/* get list of available themes and options 
+	/* get list of available themes and options
 	@return array of available themes and options based on $prefs['available_themes'] setting. This function does not consider if change_theme is on or off.
 	*/
 	function get_available_themesandoptions()
 	{
 		global $prefs;
-		$available_themesandoptions = array();
-		if (count($prefs['available_themes'] != 0) and !empty($prefs['available_themes'][0])) { //if pref['available_themes'] is set, than use it
+		$available_themesandoptions = [];
+		if (count($prefs['available_themes'] != 0) and ! empty($prefs['available_themes'][0])) { //if pref['available_themes'] is set, than use it
 			$available_themesandoptions = array_combine($prefs['available_themes'], $prefs['available_themes']);
-		}
-		else {
+		} else {
 			$available_themesandoptions = $this->list_themes_and_options(); //else load all themes and options
 			unset($available_themesandoptions['custom_url']); //make sure Custom URL is removed from the list
 		}
 		return $available_themesandoptions;
 	}
-	/* get a list of available themes 
+	/* get a list of available themes
 	@return array of available themes based on $prefs['available_themes'] setting. This function does not consider if change_theme is on or off.
 	*/
 	function get_available_themes()
 	{
 		global $prefs;
-		$available_themes = array();
-		if (count($prefs['available_themes'] != 0) and !empty($prefs['available_themes'][0])) { //if pref['available_themes'] is set, than use it
-			foreach ($prefs['available_themes'] as $available_theme){
+		$available_themes = [];
+		if (count($prefs['available_themes'] != 0) and ! empty($prefs['available_themes'][0])) { //if pref['available_themes'] is set, than use it
+			foreach ($prefs['available_themes'] as $available_theme) {
 				$theme = $this->extract_theme_and_option($available_theme)[0];
 				$available_themes[$theme] = $theme;
 				$available_themes['default'] = tr('Default Bootstrap');
 			}
-		}
-		else {
+		} else {
 			$available_themes = $this->list_themes(); //else load all themes and options
 			unset($available_themes['custom_url']); //make sure Custom URL is removed from the list
 		}
 		return $available_themes;
 	}
-	
-	/* get a list of available options for a theme 
+
+	/* get a list of available options for a theme
 	@return array of available theme options based on $prefs['available_themes'] setting. This function does not consider if change_theme is on or off.
 	*/
 	function get_available_options($theme)
 	{
 		global $prefs;
-		$available_options = array();
-		if (count($prefs['available_themes'] != 0) and !empty($prefs['available_themes'][0])) {
-			foreach ($prefs['available_themes'] as $available_themeandoption){
+		$available_options = [];
+		if (count($prefs['available_themes'] != 0) and ! empty($prefs['available_themes'][0])) {
+			foreach ($prefs['available_themes'] as $available_themeandoption) {
 				$themeandoption = $this->extract_theme_and_option($available_themeandoption);
-				if($theme === $themeandoption[0] && !empty($themeandoption[1])){
+				if ($theme === $themeandoption[0] && ! empty($themeandoption[1])) {
 					$available_options[$themeandoption[1]] = $themeandoption[1];
 				}
 			}

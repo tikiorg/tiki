@@ -5,10 +5,10 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function payment_behavior_cancel_cart_order( $items = array() )
+function payment_behavior_cancel_cart_order($items = [])
 {
 	global $tikilib;
-	if (!count($items)) {
+	if (! count($items)) {
 		return false;
 	}
 

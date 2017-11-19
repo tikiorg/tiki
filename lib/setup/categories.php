@@ -12,7 +12,7 @@ if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
 if ($prefs['feature_categories'] == 'y' && $prefs['categories_used_in_tpl'] == 'y') {
 	$categlib = TikiLib::lib('categ');
 	// pick up the objectType from cat_type is set or from section
-	if (!empty($section) && !empty($sections) && !empty($sections[$section])) {
+	if (! empty($section) && ! empty($sections) && ! empty($sections[$section])) {
 		$here = $sections[$section];
 		if (isset($_REQUEST[$here['key']])) {
 			if (is_array($_REQUEST[$here['key']])) { // tiki-upload_file uses galleryId[]
@@ -31,9 +31,9 @@ if ($prefs['feature_categories'] == 'y' && $prefs['categories_used_in_tpl'] == '
 			$objectType = $here['objectType'];
 		}
 	}
-	$objectCategoryIds = array();
-	$objectCategoryIdsNoJail = array();
-	if (!empty($objectType)) {
+	$objectCategoryIds = [];
+	$objectCategoryIdsNoJail = [];
+	if (! empty($objectType)) {
 		if (isset($here['itemkey']) && isset($_REQUEST[$here['itemkey']]) && isset($here['itemObjectType'])) {
 			$objectCategoryIds = $categlib->get_object_categories($objectType, $_REQUEST[$here['itemkey']]);
 			$objectCategoryIdsNoJail = $categlib->get_object_categories($objectType, $_REQUEST[$here['itemkey']], -1, false);

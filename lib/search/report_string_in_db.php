@@ -11,19 +11,19 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
-if (!empty($_POST['string_in_db_search'])) {
+if (! empty($_POST['string_in_db_search'])) {
 	$searchString = $_POST['string_in_db_search'];
 	$result = searchAllDB($searchString);
 	$smarty->assign('searchResult', $result);
-} elseif (!empty($_POST['query'])) {
+} elseif (! empty($_POST['query'])) {
 	$query = $_POST['query'];
 	$table = $_POST['table'];
 	sanitizeTableName($table);
 	$column = $_POST['column'];
 	sanitizeColumnName($column, $table);
 
-	$headers = array();
-	$sql2 = "SHOW COLUMNS FROM ".$table;
+	$headers = [];
+	$sql2 = "SHOW COLUMNS FROM " . $table;
 	$rs2 = $tikilib->fetchAll($sql2);
 	foreach ($rs2 as $key2 => $val2) {
 		$vals2 = array_values($val2);
@@ -33,9 +33,9 @@ if (!empty($_POST['string_in_db_search'])) {
 	}
 	$smarty->assign('tableHeaders', $headers);
 
-	$tableData = array();
-	$qrySearch = '%'.$query.'%';
-	$args = array($qrySearch);
+	$tableData = [];
+	$qrySearch = '%' . $query . '%';
+	$args = [$qrySearch];
 	$sql = "select * from `" . $table . "` where `" . $column . "` like ?";
 	$rs = $tikilib->fetchAll($sql, $args);
 	foreach ($rs as $row) {
@@ -43,7 +43,6 @@ if (!empty($_POST['string_in_db_search'])) {
 	}
 	$smarty->assign('tableData', $tableData);
 	$smarty->assign('tableName', $table);
-
 }
 
 /*
@@ -53,7 +52,7 @@ function searchAllDB($search)
 {
 	global $tikilib;
 
-	$result = array();
+	$result = [];
 	$out = '';
 
 	$sql = "show tables";
@@ -61,7 +60,7 @@ function searchAllDB($search)
 	foreach ($rs as $key => $val) {
 		$vals = array_values($val);
 		$table = $vals[0];
-		if (substr($table,0,6) == 'index_') {
+		if (substr($table, 0, 6) == 'index_') {
 			continue;
 		}
 		$sql2 = "SHOW COLUMNS FROM `$table`";
@@ -71,15 +70,15 @@ function searchAllDB($search)
 			$colum = $vals2[0];
 			$type = $vals2[1];
 			if (isTextType($type)) {
-				$sql_search_fields = Array();
-				$qrySearch = '%'.$search.'%';
-				$args = array($qrySearch);
+				$sql_search_fields = [];
+				$qrySearch = '%' . $search . '%';
+				$args = [$qrySearch];
 				$sql_search_fields[] = "`" . $colum . "` like ?"; // '%" . str_replace("'", "''", $search) . "%'";
 				$sql_search = "select * from `$table` where ";
 				$sql_search .= implode(" OR ", $sql_search_fields);
 				$rs3 = $tikilib->fetchAll($sql_search, $args);
-				if (!empty($rs3)) {
-					$result[] = array('table' => $table, 'column' => $colum, 'occurrences' => count($rs3));
+				if (! empty($rs3)) {
+					$result[] = ['table' => $table, 'column' => $colum, 'occurrences' => count($rs3)];
 				}
 			}
 		}
@@ -103,7 +102,7 @@ function sanitizeTableName($table)
 {
 	global $tikilib;
 	$validTables = $tikilib->listTables();
-	if (!in_array($table, $validTables)) {
+	if (! in_array($table, $validTables)) {
 		throw new Exception(tra('Invalid table name:') . ' ' . htmlentities($table));
 	}
 }
@@ -115,7 +114,7 @@ function sanitizeColumnName($column, $table)
 	foreach ($colsinfo as $col) {
 		$colnames[] = $col['Field'];
 	}
-	if (!in_array($column, $colnames)) {
+	if (! in_array($column, $colnames)) {
 		throw new Exception(tra('Invalid column name:') . ' ' . htmlentities($column));
 	}
 }

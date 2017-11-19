@@ -11,12 +11,12 @@ class StoredSearchLib
 		$userId = TikiLib::lib('login')->getUserId();
 
 		if ($userId && $this->isValidPriority($priority)) {
-			return $this->table()->insert(array(
+			return $this->table()->insert([
 				'userId' => $userId,
 				'label' => $label,
 				'priority' => $priority,
 				'description' => $description,
-			));
+			]);
 		}
 	}
 
@@ -24,11 +24,11 @@ class StoredSearchLib
 	{
 		$userId = TikiLib::lib('login')->getUserId();
 
-		return $this->table()->fetchAll(array('queryId', 'label', 'priority', 'description', 'lastModif'), array(
+		return $this->table()->fetchAll(['queryId', 'label', 'priority', 'description', 'lastModif'], [
 			'userId' => $userId,
-		), -1, -1, array(
+		], -1, -1, [
 			'label' => 'ASC',
-		));
+		]);
 	}
 
 	public function getEditableQuery($queryId)
@@ -47,7 +47,7 @@ class StoredSearchLib
 
 	public function deleteQuery($data)
 	{
-		$this->table()->delete(array('queryId' => $data['queryId']));
+		$this->table()->delete(['queryId' => $data['queryId']]);
 		$this->removeFromIndex("{$data['priority']}-{$data['queryId']}");
 	}
 
@@ -61,12 +61,12 @@ class StoredSearchLib
 		// Apply jail and base properties
 		$unifiedsearchlib->initQueryBase($query);
 
-		$this->table()->update(array(
+		$this->table()->update([
 			'query' => serialize($query),
 			'lastModif' => TikiLib::lib('tiki')->now,
-		), array(
+		], [
 			'queryId' => $queryId,
-		));
+		]);
 
 		$priority = $this->getPriority($data['priority']);
 		if ($priority['indexed']) {
@@ -88,14 +88,14 @@ class StoredSearchLib
 			return false;
 		}
 
-		$this->table()->update(array(
+		$this->table()->update([
 			'label' => $label,
 			'priority' => $priority,
 			'description' => $description,
 			'lastModif' => TikiLib::lib('tiki')->now,
-		), array(
+		], [
 			'queryId' => $queryId,
-		));
+		]);
 
 		$oldPriority = $this->getPriority($data['priority']);
 		if ($oldPriority['indexed'] && $data['priority'] != $priority) {
@@ -121,12 +121,12 @@ class StoredSearchLib
 
 		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 		$unifiedsearchlib->initQueryPresentation($query);
-		
-		return array(
+
+		return [
 			'query' => $query,
 			'label' => $data['label'],
 			'description' => TikiLib::lib('parser')->parse_data($data['description']),
-		);
+		];
 	}
 
 	public function reloadAll()
@@ -156,14 +156,14 @@ class StoredSearchLib
 
 		static $list;
 		if (! $list) {
-			$list = array(
-				'manual' => array(
+			$list = [
+				'manual' => [
 					'label' => tr('On Demand'),
 					'description' => tr('You can revisit the results of this saved search on demand.'),
 					'class' => 'label-default',
 					'indexed' => false,
-				),
-			);
+				],
+			];
 
 			$index = TikiLib::lib('unifiedsearch')->getIndex();
 			if ($prefs['monitor_enabled'] == 'y' && $index instanceof Search_Index_QueryRepository) {
@@ -195,7 +195,7 @@ class StoredSearchLib
 			$query->store($name, $index);
 		}
 	}
-	
+
 	private function removeFromIndex($name)
 	{
 		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
@@ -213,7 +213,7 @@ class StoredSearchLib
 
 	private function isValidPriority($priority)
 	{
-		return !! $this->getPriority($priority);
+		return ! ! $this->getPriority($priority);
 	}
 
 	private function getPriority($priority)
@@ -226,9 +226,9 @@ class StoredSearchLib
 
 	private function fetchQuery($queryId)
 	{
-		return $this->table()->fetchFullRow(array(
+		return $this->table()->fetchFullRow([
 			'queryId' => $queryId,
-		));
+		]);
 	}
 
 	private function canUserStoreQuery($query)
@@ -260,4 +260,3 @@ class StoredSearchLib
 		$monitorlib->directNotification($query['priority'], $query['userId'], $event, $args);
 	}
 }
-

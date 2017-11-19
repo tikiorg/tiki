@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -15,7 +15,7 @@
  * - add the lines
  * <code>
  * include "pluginslib.php";
- * 
+ *
  * function wikiplugin_backlinks($data, $params) {
  *    $plugin = new BackLinks();
  *    return $plugin->run($data, $params);
@@ -45,7 +45,7 @@ class PluginsLib extends TikiLib
 	 * Array of params to be expanded as arrays. Explode the string with {@link $separator}
 	 * @var array
 	 */
-	var $expanded_params = array();
+	var $expanded_params = [];
 	/**
 	 * Separator used to explote params listed on {@link $expanded_params}
 	 * @var string
@@ -56,10 +56,10 @@ class PluginsLib extends TikiLib
 	 * Keys are the name of the fields and values the names for tra();
 	 * @var array
 	 */
-	var $aInfoPresetNames = array(
-			'hits' => 'Hits', 'lastModif' => 'Last mod', 'user' => 'Last author', 'len' => 'Size', 'comment' => 'Com', 
-			'creator' => 'Creator', 'version' => 'Last ver', 'flag' => 'Status', 'versions' => 'Vers', 'links' => 'Links', 
-			'backlinks' => 'Backlinks');
+	var $aInfoPresetNames = [
+			'hits' => 'Hits', 'lastModif' => 'Last mod', 'user' => 'Last author', 'len' => 'Size', 'comment' => 'Com',
+			'creator' => 'Creator', 'version' => 'Last ver', 'flag' => 'Status', 'versions' => 'Vers', 'links' => 'Links',
+			'backlinks' => 'Backlinks'];
 	/**
 	 * Process the params, in this order:
 	 * - default values, asigned on {@link PluginsLib::getDefaultArguments()}
@@ -75,7 +75,7 @@ class PluginsLib extends TikiLib
 		if ($defaults === false) {
 			$defaults = $this->getDefaultArguments();
 		}
-		$args = array();
+		$args = [];
 
 		foreach ($defaults as $arg => $default_val) {
 			if (isset($params[$arg])) {
@@ -85,20 +85,20 @@ class PluginsLib extends TikiLib
 			} elseif (isset($_REQUEST['page'])) {
 				// maybe this kind of transformation can be grouped on a external function
 				if ($default_val === '[pagename]') {
-					$default_val=$_REQUEST['page'];
+					$default_val = $_REQUEST['page'];
 				}
 				$args[$arg] = $default_val;
 			}
-			if (in_array($arg, $this->expanded_params) && !is_array($args[$arg])) {
+			if (in_array($arg, $this->expanded_params) && ! is_array($args[$arg])) {
 				if (isset($args[$arg]) && $args[$arg]) {
 					$args[$arg] = explode($this->separator, $args[$arg]);
-					foreach ($args[$arg] as $id=>$value) {
-						$args[$arg][$id]=trim($value);
+					foreach ($args[$arg] as $id => $value) {
+						$args[$arg][$id] = trim($value);
 					}
 				} else {
-					$args[$arg]=array();
+					$args[$arg] = [];
 				}
-			} 
+			}
 		}
 		return $args;
 	}
@@ -143,7 +143,7 @@ class PluginsLib extends TikiLib
 	 */
 	function getDefaultArguments()
 	{
-		return array('description' => $this->getDescription());
+		return ['description' => $this->getDescription()];
 	}
 
 	/**
@@ -152,7 +152,7 @@ class PluginsLib extends TikiLib
 	 * @param string
 	 * @param array
 	 */
-	function run ($data, $params)
+	function run($data, $params)
 	{
 		/**
 		 * UGLY ERROR!.
@@ -160,9 +160,9 @@ class PluginsLib extends TikiLib
 		return $this->error('PluginsLib::run: pure virtual function. Don\'t be so lazy!');
 	}
 
-	function error ($message)
+	function error($message)
 	{
-		return '~np~<span class="warn">' . tra('Plugin ') . $this->getName() . ' ' . tra('failed') 
+		return '~np~<span class="warn">' . tra('Plugin ') . $this->getName() . ' ' . tra('failed')
 			. ' : ' . tra($message) . '</span>~/np~';
 	}
 
@@ -186,31 +186,31 @@ class PluginsLibUtil
 	 * Create a table with information from pages
 	 * @param array key ["data"] from one of the functions that retrieve informaci�n about pages
 	 * @param array list of keys to show.
-	 * @param array definition of the principal field. By default: 
+	 * @param array definition of the principal field. By default:
 	 *              array("field"=>"pageName","name"=>"Page")
 	 * @return string
 	 */
 	static function createTable($aData, $aInfo = false, $aPrincipalField = false)
 	{
 		// contract
-		if (!$aPrincipalField or !is_array($aPrincipalField)) {
-			$aPrincipalField = array('field' => 'pageName', 'name' => 'Page');
+		if (! $aPrincipalField or ! is_array($aPrincipalField)) {
+			$aPrincipalField = ['field' => 'pageName', 'name' => 'Page'];
 		}
-		if (!is_array($aInfo)) {
-			$aInfo=false;
+		if (! is_array($aInfo)) {
+			$aInfo = false;
 		}
 		// ~contract
 		$sOutput = '';
 		if ($aInfo) {
-			$iNumCol=count($aInfo)+1;
+			$iNumCol = count($aInfo) + 1;
 			$sStyle = '';
 
 			if (in_array('parameters', $aInfo)) {
-				$sOutput .= '<em>'. tra('Required parameters are in</em> <b>bold</b>') . '<br />';
+				$sOutput .= '<em>' . tra('Required parameters are in</em> <b>bold</b>') . '<br />';
 			}
 			// Header for info
 			$sOutput .= '<table class="table table-striped table-hover">' . "\n\t" . '<tr>' . "\n\t\t"
-				. '<td class="heading"' . $sStyle. '>' . tra($aPrincipalField['name']) . '</td>';
+				. '<td class="heading"' . $sStyle . '>' . tra($aPrincipalField['name']) . '</td>';
 			foreach ($aInfo as $iInfo => $sHeader) {
 				if ($sHeader == 'paraminfo') {
 					$sHeader = tra('Parameter Info');
@@ -219,7 +219,7 @@ class PluginsLibUtil
 			}
 			$sOutput .= "\n\t" . '</tr>';
 		}
-		$iCounter=1;
+		$iCounter = 1;
 		//Primary row
 		foreach ($aData as $aPage) {
 			$rowspan = '';
@@ -230,7 +230,7 @@ class PluginsLibUtil
 				$openlink = '((';
 							$closelink = '))';
 			}
-			if (!$aInfo) {
+			if (! $aInfo) {
 				$sOutput .= '*' . $openlink . $aPage[$aPrincipalField['field']] . $closelink . "\n";
 				//First column
 			} elseif (isset($aPage[$aPrincipalField['field']])) {
@@ -245,9 +245,9 @@ class PluginsLibUtil
 					$fieldval = $aPage[$aPrincipalField['field']];
 					$rowspan = '';
 				}
-				$sClass = ($iCounter%2) ? 'odd' : 'even';
+				$sClass = ($iCounter % 2) ? 'odd' : 'even';
 
-				$sOutput .= "\n\t" . '<tr>' . "\n\t\t" . '<td class="' . $sClass . '"' . $rowspan . '>' 
+				$sOutput .= "\n\t" . '<tr>' . "\n\t\t" . '<td class="' . $sClass . '"' . $rowspan . '>'
 					. $openlink . $fieldval . $closelink . '</td>';
 				$colcounter = 2;
 				//Subsequent columns
@@ -290,7 +290,7 @@ class PluginsLibUtil
 										$sOutput .= "\n\t\t" . '<td class="' . $sClass . '">';
 										if (count($aPage['parameters']) > 0) {
 											$sOutput .= $sInfoitem;
-										} 
+										}
 										$sOutput .= '</td>';
 									}
 								}
@@ -318,7 +318,7 @@ class PluginsLibUtil
 
 	static function createList($aData)
 	{
-		$aPrincipalField = array('field' => 'pageName', 'name' => 'Pages');
+		$aPrincipalField = ['field' => 'pageName', 'name' => 'Pages'];
 
 		// Header for info
 		$sOutput = '<table class="table table-striped table-hover"><tr><th class="heading">'
@@ -326,7 +326,9 @@ class PluginsLibUtil
 		$iCounter = 0;
 		// create a comma separated list of entries
 		foreach ($aData as $aPage) {
-			if ($iCounter>0) $sOutput .= ', ';
+			if ($iCounter > 0) {
+				$sOutput .= ', ';
+			}
 			$sOutput .= '((' . $aPage[$aPrincipalField['field']] . '))';
 			$iCounter++;
 		}
@@ -334,7 +336,8 @@ class PluginsLibUtil
 		return $sOutput;
 	}
 
-	static function handleDownload($query, $index, $matches) {
+	static function handleDownload($query, $index, $matches)
+	{
 		if (empty($_REQUEST['download'])) {
 			return;
 		}
@@ -342,9 +345,9 @@ class PluginsLibUtil
 		$builder = new Search_Formatter_Builder;
 		$builder->setDownload(true);
 		$builder->apply($matches);
-		
+
 		$filename = $builder->getDownloadName();
-		if (!$filename) {
+		if (! $filename) {
 			$filename = 'report.csv';
 		}
 
@@ -357,12 +360,12 @@ class PluginsLibUtil
 			$result = $query->search($index);
 			$chunk = $formatter->format($result);
 			if ($offset > 0) {
-				$chunk = substr($chunk, strpos($chunk, "\n")+1);
+				$chunk = substr($chunk, strpos($chunk, "\n") + 1);
 			}
 			$output .= $chunk;
 			$offset += 100;
 		} while ($offset < $result->count());
-		
+
 		header('Content-Type: text/csv; charset=utf8');
 		header("Content-Disposition: attachment; filename=$filename");
 		echo $output;

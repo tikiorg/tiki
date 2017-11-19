@@ -1,6 +1,6 @@
-<?php 
+<?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -13,14 +13,14 @@ function validator_username($input, $parameter = '', $message = '')
 		if ($userlib->get_user_by_email($input)) {
 			return tra("Email already in use");
 		}
-		if (!validate_email($input)){
+		if (! validate_email($input)) {
 			return tra("Invalid email");
 		}
 	} else {
 		if ($userlib->user_exists($input)) {
 			return tra("User already exists");
 		}
-		if (!empty($prefs['username_pattern']) && !preg_match($prefs['username_pattern'], $input)) {
+		if (! empty($prefs['username_pattern']) && ! preg_match($prefs['username_pattern'], $input)) {
 			return tra("Invalid character combination for username");
 		}
 		if (strtolower($input) == 'anonymous' || strtolower($input) == 'registered') {

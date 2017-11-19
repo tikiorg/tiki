@@ -21,36 +21,36 @@ class CustomShippingProvider_Example extends CustomShippingProvider
 
 	function __construct()	// needs to be without params
 	{
-		$this->services = array(
-			'standard' => array(
+		$this->services = [
+			'standard' => [
 				'name' => tra('Standard Shipping'),
 				'description' => tra('3 to 5 working days'),
-				'zones' => array(
-					'zone 1' => array(	// $5 per package, more than 6 packages go free
+				'zones' => [
+					'zone 1' => [	// $5 per package, more than 6 packages go free
 						'cost_per_item' => 9,
 						'max_total' => 45,
-					),
-					'zone 2' => array(	// $20 per package, max 3
+					],
+					'zone 2' => [	// $20 per package, max 3
 						'cost_per_item' => 20,
 						'max_total' => 60,
-					),
-				),
-			),
-			'express' => array(
+					],
+				],
+			],
+			'express' => [
 				'name' => tra('Express Shipping'),
 				'description' => tra('Next day delivery'),
-				'zones' => array(
-					'zone 1' => array(	// $20 per package, max 3
+				'zones' => [
+					'zone 1' => [	// $20 per package, max 3
 						'cost_per_item' => 20,
 						'max_total' => 60,
-					),
-					'zone 2' => array(	// $30 per package, max 3
+					],
+					'zone 2' => [	// $30 per package, max 3
 						'cost_per_item' => 30,
 						'max_total' => 90,
-					),
-				),
-			),
-		);
+					],
+				],
+			],
+		];
 	}
 
 	function getName()
@@ -63,40 +63,40 @@ class CustomShippingProvider_Example extends CustomShippingProvider
 		return 'USD';
 	}
 
-	function getRates( array $from, array $to, array $packages )
+	function getRates(array $from, array $to, array $packages)
 	{
-		if ( !empty($to) && !empty($packages) ) {
-			$rates = array();
+		if (! empty($to) && ! empty($packages)) {
+			$rates = [];
 
-			foreach ( $this->services as $service => $info ) {
+			foreach ($this->services as $service => $info) {
 				$rates[] = $this->getRate($info, $from, $to, $packages);
 			}
 
 			return $rates;
 		} else {
-			return array();
+			return [];
 		}
 	}
 
-	private function getRate( $service, array $from, array $to, array $packages )
+	private function getRate($service, array $from, array $to, array $packages)
 	{
-		$ret = array(
+		$ret = [
 			'provider' => $this->getName(),
 			'currency' => $this->getCurrency(),
 			'service' => $service['name'],
 			'readable' => $service['description'],
-		);
+		];
 
 		$itemCount = 0;
 		foreach ($packages as $item) {
-			if (!empty($item['count'])) {
+			if (! empty($item['count'])) {
 				$itemCount += (int) $item['count'];
 			} else {
 				$itemCount++;
 			}
 		}
 
-		if (in_array(strtoupper($to['country']), array( 'AR', 'BO', 'BR', 'CL', 'CO', 'EC', 'FK', 'GF', 'GY', 'PY', 'PE', 'GS', 'SR', 'UY', 'VE' ))) {
+		if (in_array(strtoupper($to['country']), [ 'AR', 'BO', 'BR', 'CL', 'CO', 'EC', 'FK', 'GF', 'GY', 'PY', 'PE', 'GS', 'SR', 'UY', 'VE' ])) {
 			$zone = $service['zones']['zone 2'];	// zone 2 is South America
 		} else {
 			$zone = $service['zones']['zone 1'];
@@ -106,5 +106,4 @@ class CustomShippingProvider_Example extends CustomShippingProvider
 
 		return $ret;
 	}
-
 }

@@ -9,17 +9,20 @@ if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
 	die('This script may only be included.');
 }
 
-if ( isset($section) and isset($sections[$section])) {
+if (isset($section) and isset($sections[$section])) {
 	$freetaglib = TikiLib::lib('freetag');
 	$here = $sections[$section];
-	if ( $tiki_p_freetags_tag == 'y' && isset($_POST['addtags']) && trim($_POST['addtags']) != '' ) {
-		if ( ! isset($user) ) $userid = 0;
-		else $userid = $userlib->get_user_id($user);
+	if ($tiki_p_freetags_tag == 'y' && isset($_POST['addtags']) && trim($_POST['addtags']) != '') {
+		if (! isset($user)) {
+			$userid = 0;
+		} else {
+			$userid = $userlib->get_user_id($user);
+		}
 
-		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
+		if (empty($user) && $prefs['feature_antibot'] == 'y' && ! $captchalib->validate()) {
 			$smarty->assign('freetag_error', $captchalib->getErrors());
 			$smarty->assign_by_ref('freetag_msg', $_POST['addtags']);
-		} elseif ( $object = current_object() ) {
+		} elseif ($object = current_object()) {
 			$freetaglib->tag_object($userid, $object['object'], $object['type'], $_POST['addtags']);
 			require_once 'lib/search/refresh-functions.php';
 			refresh_index($object['type'], $object['object']);
@@ -27,7 +30,7 @@ if ( isset($section) and isset($sections[$section])) {
 	}
 
 	if (($tiki_p_admin == 'y' || $tiki_p_unassign_freetags == 'y') && isset($_REQUEST['delTag'])) {
-		if ( $object = current_object() ) {
+		if ($object = current_object()) {
 			$freetaglib->delete_object_tag($object['object'], $object['type'], $_REQUEST['delTag']);
 			require_once 'lib/search/refresh-functions.php';
 			refresh_index($object['type'], $object['object']);
@@ -38,34 +41,35 @@ if ( isset($section) and isset($sections[$section])) {
 		die;
 	}
 
-	if ( $object = current_object() ) {
+	if ($object = current_object()) {
 		$tags = $freetaglib->get_tags_on_object($object['object'], $object['type']);
 	} else {
-		$tags = array();
+		$tags = [];
 	}
 
 	$smarty->assign('freetags', $tags);
 
-	if ( $tiki_p_freetags_tag == 'y' && $prefs['freetags_multilingual'] == 'y' ) {
+	if ($tiki_p_freetags_tag == 'y' && $prefs['freetags_multilingual'] == 'y') {
 		$ft_lang = null;
 		$ft_multi = false;
-		if (!empty($tags['data'])) {
-			foreach ( $tags['data'] as $row ) {
+		if (! empty($tags['data'])) {
+			foreach ($tags['data'] as $row) {
 				$l = $row['lang'];
 
-				if ( ! $l )
+				if (! $l) {
 					continue;
+				}
 
-				if ( ! $ft_lang )
+				if (! $ft_lang) {
 					$ft_lang = $l;
-				elseif ( $ft_lang != $l ) {
+				} elseif ($ft_lang != $l) {
 					$ft_multi = true;
 					break;
 				}
 			}
 		}
 
-		if ( $ft_multi && $object = current_object() ) {
+		if ($ft_multi && $object = current_object()) {
 			$smarty->assign(
 				'freetags_mixed_lang',
 				'tiki-freetag_translate.php?objType=' . urlencode($object['type']) . '&objId=' . urlencode($object['object'])

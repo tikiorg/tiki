@@ -19,117 +19,123 @@ class Tiki_ShareGroup
 	public $categPerm;
 	public $objectPerm;
 
-    /**
-     * @param $name
-     */
-    function __construct( $name )
+	/**
+	 * @param $name
+	 */
+	function __construct($name)
 	{
 		$this->name = $name;
-		$this->groupPerm = array();
-		$this->categPerm = array();
-		$this->objectPerm = array();
-		$this->selectedValues = array();
+		$this->groupPerm = [];
+		$this->categPerm = [];
+		$this->objectPerm = [];
+		$this->selectedValues = [];
 	}
 
-    /**
-     * @param $permission
-     */
-    function addGroupPermission( $permission )
+	/**
+	 * @param $permission
+	 */
+	function addGroupPermission($permission)
 	{
 		$this->groupPerm[$permission] = 'y';
 	}
 
-    /**
-     * @param $source
-     * @param $permission
-     */
-    function addCategoryPermission( $source, $permission )
+	/**
+	 * @param $source
+	 * @param $permission
+	 */
+	function addCategoryPermission($source, $permission)
 	{
-		if ( ! array_key_exists($permission, $this->categPerm) )
-			$this->categPerm[$permission] = array();
+		if (! array_key_exists($permission, $this->categPerm)) {
+			$this->categPerm[$permission] = [];
+		}
 
 		$this->categPerm[$permission][] = $source;
 	}
 
-    /**
-     * @param $permission
-     */
-    function addObjectPermission( $permission )
+	/**
+	 * @param $permission
+	 */
+	function addObjectPermission($permission)
 	{
 		$this->objectPerm[$permission] = 'y';
 		$this->selectedValues[] = $permission;
 	}
 
-    /**
-     * @param $permission
-     * @return string
-     */
-    function getSourceCategory( $permission )
+	/**
+	 * @param $permission
+	 * @return string
+	 */
+	function getSourceCategory($permission)
 	{
-		if ( array_key_exists($permission, $this->categPerm) )
+		if (array_key_exists($permission, $this->categPerm)) {
 			return implode(', ', $this->categPerm[$permission]);
+		}
 
 		return '';
 	}
 
-    /**
-     * @param $permission
-     * @return string
-     */
-    function getLevel( $permission )
+	/**
+	 * @param $permission
+	 * @return string
+	 */
+	function getLevel($permission)
 	{
 		$ret = 'object';
 
-		if ( array_key_exists($permission, $this->categPerm) )
+		if (array_key_exists($permission, $this->categPerm)) {
 			$ret = 'category';
-		if ( array_key_exists($permission, $this->groupPerm) )
+		}
+		if (array_key_exists($permission, $this->groupPerm)) {
 			$ret = 'group';
+		}
 
 		return $ret;
 	}
 
-    /**
-     * @param $permission
-     * @return bool
-     */
-    function isSelected( $permission )
+	/**
+	 * @param $permission
+	 * @return bool
+	 */
+	function isSelected($permission)
 	{
 		return in_array($permission, $this->selectedValues);
 	}
 
-    /**
-     * @return bool
-     */
-    function hasSelection()
+	/**
+	 * @return bool
+	 */
+	function hasSelection()
 	{
 		return count($this->selectedValues) != 0;
 	}
 
-    /**
-     * @param $permissions
-     */
-    function setObjectPermissions( $permissions )
+	/**
+	 * @param $permissions
+	 */
+	function setObjectPermissions($permissions)
 	{
 		// Make sure view is present
-		if ( in_array('tiki_p_edit', $permissions) && ! in_array('tiki_p_view', $permissions) )
+		if (in_array('tiki_p_edit', $permissions) && ! in_array('tiki_p_view', $permissions)) {
 			$permissions[] = 'tiki_p_view';
+		}
 
 		// Remove redundant permissions
 		$permissions = array_diff($permissions, array_keys($this->groupPerm));
 		$permissions = array_diff($permissions, array_keys($this->categPerm));
 
-		$this->objectPerm = array();
-		foreach ( $permissions as $p )
+		$this->objectPerm = [];
+		foreach ($permissions as $p) {
 			$this->objectPerm[$p] = 'y';
+		}
 
 		$this->selectedValues = $permissions;
 	}
 
-    /**
-     * @param $name
-     * @return bool
-     */
-    function hasObjectPermission( $name )
+	/**
+	 * @param $name
+	 * @return bool
+	 */
+	function hasObjectPermission($name)
 	{
 		return isset($this->objectPerm[$name]);
 	}
@@ -148,11 +154,11 @@ class Tiki_ShareObject
 	public $loadedPermission;
 	public $validGroups;
 
-    /**
-     * @param $objectType
-     * @param $objectId
-     */
-    function __construct( $objectType, $objectId )
+	/**
+	 * @param $objectType
+	 * @param $objectId
+	 */
+	function __construct($objectType, $objectId)
 	{
 		global $Tiki_ShareObject__groups;
 
@@ -160,11 +166,12 @@ class Tiki_ShareObject
 		$this->objectType = $objectType;
 		$this->objectId = $objectId;
 
-		$this->loadedPermission = array();
-		$this->validGroups = array();
+		$this->loadedPermission = [];
+		$this->validGroups = [];
 
-		if ( $Tiki_ShareObject__groups == null )
+		if ($Tiki_ShareObject__groups == null) {
 			$this->loadGroups();
+		}
 	}
 
 	function loadGroups()
@@ -173,22 +180,23 @@ class Tiki_ShareObject
 		global $Tiki_ShareObject__groups;
 
 		$result = $tikilib->query("SELECT groupName FROM users_groups ORDER BY groupName");
-		$Tiki_ShareObject__groups = array();
+		$Tiki_ShareObject__groups = [];
 
-		foreach ( $result as $row )
+		foreach ($result as $row) {
 			$Tiki_ShareObject__groups[] = $row['groupName'];
+		}
 	}
 
-    /**
-     * @param $permissionName
-     */
-    function loadPermission( $permissionName )
+	/**
+	 * @param $permissionName
+	 */
+	function loadPermission($permissionName)
 	{
 		global $tikilib;
 
-		$result = $tikilib->query("SELECT groupName FROM users_grouppermissions WHERE permName = ?", array( $permissionName ));
+		$result = $tikilib->query("SELECT groupName FROM users_grouppermissions WHERE permName = ?", [ $permissionName ]);
 
-		while ( $row = $result->fetchRow() ) {
+		while ($row = $result->fetchRow()) {
 			$group = $this->getGroup($row['groupName']);
 			$group->addGroupPermission($permissionName);
 		}
@@ -202,91 +210,96 @@ class Tiki_ShareObject
 			" INNER JOIN users_objectpermissions ON objectType = 'category' AND users_objectpermissions.objectId = MD5( CONCAT('category', categId) )" .
 			" WHERE" .
 			" tiki_objects.type = ? AND tiki_objects.itemId = ? AND permName = ?",
-			array( $this->objectType, $this->objectId, $permissionName )
+			[ $this->objectType, $this->objectId, $permissionName ]
 		);
 
-		while ( $row = $result->fetchRow() ) {
+		while ($row = $result->fetchRow()) {
 			$group = $this->getGroup($row['groupName']);
 			$group->addCategoryPermission($row['name'], $permissionName);
 		}
 
 		$result = $tikilib->query(
 			"SELECT groupName FROM users_objectpermissions WHERE permName = ? AND objectType = ? AND objectId = ?",
-			array( $permissionName, $this->objectType, $this->objectHash )
+			[ $permissionName, $this->objectType, $this->objectHash ]
 		);
 
-		while ( $row = $result->fetchRow() ) {
+		while ($row = $result->fetchRow()) {
 			$group = $this->getGroup($row['groupName']);
 			$group->addObjectPermission($permissionName);
 		}
 	}
 
-    /**
-     * @param $name
-     * @return mixed
-     */
-    function getGroup( $name )
+	/**
+	 * @param $name
+	 * @return mixed
+	 */
+	function getGroup($name)
 	{
 		global $Tiki_ShareObject__groups;
 
-		if ( ! array_key_exists($name, $this->validGroups) ) {
-			if ( in_array($name, $Tiki_ShareObject__groups) )
+		if (! array_key_exists($name, $this->validGroups)) {
+			if (in_array($name, $Tiki_ShareObject__groups)) {
 				$this->validGroups[$name] = new Tiki_ShareGroup($name);
-			else
+			} else {
 				return;
+			}
 		}
 
 		return $this->validGroups[$name];
 	}
 
-    /**
-     * @return array
-     */
-    function getValidGroups()
+	/**
+	 * @return array
+	 */
+	function getValidGroups()
 	{
 		ksort($this->validGroups);
 
 		return array_values($this->validGroups);
 	}
 
-    /**
-     * @return array
-     */
-    function getOtherGroups()
+	/**
+	 * @return array
+	 */
+	function getOtherGroups()
 	{
 		global $Tiki_ShareObject__groups;
 
 		return array_diff($Tiki_ShareObject__groups, array_keys($this->validGroups));
 	}
 
-    /**
-     * @param $name
-     * @return bool
-     */
-    function isValid( $name )
+	/**
+	 * @param $name
+	 * @return bool
+	 */
+	function isValid($name)
 	{
 		return array_key_exists($name, $this->validGroups);
 	}
 
-    /**
-     * @param $validPermission
-     */
-    function saveObjectPermissions( $validPermission )
+	/**
+	 * @param $validPermission
+	 */
+	function saveObjectPermissions($validPermission)
 	{
 		global $tikilib;
 
-		foreach ( $validPermission as $permission )
+		foreach ($validPermission as $permission) {
 			$tikilib->query(
 				"DELETE FROM users_objectpermissions WHERE objectType = ? AND objectId = ? AND permName = ?",
-				array($this->objectType, $this->objectHash, $permission)
+				[$this->objectType, $this->objectHash, $permission]
 			);
+		}
 
-		foreach ( $this->validGroups as $group )
-			foreach ( $validPermission as $permission )
-				if ( $group->hasObjectPermission($permission) )
+		foreach ($this->validGroups as $group) {
+			foreach ($validPermission as $permission) {
+				if ($group->hasObjectPermission($permission)) {
 					$tikilib->query(
 						"INSERT INTO users_objectpermissions ( groupName, permName, objectType, objectId ) VALUES( ?, ?, ?, ? )",
-						array($group->name, $permission, $this->objectType, $this->objectHash)
+						[$group->name, $permission, $this->objectType, $this->objectHash]
 					);
+				}
+			}
+		}
 	}
 }

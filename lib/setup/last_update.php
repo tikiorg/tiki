@@ -9,15 +9,16 @@ if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
 	die('This script may only be included.');
 }
 
-function svn_last_update() {
-	static $cache = array();
+function svn_last_update()
+{
+	static $cache = [];
 
 	if ($cache) {
 		return $cache;
 	}
 
 	if (is_readable('.svn')) {
-		$svn = array();
+		$svn = [];
 		if (is_readable('.svn/entries')) {
 			$fp = fopen('.svn/entries', 'r');
 			for ($i = 0; 10 > $i && $line = fgets($fp, 80); ++$i) {

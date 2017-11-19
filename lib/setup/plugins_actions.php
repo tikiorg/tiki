@@ -11,31 +11,31 @@ if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
 
 // Handle actions of plugins (smarty plugins, wiki-plugins, modules, ...)
 
-$plugins_actions = array();
-$matches = array();
+$plugins_actions = [];
+$matches = [];
 
-foreach ( $_REQUEST as $k => $v ) {
-	if ( preg_match('/^(\w_\w_)([a-zA-Z0-9_-]+)-(.*)$/', $k, $matches) ) {
+foreach ($_REQUEST as $k => $v) {
+	if (preg_match('/^(\w_\w_)([a-zA-Z0-9_-]+)-(.*)$/', $k, $matches)) {
 		$plugin_type =& $matches[1];
 		$plugin_name =& $matches[2];
 		$plugin_argument =& $matches[3];
-		if ( ! isset($plugins_actions[$plugin_type]) ) {
-			$plugins_actions[$plugin_type] = array();
+		if (! isset($plugins_actions[$plugin_type])) {
+			$plugins_actions[$plugin_type] = [];
 		}
-		if ( ! isset($plugins_actions[$plugin_type][$plugin_name]) ) {
-			$plugins_actions[$plugin_type][$plugin_name] = array();
+		if (! isset($plugins_actions[$plugin_type][$plugin_name])) {
+			$plugins_actions[$plugin_type][$plugin_name] = [];
 		}
 		$plugins_actions[$plugin_type][$plugin_name][$plugin_argument] =& $_REQUEST[$k];
 	}
 }
 
-foreach ( $plugins_actions as $plugin_type => $v ) {
-	foreach ( $v as $plugin_name => $params ) {
-		switch ( $plugin_type ) {
+foreach ($plugins_actions as $plugin_type => $v) {
+	foreach ($v as $plugin_name => $params) {
+		switch ($plugin_type) {
 			case 's_f_': // Smarty Function
 				@include_once('lib/smarty_tiki/function.' . $plugin_name . '.php');
 				$func = 's_f_' . $plugin_name . '_actionshandler';
-				if ( ! function_exists($func) || ! call_user_func($func, $params) ) {
+				if (! function_exists($func) || ! call_user_func($func, $params)) {
 					$smarty = TikiLib::lib('smarty');
 					$smarty->assign('msg', sprintf(tra('Handling actions of plugin "%s" failed.'), $plugin_name));
 					$smarty->display('error.tpl');
@@ -46,5 +46,5 @@ foreach ( $plugins_actions as $plugin_type => $v ) {
 	}
 }
 
-unset( $matches );
-unset( $plugins_actions );
+unset($matches);
+unset($plugins_actions);

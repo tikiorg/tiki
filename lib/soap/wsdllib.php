@@ -15,35 +15,35 @@ require_once 'lib/soap/nusoap/nusoap.php';
 
 class Tiki_Wsdl
 {
-	public function getParametersNames( $wsdlUri, $operation )
+	public function getParametersNames($wsdlUri, $operation)
 	{
 		global $prefs;
-		$parameters = array();
+		$parameters = [];
 
-		if (!$wsdlUri || !$operation) {
+		if (! $wsdlUri || ! $operation) {
 			return $parameters;
 		}
 
 		$context = null;
 
-		if ( $prefs['use_proxy'] == 'y' && !strpos($wsdlUri, 'localhost') ) {
+		if ($prefs['use_proxy'] == 'y' && ! strpos($wsdlUri, 'localhost')) {
 			// Use proxy
 			$context = stream_context_create(
-				array(
-					'http' => array(
-							'proxy' => $prefs['proxy_host'] .':'. $prefs['proxy_port'],
+				[
+					'http' => [
+							'proxy' => $prefs['proxy_host'] . ':' . $prefs['proxy_port'],
 							'request_fulluri' => true
-					)
-				)
+					]
+				]
 			);
 		}
 
 		// Copy content in cache
 		$wsdl_data = file_get_contents($wsdlUri, false, $context);
 
-		if (!isset($wsdl_data) || empty($wsdl_data)) {
+		if (! isset($wsdl_data) || empty($wsdl_data)) {
 			trigger_error(tr("No WSDL found"));
-			return array();
+			return [];
 		}
 
 		$wsdlFile = $GLOBALS['tikipath'] . 'temp/cache/' . md5($wsdlUri);
@@ -52,7 +52,7 @@ class Tiki_Wsdl
 		// Read wsdl from local copy
 		$wsdl = new wsdl('file:' . $wsdlFile);
 
-		if (!empty($wsdl->error_str)) {
+		if (! empty($wsdl->error_str)) {
 			trigger_error($wsdl->error_str);
 			return $parameters;
 		}

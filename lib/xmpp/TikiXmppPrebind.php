@@ -5,14 +5,16 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class TikiXmppPrebind extends XmppPrebind {
+class TikiXmppPrebind extends XmppPrebind
+{
 	const ENCRYPTION_TIKITOKEN = 'TIKITOKEN';
 
 	/**
 	 * Connect to XMPP server, but setting TIKITOKEN as preferred
 	 * authorization mechanism
 	 */
-	public function connect($username, $password, $route = false) {
+	public function connect($username, $password, $route = false)
+	{
 		parent::connect($username, $password, $route);
 
 		if (in_array(self::ENCRYPTION_TIKITOKEN, $this->mechanisms)) {
@@ -21,7 +23,8 @@ class TikiXmppPrebind extends XmppPrebind {
 		}
 	}
 
-	public function auth() {
+	public function auth()
+	{
 
 		if ($this->encryption === self::ENCRYPTION_TIKITOKEN) {
 			$auth = Auth_SASL::factory(self::ENCRYPTION_PLAIN);
@@ -47,7 +50,7 @@ class TikiXmppPrebind extends XmppPrebind {
 
 		$body = self::getBodyFromXml($response);
 
-		if (!$body->hasChildNodes() || $body->firstChild->nodeName !== 'success') {
+		if (! $body->hasChildNodes() || $body->firstChild->nodeName !== 'success') {
 			throw new XmppPrebindException("Invalid login");
 		}
 
@@ -58,7 +61,8 @@ class TikiXmppPrebind extends XmppPrebind {
 		return true;
 	}
 
-	protected function buildTikiTokenAuth(Auth_SASL_Common $auth) {
+	protected function buildTikiTokenAuth(Auth_SASL_Common $auth)
+	{
 		$authString = $auth->getResponse(self::getNodeFromJid($this->jid), $this->password);
 		$authString = base64_encode($authString);
 		$this->debug($authString, 'PLAIN Auth String');

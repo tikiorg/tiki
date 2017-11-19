@@ -18,7 +18,7 @@
  * @param string $currency
  * @param string $wanted = 'n'
  */
-function payment_behavior_perform_trade( $params )
+function payment_behavior_perform_trade($params)
 {
 	global $prefs, $cclitelib;
 	$userlib = TikiLib::lib('user');
@@ -26,21 +26,21 @@ function payment_behavior_perform_trade( $params )
 	$smarty = TikiLib::lib('smarty');
 	require_once 'lib/payment/cclitelib.php';
 
-	$default = array( 'wanted' => 'n', 'registry' => '', 'currency' => '' );
+	$default = [ 'wanted' => 'n', 'registry' => '', 'currency' => '' ];
 	$params = array_merge($default, $params);
 
 	$smarty->assign('ccresult_ok', false);
 
 
-	if (!$userlib->user_exists($params['main_user'])) {
+	if (! $userlib->user_exists($params['main_user'])) {
 		$smarty->assign('ccresult2', "Perform Trade: Main user {$params['main_user']} not found");
 	}
 
-	if (!$userlib->user_exists($params['other_user'])) {
+	if (! $userlib->user_exists($params['other_user'])) {
 		$smarty->assign('ccresult2', "Perform Trade: Other user {$params['other_user']} not found");
 	}
 
-	if (!$params['price'] || (int) $params['price'] === 0) {
+	if (! $params['price'] || (int) $params['price'] === 0) {
 		$smarty->assign('ccresult2', "Perform Trade: price not set");
 	}
 
@@ -52,7 +52,7 @@ function payment_behavior_perform_trade( $params )
 		$params['main_user']
 	);
 
-	if (!empty($result)) {
+	if (! empty($result)) {
 		$smarty->assign('ccresult2', $result);
 		$smarty->assign('ccresult_ok', (strpos($result, 'Transaction Accepted') !== false));
 	} else {
@@ -60,4 +60,3 @@ function payment_behavior_perform_trade( $params )
 	}
 	return $result;
 }
-

@@ -52,7 +52,7 @@ class FlaggedRevisionLib extends TikiDb_Bridge
 		$this->get_version_query($pageName, $flag, $value, $query, $bindvars, 'version');
 		$result = $this->fetchAll($query, $bindvars);
 
-		$versions = array();
+		$versions = [];
 		foreach ($result as $row) {
 			$versions[] = $row['version'];
 		}
@@ -65,12 +65,12 @@ class FlaggedRevisionLib extends TikiDb_Bridge
 		// NOTE : These are out variables
 		$query = 'SELECT ' . $fields . ' FROM `tiki_history` th INNER JOIN `tiki_object_attributes` toa ON toa.`itemId` = `historyId` AND toa.`type` = ? WHERE toa.attribute = ? AND toa.value = ? AND th.pageName = ? ORDER BY `th`.`version` DESC';
 
-		$bindvars = array(
+		$bindvars = [
 			'wiki history',
 			$this->get_attribute_for_flag($flag),
 			$value,
 			$pageName,
-		);
+		];
 	}
 
 	function page_requires_approval($pageName)
@@ -83,7 +83,7 @@ class FlaggedRevisionLib extends TikiDb_Bridge
 
 		if ($prefs['feature_categories'] == 'y') {
 			$categlib = TikiLib::lib('categ');
-			$approvalCategories = $tikilib->get_preference('flaggedrev_approval_categories', array(), true);
+			$approvalCategories = $tikilib->get_preference('flaggedrev_approval_categories', [], true);
 
 			$objectCategories = $categlib->get_object_categories('wiki page', $pageName);
 
@@ -100,13 +100,13 @@ class FlaggedRevisionLib extends TikiDb_Bridge
 		if ($prefs['feature_actionlog'] == 'y') {
 			$logs = $this->table('tiki_actionlog');
 			return $logs->fetchRow(
-				array('user', 'lastModif', 'ip'),
-				array(
+				['user', 'lastModif', 'ip'],
+				[
 					'action' => self::ACTION,
 					'object' => $page,
 					'objectType' => 'wiki page',
 					'comment' => "flag=moderation&version=$version&value=OK",
-				)
+				]
 			);
 		}
 	}
@@ -116,4 +116,3 @@ class FlaggedRevisionLib extends TikiDb_Bridge
 		return 'tiki.history.' . $flag;
 	}
 }
-

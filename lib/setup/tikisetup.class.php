@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -26,7 +26,7 @@ class TikiSetup extends TikiInit
 
 		$errors = '';
 
-		if (strpos($_SERVER['SERVER_SOFTWARE'], 'IIS') == TRUE) {
+		if (strpos($_SERVER['SERVER_SOFTWARE'], 'IIS') == true) {
 			if (array_key_exists('SCRIPT_FILENAME', $_SERVER)) {
 				$docroot = dirname($_SERVER['SCRIPT_FILENAME']);
 			} elseif (array_key_exists('PATH_TRANSLATED', $_SERVER)) {
@@ -42,11 +42,11 @@ class TikiSetup extends TikiInit
 			$save_path = ini_get('session.save_path');
 			// check if we can check it. The session.save_path can be outside
 			// the open_basedir paths.
-			$open_basedir=ini_get('open_basedir');
+			$open_basedir = ini_get('open_basedir');
 			if (empty($open_basedir)) {
-				if (!is_dir($save_path)) {
+				if (! is_dir($save_path)) {
 					$errors .= "The directory '$save_path' does not exist or PHP is not allowed to access it (check open_basedir entry in php.ini).\n";
-				} else if (!TikiSetup::is_writeable($save_path)) {
+				} elseif (! TikiSetup::is_writeable($save_path)) {
 					$errors .= "The directory '$save_path' is not writeable.\n";
 				}
 			}
@@ -77,15 +77,15 @@ class TikiSetup extends TikiInit
 			$wwwgroup = $group ? $group['name'] : false;
 		}
 
-		if (!$wwwuser) {
+		if (! $wwwuser) {
 			$wwwuser = 'nobody (or the user account the web server is running under)';
 		}
 
-		if (!$wwwgroup) {
+		if (! $wwwgroup) {
 			$wwwgroup = 'nobody (or the group account the web server is running under)';
 		}
 
-		static $dirs = array(
+		static $dirs = [
 				'dump',
 				'img/wiki',
 				'img/wiki_up',
@@ -95,13 +95,13 @@ class TikiSetup extends TikiInit
 				# 'var',
 				# 'var/log',
 				# 'var/log/irc',
-		);
+		];
 
 		foreach ($dirs as $dir) {
-			if (!is_dir("$docroot/$dir/$tikidomain")) {
+			if (! is_dir("$docroot/$dir/$tikidomain")) {
 				$errors .= "The directory '$docroot/$dir/$tikidomain' does not exist.\n";
 			} else {
-				if (!TikiSetup::is_writeable("$docroot/$dir/$tikidomain")) {
+				if (! TikiSetup::is_writeable("$docroot/$dir/$tikidomain")) {
 					$errors .= "The directory '$docroot/$dir/$tikidomain' is not writeable by $wwwuser.\n";
 				}
 			}
@@ -127,10 +127,10 @@ class TikiSetup extends TikiInit
 $errors
 ";
 			if ($tikidomain) {
-				$install_link = '?multi='.urlencode($tikidomain);
+				$install_link = '?multi=' . urlencode($tikidomain);
 			}
 
-			if (!TikiSetup::isWindows()) {
+			if (! TikiSetup::isWindows()) {
 				print "Your options:
 
 

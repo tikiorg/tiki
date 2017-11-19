@@ -7,24 +7,24 @@
 
 class Tiki_Formula_Function_Attribute extends Math_Formula_Function
 {
-	function evaluate( $element )
+	function evaluate($element)
 	{
-		$allowed = array( 'object', 'default', 'property' );
+		$allowed = [ 'object', 'default', 'property' ];
 
-		if ( $extra = $element->getExtraValues($allowed) ) {
+		if ($extra = $element->getExtraValues($allowed)) {
 			$this->error(tr('Unexpected values: %0', implode(', ', $extra)));
 		}
 
 		$object = $element->object;
 
-		if ( ! $object || count($object) != 2 ) {
+		if (! $object || count($object) != 2) {
 			$this->error(tra('Object must be provided and contain two arguments: type and object'));
 		}
 
 		$type = $this->evaluateChild($object[0]);
 		$object = $this->evaluateChild($object[1]);
 
-		if ( ( $property = $element->property ) && count($property) == 1 ) {
+		if (( $property = $element->property ) && count($property) == 1) {
 			$property = $property[0];
 		} else {
 			$this->error(tra('Invalid property.'));
@@ -34,7 +34,7 @@ class Tiki_Formula_Function_Attribute extends Math_Formula_Function
 			$property = $this->evaluateChild($property);
 		}
 
-		if ( $type == 'wiki page' && is_numeric($object) ) {
+		if ($type == 'wiki page' && is_numeric($object)) {
 			$tikilib = TikiLib::lib('tiki');
 			$object = $tikilib->get_page_name_from_id($object);
 		}
@@ -45,13 +45,12 @@ class Tiki_Formula_Function_Attribute extends Math_Formula_Function
 		// Attributes are always lowercase
 		$property = strtolower($property);
 
-		if ( isset( $values[$property] ) ) {
+		if (isset($values[$property])) {
 			return $values[$property];
-		} elseif ( ( $default = $element->default ) && count($default) == 1 ) {
+		} elseif (( $default = $element->default ) && count($default) == 1) {
 			return $this->evaluateChild($default[0]);
 		} else {
 			return 0;
 		}
 	}
 }
-

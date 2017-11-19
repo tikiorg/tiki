@@ -22,32 +22,32 @@ class RatingConfigLib extends TikiDb_Bridge
 		return $this->fetchAll('SELECT * FROM `tiki_rating_configs`');
 	}
 
-	function get_configuration( $id )
+	function get_configuration($id)
 	{
-		return $this->config()->fetchFullRow(array(
+		return $this->config()->fetchFullRow([
 			'ratingConfigId' => $id,
-		));
+		]);
 	}
 
-	function create_configuration( $name )
+	function create_configuration($name)
 	{
 		$this->query(
 			'INSERT INTO `tiki_rating_configs` ( `name`, `formula` ) VALUES( ?, ? )',
-			array( $name, '(rating-average (object type object-id))' )
+			[ $name, '(rating-average (object type object-id))' ]
 		);
 
 		return $this->lastInsertId();
 	}
 
-	function update_configuration( $id, $name, $expiry, $formula )
+	function update_configuration($id, $name, $expiry, $formula)
 	{
 		$this->query(
 			'UPDATE `tiki_rating_configs` SET `name` = ?, `expiry` = ?, `formula` = ? WHERE `ratingConfigId` = ?',
-			array( $name, $expiry, $formula, $id )
+			[ $name, $expiry, $formula, $id ]
 		);
 	}
 
-	function record_value( $info, $type, $object, $value )
+	function record_value($info, $type, $object, $value)
 	{
 		$now = time() + $info['expiry'];
 
@@ -55,15 +55,15 @@ class RatingConfigLib extends TikiDb_Bridge
 			'INSERT INTO `tiki_rating_obtained`' .
 			' ( `ratingConfigId`, `type`, `object`, `value`, `expire` )' .
 			' VALUES( ?, ?, ?, ?, ? ) ON DUPLICATE KEY UPDATE `value` = ?, `expire` = ?',
-			array( $info['ratingConfigId'], $type, $object, $value, $now, $value, $now )
+			[ $info['ratingConfigId'], $type, $object, $value, $now, $value, $now ]
 		);
 	}
 
-	function get_expired_object_list( $max )
+	function get_expired_object_list($max)
 	{
 		global $prefs;
 
-		if ( $prefs['feature_wiki'] == 'y' ) {
+		if ($prefs['feature_wiki'] == 'y') {
 			$this->query(
 				'INSERT IGNORE INTO `tiki_rating_obtained` ( `ratingConfigId`, `type`, `object`, `value`, `expire`)' .
 				' SELECT `ratingConfigId`, "wiki page", `page_id`, 0, 0' .
@@ -71,7 +71,7 @@ class RatingConfigLib extends TikiDb_Bridge
 			);
 		}
 
-		if ( $prefs['feature_wiki_comments'] == 'y' || $prefs['feature_forums'] == 'y' ) {
+		if ($prefs['feature_wiki_comments'] == 'y' || $prefs['feature_forums'] == 'y') {
 			$this->query(
 				'INSERT IGNORE INTO `tiki_rating_obtained` ( `ratingConfigId`, `type`, `object`, `value`, `expire` )' .
 				' SELECT `ratingConfigId`, "comment", `threadId`, 0, 0' .
@@ -79,9 +79,9 @@ class RatingConfigLib extends TikiDb_Bridge
 			);
 		}
 
-		if ( $prefs['feature_articles'] == 'y' ) {
+		if ($prefs['feature_articles'] == 'y') {
 			$this->query(
-				'INSERT IGNORE INTO `tiki_rating_obtained` ( `ratingConfigId`, `type`, `object`, `value`, `expire` )'.
+				'INSERT IGNORE INTO `tiki_rating_obtained` ( `ratingConfigId`, `type`, `object`, `value`, `expire` )' .
 				' SELECT `ratingConfigId`, "article", `articleId`, 0, 0' .
 				' FROM `tiki_articles`, `tiki_rating_configs`'
 			);
@@ -89,7 +89,7 @@ class RatingConfigLib extends TikiDb_Bridge
 
 		return $this->fetchAll(
 			'SELECT `type`, `object` FROM `tiki_rating_obtained` WHERE `expire` < UNIX_TIMESTAMP() GROUP BY `type`, `object`, `expire` ORDER BY `expire`',
-			array(),
+			[],
 			$max
 		);
 	}
@@ -99,15 +99,14 @@ class RatingConfigLib extends TikiDb_Bridge
 		$config = $this->config();
 		$obtained = $this->obtained();
 		$config->deleteMultiple(
-			array(
+			[
 				'ratingConfigId' => $config->notIn($ids),
-			)
+			]
 		);
 		$obtained->deleteMultiple(
-			array(
+			[
 				'ratingConfigId' => $obtained->notIn($ids),
-			)
+			]
 		);
 	}
 }
-

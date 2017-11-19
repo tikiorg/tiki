@@ -7,33 +7,33 @@
 
 class PreferencesLib
 {
-	private $data = array();
+	private $data = [];
 	private $usageArray;
 	private $file = '';
-	private $files = array();
+	private $files = [];
 	// Fake preferences controlled by the system
-	private $system_modified = array( 'tiki_release', 'tiki_version_last_check');
+	private $system_modified = [ 'tiki_release', 'tiki_version_last_check'];
 	// prefs with system info etc
-	private $system_info = array( 'fgal_use_dir', 'sender_email' );
+	private $system_info = [ 'fgal_use_dir', 'sender_email' ];
 
-	function getPreference( $name, $deps = true, $source = null, $get_pages = false )
+	function getPreference($name, $deps = true, $source = null, $get_pages = false)
 	{
 		global $prefs, $systemConfiguration;
 		static $id = 0;
 		$data = $this->loadData($name);
 
-		if ( ! isset( $data[$name] ) ) {
+		if (! isset($data[$name])) {
 			return false;
 		}
-		$defaults = array(
+		$defaults = [
 			'type' => '',
 			'helpurl' => '',
 			'help' => '',
-			'dependencies' => array(),
-			'packages_required' => array(),
-			'extensions' => array(),
-			'dbfeatures' => array(),
-			'options' => array(),
+			'dependencies' => [],
+			'packages_required' => [],
+			'extensions' => [],
+			'dbfeatures' => [],
+			'options' => [],
 			'description' => '',
 			'size' => 40,
 			'detail' => '',
@@ -41,31 +41,31 @@ class PreferencesLib
 			'hint' => '',
 			'shorthint' => '',
 			'perspective' => true,
-			'parameters' => array(),
+			'parameters' => [],
 			'admin' => '',
 			'module' => '',
 			'permission' => '',
 			'plugin' => '',
 			'view' => '',
 			'public' => false,
-		);
+		];
 		if ($data[$name]['type'] === 'textarea') {
 			$defaults['size'] = 10;
 		}
 
 		$info = array_merge($defaults, $data[$name]);
 
-		if ( $source == null ) {
+		if ($source == null) {
 			$source = $prefs;
 		}
 
 		$value = isset($source[$name]) ? $source[$name] : null;
-		if ( !empty($value) && is_string($value) && (strlen($value) > 1 && $value{1} == ':') && false !== $unserialized = @unserialize($value) ) {
+		if (! empty($value) && is_string($value) && (strlen($value) > 1 && $value{1} == ':') && false !== $unserialized = @unserialize($value)) {
 			$value = $unserialized;
 		}
 
 		$info['preference'] = $name;
-		if ( isset( $info['serialize'] ) ) {
+		if (isset($info['serialize'])) {
 			$fnc = $info['serialize'];
 			$info['value'] = $fnc($value);
 		} else {
@@ -73,19 +73,19 @@ class PreferencesLib
 		}
 
 		if (! isset($info['tags'])) {
-			$info['tags'] = array('advanced');
+			$info['tags'] = ['advanced'];
 		}
 
 		$info['tags'][] = $name;
 		$info['tags'][] = 'all';
 
-		$info['notes'] = array();
+		$info['notes'] = [];
 
 		$info['raw'] = isset($source[$name]) ? $source[$name] : null;
 		$info['id'] = 'pref-' . ++$id;
 
-		if ( !empty($info['help']) && isset($prefs['feature_help']) && $prefs['feature_help'] == 'y' ) {
-			if ( preg_match('/^https?:/i', $info['help']) ) {
+		if (! empty($info['help']) && isset($prefs['feature_help']) && $prefs['feature_help'] == 'y') {
+			if (preg_match('/^https?:/i', $info['help'])) {
 				$info['helpurl'] = $info['help'];
 			} else {
 				$info['helpurl'] = $prefs['helpurl'] . $info['help'];
@@ -96,7 +96,7 @@ class PreferencesLib
 		// The value element is deprecated. Use either "configuredValue" or "effectiveValue"  instead.
 		$info['configuredValue'] = $info['effectiveValue'] = $info['value'];
 		*/
-		if ( $deps && isset( $info['dependencies'] ) ) {
+		if ($deps && isset($info['dependencies'])) {
 			$info['dependencies'] = $this->getDependencies($info['dependencies']);
 			/* TODO: test
 			if ($info['type'] == 'flag' &&
@@ -109,23 +109,23 @@ class PreferencesLib
 			*/
 		}
 
-		if ( $deps && isset( $info['packages_required'] ) && !empty($info['packages_required']) ) {
+		if ($deps && isset($info['packages_required']) && ! empty($info['packages_required'])) {
 			$info['packages_required'] = $this->getPackagesRequired($info['packages_required']);
 		}
 
 		$info['available'] = true;
 
-		if (! $this->checkExtensions($info['extensions']) ) {
+		if (! $this->checkExtensions($info['extensions'])) {
 			$info['available'] = false;
 			$info['notes'][] = tr('Unmatched system requirement. Missing PHP extension among %0', implode(', ', $info['extensions']));
 		}
 
-		if (! $this->checkDatabaseFeatures($info['dbfeatures']) ) {
+		if (! $this->checkDatabaseFeatures($info['dbfeatures'])) {
 			$info['available'] = false;
 			$info['notes'][] = tr('Unmatched system requirement. The database you are using does not support this feature.');
 		}
 
-		if (!isset($info['default'])) {	// missing default in prefs definition file?
+		if (! isset($info['default'])) {	// missing default in prefs definition file?
 			$info['modified'] = false;
 			trigger_error(tr('Missing default for preference "%0"', $name), E_USER_WARNING);
 		} else {
@@ -136,17 +136,17 @@ class PreferencesLib
 			$info['pages'] = $this->getPreferenceLocations($name);
 		}
 
-		if ( isset( $systemConfiguration->preference->$name ) ) {
+		if (isset($systemConfiguration->preference->$name)) {
 			$info['available'] = false;
 			$info['notes'][] = tr('Configuration forced by host.');
 		}
 
-		if ( $this->preferenceDisabled($info['tags']) ) {
+		if ($this->preferenceDisabled($info['tags'])) {
 			$info['available'] = false;
 			$info['notes'][] = tr('Disabled by host.');
 		}
 
-		if ( ! $info['available'] ) {
+		if (! $info['available']) {
 			$info['tags'][] = 'unavailable';
 		}
 
@@ -158,51 +158,50 @@ class PreferencesLib
 
 		$info = array_merge($defaults, $info);
 
-		if (!empty($info['permission'])) {
+		if (! empty($info['permission'])) {
 			$info['permission']['show_disabled_features'] = 'y';
 			$info['permission'] = 'tiki-objectpermissions.php?' . http_build_query($info['permission'], '', '&');
 		}
 
-		if (!empty($info['admin'])) {
+		if (! empty($info['admin'])) {
 			if (preg_match('/^\w+$/', $info['admin'])) {
 				$info['admin'] = 'tiki-admin.php?page=' . urlencode($info['admin']);
 			}
 		}
 
-		if (!empty($info['module'])) {
+		if (! empty($info['module'])) {
 			$info['module'] = 'tiki-admin_modules.php?cookietab=3&textFilter=' . urlencode($info['module']);
 		}
 
-		if (!empty($info['plugin'])) {
+		if (! empty($info['plugin'])) {
 			$info['plugin'] = 'tiki-admin.php?page=textarea&amp;cookietab=2&textFilter=' . urlencode($info['plugin']);
 		}
 
 		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_function_icon');
 
-		if (!empty($info['admin']) || !empty($info['permission']) || !empty($info['view']) || !empty($info['module']) || !empty($info['plugin'])) {
-
+		if (! empty($info['admin']) || ! empty($info['permission']) || ! empty($info['view']) || ! empty($info['module']) || ! empty($info['plugin'])) {
 			$info['popup_html'] = '<ul class="list-unstyled">';
 
-			if (!empty($info['admin'])) {
-				$icon = smarty_function_icon(array( 'name' => 'settings'), $smarty);
-				$info['popup_html'] .= '<li><a class="icon" href="'.$info['admin'].'">' . $icon . ' ' . tra('Settings') .'</a></li>';
+			if (! empty($info['admin'])) {
+				$icon = smarty_function_icon([ 'name' => 'settings'], $smarty);
+				$info['popup_html'] .= '<li><a class="icon" href="' . $info['admin'] . '">' . $icon . ' ' . tra('Settings') . '</a></li>';
 			}
-			if (!empty($info['permission'])) {
-				$icon = smarty_function_icon(array( 'name' => 'permission'), $smarty);
-				$info['popup_html'] .= '<li><a class="icon" href="'.$info['permission'].'">' . $icon . ' ' . tra('Permissions').'</a></li>';
+			if (! empty($info['permission'])) {
+				$icon = smarty_function_icon([ 'name' => 'permission'], $smarty);
+				$info['popup_html'] .= '<li><a class="icon" href="' . $info['permission'] . '">' . $icon . ' ' . tra('Permissions') . '</a></li>';
 			}
-			if (!empty($info['view'])) {
-				$icon = smarty_function_icon(array( 'name' => 'view'), $smarty);
-				$info['popup_html'] .= '<li><a class="icon" href="'.$info['view'].'">' . $icon . ' ' . tra('View').'</a></li>';
+			if (! empty($info['view'])) {
+				$icon = smarty_function_icon([ 'name' => 'view'], $smarty);
+				$info['popup_html'] .= '<li><a class="icon" href="' . $info['view'] . '">' . $icon . ' ' . tra('View') . '</a></li>';
 			}
-			if (!empty($info['module'])) {
-				$icon = smarty_function_icon(array( 'name' => 'module'), $smarty);
-				$info['popup_html'] .= '<li><a class="icon" href="'.$info['module'].'">' . $icon . ' ' . tra('Modules').'</a></li>';
+			if (! empty($info['module'])) {
+				$icon = smarty_function_icon([ 'name' => 'module'], $smarty);
+				$info['popup_html'] .= '<li><a class="icon" href="' . $info['module'] . '">' . $icon . ' ' . tra('Modules') . '</a></li>';
 			}
-			if (!empty($info['plugin'])) {
-				$icon = smarty_function_icon(array( 'name' => 'plugin'), $smarty);
-				$info['popup_html'] .= '<li><a class="icon" href="'.$info['plugin'].'">' . $icon . ' ' . tra('Plugins').'</a></li>';
+			if (! empty($info['plugin'])) {
+				$icon = smarty_function_icon([ 'name' => 'plugin'], $smarty);
+				$info['popup_html'] .= '<li><a class="icon" href="' . $info['plugin'] . '">' . $icon . ' ' . tra('Plugins') . '</a></li>';
 			}
 			$info['popup_html'] .= '</ul>';
 		}
@@ -213,7 +212,7 @@ class PreferencesLib
 
 			$info['voting_html'] = '';
 
-			if (!in_array('like', $currentVote)) {
+			if (! in_array('like', $currentVote)) {
 				$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'like', tra('Like')), $smarty);
 			} else {
 				$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'unlike', tra("Don't like")), $smarty);
@@ -235,7 +234,7 @@ class PreferencesLib
 		}
 
 		$info['params'] = '';
-		if (!empty($info['parameters'])) {
+		if (! empty($info['parameters'])) {
 			foreach ($info['parameters'] as $param => $value) {
 				$info['params'] .= ' ' . $param . '="' . $value . '"';
 			}
@@ -262,20 +261,20 @@ class PreferencesLib
 		return $info;
 	}
 
-	private function getVoteIconParams( $pref, $vote, $label )
+	private function getVoteIconParams($pref, $vote, $label)
 	{
 		$iconname = [
 			'like' => 'thumbs-up',
 			'unlike' => 'thumbs-down'
 		];
-		return array(
+		return [
 			'name' => $iconname[$vote],
 			'title' => $label,
-			'href' => '#', 'onclick' => 'connectVote(\'' . $pref . '\', \''. $vote .'\', this);return false;',
+			'href' => '#', 'onclick' => 'connectVote(\'' . $pref . '\', \'' . $vote . '\', this);return false;',
 			'class' => '',
 			'iclass' => 'icon connectVoter',
 			'istyle' => 'display:none',
-		);
+		];
 	}
 
 	private function preferenceDisabled($tags)
@@ -290,7 +289,7 @@ class PreferencesLib
 			foreach ($rules as & $rule) {
 				$parts = explode(' ', $rule);
 				$type = array_shift($parts);
-				$rule = array($type, $parts);
+				$rule = [$type, $parts];
 			}
 		}
 
@@ -306,7 +305,7 @@ class PreferencesLib
 		return false;
 	}
 
-	private function checkExtensions( $extensions )
+	private function checkExtensions($extensions)
 	{
 		if (count($extensions) == 0) {
 			return true;
@@ -314,8 +313,8 @@ class PreferencesLib
 
 		$installed = get_loaded_extensions();
 
-		foreach ( $extensions as $ext ) {
-			if ( ! in_array($ext, $installed) ) {
+		foreach ($extensions as $ext) {
+			if (! in_array($ext, $installed)) {
 				return false;
 			}
 		}
@@ -332,7 +331,7 @@ class PreferencesLib
 		return true;
 	}
 
-	function getMatchingPreferences( $criteria, $filters = null, $maxRecords = 50, $sort = '' )
+	function getMatchingPreferences($criteria, $filters = null, $maxRecords = 50, $sort = '')
 	{
 		$index = $this->getIndex();
 
@@ -347,8 +346,8 @@ class PreferencesLib
 		}
 		$results = $query->search($index);
 
-		$prefs = array();
-		foreach ( $results as $hit ) {
+		$prefs = [];
+		foreach ($results as $hit) {
 			$prefs[] = $hit['object_id'];
 		}
 
@@ -363,29 +362,29 @@ class PreferencesLib
 	 * @return array
 	 */
 
-	function applyChanges( $handled, $data, $limitation = null )
+	function applyChanges($handled, $data, $limitation = null)
 	{
 		global $user_overrider_prefs;
 		$tikilib = TikiLib::lib('tiki');
 
-		if ( is_array($limitation) ) {
+		if (is_array($limitation)) {
 			$handled = array_intersect($handled, $limitation);
 		}
 
-		$resets = isset( $data['lm_reset'] ) ? (array) $data['lm_reset'] : array();
+		$resets = isset($data['lm_reset']) ? (array) $data['lm_reset'] : [];
 
-		$changes = array();
-		foreach ( $handled as $pref ) {
-			if ( in_array($pref, $resets) ) {
+		$changes = [];
+		foreach ($handled as $pref) {
+			if (in_array($pref, $resets)) {
 				$tikilib->delete_preference($pref);
-				$changes[$pref] = array('type'=> 'reset');
+				$changes[$pref] = ['type' => 'reset'];
 			} else {
 				$value = $this->formatPreference($pref, $data);
-				$realPref = in_array($pref, $user_overrider_prefs)? "site_$pref": $pref;
-				$old = $this->formatPreference($pref, array($pref => $tikilib->get_preference($realPref)));
-				if ( $old != $value ) {
+				$realPref = in_array($pref, $user_overrider_prefs) ? "site_$pref" : $pref;
+				$old = $this->formatPreference($pref, [$pref => $tikilib->get_preference($realPref)]);
+				if ($old != $value) {
 					if ($tikilib->set_preference($pref, $value)) {
-						$changes[$pref] = array('type'=> 'changed', 'new'=> $value, 'old' => $old);
+						$changes[$pref] = ['type' => 'changed', 'new' => $value, 'old' => $old];
 					}
 				}
 			}
@@ -394,35 +393,36 @@ class PreferencesLib
 		return $changes;
 	}
 
-	function formatPreference( $pref, $data )
+	function formatPreference($pref, $data)
 	{
-		if ( false !== $info = $this->getPreference($pref) ) {
+		if (false !== $info = $this->getPreference($pref)) {
 			$function = '_get' . ucfirst($info['type']) . 'Value';
 			$value = $this->$function($info, $data);
 			return $value;
 		} else {
-			if (isset($data[$pref]))
+			if (isset($data[$pref])) {
 				return $data[$pref];
+			}
 			return null;
 		}
 	}
 
-	function getInput( JitFilter $filter, $preferences = array(), $environment = '' )
+	function getInput(JitFilter $filter, $preferences = [], $environment = '')
 	{
-		$out = array();
+		$out = [];
 
-		foreach ( $preferences as $name ) {
+		foreach ($preferences as $name) {
 			$info = $this->getPreference($name);
 
-			if ( $environment == 'perspective' && isset( $info['perspective'] ) && $info['perspective'] === false ) {
+			if ($environment == 'perspective' && isset($info['perspective']) && $info['perspective'] === false) {
 				continue;
 			}
 
-			if ( isset( $info['filter'] ) ) {
+			if (isset($info['filter'])) {
 				$filter->replaceFilter($name, $info['filter']);
 			}
 
-			if ( isset( $info['separator'] ) ) {
+			if (isset($info['separator'])) {
 				$out[ $name ] = $filter->asArray($name, $info['separator']);
 			} else {
 				$out[ $name ] = $filter[$name];
@@ -435,23 +435,25 @@ class PreferencesLib
 	function getExtraSortColumns()
 	{
 		global $prefs;
-		if ( isset($prefs['rating_advanced']) && $prefs['rating_advanced'] == 'y' ) {
+		if (isset($prefs['rating_advanced']) && $prefs['rating_advanced'] == 'y') {
 			return TikiDb::get()->fetchMap("SELECT CONCAT('adv_rating_', ratingConfigId), name FROM tiki_rating_configs");
 		} else {
-			return array();
+			return [];
 		}
 	}
 
-	private function loadData( $name )
+	private function loadData($name)
 	{
-		if (in_array($name, $this->system_modified)) return null;
-		if ( substr($name, 0, 3) == 'ta_' ) {
+		if (in_array($name, $this->system_modified)) {
+			return null;
+		}
+		if (substr($name, 0, 3) == 'ta_') {
 			$midpos = strpos($name, '_', 3);
 			$pos = strpos($name, '_', $midpos + 1);
 			$file = substr($name, 0, $pos);
-		} elseif ( false !== $pos = strpos($name, '_') ) {
+		} elseif (false !== $pos = strpos($name, '_')) {
 			$file = substr($name, 0, $pos);
-		} elseif ( file_exists(__DIR__ . "/prefs/{$name}.php") ) {
+		} elseif (file_exists(__DIR__ . "/prefs/{$name}.php")) {
 			$file = $name;
 		} else {
 			$file = 'global';
@@ -460,13 +462,13 @@ class PreferencesLib
 		return $this->getFileData($file);
 	}
 
-	private function getFileData( $file, $partial = false )
+	private function getFileData($file, $partial = false)
 	{
-		if ( ! isset( $this->files[$file] ) ) {
-   			$this->realLoad($file, $partial);
+		if (! isset($this->files[$file])) {
+			   $this->realLoad($file, $partial);
 		}
 
-		$ret = array();
+		$ret = [];
 		if (isset($this->files[$file])) {
 			$ret = $this->files[$file];
 		}
@@ -484,46 +486,46 @@ class PreferencesLib
 		if (substr($file, 0, 3) == "ta_") {
 			$paths = TikiAddons::getPaths();
 			$package = str_replace('_', '/', substr($file, 3));
-			$inc_file = $paths[$package] .  "/prefs/{$file}.php";
+			$inc_file = $paths[$package] . "/prefs/{$file}.php";
 		}
 		if (file_exists($inc_file)) {
 			require_once $inc_file;
 			$function = "prefs_{$file}_list";
-			if ( function_exists($function) ) {
+			if (function_exists($function)) {
 				$this->files[$file] = $function($partial);
 			} else {
-				$this->files[$file] = array();
+				$this->files[$file] = [];
 			}
 		}
 	}
 
-	private function getDependencies( $dependencies )
+	private function getDependencies($dependencies)
 	{
-		$out = array();
+		$out = [];
 
-		foreach ( (array) $dependencies as $key => $dep ) {
+		foreach ((array) $dependencies as $key => $dep) {
 			$info = $this->getPreference($dep, false);
-			if ( $info ) {
-				$out[] = array(
+			if ($info) {
+				$out[] = [
 					'name' => $dep,
 					'label' => $info['name'],
 					'type' => $info['type'],
 					'link' => 'tiki-admin.php?lm_criteria=' . urlencode($info['name']),
 					'met' =>
 						( $info['type'] == 'flag' && $info['value'] == 'y' )
-						|| ( $info['type'] != 'flag' && ! empty( $info['value'] ) )
-				);
+						|| ( $info['type'] != 'flag' && ! empty($info['value']) )
+				];
 			} elseif ($key == 'profiles') {
-				foreach ( (array) $dep as $profile) {
-					$out[] = array(
+				foreach ((array) $dep as $profile) {
+					$out[] = [
 						'name' => $profile,
 						'label' => $profile,
 						'type' => 'profile',
 						'link' => 'tiki-admin.php?page=profiles&list=List&profile=' . urlencode($profile),
 						'met' => // FIXME: $info is false, the following surely won't behave as intended. This should indicate whether the profile was applied.
 						( $info['type'] == 'flag' && $info['value'] == 'y' )
-							|| ( $info['type'] != 'flag' && ! empty( $info['value'] ) )
-					);
+							|| ( $info['type'] != 'flag' && ! empty($info['value']) )
+					];
 				}
 			}
 		}
@@ -531,18 +533,18 @@ class PreferencesLib
 		return $out;
 	}
 
-	private function getPackagesRequired( $packages )
+	private function getPackagesRequired($packages)
 	{
-		$out = array();
+		$out = [];
 
-		foreach ((array) $packages as $key => $dep ) {
-			$out[] = array(
+		foreach ((array) $packages as $key => $dep) {
+			$out[] = [
 				'name' => $key,
 				'label' => $key,
 				'type' => 'composer',
 				'link' => 'https://packagist.org/packages/' . $key,
 				'met' => class_exists($dep)
-			);
+			];
 		}
 
 		return $out;
@@ -558,7 +560,7 @@ class PreferencesLib
 		foreach ($this->getAvailableFiles() as $file) {
 			$data = $this->getFileData($file);
 
-			foreach ( $data as $pref => $info ) {
+			foreach ($data as $pref => $info) {
 				$prefInfo = $this->getPreference($pref);
 				if ($prefInfo) {
 					$info = $prefInfo;
@@ -594,26 +596,26 @@ class PreferencesLib
 		return ! $index->exists();
 	}
 
-	public function getPreferenceLocations( $name )
+	public function getPreferenceLocations($name)
 	{
-		if ( ! $this->usageArray ) {
+		if (! $this->usageArray) {
 			$this->loadPreferenceLocations();
 		}
 
-		$pages = array();
+		$pages = [];
 		foreach ($this->usageArray as $pg => $pfs) {
 			foreach ($pfs as $pf) {
 				if ($pf[0] == $name) {
-					$pages[] = array($pg, $pf[1]);
+					$pages[] = [$pg, $pf[1]];
 				}
 			}
 		}
 
 		if (strpos($name, 'wikiplugin_') === 0 || strpos($name, 'wikiplugininline_') === 0) {
-			$pages[] = array('textarea', 2);	// plugins are included in textarea admin dynamically
+			$pages[] = ['textarea', 2];	// plugins are included in textarea admin dynamically
 		}
 		if (strpos($name, 'trackerfield_') === 0) {
-			$pages[] = array('trackers', 3);	// trackerfields are also included in tracker admin dynamically
+			$pages[] = ['trackers', 3];	// trackerfields are also included in tracker admin dynamically
 		}
 
 		return $pages;
@@ -625,19 +627,19 @@ class PreferencesLib
 
 		// check for or create array of where each pref is used
 		$file = 'temp/cache/preference-usage-index';
-		if ( !file_exists($file) ) {
-			$prefs_usage_array = array();
+		if (! file_exists($file)) {
+			$prefs_usage_array = [];
 			$fp = opendir('templates/admin/');
 
 			while (false !== ($f = readdir($fp))) {
 				preg_match('/^include_(.*)\.tpl$/', $f, $m);
 				if (count($m) > 0) {
 					$page = $m[1];
-					$c = file_get_contents('templates/admin/'.$f);
+					$c = file_get_contents('templates/admin/' . $f);
 					preg_match_all('/{preference.*name=[\'"]?(\w*)[\'"]?.*}/i', $c, $m2, PREG_OFFSET_CAPTURE);
 					if (count($m2[1]) > 0) {
 						// count number of tabs in front of each found pref
-						foreach ( $m2[1] as & $found) {
+						foreach ($m2[1] as & $found) {
 							$tabs = preg_match_all('/{\/tab}/i', substr($c, 0, $found[1]), $m3);
 							if ($tabs === false) {
 								$tabs = 0;
@@ -654,7 +656,6 @@ class PreferencesLib
 				}
 			}
 			file_put_contents($file, serialize($prefs_usage_array));
-
 		} else {
 			$prefs_usage_array = unserialize(file_get_contents($file));
 		}
@@ -662,33 +663,33 @@ class PreferencesLib
 		$this->usageArray = $prefs_usage_array;
 	}
 
-	private function indexPreference( $typeFactory, $pref, $info )
+	private function indexPreference($typeFactory, $pref, $info)
 	{
-		$contents = array(
+		$contents = [
 			$info['preference'],
 			// also index the parts of the pref name individually, e.g. wikiplugin_plugin_name as wikiplugin plugin name
-			str_replace('_', ' ' , $info['preference']),
+			str_replace('_', ' ', $info['preference']),
 			$info['name'],
 			isset($info['description']) ? $info['description'] : '',
 			isset($info['keywords']) ? $info['keywords'] : '',
-		);
+		];
 
 		if (isset($info['options'])) {
 			$contents = array_merge($contents, $info['options']);
 		}
 
-		return array(
+		return [
 			'object_type' => $typeFactory->identifier('preference'),
 			'object_id' => $typeFactory->identifier($pref),
 			'contents' => $typeFactory->plaintext(implode(' ', $contents)),
 			'tags' => $typeFactory->plaintext(implode(' ', $info['tags'])),
-		);
+		];
 	}
 
-	private function _getFlagValue( $info, $data )
+	private function _getFlagValue($info, $data)
 	{
 		$name = $info['preference'];
-		if(isset( $data[$name] )&& !empty($data[$name]) && $data[$name] != 'n') {
+		if (isset($data[$name])&& ! empty($data[$name]) && $data[$name] != 'n') {
 			$ret = 'y';
 		} else {
 			$ret = 'n';
@@ -697,13 +698,13 @@ class PreferencesLib
 		return $ret;
 	}
 
-	private function _getSelectorValue( $info, $data )
+	private function _getSelectorValue($info, $data)
 	{
 		$name = $info['preference'];
 		if (! empty($data[$name])) {
 			$value = $data[$name];
 
-			if ( isset($info['filter']) && $filter = TikiFilter::get($info['filter']) ) {
+			if (isset($info['filter']) && $filter = TikiFilter::get($info['filter'])) {
 				return $filter->filter($value);
 			} else {
 				return $value;
@@ -711,40 +712,44 @@ class PreferencesLib
 		}
 	}
 
-	private function _getMultiselectorValue( $info, $data )
+	private function _getMultiselectorValue($info, $data)
 	{
 		$name = $info['preference'];
 
-		if (isset($data[$name]) && !empty($data[$name])) {
+		if (isset($data[$name]) && ! empty($data[$name])) {
 			if (! is_array($data[$name])) {
 				$value = explode($info['separator'], $data[$name]);
 			} else {
 				$value = $data[$name];
 			}
 		} else {
-			$value = array();
+			$value = [];
 		}
 
 		if (isset($info['filter']) && $filter = TikiFilter::get($info['filter'])) {
-			return array_map(array( $filter, 'filter' ), $value);
+			return array_map([ $filter, 'filter' ], $value);
 		} else {
 			return $value;
 		}
 	}
 
-	private function _getTextValue( $info, $data )
+	private function _getTextValue($info, $data)
 	{
 		$name = $info['preference'];
 
-		if ( isset($info['separator']) && is_string($data[$name])) {
-			if(!empty($data[$name])) { $value = explode($info['separator'], $data[$name]); } else { $value = array(); }
+		if (isset($info['separator']) && is_string($data[$name])) {
+			if (! empty($data[$name])) {
+				$value = explode($info['separator'], $data[$name]);
+			} else {
+				$value = [];
+			}
 		} else {
 			$value = $data[$name];
 		}
 
-		if ( isset($info['filter']) && $filter = TikiFilter::get($info['filter']) ) {
-			if ( is_array($value) ) {
-				return array_map(array( $filter, 'filter' ), $value);
+		if (isset($info['filter']) && $filter = TikiFilter::get($info['filter'])) {
+			if (is_array($value)) {
+				return array_map([ $filter, 'filter' ], $value);
 			} else {
 				return $filter->filter($value);
 			}
@@ -753,29 +758,29 @@ class PreferencesLib
 		}
 	}
 
-	private function _getPasswordValue( $info, $data )
+	private function _getPasswordValue($info, $data)
 	{
 		$name = $info['preference'];
 
-		if ( isset($info['filter']) && $filter = TikiFilter::get($info['filter']) ) {
+		if (isset($info['filter']) && $filter = TikiFilter::get($info['filter'])) {
 			return $filter->filter($data[$name]);
 		} else {
 			return $data[$name];
 		}
 	}
 
-	private function _getTextareaValue( $info, $data )
+	private function _getTextareaValue($info, $data)
 	{
 		$name = $info['preference'];
 
-		if ( isset($info['filter']) && $filter = TikiFilter::get($info['filter']) ) {
+		if (isset($info['filter']) && $filter = TikiFilter::get($info['filter'])) {
 			$value = $filter->filter($data[$name]);
 		} else {
 			$value = $data[$name];
 		}
 		$value = str_replace("\r", "", $value);
 
-		if ( isset( $info['unserialize'] ) ) {
+		if (isset($info['unserialize'])) {
 			$fnc = $info['unserialize'];
 
 			return $fnc($value);
@@ -784,14 +789,14 @@ class PreferencesLib
 		}
 	}
 
-	private function _getListValue( $info, $data )
+	private function _getListValue($info, $data)
 	{
 		$name = $info['preference'];
-		$value = isset ($data[$name]) ? $data[$name]: null;
+		$value = isset($data[$name]) ? $data[$name] : null;
 
 		$options = $info['options'];
 
-		if ( isset( $options[$value] ) ) {
+		if (isset($options[$value])) {
 			return $value;
 		} else {
 			$keys = array_keys($options);
@@ -799,10 +804,10 @@ class PreferencesLib
 		}
 	}
 
-	private function _getMultilistValue( $info, $data )
+	private function _getMultilistValue($info, $data)
 	{
 		$name = $info['preference'];
-		$value = isset($data[$name])? (array) $data[$name] : array();
+		$value = isset($data[$name]) ? (array) $data[$name] : [];
 
 		$options = $info['options'];
 		$options = array_keys($options);
@@ -810,10 +815,10 @@ class PreferencesLib
 		return array_intersect($value, $options);
 	}
 
-	private function _getRadioValue( $info, $data )
+	private function _getRadioValue($info, $data)
 	{
 		$name = $info['preference'];
-		$value = isset($data[$name]) ? $data[$name]: null;
+		$value = isset($data[$name]) ? $data[$name] : null;
 
 		$options = $info['options'];
 		$options = array_keys($options);
@@ -825,7 +830,7 @@ class PreferencesLib
 		}
 	}
 
-	private function _getMulticheckboxValue( $info, $data )
+	private function _getMulticheckboxValue($info, $data)
 	{
 		return $this->_getMultilistValue($info, $data);
 	}
@@ -838,22 +843,22 @@ class PreferencesLib
 	 * @return array (prefname => array( 'current' => current value, 'default' => default value ))
 	 */
 	// NOTE: tikilib contains a similar method called getModifiedPreferences
-	function getModifiedPrefsForExport( $added = false )
+	function getModifiedPrefsForExport($added = false)
 	{
 		$tikilib = TikiLib::lib('tiki');
 
 		$prefs = $tikilib->getModifiedPreferences();
 
 		$defaults = get_default_prefs();
-		$modified = array();
+		$modified = [];
 
 		foreach ($prefs as $pref => $value) {
-			if (( $added && !isset($defaults[$pref])) || (isset($defaults[$pref]) && $value !== $defaults[$pref] )) {
-				if (!in_array($pref, $this->system_modified) && !in_array($pref, $this->system_info)) {	// prefs modified by the system and with system info etc
+			if (( $added && ! isset($defaults[$pref])) || (isset($defaults[$pref]) && $value !== $defaults[$pref] )) {
+				if (! in_array($pref, $this->system_modified) && ! in_array($pref, $this->system_info)) {	// prefs modified by the system and with system info etc
 					$preferenceInformation = $this->getPreference($pref);
-					$modified[$pref] = array(
-						'current' => array('serial' => $value, 'expanded' => $preferenceInformation['value']),
-					);
+					$modified[$pref] = [
+						'current' => ['serial' => $value, 'expanded' => $preferenceInformation['value']],
+					];
 					if (isset($defaults[$pref])) {
 						$modified[$pref]['default'] = $defaults[$pref];
 					}
@@ -867,7 +872,7 @@ class PreferencesLib
 
 	function getDefaults()
 	{
-		$defaults = array();
+		$defaults = [];
 
 		foreach ($this->getAvailableFiles() as $file) {
 			$data = $this->getFileData($file, true);
@@ -886,16 +891,18 @@ class PreferencesLib
 
 	private function getAvailableFiles()
 	{
-		$files = array();
-		foreach ( glob(__DIR__ . '/prefs/*.php') as $file ) {
-			if (basename($file) === "index.php")
+		$files = [];
+		foreach (glob(__DIR__ . '/prefs/*.php') as $file) {
+			if (basename($file) === "index.php") {
 				continue;
+			}
 			$files[] = substr(basename($file), 0, -4);
 		}
 		foreach (TikiAddons::getPaths() as $path) {
-			foreach ( glob( $path . '/prefs/*.php') as $file ) {
-				if (basename($file) === "index.php")
+			foreach (glob($path . '/prefs/*.php') as $file) {
+				if (basename($file) === "index.php") {
 					continue;
+				}
 				$files[] = substr(basename($file), 0, -4);
 			}
 		}
@@ -927,24 +934,24 @@ class PreferencesLib
 			$filters = $this->getEnabledFilters();
 		}
 
-		$out = array(
-			'basic' => array(
+		$out = [
+			'basic' => [
 				'label' => tra('Basic'),
 				'type' => 'positive',
-			),
-			'advanced' => array(
+			],
+			'advanced' => [
 				'label' => tra('Advanced'),
 				'type' => 'positive',
-			),
-			'experimental' => array(
+			],
+			'experimental' => [
 				'label' => tra('Experimental'),
 				'type' => 'negative',
-			),
-			'unavailable' => array(
+			],
+			'unavailable' => [
 				'label' => tra('Unavailable'),
 				'type' => 'negative',
-			),
-		);
+			],
+		];
 
 		foreach ($out as $key => & $info) {
 			$info['selected'] = in_array($key, $filters);
@@ -983,7 +990,7 @@ class PreferencesLib
 	{
 		global $user;
 
-		if (!$auser) {
+		if (! $auser) {
 			$auser = $user;
 		}
 
@@ -1007,14 +1014,14 @@ class PreferencesLib
 		global $user;
 		$tikilib = TikiLib::lib('tiki');
 
-		if (!$auser) {
+		if (! $auser) {
 			$auser = $user;
 		}
 
 		$recent = $tikilib->get_user_preference($auser, 'admin_recent_prefs');
 
 		if (empty($recent)) {
-			return array();
+			return [];
 		} else {
 			return unserialize($recent);
 		}
@@ -1041,7 +1048,7 @@ class PreferencesLib
 	public function getAddonPrefs()
 	{
 		global $prefs;
-		$ret = array();
+		$ret = [];
 		foreach (array_keys($prefs) as $prefName) {
 			if (substr($prefName, 0, 3) == 'ta_' && substr($prefName, -3) == '_on') {
 				$ret[] = $prefName;
@@ -1050,4 +1057,3 @@ class PreferencesLib
 		return $ret;
 	}
 }
-

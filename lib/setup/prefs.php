@@ -21,7 +21,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__)) {
 // Prefs for which we want to use the site value (they will be prefixed with 'site_')
 // ( this is also used in tikilib, not only when reloading prefs )
 global $user_overrider_prefs, $prefs;
-$user_overrider_prefs = array(
+$user_overrider_prefs = [
 	'language',
 	'userbreadCrumb',
 	'tikiIndex',
@@ -30,19 +30,19 @@ $user_overrider_prefs = array(
 	'metatag_robots',
 	'theme',
 	'theme_option',
-);
+];
 
 initialize_prefs();
 
 function get_default_prefs()
 {
 	static $prefs;
-	if ( is_array($prefs) ) {
+	if (is_array($prefs)) {
 		return $prefs;
 	}
 
 	$cachelib = TikiLib::lib('cache');
-	if ( $prefs = $cachelib->getSerialized('tiki_default_preferences_cache') ) {
+	if ($prefs = $cachelib->getSerialized('tiki_default_preferences_cache')) {
 		return $prefs;
 	}
 
@@ -50,7 +50,7 @@ function get_default_prefs()
 	$prefs = $prefslib->getDefaults();
 	$prefs = array_merge(
 		$prefs,
-		array(
+		[
 			// tiki and version
 			'tiki_release' => '0',
 			'tiki_needs_upgrade' => 'n',
@@ -63,7 +63,7 @@ function get_default_prefs()
 			// wiki
 			'backlinks_name_len' => '0',
 			'feature_wiki_notepad' => 'n',
-			'feature_wiki_feedback_polls' => array(),
+			'feature_wiki_feedback_polls' => [],
 			'mailin_respond_email' => 'y',
 			'mailin_autocheck' => 'n',
 			'mailin_autocheckFreq' => '0',
@@ -99,7 +99,7 @@ function get_default_prefs()
 			'trackerCreatorGroupName' => ' ',
 
 			// user
-			'userlevels' => function_exists('tra') ? array('1'=>tra('Simple'),'2'=>tra('Advanced')) : array('1'=>'Simple','2'=>'Advanced'),
+			'userlevels' => function_exists('tra') ? ['1' => tra('Simple'),'2' => tra('Advanced')] : ['1' => 'Simple','2' => 'Advanced'],
 			'userbreadCrumb' => 4,
 			'feature_community_friends_permission' => 'n',
 			'feature_community_friends_permission_dep' => '2',
@@ -146,11 +146,11 @@ function get_default_prefs()
 			'error_url' => 'tiki-error.php',
 
 			// intertiki
-			'interlist' => array(),
-			'known_hosts' => array(),
+			'interlist' => [],
+			'known_hosts' => [],
 
 			// categories
-			'category_i18n_unsynced' => array(),
+			'category_i18n_unsynced' => [],
 
 			// look and feel
 
@@ -208,13 +208,13 @@ function get_default_prefs()
 
 
 			// SefUrl
-			'feature_sefurl_paths' => array(''), //empty string needed to keep preference from setting unexpectedly
+			'feature_sefurl_paths' => [''], //empty string needed to keep preference from setting unexpectedly
 
 			'feature_bidi' => 'n',
 			'feature_lastup' => 'y',
 
 			'terminology_profile_installed' => 'n',
-		)
+		]
 	);
 
 	// Special default values
@@ -225,8 +225,8 @@ function get_default_prefs()
 	$prefs['feature_lastup'] = 'y';
 
 	// Be sure we have a default value for user prefs
-	foreach ( $prefs as $p => $v ) {
-		if ( substr($p, 0, 12) == 'users_prefs_' ) {
+	foreach ($prefs as $p => $v) {
+		if (substr($p, 0, 12) == 'users_prefs_') {
 			$prefs[substr($p, 12)] = $v;
 		}
 	}
@@ -253,15 +253,15 @@ function initialize_prefs($force = false)
 		// in the interim leading to blank $prefs
 	}
 
-	if (empty($prefs) || !$cachelib->isCached('global_preferences')) {
+	if (empty($prefs) || ! $cachelib->isCached('global_preferences')) {
 		$defaults = get_default_prefs();
 
 		// Find which preferences need to be serialized/unserialized, based on the default
 		//  values (those with arrays as values) and preferences with special serializations
-		$serializedPreferences = array();
+		$serializedPreferences = [];
 		$prefslib = TikiLib::lib('prefs');
-		foreach ( $defaults as $preference => $value ) {
-			if ( is_array($value) || in_array($preference, array('category_defaults', 'memcache_servers'))) {
+		foreach ($defaults as $preference => $value) {
+			if (is_array($value) || in_array($preference, ['category_defaults', 'memcache_servers'])) {
 				$serializedPreferences[] = $preference;
 			}
 		}
@@ -270,23 +270,23 @@ function initialize_prefs($force = false)
 		if (method_exists($tikilib, "getModifiedPreferences")) {
 			$modified = TikiLib::lib("tiki")->getModifiedPreferences();
 		} else {
-			$modified = array();
+			$modified = [];
 		}
 
 		// Unserialize serialized preferences
-		foreach ( $serializedPreferences as $serializedPreference ) {
-			if ( !empty($modified[$serializedPreference]) && ! is_array($modified[$serializedPreference]) ) {
+		foreach ($serializedPreferences as $serializedPreference) {
+			if (! empty($modified[$serializedPreference]) && ! is_array($modified[$serializedPreference])) {
 				$modified[$serializedPreference] = unserialize($modified[$serializedPreference]);
 			}
 		}
 
 		// Keep some useful sites values available before overriding with user prefs
 		// (they could be used in templates, so we need to set them even for Anonymous)
-		foreach ( $user_overrider_prefs as $uop ) {
+		foreach ($user_overrider_prefs as $uop) {
 			if (isset($modified[$uop])) {
-				$modified['site_'.$uop] = $modified[$uop];
+				$modified['site_' . $uop] = $modified[$uop];
 			} elseif (isset($defaults[$uop])) {
-				$modified['site_'.$uop] = $defaults[$uop];
+				$modified['site_' . $uop] = $defaults[$uop];
 			}
 		}
 
@@ -294,10 +294,10 @@ function initialize_prefs($force = false)
 		$cachelib->cacheItem('global_preferences', serialize($prefs));
 	}
 
-	if ( $prefs['feature_perspective'] == 'y') {
-		if ( ! isset( $section ) || $section != 'admin' ) {
+	if ($prefs['feature_perspective'] == 'y') {
+		if (! isset($section) || $section != 'admin') {
 			$perspectivelib = TikiLib::lib('perspective');
-			if ( $persp = $perspectivelib->get_current_perspective($prefs) ) {
+			if ($persp = $perspectivelib->get_current_perspective($prefs)) {
 				$perspectivePreferences = $perspectivelib->get_preferences($persp);
 				$prefs = $perspectivePreferences + $prefs;
 			}
@@ -307,14 +307,16 @@ function initialize_prefs($force = false)
 	// Override preferences with system-configured preferences.
 	$system = $systemConfiguration->preference->toArray();
 	// Also include the site_ versions
-	foreach ( $user_overrider_prefs as $uop ) {
+	foreach ($user_overrider_prefs as $uop) {
 		if (isset($system[$uop])) {
 			$system['site_' . $uop] = $system[$uop];
 		}
 	}
 	$prefs = array_merge($prefs, $system);
 
-	if ( !defined('TIKI_PREFS_DEFINED') ) define('TIKI_PREFS_DEFINED', 1);
+	if (! defined('TIKI_PREFS_DEFINED')) {
+		define('TIKI_PREFS_DEFINED', 1);
+	}
 }
 
 /**

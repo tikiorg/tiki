@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -36,15 +36,17 @@ class AreasLib extends CategLib
 
 		$current_object = current_object();
 
-		if (!$current_object) {	// only used on tiki objects
+		if (! $current_object) {	// only used on tiki objects
 			return;
 		}
 
 		$descendants = $this->get_category_descendants($prefs['areas_root']);
 
 		$objectPerspective = 0;
-		if (!empty($objectCategoryIds)) {
-			if (!isset($_SESSION['current_perspective'])) unset($_SESSION['current_perspective']);
+		if (! empty($objectCategoryIds)) {
+			if (! isset($_SESSION['current_perspective'])) {
+				unset($_SESSION['current_perspective']);
+			}
 			foreach ($objectCategoryIds as $categId) {
 				// If category is inside $prefs['areas_root']
 				if (in_array($categId, $descendants)) {
@@ -57,21 +59,20 @@ class AreasLib extends CategLib
 				}
 			}
 			if ($objectPerspective && $objectPerspective != $_SESSION['current_perspective']) {
-
 				$area = $this->getAreaByPerspId($_SESSION['current_perspective']);
 				$objectArea = $this->getAreaByPerspId($objectPerspective);
 
-				if (($area && !$area['share_common']) || ($objectArea && $objectArea['exclusive'])) {
+				if (($area && ! $area['share_common']) || ($objectArea && $objectArea['exclusive'])) {
 					$perspectivelib->set_perspective($objectPerspective, true);
 					$accesslib->redirect($accesslib->selfUrl(), '', 301);
 				}
 			}
 		}
-		if ($objectPerspective < 1 && !empty($_SESSION['current_perspective'])) { // uncategorised objects
+		if ($objectPerspective < 1 && ! empty($_SESSION['current_perspective'])) { // uncategorised objects
 
 			$area = $this->getAreaByPerspId($_SESSION['current_perspective']);
 			if ($area) {
-				if ( !$area['share_common']) {
+				if (! $area['share_common']) {
 					$perspectivelib->set_perspective($objectPerspective, true);
 					$accesslib->redirect($accesslib->selfUrl(), '', 301);
 				}
@@ -86,7 +87,7 @@ class AreasLib extends CategLib
 				return $area;
 			}
 		}
-		return array();
+		return [];
 	}
 
 	public function getAreaByPerspId($perspid, $enabled = true)
@@ -96,7 +97,7 @@ class AreasLib extends CategLib
 				return $area;
 			}
 		}
-		return array();
+		return [];
 	}
 
 	/**
@@ -108,7 +109,7 @@ class AreasLib extends CategLib
 	private function cacheAreas($reload = false)
 	{
 		if ($reload || empty($this->areasArray)) {
-			$this->areasArray = array();
+			$this->areasArray = [];
 			$res = $this->areas->fetchAll($this->areas->all());
 			foreach ($res as & $row) {
 				$row['perspectives'] = unserialize($row['perspectives']);
@@ -124,13 +125,13 @@ class AreasLib extends CategLib
 	{
 		global $prefs;
 		$this->areas->deleteMultiple([]);	// empty areas table before rebuilding
-		$areas = array();
+		$areas = [];
 		$descendants = $this->get_category_descendants($prefs['areas_root']);
 		if (is_array($descendants)) {
 			foreach ($descendants as $item) { // it only should be just one perspective assigned
-				$areas[$item] = array();
+				$areas[$item] = [];
 			}
-			$result = $this->fetchAll("SELECT `perspectiveId`, `pref`, `value` FROM tiki_perspective_preferences WHERE pref = 'category_jail'", array());
+			$result = $this->fetchAll("SELECT `perspectiveId`, `pref`, `value` FROM tiki_perspective_preferences WHERE pref = 'category_jail'", []);
 			if (count($result) != 0) {
 				foreach ($result as $row) {
 					$categs = unserialize($row['value']);
@@ -142,11 +143,11 @@ class AreasLib extends CategLib
 				}
 
 				foreach (array_filter($areas) as $key => $item) { // don't bother with categs with no perspectives
-					$data = array();
+					$data = [];
 					// update checkboxes from form
-					$data['enabled'] = !empty($_REQUEST['enabled'][$key]) ? 'y' : 'n';
-					$data['exclusive'] = !empty($_REQUEST['exclusive'][$key]) ? 'y' : 'n';
-					$data['share_common'] = !empty($_REQUEST['share_common'][$key]) ? 'y' : 'n';
+					$data['enabled'] = ! empty($_REQUEST['enabled'][$key]) ? 'y' : 'n';
+					$data['exclusive'] = ! empty($_REQUEST['exclusive'][$key]) ? 'y' : 'n';
+					$data['share_common'] = ! empty($_REQUEST['share_common'][$key]) ? 'y' : 'n';
 
 					$this->bind_area($key, $item, $data);
 				}
@@ -160,14 +161,13 @@ class AreasLib extends CategLib
 		}
 	}
 
-	function bind_area($categId, $perspectiveIds, $data = array())
+	function bind_area($categId, $perspectiveIds, $data = [])
 	{
 		$perspectiveIds = (array)$perspectiveIds;
-		$conditions = array('categId' => $categId);
+		$conditions = ['categId' => $categId];
 		$data['perspectives'] = serialize($perspectiveIds);
 
 		if ($this->areas->fetchCount($conditions)) {
-
 			$this->areas->update($data, $conditions);
 		} else {
 			$this->areas->insert(array_merge($data, $conditions));
@@ -176,7 +176,7 @@ class AreasLib extends CategLib
 } // class end
 
 /*-----------------------------------------------
-+++ Description of Perspective Binder / Areas +++ 
++++ Description of Perspective Binder / Areas +++
 -------------------------------------------------
 
 Much of this will become out of date for tiki 10 (jb)
@@ -205,7 +205,7 @@ The id of the parent category you can type in the text field areas root id in th
 Step 3 of 5
 -----------
 
-Please activate "categories used in templates" in your Tiki installation: 
+Please activate "categories used in templates" in your Tiki installation:
 Admin->Categories check tick box "categories used in templates.
 
 To satisfy this step feature_areas is set to depend on categories_used_in_tpl.
@@ -238,7 +238,7 @@ Now you can combine very specific content, that mainly makes sense in a specific
 Examples of usage would be:
 
 * Project related content, that only should be visible in the perspective and context of the specific project.
-* Subwebsites of local groups 
+* Subwebsites of local groups
 a) that should not appear on the national website
 b) whith content that automatically should be adressed to the right local website without cryptical urls, even if the same Tiki installation is shared for several groups
 * News Websites with specific regional or local related content and common content in the same Tiki installation

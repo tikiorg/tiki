@@ -21,7 +21,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	 	restricted_modification();
 	 }
 	 ask_ticket('foo');
-	 
+
 	 ...can now simply use...
 	 $access->check_authenticity();
 	 restricted_modification();
@@ -45,7 +45,7 @@ function ask_ticket($area)
  */
 function check_ticket($area)
 {
-	if (!isset($_SESSION['antisurf'])) {
+	if (! isset($_SESSION['antisurf'])) {
 		$_SESSION['antisurf'] = '';
 	}
 	if ($_SESSION['antisurf'] != $area) {
@@ -64,4 +64,3 @@ function check_ticket($area)
 
 	return true;
 }
-

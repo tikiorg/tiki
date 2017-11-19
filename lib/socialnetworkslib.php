@@ -24,12 +24,12 @@ class SocialNetworksLib extends LogsLib
 	/**
 	 * @var	array	options for Twitter Zend functions
 	 */
-	public $options = array(
+	public $options = [
 			'callbackUrl'    => '',
 			'siteUrl'        => 'http://twitter.com/oauth',
 			'consumerKey'    => '',
 			'consumerSecret' => '',
-	);
+	];
 
 	/**
 	 * retrieves the URL for the current page
@@ -40,7 +40,7 @@ class SocialNetworksLib extends LogsLib
 	{
 		$url = 'http';
 		$port = '';
-		if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+		if (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
 			$url .= 's';
 			if ($_SERVER['SERVER_PORT'] != 443 and strpos($_SERVER['HTTP_HOST'], ':') == 0) {
 				$port = ':' . $_SERVER['SERVER_PORT'];
@@ -72,7 +72,7 @@ class SocialNetworksLib extends LogsLib
 	{
 		global $prefs;
 
-		if (!$this->twitterRegistered()) {
+		if (! $this->twitterRegistered()) {
 			return false;
 		}
 
@@ -107,7 +107,7 @@ class SocialNetworksLib extends LogsLib
 
 		if ($prefs['socialnetworks_twitter_consumer_key'] == ''
 				or $prefs['socialnetworks_twitter_consumer_secret'] == ''
-				or !isset($_SESSION['TWITTER_REQUEST_TOKEN'])
+				or ! isset($_SESSION['TWITTER_REQUEST_TOKEN'])
 		) {
 			return false;
 		}
@@ -142,10 +142,10 @@ class SocialNetworksLib extends LogsLib
 	function getFacebookRequestToken()
 	{
 		global $prefs;
-		if (!$this->facebookRegistered()) {
+		if (! $this->facebookRegistered()) {
 			return false;
 		}
-		$scopes = array();
+		$scopes = [];
 		if ($prefs['socialnetworks_facebook_publish_stream'] == 'y') {
 			$scopes[] = 'publish_actions';
 		}
@@ -167,9 +167,9 @@ class SocialNetworksLib extends LogsLib
 		if (strpos($url, '?') != 0) {
 			$url = preg_replace('/\?.*/', '', $url);
 		}
-		$url = urlencode($url.'?request_facebook');
+		$url = urlencode($url . '?request_facebook');
 		$url = 'https://www.facebook.com/v2.0/dialog/oauth?client_id=' . $prefs['socialnetworks_facebook_application_id'] .
-			'&scope=' . $scope . '&redirect_uri='.$url;
+			'&scope=' . $scope . '&redirect_uri=' . $url;
 		header("Location: $url");
 		die();
 	}
@@ -191,13 +191,13 @@ class SocialNetworksLib extends LogsLib
 		}
 
 		$url = '/v2.0/oauth/access_token?client_id=' . $prefs['socialnetworks_facebook_application_id'] .
-			'&redirect_uri=' . $this->getURL() .'&client_secret=' . $prefs['socialnetworks_facebook_application_secr']; // code is already in the url
+			'&redirect_uri=' . $this->getURL() . '&client_secret=' . $prefs['socialnetworks_facebook_application_secr']; // code is already in the url
 
 
-		$request = "GET $url HTTP/1.1\r\n".
-			"Host: graph.facebook.com\r\n".
-			"Accept: */*\r\n".
-			"Expect: 100-continue\r\n".
+		$request = "GET $url HTTP/1.1\r\n" .
+			"Host: graph.facebook.com\r\n" .
+			"Accept: */*\r\n" .
+			"Expect: 100-continue\r\n" .
 			"Connection: close\r\n\r\n";
 
 		$fp = fsockopen('ssl://graph.facebook.com', 443);
@@ -207,7 +207,7 @@ class SocialNetworksLib extends LogsLib
 		} else {
 			fputs($fp, $request);
 			$ret = '';
-			while (!feof($fp)) {
+			while (! feof($fp)) {
 				$ret .= fgets($fp, 128);
 			}
 			fclose($fp);
@@ -218,7 +218,6 @@ class SocialNetworksLib extends LogsLib
 		$json_decoded_ret = json_decode($ret, true);
 
 		if (isset($json_decoded_ret['access_token']) || substr($ret, 0, 13) == 'access_token=') {
-
 			if (isset($json_decoded_ret['access_token'])) {
 				$access_token = $json_decoded_ret['access_token'];
 			} else {
@@ -228,21 +227,21 @@ class SocialNetworksLib extends LogsLib
 					$access_token = substr($access_token, 0, $endoftoken);
 				}
 			}
-			$fields = array('id', 'name', 'first_name', 'last_name');
+			$fields = ['id', 'name', 'first_name', 'last_name'];
 
 			if ($prefs['socialnetworks_facebook_email'] == 'y') {
 				$fields[] = 'email';
 			}
 
-			$fb_profile = json_decode($this->facebookGraph('', 'me', array('fields' => implode(',', $fields),'access_token' => $access_token), false, 'GET'));
+			$fb_profile = json_decode($this->facebookGraph('', 'me', ['fields' => implode(',', $fields),'access_token' => $access_token], false, 'GET'));
 			if (empty($fb_profile->id)) {
 				return false;
 			}
-			if (!$user) {
+			if (! $user) {
 				if ($prefs['socialnetworks_facebook_login'] != 'y') {
 					return false;
 				}
-				$local_user = $this->getOne("select `user` from `tiki_user_preferences` where `prefName` = 'facebook_id' and `value` = ?", array($fb_profile->id));
+				$local_user = $this->getOne("select `user` from `tiki_user_preferences` where `prefName` = 'facebook_id' and `value` = ?", [$fb_profile->id]);
 				if ($local_user) {
 					$user = $local_user;
 				} elseif ($prefs['socialnetworks_facebook_autocreateuser'] == 'y') {
@@ -250,14 +249,14 @@ class SocialNetworksLib extends LogsLib
 					$email = $prefs['socialnetworks_facebook_email'] === 'y' ? $fb_profile->email : '';
 					if ($prefs['login_is_email'] == 'y' && $email) {
 						$user = $email;
-					} else if ($prefs['login_autogenerate'] == 'y') {
+					} elseif ($prefs['login_autogenerate'] == 'y') {
 						$user = '';
 					} else {
 						$user = 'fb_' . $fb_profile->id;
 					}
 					$user = $userlib->add_user($user, $randompass, $email);
 
-					if (!$user) {
+					if (! $user) {
 						$smarty = TikiLib::lib('smarty');
 						$smarty->assign('errortype', 'login');
 						$smarty->assign('msg', tra('We were unable to log you in using your Facebook account. Please contact the administrator.'));
@@ -271,18 +270,19 @@ class SocialNetworksLib extends LogsLib
 					if ($prefs['socialnetworks_facebook_create_user_trackeritem'] == 'y' && $userTracker && $userField) {
 						$definition = Tracker_Definition::get($userTracker);
 						$utilities = new Services_Tracker_Utilities();
-						$fields = array('ins_'.$userField => $user);
-						if (!empty($prefs['socialnetworks_facebook_names'])) {
+						$fields = ['ins_' . $userField => $user];
+						if (! empty($prefs['socialnetworks_facebook_names'])) {
 							$names = array_map('trim', explode(',', $prefs['socialnetworks_facebook_names']));
-							$fields['ins_'.$names[0]] = $fb_profile->first_name;
-							$fields['ins_'.$names[1]] = $fb_profile->last_name;
+							$fields['ins_' . $names[0]] = $fb_profile->first_name;
+							$fields['ins_' . $names[1]] = $fb_profile->last_name;
 						}
-						$utilities->insertItem($definition,
-							array(
+						$utilities->insertItem(
+							$definition,
+							[
 								'status' => '',
 								'fields' => $fields,
 								'validate' => false,
-							)
+							]
 						);
 					}
 
@@ -291,7 +291,7 @@ class SocialNetworksLib extends LogsLib
 						$this->set_user_preference($user, 'socialnetworks_user_firstlogin', 'y');
 					}
 					if ($prefs['feature_userPreferences'] == 'y') {
-						$fb_avatar = json_decode($this->facebookGraph('', 'me/picture', array('type' => 'square', 'width' => '480', 'redirect' => '0','access_token' => $access_token), false, 'GET'));
+						$fb_avatar = json_decode($this->facebookGraph('', 'me/picture', ['type' => 'square', 'width' => '480', 'redirect' => '0','access_token' => $access_token], false, 'GET'));
 						$avatarlib = TikiLib::lib('avatar');
 						$avatarlib->set_avatar_from_url($fb_avatar->data->url, $user);
 					}
@@ -329,7 +329,8 @@ class SocialNetworksLib extends LogsLib
 	 *
 	 * @return bool	true, if this site is registered with linkedIn as an application
 	 */
-	function linkedInRegistered(){
+	function linkedInRegistered()
+	{
 		global $prefs;
 		return ($prefs['socialnetworks_linkedin_client_id'] != '' and $prefs['socialnetworks_linkedin_client_secr'] != '');
 	}
@@ -337,10 +338,10 @@ class SocialNetworksLib extends LogsLib
 	function getLinkedInRequestToken()
 	{
 		global $prefs;
-		if (!$this->linkedInRegistered()) {
+		if (! $this->linkedInRegistered()) {
 			return false;
 		}
-		$scopes = array();
+		$scopes = [];
 		$scopes[] = 'r_basicprofile';
 		if ($prefs['socialnetworks_linkedin_email'] == 'y') {
 			$scopes[] = 'r_emailaddress';
@@ -362,27 +363,28 @@ class SocialNetworksLib extends LogsLib
 		die();
 	}
 
-	function getLinkedInAccessToken() {
+	function getLinkedInAccessToken()
+	{
 		global $prefs;
-		if (!$this->linkedInRegistered()) {
+		if (! $this->linkedInRegistered()) {
 			return false;
 		}
 
 		$curl_request = curl_init();
-		curl_setopt_array($curl_request, array(
-			CURLOPT_HTTPHEADER => array('Content-Type: application/x-www-form-urlencoded'),
+		curl_setopt_array($curl_request, [
+			CURLOPT_HTTPHEADER => ['Content-Type: application/x-www-form-urlencoded'],
 			CURLOPT_RETURNTRANSFER => 1,
 			CURLOPT_URL => 'https://www.linkedin.com/uas/oauth2/accessToken',
 			CURLOPT_POST => 1,
-			CURLOPT_POSTFIELDS => http_build_query (array(
+			CURLOPT_POSTFIELDS => http_build_query([
 				client_secret => $prefs['socialnetworks_linkedin_client_secr'],
 				client_id => $prefs['socialnetworks_linkedin_client_id'],
 				client_secret => $prefs['socialnetworks_linkedin_client_secr'],
 				grant_type => "authorization_code",
 				redirect_uri => $_SESSION['LINKEDIN_CALLBACK_URL'],
 				code => $_SESSION['LINKEDIN_AUTH_CODE'],
-			), '', '&'),
-		));
+			], '', '&'),
+		]);
 
 		$curl_result = curl_exec($curl_request);
 		$ret = json_decode($curl_result);
@@ -391,7 +393,7 @@ class SocialNetworksLib extends LogsLib
 			$smarty = TikiLib::lib('smarty');
 			$smarty->assign('errortype', 'login');
 			$smarty->assign('msg', tra('We were unable to connect to your LinkedIn account. Please contact the administrator.'));
-                        $smarty->display('error.tpl');
+						$smarty->display('error.tpl');
 			die;
 		}
 
@@ -400,32 +402,32 @@ class SocialNetworksLib extends LogsLib
 
 		$this->linkedInLogin();
 		return true;
-
 	}
 
-	function linkedInLogin() {
+	function linkedInLogin()
+	{
 		global $user, $prefs;
 		$userlib = TikiLib::lib('user');
 		$curl = curl_init();
 
-		$data = array(
-			"oauth2_access_token"=>$_SESSION['LINKEDIN_ACCESS_TOKEN'],
-			"format"=>"json"
-		);
-		$profile_fields = array(
+		$data = [
+			"oauth2_access_token" => $_SESSION['LINKEDIN_ACCESS_TOKEN'],
+			"format" => "json"
+		];
+		$profile_fields = [
 			'id',
 			'first-name',
 			'last-name',
 			'formatted-name',
 			'picture-url',
 			'picture-urls::(original)',
-		);
+		];
 
 		if ($prefs['socialnetworks_linkedin_email'] == 'y') {
 			$profile_fields[] = 'email-address';
 		}
 
-		$url = "https://api.linkedin.com/v1/people/~:(". implode(",",$profile_fields) .")";
+		$url = "https://api.linkedin.com/v1/people/~:(" . implode(",", $profile_fields) . ")";
 		$url = sprintf("%s?%s", $url, http_build_query($data, '', '&'));
 		curl_setopt($curl, CURLOPT_URL, $url);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -441,11 +443,11 @@ class SocialNetworksLib extends LogsLib
 			$smarty->display('error.tpl');
 			die;
 		}
-		if (!$user) {
+		if (! $user) {
 			if ($prefs['socialnetworks_linkedin_login'] != 'y') {
 				return false;
 			}
-			$local_user = $this->getOne("select `user` from `tiki_user_preferences` where `prefName` = 'linkedin_id' and `value` = ?", array($linkedin_info->id));
+			$local_user = $this->getOne("select `user` from `tiki_user_preferences` where `prefName` = 'linkedin_id' and `value` = ?", [$linkedin_info->id]);
 			if ($local_user) {
 				$user = $local_user;
 			} elseif ($prefs['socialnetworks_linkedin_autocreateuser'] == 'y') {
@@ -453,14 +455,14 @@ class SocialNetworksLib extends LogsLib
 				$email = $prefs['socialnetworks_linkedin_email'] === 'y' ? $linkedin_info->emailAddress : '';
 				if ($prefs['login_is_email'] == 'y' && $email) {
 					$user = $email;
-				} else if ($prefs['login_autogenerate'] == 'y') {
+				} elseif ($prefs['login_autogenerate'] == 'y') {
 						$user = '';
 				} else {
 					$user = 'li_' . $linkedin_info->id;
 				}
 				$user = $userlib->add_user($user, $randompass, $email);
 
-				if (!$user) {
+				if (! $user) {
 					$smarty = TikiLib::lib('smarty');
 					$smarty->assign('errortype', 'login');
 					$smarty->assign('msg', tra('We were unable to log you in using your LinkedIn account. Please contact the administrator.'));
@@ -474,18 +476,19 @@ class SocialNetworksLib extends LogsLib
 				if ($prefs['socialnetworks_linkedin_create_user_trackeritem'] == 'y' && $userTracker && $userField) {
 					$definition = Tracker_Definition::get($userTracker);
 					$utilities = new Services_Tracker_Utilities();
-					$fields = array('ins_'.$userField => $user);
-					if (!empty($prefs['socialnetworks_linkedin_names'])) {
+					$fields = ['ins_' . $userField => $user];
+					if (! empty($prefs['socialnetworks_linkedin_names'])) {
 						$names = array_map('trim', explode(',', $prefs['socialnetworks_linkedin_names']));
-						$fields['ins_'.$names[0]] = $linkedin_info->firstName;
-						$fields['ins_'.$names[1]] = $linkedin_info->lastName;
+						$fields['ins_' . $names[0]] = $linkedin_info->firstName;
+						$fields['ins_' . $names[1]] = $linkedin_info->lastName;
 					}
-					$utilities->insertItem($definition,
-						array(
+					$utilities->insertItem(
+						$definition,
+						[
 							'status' => '',
 							'fields' => $fields,
 							'validate' => false,
-						)
+						]
 					);
 				}
 
@@ -554,13 +557,13 @@ class SocialNetworksLib extends LogsLib
 		$this->options['consumerSecret'] = $prefs['socialnetworks_twitter_consumer_secret'];
 		$httpClient = TikiLib::lib('tiki')->get_http_client();
 		$twitter = new ZendService\Twitter\Twitter(
-			array(
-				'oauthOptions' => array(
+			[
+				'oauthOptions' => [
 					'consumerKey' => $prefs['socialnetworks_twitter_consumer_key'],
 					'consumerSecret' => $prefs['socialnetworks_twitter_consumer_secret'],
-				),
+				],
 				'accessToken' => $token
-			),
+			],
 			null,
 			$httpClient
 		);
@@ -572,7 +575,7 @@ class SocialNetworksLib extends LogsLib
 			return -($e->getCode());
 		}
 
-		if (!$response->isSuccess()) {
+		if (! $response->isSuccess()) {
 			$errors = $response->getErrors();
 			$this->add_log('tweet', 'twitter response: ' . $errors[0]->message . ' - Code: ' . $errors[0]->code);
 			return -$errors['code'];
@@ -603,19 +606,19 @@ class SocialNetworksLib extends LogsLib
 		$this->options['consumerSecret'] = $prefs['socialnetworks_twitter_consumer_secret'];
 		$httpClient = TikiLib::lib('tiki')->get_http_client();
 		$twitter = new ZendService\Twitter\Twitter(
-			array(
-				'oauthOptions' => array(
+			[
+				'oauthOptions' => [
 					'consumerKey' => $prefs['socialnetworks_twitter_consumer_key'],
 					'consumerSecret' => $prefs['socialnetworks_twitter_consumer_secret'],
-				),
+				],
 				'accessToken' => $token
-			),
+			],
 			null,
 			$httpClient
 		);
 		try {
 			$response = $twitter->statuses->destroy($id);
-		} catch(ZendService\Twitter\Exception\ExceptionInterface $e)	{
+		} catch (ZendService\Twitter\Exception\ExceptionInterface $e) {
 			return false;
 		}
 		return true;
@@ -634,7 +637,7 @@ class SocialNetworksLib extends LogsLib
 	function facebookGraph($user, $action, $params, $addtoken = true, $method = 'POST')
 	{
 		global $prefs;
-		if (!$this->facebookRegistered()) {
+		if (! $this->facebookRegistered()) {
 			$this->add_log('facebookGraph', 'application not set up');
 			return false;
 		}
@@ -645,7 +648,7 @@ class SocialNetworksLib extends LogsLib
 				return false;
 			}
 
-			if (!isset($params['access_token'])) {
+			if (! isset($params['access_token'])) {
 				$params['access_token'] = $token;
 			}
 		}
@@ -655,14 +658,14 @@ class SocialNetworksLib extends LogsLib
 			$action .= "?$data";
 		}
 
-		$request = "$method /v2.0/$action HTTP/1.1\r\n".
-			"Host: graph.facebook.com\r\n".
-			"Accept: */*\r\n".
-			"Expect: 100-continue\r\n".
+		$request = "$method /v2.0/$action HTTP/1.1\r\n" .
+			"Host: graph.facebook.com\r\n" .
+			"Accept: */*\r\n" .
+			"Expect: 100-continue\r\n" .
 			"Connection: close\r\n";
 		if ($method == 'POST') {
-			$request .= "Content-type: application/x-www-form-urlencoded\r\n".
-				"Content-length: ". strlen($data) ."\r\n";
+			$request .= "Content-type: application/x-www-form-urlencoded\r\n" .
+				"Content-length: " . strlen($data) . "\r\n";
 		}
 		$request .= "\r\n";
 		if ($method == 'POST') {
@@ -676,7 +679,7 @@ class SocialNetworksLib extends LogsLib
 		} else {
 			fputs($fp, $request);
 			$ret = '';
-			while (!feof($fp)) {
+			while (! feof($fp)) {
 				$ret .= fgets($fp, 128);
 			}
 			fclose($fp);
@@ -700,7 +703,7 @@ class SocialNetworksLib extends LogsLib
 	 */
 	function facebookWallPublish($user, $message, $url = '', $text = '', $caption = '', $privacy = '')
 	{
-		$params = array();
+		$params = [];
 		if ($url != '') {
 			$params['link'] = $url;
 			if ($text != '') {
@@ -732,7 +735,7 @@ class SocialNetworksLib extends LogsLib
 	 */
 	function facebookLike($user, $id)
 	{
-		$params = array();
+		$params = [];
 		$ret = $this->facebookGraph($user, "$id/likes/", $params);
 		return json_decode($ret);
 	}
@@ -776,7 +779,7 @@ class SocialNetworksLib extends LogsLib
 		$httpclient->setParameterGet($params);
 
 		$response = $httpclient->send();
-		if (!$response->isSuccess() ) {
+		if (! $response->isSuccess()) {
 			return false;
 		}
 		return $response->getBody();
@@ -792,7 +795,7 @@ class SocialNetworksLib extends LogsLib
 	{
 		$query = 'SELECT * FROM `tiki_url_shortener` WHERE `longurl_hash`=MD5(?)';
 
-		$result = $this->query($query, array($url));
+		$result = $this->query($query, [$url]);
 
 		while ($data = $result->fetchRow()) {
 			if ($url == $data['longurl']) {
@@ -800,11 +803,11 @@ class SocialNetworksLib extends LogsLib
 			}
 		}
 
-		$params = array(
+		$params = [
 				'version' => '2.0.1',
 				'longUrl' => $url,
 				'history' => '1',
-		);
+		];
 
 		$ret = $this->bitlyApi($user, 'shorten', $params);
 		if ($ret == false) {
@@ -818,7 +821,7 @@ class SocialNetworksLib extends LogsLib
 
 		$shorturl = $ret->{'results'}->{$url}->{'shortUrl'};
 		$query = 'INSERT INTO `tiki_url_shortener` SET `user`=?, `longurl`=?, `longurl_hash`=MD5(?), `service`=?, `shorturl`=?';
-		$this->query($query, array($user, $url, $url, 'bit.ly', $shorturl));
+		$this->query($query, [$user, $url, $url, 'bit.ly', $shorturl]);
 
 		return $shorturl;
 	}
@@ -830,11 +833,11 @@ class SocialNetworksLib extends LogsLib
 	 * @param  string	$search		Search string
 	 * @return string|int			-1 if the user did not authorize the site with twitter, a negative number corresponding to the HTTP response codes from twitter (https://dev.twitter.com/docs/streaming-api/response-codes) or the requested timeline (json encoded object)
 	 */
-	function getTwitterTimeline($user, $timelineType = 'public', $search = 'tikiwiki' )
+	function getTwitterTimeline($user, $timelineType = 'public', $search = 'tikiwiki')
 	{
 		global $prefs;
-		$token=$this->get_user_preference($user, 'twitter_token', '');
-		if ($token=='') {
+		$token = $this->get_user_preference($user, 'twitter_token', '');
+		if ($token == '') {
 			$this->add_log('tweet', 'user not registered with twitter');
 			return -1;
 		}
@@ -843,26 +846,26 @@ class SocialNetworksLib extends LogsLib
 
 		$httpClient = TikiLib::lib('tiki')->get_http_client();
 		$twitter = new ZendService\Twitter\Twitter(
-			array(
-				'oauthOptions' => array(
+			[
+				'oauthOptions' => [
 					'consumerKey' => $prefs['socialnetworks_twitter_consumer_key'],
 					'consumerSecret' => $prefs['socialnetworks_twitter_consumer_secret'],
-				),
+				],
 				'accessToken' => $token
-			),
+			],
 			null,
 			$httpClient
 		);
 
-		if ($timelineType=='friends') {
+		if ($timelineType == 'friends') {
 			$response = $twitter->statuses->homeTimeline();
 		} elseif ($timelineType == 'search') {
-			$response = $twitter->search->tweets($search, array('include_entities' => true));
+			$response = $twitter->search->tweets($search, ['include_entities' => true]);
 		} else {
 			$response = $twitter->statuses->userTimeline();
 		}
 
-		if (!$response->isSuccess()) {
+		if (! $response->isSuccess()) {
 			$errors = $response->getErrors();
 			$this->add_log('tweet', 'twitter response: ' . $errors[0]->message . ' - Code: ' . $errors[0]->code);
 			return -$errors['code'];
@@ -880,62 +883,61 @@ class SocialNetworksLib extends LogsLib
 	 *
 	 * @return		string|bool	false on error, JSON encoded Facebook response on success
 	 */
-	function facebookGetWall($user, $addtoken=true)
+	function facebookGetWall($user, $addtoken = true)
 	{
 		global $prefs;
-		if (!$this->facebookRegistered()) {
+		if (! $this->facebookRegistered()) {
 			$this->add_log('facebookGraph', 'application not set up');
 			return false;
 		}
 		if ($addtoken) {
-			$token=$this->get_user_preference($user, 'facebook_token', '');
+			$token = $this->get_user_preference($user, 'facebook_token', '');
 			// expires will make the token fail
 			$token = preg_replace('/&expires=(\d)*/', '', $token);
-			$token=urlencode($token);
-			$getdata='?'.urlencode('access_token').'='.$token;
-			if ($token=='') {
+			$token = urlencode($token);
+			$getdata = '?' . urlencode('access_token') . '=' . $token;
+			if ($token == '') {
 				$this->add_log('facebookGraph', 'user not registered with facebook');
 				return -1;
 			}
-
 		}
 
-			$request="GET /v2.0/me/feed".$getdata." HTTP/1.1\r\n".
-			 "Host: graph.facebook.com\r\n".
-			 "Accept:*/*\r\n".
-			 "Accept-Charset:ISO-8859-1,utf-8;q=0.7,*;q=0.3\r\n".
-			 "Expect: 100-continue\r\n".
+			$request = "GET /v2.0/me/feed" . $getdata . " HTTP/1.1\r\n" .
+			 "Host: graph.facebook.com\r\n" .
+			 "Accept:*/*\r\n" .
+			 "Accept-Charset:ISO-8859-1,utf-8;q=0.7,*;q=0.3\r\n" .
+			 "Expect: 100-continue\r\n" .
 			 "Connection: close\r\n\r\n";
 
-  		$fp = fsockopen("ssl://graph.facebook.com", 443);
-  		if ($fp===false) {
+		  $fp = fsockopen("ssl://graph.facebook.com", 443);
+		if ($fp === false) {
 			$this->add_log('facebookGraph', "can't connect");
 			return false;
-  		} else {
+		} else {
 			//stream_set_timeout($fp, 0, 5000);
-	  		fputs($fp, $request);
-	  		$ret='';
-			while (!feof($fp)) {
+			fputs($fp, $request);
+			$ret = '';
+			while (! feof($fp)) {
 				$ret .= fgets($fp, 128);
-	  		}
-			fclose($fp);
-  		}
-		$ret=preg_split('/(\r\n\r\n|\r\r|\n\n)/', $ret, 2);
-		$result=json_decode($ret[1]);
-		foreach ($result->data as $key=>$value) {
-			if (isset($result->data[$key]->message)) {
-				$feed[$key]["message"]=$result->data[$key]->message;
-				$feed[$key]["type"]="message";
-			} else {
-				$feed[$key]["message"]=$result->data[$key]->story;
-				$feed[$key]["type"]="story";
 			}
-			$feed[$key]["fromName"]=$result->data[$key]->from->name;
-			$feed[$key]["fromId"]=$result->data[$key]->from->id;
-			$feed[$key]["created_time"]=$result->data[$key]->created_time;
-			$id=$result->data[$key]->id;
-			$id=str_replace("_", "/posts/", $id);
-			$feed[$key]["link"]="https://www.facebook.com/".$id;
+			fclose($fp);
+		}
+		$ret = preg_split('/(\r\n\r\n|\r\r|\n\n)/', $ret, 2);
+		$result = json_decode($ret[1]);
+		foreach ($result->data as $key => $value) {
+			if (isset($result->data[$key]->message)) {
+				$feed[$key]["message"] = $result->data[$key]->message;
+				$feed[$key]["type"] = "message";
+			} else {
+				$feed[$key]["message"] = $result->data[$key]->story;
+				$feed[$key]["type"] = "story";
+			}
+			$feed[$key]["fromName"] = $result->data[$key]->from->name;
+			$feed[$key]["fromId"] = $result->data[$key]->from->id;
+			$feed[$key]["created_time"] = $result->data[$key]->created_time;
+			$id = $result->data[$key]->id;
+			$id = str_replace("_", "/posts/", $id);
+			$feed[$key]["link"] = "https://www.facebook.com/" . $id;
 		}
 		return $feed;
 	}

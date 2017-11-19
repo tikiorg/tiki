@@ -20,12 +20,12 @@ class ShippingProvider_Fedex implements ShippingProvider
 
 	function getRates(array $from, array $to, array $packages)
 	{
-		if ( ! class_exists('SoapClient') ) {
-			return array();
+		if (! class_exists('SoapClient')) {
+			return [];
 		}
 
 		$wsdl = dirname(__FILE__) . '/FedEx_v8.wsdl';
-		$args = array();
+		$args = [];
 
 		$request = $this->getRequest($from, $to, $packages);
 
@@ -37,25 +37,25 @@ class ShippingProvider_Fedex implements ShippingProvider
 			$out = $this->extractRates($options);
 
 			return $out;
-		} catch( SoapFault $e ) {
-			return array();
+		} catch (SoapFault $e) {
+			return [];
 		}
 	}
 
 	private function extractRates($options)
 	{
-		$out = array();
+		$out = [];
 
-		foreach ( $options as $option ) {
-			if ( $detail = reset($option->RatedShipmentDetails) ) {
+		foreach ($options as $option) {
+			if ($detail = reset($option->RatedShipmentDetails)) {
 				$charge = $detail->ShipmentRateDetail->TotalNetCharge;
-				$out[] = array(
+				$out[] = [
 					'provider' => 'FedEx',
 					'service' => $option->ServiceType,
 					'readable' => tra($option->ServiceType),
 					'cost' => number_format($charge->Amount, 2, '.', ''),
 					'currency' => $charge->Currency,
-				);
+				];
 			}
 		}
 
@@ -64,54 +64,53 @@ class ShippingProvider_Fedex implements ShippingProvider
 
 	private function getRequest($from, $to, $packages)
 	{
-		$request = array(
-			'WebAuthenticationDetail' => array(
-				'UserCredential' => array(
+		$request = [
+			'WebAuthenticationDetail' => [
+				'UserCredential' => [
 					'Key' => $this->key,
 					'Password' => $this->password,
-				),
-			),
-			'ClientDetail' => array(
+				],
+			],
+			'ClientDetail' => [
 				'AccountNumber' => $this->account,
 				'MeterNumber' => $this->meter,
-			),
-			'Version' => array(
+			],
+			'Version' => [
 				'ServiceId' => 'crs',
 				'Major' => '8',
 				'Intermediate' => '0',
 				'Minor' => '0',
-			),
-			'RequestedShipment' => array(
+			],
+			'RequestedShipment' => [
 				'PackagingType' => 'YOUR_PACKAGING',
 				'Shipper' => $this->buildAddress($from),
 				'Recipient' => $this->buildAddress($to),
 				'RateRequestTypes' => 'LIST',
 				'PackageDetail' => 'INDIVIDUAL_PACKAGES',
-				'RequestedPackageLineItems' => array_map(array( $this, 'buildPackage' ), $packages),
-			),
-		);
+				'RequestedPackageLineItems' => array_map([ $this, 'buildPackage' ], $packages),
+			],
+		];
 
 		return $request;
 	}
 
 	private function buildAddress($address)
 	{
-		return array(
-			'Address' => array(
+		return [
+			'Address' => [
 				'PostalCode' => $address['zip'],
 				'CountryCode' => $address['country'],
-			),
-		);
+			],
+		];
 	}
 
 	private function buildPackage($package)
 	{
-		return array(
-			'Weight' => array(
+		return [
+			'Weight' => [
 				'Value' => $package['weight'],
 				'Units' => 'KG',
-			),
-		);
+			],
+		];
 	}
 }
-

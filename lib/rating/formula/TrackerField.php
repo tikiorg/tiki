@@ -7,18 +7,18 @@
 
 class Tiki_Formula_Function_TrackerField extends Math_Formula_Function
 {
-	function evaluate( $element )
+	function evaluate($element)
 	{
 		$default = 0;
-		$allowed = array( 'object', 'field' );
+		$allowed = [ 'object', 'field' ];
 
-		if ( $extra = $element->getExtraValues($allowed) ) {
+		if ($extra = $element->getExtraValues($allowed)) {
 			$this->error(tr('Unexpected values: %0', implode(', ', $extra)));
 		}
 
 		$object = $element->object;
 
-		if ( ! $object || count($object) != 2 ) {
+		if (! $object || count($object) != 2) {
 			$this->error(tra('Item must be provided and contain one argument: type, object-id'));
 		}
 
@@ -27,7 +27,7 @@ class Tiki_Formula_Function_TrackerField extends Math_Formula_Function
 
 		$field = $element->field;
 
-		if ( ! $field || count($field) != 1 ) {
+		if (! $field || count($field) != 1) {
 			$this->error(tra('Field must be provided and contain one argument: field permanent name'));
 		}
 		$field = $field[0];
@@ -65,4 +65,3 @@ class Tiki_Formula_Function_TrackerField extends Math_Formula_Function
 		return $item[$fieldId];
 	}
 }
-

@@ -19,12 +19,12 @@ class MonitorLib
 			return $priorities;
 		}
 
-		$priorities = array(
+		$priorities = [
 			'none' => ['label' => '', 'description' => null],
 			'critical' => ['label' => tr('Critical'), 'description' => tr('Immediate notification by email.'), 'class' => 'label-danger'],
 			'high' => ['label' => tr('High'), 'description' => tr('Will be sent to you with the next periodic digest.'), 'class' => 'label-warning'],
 			'low' => ['label' => tr('Low'), 'description' => tr('Included in your personalized recent changes feed.'), 'class' => 'label-info'],
-		);
+		];
 
 		global $prefs;
 		if ($prefs['monitor_digest'] != 'y') {
@@ -274,7 +274,7 @@ class MonitorLib
 
 		$tx = TikiDb::get()->begin();
 
-		// TODO : Shrink large events / truncate content ? 
+		// TODO : Shrink large events / truncate content ?
 
 		$mailQueue = [];
 
@@ -289,7 +289,6 @@ class MonitorLib
 			if (! empty($sendTo)) {
 				$monitormail->queue($item['event'], $args, $sendTo);
 			}
-
 		}
 
 		$tx->commit();
@@ -347,13 +346,13 @@ class MonitorLib
 		if ($object) {
 			$objectInfo = $this->getObjectInfo($type, $object, $title);
 		} else {
-			$objectInfo = array(
+			$objectInfo = [
 				'type' => 'global',
 				'target' => 'global',
 				'title' => tr('Anywhere'),
 				'isContainer' => true,
 				'fetchTargets' => ['global'],
-			);
+			];
 		}
 
 		$options = [];
@@ -392,14 +391,14 @@ class MonitorLib
 
 		$fetchTargets[] = $target;
 
-		return array(
+		return [
 			'type' => $type,
 			'object' => $objectId,
 			'target' => $target,
 			'title' => $title,
 			'isContainer' => $isTranslation || in_array($realType, ['category', 'structure', 'forum', 'tracker']),
 			'fetchTargets' => $fetchTargets,
-		);
+		];
 	}
 
 	private function cleanObjectId($type, $object)
@@ -440,7 +439,7 @@ class MonitorLib
 		// Because of the above rule, the active target may not be the requested one
 		// Still display everything as it is the requested one
 		$realTarget = $active ? $active['target'] : $objectInfo['target'];
-		return array(
+		return [
 			'priority' => $active ? $active['priority'] : 'none',
 			'event' => $eventName,
 			'target' => $realTarget,
@@ -450,7 +449,7 @@ class MonitorLib
 			'description' => $objectInfo['isContainer']
 				? tr('%0 in %1', $label, $objectInfo['title'])
 				: tr('%0 for %1', $label, $objectInfo['title']),
-		);
+		];
 	}
 
 	private function getApplicableEvents($type)
@@ -460,31 +459,31 @@ class MonitorLib
 		 * Local indicates the event cannot apply on a global scale (to reduce noise)
 		 */
 		switch ($type) {
-		case 'wiki page':
-			return [
+			case 'wiki page':
+				return [
 				'tiki.save' => ['global' => false, 'local' => true, 'label' => tr('Any activity')],
 				'tiki.wiki.save' => ['global' => false, 'local' => false, 'label' => tr('Page modified')],
 				'tiki.wiki.create' => ['global' => true, 'local' => false, 'label' => tr('Page created')],
-			];
-		case 'forum post':
-			return [
+				];
+			case 'forum post':
+				return [
 				'tiki.save' => ['global' => false, 'local' => true, 'label' => tr('Any activity')],
 				'tiki.forumpost.save' => ['global' => false, 'local' => false, 'label' => tr('Any forum activity')],
 				'tiki.forumpost.create' => ['global' => true, 'local' => false, 'label' => tr('New topics')],
-			];
-		case 'trackeritem':
-			return [
+				];
+			case 'trackeritem':
+				return [
 				'tiki.save' => ['global' => false, 'local' => true, 'label' => tr('Any activity')],
 				'tiki.trackeritem.save' => ['global' => false, 'local' => false, 'label' => tr('Any item activity')],
 				'tiki.trackeritem.create' => ['global' => true, 'local' => false, 'label' => tr('New items')],
-			];
-		case 'user':
-			return [
+				];
+			case 'user':
+				return [
 				'tiki.mustread.required' => ['global' => false, 'local' => true, 'label' => tr('Action Required')],
 				'tiki.recommendation.incoming' => ['global' => false, 'local' => true, 'label' => tr('Recommendation Received')],
-			];
-		default:
-			return [];
+				];
+			default:
+				return [];
 		}
 	}
 
@@ -518,4 +517,3 @@ class MonitorLib
 		}
 	}
 }
-

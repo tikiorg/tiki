@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
-  header('location: index.php');
-  exit;
+	header('location: index.php');
+	exit;
 }
 
 /**
@@ -24,16 +24,16 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class TikiDate
 {
-	public $trad = array(
+	public $trad = [
 					'January','February','March','April','May','June','July','August','September','October','November','December',
 					'Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec',
 					'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday',
 					'Mon','Tue','Wed','Thu','Fri','Sat','Sun','of'
-	);
+	];
 
-	public $translated_trad = array();
+	public $translated_trad = [];
 	public $date;
-	public $translation_array = array (
+	public $translation_array = [
 				'%a' => 'D',
 				'%A' => 'l',
 				'%b' => 'M',
@@ -70,9 +70,9 @@ class TikiDate
 				'%y' => 'y',
 				'%Y' => 'Y',
 				'%Z' => 'T',
-	);
+	];
 
-	public static $deprecated_tz = array(
+	public static $deprecated_tz = [
 		'CST6CDT',
 		'Cuba',
 		'Egypt',
@@ -104,7 +104,7 @@ class TikiDate
 		'Universal',
 		'W-SU',
 		'Zulu'
-	);
+	];
 
 	/**
 	 * Default constructor
@@ -112,11 +112,11 @@ class TikiDate
 	function __construct()
 	{
 
-		if (isset($_SERVER['TZ']) && !empty($_SERVER['TZ'])) {	// apache - can be set in .htaccess
+		if (isset($_SERVER['TZ']) && ! empty($_SERVER['TZ'])) {	// apache - can be set in .htaccess
 			$tz = $_SERVER['TZ'];
-		} else if (ini_get('date.timezone')) {					// set in php.ini
+		} elseif (ini_get('date.timezone')) {					// set in php.ini
 			$tz = ini_get('date.timezone');
-		} else if (getenv('TZ')) {								// system env setting
+		} elseif (getenv('TZ')) {								// system env setting
 			$tz = getenv('TZ');
 		} else {
 			$tz = 'UTC';
@@ -130,12 +130,12 @@ class TikiDate
 		$this->replace = array_values($this->translation_array);
 	}
 
-    /**
-     * @return array
-     */
-    static function getTimeZoneList()
+	/**
+	 * @return array
+	 */
+	static function getTimeZoneList()
 	{
-		$tz = array();
+		$tz = [];
 		$now = new DateTime('now', new DateTimeZone('GMT'));
 		$tz_list = DateTimeZone::listIdentifiers(DateTimeZone::ALL_WITH_BC);
 		ksort($tz_list);
@@ -145,14 +145,15 @@ class TikiDate
 				continue; // Workaround PHP5.5 no more this timezone https://bugs.php.net/bug.php?id=66985
 			}
 			$tmp_now = new DateTime('now', new DateTimeZone($tz_id));
-			$tmp = $tmp_now->getOffset() - 3600*$tmp_now->format('I');
+			$tmp = $tmp_now->getOffset() - 3600 * $tmp_now->format('I');
 			$tz[$tz_id]['offset'] = $tmp * 1000;
 		}
 		return $tz;
 	}
 
-	static function tzServerOffset( $display_tz = null ) {
-		if ( !$display_tz ) {
+	static function tzServerOffset($display_tz = null)
+	{
+		if (! $display_tz) {
 			$display_tz = 'UTC';
 		}
 		$tz = new DateTimeZone($display_tz);
@@ -160,17 +161,17 @@ class TikiDate
 		return $tz->getOffset($d);
 	}
 
-    /**
-     * @param $format
-     * @param bool $is_strftime_format
-     * @return string
-     */
-    function format($format, $is_strftime_format = true)
+	/**
+	 * @param $format
+	 * @param bool $is_strftime_format
+	 * @return string
+	 */
+	function format($format, $is_strftime_format = true)
 	{
 		global $prefs;
 
 		// Format the date
-		if ( $is_strftime_format ) {
+		if ($is_strftime_format) {
 			$format = preg_replace('/(?<!%)([a-zA-Z])/', '\\\$1', $format);
 			$return = $this->date->format(str_replace($this->search, $this->replace, $format));
 		} else {
@@ -185,11 +186,11 @@ class TikiDate
 
 		// For each strings in $words array...
 		$return = '';
-		foreach ( $words as $w ) {
+		foreach ($words as $w) {
 			if (array_key_exists($w, $this->translated_trad)) {
-                // ... we've loaded this previously
+				// ... we've loaded this previously
 				$return .= $this->translated_trad["$w"];
-			} else if ( in_array($w, $this->trad) ) {
+			} elseif (in_array($w, $this->trad)) {
 				// ... or we have a date element that needs a translation
 				$t = tra($w, '', true);
 				$this->translated_trad["$w"] = $t;
@@ -210,48 +211,50 @@ class TikiDate
 		return $return;
 	}
 
-    /**
-     * @param $days
-     */
-    function addDays($days)
+	/**
+	 * @param $days
+	 */
+	function addDays($days)
 	{
-		if ($days >= 0)
+		if ($days >= 0) {
 			$this->date->modify("+$days day");
-		else
+		} else {
 			$this->date->modify("$days day");
+		}
 	}
 
-    /**
-     * @param $months
-     */
-    function addMonths($months)
+	/**
+	 * @param $months
+	 */
+	function addMonths($months)
 	{
-		if ($months >= 0)
+		if ($months >= 0) {
 			$this->date->modify("+$months months");
-		else
+		} else {
 			$this->date->modify("$months months");
+		}
 	}
 
-    /**
-     * @return int
-     */
-    function getTime()
+	/**
+	 * @return int
+	 */
+	function getTime()
 	{
 		return (int)$this->date->format('U');
 	}
 
-    /**
-     * @return int
-     */
-    function getWeekOfYear()
+	/**
+	 * @return int
+	 */
+	function getWeekOfYear()
 	{
 		return (int)$this->date->format('W');
 	}
 
-    /**
-     * @param $date
-     */
-    function setDate($date)
+	/**
+	 * @param $date
+	 */
+	function setDate($date)
 	{
 		if (is_numeric($date)) {
 			$this->date = new DateTime(date('Y-m-d H:i:s', $date));
@@ -260,46 +263,46 @@ class TikiDate
 		}
 	}
 
-    /**
-     * @param $day
-     * @param $month
-     * @param $year
-     * @param $hour
-     * @param $minute
-     * @param $second
-     * @param $partsecond
-     */
-    function setLocalTime($day, $month, $year, $hour, $minute, $second, $partsecond )
+	/**
+	 * @param $day
+	 * @param $month
+	 * @param $year
+	 * @param $hour
+	 * @param $minute
+	 * @param $second
+	 * @param $partsecond
+	 */
+	function setLocalTime($day, $month, $year, $hour, $minute, $second, $partsecond)
 	{
 		$this->date->setDate($year, $month, $day);
 		$this->date->setTime($hour, $minute, $second);
 	}
 
-    /**
-     * @param $tz_id
-     */
-    function setTZbyID($tz_id)
+	/**
+	 * @param $tz_id
+	 */
+	function setTZbyID($tz_id)
 	{
-        global $prefs;
-        if (! self::TimezoneIsValidId($tz_id) && (! empty($prefs['timezone_offset']) || $prefs['timezone_offset'] == 0)) {	// timezone_offset in seconds
-            $tz_id = timezone_name_from_abbr($tz_id, $prefs['timezone_offset']);
-        }
+		global $prefs;
+		if (! self::TimezoneIsValidId($tz_id) && (! empty($prefs['timezone_offset']) || $prefs['timezone_offset'] == 0)) {	// timezone_offset in seconds
+			$tz_id = timezone_name_from_abbr($tz_id, $prefs['timezone_offset']);
+		}
 		$dtz = null;
-		while (!$dtz) {
+		while (! $dtz) {
 			try {
 				$dtz = new DateTimeZone($tz_id);
-			} catch(Exception $e) {
+			} catch (Exception $e) {
 				$tz_id = $this->convertMissingTimezone($tz_id);
 			}
 		}
 		$this->date->setTimezone($dtz);
 	}
 
-    /**
-     * @param $tz_id
-     * @return string
-     */
-    function convertMissingTimezone($tz_id)
+	/**
+	 * @param $tz_id
+	 * @return string
+	 */
+	function convertMissingTimezone($tz_id)
 	{
 		switch ($tz_id) {		// Convert timezones not in PHP 5
 			case 'A':
@@ -383,10 +386,10 @@ class TikiDate
 		return $tz_id;
 	}
 
-    /**
-     * @return string
-     */
-    function getTimezoneId()
+	/**
+	 * @return string
+	 */
+	function getTimezoneId()
 	{
 		$tz = $this->date->format('e');
 		if ($tz === 'GMT') {
@@ -397,7 +400,7 @@ class TikiDate
 
 	/**
 	 * Checks that the string is a timezone identifier (Note: timezone abbreviations
-	 * are not always valid timezones and don't handle daylight saving correctly). 
+	 * are not always valid timezones and don't handle daylight saving correctly).
 	 * display_timezone can be manually set to an identifier in preferences but
 	 * will be an [uppercase] abbreviation if auto-detected by JavaScript.
 	 */
@@ -441,14 +444,13 @@ class TikiDate
 class Date_Calc
 {
 
-    /**
-     * @param $month
-     * @param $year
-     * @return int
-     */
-    static public function daysInMonth($month,$year)
+	/**
+	 * @param $month
+	 * @param $year
+	 * @return int
+	 */
+	public static function daysInMonth($month, $year)
 	{
 		return cal_days_in_month(CAL_GREGORIAN, $month, $year);
 	}
-
 }

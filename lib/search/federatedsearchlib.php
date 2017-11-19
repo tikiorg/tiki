@@ -86,4 +86,3 @@ class FederatedSearchLib
 		$connection->mapping($index, $type, $mapping);
 	}
 }
-

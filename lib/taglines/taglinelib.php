@@ -17,50 +17,50 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 class TagLineLib extends TikiLib
 {
 
-    /**
-     * @param $offset
-     * @param $maxRecords
-     * @param $sort_mode
-     * @param $find
-     * @return array
-     */
-    public function list_cookies($offset, $maxRecords, $sort_mode, $find)
+	/**
+	 * @param $offset
+	 * @param $maxRecords
+	 * @param $sort_mode
+	 * @param $find
+	 * @return array
+	 */
+	public function list_cookies($offset, $maxRecords, $sort_mode, $find)
 	{
 		if ($find) {
 			$mid = " where (`cookie` like ?)";
-			$bindvars = array('%' . $find . '%');
+			$bindvars = ['%' . $find . '%'];
 		} else {
 			$mid = "";
-			$bindvars = array();
+			$bindvars = [];
 		}
-		$query = "select * from `tiki_cookies` $mid order by ".$this->convertSortMode($sort_mode);
+		$query = "select * from `tiki_cookies` $mid order by " . $this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_cookies` $mid";
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
-		$ret = array();
+		$ret = [];
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
-		$retval = array();
+		$retval = [];
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
 		return $retval;
 	}
 
-    /**
-     * @param $cookieId
-     * @param $cookie
-     * @return bool
-     */
-    public function replace_cookie($cookieId, $cookie)
+	/**
+	 * @param $cookieId
+	 * @param $cookie
+	 * @return bool
+	 */
+	public function replace_cookie($cookieId, $cookie)
 	{
 		//$cookie = addslashes($cookie);
 		// Check the name
 		if ($cookieId) {
 			$query = "update `tiki_cookies` set `cookie`=? where `cookieId`=?";
-			$bindvars = array($cookie,(int) $cookieId);
+			$bindvars = [$cookie,(int) $cookieId];
 		} else {
-			$bindvars = array($cookie);
+			$bindvars = [$cookie];
 			$query = "delete from `tiki_cookies` where `cookie`=?";
 			$result = $this->query($query, $bindvars);
 			$query = "insert into `tiki_cookies`(`cookie`) values(?)";
@@ -69,26 +69,26 @@ class TagLineLib extends TikiLib
 		return true;
 	}
 
-    /**
-     * @param $cookieId
-     * @return bool
-     */
-    public function remove_cookie($cookieId)
+	/**
+	 * @param $cookieId
+	 * @return bool
+	 */
+	public function remove_cookie($cookieId)
 	{
 		$query = "delete from `tiki_cookies` where `cookieId`=?";
-		$result = $this->query($query, array((int) $cookieId));
+		$result = $this->query($query, [(int) $cookieId]);
 		return true;
 	}
 
-    /**
-     * @param $cookieId
-     * @return bool
-     */
-    public function get_cookie($cookieId)
+	/**
+	 * @param $cookieId
+	 * @return bool
+	 */
+	public function get_cookie($cookieId)
 	{
 		$query = "select * from `tiki_cookies` where `cookieId`=?";
-		$result = $this->query($query, array((int) $cookieId));
-		if (!$result->numRows()) {
+		$result = $this->query($query, [(int) $cookieId]);
+		if (! $result->numRows()) {
 			return false;
 		}
 
@@ -99,7 +99,7 @@ class TagLineLib extends TikiLib
 	public function remove_all_cookies()
 	{
 		$query = "delete from `tiki_cookies`";
-		$result = $this->query($query, array());
+		$result = $this->query($query, []);
 	}
 }
 $taglinelib = new TagLineLib;

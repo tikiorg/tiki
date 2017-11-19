@@ -9,8 +9,7 @@ if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
 	die('This script may only be included.');
 }
 
-if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
-
+if (! isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y') {
 	$uagent_info = new uagent_info();
 
 	$supported_device = $uagent_info->DetectIphoneOrIpod() ||
@@ -20,16 +19,15 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 						$uagent_info->DetectOperaMobile() ||
 						$uagent_info->DetectPalmWebOS();
 
-	if ((!getCookie('mobile_mode') && $supported_device) || getCookie('mobile_mode') === 'y') {		// supported by jquery.mobile
+	if ((! getCookie('mobile_mode') && $supported_device) || getCookie('mobile_mode') === 'y') {		// supported by jquery.mobile
 
-		if (!is_array($prefs['mobile_perspectives'])) {
+		if (! is_array($prefs['mobile_perspectives'])) {
 			$prefs['mobile_perspectives'] = unserialize($prefs['mobile_perspectives']);
 		}
 		if (count($prefs['mobile_perspectives']) > 0) {
 			$persp = $prefs['mobile_perspectives'][0];
 
-			if (Perms::get( array( 'type' => 'perspective', 'object' => $persp ))->perspective_view) {
-
+			if (Perms::get([ 'type' => 'perspective', 'object' => $persp ])->perspective_view) {
 				$prefs['mobile_mode'] = 'y';
 
 				// pre-tiki14/bootstrap these prefs were disabled by default
@@ -66,7 +64,7 @@ if ($photosToSwipe.length) {$photosToSwipe.photoSwipe();}', 5)
 
 				global $base_url;
 				$perspectivelib = TikiLib::lib('perspective');
-				if (!in_array($perspectivelib->get_current_perspective($prefs), $prefs['mobile_perspectives'])) {	// change perspective
+				if (! in_array($perspectivelib->get_current_perspective($prefs), $prefs['mobile_perspectives'])) {	// change perspective
 
 					$hp = $prefs['wikiHomePage'];							// get default non mobile homepage
 
@@ -74,7 +72,6 @@ if ($photosToSwipe.length) {$photosToSwipe.photoSwipe();}', 5)
 					$_SESSION['current_perspective_name'] = $perspectivelib->get_perspective_name($_SESSION['current_perspective']);
 
 					if ($prefs['tikiIndex'] === 'tiki-index.php' && isset($_REQUEST['page'])) {
-
 						$pprefs = $perspectivelib->get_preferences($_SESSION['current_perspective']);
 						if (in_array('wikiHomePage', array_keys($pprefs))) {				// mobile persp has home page set (often the case)
 							if ($hp == $_REQUEST['page']) {

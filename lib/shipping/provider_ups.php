@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -13,29 +13,29 @@ class ShippingProvider_Ups implements ShippingProvider
 	private $password;
 	private $license;
 
-	function __construct( array $config )
+	function __construct(array $config)
 	{
 		$this->username = $config['username'];
 		$this->password = $config['password'];
 		$this->license = $config['license'];
 	}
 
-	function getRates( array $from, array $to, array $packages )
+	function getRates(array $from, array $to, array $packages)
 	{
-		if ( $dom = $this->obtain($from, $to, $packages) ) {
-			$rates = array();
+		if ($dom = $this->obtain($from, $to, $packages)) {
+			$rates = [];
 
-			foreach ( $dom->getElementsByTagName('RatedShipment') as $node ) {
+			foreach ($dom->getElementsByTagName('RatedShipment') as $node) {
 				$rates[] = $this->readShipment($node);
 			}
 
 			return $rates;
 		} else {
-			return array();
+			return [];
 		}
 	}
 
-	private function obtain( $from, $to, $packages, $service )
+	private function obtain($from, $to, $packages, $service)
 	{
 		try {
 			$auth = $this->getAuth();
@@ -53,21 +53,21 @@ class ShippingProvider_Ups implements ShippingProvider
 			$dom->loadXML($body);
 
 			return $dom;
-		} catch(Zend\Http\Exception\ExceptionInterface $e ) {
+		} catch (Zend\Http\Exception\ExceptionInterface $e) {
 			return null;
 		}
 	}
 
-	private function readShipment( $node )
+	private function readShipment($node)
 	{
 		$xp = new DOMXPath($node->ownerDocument);
-		return array(
+		return [
 			'provider' => 'UPS',
 			'service' => 'UPS_CODE_' . $xp->query('Service/Code', $node)->item(0)->textContent,
 			'readable' => tr('UPS_CODE_%0', $xp->query('Service/Code', $node)->item(0)->textContent),
 			'cost' => $xp->query('TotalCharges/MonetaryValue', $node)->item(0)->textContent,
 			'currency' => $xp->query('TotalCharges/CurrencyCode', $node)->item(0)->textContent,
-		);
+		];
 	}
 
 	private function getAuth()
@@ -86,7 +86,7 @@ class ShippingProvider_Ups implements ShippingProvider
 		return $dom->saveXML();
 	}
 
-	private function getRequest( $from, $to, $packages )
+	private function getRequest($from, $to, $packages)
 	{
 		$dom = new DOMDocument('1.0');
 		$dom->appendChild($root = $dom->createElement('RatingServiceSelectionRequest'));
@@ -106,14 +106,14 @@ class ShippingProvider_Ups implements ShippingProvider
 		$this->addAddress($shipment, 'ShipTo', $to);
 		//$this->addAddress( $shipment, 'ShipFrom', $from );
 
-		foreach ( $packages as $package ) {
+		foreach ($packages as $package) {
 			$this->addPackage($shipment, $package);
 		}
 
 		return $dom->saveXML();
 	}
 
-	private function addAddress( $root, $name, $data )
+	private function addAddress($root, $name, $data)
 	{
 		$dom = $root->ownerDocument;
 
@@ -126,7 +126,7 @@ class ShippingProvider_Ups implements ShippingProvider
 		$country->appendChild($dom->createTextNode($data['country']));
 	}
 
-	private function addPackage( $root, $data )
+	private function addPackage($root, $data)
 	{
 		$dom = $root->ownerDocument;
 
@@ -141,4 +141,3 @@ class ShippingProvider_Ups implements ShippingProvider
 		$weight->appendChild($dom->createTextNode($data['weight'] * 2.20462262));
 	}
 }
-

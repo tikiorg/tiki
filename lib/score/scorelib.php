@@ -29,11 +29,11 @@ class ScoreLib extends TikiLib
 		TikiLib::lib('cache')->invalidate(self::CACHE_KEY);
 	}
 	// User's general classification on site
-    /**
-     * @param $user
-     * @return mixed
-     */
-    public function user_position($user)
+	/**
+	 * @param $user
+	 * @return mixed
+	 */
+	public function user_position($user)
 	{
 		global $prefs;
 		$score_expiry_days = $prefs['feature_score_expday'];
@@ -49,7 +49,7 @@ class ScoreLib extends TikiLib
 				and tos.`id` = (select max(id) from `tiki_object_scores` where `recipientObjectId` = tos.`recipientObjectId` and `recipientObjectType`='user' group by `recipientObjectId`)
 				group by `recipientObjectId`";
 
-			$position = $this->getOne($query, array($user, $score));
+			$position = $this->getOne($query, [$user, $score]);
 		} else {
 			// score expires
 			$query = "select count(*)+1 from `tiki_object_scores` tos
@@ -63,7 +63,7 @@ class ScoreLib extends TikiLib
 				and tos.`id` = (select max(id) from `tiki_object_scores` where `recipientObjectId` = tos.`recipientObjectId` and `recipientObjectType`='user' group by `recipientObjectId`)
 				group by `recipientObjectId`";
 
-			$position = $this->getOne($query, array($user, $score_expiry_days, $score));
+			$position = $this->getOne($query, [$user, $score_expiry_days, $score]);
 		}
 
 		return $position;
@@ -71,20 +71,20 @@ class ScoreLib extends TikiLib
 
 	// User's score on site
 	// allows getting score of a single user
-    /**
-     * @param $user
-     * @return mixed
-     */
-    public function get_user_score($user, $dayLimit = 0)
+	/**
+	 * @param $user
+	 * @return mixed
+	 */
+	public function get_user_score($user, $dayLimit = 0)
 	{
 		global $prefs;
 		$score_expiry_days = $prefs['feature_score_expday'];
-		if (!empty($dayLimit) && $dayLimit < $score_expiry_days) {
+		if (! empty($dayLimit) && $dayLimit < $score_expiry_days) {
 			//if the day limit is set, change the expiry to the day limit.
 			$score_expiry_days = $dayLimit;
 		}
 		$query = "select `pointsBalance` from `tiki_object_scores` where `recipientObjectId`=? and `recipientObjectType`='user' order by id desc";
-		$total_score = $this->getOne($query, array($user));
+		$total_score = $this->getOne($query, [$user]);
 		if (empty($total_score)) {
 			$total_score = 0;
 		}
@@ -96,7 +96,7 @@ class ScoreLib extends TikiLib
 					where `recipientObjectId`=? and `recipientObjectType`='user' and
 					`date` < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL ? DAY))
 					order by id desc";
-			$score_at_expiry = $this->getOne($query, array($user, $score_expiry_days));
+			$score_at_expiry = $this->getOne($query, [$user, $score_expiry_days]);
 			if (empty($score_at_expiry)) {
 				$score_at_expiry = 0;
 			}
@@ -107,10 +107,10 @@ class ScoreLib extends TikiLib
 	}
 
 	// Number of users that go on ranking
-    /**
-     * @return mixed
-     */
-    public function count_users()
+	/**
+	 * @return mixed
+	 */
+	public function count_users()
 	{
 		global $prefs;
 		$score_expiry_days = $prefs['feature_score_expday'];
@@ -123,7 +123,7 @@ class ScoreLib extends TikiLib
 				and tos.`id` = (select max(id) from `tiki_object_scores` where `recipientObjectId` = tos.`recipientObjectId` and `recipientObjectType`='user' group by `recipientObjectId`)
 				group by `recipientObjectId`";
 
-			$count = $this->getOne($query, array());
+			$count = $this->getOne($query, []);
 		} else {
 			// score expires
 			$query = "select count(*) from `tiki_object_scores` tos
@@ -136,21 +136,21 @@ class ScoreLib extends TikiLib
 				and tos.`id` = (select max(id) from `tiki_object_scores` where `recipientObjectId` = tos.`recipientObjectId` and `recipientObjectType`='user' group by `recipientObjectId`)
 				group by `recipientObjectId`";
 
-			$count = $this->getOne($query, array($score_expiry_days));
+			$count = $this->getOne($query, [$score_expiry_days]);
 		}
 
 		return $count;
 	}
 
 	// All event types, for administration
-    /**
-     * @return array
-     */
-    public function get_all_events()
+	/**
+	 * @return array
+	 */
+	public function get_all_events()
 	{
 		$query = "SELECT * FROM `tiki_score` WHERE data IS NOT NULL";
-		$result = $this->query($query, array());
-		$event_list = array();
+		$result = $this->query($query, []);
+		$event_list = [];
 		while ($res = $result->fetchRow()) {
 			$res['scores'] = json_decode($res['data']);
 			foreach ($res['scores'] as $key => $score) {
@@ -163,10 +163,10 @@ class ScoreLib extends TikiLib
 	}
 
 	// Read information from admin and updates event's punctuation
-    /**
-     * @param $events
-     */
-    public function update_events($events)
+	/**
+	 * @param $events
+	 */
+	public function update_events($events)
 	{
 		//clear old scores before re-inserting
 		$query = "delete from `tiki_score`";
@@ -178,13 +178,13 @@ class ScoreLib extends TikiLib
 
 			foreach ($event_data as $key => $rules) {
 				$tempArr = explode(',', $rules['validObjectIds']);
-				$event_data[$key]['validObjectIds'] = array_map('trim',$tempArr);
+				$event_data[$key]['validObjectIds'] = array_map('trim', $tempArr);
 			}
 
 			$event_data = json_encode($event_data);
 
 			$query = "insert into `tiki_score` (`event`,`reversalEvent`,`data`) values (?,?,?)";
-			$this->query($query, array($event_name, $reversalEvent, $event_data));
+			$this->query($query, [$event_name, $reversalEvent, $event_data]);
 		}
 		$this->touch();
 		return;
@@ -207,7 +207,6 @@ class ScoreLib extends TikiLib
 	function bindEvents($manager)
 	{
 		try {
-
 			$list = $this->getScoreEvents();
 			$eventsList = $list['events'];
 			$reversalEventsList = $list['reversalEvents'];
@@ -230,22 +229,23 @@ class ScoreLib extends TikiLib
 	 * @param string $eventType
 	 * @throws Exception
 	 */
-	function assignPoints($args=array(), $eventType="") {
+	function assignPoints($args = [], $eventType = "")
+	{
 		$rules = $this->getScoreEventRules($eventType);
 		$date = TikiLib::lib('tiki')->now;
 		//for each rule associated with the event, set up the scor
 		foreach ($rules as $rule) {
 			// if the object is invalid, do nothing.
-			if (! $this->objectIsValid($args,$rule)) {
+			if (! $this->objectIsValid($args, $rule)) {
 				continue;
 			}
 			$recipient = $this->evaluateExpression($rule->recipient, $args, "eval");
 			$recipientType = $this->evaluateExpression($rule->recipientType, $args);
 			$points = $this->evaluateExpression($rule->score, $args);
-			if (!$recipient || !$points) {
+			if (! $recipient || ! $points) {
 				continue;
 			}
-			if ($rule->expiration > 0 && !$this->hasWaitedMinTime($args,$rule, $recipientType, $recipient)) {
+			if ($rule->expiration > 0 && ! $this->hasWaitedMinTime($args, $rule, $recipientType, $recipient)) {
 				continue;
 			}
 			//if user is anonymous, store a unique identifier in a cookie and set it as the user.
@@ -254,11 +254,11 @@ class ScoreLib extends TikiLib
 				if (empty($uniqueVal)) {
 					$uniqueVal = getenv('HTTP_CLIENT_IP') . time() . rand();
 					$uniqueVal = md5($uniqueVal);
-					setCookieSection('anonUserScoreId', "anon".$uniqueVal);
+					setCookieSection('anonUserScoreId', "anon" . $uniqueVal);
 				}
 				$args['user'] = $uniqueVal;
 			}
-			$pbalance = $this->getPointsBalance($recipientType,$recipient);
+			$pbalance = $this->getPointsBalance($recipientType, $recipient);
 			$data = [
 				'triggerObjectType' => $args['type'],
 				'triggerObjectId' => $args['object'],
@@ -283,37 +283,38 @@ class ScoreLib extends TikiLib
 	 * @param $eventType
 	 * @throws Exception
 	 */
-	function reversePoints($args, $eventType) {
+	function reversePoints($args, $eventType)
+	{
 		$query = "SELECT event FROM `tiki_score` WHERE reversalEvent=?";
 		//if you find an original event, reverse it.
 		if ($originalEvent = $this->getOne($query, [$eventType])) {
 			//fetch all the scoring entries that were put in the last time
 			$date = $this->table()->fetchOne(
 				'date',
-				array('triggerObjectType' => $args['type'],
+				['triggerObjectType' => $args['type'],
 					'triggerObjectId' => $args['object'],
 					'triggerUser' => $args['user'],
 					'triggerEvent' => $originalEvent
-				),
-				array("id" => "desc")
+				],
+				["id" => "desc"]
 			);
 			$result = $this->table()->fetchAll(
-				array('id', 'ruleId', 'pointsAssigned', 'recipientObjectType', 'recipientObjectId', 'reversalOf'),
-				array('triggerObjectType' => $args['type'],
+				['id', 'ruleId', 'pointsAssigned', 'recipientObjectType', 'recipientObjectId', 'reversalOf'],
+				['triggerObjectType' => $args['type'],
 					'triggerObjectId' => $args['object'],
 					'triggerUser' => $args['user'],
 					'triggerEvent' => $originalEvent,
 					'date' => $date,
-				)
+				]
 			);
 
 			$date = TikiLib::lib('tiki')->now;
-			foreach($result as $row) {
+			foreach ($result as $row) {
 				// if the most recent transaction was a reversal, exit as to not reverse again
 				if ($row['reversalOf'] > 0) {
 					continue;
 				}
-				$pbalance = $this->getPointsBalance($row['recipientObjectType'],$row['recipientObjectId']);
+				$pbalance = $this->getPointsBalance($row['recipientObjectType'], $row['recipientObjectId']);
 				$data = [
 					'triggerObjectType' => $args['type'],
 					'triggerObjectId' => $args['object'],
@@ -348,19 +349,19 @@ class ScoreLib extends TikiLib
 		$cachelib = TikiLib::lib('cache');
 		if (! $result = $cachelib->getSerialized(self::CACHE_KEY)) {
 			$query = "SELECT * FROM `tiki_score` WHERE data IS NOT NULL";
-			$result = $this->query($query, array());
-			$event_list = array();
-			$event_reversal_list = array();
+			$result = $this->query($query, []);
+			$event_list = [];
+			$event_reversal_list = [];
 
 			while ($res = $result->fetchRow()) {
 				$event_list[] = $res['event'];
-				if ($res['reversalEvent']){
+				if ($res['reversalEvent']) {
 					$event_reversal_list[] = $res['reversalEvent'];
 				}
 			}
-			$result = array('events' => $event_list,
+			$result = ['events' => $event_list,
 				'reversalEvents' => $event_reversal_list
-			);
+			];
 			$cachelib->cacheItem(self::CACHE_KEY, serialize($result));
 		}
 
@@ -388,7 +389,8 @@ class ScoreLib extends TikiLib
 	 * @param $recipient
 	 * @return bool|mixed
 	 */
-	function getPointsBalance($recipientType,$recipient) {
+	function getPointsBalance($recipientType, $recipient)
+	{
 		$query = "SELECT pointsBalance FROM `tiki_object_scores` WHERE recipientObjectType=? and recipientObjectId=? order by id desc";
 		$result = $this->getOne($query, [$recipientType,$recipient]);
 
@@ -404,7 +406,8 @@ class ScoreLib extends TikiLib
 	 * @param $recipient
 	 * @return bool|mixed
 	 */
-	function getGroupedPointsBalance($recipientType,$recipient) {
+	function getGroupedPointsBalance($recipientType, $recipient)
+	{
 		$query = "SELECT ruleId, SUM(pointsAssigned) as 'points' FROM `tiki_object_scores` WHERE recipientObjectType=? and recipientObjectId=? group by ruleId";
 		$result = $this->fetchAll($query, [$recipientType,$recipient]);
 
@@ -414,7 +417,8 @@ class ScoreLib extends TikiLib
 		return $result;
 	}
 
-	function getPointsBalanceForRuleId($recipientType,$recipient, $ruleId) {
+	function getPointsBalanceForRuleId($recipientType, $recipient, $ruleId)
+	{
 		$query = "SELECT SUM(pointsAssigned) FROM `tiki_object_scores` WHERE recipientObjectType=? and recipientObjectId=? and ruleId=? group by ruleId";
 		$result = $this->getOne($query, [$recipientType,$recipient,$ruleId]);
 
@@ -431,11 +435,12 @@ class ScoreLib extends TikiLib
 	 * @param $rule
 	 * @return bool
 	 */
-	function objectIsValid($args,$rule) {
+	function objectIsValid($args, $rule)
+	{
 		if (empty($rule->validObjectIds) || empty($rule->validObjectIds[0])) {
 			return true;
 		}
-		if (in_array($args['object'], $rule->validObjectIds) || in_array($args['type'].":".$args['object'], $rule->validObjectIds)) {
+		if (in_array($args['object'], $rule->validObjectIds) || in_array($args['type'] . ":" . $args['object'], $rule->validObjectIds)) {
 			return true;
 		}
 		return false;
@@ -448,7 +453,8 @@ class ScoreLib extends TikiLib
 	 * @param $rule
 	 * @return bool
 	 */
-	function hasWaitedMinTime($args, $rule, $recipientType, $recipient) {
+	function hasWaitedMinTime($args, $rule, $recipientType, $recipient)
+	{
 		$query = "SELECT date FROM `tiki_object_scores`
 					WHERE triggerObjectType=? and triggerObjectId=? and ruleId=? and recipientObjectType=?
 					and recipientObjectId=? and reversalOf is null
@@ -469,21 +475,22 @@ class ScoreLib extends TikiLib
 	 * @param string $default
 	 * @return bool|float|void
 	 */
-	function evaluateExpression($expr, $args, $default="str"){
+	function evaluateExpression($expr, $args, $default = "str")
+	{
 		if (0 !== strpos($expr, "(")) {
 			$expr = "($default $expr)";
 		}
 		$runner = new Math_Formula_Runner(
-			array(
+			[
 				'Math_Formula_Function_' => '',
 				'Tiki_Formula_Function_' => '',
-			)
+			]
 		);
 		try {
 			$runner->setVariables($args);
 			$runner->setFormula($expr);
 			return $runner->evaluate();
-		} catch( Math_Formula_Exception $e ) {
+		} catch (Math_Formula_Exception $e) {
 			return;
 		}
 	}

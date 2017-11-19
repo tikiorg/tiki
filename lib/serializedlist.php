@@ -37,7 +37,7 @@ abstract class SerializedList
 		$this->initPrefPrefix();
 
 		$this->name = strtolower(TikiLib::remove_non_word_characters_and_accents($name));
-		if (!empty($this->name) && !empty($prefs[$this->getPrefName()])) {
+		if (! empty($this->name) && ! empty($prefs[$this->getPrefName()])) {
 			$this->loadPref();
 		} else {
 			$this->initData();
@@ -46,62 +46,62 @@ abstract class SerializedList
 
 	abstract public function initPrefPrefix();	// to be declared to set $this->prefPrefix = 'your_pref_prefix_'
 	abstract public function initData();		// func to set $this->data as you need it
-    /**
-     * @param $params
-     * @return mixed
-     */
-    abstract public function setData($params);	// func to set the date
+	/**
+	 * @param $params
+	 * @return mixed
+	 */
+	abstract public function setData($params);	// func to set the date
 
 	public function getData()
 	{
 		return $this->data;
 	}
 
-    /**
-     * @return string
-     */
-    public function getName()
+	/**
+	 * @return string
+	 */
+	public function getName()
 	{
 		return $this->name;
 	}
 
-    /**
-     * @return string
-     */
-    public function getPrefName()
+	/**
+	 * @return string
+	 */
+	public function getPrefName()
 	{
 		return $this->prefPrefix . $this->name;
 	}
 
-    /**
-     * @return string
-     */
-    public function getListName()
+	/**
+	 * @return string
+	 */
+	public function getListName()
 	{
 		return $this->prefPrefix . 'list';
 	}
 
-    /**
-     * @return array|mixed
-     */
-    public function getPrefList()
+	/**
+	 * @return array|mixed
+	 */
+	public function getPrefList()
 	{
 		global $prefs;
 
-		if ( isset($prefs[$this->getListName()]) ) {
+		if (isset($prefs[$this->getListName()])) {
 			$custom = @unserialize($prefs[$this->getListName()]);
 			sort($custom);
 		} else {
-			$custom = array();
+			$custom = [];
 		}
 
 		return $custom;
 	}
 
-    /**
-     * @return mixed
-     */
-    public function loadPref()
+	/**
+	 * @return mixed
+	 */
+	public function loadPref()
 	{
 		global $prefs, $tikilib;
 
@@ -117,7 +117,7 @@ abstract class SerializedList
 
 		$tikilib->set_preference($this->getPrefName(), serialize($this->data));
 
-		if ( !in_array($this->name, $list) ) {
+		if (! in_array($this->name, $list)) {
 			$list[] = $this->name;
 			$tikilib->set_preference($this->getListName(), serialize($list));
 		}
@@ -128,15 +128,14 @@ abstract class SerializedList
 		global $prefs, $tikilib;
 
 		$prefName = $this->getPrefName();
-		if ( isset($prefs[$prefName]) ) {
+		if (isset($prefs[$prefName])) {
 			$tikilib->delete_preference($prefName);
 		}
 		$list = $this->getPrefList();
 
-		if ( in_array($this->name, $list) ) {
-			$list = array_diff($list, array($this->name));
+		if (in_array($this->name, $list)) {
+			$list = array_diff($list, [$this->name]);
 			$tikilib->set_preference($this->getListName(), serialize($list));
 		}
 	}
-
 }

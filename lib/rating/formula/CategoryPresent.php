@@ -7,18 +7,18 @@
 
 class Tiki_Formula_Function_CategoryPresent extends Math_Formula_Function
 {
-	function evaluate( $element )
+	function evaluate($element)
 	{
 		$default = 0;
-		$allowed = array( 'object', 'list' );
+		$allowed = [ 'object', 'list' ];
 
-		if ( $extra = $element->getExtraValues($allowed) ) {
+		if ($extra = $element->getExtraValues($allowed)) {
 			$this->error(tr('Unexpected values: %0', implode(', ', $extra)));
 		}
 
 		$object = $element->object;
 
-		if ( ! $object || count($object) != 2 ) {
+		if (! $object || count($object) != 2) {
 			$this->error(tra('Item must be provided and contain one argument: type, object-id'));
 		}
 
@@ -27,13 +27,13 @@ class Tiki_Formula_Function_CategoryPresent extends Math_Formula_Function
 
 		$list = $element->list;
 
-		if ( ! $list || count($list) == 0 ) {
+		if (! $list || count($list) == 0) {
 			$this->error(tra('List must be provided and contain at least one argument: category IDs'));
 		}
 
 		$categlib = TikiLib::lib('categ');
 		$categories = $categlib->get_object_categories($type, $object, -1, false);
-		
+
 		$score = 0;
 		foreach ($list as $entry) {
 			if (in_array($entry, $categories)) {
@@ -44,4 +44,3 @@ class Tiki_Formula_Function_CategoryPresent extends Math_Formula_Function
 		return $score;
 	}
 }
-

@@ -8,20 +8,20 @@
 class ServiceLib
 {
 	private $broker;
-	private $addonbrokers = array();
+	private $addonbrokers = [];
 
 	function getBroker($addonpackage = '')
 	{
 		if ($addonpackage) {
 			$utilities = new TikiAddons_Utilities;
-			if (!$utilities->isInstalled(str_replace('.', '/', $addonpackage))) {
+			if (! $utilities->isInstalled(str_replace('.', '/', $addonpackage))) {
 				$addonpackage = '';
 			}
 		}
 
-		if ($addonpackage && !isset($this->addonbrokers[$addonpackage])) {
+		if ($addonpackage && ! isset($this->addonbrokers[$addonpackage])) {
 			$this->addonbrokers[$addonpackage] = new Services_Broker(TikiInit::getContainer(), $addonpackage);
-		} else if (! $this->broker) {
+		} elseif (! $this->broker) {
 			$this->broker = new Services_Broker(TikiInit::getContainer());
 		}
 
@@ -32,12 +32,12 @@ class ServiceLib
 		}
 	}
 
-	function internal($controller, $action, $request = array(), $addonpackage = '')
+	function internal($controller, $action, $request = [], $addonpackage = '')
 	{
 		return $this->getBroker($addonpackage)->internal($controller, $action, $request);
 	}
 
-	function render($controller, $action, $request = array(), $addonpackage = '')
+	function render($controller, $action, $request = [], $addonpackage = '')
 	{
 		return $this->getBroker($addonpackage)->internalRender($controller, $action, $request);
 	}
@@ -68,4 +68,3 @@ class ServiceLib
 		return TikiLib::tikiUrlOpt($url);
 	}
 }
-

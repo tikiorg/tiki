@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: perms.php 39469 2012-01-12 21:13:48Z changi67$
@@ -11,7 +11,7 @@ if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
 
 $groupList = null;
 $is_token_access = false;
-if ( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
+if ($prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN'])) {
 	require_once 'lib/auth/tokens.php';
 	$token = $_REQUEST['TOKEN'];
 
@@ -20,16 +20,16 @@ if ( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 	unset($_REQUEST['TOKEN']);
 	$tokenParams = $_GET;
 
- 	/**
- 	 * Shared 'Upload File' case
- 	 */
-	if ( isset($isUpload) && $isUpload && ! empty($_POST['galleryId']) && empty($_GET['galleryId']) ) {
-		foreach ( (array) $_POST['galleryId'] as $v ) {
-			if ( ! empty($tokenParams['galleryId']) ) {
-				if ( $tokenParams['galleryId'] == $v ) {
+	 /**
+	  * Shared 'Upload File' case
+	  */
+	if (isset($isUpload) && $isUpload && ! empty($_POST['galleryId']) && empty($_GET['galleryId'])) {
+		foreach ((array) $_POST['galleryId'] as $v) {
+			if (! empty($tokenParams['galleryId'])) {
+				if ($tokenParams['galleryId'] == $v) {
 					continue;
 				} else {
-					unset( $tokenParams['galleryId'] );
+					unset($tokenParams['galleryId']);
 					break;
 				}
 			}
@@ -38,17 +38,17 @@ if ( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 	}
 
 	$tokenlib = AuthTokens::build($prefs);
-	if ( $groups = $tokenlib->getGroups($token, $_SERVER['PHP_SELF'], $tokenParams) ) {
-	 	$groupList = $groups;
-	 	$detailtoken = $tokenlib->getToken($token);
-	 	$is_token_access = true;
+	if ($groups = $tokenlib->getGroups($token, $_SERVER['PHP_SELF'], $tokenParams)) {
+		 $groupList = $groups;
+		 $detailtoken = $tokenlib->getToken($token);
+		 $is_token_access = true;
 
-	 	/**
-	 	 * Shared 'File download' case
-	 	 */
-	 	if (isset($_GET['fileId']) && $detailtoken['parameters'] == '{"fileId":"' . $_GET['fileId'] . '"}') {
-	 		$_SESSION['allowed'][$_GET['fileId']] = true;
-	 	}
+		 /**
+		  * Shared 'File download' case
+		  */
+		if (isset($_GET['fileId']) && $detailtoken['parameters'] == '{"fileId":"' . $_GET['fileId'] . '"}') {
+			$_SESSION['allowed'][$_GET['fileId']] = true;
+		}
 
 		// If notification then alert
 		if ($prefs['share_token_notification'] == 'y') {
@@ -60,15 +60,15 @@ if ( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 			$smarty->assign_by_ref('page_token', $notificationPage);
 
 			if (is_array($nots)) {
-				include_once ('lib/webmail/tikimaillib.php');
+				include_once('lib/webmail/tikimaillib.php');
 				$mail = new TikiMail();
 
 				$mail->setSubject($detailtoken['email'] . ' ' . tra(' has accessed your temporary shared content'));
 
-				foreach ($nots as $i=>$not) {
+				foreach ($nots as $i => $not) {
 					$notificationPage = $not['url'];
 
-				 	// Delete token from url
+					 // Delete token from url
 					$notificationPage = preg_replace('/[\?&]TOKEN=' . $detailtoken['token'] . '/', '', $notificationPage);
 
 					// If file Gallery
@@ -87,14 +87,13 @@ if ( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 					$smarty->assign('email_token', $detailtoken['email']);
 					$txt = $smarty->fetch('mail/user_watch_token.tpl');
 					$mail->setHTML($txt);
-					$mailsent = $mail->send(array($not['email']));
+					$mailsent = $mail->send([$not['email']]);
 				}
 			}
-
 		}
 
-		if ( empty($notificationPage) ) {
-				$notificationPage = preg_replace('/[\?&]TOKEN='.$token.'/','',$_SERVER['REQUEST_URI']);
+		if (empty($notificationPage)) {
+				$notificationPage = preg_replace('/[\?&]TOKEN=' . $token . '/', '', $_SERVER['REQUEST_URI']);
 		}
 		// Log each token access
 		$logslib->add_log('token', $detailtoken['email'] . ' ' . tra('has accessed the following shared content:') . ' ' . $notificationPage);

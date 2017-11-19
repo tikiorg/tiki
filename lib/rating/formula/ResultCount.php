@@ -7,11 +7,11 @@
 
 class Tiki_Formula_Function_ResultCount extends Math_Formula_Function
 {
-	function evaluate( $element )
+	function evaluate($element)
 	{
 		$allowed = ['filter'];
 
-		if ( $extra = $element->getExtraValues($allowed) ) {
+		if ($extra = $element->getExtraValues($allowed)) {
 			$this->error(tr('Unexpected values: %0', implode(', ', $extra)));
 		}
 
@@ -27,7 +27,7 @@ class Tiki_Formula_Function_ResultCount extends Math_Formula_Function
 		}
 
 		$query->setRange(0, 1);
-		
+
 		$result = $query->search($searchlib->getIndex());
 		return count($result);
 	}
@@ -43,4 +43,3 @@ class Tiki_Formula_Function_ResultCount extends Math_Formula_Function
 		return $out;
 	}
 }
-

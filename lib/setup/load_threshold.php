@@ -14,8 +14,8 @@ if (function_exists('sys_getloadavg')) {
 	$load = sys_getloadavg();
 	$server_load = $load[0];
 
-	if ( $prefs['use_load_threshold'] == 'y' and $tiki_p_access_closed_site != 'y' and !isset($bypass_siteclose_check) ) {
-		if ( $server_load > $prefs['load_threshold'] ) {
+	if ($prefs['use_load_threshold'] == 'y' and $tiki_p_access_closed_site != 'y' and ! isset($bypass_siteclose_check)) {
+		if ($server_load > $prefs['load_threshold']) {
 			$url = 'tiki-error_simple.php?error=' . urlencode($prefs['site_busy_msg']);
 			header('location: ' . $url);
 			exit;

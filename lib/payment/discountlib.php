@@ -13,10 +13,10 @@ class DiscountLib extends TikiDb_Bridge
 		if (empty($info)) {
 			if (empty($params['id'])) {
 				$query = 'insert into `tiki_discount` (`code`, `value`, `max`, `comment`) values (?, ?, ?, ?)';
-				$this->query($query, array($params['code'], $params['value'], $params['max'], $params['comment']));
+				$this->query($query, [$params['code'], $params['value'], $params['max'], $params['comment']]);
 			} else {
 				$query = 'update `tiki_discount` set `code`=?, `value`=?, `max`=?, `comment`=? where `id`=?';
-				$this->query($query, array($params['code'], $params['value'], $params['max'], $params['comment'], $params['id']));
+				$this->query($query, [$params['code'], $params['value'], $params['max'], $params['comment'], $params['id']]);
 			}
 			return true;
 		} else {
@@ -27,7 +27,7 @@ class DiscountLib extends TikiDb_Bridge
 	function del_discount($id)
 	{
 		$query = 'delete from `tiki_discount` where `id`=?';
-		$this->query($query, array($id));
+		$this->query($query, [$id]);
 	}
 
 	function use_discount($code)
@@ -37,29 +37,29 @@ class DiscountLib extends TikiDb_Bridge
 			return false;
 		} elseif ($info['max'] > 0) {
 			$query = 'update `tiki_discount` set `max`=`max`-1 where `code`=?';
-			$this->query($query, array($code));
+			$this->query($query, [$code]);
 		}
 		return $info['value'];
 	}
 
-	function find_discount($code, $notid=0)
+	function find_discount($code, $notid = 0)
 	{
 		$query = 'select * from `tiki_discount` where `code`=? and `id` !=?';
-		$info = $this->fetchAll($query, array($code, $notid), 1, 0);
-		return $info? $info[0]: null;
+		$info = $this->fetchAll($query, [$code, $notid], 1, 0);
+		return $info ? $info[0] : null;
 	}
 
 	function get_discount($id)
 	{
 		$query = 'select * from `tiki_discount` where `id` =?';
-		$info = $this->fetchAll($query, array($id), 1, 0);
-		return $info? $info[0]: null;
+		$info = $this->fetchAll($query, [$id], 1, 0);
+		return $info ? $info[0] : null;
 	}
 
-	function list_discounts($offset=0, $max=-1)
+	function list_discounts($offset = 0, $max = -1)
 	{
 		$query = 'select * from `tiki_discount`';
-		$bindvars = array();
+		$bindvars = [];
 		$discounts['data'] = $this->fetchAll($query, $bindvars, $max, $offset);
 		$query = 'select count(*) from `tiki_discount`';
 		$discounts['cant'] = $this->getOne($query, $bindvars);

@@ -1,14 +1,14 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -23,7 +23,7 @@ function refresh_index($object_type, $object_id = null, $process = true)
 
 	// First process unified search, then process the legacy indexing if required.
 
-	if ( $prefs['feature_search'] == 'y' && $prefs['unified_incremental_update'] == 'y' && $object_id ) {
+	if ($prefs['feature_search'] == 'y' && $prefs['unified_incremental_update'] == 'y' && $object_id) {
 		$unified_type = refresh_index_convert_type($object_type);
 
 		try {
@@ -33,9 +33,7 @@ function refresh_index($object_type, $object_id = null, $process = true)
 			if ($process) {
 				$unifiedsearchlib->processUpdateQueue();
 			}
-
 		} catch (ZendSearch\Lucene\Exception\ExceptionInterface $e) {
-
 			$message = $e->getMessage();
 			if (empty($message)) {
 				$message = tra('Try rebuilding or optimizing the index on the search admin page');
@@ -53,55 +51,56 @@ function refresh_index($object_type, $object_id = null, $process = true)
  */
 function refresh_index_convert_type($object_type)
 {
-	switch ( $object_type ) {
+	switch ($object_type) {
 		case 'articles': //case 'art': case 'article':
 			return 'article';
-	
+
 		case 'blog_posts': //case 'blog': case 'blog_post':
 			return 'blog post'; // FIXME : Unchecked
-	
+
 		case 'blogs':
 			return 'blog'; // FIXME : Unchecked
-	
+
 		case 'directory_categories': //case 'dir_cat':
 			return 'directory'; // FIXME : Unchecked
-	
+
 		case 'directory_sites': //case 'dir': case 'dir_site':
 			return 'directory'; // FIXME : Unchecked
-	
+
 		case 'comments': //case 'wiki comment': case 'comment':
 			return 'comment'; // FIXME : Unchecked
-	
+
 		case 'faq_questions':
 			return 'faq'; // FIXME : Unchecked
-	
+
 		case 'faqs': //case 'faq':
 			return 'faq'; // FIXME : Unchecked
-	
+
 		case 'file_galleries';
 			return 'file gallery';
-	
-		case 'files': case 'file'; //case 'fgal':
+
+		case 'files':
+		case 'file'; //case 'fgal':
 			return 'file';
-	
+
 		case 'forums': //case 'forum':
 			return 'forum post';
-	
+
 		case 'images': //case 'gal': case 'img':
 			return 'image';
-	
+
 		case 'pages': //case 'wiki page': case 'wiki':
 			return 'wiki page';
-	
+
 		case 'tracker_items': //case 'track': case 'trackeritem':
 			return 'trackeritem';
-	
+
 		case 'trackers': //case 'tracker':
 			return 'tracker'; // FIXME : Unchecked
-	
+
 		case 'galleries': // case 'imggal':
 			return 'image gallery'; // FIXME : Unchecked
-		
+
 		default:
 			return $object_type;
 	}
@@ -143,10 +142,11 @@ function random_refresh_index_blogs()
 /**
  * @param int $times
  */
-function random_refresh_index_comments( $times = 1 )
+function random_refresh_index_comments($times = 1)
 {
-	for( $i = 1; $i <= $times; $i ++ )
+	for ($i = 1; $i <= $times; $i ++) {
 		refresh_index('comments', -1);
+	}
 }
 function random_refresh_index_dir_cats()
 {

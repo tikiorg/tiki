@@ -6,12 +6,12 @@
 // $Id$
 
 function payment_behavior_cart_gift_certificate_refund(
-		$giftcertId = 0,
-		$giftcertMode = '',
-		$giftcertAmount = 0,
-		$giftcertDiscount = 0
-		)
-{
+	$giftcertId = 0,
+	$giftcertMode = '',
+	$giftcertAmount = 0,
+	$giftcertDiscount = 0
+) {
+
 	$cartlib = TikiLib::lib('cart');
 	global $prefs;
 

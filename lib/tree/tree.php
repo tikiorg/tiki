@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -15,11 +15,11 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
-require_once ('lib/debug/debugger.php');
+require_once('lib/debug/debugger.php');
 
 /**
  * \brief Base class for all tree makers
@@ -33,7 +33,7 @@ abstract class TreeMaker
 	var $prefix;
 
 	/// Constructor
-	function __construct($prefix) 
+	function __construct($prefix)
 	{
 		$this->prefix = $prefix;
 	}
@@ -43,13 +43,13 @@ abstract class TreeMaker
 	// *  parent => Identifier of the node's parent
 	// *  data   => Node content (HTML)
 	/// Returns HTML code for tree
-	function make_tree($rootid, $ar) 
+	function make_tree($rootid, $ar)
 	{
 		return $this->make_tree_r($rootid, $ar);
 	}
 
 	/// Recursively make a tree
-	protected function make_tree_r($rootid, &$ar) 
+	protected function make_tree_r($rootid, &$ar)
 	{
 		global $debugger;
 
@@ -57,15 +57,17 @@ abstract class TreeMaker
 		$result = '';
 
 		if (count($ar) > 0) {
-			$cli = array();
+			$cli = [];
 
-			$tmp = array();
+			$tmp = [];
 
-			foreach ($ar as $i)
-				if ($rootid == $i["parent"])
+			foreach ($ar as $i) {
+				if ($rootid == $i["parent"]) {
 					$cli[] = $i;
-				else
+				} else {
 					$tmp[] = $i;
+				}
+			}
 
 			$ind = "";
 			//
@@ -76,19 +78,19 @@ abstract class TreeMaker
 
 				$have_childs = (strlen($child_result) > 0);
 				//
-				// NOTE: The main rule is to call all methods in 
+				// NOTE: The main rule is to call all methods in
 				//       stricty defined order!
 				//
 				$nl = "\n";
 				$ind .= "\t";
-				
+
 				if ($have_childs) {
 					$flipper = $this->node_flipper_code($i);
 					$nsc = $this->node_start_code_flip($i, $count);
 				} else {
 					$nsc = $this->node_start_code($i, $count);
 					$flipper = '';
-				}	
+				}
 
 				$ndsc = $this->node_data_start_code($i);
 				$ndec = $this->node_data_end_code($i);
@@ -101,10 +103,10 @@ abstract class TreeMaker
 					$ncec = $this->node_child_end_code($i);
 					$ind .= $this->indent($i);
 				}
-				
+
 				$nec = $this->node_end_code($i);
 				// Form result
-				$result .= $nsc . $flipper . $ndsc . $i["data"] . $nl . $ind . $ncsc. $nl . $ind . $ind . $child_result . $ncec . $nl . $ind . $ind . $ndec . $nec . $nl . $ind; // this sort is for lists kind of tree
+				$result .= $nsc . $flipper . $ndsc . $i["data"] . $nl . $ind . $ncsc . $nl . $ind . $ind . $child_result . $ncec . $nl . $ind . $ind . $ndec . $nec . $nl . $ind; // this sort is for lists kind of tree
 			}
 		}
 
@@ -147,53 +149,53 @@ abstract class TreeMaker
 	 *       So to make smth other use inheritance and redefine
 	 *       corresponding function :)
 	 */
-	function indent($nodeinfo) 
-	{
-		return '';
-	}
-	
-	function node_start_code($nodeinfo, $count=0) 
+	function indent($nodeinfo)
 	{
 		return '';
 	}
 
-	function node_start_code_flip($nodeinfo, $count=0) 
+	function node_start_code($nodeinfo, $count = 0)
 	{
 		return '';
 	}
-	
-	//
-	function node_flipper_code($nodeinfo) 
+
+	function node_start_code_flip($nodeinfo, $count = 0)
 	{
 		return '';
 	}
 
 	//
-	function node_data_start_code($nodeinfo) 
+	function node_flipper_code($nodeinfo)
 	{
 		return '';
 	}
 
 	//
-	function node_data_end_code($nodeinfo) 
+	function node_data_start_code($nodeinfo)
 	{
 		return '';
 	}
 
 	//
-	function node_child_start_code($nodeinfo) 
+	function node_data_end_code($nodeinfo)
 	{
 		return '';
 	}
 
 	//
-	function node_child_end_code($nodeinfo) 
+	function node_child_start_code($nodeinfo)
 	{
 		return '';
 	}
 
 	//
-	function node_end_code($nodeinfo) 
+	function node_child_end_code($nodeinfo)
+	{
+		return '';
+	}
+
+	//
+	function node_end_code($nodeinfo)
 	{
 		return '';
 	}

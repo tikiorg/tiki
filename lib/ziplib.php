@@ -25,15 +25,16 @@ function gzip_cleanup()
 {
 	global $gzip_tmpfile;
 
-	if ($gzip_tmpfile)
+	if ($gzip_tmpfile) {
 		@unlink($gzip_tmpfile);
+	}
 }
 
 function gzip_tempnam()
 {
 	global $gzip_tmpfile;
 
-	if (!$gzip_tmpfile) {
+	if (! $gzip_tmpfile) {
 		//FIXME: does this work on non-unix machines?
 		$gzip_tmpfile = tempnam('/tmp', 'wkzip');
 
@@ -47,24 +48,29 @@ function gzip_compress($data)
 {
 	$filename = gzip_tempnam();
 
-	if (!($fp = gzopen($filename, 'wb')))
+	if (! ($fp = gzopen($filename, 'wb'))) {
 		trigger_error(sprintf('%s failed', 'gzopen'), E_USER_ERROR);
+	}
 
 	gzwrite($fp, $data, strlen($data));
 
-	if (!gzclose($fp))
+	if (! gzclose($fp)) {
 		trigger_error(sprintf('%s failed', 'gzclose'), E_USER_ERROR);
+	}
 
 	$size = filesize($filename);
 
-	if (!($fp = fopen($filename, 'rb')))
+	if (! ($fp = fopen($filename, 'rb'))) {
 		trigger_error(sprintf('%s failed', 'fopen'), E_USER_ERROR);
+	}
 
-	if (!($z = fread($fp, $size)) || strlen($z) != $size)
+	if (! ($z = fread($fp, $size)) || strlen($z) != $size) {
 		trigger_error(sprintf('%s failed', 'fread'), E_USER_ERROR);
+	}
 
-	if (!fclose($fp))
+	if (! fclose($fp)) {
 		trigger_error(sprintf('%s failed', 'fclose'), E_USER_ERROR);
+	}
 
 	unlink($filename);
 	return $z;
@@ -74,24 +80,29 @@ function gzip_uncompress($data)
 {
 	$filename = gzip_tempnam();
 
-	if (!($fp = fopen($filename, 'wb')))
+	if (! ($fp = fopen($filename, 'wb'))) {
 		trigger_error(sprintf('%s failed', 'fopen'), E_USER_ERROR);
+	}
 
 	fwrite($fp, $data, strlen($data));
 
-	if (!fclose($fp))
+	if (! fclose($fp)) {
 		trigger_error(sprintf('%s failed', 'fclose'), E_USER_ERROR);
+	}
 
-	if (!($fp = gzopen($filename, 'rb')))
+	if (! ($fp = gzopen($filename, 'rb'))) {
 		trigger_error(sprintf('%s failed', 'gzopen'), E_USER_ERROR);
+	}
 
 	$unz = '';
 
-	while ($buf = gzread($fp, 4096))
+	while ($buf = gzread($fp, 4096)) {
 		$unz .= $buf;
+	}
 
-	if (!gzclose($fp))
+	if (! gzclose($fp)) {
 		trigger_error(sprintf("%s failed", 'gzclose'), E_USER_ERROR);
+	}
 
 	unlink($filename);
 	return $unz;
@@ -108,7 +119,7 @@ function zip_crc32($str, $crc = 0)
 		/* NOTE: The range of PHP ints seems to be -0x80000000 to 0x7fffffff.
 		 * So, had to munge these constants.
 		 */
-		$zip_crc_table = array(
+		$zip_crc_table = [
 				0x00000000,
 				0x77073096,
 				-0x11f19ed4,
@@ -365,7 +376,7 @@ function zip_crc32($str, $crc = 0)
 				-0x3cf3715f,
 				0x5a05df1b,
 				0x2d02ef8d
-					);
+					];
 	}
 
 	$crc = ~$crc;
@@ -388,33 +399,37 @@ function zip_deflate($content)
 	// Suck OS type byte from gzip header. FIXME: this smells bad.
 	extract(unpack("a2magic/Ccomp_type/Cflags/@9/Cos_type", $z));
 
-	if ($magic != GZIP_MAGIC)
+	if ($magic != GZIP_MAGIC) {
 		trigger_error(sprintf('Bad %s', 'gzip magic'), E_USER_ERROR);
+	}
 
-	if ($comp_type != GZIP_DEFLATE)
+	if ($comp_type != GZIP_DEFLATE) {
 		trigger_error(sprintf('Bad %s', 'gzip comp type'), E_USER_ERROR);
+	}
 
-	if (($flags & 0x3e) != 0)
+	if (($flags & 0x3e) != 0) {
 		trigger_error(sprintf('Bad %s', sprintf('flags (0x%02x)', $flags)), E_USER_ERROR);
+	}
 
 	$gz_header_len = 10;
 	$gz_data_len = strlen($z) - $gz_header_len - 8;
 
-	if ($gz_data_len < 0)
+	if ($gz_data_len < 0) {
 		trigger_error('not enough gzip output?', E_USER_ERROR);
+	}
 
 	extract(unpack('Vcrc32', substr($z, $gz_header_len + $gz_data_len)));
 
-	return array(
+	return [
 			substr($z, $gz_header_len, $gz_data_len), // gzipped data
 			$crc32,                                   // crc
 			$os_type                                  // OS type
-	);
+	];
 }
 
 function zip_inflate($data, $crc32, $uncomp_size)
 {
-	if (!function_exists('gzopen')) {
+	if (! function_exists('gzopen')) {
 		global $request;
 
 		$request->finish(_("Can't inflate data: zlib support not enabled in this PHP"));
@@ -423,33 +438,35 @@ function zip_inflate($data, $crc32, $uncomp_size)
 	// Reconstruct gzip header and ungzip the data.
 	$mtime = time(); //(Bogus mtime)
 
-	return gzip_uncompress(pack("a2CxV@10", GZIP_MAGIC, GZIP_DEFLATE, $mtime). $data . pack('VV', $crc32, $uncomp_size));
+	return gzip_uncompress(pack("a2CxV@10", GZIP_MAGIC, GZIP_DEFLATE, $mtime) . $data . pack('VV', $crc32, $uncomp_size));
 }
 
 function unixtime2dostime($unix_time)
 {
-	if ($unix_time % 1)
+	if ($unix_time % 1) {
 		$unix_time++; // Round up to even seconds.
+	}
 
 	list($year, $month, $mday, $hour, $min, $sec) = explode(' ', TikiLib::date_format('%Y %m %e %H %M %S', $unix_time));
 
-	if ($year < 1980)
-		list($year, $month, $mday, $hour, $min, $sec) = array(
+	if ($year < 1980) {
+		list($year, $month, $mday, $hour, $min, $sec) = [
 				1980,
 				1,
 				1,
 				0,
 				0,
 				0
-				);
+				];
+	}
 
 	$dosdate = (($year - 1980) << 9) | ($month << 5) | $mday;
 	$dostime = ($hour << 11) | ($min << 5) | ($sec >> 1);
 
-	return array(
+	return [
 			$dosdate,
 			$dostime
-			);
+			];
 }
 
 function dostime2unixtime($dosdate, $dostime)
@@ -492,8 +509,9 @@ class ZipWriter
 
 	function addRegularFile($filename, $content, $attrib = false)
 	{
-		if (!$attrib)
-			$attrib = array();
+		if (! $attrib) {
+			$attrib = [];
+		}
 
 		$size = strlen($content);
 
@@ -504,36 +522,41 @@ class ZipWriter
 				$content = $data;	// Use compressed data.
 
 				$comp_type = ZIP_DEFLATE;
-			} else
-				unset ($crc32);	// force plain store.
+			} else {
+				unset($crc32);	// force plain store.
+			}
 		}
 
-		if (!isset($crc32)) {
+		if (! isset($crc32)) {
 			$comp_type = ZIP_STORE;
 
 			$crc32 = zip_crc32($content);
 		}
 
-		if (!empty($attrib['write_protected']))
+		if (! empty($attrib['write_protected'])) {
 			$atx = (0100444 << 16) | 1; // S_IFREG + read permissions to
-		// everybody.
-		else
+		} // everybody.
+		else {
 			$atx = (0100644 << 16); // Add owner write perms.
+		}
 
 		$ati = $attrib['is_ascii'] ? 1 : 0;
 
-		if (empty($attrib['mtime']))
+		if (empty($attrib['mtime'])) {
 			$attrib['mtime'] = time();
+		}
 
 		list($mod_date, $mod_time) = unixtime2dostime($attrib['mtime']);
 
 		// Construct parts common to "Local file header" and "Central
 		// directory file header."
-		if (!isset($attrib['extra_field']))
+		if (! isset($attrib['extra_field'])) {
 			$attrib['extra_field'] = '';
+		}
 
-		if (!isset($attrib['file_comment']))
+		if (! isset($attrib['file_comment'])) {
 			$attrib['file_comment'] = '';
+		}
 
 		$head = pack(
 			"vvvvvVVVvv",
@@ -614,18 +637,20 @@ class ZipReader
 {
 	function __construct($zipfile)
 	{
-		if (!is_string($zipfile))
+		if (! is_string($zipfile)) {
 			$this->fp = $zipfile; // File already open
-		else if (!($this->fp = fopen($zipfile, "rb")))
+		} elseif (! ($this->fp = fopen($zipfile, "rb"))) {
 			trigger_error(sprintf(_("Can't open zip file '%s' for reading"), $zipfile), E_USER_ERROR);
+		}
 	}
 
 	function _read($nbytes)
 	{
 		$chunk = fread($this->fp, $nbytes);
 
-		if (strlen($chunk) != $nbytes)
+		if (strlen($chunk) != $nbytes) {
 			trigger_error(_("Unexpected EOF in zip file"), E_USER_ERROR);
+		}
 
 		return $chunk;
 	}
@@ -655,45 +680,52 @@ class ZipReader
 		$attrib['mtime'] = dostime2unixtime($mod_date, $mod_time);
 
 		if ($magic != ZIP_LOCHEAD_MAGIC) {
-			if ($magic != ZIP_CENTHEAD_MAGIC)
+			if ($magic != ZIP_CENTHEAD_MAGIC) {
 				// FIXME: better message?
 				ExitWiki(sprintf('Bad header type: %s', $magic));
+			}
 
 			return $this->done();
 		}
 
-		if (($flags & 0x21) != 0)
+		if (($flags & 0x21) != 0) {
 			ExitWiki('Encryption and/or zip patches not supported.');
+		}
 
-		if (($flags & 0x08) != 0)
+		if (($flags & 0x08) != 0) {
 			// FIXME: better message?
 			ExitWiki('Postponed CRC not yet supported.');
+		}
 
 		$filename = $this->_read($filename_len);
 
-		if ($extrafld_len != 0)
+		if ($extrafld_len != 0) {
 			$attrib['extra_field'] = $this->_read($extrafld_len);
+		}
 
 		$data = $this->_read($comp_size);
 
 		if ($comp_type == ZIP_DEFLATE) {
 			$data = zip_inflate($data, $crc32, $uncomp_size);
-		} else if ($comp_type == ZIP_STORE) {
+		} elseif ($comp_type == ZIP_STORE) {
 			$crc = zip_crc32($data);
 
-			if ($crc32 != $crc)
+			if ($crc32 != $crc) {
 				ExitWiki(sprintf('CRC mismatch %x != %x', $crc, $crc32));
-		} else
+			}
+		} else {
 			ExitWiki(sprintf('Compression method %s unsupported', $comp_method));
+		}
 
-		if (strlen($data) != $uncomp_size)
+		if (strlen($data) != $uncomp_size) {
 			ExitWiki(sprintf('Uncompressed size mismatch %d != %d', strlen($data), $uncomp_size));
+		}
 
-		return array(
+		return [
 				$filename,
 				$data,
 				$attrib
-				);
+				];
 	}
 }
 
@@ -716,8 +748,9 @@ function QuotedPrintableEncode($string)
 
 		$quoted .= $match[1] . $match[2];
 
-		if (!empty($match[3]))
+		if (! empty($match[3])) {
 			$quoted .= sprintf('=%02X', ord($match[3]));
+		}
 
 		$string = substr($string, strlen($match[0]));
 	}
@@ -747,8 +780,9 @@ function MimeContentTypeHeader($type, $subtype, $params)
 
 	while (list($key, $val) = each($params)) {
 		//FIXME: what about non-ascii printables in $val?
-		if (!preg_match('/^' . MIME_TOKEN_REGEXP . '$/', $val))
-			$val = '"' . addslashes($val). '"';
+		if (! preg_match('/^' . MIME_TOKEN_REGEXP . '$/', $val)) {
+			$val = '"' . addslashes($val) . '"';
+		}
 
 		$header .= ";\r\n  $key=$val";
 	}
@@ -763,11 +797,11 @@ function MimeMultipart($parts)
 	// The string "=_" can not occur in quoted-printable encoded data.
 	$boundary = "=_multipart_boundary_" . ++$mime_multipart_count;
 
-	$head = MimeContentTypeHeader('multipart', 'mixed', array('boundary' => $boundary));
+	$head = MimeContentTypeHeader('multipart', 'mixed', ['boundary' => $boundary]);
 
 	$sep = "\r\n--$boundary\r\n";
 
-	return $head . $sep . implode($sep, $parts). "\r\n--${boundary}--\r\n";
+	return $head . $sep . implode($sep, $parts) . "\r\n--${boundary}--\r\n";
 }
 
 /**
@@ -795,19 +829,20 @@ function MimeifyPageRevision($page)
 {
 	//$page = $revision->getPage();
 	// FIXME: add 'hits' to $params
-	$params = array(
+	$params = [
 			'pagename' => $page['pageName'],
 			'flags' => '',
 			'author' => $page['user'],
 			'version' => $page['version'],
 			'lastmodified' => $page['lastModif']
-			);
+			];
 
 	$params['author_id'] = $page['ip'];
 	$params['summary'] = $page['comment'];
 
-	if (isset($page['hits']))
+	if (isset($page['hits'])) {
 		$params['hits'] = $page['hits'];
+	}
 
 	$params['description'] = $page['description'];
 
@@ -815,8 +850,9 @@ function MimeifyPageRevision($page)
 
 	// Non-US-ASCII is not allowed in Mime headers (at least not without
 	// special handling) --- so we urlencode all parameter values.
-	foreach ($params as $key => $val)
+	foreach ($params as $key => $val) {
 		$params[$key] = rawurlencode($val);
+	}
 
 	$out = MimeContentTypeHeader('application', 'x-tikiwiki', $params);
 	$out .= sprintf("Content-Transfer-Encoding: %s\r\n", 'binary');
@@ -850,10 +886,11 @@ function ParseRFC822Headers(&$string)
 		$string = substr($string, strlen($match[0]));
 	}
 
-	if (empty($headers))
+	if (empty($headers)) {
 		return false;
+	}
 
-	if (!preg_match("/^\r?\n/", $string, $match)) {
+	if (! preg_match("/^\r?\n/", $string, $match)) {
 		// No blank line after headers.
 		return false;
 	}
@@ -868,52 +905,56 @@ function ParseMimeContentType($string)
 	// FIXME: Remove (RFC822 style comments).
 
 	// Get type/subtype
-	if (!preg_match(':^\s*(' . MIME_TOKEN_REGEXP . ')\s*' . '/' . '\s*(' . MIME_TOKEN_REGEXP . ')\s*:x', $string, $match))
+	if (! preg_match(':^\s*(' . MIME_TOKEN_REGEXP . ')\s*' . '/' . '\s*(' . MIME_TOKEN_REGEXP . ')\s*:x', $string, $match)) {
 		ExitWiki(sprintf("Bad %s", 'MIME content-type'));
+	}
 
 	$type = strtolower($match[1]);
 	$subtype = strtolower($match[2]);
 	$string = substr($string, strlen($match[0]));
 
-	$param = array();
+	$param = [];
 
 	while (preg_match('/^;\s*(' . MIME_TOKEN_REGEXP . ')\s*=\s*' . '(?:(' . MIME_TOKEN_REGEXP . ')|"((?:[^"\\\\]|\\.)*)") \s*/sx', $string, $match)) {
 		//" <--kludge for brain-dead syntax coloring
-		if (strlen($match[2]))
+		if (strlen($match[2])) {
 			$val = $match[2];
-		else
+		} else {
 			$val = preg_replace('/[\\\\](.)/s', '\\1', $match[3]);
+		}
 
 		$param[strtolower($match[1])] = $val;
 
 		$string = substr($string, strlen($match[0]));
 	}
 
-	return array($type, $subtype,$param);
+	return [$type, $subtype,$param];
 }
 
 function ParseMimeMultipart($data, $boundary)
 {
-	if (!$boundary)
+	if (! $boundary) {
 		ExitWiki('No boundary?');
+	}
 
 	$boundary = preg_quote($boundary);
 
 	while (preg_match("/^(|.*?\n)--$boundary((?:--)?)[^\n]*\n/s", $data, $match)) {
 		$data = substr($data, strlen($match[0]));
 
-		if (!isset($parts)) {
-			$parts = array(); // First time through: discard leading chaff
+		if (! isset($parts)) {
+			$parts = []; // First time through: discard leading chaff
 		} else {
 			if ($content = ParseMimeifiedPages($match[1])) {
-				foreach ($content as $p ) {
+				foreach ($content as $p) {
 					$parts[] = $p;
 				}
 			}
 		}
 
-		if ($match[2])
+		if ($match[2]) {
 			return $parts; // End boundary found.
+		}
 	}
 
 	ExitWiki('No end boundary?');
@@ -921,21 +962,23 @@ function ParseMimeMultipart($data, $boundary)
 
 function GenerateFootnotesFromRefs($params)
 {
-	$footnotes = array();
+	$footnotes = [];
 
 	reset($params);
 
 	while (list($p, $reference) = each($params)) {
-		if (preg_match('/^ref([1-9][0-9]*)$/', $p, $m))
+		if (preg_match('/^ref([1-9][0-9]*)$/', $p, $m)) {
 			$footnotes[$m[1]] = sprintf(_("[%d] See [%s]"), $m[1], rawurldecode($reference));
+		}
 	}
 
 	if (count($footnotes) > 0) {
 		ksort($footnotes);
 
-		return "-----\n" . "!" . _("References"). "\n" . join("\n%%%\n", $footnotes). "\n";
-	} else
+		return "-----\n" . "!" . _("References") . "\n" . join("\n%%%\n", $footnotes) . "\n";
+	} else {
 		return '';
+	}
 }
 
 // Convert references in meta-data to footnotes.
@@ -943,7 +986,7 @@ function GenerateFootnotesFromRefs($params)
 // references.
 function ParseMimeifiedPages($data)
 {
-	if (!($headers = ParseRFC822Headers($data)) || empty($headers['content-type'])) {
+	if (! ($headers = ParseRFC822Headers($data)) || empty($headers['content-type'])) {
 		//trigger_error( sprintf(_("Can't find %s"),'content-type header'),
 		//  E_USER_WARNING );
 		return false;
@@ -951,7 +994,7 @@ function ParseMimeifiedPages($data)
 
 	$typeheader = $headers['content-type'];
 
-	if (!(list($type, $subtype, $params) = ParseMimeContentType($typeheader))) {
+	if (! (list($type, $subtype, $params) = ParseMimeContentType($typeheader))) {
 		trigger_error(sprintf("Can't parse %s: (%s)", 'content-type', $typeheader), E_USER_WARNING);
 
 		return false;
@@ -959,20 +1002,21 @@ function ParseMimeifiedPages($data)
 
 	if ("$type/$subtype" == 'multipart/mixed') {
 		return ParseMimeMultipart($data, $params['boundary']);
-	} else if ("$type/$subtype" != 'application/x-phpwiki') {
+	} elseif ("$type/$subtype" != 'application/x-phpwiki') {
 		trigger_error(sprintf("Bad %s", "content-type: $type/$subtype"), E_USER_WARNING);
 
 		return false;
 	}
 
 	// FIXME: more sanity checking?
-	$page = array();
-	$pagedata = array();
-	$versiondata = array();
+	$page = [];
+	$pagedata = [];
+	$versiondata = [];
 
 	foreach ($params as $key => $value) {
-		if (empty($value))
+		if (empty($value)) {
 			continue;
+		}
 
 		$value = rawurldecode($value);
 
@@ -983,8 +1027,9 @@ function ParseMimeifiedPages($data)
 				break;
 
 			case 'flags':
-				if (preg_match('/PAGE_LOCKED/', $value))
+				if (preg_match('/PAGE_LOCKED/', $value)) {
 					$pagedata['locked'] = 'yes';
+				}
 				break;
 
 			case 'created':
@@ -1007,7 +1052,7 @@ function ParseMimeifiedPages($data)
 
 	// FIXME: do we need to try harder to find a pagename if we
 	// haven't got one yet?
-	if (!isset($versiondata['author'])) {
+	if (! isset($versiondata['author'])) {
 		global $request;
 
 		$user = $request->getUser();
@@ -1016,10 +1061,11 @@ function ParseMimeifiedPages($data)
 
 	$encoding = strtolower($headers['content-transfer-encoding']);
 
-	if ($encoding == 'quoted-printable')
+	if ($encoding == 'quoted-printable') {
 		$data = QuotedPrintableDecode($data);
-	else if ($encoding && $encoding != 'binary')
+	} elseif ($encoding && $encoding != 'binary') {
 		ExitWiki(sprintf("Unknown %s", 'encoding type: $encoding'));
+	}
 
 	$data .= GenerateFootnotesFromRefs($params);
 
@@ -1027,7 +1073,7 @@ function ParseMimeifiedPages($data)
 	$page['pagedata'] = $pagedata;
 	$page['versiondata'] = $versiondata;
 
-	return array($page);
+	return [$page];
 }
 // Local Variables:
 // mode: php

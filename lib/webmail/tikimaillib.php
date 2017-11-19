@@ -22,7 +22,7 @@ class TikiMail
 	 * @param null $user	to username
 	 * @param null $from	from email
 	 */
-	function __construct($user = null, $from=null)
+	function __construct($user = null, $from = null)
 	{
 		global $user_preferences, $prefs;
 
@@ -33,10 +33,10 @@ class TikiMail
 
 		$to = '';
 		$this->errors = [];
-		if (!empty($user)) {
+		if (! empty($user)) {
 			if ($userlib->user_exists($user)) {
 				$to = $userlib->get_user_email($user);
-				$tikilib->get_user_preferences($user, array('mailCharset'));
+				$tikilib->get_user_preferences($user, ['mailCharset']);
 				$this->charset = $user_preferences[$user]['mailCharset'];
 			} else {
 				$str = tra('Mail to: User not found');
@@ -61,8 +61,9 @@ class TikiMail
 			$this->mail->addTo($to);
 		}
 
-		if( empty($this->charset) )
+		if (empty($this->charset)) {
 			$this->charset = $prefs['users_prefs_mailCharset'];
+		}
 	}
 
 	function setUser($user)
@@ -93,92 +94,97 @@ class TikiMail
 	function setHtml($html, $text = null, $images_dir = null)
 	{
 		$body = $this->mail->getBody();
-		if ( !($body instanceof \Zend\Mime\Message) && !empty($body)){
+		if (! ($body instanceof \Zend\Mime\Message) && ! empty($body)) {
 			$this->convertBodyToMime($body);
 			$body = $this->mail->getBody();
 		}
 
-		if (! $body instanceof Zend\Mime\Message){
+		if (! $body instanceof Zend\Mime\Message) {
 			$body = new Zend\Mime\Message();
 		}
 
 		$partHtml = false;
 		$partText = false;
 
-		$parts = array();
-		foreach($body->getParts() as $part){
+		$parts = [];
+		foreach ($body->getParts() as $part) {
 			/* @var $part Zend\Mime\Part */
-			if ($part->getType() == Zend\Mime\Mime::TYPE_HTML){
+			if ($part->getType() == Zend\Mime\Mime::TYPE_HTML) {
 				$partHtml = $part;
 				$part->setContent($html);
-				if( $this->charset )
+				if ($this->charset) {
 					$part->setCharset($this->charset);
-			}
-			elseif ($part->getType() == Zend\Mime\Mime::TYPE_TEXT){
-				$partText = $part;
-				if ($text){
-					$part->setContent($text);
-					if( $this->charset )
-						$part->setCharset($this->charset);
 				}
-			}
-			else
+			} elseif ($part->getType() == Zend\Mime\Mime::TYPE_TEXT) {
+				$partText = $part;
+				if ($text) {
+					$part->setContent($text);
+					if ($this->charset) {
+						$part->setCharset($this->charset);
+					}
+				}
+			} else {
 				$parts[] = $part;
+			}
 		}
 
-		if (!$partText && $text){
+		if (! $partText && $text) {
 			$partText = new Zend\Mime\Part($text);
 			$partText->setType(Zend\Mime\Mime::TYPE_TEXT);
-			if( $this->charset )
+			if ($this->charset) {
 				$partText->setCharset($this->charset);
+			}
 		}
 		if ($partText) {
 			$parts[] = $partText;
 		}
 
-		if (!$partHtml){
+		if (! $partHtml) {
 			$partHtml = new Zend\Mime\Part($html);
 			$partHtml->setType(Zend\Mime\Mime::TYPE_HTML);
-			if( $this->charset )
+			if ($this->charset) {
 				$partHtml->setCharset($this->charset);
-
+			}
 		}
 		$parts[] = $partHtml;
 
 		$body->setParts($parts);
 		$this->mail->setBody($body);
 		// use multipart/alternative for mail clients to display html and fall back to plain text parts
-		if( $text )
+		if ($text) {
 			$this->mail->getHeaders()->get('content-type')->setType('multipart/alternative');
+		}
 	}
 
 	function setText($text = '')
 	{
 		$body = $this->mail->getBody();
-		if ( $body instanceof \Zend\Mime\Message ){
+		if ($body instanceof \Zend\Mime\Message) {
 			$parts = $body->getParts();
 			$textPartFound = false;
-			foreach($parts as $part){
+			foreach ($parts as $part) {
 				/* @var $part Zend\Mime\Part */
-				if ($part->getType() == Zend\Mime\Mime::TYPE_TEXT){
+				if ($part->getType() == Zend\Mime\Mime::TYPE_TEXT) {
 					$part->setContent($text);
-					if( $this->charset )
+					if ($this->charset) {
 						$part->setCharset($this->charset);
+					}
 					$textPartFound = true;
 					break;
 				}
 			}
-			if (!$textPartFound){
+			if (! $textPartFound) {
 				$part = new Zend\Mime\Part($text);
 				$part->setType(Zend\Mime\Mime::TYPE_TEXT);
-				if( $this->charset )
+				if ($this->charset) {
 					$part->setCharset($this->charset);
+				}
 				$parts[] = $part;
 			}
 			$body->setParts($parts);
 		} else {
 			$this->mail->setBody($text);
-			if( $this->charset ) {
+			if ($this->charset) {
 				$headers = $this->mail->getHeaders();
 				$headers->removeHeader($headers->get('Content-type'));
 				$headers->addHeaderLine(
@@ -229,31 +235,29 @@ class TikiMail
 			}
 		}
 
-        if ($prefs['zend_mail_handler'] == 'smtp' && $prefs['zend_mail_queue'] == 'y') {
-            $query = "INSERT INTO `tiki_mail_queue` (message) VALUES (?)";
-		    $bindvars = array(serialize($this->mail));
+		if ($prefs['zend_mail_handler'] == 'smtp' && $prefs['zend_mail_queue'] == 'y') {
+			$query = "INSERT INTO `tiki_mail_queue` (message) VALUES (?)";
+			$bindvars = [serialize($this->mail)];
 			$tikilib->query($query, $bindvars, -1, 0);
-            $title = 'mail';
-        } else {
-
-    		try {
+			$title = 'mail';
+		} else {
+			try {
 				tiki_send_email($this->mail);
-    			$title = 'mail';
+				$title = 'mail';
 				$error = '';
-
-    		} catch (Zend\Mail\Exception\ExceptionInterface $e) {
-    			$title = 'mail error';
+			} catch (Zend\Mail\Exception\ExceptionInterface $e) {
+				$title = 'mail error';
 				$error = $e->getMessage();
 				$this->errors[] = $error;
 				$error = ' [' . $error . ']';
-    		}
+			}
 
-    		if ($title == 'mail error' || $prefs['log_mail'] == 'y') {
-    			foreach ($recipients as $u) {
-    				$logslib->add_log($title, $u . '/' . $this->mail->getSubject() . $error);
-    			}
-    		}
-        }
+			if ($title == 'mail error' || $prefs['log_mail'] == 'y') {
+				foreach ($recipients as $u) {
+					$logslib->add_log($title, $u . '/' . $this->mail->getSubject() . $error);
+				}
+			}
+		}
 		return $title == 'mail';
 	}
 
@@ -269,7 +273,7 @@ class TikiMail
 	function addAttachment($data, $filename, $mimetype)
 	{
 		$body = $this->mail->getBody();
-		if (! ($body instanceof \Zend\Mime\Message) ){
+		if (! ($body instanceof \Zend\Mime\Message)) {
 			$this->convertBodyToMime($body);
 			$body = $this->mail->getBody();
 		}
@@ -292,33 +296,34 @@ class TikiMail
 	 *
 	 * @return string scrambled email
 	 */
-	static function scrambleEmail($email, $method='unicode')
+	static function scrambleEmail($email, $method = 'unicode')
 	{
 		switch ($method) {
-		case 'strtr':
-			$trans = array(	"@" => tra("(AT)"),
+			case 'strtr':
+				$trans = [	"@" => tra("(AT)"),
 							"." => tra("(DOT)")
-			);
-			return strtr($email, $trans);
-		case 'x' :
-			$encoded = $email;
-			for ($i = strpos($email, "@") + 1, $istrlen_email = strlen($email); $i < $istrlen_email; $i++) {
-				if ($encoded[$i]  != ".") $encoded[$i] = 'x';
-			}
-			return $encoded;
-		case 'unicode':
-		case 'y':// for previous compatibility
-			$encoded = '';
-			for ($i = 0, $istrlen_email = strlen($email); $i < $istrlen_email; $i++) {
-				$encoded .= '&#' . ord($email[$i]). ';';
-			}
-			return $encoded;
-		case 'n':
-		default:
-			return $email;
+				];
+				return strtr($email, $trans);
+			case 'x':
+				$encoded = $email;
+				for ($i = strpos($email, "@") + 1, $istrlen_email = strlen($email); $i < $istrlen_email; $i++) {
+					if ($encoded[$i] != ".") {
+						$encoded[$i] = 'x';
+					}
+				}
+				return $encoded;
+			case 'unicode':
+			case 'y':// for previous compatibility
+				$encoded = '';
+				for ($i = 0, $istrlen_email = strlen($email); $i < $istrlen_email; $i++) {
+					$encoded .= '&#' . ord($email[$i]) . ';';
+				}
+				return $encoded;
+			case 'n':
+			default:
+				return $email;
 		}
 	}
-
 }
 
 /**
@@ -337,8 +342,8 @@ function format_email_reply(&$text, $from, $date)
 	for ($i = 0, $icount_lines = count($lines); $i < $icount_lines; $i++) {
 		$lines[$i] = '> ' . $lines[$i] . "\n";
 	}
-	$str = !empty($from) ? $from . ' wrote' : '';
-	$str .= !empty($date) ? ' on ' . $date : '';
+	$str = ! empty($from) ? $from . ' wrote' : '';
+	$str .= ! empty($date) ? ' on ' . $date : '';
 	$str = "\n\n\n" . $str . "\n" . implode($lines);
 
 	return $str;
@@ -352,7 +357,7 @@ function format_email_reply(&$text, $from, $date)
  * @param $html			html input
  * @return string		corrected html out
  */
-function closetags ( $html )
+function closetags($html)
 {
 	#put all opened tags into an array
 	preg_match_all("#<([a-z]+)( .*)?(?!/)>#iU", $html, $result);
@@ -364,14 +369,14 @@ function closetags ( $html )
 	$len_opened = count($openedtags);
 
 	# all tags are closed
-	if ( count($closedtags) == $len_opened ) {
+	if (count($closedtags) == $len_opened) {
 		return $html;
 	}
 	$openedtags = array_reverse($openedtags);
 
 	# close tags
-	for ( $i = 0; $i < $len_opened; $i++ ) {
-		if ( !in_array($openedtags[$i], $closedtags)) {
+	for ($i = 0; $i < $len_opened; $i++) {
+		if (! in_array($openedtags[$i], $closedtags)) {
 			$html .= "</" . $openedtags[$i] . ">";
 		} else {
 			unset($closedtags[array_search($openedtags[$i], $closedtags)]);
@@ -379,4 +384,3 @@ function closetags ( $html )
 	}
 	return $html;
 }
-

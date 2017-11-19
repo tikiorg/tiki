@@ -7,7 +7,7 @@
 
 interface ShippingProvider
 {
-	function getRates( array $from, array $to, array $packages );
+	function getRates(array $from, array $to, array $packages);
 }
 
 abstract class CustomShippingProvider implements ShippingProvider
@@ -17,27 +17,27 @@ abstract class CustomShippingProvider implements ShippingProvider
 
 class ShippingLib
 {
-	private $providers = array();
-	private $formats = array(
+	private $providers = [];
+	private $formats = [
 		'/^[A-Z][0-9][A-Z]\s?[0-9][A-Z][0-9]$/' => 'CA',
 		'/^[0-9]{5}$/' => 'US',
-	);
+	];
 
-	function addProvider( ShippingProvider $provider )
+	function addProvider(ShippingProvider $provider)
 	{
 		$this->providers[] = $provider;
 	}
 
 	function getRates(array $from, array $to, array $packages)
 	{
-		$rates = array();
+		$rates = [];
 
 		$from = $this->completeAddressInformation($from);
 		$to = $this->completeAddressInformation($to);
 
 		$packages = $this->expandPackages($packages);
 
-		foreach ( $this->providers as $provider ) {
+		foreach ($this->providers as $provider) {
 			$rates = array_merge($rates, $provider->getRates($from, $to, $packages));
 		}
 
@@ -46,13 +46,13 @@ class ShippingLib
 
 	private function completeAddressInformation($address)
 	{
-		if ( isset($address['zip']) ) {
+		if (isset($address['zip'])) {
 			$address['zip'] = strtoupper($address['zip']);
 		}
 
-		if ( ! isset( $address['country'] ) ) {
-			foreach ( $this->formats as $pattern => $country ) {
-				if ( preg_match($pattern, $address['zip']) ) {
+		if (! isset($address['country'])) {
+			foreach ($this->formats as $pattern => $country) {
+				if (preg_match($pattern, $address['zip'])) {
 					$address['country'] = $country;
 					break;
 				}
@@ -64,17 +64,17 @@ class ShippingLib
 
 	private function expandPackages($packages)
 	{
-		$out = array();
+		$out = [];
 
-		foreach ( $packages as $package ) {
-			if ( isset( $package['count'] ) ) {
+		foreach ($packages as $package) {
+			if (isset($package['count'])) {
 				$c = $package['count'];
 				unset($package['count']);
 			} else {
 				$c = 1;
 			}
 
-			for ( $i = 0; $c > $i; ++$i ) {
+			for ($i = 0; $c > $i; ++$i) {
 				$out[] = $package;
 			}
 		}
@@ -96,38 +96,37 @@ class ShippingLib
 		}
 		Feedback::error(tr('Problem reading custom shipping provider "%0"', $name), 'session');
 	}
-
 }
 
 global $shippinglib, $prefs;
 $shippinglib = new ShippingLib;
 
-if ( !empty($prefs['shipping_fedex_enable']) && $prefs['shipping_fedex_enable'] === 'y' ) {
+if (! empty($prefs['shipping_fedex_enable']) && $prefs['shipping_fedex_enable'] === 'y') {
 	require_once 'lib/shipping/provider_fedex.php';
 	$shippinglib->addProvider(
 		new ShippingProvider_FedEx(
-			array(
+			[
 				'key' => $prefs['shipping_fedex_key'],
 				'password' => $prefs['shipping_fedex_password'],
 				'meter' => $prefs['shipping_fedex_meter'],
-			)
+			]
 		)
 	);
 }
 
-if ( !empty($prefs['shipping_ups_enable']) && $prefs['shipping_ups_enable'] === 'y' ) {
+if (! empty($prefs['shipping_ups_enable']) && $prefs['shipping_ups_enable'] === 'y') {
 	require_once 'lib/shipping/provider_ups.php';
 	$shippinglib->addProvider(
 		new ShippingProvider_Ups(
-			array(
+			[
 				'username' => $prefs['shipping_ups_username'],
 				'password' => $prefs['shipping_ups_password'],
 				'license' => $prefs['shipping_ups_license'],
-			)
+			]
 		)
 	);
 }
 
-if ( !empty($prefs['shipping_custom_provider']) ) {
+if (! empty($prefs['shipping_custom_provider'])) {
 	$shippinglib->addProvider(ShippingLib::getCustomShippingProvider($prefs['shipping_custom_provider']));
 }

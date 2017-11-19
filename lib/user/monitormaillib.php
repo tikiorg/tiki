@@ -52,7 +52,7 @@ class MonitorMailLib
 			]);
 
 			$html = $this->applyStyle($html);
-			
+
 			$title = TikiLib::lib('smarty')->fetchLang($prefs['language'], 'monitor/notification_email_digest_subject.tpl');
 
 			$this->send($info['email'], $title, $html);
@@ -189,4 +189,3 @@ class MonitorMailLib
 		return $html;
 	}
 }
-
