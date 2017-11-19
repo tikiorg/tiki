@@ -186,10 +186,12 @@
 					{/if}
 				</fieldset>
 				<div id="pluginlist">
+				{if $prefs.unified_search_textarea_admin eq 'y'}
 					{remarksbox type='tip' title='{tr}Plugin List{/tr}'}
 						{tr}Use the filter input above to find plugins, or enter return to see the whole list{/tr}
 						<a href="{bootstrap_modal controller=search action=help}">{tr}Search Help{/tr} {icon name='help'}</a>
 					{/remarksbox}
+				{/if}
 				</div>
 				{if $prefs.unified_search_textarea_admin eq 'y'}<noscript>{/if}
 					{foreach from=$plugins key=plugin item=info}
