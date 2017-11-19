@@ -67,7 +67,7 @@ function typography($content, $lg = '', $ui_flag = false)
  * @param string $lang    language - must be specified
  * @param bool   $ui_flag indicates whether this for user interface strings
  *
- * @return mixed
+ * @return \Michelf\SmartyPantsTypographer|boolean
  */
 function get_typography_parser($lang, $ui_flag)
 {
