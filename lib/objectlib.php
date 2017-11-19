@@ -73,13 +73,11 @@ class ObjectLib extends TikiLib
 						break;
 
 					case 'faq':
-						{
-							$info = TikiLib::lib('faq')->get_faq($itemId);
+						$info = TikiLib::lib('faq')->get_faq($itemId);
 
-							$description = $info['description'];
-							$name = $info['title'];
-							$href = 'tiki-view_faq.php?faqId=' . $itemId;
-					}
+						$description = $info['description'];
+						$name = $info['title'];
+						$href = 'tiki-view_faq.php?faqId=' . $itemId;
 						break;
 
 					case 'file':
