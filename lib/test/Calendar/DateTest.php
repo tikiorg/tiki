@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -25,7 +25,7 @@ class Calendar_DateTest extends TikiTestCase
 	{
 		$calendarlib = TikiLib::lib('calendar');
 		$date = TikiLib::make_time(0, 0, 0, 8, 1, 2010);
-		$start = $startNext = array();
+		$start = $startNext = [];
 		$calendarlib->focusStartEnd($calendarlib->infoDate($date), 'month', 'y', $start, $startNext);
 		$this->assertEquals('2010-08-01', TikiLib::date_format('%Y-%m-%d', $start['date']));
 		$this->assertEquals('2010-09-01', TikiLib::date_format('%Y-%m-%d', $startNext['date']));
@@ -42,7 +42,7 @@ class Calendar_DateTest extends TikiTestCase
 	function testFocusToCell()
 	{
 		$calendarlib = TikiLib::lib('calendar');
-		$start = $startNext = array();
+		$start = $startNext = [];
 		$date = TikiLib::make_time(0, 0, 0, 8, 1, 2010);
 		$calendarlib->focusStartEnd($calendarlib->infoDate($date), 'month', 'y', $start, $startNext);
 		$view = 'month';

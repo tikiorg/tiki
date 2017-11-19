@@ -43,12 +43,12 @@ class Search_Elastic_FacetTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(
 			new Search_ResultSet_FacetFilter(
 				$facet,
-				array(
-					array('value' => 1, 'count' => 3),
-					array('value' => 2, 'count' => 2),
-					array('value' => 3, 'count' => 1),
-					array('value' => 'orphan', 'count' => 1),
-				)
+				[
+					['value' => 1, 'count' => 3],
+					['value' => 2, 'count' => 2],
+					['value' => 3, 'count' => 1],
+					['value' => 'orphan', 'count' => 1],
+				]
 			),
 			$values
 		);
@@ -56,10 +56,10 @@ class Search_Elastic_FacetTest extends PHPUnit_Framework_TestCase
 
 	protected function populate($index)
 	{
-		$this->add($index, 'ABC', array(1, 2, 3));
-		$this->add($index, 'AB', array(1, 2));
-		$this->add($index, 'A', array(1));
-		$this->add($index, 'empty', array('orphan'));
+		$this->add($index, 'ABC', [1, 2, 3]);
+		$this->add($index, 'AB', [1, 2]);
+		$this->add($index, 'A', [1]);
+		$this->add($index, 'empty', ['orphan']);
 	}
 
 	private function add($index, $page, array $categories)
@@ -67,12 +67,11 @@ class Search_Elastic_FacetTest extends PHPUnit_Framework_TestCase
 		$typeFactory = $index->getTypeFactory();
 
 		$index->addDocument(
-			array(
+			[
 				'object_type' => $typeFactory->identifier('wiki page'),
 				'object_id' => $typeFactory->identifier($page),
 				'categories' => $typeFactory->multivalue($categories),
-			)
+			]
 		);
 	}
 }
-

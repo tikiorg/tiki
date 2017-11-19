@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -24,20 +24,19 @@ class CommentsTest extends TikiTestCase
 	function testGetRootPath()
 	{
 		$comments = $this->lib->table('tiki_comments');
-		$parentId = $comments->insert(array(
+		$parentId = $comments->insert([
 			'objectType' => 'trackeritem',
 			'object' => 1,
 			'parentId' => 0
-		));
-		$childId = $comments->insert(array(
+		]);
+		$childId = $comments->insert([
 			'objectType' => 'trackeritem',
 			'object' => 1,
 			'parentId' => $parentId
-		));
-		$this->assertEquals(array(), $this->lib->get_root_path($parentId));
-		$this->assertEquals(array($parentId), $this->lib->get_root_path($childId));
-		$comments->delete(array('threadId' => $childId));
-		$comments->delete(array('threadId' => $parentId));
+		]);
+		$this->assertEquals([], $this->lib->get_root_path($parentId));
+		$this->assertEquals([$parentId], $this->lib->get_root_path($childId));
+		$comments->delete(['threadId' => $childId]);
+		$comments->delete(['threadId' => $parentId]);
 	}
 }
-

@@ -34,4 +34,3 @@ class Search_Elastic_StemmingTest extends Search_Index_StemmingTest
 		}
 	}
 }
-

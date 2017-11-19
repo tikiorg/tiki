@@ -16,7 +16,7 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 
 	private function backupTable($name)
 	{
-		$this->tableData[$name] = array();
+		$this->tableData[$name] = [];
 
 		$db = TikiDb::get();
 
@@ -35,7 +35,7 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 		$db->query('DELETE FROM ' . $name);
 
 		foreach ($this->tableData[$name] as $row) {
-			$db->query('INSERT INTO ' . $name . ' VALUES(?' . str_repeat(',?', count($row)-1) . ')', array_values($row));
+			$db->query('INSERT INTO ' . $name . ' VALUES(?' . str_repeat(',?', count($row) - 1) . ')', array_values($row));
 		}
 	}
 
@@ -62,32 +62,32 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 		$itemQuery = 'INSERT INTO tiki_tracker_items (itemId, trackerId) VALUES(?, ?)';
 
 		$db = TikiDb::get();
-		$db->query($objectQuery, array(1, 'wiki page', 'HomePage'));
-		$db->query($objectQuery, array(2, 'wiki page', 'Contact'));
-		$db->query($objectQuery, array(3, 'blog', 4));
-		$db->query($objectQuery, array(4, 'tracker', 1));
-		$db->query($objectQuery, array(5, 'trackeritem', 12));
+		$db->query($objectQuery, [1, 'wiki page', 'HomePage']);
+		$db->query($objectQuery, [2, 'wiki page', 'Contact']);
+		$db->query($objectQuery, [3, 'blog', 4]);
+		$db->query($objectQuery, [4, 'tracker', 1]);
+		$db->query($objectQuery, [5, 'trackeritem', 12]);
 
-		$db->query($categQuery, array(1, 1));
-		$db->query($categQuery, array(1, 4));
-		$db->query($categQuery, array(1, 3));
-		$db->query($categQuery, array(2, 3));
-		$db->query($categQuery, array(2, 2));
-		$db->query($categQuery, array(3, 2));
-		$db->query($categQuery, array(4, 1));
-		$db->query($categQuery, array(5, 2));
+		$db->query($categQuery, [1, 1]);
+		$db->query($categQuery, [1, 4]);
+		$db->query($categQuery, [1, 3]);
+		$db->query($categQuery, [2, 3]);
+		$db->query($categQuery, [2, 2]);
+		$db->query($categQuery, [3, 2]);
+		$db->query($categQuery, [4, 1]);
+		$db->query($categQuery, [5, 2]);
 
-		$db->query($itemQuery, array(12, 1));
+		$db->query($itemQuery, [12, 1]);
 
 		$factory = new Perms_ResolverFactory_CategoryFactory;
 
-		$this->assertEquals('category:1:3:4', $factory->getHash(array('type' => 'wiki page', 'object' => 'HomePage')));
-		$this->assertEquals('category:2:3', $factory->getHash(array('type' => 'wiki page', 'object' => 'Contact')));
-		$this->assertEquals('', $factory->getHash(array('type' => 'wiki page', 'object' => 'Hello World')));
-		$this->assertEquals('category:2', $factory->getHash(array('type' => 'trackeritem', 'object' => 12)));
+		$this->assertEquals('category:1:3:4', $factory->getHash(['type' => 'wiki page', 'object' => 'HomePage']));
+		$this->assertEquals('category:2:3', $factory->getHash(['type' => 'wiki page', 'object' => 'Contact']));
+		$this->assertEquals('', $factory->getHash(['type' => 'wiki page', 'object' => 'Hello World']));
+		$this->assertEquals('category:2', $factory->getHash(['type' => 'trackeritem', 'object' => 12]));
 
 		$factory = new Perms_ResolverFactory_CategoryFactory('parent');
-		$this->assertEquals('category:1', $factory->getHash(array('type' => 'trackeritem', 'object' => 12)));
+		$this->assertEquals('category:1', $factory->getHash(['type' => 'trackeritem', 'object' => 12]));
 	}
 
 	function testHashMissingType()
@@ -96,19 +96,19 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 		$categQuery = 'INSERT INTO tiki_category_objects (catObjectId, categId) VALUES(?, ?)';
 
 		$db = TikiDb::get();
-		$db->query($objectQuery, array(1, 'wiki page', 'HomePage'));
-		$db->query($objectQuery, array(2, 'wiki page', 'Contact'));
-		$db->query($objectQuery, array(3, 'blog', 4));
+		$db->query($objectQuery, [1, 'wiki page', 'HomePage']);
+		$db->query($objectQuery, [2, 'wiki page', 'Contact']);
+		$db->query($objectQuery, [3, 'blog', 4]);
 
-		$db->query($categQuery, array(1, 1));
-		$db->query($categQuery, array(1, 4));
-		$db->query($categQuery, array(1, 3));
-		$db->query($categQuery, array(2, 3));
-		$db->query($categQuery, array(2, 2));
-		$db->query($categQuery, array(3, 2));
+		$db->query($categQuery, [1, 1]);
+		$db->query($categQuery, [1, 4]);
+		$db->query($categQuery, [1, 3]);
+		$db->query($categQuery, [2, 3]);
+		$db->query($categQuery, [2, 2]);
+		$db->query($categQuery, [3, 2]);
 
 		$factory = new Perms_ResolverFactory_CategoryFactory;
-		$this->assertEquals('', $factory->getHash(array('object' => 'HomePage')));
+		$this->assertEquals('', $factory->getHash(['object' => 'HomePage']));
 	}
 
 	function testHashMissingObject()
@@ -117,19 +117,19 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 		$categQuery = 'INSERT INTO tiki_category_objects (catObjectId, categId) VALUES(?, ?)';
 
 		$db = TikiDb::get();
-		$db->query($objectQuery, array(1, 'wiki page', 'HomePage'));
-		$db->query($objectQuery, array(2, 'wiki page', 'Contact'));
-		$db->query($objectQuery, array(3, 'blog', 4));
+		$db->query($objectQuery, [1, 'wiki page', 'HomePage']);
+		$db->query($objectQuery, [2, 'wiki page', 'Contact']);
+		$db->query($objectQuery, [3, 'blog', 4]);
 
-		$db->query($categQuery, array(1, 1));
-		$db->query($categQuery, array(1, 4));
-		$db->query($categQuery, array(1, 3));
-		$db->query($categQuery, array(2, 3));
-		$db->query($categQuery, array(2, 2));
-		$db->query($categQuery, array(3, 2));
+		$db->query($categQuery, [1, 1]);
+		$db->query($categQuery, [1, 4]);
+		$db->query($categQuery, [1, 3]);
+		$db->query($categQuery, [2, 3]);
+		$db->query($categQuery, [2, 2]);
+		$db->query($categQuery, [3, 2]);
 
 		$factory = new Perms_ResolverFactory_CategoryFactory;
-		$this->assertEquals('', $factory->getHash(array('type' => 'wiki page')));
+		$this->assertEquals('', $factory->getHash(['type' => 'wiki page']));
 	}
 
 	function testObtainPermissions()
@@ -139,41 +139,41 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 		$permQuery = 'INSERT INTO users_objectpermissions (groupName, permName, objectType, objectId) VALUES(?,?,\'category\',MD5(CONCAT("category",?)))';
 
 		$db = TikiDb::get();
-		$db->query($objectQuery, array(1, 'wiki page', 'HomePage'));
-		$db->query($objectQuery, array(2, 'wiki page', 'Contact'));
-		$db->query($objectQuery, array(3, 'blog', 4));
+		$db->query($objectQuery, [1, 'wiki page', 'HomePage']);
+		$db->query($objectQuery, [2, 'wiki page', 'Contact']);
+		$db->query($objectQuery, [3, 'blog', 4]);
 
-		$db->query($categQuery, array(1, 1));
-		$db->query($categQuery, array(1, 4));
-		$db->query($categQuery, array(1, 3));
-		$db->query($categQuery, array(2, 3));
-		$db->query($categQuery, array(2, 2));
-		$db->query($categQuery, array(3, 2));
+		$db->query($categQuery, [1, 1]);
+		$db->query($categQuery, [1, 4]);
+		$db->query($categQuery, [1, 3]);
+		$db->query($categQuery, [2, 3]);
+		$db->query($categQuery, [2, 2]);
+		$db->query($categQuery, [3, 2]);
 
-		$db->query($permQuery, array('Registered', 'tiki_p_view', 3));
-		$db->query($permQuery, array('Registered', 'tiki_p_edit', 3));
-		$db->query($permQuery, array('Registered', 'tiki_p_edit', 1));
-		$db->query($permQuery, array('Anonymous', 'tiki_p_admin', 4));
-		$db->query($permQuery, array('Hello', 'tiki_p_view', 2));
+		$db->query($permQuery, ['Registered', 'tiki_p_view', 3]);
+		$db->query($permQuery, ['Registered', 'tiki_p_edit', 3]);
+		$db->query($permQuery, ['Registered', 'tiki_p_edit', 1]);
+		$db->query($permQuery, ['Anonymous', 'tiki_p_admin', 4]);
+		$db->query($permQuery, ['Hello', 'tiki_p_view', 2]);
 
 		$factory = new Perms_ResolverFactory_CategoryFactory;
 
 		$expect = new Perms_Resolver_Static(
-			array(
-				'Anonymous' => array('admin'),
-				'Registered' => array('edit', 'view'),
-			),
+			[
+				'Anonymous' => ['admin'],
+				'Registered' => ['edit', 'view'],
+			],
 			'category'
 		);
 
-		$this->assertEquals($expect, $factory->getResolver(array('type' => 'wiki page', 'object' => 'HomePage')));
+		$this->assertEquals($expect, $factory->getResolver(['type' => 'wiki page', 'object' => 'HomePage']));
 
 		$expect = new Perms_Resolver_Static(
-			array('Hello' => array('view'),),
+			['Hello' => ['view'],],
 			'category'
 		);
 
-		$this->assertEquals($expect, $factory->getResolver(array('type' => 'blog', 'object' => 4)));
+		$this->assertEquals($expect, $factory->getResolver(['type' => 'blog', 'object' => 4]));
 	}
 
 	function testObtainParentPermissions()
@@ -184,46 +184,46 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 		$itemQuery = 'INSERT INTO tiki_tracker_items (itemId, trackerId) VALUES(?, ?)';
 
 		$db = TikiDb::get();
-		$db->query($objectQuery, array(1, 'tracker', 1));
-		$db->query($objectQuery, array(2, 'trackeritem', 12));
+		$db->query($objectQuery, [1, 'tracker', 1]);
+		$db->query($objectQuery, [2, 'trackeritem', 12]);
 
-		$db->query($categQuery, array(1, 1));
-		$db->query($categQuery, array(1, 4));
-		$db->query($categQuery, array(1, 3));
-		$db->query($categQuery, array(2, 3));
-		$db->query($categQuery, array(2, 2));
+		$db->query($categQuery, [1, 1]);
+		$db->query($categQuery, [1, 4]);
+		$db->query($categQuery, [1, 3]);
+		$db->query($categQuery, [2, 3]);
+		$db->query($categQuery, [2, 2]);
 
-		$db->query($itemQuery, array(12, 1));
+		$db->query($itemQuery, [12, 1]);
 
-		$db->query($permQuery, array('Registered', 'tiki_p_tracker_view', 3));
-		$db->query($permQuery, array('Registered', 'tiki_p_tracker_edit', 3));
-		$db->query($permQuery, array('Registered', 'tiki_p_tracker_edit', 1));
-		$db->query($permQuery, array('Anonymous', 'tiki_p_tracker_admin', 4));
-		$db->query($permQuery, array('Hello', 'tiki_p_tracker_view', 2));
+		$db->query($permQuery, ['Registered', 'tiki_p_tracker_view', 3]);
+		$db->query($permQuery, ['Registered', 'tiki_p_tracker_edit', 3]);
+		$db->query($permQuery, ['Registered', 'tiki_p_tracker_edit', 1]);
+		$db->query($permQuery, ['Anonymous', 'tiki_p_tracker_admin', 4]);
+		$db->query($permQuery, ['Hello', 'tiki_p_tracker_view', 2]);
 
 		$factory = new Perms_ResolverFactory_CategoryFactory;
 
 		$expect = new Perms_Resolver_Static(
-			array(
-				'Registered' => array('tracker_edit', 'tracker_view'),
-				'Hello' => array('tracker_view'),
-			),
+			[
+				'Registered' => ['tracker_edit', 'tracker_view'],
+				'Hello' => ['tracker_view'],
+			],
 			'category'
 		);
 
-		$this->assertEquals($expect, $factory->getResolver(array('type' => 'trackeritem', 'object' => 12)));
+		$this->assertEquals($expect, $factory->getResolver(['type' => 'trackeritem', 'object' => 12]));
 
 		$factory = new Perms_ResolverFactory_CategoryFactory('parent');
 
 		$expect = new Perms_Resolver_Static(
-			array(
-				'Anonymous' => array('tracker_admin'),
-				'Registered' => array('tracker_edit', 'tracker_view'),
-			),
+			[
+				'Anonymous' => ['tracker_admin'],
+				'Registered' => ['tracker_edit', 'tracker_view'],
+			],
 			'category'
 		);
 
-		$this->assertEquals($expect, $factory->getResolver(array('type' => 'trackeritem', 'object' => 12)));
+		$this->assertEquals($expect, $factory->getResolver(['type' => 'trackeritem', 'object' => 12]));
 	}
 
 	function testGetResolverWithoutCategories()
@@ -233,21 +233,21 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 		$permQuery = 'INSERT INTO users_objectpermissions (groupName, permName, objectType, objectId) VALUES(?,?,\'category\',MD5(CONCAT("category",?)))';
 
 		$db = TikiDb::get();
-		$db->query($objectQuery, array(1, 'wiki page', 'HomePage'));
+		$db->query($objectQuery, [1, 'wiki page', 'HomePage']);
 
-		$db->query($categQuery, array(2, 3));
-		$db->query($categQuery, array(2, 2));
-		$db->query($categQuery, array(3, 2));
+		$db->query($categQuery, [2, 3]);
+		$db->query($categQuery, [2, 2]);
+		$db->query($categQuery, [3, 2]);
 
-		$db->query($permQuery, array('Registered', 'tiki_p_view', 3));
-		$db->query($permQuery, array('Registered', 'tiki_p_edit', 3));
-		$db->query($permQuery, array('Registered', 'tiki_p_edit', 1));
-		$db->query($permQuery, array('Anonymous', 'tiki_p_admin', 4));
-		$db->query($permQuery, array('Hello', 'tiki_p_view', 2));
+		$db->query($permQuery, ['Registered', 'tiki_p_view', 3]);
+		$db->query($permQuery, ['Registered', 'tiki_p_edit', 3]);
+		$db->query($permQuery, ['Registered', 'tiki_p_edit', 1]);
+		$db->query($permQuery, ['Anonymous', 'tiki_p_admin', 4]);
+		$db->query($permQuery, ['Hello', 'tiki_p_view', 2]);
 
 		$factory = new Perms_ResolverFactory_CategoryFactory;
 
-		$this->assertNull($factory->getResolver(array('type' => 'wiki page', 'object' => 'HomePage')));
+		$this->assertNull($factory->getResolver(['type' => 'wiki page', 'object' => 'HomePage']));
 	}
 
 	function testObtainPermissionsWhenNoneSpecific()
@@ -257,31 +257,31 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 		$permQuery = 'INSERT INTO users_objectpermissions (groupName, permName, objectType, objectId) VALUES(?,?,\'category\',MD5(CONCAT("category",?)))';
 
 		$db = TikiDb::get();
-		$db->query($objectQuery, array(1, 'wiki page', 'HomePage'));
-		$db->query($objectQuery, array(2, 'wiki page', 'Contact'));
-		$db->query($objectQuery, array(3, 'blog', 4));
+		$db->query($objectQuery, [1, 'wiki page', 'HomePage']);
+		$db->query($objectQuery, [2, 'wiki page', 'Contact']);
+		$db->query($objectQuery, [3, 'blog', 4]);
 
-		$db->query($categQuery, array(1, 1));
-		$db->query($categQuery, array(1, 4));
-		$db->query($categQuery, array(1, 3));
-		$db->query($categQuery, array(2, 3));
-		$db->query($categQuery, array(2, 2));
-		$db->query($categQuery, array(3, 2));
+		$db->query($categQuery, [1, 1]);
+		$db->query($categQuery, [1, 4]);
+		$db->query($categQuery, [1, 3]);
+		$db->query($categQuery, [2, 3]);
+		$db->query($categQuery, [2, 2]);
+		$db->query($categQuery, [3, 2]);
 
-		$db->query($permQuery, array('Registered', 'tiki_p_edit', 1));
-		$db->query($permQuery, array('Anonymous', 'tiki_p_admin', 4));
+		$db->query($permQuery, ['Registered', 'tiki_p_edit', 1]);
+		$db->query($permQuery, ['Anonymous', 'tiki_p_admin', 4]);
 
 		$factory = new Perms_ResolverFactory_CategoryFactory;
 
-		$this->assertNull($factory->getResolver(array('type' => 'wiki page', 'object' => 'Contact')));
+		$this->assertNull($factory->getResolver(['type' => 'wiki page', 'object' => 'Contact']));
 	}
 
 	function testObtainResolverIncompleteContext()
 	{
 		$factory = new Perms_ResolverFactory_CategoryFactory;
 
-		$this->assertNull($factory->getResolver(array('type' => 'wiki page')));
-		$this->assertNull($factory->getResolver(array('object' => 'HomePage')));
+		$this->assertNull($factory->getResolver(['type' => 'wiki page']));
+		$this->assertNull($factory->getResolver(['object' => 'HomePage']));
 	}
 
 	function testBulkLoading()
@@ -291,50 +291,50 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 		$permQuery = 'INSERT INTO users_objectpermissions (groupName, permName, objectType, objectId) VALUES(?,?,\'category\',MD5(CONCAT("category",?)))';
 
 		$db = TikiDb::get();
-		$db->query($objectQuery, array(1, 'wiki page', 'HomePage'));
-		$db->query($objectQuery, array(2, 'wiki page', 'Contact'));
-		$db->query($objectQuery, array(3, 'wiki page', 'Hello World'));
+		$db->query($objectQuery, [1, 'wiki page', 'HomePage']);
+		$db->query($objectQuery, [2, 'wiki page', 'Contact']);
+		$db->query($objectQuery, [3, 'wiki page', 'Hello World']);
 
-		$db->query($categQuery, array(1, 1));
-		$db->query($categQuery, array(1, 4));
-		$db->query($categQuery, array(1, 3));
-		$db->query($categQuery, array(2, 3));
-		$db->query($categQuery, array(2, 2));
-		$db->query($categQuery, array(3, 2));
+		$db->query($categQuery, [1, 1]);
+		$db->query($categQuery, [1, 4]);
+		$db->query($categQuery, [1, 3]);
+		$db->query($categQuery, [2, 3]);
+		$db->query($categQuery, [2, 2]);
+		$db->query($categQuery, [3, 2]);
 
-		$db->query($permQuery, array('Registered', 'tiki_p_view', 3));
-		$db->query($permQuery, array('Registered', 'tiki_p_edit', 3));
-		$db->query($permQuery, array('Registered', 'tiki_p_edit', 1));
-		$db->query($permQuery, array('Anonymous', 'tiki_p_admin', 4));
-		$db->query($permQuery, array('Hello', 'tiki_p_view', 2));
+		$db->query($permQuery, ['Registered', 'tiki_p_view', 3]);
+		$db->query($permQuery, ['Registered', 'tiki_p_edit', 3]);
+		$db->query($permQuery, ['Registered', 'tiki_p_edit', 1]);
+		$db->query($permQuery, ['Anonymous', 'tiki_p_admin', 4]);
+		$db->query($permQuery, ['Hello', 'tiki_p_view', 2]);
 
 		$factory = new Perms_ResolverFactory_CategoryFactory;
-		$out = $factory->bulk(array('type' => 'wiki page'), 'object', array('HomePage', 'UserPageFoobar', 'Hello World'));
+		$out = $factory->bulk(['type' => 'wiki page'], 'object', ['HomePage', 'UserPageFoobar', 'Hello World']);
 
-		$this->assertEquals(array('UserPageFoobar'), $out);
+		$this->assertEquals(['UserPageFoobar'], $out);
 	}
 
 	function testBulkLoadingWithoutObject()
 	{
 		$factory = new Perms_ResolverFactory_CategoryFactory;
-		$out = $factory->bulk(array('type' => 'wiki page'), 'objectId', array('HomePage', 'UserPageFoobar', 'HelloWorld'));
+		$out = $factory->bulk(['type' => 'wiki page'], 'objectId', ['HomePage', 'UserPageFoobar', 'HelloWorld']);
 
-		$this->assertEquals(array('HomePage', 'UserPageFoobar', 'HelloWorld'), $out);
+		$this->assertEquals(['HomePage', 'UserPageFoobar', 'HelloWorld'], $out);
 	}
 
 	function testBulkLoadingWithoutType()
 	{
 		$factory = new Perms_ResolverFactory_CategoryFactory;
-		$out = $factory->bulk(array(), 'object', array('HomePage', 'UserPageFoobar', 'HelloWorld'));
+		$out = $factory->bulk([], 'object', ['HomePage', 'UserPageFoobar', 'HelloWorld']);
 
-		$this->assertEquals(array('HomePage', 'UserPageFoobar', 'HelloWorld'), $out);
+		$this->assertEquals(['HomePage', 'UserPageFoobar', 'HelloWorld'], $out);
 	}
 
 	function testBulkLoadingParentWithWrongType()
 	{
 		$factory = new Perms_ResolverFactory_CategoryFactory('parent');
-		$out = $factory->bulk(array('type' => 'wiki page'), 'object', array('HomePage', 'UserPageFoobar', 'HelloWorld'));
+		$out = $factory->bulk(['type' => 'wiki page'], 'object', ['HomePage', 'UserPageFoobar', 'HelloWorld']);
 
-		$this->assertEquals(array('HomePage', 'UserPageFoobar', 'HelloWorld'), $out);
+		$this->assertEquals(['HomePage', 'UserPageFoobar', 'HelloWorld'], $out);
 	}
 }

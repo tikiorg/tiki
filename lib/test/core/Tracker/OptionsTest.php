@@ -10,49 +10,48 @@ class Tracker_OptionsTest extends PHPUnit_Framework_TestCase
 	function testBuildLegacyStringBuilder()
 	{
 		$options = Tracker_Options::fromSerialized(
-			json_encode(array('a' => 3, 'b' => 2, 'c' => 1)),
-			array(
-				'params' => array(
-					'a' => array(
+			json_encode(['a' => 3, 'b' => 2, 'c' => 1]),
+			[
+				'params' => [
+					'a' => [
 						'legacy_index' => 2,
-					),
-					'b' => array(
+					],
+					'b' => [
 						'legacy_index' => 1,
-					),
-					'c' => array(
+					],
+					'c' => [
 						'legacy_index' => 0,
-					),
-					'd' => array(
+					],
+					'd' => [
 						// No legacy
-					),
-				),
-			)
+					],
+				],
+			]
 		);
 
-		$this->assertEquals(array('1', '2', '3'), $options->buildOptionsArray());
+		$this->assertEquals(['1', '2', '3'], $options->buildOptionsArray());
 	}
 
 	function testSeparatorOnEmptyData()
 	{
 		$options = Tracker_Options::fromString(
 			'a,,b',
-			array(
-				'params' => array(
-					'a' => array(
+			[
+				'params' => [
+					'a' => [
 						'legacy_index' => 0,
-					),
-					'b' => array(
+					],
+					'b' => [
 						'legacy_index' => 1,
 						'separator' => '|',
-					),
-					'c' => array(
+					],
+					'c' => [
 						'legacy_index' => 2,
-					),
-				),
-			)
+					],
+				],
+			]
 		);
 
-		$this->assertEquals(array(), $options->getParam('b'));
+		$this->assertEquals([], $options->getParam('b'));
 	}
 }
-

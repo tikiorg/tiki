@@ -36,4 +36,3 @@ class Search_Elastic_IncrementalUpdateTest extends Search_Index_IncrementalUpdat
 		}
 	}
 }
-

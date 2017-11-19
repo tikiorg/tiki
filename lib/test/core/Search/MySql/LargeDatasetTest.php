@@ -33,10 +33,10 @@ class Search_MySql_LargeDatasetTest extends PHPUnit_Framework_TestCase
 	function testManyColumns()
 	{
 		$typeFactory = $this->index->getTypeFactory();
-		$document = array(
+		$document = [
 			'object_type' => $typeFactory->identifier('test'),
 			'object_id' => $typeFactory->identifier('test'),
-		);
+		];
 
 		for ($i = 0; 1500 > $i; ++$i) {
 			$document['identifier_' . $i] = $typeFactory->identifier('test');
@@ -53,10 +53,10 @@ class Search_MySql_LargeDatasetTest extends PHPUnit_Framework_TestCase
 	function testManyIndexes()
 	{
 		$typeFactory = $this->index->getTypeFactory();
-		$document = array(
+		$document = [
 			'object_type' => $typeFactory->identifier('test'),
 			'object_id' => $typeFactory->identifier('test'),
-		);
+		];
 
 		$query = new Search_Query;
 		for ($i = 0; 3000 > $i; ++$i) {
@@ -69,4 +69,3 @@ class Search_MySql_LargeDatasetTest extends PHPUnit_Framework_TestCase
 		$query->search($this->index);
 	}
 }
-

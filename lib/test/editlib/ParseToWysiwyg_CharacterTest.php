@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -21,8 +21,8 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 
 		$this->el = new EditLib();
 	}
-	
-		
+
+
 	function tearDown()
 	{
 	}
@@ -31,38 +31,38 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 	function testFontFamily()
 	{
 		$this->markTestIncomplete('Work in progress.');
-		
+
 		$el = new Editlib();
-		
+
 		$inData = '{FONT(type="span", font-family="tahoma")}text{FONT}';
 		$exp = '<span style="font-family:tahoma;">text<span>';
 		$out = $el->parseToWysiwyg($inData);
 		$this->assertContains($exp, $out);
 	}
 
-	
+
 	function testFontSize()
 	{
 		$this->markTestIncomplete('Work in progress.');
-		
+
 		$el = new Editlib();
-		
+
 		$inData = '{FONT(type="span", font-size="12px")}text{FONT}';
 		$exp = '<span style="font-size:12px;">text<span>';
 		$out = $el->parseToWysiwyg($inData);
 		$this->assertContains($exp, $out);
 	}
-	
-	
+
+
 	function testBold()
 	{
 		$inData = '__bold__';
 		$exp = '<strong>bold</strong>'; // like CKE
 		$out = trim($this->el->parseToWysiwyg($inData));
-		$this->assertContains($exp, $out);		
+		$this->assertContains($exp, $out);
 	}
-	
-	
+
+
 	function testItalic()
 	{
 		$inData = '\'\'italic\'\'';
@@ -70,8 +70,8 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertContains($exp, $out);
 	}
-	
-	
+
+
 	function testUnderlined()
 	{
 		$inData = '===underlined===';
@@ -79,8 +79,8 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertContains($exp, $out);
 	}
-	
-	
+
+
 	function testStrike()
 	{
 		$inData = '--strike through--';
@@ -88,8 +88,8 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertContains($exp, $out);
 	}
-	
-	
+
+
 	function testSubscript()
 	{
 		$this->markTestIncomplete('Work in progress.');
@@ -97,55 +97,55 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 		$exp = '<sub>subscript</sub>';
 		$out = $this->el->parseToWysiwyg($inData);
 		$this->assertContains($exp, $out);
-	}	
+	}
 
-	
+
 	function testSuperscript()
 	{
 		$this->markTestIncomplete('Work in progress.');
-		
+
 		$el = new EditLib();
-		
+
 		$inData = '{SUP()}superscript{SUP}';
 		$exp = '<sup>superscript</sup>';
 		$out = $el->parseToWysiwyg($inData);
 		$this->assertContains($exp, $out);
-	}		
-	
-	
+	}
+
+
 	function testMonospaced()
 	{
 		$this->markTestIncomplete('Work in progress.');
-		
+
 		$el = new EditLib();
-		
+
 		$inData = '-+monospaced+-';
 		$exp = '<code>monospaced</code>';
 		$out = $el->parseToWysiwyg($inData);
 		$this->assertContains($exp, $out);
 	}
 
-	
+
 	function testTeletype()
 	{
 		$this->markTestIncomplete('Work in progress.');
-		
+
 		$el = new EditLib();
-		
+
 		$inData = '{DIV(type="tt")}teletype{DIV}';
 		$exp = '<tt>teletype</tt>';
 		$out = $el->parseToWysiwyg($inData);
 		$this->assertContains($exp, $out);
 	}
-	
-	
+
+
 	function testColor()
 	{
 		$inData = '~~#112233:text~~';
 		$exp = '<span style="color:#112233">text</span>';
 		$out = trim($this->el->parseToWysiwyg($inData));
-		$this->assertContains($exp, $out);			
-				
+		$this->assertContains($exp, $out);
+
 		$inData = '~~ ,#112233:text~~';
 		$exp = '<span style="background-color:#112233">text</span>';
 		$out = trim($this->el->parseToWysiwyg($inData));
@@ -154,6 +154,6 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 		$inData = '~~#AABBCC,#112233:text~~';
 		$exp = '<span style="color:#AABBCC; background-color:#112233">text</span>';
 		$out = trim($this->el->parseToWysiwyg($inData));
-		$this->assertContains($exp, $out);			
+		$this->assertContains($exp, $out);
 	}
 }

@@ -17,41 +17,40 @@ class Perms_ResolverFactory_TestFactoryTest extends TikiTestCase
 	 */
 	function testHashCorrect($known, $in, $out)
 	{
-		$factory = new Perms_ResolverFactory_TestFactory($known, array());
+		$factory = new Perms_ResolverFactory_TestFactory($known, []);
 
 		$this->assertEquals($out, $factory->getHash($in));
 	}
 
 	function hashes()
 	{
-		return array(
-			'empty' => array(array(), array(), 'test:'),
-			'exact' => array(array('a'), array('a' => 1), 'test:1'),
-			'miss' => array(array('b'), array('a' => 1), 'test:'),
-			'multiple' => array(array('a', 'b'), array('a' => 1, 'b' => 2), 'test:1:2'),
-			'extra' => array(array('a'), array('a' => 1, 'b' => 2), 'test:1'),
-			'ordering' => array(array('a', 'b'), array('b' => 1, 'a' => 2), 'test:2:1'),
-		);
+		return [
+			'empty' => [[], [], 'test:'],
+			'exact' => [['a'], ['a' => 1], 'test:1'],
+			'miss' => [['b'], ['a' => 1], 'test:'],
+			'multiple' => [['a', 'b'], ['a' => 1, 'b' => 2], 'test:1:2'],
+			'extra' => [['a'], ['a' => 1, 'b' => 2], 'test:1'],
+			'ordering' => [['a', 'b'], ['b' => 1, 'a' => 2], 'test:2:1'],
+		];
 	}
 
 	function testFetchKnown()
 	{
 		$factory = new Perms_ResolverFactory_TestFactory(
-			array('a'),
-			array('test:1' => $a = new Perms_Resolver_Default(true))
+			['a'],
+			['test:1' => $a = new Perms_Resolver_Default(true)]
 		);
 
-		$this->assertSame($a, $factory->getResolver(array('a' => 1)));
+		$this->assertSame($a, $factory->getResolver(['a' => 1]));
 	}
 
 	function testFetchUnknown()
 	{
 		$factory = new Perms_ResolverFactory_TestFactory(
-			array('a'),
-			array('test:1' => $a = new Perms_Resolver_Default(true))
+			['a'],
+			['test:1' => $a = new Perms_Resolver_Default(true)]
 		);
 
-		$this->assertNull($factory->getResolver(array('a' => 2)));
+		$this->assertNull($factory->getResolver(['a' => 2]));
 	}
 }
-

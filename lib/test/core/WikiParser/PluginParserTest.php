@@ -54,7 +54,7 @@ class WikiParser_PluginParserTest extends TikiTestCase
 			->with(
 				$this->equalTo('test'),
 				$this->equalTo('Hello'),
-				$this->equalTo(array('hello' => 'world'))
+				$this->equalTo(['hello' => 'world'])
 			)
 			->will($this->returnValue('test'));
 
@@ -74,7 +74,7 @@ class WikiParser_PluginParserTest extends TikiTestCase
 			->with(
 				$this->equalTo('test'),
 				$this->equalTo(null),
-				$this->equalTo(array('hello' => 'world'))
+				$this->equalTo(['hello' => 'world'])
 			)
 			->will($this->returnValue('test'));
 
@@ -94,7 +94,7 @@ class WikiParser_PluginParserTest extends TikiTestCase
 			->with(
 				$this->equalTo('test'),
 				$this->equalTo(null),
-				$this->equalTo(array())
+				$this->equalTo([])
 			)
 			->will($this->returnValue('test'));
 
@@ -111,7 +111,7 @@ class WikiParser_PluginParserTest extends TikiTestCase
 		$mock = $this->createMock('WikiParser_PluginRunner')
 			->expects($this->once())
 			->method('run')
-			->with($this->equalTo('b'), $this->equalTo(null), $this->equalTo(array()))
+			->with($this->equalTo('b'), $this->equalTo(null), $this->equalTo([]))
 			->will($this->returnValue('return'));
 
 		$data = '~np~ {a} ~/np~ {b} ~np~ {c} ~/np~';
@@ -127,7 +127,7 @@ class WikiParser_PluginParserTest extends TikiTestCase
 		$mock = $this->createMock('WikiParser_PluginRunner')
 			->expects($this->once())
 			->method('run')
-			->with($this->equalTo('a'), $this->equalTo(' {b} '), $this->equalTo(array()))
+			->with($this->equalTo('a'), $this->equalTo(' {b} '), $this->equalTo([]))
 			->will($this->returnValue('no plugin'));
 
 		$data = '{A()} {b} {A}';

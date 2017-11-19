@@ -31,7 +31,7 @@ class UserLibTest extends TikiTestCase
 			->with($this->equalTo($user), $this->equalTo('country'))
 			->will($this->returnValue($country));
 
-		if ($setWillBeCalled){
+		if ($setWillBeCalled) {
 			// set_user_fields
 			$userLibMock
 				->expects($this->at(3))

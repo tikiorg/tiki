@@ -18,17 +18,17 @@ EXPECT;
 		$builder->addObject(
 			'wiki_page',
 			'foo',
-			array(
+			[
 				'name' => 'Foo',
 				'content' => 'Hello',
-			)
+			]
 		);
 		$builder->addObject(
 			'trackerfield',
 			'date',
-			array(
+			[
 				'tracker' => $builder->ref('tracker'),
-			)
+			]
 		);
 
 		$expect = <<<EXPECT
@@ -130,11 +130,11 @@ EXPECT;
 		$builder->addObject(
 			'wiki_page',
 			'foo',
-			array(
+			[
 				'name' => 'Foo',
 				'content' => 'Hello',
 				'categories' => $builder->user('category'),
-			)
+			]
 		);
 
 		$expect = <<<EXPECT
@@ -165,4 +165,3 @@ EXPECT;
 		}
 	}
 }
-

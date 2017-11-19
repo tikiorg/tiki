@@ -12,7 +12,7 @@
 
 class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 {
-	private $tableData = array();
+	private $tableData = [];
 
 	function setUp()
 	{
@@ -42,37 +42,37 @@ class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 	{
 		$factory = new Perms_ResolverFactory_ObjectFactory;
 
-		$this->assertEquals('object:wiki page:homepage', $factory->getHash(array('type' => 'wiki page', 'object' => 'HomePage')));
+		$this->assertEquals('object:wiki page:homepage', $factory->getHash(['type' => 'wiki page', 'object' => 'HomePage']));
 	}
 
 	function testHashParent()
 	{
 		$factory = new Perms_ResolverFactory_ObjectFactory('parent');
 
-		$this->assertEquals('object:trackeritemparent:12', $factory->getHash(array('type' => 'trackeritem', 'object' => '12')));
+		$this->assertEquals('object:trackeritemparent:12', $factory->getHash(['type' => 'trackeritem', 'object' => '12']));
 	}
 
 	function testHashMissingType()
 	{
 		$factory = new Perms_ResolverFactory_ObjectFactory;
-		$this->assertEquals('', $factory->getHash(array('object' => 'HomePage')));
+		$this->assertEquals('', $factory->getHash(['object' => 'HomePage']));
 	}
 
 	function testHashMissingObject()
 	{
 		$factory = new Perms_ResolverFactory_ObjectFactory;
-		$this->assertEquals('', $factory->getHash(array('type' => 'wiki page')));
+		$this->assertEquals('', $factory->getHash(['type' => 'wiki page']));
 	}
 
 	function testObtainPermissions()
 	{
-		$data = array(
-			array('Anonymous', 'tiki_p_view', 'wiki page', md5('wiki pagehomepage')),
-			array('Anonymous', 'tiki_p_edit', 'wiki page', md5('wiki pagehomepage')),
-			array('Anonymous', 'tiki_p_admin', 'blog', md5('wiki pagehomepage')),
-			array('Anonymous', 'tiki_p_admin', 'wiki page', md5('wiki pageuserlist')),
-			array('Admins', 'tiki_p_admin', 'wiki page', md5('wiki pagehomepage')),
-		);
+		$data = [
+			['Anonymous', 'tiki_p_view', 'wiki page', md5('wiki pagehomepage')],
+			['Anonymous', 'tiki_p_edit', 'wiki page', md5('wiki pagehomepage')],
+			['Anonymous', 'tiki_p_admin', 'blog', md5('wiki pagehomepage')],
+			['Anonymous', 'tiki_p_admin', 'wiki page', md5('wiki pageuserlist')],
+			['Admins', 'tiki_p_admin', 'wiki page', md5('wiki pagehomepage')],
+		];
 
 		$db = TikiDb::get();
 		foreach ($data as $row) {
@@ -82,23 +82,23 @@ class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 		$factory = new Perms_ResolverFactory_ObjectFactory;
 
 		$expect = new Perms_Resolver_Static(
-			array(
-				'Admins' => array('admin'),
-				'Anonymous' => array('edit', 'view'),
-			),
+			[
+				'Admins' => ['admin'],
+				'Anonymous' => ['edit', 'view'],
+			],
 			'object'
 		);
 
-		$this->assertEquals($expect, $factory->getResolver(array('type' => 'wiki page', 'object' => 'HomePage')));
+		$this->assertEquals($expect, $factory->getResolver(['type' => 'wiki page', 'object' => 'HomePage']));
 	}
 
 	function testObtainParentPermissions()
 	{
-		$data = array(
-			array('Anonymous', 'tiki_p_tracker_view', 'tracker', md5('tracker1')),
-			array('Anonymous', 'tiki_p_modify_object_categories', 'tracker', md5('tracker1')),
-			array('Admins', 'tiki_p_tracker_admin', 'tracker', md5('tracker1')),
-		);
+		$data = [
+			['Anonymous', 'tiki_p_tracker_view', 'tracker', md5('tracker1')],
+			['Anonymous', 'tiki_p_modify_object_categories', 'tracker', md5('tracker1')],
+			['Admins', 'tiki_p_tracker_admin', 'tracker', md5('tracker1')],
+		];
 
 		$db = TikiDb::get();
 		foreach ($data as $row) {
@@ -110,25 +110,25 @@ class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 		$factory = new Perms_ResolverFactory_ObjectFactory('parent');
 
 		$expect = new Perms_Resolver_Static(
-			array(
-				'Admins' => array('tracker_admin'),
-				'Anonymous' => array('modify_object_categories', 'tracker_view'),
-			),
+			[
+				'Admins' => ['tracker_admin'],
+				'Anonymous' => ['modify_object_categories', 'tracker_view'],
+			],
 			'object'
 		);
 
-		$this->assertEquals($expect, $factory->getResolver(array('type' => 'trackeritem', 'object' => 2)));
+		$this->assertEquals($expect, $factory->getResolver(['type' => 'trackeritem', 'object' => 2]));
 	}
 
 	function testObtainPermissionsWhenNoneSpecific()
 	{
-		$data = array(
-			array('Anonymous', 'tiki_p_view', 'wiki page', md5('wiki pagehomepage')),
-			array('Anonymous', 'tiki_p_edit', 'wiki page', md5('wiki pagehomepage')),
-			array('Anonymous', 'tiki_p_admin', 'blog', md5('wiki pagehomepage')),
-			array('Anonymous', 'tiki_p_admin', 'wiki page', md5('wiki pageuserlist')),
-			array('Admins', 'tiki_p_admin', 'wiki page', md5('wiki pagehomepage')),
-		);
+		$data = [
+			['Anonymous', 'tiki_p_view', 'wiki page', md5('wiki pagehomepage')],
+			['Anonymous', 'tiki_p_edit', 'wiki page', md5('wiki pagehomepage')],
+			['Anonymous', 'tiki_p_admin', 'blog', md5('wiki pagehomepage')],
+			['Anonymous', 'tiki_p_admin', 'wiki page', md5('wiki pageuserlist')],
+			['Admins', 'tiki_p_admin', 'wiki page', md5('wiki pagehomepage')],
+		];
 
 		$db = TikiDb::get();
 		foreach ($data as $row) {
@@ -137,16 +137,16 @@ class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 
 		$factory = new Perms_ResolverFactory_ObjectFactory;
 
-		$this->assertNull($factory->getResolver(array('type' => 'blog', 'object' => '234')));
+		$this->assertNull($factory->getResolver(['type' => 'blog', 'object' => '234']));
 	}
 
 	function testObtainParentPermissionsWhenNoneSpecific()
 	{
-		$data = array(
-			array('Anonymous', 'tiki_p_tracker_view', 'tracker', md5('tracker1')),
-			array('Anonymous', 'tiki_p_modify_object_categories', 'tracker', md5('tracker1')),
-			array('Admins', 'tiki_p_tracker_admin', 'tracker', md5('tracker1')),
-		);
+		$data = [
+			['Anonymous', 'tiki_p_tracker_view', 'tracker', md5('tracker1')],
+			['Anonymous', 'tiki_p_modify_object_categories', 'tracker', md5('tracker1')],
+			['Admins', 'tiki_p_tracker_admin', 'tracker', md5('tracker1')],
+		];
 
 		$db = TikiDb::get();
 		foreach ($data as $row) {
@@ -157,27 +157,27 @@ class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 
 		$factory = new Perms_ResolverFactory_ObjectFactory('parent');
 
-		$this->assertNull($factory->getResolver(array('type' => 'trackeritem', 'object' => 2)));
+		$this->assertNull($factory->getResolver(['type' => 'trackeritem', 'object' => 2]));
 	}
 
 	function testObtainResolverIncompleteContext()
 	{
 		$factory = new Perms_ResolverFactory_ObjectFactory;
 
-		$this->assertNull($factory->getResolver(array('type' => 'wiki page')));
-		$this->assertNull($factory->getResolver(array('object' => 'HomePage')));
+		$this->assertNull($factory->getResolver(['type' => 'wiki page']));
+		$this->assertNull($factory->getResolver(['object' => 'HomePage']));
 	}
 
 	function testBulkLoading()
 	{
-		$data = array(
-			array('Anonymous', 'tiki_p_view', 'wiki page', md5('wiki pagehomepage')),
-			array('Anonymous', 'tiki_p_edit', 'wiki page', md5('wiki pagehomepage')),
-			array('Anonymous', 'tiki_p_admin', 'blog', md5('wiki pagehomepage')),
-			array('Anonymous', 'tiki_p_admin', 'wiki page', md5('wiki pageuserlist')),
-			array('Admins', 'tiki_p_admin', 'wiki page', md5('wiki pagehomepage')),
-			array('Anonymous', 'tiki_p_admin', 'wiki page', md5('wiki pageuserpagefoobar')),
-		);
+		$data = [
+			['Anonymous', 'tiki_p_view', 'wiki page', md5('wiki pagehomepage')],
+			['Anonymous', 'tiki_p_edit', 'wiki page', md5('wiki pagehomepage')],
+			['Anonymous', 'tiki_p_admin', 'blog', md5('wiki pagehomepage')],
+			['Anonymous', 'tiki_p_admin', 'wiki page', md5('wiki pageuserlist')],
+			['Admins', 'tiki_p_admin', 'wiki page', md5('wiki pagehomepage')],
+			['Anonymous', 'tiki_p_admin', 'wiki page', md5('wiki pageuserpagefoobar')],
+		];
 
 		$db = TikiDb::get();
 		foreach ($data as $row) {
@@ -185,32 +185,32 @@ class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 		}
 
 		$factory = new Perms_ResolverFactory_ObjectFactory;
-		$out = $factory->bulk(array('type' => 'wiki page'), 'object', array('HomePage', 'UserPageFoobar', 'HelloWorld'));
+		$out = $factory->bulk(['type' => 'wiki page'], 'object', ['HomePage', 'UserPageFoobar', 'HelloWorld']);
 
-		$this->assertEquals(array('HelloWorld'), $out);
+		$this->assertEquals(['HelloWorld'], $out);
 	}
 
 	function testBulkLoadingWithoutObject()
 	{
 		$factory = new Perms_ResolverFactory_ObjectFactory;
-		$out = $factory->bulk(array('type' => 'wiki page'), 'objectId', array('HomePage', 'UserPageFoobar', 'HelloWorld'));
+		$out = $factory->bulk(['type' => 'wiki page'], 'objectId', ['HomePage', 'UserPageFoobar', 'HelloWorld']);
 
-		$this->assertEquals(array('HomePage', 'UserPageFoobar', 'HelloWorld'), $out);
+		$this->assertEquals(['HomePage', 'UserPageFoobar', 'HelloWorld'], $out);
 	}
 
 	function testBulkLoadingWithoutType()
 	{
 		$factory = new Perms_ResolverFactory_ObjectFactory;
-		$out = $factory->bulk(array(), 'object', array('HomePage', 'UserPageFoobar', 'HelloWorld'));
+		$out = $factory->bulk([], 'object', ['HomePage', 'UserPageFoobar', 'HelloWorld']);
 
-		$this->assertEquals(array('HomePage', 'UserPageFoobar', 'HelloWorld'), $out);
+		$this->assertEquals(['HomePage', 'UserPageFoobar', 'HelloWorld'], $out);
 	}
 
 	function testBulkLoadingParentWithWrongType()
 	{
 		$factory = new Perms_ResolverFactory_ObjectFactory('parent');
-		$out = $factory->bulk(array('type' => 'wiki page'), 'object', array('HomePage', 'UserPageFoobar', 'HelloWorld'));
+		$out = $factory->bulk(['type' => 'wiki page'], 'object', ['HomePage', 'UserPageFoobar', 'HelloWorld']);
 
-		$this->assertEquals(array('HomePage', 'UserPageFoobar', 'HelloWorld'), $out);
+		$this->assertEquals(['HomePage', 'UserPageFoobar', 'HelloWorld'], $out);
 	}
 }

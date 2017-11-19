@@ -6,6 +6,7 @@
 // $Id$
 
 namespace Tiki\Recommendation;
+
 use Tiki\Recommendation\Input\UserInput as U;
 
 class BatchTest extends \PHPUnit_Framework_TestCase implements Store\StoreInterface

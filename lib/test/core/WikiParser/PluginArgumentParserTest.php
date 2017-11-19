@@ -1,20 +1,20 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/** 
+/**
  * @group unit
- * 
+ *
  */
 
 class WikiParser_PluginArgumentParserTest extends TikiTestCase
 {
 	function testSingleSimpleArgument()
 	{
-		$out = array('foo' => 'bar');
+		$out = ['foo' => 'bar'];
 		$parser = new WikiParser_PluginArgumentParser;
 		$this->assertEquals($parser->parse('foo=bar'), $out);
 		$this->assertEquals($parser->parse('foo=>bar'), $out);
@@ -23,7 +23,7 @@ class WikiParser_PluginArgumentParserTest extends TikiTestCase
 
 	function testSingleArgumentWithQuotes()
 	{
-		$out = array('foo' => 'bar');
+		$out = ['foo' => 'bar'];
 		$parser = new WikiParser_PluginArgumentParser;
 		$this->assertEquals($parser->parse('foo="bar"'), $out);
 		$this->assertEquals($parser->parse('foo=>"bar"'), $out);
@@ -32,18 +32,18 @@ class WikiParser_PluginArgumentParserTest extends TikiTestCase
 
 	function testEqualsWithinQuotes()
 	{
-		$out = array('foo' => 'bar=baz');
+		$out = ['foo' => 'bar=baz'];
 		$parser = new WikiParser_PluginArgumentParser;
 		$this->assertEquals($parser->parse('foo="bar=baz"'), $out);
 	}
 
 	function testArgumentChaining()
 	{
-		$out = array(
+		$out = [
 			'foo' => 'bar',
 			'hello' => 'world',
 			'bar' => 'baz',
-		);
+		];
 
 		$parser = new WikiParser_PluginArgumentParser;
 		$this->assertEquals($parser->parse('foo=bar hello=world bar=baz'), $out);
@@ -54,14 +54,14 @@ class WikiParser_PluginArgumentParserTest extends TikiTestCase
 
 	function testQuoteEscape()
 	{
-		$out = array('foo' => 'bar " test');
+		$out = ['foo' => 'bar " test'];
 		$parser = new WikiParser_PluginArgumentParser;
 		$this->assertEquals($parser->parse('foo=>"bar \" test"'), $out);
 	}
 
 	function testUnclosedQuote()
 	{
-		$out = array('foo' => '" bar');
+		$out = ['foo' => '" bar'];
 		$parser = new WikiParser_PluginArgumentParser;
 		$this->assertEquals($parser->parse('foo=>" bar'), $out);
 	}
@@ -69,13 +69,13 @@ class WikiParser_PluginArgumentParserTest extends TikiTestCase
 	function testNoArgument()
 	{
 		$parser = new WikiParser_PluginArgumentParser;
-		$this->assertEquals($parser->parse(''), array());
-		$this->assertEquals($parser->parse('foo'), array());
+		$this->assertEquals($parser->parse(''), []);
+		$this->assertEquals($parser->parse('foo'), []);
 	}
 
 	function testInvalidEnd()
 	{
-		$out = array('a' => 'b');
+		$out = ['a' => 'b'];
 		$parser = new WikiParser_PluginArgumentParser;
 		$this->assertEquals($parser->parse('a=b foo='), $out);
 	}

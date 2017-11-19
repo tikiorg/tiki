@@ -29,4 +29,3 @@ class Search_MySql_IncrementalUpdateTest extends Search_Index_IncrementalUpdateT
 		}
 	}
 }
-

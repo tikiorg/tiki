@@ -14,7 +14,7 @@
  */
 
 
-class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
+class AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 {
 
 	public function _testRememberToReactivateAllTestsInMultilingualTest()
@@ -29,8 +29,8 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 	{
 		$this->openTikiPage('tiki-index.php');
 		$this->logInIfNecessaryAs('admin');
-		print "\n".$this->getHtmlSource()."\n";
-		$this->assertLanguagePicklistHasLanguages(array('English' => 'HomePage'));
+		print "\n" . $this->getHtmlSource() . "\n";
+		$this->assertLanguagePicklistHasLanguages(['English' => 'HomePage']);
 	}
 
 	/**
@@ -41,7 +41,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 		$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
 		$this->logInIfNecessaryAs('admin');
 		$this->assertLanguagePicklistHasLanguages(
-			array('English' => 'Multilingual Test Page 1', 'Français' => 'Page de test multilingue 1')
+			['English' => 'Multilingual Test Page 1', 'Français' => 'Page de test multilingue 1']
 		);
 	}
 
@@ -68,7 +68,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 		$this->assertTrue(preg_match('/page=Page\+de\+test\+multilingue\+1/', $this->getLocation()) == 1);
 		$this->assertElementPresent("link=Page de test multilingue 1");
 		$this->assertLanguagePicklistHasLanguages(
-			array('Français' => 'Page de test multilingue 1', 'English' => 'Multilingual Test Page 1')
+			['Français' => 'Page de test multilingue 1', 'English' => 'Multilingual Test Page 1']
 		);
 	}
 
@@ -109,7 +109,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 		$this->waitForPageToLoad("30000");
 		$this->assertSelectElementDoesNotContainItems(
 			"xpath=id('tiki-center')/form[1]/p/select[@name='lang']",
-			array('English' => 'en'),
+			['English' => 'en'],
 			"English should not have been present in the list of languages."
 		);
 	}
@@ -132,8 +132,6 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 		$this->type("translation_name", "Multilingual Test Page 1");
 		$this->clickAndWait("//input[@value='Create translation']");
 		$this->assertTrue($this->isTextPresent("That page already exists. Go back and choose a different name."));
-
-
 	}
 
 	/**
@@ -155,9 +153,9 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 		$this->clickAndWait("link=View Page");
 		//A bug: instead of English it shows English British although the page was not created
 		$this->assertLanguagePicklistHasLanguages(
-			array('Français' => 'Page de test multilingue 1', 'English' => 'Multilingual Test Page 1')
+			['Français' => 'Page de test multilingue 1', 'English' => 'Multilingual Test Page 1']
 		);
-		$this->assertLanguagePicklistDoesNotHaveLanguages(array('English British' => 'Multilingual Test Page 1'));
+		$this->assertLanguagePicklistDoesNotHaveLanguages(['English British' => 'Multilingual Test Page 1']);
 	}
 
 
@@ -248,9 +246,9 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 		$this->_setMachineTranslationFeatureTo('n');
 		$this->openTikiPage('tiki-index.php?page=HomePage&machine_translate_to_lang=fr');
 		$this->assertTextPresent(
-			'Machine Translation feature is not enabled.', "System should have known that MT features are not enabled."
+			'Machine Translation feature is not enabled.',
+			"System should have known that MT features are not enabled."
 		);
-
 	}
 
 
@@ -271,7 +269,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 		$this->assertSelectElementContainsItems(
 			"xpath=//select[@name='page' and @onchange='quick_switch_language( this )']",
 			$expAvailableLanguages,
-			"Language picklist was wrong. It should have contained ".$this->implode_with_key(",", $expAvailableLanguages)." but didn't."
+			"Language picklist was wrong. It should have contained " . $this->implode_with_key(",", $expAvailableLanguages) . " but didn't."
 		);
 	}
 
@@ -286,7 +284,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 		$this->assertSelectElementDoesNotContainItems(
 			"xpath=//select[@name='page' and @onchange='quick_switch_language( this )']",
 			$expAvailableLanguages,
-			"Language picklist was wrong. It contained ".$this->implode_with_key(",", $expAvailableLanguages)." but shouldn't."
+			"Language picklist was wrong. It contained " . $this->implode_with_key(",", $expAvailableLanguages) . " but shouldn't."
 		);
 	}
 
@@ -316,5 +314,4 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 			print "\nfeature_machine_translation ENABLED\n";
 		}
 	}
-
 }

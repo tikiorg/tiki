@@ -12,7 +12,7 @@
 
 class Perms_ResolverFactory_GlobalFactoryTest extends PHPUnit_Framework_TestCase
 {
-	private $tableData = array();
+	private $tableData = [];
 
 	function setUp()
 	{
@@ -41,28 +41,28 @@ class Perms_ResolverFactory_GlobalFactoryTest extends PHPUnit_Framework_TestCase
 	{
 		$factory = new Perms_ResolverFactory_GlobalFactory;
 
-		$this->assertEquals('global', $factory->getHash(array()));
-		$this->assertEquals('global', $factory->getHash(array('type' => 'wiki page', 'object' => 'HomePage')));
+		$this->assertEquals('global', $factory->getHash([]));
+		$this->assertEquals('global', $factory->getHash(['type' => 'wiki page', 'object' => 'HomePage']));
 	}
 
 	function testObtainGlobalPermissions()
 	{
 		$db = TikiDb::get();
 		$query = 'INSERT INTO users_grouppermissions (groupName, permName) VALUES(?,?)';
-		$db->query($query, array('Anonymous', 'tiki_p_view'));
-		$db->query($query, array('Anonymous', 'tiki_p_edit'));
-		$db->query($query, array('Registered', 'tiki_p_remove'));
-		$db->query($query, array('Admins', 'tiki_p_admin'));
+		$db->query($query, ['Anonymous', 'tiki_p_view']);
+		$db->query($query, ['Anonymous', 'tiki_p_edit']);
+		$db->query($query, ['Registered', 'tiki_p_remove']);
+		$db->query($query, ['Admins', 'tiki_p_admin']);
 
 		$expect = new Perms_Resolver_Static(
-			array(
-				'Anonymous' => array('view', 'edit'),
-				'Registered' => array('remove'),
-				'Admins' => array('admin'),
-			)
+			[
+				'Anonymous' => ['view', 'edit'],
+				'Registered' => ['remove'],
+				'Admins' => ['admin'],
+			]
 		);
 
 		$factory = new Perms_ResolverFactory_GlobalFactory;
-		$this->assertEquals($expect, $factory->getResolver(array()));
+		$this->assertEquals($expect, $factory->getResolver([]));
 	}
 }

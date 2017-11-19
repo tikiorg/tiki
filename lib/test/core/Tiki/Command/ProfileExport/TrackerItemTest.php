@@ -28,7 +28,6 @@ class Tiki_Command_ProfileExport_TrackerItemTest extends TikiTestCase
 		);
 
 		parent::setUp();
-
 	}
 
 	/**

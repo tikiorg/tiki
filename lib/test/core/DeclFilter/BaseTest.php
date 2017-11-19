@@ -14,17 +14,17 @@ class DeclFilter_BaseTest extends TikiTestCase
 {
 	function testSimple()
 	{
-		$data = array(
+		$data = [
 			'numeric' => '123abc',
 			'alpha' => 'alpha123',
-		);
+		];
 
 		$filter = new DeclFilter;
 		$filter->addStaticKeyFilters(
-			array(
+			[
 				'numeric' => 'digits',
 				'alpha' => 'alpha',
-			)
+			]
 		);
 
 		$data = $filter->filter($data);
@@ -35,12 +35,12 @@ class DeclFilter_BaseTest extends TikiTestCase
 
 	function testStructure()
 	{
-		$data = array(
-			'num_array' => array(134, '456', 'abc', '123abc'),
-		);
+		$data = [
+			'num_array' => [134, '456', 'abc', '123abc'],
+		];
 
 		$filter = new DeclFilter;
-		$filter->addStaticKeyFiltersForArrays(array('num_array' => 'digits',));
+		$filter->addStaticKeyFiltersForArrays(['num_array' => 'digits',]);
 
 		$data = $filter->filter($data);
 
@@ -54,14 +54,14 @@ class DeclFilter_BaseTest extends TikiTestCase
 	function testDefault()
 	{
 		$filter = new DeclFilter;
-		$filter->addStaticKeyFilters(array('hello' => 'digits',));
+		$filter->addStaticKeyFilters(['hello' => 'digits',]);
 		$filter->addCatchAllFilter('alpha');
 
 		$data = $filter->filter(
-			array(
+			[
 				'hello' => '123abc',
 				'world' => '123abc',
-			)
+			]
 		);
 
 		$this->assertEquals($data['world'], 'abc');
@@ -71,13 +71,13 @@ class DeclFilter_BaseTest extends TikiTestCase
 	function testNoDefault()
 	{
 		$filter = new DeclFilter;
-		$filter->addStaticKeyFilters(array('hello' => 'digits',));
+		$filter->addStaticKeyFilters(['hello' => 'digits',]);
 
 		$data = $filter->filter(
-			array(
+			[
 				'hello' => '123abc',
 				'world' => '123abc',
-			)
+			]
 		);
 
 		$this->assertEquals($data['world'], '123abc');

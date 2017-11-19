@@ -25,25 +25,25 @@ class Perms_BaseTest extends TikiTestCase
 	function testGroupsPropagateToAccessor()
 	{
 		$perms = new Perms;
-		$perms->setGroups(array('Registered', 'Administrator'));
+		$perms->setGroups(['Registered', 'Administrator']);
 		Perms::set($perms);
 
 		$expect = new Perms_Accessor;
-		$expect->setGroups(array('Registered', 'Administrator'));
+		$expect->setGroups(['Registered', 'Administrator']);
 
 		$this->assertEquals($expect, Perms::get());
 	}
 
 	function testContextPropagatesToAccessor()
 	{
-		$accessor = Perms::get(array('context'));
+		$accessor = Perms::get(['context']);
 
-		$this->assertEquals(array('context'), $accessor->getContext());
+		$this->assertEquals(['context'], $accessor->getContext());
 	}
 
 	function testWithoutArrayContext()
 	{
-		$expect = Perms::get(array('type' => 'wiki page', 'object' => 'HomePage', 'parentId' => null));
+		$expect = Perms::get(['type' => 'wiki page', 'object' => 'HomePage', 'parentId' => null]);
 		$accessor = Perms::get('wiki page', 'HomePage');
 
 		$this->assertEquals($expect, $accessor);
@@ -57,26 +57,26 @@ class Perms_BaseTest extends TikiTestCase
 		$perms = new Perms;
 
 		$perms->setResolverFactories(
-			array(
+			[
 				new Perms_ResolverFactory_TestFactory(
-					array('object'),
-					array(
+					['object'],
+					[
 						'test:a' => $rA = new Perms_Resolver_Default(true),
 						'test:b' => $rB = new Perms_Resolver_Default(true),
-					)
+					]
 				),
 				new Perms_ResolverFactory_TestFactory(
-					array('category'),
-					array(
+					['category'],
+					[
 						'test:1' => $r1 = new Perms_Resolver_Default(true),
 						'test:2' => $r2 = new Perms_Resolver_Default(true),
-					)
+					]
 				),
 				new Perms_ResolverFactory_TestFactory(
-					array(),
-					array('test:' => $rG = new Perms_Resolver_Default(true),)
+					[],
+					['test:' => $rG = new Perms_Resolver_Default(true),]
 				),
-			)
+			]
 		);
 		Perms::set($perms);
 
@@ -85,15 +85,15 @@ class Perms_BaseTest extends TikiTestCase
 
 	function resolverMatches()
 	{
-		return array(
-			'testObjectA' => array(array('object' => 'a'), 'rA'),
-			'testObjectB' => array(array('object' => 'b'), 'rB'),
-			'testCategoryIgnoredWhenObjectMatches' => array(array('object' => 'b', 'category' => '1'), 'rB'),
-			'testCategoryObtainOnObjectMiss' => array(array('object' => 'c', 'category' => '1'), 'r1'),
-			'testCategoryOnly' => array(array('category' => '2'), 'r2'),
-			'testObjectAndCategoryMiss' => array(array('object' => 'd', 'category' => '3'), 'rG'),
-			'testNoContext' => array(array(), 'rG'),
-		);
+		return [
+			'testObjectA' => [['object' => 'a'], 'rA'],
+			'testObjectB' => [['object' => 'b'], 'rB'],
+			'testCategoryIgnoredWhenObjectMatches' => [['object' => 'b', 'category' => '1'], 'rB'],
+			'testCategoryObtainOnObjectMiss' => [['object' => 'c', 'category' => '1'], 'r1'],
+			'testCategoryOnly' => [['category' => '2'], 'r2'],
+			'testObjectAndCategoryMiss' => [['object' => 'd', 'category' => '3'], 'rG'],
+			'testNoContext' => [[], 'rG'],
+		];
 	}
 
 	function testResolverNotCalledTwiceWhenFound()
@@ -109,7 +109,7 @@ class Perms_BaseTest extends TikiTestCase
 			->will($this->returnValue(new Perms_Resolver_Default(true)));
 
 		$perms = new Perms;
-		$perms->setResolverFactories(array($mock,));
+		$perms->setResolverFactories([$mock,]);
 		Perms::set($perms);
 
 		Perms::get();
@@ -129,7 +129,7 @@ class Perms_BaseTest extends TikiTestCase
 			->will($this->returnValue(false));
 
 		$perms = new Perms;
-		$perms->setResolverFactories(array($mock,));
+		$perms->setResolverFactories([$mock,]);
 		Perms::set($perms);
 
 		Perms::get();
@@ -143,31 +143,31 @@ class Perms_BaseTest extends TikiTestCase
 		$mockGlobal = $this->createMock('Perms_ResolverFactory');
 
 		$perms = new Perms;
-		$perms->setResolverFactories(array($mockObject, $mockCategory, $mockGlobal));
+		$perms->setResolverFactories([$mockObject, $mockCategory, $mockGlobal]);
 		Perms::set($perms);
 
 		$mockObject->expects($this->once())
 			->method('bulk')
-			->with($this->equalTo(array('type' => 'wiki page')), $this->equalTo('object'), $this->equalTo(array('A', 'B', 'C', 'D', 'E')))
-			->will($this->returnValue(array('A', 'C', 'E')));
+			->with($this->equalTo(['type' => 'wiki page']), $this->equalTo('object'), $this->equalTo(['A', 'B', 'C', 'D', 'E']))
+			->will($this->returnValue(['A', 'C', 'E']));
 		$mockCategory->expects($this->once())
 			->method('bulk')
-			->with($this->equalTo(array('type' => 'wiki page')), $this->equalTo('object'), $this->equalTo(array('A', 'C', 'E')))
-			->will($this->returnValue(array('C')));
+			->with($this->equalTo(['type' => 'wiki page']), $this->equalTo('object'), $this->equalTo(['A', 'C', 'E']))
+			->will($this->returnValue(['C']));
 		$mockGlobal->expects($this->once())
 			->method('bulk')
-			->with($this->equalTo(array('type' => 'wiki page')), $this->equalTo('object'), $this->equalTo(array('C')))
+			->with($this->equalTo(['type' => 'wiki page']), $this->equalTo('object'), $this->equalTo(['C']))
 			->will($this->returnArgument(0));
 
-		$data = array(
-			array('pageId' => 1, 'pageName' => 'A', 'content' => 'Hello World'),
-			array('pageId' => 2, 'pageName' => 'B', 'content' => 'Hello World'),
-			array('pageId' => 3, 'pageName' => 'C', 'content' => 'Hello World'),
-			array('pageId' => 4, 'pageName' => 'D', 'content' => 'Hello World'),
-			array('pageId' => 5, 'pageName' => 'E', 'content' => 'Hello World'),
-		);
+		$data = [
+			['pageId' => 1, 'pageName' => 'A', 'content' => 'Hello World'],
+			['pageId' => 2, 'pageName' => 'B', 'content' => 'Hello World'],
+			['pageId' => 3, 'pageName' => 'C', 'content' => 'Hello World'],
+			['pageId' => 4, 'pageName' => 'D', 'content' => 'Hello World'],
+			['pageId' => 5, 'pageName' => 'E', 'content' => 'Hello World'],
+		];
 
-		Perms::bulk(array('type' => 'wiki page'), 'object', $data, 'pageName');
+		Perms::bulk(['type' => 'wiki page'], 'object', $data, 'pageName');
 	}
 
 	function customHash($context)
@@ -179,42 +179,42 @@ class Perms_BaseTest extends TikiTestCase
 	{
 		$perms = new Perms;
 		$perms->setResolverFactories(
-			array(
+			[
 				new Perms_ResolverFactory_TestFactory(
-					array('object'),
-					array(
+					['object'],
+					[
 						'test:A' => new Perms_Resolver_Default(true),
 						'test:B' => new Perms_Resolver_Default(true),
 						'test:C' => new Perms_Resolver_Default(false),
 						'test:D' => new Perms_Resolver_Default(false),
 						'test:E' => new Perms_Resolver_Default(true),
-					)
+					]
 				),
-			)
+			]
 		);
 		Perms::set($perms);
 
-		$data = array(
-			array('pageId' => 1, 'pageName' => 'A', 'content' => 'Hello World', 'creator' => 'admin'),
-			array('pageId' => 2, 'pageName' => 'B', 'content' => 'Hello World', 'creator' => 'admin'),
-			array('pageId' => 3, 'pageName' => 'C', 'content' => 'Hello World', 'creator' => 'admin'),
-			array('pageId' => 4, 'pageName' => 'D', 'content' => 'Hello World', 'creator' => 'admin'),
-			array('pageId' => 5, 'pageName' => 'E', 'content' => 'Hello World', 'creator' => 'admin'),
-		);
+		$data = [
+			['pageId' => 1, 'pageName' => 'A', 'content' => 'Hello World', 'creator' => 'admin'],
+			['pageId' => 2, 'pageName' => 'B', 'content' => 'Hello World', 'creator' => 'admin'],
+			['pageId' => 3, 'pageName' => 'C', 'content' => 'Hello World', 'creator' => 'admin'],
+			['pageId' => 4, 'pageName' => 'D', 'content' => 'Hello World', 'creator' => 'admin'],
+			['pageId' => 5, 'pageName' => 'E', 'content' => 'Hello World', 'creator' => 'admin'],
+		];
 
 		$out = Perms::filter(
-			array('type' => 'wiki page'),
+			['type' => 'wiki page'],
 			'object',
 			$data,
-			array('object' => 'pageName', 'creator' => 'creator'),
+			['object' => 'pageName', 'creator' => 'creator'],
 			'view'
 		);
 
-		$expect = array(
-			array('pageId' => 1, 'pageName' => 'A', 'content' => 'Hello World', 'creator' => 'admin'),
-			array('pageId' => 2, 'pageName' => 'B', 'content' => 'Hello World', 'creator' => 'admin'),
-			array('pageId' => 5, 'pageName' => 'E', 'content' => 'Hello World', 'creator' => 'admin'),
-		);
+		$expect = [
+			['pageId' => 1, 'pageName' => 'A', 'content' => 'Hello World', 'creator' => 'admin'],
+			['pageId' => 2, 'pageName' => 'B', 'content' => 'Hello World', 'creator' => 'admin'],
+			['pageId' => 5, 'pageName' => 'E', 'content' => 'Hello World', 'creator' => 'admin'],
+		];
 
 		$this->assertEquals($expect, $out);
 	}
@@ -223,29 +223,29 @@ class Perms_BaseTest extends TikiTestCase
 	{
 		$perms = new Perms;
 		$perms->setResolverFactories(
-			array($mock = $this->createMock('Perms_ResolverFactory'))
+			[$mock = $this->createMock('Perms_ResolverFactory')]
 		);
 		Perms::set($perms);
 
 		$mock->expects($this->once())
 			->method('getHash')
-			->with($this->equalTo(array('type' => 'wiki page', 'object' => 'Hello World', 'creator' => 'admin')))
+			->with($this->equalTo(['type' => 'wiki page', 'object' => 'Hello World', 'creator' => 'admin']))
 			->will($this->returnValue(null));
 		$mock->expects($this->once())
 			->method('bulk');
 
-		$data = array(
-			array('pageId' => 1, 'pageName' => 'Hello World', 'content' => 'Hello World', 'creator' => 'admin'),
-		);
+		$data = [
+			['pageId' => 1, 'pageName' => 'Hello World', 'content' => 'Hello World', 'creator' => 'admin'],
+		];
 
-		Perms::filter(array('type' => 'wiki page'), 'object', $data, array('object' => 'pageName', 'creator' => 'creator'), 'view');
+		Perms::filter(['type' => 'wiki page'], 'object', $data, ['object' => 'pageName', 'creator' => 'creator'], 'view');
 	}
 
 	function testSkipBulkOnEmptySet()
 	{
 		$perms = new Perms;
 		$perms->setResolverFactories(
-			array($mock = $this->createMock('Perms_ResolverFactory'))
+			[$mock = $this->createMock('Perms_ResolverFactory')]
 		);
 		Perms::set($perms);
 
@@ -253,4 +253,3 @@ class Perms_BaseTest extends TikiTestCase
 			->method('bulk');
 	}
 }
-

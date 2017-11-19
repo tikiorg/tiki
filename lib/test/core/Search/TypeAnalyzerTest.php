@@ -9,28 +9,28 @@ class Search_TypeAnalyzerTest extends PHPUnit_Framework_TestCase
 {
 	function mappingProvider()
 	{
-		return array(
-			'empty' => array('plaintext', 'test', ''),
-			'text' => array('plaintext', 'test', 'Hello World!'),
-			'basic_array' => array('multivalue', 'test', array('A', 'B', 'C')),
-			'map' => array('', 'test', array(
+		return [
+			'empty' => ['plaintext', 'test', ''],
+			'text' => ['plaintext', 'test', 'Hello World!'],
+			'basic_array' => ['multivalue', 'test', ['A', 'B', 'C']],
+			'map' => ['', 'test', [
 				'A' => 1,
 				'B' => 2,
 				'C' => 5,
-			)),
-			'complex' => array('', 'test', array(
-				array(1, 2, 3),
-				array(2, 3, 4),
-			)),
-			'identifier_suffix' => array('identifier', 'some_id', 'foobar'),
-			'identifier_suffix2' => array('identifier', 'someId', 'foobar'),
-			'date_suffix' => array('timestamp', 'modification_date', 'foobar'),
-			'standard_field_type' => array('identifier', 'type', 'foobar'),
-			'standard_field_object' => array('identifier', 'object', 'foobar'),
-			'standard_field_version' => array('identifier', 'version', 'foobar'),
-			'standard_field_user' => array('identifier', 'user', 'foobar'),
-			'wiki_field' => array('wikitext', 'field_wiki', 'foobar'),
-		);
+			]],
+			'complex' => ['', 'test', [
+				[1, 2, 3],
+				[2, 3, 4],
+			]],
+			'identifier_suffix' => ['identifier', 'some_id', 'foobar'],
+			'identifier_suffix2' => ['identifier', 'someId', 'foobar'],
+			'date_suffix' => ['timestamp', 'modification_date', 'foobar'],
+			'standard_field_type' => ['identifier', 'type', 'foobar'],
+			'standard_field_object' => ['identifier', 'object', 'foobar'],
+			'standard_field_version' => ['identifier', 'version', 'foobar'],
+			'standard_field_user' => ['identifier', 'user', 'foobar'],
+			'wiki_field' => ['wikitext', 'field_wiki', 'foobar'],
+		];
 	}
 
 	/**
@@ -43,4 +43,3 @@ class Search_TypeAnalyzerTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($expectedType, $analyzer->findType($key, $value));
 	}
 }
-

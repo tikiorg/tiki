@@ -25,7 +25,7 @@ class Tiki_Event_ManagerTest extends PHPUnit_Framework_TestCase
 	function testBindAndTrigger()
 	{
 		$manager = new Tiki_Event_Manager;
-		$manager->bind('tiki.wiki.update', array($this, 'callbackAdd'));
+		$manager->bind('tiki.wiki.update', [$this, 'callbackAdd']);
 
 		$manager->trigger('tiki.wiki.update');
 
@@ -39,9 +39,9 @@ class Tiki_Event_ManagerTest extends PHPUnit_Framework_TestCase
 		$manager->bind('tiki.wiki.update', 'tiki.wiki.save');
 		$manager->bind('tiki.wiki.save', 'tiki.save');
 
-		$manager->bind('tiki.save', array($this, 'callbackAdd'));
-		$manager->bind('tiki.wiki.save', array($this, 'callbackMultiply'));
-		$manager->bind('tiki.wiki.update', array($this, 'callbackMultiply'));
+		$manager->bind('tiki.save', [$this, 'callbackAdd']);
+		$manager->bind('tiki.wiki.save', [$this, 'callbackMultiply']);
+		$manager->bind('tiki.wiki.update', [$this, 'callbackMultiply']);
 
 		$manager->trigger('tiki.wiki.update');
 
@@ -53,14 +53,14 @@ class Tiki_Event_ManagerTest extends PHPUnit_Framework_TestCase
 		$manager = new Tiki_Event_Manager;
 		$manager->bind(
 			'tiki.wiki.update',
-			array($this, 'callbackAdd'),
-			array('amount' => 4,)
+			[$this, 'callbackAdd'],
+			['amount' => 4,]
 		);
 
 		$manager->bind(
 			'tiki.wiki.update',
-			array($this, 'callbackAdd'),
-			array('amount' => 5,)
+			[$this, 'callbackAdd'],
+			['amount' => 5,]
 		);
 
 		$manager->trigger('tiki.wiki.update');
@@ -74,11 +74,11 @@ class Tiki_Event_ManagerTest extends PHPUnit_Framework_TestCase
 
 		$manager->bind('tiki.wiki.update', 'tiki.wiki.save');
 
-		$manager->bind('tiki.save', array($this, 'callbackAdd'));
-		$manager->bind('tiki.wiki.save', array($this, 'callbackAdd'), array('amount' => 3));
-		$manager->bind('tiki.wiki.update', array($this, 'callbackMultiply'));
+		$manager->bind('tiki.save', [$this, 'callbackAdd']);
+		$manager->bind('tiki.wiki.save', [$this, 'callbackAdd'], ['amount' => 3]);
+		$manager->bind('tiki.wiki.update', [$this, 'callbackMultiply']);
 
-		$manager->trigger('tiki.wiki.update', array('amount' => 4));
+		$manager->trigger('tiki.wiki.update', ['amount' => 4]);
 
 		$this->assertEquals(16, $this->called);
 	}
@@ -91,25 +91,25 @@ class Tiki_Event_ManagerTest extends PHPUnit_Framework_TestCase
 		$manager->bind('tiki.wiki.save', 'tiki.save');
 		$manager->bind('tiki.file.save', 'tiki.save');
 
-		$manager->bind('tiki.wiki.save', array($this, 'callbackMultiply'));
-		$manager->bind('tiki.wiki.update', array($this, 'callbackMultiply'));
-		$manager->bind('tiki.pageload', array($this, 'callbackMultiply'));
+		$manager->bind('tiki.wiki.save', [$this, 'callbackMultiply']);
+		$manager->bind('tiki.wiki.update', [$this, 'callbackMultiply']);
+		$manager->bind('tiki.pageload', [$this, 'callbackMultiply']);
 
 		$this->assertEquals(
-			array(
-				'nodes' => array(
+			[
+				'nodes' => [
 					'tiki.wiki.update',
 					'tiki.wiki.save',
 					'tiki.file.save',
 					'tiki.pageload',
 					'tiki.save',
-				),
-				'edges' => array(
-					array('from' => 'tiki.wiki.update', 'to' => 'tiki.wiki.save'),
-					array('from' => 'tiki.wiki.save', 'to' => 'tiki.save'),
-					array('from' => 'tiki.file.save', 'to' => 'tiki.save'),
-				),
-			),
+				],
+				'edges' => [
+					['from' => 'tiki.wiki.update', 'to' => 'tiki.wiki.save'],
+					['from' => 'tiki.wiki.save', 'to' => 'tiki.save'],
+					['from' => 'tiki.file.save', 'to' => 'tiki.save'],
+				],
+			],
 			$manager->getEventGraph()
 		);
 	}
@@ -121,9 +121,9 @@ class Tiki_Event_ManagerTest extends PHPUnit_Framework_TestCase
 		$manager->bind('tiki.wiki.update', 'tiki.wiki.save');
 		$manager->bind('tiki.wiki.save', 'tiki.save');
 
-		$manager->bindPriority(10, 'tiki.save', array($this, 'callbackAdd'));
-		$manager->bind('tiki.wiki.save', array($this, 'callbackMultiply'));
-		$manager->bind('tiki.wiki.update', array($this, 'callbackMultiply'));
+		$manager->bindPriority(10, 'tiki.save', [$this, 'callbackAdd']);
+		$manager->bind('tiki.wiki.save', [$this, 'callbackMultiply']);
+		$manager->bind('tiki.wiki.update', [$this, 'callbackMultiply']);
 
 		$manager->trigger('tiki.wiki.update');
 
@@ -137,9 +137,9 @@ class Tiki_Event_ManagerTest extends PHPUnit_Framework_TestCase
 		$manager->bind('tiki.wiki.update', 'tiki.wiki.save');
 		$manager->bind('tiki.wiki.save', 'tiki.save');
 
-		$manager->bindPriority(10, 'tiki.save', array($this, 'callbackAdd'));
-		$manager->bind('tiki.wiki.save', array($this, 'callbackMultiply'));
-		$manager->bind('tiki.wiki.update', array($this, 'callbackMultiply'));
+		$manager->bindPriority(10, 'tiki.save', [$this, 'callbackAdd']);
+		$manager->bind('tiki.wiki.save', [$this, 'callbackMultiply']);
+		$manager->bind('tiki.wiki.update', [$this, 'callbackMultiply']);
 
 		$manager->bindPriority(
 			5,
@@ -164,4 +164,3 @@ class Tiki_Event_ManagerTest extends PHPUnit_Framework_TestCase
 		$this->called *= isset($arguments['amount']) ? $arguments['amount'] : 2;
 	}
 }
-

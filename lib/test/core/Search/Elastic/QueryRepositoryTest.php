@@ -23,11 +23,11 @@ class Search_Elastic_QueryRepositoryTest extends PHPUnit_Framework_TestCase
 		$this->index = new Search_Elastic_Index($connection, 'test_index');
 		$this->index->destroy();
 		$factory = $this->index->getTypeFactory();
-		$this->index->addDocument(array(
+		$this->index->addDocument([
 			'object_type' => $factory->identifier('wiki page'),
 			'object_id' => $factory->identifier('HomePage'),
 			'contents' => $factory->plaintext('Hello World'),
-		));
+		]);
 	}
 
 	function tearDown()
@@ -40,13 +40,13 @@ class Search_Elastic_QueryRepositoryTest extends PHPUnit_Framework_TestCase
 	function testNothingToMatch()
 	{
 		$tf = $this->index->getTypeFactory();
-		$names = $this->index->getMatchingQueries(array(
+		$names = $this->index->getMatchingQueries([
 			'object_type' => $tf->identifier('wiki page'),
 			'object_id' => $tf->identifier('HomePage'),
 			'contents' => $tf->plaintext('Hello World!'),
-		));
+		]);
 
-		$this->assertEquals(array(), $names);
+		$this->assertEquals([], $names);
 	}
 
 	function testFilterBasicContent()
@@ -55,13 +55,13 @@ class Search_Elastic_QueryRepositoryTest extends PHPUnit_Framework_TestCase
 		$query->store('my_custom_name', $this->index);
 
 		$tf = $this->index->getTypeFactory();
-		$names = $this->index->getMatchingQueries(array(
+		$names = $this->index->getMatchingQueries([
 			'object_type' => $tf->identifier('wiki page'),
 			'object_id' => $tf->identifier('HomePage'),
 			'contents' => $tf->plaintext('Hello World!'),
-		));
+		]);
 
-		$this->assertEquals(array('my_custom_name'), $names);
+		$this->assertEquals(['my_custom_name'], $names);
 	}
 
 	function testFilterFailsToFindContent()
@@ -70,13 +70,13 @@ class Search_Elastic_QueryRepositoryTest extends PHPUnit_Framework_TestCase
 		$query->store('my_custom_name', $this->index);
 
 		$tf = $this->index->getTypeFactory();
-		$names = $this->index->getMatchingQueries(array(
+		$names = $this->index->getMatchingQueries([
 			'object_type' => $tf->identifier('wiki page'),
 			'object_id' => $tf->identifier('HomePage'),
 			'contents' => $tf->plaintext('Hello World!'),
-		));
+		]);
 
-		$this->assertEquals(array(), $names);
+		$this->assertEquals([], $names);
 	}
 
 	function testRemoveQuery()
@@ -86,13 +86,12 @@ class Search_Elastic_QueryRepositoryTest extends PHPUnit_Framework_TestCase
 		$this->index->unstore('my_custom_name');
 
 		$tf = $this->index->getTypeFactory();
-		$names = $this->index->getMatchingQueries(array(
+		$names = $this->index->getMatchingQueries([
 			'object_type' => $tf->identifier('wiki page'),
 			'object_id' => $tf->identifier('HomePage'),
 			'contents' => $tf->plaintext('Hello World!'),
-		));
+		]);
 
-		$this->assertEquals(array(), $names);
+		$this->assertEquals([], $names);
 	}
 }
-

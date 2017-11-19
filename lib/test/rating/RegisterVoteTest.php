@@ -14,9 +14,10 @@ class Rating_RegisterVoteTest extends TikiTestCase
 
 	function setUp()
 	{
-		global $user, $prefs; $user = null;
+		global $user, $prefs;
+		$user = null;
 		parent::setUp();
-		TikiDb::get()->query('DELETE FROM `tiki_user_votings` WHERE `id` LIKE ?', array('test.%'));
+		TikiDb::get()->query('DELETE FROM `tiki_user_votings` WHERE `id` LIKE ?', ['test.%']);
 
 		$ratinglib = TikiLib::lib('rating');
 
@@ -28,9 +29,10 @@ class Rating_RegisterVoteTest extends TikiTestCase
 
 	function tearDown()
 	{
-		global $user, $prefs; $user = null;
+		global $user, $prefs;
+		$user = null;
 		parent::tearDown();
-		TikiDb::get()->query('DELETE FROM `tiki_user_votings` WHERE `id` LIKE ?', array('test.%'));
+		TikiDb::get()->query('DELETE FROM `tiki_user_votings` WHERE `id` LIKE ?', ['test.%']);
 
 		$prefs['rating_default_options'] = $this->ratingDefaultOptions;
 		$prefs['rating_allow_multi_votes'] = $this->ratingAllowMultipleVotes;
@@ -38,15 +40,15 @@ class Rating_RegisterVoteTest extends TikiTestCase
 
 	function tokenFormats()
 	{
-		return array(
-			'unknown' => array('foobar', 233, null),
-			'comment' => array('comment', 123, 'comment123'),
-			'article' => array('article', 123, 'article123'),
-			'wiki' => array('wiki page', 123, 'wiki123'),
-			'wikiAsString' => array('wiki page', '123', 'wiki123'),
-			'wikiPageName' => array('wiki page', 'HomePage', null),
-			'test' => array('test', 111, 'test.111'),
-		);
+		return [
+			'unknown' => ['foobar', 233, null],
+			'comment' => ['comment', 123, 'comment123'],
+			'article' => ['article', 123, 'article123'],
+			'wiki' => ['wiki page', 123, 'wiki123'],
+			'wikiAsString' => ['wiki page', '123', 'wiki123'],
+			'wikiPageName' => ['wiki page', 'HomePage', null],
+			'test' => ['test', 111, 'test.111'],
+		];
 	}
 
 	/**
@@ -70,14 +72,14 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$this->assertTrue($lib->record_user_vote('def', 'test', 112, 5));
 
 		$this->assertEquals(
-			array(
-				array('user' => 'abc', 'id' => 'test.111', 'optionId' => 2),
-				array('user' => 'abc', 'id' => 'test.111', 'optionId' => 3),
-				array('user' => 'abc', 'id' => 'test.112', 'optionId' => 4),
-				array('user' => 'def', 'id' => 'test.111', 'optionId' => 1),
-				array('user' => 'def', 'id' => 'test.112', 'optionId' => 5),
-				array('user' => 'def', 'id' => 'test.113', 'optionId' => 1),
-			),
+			[
+				['user' => 'abc', 'id' => 'test.111', 'optionId' => 2],
+				['user' => 'abc', 'id' => 'test.111', 'optionId' => 3],
+				['user' => 'abc', 'id' => 'test.112', 'optionId' => 4],
+				['user' => 'def', 'id' => 'test.111', 'optionId' => 1],
+				['user' => 'def', 'id' => 'test.112', 'optionId' => 5],
+				['user' => 'def', 'id' => 'test.113', 'optionId' => 1],
+			],
 			$this->getTestData()
 		);
 	}
@@ -96,13 +98,13 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$this->assertTrue($lib->record_user_vote('def', 'test', 112, 5));
 
 		$this->assertEquals(
-			array(
-				array('user' => 'abc', 'id' => 'test.111', 'optionId' => 2),
-				array('user' => 'abc', 'id' => 'test.112', 'optionId' => 4),
-				array('user' => 'def', 'id' => 'test.111', 'optionId' => 1),
-				array('user' => 'def', 'id' => 'test.112', 'optionId' => 5),
-				array('user' => 'def', 'id' => 'test.113', 'optionId' => 1),
-			),
+			[
+				['user' => 'abc', 'id' => 'test.111', 'optionId' => 2],
+				['user' => 'abc', 'id' => 'test.112', 'optionId' => 4],
+				['user' => 'def', 'id' => 'test.111', 'optionId' => 1],
+				['user' => 'def', 'id' => 'test.112', 'optionId' => 5],
+				['user' => 'def', 'id' => 'test.113', 'optionId' => 1],
+			],
 			$this->getTestData()
 		);
 	}
@@ -121,14 +123,14 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$this->assertTrue($lib->record_anonymous_vote($key2, 'test', 112, 5));
 
 		$this->assertEquals(
-			array(
-				array('user' => "anonymous\0$key1", 'id' => 'test.111', 'optionId' => 2),
-				array('user' => "anonymous\0$key1", 'id' => 'test.111', 'optionId' => 3),
-				array('user' => "anonymous\0$key1", 'id' => 'test.112', 'optionId' => 4),
-				array('user' => "anonymous\0$key2", 'id' => 'test.111', 'optionId' => 1),
-				array('user' => "anonymous\0$key2", 'id' => 'test.112', 'optionId' => 5),
-				array('user' => "anonymous\0$key2", 'id' => 'test.113', 'optionId' => 1),
-			),
+			[
+				['user' => "anonymous\0$key1", 'id' => 'test.111', 'optionId' => 2],
+				['user' => "anonymous\0$key1", 'id' => 'test.111', 'optionId' => 3],
+				['user' => "anonymous\0$key1", 'id' => 'test.112', 'optionId' => 4],
+				['user' => "anonymous\0$key2", 'id' => 'test.111', 'optionId' => 1],
+				['user' => "anonymous\0$key2", 'id' => 'test.112', 'optionId' => 5],
+				['user' => "anonymous\0$key2", 'id' => 'test.113', 'optionId' => 1],
+			],
 			$this->getTestData()
 		);
 	}
@@ -150,13 +152,13 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$this->assertTrue($lib->record_anonymous_vote($key2, 'test', 112, 5));
 
 		$this->assertEquals(
-			array(
-				array('user' => "anonymous\0$key1", 'id' => 'test.111', 'optionId' => 2),
-				array('user' => "anonymous\0$key1", 'id' => 'test.112', 'optionId' => 4),
-				array('user' => "anonymous\0$key2", 'id' => 'test.111', 'optionId' => 1),
-				array('user' => "anonymous\0$key2", 'id' => 'test.112', 'optionId' => 5),
-				array('user' => "anonymous\0$key2", 'id' => 'test.113', 'optionId' => 1),
-			),
+			[
+				['user' => "anonymous\0$key1", 'id' => 'test.111', 'optionId' => 2],
+				['user' => "anonymous\0$key1", 'id' => 'test.112', 'optionId' => 4],
+				['user' => "anonymous\0$key2", 'id' => 'test.111', 'optionId' => 1],
+				['user' => "anonymous\0$key2", 'id' => 'test.112', 'optionId' => 5],
+				['user' => "anonymous\0$key2", 'id' => 'test.113', 'optionId' => 1],
+			],
 			$this->getTestData()
 		);
 	}
@@ -168,7 +170,7 @@ class Rating_RegisterVoteTest extends TikiTestCase
 
 		$this->assertEquals(['0', '1', '2', '3', '4', '5'], $lib->get_options('test', '123'));
 		$this->assertEquals(
-			array(),
+			[],
 			$this->getTestData()
 		);
 	}
@@ -228,9 +230,9 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$this->assertTrue($lib->record_vote('test', '123', 2));
 
 		$this->assertEquals(
-			array(
-				array('user' => "foobar", 'id' => 'test.123', 'optionId' => 2),
-			),
+			[
+				['user' => "foobar", 'id' => 'test.123', 'optionId' => 2],
+			],
 			$this->getTestData()
 		);
 
@@ -245,9 +247,9 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$this->assertTrue($lib->record_vote('test', '123', 2));
 
 		$this->assertEquals(
-			array(
-				array('user' => "anonymous\0deadbeef01234567", 'id' => 'test.123', 'optionId' => 2),
-			),
+			[
+				['user' => "anonymous\0deadbeef01234567", 'id' => 'test.123', 'optionId' => 2],
+			],
 			$this->getTestData()
 		);
 
@@ -260,14 +262,13 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$this->assertFalse($lib->record_user_vote('abc', 'foobar', 111, 4));
 
 		$this->assertEquals(
-			array(),
+			[],
 			$this->getTestData()
 		);
 	}
 
 	private function getTestData()
 	{
-		return TikiDb::get()->fetchAll('SELECT `user`, `id`, `optionId` FROM `tiki_user_votings` WHERE `id` LIKE ? ORDER BY `user`, `id`, `optionId`', array('test.%'));
+		return TikiDb::get()->fetchAll('SELECT `user`, `id`, `optionId` FROM `tiki_user_votings` WHERE `id` LIKE ? ORDER BY `user`, `id`, `optionId`', ['test.%']);
 	}
 }
-

@@ -8,15 +8,15 @@ abstract class Search_Index_NumericTest extends PHPUnit_Framework_TestCase
 	{
 		$typeFactory = $index->getTypeFactory();
 		$index->addDocument(
-			array(
+			[
 				'object_type' => $typeFactory->identifier('wiki page'),
 				'object_id' => $typeFactory->identifier('HomePage'),
 				'contents' => $typeFactory->plaintext('module 7, 2.5.3')->filter(
-					array(
+					[
 						new Search_ContentFilter_VersionNumber,
-					)
+					]
 				),
-			)
+			]
 		);
 	}
 

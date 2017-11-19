@@ -30,4 +30,3 @@ class Search_Elastic_PaginationTest extends Search_Index_PaginationTest
 		}
 	}
 }
-

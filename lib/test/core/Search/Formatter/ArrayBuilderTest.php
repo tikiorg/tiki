@@ -16,7 +16,7 @@ class Search_Formatter_ArrayBuilderTest extends PHPUnit_Framework_TestCase
 
 	function testEmpty()
 	{
-		$this->assertEquals(array(), $this->builder->getData(''));
+		$this->assertEquals([], $this->builder->getData(''));
 	}
 
 	function testSingleValue()
@@ -25,7 +25,7 @@ class Search_Formatter_ArrayBuilderTest extends PHPUnit_Framework_TestCase
 {hello foo=bar}
 STR;
 
-		$this->assertEquals(array('hello' => array('foo' => 'bar')), $this->builder->getData($string));
+		$this->assertEquals(['hello' => ['foo' => 'bar']], $this->builder->getData($string));
 	}
 
 	function testDifferentKeys()
@@ -36,10 +36,10 @@ STR;
 STR;
 
 		$this->assertEquals(
-			array(
-				'hello' => array('foo' => 'bar', 'bar' => 'test'),
-				'test' => array('foo' => 'bar'),
-			),
+			[
+				'hello' => ['foo' => 'bar', 'bar' => 'test'],
+				'test' => ['foo' => 'bar'],
+			],
 			$this->builder->getData($string)
 		);
 	}
@@ -52,14 +52,13 @@ STR;
 STR;
 
 		$this->assertEquals(
-			array(
-				'test' => array(
-					array('foo' => 'bar'),
-					array('bar' => 'baz'),
-				),
-			),
+			[
+				'test' => [
+					['foo' => 'bar'],
+					['bar' => 'baz'],
+				],
+			],
 			$this->builder->getData($string)
 		);
 	}
 }
-

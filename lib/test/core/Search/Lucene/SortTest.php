@@ -29,4 +29,3 @@ class Search_Lucene_SortTest extends Search_Index_SortTest
 		}
 	}
 }
-

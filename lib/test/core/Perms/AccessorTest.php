@@ -25,9 +25,9 @@ class Perms_AccessorTest extends TikiTestCase
 	function testGetSetGroups()
 	{
 		$accessor = new Perms_Accessor;
-		$accessor->setGroups(array('Test'));
+		$accessor->setGroups(['Test']);
 
-		$this->assertEquals(array('Test'), $accessor->getGroups());
+		$this->assertEquals(['Test'], $accessor->getGroups());
 	}
 
 	function testGetSetPrefix()
@@ -41,16 +41,16 @@ class Perms_AccessorTest extends TikiTestCase
 	function testGetSetContext()
 	{
 		$accessor = new Perms_Accessor;
-		$accessor->setContext(array('type' => 'wiki page', 'object' => 'HomePage'));
+		$accessor->setContext(['type' => 'wiki page', 'object' => 'HomePage']);
 
-		$this->assertEquals(array('type' => 'wiki page', 'object' => 'HomePage'), $accessor->getContext());
+		$this->assertEquals(['type' => 'wiki page', 'object' => 'HomePage'], $accessor->getContext());
 	}
 
 	function testGetDefaultGroups()
 	{
 		$accessor = new Perms_Accessor;
 
-		$this->assertEquals(array(), $accessor->getGroups());
+		$this->assertEquals([], $accessor->getGroups());
 	}
 
 	function testDefaultPrefix()
@@ -72,13 +72,13 @@ class Perms_AccessorTest extends TikiTestCase
 		$accessor = new Perms_Accessor;
 
 		$accessor->setResolver(
-			new Perms_Resolver_Static(array('Anonymous' => array('view', 'edit'),))
+			new Perms_Resolver_Static(['Anonymous' => ['view', 'edit'],])
 		);
 
 		$this->assertFalse($accessor->view);
 		$this->assertFalse($accessor->view_history);
 
-		$accessor->setGroups(array('Anonymous'));
+		$accessor->setGroups(['Anonymous']);
 
 		$this->assertTrue($accessor->view);
 		$this->assertFalse($accessor->view_history);
@@ -87,11 +87,11 @@ class Perms_AccessorTest extends TikiTestCase
 	function testReadWithPrefix()
 	{
 		$accessor = new Perms_Accessor;
-		$accessor->setGroups(array('Anonymous'));
+		$accessor->setGroups(['Anonymous']);
 		$accessor->setPrefix('tiki_p_');
 
 		$accessor->setResolver(
-			new Perms_Resolver_Static(array('Anonymous' => array('view', 'edit'),))
+			new Perms_Resolver_Static(['Anonymous' => ['view', 'edit'],])
 		);
 
 		$this->assertTrue($accessor->view);
@@ -103,13 +103,13 @@ class Perms_AccessorTest extends TikiTestCase
 	{
 		$accessor = new Perms_Accessor;
 		$accessor->setPrefix('tiki_p_');
-		$accessor->setGroups(array('Anonymous'));
+		$accessor->setGroups(['Anonymous']);
 
 		$accessor->setResolver(
-			new Perms_Resolver_Static(array('Anonymous' => array('view', 'edit', 'comment'),))
+			new Perms_Resolver_Static(['Anonymous' => ['view', 'edit', 'comment'],])
 		);
 
-		$accessor->globalize(array('view', 'edit', 'view_history', 'tiki_p_comment'));
+		$accessor->globalize(['view', 'edit', 'view_history', 'tiki_p_comment']);
 
 		global $tiki_p_view, $tiki_p_view_history, $tiki_p_comment;
 		$this->assertEquals('y', $tiki_p_view);
@@ -120,12 +120,12 @@ class Perms_AccessorTest extends TikiTestCase
 	function testArrayAccess()
 	{
 		$accessor = new Perms_Accessor;
-		$accessor->setGroups(array('Anonymous'));
+		$accessor->setGroups(['Anonymous']);
 		$accessor->setPrefix('tiki_p_');
 
 		$accessor->setResolver(
 			new Perms_Resolver_Static(
-				array('Anonymous' => array('view', 'edit'),)
+				['Anonymous' => ['view', 'edit'],]
 			)
 		);
 
@@ -138,42 +138,41 @@ class Perms_AccessorTest extends TikiTestCase
 	{
 		$accessor = new Perms_Accessor;
 		$static = new Perms_Resolver_Static(
-			array(
-				'Anonymous' => array('view'),
-				'Registered' => array('view', 'edit'),
-			)
+			[
+				'Anonymous' => ['view'],
+				'Registered' => ['view', 'edit'],
+			]
 		);
 
 		$accessor->setResolver($static);
 
-		$this->assertEquals(array('Anonymous', 'Registered'), $accessor->applicableGroups());
+		$this->assertEquals(['Anonymous', 'Registered'], $accessor->applicableGroups());
 	}
 
 	function testApplicableGroupsThroughCheckSequence()
 	{
 		$accessor = new Perms_Accessor;
 		$static = new Perms_Resolver_Static(
-			array(
-				'Anonymous' => array('view'),
-				'Registered' => array('view', 'edit'),
-			)
+			[
+				'Anonymous' => ['view'],
+				'Registered' => ['view', 'edit'],
+			]
 		);
 
 		$global = new Perms_Resolver_Static(
-			array('Admins' => array('admin'),)
+			['Admins' => ['admin'],]
 		);
 
 		$accessor->setResolver($static);
 		$accessor->setCheckSequence(
-			array(
+			[
 				$g = new Perms_Check_Alternate('admin'),
 				new Perms_Check_Direct,
-			)
+			]
 		);
 
 		$g->setResolver($global);
 
-		$this->assertEquals(array('Admins', 'Anonymous', 'Registered'), $accessor->applicableGroups());
+		$this->assertEquals(['Admins', 'Anonymous', 'Registered'], $accessor->applicableGroups());
 	}
 }
-

@@ -22,4 +22,3 @@ class Search_MySql_BaseTest extends Search_Index_BaseTest
 		}
 	}
 }
-

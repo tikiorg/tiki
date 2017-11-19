@@ -60,7 +60,7 @@ class EngineSetTest extends \PHPUnit_Framework_TestCase
 
 			$out[spl_object_hash($engine)]++;
 		}
-		
+
 		$this->assertEquals([
 			spl_object_hash($a) => 5,
 			spl_object_hash($b) => 5,
@@ -88,7 +88,7 @@ class EngineSetTest extends \PHPUnit_Framework_TestCase
 
 			$out[spl_object_hash($engine)]++;
 		}
-		
+
 		$this->assertEquals([
 			spl_object_hash($a) => 8,
 			spl_object_hash($b) => 2,

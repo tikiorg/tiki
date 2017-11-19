@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -10,15 +10,15 @@
  */
 
 
-/* 
+/*
  * This test case verifies that we can access various Tiki libraries
  * from inside Acceptance tests. This can be useful for example,
  * to set starting conditions of the Tiki DB directly, without having
- * to go through Selenium actions in the browser (the later 
+ * to go through Selenium actions in the browser (the later
  * is slow).
  */
 
-class  AcceptanceTests_TikiLibrariesAccessTest extends TikiTestCase
+class AcceptanceTests_TikiLibrariesAccessTest extends TikiTestCase
 {
 
 	protected function setUp()
@@ -34,7 +34,7 @@ class  AcceptanceTests_TikiLibrariesAccessTest extends TikiTestCase
 
 	/**
 	 * @group gui
-	 */ 
+	 */
 	public function testAccessPreferences()
 	{
 		global $tikilib, $prefs;
@@ -51,6 +51,5 @@ class  AcceptanceTests_TikiLibrariesAccessTest extends TikiTestCase
 		$this->assertEquals('y', $gotPreference, "After setting it, get_preference() should have returned 'y' after following preference was set: '$pref_name'");
 		$gotPreference = $prefs[$pref_name];
 		$this->assertEquals('y', $gotPreference, "\$prefs[$pref_name] should initially have been 'y' after that preference was set. NOTE: At this point, this test fails. I think set_preference() should not only update the DB, but also set \$prefs");
-	}    
-
+	}
 }

@@ -16,14 +16,14 @@ class JitFilter_AccessTest extends TikiTestCase
 
 	function setUp()
 	{
-		$this->array = array(
+		$this->array = [
 			'foo' => 'bar',
 			'bar' => 10,
-			'baz' => array(
+			'baz' => [
 				'hello',
 				'world',
-			),
-		);
+			],
+		];
 
 		$this->array = new JitFilter($this->array);
 	}
@@ -53,12 +53,12 @@ class JitFilter_AccessTest extends TikiTestCase
 
 	function testDirectArray()
 	{
-		$this->assertEquals(array(), array_diff(array('hello', 'world'), $this->array['baz']->asArray()));
+		$this->assertEquals([], array_diff(['hello', 'world'], $this->array['baz']->asArray()));
 	}
 
 	function testKeys()
 	{
-		$this->assertEquals(array('foo', 'bar', 'baz'), $this->array->keys());
+		$this->assertEquals(['foo', 'bar', 'baz'], $this->array->keys());
 	}
 
 	function testIsArray()
@@ -68,26 +68,26 @@ class JitFilter_AccessTest extends TikiTestCase
 
 	function testAsArray()
 	{
-		$this->assertEquals(array('bar'), $this->array->asArray('foo'));
-		$this->assertEquals(array(), $this->array->asArray('not_exists'));
+		$this->assertEquals(['bar'], $this->array->asArray('foo'));
+		$this->assertEquals([], $this->array->asArray('not_exists'));
 	}
 
 	function testAsArraySplit()
 	{
-		$test = new JitFilter(array('foo' => '1|2a|3'));
+		$test = new JitFilter(['foo' => '1|2a|3']);
 		$test->setDefaultFilter(new Zend\Filter\Digits);
 
-		$this->assertEquals(array('1', '2', '3'), $test->asArray('foo', '|'));
+		$this->assertEquals(['1', '2', '3'], $test->asArray('foo', '|'));
 	}
 
 	function testSubset()
 	{
 		$this->assertEquals(
-			array(
+			[
 				'foo' => $this->array['foo'],
 				'baz' => $this->array->asArray('baz')
-			),
-			$this->array->subset(array('foo', 'baz'))->asArray()
+			],
+			$this->array->subset(['foo', 'baz'])->asArray()
 		);
 	}
 
@@ -118,12 +118,12 @@ class JitFilter_AccessTest extends TikiTestCase
 	function testGetStructuredWithoutPresetGeneric()
 	{
 		$filtered = $this->array->baz->filter(new Zend\Filter\StringToUpper);
-		$this->assertEquals($filtered, array('HELLO', 'WORLD'));
+		$this->assertEquals($filtered, ['HELLO', 'WORLD']);
 	}
 
 	function testGetStructuredWithoutPresetNamed()
 	{
 		$filtered = $this->array->baz->alpha();
-		$this->assertEquals($filtered, array('hello', 'world'));
+		$this->assertEquals($filtered, ['hello', 'world']);
 	}
 }

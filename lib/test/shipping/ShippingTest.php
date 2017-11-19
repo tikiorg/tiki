@@ -23,7 +23,7 @@ class ShippingTest extends TikiTestCase implements ShippingProvider
 	{
 		$lib = new ShippingLib;
 
-		$this->assertEquals(array(), $lib->getRates(array('zip' => '12345'), array('zip' => '23456'), array(array('weight' => 5))));
+		$this->assertEquals([], $lib->getRates(['zip' => '12345'], ['zip' => '23456'], [['weight' => 5]]));
 	}
 
 	function testCountryPreserved()
@@ -31,7 +31,7 @@ class ShippingTest extends TikiTestCase implements ShippingProvider
 		$lib = new ShippingLib;
 		$lib->addProvider($this);
 
-		$lib->getRates(array('zip' => '12345', 'country' => 'FR'), array('zip' => '23456'), array(array('weight' => 5)));
+		$lib->getRates(['zip' => '12345', 'country' => 'FR'], ['zip' => '23456'], [['weight' => 5]]);
 
 		$this->assertEquals('FR', $this->from['country']);
 	}
@@ -41,7 +41,7 @@ class ShippingTest extends TikiTestCase implements ShippingProvider
 		$lib = new ShippingLib;
 		$lib->addProvider($this);
 
-		$lib->getRates(array('zip' => '12345'), array('zip' => 'A1B 2C3'), array(array('weight' => 5)));
+		$lib->getRates(['zip' => '12345'], ['zip' => 'A1B 2C3'], [['weight' => 5]]);
 
 		$this->assertEquals('US', $this->from['country']);
 		$this->assertEquals('CA', $this->to['country']);
@@ -52,7 +52,7 @@ class ShippingTest extends TikiTestCase implements ShippingProvider
 		$lib = new ShippingLib;
 		$lib->addProvider($this);
 
-		$lib->getRates(array('zip' => '12345'), array('zip' => 'a1b 2c3'), array(array('weight' => 5)));
+		$lib->getRates(['zip' => '12345'], ['zip' => 'a1b 2c3'], [['weight' => 5]]);
 
 		$this->assertEquals('A1B 2C3', $this->to['zip']);
 		$this->assertEquals('CA', $this->to['country']);
@@ -63,7 +63,7 @@ class ShippingTest extends TikiTestCase implements ShippingProvider
 		$lib = new ShippingLib;
 		$lib->addProvider($this);
 
-		$lib->getRates(array('zip' => '12345678900X'), array('zip' => 'A1B 2C3'), array(array('weight' => 5)));
+		$lib->getRates(['zip' => '12345678900X'], ['zip' => 'A1B 2C3'], [['weight' => 5]]);
 
 		$this->assertArrayNotHasKey('country', $this->from);
 	}
@@ -73,14 +73,14 @@ class ShippingTest extends TikiTestCase implements ShippingProvider
 		$lib = new ShippingLib;
 		$lib->addProvider($this);
 
-		$lib->getRates(array('zip' => '12345678900X'), array('zip' => 'A1B 2C3'), array(array('weight' => 5, 'count' => 2), array('weight' => 10)));
+		$lib->getRates(['zip' => '12345678900X'], ['zip' => 'A1B 2C3'], [['weight' => 5, 'count' => 2], ['weight' => 10]]);
 
 		$this->assertEquals(
-			array(
-				array('weight' => 5),
-				array('weight' => 5),
-				array('weight' => 10),
-			),
+			[
+				['weight' => 5],
+				['weight' => 5],
+				['weight' => 10],
+			],
 			$this->packages
 		);
 	}
@@ -91,7 +91,6 @@ class ShippingTest extends TikiTestCase implements ShippingProvider
 		$this->to = $to;
 		$this->packages = $packages;
 
-		return array();
+		return [];
 	}
 }
-

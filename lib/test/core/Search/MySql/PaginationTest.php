@@ -20,4 +20,3 @@ class Search_MySql_PaginationTest extends Search_Index_PaginationTest
 		}
 	}
 }
-

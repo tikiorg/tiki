@@ -53,11 +53,11 @@ class DirectivesTest extends PHPUnit_Framework_TestCase
 
 	public function includeDataProvider()
 	{
-		return array(
-			array('include_replace_key.yml', 'include_replace_key_result.yml'),
-			array('include_replace_key_2.yml', 'include_replace_key_result.yml'),
-			array('include_replace_deep_key.yml', 'include_replace_deep_key_result.yml'),
-			array('include_appending.yml', 'include_appending_result.yml'),
-		);
+		return [
+			['include_replace_key.yml', 'include_replace_key_result.yml'],
+			['include_replace_key_2.yml', 'include_replace_key_result.yml'],
+			['include_replace_deep_key.yml', 'include_replace_deep_key_result.yml'],
+			['include_appending.yml', 'include_appending_result.yml'],
+		];
 	}
 }

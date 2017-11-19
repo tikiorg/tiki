@@ -28,4 +28,3 @@ class Search_Lucene_TypeAnalyzerTest extends Search_Index_TypeAnalyzerTest
 		return new Search_Lucene_Index($this->dir);
 	}
 }
-

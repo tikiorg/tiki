@@ -87,10 +87,10 @@ class Perms_Reflection_PermissionComparatorTest extends TikiTestCase
 
 		$comparator = new Perms_Reflection_PermissionComparator($a, $b);
 		$this->assertEquals(
-			array(
-				array('Anonymous', 'view'),
-				array('Registered', 'edit'),
-			),
+			[
+				['Anonymous', 'view'],
+				['Registered', 'edit'],
+			],
 			$comparator->getRemovals()
 		);
 	}
@@ -107,10 +107,10 @@ class Perms_Reflection_PermissionComparatorTest extends TikiTestCase
 
 		$comparator = new Perms_Reflection_PermissionComparator($a, $b);
 		$this->assertEquals(
-			array(
-				array('Registered', 'view'),
-				array('Registered', 'edit'),
-			),
+			[
+				['Registered', 'view'],
+				['Registered', 'edit'],
+			],
 			$comparator->getAdditions()
 		);
 	}
@@ -124,7 +124,7 @@ class Perms_Reflection_PermissionComparatorTest extends TikiTestCase
 		$b->add('Anonymous', 'view');
 
 		$comparator = new Perms_Reflection_PermissionComparator($a, $b);
-		$this->assertEquals(array(), $comparator->getAdditions());
-		$this->assertEquals(array(), $comparator->getRemovals());
+		$this->assertEquals([], $comparator->getAdditions());
+		$this->assertEquals([], $comparator->getRemovals());
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -18,15 +18,14 @@ class Search_Query_OrderTest extends PHPUnit_Framework_TestCase
 
 	function sortMatches()
 	{
-		return array(
-			array('', 'score', 'desc', 'numeric'),
-			array('title', 'title', 'asc', 'text'),
-			array('title_asc', 'title', 'asc', 'text'),
-			array('title_desc', 'title', 'desc', 'text'),
-			array('title_nasc', 'title', 'asc', 'numeric'),
-			array('title_ndesc', 'title', 'desc', 'numeric'),
-			array('modification_date_ndesc', 'modification_date', 'desc', 'numeric'),
-		);
+		return [
+			['', 'score', 'desc', 'numeric'],
+			['title', 'title', 'asc', 'text'],
+			['title_asc', 'title', 'asc', 'text'],
+			['title_desc', 'title', 'desc', 'text'],
+			['title_nasc', 'title', 'asc', 'numeric'],
+			['title_ndesc', 'title', 'desc', 'numeric'],
+			['modification_date_ndesc', 'modification_date', 'desc', 'numeric'],
+		];
 	}
 }
-

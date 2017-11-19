@@ -9,7 +9,7 @@ class Search_Elastic_BulkIndexingTest extends PHPUnit_Framework_TestCase
 {
 	function testBasicBulk()
 	{
-		$parts = array();
+		$parts = [];
 		$bulk = new Search_Elastic_BulkOperation(
 			10,
 			function ($data) use (& $parts) {
@@ -17,22 +17,22 @@ class Search_Elastic_BulkIndexingTest extends PHPUnit_Framework_TestCase
 			}
 		);
 
-		$bulk->index('test', 'foo', 1, array('a' => 1));
-		$bulk->index('test', 'foo', 2, array('a' => 2));
-		$bulk->index('test', 'foo', 3, array('a' => 3));
+		$bulk->index('test', 'foo', 1, ['a' => 1]);
+		$bulk->index('test', 'foo', 2, ['a' => 2]);
+		$bulk->index('test', 'foo', 3, ['a' => 3]);
 		$bulk->unindex('test', 'bar', 4);
 		$bulk->flush();
 
 		$this->assertCount(1, $parts);
 
-		$this->assertContains(json_encode(array('a' => 3)) . "\n", $parts[0]);
-		$this->assertContains(json_encode(array('index' => array('_index' => 'test', '_type' => 'foo', '_id' => 2))) . "\n", $parts[0]);
-		$this->assertContains(json_encode(array('delete' => array('_index' => 'test', '_type' => 'bar', '_id' => 4))) . "\n", $parts[0]);
+		$this->assertContains(json_encode(['a' => 3]) . "\n", $parts[0]);
+		$this->assertContains(json_encode(['index' => ['_index' => 'test', '_type' => 'foo', '_id' => 2]]) . "\n", $parts[0]);
+		$this->assertContains(json_encode(['delete' => ['_index' => 'test', '_type' => 'bar', '_id' => 4]]) . "\n", $parts[0]);
 	}
 
 	function testDoubleFlushHasNoImpact()
 	{
-		$parts = array();
+		$parts = [];
 		$bulk = new Search_Elastic_BulkOperation(
 			10,
 			function ($data) use (& $parts) {
@@ -40,9 +40,9 @@ class Search_Elastic_BulkIndexingTest extends PHPUnit_Framework_TestCase
 			}
 		);
 
-		$bulk->index('test', 'foo', 1, array('a' => 1));
-		$bulk->index('test', 'foo', 2, array('a' => 2));
-		$bulk->index('test', 'foo', 3, array('a' => 3));
+		$bulk->index('test', 'foo', 1, ['a' => 1]);
+		$bulk->index('test', 'foo', 2, ['a' => 2]);
+		$bulk->index('test', 'foo', 3, ['a' => 3]);
 		$bulk->unindex('test', 'bar', 4);
 		$bulk->flush();
 		$bulk->flush();
@@ -52,7 +52,7 @@ class Search_Elastic_BulkIndexingTest extends PHPUnit_Framework_TestCase
 
 	function testAutomaticFlushWhenLimitReached()
 	{
-		$parts = array();
+		$parts = [];
 		$bulk = new Search_Elastic_BulkOperation(
 			10,
 			function ($data) use (& $parts) {
@@ -61,7 +61,7 @@ class Search_Elastic_BulkIndexingTest extends PHPUnit_Framework_TestCase
 		);
 
 		foreach (range(1, 15) as $i) {
-			$bulk->index('test', 'foo', $i, array('a' => $i));
+			$bulk->index('test', 'foo', $i, ['a' => $i]);
 		}
 
 		$bulk->flush();
@@ -71,7 +71,7 @@ class Search_Elastic_BulkIndexingTest extends PHPUnit_Framework_TestCase
 
 	function testFlushOnLimit()
 	{
-		$parts = array();
+		$parts = [];
 		$bulk = new Search_Elastic_BulkOperation(
 			15,
 			function ($data) use (& $parts) {
@@ -80,7 +80,7 @@ class Search_Elastic_BulkIndexingTest extends PHPUnit_Framework_TestCase
 		);
 
 		foreach (range(1, 45) as $i) {
-			$bulk->index('test', 'foo', $i, array('a' => $i));
+			$bulk->index('test', 'foo', $i, ['a' => $i]);
 		}
 
 		$this->assertCount(3, $parts);
@@ -90,4 +90,3 @@ class Search_Elastic_BulkIndexingTest extends PHPUnit_Framework_TestCase
 		$this->assertCount(3, $parts);
 	}
 }
-

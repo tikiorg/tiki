@@ -8,7 +8,6 @@
 use Tiki\Package\ComposerManager;
 use org\bovigo\vfs\vfsStream;
 
-
 class Tiki_Package_ComposerManagerTest extends TikiTestCase
 {
 
@@ -251,7 +250,6 @@ class Tiki_Package_ComposerManagerTest extends TikiTestCase
 
 		$this->assertEquals('', $response[1]['key']);
 		$this->assertEquals('Foo/Bar', $response[1]['name']);
-
 	}
 
 	function testGetInstalledCaseMismatch()
@@ -288,7 +286,6 @@ class Tiki_Package_ComposerManagerTest extends TikiTestCase
 
 		$this->assertEquals('CasperJS', $response[0]['key']);
 		$this->assertEquals('JEROME-BRETON/casperjs-installer', $response[0]['name']);
-
 	}
 
 	function testRemoveUnknownPackageFails()

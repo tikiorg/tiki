@@ -36,4 +36,3 @@ class BigBlueButton_DynamicConfigurationTest extends PHPUnit_Framework_TestCase
 		$this->assertNotContains('<module name="WhiteboardModule"', $xml);
 	}
 }
-

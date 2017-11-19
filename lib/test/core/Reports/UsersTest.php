@@ -54,8 +54,8 @@ class Reports_UsersTest extends TikiDatabaseTestCase
 
 	public function testGet_shouldReturnUsersReportsPreferences()
 	{
-		$expectedResult = array('id' => 2, 'interval' => 'daily', 'view' => 'detailed', 'type' => 'html',
-			'always_email' => 1, 'last_report' => '2012-01-15 12:22:08');
+		$expectedResult = ['id' => 2, 'interval' => 'daily', 'view' => 'detailed', 'type' => 'html',
+			'always_email' => 1, 'last_report' => '2012-01-15 12:22:08'];
 
 		$this->assertEquals($expectedResult, $this->obj->get('test'));
 	}
@@ -92,12 +92,12 @@ class Reports_UsersTest extends TikiDatabaseTestCase
 			->getMock();
 
 		$obj->expects($this->once())->method('save')->with('test', 'daily', 'detailed', 'html', 0);
-		$obj->addUserToDailyReports(array('user' => 'test'));
+		$obj->addUserToDailyReports(['user' => 'test']);
 	}
 
 	public function testGetUsersForReport_shouldReturnArrayWithUsers()
 	{
-		$expectedResult = array('test');
+		$expectedResult = ['test'];
 		$users = $this->obj->getUsersForReport();
 		$this->assertEquals($expectedResult, $users);
 	}
@@ -109,7 +109,7 @@ class Reports_UsersTest extends TikiDatabaseTestCase
 			VALUES ('newUser', 'weekly', 'detailed', 'html', 1, '')"
 		);
 
-		$expectedResult = array('test', 'newUser');
+		$expectedResult = ['test', 'newUser'];
 		$users = $this->obj->getUsersForReport();
 		$this->assertEquals($expectedResult, $users);
 	}
@@ -132,6 +132,6 @@ class Reports_UsersTest extends TikiDatabaseTestCase
 	public function testGetAllUsers_shouldReturnAllUsers()
 	{
 		$users = $this->obj->getAllUsers();
-		$this->assertEquals(array('admin', 'test'), $users);
+		$this->assertEquals(['admin', 'test'], $users);
 	}
 }

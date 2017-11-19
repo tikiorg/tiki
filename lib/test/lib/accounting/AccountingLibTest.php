@@ -47,7 +47,7 @@ class AccountingLibTest extends PHPUnit_Framework_TestCase
 		$this->assertGreaterThan(0, $bookA);
 
 		// create 2 accounts
-		$accountNameSnakeOil = 'Snake Oil Company '.uniqid();
+		$accountNameSnakeOil = 'Snake Oil Company ' . uniqid();
 		$accountResult = $accountinglib->createAccount(
 			$bookA,
 			'1',
@@ -62,7 +62,7 @@ class AccountingLibTest extends PHPUnit_Framework_TestCase
 		$accountResult = $accountinglib->createAccount(
 			$bookA,
 			'2',
-			'ACME Corporation '.uniqid(),
+			'ACME Corporation ' . uniqid(),
 			'More Notes',
 			'2000',
 			'0',

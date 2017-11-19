@@ -26,4 +26,3 @@ class Search_Lucene_PaginationTest extends Search_Index_PaginationTest
 		}
 	}
 }
-

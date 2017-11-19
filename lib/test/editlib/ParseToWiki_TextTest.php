@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -124,12 +124,12 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 
 		$inData = '<div style="text-align: center;">This text is centered<br />This text is centered</div>';
 		$out = trim($this->el->parseToWiki($inData));
-		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);
 
 		$inData = '<div align="center">This text is centered<br />This text is centered</div>';
 		$out = trim($this->el->parseToWiki($inData));
-		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);
 
 
@@ -141,7 +141,7 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 
 		$inData = '<div align="center">Center 1<br /><br />Center 2</div>';
 		$out = trim($this->el->parseToWiki($inData));
-		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);
 
 
@@ -153,7 +153,7 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 
 		$inData = '<div align="center">Center 1<br /><br />Center 2</div>';
 		$out = trim($this->el->parseToWiki($inData));
-		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);
 	}
 
@@ -215,7 +215,7 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 
 	/**
 	 * Align paragraphs 'left'
-	 */	
+	 */
 	function testParagraphAlignLeft()
 	{
 
@@ -241,7 +241,7 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 	}
 
 
-	/** 
+	/**
 	 * Centered headings must use style attribute
 	 */
 	function testCenterdHeadings()
@@ -268,16 +268,16 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		 */
 		$prefs['feature_use_three_colon_centertag'] = 'n';
 		$inData = '<h1 style="text-align: center;" class="showhide_heading" id="Heading">1. Heading</h1>';
-		$ex = '!#::Heading::';	
+		$ex = '!#::Heading::';
 		$out = trim($this->el->parseToWiki($inData));
-		$this->assertEquals($ex, $out);		
+		$this->assertEquals($ex, $out);
 
 		$prefs['feature_use_three_colon_centertag'] = 'y';
 		$inData = '<h1 style="text-align: center;" class="showhide_heading" id="Heading">1. Heading</h1>';
-		$ex = '!#:::Heading:::';	
+		$ex = '!#:::Heading:::';
 		$out = trim($this->el->parseToWiki($inData));
-		$this->assertEquals($ex, $out);				
-	}	
+		$this->assertEquals($ex, $out);
+	}
 
 
 	/**
@@ -315,51 +315,51 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		$inData = '<h6>9.9.9.9.9.9. Heading Level 6</h6>';
 		$ex = '!!!!!!# Heading Level 6';
 		$out = trim($this->el->parseToWiki($inData));
-		$this->assertEquals($ex, $out);		
+		$this->assertEquals($ex, $out);
 
 
 		// all levels, line breaks
 		$inData = '<h1>9. Heading Level 1<br />and Level 1A<br />and Level 1B</h1>line<br />line';
 		$ex = '!# Heading Level 1 %%% and Level 1A %%% and Level 1B\nline\nline';
 		$out = trim($this->el->parseToWiki($inData));
-		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
-		$this->assertEquals($ex, $out);	
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
+		$this->assertEquals($ex, $out);
 
 		$inData = '<h2>9.9. Heading Level 2<br />and Level 2A<br />and Level 2B</h2>line<br />line';
 		$ex = '!!# Heading Level 2 %%% and Level 2A %%% and Level 2B\nline\nline';
 		$out = trim($this->el->parseToWiki($inData));
-		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);
 
 		$inData = '<h3>9.9.9. Heading Level 3<br />and Level 3A<br />and Level 3B</h3>line<br />line';
 		$ex = '!!!# Heading Level 3 %%% and Level 3A %%% and Level 3B\nline\nline';
 		$out = trim($this->el->parseToWiki($inData));
-		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);
 
 		$inData = '<h4>9.9.9.9. Heading Level 4<br />and Level 4A<br />and Level 4B</h4>line<br />line';
 		$ex = '!!!!# Heading Level 4 %%% and Level 4A %%% and Level 4B\nline\nline';
 		$out = trim($this->el->parseToWiki($inData));
-		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);
 
 		$inData = '<h5>9.9.9.9.9. Heading Level 5<br />and Level 5A<br />and Level 5B</h5>line<br />line';
 		$ex = '!!!!!# Heading Level 5 %%% and Level 5A %%% and Level 5B\nline\nline';
 		$out = trim($this->el->parseToWiki($inData));
-		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);
 
 		$inData = '<h6>9.9.9.9.9.9. Heading Level 6<br />and Level 6A<br />and Level 6B</h6>line<br />line';
 		$ex = '!!!!!!# Heading Level 6 %%% and Level 6A %%% and Level 6B\nline\nline';
 		$out = trim($this->el->parseToWiki($inData));
-		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
-		$this->assertEquals($ex, $out);		
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
+		$this->assertEquals($ex, $out);
 	}
 
 
 	/**
 	 * Align paragraphs 'center'
-	 */	
+	 */
 	function testParagraphAlignCentered()
 	{
 		global $prefs;
@@ -420,19 +420,19 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 
 		$inData = '<p style="text-align: center;">This text is centered<br />This text is centered</p>';
 		$out = trim($this->el->parseToWiki($inData));
-		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);
 
 		$inData = '<p align="center">This text is centered<br />This text is centered</p>';
 		$out = trim($this->el->parseToWiki($inData));
-		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
-		$this->assertEquals($ex, $out);		
-	}	
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
+		$this->assertEquals($ex, $out);
+	}
 
 
 	/**
 	 * Align paragraphs 'right'
-	 */	
+	 */
 	function testParagraphAlignRight()
 	{
 
@@ -455,12 +455,12 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		$inData = '<p align="right">This text is aligned</p>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
-	}	
+	}
 
 
 	/**
 	 * Align paragraphs 'justified'
-	 */	
+	 */
 	function testParagraphAlignJustified()
 	{
 
@@ -528,37 +528,37 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		$inData = '<h1>Heading Level 1<br />and Level 1A<br />and Level 1B</h1>line<br />line';
 		$ex = '!Heading Level 1 %%% and Level 1A %%% and Level 1B\nline\nline';
 		$out = trim($this->el->parseToWiki($inData));
-		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
-		$this->assertEquals($ex, $out);		
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
+		$this->assertEquals($ex, $out);
 
 		$inData = '<h2>Heading Level 2<br />and Level 2A<br />and Level 2B</h2>line<br />line';
 		$ex = '!!Heading Level 2 %%% and Level 2A %%% and Level 2B\nline\nline';
 		$out = trim($this->el->parseToWiki($inData));
-		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);
 
 		$inData = '<h3>Heading Level 3<br />and Level 3A<br />and Level 3B</h3>line<br />line';
 		$ex = '!!!Heading Level 3 %%% and Level 3A %%% and Level 3B\nline\nline';
 		$out = trim($this->el->parseToWiki($inData));
-		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);
 
 		$inData = '<h4>Heading Level 4<br />and Level 4A<br />and Level 4B</h4>line<br />line';
 		$ex = '!!!!Heading Level 4 %%% and Level 4A %%% and Level 4B\nline\nline';
 		$out = trim($this->el->parseToWiki($inData));
-		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);
 
 		$inData = '<h5>Heading Level 5<br />and Level 5A<br />and Level 5B</h5>line<br />line';
 		$ex = '!!!!!Heading Level 5 %%% and Level 5A %%% and Level 5B\nline\nline';
 		$out = trim($this->el->parseToWiki($inData));
-		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);
 
 		$inData = '<h6>Heading Level 6<br />and Level 6A<br />and Level 6B</h6>line<br />line';
 		$ex = '!!!!!!Heading Level 6 %%% and Level 6A %%% and Level 6B\nline\nline';
 		$out = trim($this->el->parseToWiki($inData));
-		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
-		$this->assertEquals($ex, $out);		
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
+		$this->assertEquals($ex, $out);
 	}
 }

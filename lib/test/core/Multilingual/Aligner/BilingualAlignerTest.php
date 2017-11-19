@@ -10,7 +10,7 @@
  *
  */
 
-class  Multilingual_Aligner_BilingualAlignerTest extends TikiTestCase
+class Multilingual_Aligner_BilingualAlignerTest extends TikiTestCase
 {
 
 	public function ___test_reminder()
@@ -49,8 +49,8 @@ class  Multilingual_Aligner_BilingualAlignerTest extends TikiTestCase
 	public function test_this_is_how_you_align_two_texts()
 	{
 		$aligner = new Multilingual_Aligner_BilingualAligner();
-		$en_entences = array("Hello earthlings. Take me to your leader.");
-		$fr_sentences = array("Bonjour terriens. Inutile de résister. Amenez moi à votre chef.");
+		$en_entences = ["Hello earthlings. Take me to your leader."];
+		$fr_sentences = ["Bonjour terriens. Inutile de résister. Amenez moi à votre chef."];
 		$aligned_sentences = $aligner->align($en_entences, $fr_sentences);
 		$first_pair = $aligned_sentences[0];
 		$first_en_sent = $first_pair[0];
@@ -69,11 +69,11 @@ class  Multilingual_Aligner_BilingualAlignerTest extends TikiTestCase
 	{
 		$text = "This is sentence 1! This is sentence 2\n* This is sentence 3";
 		$got_sentences = $this->aligner->_segment_into_sentences($text);
-		$exp_sentences = array(
+		$exp_sentences = [
 								"This is sentence 1!",
 								" This is sentence 2\n",
 								"* This is sentence 3"
-		);
+		];
 		$this->assertEquals(
 			$exp_sentences,
 			$got_sentences,
@@ -89,8 +89,8 @@ class  Multilingual_Aligner_BilingualAlignerTest extends TikiTestCase
 		$l1_text = "This is sentence 1! This is sentence 2.";
 		$l2_text = "Voici la phrase 1! Voici la phrase 2.";
 
-		$exp_l1_sentences = array("This is sentence 1!", " This is sentence 2.");
-		$exp_l2_sentences = array("Voici la phrase 1!", " Voici la phrase 2.");
+		$exp_l1_sentences = ["This is sentence 1!", " This is sentence 2."];
+		$exp_l2_sentences = ["Voici la phrase 1!", " Voici la phrase 2."];
 
 		$this->aligner->_segment_parallel_texts_to_sentences($l1_text, $l2_text);
 
@@ -126,7 +126,8 @@ class  Multilingual_Aligner_BilingualAlignerTest extends TikiTestCase
 		$l2_sentence = "Bonjour le monde.";
 		$this->assert_sentence_length_delta_is(
 			$l1_sentence,
-			$l2_sentence, 1,
+			$l2_sentence,
+			1,
 			"Bad delta for case with only L1 sentence empty."
 		);
 
@@ -186,131 +187,131 @@ class  Multilingual_Aligner_BilingualAlignerTest extends TikiTestCase
 		$this->_setup_segmented_sentences();
 		$this->aligner->_generate_shortest_path_matrix();
 
-		$exp_cost_matrix = array();
+		$exp_cost_matrix = [];
 
-		$exp_cost_matrix["-1n0|-1n0"]["-1m1|-1m1"]= "match_cost";
-		$exp_cost_matrix["-1n0|-1n0"]["-1m2|-1m1"]= "match_cost";
-		$exp_cost_matrix["-1n0|-1n0"]["-1m1|-1m2"]= "match_cost";
-		$exp_cost_matrix["-1n0|-1n0"]["-1m1|-1m0"]= "match_cost";
-		$exp_cost_matrix["-1n0|-1n0"]["-1m0|-1m1"]= "match_cost";
+		$exp_cost_matrix["-1n0|-1n0"]["-1m1|-1m1"] = "match_cost";
+		$exp_cost_matrix["-1n0|-1n0"]["-1m2|-1m1"] = "match_cost";
+		$exp_cost_matrix["-1n0|-1n0"]["-1m1|-1m2"] = "match_cost";
+		$exp_cost_matrix["-1n0|-1n0"]["-1m1|-1m0"] = "match_cost";
+		$exp_cost_matrix["-1n0|-1n0"]["-1m0|-1m1"] = "match_cost";
 
-		$exp_cost_matrix["-1m1|-1m1"]["0m1|0m1"]= "match_cost";
-		$exp_cost_matrix["-1m1|-1m1"]["0m1|0m2"]= "match_cost";
-		$exp_cost_matrix["-1m1|-1m1"]["0m1|0m0"]= "match_cost";
-		$exp_cost_matrix["-1m1|-1m1"]["0m0|0m1"]= "match_cost";
-		$exp_cost_matrix["-1m1|-1m1"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["-1m1|-1m1"]["0m1|0m1"] = "match_cost";
+		$exp_cost_matrix["-1m1|-1m1"]["0m1|0m2"] = "match_cost";
+		$exp_cost_matrix["-1m1|-1m1"]["0m1|0m0"] = "match_cost";
+		$exp_cost_matrix["-1m1|-1m1"]["0m0|0m1"] = "match_cost";
+		$exp_cost_matrix["-1m1|-1m1"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["-1m2|-1m1"]["END"]= "goto_end_cost";
-		$exp_cost_matrix["-1m2|-1m1"]["1m0|0m1"]= "match_cost";
-		$exp_cost_matrix["-1m2|-1m1"]["1m0|0m2"]= "match_cost";
-		$exp_cost_matrix["-1m2|-1m1"]["1m0|0m0"]= "match_cost";
+		$exp_cost_matrix["-1m2|-1m1"]["END"] = "goto_end_cost";
+		$exp_cost_matrix["-1m2|-1m1"]["1m0|0m1"] = "match_cost";
+		$exp_cost_matrix["-1m2|-1m1"]["1m0|0m2"] = "match_cost";
+		$exp_cost_matrix["-1m2|-1m1"]["1m0|0m0"] = "match_cost";
 
-		$exp_cost_matrix["-1m1|-1m2"]["0m1|1m1"]= "match_cost";
-		$exp_cost_matrix["-1m1|-1m2"]["END"]= "goto_end_cost";
-		$exp_cost_matrix["-1m1|-1m2"]["0m1|1m0"]= "match_cost";
-		$exp_cost_matrix["-1m1|-1m2"]["0m0|1m1"]= "match_cost";
+		$exp_cost_matrix["-1m1|-1m2"]["0m1|1m1"] = "match_cost";
+		$exp_cost_matrix["-1m1|-1m2"]["END"] = "goto_end_cost";
+		$exp_cost_matrix["-1m1|-1m2"]["0m1|1m0"] = "match_cost";
+		$exp_cost_matrix["-1m1|-1m2"]["0m0|1m1"] = "match_cost";
 
-		$exp_cost_matrix["-1m1|-1m0"]["0m1|-1m1"]= "match_cost";
-		$exp_cost_matrix["-1m1|-1m0"]["END"]= "goto_end_cost";
-		$exp_cost_matrix["-1m1|-1m0"]["0m1|-1m2"]= "match_cost";
-		$exp_cost_matrix["-1m1|-1m0"]["0m1|-1m0"]= "match_cost";
-		$exp_cost_matrix["-1m1|-1m0"]["0m0|-1m1"]= "match_cost";
+		$exp_cost_matrix["-1m1|-1m0"]["0m1|-1m1"] = "match_cost";
+		$exp_cost_matrix["-1m1|-1m0"]["END"] = "goto_end_cost";
+		$exp_cost_matrix["-1m1|-1m0"]["0m1|-1m2"] = "match_cost";
+		$exp_cost_matrix["-1m1|-1m0"]["0m1|-1m0"] = "match_cost";
+		$exp_cost_matrix["-1m1|-1m0"]["0m0|-1m1"] = "match_cost";
 
-		$exp_cost_matrix["-1m0|-1m1"]["-1m1|0m1"]= "match_cost";
-		$exp_cost_matrix["-1m0|-1m1"]["-1m1|0m2"]= "match_cost";
-		$exp_cost_matrix["-1m0|-1m1"]["-1m2|0m1"]= "match_cost";
-		$exp_cost_matrix["-1m0|-1m1"]["-1m1|0m0"]= "match_cost";
-		$exp_cost_matrix["-1m0|-1m1"]["-1m0|0m1"]= "match_cost";
+		$exp_cost_matrix["-1m0|-1m1"]["-1m1|0m1"] = "match_cost";
+		$exp_cost_matrix["-1m0|-1m1"]["-1m1|0m2"] = "match_cost";
+		$exp_cost_matrix["-1m0|-1m1"]["-1m2|0m1"] = "match_cost";
+		$exp_cost_matrix["-1m0|-1m1"]["-1m1|0m0"] = "match_cost";
+		$exp_cost_matrix["-1m0|-1m1"]["-1m0|0m1"] = "match_cost";
 
-		$exp_cost_matrix["0m1|0m1"]["1m0|1m1"]= "match_cost";
-		$exp_cost_matrix["0m1|0m1"]["1m0|1m0"]= "match_cost";
-		$exp_cost_matrix["0m1|0m1"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["0m1|0m1"]["1m0|1m1"] = "match_cost";
+		$exp_cost_matrix["0m1|0m1"]["1m0|1m0"] = "match_cost";
+		$exp_cost_matrix["0m1|0m1"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["0m1|0m2"]["1m0|2m0"]= "match_cost";
-		$exp_cost_matrix["0m1|0m2"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["0m1|0m2"]["1m0|2m0"] = "match_cost";
+		$exp_cost_matrix["0m1|0m2"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["0m1|0m0"]["1m0|0m1"]= "match_cost";
-		$exp_cost_matrix["0m1|0m0"]["1m0|0m2"]= "match_cost";
-		$exp_cost_matrix["0m1|0m0"]["1m0|0m0"]= "match_cost";
-		$exp_cost_matrix["0m1|0m0"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["0m1|0m0"]["1m0|0m1"] = "match_cost";
+		$exp_cost_matrix["0m1|0m0"]["1m0|0m2"] = "match_cost";
+		$exp_cost_matrix["0m1|0m0"]["1m0|0m0"] = "match_cost";
+		$exp_cost_matrix["0m1|0m0"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["0m0|0m1"]["0m1|1m1"]= "match_cost";
-		$exp_cost_matrix["0m0|0m1"]["0m1|1m0"]= "match_cost";
-		$exp_cost_matrix["0m0|0m1"]["0m0|1m1"]= "match_cost";
-		$exp_cost_matrix["0m0|0m1"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["0m0|0m1"]["0m1|1m1"] = "match_cost";
+		$exp_cost_matrix["0m0|0m1"]["0m1|1m0"] = "match_cost";
+		$exp_cost_matrix["0m0|0m1"]["0m0|1m1"] = "match_cost";
+		$exp_cost_matrix["0m0|0m1"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["1m0|0m1"]["1m0|1m1"]= "match_cost";
-		$exp_cost_matrix["1m0|0m1"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["1m0|0m1"]["1m0|1m1"] = "match_cost";
+		$exp_cost_matrix["1m0|0m1"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["0m1|1m1"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["0m1|1m1"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["0m1|1m0"]["1m0|1m1"]= "match_cost";
-		$exp_cost_matrix["0m1|1m0"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["0m1|1m0"]["1m0|1m1"] = "match_cost";
+		$exp_cost_matrix["0m1|1m0"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["0m0|1m1"]["0m1|2m0"]= "match_cost";
-		$exp_cost_matrix["0m0|1m1"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["0m0|1m1"]["0m1|2m0"] = "match_cost";
+		$exp_cost_matrix["0m0|1m1"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["0m1|-1m1"]["1m0|0m1"]= "match_cost";
-		$exp_cost_matrix["0m1|-1m1"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["0m1|-1m1"]["1m0|0m1"] = "match_cost";
+		$exp_cost_matrix["0m1|-1m1"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["0m1|-1m2"]["1m0|1m1"]= "match_cost";
-		$exp_cost_matrix["0m1|-1m2"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["0m1|-1m2"]["1m0|1m1"] = "match_cost";
+		$exp_cost_matrix["0m1|-1m2"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["0m1|-1m0"]["1m0|-1m1"]= "match_cost";
-		$exp_cost_matrix["0m1|-1m0"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["0m1|-1m0"]["1m0|-1m1"] = "match_cost";
+		$exp_cost_matrix["0m1|-1m0"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["0m0|-1m1"]["0m1|0m1"]= "match_cost";
-		$exp_cost_matrix["0m0|-1m1"]["0m1|0m2"]= "match_cost";
-		$exp_cost_matrix["0m0|-1m1"]["0m1|0m0"]= "match_cost";
-		$exp_cost_matrix["0m0|-1m1"]["0m0|0m1"]= "match_cost";
-		$exp_cost_matrix["0m0|-1m1"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["0m0|-1m1"]["0m1|0m1"] = "match_cost";
+		$exp_cost_matrix["0m0|-1m1"]["0m1|0m2"] = "match_cost";
+		$exp_cost_matrix["0m0|-1m1"]["0m1|0m0"] = "match_cost";
+		$exp_cost_matrix["0m0|-1m1"]["0m0|0m1"] = "match_cost";
+		$exp_cost_matrix["0m0|-1m1"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["-1m1|0m1"]["0m1|1m1"]= "match_cost";
-		$exp_cost_matrix["-1m1|0m1"]["0m1|1m0"]= "match_cost";
-		$exp_cost_matrix["-1m1|0m1"]["0m0|1m1"]= "match_cost";
-		$exp_cost_matrix["-1m1|0m1"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["-1m1|0m1"]["0m1|1m1"] = "match_cost";
+		$exp_cost_matrix["-1m1|0m1"]["0m1|1m0"] = "match_cost";
+		$exp_cost_matrix["-1m1|0m1"]["0m0|1m1"] = "match_cost";
+		$exp_cost_matrix["-1m1|0m1"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["-1m1|0m2"]["0m1|2m0"]= "match_cost";
-		$exp_cost_matrix["-1m1|0m2"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["-1m1|0m2"]["0m1|2m0"] = "match_cost";
+		$exp_cost_matrix["-1m1|0m2"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["-1m2|0m1"]["1m0|1m1"]= "match_cost";
-		$exp_cost_matrix["-1m2|0m1"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["-1m2|0m1"]["1m0|1m1"] = "match_cost";
+		$exp_cost_matrix["-1m2|0m1"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["-1m1|0m0"]["0m1|0m1"]= "match_cost";
-		$exp_cost_matrix["-1m1|0m0"]["0m1|0m2"]= "match_cost";
-		$exp_cost_matrix["-1m1|0m0"]["0m1|0m0"]= "match_cost";
-		$exp_cost_matrix["-1m1|0m0"]["0m0|0m1"]= "match_cost";
-		$exp_cost_matrix["-1m1|0m0"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["-1m1|0m0"]["0m1|0m1"] = "match_cost";
+		$exp_cost_matrix["-1m1|0m0"]["0m1|0m2"] = "match_cost";
+		$exp_cost_matrix["-1m1|0m0"]["0m1|0m0"] = "match_cost";
+		$exp_cost_matrix["-1m1|0m0"]["0m0|0m1"] = "match_cost";
+		$exp_cost_matrix["-1m1|0m0"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["-1m0|0m1"]["-1m1|1m1"]= "match_cost";
-		$exp_cost_matrix["-1m0|0m1"]["-1m2|1m1"]= "match_cost";
-		$exp_cost_matrix["-1m0|0m1"]["-1m1|1m0"]= "match_cost";
-		$exp_cost_matrix["-1m0|0m1"]["-1m0|1m1"]= "match_cost";
-		$exp_cost_matrix["-1m0|0m1"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["-1m0|0m1"]["-1m1|1m1"] = "match_cost";
+		$exp_cost_matrix["-1m0|0m1"]["-1m2|1m1"] = "match_cost";
+		$exp_cost_matrix["-1m0|0m1"]["-1m1|1m0"] = "match_cost";
+		$exp_cost_matrix["-1m0|0m1"]["-1m0|1m1"] = "match_cost";
+		$exp_cost_matrix["-1m0|0m1"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["1m0|1m1"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["1m0|1m1"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["0m1|2m0"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["0m1|2m0"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["1m0|-1m1"]["1m0|0m1"]= "match_cost";
-		$exp_cost_matrix["1m0|-1m1"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["1m0|-1m1"]["1m0|0m1"] = "match_cost";
+		$exp_cost_matrix["1m0|-1m1"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["-1m1|1m1"]["0m1|2m0"]= "match_cost";
-		$exp_cost_matrix["-1m1|1m1"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["-1m1|1m1"]["0m1|2m0"] = "match_cost";
+		$exp_cost_matrix["-1m1|1m1"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["-1m2|1m1"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["-1m2|1m1"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["-1m1|1m0"]["0m1|1m1"]= "match_cost";
-		$exp_cost_matrix["-1m1|1m0"]["0m1|1m0"]= "match_cost";
-		$exp_cost_matrix["-1m1|1m0"]["0m0|1m1"]= "match_cost";
-		$exp_cost_matrix["-1m1|1m0"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["-1m1|1m0"]["0m1|1m1"] = "match_cost";
+		$exp_cost_matrix["-1m1|1m0"]["0m1|1m0"] = "match_cost";
+		$exp_cost_matrix["-1m1|1m0"]["0m0|1m1"] = "match_cost";
+		$exp_cost_matrix["-1m1|1m0"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["-1m0|1m1"]["-1m1|2m0"]= "match_cost";
-		$exp_cost_matrix["-1m0|1m1"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["-1m0|1m1"]["-1m1|2m0"] = "match_cost";
+		$exp_cost_matrix["-1m0|1m1"]["END"] = "goto_end_cost";
 
-		$exp_cost_matrix["-1m1|2m0"]["0m1|2m0"]= "match_cost";
+		$exp_cost_matrix["-1m1|2m0"]["0m1|2m0"] = "match_cost";
 
-		$exp_cost_matrix["-1m1|2m0"]["END"]= "goto_end_cost";
+		$exp_cost_matrix["-1m1|2m0"]["END"] = "goto_end_cost";
 
 		$exp_cost_matrix["-1m0|2m0"]["END"] = "goto_end_cost";
 
@@ -337,7 +338,6 @@ class  Multilingual_Aligner_BilingualAlignerTest extends TikiTestCase
 			$this->aligner->cost_matrix,
 			"Cost matrix was wrong."
 		);
-
 	}
 
 	/**
@@ -347,25 +347,25 @@ class  Multilingual_Aligner_BilingualAlignerTest extends TikiTestCase
 	{
 		$this->assert_parse_node_ID_yields(
 			'3m1|5m1',
-			array(3, 'm', 1, 5, 'm', 1),
+			[3, 'm', 1, 5, 'm', 1],
 			"Parsed node ID info was wrong for case where sentences are matched."
 		);
 
 		$this->assert_parse_node_ID_yields(
 			'3m1|5m0',
-			array(3, 'm', 1, 5, 'm', 0),
+			[3, 'm', 1, 5, 'm', 0],
 			"Parsed node ID info was wrong for case where sentences were skipped."
 		);
 
 		$this->assert_parse_node_ID_yields(
 			'-1m1|-1m1',
-			array(-1, 'm', 1, -1, 'm', 1),
+			[-1, 'm', 1, -1, 'm', 1],
 			"Parsed node ID info was wrong for case with sentence number = -1 (i.e., cursor before first sentences on both sides)."
 		);
 
 		$this->assert_parse_node_ID_yields(
 			'-1n0|-1n0',
-			array(-1, 'n', 0, -1, 'n', 0),
+			[-1, 'n', 0, -1, 'n', 0],
 			"Parsed node ID info was wrong for START node '-1n0|-1n0'."
 		);
 	}
@@ -394,8 +394,6 @@ class  Multilingual_Aligner_BilingualAlignerTest extends TikiTestCase
 			$this->aligner->_generate_node_ID(-1, 'n', 0, -1, 'n', 0),
 			"Node ID was wrong for START node '-1n0|-1n0'."
 		);
-
-
 	}
 
 	/**
@@ -405,25 +403,25 @@ class  Multilingual_Aligner_BilingualAlignerTest extends TikiTestCase
 	{
 		$this->assert_sentences_at_this_node(
 			'3m1|5m1',
-			array(4, 6),
+			[4, 6],
 			"Current sentences were wrong for node with matches on both sides."
 		);
 
 		$this->assert_sentences_at_this_node(
 			'-1m1|-1m1',
-			array(0, 0),
+			[0, 0],
 			"Current sentences were wrong for initial nodes (i.e., sentence number = -1)"
 		);
 
 		$this->assert_sentences_at_this_node(
 			'4m1|5m0',
-			array(5, 5),
+			[5, 5],
 			"Current sentences were wrong for case where we skip a sentence."
 		);
 
 		$this->assert_sentences_at_this_node(
 			'-1n0|-1n0',
-			array(-1, -1),
+			[-1, -1],
 			"Current sentences were wrong for START node '-1n0|-1n0'."
 		);
 	}
@@ -436,7 +434,7 @@ class  Multilingual_Aligner_BilingualAlignerTest extends TikiTestCase
 		$node = '3m1|5m1';
 		$sentences_preceding_node = $this->aligner->_sentences_preceding_this_node($node);
 		$this->assertEquals(
-			array(3, 5),
+			[3, 5],
 			$sentences_preceding_node,
 			"Sentences preceding node '$node' were wrong."
 		);
@@ -487,7 +485,7 @@ class  Multilingual_Aligner_BilingualAlignerTest extends TikiTestCase
 	private function assert_sentence_length_delta_is($l1_sentence, $l2_sentence, $exp_delta, $message)
 	{
 		$got_delta = $this->aligner->_sentence_length_delta($l1_sentence, $l2_sentence);
-		$message = $message."\nSentence length delta was wrong.";
+		$message = $message . "\nSentence length delta was wrong.";
 		$this->assertEquals($exp_delta, $got_delta, $message, 0.001);
 	}
 
@@ -513,7 +511,6 @@ class  Multilingual_Aligner_BilingualAlignerTest extends TikiTestCase
 			$next_sentences,
 			$message . "\nNext sentences were wrong for node '$node_id'"
 		);
-
 	}
 
 	private function assertCostMatrixEquals($exp_cost_matrix, $got_cost_matrix, $message)
@@ -544,13 +541,15 @@ class  Multilingual_Aligner_BilingualAlignerTest extends TikiTestCase
 				$got_cost_matrix[$origin],
 				"Costs from origin $origin differed"
 			);
-
 		}
 	}
 
-	public function assert__compute_node_transition_cost__yields($destination_node,
-			$exp_cost, $message)
-	{
+	public function assert__compute_node_transition_cost__yields(
+		$destination_node,
+		$exp_cost,
+		$message
+	) {
+
 		$got_cost = $this->aligner->_compute_node_transition_cost($destination_node);
 		$tolerance = 0.01;
 		$this->assertEquals(

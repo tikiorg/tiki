@@ -11,7 +11,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 
 	function setUp()
 	{
-		$this->info = array();
+		$this->info = [];
 	}
 
 	function testCreateLink()
@@ -55,49 +55,49 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 
 	function testPageDoesExist()
 	{
-		$this->info['Test'] = array(
+		$this->info['Test'] = [
 			'pageName' => 'Test',
 			'description' => 'Testing',
 			'lastModif' => 1234567890,
-		);
+		];
 
 		$link = new WikiParser_OutputLink;
 		$link->setIdentifier('Test');
-		$link->setWikiLookup(array($this, 'getPageInfo'));
-		$link->setWikiLinkBuilder(array($this, 'getWikiLink'));
+		$link->setWikiLookup([$this, 'getPageInfo']);
+		$link->setWikiLinkBuilder([$this, 'getWikiLink']);
 
 		$this->assertLinkIs('<a href="Test" title="Testing" class="wiki wiki_page">Test</a>', $link->getHtml());
 	}
 
 	function testInfoFunctionProvidesAlias()
 	{
-		$this->info['Test'] = array(
+		$this->info['Test'] = [
 			'pageName' => 'Test1.2',
 			'description' => 'Testing',
 			'lastModif' => 1234567890,
-		);
+		];
 
 		$link = new WikiParser_OutputLink;
 		$link->setIdentifier('Test');
-		$link->setWikiLookup(array($this, 'getPageInfo'));
-		$link->setWikiLinkBuilder(array($this, 'getWikiLink'));
+		$link->setWikiLookup([$this, 'getPageInfo']);
+		$link->setWikiLinkBuilder([$this, 'getWikiLink']);
 
 		$this->assertLinkIs('<a href="Test1.2" title="Testing" class="wiki wiki_page">Test</a>', $link->getHtml());
 	}
 
 	function testExistsWithRelType()
 	{
-		$this->info['Test'] = array(
+		$this->info['Test'] = [
 			'pageName' => 'Test',
 			'description' => 'Testing',
 			'lastModif' => 1234567890,
-		);
+		];
 
 		$link = new WikiParser_OutputLink;
 		$link->setIdentifier('Test');
 		$link->setQualifier('abc');
-		$link->setWikiLookup(array($this, 'getPageInfo'));
-		$link->setWikiLinkBuilder(array($this, 'getWikiLink'));
+		$link->setWikiLookup([$this, 'getPageInfo']);
+		$link->setWikiLinkBuilder([$this, 'getWikiLink']);
 
 		$this->assertLinkIs('<a href="Test" title="Testing" class="wiki wiki_page abc">Test</a>', $link->getHtml());
 	}
@@ -106,8 +106,8 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 	{
 		$link = new WikiParser_OutputLink;
 		$link->setIdentifier('out:Test');
-		$link->setWikiLookup(array($this, 'getPageInfo'));
-		$link->setWikiLinkBuilder(array($this, 'getWikiLink'));
+		$link->setWikiLookup([$this, 'getPageInfo']);
+		$link->setWikiLinkBuilder([$this, 'getWikiLink']);
 
 		$this->assertLinkIs('<a href="tiki-editpage.php?page=out%3ATest" title="Create page: out:Test" class="wiki wikinew text-danger tips">out:Test</a>', $link->getHtml());
 	}
@@ -117,10 +117,10 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link = new WikiParser_OutputLink;
 		$link->setIdentifier('out:Test');
 		$link->setExternals(
-			array(
+			[
 				'out' => 'http://example.com/$page',
 				'other' => 'http://www.example.com/$page',
-			)
+			]
 		);
 
 		$this->assertLinkIs('<a href="http://example.com/Test" class="wiki ext_page out">Test</a>', $link->getHtml());
@@ -132,10 +132,10 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setIdentifier('out:Test');
 		$link->setDescription('ABC');
 		$link->setExternals(
-			array(
+			[
 				'out' => 'http://example.com/$page',
 				'other' => 'http://www.example.com/$page',
-			)
+			]
 		);
 
 		$this->assertLinkIs('<a href="http://example.com/Test" class="wiki ext_page out">ABC</a>', $link->getHtml());
@@ -144,16 +144,16 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 	function testHandlePlural()
 	{
 		$this->info['Policies'] = false;
-		$this->info['Policy'] = array(
+		$this->info['Policy'] = [
 			'pageName' => 'Policy',
 			'description' => 'Some Page',
 			'lastModif' => 1234567890,
-		);
+		];
 
 		$link = new WikiParser_OutputLink;
 		$link->setIdentifier('Policies');
-		$link->setWikiLookup(array($this, 'getPageInfo'));
-		$link->setWikiLinkBuilder(array($this, 'getWikiLink'));
+		$link->setWikiLookup([$this, 'getPageInfo']);
+		$link->setWikiLinkBuilder([$this, 'getWikiLink']);
 		$link->setHandlePlurals(true);
 
 		$this->assertLinkIs('<a href="Policy" title="Some Page" class="wiki wiki_page">Policies</a>', $link->getHtml());
@@ -171,19 +171,19 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 
 	function testRenderLinkWithinSameNamespace()
 	{
-		$this->info['HelloWorld_Test'] = array(
+		$this->info['HelloWorld_Test'] = [
 			'pageName' => 'HelloWorld_Test',
 			'prettyName' => 'HelloWorld / Test',
 			'namespace' => 'HelloWorld',
-			'namespace_parts' => array('HelloWorld'),
+			'namespace_parts' => ['HelloWorld'],
 			'baseName' => 'Test',
 			'description' => '',
 			'lastModif' => 1234567890,
-		);
+		];
 
 		// ((Test)) within a page in HelloWorld namespace
 		$link = new WikiParser_OutputLink;
-		$link->setWikiLookup(array($this, 'getPageInfo'));
+		$link->setWikiLookup([$this, 'getPageInfo']);
 		$link->setNamespace('HelloWorld', '_');
 		$link->setIdentifier('Test');
 
@@ -192,19 +192,19 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 
 	function testRenderFromDifferentNamespace()
 	{
-		$this->info['HelloWorld_Test'] = array(
+		$this->info['HelloWorld_Test'] = [
 			'pageName' => 'HelloWorld_Test',
 			'prettyName' => 'HelloWorld / Test',
 			'namespace' => 'HelloWorld',
-			'namespace_parts' => array('HelloWorld'),
+			'namespace_parts' => ['HelloWorld'],
 			'baseName' => 'Test',
 			'description' => '',
 			'lastModif' => 1234567890,
-		);
+		];
 
 		// ((Test)) within a page in HelloWorld namespace
 		$link = new WikiParser_OutputLink;
-		$link->setWikiLookup(array($this, 'getPageInfo'));
+		$link->setWikiLookup([$this, 'getPageInfo']);
 		$link->setNamespace('Foobar', '_');
 		$link->setIdentifier('HelloWorld_Test');
 
@@ -213,19 +213,19 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 
 	function testRenderFromDifferentNamespaceWithMultipleParts()
 	{
-		$this->info['Abc_Def_HelloWorld_Test'] = array(
+		$this->info['Abc_Def_HelloWorld_Test'] = [
 			'pageName' => 'Abc_Def_HelloWorld_Test',
 			'prettyName' => 'Abc / Def / HelloWorld / Test',
 			'namespace' => 'Abc_Def_HelloWorld',
-			'namespace_parts' => array('Abc', 'Def', 'HelloWorld'),
+			'namespace_parts' => ['Abc', 'Def', 'HelloWorld'],
 			'baseName' => 'Test',
 			'description' => '',
 			'lastModif' => 1234567890,
-		);
+		];
 
 		// ((Test)) within a page in HelloWorld namespace
 		$link = new WikiParser_OutputLink;
-		$link->setWikiLookup(array($this, 'getPageInfo'));
+		$link->setWikiLookup([$this, 'getPageInfo']);
 		$link->setNamespace('Foobar', '_');
 		$link->setIdentifier('Abc_Def_HelloWorld_Test');
 
@@ -249,4 +249,3 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$this->assertEquals($expect, $content);
 	}
 }
-

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,15 +9,15 @@
  * @group unit
  * @group multilingual
  * @group GoogleTranslate
- * 
+ *
  */
 
 class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTestCase
 {
 
 	////////////////////////////////////////////////////////////////
-	// Note: In the rest of these tests, you can assume that 
-	//       $this->translator is an instance of GoogleTranslateWrapper 
+	// Note: In the rest of these tests, you can assume that
+	//       $this->translator is an instance of GoogleTranslateWrapper
 	//       created as above.
 	////////////////////////////////////////////////////////////////
 
@@ -33,7 +33,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTes
 		}
 
 		$source_lang = 'en';
-		$target_lang = 'it'; 	
+		$target_lang = 'it';
 
 		$this->provider = Multilingual_MachineTranslation::force('google', $prefs['lang_google_api_key']);
 		$this->translator = $this->provider->getHtmlImplementation($source_lang, $target_lang);
@@ -70,7 +70,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTes
 
 	public function _test_translate_text_with_more_than_1800_chars()
 	{
-		$text = str_repeat("Nothing in the world is ever completely wrong; even a stopped clock is right twice a day. ", 24); 
+		$text = str_repeat("Nothing in the world is ever completely wrong; even a stopped clock is right twice a day. ", 24);
 		$translation = $this->translator->translateText($text);
 		$this->assertEquals(trim(str_repeat("Niente al mondo è mai completamente sbagliato; fermato anche un orologio è giusto due volte al giorno. ", 24)), $translation, "The translation was not correct for text of 1800 chars.");
 	}
@@ -92,7 +92,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTes
 
 	/**
 	 * @group multilingual
-	 */ 
+	 */
 	public function test_Google_should_not_translate_html_syntax()
 	{
 		$text = "<a href='blah'>Hello world</a>";
@@ -103,7 +103,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTes
 
 	/**
 	 * @group multilingual
-	 */ 
+	 */
 	public function test_Google_should_not_translate_more_complicated_html()
 	{
 		$text = "<strong><a title='refresh' accesskey='2' href='tiki-index.php?page=Hello+World'>Hello World</a></strong>";
@@ -111,12 +111,11 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTes
 		$translation = $this->translator->translateText($text);
 
 		$this->assertEquals("<strong><a title='refresh' accesskey='2' href='tiki-index.php?page=Hello+World'>Ciao Mondo</a></strong>", $translation, "The translation was not correct for text: $text.");
-
 	}
 
 	/**
 	 * @group multilingual
-	 */ 
+	 */
 	public function test_that_ul_tag_gets_translated_properly()
 	{
 		$text = "<ul><li>You want to get started quickly<br /></li></ul>";
@@ -127,7 +126,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTes
 
 	/**
 	 * @group multilingual
-	 */ 
+	 */
 	public function test_that_parens_stay_after_translation()
 	{
 		$text = 'profile (<a class="wiki"  href="tiki-admin.php?profile=&amp;category=Featured+profiles&amp;repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&amp;preloadlist=y&amp;page=profiles&amp;list=List#profile-results" rel="">install profile now</a>)';
@@ -141,7 +140,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTes
 
 	/**
 	 * @group multilingual
-	 */ 
+	 */
 	public function test_strong_html_tag_renders_well_after_translation()
 	{
 		$text = 'different ways to <strong>Get Started</strong> with Tiki';
@@ -152,7 +151,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTes
 
 	/**
 	 * @group multilingual
-	 */ 
+	 */
 	public function test_english_one_title_gets_translated()
 	{
 		$text = '<h3 class="showhide_heading" id="Get_Started_using_Profiles"><a class="wiki"  href="tiki-admin.php?profile=&amp;category=Featured+profiles&amp;repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&amp;preloadlist=y&amp;page=profiles&amp;list=List#profile-results" rel="">Get Started using Admin Panel</a><br /></h3>';
@@ -161,13 +160,13 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTes
 
 		$translation = $translator->translateText($text);
 
-		$this->assertEquals('<h3 class="showhide_heading" id="Get_Started_using_Profiles"><a class="wiki"  href="tiki-admin.php?profile=&amp;category=Featured+profiles&amp;repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&amp;preloadlist=y&amp;page=profiles&amp;list=List#profile-results" rel="">commencer à utiliser le panneau d\'administration</a><br /></h3>', $translation, "The translation was not correct for text: $text.");	
+		$this->assertEquals('<h3 class="showhide_heading" id="Get_Started_using_Profiles"><a class="wiki"  href="tiki-admin.php?profile=&amp;category=Featured+profiles&amp;repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&amp;preloadlist=y&amp;page=profiles&amp;list=List#profile-results" rel="">commencer à utiliser le panneau d\'administration</a><br /></h3>', $translation, "The translation was not correct for text: $text.");
 	}
 
 
 	/**
 	 * @group multilingual
-	 */ 
+	 */
 	public function test_english_titles_get_translated()
 	{
 		$text = '<h3 class="showhide_heading" id="Get_Started_using_Profiles"><a class="wiki"  href="tiki-admin.php?profile=&amp;category=Featured+profiles&amp;repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&amp;preloadlist=y&amp;page=profiles&amp;list=List#profile-results" rel="">Get Started using Admin Panel</a><br /></h3><h3 class="showhide_heading" id="Get_Started_using_Profiles"><a class="wiki"  href="tiki-admin.php?profile=&amp;category=Featured+profiles&amp;repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&amp;preloadlist=y&amp;page=profiles&amp;list=List#profile-results" rel="">Get Started using Profiles</a><br /></h3>';
@@ -176,7 +175,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTes
 
 		$translation = $translator->translateText($text);
 
-		$this->assertEquals('<h3 class="showhide_heading" id="Get_Started_using_Profiles"><a class="wiki"  href="tiki-admin.php?profile=&amp;category=Featured+profiles&amp;repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&amp;preloadlist=y&amp;page=profiles&amp;list=List#profile-results" rel="">commencer à utiliser le panneau admin</a><br /></h3><h3 class="showhide_heading" id="Get_Started_using_Profiles"><a class="wiki"  href="tiki-admin.php?profile=&amp;category=Featured+profiles&amp;repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&amp;preloadlist=y&amp;page=profiles&amp;list=List#profile-results" rel="">commencer à utiliser les profils</a><br /></h3>', $translation, "The translation was not correct for text: $text.");	
+		$this->assertEquals('<h3 class="showhide_heading" id="Get_Started_using_Profiles"><a class="wiki"  href="tiki-admin.php?profile=&amp;category=Featured+profiles&amp;repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&amp;preloadlist=y&amp;page=profiles&amp;list=List#profile-results" rel="">commencer à utiliser le panneau admin</a><br /></h3><h3 class="showhide_heading" id="Get_Started_using_Profiles"><a class="wiki"  href="tiki-admin.php?profile=&amp;category=Featured+profiles&amp;repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&amp;preloadlist=y&amp;page=profiles&amp;list=List#profile-results" rel="">commencer à utiliser les profils</a><br /></h3>', $translation, "The translation was not correct for text: $text.");
 	}
 
 	////////////////////////////////////////////////
@@ -306,7 +305,4 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTes
 		$translation = $this->translator->translateText($text);
 		$this->assertEquals("Ciao __bella__ mondo", $translation, "The translation was not correct for text: $text.");
 	}
-
-
-
 }

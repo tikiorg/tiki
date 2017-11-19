@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * @group unit
- * 
+ *
  */
 
 class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
@@ -24,7 +24,7 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
 		$distances_matrix[0][2] = 23;
 		$distances_matrix[1][2] = 5;
 		$INFINITY = 9999999;
-		$this->pfinder = new Multilingual_Aligner_ShortestPathFinder($distances_matrix, $INFINITY);   
+		$this->pfinder = new Multilingual_Aligner_ShortestPathFinder($distances_matrix, $INFINITY);
 	}
 
 	//
@@ -33,7 +33,7 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
 	//
 	/**
 	 * @group multilingual
-	 */ 
+	 */
 	public function test_This_is_how_you_create_a_ShortestPathFinder()
 	{
 
@@ -43,7 +43,7 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
 		$distances_matrix[1][2] = 5;
 		$distances_matrix[0][0] = 0;
 		$distances_matrix[1][1] = 0;
-		$distances_matrix[2][2] = 0;      
+		$distances_matrix[2][2] = 0;
 
 		// Need  to choose  a very large number to act as infinity.
 		$INFINITY = 9999999;
@@ -53,7 +53,7 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
 
 	/**
 	 * @group multilingual
-	 */ 
+	 */
 	public function test_This_is_how_you_find_shortest_path_from_the_origin_to_another_node()
 	{
 		$origin_node_num = 0;
@@ -62,11 +62,11 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
 
 		$nodes_in_path = $this->pfinder->shortestPathTo($destination_node_num);
 		$distance = $this->pfinder->shortestDistanceTo($destination_node_num);
-	}    
+	}
 
 	/**
 	 * @group multilingual
-	 */ 
+	 */
 	public function test_node_names_do_not_have_to_be_numbers()
 	{
 		$distances_matrix['paris']['lyon'] = 11;
@@ -74,11 +74,10 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
 		$distances_matrix['lyon']['marseilles'] = 5;
 		$INFINITY = 9999999;
 
-		$this->pfinder = new Multilingual_Aligner_ShortestPathFinder($distances_matrix, $INFINITY);   
-		$this->pfinder->computeShortestPathes('paris');      
+		$this->pfinder = new Multilingual_Aligner_ShortestPathFinder($distances_matrix, $INFINITY);
+		$this->pfinder->computeShortestPathes('paris');
 		$nodes_in_path = $this->pfinder->shortestPathTo('marseilles');
 		$distance = $this->pfinder->shortestDistanceTo('marseilles');
-
 	}
 
 	////////////////////////////////////////////////////////////////
@@ -88,15 +87,15 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
 
 	/**
 	 * @group multilingual
-	 */ 
+	 */
 	public function test__nodesInMatrix()
 	{
 
-		$distances_matrix = array();
+		$distances_matrix = [];
 		$distances_matrix['paris']['london'] = 300;
 		$distances_matrix['paris']['rome'] = 600;
-		$distances_matrix['london']['ottawa'] = 2000;      
-		$exp_nodes = array('london', 'ottawa', 'paris', 'rome');
+		$distances_matrix['london']['ottawa'] = 2000;
+		$exp_nodes = ['london', 'ottawa', 'paris', 'rome'];
 
 		$nodes_list = $this->pfinder->_nodesInMmatrix($distances_matrix);
 
@@ -105,19 +104,19 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
 
 	/**
 	 * @group multilingual
-	 */ 
+	 */
 	public function test_path_finder_SMALL_example()
 	{
 		$start_node_num = 0;
-		$this->pfinder->computeShortestPathes($start_node_num); 
+		$this->pfinder->computeShortestPathes($start_node_num);
 
-		$this->assertShortestPathIs(1, array(0, 1), 11, "");     
-		$this->assertShortestPathIs(2, array(0, 1, 2), 16, "");
+		$this->assertShortestPathIs(1, [0, 1], 11, "");
+		$this->assertShortestPathIs(2, [0, 1, 2], 16, "");
 	}
 
 	/**
 	 * @group multilingual
-	 */ 
+	 */
 	public function test_path_finder_LARGER_example()
 	{
 		$start_node_num = 'ottawa';
@@ -133,14 +132,14 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
 		$cost_matrix['toronto']['vancouver'] = 280;
 		$INFINITY = 9999999;
 
-		$this->pfinder = new Multilingual_Aligner_ShortestPathFinder($cost_matrix, $INFINITY);      
-		$this->pfinder->computeShortestPathes('ottawa'); 
+		$this->pfinder = new Multilingual_Aligner_ShortestPathFinder($cost_matrix, $INFINITY);
+		$this->pfinder->computeShortestPathes('ottawa');
 
-		$this->assertShortestPathIs('montreal', array("ottawa", "montreal"), 50, "Bad path to montreal");     
-		$this->assertShortestPathIs('toronto', array("ottawa", "toronto"), 90, "Bad path to toronto");
-		$this->assertShortestPathIs('chicago', array("ottawa", "chicago"), 100, "Bad path to chicago");   
-		$this->assertShortestPathIs('detroit', array("ottawa", "montreal", "detroit"), 140, "Bad path to detroit");
-		$this->assertShortestPathIs('vancouver', array("ottawa", "montreal", "detroit", "vancouver"), 250, "Bad path to vancouver");
+		$this->assertShortestPathIs('montreal', ["ottawa", "montreal"], 50, "Bad path to montreal");
+		$this->assertShortestPathIs('toronto', ["ottawa", "toronto"], 90, "Bad path to toronto");
+		$this->assertShortestPathIs('chicago', ["ottawa", "chicago"], 100, "Bad path to chicago");
+		$this->assertShortestPathIs('detroit', ["ottawa", "montreal", "detroit"], 140, "Bad path to detroit");
+		$this->assertShortestPathIs('vancouver', ["ottawa", "montreal", "detroit", "vancouver"], 250, "Bad path to vancouver");
 	}
 
 
@@ -155,5 +154,4 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
 		$got_path = $this->pfinder->shortestPathTo($destination);
 		$this->assertEquals($exp_path, $got_path, "$message\nShortest path to node $destination was wrong.");
 	}
-
 }

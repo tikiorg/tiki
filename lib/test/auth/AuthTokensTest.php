@@ -37,14 +37,14 @@ class AuthTokensTest extends TikiDatabaseTestCase
 
 		$this->table = $this->db->table('tiki_auth_tokens');
 
-		$this->obj = new AuthTokens($this->db, array(), $this->dt);
+		$this->obj = new AuthTokens($this->db, [], $this->dt);
 
 		parent::setUp();
 	}
 
 	function testNoTokensIsDenied()
 	{
-		$params = array();
+		$params = [];
 		$groups = $this->obj->getGroups('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', 'tiki-index.php', $params);
 		$this->assertNull($groups);
 	}
@@ -54,7 +54,7 @@ class AuthTokensTest extends TikiDatabaseTestCase
 		$expectedTable = $this->createMySQLXmlDataSet(dirname(__FILE__) . '/fixtures/auth_tokens_dataset_create.xml')
 			->getTable('tiki_auth_tokens');
 
-		$token = $this->obj->createToken('tiki-index.php', array('page' => 'HomePage'), array('Registered'), array('timeout' => 5));
+		$token = $this->obj->createToken('tiki-index.php', ['page' => 'HomePage'], ['Registered'], ['timeout' => 5]);
 		$this->db->query("UPDATE tiki_auth_tokens SET creation = '2012-02-03 15:25:07', token = '0ae3b4b86286ab68f5a66fb8c49da163' WHERE token = '$token'");
 
 		$queryTable = $this->getConnection()->createQueryTable('tiki_auth_tokens', 'SELECT * FROM tiki_auth_tokens');
@@ -64,7 +64,7 @@ class AuthTokensTest extends TikiDatabaseTestCase
 
 	function testTokenMatchesCompleteHash()
 	{
-        $token = $this->obj->createToken('tiki-index.php', array('page' => 'HomePage'), array('Registered'));
+		$token = $this->obj->createToken('tiki-index.php', ['page' => 'HomePage'], ['Registered']);
 
 		$row = $this->db->query('SELECT tokenId, creation, timeout, entry, parameters, groups FROM tiki_auth_tokens ORDER BY creation desc')->fetchRow();
 
@@ -73,95 +73,95 @@ class AuthTokensTest extends TikiDatabaseTestCase
 
 	function testRetrieveGroupsForToken()
 	{
-        $this->dt->setTimestamp(time());
-		$token = $this->obj->createToken('tiki-index.php', array('page' => 'HomePage'), array('Registered'));
-		$this->assertEquals(array('Registered'), $this->obj->getGroups($token, 'tiki-index.php', array('page' => 'HomePage')));
+		$this->dt->setTimestamp(time());
+		$token = $this->obj->createToken('tiki-index.php', ['page' => 'HomePage'], ['Registered']);
+		$this->assertEquals(['Registered'], $this->obj->getGroups($token, 'tiki-index.php', ['page' => 'HomePage']));
 	}
 
 	function testAccessExpiredToken()
 	{
-		$this->assertNull($this->obj->getGroups("946fc2fa0a5e1cecd54440ce733b8fb4", 'tiki-index.php', array('page' => 'HomePage')));
+		$this->assertNull($this->obj->getGroups("946fc2fa0a5e1cecd54440ce733b8fb4", 'tiki-index.php', ['page' => 'HomePage']));
 	}
 
 	function testAlteredDataCancels()
 	{
-		$token = $this->obj->createToken('tiki-index.php', array('page' => 'HomePage'), array('Registered'));
+		$token = $this->obj->createToken('tiki-index.php', ['page' => 'HomePage'], ['Registered']);
 		$this->db->query('UPDATE tiki_auth_tokens SET groups = \'["Admins"]\'');
-		$this->assertNull($this->obj->getGroups($token, 'tiki-index.php', array('page' => 'HomePage')));
+		$this->assertNull($this->obj->getGroups($token, 'tiki-index.php', ['page' => 'HomePage']));
 	}
 
 	function testExtraDataCancels()
 	{
-		$token = $this->obj->createToken('tiki-index.php', array('page' => 'HomePage'), array('Registered'));
-		$this->assertNull($this->obj->getGroups($token, 'tiki-index.php', array('page' => 'HomePage', 'hello' => 'world')));
+		$token = $this->obj->createToken('tiki-index.php', ['page' => 'HomePage'], ['Registered']);
+		$this->assertNull($this->obj->getGroups($token, 'tiki-index.php', ['page' => 'HomePage', 'hello' => 'world']));
 	}
 
 	function testMissingDataCancels()
 	{
-		$token = $this->obj->createToken('tiki-index.php', array('page' => 'HomePage', 'foobar' => 'baz'), array('Registered'));
-		$this->assertNull($this->obj->getGroups($token, 'tiki-index.php', array('page' => 'HomePage')));
+		$token = $this->obj->createToken('tiki-index.php', ['page' => 'HomePage', 'foobar' => 'baz'], ['Registered']);
+		$this->assertNull($this->obj->getGroups($token, 'tiki-index.php', ['page' => 'HomePage']));
 	}
 
 	function testDifferingEntryCancels()
 	{
-		$token = $this->obj->createToken('tiki-index.php', array('page' => 'HomePage'), array('Registered'));
-		$this->assertNull($this->obj->getGroups($token, 'tiki-print.php', array('page' => 'HomePage')));
+		$token = $this->obj->createToken('tiki-index.php', ['page' => 'HomePage'], ['Registered']);
+		$this->assertNull($this->obj->getGroups($token, 'tiki-print.php', ['page' => 'HomePage']));
 	}
 
 	function testDifferingValueCancels()
 	{
-		$token = $this->obj->createToken('tiki-index.php', array('page' => 'HomePage'), array('Registered'));
-		$this->assertNull($this->obj->getGroups($token, 'tiki-index.php', array('page' => 'Home')));
+		$token = $this->obj->createToken('tiki-index.php', ['page' => 'HomePage'], ['Registered']);
+		$this->assertNull($this->obj->getGroups($token, 'tiki-index.php', ['page' => 'Home']));
 	}
 
 	function testNoParamerers()
 	{
-        $this->dt->setTimestamp(time());
-		$token = $this->obj->createToken('tiki-index.php', array(), array('Registered'));
-		$this->assertEquals(array('Registered'), $this->obj->getGroups($token, 'tiki-index.php', array()));
+		$this->dt->setTimestamp(time());
+		$token = $this->obj->createToken('tiki-index.php', [], ['Registered']);
+		$this->assertEquals(['Registered'], $this->obj->getGroups($token, 'tiki-index.php', []));
 	}
 
 	function testMaximumTimeout()
 	{
 		$lib = new AuthTokens(
 			$this->db,
-			array(
+			[
 				'maxTimeout' => 10,
-			)
+			]
 		);
-		$token = $lib->createToken('tiki-index.php', array('page' => 'HomePage'), array('Registered'), array('timeout' => 3600));
+		$token = $lib->createToken('tiki-index.php', ['page' => 'HomePage'], ['Registered'], ['timeout' => 3600]);
 
 		$this->assertEquals(10, $this->db->getOne('SELECT timeout FROM tiki_auth_tokens ORDER BY creation desc'));
 	}
 
 	function testSameTokenTwice()
 	{
-		$token = $this->obj->createToken('tiki-index.php', array('page' => 'HomePage'), array('Registered'));
-		$this->obj->getGroups($token, 'tiki-index.php', array('page' => 'HomePage'));
+		$token = $this->obj->createToken('tiki-index.php', ['page' => 'HomePage'], ['Registered']);
+		$this->obj->getGroups($token, 'tiki-index.php', ['page' => 'HomePage']);
 
-		$this->assertNull($this->obj->getGroups($token, 'tiki-index.php', array('page' => 'HomePage')));
+		$this->assertNull($this->obj->getGroups($token, 'tiki-index.php', ['page' => 'HomePage']));
 	}
 
 	function testAllowMultipleHits()
 	{
-        $lib = new AuthTokens($this->db, array('maxHits' => 100));
-		$token = $lib->createToken('tiki-index.php', array('page' => 'HomePage'), array('Registered'), array('hits' => 3));
-		$lib->getGroups($token, 'tiki-index.php', array('page' => 'HomePage'));
-		$lib->getGroups($token, 'tiki-index.php', array('page' => 'HomePage'));
+		$lib = new AuthTokens($this->db, ['maxHits' => 100]);
+		$token = $lib->createToken('tiki-index.php', ['page' => 'HomePage'], ['Registered'], ['hits' => 3]);
+		$lib->getGroups($token, 'tiki-index.php', ['page' => 'HomePage']);
+		$lib->getGroups($token, 'tiki-index.php', ['page' => 'HomePage']);
 
-		$this->assertEquals(array('Registered'), $lib->getGroups($token, 'tiki-index.php', array('page' => 'HomePage')));
-		$this->assertNull($lib->getGroups($token, 'tiki-index.php', array('page' => 'HomePage')));
+		$this->assertEquals(['Registered'], $lib->getGroups($token, 'tiki-index.php', ['page' => 'HomePage']));
+		$this->assertNull($lib->getGroups($token, 'tiki-index.php', ['page' => 'HomePage']));
 	}
 
 	function testLimitOnAccessCount()
 	{
 		$lib = new AuthTokens(
 			$this->db,
-			array(
+			[
 				'maxHits' => 10,
-			)
+			]
 		);
-		$token = $lib->createToken('tiki-index.php', array('page' => 'HomePage'), array('Registered'), array('hits' => 3600));
+		$token = $lib->createToken('tiki-index.php', ['page' => 'HomePage'], ['Registered'], ['hits' => 3600]);
 
 		$this->assertEquals(10, $this->db->getOne('SELECT hits FROM tiki_auth_tokens WHERE tokenId = 1'));
 	}
@@ -196,7 +196,7 @@ class AuthTokensTest extends TikiDatabaseTestCase
 	function testGetTokens_shouldReturnEmptyArrayIfNoToken()
 	{
 		$this->db->query('TRUNCATE tiki_auth_tokens');
-		$this->assertEquals(array(), $this->obj->getTokens());
+		$this->assertEquals([], $this->obj->getTokens());
 	}
 
 	function testGetTokens_shouldReturnAllTokens()
@@ -215,20 +215,20 @@ class AuthTokensTest extends TikiDatabaseTestCase
 
 	function testDeleteToken()
 	{
-		$token = $this->obj->createToken('tiki-user_send_reports.php', array(), array('Registered'));
+		$token = $this->obj->createToken('tiki-user_send_reports.php', [], ['Registered']);
 		$tokenId = $this->db->getOne('SELECT tokenId FROM tiki_auth_tokens ORDER BY creation desc');
 
 		$this->obj->deleteToken($tokenId);
 
-		$this->assertEmpty($this->table->fetchRow(array('entry'), array('tokenId' => $tokenId)));
+		$this->assertEmpty($this->table->fetchRow(['entry'], ['tokenId' => $tokenId]));
 	}
 
 	function testGetGroups_shouldDeleteExpiredTokens()
 	{
-        $expectedTable = $this->createMySQLXmlDataSet(dirname(__FILE__) . '/fixtures/auth_tokens_dataset_delete_timeout.xml')
+		$expectedTable = $this->createMySQLXmlDataSet(dirname(__FILE__) . '/fixtures/auth_tokens_dataset_delete_timeout.xml')
 			->getTable('tiki_auth_tokens');
 
-		$this->obj->getGroups('91bba2f998b48fce0146016809886127', 'tiki-index.php', array());
+		$this->obj->getGroups('91bba2f998b48fce0146016809886127', 'tiki-index.php', []);
 
 		$queryTable = $this->getConnection()->createQueryTable('tiki_auth_tokens', 'SELECT * FROM tiki_auth_tokens');
 
@@ -237,7 +237,7 @@ class AuthTokensTest extends TikiDatabaseTestCase
 
 	function testGetGroups_shouldDeleteTokensWithoutHitsLeft()
 	{
-        // 2012-02-01 13:25:07
+		// 2012-02-01 13:25:07
 		$this->dt->setTimestamp('1328109907');
 
 		$this->db->query('UPDATE tiki_auth_tokens set maxHits = -1, hits = -1 WHERE tokenId = 1');
@@ -246,7 +246,7 @@ class AuthTokensTest extends TikiDatabaseTestCase
 		$expectedTable = $this->createMySQLXmlDataSet(dirname(__FILE__) . '/fixtures/auth_tokens_dataset_delete_hits.xml')
 			->getTable('tiki_auth_tokens');
 
-		$this->obj->getGroups('91bba2f998b48fce0146016809886127', 'tiki-index.php', array());
+		$this->obj->getGroups('91bba2f998b48fce0146016809886127', 'tiki-index.php', []);
 
 		$queryTable = $this->getConnection()->createQueryTable('tiki_auth_tokens', 'SELECT * FROM tiki_auth_tokens');
 
@@ -255,18 +255,17 @@ class AuthTokensTest extends TikiDatabaseTestCase
 
 	function testGetGroups_shouldDecrementHits()
 	{
-        $this->obj->getGroups('e2990f7983b7b6c46b3987536aa38d32', 'tiki-index.php', array());
+		$this->obj->getGroups('e2990f7983b7b6c46b3987536aa38d32', 'tiki-index.php', []);
 
 		$this->assertEquals('9', $this->db->getOne('SELECT hits FROM tiki_auth_tokens WHERE tokenId = 3'));
 	}
 
 	function testGetGroups_shouldDecrementIfUnlimitedHits()
 	{
-        $this->db->query('UPDATE tiki_auth_tokens set maxHits = -1, hits = -1 WHERE tokenId = 3');
+		$this->db->query('UPDATE tiki_auth_tokens set maxHits = -1, hits = -1 WHERE tokenId = 3');
 
-		$this->obj->getGroups('e2990f7983b7b6c46b3987536aa38d32', 'tiki-index.php', array());
+		$this->obj->getGroups('e2990f7983b7b6c46b3987536aa38d32', 'tiki-index.php', []);
 
 		$this->assertEquals('-1', $this->db->getOne('SELECT hits FROM tiki_auth_tokens WHERE tokenId = 3'));
 	}
 }
-

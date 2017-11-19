@@ -31,4 +31,3 @@ class Search_Elastic_SortTest extends Search_Index_SortTest
 		}
 	}
 }
-

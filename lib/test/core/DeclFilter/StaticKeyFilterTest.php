@@ -15,10 +15,10 @@ class DeclFilter_StaticKeyFilterTest extends TikiTestCase
 	function testMatch()
 	{
 		$rule = new DeclFilter_StaticKeyFilterRule(
-			array(
+			[
 				'hello' => 'digits',
 				'world' => 'alpha',
-			)
+			]
 		);
 
 		$this->assertTrue($rule->match('hello'));
@@ -29,17 +29,17 @@ class DeclFilter_StaticKeyFilterTest extends TikiTestCase
 	function testApply()
 	{
 		$rule = new DeclFilter_StaticKeyFilterRule(
-			array(
+			[
 				'hello' => 'digits',
 				'world' => 'alpha',
-			)
+			]
 		);
 
-		$data = array(
+		$data = [
 			'hello' => '123abc',
 			'world' => '123abc',
 			'foo' => '123abc',
-		);
+		];
 
 		$rule->apply($data, 'hello');
 		$rule->apply($data, 'world');

@@ -1,6 +1,7 @@
 <?php
 
 namespace Test\Wiki;
+
 use Tiki\Wiki\SlugManager;
 use Tiki\Wiki\SlugManager\UrlencodeGenerator;
 use Tiki\Wiki\SlugManager\UnderscoreGenerator;
@@ -83,4 +84,3 @@ class SlugManagerTest extends \PHPUnit_Framework_TestCase
 		];
 	}
 }
-

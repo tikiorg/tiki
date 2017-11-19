@@ -14,7 +14,7 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 {
 	function toArray($matcher)
 	{
-		$ret = array();
+		$ret = [];
 		foreach ($matcher as $match) {
 			$ret[] = $match;
 		}
@@ -282,7 +282,7 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 		$matches = WikiParser_PluginMatcher::match($string);
 		$this->assertEquals(4, count($matches));
 
-		$expected = array('c', 'a', 'd');
+		$expected = ['c', 'a', 'd'];
 		$iteration = 0;
 		foreach ($matches as $match) {
 			$this->assertEquals($expected[$iteration], $match->getName());
@@ -303,7 +303,7 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 		$matches = WikiParser_PluginMatcher::match($string);
 		$this->assertEquals(4, count($matches));
 
-		$expected = array('c', 'a', 'b', 'f', 'd');
+		$expected = ['c', 'a', 'b', 'f', 'd'];
 		$iteration = 0;
 		foreach ($matches as $match) {
 			$this->assertEquals($expected[$iteration], $match->getName());
@@ -323,11 +323,11 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 		$matches = WikiParser_PluginMatcher::match($strings);
 		$this->assertEquals(3, count($matches));
 
-		$replacements = array(
+		$replacements = [
 			'~np~<div>~/np~{A(a=2)}{a a=3}{A}~np~</div>~/np~',
 			'~np~<div>~/np~{a a=3}~np~</div>~/np~',
 			'~np~<div>~/np~3~np~</div>~/np~',
-		);
+		];
 		foreach ($matches as $match) {
 			$match->replaceWith(array_shift($replacements));
 		}
@@ -341,13 +341,13 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 
 		$matches = WikiParser_PluginMatcher::match($strings);
 
-		$replacements = array(
+		$replacements = [
 			'{a a=2}{A(a=3)/}{A(a=4)}Hello World{A}',
 			'0',
 			'1',
 			'2',
-		);
-		$obtained = array();
+		];
+		$obtained = [];
 		foreach ($matches as $match) {
 			$obtained[] = $match->getArguments() . $match->getBody();
 			$match->replaceWith(array_shift($replacements));
@@ -355,12 +355,12 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 
 		$this->assertEquals('012', $matches->getText());
 		$this->assertEquals(
-			array(
+			[
 				'a=1{a a=2}{A(a=3)/}',
 				'a=2',
 				'a=3',
 				'a=4Hello World',
-			),
+			],
 			$obtained
 		);
 	}
@@ -401,13 +401,13 @@ CONTENT;
 				continue;
 			}
 			if ($m->getName() == 'box') {
-				$m->replaceWithPlugin('box', array('a' => 1), $m->getBody());
+				$m->replaceWithPlugin('box', ['a' => 1], $m->getBody());
 				$justReplaced = true;
 			} elseif ($m->getName() == 'list') {
-				$m->replaceWithPlugin('list', array(), "\n    {filter categories=abc1234567890abc1234567890}\n  ");
+				$m->replaceWithPlugin('list', [], "\n    {filter categories=abc1234567890abc1234567890}\n  ");
 				$justReplaced = true;
 			} elseif ($m->getName() == 'filter') {
-				$m->replaceWithPlugin('filter', array('categories' => 'abc1234567890abc1234567890'), "");
+				$m->replaceWithPlugin('filter', ['categories' => 'abc1234567890abc1234567890'], "");
 				$justReplaced = true;
 			}
 		}

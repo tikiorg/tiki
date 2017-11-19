@@ -16,10 +16,10 @@ class Perms_MixedTest extends TikiTestCase
 	{
 		$perms = new Perms;
 		$perms->setResolverFactories(
-			array(
+			[
 				$resolver = $this->createMock('Perms_ResolverFactory'),
 				new Perms_ResolverFactory_StaticFactory('global', new Perms_Resolver_Default(true)),
-			)
+			]
 		);
 		Perms::set($perms);
 
@@ -28,46 +28,46 @@ class Perms_MixedTest extends TikiTestCase
 			->will($this->returnValue(null));
 		$resolver->expects($this->exactly(3))
 			->method('bulk')
-			->will($this->returnValue(array()));
+			->will($this->returnValue([]));
 		$resolver->expects($this->at(0))
 			->method('bulk')
-			->will($this->returnValue(array()))
+			->will($this->returnValue([]))
 			->with(
-				$this->equalTo(array('type' => 'wiki page')),
+				$this->equalTo(['type' => 'wiki page']),
 				$this->equalTo('object'),
-				$this->equalTo(array('A', 'B'))
+				$this->equalTo(['A', 'B'])
 			);
 		$resolver->expects($this->at(1))
 			->method('bulk')
-			->will($this->returnValue(array()))
+			->will($this->returnValue([]))
 			->with(
-				$this->equalTo(array('type' => 'category')),
+				$this->equalTo(['type' => 'category']),
 				$this->equalTo('object'),
-				$this->equalTo(array(10))
+				$this->equalTo([10])
 			);
 
-		$data = array(
-			array('type' => 'wiki page', 'object' => 'A', 'creator' => 'abc'),
-			array('type' => 'wiki page', 'object' => 'B', 'creator' => 'abc'),
-			array('type' => 'category', 'object' => 10),
-			array('type' => 'forumPost', 'object' => 12, 'author' => 'author'),
-		);
+		$data = [
+			['type' => 'wiki page', 'object' => 'A', 'creator' => 'abc'],
+			['type' => 'wiki page', 'object' => 'B', 'creator' => 'abc'],
+			['type' => 'category', 'object' => 10],
+			['type' => 'forumPost', 'object' => 12, 'author' => 'author'],
+		];
 
 		$out = Perms::mixedFilter(
-			array(),
+			[],
 			'type',
 			'object',
 			$data,
-			array(
-				'wiki page' => array('object' => 'object', 'type' => 'type', 'creator' => 'creator'),
-				'category' => array('object' => 'object', 'type' => 'type'),
-				'forumPost' => array('object' => 'object', 'type' => 'type', 'creator' => 'author'),
-			),
-			array(
+			[
+				'wiki page' => ['object' => 'object', 'type' => 'type', 'creator' => 'creator'],
+				'category' => ['object' => 'object', 'type' => 'type'],
+				'forumPost' => ['object' => 'object', 'type' => 'type', 'creator' => 'author'],
+			],
+			[
 				'wiki page' => 'view',
 				'category' => 'view_categories',
 				'forumPost' => 'forum_post',
-			)
+			]
 		);
 
 		$this->assertEquals($data, $out);

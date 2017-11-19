@@ -30,4 +30,3 @@ class Search_Lucene_StemmingTest extends Search_Index_StemmingTest
 		}
 	}
 }
-

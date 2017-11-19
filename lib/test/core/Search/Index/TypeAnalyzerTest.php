@@ -10,7 +10,7 @@
  */
 abstract class Search_Index_TypeAnalyzerTest extends PHPUnit_Framework_TestCase
 {
-	protected abstract function getIndex();
+	abstract protected function getIndex();
 
 	function testIdentifierTypes()
 	{
@@ -19,7 +19,7 @@ abstract class Search_Index_TypeAnalyzerTest extends PHPUnit_Framework_TestCase
 		$index = new Search_Index_TypeAnalysisDecorator($index);
 
 		$index->addDocument(
-			array(
+			[
 				'object_type' => $typeFactory->identifier('wiki page'),
 				'object_id' => $typeFactory->identifier('X'),
 				'a' => $typeFactory->plaintext('X'),
@@ -29,10 +29,9 @@ abstract class Search_Index_TypeAnalyzerTest extends PHPUnit_Framework_TestCase
 				'e' => $typeFactory->numeric('X'),
 				'f' => $typeFactory->multivalue('X'),
 				'g' => $typeFactory->sortable('X'),
-			)
+			]
 		);
 
-		$this->assertEquals(array('object_type', 'object_id', 'd', 'e'), $index->getIdentifierFields());
+		$this->assertEquals(['object_type', 'object_id', 'd', 'e'], $index->getIdentifierFields());
 	}
 }
-

@@ -14,10 +14,10 @@ class Search_FormatterTest extends PHPUnit_Framework_TestCase
 		$formatter = new Search_Formatter($plugin);
 
 		$output = $formatter->format(
-			array(
-				array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
-				array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
-			)
+			[
+				['object_type' => 'wiki page', 'object_id' => 'HomePage'],
+				['object_type' => 'wiki page', 'object_id' => 'SomePage'],
+			]
 		);
 
 		$expect = <<<OUT
@@ -38,18 +38,18 @@ OUT;
 		$formatter = new Search_Formatter($plugin);
 
 		$output = $formatter->format(
-			array(
-				array(
+			[
+				[
 					'object_type' => 'wiki page',
 					'object_id' => 'HomePage',
 					'modification_date' => strtotime('2010-10-10 10:10:10')
-				),
-				array(
+				],
+				[
 					'object_type' => 'wiki page',
 					'object_id' => 'SomePage',
 					'modification_date' => strtotime('2011-11-11 11:11:11')
-				),
-			)
+				],
+			]
 		);
 
 		$expect = <<<OUT
@@ -67,10 +67,10 @@ OUT;
 		$formatter = new Search_Formatter($plugin);
 
 		$output = $formatter->format(
-			array(
-				array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
-				array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
-			)
+			[
+				['object_type' => 'wiki page', 'object_id' => 'HomePage'],
+				['object_type' => 'wiki page', 'object_id' => 'SomePage'],
+			]
 		);
 
 		$expect = <<<OUT
@@ -87,7 +87,7 @@ OUT;
 
 		$formatter = new Search_Formatter($plugin);
 
-		$output = $formatter->format(array(array('object_type' => 'wiki page', 'object_id' => 'HomePage'),));
+		$output = $formatter->format([['object_type' => 'wiki page', 'object_id' => 'HomePage'],]);
 
 		$expect = <<<OUT
 * No value for 'doesnotexist' (Test)
@@ -98,19 +98,19 @@ OUT;
 
 	function testBasicSmartyFormatter()
 	{
-		$plugin = new Search_Formatter_Plugin_SmartyTemplate(dirname(__FILE__).'/basic.tpl');
-		$plugin->setData(array('foo' => array('bar' => 'baz'),));
+		$plugin = new Search_Formatter_Plugin_SmartyTemplate(dirname(__FILE__) . '/basic.tpl');
+		$plugin->setData(['foo' => ['bar' => 'baz'],]);
 
 		$formatter = new Search_Formatter($plugin);
 
 		// required for the SmartyFormatter since r59367
-		$GLOBALS['base_url'] ='';
+		$GLOBALS['base_url'] = '';
 
 		$output = $formatter->format(
-			array(
-				array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
-				array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
-			)
+			[
+				['object_type' => 'wiki page', 'object_id' => 'HomePage'],
+				['object_type' => 'wiki page', 'object_id' => 'SomePage'],
+			]
 		);
 
 		$expect = <<<OUT
@@ -127,15 +127,15 @@ OUT;
 
 	function testForEmbeddedMode()
 	{
-		$plugin = new Search_Formatter_Plugin_SmartyTemplate(dirname(__FILE__).'/embedded.tpl', true);
+		$plugin = new Search_Formatter_Plugin_SmartyTemplate(dirname(__FILE__) . '/embedded.tpl', true);
 
 		$formatter = new Search_Formatter($plugin);
 
 		$output = $formatter->format(
-			array(
-				array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
-				array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
-			)
+			[
+				['object_type' => 'wiki page', 'object_id' => 'HomePage'],
+				['object_type' => 'wiki page', 'object_id' => 'SomePage'],
+			]
 		);
 
 		$expect = <<<OUT
@@ -152,16 +152,16 @@ OUT;
 
 	function testAdditionalFieldDefinition()
 	{
-		$plugin = new Search_Formatter_Plugin_SmartyTemplate(dirname(__FILE__).'/basic.tpl');
+		$plugin = new Search_Formatter_Plugin_SmartyTemplate(dirname(__FILE__) . '/basic.tpl');
 
 		$formatter = new Search_Formatter($plugin);
 		$formatter->addSubFormatter('object_id', new Search_Formatter_Plugin_WikiTemplate("{display name=object_id}\n{display name=description default=None}"));
 
 		$output = $formatter->format(
-			array(
-				array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
-				array('object_type' => 'wiki page', 'object_id' => 'SomePage', 'description' => 'About'),
-			)
+			[
+				['object_type' => 'wiki page', 'object_id' => 'HomePage'],
+				['object_type' => 'wiki page', 'object_id' => 'SomePage', 'description' => 'About'],
+			]
 		);
 
 		$expect = <<<OUT
@@ -180,15 +180,15 @@ OUT;
 
 	function testPaginationInformationProvided()
 	{
-		$plugin = new Search_Formatter_Plugin_SmartyTemplate(dirname(__FILE__).'/paginate.tpl');
+		$plugin = new Search_Formatter_Plugin_SmartyTemplate(dirname(__FILE__) . '/paginate.tpl');
 
 		$formatter = new Search_Formatter($plugin);
 		$output = $formatter->format(
 			new Search_ResultSet(
-				array(
-					array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
-					array('object_type' => 'wiki page', 'object_id' => 'SomePage', 'description' => 'About'),
-				),
+				[
+					['object_type' => 'wiki page', 'object_id' => 'HomePage'],
+					['object_type' => 'wiki page', 'object_id' => 'SomePage', 'description' => 'About'],
+				],
 				22,
 				20,
 				10
@@ -203,22 +203,22 @@ OUT;
 
 	function testSpecifyDataSource()
 	{
-		$searchResult = Search_ResultSet::create(array(
-			array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
-			array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
-		));
-		$withData = array(
-			array('object_type' => 'wiki page', 'object_id' => 'HomePage', 'description' => 'ABC'),
-			array('object_type' => 'wiki page', 'object_id' => 'SomePage', 'description' => 'DEF'),
-		);
+		$searchResult = Search_ResultSet::create([
+			['object_type' => 'wiki page', 'object_id' => 'HomePage'],
+			['object_type' => 'wiki page', 'object_id' => 'SomePage'],
+		]);
+		$withData = [
+			['object_type' => 'wiki page', 'object_id' => 'HomePage', 'description' => 'ABC'],
+			['object_type' => 'wiki page', 'object_id' => 'SomePage', 'description' => 'DEF'],
+		];
 
 		$source = $this->createMock('Search_Formatter_DataSource_Interface');
-		for( $i = 0; $i < 4; $i++ ) {
+		for ($i = 0; $i < 4; $i++) {
 			$source->expects($this->at($i))
 				->method('getData')
 				->will($this->returnCallback(function ($entry, $field) use (& $withData, $i) {
-					$this->assertContains($field, array('object_id', 'description'));
-					return $withData[intval($i/2)];
+					$this->assertContains($field, ['object_id', 'description']);
+					return $withData[intval($i / 2)];
 				}));
 		}
 
@@ -247,18 +247,18 @@ OUT;
 		$formatter = new Search_Formatter($plugin);
 
 		$output = $formatter->format(
-			array(
-				array(
+			[
+				[
 					'object_type' => 'wiki page',
 					'object_id' => 'HomePage',
 					'title' => 'Home'
-				),
-				array(
+				],
+				[
 					'object_type' => 'wiki page',
 					'object_id' => 'Some Page',
 					'title' => 'Test'
-				),
-			)
+				],
+			]
 		);
 
 		$expect = <<<OUT
@@ -274,18 +274,18 @@ OUT;
 		global $prefs;
 		$prefs['feature_sefurl'] = 'y';
 
-		$plugin = new Search_Formatter_Plugin_SmartyTemplate(dirname(__FILE__).'/basic.tpl');
+		$plugin = new Search_Formatter_Plugin_SmartyTemplate(dirname(__FILE__) . '/basic.tpl');
 
 		$formatter = new Search_Formatter($plugin);
 		$formatter->addSubFormatter('object_id', new Search_Formatter_Plugin_WikiTemplate("{display name=object_id format=objectlink}"));
 
 		$output = $formatter->format(
-			array(
-				array(
+			[
+				[
 					'object_type' => 'wiki page',
 					'object_id' => 'HomePage'
-				),
-			)
+				],
+			]
 		);
 
 		$expect = <<<OUT
@@ -304,18 +304,18 @@ OUT;
 		$plugin = new Search_Formatter_Plugin_WikiTemplate('{display name=highlight}');
 
 		$resultSet = new Search_ResultSet(
-			array(
-				array(
+			[
+				[
 					'object_type' => 'wiki page',
 					'object_id' => 'HomePage',
 					'content' => 'Hello World'
-				),
-				array(
+				],
+				[
 					'object_type' => 'wiki page',
 					'object_id' => 'SomePage',
 					'content' => 'Test'
-				),
-			),
+				],
+			],
 			22,
 			20,
 			10
@@ -336,4 +336,3 @@ class Search_FormatterTest_HighlightHelper implements Zend\Filter\FilterInterfac
 		return str_replace('Hello', '<strong>Hello</strong>', $content);
 	}
 }
-

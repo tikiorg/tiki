@@ -79,10 +79,10 @@ class Tiki_Package_ComposerCliTest extends TikiTestCase
 	public function testGetComposerConfigOrDefault($composer, $composerDist, $expected)
 	{
 		$structure = [];
-		if (!is_null($composer)) {
+		if (! is_null($composer)) {
 			$structure['composer.json'] = $composer;
 		}
-		if (!is_null($composerDist)) {
+		if (! is_null($composerDist)) {
 			$structure['composer.json.dist'] = $composerDist;
 		}
 
@@ -92,7 +92,6 @@ class Tiki_Package_ComposerCliTest extends TikiTestCase
 		$composerCli = new ComposerCli(vfsStream::url($stream));
 
 		$this->assertEquals(json_decode($expected, true), $composerCli->getComposerConfigOrDefault());
-
 	}
 
 	public function getComposerConfigOrDefaultProvider()

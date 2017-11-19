@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -31,7 +31,7 @@ class EditLibTest extends TikiTestCase
 	{
 		$el = new EditLib();
 
-		$col = 'rgb(255 , 0 , 0)'; 
+		$col = 'rgb(255 , 0 , 0)';
 		$hex = $el->parseColor($col);
 		$this->assertEquals('#FF0000', $hex);
 
@@ -61,7 +61,7 @@ class EditLibTest extends TikiTestCase
 		 * empty style -> empty array
 		 */
 		$style = '';
-		$parsed = array();
+		$parsed = [];
 		$el->parseStyleAttribute($style, $parsed);
 		$this->assertEquals(0, count($parsed));
 
@@ -70,7 +70,7 @@ class EditLibTest extends TikiTestCase
 		 * delimiters only -> empty array
 		 */
 		$style = ' ; ; ';
-		$parsed = array();
+		$parsed = [];
 		$el->parseStyleAttribute($style, $parsed);
 		$this->assertEquals(0, count($parsed));
 
@@ -79,7 +79,7 @@ class EditLibTest extends TikiTestCase
 		 * examples, no shortand lists
 		 */
 		$style = 'unknown-list:rgb(1,2,3) url(background.gif);unknown-size:12;';
-		$parsed = array();
+		$parsed = [];
 		$el->parseStyleAttribute($style, $parsed);
 		$this->assertEquals(2, count($parsed));
 		$this->assertTrue(isset($parsed['unknown-list']));
@@ -88,7 +88,7 @@ class EditLibTest extends TikiTestCase
 		$this->assertEquals(12, $parsed['unknown-size']);
 
 		$style = 'unknown-list:rgb(1,2,3) url(background.gif);unknown-size:12';
-		$parsed = array();
+		$parsed = [];
 		$el->parseStyleAttribute($style, $parsed);
 		$this->assertEquals(2, count($parsed));
 		$this->assertTrue(isset($parsed['unknown-list']));
@@ -97,68 +97,68 @@ class EditLibTest extends TikiTestCase
 		$this->assertEquals(12, $parsed['unknown-size']);
 
 		$style = ' unknown-list : rgb( 1 , 2 , 3 ) url( background.gif )   ;   unknown-size: 12 ; ';
-		$parsed = array();
+		$parsed = [];
 		$el->parseStyleAttribute($style, $parsed);
 		$this->assertEquals(2, count($parsed));
 		$this->assertTrue(isset($parsed['unknown-list']));
 		$this->assertEquals('rgb( 1 , 2 , 3 ) url( background.gif )', $parsed['unknown-list']);
 		$this->assertTrue(isset($parsed['unknown-size']));
-		$this->assertEquals(12, $parsed['unknown-size']);	
+		$this->assertEquals(12, $parsed['unknown-size']);
 
 
 		/*
 		 * examples with shorthand list 'background'
 		 */
 		$style = 'background-color:#FF0000';
-		$parsed = array();
+		$parsed = [];
 		$el->parseStyleAttribute($style, $parsed);
 		$this->assertEquals(1, count($parsed));
 		$this->assertTrue(isset($parsed['background-color']));
 		$this->assertEquals('#FF0000', $parsed['background-color']);
 
 		$style = 'background:#FF0000';
-		$parsed = array();
+		$parsed = [];
 		$el->parseStyleAttribute($style, $parsed);
 		$this->assertEquals(1, count($parsed));
 		$this->assertTrue(isset($parsed['background-color']));
 		$this->assertEquals('#FF0000', $parsed['background-color']);
 
 		$style = 'background:rgb(0, 0, 0);';
-		$parsed = array();
+		$parsed = [];
 		$el->parseStyleAttribute($style, $parsed);
 		$this->assertEquals(1, count($parsed));
 		$this->assertTrue(isset($parsed['background-color']));
 		$this->assertEquals('rgb(0, 0, 0)', $parsed['background-color']);
 
-		$style = 'background: rgb(0, 255, 0); background-color:rgb(255, 0, 0);';		
-		$parsed = array();
+		$style = 'background: rgb(0, 255, 0); background-color:rgb(255, 0, 0);';
+		$parsed = [];
 		$el->parseStyleAttribute($style, $parsed);
 		$this->assertEquals(1, count($parsed));
 		$this->assertTrue(isset($parsed['background-color']));
-		$this->assertEquals('rgb(255, 0, 0)', $parsed['background-color']);				
+		$this->assertEquals('rgb(255, 0, 0)', $parsed['background-color']);
 
-		$style = 'background-color:rgb(255, 0, 0); background: rgb(0, 255, 0);';		
-		$parsed = array();
+		$style = 'background-color:rgb(255, 0, 0); background: rgb(0, 255, 0);';
+		$parsed = [];
 		$el->parseStyleAttribute($style, $parsed);
 		$this->assertEquals(1, count($parsed));
 		$this->assertTrue(isset($parsed['background-color']));
-		$this->assertEquals('rgb(0, 255, 0)', $parsed['background-color']);		
+		$this->assertEquals('rgb(0, 255, 0)', $parsed['background-color']);
 
 		$style = 'background-color:rgb(255, 0, 0); background: rgb(0, 255, 0) #0000FF;';
-		$parsed = array();
+		$parsed = [];
 		$el->parseStyleAttribute($style, $parsed);
 		$this->assertEquals(1, count($parsed));
 		$this->assertTrue(isset($parsed['background-color']));
-		$this->assertEquals('#0000FF', $parsed['background-color']);				
+		$this->assertEquals('#0000FF', $parsed['background-color']);
 
 		$style = 'background-color:rgb(255, 0, 0); background: rgb(0, 255, 0) unknown1 #0000FF unknown2;';
-		$parsed = array();
+		$parsed = [];
 		$el->parseStyleAttribute($style, $parsed);
 		$this->assertEquals(2, count($parsed));
 		$this->assertTrue(isset($parsed['background-color']));
-		$this->assertEquals('#0000FF', $parsed['background-color']);				
+		$this->assertEquals('#0000FF', $parsed['background-color']);
 		$this->assertTrue(isset($parsed['background']));
-		$this->assertEquals('unknown1 unknown2', $parsed['background']);				
+		$this->assertEquals('unknown1 unknown2', $parsed['background']);
 	}
 
 
@@ -170,7 +170,7 @@ class EditLibTest extends TikiTestCase
 		 * empty
 		 */
 		$list = '';
-		$parsed = array();
+		$parsed = [];
 		$el->parseStyleList($list, $parsed);
 		$this->assertEquals(0, count($parsed));
 
@@ -179,14 +179,14 @@ class EditLibTest extends TikiTestCase
 		 * mixed examples
 		 */
 		$list = 'rgb(0, 255, 0) #0000FF';
-		$parsed = array();
+		$parsed = [];
 		$el->parseStyleList($list, $parsed);
 		$this->assertEquals(2, count($parsed));
 		$this->assertEquals('rgb(0, 255, 0)', $parsed[0]);
 		$this->assertEquals('#0000FF', $parsed[1]);
 
 		$list = 'rgb( 1 , 2 , 3 )   20px    url( background-example.gif )';
-		$parsed = array();
+		$parsed = [];
 		$el->parseStyleList($list, $parsed);
 		$this->assertEquals(3, count($parsed));
 		$this->assertEquals('rgb( 1 , 2 , 3 )', $parsed[0]);
@@ -208,7 +208,7 @@ class EditLibTest extends TikiTestCase
 
 	/**
 	 * Nested color specifications
-	 * 
+	 *
 	 * In HTML, color specifications can be nested.
 	 * In Wiki, the colors specifications cannot be nested.
 	 * Hence some reordering is required.
@@ -261,7 +261,7 @@ class EditLibTest extends TikiTestCase
 	function testParseToWikiNestedColorsWithWikiInline()
 	{
 
-		$inData =  '<span style="color: rgb(255, 0, 0);">';
+		$inData = '<span style="color: rgb(255, 0, 0);">';
 		$inData .= 'red ';
 		$inData .= '<strong>';
 		$inData .= 'bold ';
@@ -279,7 +279,7 @@ class EditLibTest extends TikiTestCase
 
 	/**
 	 * Nested wiki inline tags
-	 * 
+	 *
 	 * This test verifies that the tags are written in the correct
 	 * order to the output stream.
 	 */
@@ -296,13 +296,13 @@ class EditLibTest extends TikiTestCase
 		$inData = '<strong>bold<em>bold italic</em><br />bold</strong>';
 		$res = $this->el->parseToWiki($inData);
 		$res = preg_replace('/\n/', '\n', $res); // fix LF encoding for comparison
-		$this->assertEquals($ex, $res);	
+		$this->assertEquals($ex, $res);
 
 		$ex = '__\'\'bold italic\'\'__\n__\'\'BOLD ITALIC\'\'__';
 		$inData = '<span style="font-weight:bold;font-style:italic">bold italic<br />BOLD ITALIC</span>';
 		$res = $this->el->parseToWiki($inData);
 		$res = preg_replace('/\n/', '\n', $res); // fix LF encoding for comparison
-		$this->assertEquals($ex, $res);	
+		$this->assertEquals($ex, $res);
 	}
 
 
@@ -312,6 +312,6 @@ class EditLibTest extends TikiTestCase
 		$ex = '--===text===--';
 		$inData = '<span style="text-decoration:line-through underline;">text</span>';
 		$res = $this->el->parseToWiki($inData);
-		$this->assertEquals($ex, $res);	
+		$this->assertEquals($ex, $res);
 	}
 }

@@ -14,22 +14,21 @@ class Search_GlobalSource_TitleInitialTest extends PHPUnit_Framework_TestCase
 	{
 		$factory = new Search_Type_Factory_Direct;
 		$source = new Search_GlobalSource_TitleInitialSource;
-		$out = $source->getData(null, null, $factory, array(
+		$out = $source->getData(null, null, $factory, [
 			'title' => $factory->sortable($string),
-		));
+		]);
 
 		$this->assertEquals($factory->identifier($letter), $out['title_initial']);
 	}
 
 	function mapping()
 	{
-		return array(
-			'basic' => array('H', 'Hello World'),
-			'lowercase' => array('H', 'hello world'),
-			'vowel' => array('E', 'End'),
-			'missing' => array('0', ''),
-			'accentuated' => array('E', 'éducation'),
-		);
+		return [
+			'basic' => ['H', 'Hello World'],
+			'lowercase' => ['H', 'hello world'],
+			'vowel' => ['E', 'End'],
+			'missing' => ['0', ''],
+			'accentuated' => ['E', 'éducation'],
+		];
 	}
 }
-

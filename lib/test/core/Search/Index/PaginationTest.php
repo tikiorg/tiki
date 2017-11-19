@@ -32,13 +32,13 @@ abstract class Search_Index_PaginationTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals($count, count($result), 'total count');
 
-		$real = array();
+		$real = [];
 		foreach ($result as $hit) {
 			$real[] = $hit;
 		}
 
 		$this->assertEquals($first, $real[0]['object_id'], 'first entry');
-		$this->assertEquals($last, $real[count($real)-1]['object_id'], 'last entry');
+		$this->assertEquals($last, $real[count($real) - 1]['object_id'], 'last entry');
 	}
 
 	private function addDocuments($count)
@@ -49,12 +49,11 @@ abstract class Search_Index_PaginationTest extends PHPUnit_Framework_TestCase
 
 		for ($i = 0; $count > $i; ++$i) {
 			$index->addDocument(
-				array(
+				[
 					'object_type' => $typeFactory->identifier('article'),
 					'object_id' => $typeFactory->identifier($i + 1),
-				)
+				]
 			);
 		}
 	}
 }
-

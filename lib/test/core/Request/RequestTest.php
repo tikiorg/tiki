@@ -23,7 +23,7 @@ class RequestTest extends TikiTestCase
 
 	public function testEndToEndHttp()
 	{
-		$expectedResult = $_REQUEST = array('someKey' => 'someValue', 'otherKey' => 'otherValue');
+		$expectedResult = $_REQUEST = ['someKey' => 'someValue', 'otherKey' => 'otherValue'];
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$obj = new Tiki_Request();
@@ -36,9 +36,9 @@ class RequestTest extends TikiTestCase
 	public function testEndToEndCli()
 	{
 		global $argv, $argc;
-		$_SERVER['argv'] = array('someKey=someValue', 'otherKey=otherValue');
+		$_SERVER['argv'] = ['someKey=someValue', 'otherKey=otherValue'];
 		$_SERVER['argc'] = 3;
-		$expectedResult = array('someKey' => 'someValue', 'otherKey' => 'otherValue');
+		$expectedResult = ['someKey' => 'someValue', 'otherKey' => 'otherValue'];
 
 		$obj = new Tiki_Request();
 

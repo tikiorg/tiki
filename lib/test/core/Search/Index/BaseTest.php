@@ -17,27 +17,26 @@ abstract class Search_Index_BaseTest extends PHPUnit_Framework_TestCase
 	{
 		$typeFactory = $index->getTypeFactory();
 		$index->addDocument(
-			array(
+			[
 				'object_type' => $typeFactory->identifier('wiki page'),
 				'object_id' => $typeFactory->identifier('HomePage'),
 				'title' => $typeFactory->sortable('HomePage'),
 				'language' => $typeFactory->identifier('en'),
 				'modification_date' => $typeFactory->timestamp(self::DOCUMENT_DATE),
 				'description' => $typeFactory->sortable('a description for the page'),
-				'categories' => $typeFactory->multivalue(array(1, 2, 5, 6)),
-				'allowed_groups' => $typeFactory->multivalue(array('Project Lead', 'Editor', 'Admins')),
+				'categories' => $typeFactory->multivalue([1, 2, 5, 6]),
+				'allowed_groups' => $typeFactory->multivalue(['Project Lead', 'Editor', 'Admins']),
 				'contents' => $typeFactory->plaintext('a description for the page Bonjour world!'),
 				'relations' => $typeFactory->multivalue(
-					array(
+					[
 						Search_Query_Relation::token('tiki.content.link', 'wiki page', 'About'),
 						Search_Query_Relation::token('tiki.content.link', 'wiki page', 'Contact'),
 						Search_Query_Relation::token('tiki.content.link.invert', 'wiki page', 'Product'),
 						Search_Query_Relation::token('tiki.user.favorite.invert', 'user', 'bob'),
-					)
+					]
 				),
-			)
+			]
 		);
-
 	}
 
 	function testBasicSearch()
@@ -45,16 +44,16 @@ abstract class Search_Index_BaseTest extends PHPUnit_Framework_TestCase
 		$positive = new Search_Query('Bonjour');
 		$negative = new Search_Query('NotInDocument');
 
-		$this->assertContains(array('object_type' => 'wiki page', 'object_id' => 'HomePage'), $this->stripExtra($positive->search($this->index)));
-		$this->assertNotContains(array('object_type' => 'wiki page', 'object_id' => 'HomePage'), $this->stripExtra($negative->search($this->index)));
+		$this->assertContains(['object_type' => 'wiki page', 'object_id' => 'HomePage'], $this->stripExtra($positive->search($this->index)));
+		$this->assertNotContains(['object_type' => 'wiki page', 'object_id' => 'HomePage'], $this->stripExtra($negative->search($this->index)));
 	}
 
 	private function stripExtra($list)
 	{
-		$out = array();
+		$out = [];
 
 		foreach ($list as $entry) {
-			$out[] = array_intersect_key($entry, array('object_type' => '', 'object_id' => ''));
+			$out[] = array_intersect_key($entry, ['object_type' => '', 'object_id' => '']);
 		}
 
 		return $out;
@@ -116,11 +115,11 @@ abstract class Search_Index_BaseTest extends PHPUnit_Framework_TestCase
 
 	function testFilterPermissions()
 	{
-		$this->assertResultCount(0, 'filterPermissions', array('Anonymous'));
-		$this->assertResultCount(0, 'filterPermissions', array('Registered'));
-		$this->assertResultCount(1, 'filterPermissions', array('Registered', 'Editor'));
-		$this->assertResultCount(1, 'filterPermissions', array('Project Lead'));
-		$this->assertResultCount(0, 'filterPermissions', array('Project'));
+		$this->assertResultCount(0, 'filterPermissions', ['Anonymous']);
+		$this->assertResultCount(0, 'filterPermissions', ['Registered']);
+		$this->assertResultCount(1, 'filterPermissions', ['Registered', 'Editor']);
+		$this->assertResultCount(1, 'filterPermissions', ['Project Lead']);
+		$this->assertResultCount(0, 'filterPermissions', ['Project']);
 	}
 
 	function testRangeFilter()
@@ -197,7 +196,7 @@ abstract class Search_Index_BaseTest extends PHPUnit_Framework_TestCase
 		$this->assertResultCount(1, 'filterRelation', "$user and not $nothing");
 		$this->assertResultCount(0, 'filterRelation', "$user and not $about");
 
-		$this->assertResultCount(1, 'filterRelation', "$invert_product and $invert_user", array('tiki.content.link', 'tiki.user.favorite'));
+		$this->assertResultCount(1, 'filterRelation', "$invert_product and $invert_user", ['tiki.content.link', 'tiki.user.favorite']);
 	}
 
 	private function assertResultCount($count, $filterMethod, $argument)
@@ -207,16 +206,16 @@ abstract class Search_Index_BaseTest extends PHPUnit_Framework_TestCase
 
 		$query = new Search_Query;
 		// add something positive  to search as Lucene negative only search returns no results
-		if( $filterMethod == 'filterNotInitial' )
+		if ($filterMethod == 'filterNotInitial') {
 			$query->filterContent('description');
-		call_user_func_array(array($query, $filterMethod), $arguments);
+		}
+		call_user_func_array([$query, $filterMethod], $arguments);
 
 		$this->assertEquals($count, count($query->search($this->index)));
 	}
 
 	protected function highlight($word)
 	{
-		return '<b class="highlight_word highlight_word_1">'.$word.'</b>';
+		return '<b class="highlight_word highlight_word_1">' . $word . '</b>';
 	}
 }
-

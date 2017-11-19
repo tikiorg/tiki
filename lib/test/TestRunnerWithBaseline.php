@@ -20,68 +20,65 @@
 
 require_once('lib/debug/Tracer.php');
 
-class TestRunnerWithBaseline {
+class TestRunnerWithBaseline
+{
 
-    private $baseline_log_fpath;
-    private $current_log_fpath;
-    private $output_fpath;
+	private $baseline_log_fpath;
+	private $current_log_fpath;
+	private $output_fpath;
 
-    private $last_test_started = null;
+	private $last_test_started = null;
 
-    private $logname_stem = 'phpunit-log';
-    public $action = 'run'; // run|update_baseline
-    public $phpunit_options = '';
-    public $help = false;
-    public $filter = '';
-    public $diffs;
+	private $logname_stem = 'phpunit-log';
+	public $action = 'run'; // run|update_baseline
+	public $phpunit_options = '';
+	public $help = false;
+	public $filter = '';
+	public $diffs;
 
-    function __construct($baseline_log_fpath = null, $current_log_fpath = null, $output_fpath = null)
-    {
-        $this->baseline_log_fpath = $baseline_log_fpath;
-        $this->current_log_fpath = $current_log_fpath;
-        $this->output_fpath =$output_fpath;
-    }
+	function __construct($baseline_log_fpath = null, $current_log_fpath = null, $output_fpath = null)
+	{
+		$this->baseline_log_fpath = $baseline_log_fpath;
+		$this->current_log_fpath = $current_log_fpath;
+		$this->output_fpath = $output_fpath;
+	}
 
-    function run()
-    {
-        global $tracer;
+	function run()
+	{
+		global $tracer;
 
-        $this->config_from_cmdline_options();
+		$this->config_from_cmdline_options();
 
-        if ($this->help) {
-            $this->usage();
-        }
+		if ($this->help) {
+			$this->usage();
+		}
 
-        $this->run_tests();
+		$this->run_tests();
 
-        $this->print_diffs_with_baseline();
+		$this->print_diffs_with_baseline();
 
-        if ($this->action == 'update_baseline')
-        {
-            $this->save_current_log_as_baseline();
-        }
+		if ($this->action == 'update_baseline') {
+			$this->save_current_log_as_baseline();
+		}
+	}
 
-    }
+	function run_tests()
+	{
+		global $tracer;
 
-    function run_tests()
-    {
-        global $tracer;
+		$cmd_line = "../../bin/phpunit --verbose";
 
-        $cmd_line = "../../bin/phpunit --verbose";
+		if ($this->phpunit_options != '') {
+			$cmd_line = "$cmd_line " . $this->phpunit_options;
+		}
 
-        if ($this->phpunit_options != '')
-        {
-            $cmd_line = "$cmd_line ".$this->phpunit_options;
-        }
+		if ($this->filter != '') {
+			$cmd_line = "$cmd_line --filter " . $this->filter;
+		}
 
-        if ($this->filter != '')
-        {
-            $cmd_line = "$cmd_line --filter ".$this->filter;
-        }
+		$cmd_line = 'php ' . $cmd_line . " --log-json \"" . $this->logpath_current() . "\" .";
 
-        $cmd_line = 'php ' . $cmd_line." --log-json \"".$this->logpath_current()."\" .";
-
-        $this->do_echo( "
+		$this->do_echo("
 ********************************************************************
 *
 * Executing phpunit as:
@@ -91,391 +88,329 @@ class TestRunnerWithBaseline {
 ********************************************************************
 ");
 
-        if ($this->output_fpath == null)
-        {
-            system($cmd_line);
-        }
-        else
-        {
-            $phpunit_output = array();
-            exec($cmd_line, $phpunit_output);
-            $this->do_echo(implode("\n", $phpunit_output));
-        }
+		if ($this->output_fpath == null) {
+			system($cmd_line);
+		} else {
+			$phpunit_output = [];
+			exec($cmd_line, $phpunit_output);
+			$this->do_echo(implode("\n", $phpunit_output));
+		}
+	}
 
+	function print_diffs_with_baseline()
+	{
+		global $tracer;
 
-    }
+		$this->do_echo("\n\nChecking for differences with baseline test logs...\n\n");
 
-    function print_diffs_with_baseline()
-    {
-        global $tracer;
+		$baseline_issues;
+		if (file_exists($this->logpath_baseline())) {
+			$baseline_issues = $this->read_log_file($this->logpath_baseline());
+		} else {
+			$this->do_echo("=== WARNING: No baseline file exists. Assuming empty baseline.\n\n");
+			$baseline_issues = $this->make_empty_issues_list();
+		}
 
-        $this->do_echo("\n\nChecking for differences with baseline test logs...\n\n");
+		$current_issues = $this->read_log_file($this->logpath_current());
 
-        $baseline_issues;
-        if (file_exists($this->logpath_baseline()))
-        {
-            $baseline_issues = $this->read_log_file($this->logpath_baseline());
-        }
-        else
-        {
-            $this->do_echo("=== WARNING: No baseline file exists. Assuming empty baseline.\n\n");
-            $baseline_issues = $this->make_empty_issues_list();
-        }
+		$this->diffs = $this->compare_two_test_runs($baseline_issues, $current_issues);
 
-        $current_issues = $this->read_log_file($this->logpath_current());
+		$nb_failures_introduced = count($this->diffs['failures_introduced']);
+		$nb_failures_fixed = count($this->diffs['failures_fixed']);
+		$nb_errors_introduced = count($this->diffs['errors_introduced']);
+		$nb_errors_fixed = count($this->diffs['errors_fixed']);
 
-        $this->diffs = $this->compare_two_test_runs($baseline_issues, $current_issues);
+		$total_diffs =
+			$nb_failures_introduced + $nb_errors_introduced +
+				$nb_failures_fixed + $nb_errors_fixed;
 
-        $nb_failures_introduced = count($this->diffs['failures_introduced']);
-        $nb_failures_fixed = count($this->diffs['failures_fixed']);
-        $nb_errors_introduced = count($this->diffs['errors_introduced']);
-        $nb_errors_fixed = count($this->diffs['errors_fixed']);
-
-        $total_diffs =
-            $nb_failures_introduced + $nb_errors_introduced +
-                $nb_failures_fixed + $nb_errors_fixed;
-
-        if ($total_diffs > 0)
-        {
-            $this->do_echo("\n\nThere were $total_diffs differences with baseline.\n
+		if ($total_diffs > 0) {
+			$this->do_echo("\n\nThere were $total_diffs differences with baseline.\n
 
 Below is a list of tests that differ from the baseline.
 See above details about each error or failure.
 ");
-            if ($nb_failures_introduced > 0)
-            {
-                $this->do_echo("\nNb of new FAILURES: $nb_failures_introduced:\n");
-                foreach ($this->diffs['failures_introduced'] as $an_issue)
-                {
-                    $this->do_echo("   $an_issue\n");
-                }
-            }
+			if ($nb_failures_introduced > 0) {
+				$this->do_echo("\nNb of new FAILURES: $nb_failures_introduced:\n");
+				foreach ($this->diffs['failures_introduced'] as $an_issue) {
+					$this->do_echo("   $an_issue\n");
+				}
+			}
 
-            if ($nb_errors_introduced > 0)
-            {
-                $this->do_echo("\nNb of new ERRORS: $nb_errors_introduced:\n");
-                foreach ($this->diffs['errors_introduced'] as $an_issue)
-                {
-                    $this->do_echo("   $an_issue\n");
-                }
+			if ($nb_errors_introduced > 0) {
+				$this->do_echo("\nNb of new ERRORS: $nb_errors_introduced:\n");
+				foreach ($this->diffs['errors_introduced'] as $an_issue) {
+					$this->do_echo("   $an_issue\n");
+				}
+			}
 
-            }
+			if ($nb_failures_fixed > 0) {
+				$this->do_echo("\nNb of newly FIXED FAILURES: $nb_failures_fixed:\n");
+				foreach ($this->diffs['failures_fixed'] as $an_issue) {
+					$this->do_echo("   $an_issue\n");
+				}
+			}
 
-            if ($nb_failures_fixed > 0)
-            {
-                $this->do_echo("\nNb of newly FIXED FAILURES: $nb_failures_fixed:\n");
-                foreach ($this->diffs['failures_fixed'] as $an_issue)
-                {
-                    $this->do_echo("   $an_issue\n");
-                }
+			if ($nb_errors_fixed > 0) {
+				$this->do_echo("\nNb of newly FIXED ERRORS: $nb_errors_fixed:\n");
+				foreach ($this->diffs['errors_fixed'] as $an_issue) {
+					$this->do_echo("   $an_issue\n");
+				}
+			}
+		} else {
+			$this->do_echo("\n\nNo differences with baseline run. All is \"normal\".\n\n");
+		}
 
-            }
+		$this->do_echo("\n\n");
+	}
 
-            if ($nb_errors_fixed > 0)
-            {
-                $this->do_echo("\nNb of newly FIXED ERRORS: $nb_errors_fixed:\n");
-                foreach ($this->diffs['errors_fixed'] as $an_issue)
-                {
-                    $this->do_echo("   $an_issue\n");
-                }
+	function logpath_current()
+	{
 
-            }
-        }
-        else
-        {
-            $this->do_echo("\n\nNo differences with baseline run. All is \"normal\".\n\n");
-        }
+		$path = dirname(__FILE__) . DIRECTORY_SEPARATOR . $this->logname_stem . ".current.json";
+		if ($this->current_log_fpath != null) {
+			$path = $this->current_log_fpath;
+		}
+		return $path;
+	}
 
-        $this->do_echo("\n\n");
+	function logpath_baseline()
+	{
 
-    }
+		$path = dirname(__FILE__) . DIRECTORY_SEPARATOR . $this->logname_stem . ".baseline.json";
+		if ($this->baseline_log_fpath != null) {
+			$path = $this->baseline_log_fpath;
+		}
+		return $path;
+	}
 
-    function logpath_current()
-    {
+	function ask_if_want_to_create_baseline()
+	{
+		$answer = $this->prompt_for(
+			"There is no baseline log. Would you like to log current failures and errors as the baseline?",
+			['y', 'n']
+		);
+		if ($answer == 'y') {
+			$this->save_current_log_as_baseline();
+		}
+	}
 
-        $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . $this->logname_stem.".current.json";
-        if ($this->current_log_fpath != null)
-        {
-          $path = $this->current_log_fpath;
-        }
-        return $path;
-    }
+	function process_phpunit_log_data($log_data)
+	{
+		global $tracer;
 
-    function logpath_baseline()
-    {
+		$issues =
+			[
+				'errors' => [],
+				'failures' => [],
+				'pass' => []
+			];
 
-        $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . $this->logname_stem.".baseline.json";
-        if ($this->baseline_log_fpath != null)
-        {
-            $path = $this->baseline_log_fpath;
-        }
-        return $path;
-    }
+		foreach ($log_data as $log_entry) {
+			$event = '';
+			if (isset($log_entry['event'])) {
+				$event = $log_entry['event'];
+			}
 
-    function ask_if_want_to_create_baseline()
-    {
-        $answer = $this->prompt_for(
-            "There is no baseline log. Would you like to log current failures and errors as the baseline?",
-            array('y', 'n'));
-        if ($answer == 'y')
-        {
-            $this->save_current_log_as_baseline();
-        }
-    }
+			if ($event != 'testStart' && $event != 'test') {
+				continue;
+			}
 
-    function process_phpunit_log_data($log_data)
-    {
-        global $tracer;
+			$test = '';
+			if (isset($log_entry['test'])) {
+				$test = $log_entry['test'];
+			}
 
-        $issues =
-            array(
-                'errors' => array(),
-                'failures' => array(),
-                'pass' => array()
-            );
+			if ($event == 'testStart') {
+				$this->last_test_started = $test;
+				continue;
+			} else {
+				$this->last_test_started = null;
+			}
 
-        foreach ($log_data as $log_entry)
-        {
-            $event = '';
-            if (isset($log_entry['event']))
-            {
-                $event = $log_entry['event'];
-            }
-
-            if ($event != 'testStart' && $event != 'test')
-            {
-                continue;
-            }
-
-            $test = '';
-            if (isset($log_entry['test']))
-            {
-                $test = $log_entry['test'];
-            }
-
-            if ($event == 'testStart')
-            {
-                $this->last_test_started = $test;
-                continue;
-            }
-            else
-            {
-                $this->last_test_started = null;
-            }
-
-            /* For some reason, sometimes an event=test entry does not have
+			/* For some reason, sometimes an event=test entry does not have
                a 'status' field.
                Whenever that happens, it seems to be a sign of an error.
             */
-            $status = 'fail';
-            if(isset($log_entry['status']))
-            {
-                $status = $log_entry['status'];
-            }
+			$status = 'fail';
+			if (isset($log_entry['status'])) {
+				$status = $log_entry['status'];
+			}
 
-            if ($status == 'fail')
-            {
-                array_push($issues['failures'], $test);
-            }
-            else if ($status == 'error')
-            {
-                array_push($issues['errors'], $test);
-            }
-            else if ($status == 'pass')
-            {
-                array_push($issues['pass'], $test);
-            }
-        }
+			if ($status == 'fail') {
+				array_push($issues['failures'], $test);
+			} elseif ($status == 'error') {
+				array_push($issues['errors'], $test);
+			} elseif ($status == 'pass') {
+				array_push($issues['pass'], $test);
+			}
+		}
 
-        /* If a test was started by never ended, flag it as a failure */
-        if ($this->last_test_started != null)
-        {
-            if (!in_array($this->last_test_started, $issues['failures'])) {
-                array_push($issues['failures'], $this->last_test_started);
-            }
-        }
+		/* If a test was started by never ended, flag it as a failure */
+		if ($this->last_test_started != null) {
+			if (! in_array($this->last_test_started, $issues['failures'])) {
+				array_push($issues['failures'], $this->last_test_started);
+			}
+		}
 
-        return $issues;
+		return $issues;
+	}
 
-    }
+	function compare_two_test_runs($baseline_issues, $current_issues)
+	{
+		global $tracer;
 
-    function compare_two_test_runs($baseline_issues, $current_issues)
-    {
-        global $tracer;
+		$diffs = ['failures_introduced' => [], 'failures_fixed' => [],
+			'errors_introduced' => [], 'errors_fixed' => []];
 
-        $diffs = array('failures_introduced' => array(), 'failures_fixed' => array(),
-            'errors_introduced' => array(), 'errors_fixed' => array());
+		$current_failures = $current_issues['failures'];
+		$current_pass = $current_issues['pass'];
+		$baseline_failures = $baseline_issues['failures'];
+		$baseline_errors = $baseline_issues['errors'];
+		foreach ($baseline_failures as $a_baseline_failure) {
+			if (in_array($a_baseline_failure, $current_pass)) {
+				array_push($diffs['failures_fixed'], $a_baseline_failure);
+			}
+		}
 
-        $current_failures = $current_issues['failures'];
-        $current_pass = $current_issues['pass'];
-        $baseline_failures = $baseline_issues['failures'];
-        $baseline_errors =  $baseline_issues['errors'];
-        foreach ($baseline_failures as $a_baseline_failure)
-        {
-            if (in_array($a_baseline_failure, $current_pass))
-            {
-                array_push($diffs['failures_fixed'], $a_baseline_failure);
-            }
-        }
+		foreach ($current_failures as $a_current_failure) {
+			if (! in_array($a_current_failure, $baseline_failures) && ! in_array($a_current_failure, $baseline_errors)) {
+				array_push($diffs['failures_introduced'], $a_current_failure);
+			}
+		}
 
-        foreach ($current_failures as $a_current_failure)
-        {
-            if (!in_array($a_current_failure, $baseline_failures) && !in_array($a_current_failure, $baseline_errors))
-            {
-                array_push($diffs['failures_introduced'], $a_current_failure);
-            }
-        }
+		$baseline_errors = $baseline_issues['errors'];
+		$current_errors = $current_issues['errors'];
+		foreach ($baseline_errors as $a_baseline_error) {
+			if (in_array($a_baseline_error, $current_pass)) {
+				array_push($diffs['errors_fixed'], $a_baseline_error);
+			}
+		}
 
-        $baseline_errors = $baseline_issues['errors'];
-        $current_errors = $current_issues['errors'];
-        foreach ($baseline_errors as $a_baseline_error)
-        {
-            if (in_array($a_baseline_error, $current_pass))
-            {
-                array_push($diffs['errors_fixed'], $a_baseline_error);
-            }
+		foreach ($current_errors as $a_current_error) {
+			if (! in_array($a_current_error, $baseline_errors) && ! in_array($a_current_error, $baseline_failures)) {
+				array_push($diffs['errors_introduced'], $a_current_error);
+			}
+		}
 
-        }
+		return $diffs;
+	}
 
-        foreach ($current_errors as $a_current_error)
-        {
-            if (!in_array($a_current_error, $baseline_errors) && !in_array($a_current_error, $baseline_failures))
-            {
-                array_push($diffs['errors_introduced'], $a_current_error);
-            }
-        }
+	function save_current_log_as_baseline()
+	{
+		if ($this->total_new_issues_found() > 0) {
+			$answer = $this->prompt_for(
+				"Some new failures and/or errors were introduced (see above for details).\n\nAre you SURE you want to save the current run as a baseline?\n",
+				['y', 'n']
+			);
+			if ($answer == 'n') {
+				$this->do_echo("\nThe current run was NOT saved as the new baseline.\n");
+				return;
+			}
+		}
 
-        return $diffs;
-    }
+		$this->do_echo("\n\nSaving current phpunit log as the baseline.\n");
+		copy($this->logpath_current(), $this->logpath_baseline());
+	}
 
-    function save_current_log_as_baseline()
-    {
-        if ($this->total_new_issues_found() > 0)
-        {
-            $answer = $this->prompt_for(
-                                "Some new failures and/or errors were introduced (see above for details).\n\nAre you SURE you want to save the current run as a baseline?\n",
-                                array('y', 'n'));
-            if ($answer == 'n')
-            {
-                $this->do_echo("\nThe current run was NOT saved as the new baseline.\n");
-                return;
-            }
-        }
+	function prompt_for($prompt, $eligible_answers)
+	{
+		$prompt = "\n\n$prompt (" . implode('|', $eligible_answers) . ")\n> ";
+		$answer = null;
+		while ($answer == null) {
+			echo $prompt;
+			$tentative_answer = rtrim(fgets(STDIN));
+			if (in_array($tentative_answer, $eligible_answers)) {
+				$answer = $tentative_answer;
+			} else {
+				$prompt = "\n\nSorry, '$tentative_answer' is not a valid answer.$prompt";
+			}
+		}
 
-        $this->do_echo("\n\nSaving current phpunit log as the baseline.\n");
-        copy($this->logpath_current(), $this->logpath_baseline());
-    }
+		$this->do_echo("\$answer='$answer'\n'");
+		return $answer;
+	}
 
-    function prompt_for($prompt, $eligible_answers)
-    {
-        $prompt = "\n\n$prompt (".implode('|', $eligible_answers).")\n> ";
-        $answer = null;
-        while ($answer ==null)
-        {
-            echo $prompt;
-            $tentative_answer = rtrim(fgets(STDIN));
-            if (in_array($tentative_answer, $eligible_answers))
-            {
-                $answer = $tentative_answer;
-            }
-            else
-            {
-                $prompt = "\n\nSorry, '$tentative_answer' is not a valid answer.$prompt";
-            }
-        }
+	function read_log_file($log_file_path)
+	{
+		global $tracer;
 
-        $this->do_echo("\$answer='$answer'\n'");
-        return $answer;
-    }
+		$json_string = file_get_contents($log_file_path);
 
-    function read_log_file($log_file_path)
-    {
-        global $tracer;
+		// The json string is actually a sequence of json arrays, but the
+		// sequence itself is not wrapped inside an array.
+		//
+		// Wrap all the json arrays into one before parsing the json.
+		//
+		$json_string = preg_replace('/}\s*{/', "},\n   {", $json_string);
+		$json_string = "[\n   $json_string\n]";
 
-        $json_string = file_get_contents($log_file_path);
+		$json_decoded = json_decode($json_string, true);
 
-        // The json string is actually a sequence of json arrays, but the
-        // sequence itself is not wrapped inside an array.
-        //
-        // Wrap all the json arrays into one before parsing the json.
-        //
-        $json_string = preg_replace('/}\s*{/', "},\n   {", $json_string);
-        $json_string = "[\n   $json_string\n]";
+		$issues = $this->process_phpunit_log_data($json_decoded);
 
-        $json_decoded = json_decode($json_string,true);
+		return $issues;
+	}
 
-        $issues = $this->process_phpunit_log_data($json_decoded);
+	function config_from_cmdline_options()
+	{
+		global $argv, $tracer;
 
-        return $issues;
-    }
+		$options = getopt('', ['action:', 'phpunit-options:', 'filter:', 'help']);
+		$options = $this->validate_cmdline_options($options);
 
-    function config_from_cmdline_options()
-    {
-        global $argv, $tracer;
+		if (isset($options['help'])) {
+			$this->help = true;
+		}
 
-        $options = getopt('', array('action:', 'phpunit-options:', 'filter:', 'help'));
-        $options = $this->validate_cmdline_options($options);
+		if (isset($options['action'])) {
+			$this->action = $options['action'];
+		}
 
-        if (isset($options['help']))
-        {
-            $this->help = true;
-        }
+		if (isset($options['phpunit-options'])) {
+			$this->phpunit_options = $options['phpunit-options'];
+		}
 
-        if (isset($options['action']))
-        {
-            $this->action = $options['action'];
-        }
+		if (isset($options['filter'])) {
+			$this->filter = $options['filter'];
+		}
+	}
 
-        if (isset($options['phpunit-options']))
-        {
-            $this->phpunit_options = $options['phpunit-options'];
-        }
+	function validate_cmdline_options($options)
+	{
+		global $tracer;
 
-        if (isset($options['filter']))
-        {
-            $this->filter = $options['filter'];
-        }
-    }
+		$action = '';
+		if (isset($options['action'])) {
+			$action = $options['action'];
+		}
+		if ($action == 'update_baseline' && isset($options['phpunit-options'])) {
+			$this->usage("Cannot specify --phpunit-options with --action=update_baseline.");
+		}
 
-    function validate_cmdline_options($options)
-    {
-        global $tracer;
-
-        $action = '';
-        if (isset($options['action'])) {
-            $action = $options['action'];
-        }
-        if ($action == 'update_baseline' && isset($options['phpunit-options']))
-        {
-            $this->usage("Cannot specify --phpunit-options with --action=update_baseline.");
-        }
-
-        $phpunit_options = '';
-        if (isset($options['phpunit-options']))
-        {
-            $phpunit_options = $options['phpunit-options'];
-        }
-        if (preg_match('/--log-json/', $phpunit_options))
-        {
-            $this->usage("You cannot specify '--log-json' option in the '--phpunit-options' option.");
-        }
-        if (preg_match('/--filter/', $phpunit_options))
-        {
-            $this->usage("You cannot specify '--filter' option in the '--phpunit-options' option. Instead, the --filter option of {$GLOBALS['argv'][0]} directely (i.e., '{$GLOBALS['argv'][0]} --filter pattern')");
-        }
+		$phpunit_options = '';
+		if (isset($options['phpunit-options'])) {
+			$phpunit_options = $options['phpunit-options'];
+		}
+		if (preg_match('/--log-json/', $phpunit_options)) {
+			$this->usage("You cannot specify '--log-json' option in the '--phpunit-options' option.");
+		}
+		if (preg_match('/--filter/', $phpunit_options)) {
+			$this->usage("You cannot specify '--filter' option in the '--phpunit-options' option. Instead, the --filter option of {$GLOBALS['argv'][0]} directely (i.e., '{$GLOBALS['argv'][0]} --filter pattern')");
+		}
 
 
 
-        return $options;
-    }
+		return $options;
+	}
 
-    function usage($error_message = null)
-    {
-        global $argv;
+	function usage($error_message = null)
+	{
+		global $argv;
 
-        $script_name = $argv[0];
+		$script_name = $argv[0];
 
-        $help = "php $script_name options
+		$help = "php $script_name options
 
 Run phpunit tests, and compare the list of errors and failures against
 a baseline. Only report tests that have either started or stopped
@@ -505,43 +440,39 @@ Options
 
 ";
 
-        if ($error_message != null)
-        {
-            $help = "ERROR: $error_message\n\n$help";
-        }
+		if ($error_message != null) {
+			$help = "ERROR: $error_message\n\n$help";
+		}
 
-        exit("\n$help");
-    }
+		exit("\n$help");
+	}
 
-    function make_empty_issues_list()
-    {
-        $issues =
-            array('pass' => array(), 'failures' => array(), 'errors' => array());
+	function make_empty_issues_list()
+	{
+		$issues =
+			['pass' => [], 'failures' => [], 'errors' => []];
 
-        return $issues;
-    }
+		return $issues;
+	}
 
-    function total_new_issues_found()
-    {
-        global $tracer;
-        $total = count($this->diffs['errors_introduced']) + count($this->diffs['failures_introduced']);
+	function total_new_issues_found()
+	{
+		global $tracer;
+		$total = count($this->diffs['errors_introduced']) + count($this->diffs['failures_introduced']);
 
-        $tracer->trace('total_new_issues_found', "** Returning \$total=$total");
+		$tracer->trace('total_new_issues_found', "** Returning \$total=$total");
 
-        return $total;
-    }
+		return $total;
+	}
 
-    private function do_echo($message)
-    {
-        if ($this->output_fpath == null)
-        {
-            echo($message);
-        }
-        else
-        {
-            $fh_output = fopen($this->output_fpath, 'a');
-            fwrite($fh_output, $message);
-            fclose($fh_output);
-        }
-    }
+	private function do_echo($message)
+	{
+		if ($this->output_fpath == null) {
+			echo($message);
+		} else {
+			$fh_output = fopen($this->output_fpath, 'a');
+			fwrite($fh_output, $message);
+			fclose($fh_output);
+		}
+	}
 }

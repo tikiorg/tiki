@@ -10,13 +10,13 @@ class TikiVersionTest extends PHPUnit_Framework_TestCase
 {
 	function versions()
 	{
-		return array(
-			array('9.0', new Tiki_Version_Version(9, 0)),
-			array('9.1', new Tiki_Version_Version(9, 1)),
-			array('9.1beta2', new Tiki_Version_Version(9, 1, null, 'beta', 2)),
-			array('1.9.12.1beta2', new Tiki_Version_Version(1, 9, '12.1', 'beta', 2)),
-			array('9.0pre', new Tiki_Version_Version(9, 0, null, 'pre')),
-		);
+		return [
+			['9.0', new Tiki_Version_Version(9, 0)],
+			['9.1', new Tiki_Version_Version(9, 1)],
+			['9.1beta2', new Tiki_Version_Version(9, 1, null, 'beta', 2)],
+			['1.9.12.1beta2', new Tiki_Version_Version(1, 9, '12.1', 'beta', 2)],
+			['9.0pre', new Tiki_Version_Version(9, 0, null, 'pre')],
+		];
 	}
 
 	/**
@@ -42,8 +42,7 @@ class TikiVersionTest extends PHPUnit_Framework_TestCase
 		$checker->setVersion('9.0');
 
 		$response = $checker->check(
-			function ($url) use (& $out)
-			{
+			function ($url) use (& $out) {
 				$out = $url;
 				return <<<O
 9.0
@@ -54,7 +53,7 @@ O;
 		);
 
 		$this->assertEquals('http://tiki.org/regular.cycle', $out);
-		$this->assertEquals(array(), $response);
+		$this->assertEquals([], $response);
 	}
 
 	function testVerifyPastSupportedVersion()
@@ -64,8 +63,7 @@ O;
 		$checker->setVersion('8.4');
 
 		$response = $checker->check(
-			function ($url) use (& $out)
-			{
+			function ($url) use (& $out) {
 				$out = $url;
 				return <<<O
 9.0
@@ -76,9 +74,10 @@ O;
 		);
 
 		$this->assertEquals(
-			array(
+			[
 				new Tiki_Version_Upgrade('8.4', '9.0', false),
-			), $response
+			],
+			$response
 		);
 	}
 
@@ -89,8 +88,7 @@ O;
 		$checker->setVersion('8.2');
 
 		$response = $checker->check(
-			function ($url) use (& $out)
-			{
+			function ($url) use (& $out) {
 				$out = $url;
 				return <<<O
 9.0
@@ -101,10 +99,11 @@ O;
 		);
 
 		$this->assertEquals(
-			array(
+			[
 				new Tiki_Version_Upgrade('8.2', '8.4', true),
 				new Tiki_Version_Upgrade('8.4', '9.0', false),
-			), $response
+			],
+			$response
 		);
 	}
 
@@ -115,8 +114,7 @@ O;
 		$checker->setVersion('8.4beta3');
 
 		$response = $checker->check(
-			function ($url) use (& $out)
-			{
+			function ($url) use (& $out) {
 				$out = $url;
 				return <<<O
 9.0
@@ -127,10 +125,11 @@ O;
 		);
 
 		$this->assertEquals(
-			array(
+			[
 				new Tiki_Version_Upgrade('8.4beta3', '8.4', true),
 				new Tiki_Version_Upgrade('8.4', '9.0', false),
-			), $response
+			],
+			$response
 		);
 	}
 
@@ -152,9 +151,10 @@ O;
 		);
 
 		$this->assertEquals(
-			array(
+			[
 				new Tiki_Version_Upgrade('4.3', '9.0', true),
-			), $response
+			],
+			$response
 		);
 	}
 
@@ -165,8 +165,7 @@ O;
 		$checker->setVersion('10.0');
 
 		$response = $checker->check(
-			function ($url) use (& $out)
-			{
+			function ($url) use (& $out) {
 				$out = $url;
 				return <<<O
 8.4
@@ -176,7 +175,7 @@ O;
 			}
 		);
 
-		$this->assertEquals(array(), $response);
+		$this->assertEquals([], $response);
 	}
 
 	/**
@@ -189,11 +188,10 @@ O;
 
 	function upgradeMessages()
 	{
-		return array(
-			array('Version 8.2 is no longer supported. A minor upgrade to 8.4 is strongly recommended.', new Tiki_Version_Upgrade('8.2', '8.4', true)),
-			array('Version 4.3 is no longer supported. A major upgrade to 9.0 is strongly recommended.', new Tiki_Version_Upgrade('4.3', '9.0', true)),
-			array('Version 8.4 is still supported. However, a major upgrade to 9.0 is available.', new Tiki_Version_Upgrade('8.4', '9.0', false)),
-		);
+		return [
+			['Version 8.2 is no longer supported. A minor upgrade to 8.4 is strongly recommended.', new Tiki_Version_Upgrade('8.2', '8.4', true)],
+			['Version 4.3 is no longer supported. A major upgrade to 9.0 is strongly recommended.', new Tiki_Version_Upgrade('4.3', '9.0', true)],
+			['Version 8.4 is still supported. However, a major upgrade to 9.0 is available.', new Tiki_Version_Upgrade('8.4', '9.0', false)],
+		];
 	}
 }
-

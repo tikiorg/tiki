@@ -30,17 +30,17 @@ class Search_Elastic_MoreLikeThisTest extends PHPUnit_Framework_TestCase
 
 	function populate($index)
 	{
-		$data = array(
-			'X' => array(
+		$data = [
+			'X' => [
 				'wiki_content' => 'this does not work',
-			),
-		);
+			],
+		];
 
-		$words = array('hello', 'world', 'some', 'random', 'content', 'populated', 'through', 'automatic', 'sampling');
+		$words = ['hello', 'world', 'some', 'random', 'content', 'populated', 'through', 'automatic', 'sampling'];
 
 		// Generate 50 documents with random words (in a stable way)
 		foreach (range(1, 50) as $doc) {
-			$parts = array();
+			$parts = [];
 			foreach ($words as $key => $word) {
 				if ($doc % ($key + 2) === 0) {
 					$parts[] = $word;
@@ -49,19 +49,20 @@ class Search_Elastic_MoreLikeThisTest extends PHPUnit_Framework_TestCase
 				}
 			}
 
-			$data[$doc] = array(
+			$data[$doc] = [
 				'object_type' => 'wiki page',
 				'object_id' => $doc,
 				'wiki_content' => implode(' ', $parts),
-			);
+			];
 		}
 
 		$source = new Search_ContentSource_Static(
-			$data, array(
+			$data,
+			[
 				'object_type' => 'identifier',
 				'object_id' => 'identifier',
 				'wiki_content' => 'plaintext',
-			)
+			]
 		);
 
 		$this->indexer = new Search_Indexer($index);
@@ -90,4 +91,3 @@ class Search_Elastic_MoreLikeThisTest extends PHPUnit_Framework_TestCase
 		$this->assertCount(0, $results);
 	}
 }
-

@@ -31,7 +31,7 @@ class MembershipTest extends TikiTestCase
 		$this->userlib->add_group('MembershipTest', '', '', 0, 0, '', '', 0, '', 0, 0, 'n', 45);
 
 		global $user_preferences;
-		$user_preferences = array();
+		$user_preferences = [];
 
 		$this->userlib->add_user('membershiptest_a', 'abc', 'a@example.com');
 		$this->userlib->add_user('membershiptest_b', 'abc', 'a@example.com');
@@ -57,7 +57,7 @@ class MembershipTest extends TikiTestCase
 
 		$expires = $this->userlib->getOne(
 			'SELECT `expire` FROM `users_usergroups` WHERE `userId` = ? AND `groupName` = "MembershipTest"',
-			array($id)
+			[$id]
 		);
 
 		//convert start date to object
@@ -77,14 +77,14 @@ class MembershipTest extends TikiTestCase
 			$expect,
 			$this->userlib->getOne(
 				'SELECT `expire` FROM `users_usergroups` WHERE `userId` = ? AND `groupName` = "MembershipTest"',
-				array($id)
+				[$id]
 			)
 		);
 		$this->assertEquals(
 			$expires,
 			$this->userlib->getOne(
 				'SELECT `expire` FROM `users_usergroups` WHERE `userId` = ? AND `groupName` = "MembershipTest"',
-				array($this->userlib->get_user_id('membershiptest_b'))
+				[$this->userlib->get_user_id('membershiptest_b')]
 			)
 		);
 	}
@@ -95,7 +95,7 @@ class MembershipTest extends TikiTestCase
 
 		$expires = $this->userlib->getOne(
 			'SELECT `created` FROM `users_usergroups` WHERE `userId` = ? AND `groupName` = "MembershipTest"',
-			array($id)
+			[$id]
 		);
 
 		//convert start date to object
@@ -108,7 +108,7 @@ class MembershipTest extends TikiTestCase
 		$extendto = $startlocal->modify('+' . 45 * 2 . ' days');
 		$expect = $extendto->getTimestamp();
 
-		$this->userlib->query('UPDATE `users_usergroups` SET `expire` = `expire` - 12*3600 - 45*24*3600 WHERE `userId` = ?', array($id));
+		$this->userlib->query('UPDATE `users_usergroups` SET `expire` = `expire` - 12*3600 - 45*24*3600 WHERE `userId` = ?', [$id]);
 
 		$this->userlib->extend_membership('membershiptest_b', 'MembershipTest', 2);
 
@@ -116,7 +116,7 @@ class MembershipTest extends TikiTestCase
 			$expect,
 			$this->userlib->getOne(
 				'SELECT `expire` FROM `users_usergroups` WHERE `userId` = ? AND `groupName` = "MembershipTest"',
-				array($id)
+				[$id]
 			)
 		);
 	}

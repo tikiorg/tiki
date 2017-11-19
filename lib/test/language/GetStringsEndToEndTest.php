@@ -61,7 +61,7 @@ class Language_GetStringsEndToEndTest extends TikiTestCase
 		$obj = new Language_GetStrings(
 			new Language_CollectFiles,
 			new Language_WriteFile_Factory,
-			array('baseDir' => vfsStream::url('root'))
+			['baseDir' => vfsStream::url('root')]
 		);
 		$obj->addFileType(new Language_FileType_Php);
 		$obj->addFileType(new Language_FileType_Tpl);
@@ -89,7 +89,7 @@ class Language_GetStringsEndToEndTest extends TikiTestCase
 		$obj = new Language_GetStrings(
 			new Language_CollectFiles,
 			new Language_WriteFile_Factory,
-			array('baseDir' => vfsStream::url('root'), 'fileName' => 'language_r.php')
+			['baseDir' => vfsStream::url('root'), 'fileName' => 'language_r.php']
 		);
 
 		$obj->addFileType(new Language_FileType_Php);
@@ -126,7 +126,7 @@ class Language_GetStringsEndToEndTest extends TikiTestCase
 		$obj = new Language_GetStrings(
 			new Language_CollectFiles,
 			new Language_WriteFile_Factory,
-			array('baseDir' => vfsStream::url('root'))
+			['baseDir' => vfsStream::url('root')]
 		);
 		$obj->addFileType(new Language_FileType_Php);
 		$obj->addFileType(new Language_FileType_Tpl);

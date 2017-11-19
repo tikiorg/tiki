@@ -35,4 +35,3 @@ class Search_Elastic_TypeAnalyzerTest extends Search_Index_TypeAnalyzerTest
 		}
 	}
 }
-

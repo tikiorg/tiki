@@ -14,7 +14,7 @@ class Payment_CartTest extends TikiTestCase
 		global $prefs;
 		$prefs['feature_sefurl'] = 'n';
 		$this->obj = $this->getMockBuilder('CartLib')
-			->setMethods( array('get_gift_certificate_code'))
+			->setMethods(['get_gift_certificate_code'])
 			->getMock();
 		$_SERVER['REQUEST_URI'] = '/tiki-index.php';
 	}
@@ -35,10 +35,10 @@ class Payment_CartTest extends TikiTestCase
 		$this->obj->add_product(
 			'T-123',
 			3,
-			array(
+			[
 				'price' => '100.43',
 				'description' => 'Hello',
-			)
+			]
 		);
 
 		$this->assertEquals(301.29, $this->obj->get_total());
@@ -49,10 +49,10 @@ class Payment_CartTest extends TikiTestCase
 		$this->obj->add_product(
 			'T-123',
 			3,
-			array(
+			[
 				'price' => '100.43',
 				'description' => 'Hello',
-			)
+			]
 		);
 
 		$this->obj->update_quantity('T-123', 1);
@@ -65,18 +65,18 @@ class Payment_CartTest extends TikiTestCase
 		$this->obj->add_product(
 			'T-123',
 			2,
-			array(
+			[
 				'price' => '100.43',
 				'description' => 'Hello',
-			)
+			]
 		);
 		$this->obj->add_product(
 			'T-456',
 			1,
-			array(
+			[
 				'price' => '100.43',
 				'description' => 'World',
-			)
+			]
 		);
 
 		$this->assertEquals(301.29, $this->obj->get_total());
@@ -87,18 +87,18 @@ class Payment_CartTest extends TikiTestCase
 		$this->obj->add_product(
 			'T-123',
 			2,
-			array(
+			[
 				'price' => '100.43',
 				'description' => 'Hello',
-			)
+			]
 		);
 		$this->obj->add_product(
 			'T-123',
 			1,
-			array(
+			[
 				'price' => '1000.00',
 				'description' => 'World',
-			)
+			]
 		);
 
 		$this->assertEquals(301.29, $this->obj->get_total());
@@ -116,10 +116,10 @@ class Payment_CartTest extends TikiTestCase
 		$this->obj->add_product(
 			'T-456',
 			1,
-			array(
+			[
 				'price' => '1.012',
 				'description' => 'World',
-			)
+			]
 		);
 
 		$this->assertEquals(1.01, $this->obj->get_total());
@@ -130,10 +130,10 @@ class Payment_CartTest extends TikiTestCase
 		$this->obj->add_product(
 			'T-456',
 			-1,
-			array(
+			[
 				'price' => '1.01',
 				'description' => 'World',
-			)
+			]
 		);
 
 		$this->assertEquals(1.01, $this->obj->get_total());
@@ -144,10 +144,10 @@ class Payment_CartTest extends TikiTestCase
 		$this->obj->add_product(
 			'T-456',
 			1,
-			array(
+			[
 				'price' => '-1.01',
 				'description' => 'World',
-			)
+			]
 		);
 
 		$this->assertEquals(0, $this->obj->get_total());
@@ -158,15 +158,15 @@ class Payment_CartTest extends TikiTestCase
 		$this->obj->add_product(
 			'T-123',
 			2,
-			array(
+			[
 				'price' => '100.43',
 				'description' => 'Hello',
-			)
+			]
 		);
 
 		$this->obj->update_quantity('T-123', 0);
 
-		$this->assertEquals(array(), $this->obj->get_content());
+		$this->assertEquals([], $this->obj->get_content());
 	}
 
 	function testPricePadded()
@@ -174,10 +174,10 @@ class Payment_CartTest extends TikiTestCase
 		$this->obj->add_product(
 			'T-123',
 			2,
-			array(
+			[
 				'price' => '100.4',
 				'description' => 'Hello',
-			)
+			]
 		);
 
 		$content = $this->obj->get_content();
@@ -189,10 +189,10 @@ class Payment_CartTest extends TikiTestCase
 		$this->obj->add_product(
 			'T-123',
 			2,
-			array(
+			[
 				'price' => '100.4',
 				'description' => 'Hello',
-			)
+			]
 		);
 
 		$this->assertSame('200.80', $this->obj->get_total());
@@ -206,17 +206,17 @@ class Payment_CartTest extends TikiTestCase
 		$this->obj->add_product(
 			'T-123',
 			2,
-			array(
+			[
 				'price' => '100.4',
 				'description' => 'Hello',
 				'eventcode' => 123,
 				'producttype' => 'Any type'
-			)
+			]
 		);
 
 		$this->obj->request_payment();
 
-		$this->assertEquals(array(), $this->obj->get_content());
+		$this->assertEquals([], $this->obj->get_content());
 	}
 
 	function testEmptyCartRequestsNothing()
@@ -229,19 +229,19 @@ class Payment_CartTest extends TikiTestCase
 		$this->obj->add_product(
 			'T-123',
 			2,
-			array(
+			[
 				'description' => 'Hello World',
 				'href' => 'product123',
 				'price' => 12.50,
-			)
+			]
 		);
 		$this->obj->add_product(
 			'T-456',
 			1,
-			array(
+			[
 				'description' => 'Foobar',
 				'price' => 120.50,
-			)
+			]
 		);
 
 		$this->assertEquals(
@@ -261,12 +261,12 @@ T-456|Foobar|1|120.50
 		$this->obj->add_product(
 			'123',
 			2,
-			array(
+			[
 				'price' => 123,
 				'description' => 'test',
 				'eventcode' => 123,
 				'producttype' => 'any type',
-			)
+			]
 		);
 
 		$id = $this->obj->request_payment();
@@ -275,7 +275,7 @@ T-456|Foobar|1|120.50
 
 		$payment = $paymentlib->get_payment($id);
 
-		TikiDb::get()->query('DELETE FROM tiki_payment_requests WHERE paymentRequestId = ?', array($id));
+		TikiDb::get()->query('DELETE FROM tiki_payment_requests WHERE paymentRequestId = ?', [$id]);
 
 		$this->assertEquals(246, $payment['amount_original']);
 		$this->assertContains('123|test|2|123', $payment['detail']);
@@ -288,46 +288,46 @@ T-456|Foobar|1|120.50
 		$this->obj->add_product(
 			'123',
 			2,
-			array(
+			[
 				'price' => 123,
 				'description' => 'test',
 				'eventcode' => 123,
 				'producttype' => 'any type',
-				'behaviors' => array(
-					array(
+				'behaviors' => [
+					[
 						'event' => 'complete',
 						'behavior' => 'sample',
-						'arguments' => array('Done 123!')
-					),
-					array(
+						'arguments' => ['Done 123!']
+					],
+					[
 						'event' => 'cancel',
 						'behavior' => 'sample',
-						'arguments' => array('No 123!')
-					),
-				),
-			)
+						'arguments' => ['No 123!']
+					],
+				],
+			]
 		);
 		$this->obj->add_product(
 			'456',
 			1,
-			array(
+			[
 				'price' => 456,
 				'description' => 'test',
 				'eventcode' => 123,
 				'producttype' => 'any type',
-				'behaviors' => array(
-					array(
+				'behaviors' => [
+					[
 						'event' => 'complete',
 						'behavior' => 'sample',
-						'arguments' => array('Done 456!')
-					),
-					array(
+						'arguments' => ['Done 456!']
+					],
+					[
 						'event' => 'cancel',
 						'behavior' => 'sample',
-						'arguments' => array('No 456!')
-					),
-				),
-			)
+						'arguments' => ['No 456!']
+					],
+				],
+			]
 		);
 
 		$id = $this->obj->request_payment();
@@ -336,32 +336,32 @@ T-456|Foobar|1|120.50
 
 		$payment = $paymentlib->get_payment($id);
 
-		TikiDb::get()->query('DELETE FROM tiki_payment_requests WHERE paymentRequestId = ?', array($id));
+		TikiDb::get()->query('DELETE FROM tiki_payment_requests WHERE paymentRequestId = ?', [$id]);
 
 		$this->assertEquals(
-			array(
-				array('behavior' => 'sample', 'arguments' => array('Done 123!')),
-				array('behavior' => 'sample', 'arguments' => array('Done 123!')),
-				array('behavior' => 'sample', 'arguments' => array('Done 456!')),
-			),
+			[
+				['behavior' => 'sample', 'arguments' => ['Done 123!']],
+				['behavior' => 'sample', 'arguments' => ['Done 123!']],
+				['behavior' => 'sample', 'arguments' => ['Done 456!']],
+			],
 			$payment['actions']['complete']
 		);
 
 		$this->assertEquals(
-			array(
-				array('behavior' => 'sample', 'arguments' => array('No 123!')),
-				array('behavior' => 'sample', 'arguments' => array('No 123!')),
-				array('behavior' => 'sample', 'arguments' => array('No 456!')),
-				array('behavior' => 'replace_inventory', 'arguments' => array(123, 2)),
-				array('behavior' => 'replace_inventory', 'arguments' => array(456, 1)),
-			),
+			[
+				['behavior' => 'sample', 'arguments' => ['No 123!']],
+				['behavior' => 'sample', 'arguments' => ['No 123!']],
+				['behavior' => 'sample', 'arguments' => ['No 456!']],
+				['behavior' => 'replace_inventory', 'arguments' => [123, 2]],
+				['behavior' => 'replace_inventory', 'arguments' => [456, 1]],
+			],
 			$payment['actions']['cancel']
 		);
 	}
 
 	function testGetGiftCertificateCode_shouldReturnCodeIfNotNull()
 	{
-        $this->markTestSkipped("As of 2013-10-02, this test is broken, and nobody knows how to fix it. Mark as Skipped for now.");
+		$this->markTestSkipped("As of 2013-10-02, this test is broken, and nobody knows how to fix it. Mark as Skipped for now.");
 		$obj = new CartLib;
 		$code = 123;
 		$this->assertEquals($code, $obj->get_gift_certificate_code($code));
@@ -375,5 +375,3 @@ T-456|Foobar|1|120.50
 		$this->assertEquals(123, $obj->get_gift_certificate_code($code));
 	}
 }
-
-

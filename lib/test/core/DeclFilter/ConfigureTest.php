@@ -14,29 +14,29 @@ class DeclFilter_ConfigureTest extends TikiTestCase
 {
 	function testSimple()
 	{
-		$configuration = array(
-			array('staticKeyFilters' => array(
+		$configuration = [
+			['staticKeyFilters' => [
 				'hello' => 'digits',
 				'world' => 'alpha',
-			)),
-			array('staticKeyFiltersForArrays' => array(
+			]],
+			['staticKeyFiltersForArrays' => [
 				'foo' => 'digits',
-			)),
-			array('catchAllFilter' => new Zend\Filter\StringToUpper),
-		);
+			]],
+			['catchAllFilter' => new Zend\Filter\StringToUpper],
+		];
 
 		$filter = DeclFilter::fromConfiguration($configuration);
 
 		$data = $filter->filter(
-			array(
+			[
 				'hello' => '123abc',
 				'world' => '123abc',
-				'foo' => array(
+				'foo' => [
 					'abc123',
 					'def456',
-				),
+				],
 				'bar' => 'undeclared',
-			)
+			]
 		);
 
 		$this->assertEquals($data['hello'], '123');
@@ -52,11 +52,11 @@ class DeclFilter_ConfigureTest extends TikiTestCase
 	 */
 	function testDisallowed()
 	{
-		$configuration = array(
-			array('catchAllFilter' => new Zend\Filter\StringToUpper),
-		);
+		$configuration = [
+			['catchAllFilter' => new Zend\Filter\StringToUpper],
+		];
 
-		$filter = DeclFilter::fromConfiguration($configuration, array('catchAllFilter'));
+		$filter = DeclFilter::fromConfiguration($configuration, ['catchAllFilter']);
 	}
 
 	/**
@@ -64,28 +64,28 @@ class DeclFilter_ConfigureTest extends TikiTestCase
 	 */
 	function testMissingLevel()
 	{
-		$configuration = array(
+		$configuration = [
 			'catchAllUnset' => null,
-		);
+		];
 
 		$filter = DeclFilter::fromConfiguration($configuration);
 	}
 
 	function testUnsetSome()
 	{
-		$configuration = array(
-			array('staticKeyUnset' => array('hello', 'world')),
-			array('catchAllFilter' => new Zend\Filter\StringToUpper),
-		);
+		$configuration = [
+			['staticKeyUnset' => ['hello', 'world']],
+			['catchAllFilter' => new Zend\Filter\StringToUpper],
+		];
 
 		$filter = DeclFilter::fromConfiguration($configuration);
 
 		$data = $filter->filter(
-			array(
+			[
 				'hello' => '123abc',
 				'world' => '123abc',
 				'bar' => 'undeclared',
-			)
+			]
 		);
 
 		$this->assertFalse(isset($data['hello']));
@@ -95,22 +95,22 @@ class DeclFilter_ConfigureTest extends TikiTestCase
 
 	function testUnsetOthers()
 	{
-		$configuration = array(
-			array('staticKeyFilters' => array(
+		$configuration = [
+			['staticKeyFilters' => [
 				'hello' => 'digits',
 				'world' => 'alpha',
-			)),
-			array('catchAllUnset' => null),
-		);
+			]],
+			['catchAllUnset' => null],
+		];
 
 		$filter = DeclFilter::fromConfiguration($configuration);
 
 		$data = $filter->filter(
-			array(
+			[
 				'hello' => '123abc',
 				'world' => '123abc',
 				'bar' => 'undeclared',
-			)
+			]
 		);
 
 		$this->assertEquals($data['hello'], '123');
@@ -120,27 +120,27 @@ class DeclFilter_ConfigureTest extends TikiTestCase
 
 	function testFilterPattern()
 	{
-		$configuration = array(
-			array('keyPatternFilters' => array(
+		$configuration = [
+			['keyPatternFilters' => [
 				'/^hello/' => 'digits',
-			)),
-			array('keyPatternFiltersForArrays' => array(
+			]],
+			['keyPatternFiltersForArrays' => [
 				'/^fo+$/' => 'alpha',
-			)),
-		);
+			]],
+		];
 
 		$filter = DeclFilter::fromConfiguration($configuration);
 
 		$data = $filter->filter(
-			array(
+			[
 				'hello123' => '123abc',
 				'hello456' => '123abc',
 				'world' => '123abc',
-				'foo' => array(
+				'foo' => [
 					'abc123',
 					'def456',
-				),
-			)
+				],
+			]
 		);
 
 		$this->assertEquals($data['hello123'], '123');
@@ -152,20 +152,20 @@ class DeclFilter_ConfigureTest extends TikiTestCase
 
 	function testUnsetPattern()
 	{
-		$configuration = array(
-			array('keyPatternUnset' => array(
+		$configuration = [
+			['keyPatternUnset' => [
 				'/^hello/',
-			)),
-		);
+			]],
+		];
 
 		$filter = DeclFilter::fromConfiguration($configuration);
 
 		$data = $filter->filter(
-			array(
+			[
 				'hello123' => '123abc',
 				'hello456' => '123abc',
 				'world' => '123abc',
-			)
+			]
 		);
 
 		$this->assertFalse(isset($data['hello123']));

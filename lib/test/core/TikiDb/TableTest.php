@@ -19,7 +19,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$mock->expects($this->once())
 			->method('queryException')
-			->with($this->equalTo($query), $this->equalTo(array('hello')));
+			->with($this->equalTo($query), $this->equalTo(['hello']));
 
 		$mock->expects($this->once())
 			->method('lastInsertId')
@@ -30,7 +30,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(
 			42,
 			$table->insert(
-				array('label' => 'hello',),
+				['label' => 'hello',],
 				true
 			)
 		);
@@ -44,7 +44,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$mock->expects($this->once())
 			->method('queryException')
-			->with($this->equalTo($query), $this->equalTo(array('hello', 'world', 15)));
+			->with($this->equalTo($query), $this->equalTo(['hello', 'world', 15]));
 
 		$mock->expects($this->once())
 			->method('lastInsertId')
@@ -55,11 +55,11 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(
 			12,
 			$table->insert(
-				array(
+				[
 					'label' => 'hello',
 					'description' => 'world',
 					'count' => 15,
-				)
+				]
 			)
 		);
 	}
@@ -72,11 +72,11 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$mock->expects($this->once())
 			->method('queryException')
-			->with($this->equalTo($query), $this->equalTo(array(15)));
+			->with($this->equalTo($query), $this->equalTo([15]));
 
 		$table = new TikiDb_Table($mock, 'my_table');
 
-		$table->delete(array('some_id' => 15,));
+		$table->delete(['some_id' => 15,]);
 	}
 
 	function testDeletionOnMultipleConditions()
@@ -87,15 +87,15 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$mock->expects($this->once())
 			->method('queryException')
-			->with($this->equalTo($query), $this->equalTo(array('wiki page', 'HomePage')));
+			->with($this->equalTo($query), $this->equalTo(['wiki page', 'HomePage']));
 
 		$table = new TikiDb_Table($mock, 'other_table');
 
 		$table->delete(
-			array(
+			[
 				'objectType' => 'wiki page',
 				'objectId' => 'HomePage',
-			)
+			]
 		);
 	}
 
@@ -107,15 +107,15 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$mock->expects($this->once())
 			->method('queryException')
-			->with($this->equalTo($query), $this->equalTo(array('wiki page', 'HomePage')));
+			->with($this->equalTo($query), $this->equalTo(['wiki page', 'HomePage']));
 
 		$table = new TikiDb_Table($mock, 'other_table');
 
 		$table->deleteMultiple(
-			array(
+			[
 				'objectType' => 'wiki page',
 				'objectId' => 'HomePage',
-			)
+			]
 		);
 	}
 
@@ -127,16 +127,16 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$mock->expects($this->once())
 			->method('queryException')
-			->with($this->equalTo($query), $this->equalTo(array('wiki page', 'HomePage', null)));
+			->with($this->equalTo($query), $this->equalTo(['wiki page', 'HomePage', null]));
 
 		$table = new TikiDb_Table($mock, 'other_table');
 
 		$table->delete(
-			array(
+			[
 				'objectType' => 'wiki page',
 				'objectId' => 'HomePage',
 				'lang' => '',
-			)
+			]
 		);
 	}
 
@@ -148,18 +148,18 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$mock->expects($this->once())
 			->method('queryException')
-			->with($this->equalTo($query), $this->equalTo(array('hello world', 'foobar', 'wiki page', 'HomePage')));
+			->with($this->equalTo($query), $this->equalTo(['hello world', 'foobar', 'wiki page', 'HomePage']));
 
 		$table = new TikiDb_Table($mock, 'my_table');
 		$table->update(
-			array(
+			[
 				'title' => 'hello world',
 				'description' => 'foobar',
-			),
-			array(
+			],
+			[
 				'objectType' => 'wiki page',
 				'objectId' => 'HomePage',
-			)
+			]
 		);
 	}
 
@@ -171,18 +171,18 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$mock->expects($this->once())
 			->method('queryException')
-			->with($this->equalTo($query), $this->equalTo(array('hello world', 'foobar', 'wiki page', 'HomePage')));
+			->with($this->equalTo($query), $this->equalTo(['hello world', 'foobar', 'wiki page', 'HomePage']));
 
 		$table = new TikiDb_Table($mock, 'my_table');
 		$table->updateMultiple(
-			array(
+			[
 				'title' => 'hello world',
 				'description' => 'foobar',
-			),
-			array(
+			],
+			[
 				'objectType' => 'wiki page',
 				'objectId' => 'HomePage',
-			)
+			]
 		);
 	}
 
@@ -197,26 +197,27 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 			->with(
 				$this->equalTo($query),
 				$this->equalTo(
-					array(
+					[
 						'hello world',
 						'foobar',
 						'wiki page',
 						'HomePage',
 						'hello world',
 						'foobar'
-					)
+					]
 				)
 			);
 
 		$table = new TikiDb_Table($mock, 'my_table');
 		$table->insertOrUpdate(
-			array(
+			[
 				'title' => 'hello world',
 				'description' => 'foobar',
-			), array(
+			],
+			[
 				'objectType' => 'wiki page',
 				'objectId' => 'HomePage',
-			)
+			]
 		);
 	}
 
@@ -228,12 +229,12 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$mock->expects($this->once())
 			->method('queryException')
-			->with($this->equalTo($query), $this->equalTo(array(5, 42)));
+			->with($this->equalTo($query), $this->equalTo([5, 42]));
 
 		$table = new TikiDb_Table($mock, 'my_table');
 		$table->update(
-			array('hits' => $table->expr('$$ + ?', array(5)),),
-			array('fileId' => 42,)
+			['hits' => $table->expr('$$ + ?', [5]),],
+			['fileId' => 42,]
 		);
 	}
 
@@ -247,13 +248,13 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 			->method('queryException')
 			->with(
 				$this->equalTo($query),
-				$this->equalTo(array(1.5, 5, 42))
+				$this->equalTo([1.5, 5, 42])
 			);
 
 		$table = new TikiDb_Table($mock, 'my_table');
 		$table->update(
-			array('hits' => $table->expr('`weight` * ? * ($$ + ?)', array(1.5, 5)),),
-			array('fileId' => 42,)
+			['hits' => $table->expr('`weight` * ? * ($$ + ?)', [1.5, 5]),],
+			['fileId' => 42,]
 		);
 	}
 
@@ -265,14 +266,14 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$mock->expects($this->once())
 			->method('queryException')
-			->with($this->equalTo($query), $this->equalTo(array('SomePage', 12345)));
+			->with($this->equalTo($query), $this->equalTo(['SomePage', 12345]));
 
 		$table = new TikiDb_Table($mock, 'my_table');
 		$table->deleteMultiple(
-			array(
+			[
 				'pageName' => 'SomePage',
-				'modified' => $table->expr('$$ < ?', array(12345)),
-			)
+				'modified' => $table->expr('$$ < ?', [12345]),
+			]
 		);
 	}
 
@@ -284,16 +285,16 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$mock->expects($this->once())
 			->method('fetchAll')
-			->with($this->equalTo($query), $this->equalTo(array(42)), $this->equalTo(1), $this->equalTo(0))
+			->with($this->equalTo($query), $this->equalTo([42]), $this->equalTo(1), $this->equalTo(0))
 			->will(
 				$this->returnValue(
-					array(array('user' => 'hello'),)
+					[['user' => 'hello'],]
 				)
 			);
 
 		$table = new TikiDb_Table($mock, 'tiki_user_watches');
 
-		$this->assertEquals('hello', $table->fetchOne('user', array('watchId' => 42)));
+		$this->assertEquals('hello', $table->fetchOne('user', ['watchId' => 42]));
 	}
 
 	function testFetchColumn()
@@ -304,18 +305,18 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$mock->expects($this->once())
 			->method('fetchAll')
-			->with($this->equalTo($query), $this->equalTo(array(42, 'foobar')), $this->equalTo(-1), $this->equalTo(-1))
+			->with($this->equalTo($query), $this->equalTo([42, 'foobar']), $this->equalTo(-1), $this->equalTo(-1))
 			->will(
 				$this->returnValue(
-					array(
-						array('group' => 'hello'),
-							array('group' => 'world'),
-					)
+					[
+						['group' => 'hello'],
+							['group' => 'world'],
+					]
 				)
 			);
 
 		$table = new TikiDb_Table($mock, 'tiki_group_watches');
-		$this->assertEquals(array('hello', 'world'), $table->fetchColumn('group', array('object' => 42, 'event' => 'foobar')));
+		$this->assertEquals(['hello', 'world'], $table->fetchColumn('group', ['object' => 42, 'event' => 'foobar']));
 	}
 
 	function testFetchColumnWithSort()
@@ -326,56 +327,56 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$mock->expects($this->once())
 			->method('fetchAll')
-			->with($this->equalTo($query), $this->equalTo(array(42, 'foobar')), $this->equalTo(-1), $this->equalTo(-1))
+			->with($this->equalTo($query), $this->equalTo([42, 'foobar']), $this->equalTo(-1), $this->equalTo(-1))
 			->will(
 				$this->returnValue(
-					array(
-						array('group' => 'hello'),
-						array('group' => 'world'),
-					)
+					[
+						['group' => 'hello'],
+						['group' => 'world'],
+					]
 				)
 			);
 
 		$table = new TikiDb_Table($mock, 'tiki_group_watches');
-		$this->assertEquals(array('hello', 'world'), $table->fetchColumn('group', array('object' => 42, 'event' => 'foobar'), -1, -1, 'ASC'));
+		$this->assertEquals(['hello', 'world'], $table->fetchColumn('group', ['object' => 42, 'event' => 'foobar'], -1, -1, 'ASC'));
 	}
 
 	function testFetchAll_shouldConsiderOnlyProvidedFields()
 	{
-		$expectedResult = array(
-			array('user' => 'admin'),
-			array('user' => 'test')
-		);
+		$expectedResult = [
+			['user' => 'admin'],
+			['user' => 'test']
+		];
 
 		$query = 'SELECT `user`, `email` FROM `users_users` WHERE 1=1';
 
 		$tikiDb = $this->createMock('TikiDb');
 		$tikiDb->expects($this->once())->method('fetchAll')
-			->with($query, array(), -1, -1)
+			->with($query, [], -1, -1)
 			->will($this->returnValue($expectedResult));
 
 		$table = new TikiDb_Table($tikiDb, 'users_users');
 
-		$this->assertEquals($expectedResult, $table->fetchAll(array('user', 'email'), array()));
+		$this->assertEquals($expectedResult, $table->fetchAll(['user', 'email'], []));
 	}
 
 	function testFetchAll_shouldReturnAllFieldsIfFirstParamIsEmpty()
 	{
-		$expectedResult = array(
-			array('user' => 'admin'),
-			array('user' => 'test')
-		);
+		$expectedResult = [
+			['user' => 'admin'],
+			['user' => 'test']
+		];
 
 		$query = 'SELECT * FROM `users_users` WHERE 1=1';
 
 		$tikiDb = $this->createMock('TikiDb');
 		$tikiDb->expects($this->exactly(2))->method('fetchAll')
-			->with($query, array(), -1, -1)
+			->with($query, [], -1, -1)
 			->will($this->returnValue($expectedResult));
 
 		$table = new TikiDb_Table($tikiDb, 'users_users');
 
-		$this->assertEquals($expectedResult, $table->fetchAll(array(), array()));
+		$this->assertEquals($expectedResult, $table->fetchAll([], []));
 		$this->assertEquals($expectedResult, $table->fetchAll());
 	}
 
@@ -385,16 +386,16 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$query = 'SELECT `user`, `email` FROM `users_users` WHERE 1=1 AND `userId` = ?';
 
-		$row = array('user' => 'hello', 'email' => 'hello@example.com');
+		$row = ['user' => 'hello', 'email' => 'hello@example.com'];
 
 		$mock->expects($this->once())
 			->method('fetchAll')
-			->with($this->equalTo($query), $this->equalTo(array(42)), $this->equalTo(1), $this->equalTo(0))
-			->will($this->returnValue(array($row,)));
+			->with($this->equalTo($query), $this->equalTo([42]), $this->equalTo(1), $this->equalTo(0))
+			->will($this->returnValue([$row,]));
 
 		$table = new TikiDb_Table($mock, 'users_users');
 
-		$this->assertEquals($row, $table->fetchRow(array('user', 'email'), array('userId' => 42)));
+		$this->assertEquals($row, $table->fetchRow(['user', 'email'], ['userId' => 42]));
 	}
 
 	function testFetchCount()
@@ -405,12 +406,12 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$mock->expects($this->once())
 			->method('fetchAll')
-			->with($this->equalTo($query), $this->equalTo(array(42)), $this->equalTo(1), $this->equalTo(0))
-			->will($this->returnValue(array(array(15),)));
+			->with($this->equalTo($query), $this->equalTo([42]), $this->equalTo(1), $this->equalTo(0))
+			->will($this->returnValue([[15],]));
 
 		$table = new TikiDb_Table($mock, 'users_users');
 
-		$this->assertEquals(15, $table->fetchCount(array('userId' => 42)));
+		$this->assertEquals(15, $table->fetchCount(['userId' => 42]));
 	}
 
 	function testFetchFullRow()
@@ -419,16 +420,16 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$query = 'SELECT * FROM `users_users` WHERE 1=1 AND `userId` = ?';
 
-		$row = array('user' => 'hello', 'email' => 'hello@example.com');
+		$row = ['user' => 'hello', 'email' => 'hello@example.com'];
 
 		$mock->expects($this->once())
 			->method('fetchAll')
-			->with($this->equalTo($query), $this->equalTo(array(42)), $this->equalTo(1), $this->equalTo(0))
-			->will($this->returnValue(array($row,)));
+			->with($this->equalTo($query), $this->equalTo([42]), $this->equalTo(1), $this->equalTo(0))
+			->will($this->returnValue([$row,]));
 
 		$table = new TikiDb_Table($mock, 'users_users');
 
-		$this->assertEquals($row, $table->fetchFullRow(array('userId' => 42)));
+		$this->assertEquals($row, $table->fetchFullRow(['userId' => 42]));
 	}
 
 	function testFetchMap()
@@ -439,23 +440,23 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$mock->expects($this->once())
 			->method('fetchAll')
-			->with($this->equalTo($query), $this->equalTo(array(42)), $this->equalTo(-1), $this->equalTo(-1))
+			->with($this->equalTo($query), $this->equalTo([42]), $this->equalTo(-1), $this->equalTo(-1))
 			->will(
 				$this->returnValue(
-					array(
-						array('user' => 'hello', 'email' => 'hello@example.com'),
-						array('user' => 'world', 'email' => 'world@example.com'),
-					)
+					[
+						['user' => 'hello', 'email' => 'hello@example.com'],
+						['user' => 'world', 'email' => 'world@example.com'],
+					]
 				)
 			);
 
 		$table = new TikiDb_Table($mock, 'users_users');
 
-		$expect = array(
+		$expect = [
 				'hello' => 'hello@example.com',
 				'world' => 'world@example.com',
-				);
-		$this->assertEquals($expect, $table->fetchMap('user', 'email', array('userId' => $table->greaterThan(42)), -1, -1, array('user' => 'DESC')));
+				];
+		$this->assertEquals($expect, $table->fetchMap('user', 'email', ['userId' => $table->greaterThan(42)], -1, -1, ['user' => 'DESC']));
 	}
 
 	function testAliasField()
@@ -466,23 +467,23 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$mock->expects($this->once())
 			->method('fetchAll')
-			->with($this->equalTo($query), $this->equalTo(array(42)), $this->equalTo(-1), $this->equalTo(-1))
+			->with($this->equalTo($query), $this->equalTo([42]), $this->equalTo(-1), $this->equalTo(-1))
 			->will(
 				$this->returnValue(
-					array(
-						array('user' => 'hello', 'address' => 'hello@example.com'),
-						array('user' => 'world', 'address' => 'world@example.com'),
-					)
+					[
+						['user' => 'hello', 'address' => 'hello@example.com'],
+						['user' => 'world', 'address' => 'world@example.com'],
+					]
 				)
 			);
 
 		$table = new TikiDb_Table($mock, 'users_users');
 
-		$expect = array(
-				array('user' => 'hello', 'address' => 'hello@example.com'),
-				array('user' => 'world', 'address' => 'world@example.com'),
-				);
-		$this->assertEquals($expect, $table->fetchAll(array('user', 'address' => 'email'), array('userId' => $table->greaterThan(42)), -1, -1, array('user' => 'DESC')));
+		$expect = [
+				['user' => 'hello', 'address' => 'hello@example.com'],
+				['user' => 'world', 'address' => 'world@example.com'],
+				];
+		$this->assertEquals($expect, $table->fetchAll(['user', 'address' => 'email'], ['userId' => $table->greaterThan(42)], -1, -1, ['user' => 'DESC']));
 	}
 
 	function testIncrement()
@@ -490,7 +491,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
-		$this->assertEquals($table->expr('$$ + ?', array(1)), $table->increment(1));
+		$this->assertEquals($table->expr('$$ + ?', [1]), $table->increment(1));
 	}
 
 	function testDecrement()
@@ -498,7 +499,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
-		$this->assertEquals($table->expr('$$ - ?', array(1)), $table->decrement(1));
+		$this->assertEquals($table->expr('$$ - ?', [1]), $table->decrement(1));
 	}
 
 	function testNot()
@@ -506,7 +507,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
-		$this->assertEquals($table->expr('$$ <> ?', array(1)), $table->not(1));
+		$this->assertEquals($table->expr('$$ <> ?', [1]), $table->not(1));
 	}
 
 	function testGreaterThan()
@@ -514,7 +515,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
-		$this->assertEquals($table->expr('$$ > ?', array(1)), $table->greaterThan(1));
+		$this->assertEquals($table->expr('$$ > ?', [1]), $table->greaterThan(1));
 	}
 
 	function testLesserThan()
@@ -522,7 +523,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
-		$this->assertEquals($table->expr('$$ < ?', array(1)), $table->lesserThan(1));
+		$this->assertEquals($table->expr('$$ < ?', [1]), $table->lesserThan(1));
 	}
 
 	function testLike()
@@ -530,7 +531,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
-		$this->assertEquals($table->expr('$$ LIKE ?', array('foo%')), $table->like('foo%'));
+		$this->assertEquals($table->expr('$$ LIKE ?', ['foo%']), $table->like('foo%'));
 	}
 
 	function testInWithEmptyArray()
@@ -538,7 +539,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
-		$this->assertEquals($table->expr('1=0', array()), $table->in(array()));
+		$this->assertEquals($table->expr('1=0', []), $table->in([]));
 	}
 
 	function testInWithData()
@@ -546,7 +547,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
-		$this->assertEquals($table->expr('$$ IN(?, ?, ?)', array(1, 2, 3)), $table->in(array(1, 2, 3)));
+		$this->assertEquals($table->expr('$$ IN(?, ?, ?)', [1, 2, 3]), $table->in([1, 2, 3]));
 	}
 
 	function testInWithDataNotSensitive()
@@ -554,7 +555,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
-		$this->assertEquals($table->expr('BINARY $$ IN(?, ?, ?)', array(1, 2, 3)), $table->in(array(1, 2, 3), true));
+		$this->assertEquals($table->expr('BINARY $$ IN(?, ?, ?)', [1, 2, 3]), $table->in([1, 2, 3], true));
 	}
 
 	function testExactMatch()
@@ -562,7 +563,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
-		$this->assertEquals($table->expr('BINARY $$ = ?', array('foo%')), $table->exactly('foo%'));
+		$this->assertEquals($table->expr('BINARY $$ = ?', ['foo%']), $table->exactly('foo%'));
 	}
 
 	function testAllFields()
@@ -570,7 +571,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
-		$this->assertEquals(array($table->expr('*', array())), $table->all());
+		$this->assertEquals([$table->expr('*', [])], $table->all());
 	}
 
 	function testCountAll()
@@ -578,7 +579,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
-		$this->assertEquals($table->expr('COUNT(*)', array()), $table->count());
+		$this->assertEquals($table->expr('COUNT(*)', []), $table->count());
 	}
 
 	function testSumField()
@@ -586,7 +587,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
-		$this->assertEquals($table->expr('SUM(`hits`)', array()), $table->sum('hits'));
+		$this->assertEquals($table->expr('SUM(`hits`)', []), $table->sum('hits'));
 	}
 
 	function testMaxField()
@@ -594,7 +595,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
-		$this->assertEquals($table->expr('MAX(`hits`)', array()), $table->max('hits'));
+		$this->assertEquals($table->expr('MAX(`hits`)', []), $table->max('hits'));
 	}
 
 	function testFindIn()
@@ -602,21 +603,20 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
-		$this->assertEquals($table->expr('(`a` LIKE ? OR `b` LIKE ? OR `c` LIKE ?)', array("%X%", "%X%", "%X%")), $table->findIn('X', array('a', 'b', 'c')));
+		$this->assertEquals($table->expr('(`a` LIKE ? OR `b` LIKE ? OR `c` LIKE ?)', ["%X%", "%X%", "%X%"]), $table->findIn('X', ['a', 'b', 'c']));
 	}
 
 	function testEmptyConcat()
 	{
 		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
-		$this->assertEquals($table->expr('', array()), $table->concatFields(array()));
+		$this->assertEquals($table->expr('', []), $table->concatFields([]));
 	}
 
 	function testEmptyConcatWithMultiple()
 	{
 		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
-		$this->assertEquals($table->expr('CONCAT(`a`, `b`, `c`)', array()), $table->concatFields(array('a', 'b', 'c')));
+		$this->assertEquals($table->expr('CONCAT(`a`, `b`, `c`)', []), $table->concatFields(['a', 'b', 'c']));
 	}
 }
-

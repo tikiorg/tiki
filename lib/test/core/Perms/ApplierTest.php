@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/** 
+/**
  * @group unit
- * 
+ *
  */
 
 class Perms_ApplierTest extends TikiTestCase
@@ -200,7 +200,7 @@ class Perms_ApplierTest extends TikiTestCase
 
 		$applier = new Perms_Applier;
 		$applier->addObject($target);
-		$applier->restrictPermissions(array('view', 'view_history', 'edit'));
+		$applier->restrictPermissions(['view', 'view_history', 'edit']);
 		$applier->apply($newSet);
 	}
 
@@ -232,7 +232,7 @@ class Perms_ApplierTest extends TikiTestCase
 
 		$applier = new Perms_Applier;
 		$applier->addObject($target);
-		$applier->restrictPermissions(array('view', 'edit'));
+		$applier->restrictPermissions(['view', 'edit']);
 		$applier->apply($newSet);
 	}
 
@@ -264,7 +264,7 @@ class Perms_ApplierTest extends TikiTestCase
 
 		$applier = new Perms_Applier;
 		$applier->addObject($target);
-		$applier->restrictPermissions(array('view', 'edit', 'admin'));
+		$applier->restrictPermissions(['view', 'edit', 'admin']);
 		$applier->apply($newSet);
 	}
 }

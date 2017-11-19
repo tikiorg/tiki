@@ -89,10 +89,10 @@ class Search_Expr_ParserTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(
 			new Search_Expr_Or(
-				array(
+				[
 					$this->parser->parse('bob roger'),
 					$this->parser->parse('test again'),
-				)
+				]
 			),
 			$result
 		);
@@ -104,10 +104,10 @@ class Search_Expr_ParserTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(
 			new Search_Expr_And(
-				array(
+				[
 					$this->parser->parse('bob roger'),
 					$this->parser->parse('test again'),
-				)
+				]
 			),
 			$result
 		);
@@ -119,15 +119,15 @@ class Search_Expr_ParserTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(
 			new Search_Expr_And(
-				array(
+				[
 					new Search_Expr_And(
-						array(
+						[
 							$this->parser->parse('1'),
 							$this->parser->parse('2'),
-						)
+						]
 					),
 					$this->parser->parse('3'),
-				)
+				]
 			),
 			$result
 		);
@@ -147,15 +147,15 @@ class Search_Expr_ParserTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(
 			new Search_Expr_Or(
-				array(
+				[
 					new Search_Expr_Or(
-						array(
+						[
 							$this->parser->parse('1'),
 							$this->parser->parse('2'),
-						)
+						]
 					),
 					$this->parser->parse('3'),
-				)
+				]
 			),
 			$result
 		);
@@ -167,10 +167,10 @@ class Search_Expr_ParserTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(
 			new Search_Expr_And(
-				array(
+				[
 					$this->parser->parse('bob roger'),
 					$this->parser->parse('test again'),
-				)
+				]
 			),
 			$result
 		);
@@ -182,10 +182,10 @@ class Search_Expr_ParserTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(
 			new Search_Expr_And(
-				array(
+				[
 					$this->parser->parse('bob'),
 					$this->parser->parse('test OR again'),
-				)
+				]
 			),
 			$result
 		);
@@ -210,10 +210,10 @@ class Search_Expr_ParserTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(
 			new Search_Expr_And(
-				array(
+				[
 					$this->parser->parse('bob'),
 					new Search_Expr_Not($this->parser->parse('roger alphonse')),
-				)
+				]
 			),
 			$result
 		);
@@ -255,4 +255,3 @@ class Search_Expr_ParserTest extends PHPUnit_Framework_TestCase
 		);
 	}
 }
-

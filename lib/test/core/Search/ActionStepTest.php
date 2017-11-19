@@ -12,13 +12,13 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 		$action = $this->createMock('Search_Action_Action');
 		$action->expects($this->any())
 			->method('getValues')
-			->will($this->returnValue(array('hello' => true)));
+			->will($this->returnValue(['hello' => true]));
 
-		$step = new Search_Action_ActionStep($action, array());
+		$step = new Search_Action_ActionStep($action, []);
 		$this->expectException(Search_Action_Exception::class);
 		$this->expectExceptionMessage("Missing required action parameter or value: hello");
-		$step->validate(array());
-		$this->assertEquals(array('hello'), $step->getFields());
+		$step->validate([]);
+		$this->assertEquals(['hello'], $step->getFields());
 	}
 
 	function testMissingValueButNotRequired()
@@ -26,15 +26,15 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 		$action = $this->createMock('Search_Action_Action');
 		$action->expects($this->any())
 			->method('getValues')
-			->will($this->returnValue(array('hello' => false)));
+			->will($this->returnValue(['hello' => false]));
 		$action->expects($this->once())
 			->method('validate')
-			->with($this->equalTo(new JitFilter(array('hello' => null))))
+			->with($this->equalTo(new JitFilter(['hello' => null])))
 			->will($this->returnValue(true));
 
-		$step = new Search_Action_ActionStep($action, array());
-		$this->assertTrue($step->validate(array()));
-		$this->assertEquals(array('hello'), $step->getFields());
+		$step = new Search_Action_ActionStep($action, []);
+		$this->assertTrue($step->validate([]));
+		$this->assertEquals(['hello'], $step->getFields());
 	}
 
 	function testValueProvidedStaticInDefinition()
@@ -42,15 +42,15 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 		$action = $this->createMock('Search_Action_Action');
 		$action->expects($this->any())
 			->method('getValues')
-			->will($this->returnValue(array('hello' => true)));
+			->will($this->returnValue(['hello' => true]));
 		$action->expects($this->once())
 			->method('validate')
-			->with($this->equalTo(new JitFilter(array('hello' => 'world'))))
+			->with($this->equalTo(new JitFilter(['hello' => 'world'])))
 			->will($this->returnValue(true));
 
-		$step = new Search_Action_ActionStep($action, array('hello' => 'world'));
-		$this->assertTrue($step->validate(array()));
-		$this->assertEquals(array(), $step->getFields());
+		$step = new Search_Action_ActionStep($action, ['hello' => 'world']);
+		$this->assertTrue($step->validate([]));
+		$this->assertEquals([], $step->getFields());
 	}
 
 	function testValueProvidedInEntryDirectly()
@@ -58,15 +58,15 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 		$action = $this->createMock('Search_Action_Action');
 		$action->expects($this->any())
 			->method('getValues')
-			->will($this->returnValue(array('hello' => true)));
+			->will($this->returnValue(['hello' => true]));
 		$action->expects($this->once())
 			->method('validate')
-			->with($this->equalTo(new JitFilter(array('hello' => 'world'))))
+			->with($this->equalTo(new JitFilter(['hello' => 'world'])))
 			->will($this->returnValue(true));
 
-		$step = new Search_Action_ActionStep($action, array());
-		$this->assertTrue($step->validate(array('hello' => 'world')));
-		$this->assertEquals(array('hello'), $step->getFields());
+		$step = new Search_Action_ActionStep($action, []);
+		$this->assertTrue($step->validate(['hello' => 'world']));
+		$this->assertEquals(['hello'], $step->getFields());
 	}
 
 	function testDefinitionDefersToSingleField()
@@ -74,15 +74,15 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 		$action = $this->createMock('Search_Action_Action');
 		$action->expects($this->any())
 			->method('getValues')
-			->will($this->returnValue(array('hello' => true)));
+			->will($this->returnValue(['hello' => true]));
 		$action->expects($this->once())
 			->method('validate')
-			->with($this->equalTo(new JitFilter(array('hello' => 'world'))))
+			->with($this->equalTo(new JitFilter(['hello' => 'world'])))
 			->will($this->returnValue(true));
 
-		$step = new Search_Action_ActionStep($action, array('hello_field' => 'test'));
-		$this->assertTrue($step->validate(array('test' => 'world')));
-		$this->assertEquals(array('test'), $step->getFields());
+		$step = new Search_Action_ActionStep($action, ['hello_field' => 'test']);
+		$this->assertTrue($step->validate(['test' => 'world']));
+		$this->assertEquals(['test'], $step->getFields());
 	}
 
 	function testDefinitionCoalesceField()
@@ -90,15 +90,15 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 		$action = $this->createMock('Search_Action_Action');
 		$action->expects($this->any())
 			->method('getValues')
-			->will($this->returnValue(array('hello' => true)));
+			->will($this->returnValue(['hello' => true]));
 		$action->expects($this->once())
 			->method('validate')
-			->with($this->equalTo(new JitFilter(array('hello' => 'right'))))
+			->with($this->equalTo(new JitFilter(['hello' => 'right'])))
 			->will($this->returnValue(true));
 
-		$step = new Search_Action_ActionStep($action, array('hello_field_coalesce' => 'foo,bar,test,baz,hello'));
-		$this->assertTrue($step->validate(array('test' => 'right', 'baz' => 'wrong')));
-		$this->assertEquals(array('foo', 'bar', 'test', 'baz', 'hello'), $step->getFields());
+		$step = new Search_Action_ActionStep($action, ['hello_field_coalesce' => 'foo,bar,test,baz,hello']);
+		$this->assertTrue($step->validate(['test' => 'right', 'baz' => 'wrong']));
+		$this->assertEquals(['foo', 'bar', 'test', 'baz', 'hello'], $step->getFields());
 	}
 
 	function testDefinitionCoalesceFieldNoMatch()
@@ -106,12 +106,12 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 		$action = $this->createMock('Search_Action_Action');
 		$action->expects($this->any())
 			->method('getValues')
-			->will($this->returnValue(array('hello' => true)));
+			->will($this->returnValue(['hello' => true]));
 
-		$step = new Search_Action_ActionStep($action, array('hello_field_coalesce' => 'foo,bar,test,baz,hello'));
+		$step = new Search_Action_ActionStep($action, ['hello_field_coalesce' => 'foo,bar,test,baz,hello']);
 		$this->expectException(Search_Action_Exception::class);
-		$step->validate(array());
-		$this->assertEquals(array('foo', 'bar', 'test', 'baz', 'hello'), $step->getFields());
+		$step->validate([]);
+		$this->assertEquals(['foo', 'bar', 'test', 'baz', 'hello'], $step->getFields());
 	}
 
 	function testRequiresValueAsArrayButMissing()
@@ -119,15 +119,15 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 		$action = $this->createMock('Search_Action_Action');
 		$action->expects($this->any())
 			->method('getValues')
-			->will($this->returnValue(array('hello+' => false)));
+			->will($this->returnValue(['hello+' => false]));
 		$action->expects($this->once())
 			->method('validate')
-			->with($this->equalTo(new JitFilter(array('hello' => array()))))
+			->with($this->equalTo(new JitFilter(['hello' => []])))
 			->will($this->returnValue(true));
 
-		$step = new Search_Action_ActionStep($action, array());
-		$this->assertTrue($step->validate(array()));
-		$this->assertEquals(array('hello'), $step->getFields());
+		$step = new Search_Action_ActionStep($action, []);
+		$this->assertTrue($step->validate([]));
+		$this->assertEquals(['hello'], $step->getFields());
 	}
 
 	function testRequiresValueAsArrayAndSingleValue()
@@ -135,15 +135,15 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 		$action = $this->createMock('Search_Action_Action');
 		$action->expects($this->any())
 			->method('getValues')
-			->will($this->returnValue(array('hello+' => false)));
+			->will($this->returnValue(['hello+' => false]));
 		$action->expects($this->once())
 			->method('validate')
-			->with($this->equalTo(new JitFilter(array('hello' => array('world')))))
+			->with($this->equalTo(new JitFilter(['hello' => ['world']])))
 			->will($this->returnValue(true));
 
-		$step = new Search_Action_ActionStep($action, array('hello' => 'world'));
-		$this->assertTrue($step->validate(array()));
-		$this->assertEquals(array(), $step->getFields());
+		$step = new Search_Action_ActionStep($action, ['hello' => 'world']);
+		$this->assertTrue($step->validate([]));
+		$this->assertEquals([], $step->getFields());
 	}
 
 	function testRequiresValueAsArrayAndMultipleValues()
@@ -151,15 +151,14 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 		$action = $this->createMock('Search_Action_Action');
 		$action->expects($this->any())
 			->method('getValues')
-			->will($this->returnValue(array('hello+' => false)));
+			->will($this->returnValue(['hello+' => false]));
 		$action->expects($this->once())
 			->method('validate')
-			->with($this->equalTo(new JitFilter(array('hello' => array('a', 'b')))))
+			->with($this->equalTo(new JitFilter(['hello' => ['a', 'b']])))
 			->will($this->returnValue(true));
 
-		$step = new Search_Action_ActionStep($action, array('hello_field_multiple' => 'foo,bar,baz'));
-		$this->assertTrue($step->validate(array('foo' => 'a', 'baz' => 'b')));
-		$this->assertEquals(array('foo', 'bar', 'baz'), $step->getFields());
+		$step = new Search_Action_ActionStep($action, ['hello_field_multiple' => 'foo,bar,baz']);
+		$this->assertTrue($step->validate(['foo' => 'a', 'baz' => 'b']));
+		$this->assertEquals(['foo', 'bar', 'baz'], $step->getFields());
 	}
 }
-

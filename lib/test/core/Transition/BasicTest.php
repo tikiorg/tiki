@@ -15,7 +15,7 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 	function testSimpleTransition()
 	{
 		$transition = new Tiki_Transition('A', 'B');
-		$transition->setStates(array('A'));
+		$transition->setStates(['A']);
 
 		$this->assertTrue($transition->isReady());
 	}
@@ -23,7 +23,7 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 	function testAlreadyInTarget()
 	{
 		$transition = new Tiki_Transition('A', 'B');
-		$transition->setStates(array('B'));
+		$transition->setStates(['B']);
 
 		$this->assertFalse($transition->isReady());
 	}
@@ -31,7 +31,7 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 	function testInBoth()
 	{
 		$transition = new Tiki_Transition('A', 'B');
-		$transition->setStates(array('A', 'B'));
+		$transition->setStates(['A', 'B']);
 
 		$this->assertFalse($transition->isReady());
 	}
@@ -39,9 +39,9 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 	function testExplainWhenReady()
 	{
 		$transition = new Tiki_Transition('A', 'B');
-		$transition->setStates(array('A'));
+		$transition->setStates(['A']);
 
-		$this->assertEquals(array(), $transition->explain());
+		$this->assertEquals([], $transition->explain());
 	}
 
 	function testExplainWhenOriginNotMet()
@@ -49,7 +49,7 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 		$transition = new Tiki_Transition('A', 'B');
 
 		$this->assertEquals(
-			array(array('class' => 'missing', 'count' => 1, 'set' => array('A')),),
+			[['class' => 'missing', 'count' => 1, 'set' => ['A']],],
 			$transition->explain()
 		);
 	}
@@ -57,10 +57,10 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 	function testExplainWhenInTarget()
 	{
 		$transition = new Tiki_Transition('A', 'B');
-		$transition->setStates(array('A', 'B'));
+		$transition->setStates(['A', 'B']);
 
 		$this->assertEquals(
-			array(array('class' => 'extra', 'count' => 1, 'set' => array('B')),),
+			[['class' => 'extra', 'count' => 1, 'set' => ['B']],],
 			$transition->explain()
 		);
 	}
@@ -68,11 +68,11 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 	function testAddUnknownGuardType()
 	{
 		$transition = new Tiki_Transition('A', 'B');
-		$transition->setStates(array('A'));
-		$transition->addGuard('foobar', 5, array('D', 'E', 'F'));
+		$transition->setStates(['A']);
+		$transition->addGuard('foobar', 5, ['D', 'E', 'F']);
 
 		$this->assertEquals(
-			array(array('class' => 'unknown', 'count' => 1, 'set' => array('foobar')),),
+			[['class' => 'unknown', 'count' => 1, 'set' => ['foobar']],],
 			$transition->explain()
 		);
 	}
@@ -80,8 +80,8 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 	function testAddPassingCustomGuard()
 	{
 		$transition = new Tiki_Transition('A', 'B');
-		$transition->setStates(array('A', 'C', 'F'));
-		$transition->addGuard('exactly', 2, array('C', 'D', 'E', 'F'));
+		$transition->setStates(['A', 'C', 'F']);
+		$transition->addGuard('exactly', 2, ['C', 'D', 'E', 'F']);
 
 		$this->assertTrue($transition->isReady());
 	}
@@ -89,11 +89,11 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 	function testAddFailingCustomGuard()
 	{
 		$transition = new Tiki_Transition('A', 'B');
-		$transition->setStates(array('A', 'C', 'F'));
-		$transition->addGuard('exactly', 4, array('C', 'D', 'E', 'F', 'G'));
+		$transition->setStates(['A', 'C', 'F']);
+		$transition->addGuard('exactly', 4, ['C', 'D', 'E', 'F', 'G']);
 
 		$this->assertEquals(
-			array(array('class' => 'missing', 'count' => 2, 'set' => array('D', 'E', 'G')),),
+			[['class' => 'missing', 'count' => 2, 'set' => ['D', 'E', 'G']],],
 			$transition->explain()
 		);
 	}
@@ -101,11 +101,11 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 	function testImpossibleCondition()
 	{
 		$transition = new Tiki_Transition('A', 'B');
-		$transition->setStates(array('A', 'C', 'D', 'F'));
-		$transition->addGuard('exactly', 4, array('C', 'D', 'E'));
+		$transition->setStates(['A', 'C', 'D', 'F']);
+		$transition->addGuard('exactly', 4, ['C', 'D', 'E']);
 
 		$this->assertEquals(
-			array(array('class' => 'invalid', 'count' => 4, 'set' => array('C', 'D', 'E')),),
+			[['class' => 'invalid', 'count' => 4, 'set' => ['C', 'D', 'E']],],
 			$transition->explain()
 		);
 	}

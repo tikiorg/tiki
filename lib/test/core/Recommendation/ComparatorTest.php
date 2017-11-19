@@ -76,4 +76,3 @@ class ComparatorTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals([$expect], $comparator->generate($input));
 	}
 }
-

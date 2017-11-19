@@ -16,23 +16,23 @@ class Search_GlobalSource_PermissionSourceTest extends PHPUnit_Framework_TestCas
 	{
 		$perms = new Perms;
 		$perms->setCheckSequence(
-			array(
+			[
 				$this->globalAlternate = new Perms_Check_Alternate('admin'),
 				new Perms_Check_Direct,
-			)
+			]
 		);
 		$perms->setResolverFactories(
-			array(
+			[
 				new Perms_ResolverFactory_StaticFactory(
 					'global',
 					new Perms_Resolver_Static(
-						array(
-							'Anonymous' => array('tiki_p_view'),
-							'Registered' => array('tiki_p_view', 'tiki_p_topic_read'),
-						)
+						[
+							'Anonymous' => ['tiki_p_view'],
+							'Registered' => ['tiki_p_view', 'tiki_p_topic_read'],
+						]
 					)
 				),
-			)
+			]
 		);
 
 		$index = new Search_Index_Memory;
@@ -46,10 +46,10 @@ class Search_GlobalSource_PermissionSourceTest extends PHPUnit_Framework_TestCas
 	function testSingleGroup()
 	{
 		$contentSource = new Search_ContentSource_Static(
-			array(
-				'HomePage' => array('view_permission' => 'tiki_p_topic_read'),
-			),
-			array('view_permission' => 'identifier')
+			[
+				'HomePage' => ['view_permission' => 'tiki_p_topic_read'],
+			],
+			['view_permission' => 'identifier']
 		);
 
 		$this->indexer->addGlobalSource(new Search_GlobalSource_PermissionSource($this->perms));
@@ -59,14 +59,14 @@ class Search_GlobalSource_PermissionSourceTest extends PHPUnit_Framework_TestCas
 		$document = $this->index->getDocument(0);
 
 		$typeFactory = $this->index->getTypeFactory();
-		$this->assertEquals($typeFactory->multivalue(array('Registered')), $document['allowed_groups']);
+		$this->assertEquals($typeFactory->multivalue(['Registered']), $document['allowed_groups']);
 	}
 
 	function testMultipleGroup()
 	{
 		$contentSource = new Search_ContentSource_Static(
-			array('HomePage' => array('view_permission' => 'tiki_p_view'),),
-			array('view_permission' => 'identifier')
+			['HomePage' => ['view_permission' => 'tiki_p_view'],],
+			['view_permission' => 'identifier']
 		);
 
 		$this->indexer->addGlobalSource(new Search_GlobalSource_PermissionSource($this->perms));
@@ -76,14 +76,14 @@ class Search_GlobalSource_PermissionSourceTest extends PHPUnit_Framework_TestCas
 		$document = $this->index->getDocument(0);
 
 		$typeFactory = $this->index->getTypeFactory();
-		$this->assertEquals($typeFactory->multivalue(array('Anonymous', 'Registered')), $document['allowed_groups']);
+		$this->assertEquals($typeFactory->multivalue(['Anonymous', 'Registered']), $document['allowed_groups']);
 	}
 
 	function testNoMatches()
 	{
 		$contentSource = new Search_ContentSource_Static(
-			array('HomePage' => array('view_permission' => 'tiki_p_do_stuff'),),
-			array('view_permission' => 'identifier')
+			['HomePage' => ['view_permission' => 'tiki_p_do_stuff'],],
+			['view_permission' => 'identifier']
 		);
 
 		$this->indexer->addGlobalSource(new Search_GlobalSource_PermissionSource($this->perms));
@@ -93,16 +93,16 @@ class Search_GlobalSource_PermissionSourceTest extends PHPUnit_Framework_TestCas
 		$document = $this->index->getDocument(0);
 
 		$typeFactory = $this->index->getTypeFactory();
-		$this->assertEquals($typeFactory->multivalue(array()), $document['allowed_groups']);
+		$this->assertEquals($typeFactory->multivalue([]), $document['allowed_groups']);
 	}
 
 	function testUndeclaredPermission()
 	{
 		$contentSource = new Search_ContentSource_Static(
-			array(
-				'HomePage' => array(),
-			),
-			array('view_permission' => 'identifier')
+			[
+				'HomePage' => [],
+			],
+			['view_permission' => 'identifier']
 		);
 
 		$this->indexer->addGlobalSource(new Search_GlobalSource_PermissionSource($this->perms));
@@ -112,24 +112,24 @@ class Search_GlobalSource_PermissionSourceTest extends PHPUnit_Framework_TestCas
 		$document = $this->index->getDocument(0);
 
 		$typeFactory = $this->index->getTypeFactory();
-		$this->assertEquals($typeFactory->multivalue(array()), $document['allowed_groups']);
+		$this->assertEquals($typeFactory->multivalue([]), $document['allowed_groups']);
 	}
 
 	function testWithParentPermissionSpecified()
 	{
 		$contentSource = new Search_ContentSource_Static(
-			array(
-				'10' => array(
+			[
+				'10' => [
 					'parent_view_permission' => 'tiki_p_topic_read',
 					'parent_object_id' => '1',
 					'parent_object_type' => 'forum'
-				),
-			),
-			array(
+				],
+			],
+			[
 				'parent_view_permission' => 'identifier',
 				'parent_object_id' => 'identifier',
 				'parent_object_type' => 'identifier'
-			)
+			]
 		);
 
 		$this->indexer->addGlobalSource(new Search_GlobalSource_PermissionSource($this->perms));
@@ -139,26 +139,26 @@ class Search_GlobalSource_PermissionSourceTest extends PHPUnit_Framework_TestCas
 		$document = $this->index->getDocument(0);
 
 		$typeFactory = $this->index->getTypeFactory();
-		$this->assertEquals($typeFactory->multivalue(array('Registered')), $document['allowed_groups']);
+		$this->assertEquals($typeFactory->multivalue(['Registered']), $document['allowed_groups']);
 	}
 
 	function testWithBothSpecified()
 	{
 		$contentSource = new Search_ContentSource_Static(
-			array(
-				'10' => array(
+			[
+				'10' => [
 					'parent_view_permission' => 'tiki_p_topic_read',
 					'parent_object_id' => '1',
 					'parent_object_type' => 'forum',
 					'view_permission' => 'tiki_p_article_read'
-				),
-			),
-			array(
+				],
+			],
+			[
 				'parent_view_permission' => 'identifier',
 				'parent_object_id' => 'identifier',
 				'parent_object_type' => 'identifier',
 				'view_permission' => 'identifier'
-			)
+			]
 		);
 
 		$this->indexer->addGlobalSource(new Search_GlobalSource_PermissionSource($this->perms));
@@ -168,7 +168,6 @@ class Search_GlobalSource_PermissionSourceTest extends PHPUnit_Framework_TestCas
 		$document = $this->index->getDocument(0);
 
 		$typeFactory = $this->index->getTypeFactory();
-		$this->assertEquals($typeFactory->multivalue(array('Registered')), $document['allowed_groups']);
+		$this->assertEquals($typeFactory->multivalue(['Registered']), $document['allowed_groups']);
 	}
 }
-

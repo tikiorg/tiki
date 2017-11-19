@@ -37,4 +37,3 @@ class TikiLib_UriMergeTest extends PHPUnit_Framework_TestCase
 		return TikiLib::lib('tiki')->http_get_uri(new Zend\Uri\Http($first), $last)->toString();
 	}
 }
-

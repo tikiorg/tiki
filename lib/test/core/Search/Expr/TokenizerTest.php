@@ -16,23 +16,23 @@ class Search_Expr_TokenizerTest extends PHPUnit_Framework_TestCase
 
 	function testSingleWord()
 	{
-		$this->assertEquals(array('hello'), $this->tokenizer->tokenize('hello'));
+		$this->assertEquals(['hello'], $this->tokenizer->tokenize('hello'));
 	}
 
 	function testMultipleWords()
 	{
-		$this->assertEquals(array('hello', 'world', 'who', 'listens'), $this->tokenizer->tokenize('hello world who listens'));
+		$this->assertEquals(['hello', 'world', 'who', 'listens'], $this->tokenizer->tokenize('hello world who listens'));
 	}
 
 	function testWithQuotedText()
 	{
-		$this->assertEquals(array('hello world', 'who listens'), $this->tokenizer->tokenize('"hello world" "who listens"'));
+		$this->assertEquals(['hello world', 'who listens'], $this->tokenizer->tokenize('"hello world" "who listens"'));
 	}
 
 	function testWithParenthesis()
 	{
 		$this->assertEquals(
-			array(
+			[
 				'hello world (who?)',
 				'(',
 				'who',
@@ -41,9 +41,8 @@ class Search_Expr_TokenizerTest extends PHPUnit_Framework_TestCase
 				'test',
 				'listens',
 				')'
-			),
+			],
 			$this->tokenizer->tokenize('"hello world (who?)" (who) (test listens)')
 		);
 	}
 }
-

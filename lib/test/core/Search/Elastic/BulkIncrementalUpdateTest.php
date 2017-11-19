@@ -37,4 +37,3 @@ class Search_Elastic_BulkIncrementalUpdateTest extends Search_Index_IncrementalU
 		}
 	}
 }
-

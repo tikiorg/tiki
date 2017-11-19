@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -17,26 +17,26 @@ class TestableTikiLib extends TikiLib
 	 * defined by TikiLib::lib()
 	 * @var array
 	 */
-	protected $originalObjects = array();
-	
+	protected $originalObjects = [];
+
 	/**
 	 * Override libs defined in TikiLib::lib().
 	 * For each entry in $libs, the key should
 	 * match the key used in TikiLib::lib() and the
 	 * value should be the mock object used as replacement.
-	 *  
+	 *
 	 * @param array $libs
-	 * @return 
+	 * @return
 	 */
 	public function overrideLibs(array $libs)
 	{
 		foreach ($libs as $key => $obj) {
 			$this->originalObjects[$key] = TikiLib::lib($key);
 		}
-		
+
 		self::$libraries = array_merge(self::$libraries, $libs);
 	}
-	
+
 	/**
 	 * Restore TikiLib::libraries to its original
 	 * state.

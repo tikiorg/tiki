@@ -25,16 +25,16 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 		$timeA = strtotime('2010-10-10 10:10:10');
 		$timeB = strtotime('2010-10-26 12:00:00');
 
-		$data = array(
-			'HomePage' => array('wiki_page_name' => 'HomePage', 'wiki_content' => 'Hello World', 'modification_date' => $timeA),
-			'Help' => array('wiki_page_name' => 'Help', 'wiki_content' => 'None available.', 'modification_date' => $timeB),
-		);
+		$data = [
+			'HomePage' => ['wiki_page_name' => 'HomePage', 'wiki_content' => 'Hello World', 'modification_date' => $timeA],
+			'Help' => ['wiki_page_name' => 'Help', 'wiki_content' => 'None available.', 'modification_date' => $timeB],
+		];
 
-		$typeMap = array(
+		$typeMap = [
 			'modification_date' => 'timestamp',
 			'wiki_content' => 'wikitext',
 			'wiki_page_name' => 'plaintext',
-		);
+		];
 
 		$index = new Search_Index_Memory;
 		$indexer = new Search_Indexer($index);
@@ -57,24 +57,24 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 		$timeA = strtotime('2010-10-10 10:10:10');
 		$timeB = strtotime('2010-10-26 12:00:00');
 
-		$typeMap = array(
+		$typeMap = [
 			'modification_date' => 'timestamp',
 			'wiki_content' => 'wikitext',
 			'wiki_page_name' => 'plaintext',
 			'forum_post_title' => 'plaintext',
 			'forum_post_body' => 'wikitext',
-		);
+		];
 
-		$data = array(
-			'HomePage' => array('wiki_page_name' => 'HomePage', 'wiki_content' => 'Hello World', 'modification_date' => $timeA),
-			'Help' => array('wiki_page_name' => 'Help', 'wiki_content' => 'None available.', 'modification_date' => $timeB),
-		);
+		$data = [
+			'HomePage' => ['wiki_page_name' => 'HomePage', 'wiki_content' => 'Hello World', 'modification_date' => $timeA],
+			'Help' => ['wiki_page_name' => 'Help', 'wiki_content' => 'None available.', 'modification_date' => $timeB],
+		];
 
 		$wikiSource = new Search_ContentSource_Static($data, $typeMap);
 
-		$data = array(
-			10 => array('forum_post_title' => 'Hello', 'forum_post_body' => 'Foobar.', 'modification_date' => $timeA),
-		);
+		$data = [
+			10 => ['forum_post_title' => 'Hello', 'forum_post_body' => 'Foobar.', 'modification_date' => $timeA],
+		];
 
 		$forumSource = new Search_ContentSource_Static($data, $typeMap);
 
@@ -90,21 +90,21 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 	function testGlobalCollection()
 	{
 		$contentSource = new Search_ContentSource_Static(
-			array(
-				'HomePage' => array(),
-				'OtherPage' => array(),
-				'Foobar' => array(),
-			),
-			array()
+			[
+				'HomePage' => [],
+				'OtherPage' => [],
+				'Foobar' => [],
+			],
+			[]
 		);
 
 		$globalSource = new Search_GlobalSource_Static(
-			array(
-				'wiki page:HomePage' => array('categories' => array(1, 2, 3)),
-				'wiki page:OtherPage' => array('categories' => array(0)),
-				'wiki page:Foobar' => array('categories' => array(2)),
-			),
-			array('categories' => 'multivalue')
+			[
+				'wiki page:HomePage' => ['categories' => [1, 2, 3]],
+				'wiki page:OtherPage' => ['categories' => [0]],
+				'wiki page:Foobar' => ['categories' => [2]],
+			],
+			['categories' => 'multivalue']
 		);
 
 		$index = new Search_Index_Memory;
@@ -116,27 +116,27 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 		$document = $index->getDocument(0);
 
 		$typeFactory = $index->getTypeFactory();
-		$this->assertEquals($typeFactory->multivalue(array(1, 2, 3)), $document['categories']);
+		$this->assertEquals($typeFactory->multivalue([1, 2, 3]), $document['categories']);
 	}
 
 	function testPartialUpdate()
 	{
 		$initialSource = new Search_ContentSource_Static(
-			array(
-				'HomePage' => array('data' => 'initial'),
-				'SomePage' => array('data' => 'initial'),
-				'Untouchable' => array('data' => 'initial'),
-			),
-			array('data' => 'sortable')
+			[
+				'HomePage' => ['data' => 'initial'],
+				'SomePage' => ['data' => 'initial'],
+				'Untouchable' => ['data' => 'initial'],
+			],
+			['data' => 'sortable']
 		);
 
 		$finalSource = new Search_ContentSource_Static(
-			array(
-				'SomePage' => array('data' => 'final'),
-				'OtherPage' => array('data' => 'final'),
-				'Untouchable' => array('data' => 'final'),
-			),
-			array('data' => 'sortable')
+			[
+				'SomePage' => ['data' => 'final'],
+				'OtherPage' => ['data' => 'final'],
+				'Untouchable' => ['data' => 'final'],
+			],
+			['data' => 'sortable']
 		);
 
 		$dir = dirname(__FILE__) . '/test_index';
@@ -150,11 +150,11 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 		$indexer = new Search_Indexer($index);
 		$indexer->addContentSource('wiki page', $finalSource);
 		$indexer->update(
-			array(
-				array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
-				array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
-				array('object_type' => 'wiki page', 'object_id' => 'OtherPage'),
-			)
+			[
+				['object_type' => 'wiki page', 'object_id' => 'HomePage'],
+				['object_type' => 'wiki page', 'object_id' => 'SomePage'],
+				['object_type' => 'wiki page', 'object_id' => 'OtherPage'],
+			]
 		);
 
 		$query = new Search_Query;
@@ -178,13 +178,13 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 	function testGlobalAssembly()
 	{
 		$contentSource = new Search_ContentSource_Static(
-			array('HomePage' => array('title' => 'Hello'),),
-			array('title' => 'plaintext')
+			['HomePage' => ['title' => 'Hello'],],
+			['title' => 'plaintext']
 		);
 
 		$globalSource = new Search_GlobalSource_Static(
-			array('wiki page:HomePage' => array('freetags_text' => 'foobar baz'),),
-			array('freetags_text' => 'plaintext')
+			['wiki page:HomePage' => ['freetags_text' => 'foobar baz'],],
+			['freetags_text' => 'plaintext']
 		);
 
 		$index = new Search_Index_Memory;
@@ -197,19 +197,19 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 
 		$typeFactory = $index->getTypeFactory();
 		$this->assertEquals($typeFactory->plaintext('foobar baz Hello '), $document['contents']);
-		$this->assertEquals(array('wiki page' => 1), $stats);
+		$this->assertEquals(['wiki page' => 1], $stats);
 	}
 
 	function testContentSourceWithMultipleResults()
 	{
 		$contentSource = new Search_ContentSource_Static(
-			array(
-				'HomePage' => array(
-					array('title' => 'Hello'),
-					array('title' => 'Hello (latest)'),
-				),
-			),
-			array('title' => 'plaintext')
+			[
+				'HomePage' => [
+					['title' => 'Hello'],
+					['title' => 'Hello (latest)'],
+				],
+			],
+			['title' => 'plaintext']
 		);
 
 		$index = new Search_Index_Memory;
@@ -221,14 +221,14 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 
 		$typeFactory = $index->getTypeFactory();
 		$this->assertEquals($typeFactory->plaintext('Hello (latest)'), $document['title']);
-		$this->assertEquals(array('wiki page' => 2), $stats);
+		$this->assertEquals(['wiki page' => 2], $stats);
 	}
 
 	function testTemporaryFields()
 	{
 		$contentSource = new Search_ContentSource_Static(
-			array('HomePage' => array('_title' => 'Hello'),),
-			array('_title' => 'plaintext')
+			['HomePage' => ['_title' => 'Hello'],],
+			['_title' => 'plaintext']
 		);
 
 		$index = new Search_Index_Memory;
@@ -242,4 +242,3 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 		$this->assertArrayNotHasKey('_title', $document);
 	}
 }
-

@@ -14,20 +14,20 @@ class Search_Formatter_DataSourceTest extends PHPUnit_Framework_TestCase
 	function setUp()
 	{
 		$this->wikiSource = new Search_ContentSource_Static(
-			array('Test' => array('description' => 'ABC'),),
-			array('description' => 'sortable')
+			['Test' => ['description' => 'ABC'],],
+			['description' => 'sortable']
 		);
 
 		$this->categorySource = new Search_GlobalSource_Static(
-			array('wiki page:Test' => array('categories' => array(1, 2, 3)),),
-			array('categories' => 'multivalue')
+			['wiki page:Test' => ['categories' => [1, 2, 3]],],
+			['categories' => 'multivalue']
 		);
 
 		$this->permissionSource = new Search_GlobalSource_Static(
-			array(
-				'wiki page:Test' => array('allowed_groups' => array('Editors', 'Admins')),
-			),
-			array('allowed_groups' => 'multivalue')
+			[
+				'wiki page:Test' => ['allowed_groups' => ['Editors', 'Admins']],
+			],
+			['allowed_groups' => 'multivalue']
 		);
 	}
 
@@ -63,4 +63,3 @@ class Search_Formatter_DataSourceTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals([], $source->getData(['object_type' => 'wiki page', 'object_id' => 'Test'], 'title'));
 	}
 }
-

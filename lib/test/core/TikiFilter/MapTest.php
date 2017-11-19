@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/** 
+/**
  * @group unit
- * 
+ *
  */
 
 class TikiFilter_MapTest extends TikiTestCase
@@ -43,7 +43,7 @@ class TikiFilter_MapTest extends TikiTestCase
 
 	function testComposed()
 	{
-		$filter = new JitFilter(array('foo' => 'test123'));
+		$filter = new JitFilter(['foo' => 'test123']);
 		$filter->replaceFilter('foo', 'digits');
 
 		$this->assertEquals('123', $filter['foo']);
@@ -51,7 +51,7 @@ class TikiFilter_MapTest extends TikiTestCase
 
 	function testDefault()
 	{
-		$filter = new JitFilter(array('foo' => 'test123'));
+		$filter = new JitFilter(['foo' => 'test123']);
 		$filter->setDefaultFilter('digits');
 
 		$this->assertEquals('123', $filter['foo']);

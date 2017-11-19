@@ -18,10 +18,10 @@ class Perms_Reflection_QuickTest extends TikiTestCase
 
 		$obtained = $quick->getPermissions(
 			new Perms_Reflection_PermissionSet,
-			array(
+			[
 				'Anonymous' => 'basic',
 				'Registered' => 'editor',
-			)
+			]
 		);
 		$this->assertEquals(new Perms_Reflection_PermissionSet, $obtained);
 	}
@@ -29,16 +29,16 @@ class Perms_Reflection_QuickTest extends TikiTestCase
 	function testSimpleConfigurations()
 	{
 		$quick = new Perms_Reflection_Quick;
-		$quick->configure('tester', array('view', 'edit', 'comment'));
-		$quick->configure('basic', array('view'));
+		$quick->configure('tester', ['view', 'edit', 'comment']);
+		$quick->configure('basic', ['view']);
 
 		$obtained = $quick->getPermissions(
 			new Perms_Reflection_PermissionSet,
-			array(
+			[
 				'Anonymous' => 'basic',
 				'Registered' => 'editor',
 				'Tester' => 'tester',
-			)
+			]
 		);
 
 		$expect = new Perms_Reflection_PermissionSet;
@@ -53,17 +53,17 @@ class Perms_Reflection_QuickTest extends TikiTestCase
 	function testInheritance()
 	{
 		$quick = new Perms_Reflection_Quick;
-		$quick->configure('basic', array('view'));
-		$quick->configure('registered', array('edit'));
-		$quick->configure('editors', array('remove'));
+		$quick->configure('basic', ['view']);
+		$quick->configure('registered', ['edit']);
+		$quick->configure('editors', ['remove']);
 
 		$obtained = $quick->getPermissions(
 			new Perms_Reflection_PermissionSet,
-			array(
+			[
 				'Anonymous' => 'basic',
 				'Registered' => 'registered',
 				'Editor' => 'editors',
-			)
+			]
 		);
 
 		$expect = new Perms_Reflection_PermissionSet;
@@ -85,7 +85,7 @@ class Perms_Reflection_QuickTest extends TikiTestCase
 
 		$obtained = $quick->getPermissions(
 			$current,
-			array('Anonymous' => 'none',)
+			['Anonymous' => 'none',]
 		);
 
 		$expect = new Perms_Reflection_PermissionSet;
@@ -101,7 +101,7 @@ class Perms_Reflection_QuickTest extends TikiTestCase
 
 		$obtained = $quick->getPermissions(
 			$current,
-			array('Anonymous' => 'userdefined',)
+			['Anonymous' => 'userdefined',]
 		);
 
 		$expect = new Perms_Reflection_PermissionSet;
@@ -117,12 +117,12 @@ class Perms_Reflection_QuickTest extends TikiTestCase
 		$permissions = new Perms_Reflection_PermissionSet;
 		$permissions->add('Registered', 'view');
 
-		$expect = array(
+		$expect = [
 			'Anonymous' => 'none',
 			'Registered' => 'userdefined',
-		);
+		];
 
-		$obtained = $quick->getAppliedPermissions($permissions, array('Anonymous', 'Registered'));
+		$obtained = $quick->getAppliedPermissions($permissions, ['Anonymous', 'Registered']);
 
 		$this->assertEquals($expect, $obtained);
 	}
@@ -130,14 +130,14 @@ class Perms_Reflection_QuickTest extends TikiTestCase
 	function testMatch()
 	{
 		$quick = new Perms_Reflection_Quick;
-		$quick->configure('basic', array('view'));
+		$quick->configure('basic', ['view']);
 
 		$permissions = new Perms_Reflection_PermissionSet;
 		$permissions->add('Registered', 'view');
 
-		$expect = array('Registered' => 'basic');
+		$expect = ['Registered' => 'basic'];
 
-		$obtained = $quick->getAppliedPermissions($permissions, array('Registered'));
+		$obtained = $quick->getAppliedPermissions($permissions, ['Registered']);
 
 		$this->assertEquals($expect, $obtained);
 	}
@@ -145,15 +145,15 @@ class Perms_Reflection_QuickTest extends TikiTestCase
 	function testNoMatchOnExtra()
 	{
 		$quick = new Perms_Reflection_Quick;
-		$quick->configure('basic', array('view'));
+		$quick->configure('basic', ['view']);
 
 		$permissions = new Perms_Reflection_PermissionSet;
 		$permissions->add('Registered', 'view');
 		$permissions->add('Registered', 'edit');
 
-		$expect = array('Registered' => 'userdefined');
+		$expect = ['Registered' => 'userdefined'];
 
-		$obtained = $quick->getAppliedPermissions($permissions, array('Registered'));
+		$obtained = $quick->getAppliedPermissions($permissions, ['Registered']);
 
 		$this->assertEquals($expect, $obtained);
 	}
@@ -161,14 +161,14 @@ class Perms_Reflection_QuickTest extends TikiTestCase
 	function testNoMatchOnMissing()
 	{
 		$quick = new Perms_Reflection_Quick;
-		$quick->configure('basic', array('view', 'edit'));
+		$quick->configure('basic', ['view', 'edit']);
 
 		$permissions = new Perms_Reflection_PermissionSet;
 		$permissions->add('Registered', 'view');
 
-		$expect = array('Registered' => 'userdefined');
+		$expect = ['Registered' => 'userdefined'];
 
-		$obtained = $quick->getAppliedPermissions($permissions, array('Registered'));
+		$obtained = $quick->getAppliedPermissions($permissions, ['Registered']);
 
 		$this->assertEquals($expect, $obtained);
 	}
@@ -176,16 +176,16 @@ class Perms_Reflection_QuickTest extends TikiTestCase
 	function testInheritenceAppiesInMatching()
 	{
 		$quick = new Perms_Reflection_Quick;
-		$quick->configure('basic', array('view'));
-		$quick->configure('registered', array('edit'));
+		$quick->configure('basic', ['view']);
+		$quick->configure('registered', ['edit']);
 
 		$permissions = new Perms_Reflection_PermissionSet;
 		$permissions->add('Registered', 'view');
 		$permissions->add('Registered', 'edit');
 
-		$expect = array('Registered' => 'registered');
+		$expect = ['Registered' => 'registered'];
 
-		$obtained = $quick->getAppliedPermissions($permissions, array('Registered'));
+		$obtained = $quick->getAppliedPermissions($permissions, ['Registered']);
 
 		$this->assertEquals($expect, $obtained);
 	}
@@ -193,7 +193,7 @@ class Perms_Reflection_QuickTest extends TikiTestCase
 	function testRegisterNoneIsIgnored()
 	{
 		$quick = new Perms_Reflection_Quick;
-		$quick->configure('none', array('view'));
+		$quick->configure('none', ['view']);
 
 		$expect = new Perms_Reflection_Quick;
 		$this->assertEquals($expect, $quick);
@@ -202,7 +202,7 @@ class Perms_Reflection_QuickTest extends TikiTestCase
 	function testRegisterUserDefinedIsIgnored()
 	{
 		$quick = new Perms_Reflection_Quick;
-		$quick->configure('userdefined', array('view'));
+		$quick->configure('userdefined', ['view']);
 
 		$expect = new Perms_Reflection_Quick;
 		$this->assertEquals($expect, $quick);

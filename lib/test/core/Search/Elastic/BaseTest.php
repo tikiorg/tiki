@@ -44,4 +44,3 @@ class Search_Elastic_BaseTest extends Search_Index_BaseTest
 		$this->assertNotContains('<body>', $output);
 	}
 }
-
