@@ -17,7 +17,7 @@ class cssLib extends TikiLib
 	{
 		global $prefs;
 
-		if (empty($theme) && empty($theme_option)){ // if you submit no parameters, return the current theme/theme option
+		if (empty($theme) && empty($theme_option)) { // if you submit no parameters, return the current theme/theme option
 			if (isset($prefs['site_theme'])) {
 				$theme = $prefs['site_theme'];
 			}
@@ -28,12 +28,12 @@ class cssLib extends TikiLib
 
 		$themelib = TikiLib::lib('theme');
 
-		$available_layouts = array();
+		$available_layouts = [];
 		foreach (scandir(TIKI_PATH . '/templates/layouts/') as $layoutName) {
 			if ($layoutName[0] != '.' && $layoutName != 'index.php') {
 				$available_layouts[$layoutName] = ucfirst($layoutName);
-			}   
-		}   
+			}
+		}
 		foreach (TikiAddons::getPaths() as $path) {
 			if (file_exists($path . '/templates/layouts/')) {
 				foreach (scandir($path . '/templates/layouts/') as $layoutName) {
@@ -42,12 +42,12 @@ class cssLib extends TikiLib
 					}
 				}
 			}
-                }
+		}
 
 		$main_theme_path = $themelib->get_theme_path($theme, '', '', 'templates'); // path to the main site theme
 
-		if (file_exists(TIKI_PATH ."/". $main_theme_path . '/layouts/') ){
-			foreach (scandir(TIKI_PATH ."/". $main_theme_path . '/layouts/') as $layoutName) {
+		if (file_exists(TIKI_PATH . "/" . $main_theme_path . '/layouts/')) {
+			foreach (scandir(TIKI_PATH . "/" . $main_theme_path . '/layouts/') as $layoutName) {
 				if ($layoutName[0] != '.' && $layoutName != 'index.php') {
 					$available_layouts[$layoutName] = ucfirst($layoutName);
 				}
@@ -57,7 +57,7 @@ class cssLib extends TikiLib
 		if ($theme_option) {
 			$theme_path = $themelib->get_theme_path($theme, $theme_option, '', 'templates'); // path to the site theme options
 
-			if (file_exists(TIKI_PATH ."/". $theme_path . '/layouts/') ) {
+			if (file_exists(TIKI_PATH . "/" . $theme_path . '/layouts/')) {
 				foreach (scandir(TIKI_PATH . "/" . $theme_path . '/layouts/') as $layoutName) {
 					if ($layoutName[0] != '.' && $layoutName != 'index.php') {
 						$available_layouts[$layoutName] = ucfirst($layoutName);
@@ -72,7 +72,7 @@ class cssLib extends TikiLib
 	{
 		global $prefs;
 
-		if (empty($theme) && empty($theme_option)){ // if you submit no parameters, return the current theme/theme option
+		if (empty($theme) && empty($theme_option)) { // if you submit no parameters, return the current theme/theme option
 			if (isset($prefs['site_theme'])) {
 				$theme = $prefs['site_theme'];
 			}
@@ -81,8 +81,8 @@ class cssLib extends TikiLib
 			}
 		}
 
-		$selectable_layouts = array();
-		$available_layouts = $this->list_layouts($theme,$theme_option);
+		$selectable_layouts = [];
+		$available_layouts = $this->list_layouts($theme, $theme_option);
 
 		foreach ($available_layouts as $layoutName => $layoutLabel) {
 			if ($layoutName == 'mobile'
@@ -103,16 +103,16 @@ class cssLib extends TikiLib
 				$selectable_layouts[$layoutName] = tra('Fixed top navbar 1 (uses "top" module zone)');
 			} else {
 				$selectable_layouts[$layoutName] = $layoutLabel;
-			} 
+			}
 		}
 
-		return $selectable_layouts;		
+		return $selectable_layouts;
 	}
 
 	function list_css($path, $recursive = false)
 	{
 		$files = $this->list_files($path, '.css', $recursive);
-		foreach ($files as $i=>$file) {
+		foreach ($files as $i => $file) {
 			$files[$i] = preg_replace("|^$path/(.*)\.css$|", '$1', $file);
 		}
 		return $files;
@@ -120,19 +120,19 @@ class cssLib extends TikiLib
 
 	function list_files($path, $extension, $recursive)
 	{
-		$back = array();
+		$back = [];
 
 		$handle = opendir($path);
 
 		while ($file = readdir($handle)) {
 			if ((substr($file, -4, 4) == $extension) and (preg_match('/^[-_a-zA-Z0-9\.]*$/', $file))) {
 				$back[] = "$path/$file";
-			} elseif ($recursive 
-								&& $file != '.svn' 
-								&& $file != '.' 
-								&& $file != '..' 
-								&& is_dir("$path/$file") 
-								&& !file_exists("db/$file/local.php")
+			} elseif ($recursive
+								&& $file != '.svn'
+								&& $file != '.'
+								&& $file != '..'
+								&& is_dir("$path/$file")
+								&& ! file_exists("db/$file/local.php")
 			) {
 				$back = array_merge($back, $this->list_files("$path/$file", $extension, $recursive));
 			}
@@ -144,8 +144,8 @@ class cssLib extends TikiLib
 
 	function browse_css($path)
 	{
-		if (!is_file($path)) {
-			return array('error' => "No such file : $path");
+		if (! is_file($path)) {
+			return ['error' => "No such file : $path"];
 		}
 
 		$meat = implode('', file($path));
@@ -172,15 +172,15 @@ class cssLib extends TikiLib
 		$repl[6] = '#000000';
 
 		$res = preg_replace($find, $repl, $meat);
-		return array(
+		return [
 			'error' => '',
 			'content' => explode("\n", $res)
-		);
+		];
 	}
 
 	function parse_css($data)
 	{
-		$back = array();
+		$back = [];
 
 		$index = 0;
 		$type = '';
@@ -194,8 +194,8 @@ class cssLib extends TikiLib
 
 					$index++;
 					$back["$index"]['comment'] = '';
-					$back["$index"]['items'] = array();
-					$back["$index"]['attributes'] = array();
+					$back["$index"]['items'] = [];
+					$back["$index"]['attributes'] = [];
 				} elseif (($type == 'comment') and ($line == '*/')) {
 					$type = '';
 				} elseif ($type == 'comment') {
@@ -208,16 +208,17 @@ class cssLib extends TikiLib
 					foreach ($li as $l) {
 						$l = trim($l);
 
-						if ($l)
+						if ($l) {
 							$back["$index"]['items'][] = $l;
+						}
 					}
 				} elseif (($type == 'attributes') and ($line == '}')) {
 					$type = '';
 
 					$index++;
 					$back["$index"]['comment'] = '';
-					$back["$index"]['items'] = array();
-					$back["$index"]['attributes'] = array();
+					$back["$index"]['items'] = [];
+					$back["$index"]['attributes'] = [];
 				} elseif ($type == 'attributes') {
 					$parts = explode(':', str_replace(';', '', $line));
 
@@ -232,8 +233,9 @@ class cssLib extends TikiLib
 					foreach ($li as $l) {
 						$l = trim($l);
 
-						if ($l)
+						if ($l) {
 							$back["$index"]['items'][] = $l;
+						}
 					}
 
 					$type = 'items';
@@ -254,13 +256,14 @@ class cssLib extends TikiLib
 	 */
 	function version_css($path)
 	{
-		if (!file_exists($path))
+		if (! file_exists($path)) {
 			return false;
+		}
 
 		$data = implode('', file($path));
 		$pos = strpos($data, '@version');
 
-		if ( $pos === false ) {
+		if ($pos === false) {
 			return false;
 		}
 		// get version
