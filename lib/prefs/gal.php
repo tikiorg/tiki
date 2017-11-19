@@ -113,7 +113,7 @@ function prefs_gal_list()
 			'type' => 'list',
 			'options' => [
 				'gd' => tra('GD'),
-				'imagick' => tra('Imagick'). ' 0',
+				'imagick' => tra('Imagick') . ' 0',
 			],
 			'default' => 'imagick',
 			'hint' => $gdlib . '  ' . $imagicklib

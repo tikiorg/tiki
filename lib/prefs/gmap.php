@@ -1,14 +1,14 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 function prefs_gmap_list()
 {
-	return array(
-		'gmap_key' => array(
+	return [
+		'gmap_key' => [
 			'name' => tra('Google Maps API Key'),
 			'description' => tra('Needed for Street View or other advanced features'),
 			'type' => 'text',
@@ -16,28 +16,28 @@ function prefs_gmap_list()
 			'help' => 'http://code.google.com/apis/maps/signup.html',
 			'filter' => 'striptags',
 			'default' => '',
-		),
-		'gmap_defaultx' => array(
+		],
+		'gmap_defaultx' => [
 			'name' => tra('Default x for map center'),
 			'description' => tra(''),
 			'type' => 'text',
 			'size' => 20,
 			'filter' => 'striptags',
 			'default' => '0',
-		),
-		'gmap_defaulty' => array(
+		],
+		'gmap_defaulty' => [
 			'name' => tra('Default y for map center'),
 			'description' => tra(''),
 			'type' => 'text',
 			'size' => 20,
 			'filter' => 'striptags',
 			'default' => '0',
-		),
-		'gmap_defaultz' => array(
+		],
+		'gmap_defaultz' => [
 			'name' => tra('Default zoom level'),
 			'description' => tra(''),
 			'type' => 'list',
-			'options' => array(
+			'options' => [
 				1 => tra('whole earth'),
 				2 => 2,
 				3 => 3,
@@ -53,29 +53,29 @@ function prefs_gmap_list()
 				13 => 13,
 				14 => 14,
 				15 => 15,
-				16 => 16, 
+				16 => 16,
 				17 => 17,
 				18 => tra('max zoom'),
-			),
+			],
 			'default' => '1',
-		),
-		'gmap_article_list' => array(
+		],
+		'gmap_article_list' => [
 			'name' => tra('Show map mode buttons in articles list'),
 			'description' => tra(''),
 			'type' => 'flag',
-			'dependencies' => array(
+			'dependencies' => [
 				'geo_locate_article',
-			),
+			],
 			'default' => 'n',
-		),
-		'gmap_page_list' => array(
+		],
+		'gmap_page_list' => [
 			'name' => tra('Show map mode buttons in page list'),
 			'description' => tra(''),
 			'type' => 'flag',
-			'dependencies' => array(
+			'dependencies' => [
 				'geo_locate_wiki',
-			),
+			],
 			'default' => 'n',
-		),
-	);	
+		],
+	];
 }

@@ -7,21 +7,21 @@
 
 function prefs_workspace_list()
 {
-	return array(
-		'workspace_ui' => array(
+	return [
+		'workspace_ui' => [
 			'name' => tr('Workspace UI'),
 			'description' => tr('Combines multiple site features to create a workspace experience for workgroups.'),
 			'type' => 'flag',
 			'default' => 'n',
 			'perspective' => false,
-			'dependencies' => array(
+			'dependencies' => [
 				'feature_wiki',
 				'namespace_enabled',
 				'feature_perspective',
 				'feature_categories',
-			),
-		),
-		'workspace_root_category' => array(
+			],
+		],
+		'workspace_root_category' => [
 			'name' => tr('Workspace root category'),
 			'description' => tr('ID of the root category containing all workspaces.'),
 			'type' => 'text',
@@ -30,7 +30,6 @@ function prefs_workspace_list()
 			'perspective' => false,
 			'warning' => tr('This value is automatically managed and should not need to be modified manually.'),
 			'profile_reference' => 'category',
-		),
-	);
+		],
+	];
 }
-

@@ -7,28 +7,28 @@
 
 function prefs_monitor_list()
 {
-	return array(
-		'monitor_enabled' => array(
+	return [
+		'monitor_enabled' => [
 			'name' => tra('Notifications'),
 			'description' => tra('Allows users to control the notifications they receive based on content changes.'),
 			'type' => 'flag',
 			'default' => 'n',
 			'help' => 'Notifications',
-		),
-		'monitor_digest' => array(
+		],
+		'monitor_digest' => [
 			'name' => tra('Notification digests'),
 			'description' => tra('Enable digest notifications (requires a cron job)'),
 			'type' => 'flag',
 			'default' => 'n',
 			'help' => 'Notifications#Digests',
-		),
-		'monitor_individual_clear' => array(
+		],
+		'monitor_individual_clear' => [
 			'name' => tra('Clear individual notifications'),
 			'description' => tra('Allow users to selectively clear notifications instead of simply having a clear-all button.'),
 			'type' => 'flag',
 			'default' => 'n',
-		),
-		'monitor_count_refresh_interval' => array(
+		],
+		'monitor_count_refresh_interval' => [
 			'name' => tra('Notification count refresh interval'),
 			'description' => tr('Show unread notification count and refresh every [x] seconds.'),
 			'type' => 'text',
@@ -37,8 +37,8 @@ function prefs_monitor_list()
 			'units' => tra('seconds'),
 			'size' => 5,
 			'hint' => tr('0 to disable, every refresh causes a hit on the server, try to leave this above 60 seconds.'),
-		),
-		'monitor_reply_email_pattern' => array(
+		],
+		'monitor_reply_email_pattern' => [
 			'name' => tr('Notification reply-to email pattern'),
 			'description' => tra('Email model to use for the notification email reply-to address.'),
 			'type' => 'text',
@@ -46,7 +46,6 @@ function prefs_monitor_list()
 			'default' => '',
 			'hint' => tr('noreply+PLACEHOLDER@example.com'),
 			'dependencies' => ['feature_mailin'],
-		),
-	);
+		],
+	];
 }
-

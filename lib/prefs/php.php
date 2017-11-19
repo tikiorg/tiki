@@ -14,8 +14,8 @@
 
 function prefs_php_list()
 {
-	return array(
-		'php_libxml' => array(
+	return [
+		'php_libxml' => [
 			'name' => tra('PHP libxml extension'),
 			'description' => tra(
 				'This extension requires the libxml PHP extension.
@@ -23,9 +23,9 @@ function prefs_php_list()
 				implicitly accomplished because libxml is enabled by default.'
 			),
 			'type' => 'flag',
-			'default' => class_exists('DOMDocument') ? 'y' :'n',
-		),
-		'php_datetime' => array(
+			'default' => class_exists('DOMDocument') ? 'y' : 'n',
+		],
+		'php_datetime' => [
 			'name' => tra('PHP DateTime'),
 			'description' => tra(
 				'DateTime class (and related functions) are enabled
@@ -34,7 +34,7 @@ function prefs_php_list()
 				CFLAGS=-DEXPERIMENTAL_DATE_SUPPORT=1'
 			),
 			'type' => 'flag',
-			'default' => class_exists('DateTime') ? 'y' :'n',
-		),
-	);
+			'default' => class_exists('DateTime') ? 'y' : 'n',
+		],
+	];
 }

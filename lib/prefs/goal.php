@@ -7,16 +7,16 @@
 
 function prefs_goal_list($partial = false)
 {
-	return array(
-		'goal_enabled' => array(
+	return [
+		'goal_enabled' => [
 			'name' => tr('Goal, recognition and rewards'),
 			'description' => tr('A tool to set motivational goals to increase engagement on the site.'),
 			'type' => 'flag',
 			'default' => 'n',
 			'admin' => $partial ?: TikiLib::lib('service')->getUrl(['controller' => 'goal', 'action' => 'admin']),
 			'help' => 'Goals',
-		),
-		'goal_badge_tracker' => array(
+		],
+		'goal_badge_tracker' => [
 			'name' => tr('Reward badge tracker'),
 			'description' => tr('Tracker ID containing the list of badges to be awarded on goal completion. Each badge can be awarded only once per user.'),
 			'type' => 'text',
@@ -25,8 +25,8 @@ function prefs_goal_list($partial = false)
 			'hint' => tr('0 to disable'),
 			'profile_reference' => 'tracker',
 			'dependencies' => ['feature_trackers'],
-		),
-		'goal_group_blacklist' => array(
+		],
+		'goal_group_blacklist' => [
 			'name' => tr('Groups not eligible for goals'),
 			'description' => tr('Groups that will not be on the eligible group list.'),
 			'type' => 'text',
@@ -34,7 +34,6 @@ function prefs_goal_list($partial = false)
 			'filter' => 'groupname',
 			'profile_reference' => 'group',
 			'default' => ['Admins', 'Anonymous'],
-		),
-	);
+		],
+	];
 }
-

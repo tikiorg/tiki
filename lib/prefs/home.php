@@ -8,41 +8,41 @@
 function prefs_home_list($partial = false)
 {
 
-	return array(
-		'home_blog' => array(
+	return [
+		'home_blog' => [
 			'name' => tra('Home blog (main blog)'),
 			'type' => 'list',
-			'options' => $partial ? array() : listblog_pref(),
+			'options' => $partial ? [] : listblog_pref(),
 			'default' => 0,
 			'profile_reference' => 'blog',
-		),
-		'home_forum' => array(
+		],
+		'home_forum' => [
 			'name' => tra('Home forum (main forum)'),
 			'type' => 'text',
 			'default' => 0,
 			'profile_reference' => 'forum',
-		),
-		'home_file_gallery' => array(
+		],
+		'home_file_gallery' => [
 			'name' => tra('Home file gallery (main file gallery)'),
 			'description' => tra('Select the default file gallery'),
 			'type' => 'list',
-			'options' => $partial ? array() : listfgal_pref(),
+			'options' => $partial ? [] : listfgal_pref(),
 			'default' => 1,
 			'profile_reference' => 'file_gallery',
-		),
-		'home_gallery' => array(
+		],
+		'home_gallery' => [
 			'name' => tra('Home gallery (main gallery)'),
 			'type' => 'list',
-			'options' => $partial ? array() : listimgal_pref(),
+			'options' => $partial ? [] : listimgal_pref(),
 			'default' => 0,
 			'profile_reference' => 'image_gallery',
-		),
-	);
+		],
+	];
 }
 
 /**
- * listimgal_pref: retrieve the list of image galleries for the home_gallery preference 
- * 
+ * listimgal_pref: retrieve the list of image galleries for the home_gallery preference
+ *
  * @access public
  * @return array: galleryId => name (truncated)
  */
@@ -52,7 +52,7 @@ function listimgal_pref()
 
 	$allimgals = $imagegallib->list_visible_galleries(0, -1, 'name_desc', 'admin', '');
 
-	$listimgals = array();
+	$listimgals = [];
 
 	if ($allimgals['cant'] > 0) {
 		foreach ($allimgals['data'] as $oneimgal) {
@@ -67,7 +67,7 @@ function listimgal_pref()
 
 /**
  * listfgal_pref: retrieve the list of file galleries for the home_file_gallery preference
- * 
+ *
  * @access public
  * @return array: galleryId => name(truncated)
  */
@@ -80,7 +80,7 @@ function listfgal_pref()
 	array_unshift($allfgals['data'], $filegallib->get_file_gallery($prefs['fgal_root_id']));
 	$allfgals['data'][0]['id'] = $allfgals['data'][0]['galleryId'];	// sometimes galleries have a galleryId, sometimes it's in id :(
 
-	$listfgals = array();
+	$listfgals = [];
 
 	if ($allfgals['cant'] > 0) {
 		foreach ($allfgals['data'] as $onefgal) {
@@ -104,7 +104,7 @@ function listblog_pref()
 	$bloglib = TikiLib::lib('blog');
 
 	$allblogs = $bloglib->list_blogs(0, -1, 'created_desc', '');
-	$listblogs = array('' => 'None');
+	$listblogs = ['' => 'None'];
 
 	if ($allblogs['cant'] > 0) {
 		foreach ($allblogs['data'] as $blog) {

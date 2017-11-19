@@ -7,18 +7,18 @@
 
 function prefs_lock_list()
 {
-	return array (
-		'lock_content_templates' => array(
+	return  [
+		'lock_content_templates' => [
 			'name' => tra('Lock Content Templates'),
 			'description' => tra('Enable users to lock content templates and so prevent others from editing them'),
 			'type' => 'flag',
 			'default' => 'n',
-		),
-		'lock_wiki_structures' => array(
+		],
+		'lock_wiki_structures' => [
 			'name' => tra('Lock Wiki Structures'),
 			'description' => tra('Enable users to lock wiki structures and so prevent others from editing them'),
 			'type' => 'flag',
 			'default' => 'n',
-		),
-	);
+		],
+	];
 }

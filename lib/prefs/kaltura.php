@@ -8,7 +8,7 @@
 function prefs_kaltura_list()
 {
 	global $prefs;
-	$players = array();
+	$players = [];
 
 	if (isset($prefs['feature_kaltura']) && $prefs['feature_kaltura'] === 'y') {
 		$kalturaadminlib = TikiLib::lib('kalturaadmin');
@@ -18,73 +18,73 @@ function prefs_kaltura_list()
 		}
 	}
 
-	return array(
-		'kaltura_partnerId' => array(
+	return [
+		'kaltura_partnerId' => [
 			'name' => tra('Partner ID'),
 			'description' => tra('Kaltura Partner ID'),
 			'type' => 'text',
 			'filter' => 'digits',
 			'size' => 10,
 			'default' => '',
-			'tags' => array('basic'),
-		),
-		'kaltura_secret' => array(
+			'tags' => ['basic'],
+		],
+		'kaltura_secret' => [
 			'name' => tra('User secret'),
 			'description' => tra('Kaltura partner-setting user secret.'),
 			'type' => 'text',
 			'size' => 45,
 			'filter' => 'alnum',
 			'default' => '',
-			'tags' => array('basic'),
-		),
-		'kaltura_adminSecret' => array(
+			'tags' => ['basic'],
+		],
+		'kaltura_adminSecret' => [
 			'name' => tra('Admin secret'),
 			'description' => tra('Kaltura partner-setting admin secret.'),
 			'type' => 'text',
 			'size' => 45,
 			'filter' => 'alnum',
 			'default' => '',
-			'tags' => array('basic'),
-		),
-		'kaltura_kdpUIConf' => array(
+			'tags' => ['basic'],
+		],
+		'kaltura_kdpUIConf' => [
 			'name' => tra('Kaltura video player ID'),
 			'description' => tra('Kaltura Dynamic Player (KDP) user interface configuration ID'),
 			'type' => empty($players) ? 'text' : 'list',
 			'options' => $players,
 			'size' => 20,
 			'default' => '',
-			'tags' => array('basic'),
-		),
-		'kaltura_kdpEditUIConf' => array(
+			'tags' => ['basic'],
+		],
+		'kaltura_kdpEditUIConf' => [
 			'name' => tra('Kaltura video player ID (in entry edit mode)'),
 			'description' => tra('Kaltura Dynamic Player (KDP) user interface configuration ID for use when editing. You can use a player which also has an option to select a frame as video thumbnail'),
 			'type' => empty($players) ? 'text' : 'list',
 			'options' => $players,
 			'size' => 20,
 			'default' => '',
-			'tags' => array('basic'),
-		),
-		'kaltura_kcwUIConf' => array(
+			'tags' => ['basic'],
+		],
+		'kaltura_kcwUIConf' => [
 			'name' => tra('KCW UI configuration ID'),
 			'description' => tra('Kaltura Configuration Wizard (KCW) user interface configuration ID'),
 			'type' => 'text',
 			'size' => 20,
 			'default' => '',
-		),
-		'kaltura_kServiceUrl' => array(
+		],
+		'kaltura_kServiceUrl' => [
 			'name' => tra('Kaltura service URL'),
 			'description' => tra('for example, https://www.kaltura.com/'),
 			'type' => 'text',
 			'size' => 40,
 			'default' => 'https://www.kaltura.com/',
-			'tags' => array('basic'),
-		),
-		'kaltura_legacyremix' => array(
+			'tags' => ['basic'],
+		],
+		'kaltura_legacyremix' => [
 			'name' => tra('Show remixes from old versions of Kaltura'),
 			'description' => tra('Show remixes from old versions of Kaltura (remixing is no longer supported)'),
 			'type' => 'flag',
 			'default' => 'n',
 			'view' => 'tiki-list_kaltura_entries.php?list=mix',
-		),
-	);
+		],
+	];
 }

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -14,7 +14,7 @@ function prefs_fgal_list()
 		'page' => tra('Page')
 	];
 	global $prefs;
-	if (!empty($prefs['fgal_elfinder_feature']) && $prefs['fgal_elfinder_feature'] === 'y') {
+	if (! empty($prefs['fgal_elfinder_feature']) && $prefs['fgal_elfinder_feature'] === 'y') {
 		$defaultViews = $defaultViews + ['finder' => tra('Finder view')];
 	}
 	//set show options for list prefs
@@ -25,61 +25,61 @@ function prefs_fgal_list()
 		'a' => tra('Both'),
 	];
 
-	return array(
-		'fgal_podcast_dir' => array(
+	return [
+		'fgal_podcast_dir' => [
 			'name' => tra('Podcast directory'),
 			'description' => tra('File system directory for storing podcast files'),
 			'type' => 'text',
 			'help' => 'File+Gallery+Config',
 			'size' => 50,
-			'hint' => tra('The server must be able to read/write the directory.').' '.tra('Required for podcasts.'),
+			'hint' => tra('The server must be able to read/write the directory.') . ' ' . tra('Required for podcasts.'),
 			'perspective' => false,
 			'default' => 'files/',
-		),
-		'fgal_batch_dir' => array(
+		],
+		'fgal_batch_dir' => [
 			'name' => tra('Path'),
 			'type' => 'text',
 			'help' => 'File+Gallery+config',
 			'size' => 50,
-			'hint' => tra('To enable and use directory batch loading, set up a web-readable directory (preferably outside the web space). Then upload files to that directory, such as with SCP, FTP, etc').' '.tra('The server must be able to read the directory.').' '. tra('The directory can be outside the web space.'),
+			'hint' => tra('To enable and use directory batch loading, set up a web-readable directory (preferably outside the web space). Then upload files to that directory, such as with SCP, FTP, etc') . ' ' . tra('The server must be able to read the directory.') . ' ' . tra('The directory can be outside the web space.'),
 			'perspective' => false,
 			'default' => '',
-		),
-		'fgal_prevent_negative_score' => array(
+		],
+		'fgal_prevent_negative_score' => [
 			'name' => tra('Prevent download if score becomes negative'),
 			'description' => tra('If using Tiki Score system, users with a negative score cannot download files.'),
 			'type' => 'flag',
 			'help' => 'File+Gallery+config',
 			'default' => 'n',
-			'dependencies' => array('feature_score'),
-		),
-		'fgal_limit_hits_per_file' => array(
+			'dependencies' => ['feature_score'],
+		],
+		'fgal_limit_hits_per_file' => [
 			'name' => tra('Allow download limit per file'),
 			'type' => 'flag',
 			'help' => 'File+Gallery+config',
 			'default' => 'n',
-		),
-		'fgal_allow_duplicates' => array(
+		],
+		'fgal_allow_duplicates' => [
 			'name' => tra('Allow file duplicates'),
 			'description' => tra('Allow the same file to be uploaded more than once.'),
 			'type' => 'list',
 			'help' => 'File+Gallery+config',
 			'perspective' => false,
-			'options' => array(
+			'options' => [
 							  'n' => tra('Never'),
 							  'y' => tra('Yes, even in the same gallery'),
 							  'different_galleries' => tra('Only in different galleries')
-			),
+			],
 			'default' => 'y',
-		),
-		'fgal_display_zip_option' => array(
+		],
+		'fgal_display_zip_option' => [
 			'name' => tra('Display ZIP option in gallery'),
 			'description' => tra('Users can upload a ZIP (archive file). Tiki will automatically un-ZIP the archive and add each file to the gallery.'),
 			'type' => 'flag',
 			'help' => 'File+Gallery+config',
 			'default' => 'n',
-		),
-		'fgal_match_regex' => array(
+		],
+		'fgal_match_regex' => [
 			'name' => tra('Must match'),
 
 			'description' => tra('A regular expression that must be matched to accept the file example A-Za-z* (filename can only have a-z letters) 
@@ -87,15 +87,15 @@ For example, if you want to require that uploads must have a wordprocessing file
 			'type' => 'text',
 			'size' => 50,
 			'default' => '',
-		),
-		'fgal_nmatch_regex' => array(
+		],
+		'fgal_nmatch_regex' => [
 			'name' => tra('Cannot match'),
 			'description' => tra('A regular expression that if matched rejects the file, example .gif (rejects gif images note that the period must be escaped since we are using regular expressions) If you don’t know anything about regular expressions just leave the fields blank and all the files will be accepted.'),
 			'type' => 'text',
 			'size' => 50,
 			'default' => '',
-		),
-		'fgal_quota' => array (
+		],
+		'fgal_quota' => [
 			'name' => tra('Quota for all files and archives'),
 			'description' => tra('It is possible to limit the volume that is uploaded to all the file galleries or a specific file gallery. A quota to a file gallery applies to this file gallery and all the file galleries under it. 
 As soon as the limit is reached not other files can be uploaded. The user will see an error message that the quota is reached. A mail can be sent via the Mail notifications feature. )'),
@@ -104,141 +104,141 @@ As soon as the limit is reached not other files can be uploaded. The user will s
 			'units' => tra('megabytes'),
 			'size' => 7,
 			'default' => 0,
-		),
-		'fgal_quota_per_fgal' => array (
+		],
+		'fgal_quota_per_fgal' => [
 			'name' => tra('Quota for each file gallery'),
 			'description' => tra('You can define a different quota for each file gallery.)'),
 			'type' => 'flag',
 			'default' => 'n',
-		),
-		'fgal_quota_default' => array (
+		],
+		'fgal_quota_default' => [
 			'name' => tra('Default quota for each new gallery'),
 			'shorthint' => tra('0 for unlimited'),
 			'type' => 'text',
 			'units' => tra('megabytes'),
 			'size' => 7,
 			'default' => 0,
-		),
-		'fgal_quota_show' => array (
+		],
+		'fgal_quota_show' => [
 			'name' => tra('Show quota bar in the list page'),
 			'type' => 'list',
-			'options' => array(
+			'options' => [
 				'n' 			=> tra('Never'),
 				'bar_and_text' 	=> tra('Yes, display bar and detail text'),
 				'y' 			=> tra('Yes, display only bar'),
 				'text_only'		=> tra('Yes, display only text')
-			),
+			],
 			'default' => 'y',
-		),
-		'fgal_use_db' => array(
+		],
+		'fgal_use_db' => [
 			'name' => tra('Storage'),
 			'description' => tra('Specify if uploaded files should be stored in the Database or Directory'),
 			'type' => 'list',
 			'perspective' => false,
-			'options' => array(
+			'options' => [
 				'y' => tra('Store in database'),
 				'n' => tra('Store in directory'),
-			),
+			],
 			'default' => 'y',
-			'tags' => array('basic'),
-		),
-		'fgal_use_dir' => array(
+			'tags' => ['basic'],
+		],
+		'fgal_use_dir' => [
 			'name' => tra('Path to the directory to store file gallery files'),
 			'description' => tra("Specify a directory on your server, for example: /var/www/  It's recommended that this directory not be web accessible. PHP must be able to read/write to the directory."),
 			'type' => 'text',
 			'size' => 50,
 			'perspective' => false,
 			'default' => '',
-			'tags' => array('basic'),
-		),
-		'fgal_search_in_content' => array(
+			'tags' => ['basic'],
+		],
+		'fgal_search_in_content' => [
 			'name' => tra('Searchable file gallery content'),
 			'description' => tra('Include the search form on the current gallery page just after "Find"'),
 			'type' => 'flag',
 			'default' => 'n',
-		),
-		'fgal_search' => array(
+		],
+		'fgal_search' => [
 			'name' => tra('Include a search form in file galleries'),
 			'type' => 'flag',
 			'default' => 'y',
-		),
-		'fgal_list_ratio_hits' => array(
+		],
+		'fgal_list_ratio_hits' => [
 			'name' => tra('Display hits ratio to maximum'),
 			'description' => tra('Display hits with a ratio of hits to maximum hits'),
 			'type' => 'flag',
 			'default' => 'n',
-		),
-		'fgal_display_properties' => array(
+		],
+		'fgal_display_properties' => [
 			'name' => tra('Display properties in the context menu'),
 			'type' => 'flag',
 			'default' => 'y',
-		),
-		'fgal_display_replace' => array(
+		],
+		'fgal_display_replace' => [
 			'name' => tra('Display "Replace" in the context menu'),
 			'type' => 'flag',
 			'default' => 'y',
-		),
-		'fgal_delete_after' => array(
+		],
+		'fgal_delete_after' => [
 			'name' => tra('Automatic deletion of old files'),
 			'description' => tra('The user will have an option when uploading a file to specify the time after which the file is deleted'),
 			'type' => 'flag',
 			'warning' => tra('A cron job must be set up in order to delete the files.'),
 			'help' => 'File+Gallery+Config',
 			'default' => 'n',
-		),
-		'fgal_checked' => array(
+		],
+		'fgal_checked' => [
 			'name' => tra('Allow action on multiple files or galleries'),
 			'description' => tra('Include "Remove" as an option for the checkbox action in file galleries'),
 			'type' => 'flag',
 			'help' => 'File+Gallery+Config',
 			'default' => 'y',
-		),
-		'fgal_delete_after_email' => array(
+		],
+		'fgal_delete_after_email' => [
 			'name' => tra('Deletion emails notification'),
 			'description' => tra('Email addresses (comma-separated) to receive a copy of each deleted file'),
 			'type' => 'text',
 			'default' => '',
-		),
-		'fgal_keep_fileId' => array(
+		],
+		'fgal_keep_fileId' => [
 			'name' => tra('Keep the same fileId for the latest version of a file'),
 			'description' => tra('If the checkbox is checked, the file ID of the latest version of a file stays the same. A link to the file will always link to the latest version. If not checked, each version of the file is assigned its own file ID, so a link to the file will be to a specific version of the file'),
 			'type' => 'flag',
 			'default' => 'y',
-		),
-		'fgal_show_thumbactions' => array(
+		],
+		'fgal_show_thumbactions' => [
 			'name' => tra('Show thumbnail actions'),
 			'description' => tra('Show the checkbox and wrench icon for file actions menu when not displaying details'),
 			'type' => 'flag',
 			'default' => 'y',
-		),
-		'fgal_thumb_max_size' => array (
+		],
+		'fgal_thumb_max_size' => [
 			'name' => tra('Maximum thumbnail size'),
 			'description' => tra('Maximum width or height for image thumbnails'),
 			'units' => tra('pixels'),
 			'type' => 'text',
 			'size' => 5,
 			'default' => 120,
-		),
-		'fgal_enable_auto_indexing' => array(
+		],
+		'fgal_enable_auto_indexing' => [
 			'name' => tra('Automatic indexing of file content'),
 			'description' => tra('Uses command line tools to extract the information from the files based on their MIME types.'),
 			'default' => 'n',
 			'type' => 'flag',
-		),
+		],
 		'fgal_asynchronous_indexing' => [
 			'name' => tra('Asynchronous indexing'),
 			'type' => 'flag',
 			'default' => 'y',
 		],
-		'fgal_upload_from_source' => array(
-			'name' =>  tra('Upload files from remote source'),
+		'fgal_upload_from_source' => [
+			'name' => tra('Upload files from remote source'),
 			'description' => tra('Enable copying files to file galleries from a URL that will be polled for new revisions.'),
 			'type' => 'flag',
 			'default' => 'n',
-			'tags' => array('advanced'),
-			'dependencies' => array('fgal_keep_fileId'),
-		),
-		'fgal_source_refresh_frequency' => array(
+			'tags' => ['advanced'],
+			'dependencies' => ['fgal_keep_fileId'],
+		],
+		'fgal_source_refresh_frequency' => [
 			'name' => tra('Remote source refresh frequency limit'),
 			'description' => tra('Minimum number of seconds to elapse between remote source checks to prevent flooding the server with requests.'),
 			'hint' => tr('Set to zero to disable refresh'),
@@ -247,29 +247,29 @@ As soon as the limit is reached not other files can be uploaded. The user will s
 			'size' => 5,
 			'units' => tra('seconds'),
 			'default' => 3600,
-		),
-		'fgal_source_show_refresh' => array(
+		],
+		'fgal_source_show_refresh' => [
 			'name' => tra('Display controls to attempt a file refresh'),
 			'description' => tra('Let users trigger a refresh attempt from the remote host.'),
 			'type' => 'flag',
 			'default' => 'n',
-		),
-		'fgal_tracker_existing_search' => array(
+		],
+		'fgal_tracker_existing_search' => [
 			'name' => tra('Allow searching for existing files in the tracker files field'),
 			'description' => tra('Search files using the search index.'),
 			'type' => 'flag',
 			'default' => 'y',
-			'dependencies' => array('feature_search'),
-		),
-		'fgal_fix_mime_type' => array(
+			'dependencies' => ['feature_search'],
+		],
+		'fgal_fix_mime_type' => [
 			'name' => tra('Set MIME type based on file suffix'),
 			'description' => tra('Sets the MIME type of an image file according to the file suffix when it is incorrectly detected as application/octet-stream'),
 			'type' => 'flag',
 			'default' => 'n',
-			'tags' => array('experimental'),
+			'tags' => ['experimental'],
 			'help' => 'File+Gallery+config',
-		),
-		'fgal_browse_name_max_length' => array(
+		],
+		'fgal_browse_name_max_length' => [
 			'name' => tra('Maximum name length'),
 			'description' => tra('Length to which to truncate file names in browse view.'),
 			'type' => 'text',
@@ -277,8 +277,8 @@ As soon as the limit is reached not other files can be uploaded. The user will s
 			'units' => tra('characters'),
 			'size' => 5,
 			'default' => 40,
-		),
-		'fgal_image_max_size_x' => array(
+		],
+		'fgal_image_max_size_x' => [
 			'name' => tra('Maximum width of images'),
 			'description' => tra('Default maximum width of images in galleries.'),
 			'type' => 'text',
@@ -287,8 +287,8 @@ As soon as the limit is reached not other files can be uploaded. The user will s
 			'units' => tra('pixels'),
 			'size' => 5,
 			'default' => 0,
-		),
-		'fgal_image_max_size_y' => array(
+		],
+		'fgal_image_max_size_y' => [
 			'name' => tra('Maximum height of images'),
 			'description' => tra('Default maximum height of images in galleries.'),
 			'type' => 'text',
@@ -297,35 +297,35 @@ As soon as the limit is reached not other files can be uploaded. The user will s
 			'units' => tra('pixels'),
 			'size' => 5,
 			'default' => 0,
-		),
-		'fgal_elfinder_feature' => array(
+		],
+		'fgal_elfinder_feature' => [
 			'name' => tra('Use elFinder UI'),
 			'description' => tra('Alternative file manager with drag and drop capability'),
 			'type' => 'flag',
 			'filter' => 'alpha',
 			'default' => 'n',
 			'help' => 'elFinder',
-			'dependencies' => array('feature_jquery_ui'),
-		),
-		'fgal_viewerjs_feature' => array(
+			'dependencies' => ['feature_jquery_ui'],
+		],
+		'fgal_viewerjs_feature' => [
 			'name' => tra('Use Viewer JS'),
 			'description' => tra('Uses ViewerJS from http://viewerjs.org if available (needs a separate install due to licensing restrictions), and allows displaying ODF files (odt, ods, odp) as well as pdf in web pages'),
 			'type' => 'flag',
 			'filter' => 'alpha',
 			'default' => 'n',
 			'help' => 'ViewerJS',
-			'tags' => array('experimental'),
-		),
-		'fgal_viewerjs_uri' => array(
+			'tags' => ['experimental'],
+		],
+		'fgal_viewerjs_uri' => [
 			'name' => tra('Viewer JS URI'),
 			'description' => tra('Where ViewerJS is installed'),
 			'type' => 'text',
 			'filter' => 'url',
 			'default' => 'files/viewerjs/ViewerJS/index.html',
 			'help' => 'ViewerJS',
-			'tags' => array('experimental'),
-			'dependencies' => array('fgal_viewerjs_feature'),
-		),
+			'tags' => ['experimental'],
+			'dependencies' => ['fgal_viewerjs_feature'],
+		],
 		'fgal_default_view' => [
 			'name' => tra('Default view'),
 			'type' => 'list',
@@ -621,5 +621,5 @@ As soon as the limit is reached not other files can be uploaded. The user will s
 			'options' => $showOptions,
 			'default' => '',
 		],
-	);
+	];
 }

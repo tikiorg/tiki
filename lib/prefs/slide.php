@@ -11,6 +11,5 @@
 
 function prefs_slide_list()
 {
-	return array();
+	return [];
 }
-

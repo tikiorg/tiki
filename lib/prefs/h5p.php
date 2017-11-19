@@ -103,4 +103,3 @@ function prefs_h5p_list($partial = false)
 		],
 	];
 }
-

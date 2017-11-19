@@ -1,25 +1,25 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 function prefs_xmpp_list()
 {
-	return array(
-		'xmpp_feature' => array(
+	return [
+		'xmpp_feature' => [
 			'name' => tra('XMPP client (ConverseJS)'),
 			'description' => tra('Integration with Converse.js XMPP client.'),
 			'type' => 'flag',
 			'keywords' => 'xmpp converse conversejs chat',
 			'help' => 'XMPP',
-			'tags' => array('basic'),
+			'tags' => ['basic'],
 			'default' => 'n',
-			'extensions' => array(
-			),			
-		),
-		'xmpp_server_host' => array(
+			'extensions' => [
+			],
+		],
+		'xmpp_server_host' => [
 			'name' => tra('XMPP server host'),
 			'description' => tra('XMPP server host'),
 			'type' => 'text',
@@ -27,10 +27,10 @@ function prefs_xmpp_list()
 			'hint' => tra('xmpp.example.com'),
 			'keywords' => 'xmpp converse conversejs chat',
 			'size' => 40,
-			'tags' => array('basic'),
+			'tags' => ['basic'],
 			'default' => '',
-		),
-		'xmpp_server_http_bind' => array(
+		],
+		'xmpp_server_http_bind' => [
 			'name' => tra('XMPP http-bind URL'),
 			'description' => tra('Full URL to the http-bind.'),
 			'keywords' => 'xmpp converse conversejs chat',
@@ -38,19 +38,17 @@ function prefs_xmpp_list()
 			'size' => 40,
 			'filter' => 'url',
 			'hint' => tra('http://xmpp.example.com/http-bind/'),
-			'tags' => array('basic'),
+			'tags' => ['basic'],
 			'default' => '',
-		),
-		'xmpp_openfire_use_token' => array(
+		],
+		'xmpp_openfire_use_token' => [
 			'name' => tra('XMPP Openfire Token'),
 			'default' => 'n',
 			'description' => tra('Handle user authentication using tokens'),
 			'keywords' => 'xmpp openfire token',
 			'type' => 'flag',
-			'tags' => array('basic'),
+			'tags' => ['basic'],
 			'default' => '',
-		)
-	);
+		]
+	];
 }
-
-

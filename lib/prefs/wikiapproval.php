@@ -11,6 +11,5 @@
 
 function prefs_wikiapproval_list()
 {
-	return array();
+	return [];
 }
-

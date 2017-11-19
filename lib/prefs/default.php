@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -17,27 +17,27 @@ function prefs_default_list()
 	}
 
 
-	return array(
-		'default_mail_charset' => array(
+	return [
+		'default_mail_charset' => [
 			'name' => tra('Default character set for sending mail'),
 			'description' => tra('Specify the character encoding used by Tiki when sending mail notifications.'),
 			'type' => 'list',
-			'options' => array(
+			'options' => [
 				'utf-8' => tra('utf-8'),
 				'iso-8859-1' => tra('iso-8859-1'),
-			),
-			'default' =>'utf-8',
-		),
-		'default_map' => array(
+			],
+			'default' => 'utf-8',
+		],
+		'default_map' => [
 			'name' => tra('default mapfile'),
 			'type' => 'text',
 			'size' => '50',
 			'default' => '',
-		),
-		'default_wiki_diff_style' => array(
+		],
+		'default_wiki_diff_style' => [
 			'name' => tra('Default diff style'),
 			'type' => 'list',
-			'options' => array(
+			'options' => [
 				'old' => tra('Only with last version'),
 				'htmldiff' => tra('HTML diff'),
 				'sidediff' => tra('Side-by-side diff'),
@@ -50,18 +50,18 @@ function prefs_default_list()
 				'inlinediff-full-char' => tra('Full inline diff by characters'),
 				'unidiff' => tra('Unified diff'),
 				'sideview' => tra('Side-by-side view'),
-			),
+			],
 			'default' => 'sidediff',
-		),
-		'default_rows_textarea_wiki' => array(
+		],
+		'default_rows_textarea_wiki' => [
 			'name' => tra('Wiki'),
 			'type' => 'text',
 			'size' => '3',
 			'units' => tra('rows'),
 			'filter' => 'digits',
 			'default' => '20',
-		),
-		'default_rows_textarea_comment' => array(
+		],
+		'default_rows_textarea_comment' => [
 			'name' => tra('Comment box'),
 			'type' => 'text',
 			'description' => tr('Size (height) of the comment text area.'),
@@ -69,28 +69,28 @@ function prefs_default_list()
 			'units' => tra('rows'),
 			'filter' => 'digits',
 			'default' => '6',
-		),
-		'default_rows_textarea_forum' => array(
+		],
+		'default_rows_textarea_forum' => [
 			'name' => tra('Forum'),
 			'type' => 'text',
 			'size' => '3',
 			'units' => tra('rows'),
 			'filter' => 'digits',
 			'default' => '20',
-		),
-		'default_rows_textarea_forumthread' => array(
+		],
+		'default_rows_textarea_forumthread' => [
 			'name' => tra('Forum reply'),
 			'type' => 'text',
 			'size' => '3',
 			'units' => tra('rows'),
 			'filter' => 'digits',
 			'default' => '10',
-		),
+		],
 		'default_calendars' => [
 			'name' => tra('Select default calendars to display'),
 			'type' => 'multicheckbox',
 			'options' => $cals,
 			'default' => [],
 		],
-	);
+	];
 }
