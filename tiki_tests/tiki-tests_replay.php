@@ -9,7 +9,7 @@ require_once('../tiki-setup.php');
 require_once('lib/diff/difflib.php');
 
 if ($prefs['feature_tikitests'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled').': feature_tikitests');
+	$smarty->assign('msg', tra('This feature is disabled') . ': feature_tikitests');
 	$smarty->display('error.tpl');
 	die;
 }
@@ -20,7 +20,7 @@ if ($tiki_p_admin_tikitests != 'y' and $tiki_p_play_tikitests != 'y') {
 	die;
 }
 
-if (!extension_loaded('http') and !extension_loaded('curl')) {
+if (! extension_loaded('http') and ! extension_loaded('curl')) {
 	$smarty->assign('msg', tra('The pecl HTTP extension or the Curl extension is needed to replay the TikiTest'));
 	$smarty->display('error.tpl');
 	die;
@@ -36,9 +36,11 @@ $smarty->assign('curl', extension_loaded('curl'));
  */
 function get_from_dom($element)
 {
-	if ($element === NULL) return NULL;
+	if ($element === null) {
+		return null;
+	}
 	$es = $element->getElementsByTagName('*');
-	$a = array();
+	$a = [];
 	foreach ($es as $e) {
 		$a[$e->tagName] = $e->nodeValue;
 	}
@@ -50,14 +52,14 @@ function get_from_dom($element)
  * @param bool $use_tidy
  * @return array
  */
-function verif_url($url, $use_tidy = TRUE)
+function verif_url($url, $use_tidy = true)
 {
 	global $cookies;
 	static $purifier;
 	static $loaded = false;
 	$smarty = TikiLib::lib('smarty');
 
-	$result = array();
+	$result = [];
 	$get = get_from_dom($url->getElementsByTagName('get')->item(0));
 	$post = get_from_dom($url->getElementsByTagName('post')->item(0));
 	$xpath = $url->getElementsByTagName('xpath')->item(0)->textContent;
@@ -80,7 +82,7 @@ function verif_url($url, $use_tidy = TRUE)
 				$buffer = http_get($urlstr, $options, $info);
 				break;
 			case 'post':
-				$buffer = http_post_fields($urlstr, $post, NULL, $options, $info);
+				$buffer = http_post_fields($urlstr, $post, null, $options, $info);
 		}
 
 		$headers = http_parse_headers($buffer);
@@ -139,8 +141,8 @@ function verif_url($url, $use_tidy = TRUE)
 		}
 
 		parse_str($cookies_tmp, $cookies_titi);
-		if (!is_array($cookies)) {
-			$cookies = array();
+		if (! is_array($cookies)) {
+			$cookies = [];
 		}
 
 		$cookies = array_merge($cookies, $cookies_titi);
@@ -149,8 +151,8 @@ function verif_url($url, $use_tidy = TRUE)
 	}
 
 	if (extension_loaded('tidy')) {
-		$data = tidy_parse_string($data, array(), 'utf8');
-		$buffer = tidy_parse_string($buffer, array(), 'utf8');
+		$data = tidy_parse_string($data, [], 'utf8');
+		$buffer = tidy_parse_string($buffer, [], 'utf8');
 		if ($use_tidy) {
 			tidy_diagnose($data);
 			$result['ref_error_count'] = tidy_error_count($data);
@@ -160,7 +162,7 @@ function verif_url($url, $use_tidy = TRUE)
 			$result['replay_error_msg'] = tidy_get_error_buffer($buffer);
 		}
 	} else {
-		if (!$loaded) {
+		if (! $loaded) {
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$config = getHTMLPurifierTikiConfig();
 			$purifier = new HTMLPurifier($config);
@@ -185,7 +187,7 @@ function verif_url($url, $use_tidy = TRUE)
 		$body = $root->appendChild($body);
 
 		foreach ($res_ref as $ref) {
-			$tmp = $new_data->importNode($ref, TRUE);
+			$tmp = $new_data->importNode($ref, true);
 			$body->appendChild($tmp);
 		}
 
@@ -200,7 +202,7 @@ function verif_url($url, $use_tidy = TRUE)
 		$body = $root->appendChild($body);
 
 		foreach ($res_buffer as $ref) {
-			$tmp = $new_buffer->importNode($ref, TRUE);
+			$tmp = $new_buffer->importNode($ref, true);
 			$body->appendChild($tmp);
 		}
 		$buffer = $new_buffer->saveHTML();
@@ -209,20 +211,20 @@ function verif_url($url, $use_tidy = TRUE)
 	$tmp = diff2($data, $buffer, "htmldiff");
 	if (trim($xpath) != '') {
 		$result['html'] = preg_replace(
-			array("/<html>/", "/<\/html>/"),
-			array("<div style='overflow: auto; width:500px; text-align: center'> ", "</div>"),
+			["/<html>/", "/<\/html>/"],
+			["<div style='overflow: auto; width:500px; text-align: center'> ", "</div>"],
 			$tmp
 		);
 	} else {
 		$result['html'] = preg_replace(
-			array("/<html.*<body/U", "/<\/body><\/html>/U"),
-			array("<div style='overflow: auto; width:500px; text-align: center' ", "</div>"),
+			["/<html.*<body/U", "/<\/body><\/html>/U"],
+			["<div style='overflow: auto; width:500px; text-align: center' ", "</div>"],
 			$tmp
 		);
 	}
 	$result['url'] = $urlstr;
 	$result['method'] = $url->getAttribute('method');
-	if (strtolower($result['method']) == 'post' ) {
+	if (strtolower($result['method']) == 'post') {
 		$result['post'] = $post;
 	}
 
@@ -243,17 +245,17 @@ if (isset($_REQUEST['action'])) {
 	} else {
 		$dom = DOMDocument::loadXML($xml);
 		$element_test = $dom->getElementsByTagName('test')->item(0);
-		if ($element_test == NULL) {
+		if ($element_test == null) {
 			$smarty->assign('msg', tra('The TikiTest Replay File is Empty'));
 			$smarty->display('error.tpl');
 			die();
 		}
 	}
 
-	$result = array();
+	$result = [];
 	$urls = $dom->getElementsByTagName('url');
 
-	$options = array();
+	$options = [];
 	foreach ($dom->getElementsByTagName('options') as $o) {
 		$es = $o->getElementsByTagName('*');
 		foreach ($es as $e) {

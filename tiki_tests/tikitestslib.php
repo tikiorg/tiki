@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -20,19 +20,21 @@ $test_get = $_GET;
 $test_post = $_POST;
 
 if (isset($_COOKIE['tikitest_record'])) {
-  ob_start(test_callback);
-	if (!isset($_SESSION['tiki_cookie_jar'])) {
-	  $_SESSION['tiki_cookie_jar'] = array();
+	ob_start(test_callback);
+	if (! isset($_SESSION['tiki_cookie_jar'])) {
+		$_SESSION['tiki_cookie_jar'] = [];
 	}
 	$_SESSION['tiki_cookie_jar']['javascript_enabled'] = 'n';
 	if ($_COOKIE['tikitest_record'] != 3) {
-		if ($_COOKIE['tikitest_record'] == '') $_COOKIE['tikitest_record'] = 1;
+		if ($_COOKIE['tikitest_record'] == '') {
+			$_COOKIE['tikitest_record'] = 1;
+		}
 		$smarty->assign("tikitest_filename", $_COOKIE['tikitest_filename']);
 		$smarty->assign("tikitest_state", $_COOKIE['tikitest_record']);
 	} else {
 		setcookie("tikitest_record", "", time() - 3600, "/");
 		setcookie("tikitest_filename", "", time() - 3600, "/");
-		$smarty->clear_assign(array("tikitest_filename","tikitest_state"));
+		$smarty->clear_assign(["tikitest_filename","tikitest_state"]);
 	}
 } else {
 	return;
@@ -46,17 +48,17 @@ function test_callback($buffer)
 {
 	global $test_cookie, $test_post, $test_get, $test_url;
 
-	if (!isset($_COOKIE['tikitest_record']) or $_COOKIE['tikitest_record'] >= 2) {
+	if (! isset($_COOKIE['tikitest_record']) or $_COOKIE['tikitest_record'] >= 2) {
 		return $buffer;
 	}
 
-	if (strpos(basename($_SERVER['PHP_SELF']), "tiki-download_file") !== FALSE) {
-	  return $buffer;
+	if (strpos(basename($_SERVER['PHP_SELF']), "tiki-download_file") !== false) {
+		return $buffer;
 	}
 
 	$filename = basename(trim($_COOKIE['tikitest_filename']));
 	if (isset($_COOKIE['tikitest_filename'])) {
-		$xml_file = dirname(__FILE__) . "/tests/". $filename .".xml";
+		$xml_file = dirname(__FILE__) . "/tests/" . $filename . ".xml";
 	} else {
 		$xml_file = dirname(__FILE__) . "/tests/tikitest.xml";
 	}
@@ -70,7 +72,7 @@ function test_callback($buffer)
 		$dom = DOMDocument::loadXML($xml);
 		if ($dom) {
 			$element_test = $dom->getElementsByTagName('test')->item(0);
-			if ($element_test == NULL) {
+			if ($element_test == null) {
 				return $buffer;
 			}
 		} else {
@@ -80,34 +82,34 @@ function test_callback($buffer)
 	}
 
 	$url = $dom->createElement('url');
-	if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+	if (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
 		$http = "https";
 	} else {
 		$http = "http";
 	}
-	$url->setAttribute('src', "$http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
+	$url->setAttribute('src', "$http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
 	$url->setAttribute('method', $_SERVER['REQUEST_METHOD']);
 	$url->setAttribute('referer', $_SERVER['HTTP_REFERER']);
-  $get = $dom->createElement('get');
+	$get = $dom->createElement('get');
 	if (is_array($test_get)) {
 		foreach ($test_get as $var => $value) {
-  		$v = $dom->createElement($var, $value);
+			$v = $dom->createElement($var, $value);
 			$get->appendChild($v);
 		}
 		$url->appendChild($get);
 	}
 
 	if (is_array($test_post)) {
-	  $post = $dom->createElement('post');
+		$post = $dom->createElement('post');
 		foreach ($test_post as $var => $value) {
-  		$v = $dom->createElement($var, $value);
+			$v = $dom->createElement($var, $value);
 			$post->appendChild($v);
 		}
 		$url->appendChild($post);
 	}
-error_reporting(E_ALL);
+	error_reporting(E_ALL);
 
-  $data = $dom->createElement('data');
+	$data = $dom->createElement('data');
 	$tikitestheader = '/<!-- StartTikiTestRemoveMe -->.*<!-- EndTikiTestRemoveMe -->/';
 	$cdata = $dom->createCDATASection(preg_replace($tikitestheader, '', $buffer));
 	$data->appendChild($cdata);

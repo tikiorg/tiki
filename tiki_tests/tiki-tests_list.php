@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -32,16 +32,16 @@ function delete_test($file)
 	if (file_exists("tiki_tests/tests/$file")) {
 		return unlink("tiki_tests/tests/$file");
 	}
-	return FALSE;
+	return false;
 }
 
-if (isset($_GET['offset']) and ($_GET['offset']+0) > 0 ) {
+if (isset($_GET['offset']) and ($_GET['offset'] + 0) > 0) {
 	$offset = $_GET['offset'];
 } else {
 	$offset = 0;
 }
 
-if (isset($_GET['files_per_page']) and ($_GET['files_per_page']+0) > 0 ) {
+if (isset($_GET['files_per_page']) and ($_GET['files_per_page'] + 0) > 0) {
 	$files_per_page = $_GET['filess_per_page'];
 } else {
 	$files_per_page = 20;
@@ -51,7 +51,7 @@ if (isset($_REQUEST['action'])) {
 	if (strtolower($_REQUEST['action']) == strtolower(tra("Remove"))) {
 		if (isset($_REQUEST['filename'])) {
 			$ok = delete_test($_REQUEST['filename']);
-			if (!$ok) {
+			if (! $ok) {
 				$smarty->assign('msg', tra("There was an error deleting the file"));
 				$smarty->display("error.tpl");
 				die();

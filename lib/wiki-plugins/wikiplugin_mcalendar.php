@@ -132,7 +132,7 @@ class MCalendar
 
 		$this->setLongKin();
 	}
-};
+}
 
 function wikiplugin_mcalendar_info()
 {

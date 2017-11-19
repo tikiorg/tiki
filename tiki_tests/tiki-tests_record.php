@@ -8,7 +8,7 @@
 require_once('../tiki-setup.php');
 
 if ($prefs['feature_tikitests'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled').': feature_tikitests');
+	$smarty->assign('msg', tra('This feature is disabled') . ': feature_tikitests');
 	$smarty->display('error.tpl');
 	die;
 }

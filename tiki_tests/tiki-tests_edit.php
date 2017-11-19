@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,7 +9,7 @@ require_once('../tiki-setup.php');
 require_once('lib/diff/difflib.php');
 
 if ($prefs['feature_tikitests'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled').': feature_tikitests');
+	$smarty->assign('msg', tra('This feature is disabled') . ': feature_tikitests');
 	$smarty->display('error.tpl');
 	die;
 }
@@ -30,9 +30,11 @@ $smarty->assign("curl", extension_loaded("curl"));
  */
 function get_from_dom($element)
 {
-	if ($element === NULL) return NULL;
+	if ($element === null) {
+		return null;
+	}
 	$es = $element->getElementsByTagName("*");
-	$a = array();
+	$a = [];
 	foreach ($es as $e) {
 		$a[$e->tagName] = $e->nodeValue;
 	}
@@ -44,11 +46,11 @@ function get_from_dom($element)
  * @param bool $use_tidy
  * @return array
  */
-function get_url($url, $use_tidy = TRUE)
+function get_url($url, $use_tidy = true)
 {
 	global $cookies;
 	$smarty = TikiLib::lib('smarty');
-	$result = array();
+	$result = [];
 	$get = get_from_dom($url->getElementsByTagName('get')->item(0));
 	$post = get_from_dom($url->getElementsByTagName('post')->item(0));
 	$xpath = $url->getElementsByTagName('xpath')->item(0)->textContent;
@@ -58,7 +60,7 @@ function get_url($url, $use_tidy = TRUE)
 
 	$result['data'] = $data;
 	if (extension_loaded("tidy")) {
-		$data =  tidy_parse_string($data, array(), 'utf8');
+		$data = tidy_parse_string($data, [], 'utf8');
 		tidy_diagnose($data);
 		if ($use_tidy) {
 			$result['ref_error_count'] = tidy_error_count($data);
@@ -82,7 +84,7 @@ function get_url($url, $use_tidy = TRUE)
  * @param $file
  * @param $options
  */
-function save_test($urls,$file,$options)
+function save_test($urls, $file, $options)
 {
 	$dom = new DOMDocument('1.0', 'UTF-8');
 	$element_test = $dom->createElement('test');
@@ -91,7 +93,7 @@ function save_test($urls,$file,$options)
 	$opt = $dom->createElement('options');
 	$element_test->appendChild($opt);
 	foreach ($options as $o => $v) {
-		$opt->appendChild($dom->createElement($o, $v? 'y' : 'n'));
+		$opt->appendChild($dom->createElement($o, $v ? 'y' : 'n'));
 	}
 
 	foreach ($urls as $url) {
@@ -136,9 +138,9 @@ function save_test($urls,$file,$options)
 
 if (isset($_REQUEST['filename'])) {
 	$_REQUEST['filename'] = str_replace("<x>", "", $_REQUEST['filename']);
-} 
+}
 
-$xml = file_get_contents("tiki_tests/tests/".basename($_REQUEST['filename']));
+$xml = file_get_contents("tiki_tests/tests/" . basename($_REQUEST['filename']));
 
 if ($xml == '' or $xml == false) {
 	$smarty->assign('msg', tra("The TikiTests Replay File is Empty"));
@@ -147,16 +149,16 @@ if ($xml == '' or $xml == false) {
 } else {
 	$dom = DOMDocument::loadXML($xml);
 	$element_test = $dom->getElementsByTagName('test')->item(0);
-	if ($element_test == NULL) {
+	if ($element_test == null) {
 		$smarty->assign('msg', tra("The TikiTests Replay File has an error"));
 		$smarty->display("error.tpl");
 		die();
 	}
 }
 
-$result = array();
+$result = [];
 $urls = $dom->getElementsByTagName('url');
-$options = array();
+$options = [];
 foreach ($dom->getElementsByTagName('options') as $o) {
 	$es = $o->getElementsByTagName("*");
 	foreach ($es as $e) {
@@ -164,10 +166,10 @@ foreach ($dom->getElementsByTagName('options') as $o) {
 	}
 }
 
-$edit = FALSE;
+$edit = false;
 if (isset($_REQUEST['action'])) {
 	if (strtolower($_REQUEST['action']) == strtolower(tra("Edit"))) {
-		$edit = TRUE;
+		$edit = true;
 	}
 	if (strtolower($_REQUEST['action']) != strtolower(tra("Show"))) {
 		$options['use_tidy'] = $_REQUEST['show_tidy'];
@@ -180,7 +182,7 @@ if (isset($_REQUEST['action'])) {
 
 $count = 0;
 foreach ($urls as $url) {
-	if (!(isset($_REQUEST['delete'][$count]) and $_REQUEST['delete'][$count] == 'delete')) {
+	if (! (isset($_REQUEST['delete'][$count]) and $_REQUEST['delete'][$count] == 'delete')) {
 		$result[$count] = get_url($url, $options['use_tidy'] == 'y');
 		if ($edit and is_string($_REQUEST['xpath'][$count]) and trim($_REQUEST['xpath'][$count]) != '') {
 			$result[$count]['xpath'] = trim($_REQUEST['xpath'][$count]);
@@ -189,10 +191,10 @@ foreach ($urls as $url) {
 		}
 	}
 	$count++;
-}	
+}
 
-if ($edit and file_exists("tiki_tests/tests/".basename($_REQUEST['filename']))) {
-	save_test($result, "tiki_tests/tests/".basename($_REQUEST['filename']), $options);
+if ($edit and file_exists("tiki_tests/tests/" . basename($_REQUEST['filename']))) {
+	save_test($result, "tiki_tests/tests/" . basename($_REQUEST['filename']), $options);
 }
 
 $smarty->assign_by_ref('result', $result);

@@ -9,7 +9,7 @@ require_once('../tiki-setup.php');
 require_once('lib/diff/difflib.php');
 
 if ($prefs['feature_tikitests'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled').': feature_tikitests');
+	$smarty->assign('msg', tra('This feature is disabled') . ': feature_tikitests');
 	$smarty->display('error.tpl');
 	die;
 }
@@ -30,9 +30,11 @@ $smarty->assign('curl', extension_loaded('curl'));
  */
 function get_from_dom($element)
 {
-	if ($element === NULL) return NULL;
+	if ($element === null) {
+		return null;
+	}
 	$es = $element->getElementsByTagName('*');
-	$a = array();
+	$a = [];
 	foreach ($es as $e) {
 		$a[$e->tagName] = $e->nodeValue;
 	}
@@ -51,17 +53,17 @@ function enlight_xpath($url, $xpath)
 	static $loaded = false;
 	$smarty = TikiLib::lib('smarty');
 
-	$result = array();
+	$result = [];
 	$data = $url->getElementsByTagName('data')->item(0)->textContent;
 	if (trim($data) == '') {
 		return tra('The page is empty');
 	}
 
 	if (extension_loaded('tidy')) {
-		$data = tidy_parse_string($data, array(), 'utf8');
+		$data = tidy_parse_string($data, [], 'utf8');
 		tidy_diagnose($data);
 	} else {
-		if (!$loaded) {
+		if (! $loaded) {
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$config = getHTMLPurifierTikiConfig();
 			$config->set('Attr.EnableID', true);
@@ -69,7 +71,7 @@ function enlight_xpath($url, $xpath)
 			$loaded = true;
 		}
 		if ($purifier) {
-			$data = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head><body>'.$purifier->purify($data).'</body></html>';
+			$data = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head><body>' . $purifier->purify($data) . '</body></html>';
 			//$data = $purifier->purify($data);
 		}
 	}
@@ -97,17 +99,17 @@ if ($xml == '') {
 } else {
 	$dom = DOMDocument::loadXML($xml);
 	$element_test = $dom->getElementsByTagName('test')->item(0);
-	if ($element_test == NULL) {
+	if ($element_test == null) {
 		$smarty->assign('msg', tra('The TikiTests Replay File is Empty'));
 		$smarty->display('error.tpl');
 		die();
 	}
 }
 
-$result = array();
+$result = [];
 $urls = $dom->getElementsByTagName('url');
 
-$count=0;
+$count = 0;
 foreach ($urls as $url) {
 	if ($count == $_REQUEST['index']) {
 		echo enlight_xpath($url, $_REQUEST['xpath']);

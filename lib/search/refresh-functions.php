@@ -76,11 +76,11 @@ function refresh_index_convert_type($object_type)
 		case 'faqs': //case 'faq':
 			return 'faq'; // FIXME : Unchecked
 
-		case 'file_galleries';
+		case 'file_galleries':
 			return 'file gallery';
 
 		case 'files':
-		case 'file'; //case 'fgal':
+		case 'file': //case 'fgal':
 			return 'file';
 
 		case 'forums': //case 'forum':

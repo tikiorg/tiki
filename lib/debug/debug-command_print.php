@@ -51,7 +51,7 @@ class DbgPrint extends DebuggerCommand
 		}
 		return $result;
 	}
-};
+}
 
 /// Class factory to create instances of defined commands
 function dbg_command_factory_print()
