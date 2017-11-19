@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -8,27 +8,27 @@
 require_once('lib/wizard/wizard.php');
 
 /**
- * The Wizard's language handler 
+ * The Wizard's language handler
  */
-class AdminWizardLanguage extends Wizard 
+class AdminWizardLanguage extends Wizard
 {
-    function pageTitle ()
-    {
-        return tra('Set up Language');
-    }
+	function pageTitle()
+	{
+		return tra('Set up Language');
+	}
 
-	function isEditable ()
+	function isEditable()
 	{
 		return true;
 	}
-	
-	function onSetupPage ($homepageUrl) 
+
+	function onSetupPage($homepageUrl)
 	{
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
-		
+
 		$showPage = true;
-		
+
 		return $showPage;
 	}
 
@@ -38,7 +38,7 @@ class AdminWizardLanguage extends Wizard
 		return $wizardTemplate;
 	}
 
-	function onContinue ($homepageUrl) 
+	function onContinue($homepageUrl)
 	{
 		// Run the parent first
 		parent::onContinue($homepageUrl);

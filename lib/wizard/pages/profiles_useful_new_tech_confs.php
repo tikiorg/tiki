@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -12,16 +12,16 @@ require_once('lib/wizard/wizard.php');
  */
 class ProfilesWizardUsefulNewTechConfs extends Wizard
 {
-    function pageTitle ()
-    {
-        return tra('Useful New Technology Configurations');
-    }
-	function isEditable ()
+	function pageTitle()
+	{
+		return tra('Useful New Technology Configurations');
+	}
+	function isEditable()
 	{
 		return false;
 	}
-	
-	function onSetupPage ($homepageUrl) 
+
+	function onSetupPage($homepageUrl)
 	{
 		global $prefs, $TWV;
 		$smarty = TikiLib::lib('smarty');
@@ -29,8 +29,8 @@ class ProfilesWizardUsefulNewTechConfs extends Wizard
 		parent::onSetupPage($homepageUrl);
 
 		$smarty->assign('tikiMajorVersion', substr($TWV->version, 0, 2));
-		
-		return true;		
+
+		return true;
 	}
 
 	function getTemplate()
@@ -39,7 +39,7 @@ class ProfilesWizardUsefulNewTechConfs extends Wizard
 		return $wizardTemplate;
 	}
 
-	function onContinue ($homepageUrl) 
+	function onContinue($homepageUrl)
 	{
 		// Run the parent first
 		parent::onContinue($homepageUrl);

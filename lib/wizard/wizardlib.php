@@ -13,15 +13,15 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 class WizardLib extends TikiLib
 {
-    public $wizard_stepNr;
+	public $wizard_stepNr;
 
 	/**
 	 * onLogin is the collection point for all login events, which may run a wizard.
 	 * All triggers at login time, must call this function.
-	 * 
+	 *
 	 * The function will not return, if the wizard is run.
 	 * Instead it will redirect to the specified homePageUrl
-	 * 
+	 *
 	 * Use the start functions, e.g. startAdminWizard, to start the wizard manually, not this function
 	 *
 	 * @param mixed $user The logged-in user
@@ -34,17 +34,15 @@ class WizardLib extends TikiLib
 	{
 		global $base_url;
 		$userlib = TikiLib::lib('user');
-		
+
 		// Check the user status
 		$isAdmin = $userlib->user_has_permission($user, 'tiki_p_admin');
 
-		// Check if a Login Wizard should be displayed		
+		// Check if a Login Wizard should be displayed
 		$activeLoginWizard = $this->get_preference('wizard_admin_hide_on_login') !== 'y';
 		if ($force || ($isAdmin && $activeLoginWizard)) {
-
 			// User is an admin. Show Setup Wizards
-			$this->startAdminWizard($homePageUrl,0);
-			
+			$this->startAdminWizard($homePageUrl, 0);
 		} else {
 			// Do not activate the user wizard (yet)
 			// $show = false;
@@ -53,46 +51,46 @@ class WizardLib extends TikiLib
 			// }
 		}
 	}
-	
+
 	/**
 	 *	startAdminWizard - Manually start the admin wizard
 	 *	Can also be started by going to: tiki-wizard_admin.php?url=tiki-admin.php?page=general#content2
 	 *	The url value, is where the wizard should return, when it's done
-	 * 
+	 *
 	 *  @param	$homePageUrl	The url to return to, when the wizard is done
 	 *  @param	$stepNr			Which step in the wizard to go to. Default = 0
 	 *  @return		This function doesn't return
 	 */
-	public function startAdminWizard($homePageUrl, $stepNr=0)
+	public function startAdminWizard($homePageUrl, $stepNr = 0)
 	{
 		global $base_url;
 
 		// Start the admin wizard
-		$url = $base_url.'tiki-wizard_admin.php?&stepNr=' . $stepNr . '&url=' . rawurlencode($homePageUrl);
+		$url = $base_url . 'tiki-wizard_admin.php?&stepNr=' . $stepNr . '&url=' . rawurlencode($homePageUrl);
 		$accesslib = TikiLib::lib('access');
 		$accesslib->redirect($url);
 	}
-	
+
 	/**
 	 *	startUserWizard - Manually start the user wizard
 	 *	Can also be started by going to: tiki-wizard_user.php?url=tiki-index.php?page=Hello
 	 *	The url value, is where the wizard should return, when it's done
-	 * 
+	 *
 	 *  @param	$homePageUrl	The url to return to, when the wizard is done
 	 *  @param	$stepNr			Which step in the wizard to go to. Default = 0
 	 *  @return		This function doesn't return
 	 */
-	public function startUserWizard($homePageUrl, $stepNr=0)
+	public function startUserWizard($homePageUrl, $stepNr = 0)
 	{
 		global $base_url;
 
 		// Start the admin wizard
-		$url = $base_url.'tiki-wizard_user.php?&stepNr=' . $stepNr . '&url=' . rawurlencode($homePageUrl);
+		$url = $base_url . 'tiki-wizard_user.php?&stepNr=' . $stepNr . '&url=' . rawurlencode($homePageUrl);
 		$accesslib = TikiLib::lib('access');
 		$accesslib->redirect($url);
-	}	
-	
-	
+	}
+
+
 	/**
 	*	Wizard's page stepping logic
 	*	Every page added must be a subclass of the Wizard class
@@ -100,12 +98,12 @@ class WizardLib extends TikiLib
 	*	@param	array	$pages	Array of Wizard pages
 	*	@param  bool	$adminWizard Flag if the wizard is a login/admin wizard. Default = false
 	*/
-	public function showPages($pages, $adminWizard=false)
+	public function showPages($pages, $adminWizard = false)
 	{
 		global $base_url;
 		$smarty = TikiLib::lib('smarty');
 		try {
-			if (!isset($_REQUEST['url'])) {
+			if (! isset($_REQUEST['url'])) {
 				// User the base url as the return URL
 				$_REQUEST['url'] = $base_url;
 				// throw new Exception(tra("No return URL specified"));
@@ -123,7 +121,6 @@ class WizardLib extends TikiLib
 			// User pressed "Close".
 			//	Save the "Show on login" setting, and no other preferences
 			if (isset($_POST['close'])) {
-
 				if ($adminWizard) {
 					// Save "Show on login" setting
 					$showOnLogin = ( isset($_POST['showOnLogin']) && $_POST['showOnLogin'] == 'on' ) ? 'y' : 'n';
@@ -135,7 +132,7 @@ class WizardLib extends TikiLib
 				$accesslib->redirect($homepageUrl);
 			}
 
-			$isFirstStep = !isset($_POST['wizard_step']);
+			$isFirstStep = ! isset($_POST['wizard_step']);
 			$isUserStep = isset($_GET['stepNr']);	// User defined step nr
 			if ($isUserStep) {
 				$stepNr = intval($_GET['stepNr']);
@@ -150,33 +147,32 @@ class WizardLib extends TikiLib
 				$stepNr -= 1;
 				$stepBack = true;
 			}
-		
+
 			// Validate the specified stepNr
 			if (($stepNr < 0) || ($stepNr >= count($pages))) {
 				throw new Exception(tra("Invalid wizard stepNr specified"));
 			}
-		
-			if (!$stepBack && !$isFirstStep && (!$isUserStep && $stepNr >= 0)) {
-			
+
+			if (! $stepBack && ! $isFirstStep && (! $isUserStep && $stepNr >= 0)) {
 				// Commit the step just completed
 				$pages[$stepNr]->onContinue($homepageUrl);
-			
+
 				// Loop until the next displayed wizard page
 				//	Return when all pages have been processed.
 				do {
 					$next = true;
-					if (count($pages) > $stepNr+1) {
+					if (count($pages) > $stepNr + 1) {
 						$stepNr += 1;
-						if (count($pages) == $stepNr+1) {
+						if (count($pages) == $stepNr + 1) {
 							$smarty->assign('lastWizardPage', 'y');
 						} else {
 							$isEditable = $pages[$stepNr]->isEditable();
 							$smarty->assign('isEditable', $isEditable);
 						}
-					
+
 						// If onSetupPage returns true, processing should continue
 						$show = $pages[$stepNr]->onSetupPage($homepageUrl);
-					
+
 						// Do not show page, if it doesn't return a boolean
 						if ($show === true) {
 							$template = $pages[$stepNr]->getTemplate();
@@ -184,7 +180,6 @@ class WizardLib extends TikiLib
 							$next = false;
 							break;
 						}
-					
 					} else {
 						// Return to homepage, when we get to the end
 						$accesslib = TikiLib::lib('access');
@@ -211,19 +206,17 @@ class WizardLib extends TikiLib
 						$smarty->assign('firstWizardPage', 'y');
 						$next = false;
 					} elseif ($show === false) {
-						// Step back			
+						// Step back
 						$stepNr -= 1;
 					}
-				
 				} while ($next);
 			}
 
 			$smarty->assign('wizard_step', $stepNr);
-            $this->wizard_stepNr = $stepNr;
+			$this->wizard_stepNr = $stepNr;
 
-            // Set the page title
-            $smarty->assign('pageTitle', $pages[$stepNr]->pageTitle());
-
+			// Set the page title
+			$smarty->assign('pageTitle', $pages[$stepNr]->pageTitle());
 		} catch (Exception $e) {
 			$error = $e->getMessage();
 			$smarty->assign('msg', $error);
@@ -231,7 +224,7 @@ class WizardLib extends TikiLib
 			die;
 		}
 	}
-	
+
 	public function showOnLogin($showOnLogin)
 	{
 		$hide = $showOnLogin === 'y' ? 'n' : 'y';

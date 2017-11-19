@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -10,18 +10,18 @@ require_once('lib/wizard/wizard.php');
 /**
  * Set up the wiki settings
  */
-class AdminWizardTextArea extends Wizard 
+class AdminWizardTextArea extends Wizard
 {
-    function pageTitle ()
-    {
-        return tra('Set up Text Area');
-    }
-	function isEditable ()
+	function pageTitle()
+	{
+		return tra('Set up Text Area');
+	}
+	function isEditable()
 	{
 		return true;
 	}
-	
-	public function onSetupPage ($homepageUrl) 
+
+	public function onSetupPage($homepageUrl)
 	{
 		global $prefs;
 		$smarty = TikiLib::lib('smarty');
@@ -32,9 +32,9 @@ class AdminWizardTextArea extends Wizard
 
 		// Mark that Wysiwyg HTML mode is used
 		if ((isset($prefs['feature_wysiwyg']) && $prefs['feature_wysiwyg'] === 'y') &&
-			(!isset($prefs['wysiwyg_htmltowiki']) || $prefs['wysiwyg_htmltowiki'] === 'n')) {
+			(! isset($prefs['wysiwyg_htmltowiki']) || $prefs['wysiwyg_htmltowiki'] === 'n')) {
 			$smarty->assign('isHtmlMode', true);
-		} else  {
+		} else {
 			$smarty->assign('isHtmlMode', false);
 		}
 
@@ -42,8 +42,8 @@ class AdminWizardTextArea extends Wizard
 		require_once('lib/language/Language.php');
 		$isRTL = Language::isRTL();
 		$smarty->assign('isRTL', $isRTL);
-		
-		return $showPage;		
+
+		return $showPage;
 	}
 
 	function getTemplate()
@@ -52,13 +52,13 @@ class AdminWizardTextArea extends Wizard
 		return $wizardTemplate;
 	}
 
-	public function onContinue ($homepageUrl) 
+	public function onContinue($homepageUrl)
 	{
-		global $tikilib; 
+		global $tikilib;
 
 		// Run the parent first
 		parent::onContinue($homepageUrl);
-		
+
 		// Configure detail preferences in own page
 	}
 }

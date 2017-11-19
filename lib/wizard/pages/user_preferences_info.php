@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -11,27 +11,27 @@ $userprefslib = TikiLib::lib('userprefs');
 /**
  * Set up the Basic User Information
  */
-class UserWizardPreferencesInfo extends Wizard 
+class UserWizardPreferencesInfo extends Wizard
 {
-	function pageTitle ()
-    {
-        return tra('User Preferences:') . ' ' . tra('Personal Information');
-    }
-    
-	function isEditable ()
+	function pageTitle()
+	{
+		return tra('User Preferences:') . ' ' . tra('Personal Information');
+	}
+
+	function isEditable()
 	{
 		return true;
 	}
 
-	function isVisible ()
+	function isVisible()
 	{
 		global	$prefs;
 		//return $prefs['feature_userPreferences'] === 'y';
 		return true; // hardcoded to true since at least the first page is shown to tell the user that the user
-					 // preferences feature is disabled site-wide & he/she might want to ask the site admin to enable it 
+					 // preferences feature is disabled site-wide & he/she might want to ask the site admin to enable it
 	}
 
-	function onSetupPage ($homepageUrl) 
+	function onSetupPage($homepageUrl)
 	{
 
 		global $user, $prefs, $user_preferences;
@@ -41,19 +41,19 @@ class UserWizardPreferencesInfo extends Wizard
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
-		
+
 		// Show page always since in case user prefs are not enabled,
-		// a message will be shown to the user reporting that and 
+		// a message will be shown to the user reporting that and
 		// suggesting to request the admin to enable it.
 		$showPage = true;
-		
+
 		//// Show if option is selected
 		//if ($prefs['feature_userPreferences'] === 'y') {
 			//$showPage = true;
 		//}
-		
+
 		$userwatch = $user;
-		
+
 		$userinfo = $userlib->get_user_info($userwatch);
 		$smarty->assign_by_ref('userinfo', $userinfo);
 
@@ -64,7 +64,7 @@ class UserWizardPreferencesInfo extends Wizard
 			$gender = $tikilib->get_user_preference($userwatch, 'gender', 'Hidden');
 			$smarty->assign('gender', $gender);
 		}
-		$flags = $tikilib->get_flags('','','', true);
+		$flags = $tikilib->get_flags('', '', '', true);
 		$smarty->assign_by_ref('flags', $flags);
 		$country = $tikilib->get_user_preference($userwatch, 'country', 'Other');
 		$smarty->assign('country', $country);
@@ -88,8 +88,8 @@ class UserWizardPreferencesInfo extends Wizard
 		}
 		$smarty->assign('usertrackerId', $usertrackerId);
 		$smarty->assign('useritemId', $useritemId);
-		
-		return $showPage;		
+
+		return $showPage;
 	}
 
 	function getTemplate()
@@ -98,29 +98,32 @@ class UserWizardPreferencesInfo extends Wizard
 		return $wizardTemplate;
 	}
 
-	function onContinue ($homepageUrl) 
+	function onContinue($homepageUrl)
 	{
 		global $user, $prefs;
 		$tikilib = TikiLib::lib('tiki');
-		
+
 		$userwatch = $user;
-		
+
 		// Run the parent first
 		parent::onContinue($homepageUrl);
-		
+
 		if (isset($_REQUEST["realName"]) && ($prefs['auth_ldap_nameattr'] == '' || $prefs['auth_method'] != 'ldap')) {
 			$tikilib->set_user_preference($userwatch, 'realName', $_REQUEST["realName"]);
-			if ( $prefs['user_show_realnames'] == 'y' ) {
+			if ($prefs['user_show_realnames'] == 'y') {
 				$cachelib = TikiLib::lib('cache');
-				$cachelib->invalidate('userlink.'.$user.'0');
+				$cachelib->invalidate('userlink.' . $user . '0');
 			}
 		}
 		if ($prefs['feature_community_gender'] == 'y') {
-			if (isset($_REQUEST["gender"])) $tikilib->set_user_preference($userwatch, 'gender', $_REQUEST["gender"]);
+			if (isset($_REQUEST["gender"])) {
+				$tikilib->set_user_preference($userwatch, 'gender', $_REQUEST["gender"]);
+			}
 		}
 		$tikilib->set_user_preference($userwatch, 'country', $_REQUEST["country"]);
-		if (isset($_REQUEST["homePage"])) $tikilib->set_user_preference($userwatch, 'homePage', $_REQUEST["homePage"]);
+		if (isset($_REQUEST["homePage"])) {
+			$tikilib->set_user_preference($userwatch, 'homePage', $_REQUEST["homePage"]);
+		}
 		$tikilib->set_user_preference($userwatch, 'user_information', $_REQUEST['user_information']);
-	
 	}
 }

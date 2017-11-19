@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -8,22 +8,22 @@
 require_once('lib/wizard/wizard.php');
 
 /**
- * The Wizard's first page and frame handler 
+ * The Wizard's first page and frame handler
  */
-class AdminWizard extends Wizard 
+class AdminWizard extends Wizard
 {
-    function pageTitle ()
-    {
-        return tra('Tiki Setup');
-    }
+	function pageTitle()
+	{
+		return tra('Tiki Setup');
+	}
 
-	function isEditable ()
+	function isEditable()
 	{
 		return false;
 	}
 
-	
-	function onSetupPage ($homepageUrl) 
+
+	function onSetupPage($homepageUrl)
 	{
 		$smarty = TikiLib::lib('smarty');
 		// Run the parent first
@@ -42,8 +42,8 @@ class AdminWizard extends Wizard
 		}
 
 		// Assign the page template
-        $smarty->assign('pageTitle', $this->pageTitle());
-		
+		$smarty->assign('pageTitle', $this->pageTitle());
+
 		return true;
 	}
 
@@ -53,22 +53,21 @@ class AdminWizard extends Wizard
 		return $wizardTemplate;
 	}
 
-	function onContinue ($homepageUrl) 
+	function onContinue($homepageUrl)
 	{
 		// Run the parent first
 		parent::onContinue($homepageUrl);
-		
+
 		$wizardlib = TikiLib::lib('wizard');
 
 		// User selected to skip the wizard and hide it on login
 		//	Save the "Show on login" setting, and no other preferences
 		//	Set preference to hide on login
 		if (isset($_REQUEST['skip'])) {
-			
 			// Save "Show on login" setting
 			$showOnLogin = false;
 			$wizardlib->showOnLogin($showOnLogin);
-			
+
 			//	Then exit, by returning the specified URL
 			$accesslib = TikiLib::lib('access');
 			$accesslib->redirect($homepageUrl);

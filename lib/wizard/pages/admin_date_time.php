@@ -12,17 +12,17 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardDateTime extends Wizard
 {
-    function pageTitle ()
-    {
-        return tra('Set up Date and Time');
-    }
+	function pageTitle()
+	{
+		return tra('Set up Date and Time');
+	}
 
-	function isEditable ()
+	function isEditable()
 	{
 		return true;
 	}
 
-	function onSetupPage ($homepageUrl)
+	function onSetupPage($homepageUrl)
 	{
 		global $prefs;
 		$smarty = TikiLib::lib('smarty');
@@ -38,7 +38,7 @@ class AdminWizardDateTime extends Wizard
 		return $wizardTemplate;
 	}
 
-	function onContinue ($homepageUrl)
+	function onContinue($homepageUrl)
 	{
 		// Run the parent first
 		parent::onContinue($homepageUrl);

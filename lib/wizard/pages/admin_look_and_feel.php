@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -8,20 +8,20 @@
 require_once('lib/wizard/wizard.php');
 
 /**
- * The Wizard's editor type selector handler 
+ * The Wizard's editor type selector handler
  */
-class AdminWizardLookAndFeel extends Wizard 
+class AdminWizardLookAndFeel extends Wizard
 {
-	function pageTitle ()
+	function pageTitle()
 	{
 		return tra('Set up Look & Feel');
 	}
-	function isEditable ()
+	function isEditable()
 	{
 		return true;
 	}
-	
-	function onSetupPage ($homepageUrl) 
+
+	function onSetupPage($homepageUrl)
 	{
 		global $prefs;
 		$smarty = TikiLib::lib('smarty');
@@ -39,7 +39,7 @@ class AdminWizardLookAndFeel extends Wizard
 			if (isset($_REQUEST['theme'])) {
 				check_ticket('admin-inc-general');
 
-				if (!isset($_REQUEST['theme_option']) || $_REQUEST['theme_option'] = '') {
+				if (! isset($_REQUEST['theme_option']) || $_REQUEST['theme_option'] = '') {
 					// theme has no options
 					$_REQUEST['theme_option'] = '';
 				}
@@ -74,20 +74,20 @@ class AdminWizardLookAndFeel extends Wizard
 		if ($prefs['feature_jquery'] == 'y') {
 			$js = 'var theme_options = {';
 			foreach ($themes as $theme => $value) {
-				$js.= "\n'$theme':['" . $themelib->get_thumbnail_file($theme, '') . '\',{';
+				$js .= "\n'$theme':['" . $themelib->get_thumbnail_file($theme, '') . '\',{';
 				$options = $themelib->list_theme_options($theme);
 				if ($options) {
 					foreach ($options as $option) {
-						$js.= "'$option':'" . $themelib->get_thumbnail_file($theme, $option) . '\',';
+						$js .= "'$option':'" . $themelib->get_thumbnail_file($theme, $option) . '\',';
 					}
 					$js = substr($js, 0, strlen($js) - 1) . '}';
 				} else {
-					$js.= '}';
+					$js .= '}';
 				}
-				$js.= '],';
+				$js .= '],';
 			}
 			$js = substr($js, 0, strlen($js) - 1);
-			$js.= '};';
+			$js .= '};';
 
 			$js .= 'var theme_layouts = ';
 			foreach ($themes as $theme => $value) {
@@ -95,7 +95,7 @@ class AdminWizardLookAndFeel extends Wizard
 				$options = $themelib->list_theme_options($theme);
 				if ($options) {
 					foreach ($options as $option) {
-						$theme_layouts[$theme.':'.$option] = $csslib->list_user_selectable_layouts($theme,$option);
+						$theme_layouts[$theme . ':' . $option] = $csslib->list_user_selectable_layouts($theme, $option);
 					}
 				}
 			}
@@ -230,16 +230,16 @@ JS
 		return $wizardTemplate;
 	}
 
-	function onContinue ($homepageUrl) 
+	function onContinue($homepageUrl)
 	{
 		// Run the parent first
 		$changes = parent::onContinue($homepageUrl);
 		if (array_key_exists('style', $changes) || array_key_exists('style_option', $changes)) {
-			$query = array('url' => $_REQUEST['url'], 'wizard_step' => $_REQUEST['wizard_step'], 'showOnLogin' => $_REQUEST['showOnLogin']);
-			TikiLib::lib('access')->redirect($_SERVER['PHP_SELF'] . '?' . http_build_query($query, '', '&') );
+			$query = ['url' => $_REQUEST['url'], 'wizard_step' => $_REQUEST['wizard_step'], 'showOnLogin' => $_REQUEST['showOnLogin']];
+			TikiLib::lib('access')->redirect($_SERVER['PHP_SELF'] . '?' . http_build_query($query, '', '&'));
 		}
 	}
-	
+
 	/**
 	 * @param $stl - style file name (e.g. thenews.css)
 	 * @param $opt - optional option file name
@@ -248,47 +248,46 @@ JS
 	function get_thumbnail_file($stl, $opt = '') // find thumbnail if there is one
 	{
 		$tikilib = TikiLib::lib('tiki');
-		if (!empty($opt) && $opt != tr('None')) {
+		if (! empty($opt) && $opt != tr('None')) {
 			$filename = preg_replace('/\.css$/i', '.png', $opt); // change .css to .png
-
 		} else {
 			$filename = preg_replace('/\.css$/i', '.png', $stl); // change .css to .png
 			$opt = '';
 		}
 		return $tikilib->get_style_path($stl, $opt, $filename);
-	}	
+	}
 
 	function setupThumbnailScript($styles)
 	{
 		global	$prefs;
 		$headerlib = TikiLib::lib('header');
 		$tikilib = TikiLib::lib('tiki');
-		
+
 		if ($prefs['feature_jquery'] == 'y') {
 			// hash of themes and their options and their thumbnail images
 			$js = 'var style_options = {';
 			foreach ($styles as $s) {
-				$js.= "\n'$s':['" . $this->get_thumbnail_file($s, '') . '\',{';
+				$js .= "\n'$s':['" . $this->get_thumbnail_file($s, '') . '\',{';
 				$options = $tikilib->list_style_options($s);
 				if ($options) {
 					foreach ($options as $o) {
-						$js.= "'$o':'" . $this->get_thumbnail_file($s, $o) . '\',';
+						$js .= "'$o':'" . $this->get_thumbnail_file($s, $o) . '\',';
 					}
 					$js = substr($js, 0, strlen($js) - 1) . '}';
 				} else {
-					$js.= '}';
+					$js .= '}';
 				}
-				$js.= '],';
+				$js .= '],';
 			}
 
 			$js = substr($js, 0, strlen($js) - 1);
-			$js.= '};';
+			$js .= '};';
 			// JS to handle theme/option changes client-side
 			// the var (style_options) has to be declared in the same block for AJAX call scope
 			$none = json_encode(tr('None'));
 
 			$headerlib->add_js(
-<<<JS
+				<<<JS
 $js
 
 \$(document).ready( function() {
