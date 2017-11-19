@@ -14,378 +14,378 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 function iconset_default()
 {
-	return array(
+	return [
 		'name' => tr('Default (Font-awesome)'), // Mandatory, will be displayed as Icon set option in the Look&Feel admin UI
 		'description' => tr('The default system icon set using Font-awesome fonts'), // TODO display as Icon set description in the Look&Feel admin UI
 		'tag' => 'span', // The default html tag for the icons in the icon set.
 		'prepend' => 'fa fa-',
 		'append' => ' fa-fw',
-		'rotate' => array(
+		'rotate' => [
 			// Rotate the icon (only values accepted by fontawesome)
 			'90' => ' fa-rotate-90',
 			'180' => ' fa-rotate-180',
 			'270' => ' fa-rotate-270',
 			'horizontal' => ' fa-flip-horizontal',
 			'vertical' => ' fa-flip-vertical',
-		),
-		'icons' => array(
+		],
+		'icons' => [
 			/* This is the definition of an icon in the icon set if it's an "alias" to one of the default icons.
 			 * The key must be unique, it is the "name" parameter at the icon function,
 			 * so eg: {icon name="actions"}
 			 * will find 'actions' in the array and apply the specified configuration */
 
-			'actions' => array(
+			'actions' => [
 				'id' => 'play-circle',    // id to match the defaults defined below
-			),
-			'admin' => array(
+			],
+			'admin' => [
 				'id' => 'cog',
-			),
-			'add' => array(
+			],
+			'add' => [
 				'id' => 'plus-circle',
-			),
-			'admin_ads' => array(
+			],
+			'admin_ads' => [
 				'id' => 'film',
-			),
-			'admin_articles' => array(
+			],
+			'admin_articles' => [
 				'id' => 'newspaper-o',
-			),
-			'admin_blogs' => array(
+			],
+			'admin_blogs' => [
 				'id' => 'bold',
-			),
-			'admin_calendar' => array(
+			],
+			'admin_calendar' => [
 				'id' => 'calendar',
-			),
-			'admin_category' => array(
+			],
+			'admin_category' => [
 				'id' => 'sitemap fa-rotate-270',
-			),
-			'admin_comments' => array(
+			],
+			'admin_comments' => [
 				'id' => 'comment',
-			),
-			'admin_community' => array(
+			],
+			'admin_community' => [
 				'id' => 'group',
-			),
-			'admin_connect' => array(
+			],
+			'admin_connect' => [
 				'id' => 'link',
-			),
-			'admin_copyright' => array(
+			],
+			'admin_copyright' => [
 				'id' => 'copyright',
-			),
-			'admin_directory' => array(
+			],
+			'admin_directory' => [
 				'id' => 'folder-o',
-			),
-			'admin_faqs' => array(
+			],
+			'admin_faqs' => [
 				'id' => 'question',
-			),
-			'admin_features' => array(
+			],
+			'admin_features' => [
 				'id' => 'power-off',
-			),
-			'admin_fgal' => array(
+			],
+			'admin_fgal' => [
 				'id' => 'folder-open',
-			),
-			'admin_forums' => array(
+			],
+			'admin_forums' => [
 				'id' => 'comments',
-			),
-			'admin_freetags' => array(
+			],
+			'admin_freetags' => [
 				'id' => 'tags',
-			),
-			'admin_gal' => array(
+			],
+			'admin_gal' => [
 				'id' => 'file-image-o',
-			),
-			'admin_general' => array(
+			],
+			'admin_general' => [
 				'id' => 'cog',
-			),
-			'admin_i18n' => array(
+			],
+			'admin_i18n' => [
 				'id' => 'language',
-			),
-			'admin_intertiki' => array(
+			],
+			'admin_intertiki' => [
 				'id' => 'exchange',
-			),
-			'admin_login' => array(
+			],
+			'admin_login' => [
 				'id' => 'sign-in',
-			),
-            'admin_user' => array(
-                'id' => 'user',
-            ),
-			'admin_look' => array(
+			],
+			'admin_user' => [
+				'id' => 'user',
+			],
+			'admin_look' => [
 				'id' => 'image',
-			),
-			'admin_maps' => array(
+			],
+			'admin_maps' => [
 				'id' => 'map-marker',
-			),
-			'admin_messages' => array(
+			],
+			'admin_messages' => [
 				'id' => 'envelope-o',
-			),
-			'admin_metatags' => array(
+			],
+			'admin_metatags' => [
 				'id' => 'tag',
-			),
-			'admin_module' => array(
+			],
+			'admin_module' => [
 				'id' => 'cogs',
-			),
-			'admin_payment' => array(
+			],
+			'admin_payment' => [
 				'id' => 'credit-card',
-			),
-			'admin_performance' => array(
+			],
+			'admin_performance' => [
 				'id' => 'tachometer',
-			),
-			'admin_polls' => array(
+			],
+			'admin_polls' => [
 				'id' => 'tasks',
-			),
-			'admin_profiles' => array(
+			],
+			'admin_profiles' => [
 				'id' => 'cube',
-			),
-			'admin_rating' => array(
+			],
+			'admin_rating' => [
 				'id' => 'check-square',
-			),
-			'admin_rss' => array(
+			],
+			'admin_rss' => [
 				'id' => 'rss',
-			),
-			'admin_score' => array(
+			],
+			'admin_score' => [
 				'id' => 'trophy',
-			),
-			'admin_search' => array(
+			],
+			'admin_search' => [
 				'id' => 'search',
-			),
-			'admin_semantic' => array(
+			],
+			'admin_semantic' => [
 				'id' => 'arrows-h',
-			),
-			'admin_security' => array(
+			],
+			'admin_security' => [
 				'id' => 'lock',
-			),
-			'admin_sefurl' => array(
+			],
+			'admin_sefurl' => [
 				'id' => 'search-plus',
-			),
-			'admin_share' => array(
+			],
+			'admin_share' => [
 				'id' => 'share-alt',
-			),
-			'admin_socialnetworks' => array(
+			],
+			'admin_socialnetworks' => [
 				'id' => 'thumbs-up',
-			),
-			'admin_stats' => array(
+			],
+			'admin_stats' => [
 				'id' => 'bar-chart',
-			),
-			'admin_textarea' => array(
+			],
+			'admin_textarea' => [
 				'id' => 'edit',
-			),
-			'admin_trackers' => array(
+			],
+			'admin_trackers' => [
 				'id' => 'database',
-			),
-			'admin_userfiles' => array(
+			],
+			'admin_userfiles' => [
 				'id' => 'cog',
-			),
-			'admin_video' => array(
+			],
+			'admin_video' => [
 				'id' => 'video-camera',
-			),
-			'admin_webmail' => array(
+			],
+			'admin_webmail' => [
 				'id' => 'inbox',
-			),
-			'admin_webservices' => array(
+			],
+			'admin_webservices' => [
 				'id' => 'cog',
-			),
-			'admin_wiki' => array(
+			],
+			'admin_wiki' => [
 				'id' => 'file-text-o',
-			),
-			'admin_workspace' => array(
+			],
+			'admin_workspace' => [
 				'id' => 'desktop',
-			),
-			'admin_wysiwyg' => array(
+			],
+			'admin_wysiwyg' => [
 				'id' => 'file-text',
-			),
-			'admin_print' => array(
+			],
+			'admin_print' => [
 				'id' => 'print',
-			),
-			'admin_packages' => array(
+			],
+			'admin_packages' => [
 				'id' => 'gift',
-			),
-			'admin_rtc' => array(
+			],
+			'admin_rtc' => [
 				'id' => 'bullhorn',
-			),
+			],
 			//align-center in defaults
 			//align-justify in defaults
 			//align-left in defaults
 			//align-right in defaults
 			//anchor in defaults
-			'articles' => array(
+			'articles' => [
 				'id' => 'newspaper-o',
-			),
+			],
 			//arrow-up in defaults
-			'attach' => array(
+			'attach' => [
 				'id' => 'paperclip',
-			),
-			'audio' => array(
+			],
+			'audio' => [
 				'id' => 'file-audio-o',
-			),
-			'back' => array(
+			],
+			'back' => [
 				'id' => 'arrow-left',
-			),
-			'background-color' => array(
+			],
+			'background-color' => [
 				'id' => 'paint-brush',
-			),
-			'backlink' => array(
+			],
+			'backlink' => [
 				'id' => 'reply',
-			),
+			],
 			//backward in defaults
-			'backward_step' => array(
+			'backward_step' => [
 				'id' => 'step-backward',
-			),
+			],
 			//ban in defaults
 			//book in defaults
-			'box' => array(
+			'box' => [
 				'id' => 'list-alt',
-			),
+			],
 			//caret-left & caret-right in defaults
-			'cart' => array(
+			'cart' => [
 				'id' => 'shopping-cart',
-			),
-			'chart' => array(
+			],
+			'chart' => [
 				'id' => 'area-chart',
-			),
+			],
 			//code in defaults
-			'code_file' => array(
+			'code_file' => [
 				'id' => 'file-code-o',
-			),
-			'collapsed' => array(
+			],
+			'collapsed' => [
 				'id' => 'plus-square-o',
-			),
+			],
 			//columns in defaults
-			'comments' => array(
+			'comments' => [
 				'id' => 'comments-o',
-			),
-			'compose' => array(
+			],
+			'compose' => [
 				'id' => 'pencil',
-			),
-			'computer' => array(
+			],
+			'computer' => [
 				'id' => 'desktop',
-			),
-			'contacts' => array(
+			],
+			'contacts' => [
 				'id' => 'group',
-			),
-			'content-template' => array(
+			],
+			'content-template' => [
 				'id' => 'file-o',
-			),
+			],
 			//copy in defaults
-			'create' => array(
+			'create' => [
 				'id' => 'plus',
-			),
+			],
 			//database in defaults
-			'delete' => array(
+			'delete' => [
 				'id' => 'times',
-			),
-			'difference' => array(
+			],
+			'difference' => [
 				'id' => 'strikethrough',
-			),
-			'disable' => array(
+			],
+			'disable' => [
 				'id' => 'minus-square',
-			),
-			'documentation' => array(
+			],
+			'documentation' => [
 				'id' => 'book',
-			),
-			'down' => array(
+			],
+			'down' => [
 				'id' => 'sort-desc',
-			),
+			],
 			//edit in defaults
-			'education' => array(
+			'education' => [
 				'id' => 'graduation-cap',
-			),
-			'envelope' => array(
+			],
+			'envelope' => [
 				'id' => 'envelope-o',
-			),
-			'erase' => array(
+			],
+			'erase' => [
 				'id' => 'eraser',
-			),
-			'error' => array(
+			],
+			'error' => [
 				'id' => 'exclamation-circle',
-			),
-			'excel' => array(
+			],
+			'excel' => [
 				'id' => 'file-excel-o',
-			),
-			'expanded' => array(
+			],
+			'expanded' => [
 				'id' => 'minus-square-o',
-			),
-			'export' => array(
+			],
+			'export' => [
 				'id' => 'download',
-			),
+			],
 			//facebook in defaults
-			'file' => array(
+			'file' => [
 				'id' => 'file-o',
-			),
-			'file-archive' => array(
+			],
+			'file-archive' => [
 				'id' => 'folder',
-			),
-			'file-archive-open' => array(
+			],
+			'file-archive-open' => [
 				'id' => 'folder-open',
-			),
+			],
 			//filter in defaults
 			//flag in defaults
-			'floppy' => array(
+			'floppy' => [
 				'id' => 'floppy-o',
-			),
-			'font-color' => array(
+			],
+			'font-color' => [
 				'id' => 'font',
 				'class' => 'text-danger'
-			),
+			],
 			//forward in defaults
-			'forward_step' => array(
+			'forward_step' => [
 				'id' => 'step-forward',
-			),
-			'fullscreen' => array(
+			],
+			'fullscreen' => [
 				'id' => 'arrows-alt',
-			),
+			],
 			//group in defaults
-			'h1' => array(
+			'h1' => [
 				'id' => 'header',
-			),
-			'h2' => array(
+			],
+			'h2' => [
 				'id' => 'header',
 				'size' => '.9'
-			),
-			'h3' => array(
+			],
+			'h3' => [
 				'id' => 'header',
 				'size' => '.8'
-			),
-			'help' => array(
+			],
+			'help' => [
 				'id' => 'question-circle',
-			),
-			'history' => array(
+			],
+			'history' => [
 				'id' => 'clock-o',
-			),
+			],
 			//history in defaults
-			'horizontal-rule' => array(
+			'horizontal-rule' => [
 				'id' => 'minus',
-			),
-			'html' => array(
+			],
+			'html' => [
 				'id' => 'html5',
-			),
-			'image' => array(
+			],
+			'image' => [
 				'id' => 'file-image-o',
-			),
-			'import' => array(
+			],
+			'import' => [
 				'id' => 'upload',
-			),
+			],
 			//indent in defaults
-			'index' => array(
+			'index' => [
 				'id' => 'spinner',
-			),
-			'information' => array(
+			],
+			'information' => [
 				'id' => 'info-circle',
-			),
+			],
 			//italic in defaults
-			'keyboard' => array(
+			'keyboard' => [
 				'id' => 'keyboard-o',
-			),
-			'like' => array(
+			],
+			'like' => [
 				'id' => 'thumbs-up',
-			),
+			],
 			//link in defaults
-			'link-external' => array(
+			'link-external' => [
 				'id' => 'external-link',
-			),
-			'link-external-alt' => array(
+			],
+			'link-external-alt' => [
 				'id' => 'external-link-square',
-			),
+			],
 			//list in defaults
-			'list-numbered' => array(
+			'list-numbered' => [
 				'id' => 'list-ol',
-			),
+			],
 			// special icons for list gui toolbars
 			'listgui_display' => [
 				'id' => 'desktop',
@@ -428,252 +428,252 @@ function iconset_default()
 			],
 			//lock in defaults
 			//same fa icon used for admin_security, but not the same in other icon sets
-			'log' => array(
+			'log' => [
 				'id' => 'history',
-			),
-			'login' => array(
+			],
+			'login' => [
 				'id' => 'sign-in',
-			),
-			'logout' => array(
+			],
+			'logout' => [
 				'id' => 'sign-out',
-			),
-			'mailbox' => array(
+			],
+			'mailbox' => [
 				'id' => 'inbox',
-			),
+			],
 			//map in defaults
-			'menu' => array(
+			'menu' => [
 				'id' => 'bars',
-			),
-			'menu-extra' => array(
+			],
+			'menu-extra' => [
 				'id' => 'chevron-down',
-			),
-			'menuitem' => array(
+			],
+			'menuitem' => [
 				'id' => 'angle-right',
-			),
-			'merge' => array(
+			],
+			'merge' => [
 				'id' => 'random',
-			),
-			'minimize' => array(
+			],
+			'minimize' => [
 				'id' => 'compress',
-			),
+			],
 			//minus in defaults
-			'module' => array(
+			'module' => [
 				'id' => 'cogs',
-			),
-			'more' => array(
+			],
+			'more' => [
 				'id' => 'ellipsis-h',
-			),
-			'move' => array(
+			],
+			'move' => [
 				'id' => 'exchange',
-			),
-			'next' => array(
+			],
+			'next' => [
 				'id' => 'arrow-right',
-			),
-			'notepad' => array(
+			],
+			'notepad' => [
 				'id' => 'file-text-o',
-			),
-			'notification' => array(
+			],
+			'notification' => [
 				'id' => 'bell-o',
-			),
-			'off' => array(
+			],
+			'off' => [
 				'id' => 'power-off',
-			),
-			'ok' => array(
+			],
+			'ok' => [
 				'id' => 'check-circle',
-			),
+			],
 			//outdent in defaults
-			'page-break' => array(
+			'page-break' => [
 				'id' => 'scissors',
-			),
+			],
 			//paste in defaults
 			//pause in defaults
-			'pdf' => array(
+			'pdf' => [
 				'id' => 'file-pdf-o',
-			),
-			'permission' => array(
+			],
+			'permission' => [
 				'id' => 'key',
-			),
+			],
 			//play in defaults
-			'plugin' => array(
+			'plugin' => [
 				'id' => 'puzzle-piece',
-			),
-			'popup' => array(
+			],
+			'popup' => [
 				'id' => 'list-alt',
-			),
-			'post' => array(
+			],
+			'post' => [
 				'id' => 'pencil',
-			),
-			'powerpoint' => array(
+			],
+			'powerpoint' => [
 				'id' => 'file-powerpoint-o',
-			),
-			'previous' => array(
+			],
+			'previous' => [
 				'id' => 'arrow-left',
-			),
+			],
 			//print in defaults
-			'quotes' => array(
+			'quotes' => [
 				'id' => 'quote-left',
-			),
-			'ranking' => array(
+			],
+			'ranking' => [
 				'id' => 'sort-numeric-asc',
-			),
+			],
 			//refresh in defaults
 			//remove in defaults
 			//repeat in defaults
 			//rss in defaults
 			//scissors in defaults
-			'screencapture' => array(
+			'screencapture' => [
 				'id' => 'camera',
-			),
+			],
 			//search in defaults
-			'selectall' => array(
+			'selectall' => [
 				'id' => 'file-text',
-			),
+			],
 			//send in defaults
-			'settings' => array(
+			'settings' => [
 				'id' => 'wrench',
-			),
+			],
 			//share in defaults
-			'sharethis' => array(
+			'sharethis' => [
 				'id' => 'share-alt',
-			),
-			'smile' => array(
+			],
+			'smile' => [
 				'id' => 'smile-o',
-			),
+			],
 			//sort in defaults
-			'sort-down' => array(
+			'sort-down' => [
 				'id' => 'sort-desc',
-			),
-			'sort-up' => array(
+			],
+			'sort-up' => [
 				'id' => 'sort-asc',
-			),
+			],
 			//star in defaults
-			'star-empty' => array(
+			'star-empty' => [
 				'id' => 'star-o',
-			),
-			'star-empty-selected' => array(
+			],
+			'star-empty-selected' => [
 				'id' => 'star-o',
 				'class' => 'text-success'
-			),
-			'star-half-rating' => array(
+			],
+			'star-half-rating' => [
 				'id' => 'star-half-full',
-			),
-			'star-half-selected' => array(
+			],
+			'star-half-selected' => [
 				'id' => 'star-half-full',
 				'class' => 'text-success'
-			),
-			'star-selected' => array(
+			],
+			'star-selected' => [
 				'id' => 'star',
 				'class' => 'text-success'
-			),
-			'status-open' => array(
+			],
+			'status-open' => [
 				'id' => 'circle',
 				'style' => 'color:green'
-			),
-			'status-pending' => array(
+			],
+			'status-pending' => [
 				'id' => 'adjust',
 				'style' => 'color:orange'
-			),
-			'status-closed' => array(
+			],
+			'status-closed' => [
 				'id' => 'times-circle-o',
 				'style' => 'color:grey'
-			),
+			],
 			//stop in defaults
-			'stop-watching' => array(
+			'stop-watching' => [
 				'id' => 'eye-slash',
-			),
-			'structure' => array(
+			],
+			'structure' => [
 				'id' => 'sitemap',
-			),
-			'success' => array(
+			],
+			'success' => [
 				'id' => 'check',
-			),
+			],
 			//table in defaults
 			//tag in defaults
 			//tags in defaults
-			'textfile' => array(
+			'textfile' => [
 				'id' => 'file-text-o',
-			),
+			],
 			//th-list in defaults
-			'three-d' => array(
+			'three-d' => [
 				'id' => 'cube',
-			),
+			],
 			//thumbs-down in defaults
 			//thumbs-up in defaults
-			'time' => array(
+			'time' => [
 				'id' => 'clock-o',
-			),
-			'title' => array(
+			],
+			'title' => [
 				'id' => 'text-width',
-			),
-			'toggle-off' => array(
+			],
+			'toggle-off' => [
 				'id' => 'toggle-off',
-			),
-			'toggle-on' => array(
+			],
+			'toggle-on' => [
 				'id' => 'toggle-on',
-			),
-			'trackers' => array(
+			],
+			'trackers' => [
 				'id' => 'database',
-			),
-			'translate' => array(
+			],
+			'translate' => [
 				'id' => 'language',
-			),
-			'trash' => array(
+			],
+			'trash' => [
 				'id' => 'trash-o',
-			),
+			],
 			//twitter in defaults
 			//tv in defaults
 			//undo in defaults
 			//unlink in defaults
 			//unlock in defaults
-			'unlike' => array(
+			'unlike' => [
 				'id' => 'thumbs-down',
-			),
-			'up' => array(
+			],
+			'up' => [
 				'id' => 'sort-asc',
-			),
-			'video' => array(
+			],
+			'video' => [
 				'id' => 'file-video-o',
-			),
-			'video_file' => array(
+			],
+			'video_file' => [
 				'id' => 'file-video-o',
-			),
-			'vimeo' => array(
+			],
+			'vimeo' => [
 				'id' => 'vimeo-square',
-			),
-			'view' => array(
+			],
+			'view' => [
 				'id' => 'search-plus',
-			),
-			'warning' => array(
+			],
+			'warning' => [
 				'id' => 'exclamation-triangle',
-			),
-			'watch' => array(
+			],
+			'watch' => [
 				'id' => 'eye',
-			),
-			'watch-group' => array(
+			],
+			'watch-group' => [
 				'id' => 'group',
-			),
-			'wiki' => array(
+			],
+			'wiki' => [
 				'id' => 'file-text-o',
-			),
-			'wizard' => array(
+			],
+			'wizard' => [
 				'id' => 'magic',
-			),
-			'word' => array(
+			],
+			'word' => [
 				'id' => 'file-word-o',
-			),
-			'wysiwyg' => array(
+			],
+			'wysiwyg' => [
 				'id' => 'file-text',
-			),
-			'zip' => array(
+			],
+			'zip' => [
 				'id' => 'file-zip-o',
-			),
-		),
+			],
+		],
 		/*
 		 * All the available icons in this set (font-awesome in this case,
 		 * from http://fortawesome.github.io/Font-Awesome/cheatsheet/)
 		 * Version 4.5
 		 */
-		'defaults' => array(
+		'defaults' => [
 			'500px',
 			'adjust',
 			'adn',
@@ -1456,7 +1456,6 @@ function iconset_default()
 			'window-minimize',
 			'window-restore',
 			'wpexplorer',
-		),
-	);
-
+		],
+	];
 }

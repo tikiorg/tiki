@@ -1,6 +1,6 @@
-<?php 
+<?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
@@ -16,14 +16,14 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 function iconset_akebi_custom()
 {
-	return array(
+	return [
 		'name' => tr('Custom icons'),
 		'description' => tr('Custom icons for the theme'),
 		'tag' => 'span', // the default html tag to surround the icon
-		'icons' => array(
-			'information' => array(
+		'icons' => [
+			'information' => [
 				'id' => 'info-circle', // This is a sample icon, change it to have a theme specific icon
-			),
-		)
-	);
+			],
+		]
+	];
 }

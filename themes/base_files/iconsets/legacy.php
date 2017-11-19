@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
@@ -21,792 +21,792 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 function iconset_legacy()
 {
-	return array(
+	return [
 		'name' => tr('Legacy (pre Tiki14) icons'),
 		'description' => tr('Legacy (pre Tiki14) icons, mainly using famfamfam images'),
 		'tag' => 'img',
 		'prepend' => 'img/icons/',
 		'append' => '.png',
-		'icons' => array(
-			'actions' => array(
+		'icons' => [
+			'actions' => [
 				'id' => 'application_form',
-			),
+			],
 			//add in defaults
-			'admin' => array(
+			'admin' => [
 					'id' => 'wrench',
-			),
-			'admin_ads' => array(
+			],
+			'admin_ads' => [
 				'id' => 'large/ads',
-			),
-			'admin_articles' => array(
+			],
+			'admin_articles' => [
 				'id' => 'large/stock_bold',
-			),
-			'admin_blogs' => array(
+			],
+			'admin_blogs' => [
 				'id' => 'large/blogs',
-			),
-			'admin_calendar' => array(
+			],
+			'admin_calendar' => [
 				'id' => 'large/date',
-			),
-			'admin_category' => array(
+			],
+			'admin_category' => [
 				'id' => 'large/categories',
-			),
-			'admin_comments' => array(
+			],
+			'admin_comments' => [
 				'id' => 'large/comments',
-			),
-			'admin_community' => array(
+			],
+			'admin_community' => [
 				'id' => 'large/users',
-			),
-			'admin_connect' => array(
+			],
+			'admin_connect' => [
 				'id' => 'large/gnome-globe',
-			),
-			'admin_copyright' => array(
+			],
+			'admin_copyright' => [
 				'id' => 'large/copyright',
-			),
-			'admin_directory' => array(
+			],
+			'admin_directory' => [
 				'id' => 'large/gnome-fs-server',
-			),
-			'admin_faqs' => array(
+			],
+			'admin_faqs' => [
 				'id' => 'large/stock_dialog_question',
-			),
-			'admin_features' => array(
+			],
+			'admin_features' => [
 				'id' => 'large/boot',
-			),
-			'admin_fgal' => array(
+			],
+			'admin_fgal' => [
 				'id' => 'large/file-manager',
 				'size' => 2,
-				'sizes' => array(
-					3 => array(
+				'sizes' => [
+					3 => [
 						'id' => 'large/fileopen48x48'
-					)
-				)
-			),
-			'admin_forums' => array(
+					]
+				]
+			],
+			'admin_forums' => [
 				'id' => 'large/stock_index',
-			),
-			'admin_freetags' => array(
+			],
+			'admin_freetags' => [
 				'id' => 'large/vcard',
-			),
-			'admin_gal' => array(
+			],
+			'admin_gal' => [
 				'id' => 'large/stock_select-color',
-			),
-			'admin_general' => array(
+			],
+			'admin_general' => [
 				'id' => 'large/icon-configuration',
 				'position' => '0px -15px;',
-			),
-			'admin_i18n' => array(
+			],
+			'admin_i18n' => [
 				'id' => 'large/i18n',
-			),
-			'admin_intertiki' => array(
+			],
+			'admin_intertiki' => [
 				'id' => 'large/intertiki',
-			),
-			'admin_login' => array(
+			],
+			'admin_login' => [
 				'id' => 'large/stock_quit',
-			),
-			'admin_look' => array(
+			],
+			'admin_look' => [
 				'id' => 'large/gnome-settings-background',
-			),
-			'admin_maps' => array(
+			],
+			'admin_maps' => [
 				'id' => 'large/maps',
-			),
-			'admin_messages' => array(
+			],
+			'admin_messages' => [
 				'id' => 'large/messages',
-			),
-			'admin_metatags' => array(
+			],
+			'admin_metatags' => [
 				'id' => 'large/metatags',
-			),
-			'admin_module' => array(
+			],
+			'admin_module' => [
 				'id' => 'large/display-capplet',
-			),
-			'admin_payment' => array(
+			],
+			'admin_payment' => [
 				'id' => 'large/payment',
-			),
-			'admin_performance' => array(
+			],
+			'admin_performance' => [
 				'id' => 'large/performance',
-			),
-			'admin_polls' => array(
+			],
+			'admin_polls' => [
 				'id' => 'large/stock_missing-image',
-			),
-			'admin_profiles' => array(
+			],
+			'admin_profiles' => [
 				'id' => 'large/profiles',
-			),
-			'admin_rating' => array(
+			],
+			'admin_rating' => [
 				'id' => 'large/rating',
-			),
-			'admin_rss' => array(
+			],
+			'admin_rss' => [
 				'id' => 'large/feed-icon',
-			),
-			'admin_score' => array(
+			],
+			'admin_score' => [
 				'id' => 'large/stock_about',
-			),
-			'admin_search' => array(
+			],
+			'admin_search' => [
 				'id' => 'large/xfce4-appfinder',
-			),
-			'admin_semantic' => array(
+			],
+			'admin_semantic' => [
 				'id' => 'large/semantic',
-			),
-			'admin_security' => array(
+			],
+			'admin_security' => [
 				'id' => 'large/gnome-lockscreen',
-			),
-			'admin_sefurl' => array(
+			],
+			'admin_sefurl' => [
 				'id' => 'large/goto',
-			),
-			'admin_share' => array(
+			],
+			'admin_share' => [
 				'id' => 'large/stock_contact',
-			),
-			'admin_socialnetworks' => array(
+			],
+			'admin_socialnetworks' => [
 				'id' => 'large/socialnetworks',
-			),
-			'admin_stats' => array(
+			],
+			'admin_stats' => [
 				'id' => 'large/stats48x48',
-			),
-			'admin_textarea' => array(
+			],
+			'admin_textarea' => [
 				'id' => 'large/editing',
-			),
-			'admin_trackers' => array(
+			],
+			'admin_trackers' => [
 				'id' => 'large/gnome-settings-font',
-			),
-			'admin_userfiles' => array(
+			],
+			'admin_userfiles' => [
 				'id' => 'large/userfiles',
-			),
-			'admin_video' => array(
+			],
+			'admin_video' => [
 				'id' => 'large/gnome-camera-video-32',
-			),
-			'admin_webmail' => array(
+			],
+			'admin_webmail' => [
 				'id' => 'large/evolution',
-			),
-			'admin_webservices' => array(
+			],
+			'admin_webservices' => [
 				'id' => 'large/webservices',
-			),
-			'admin_wiki' => array(
+			],
+			'admin_wiki' => [
 				'id' => 'large/wikipages',
 				'size' => 2,
-				'sizes' => array(
-					3 => array(
+				'sizes' => [
+					3 => [
 						'id' => 'large/wikipages48x48'
-					)
-				)
-			),
-			'admin_workspace' => array(
+					]
+				]
+			],
+			'admin_workspace' => [
 				'id' => 'large/areas',
-			),
-			'admin_wysiwyg' => array(
+			],
+			'admin_wysiwyg' => [
 				'id' => 'large/wysiwyg',
-			),
-			'align-center' => array(
+			],
+			'align-center' => [
 				'id' => 'text_align_center',
-			),
-			'align-justify' => array(
+			],
+			'align-justify' => [
 				'id' => 'text_align_justify',
-			),
-			'align-left' => array(
+			],
+			'align-left' => [
 				'id' => 'text_align_left',
-			),
-			'align-right' => array(
+			],
+			'align-right' => [
 				'id' => 'text_align_right',
-			),
+			],
 			//anchor in defaults
-			'arrow-up' => array(
+			'arrow-up' => [
 				'id' => 'arrow-up',
-			),
-			'articles' => array(
+			],
+			'articles' => [
 				'id' => 'newspaper_go',
-			),
-			'attach' => array(
+			],
+			'attach' => [
 				'id' => 'attach',
-			),
-			'audio' => array(
+			],
+			'audio' => [
 				'id' => 'bell',
-			),
-			'back' => array(
+			],
+			'back' => [
 				'id' => 'arrow_left',
-			),
-			'background-color' => array(
+			],
+			'background-color' => [
 				'id' => 'palette_bg',
-			),
-			'backlink' => array(
+			],
+			'backlink' => [
 				'id' => 'arrow_turn_left',
-			),
-			'backward' => array(
+			],
+			'backward' => [
 				'id' => 'control_rewind',
-			),
-			'backward_step' => array(
+			],
+			'backward_step' => [
 				'id' => 'control_start',
-			),
-			'ban' => array(
+			],
+			'ban' => [
 				'id' => 'ban_remove',
-			),
-			'bold' => array(
+			],
+			'bold' => [
 				'id' => 'text_bold',
-			),
+			],
 			//book in defaults
-			'bookmark' => array(
+			'bookmark' => [
 				'id' => 'book',
-			),
-			'box' => array(
+			],
+			'box' => [
 				'id' => 'layout_header',
-			),
+			],
 			//bug in defaults
-			'bullhorn' => array(
+			'bullhorn' => [
 				'id' => 'announce',
-			),
+			],
 			//calendar in defaults
-			'caret-left' => array(
+			'caret-left' => [
 				'id' => 'resultset_previous',
-			),
-			'caret-right' => array(
+			],
+			'caret-right' => [
 				'id' => 'resultset_next',
-			),
-			'cart' => array(
+			],
+			'cart' => [
 				'id' => 'cart_add',
-			),
-			'chart' => array(
+			],
+			'chart' => [
 				'id' => 'chart_curve',
-			),
-			'check' => array(
+			],
+			'check' => [
 				'id' => 'accept',
 //				'append' => '.gif'
-			),
-			'code' => array(
+			],
+			'code' => [
 				'id' => 'page_white_code',
-			),
-			'code_file' => array(
+			],
+			'code_file' => [
 				'id' => 'page_white_code',
-			),
-			'cog' => array(
+			],
+			'cog' => [
 				'id' => 'wrench',
-			),
-			'collapsed' => array(
+			],
+			'collapsed' => [
 				'id' => 'bullet_toggle_plus',
-			),
-			'columns' => array(
+			],
+			'columns' => [
 				'id' => 'text_columns',
-			),
-			'comment' => array(
+			],
+			'comment' => [
 				'id' => 'comment_add',
-			),
-			'comments' => array(
+			],
+			'comments' => [
 				'id' => 'comments',
 				'size' => 1,
-				'sizes' => array(
-					3 => array(
+				'sizes' => [
+					3 => [
 						'id' => 'large/comments48x48'
-					)
-				)
-			),
-			'compose' => array(
+					]
+				]
+			],
+			'compose' => [
 				'id' => 'pencil',
 				'size' => 1,
-				'sizes' => array(
-					3 => array(
+				'sizes' => [
+					3 => [
 						'id' => 'webmail/compose',
 						'prepend' => 'img/',
 						'append' => '.gif'
-					)
-				)
-			),
+					]
+				]
+			],
 			//computer in defaults
-			'contacts' => array(
+			'contacts' => [
 				'id' => 'group',
 				'size' => 1,
-				'sizes' => array(
-					3 => array(
+				'sizes' => [
+					3 => [
 						'id' => 'webmail/contact',
 						'prepend' => 'img/',
 						'append' => '.gif'
-					)
-				)
-			),
-			'copy' => array(
+					]
+				]
+			],
+			'copy' => [
 				'id' => 'page_copy',
-			),
-			'copyright' => array(
+			],
+			'copyright' => [
 				'id' => 'shield',
-			),
-			'create' => array(
+			],
+			'create' => [
 				'id' => 'add',
-			),
-			'dashboard' => array(
+			],
+			'dashboard' => [
 				'id' => 'application_view_columns',
-			),
+			],
 			//database in defaults
-			'delete' => array(
+			'delete' => [
 				'id' => 'cross',
-			),
-			'difference' => array(
+			],
+			'difference' => [
 				'id' => 'text_strikethrough',
-			),
-			'disable' => array(
+			],
+			'disable' => [
 				'id' => 'delete',
-			),
-			'documentation' => array(
+			],
+			'documentation' => [
 				'id' => 'book_open',
-			),
-			'down' => array(
+			],
+			'down' => [
 				'id' => 'resultset_down',
-			),
-			'edit' => array(
+			],
+			'edit' => [
 				'id' => 'page_edit',
-			),
-			'education' => array(
+			],
+			'education' => [
 				'id' => 'text_signature',
-			),
-			'envelope' => array(
+			],
+			'envelope' => [
 				'id' => 'email',
 				'size' => 1,
-				'sizes' => array(
-					3 => array(
+				'sizes' => [
+					3 => [
 						'id' => 'large/evolution48x48'
-					)
-				)
-			),
-			'error' => array(
+					]
+				]
+			],
+			'error' => [
 				'id' => 'exclamation',
-			),
-			'erase' => array(
+			],
+			'erase' => [
 					'id' => 'page_edit',
-			),
-			'excel' => array(
+			],
+			'excel' => [
 				'id' => 'mime/xls',
-			),
-			'expanded' => array(
+			],
+			'expanded' => [
 				'id' => 'bullet_toggle_minus',
-			),
-			'export' => array(
+			],
+			'export' => [
 				'id' => 'disk',
-			),
-			'facebook' => array(
+			],
+			'facebook' => [
 				'id' => 'thumb_up',
 				'size' => 1,
-				'sizes' => array(
-					2 => array(
+				'sizes' => [
+					2 => [
 						'id' => 'facebook-logo_32'
-					)
-				)
-			),
-			'file' => array(
+					]
+				]
+			],
+			'file' => [
 				'id' => 'page',
-			),
-			'file-archive' => array(
+			],
+			'file-archive' => [
 				'id' => 'folder',
-			),
-			'file-archive-open' => array(
+			],
+			'file-archive-open' => [
 				'id' => 'folder_go',
-			),
-			'filter' => array(
+			],
+			'filter' => [
 				'id' => 'find',
-			),
-			'flag' => array(
+			],
+			'flag' => [
 				'id' => 'flag_blue',
-			),
-			'floppy' => array(
+			],
+			'floppy' => [
 				'id' => 'disk',
-			),
-			'font-color' => array(
+			],
+			'font-color' => [
 				'id' => 'font',
-			),
-			'forward' => array(
+			],
+			'forward' => [
 				'id' => 'control_fastforward',
-			),
-			'forward_step' => array(
+			],
+			'forward_step' => [
 				'id' => 'control_end',
-			),
-			'fullscreen' => array(
+			],
+			'fullscreen' => [
 				'id' => 'application_get',
-			),
+			],
 			//google in defaults
 			//group in defaults
-			'h1' => array(
+			'h1' => [
 				'id' => 'text_heading_1',
-			),
-			'h2' => array(
+			],
+			'h2' => [
 				'id' => 'text_heading_2',
-			),
-			'h3' => array(
+			],
+			'h3' => [
 				'id' => 'text_heading_3',
-			),
+			],
 			//help in defaults
-			'history' => array(
+			'history' => [
 				'id' => 'clock',
-			),
-			'home' => array(
+			],
+			'home' => [
 				'id' => 'house',
-			),
-			'horizontal-rule' => array(
+			],
+			'horizontal-rule' => [
 				'id' => 'text_horizontalrule',
-			),
+			],
 			//html in defaults
 			//image in defaults
-			'import' => array(
+			'import' => [
 				'id' => 'upload',
-			),
-			'indent' => array(
+			],
+			'indent' => [
 				'id' => 'text_indent',
-			),
-			'index' => array(
+			],
+			'index' => [
 				'id' => 'table_refresh',
-			),
+			],
 			//information in defaults
-			'italic' => array(
+			'italic' => [
 				'id' => 'text_italic',
-			),
-			'language' => array(
+			],
+			'language' => [
 				'id' => 'world',
-			),
+			],
 			//link in defaults
-			'link-external' => array(
+			'link-external' => [
 				'id' => 'external_link',
 				'append' => '.gif'
-			),
-			'link-external-alt' => array(
+			],
+			'link-external-alt' => [
 				'id' => 'page_link',
-			),
-			'list' => array(
+			],
+			'list' => [
 				'id' => 'application_view_list',
-			),
-			'list-numbered' => array(
+			],
+			'list-numbered' => [
 				'id' => 'text_list_numbers',
-			),
-			'lock' => array(
+			],
+			'lock' => [
 				'id' => 'lock',
-			),
-			'log' => array(
+			],
+			'log' => [
 				'id' => 'book',
-			),
-			'login' => array(
+			],
+			'login' => [
 				'id' => 'task_received',
-			),
-			'logout' => array(
+			],
+			'logout' => [
 				'id' => 'task_submitted',
-			),
-			'mailbox' => array(
+			],
+			'mailbox' => [
 				'id' => 'email',
 				'size' => 1,
-				'sizes' => array(
-					3 => array(
+				'sizes' => [
+					3 => [
 						'id' => 'webmail/mailbox',
 						'prepend' => 'img/',
 						'append' => '.gif'
-					)
-				)
-			),
+					]
+				]
+			],
 			//map in defaults
-			'menu' => array(
+			'menu' => [
 				'id' => 'application_side_tree',
-			),
-			'menu-extra' => array(
+			],
+			'menu-extra' => [
 				'id' => 'resultset_down',
-			),
-			'menuitem' => array(
+			],
+			'menuitem' => [
 				'id' => 'arrow_right',
-			),
-			'merge' => array(
+			],
+			'merge' => [
 				'id' => 'arrow_merge',
-			),
-			'minimize' => array(
+			],
+			'minimize' => [
 				'id' => 'arrow_in',
-			),
-			'minus' => array(
+			],
+			'minus' => [
 				'id' => 'delete',
-			),
+			],
 			//module in defaults
 			//money in defaults
-			'more' => array(
+			'more' => [
 				'id' => 'resultset_down',
-			),
-			'move' => array(
+			],
+			'move' => [
 				'id' => 'task_submitted',
-			),
-			'music' => array(
+			],
+			'music' => [
 				'id' => '/mime/mp3',
-			),
-			'next' => array(
+			],
+			'next' => [
 				'id' => 'arrow_right',
-			),
-			'notepad' => array(
+			],
+			'notepad' => [
 				'id' => 'disk',
-			),
-			'notification' => array(
+			],
+			'notification' => [
 				'id' => 'announce',
-			),
-			'off' => array(
+			],
+			'off' => [
 				'id' => 'delete',
-			),
-			'ok' => array(
+			],
+			'ok' => [
 				'id' => 'accept',
-			),
-			'outdent' => array(
+			],
+			'outdent' => [
 				'id' => 'text_indent_remove',
-			),
-			'page-break' => array(
+			],
+			'page-break' => [
 				'id' => 'page_break',
-			),
-			'paste' => array(
+			],
+			'paste' => [
 				'id' => 'control_pause',
-			),
-			'pause' => array(
+			],
+			'pause' => [
 				'id' => 'control_pause',
-			),
-			'paypal' => array(
+			],
+			'paypal' => [
 				'id' => 'money',
-			),
-			'pdf' => array(
+			],
+			'pdf' => [
 				'id' => 'page_white_acrobat',
-			),
+			],
 			//pencil in defaults
-			'permission' => array(
+			'permission' => [
 				'id' => 'key',
-			),
-			'play' => array(
+			],
+			'play' => [
 				'id' => 'control_play',
-			),
+			],
 			//plugin in defaults
-			'popup' => array(
+			'popup' => [
 				'id' => 'application_view_columns',
-			),
-			'post' => array(
+			],
+			'post' => [
 				'id' => 'pencil_add',
-			),
-			'powerpoint' => array(
+			],
+			'powerpoint' => [
 				'id' => 'mime/ppt',
-			),
-			'previous' => array(
+			],
+			'previous' => [
 				'id' => 'arrow_left',
-			),
-			'print' => array(
+			],
+			'print' => [
 				'id' => 'printer',
-			),
+			],
 			//quotes in defaults
-			'ranking' => array(
+			'ranking' => [
 				'id' => 'star',
-			),
-			'refresh' => array(
+			],
+			'refresh' => [
 				'id' => 'arrow_refresh',
-			),
-			'remove' => array(
+			],
+			'remove' => [
 				'id' => 'cross',
-			),
-			'repeat' => array(
+			],
+			'repeat' => [
 				'id' => 'arrow_redo',
-			),
-			'rss' => array(
+			],
+			'rss' => [
 				'id' => 'feed',
-			),
-			'scissors' => array(
+			],
+			'scissors' => [
 					'id' => 'cut',
-			),
-			'screencapture' => array(
+			],
+			'screencapture' => [
 				'id' => 'camera',
-			),
-			'search' => array(
+			],
+			'search' => [
 				'id' => 'magnifier',
-			),
-			'selectall' => array(
+			],
+			'selectall' => [
 				'id' => 'page-lightning',
-			),
-			'send' => array(
+			],
+			'send' => [
 				'id' => 'email_go',
 				'size' => 1,
-				'sizes' => array(
-					3 => array(
+				'sizes' => [
+					3 => [
 						'id' => 'messages48x48'
-					)
-				)
-			),
-			'settings' => array(
+					]
+				]
+			],
+			'settings' => [
 				'id' => 'wrench',
 				'size' => 1,
-				'sizes' => array(
-					3 => array(
+				'sizes' => [
+					3 => [
 						'id' => 'webmail/settings',
 						'prepend' => 'img/',
 						'append' => '.gif'
-					)
-				)
-			),
-			'share' => array(
+					]
+				]
+			],
+			'share' => [
 				'id' => 'share_link',
-			),
+			],
 			//sharethis in defaults
 			//skype in defaults
-			'smile' => array(
+			'smile' => [
 				'prepend' => 'img/smiles/',
 				'id' => 'icon_smile',
 				'append' => '.png'
-			),
-			'sort' => array(
+			],
+			'sort' => [
 				'id' => 'resultset',
-			),
-			'sort-down' => array(
+			],
+			'sort-down' => [
 				'id' => 'resultset_down',
-			),
-			'sort-up' => array(
+			],
+			'sort-up' => [
 				'id' => 'resultset_up',
-			),
+			],
 			//star in defaults
-			'star-empty' => array(
+			'star-empty' => [
 				'id' => 'star_grey',
-			),
-			'star-empty-selected' => array(
+			],
+			'star-empty-selected' => [
 				'id' => 'star_grey_selected',
-			),
-			'star-half' => array(
+			],
+			'star-half' => [
 				'id' => 'star_half',
-			),
+			],
 			//don't use half star for rating.tpl since there is no selected half star
-			'star-half-rating' => array(
+			'star-half-rating' => [
 				'id' => 'star_grey',
-			),
-			'star-half-selected' => array(
+			],
+			'star-half-selected' => [
 				'id' => 'star_grey_selected',
-			),
-			'star-selected' => array(
+			],
+			'star-selected' => [
 				'id' => 'star_selected',
-			),
-			'status-open' => array(
+			],
+			'status-open' => [
 				'id' => 'status_open',
 				'append' => '.gif'
-			),
-			'status-pending' => array(
+			],
+			'status-pending' => [
 				'id' => 'status_pending',
 				'append' => '.gif'
-			),
-			'status-closed' => array(
+			],
+			'status-closed' => [
 				'id' => 'status_closed',
 				'append' => '.gif'
-			),
-			'stop' => array(
+			],
+			'stop' => [
 				'id' => 'control_stop',
-			),
-			'stop-watching' => array(
+			],
+			'stop-watching' => [
 				'id' => 'no_eye',
-			),
-			'strikethrough' => array(
+			],
+			'strikethrough' => [
 				'id' => 'text_strikethrough',
-			),
-			'structure' => array(
+			],
+			'structure' => [
 				'id' => 'chart_organisation',
-			),
-			'subscript' => array(
+			],
+			'subscript' => [
 				'id' => 'text_subscript',
-			),
-			'success' => array(
+			],
+			'success' => [
 				'id' => 'tick',
-			),
-			'superscript' => array(
+			],
+			'superscript' => [
 				'id' => 'text_superscript',
-			),
+			],
 			//table in defaults
-			'tag' => array(
+			'tag' => [
 				'id' => 'tag_blue',
-			),
-			'tags' => array(
+			],
+			'tags' => [
 				'id' => 'tag_blue',
-			),
-			'textfile' => array(
+			],
+			'textfile' => [
 				'id' => 'page',
-			),
-			'th-large' => array(
+			],
+			'th-large' => [
 				'id' => 'application_view_columns',
-			),
-			'th-list' => array(
+			],
+			'th-list' => [
 				'id' => 'text_list_bullets',
-			),
-			'three-d' => array(
+			],
+			'three-d' => [
 				'id' => 'application_side_tree',
-			),
-			'thumbs-down' => array(
+			],
+			'thumbs-down' => [
 				'prepend' => 'vendor_bundled/vendor/ckeditor/ckeditor/plugins/smiley/images/',
 				'id' => 'thumbs_down',
-			),
-			'thumbs-up' => array(
+			],
+			'thumbs-up' => [
 				'prepend' => 'vendor_bundled/vendor/ckeditor/ckeditor/plugins/smiley/images/',
 				'id' => 'thumbs_up',
-			),
-			'title' => array(
+			],
+			'title' => [
 				'id' => 'text_padding_top',
-			),
-			'toggle-off' => array(
+			],
+			'toggle-off' => [
 				'id' => 'accept',
-			),
-			'toggle-on' => array(
+			],
+			'toggle-on' => [
 				'id' => 'delete',
-			),
-            'toggle-left' => array(
-                'id' => 'resultset_first',
-            ),
-            'toggle-right' => array(
-                'id' => 'resultset_last',
-            ),
-			'trackers' => array(
+			],
+			'toggle-left' => [
+				'id' => 'resultset_first',
+			],
+			'toggle-right' => [
+				'id' => 'resultset_last',
+			],
+			'trackers' => [
 				'id' => 'database',
-			),
-			'translate' => array(
+			],
+			'translate' => [
 				'id' => 'world_edit',
-			),
-			'trash' => array(
+			],
+			'trash' => [
 				'id' => 'bin',
-			),
-			'tv' => array(
+			],
+			'tv' => [
 				'id' => 'television',
-			),
-			'twitter' => array(
+			],
+			'twitter' => [
 				'id' => 'twitter',
 				'size' => 1,
-				'sizes' => array(
-					2 => array(
+				'sizes' => [
+					2 => [
 						'id' => 'twitter_t_logo_32'
-					)
-				)
-			),
-			'underline' => array(
+					]
+				]
+			],
+			'underline' => [
 				'id' => 'text_underline',
-			),
-			'undo' => array(
+			],
+			'undo' => [
 				'id' => 'arrow_undo',
-			),
-			'unlink' => array(
+			],
+			'unlink' => [
 				'id' => 'lock_delete',
-			),
-			'unlock' => array(
+			],
+			'unlock' => [
 				'id' => 'lock_open',
-			),
-			'up' => array(
+			],
+			'up' => [
 				'id' => 'resultset_up',
-			),
-			'video' => array(
+			],
+			'video' => [
 				'id' => 'mime/mpg',
-			),
-			'video_file' => array(
+			],
+			'video_file' => [
 				'id' => 'mime/mpg',
-			),
+			],
 			//vimeo in defaults
-			'view' => array(
+			'view' => [
 				'id' => 'magnifier',
-			),
-			'warning' => array(
+			],
+			'warning' => [
 				'id' => 'sticky',
-			),
-			'watch' => array(
+			],
+			'watch' => [
 				'id' => 'eye',
-			),
-			'watch-group' => array(
+			],
+			'watch-group' => [
 				'id' => 'eye_group',
-			),
-			'wizard' => array(
+			],
+			'wizard' => [
 				'id' => 'wizard16x16',
-			),
-			'word' => array(
+			],
+			'word' => [
 				'id' => 'mime/doc',
-			),
-			'wysiwyg' => array(
+			],
+			'wysiwyg' => [
 				'id' => 'text_dropcaps',
-			),
+			],
 			//youtube in defaults
-			'zip' => array(
+			'zip' => [
 				'id' => 'mime/zip',
-			),
-		),
-		'defaults' => array(
+			],
+		],
+		'defaults' => [
 			'add',
 			'anchor',
 			'book',
@@ -837,6 +837,6 @@ function iconset_legacy()
 			'vimeo',
 			'wrench',
 			'youtube',
-		)
-	);
+		]
+	];
 }

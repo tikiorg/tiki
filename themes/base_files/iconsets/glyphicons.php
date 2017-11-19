@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
@@ -12,495 +12,495 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 function iconset_glyphicons()
 {
-	return array(
+	return [
 		'name' => tr('Glyphicons'),
 		'description' => tr('Glyphicon focused iconset, see http://getbootstrap.com/components/'),
 		'tag' => 'span',
 		'prepend' => 'glyphicon glyphicon-',
 		'append' => '',
-		'icons' => array(
-			'actions' => array(
+		'icons' => [
+			'actions' => [
 				'id' => 'play-circle',
-			),
-			'add' => array(
+			],
+			'add' => [
 				'id' => 'plus-sign',
-			),
-			'admin' => array(
+			],
+			'admin' => [
 					'id' => 'cog',
-			),
+			],
 			//align-center in defaults
 			//align-justify in defaults
 			//align-left in defaults
 			//align-right in defaults
-			'anchor' => array(
+			'anchor' => [
 				'id' => 'flag',
-			),
+			],
 			//arrow-up in defaults
-			'articles' => array(
+			'articles' => [
 				'id' => 'text-background',
-			),
-			'attach' => array(
+			],
+			'attach' => [
 				'id' => 'paperclip',
-			),
-			'audio' => array(
+			],
+			'audio' => [
 				'id' => 'volume-up',
-			),
-			'back' => array(
+			],
+			'back' => [
 				'id' => 'arrow-left',
-			),
-			'background-color' => array(
+			],
+			'background-color' => [
 				'id' => 'text-background',
-			),
-			'backlink' => array(
+			],
+			'backlink' => [
 				'id' => 'new-window',
-			),
+			],
 			//backward in defaults
-			'backward_step' => array(
+			'backward_step' => [
 				'id' => 'step-backward',
-			),
-			'ban' => array(
+			],
+			'ban' => [
 				'id' => 'ban-circle',
-			),
+			],
 			//book in defaults
 			//bookmark in defaults
-			'box' => array(
+			'box' => [
 				'id' => 'text-background',
-			),
-			'bug' => array(
+			],
+			'bug' => [
 				'id' => 'alert',
-			),
+			],
 			//bullhorn in defaults
 			//calendar in defaults
-			'caret-left' => array(
+			'caret-left' => [
 				'id' => 'triangle-left',
-			),
-			'caret-right' => array(
+			],
+			'caret-right' => [
 				'id' => 'triangle-right',
-			),
-			'cart' => array(
+			],
+			'cart' => [
 				'id' => 'shopping-cart',
-			),
-			'chart' => array(
+			],
+			'chart' => [
 				'id' => 'object-align-bottom',
-			),
-			'check' => array(
+			],
+			'check' => [
 				'id' => 'ok',
-			),
-			'code' => array(
+			],
+			'code' => [
 				'id' => 'console',
-			),
-			'code_file' => array(
+			],
+			'code_file' => [
 				'id' => 'file',
-			),
-			'collapsed' => array(
+			],
+			'collapsed' => [
 				'id' => 'expand',
-			),
-			'columns' => array(
+			],
+			'columns' => [
 				'id' => 'th-large',
-			),
+			],
 			//comment in defaults
-			'comments' => array(
+			'comments' => [
 				'id' => 'comment',
-			),
-			'compose' => array(
+			],
+			'compose' => [
 				'id' => 'pencil',
-			),
-			'computer' => array(
+			],
+			'computer' => [
 				'id' => 'modal-window',
-			),
-			'contacts' => array(
+			],
+			'contacts' => [
 				'id' => 'user',
-			),
-			'copy' => array(
+			],
+			'copy' => [
 				'id' => 'duplicate',
-			),
-			'copyright' => array(
+			],
+			'copyright' => [
 				'id' => 'copyright-mark',
-			),
-			'create' => array(
+			],
+			'create' => [
 				'id' => 'plus',
-			),
-			'database' => array(
+			],
+			'database' => [
 					'id' => 'tasks',
-			),
-			'delete' => array(
+			],
+			'delete' => [
 				'id' => 'remove',
-			),
+			],
 			//dashboard in defaults
-			'difference' => array(
+			'difference' => [
 				'id' => 'text-color',
-			),
-			'disable' => array(
+			],
+			'disable' => [
 				'id' => 'minus-sign',
-			),
-			'documentation' => array(
+			],
+			'documentation' => [
 				'id' => 'book',
-			),
-			'down' => array(
+			],
+			'down' => [
 				'id' => 'arrow-down',
-			),
+			],
 			//edit in defaults
 			//education in defaults
 			//envelope in defaults
 			//erase in defaults
-			'error' => array(
+			'error' => [
 				'id' => 'exclamation-sign',
-			),
-			'excel' => array(
+			],
+			'excel' => [
 				'id' => 'file',
-			),
-			'expanded' => array(
+			],
+			'expanded' => [
 				'id' => 'collapse-down',
-			),
+			],
 			//export in defaults
-			'facebook' => array(
+			'facebook' => [
 				'id' => 'thumbs-up',
-			),
+			],
 			//file in defaults
-			'file-archive' => array(
+			'file-archive' => [
 				'id' => 'folder-close',
-			),
-			'file-archive-open' => array(
+			],
+			'file-archive-open' => [
 				'id' => 'folder-open',
-			),
+			],
 			//filter in defaults
 			//flag in defaults
-			'floppy' => array(
+			'floppy' => [
 				'id' => 'floppy-save',
-			),
-			'font-color' => array(
+			],
+			'font-color' => [
 				'id' => 'font',
 				'style' => 'color:red',
-			),
+			],
 			//forward in defaults
-			'forward_step' => array(
+			'forward_step' => [
 				'id' => 'step-forward',
-			),
+			],
 			//fullscreen in defaults
 			//used for google doc plugin
-			'google' => array(
+			'google' => [
 				'id' => 'file',
-			),
-			'group' => array(
+			],
+			'group' => [
 				'id' => 'user',
-			),
-			'h1' => array(
+			],
+			'h1' => [
 				'id' => 'header',
-			),
-			'h2' => array(
+			],
+			'h2' => [
 				'id' => 'header',
 				'size' => '.9'
-			),
-			'h3' => array(
+			],
+			'h3' => [
 				'id' => 'header',
 				'size' => '.8'
-			),
-			'help' => array(
+			],
+			'help' => [
 				'id' => 'question-sign',
-			),
-			'history' => array(
+			],
+			'history' => [
 				'id' => 'time',
-			),
-			'horizontal-rule' => array(
+			],
+			'horizontal-rule' => [
 				'id' => 'minus',
-			),
-			'html' => array(
+			],
+			'html' => [
 				'id' => 'console',
-			),
-			'image' => array(
+			],
+			'image' => [
 				'id' => 'picture',
-			),
+			],
 			//import in defaults
-			'indent' => array(
+			'indent' => [
 					'id' => 'indent-left',
-			),
-			'index' => array(
+			],
+			'index' => [
 				'id' => 'refresh',
-			),
-			'information' => array(
+			],
+			'information' => [
 				'id' => 'info-sign',
-			),
-			'language' => array(
+			],
+			'language' => [
 				'id' => 'globe',
-			),
+			],
 			//link in defaults
-			'link-external' => array(
+			'link-external' => [
 				'id' => 'share',
-			),
-			'link-external-alt' => array(
+			],
+			'link-external-alt' => [
 				'id' => 'share',
-			),
+			],
 			//list in defaults
-			'list-numbered' => array(
+			'list-numbered' => [
 				'id' => 'list-alt',
-			),
+			],
 			//lock in defaults
-			'log' => array(
+			'log' => [
 				'id' => 'list-alt',
-			),
-			'login' => array(
+			],
+			'login' => [
 				'id' => 'log-in',
-			),
-			'logout' => array(
+			],
+			'logout' => [
 				'id' => 'log-out',
-			),
-			'mailbox' => array(
+			],
+			'mailbox' => [
 				'id' => 'inbox',
-			),
-			'map' => array(
+			],
+			'map' => [
 				'id' => 'map-marker',
-			),
-			'menu' => array(
+			],
+			'menu' => [
 				'id' => 'menu-hamburger',
-			),
-			'menu-extra' => array(
+			],
+			'menu-extra' => [
 				'id' => 'chevron-down',
-			),
-			'menuitem' => array(
+			],
+			'menuitem' => [
 				'id' => 'chevron-right',
-			),
-			'merge' => array(
+			],
+			'merge' => [
 				'id' => 'random',
-			),
-			'minimize' => array(
+			],
+			'minimize' => [
 				'id' => 'resize-small',
-			),
+			],
 			//minus in defaults
-			'module' => array(
+			'module' => [
 				'id' => 'cog',
-			),
-			'money' => array(
+			],
+			'money' => [
 				'id' => 'piggy-bank',
-			),
-			'more' => array(
+			],
+			'more' => [
 				'id' => 'option-horizontal',
-			),
+			],
 			//move in defaults
 			//music in defaults
-			'next' => array(
+			'next' => [
 				'id' => 'arrow-right',
-			),
-			'notepad' => array(
+			],
+			'notepad' => [
 				'id' => 'file',
-			),
-			'notification' => array(
+			],
+			'notification' => [
 				'id' => 'bell',
-			),
+			],
 			//off in defaults
-			'ok' => array(
+			'ok' => [
 				'id' => 'ok-sign',
-			),
-			'outdent' => array(
+			],
+			'outdent' => [
 				'id' => 'indent-right',
-			),
-			'page-break' => array(
+			],
+			'page-break' => [
 				'id' => 'scissors',
-			),
+			],
 			//paste in defaults
 			//pause in defaults
-			'paypal' => array(
+			'paypal' => [
 				'id' => 'credit-card',
-			),
-			'pdf' => array(
+			],
+			'pdf' => [
 				'id' => 'file',
-			),
+			],
 			//pencil in defaults
-			'permission' => array(
+			'permission' => [
 				'id' => 'lock',
-			),
+			],
 			//play in defaults
-			'plugin' => array(
+			'plugin' => [
 				'id' => 'briefcase',
-			),
-			'popup' => array(
+			],
+			'popup' => [
 				'id' => 'list-alt',
-			),
-			'post' => array(
+			],
+			'post' => [
 				'id' => 'pencil',
-			),
-			'powerpoint' => array(
+			],
+			'powerpoint' => [
 				'id' => 'blackboard',
-			),
-			'previous' => array(
+			],
+			'previous' => [
 				'id' => 'arrow-left',
-			),
+			],
 			//print in defaults
-			'quotes' => array(
+			'quotes' => [
 				'id' => 'comment',
-			),
-			'ranking' => array(
+			],
+			'ranking' => [
 				'id' => 'sort-by-order',
-			),
+			],
 			//refresh in defaults
 			//remove in defaults
 			//repeat in defaults
-			'rss' => array(
+			'rss' => [
 				'id' => 'bullhorn',
-			),
+			],
 			//scissors in defaults
-			'screencapture' => array(
+			'screencapture' => [
 				'id' => 'camera',
-			),
+			],
 			//search in defaults
-			'selectall' => array(
+			'selectall' => [
 				'id' => 'open-file',
-			),
+			],
 			//send in defaults
-			'settings' => array(
+			'settings' => [
 				'id' => 'wrench',
-			),
+			],
 			//share in defaults
-			'sharethis' => array(
+			'sharethis' => [
 				'id' => 'share-alt',
-			),
-			'skype' => array(
+			],
+			'skype' => [
 				'id' => 'share',
-			),
-			'smile' => array(
+			],
+			'smile' => [
 				'id' => 'sunglasses',
-			),
+			],
 			//sort in defaults
-			'sort-down' => array(
+			'sort-down' => [
 				'id' => 'sort-by-alphabet-alt',
-			),
-			'sort-up' => array(
+			],
+			'sort-up' => [
 				'id' => 'sort-by-alphabet',
-			),
+			],
 			//star in defaults
 			//star-empty in defaults
-			'star-empty-selected' => array(
+			'star-empty-selected' => [
 				'id' => 'star-empty',
 				'class' => 'text-success'
-			),
-			'star-half-rating' => array(
+			],
+			'star-half-rating' => [
 				'id' => 'star-empty',
-			),
-			'star-half-selected' => array(
+			],
+			'star-half-selected' => [
 				'id' => 'star-empty',
 				'class' => 'text-success'
-			),
-			'star-selected' => array(
+			],
+			'star-selected' => [
 				'id' => 'star',
 				'class' => 'text-success'
-			),
-			'status-open' => array(
+			],
+			'status-open' => [
 				'id' => 'ok-sign',
 				'class' => 'text-success'
-			),
-			'status-pending' => array(
+			],
+			'status-pending' => [
 				'id' => 'question-sign',
 				'class' => 'text-warning'
-			),
-			'status-closed' => array(
+			],
+			'status-closed' => [
 				'id' => 'remove-sign',
 				'class' => 'text-muted'
-			),
+			],
 			//stop in defaults
-			'stop-watching' => array(
+			'stop-watching' => [
 				'id' => 'eye-close',
-			),
-			'structure' => array(
+			],
+			'structure' => [
 				'id' => 'tree-conifer',
-			),
-			'success' => array(
+			],
+			'success' => [
 				'id' => 'ok',
-			),
+			],
 			//subscript in defaults
 			//superscript in defaults
-			'table' => array(
+			'table' => [
 				'id' => 'list-alt',
-			),
+			],
 			//tag in defaults
 			//tags in defaults
-			'textfile' => array(
+			'textfile' => [
 				'id' => 'file',
-			),
+			],
 			//th-large in defaults
 			//th-list in defaults
-			'three-d' => array(
+			'three-d' => [
 				'id' => 'road',
-			),
+			],
 			//thumbs-down in defaults
 			//thumbs-up in defaults
-			'title' => array(
+			'title' => [
 				'id' => 'text-color',
-			),
-			'toggle-off' => array(
+			],
+			'toggle-off' => [
 				'id' => 'stop',
-			),
-			'toggle-on' => array(
+			],
+			'toggle-on' => [
 				'id' => 'play',
-			),
-            'toggle-left' => array(
-                'id' => 'step-backward',
-            ),
-            'toggle-right' => array(
-                'id' => 'step-forward',
-            ),
-			'trackers' => array(
+			],
+			'toggle-left' => [
+				'id' => 'step-backward',
+			],
+			'toggle-right' => [
+				'id' => 'step-forward',
+			],
+			'trackers' => [
 				'id' => 'tasks',
-			),
-			'translate' => array(
+			],
+			'translate' => [
 				'id' => 'globe',
-			),
+			],
 			//trash in defaults
-			'tv' => array(
+			'tv' => [
 				'id' => 'film',
-			),
-			'twitter' => array(
+			],
+			'twitter' => [
 				'id' => 'retweet',
-			),
-			'undo' => array(
+			],
+			'undo' => [
 				'id' => 'arrow-left',
-			),
+			],
 			//use a better unlock icon when available
-			'unlink' => array(
+			'unlink' => [
 					'id' => 'flash',
-			),
-			'unlock' => array(
+			],
+			'unlock' => [
 				'id' => 'folder-open',
-			),
-			'up' => array(
+			],
+			'up' => [
 				'id' => 'arrow-up',
-			),
-			'video' => array(
+			],
+			'video' => [
 				'id' => 'facetime-video',
-			),
-			'video_file' => array(
+			],
+			'video_file' => [
 				'id' => 'facetime-video',
-			),
-			'view' => array(
+			],
+			'view' => [
 				'id' => 'zoom-in',
-			),
-			'vimeo' => array(
+			],
+			'vimeo' => [
 				'id' => 'facetime-video',
-			),
-			'warning' => array(
+			],
+			'warning' => [
 				'id' => 'warning-sign',
-			),
-			'watch' => array(
+			],
+			'watch' => [
 				'id' => 'eye-open',
-			),
-			'watch-group' => array(
+			],
+			'watch-group' => [
 				'id' => 'eye-open',
-			),
-			'wizard' => array(
+			],
+			'wizard' => [
 				'id' => 'flash',
-			),
-			'word' => array(
+			],
+			'word' => [
 				'id' => 'file',
-			),
-			'wysiwyg' => array(
+			],
+			'wysiwyg' => [
 				'id' => 'text-background',
-			),
-			'youtube' => array(
+			],
+			'youtube' => [
 				'id' => 'play',
-			),
-			'zip' => array(
+			],
+			'zip' => [
 				'id' => 'compressed',
-			),
-		),
-		'defaults' => array(
+			],
+		],
+		'defaults' => [
 			'adjust',
 			'alert',
 			'align-bottom',
@@ -761,6 +761,6 @@ function iconset_glyphicons()
 			'yen',
 			'zoom-in',
 			'zoom-out',
-		),
-	);
+		],
+	];
 }
