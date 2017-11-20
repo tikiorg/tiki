@@ -217,28 +217,6 @@ $(window).on("load", function(){
 		}
 	}
 
-	public static function page_editable($autoSaveId = null, &$page = null)
-	{
-		global $user;
-		$tikilib = TikiLib::lib('tiki');
-
-		if ($autoSaveId !== null) {
-			$autoSaveIdParts = explode(':', $autoSaveId);	// user, section, object id
-			foreach ($autoSaveIdParts as & $part) {
-				$part = urldecode($part);
-			}
-
-			$page = $autoSaveIdParts[2];	// plugins use global $page for approval
-		}
-
-		if (! Perms::get('wiki page', $page)->edit || $user != TikiLib::lib('service')->internal('semaphore', 'get_user', ['object_id' => $page, 'check' => 1])
-		) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public function action_help($input)
 	{
 		global $prefs;
