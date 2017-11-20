@@ -76,7 +76,7 @@ function wikiplugin_mediaplayer_info()
 			'type' => [
 				'required' => false,
 				'name' => tra('File type'),
-				'description' => tr('File type for source URL, e.g. %0mp4%1, %0pdf%1, %0odp%1 (through ViewerJS), etc. Specify one of the supported file types when
+				'description' => tr('File type for source URL, e.g. %0mp4%1, %0pdf%1 or %0odp%1. Specify one of the supported file types when
 					the URL of the file is missing the file extension. This is the case for File Gallery files which
 					have a URL such as %0tiki-download_file.php?fileId=4&display%1 or %0display4%1 if you have Clean URLs
 					enabled.', '<code>', '</code>'),
