@@ -28,11 +28,11 @@
 		</tr>
 		{$last = ''}
 		{foreach from=$searchResult item=res}
+			{$table = $res['table']}
 			<tr>
 			{if $last eq '' || $last neq $res['table']}
-				<td>{$res['table']|escape}</td>
-			{else}
-				<td>&nbsp;</td>
+				{$span = $tableCount["$table"]}
+				<td rowspan="{$span}">{$res['table']|escape}</td>
 			{/if}
 			<td><input type="submit" class="btn btn-link" value="{$res['column']|escape}" title="{tr}View occurrences{/tr}" onClick="document.getElementById('table').value='{$res['table']}'; document.getElementById('column').value='{$res['column']}'; document.getElementById('redirect').value='0'; document.getElementById('string_in_db_search').value='';"></td>
 			<td>{$res['occurrences']|escape}</td>
@@ -43,12 +43,8 @@
 		</p>
 	{/if}
 
-	{if isset($searchStringAgain)}
-		{remarksbox}{tr}Results for {/tr}<b>{$searchStringAgain|escape}</b> {tr}in table {/tr} <b>{$tableName}</b>:{/remarksbox}
-	{/if}
-
-
 	{if isset($tableHeaders)}
+	{remarksbox}{tr}Results for {/tr}<b>{$searchStringAgain|escape}</b> {tr}in table {/tr} <b>{$tableName}</b>:{/remarksbox}
 	<table class="table">
 		<tr>
 		{foreach from=$tableHeaders item=hdr}

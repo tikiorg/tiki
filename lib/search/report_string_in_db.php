@@ -14,7 +14,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 if (! empty($_POST['string_in_db_search'])) {
 	$searchString = $_POST['string_in_db_search'];
 	$result = searchAllDB($searchString);
+	$tableCount = tableCount($result);
 	$smarty->assign('searchResult', $result);
+	$smarty->assign('tableCount', $tableCount);
 } elseif (! empty($_POST['query'])) {
 	$query = $_POST['query'];
 	$table = $_POST['table'];
@@ -85,6 +87,29 @@ function searchAllDB($search)
 	}
 	return $result;
 }
+
+/*
+*	return array (table, occurrence count)
+*/
+function tableCount($searchResult)
+{
+	$tableCount = array();
+	$countLast = 0;
+	$last = '';
+	foreach ($searchResult as $thisResult) {
+		$table = $thisResult['table'];
+		if ($table <> $last && $last <> '') {
+			$tableCount["$last"] = $countLast;
+			$countLast = 0;
+		}
+		$last = $table;
+		$countLast++;
+	}
+	$tableCount["$last"] = $countLast;
+
+	return $tableCount;
+}
+
 
 function isTextType($type)
 {
