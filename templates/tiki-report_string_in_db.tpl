@@ -30,14 +30,14 @@
 		{foreach from=$searchResult item=res}
 			{$table = $res['table']}
 			<tr>
-			{if $last eq '' || $last neq $res['table']}
+			{if $last eq '' || $last neq $table}
 				{$span = $tableCount["$table"]}
-				<td rowspan="{$span}">{$res['table']|escape}</td>
+				<td rowspan="{$span}">{$table|escape}</td>
 			{/if}
 			<td><input type="submit" class="btn btn-link" value="{$res['column']|escape}" title="{tr}View occurrences{/tr}" onClick="document.getElementById('table').value='{$res['table']}'; document.getElementById('column').value='{$res['column']}'; document.getElementById('redirect').value='0'; document.getElementById('string_in_db_search').value='';"></td>
 			<td>{$res['occurrences']|escape}</td>
 			</tr>
-			{$last = $res['table']}
+			{$last = $table}
 		{/foreach}
 		</table>
 		</p>
