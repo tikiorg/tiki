@@ -1964,22 +1964,20 @@ class UsersLib extends TikiLib
 
 
 	/**
-	 * Stores a users passowrd in the database
+	 * Stores a users password in the database
 	 *
-	 * @param userId: the database column id of the user.
+	 * @param userId: the id of the user.
 	 * @param pass: the clear text password to be hashed and stored
 	 */
 	private function set_user_password($userId, $pass)
 	{
-   // sets a suer passwod given a username and password
 
 		$hash = password_hash($pass, PASSWORD_DEFAULT);
 		$query = 'update `users_users` set `hash`=? where `userId`=?';
 		$result = $this->query($query, [$hash, $userId]);
 
-	//todo: a little error checking woul be nice.
+	//todo: a little error checking would be nice.
 	}
-
 
 	/**
 	 * Synchronizes Tiki user and group info from LDAP.
@@ -2083,8 +2081,9 @@ class UsersLib extends TikiLib
 		// check if the login correct
 		if ($a->addUser($user, $pass, $userattr) === true) {
 			$status = USER_VALID;
-		} // otherwise use the error status given back
+		}
 		else {
+			// otherwise use the error status given back
 			$status = $a->getStatus();
 		}
 
