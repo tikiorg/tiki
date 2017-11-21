@@ -217,7 +217,7 @@
 
 		{tab name="{tr}Tools{/tr}"}
 			<br>
-            {include file='tiki-report_string_in_db.tpl'}
+            {include file='admin/include_search_report_string_in_db.tpl'}
 		{/tab}
 
 	{/tabset}

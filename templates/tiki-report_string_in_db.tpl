@@ -1,12 +1,7 @@
 {* $Id$ *}
 <h2 class="panel-title">Occurences of string in database</h2>
-{if $SCRIPT_NAME == '/tiki-report_string_in_db.php'}
-	<BR>
-	<h3 class="panel-title">{tr}This page is no longer functional. Please use the Search feature in control panel.{/tr}</h3>
-{else}
-	<input type="text" id="string_in_db_search" name="string_in_db_search" size="60" value="{$searchStringAgain|escape}" /> <input type="submit" class="btn btn-default btn-sm" value="Search" onClick="document.getElementById('redirect').value='0';"/>
-	<input type="hidden" id="redirect" name="redirect" value="1">
-{/if}
+<input type="text" id="string_in_db_search" name="string_in_db_search" size="60" value="{$searchStringAgain|escape}" /> <input type="submit" class="btn btn-default btn-sm" value="Search" onClick="document.getElementById('redirect').value='0';"/>
+<input type="hidden" id="redirect" name="redirect" value="1">
 
 <hr/>
 {if isset($errorMsg)}
