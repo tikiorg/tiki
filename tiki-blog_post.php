@@ -135,11 +135,6 @@ if ($postId > 0) {
 include_once('freetag_list.php');
 
 $smarty->assign('preview', 'n');
-if ($tiki_p_admin != 'y') {
-	if ($tiki_p_use_HTML != 'y') {
-		$_REQUEST["allowhtml"] = 'off';
-	}
-}
 
 $blogpriv = 'n';
 $smarty->assign('blogpriv', 'n');
