@@ -16,7 +16,7 @@
 	</small>
 {/block}
 {block name="content"}
-	<form action="{service controller=menu action=manage}" method="post" role="form" class="form">
+	<form action="{service controller=menu action=edit}" method="post" role="form" class="form">
 		{ticket}
 		<div class="form-group">
 			<label for="menus_name" class="control-label">

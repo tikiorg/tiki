@@ -6,7 +6,7 @@
 {block name="subtitle"}{/block}
 {block name="content"}
 	{include file='templates/menu/quicklinks.tpl'}
-	<form action="{service controller=menu action=manage_option}" method="post" role="form" class="form">
+	<form action="{service controller=menu action=edit_option}" method="post" role="form" class="form">
 		<div class="form form-horizontal">
 			<div class="form-group">
 				<label class="control-label col-md-3" for="menu_name">{tr}Name:{/tr}</label>

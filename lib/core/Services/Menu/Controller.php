@@ -31,7 +31,7 @@ class Services_Menu_Controller
 	 * @throws Services_Exception_MissingValue
 	 * @throws Services_Exception_NotFound
 	 */
-	function action_manage($input)
+	function action_edit($input)
 	{
 		$util = new Services_Utilities();
 		$util->checkTicket();
@@ -76,7 +76,7 @@ class Services_Menu_Controller
 		];
 	}
 
-	function action_clone_menu($input)
+	function action_clone($input)
 	{
 		$menuId = $input->menuId->int();
 		$menuDetails = $this->get_menu_details($menuId);
@@ -119,7 +119,7 @@ class Services_Menu_Controller
 	 * @throws Services_Exception_MissingValue
 	 * @throws Services_Exception_NotFound
 	 */
-	function action_manage_option($input)
+	function action_edit_option($input)
 	{
 		global $prefs;
 
@@ -327,7 +327,7 @@ class Services_Menu_Controller
 	 * @throws Services_Exception_Denied
 	 * @throws Services_Exception_NotFound
 	 */
-	function action_preview_menu($input)
+	function action_preview($input)
 	{
 		//get menu details
 		$menuId = $input->menuId->int();
@@ -375,7 +375,7 @@ class Services_Menu_Controller
 	 * @throws Services_Exception_Denied
 	 * @throws Services_Exception_NotFound
 	 */
-	function action_save_menu($input)
+	function action_save($input)
 	{
 		$util = new Services_Utilities();
 		$util->checkTicket();

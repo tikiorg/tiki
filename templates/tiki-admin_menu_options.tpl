@@ -6,10 +6,10 @@
 		{icon name="list"} {tr}List Menus{/tr}
 	</a>
 	{if $tiki_p_edit_menu eq 'y'}
-		<a class="btn btn-default" href="{bootstrap_modal controller=menu action=manage_option menuId=$menuId}">
+		<a class="btn btn-default" href="{bootstrap_modal controller=menu action=edit_option menuId=$menuId}">
 			{icon name="create"} {tr}Create menu option{/tr}
 		</a>
-		<a class="btn btn-default" href="{bootstrap_modal controller=menu action=manage menuId=$menuId}">
+		<a class="btn btn-default" href="{bootstrap_modal controller=menu action=edit menuId=$menuId}">
 			{icon name="edit"} {tr}Edit This Menu{/tr}
 		</a>
 		<a class="btn btn-default" href="{bootstrap_modal controller=menu action=export_menu_options menuId=$menuId}" title="{tr}Export menu options{/tr}">
@@ -119,7 +119,7 @@
 									<div class="input-group input-group-sm">
 										<span class="input-group-addon">{icon name='sort'}</span>
 										<input type="text" class="field-label form-control" value="{$option.name|escape}" placeholder="{tr}Label{/tr}">
-										<a href="{bootstrap_modal controller=menu action=manage_option menuId=$menuId optionId=$option.optionId}" class="tips input-group-addon" title='{$tooltip|escape}'>
+										<a href="{bootstrap_modal controller=menu action=edit_option menuId=$menuId optionId=$option.optionId}" class="tips input-group-addon" title='{$tooltip|escape}'>
 											{icon name='info'}
 										</a>
 									</div>
@@ -130,7 +130,7 @@
 											{icon name='link'}
 										</a>
 										<input type="text" class="field-url form-control" value="{$option.canonic|escape}" placeholder="{tr}URL or ((page name)){/tr}">
-										<a href="{bootstrap_modal controller=menu action=manage_option menuId=$menuId optionId=$option.optionId}" class="tips input-group-addon option-edit" title="|{tr}Edit{/tr}">
+										<a href="{bootstrap_modal controller=menu action=edit_option menuId=$menuId optionId=$option.optionId}" class="tips input-group-addon option-edit" title="|{tr}Edit{/tr}">
 											{icon name='edit' _menu_icon='y' alt="{tr}Edit{/tr}"}
 										</a>
 										<a href="#" class="tips input-group-addon text-danger option-remove" title="|{tr}Remove Option{/tr}">

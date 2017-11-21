@@ -5,7 +5,7 @@
 {/block}
 
 {block name="content"}
-	<form action="{service controller=menu action=clone_menu}" method="post" role="form">
+	<form action="{service controller=menu action=clone}" method="post" role="form">
 		<div class="form-group">
 			<label for="name" class="control-label">
 				{tr}Name{/tr}

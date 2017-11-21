@@ -3,7 +3,7 @@
 
 {if $tiki_p_admin eq 'y'}
 	<div class="t_navbar margin-bottom-md">
-		<a class="btn btn-default" href="{bootstrap_modal controller=menu action=manage}">
+		<a class="btn btn-default" href="{bootstrap_modal controller=menu action=edit}">
 			{icon name="create"} {tr}Create Menu{/tr}
 		</a>
 		{button href="tiki-admin_modules.php" _icon_name="cogs" _type="link" _text="{tr}Modules{/tr}"}
@@ -50,7 +50,7 @@
 						{strip}
 							{if $channels[user].menuId neq 42}
 								{if $tiki_p_edit_menu eq 'y'}
-									{$libeg}<a href="{bootstrap_modal controller=menu action=manage menuId=$channels[user].menuId}">
+									{$libeg}<a href="{bootstrap_modal controller=menu action=edit menuId=$channels[user].menuId}">
 										{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
 									</a>{$liend}
 								{/if}
@@ -71,7 +71,7 @@
 								{/if}
 							{/if}
 							{if $tiki_p_edit_menu eq 'y'}
-								{$libeg}<a href="{bootstrap_modal controller=menu action=clone_menu menuId=$channels[user].menuId}">
+								{$libeg}<a href="{bootstrap_modal controller=menu action=clone menuId=$channels[user].menuId}">
 									{icon name="copy" _menu_text='y' _menu_icon='y' alt="{tr}Clone{/tr}"}
 								</a>{$liend}
 							{/if}
