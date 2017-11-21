@@ -614,6 +614,9 @@ class ObjectLib extends TikiLib
 	 * Gets a wiki parsed content for an object. This is used in case an object can have wiki parsed
 	 * content that generates relations (ex: Plugin Include).
 	 *
+	 * This content can be used to find elements, but displaying to user might not be a good idea, since
+	 * text from different fields can be concatenated.
+	 *
 	 * @param string $type
 	 * @param $id
 	 * @return void|string
@@ -634,6 +637,9 @@ class ObjectLib extends TikiLib
 			case 'forum post':
 				$comment_info = TikiLib::lib('comments')->get_comment((int)$objectId);
 				return $comment_info['data'];
+			case 'article':
+				$info = TikiLib::lib('art')->get_article((int)$objectId);
+				return $info['heading'] . "\n" . $info['body'];
 			case 'tracker':
 				$tracker_info = TikiLib::lib('trk')->get_tracker((int)$objectId);
 				return $tracker_info['description'];

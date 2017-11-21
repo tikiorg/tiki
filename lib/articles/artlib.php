@@ -442,6 +442,12 @@ class ArtLib extends TikiLib
 			}
 		}
 
+		TikiLib::lib('wiki')->update_wikicontent_relations(
+			$heading."\n".$body,            
+			'article',
+			(int)$articleId
+		);
+
 		$nots3 = [];
 		foreach ($nots as $n) {
 			$nots3[] = $n['email'];

@@ -428,42 +428,57 @@ class WikiLib extends TikiLib
 			if ($type == 'wiki page') {
 				$page = $relation['itemId'];
 				$info = $this->get_page_info($page);
-				$data = $info['data'];
+				$data = [ $info['data'] ];
 			} elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
 				$objectId = (int)$relation['itemId'];
 				$comment_info = TikiLib::lib('comments')->get_comment($objectId);
-				$data = $comment_info['data'];
+				$data = [ $comment_info['data'] ];
+			} elseif ($type == 'article') {
+				$objectId = (int)$relation['itemId'];
+				$info = TikiLib::lib('art')->get_article($objectId);
+				$data = [ $info['heading'], $info['body'] ];
 			} elseif ($type == 'tracker') {
 				$objectId = (int)$relation['itemId'];
 				$tracker_info = TikiLib::lib('trk')->get_tracker($objectId);
-				$data = $tracker_info['description'];
+				$data = [ $tracker_info['description'] ];
 			} elseif ($type == 'trackerfield') {
 				$objectId = (int)$relation['itemId'];
 				$field_info = TikiLib::lib('trk')->get_field_info($objectId);
-				$data = $field_info['description'];
+				$data = [ $field_info['description'] ];
 			} elseif ($type == 'trackeritemfield') {
 				$objectId = explode(":", $relation['itemId']);
-				$data = TikiLib::lib('trk')->get_item_value(null, $objectId[0], $objectId[1]);
+				$data = [ TikiLib::lib('trk')->get_item_value(null, $objectId[0], $objectId[1]) ];
 			} else {
 				continue;
 			}
 
-			$matches = WikiParser_PluginMatcher::match($data);
-			$argParser = new WikiParser_PluginArgumentParser();
 			$modified = false;
-			foreach ($matches as $match) {
-				if ($match->getName() == 'include') {
-					$arguments = $argParser->parse($match->getArguments());
-					if ($arguments['page'] == $oldName) {
-						$arguments['page'] = $newName;
-						$match->replaceWithPlugin($match->getName(), $arguments, $match->getBody());
-						$modified = true;
+			$matches = [];
+			for ($i=0; $i<sizeof($data); $i++) {
+				$matches[] = WikiParser_PluginMatcher::match($data[$i]);
+				$argParser = new WikiParser_PluginArgumentParser();
+				foreach ( $matches[$i] as $match ) {
+					if ( $match->getName() == 'include' ) {
+						$arguments = $argParser->parse($match->getArguments());
+						if ($arguments['page'] == $oldName) {
+							$arguments['page'] = $newName;
+							$match->replaceWithPlugin($match->getName(), $arguments, $match->getBody());
+							$modified = true;
+						}
 					}
 				}
 			}
 
 			if ($modified) {
-				$data = $matches->getText();
+				if ($type == 'article') {
+					$heading = $matches[0]->getText();
+					$body = $matches[1]->getText();
+					$query = "update `tiki_articles` set `heading`=?, `body`=? where `articleId`=?";
+					$this->query($query, [ $heading, $body, $objectId]);
+					continue;
+				} else {
+					$data = $matches[0]->getText();
+				}
 				if ($type == 'wiki page') {
 					$query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
 					$this->query($query, [ $data,(int) strlen($data), $page]);
@@ -480,7 +495,7 @@ class WikiLib extends TikiLib
 				} elseif ($type == 'trackeritemfield') {
 					$query = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?";
 					$this->query($query, [ $data, $objectId[0], $objectId[1]]);
-				}
+				}                
 			}
 		}
 
