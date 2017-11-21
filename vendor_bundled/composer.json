@@ -119,8 +119,7 @@
 		"zendframework/zendservice-recaptcha": "~3.0",
 		"zendframework/zendservice-twitter": "~2.1",
 		"zetacomponents/base": "^1.8",
-		"zetacomponents/webdav": "^1.1.3",
-		"mpdf/mpdf": "^7.0"
+		"zetacomponents/webdav": "^1.1.3"
 	},
 	"require-dev": {
 		"bafs/testify": "dev-master",
