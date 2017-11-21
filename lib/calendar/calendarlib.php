@@ -633,6 +633,7 @@ class CalendarLib extends TikiLib
 		}
 
 		if ($calitemId) {
+			TikiLib::lib('wiki')->update_wikicontent_relations($data['description'], 'calendar event', $calitemId);
 			$query = "delete from `tiki_calendar_roles` where `calitemId`=?";
 			$this->query($query, [(int)$calitemId]);
 		}

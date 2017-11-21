@@ -452,6 +452,9 @@ class WikiLib extends TikiLib
 			} elseif ($type == 'trackeritemfield') {
 				$objectId = explode(":", $relation['itemId']);
 				$data = [ TikiLib::lib('trk')->get_item_value(null, $objectId[0], $objectId[1]) ];
+			} elseif ($type == 'calendar event') {
+				$objectId = (int)$relation['itemId'];
+				$data = [ TikiLib::lib('calendar')->get_item($objectId)['description'] ];
 			} else {
 				continue;
 			}
@@ -502,7 +505,10 @@ class WikiLib extends TikiLib
 				} elseif ($type == 'trackeritemfield') {
 					$query = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?";
 					$this->query($query, [ $data, $objectId[0], $objectId[1]]);
-				}                
+				} elseif ($type == 'calendar event') {
+					$query = "update `tiki_calendar_items` set `description`=? where `calitemId`=?";
+					$this->query($query, [ $data, $objectId ]);
+				}
 			}
 		}
 
