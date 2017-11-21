@@ -50,6 +50,12 @@ class LessCompileCommand extends Command
 				InputOption::VALUE_NONE,
 				'Compare the modification timesof the LESS and CSS files before compiling (does not check for included LESS files)'
 			)
+			->addOption(
+				'caches-to-clear',
+				'c',
+				InputOption::VALUE_OPTIONAL,
+				'Caches to clear, default is "all", other options are: templates_c,temp_cache,temp_public,modules_cache,prefs,none'
+			)
 		;
 	}
 
@@ -124,8 +130,11 @@ class LessCompileCommand extends Command
 			default:
 				$output->writeln('<error>Invalid location for less files requested. Try: php -f console.php less:compile themes</error>');
 		}
+		$caches = array_filter(explode(',', $input->getOption('caches-to-clear')));
 
-		$output->writeln('Clearing all caches');
-		$cachelib->empty_cache();
+		if (! in_array('none', $caches)) {
+			$output->writeln('Clearing all caches');
+			$cachelib->empty_cache($caches);
+		}
 	}
 }
