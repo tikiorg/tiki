@@ -187,6 +187,11 @@ function wikiplugin_include($dataIn, $params)
 	$text = $parserlib->parse_data($text, $options);
 	$parserlib->setOptions($old_options);
 
+	// append a "Read more" link at end of text if only a portion of page is being included
+	if (isset($start) || isset($stop)) {
+		$text .= '<p><a href="tiki-index.php?page='.urlencode($page).'">'.tra("Read more...").'</a><p>';
+	}
+
 	// append an edit button if page_edit_icon does not equal 'n'
 	if ($page_edit_icon != 'n') {
 		if (isset($perms) && $perms['tiki_p_edit'] === 'y' && strpos($_SERVER['PHP_SELF'], 'tiki-send_newsletters.php') === false) {
