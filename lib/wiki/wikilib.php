@@ -437,6 +437,10 @@ class WikiLib extends TikiLib
 				$objectId = (int)$relation['itemId'];
 				$info = TikiLib::lib('art')->get_article($objectId);
 				$data = [ $info['heading'], $info['body'] ];
+			} elseif ($type == 'post') {
+				$objectId = (int)$relation['itemId'];
+				$info = TikiLib::lib('blog')->get_post($objectId);
+				$data = [ $info['data'] ];
 			} elseif ($type == 'tracker') {
 				$objectId = (int)$relation['itemId'];
 				$tracker_info = TikiLib::lib('trk')->get_tracker($objectId);
@@ -485,6 +489,9 @@ class WikiLib extends TikiLib
 					$this->invalidate_cache($page);
 				} elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
 					$query = "update `tiki_comments` set `data`=? where `threadId`=?";
+					$this->query($query, [ $data, $objectId]);
+				} elseif ($type == 'post') {
+					$query = "update `tiki_blog_posts` set `data`=? where `postId`=?";
 					$this->query($query, [ $data, $objectId]);
 				} elseif ($type == 'tracker') {
 					$query = "update `tiki_trackers` set `description`=? where `trackerId`=?";

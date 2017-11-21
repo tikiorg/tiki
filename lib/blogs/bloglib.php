@@ -829,6 +829,8 @@ class BlogLib extends TikiDb_Bridge
 		$result = $this->query($query, [(int) $created, (int) $blogId]);
 		$this->add_blog_activity($blogId);
 
+		TikiLib::lib('wiki')->update_wikicontent_relations($data, 'post', $id);
+
 		if ($prefs['feature_user_watches'] == 'y' or $prefs['feature_group_watches'] == 'y') {
 			$nots = $tikilib->get_event_watches('blog_post', $blogId);
 			if (! isset($_SERVER["SERVER_NAME"])) {
@@ -1122,6 +1124,9 @@ class BlogLib extends TikiDb_Bridge
 			$query = "update `tiki_blog_posts` set `blogId`=?,`data`=?,`excerpt`=?,`user`=?,`title`=?, `priv`=?, `wysiwyg`=? where `postId`=?";
 			$result = $this->query($query, [$blogId, $data, $excerpt, $user, $title, $priv, $wysiwyg, $postId]);
 		}
+        
+		TikiLib::lib('wiki')->update_wikicontent_relations($data, 'post', $postId);
+
 		if ($prefs['feature_actionlog'] == 'y') {
 			$logslib = TikiLib::lib('logs');
 			$logslib->add_action('Updated', $blogId, 'blog', "blogId=$blogId&amp;postId=$postId#postId$postId", '', '', '', '', $contributions);
