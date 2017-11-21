@@ -344,16 +344,9 @@ class Services_Menu_Controller
 		}
 
 		//preview options, see function.menu.php
-		$refresh = $input->refresh->int();
-		if ($refresh) {
-			$preview_type = $input->preview_type->text();
-			$preview_css = $input->preview_css->text();
-			$preview_bootstrap = $input->preview_bootstrap->text();
-		} else {
-			$preview_type = 'vert';
-			$preview_css = 'n';
-			$preview_bootstrap = 'n';
-		}
+		$preview_type = $input->preview_type->text() ? $input->preview_type->text() : 'vert';
+		$preview_css = $input->preview_css->text() ? 'y' : 'n';
+		$preview_bootstrap = $input->preview_bootstrap->text() ? 'y' : 'n';
 
 		//information for the preview menu screen
 		return [

@@ -95,10 +95,6 @@
 												<dt>{tr}Groups:{/tr}</dt>
 												<dd>{$option.groupname|escape}</dd>
 											{/if}
-											{if $option.icon}
-												<dt>{tr}Icon:{/tr}</dt>
-												<dd>{$option.icon|escape}</dd>
-											{/if}
 											{if $option.class}
 												<dt>{tr}Class:{/tr}</dt>
 												<dd>{$option.class|escape}</dd>
@@ -108,6 +104,18 @@
 												{assign var=it value=$option.userlevel}
 												<dt>{tr}User Level:{/tr}</dt>
 												<dd>{$prefs.userlevels.$it}</dd>
+											{/if}
+											{if $prefs.menus_items_icons eq 'y' and $option.icon}
+												<dt>{tr}Icon:{/tr}</dt>
+												<dd>
+													{if $prefs.theme_iconset eq 'legacy'}
+														{icon _id=$option.icon _defaultdir=$prefs.menus_items_icons_path}
+													{else}
+														{icon name=$option.icon|replace:'48x48':''}{* remove size for legacy menu 42 icons *}
+													{/if}
+													&nbsp;
+													{$option.icon|escape}
+												</dd>
 											{/if}
 										</dl>
 									{/strip}{/capture}
@@ -157,33 +165,31 @@
 {/tab}
 {tab name="{tr}Preview{/tr}"}
 	<h2>{tr}Preview menu{/tr}</h2>
-	<form action="tiki-admin_menu_options.php" class="form-inline">
+	<form action="{service controller='menu' action='preview'}" class="form-inline preview">
 		<input type="hidden" name="menuId" value="{$menuId}">
 		<div class="form-group">
 			<label for="preview_type" class="control-label">{tr}Type{/tr}:</label>
-			<select id="preview_type" class="form-control" name="preview_type" onchange="this.form.submit()">
+			<select id="preview_type" class="form-control" name="preview_type">
 				<option value="vert"{if $preview_type eq 'vert'} selected{/if}>{tr}Vertical{/tr}</option>
 				<option value="horiz"{if $preview_type eq 'horiz'} selected{/if}>{tr}Horizontal{/tr}</option>
 			</select>
 		</div>
-		<div class="checkbox">
-			<label for="preview_css">
-			<input type="checkbox" id="preview_css" name="preview_css" onchange="this.form.submit()"{if $preview_css eq 'y'} checked="checked"{/if}>
-				CSS</label>
+		<div class="form-group">
+			<label for="preview_bootstrap" class="control-label">
+				Bootstrap
+			</label>
+			<input type="checkbox" id="preview_bootstrap" name="preview_bootstrap" class="form-control"{if $preview_bootstrap eq 'y'} checked="checked"{/if}>
+		</div>
+		<div class="form-group">
+			<label for="preview_css" class="control-label">
+				CSS
+			</label>
+			<input type="checkbox" id="preview_css" name="preview_css" class="form-control"{if $preview_css eq 'y'} checked="checked"{/if}>
 		</div>
 	</form>
 
-	<h2>Smarty Code</h2>
-	<pre id="preview_code">
-	{ldelim}menu id={$menuId} css={$preview_css} type={$preview_type}{rdelim}</pre>{* <pre> cannot have extra spaces for indenting *}
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">{$editable_menu_info.name|escape}</h3>
-		</div>
-		<div class="panel-body clearfix">
-			{menu id=$menuId css=$preview_css type=$preview_type}
-		</div>
+	<div class="preview-menu">
+		&nbsp;
 	</div>
-
 {/tab}
 {/tabset}

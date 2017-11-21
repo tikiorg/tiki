@@ -20,6 +20,7 @@ $auto_query_args = [
 	'menuId',
 	'preview_css',
 	'preview_type',
+	'preview_bootstrap',
 ];
 
 $smarty->assign('menuId', $_REQUEST["menuId"]);
@@ -53,6 +54,9 @@ if (is_array($all_groups)) {
 	}
 }
 $smarty->assign_by_ref('option_groups', $option_groups);
+$smarty->assign('preview_type', 'vert');
+$smarty->assign('preview_css', 'n');
+$smarty->assign('preview_bootstrap', 'y');
 
 $access->checkAuthenticity();
 
