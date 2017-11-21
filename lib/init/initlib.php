@@ -489,8 +489,8 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline)
 				if (! empty($prefs['smarty_notice_reporting']) && $prefs['smarty_notice_reporting'] != 'y' && strstr($errfile, '.tpl.php')) {
 					return;
 				}
-				$type = 'NOTICE';
 			}
+			$type = 'NOTICE';
 			break;
 		default:
 			return;
