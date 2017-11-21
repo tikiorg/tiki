@@ -13,10 +13,40 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  *
  * @param Installer $installer
  */
-function upgrade_20171114_create_plugin_include_relations($installer)
+function upgrade_20171121_create_plugin_include_relations($installer)
 {
+
 	global $prefs;
 	$prefs['wikiplugin_maximum_passes'] = 500;
+
+    $create_relations = function ($installer, $type, $objectId, $data) {
+        $matches = WikiParser_PluginMatcher::match($data);
+        $argParser = new WikiParser_PluginArgumentParser();
+        foreach ($matches as $match) {
+            if ($match->getName() == 'include') {
+                $params = $argParser->parse($match->getArguments());
+                $existing = $installer->table('tiki_object_relations')->fetchCount([
+                    'relation' => 'tiki.wiki.include',
+                    'source_type' => $type,
+                    'source_itemId' => $objectId,
+                    'target_type' => 'wiki page',
+                    'target_itemId' => $params['page'],
+                ]);
+                if (!$existing) {
+                    $installer->query(
+                        'INSERT INTO `tiki_object_relations` (`relation`, `source_type`, `source_itemId`, `target_type`, `target_itemId`) VALUES(?, ?, ?, ?, ?)',
+                        [
+                            'tiki.wiki.include',
+                            $type,
+                            $objectId,
+                            'wiki page',
+                            $params['page'],
+                        ]
+                    );
+                }
+            }
+        }
+    };
 
     /**
      * Wiki pages
@@ -25,7 +55,7 @@ function upgrade_20171114_create_plugin_include_relations($installer)
 	$pages = $tiki_pages->fetchAll();
 
 	foreach ($pages as $page) {
-        insert_include_relations($installer, 'wiki page', $page['pageName'], $page['data']);
+        $create_relations($installer, 'wiki page', $page['pageName'], $page['data']);
 	}
 
     /**
@@ -38,7 +68,7 @@ function upgrade_20171114_create_plugin_include_relations($installer)
 		} else {
 			$type = $comment['objectType'] . ' comment';
 		}
-        insert_include_relations($installer, $type, $comment['threadId'], $comment['data']);
+        $create_relations($installer, $type, $comment['threadId'], $comment['data']);
 	}
 
     /**
@@ -47,7 +77,7 @@ function upgrade_20171114_create_plugin_include_relations($installer)
 	$table = $installer->table('tiki_blog_posts');
 
 	foreach ($table->fetchAll() as $item) {
-        insert_include_relations($installer, 'post', $item['postId'], $item['data']);
+        $create_relations($installer, 'post', $item['postId'], $item['data']);
 	}
 
     /**
@@ -57,7 +87,7 @@ function upgrade_20171114_create_plugin_include_relations($installer)
 
 	foreach ($table->fetchAll() as $item) {
         $data = $item['heading'] . "\n" . $item['body'];
-        insert_include_relations($installer, 'article', $item['articleId'], $data);
+        $create_relations($installer, 'article', $item['articleId'], $data);
 	}
 
     /**
@@ -66,7 +96,7 @@ function upgrade_20171114_create_plugin_include_relations($installer)
 	$table = $installer->table('tiki_calendar_items');
 
 	foreach ($table->fetchAll() as $item) {
-        insert_include_relations($installer, 'calendar event', $item['calitemId'], $item['description']);
+        $create_relations($installer, 'calendar event', $item['calitemId'], $item['description']);
 	}
 
     /**
@@ -76,7 +106,7 @@ function upgrade_20171114_create_plugin_include_relations($installer)
 
 	foreach ($table->fetchAll() as $item) {
         if ($item['descriptionIsParsed'] == 'y') {
-            insert_include_relations($installer, 'tracker', $item['trackerId'], $item['description']);
+            $create_relations($installer, 'tracker', $item['trackerId'], $item['description']);
         }
 	}
 
@@ -87,7 +117,7 @@ function upgrade_20171114_create_plugin_include_relations($installer)
 
 	foreach ($table->fetchAll() as $item) {
         if ($item['descriptionIsParsed'] == 'y') {
-            insert_include_relations($installer, 'trackerfield', $item['fieldId'], $item['description']);
+            $create_relations($installer, 'trackerfield', $item['fieldId'], $item['description']);
         }
 	}
 
@@ -101,40 +131,9 @@ function upgrade_20171114_create_plugin_include_relations($installer)
         $fieldId = $field['fieldId'];
         foreach($itemFields->fetchAll([], ['fieldId' => (int)$fieldId]) as $itemField) {
             $objectId = sprintf("%d:%d", (int)$itemField['itemId'], $fieldId);
-            insert_include_relations($installer, 'trackeritemfield', $objectId, $itemField['value']);
+            $create_relations($installer, 'trackeritemfield', $objectId, $itemField['value']);
         }
 	}
 }
-
-
-function insert_include_relations($installer, $type, $objectId, $data) {
-    $matches = WikiParser_PluginMatcher::match($data);
-    $argParser = new WikiParser_PluginArgumentParser();
-    foreach ($matches as $match) {
-        if ($match->getName() == 'include') {
-            $params = $argParser->parse($match->getArguments());
-            $existing = $installer->table('tiki_object_relations')->fetchCount([
-                'relation' => 'tiki.wiki.include',
-                'source_type' => $type,
-                'source_itemId' => $objectId,
-                'target_type' => 'wiki page',
-                'target_itemId' => $params['page'],
-            ]);
-            if (!$existing) {
-                $installer->query(
-                    'INSERT INTO `tiki_object_relations` (`relation`, `source_type`, `source_itemId`, `target_type`, `target_itemId`) VALUES(?, ?, ?, ?, ?)',
-                    [
-                        'tiki.wiki.include',
-                        $type,
-                        $objectId,
-                        'wiki page',
-                        $params['page'],
-                    ]
-                );
-            }
-        }
-    }
-}
-
 
 
