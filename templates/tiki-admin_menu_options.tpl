@@ -165,29 +165,48 @@
 {/tab}
 {tab name="{tr}Preview{/tr}"}
 	<h2>{tr}Preview menu{/tr}</h2>
-	<form action="{service controller='menu' action='preview'}" class="form-inline preview">
-		<input type="hidden" name="menuId" value="{$menuId}">
-		<div class="form-group">
-			<label for="preview_type" class="control-label">{tr}Type{/tr}:</label>
-			<select id="preview_type" class="form-control" name="preview_type">
-				<option value="vert"{if $preview_type eq 'vert'} selected{/if}>{tr}Vertical{/tr}</option>
-				<option value="horiz"{if $preview_type eq 'horiz'} selected{/if}>{tr}Horizontal{/tr}</option>
-			</select>
+	<div class="row">
+		<div class="row">
+			<form action="{service controller='menu' action='preview'}" class="form-inline preview">
+				<input type="hidden" name="menuId" value="{$menuId}">
+				<div class="form-group col-sm-3">
+					<label for="preview_type" class="control-label">{tr}Type{/tr}:</label>
+					<select id="preview_type" class="form-control" name="preview_type">
+						<option value="vert"{if $preview_type eq 'vert'} selected{/if}>{tr}Vertical{/tr}</option>
+						<option value="horiz"{if $preview_type eq 'horiz'} selected{/if}>{tr}Horizontal{/tr}</option>
+					</select>
+				</div>
+				<div class="form-group col-sm-2">
+					<label for="preview_bootstrap" class="control-label">
+						Bootstrap
+					</label>
+					<br>
+					<input type="checkbox" id="preview_bootstrap" name="preview_bootstrap" class="form-control"{if $preview_bootstrap eq 'y'} checked="checked"{/if}>
+				</div>
+				<div class="form-group col-sm-2">
+					<label for="preview_css" class="control-label">
+						CSS
+					</label>
+					<br>
+					<input type="checkbox" id="preview_css" name="preview_css" class="form-control"{if $preview_css eq 'y'} checked="checked"{/if}>
+				</div>
+				<div class="form-group col-sm-3">
+					<label for="preview_position" class="control-label">
+						{tr}Position{/tr}
+					</label>
+					<select id="preview_position" class="form-control">
+						{foreach from=$module_zone_list key=code item=zone}
+							<option value="{$code|escape}">{$zone.name|escape}</option>
+						{/foreach}
+					</select>
+				</div>
+				<div class="form-group col-sm-2">
+					<br>
+					{button _text='{tr}Deploy{/tr}' _class='deploy_menu btn btn-sm' _type='default' _ajax='n'}
+				</div>
+			</form>
 		</div>
-		<div class="form-group">
-			<label for="preview_bootstrap" class="control-label">
-				Bootstrap
-			</label>
-			<input type="checkbox" id="preview_bootstrap" name="preview_bootstrap" class="form-control"{if $preview_bootstrap eq 'y'} checked="checked"{/if}>
-		</div>
-		<div class="form-group">
-			<label for="preview_css" class="control-label">
-				CSS
-			</label>
-			<input type="checkbox" id="preview_css" name="preview_css" class="form-control"{if $preview_css eq 'y'} checked="checked"{/if}>
-		</div>
-	</form>
-
+	</div>
 	<div class="preview-menu">
 		&nbsp;
 	</div>
