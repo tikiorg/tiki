@@ -714,6 +714,7 @@ class CalendarLib extends TikiLib
 		if ($calitemId) {
 			$query = "delete from `tiki_calendar_items` where `calitemId`=?";
 			$this->query($query, [$calitemId]);
+			$this->remove_object('calendar event', $calitemId);
 
 			TikiLib::events()->trigger('tiki.calendaritem.delete', [
 				'type' => 'calendaritem',

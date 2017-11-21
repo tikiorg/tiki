@@ -902,11 +902,19 @@ class BlogLib extends TikiDb_Bridge
 	 */
 	function remove_blog($blogId)
 	{
-		global $tikilib, $user;
+		global $user;
+		$tikilib = TikiLib::lib('tiki');
 
 		$query = "delete from `tiki_blogs` where `blogId`=?";
 
 		$result = $this->query($query, [(int) $blogId]);
+
+		$query = "select `postId` from `tiki_blog_posts` where `blogId`=?";
+		$result = $this->query($query, [(int) $blogId]);
+		if ($res = $result->fetchRow()) {
+			$tikilib->remove_object('post', $res['postId']);
+		}
+
 		$query = "delete from `tiki_blog_posts` where `blogId`=?";
 		$result = $this->query($query, [(int) $blogId]);
 		$tikilib->remove_object('blog', $blogId);
@@ -953,6 +961,7 @@ class BlogLib extends TikiDb_Bridge
 			$logslib->add_action('Removed', $blogId, 'blog', $param);
 		}
 		if ($blogId) {
+			$tikilib->remove_object('post', (int)$postId);
 			$query = "delete from `tiki_blog_posts` where `postId`=?";
 
 			$result = $this->query($query, [(int) $postId]);

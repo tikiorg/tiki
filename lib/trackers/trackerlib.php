@@ -2830,6 +2830,10 @@ class TrackerLib extends TikiLib
 
 		// remove the object and uncategorize etc while the item still exists
 		$this->remove_object("trackeritem", $itemId);
+		$itemFields = $this->itemFields()->fetchAll(['fieldId'], ['itemId' => $itemId]);
+		foreach ($itemFields as $itemField) {
+			$this->remove_object("trackeritemfield", sprintf("%d:%d", (int)$itemId, (int)$itemField['fieldId']));
+		}
 
 		$this->trackers()->update(
 			['lastModif' => $this->now, 'items' => $this->trackers()->decrement(1)],
@@ -3389,6 +3393,11 @@ class TrackerLib extends TikiLib
 			$this->remove_tracker_item($itemId);
 		}
 
+		$fields = $this->fields()->fetchAll(['fieldId'], ['trackerId' => $trackerId]);
+		foreach ($fields as $field) {
+			$this->remove_object("trackerfield", $field['fieldId']);
+		}
+
 		$conditions = [
 			'trackerId' => (int) $trackerId,
 		];
@@ -3457,7 +3466,7 @@ class TrackerLib extends TikiLib
 				'fieldId' => $fieldId,
 			]
 		);
-
+		$this->remove_object('trackerfield', $fieldId);
 		TikiLib::events()->trigger(
 			'tiki.trackerfield.delete',
 			['type' => 'trackerfield', 'object' => $fieldId]
