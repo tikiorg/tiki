@@ -214,35 +214,72 @@ class MenuLib extends TikiLib
 
 		$this->empty_menu_cache($menuId);
 	}
-	/*
-         * gets the result of list_menu_options and create the field "type_description"
-         * with description of the type.
-         */
-	public function describe_menu_types($channels)
+
+	/**
+	 * Add parent option to each of the result of list_menu_options
+	 *
+	 * Formerly created the field "type_description" with description of the now deprecated type
+	 *
+	 * @param array $options
+	 * @return array
+	 */
+	public function prepare_options_for_editing($options)
 	{
-		if (isset($channels['data'])) {
-			$cant = $channels['cant'];
-			$channels = $channels['data'];
+		if (isset($options['data'])) {
+			$cant = $options['cant'];
+			$options = $options['data'];
 		}
 
-		$types = ["o" => "option",
-			   "s" => "section level 0",
-			   "r" => "sorted section level 0",
-				'1' => 'section level 1',
-				'2' => 'section level 2',
-				'3' => 'section level 3',
-			   "-" => "separator"];
+		$treeOut = [];
 
-		foreach ($channels as &$channel) {
-			$channel["type_description"] = tra($types[$channel["type"]]);
+		$types = [
+			's' => tra('section level 0'),
+			"r" => tra('sorted section level 0'),
+			'1' => tra('section level 1'),
+			'2' => tra('section level 2'),
+			'3' => tra('section level 3'),
+			'o' => tra('option'),
+			'-' => tra('separator'),
+		];
+
+		$parent = 0;
+		$count = count($options);
+
+		for ($i = 0; $i < $count; $i++) {
+			$option = $options[$i];
+
+			if (in_array($option['type'], ['s', 'r', '1', '2', '3'])) {	// can have children
+				if ($option['type'] === 's' || $option['type'] === 'r') {
+					$parent = 0;
+				}
+				$option['parent'] = $parent;
+				$option['type_description'] = tra($types[$option['type']]);
+				$parent = (int) $option['optionId'];
+				$treeOut[$option['optionId']] = $option;
+
+				while ($i < $count - 1) {
+					$option = $options[$i + 1];
+
+					if ($option['type'] === 'o' || $option['type'] === '-') {
+						$option['type_description'] = $types[$option['type']];
+						$option['parent'] = $parent;
+						$treeOut[$option['optionId']] = $option;
+						$i++;
+					} else {
+						break;
+					}
+				}
+			} else {
+				$treeOut[$option['optionId']] = $option;
+			}
 		}
 
 		if (isset($cant)) {
-			$channels = ['data' => $channels,
+			$options = ['data' => $treeOut,
 			'cant' => $cant];
 		}
 
-		return $channels;
+		return $options;
 	}
 
 	// rename all the url of the form ((pageName))

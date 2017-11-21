@@ -4855,6 +4855,43 @@ div.tiki_plugin {
   margin: .2em;
   padding: .2em;
 }
+.options-container ol,
+.new-option {
+  list-style: none;
+}
+.options-container #options {
+  min-height: 10em;
+}
+.options-container li {
+  padding: .5em;
+  margin: .2em;
+  position: relative;
+}
+li .label-group {
+  width: 16em;
+  max-width: 35%;
+  margin-right: 2em;
+}
+li .url-group {
+  width: 25em;
+  max-width: 55%;
+}
+.options-container > ol > li {
+  border: 1px solid #eeeeee;
+}
+.options-container .child-options {
+  width: 100%;
+  float: left;
+}
+.options-container .child-options > li {
+  margin-bottom: 0;
+}
+.new-option .label-group {
+  max-width: 100%;
+}
+.new-option * {
+  cursor: move;
+}
 .TextArea-fullscreen {
   display: block;
   width: 100%;

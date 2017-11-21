@@ -24,151 +24,134 @@
 {tabset name="admin_menu_options"}
 {tab name="{tr}Manage menu{/tr} {$editable_menu_info.name}"}
 	<div>
-		<a id="options"></a>
-
 		<h2>{tr}Menu options{/tr} <span class="badge">{$cant_pages}</span></h2>
-		{if $options or ($find ne '')}
-			{include file='find.tpl' find_show_num_rows='y'}
-		{/if}
 
-		{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
-		{if $prefs.javascript_enabled !== 'y'}
-			{$js = 'n'}
-			{$libeg = '<li>'}
-			{$liend = '</li>'}
-		{else}
-			{$js = 'y'}
-			{$libeg = ''}
-			{$liend = ''}
-		{/if}
+		<div class="navbar margin-bottom-md clearfix">
+			<ol class="new-option col-sm-4">
+				<li id="node_new" class="clearfix new">
+					<div class="col-sm-12">
+						<div class="pull-left label-group">
+							<div class="input-group input-group-sm" style="max-width: 100%">
+								<span class="input-group-addon">{icon name='sort'}</span>
+								<input type="text" class="field-label form-control" value="" placeholder="{tr}New item{/tr}" readonly="readonly">
+								<a href="#" class="tips input-group-addon text-muted" title="{tr}New item{/tr}|{tr}Drag this on to the menu below{/tr}">
+									{icon name='info'}
+								</a>
+							</div>
+						</div>
+						<div class="pull-left url-group hidden">
+							<div class="input-group input-group-sm">
+								<a href="#" class="input-group-addon" onclick='return false;'>
+									{icon name='link'}
+								</a>
+								<input type="text" class="field-url form-control" value="" placeholder="{tr}URL{/tr}">
+								<a href="#" class="input-group-addon text-muted option-edit">
+									{icon name='edit' _menu_icon='y' alt="{tr}Edit{/tr}"}
+								</a>
+								<a href="#" class="input-group-addon text-danger option-remove" disabled="disabled">
+									{icon name='remove' _menu_icon='y' alt="{tr}Remove{/tr}"}
+								</a>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ol>
+			{button _text='{tr}Save{/tr}' _class='save_menu text-muted btn btn-sm disabled' _type='primary' _ajax='n' _auto_args='save_menu,page_ref_id'}
+		</div>
 		<form method="get" action="tiki-admin_menu_options.php">
+			{ticket}
 			<input type="hidden" name="find" value="{$find|escape}">
 			<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 			<input type="hidden" name="menuId" value="{$menuId}">
 			<input type="hidden" name="offset" value="{$offset}">
 
-			<div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
-				<table class="table table-striped table-hover">
-					{assign var=numbercol value=0}
-					<tr>
-						<th>
-							{assign var=numbercol value=$numbercol+1}
-							{if $options}
-								{select_all checkbox_names='checked[]'}
-							{/if}
-						</th>
-						{assign var=numbercol value=$numbercol+1}
-						<th>{self_link _sort_arg='sort_mode' _sort_field='optionId'}{tr}ID{/tr}{/self_link}</th>
-						{assign var=numbercol value=$numbercol+1}
-						<th>{self_link _sort_arg='sort_mode' _sort_field='position'}{tr}Position{/tr}{/self_link}</th>
-						{assign var=numbercol value=$numbercol+1}
-						<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
-						{assign var=numbercol value=$numbercol+1}
-						<th>{self_link _sort_arg='sort_mode' _sort_field='type'}{tr}Type{/tr}{/self_link}</th>
-						{if $prefs.feature_userlevels eq 'y'}
-							{assign var=numbercol value=$numbercol+1}
-							<th>{self_link _sort_arg='sort_mode' _sort_field='userlevel'}{tr}Level{/tr}{/self_link}</th>
-						{/if}
-						{assign var=numbercol value=$numbercol+1}
-						<th></th>
-					</tr>
-
+			<div class="options-container">
+				<ol id="options">
 					{foreach $options as $option}
-						<tr>
-							<td class="checkbox-cell">
-								<input type="checkbox" name="checked[]" value="{$option.optionId|escape}"
-									{if $smarty.request.checked and in_array($option.optionId,$smarty.request.checked)}checked="checked"{/if}>
-							</td>
-							<td class="id">{$option.optionId}</td>
-							<td class="id">{$option.position}</td>
-							<td class="text">
-								<a href="{bootstrap_modal controller=menu action=manage_option menuId=$menuId optionId=$option.optionId}" class="tips" title=":{tr}Edit{/tr}">
-									{$option.name|escape}
-								</a>
-								<span class="help-block">
-									{if $option.url}
-										{tr}URL:{/tr}
-										<a href="{$option.sefurl|escape}" class="link tips" target="_blank" title=":{$option.canonic|escape}" >
-											{$option.canonic|truncate:40:' ...'|escape}
-										</a>
-									{/if}
-									{if $option.section}
-										<br>
-										{tr}Sections:{/tr} {$option.section}
-									{/if}
-									{if $option.perm}
-										<br>
-										{tr}Permissions:{/tr} {$option.perm}
-									{/if}
-									{if $option.groupname}
-										<br>
-										{tr}Groups:{/tr} {$option.groupname|escape}
-									{/if}
-									{if $option.class}
-										<br>
-										{tr}Class:{/tr} {$option.class|escape}
-									{/if}
-								</span>
-							</td>
-							<td class="text">{$option.type_description}</td>
-
-							{if $prefs.feature_userlevels eq 'y'}
-								{assign var=it value=$option.userlevel}
-								<td>{$prefs.userlevels.$it}</td>
-							{/if}
-
-							<td class="action">
-								{capture name=menu_options_actions}
-									{strip}
-										{if !$smarty.section.user.first}
-											{$libeg}<a href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;up={$option.optionId}&amp;maxRecords={$maxRecords}#options">
-												{icon name="up" _menu_text='y' _menu_icon='y' alt="{tr}Switch with previous option{/tr}"}
-											</a>{$liend}
+						<li id="node_{$option.optionId}" class="clearfix" data-position="{$option.position}" data-parent="{$option.parent}" data-type="{$option.type}">
+							<div class="col-sm-12">
+								{if $option.name}
+									{capture assign='tooltip'}{strip}
+										{if $editable_menu_info.parse eq 'y'}
+											{wiki}{$option.name}{/wiki}
+										{else}
+											{$option.name|escape}
 										{/if}
-										{if !$smarty.section.user.last}
-											{$libeg}<a href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;down={$option.optionId}&amp;maxRecords={$maxRecords}#options">
-												{icon name="down" _menu_text='y' _menu_icon='y' alt="{tr}Switch with next option{/tr}"}
-											</a>{$liend}
-										{/if}
-										{$libeg}<a href="{bootstrap_modal controller=menu action=manage_option menuId=$menuId optionId=$option.optionId}">
-											{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-										</a>{$liend}
-										{$libeg}<a href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$option.optionId}&amp;maxRecords={$maxRecords}">
-											{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
-										</a>{$liend}
-									{/strip}
-								{/capture}
-								{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
-								<a
-									class="tips"
-									title="{tr}Actions{/tr}"
-									href="#"
-									{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.menu_options_actions}{/if}
-									style="padding:0; margin:0; border:0"
-								>
-									{icon name='wrench'}
-								</a>
-								{if $js === 'n'}
-									<ul class="dropdown-menu" role="menu">{$smarty.capture.menu_options_actions}</ul></li></ul>
+										|
+										<dl>
+											{if $option.url}
+												<dt>{tr}URL:{/tr}</dt>
+												<dd>{$option.canonic|truncate:40:' ...'|escape}</dd>
+											{/if}
+											{if $option.section}
+												<dt>{tr}Sections:{/tr}</dt>
+												<dd>{$option.section}</dd>
+											{/if}
+											{if $option.perm}
+												<dt>{tr}Permissions:{/tr}</dt>
+												<dd>{$option.perm}</dd>
+											{/if}
+											{if $option.groupname}
+												<dt>{tr}Groups:{/tr}</dt>
+												<dd>{$option.groupname|escape}</dd>
+											{/if}
+											{if $option.icon}
+												<dt>{tr}Icon:{/tr}</dt>
+												<dd>{$option.icon|escape}</dd>
+											{/if}
+											{if $option.class}
+												<dt>{tr}Class:{/tr}</dt>
+												<dd>{$option.class|escape}</dd>
+											{/if}
+
+											{if $prefs.feature_userlevels eq 'y' and not empty($option.userlevel)}
+												{assign var=it value=$option.userlevel}
+												<dt>{tr}User Level:{/tr}</dt>
+												<dd>{$prefs.userlevels.$it}</dd>
+											{/if}
+										</dl>
+									{/strip}{/capture}
+								{else}
+									{$tooltip = "|{tr}separator{/tr}"}
 								{/if}
-							</td>
-						</tr>
-					{foreachelse}
-						{norecords _colspan=$numbercol}
+
+								<div class="pull-left label-group">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon">{icon name='sort'}</span>
+										<input type="text" class="field-label form-control" value="{$option.name|escape}" placeholder="{tr}Label{/tr}">
+										<a href="{bootstrap_modal controller=menu action=manage_option menuId=$menuId optionId=$option.optionId}" class="tips input-group-addon" title='{$tooltip|escape}'>
+											{icon name='info'}
+										</a>
+									</div>
+								</div>
+								<div class="pull-left url-group">
+									<div class="input-group input-group-sm">
+										<a href="{$option.sefurl|escape}" class="input-group-addon" target="_blank" onclick='return confirm("{tr}Are you sure you want to leave this page?{/tr}");'>
+											{icon name='link'}
+										</a>
+										<input type="text" class="field-url form-control" value="{$option.canonic|escape}" placeholder="{tr}URL or ((page name)){/tr}">
+										<a href="{bootstrap_modal controller=menu action=manage_option menuId=$menuId optionId=$option.optionId}" class="tips input-group-addon option-edit" title="|{tr}Edit{/tr}">
+											{icon name='edit' _menu_icon='y' alt="{tr}Edit{/tr}"}
+										</a>
+										<a href="#" class="tips input-group-addon text-danger option-remove" title="|{tr}Remove Option{/tr}">
+											{icon name='remove' _menu_icon='y' alt="{tr}Remove{/tr}"}
+										</a>
+									</div>
+								</div>
+							</div>
+							<ol class="child-options"></ol>
+						</li>
+						{foreachelse}
+						<li></li>
 					{/foreach}
-				</table>
+					{capture name='options'}select:function(event,ui){ldelim}ui.item.value='(('+ui.item.value+'))';{rdelim}{/capture}
+					{autocomplete element='.field-url' type='pagename' options=$smarty.capture.options}
+				</ol>
 			</div>
 
-			{if $options}
-				<div align="left">
-					{tr}Perform action with checked:{/tr}
-					<input type="image" name="delsel" src='img/icons/cross.png' alt="{tr}Delete{/tr}" title="{tr}Delete{/tr}">
-				</div>
-			{/if}
 		</form>
 
-		{pagination_links cant=$cant_pages step=$maxRecords offset=$offset}{/pagination_links}
-
+		{button _text='{tr}Save{/tr}' _class='save_menu text-muted btn btn-sm disabled' _type='primary' _ajax='n' _auto_args='save_menu,page_ref_id'}
 
 	</div>
 {/tab}
@@ -192,8 +175,7 @@
 
 	<h2>Smarty Code</h2>
 	<pre id="preview_code">
-	{ldelim}menu id={$menuId} css={$preview_css} type={$preview_type}{rdelim
-					}</pre>{* <pre> cannot have extra spaces for indenting *}
+	{ldelim}menu id={$menuId} css={$preview_css} type={$preview_type}{rdelim}</pre>{* <pre> cannot have extra spaces for indenting *}
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">{$editable_menu_info.name|escape}</h3>

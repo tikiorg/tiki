@@ -17,96 +17,15 @@ if (! isset($_REQUEST["menuId"])) {
 	die;
 }
 $auto_query_args = [
-	'offset',
-	'find',
-	'sort_mode',
 	'menuId',
-	'maxRecords',
 	'preview_css',
 	'preview_type',
 ];
 
-$maxPos = $menulib->get_max_option($_REQUEST["menuId"]);
 $smarty->assign('menuId', $_REQUEST["menuId"]);
 $editable_menu_info = $menulib->get_menu($_REQUEST["menuId"]);
 $smarty->assign('editable_menu_info', $editable_menu_info);
-if (! isset($_REQUEST["optionId"])) {
-	$_REQUEST["optionId"] = 0;
-}
-$smarty->assign('optionId', $_REQUEST["optionId"]);
-if ($_REQUEST["optionId"]) {
-	$info = $menulib->get_menu_option($_REQUEST["optionId"]);
-	$cookietab = 2;
-} else {
-	$info = [];
-	$info["name"] = '';
-	$info["url"] = '';
-	$info["section"] = '';
-	$info["perm"] = '';
-	$info["groupname"] = '';
-	$info["userlevel"] = '';
-	$info["type"] = 'o';
-	$info["icon"] = '';
-	$info["class"] = '';
-	$info["position"] = $maxPos + 10;
-}
-$smarty->assign('name', $info["name"]);
-$smarty->assign('url', $info["url"]);
-$smarty->assign('section', $info["section"]);
-$smarty->assign('perm', $info["perm"]);
-$smarty->assign('type', $info["type"]);
-$smarty->assign('icon', $info["icon"]);
-$smarty->assign('position', $info["position"]);
-$smarty->assign('groupname', $info["groupname"]);
-$smarty->assign('userlevel', $info["userlevel"]);
-$smarty->assign('class', $info["class"]);
 
-if (isset($_REQUEST["remove"])) {
-	$access->check_authenticity();
-	$menulib->remove_menu_option($_REQUEST["remove"]);
-	$maxPos = $menulib->get_max_option($_REQUEST["menuId"]);
-	$smarty->assign('position', $maxPos + 10);
-}
-if (isset($_REQUEST["up"])) {
-	check_ticket('admin-menu-options');
-	$res = $menulib->prev_pos($_REQUEST["up"]);
-}
-if (isset($_REQUEST["down"])) {
-	check_ticket('admin-menu-options');
-	$area = 'downmenuoption';
-	$res = $menulib->next_pos($_REQUEST["down"]);
-}
-if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
-	check_ticket('admin-menu-options');
-	foreach ($_REQUEST['checked'] as $id) {
-		$menulib->remove_menu_option($id);
-	}
-	$maxPos = $menulib->get_max_option($_REQUEST['menuId']);
-	$smarty->assign('position', $maxPos + 10);
-}
-
-if (! isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'position_asc';
-} else {
-	$sort_mode = $_REQUEST["sort_mode"];
-}
-if (! isset($_REQUEST["offset"])) {
-	$offset = 0;
-} else {
-	$offset = $_REQUEST["offset"];
-}
-$smarty->assign_by_ref('offset', $offset);
-if (isset($_REQUEST["find"])) {
-	$find = $_REQUEST["find"];
-} else {
-	$find = '';
-}
-$smarty->assign('find', $find);
-if (isset($_REQUEST['maxRecords'])) {
-	$maxRecords = $_REQUEST['maxRecords'];
-} else {
-	$maxRecords = $prefs['maxRecords'];
-}
 
 $smarty->assign('preview_type', isset($_REQUEST['preview_type']) && $_REQUEST['preview_type'] === 'horiz' ? 'horiz' : 'vert');
 $smarty->assign('preview_css', isset($_REQUEST['preview_css']) && $_REQUEST['preview_css'] === 'On' ? 'y' : 'n');
@@ -120,10 +39,8 @@ foreach ($prefs as $k => $v) {	// attempt to filter out non-feature prefs (still
 }
 $headerlib->add_js('var prefNames = ' . json_encode($feature_prefs) . ';');
 
-$smarty->assign_by_ref('maxRecords', $maxRecords);
-$smarty->assign_by_ref('sort_mode', $sort_mode);
-$options = $menulib->list_menu_options($_REQUEST["menuId"], $offset, $maxRecords, $sort_mode, $find, true, 0, true);
-$options = $menulib->describe_menu_types($options);
+$options = $menulib->list_menu_options($_REQUEST["menuId"], 0, -1, 'position_asc', '', true, 0, true);
+$options = $menulib->prepare_options_for_editing($options);
 $smarty->assign_by_ref('cant_pages', $options["cant"]);
 $smarty->assign_by_ref('options', $options["data"]);
 if (isset($info['groupname']) && ! is_array($info['groupname'])) {
@@ -136,6 +53,11 @@ if (is_array($all_groups)) {
 	}
 }
 $smarty->assign_by_ref('option_groups', $option_groups);
+
+$access->checkAuthenticity();
+
+$headerlib->add_jsfile('lib/menubuilder/tiki-admin_menu_options.js')
+	->add_jsfile('vendor_bundled/vendor/jquery/plugins/nestedsortable/jquery.ui.nestedSortable.js');
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
