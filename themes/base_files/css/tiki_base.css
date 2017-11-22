@@ -4861,6 +4861,7 @@ div.tiki_plugin {
 }
 .options-container #options {
   min-height: 10em;
+  border: 4px #eeeeee dashed;
 }
 .options-container li {
   padding: .5em;

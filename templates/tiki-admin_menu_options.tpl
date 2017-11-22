@@ -34,7 +34,7 @@
 							<div class="input-group input-group-sm" style="max-width: 100%">
 								<span class="input-group-addon">{icon name='sort'}</span>
 								<input type="text" class="field-label form-control" value="" placeholder="{tr}New item{/tr}" readonly="readonly">
-								<a href="#" class="tips input-group-addon text-muted" title="{tr}New item{/tr}|{tr}Drag this on to the menu below{/tr}">
+								<a href="#" class="tips input-group-addon text-muted" title="{tr}New item{/tr}|{tr}Drag this on to the menu area below{/tr}">
 									{icon name='info'}
 								</a>
 							</div>
@@ -149,8 +149,8 @@
 							</div>
 							<ol class="child-options"></ol>
 						</li>
-						{foreachelse}
-						<li></li>
+					{foreachelse}
+
 					{/foreach}
 					{capture name='options'}select:function(event,ui){ldelim}ui.item.value='(('+ui.item.value+'))';{rdelim}{/capture}
 					{autocomplete element='.field-url' type='pagename' options=$smarty.capture.options}
