@@ -67,6 +67,7 @@
 
 			<div class="options-container">
 				<ol id="options">
+					{$prevpos = 0}
 					{foreach $options as $option}
 						<li id="node_{$option.optionId}" class="clearfix" data-position="{$option.position}" data-parent="{$option.parent}" data-type="{$option.type}">
 							<div class="col-sm-12">
@@ -127,6 +128,10 @@
 									<div class="input-group input-group-sm">
 										<span class="input-group-addon">{icon name='sort'}</span>
 										<input type="text" class="field-label form-control" value="{$option.name|escape}" placeholder="{tr}Label{/tr}">
+										<span class="tips input-group-addon option-edit" title="|{tr}Check this if the option is an alternative to the previous one.{/tr}">
+											<input type="checkbox" class="samepos"{if $option.position eq $prevpos} checked="checked"{/if}>
+											{$prevpos = $option.position}
+										</span>
 										<a href="{bootstrap_modal controller=menu action=edit_option menuId=$menuId optionId=$option.optionId}" class="tips input-group-addon" title='{$tooltip|escape}'>
 											{icon name='info'}
 										</a>
