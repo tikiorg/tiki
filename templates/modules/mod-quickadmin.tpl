@@ -123,6 +123,13 @@
 						</a>
 					</li>
 					{/if}
+					{if $prefs.feature_sefurl_routes eq "y"}
+						<li>
+							<a href="tiki-admin_routes.php">
+								{icon name="random"} {tr}Custom Routes{/tr}
+							</a>
+						</li>
+					{/if}
 					{if $prefs.feature_debug_console eq 'y'}
 						<li>
 							<a href="{query _type='relative' show_smarty_debug=1}">

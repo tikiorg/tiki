@@ -160,6 +160,9 @@
 			{if $tiki_p_edit_cookies eq "y"}
 				<li><a href="tiki-admin_cookies.php">{tr}Cookies{/tr}</a></li>
 			{/if}
+			{if $prefs.feature_sefurl_routes eq "y" and $tiki_p_admin}
+				<li><a href="tiki-admin_routes.php">{tr}Custom Routes{/tr}</a></li>
+			{/if}
 			<li><a href="tiki-admin_dsn.php">{tr}DSN/Content Authentication{/tr}</a></li>
 			{if $prefs.feature_editcss eq "y" and $tiki_p_create_css eq "y"}
 				<li><a href="tiki-edit_css.php">{tr}Edit CSS{/tr}</a></li>

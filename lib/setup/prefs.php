@@ -209,6 +209,7 @@ function get_default_prefs()
 
 			// SefUrl
 			'feature_sefurl_paths' => [''], //empty string needed to keep preference from setting unexpectedly
+			'feature_sefurl_routes' => 'n',
 
 			'feature_bidi' => 'n',
 			'feature_lastup' => 'y',

@@ -254,6 +254,14 @@ if (is_null($base) || is_null($path)) {
 
 tiki_route($path);
 
+//it has to be here because tiki-setup.php needs a $_GET['page'] that is populated by tiki_route
+if (! empty($path)) {
+	require_once('tiki-setup.php');
+	if ($prefs['feature_sefurl_routes'] === 'y') {
+		\Tiki\CustomRoute\CustomRoute::match($path);
+	}
+}
+
 if ($inclusion) {
 	$_SERVER['PHP_SELF'] = $base . $inclusion;
 	$_SERVER['SCRIPT_NAME'] = $base . basename($inclusion);

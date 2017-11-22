@@ -1311,6 +1311,13 @@ function prefs_feature_list($partial = false)
 			'dependencies' => ['feature_canonical_url'],
 			'default' => '',
 		],
+		'feature_sefurl_routes' => [
+			'name' => tra('Custom Routes'),
+			'description' => tra("Custom function of Routes"),
+			'dependencies' => ['feature_sefurl'],
+			'type' => 'flag',
+			'default' => 'n',
+		],
 		'feature_modulecontrols' => [
 			'name' => tra('Show module controls'),
 			'description' => tra('Enable controls in modules'),
@@ -2753,7 +2760,7 @@ function prefs_feature_list($partial = false)
 
 			/*
 			 * Anchoring absolutely not robust. Positioning is verified with the tiki.comments.ranges attribute, which is not updated when wiki pages change. When annotated text changes, the annotation stops displaying (unless the range is unchanged). Chealer 2017-09-20
-             * Annotating is offered when selecting text in a WYSIWYG zone (WYSIWYG plugin) in edition mode. Chealer 2017-10-26
+			 * Annotating is offered when selecting text in a WYSIWYG zone (WYSIWYG plugin) in edition mode. Chealer 2017-10-26
 			 */
 			'tags' => ['experimental'],
 

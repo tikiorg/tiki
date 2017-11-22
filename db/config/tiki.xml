@@ -79,6 +79,7 @@
 		<service id="tiki.lib.css" class="cssLib">
 			<file>%kernel.root_dir%/lib/csslib.php</file>
 		</service>
+		<service id="tiki.lib.custom_route" class="Tiki\CustomRoute\CustomRouteLib" />
 		<service id="tiki.lib.dcs" class="DCSLib">
 			<file>%kernel.root_dir%/lib/dcs/dcslib.php</file>
 		</service>

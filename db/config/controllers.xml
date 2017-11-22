@@ -22,6 +22,7 @@
 		<service id="tiki.controller.connect_server" class="Services_Connect_Server"/>
 		<service id="tiki.controller.connect" class="Services_Connect_Client"/>
 		<service id="tiki.controller.contenttemplate" class="Services_ContentTemplate_Controller"/>
+		<service id="tiki.controller.customroute" class="Services_CustomRoute_Controller"/>
 		<service id="tiki.controller.draw" class="Services_Draw_Controller"/>
 		<service id="tiki.controller.edit" class="Services_Edit_Controller"/>
 		<service id="tiki.controller.favorite" class="Services_User_FavoriteController"/>

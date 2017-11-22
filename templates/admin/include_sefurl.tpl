@@ -54,6 +54,8 @@
 			</span>
 		</div>
 		{preference name=wiki_url_scheme}
+
+        {preference name=feature_sefurl_routes}
 	</fieldset>
 	<fieldset>
 		<legend>{tr}Settings{/tr}</legend>
