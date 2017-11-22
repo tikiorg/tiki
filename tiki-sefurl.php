@@ -103,8 +103,20 @@ function filter_out_sefurl($tpl_output, $type = null, $title = '', $with_next = 
 	if ($type == 'tracker item' || $type == 'trackeritem') {
 		if (preg_match('/itemId=([0-9]+)/', $tpl_output, $matches)) {
 			$trklib = TikiLib::lib('trk');
+
+			if ($prefs['feature_sefurl_title_trackeritem'] == 'y') {
+				$trackerId = $trklib->get_tracker_for_item($matches[1]);
+				if (empty($title)) {
+					$title = $trklib->get_isMain_value($trackerId, $matches[1]);
+				}
+				$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $tikilib->take_away_accent($title));
+				$title = preg_replace('/' . CLEAN_CHAR . CLEAN_CHAR . '+/', '-', $title);
+				$title = preg_replace('/' . CLEAN_CHAR . '+$/', '', $title);
+			}
+
 			if ($prefs['feature_sefurl_tracker_prefixalias'] == 'y' && $prefs['tracker_prefixalias_on_links'] == 'y' &&
 					$pagealias = $trklib->get_trackeritem_pagealias($matches[1])) {
+				$title = '';
 				$tpl_output = "./tiki-index.php?page=" . $pagealias;
 			}
 		}

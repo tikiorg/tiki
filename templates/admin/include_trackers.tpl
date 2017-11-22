@@ -39,6 +39,7 @@
 				{preference name=tracker_always_notify}
 				{preference name=feature_sefurl_tracker_prefixalias}
 				{preference name=tracker_prefixalias_on_links}
+				{preference name=feature_sefurl_title_trackeritem}
 			</fieldset>
 			<fieldset class="table">
 				<legend>{tr}Field settings{/tr}</legend>

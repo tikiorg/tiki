@@ -1288,6 +1288,14 @@ function prefs_feature_list($partial = false)
 			'dependencies' => ['feature_sefurl'],
 			'default' => 'y',
 		],
+		'feature_sefurl_title_trackeritem' => [
+			'name' => tra('Display tracker item title in the search engine friendly URL'),
+			'description' => tra('To enable the title, you should disable `Rewrite tiki-view_tracker.php?itemId=yyy to Prefixyyy page`'),
+			'type' => 'flag',
+			'perspective' => false,
+			'dependencies' => ['feature_sefurl'],
+			'default' =>'n',
+		],
 		'feature_sefurl_tracker_prefixalias' => [
 			'name' => tra('Rewrite tiki-view_tracker.php?itemId=yyy to Prefixyyy page'),
 			'description' => tra('This redirection uses the wiki prefix alias feature'),

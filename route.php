@@ -103,8 +103,8 @@ function tiki_route($path)
 			];
 		}
 	);
+	tiki_route_attempt('|^item(\d+)(\-.*)?$|', 'tiki-view_tracker_item.php', tiki_route_single(1, 'itemId'));
 	tiki_route_attempt_prefix('int', 'tiki-integrator.php', 'repID');
-	tiki_route_attempt_prefix('item', 'tiki-view_tracker_item.php', 'itemId');
 	tiki_route_attempt_prefix('newsletter', 'tiki-newsletters.php', 'nlId', ['info' => '1']);
 	tiki_route_attempt_prefix('nl', 'tiki-newsletters.php', 'nlId', ['info' => '1']);
 	tiki_route_attempt_prefix('poll', 'tiki-poll_form.php', 'pollId');
