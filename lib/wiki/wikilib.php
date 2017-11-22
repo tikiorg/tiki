@@ -336,18 +336,16 @@ class WikiLib extends TikiLib
 
 		$linksToOld = [];
 		while ($res = $result->fetchRow()) {
-			$page = $res['fromPage'];
-
-			$is_wiki_page = true;
-			if (substr($page, 0, 11) == 'objectlink:') {
-				$is_wiki_page = false;
-				$objectlinkparts = explode(':', $page);
+			$linkOrigin = $res['fromPage'];
+			$linksToOld[] = $linkOrigin;
+			$is_wiki_page = substr($linkOrigin, 0, 11) != 'objectlink:';
+			if (! $is_wiki_page) {
+				$objectlinkparts = explode(':', $linkOrigin);
 				$type = $objectlinkparts[1];
 				$objectId = $objectlinkparts[2];
 			}
-			$linksToOld[] = $res['fromPage'];
 			if ($is_wiki_page) {
-				$info = $this->get_page_info($page);
+				$info = $this->get_page_info($linkOrigin);
 				//$data=addslashes(str_replace($oldName,$newName,$info['data']));
 				$data = $info['data'];
 			} elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
@@ -373,9 +371,11 @@ class WikiLib extends TikiLib
 			$data = preg_replace("/(?<=\(\()$quotedOldName(?=\)\)|\|)/i", $newName, $data);
 
 			$quotedOldHtmlName = preg_quote(urlencode($oldName), '/');
+			
 			$htmlSearch = '/<a class="wiki" href="tiki-index\.php\?page=' . $quotedOldHtmlName . '([^"]*)"/i';
 			$htmlReplace = '<a class="wiki" href="tiki-index.php?page=' . urlencode($newName) . '\\1"';
 			$data = preg_replace($htmlSearch, $htmlReplace, $data);
+			
 			$htmlSearch = '/<a class="wiki" href="' . $quotedOldHtmlName . '"/i';
 			$htmlReplace = '<a class="wiki" href="' . urlencode($newName) . '"';
 			$data = preg_replace($htmlSearch, $htmlReplace, $data);
@@ -385,7 +385,7 @@ class WikiLib extends TikiLib
 
 			if ($is_wiki_page) {
 				$query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
-				$this->query($query, [ $data,(int) strlen($data), $page]);
+				$this->query($query, [ $data,(int) strlen($data), $linkOrigin]);
 			} elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
 				$query = "update `tiki_comments` set `data`=? where `threadId`=?";
 				$this->query($query, [ $data, $objectId]);
@@ -394,7 +394,7 @@ class WikiLib extends TikiLib
 				// This should be refactored, so that both links and Plugin Include are renamed in every object
 				// that supports wiki syntax.
 			}
-			$this->invalidate_cache($page);
+			$this->invalidate_cache($linkOrigin);
 		}
 
 		// correct toPage and fromPage in tiki_links
