@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Installer;
 
 /**
  * Stub command implementation to list the commands even though they are not available.
@@ -32,6 +33,11 @@ class UnavailableCommand extends Command
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$output->writeln('<error>Command not available at this stage. Complete required installation steps.</error>');
+		$installer = new Installer;
+		if ($installer->requiresUpdate()) {
+			$output->writeln('<error>Command not available at this stage. Complete required installation steps. Perhaps your database structure is not up to date? Solved by: php console.php database:update</error>');
+		} else {
+			$output->writeln('<error>Command not available at this stage. Complete required installation steps.</error>');
+		}
 	}
 }
