@@ -19,16 +19,16 @@ class H5P_EditorTikiStorage implements H5peditorStorage
 	 */
 	public static function get_h5peditor_instance()
 	{
-		global $tikipath;
 
 		static $h5peditor;
+
+		$ajaxInterface = new H5P_EditorTikiAjax();
 
 		if (empty($h5peditor)) {
 			$h5peditor = new H5peditor(
 				H5P_H5PTiki::get_h5p_instance('core'),
 				new H5P_EditorTikiStorage(),
-				$tikipath . H5P_H5PTiki::$h5p_path,
-				$tikipath . H5P_H5PTiki::$h5p_path
+				$ajaxInterface
 			);
 		}
 

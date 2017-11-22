@@ -101,5 +101,15 @@ function prefs_h5p_list($partial = false)
 			'filter' => 'alpha',
 			'default' => 'n',
 		],
+		'h5p_hub_is_enabled' => [
+			'name' => tra('Hub Is Enabled'),
+			'description' => tra('Unused so far'),
+			'dependencies' => [
+				'h5p_enabled',
+			],
+			'type' => 'flag',
+			'filter' => 'alpha',
+			'default' => 'n',
+		],
 	];
 }
