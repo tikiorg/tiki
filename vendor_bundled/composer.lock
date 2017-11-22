@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0e5d21894817bb04a7586b225889e97",
+    "content-hash": "71890137c7e9ac2ef33b79cf20dc31a5",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -2920,17 +2920,17 @@
         },
         {
             "name": "sorich87/bootstrap-tour",
-            "version": "v0.11.0",
+            "version": "v0.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sorich87/bootstrap-tour.git",
-                "reference": "942af8331ac82a1595b060d91ad6189160067b72"
+                "reference": "1a06475e27f852bb642b9353574638d51673b0d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/sorich87/bootstrap-tour/sorich87-bootstrap-tour-942af8331ac82a1595b060d91ad6189160067b72-zip-402df2.zip",
-                "reference": "942af8331ac82a1595b060d91ad6189160067b72",
-                "shasum": "fbb114661a4cfabf0b6cf3d949a034ff2427e64b"
+                "url": "https://composer.tiki.org/dist/sorich87/bootstrap-tour/sorich87-bootstrap-tour-1a06475e27f852bb642b9353574638d51673b0d5-zip-c047fa.zip",
+                "reference": "1a06475e27f852bb642b9353574638d51673b0d5",
+                "shasum": "d3d538b9d49daced2a2b1f3e55aa9dc67856a833"
             },
             "type": "component",
             "notification-url": "https://packagist.org/downloads/",
@@ -2943,7 +2943,7 @@
                 "bootstrap",
                 "tour"
             ],
-            "time": "2016-08-06T06:05:19+00:00"
+            "time": "2017-09-30T10:35:18+00:00"
         },
         {
             "name": "studio-42/elfinder",
