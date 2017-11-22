@@ -1,0 +1,365 @@
+// $Id$
+// This file is for additional LESS rules beyond what are in variables.less.
+// Image path example:
+@imagePath: ~"../images/";
+// body {
+//	background-image: url('@{imagePath}bg.jpg');
+// }
+
+html,
+body {
+	//	height: 100%;
+	/* The html and body elements cannot have any padding or margin. */
+	-webkit-font-smoothing: antialiased;
+	//	font: normal 14px arial,sans-serif;
+}
+
+/* Wrapper for page content to push down footer */
+//#wrap {
+//	min-height: 100%;
+//	height: auto !important;
+//	height: 100%;
+/* Negative indent footer by its height */
+//	margin: 0 auto; // 0 auto -60px;
+/* Pad bottom by footer height */
+//	padding: 0; //  0 0 60px;
+//}
+
+.sitelogo { margin: 15px; }
+.layout_basic {
+	#top_modules,
+	#topbar.row {
+		margin-left: 0;
+		margin-right: 0
+	}
+}
+
+.header_outer,
+.layout_basic #top_modules {
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#136d9f+0,28a7de+100 */
+	background: #136d9f; /* Old browsers */
+	background: -moz-linear-gradient(left,  #136d9f 0%, #28a7de 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left,  #136d9f 0%,#28a7de 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right,  #136d9f 0%,#28a7de 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#136d9f', endColorstr='#28a7de',GradientType=1 ); /* IE6-9 */
+
+	color: #000000;
+	.siteloginbar_popup > .btn-link {
+		color: #f8f8f8;
+	}
+}
+
+.layout_fixed_top_modules .middle_outer .fixed-topbar { height: 54px; }
+
+#fullscreenbutton a {
+	color: #000000;
+}
+
+.middle_outer {
+	-webkit-box-shadow: inset 0 54px 0 0 #043b5a;
+	-moz-box-shadow: inset 0 54px 0 0 #043b5a;
+	box-shadow: inset 0 54px 0 0 #043b5a;
+}
+
+#topbar {
+	min-height: 54px;
+	margin-bottom: 20px;
+}
+
+//#topbar.affix { width: @container-desktop; }
+
+#topbar.affix {
+	width: 100%;
+	left: 0;
+}
+
+#topbar.row.affix {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+#topbar.affix {
+	position: fixed;
+	top: 0;
+	z-index: 10;
+	-webkit-transition: all 0.6s ease-in-out;
+}
+
+.navbar-static-top {
+	z-index: 999;
+}
+
+.topbar .navbar-nav > li > a {
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.topbar .nav > li > a:hover,
+.topbar .nav > li > a:focus {
+	background: #1a1a1a;
+}
+
+.nav-justified .navbar-nav {
+	width: 100%;
+}
+
+@media (min-width: 768px) {
+	.nav-justified .navbar-nav > li {
+		float: none;
+		display: table-cell;
+		width: 1%;
+		& > a {
+			text-align: center;
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+	}
+}
+
+.nav-justified .dropdown .dropdown-menu {
+	top: auto;
+	left: auto;
+}
+
+// repeat bootstrap rule without ">" due to Tiki menu HTML
+@media (max-width: 768px) {
+	.nav-justified li {
+		float: none;
+	}
+
+	.nav-justified li > a {
+		text-align: center;
+		margin-bottom: 5px;
+	}
+}
+
+#col1 {
+	padding: 0;
+}
+
+/* Set the fixed height of the footer here */
+#footer {
+	min-height: 60px;
+	margin-top: 50px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.popover {
+	color: @text-color;
+}
+
+.popover a {
+	color: #000000;
+	&:hover {
+		background: #ffffff;
+	}
+}
+
+.popover .iconmenu:hover {
+	background: #ffffff;
+}
+
+.popover .iconmenu a:hover {
+	text-decoration: none;
+}
+
+#wrap > .container,
+body > .container > .container {
+	padding: 60px 15px 0;
+}
+
+#row-middle {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.container .credit {
+	margin: 20px 0;
+}
+
+#footer,
+html {
+	background-color: #414141 !important;
+}
+
+.footer_liner {
+	a {
+		color: #efefef;
+	}
+	color: #d4d4d4;
+	& .panel-body {
+		color: @text-color;
+	}
+}
+
+h1, h2, h3, h4 {
+//	font-family: 'Kreon', serif;
+	vertical-align: middle;
+}
+
+#page-header {
+	h1,
+	h2,
+	h3 a,
+	a,
+	a:hover {
+		color: #f8f8f8; //#101010;
+		font-weight: 800;
+		text-decoration: none;
+	}
+
+	h3 {
+//		font-family: 'Kreon', serif;
+//		background: #27A6DD;
+		//		padding:10px;
+		border-radius: 3px;
+		font-size: 34px;
+		padding: 12px 10px 6px 10px;
+	}
+	.dropdown-menu {
+		//	top:74px;
+		background: #27A6DD;
+		border-width: 0;
+	}
+}
+
+h1 {
+	font-size: 50px;
+}
+
+#topbar {
+	width: 100%;
+	position: static;
+	top: -32px;
+}
+
+#topbar.affix {
+	position: fixed;
+	top: 0;
+	z-index: 1030;
+	-webkit-transition: all .6s ease-in-out;
+}
+
+#footer > .container {
+
+}
+
+/* navbar style */
+.topbar .navbar-nav > li {
+	background-color: #043b5a;
+	font-weight: 700;
+	text-transform: uppercase;
+	border-width: 0;
+}
+
+.topbar .navbar-nav > li > a {
+	color: #ffffff;
+}
+
+.topbar .navbar-nav > li > a:hover,
+.navbar-nav > li .open,
+.topbar .navbar-nav .active > a {
+	background-color: #1a1a1a;
+}
+
+//.topbar .dropdown-menu {
+//	right: 0;
+//}
+
+.topbar .navbar-nav > .dropdown > a .caret {
+	border-top-color: #999999;
+	border-bottom-color: #999999;
+}
+
+.navbar-collapse.in { /*3.0.2 bug workaround*/
+	overflow-y: visible;
+}
+
+.navbar-toggle {
+	outline: 0;
+}
+
+.admin-navbar .navbar-nav > li.dropdown { border-bottom-color: transparent; }
+
+.divider {
+	height: 100px;
+}
+
+.panel {
+	border-width: 0;
+}
+
+#col2,
+#col3 {
+	.panel-default > .panel-heading {
+		background: none !important;
+		background-color: transparent !important;
+		border: none !important;
+	}
+}
+
+.blog-postbody-title .panel-title {
+	font-size: 24px;
+}
+
+@media (max-width: 768px) {
+	#page-header {
+		height: auto;
+	}
+}
+
+.scroll-top {
+	position: fixed;
+	bottom: 0;
+	right: 6%;
+	z-index: 100;
+	background: #27A6DD;
+	font-size: 24px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+
+.scroll-top a:link, .scroll-top a:visited {
+	color: #222222;
+}
+
+section {
+	color: #ffffff;
+	min-height: 400px;
+	height: auto !important;
+	height: 100%;
+	padding-top: 100px;
+}
+
+.bg-1 {
+	background: url('@{imagePath}bg_4.jpg') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.bg-2 {
+	background: url('@{imagePath}bg_5.jpg') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.bg-3 {
+	background: url('@{imagePath}bg_6.jpg') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.bg-4 {
+	padding-top: 30px;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(20, 20, 20, 0.2)), to(rgba(255, 255, 255, 0)), color-stop(1, #000000));
+}
+
+.cat_Full_width_content .topbar.row,
+.cat_Full_width_content #row-middle.row { margin-left: 0; margin-right: 0; }
