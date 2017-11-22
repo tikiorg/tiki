@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "71890137c7e9ac2ef33b79cf20dc31a5",
+    "content-hash": "c14a507ed2339cebd699f1667a671726",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -943,17 +943,17 @@
         },
         {
             "name": "h5p/h5p-core",
-            "version": "1.13.2",
+            "version": "1.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/h5p/h5p-php-library.git",
-                "reference": "bfda796ab7605889ea87b64f082233a97a52968c"
+                "reference": "64f170b8a3a93713180564ec82cf61bd80252ac7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/h5p/h5p-core/h5p-h5p-core-bfda796ab7605889ea87b64f082233a97a52968c-zip-201452.zip",
-                "reference": "bfda796ab7605889ea87b64f082233a97a52968c",
-                "shasum": "27f702d75d2266fd86c3f080fbfe4230e0e8a80f"
+                "url": "https://composer.tiki.org/dist/h5p/h5p-core/h5p-h5p-core-64f170b8a3a93713180564ec82cf61bd80252ac7-zip-3ff075.zip",
+                "reference": "64f170b8a3a93713180564ec82cf61bd80252ac7",
+                "shasum": "0145d99fdc29ced40a81557754546550b82ac125"
             },
             "require": {
                 "php": ">=5.3.0"
@@ -995,21 +995,21 @@
                 "interactive",
                 "quiz"
             ],
-            "time": "2017-03-30T11:55:44+00:00"
+            "time": "2017-08-24T10:40:53+00:00"
         },
         {
             "name": "h5p/h5p-editor",
-            "version": "1.12.1",
+            "version": "1.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/h5p/h5p-editor-php-library.git",
-                "reference": "1880ae7eb5b088c607ca1fc298b55be6e230a0c7"
+                "reference": "0100d5e301a5e6a45f32f74eaf27f825ec948c37"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/h5p/h5p-editor/h5p-h5p-editor-1880ae7eb5b088c607ca1fc298b55be6e230a0c7-zip-856f1b.zip",
-                "reference": "1880ae7eb5b088c607ca1fc298b55be6e230a0c7",
-                "shasum": "b0589a2fe249d32b3c311deb4a5bc8d7d2b0d2db"
+                "url": "https://composer.tiki.org/dist/h5p/h5p-editor/h5p-h5p-editor-0100d5e301a5e6a45f32f74eaf27f825ec948c37-zip-a31c24.zip",
+                "reference": "0100d5e301a5e6a45f32f74eaf27f825ec948c37",
+                "shasum": "0ff9df70b560ce9cba44c3b423b41fe8107d34a0"
             },
             "require": {
                 "php": ">=5.3.0"
@@ -1019,7 +1019,9 @@
                 "files": [
                     "h5peditor.class.php",
                     "h5peditor-file.class.php",
-                    "h5peditor-storage.interface.php"
+                    "h5peditor-ajax.class.php",
+                    "h5peditor-storage.interface.php",
+                    "h5peditor-ajax.interface.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1050,7 +1052,7 @@
                 "interactive",
                 "quiz"
             ],
-            "time": "2017-03-06T09:07:11+00:00"
+            "time": "2017-09-14T12:01:01+00:00"
         },
         {
             "name": "itsjavi/bootstrap-colorpicker",
