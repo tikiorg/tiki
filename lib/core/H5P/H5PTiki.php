@@ -139,7 +139,7 @@ class H5P_H5PTiki implements H5PFrameworkInterface
 	 * @param $data
 	 * @return string The content (response body). null if something went wrong
 	 */
-	public function fetchExternalData($url, $data, $blocking = true)
+	public function fetchExternalData($url, $data = null, $blocking = true, $stream = null)
 	{
 		$handle = curl_init($url);
 		curl_setopt($handle, CURLOPT_POST, true);
@@ -1425,5 +1425,27 @@ GROUP BY l.`name`, l.`major_version`, l.`minor_version`');
 	public function hasPermission($permission, $id = null)
 	{
 		// TODO: Implement hasPermission() method.
+	}
+
+	/**
+	 * Get URL to file in the specific library
+	 * @param string $libraryFolderName
+	 * @param string $fileName
+	 * @return string URL to file
+	 */
+	public function getLibraryFileUrl($libraryFolderName, $fileName)
+	{
+		// TODO: Implement getLibraryFileUrl() method.
+	}
+
+	/**
+	 * Replaces existing content type cache with the one passed in
+	 *
+	 * @param object $contentTypeCache Json with an array called 'libraries'
+	 *  containing the new content type cache that should replace the old one.
+	 */
+	public function replaceContentTypeCache($contentTypeCache)
+	{
+		// TODO: Implement replaceContentTypeCache() method.
 	}
 }

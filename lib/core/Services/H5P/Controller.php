@@ -265,7 +265,7 @@ class Services_H5P_Controller
 		header('Content-type: application/json');
 
 		if ($name) {
-			print $editor->getLibraryData($name, $major_version, $minor_version, substr($prefs['language'], 0, 2), '');
+			$out = $editor->getLibraryData($name, $major_version, $minor_version, substr($prefs['language'], 0, 2), '');
 
 			// Log library load
 			new H5P_Event(
@@ -277,10 +277,10 @@ class Services_H5P_Controller
 				$major_version . '.' . $minor_version
 			);
 		} else {
-			print $editor->getLibraries();
+			$out = $editor->getLibraries();
 		}
 
-		exit;
+		return json_decode(json_encode($out), true);
 	}
 
 	function action_list_libraries($input)

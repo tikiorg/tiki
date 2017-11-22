@@ -171,4 +171,41 @@ ORDER BY `title`'
 	{
 		// Not really needed for Tiki
 	}
+
+	/**
+	 * Saves a file or moves it temporarily. This is often necessary in order to
+	 * validate and store uploaded or fetched H5Ps.
+	 *
+	 * @param string $data Uri of data that should be saved as a temporary file
+	 * @param boolean $move_file Can be set to TRUE to move the data instead of saving it
+	 *
+	 * @return bool|object Returns false if saving failed or the path to the file
+	 *  if saving succeeded
+	 */
+	public static function saveFileTemporarily($data, $move_file)
+	{
+		// TODO: Implement saveFileTemporarily() method.
+	}
+
+	/**
+	 * Marks a file for later cleanup, useful when files are not instantly cleaned
+	 * up. E.g. for files that are uploaded through the editor.
+	 *
+	 * @param H5peditorFile
+	 * @param $content_id
+	 */
+	public static function markFileForCleanup($file, $content_id)
+	{
+		// TODO: Implement markFileForCleanup() method.
+	}
+
+	/**
+	 * Clean up temporary files
+	 *
+	 * @param string $filePath Path to file or directory
+	 */
+	public static function removeTemporarilySavedFiles($filePath)
+	{
+		// TODO: Implement removeTemporarilySavedFiles() method.
+	}
 }
