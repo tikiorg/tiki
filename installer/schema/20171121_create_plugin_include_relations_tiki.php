@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  *
  * @param Installer $installer
  */
-function upgrade_20171121_create_plugin_include_relations($installer)
+function upgrade_20171121_create_plugin_include_relations_tiki($installer)
 {
 
 	global $prefs;
