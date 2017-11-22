@@ -56,7 +56,9 @@ if (isset($_REQUEST['pdf'])) {
 			'orientation' => isset($_REQUEST['landscape']) ? 'L' : 'P',
 		];
 		$filename = TikiLib::lib('tiki')->remove_non_word_characters_and_accents($_REQUEST['page']);
-
+		if($_REQUEST['pdfSettings']) {
+			$_POST['html']='<'.$_REQUEST['pdfSettings'].' />'.$_POST['html'];
+		}
 		$pdf = $generator->getPdf($filename, $params, preg_replace('/%u([a-fA-F0-9]{4})/', '&#x\\1;', $_POST['html']));
 
 		$length = strlen($pdf);

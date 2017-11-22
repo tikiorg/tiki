@@ -193,6 +193,15 @@
 			{jq}
 
 				window.exportPdf = function() {
+				var pdfSettings='';
+				$('pdfsettings').each(function() {
+					pdfSettings='pdfsettings ';
+					$.each(this.attributes, function() {
+					if(this.specified) {
+						pdfSettings+=this.name+'='+this.value+" ";
+						}
+					});
+				});
 					var inputs = $('<div />');
 					var buttons = {};
 
@@ -205,17 +214,6 @@
 					);
 
 					inputs.append('<br>');
-
-					inputs.append(
-						tr('Font Size: ') +
-						'<select id="fontsize">' +
-							'<option value="small">' + tr('Small') + '</option>' +
-							'<option value="medium">' + tr('Medium') + '</option>' +
-							'<option value="large">' + tr('Large') + '</option>' +
-							'<option value="x-large">' + tr('X-Large') + '</option>' +
-						'</select>'
-					);
-
 					buttons[tr("Ok")] = function() {
 						var s5;
 
@@ -224,16 +222,7 @@
 						} else {
 							s5 = $.s5;
 						}
-
-						$body.prepend(
-							'<style id="tempStyle">' +
-							'body *{' +
-							'font-size:' + escape($('#fontsize').val()) + ' ! important;' +
-							'}' +
-							'</style>'
-						);
-
-						s5.exportPDF('tiki-slideshow.php?page={{$page|escape:'url'}}&pdf&' + $('#layout').val() + '&fontsize=' + $('#fontsize').val(), tr("PDF Loading... This can take a minute or two."));
+						s5.exportPDF('tiki-slideshow.php?page={{$page|escape:'url'}}&pdf&' + $('#layout').val() +'&pdfSettings='+pdfSettings, tr("PDF Loading... This can take a minute or two."));
 						inputs.dialog('close');
 						$body.find('#tempStyle').remove();
 					};
