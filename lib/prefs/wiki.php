@@ -696,8 +696,8 @@ function prefs_wiki_list($partial = false)
 			'dependencies' => [],
 		],
 		'wiki_make_ordered_list_items_display_unique_numbers' => [
-			'name' => tr('Uniquely-numbered ordered list items'),
-			'description' => tr('Make ordered list items display unique numbers for sub-items; for example 1.1 and 1.2 instead of just repeating 1 and 2 again'),
+			'name' => tr('Multilevel style numbering for ordered lists'),
+			'description' => tr('Make ordered list items display unique numbers for all levels of their sub-items; for example: 1.1, 1.2, 1.2.1, 1.2.2, etc.'),
 			'keywords' => 'unique ordered lists numbered items syntax',
 			'help' => 'Wiki-Syntax-Lists#Creating_a_Numbered_List',
 			'type' => 'flag',

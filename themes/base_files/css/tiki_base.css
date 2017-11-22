@@ -1323,17 +1323,25 @@ div.categbar {
 ol.uol {
   counter-reset: item;
 }
-.uol li {
+.uol ol > li {
   display: block;
   text-indent: -1rem;
 }
-.uol li:before {
+.uol ol > li:before {
   content: counters(item, ".") ".\0000a0";
   counter-increment: item;
 }
-.uol li li:before {
+.uol ol > li ol > li:before {
   content: counters(item, ".") "\0000a0";
   counter-increment: item;
+}
+.nouol ol > li {
+  display: list-item;
+  text-indent: 0;
+}
+.nouol ol > li:before,
+.nouol ol > li ol > li:before {
+  content: "";
 }
 .box-quickadmin li {
   font-size: 0.9em;

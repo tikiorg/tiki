@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2017 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -84,6 +84,10 @@ function smarty_function_html_body_attributes($params, $smarty)
 	if (getCookie('hide_zone_right')) {
 		$class .= ' hide_zone_right';
 	}
+
+	if ($prefs['wiki_make_ordered_list_items_display_unique_numbers'] === 'y') {
+		$class .= ' uol'; // add class to display all the ordered lists sub-items indented with unique numbering like "1.2", "1.2.1", etc.
+		}
 
 	if (! empty($onload)) {
 		$back .= ' onload="' . $onload . '"';

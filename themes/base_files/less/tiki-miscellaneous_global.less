@@ -464,7 +464,10 @@ div.categbar {
 .uol ol, ol.uol { 
     counter-reset: item;
 }
-.uol li { display: block; text-indent: -1rem } // negative text-indent here simulates the common ol rendering indentation
-.uol li:before { content: counters(item, ".") ".\0000a0"; counter-increment: item } // \0000a0 is nbsp Unicode escaped
-.uol li li:before { content: counters(item, ".") "\0000a0"; counter-increment: item } // here we remove the last dot (looks better?)
+.uol ol > li { display: block; text-indent: -1rem } // negative text-indent here simulates the common ol rendering indentation
+.uol ol > li:before { content: counters(item, ".") ".\0000a0"; counter-increment: item } // \0000a0 is nbsp Unicode escaped
+.uol ol > li ol > li:before { content: counters(item, ".") "\0000a0"; counter-increment: item } // here we remove the last dot (looks better?)
+
+.nouol ol > li { display: list-item; text-indent: 0 }
+.nouol ol > li:before, .nouol ol > li ol > li:before { content: "" }
 
