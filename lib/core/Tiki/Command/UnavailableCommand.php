@@ -38,6 +38,6 @@ class UnavailableCommand extends Command
 		if ($installer->requiresUpdate()) {
 			$message .= ' '.'Perhaps your database structure is not up to date? Solved by: php console.php database:update';
 		}
-		$output->writeln('<error>'. $message . '</error>');
+		$output->writeln('<error>' . $message . '</error>');
 	}
 }
