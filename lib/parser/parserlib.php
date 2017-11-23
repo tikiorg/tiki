@@ -1365,6 +1365,49 @@ if ( \$('#$id') ) {
 		return $result;
 	}
 
+	/**
+	 * Gets a wiki parseable content and substitutes links for $oldName by
+	 * links for $newName.
+	 *
+	 * @param string wiki parseable content
+	 * @param string old page name
+	 * @param string new page name
+	 * @return string new wiki parseable content with links replaced
+	 */
+	function replace_links($data, $oldName, $newName) {
+		global $prefs;
+		$quotedOldName = preg_quote($oldName, '/');
+		$semanticlib = TikiLib::lib('semantic');
+
+		foreach ($semanticlib->getAllTokens() as $sem) {
+			$data = str_replace("($sem($oldName", "($sem($newName", $data);
+		}
+
+		if ($prefs['feature_wikiwords'] == 'y') {
+			if (strstr($newName, ' ')) {
+				$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$quotedOldName(?= |\n|\t|\r|\,|\;|$)/", '((' . $newName . '))', $data);
+			} else {
+				$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$quotedOldName(?= |\n|\t|\r|\,|\;|$)/", $newName, $data);
+			}
+		}
+
+		$data = preg_replace("/(?<=\(\()$quotedOldName(?=\)\)|\|)/i", $newName, $data);
+
+		$quotedOldHtmlName = preg_quote(urlencode($oldName), '/');
+
+		$htmlSearch = '/<a class="wiki" href="tiki-index\.php\?page=' . $quotedOldHtmlName . '([^"]*)"/i';
+		$htmlReplace = '<a class="wiki" href="tiki-index.php?page=' . urlencode($newName) . '\\1"';
+		$data = preg_replace($htmlSearch, $htmlReplace, $data);
+
+		$htmlSearch = '/<a class="wiki" href="' . $quotedOldHtmlName . '"/i';
+		$htmlReplace = '<a class="wiki" href="' . urlencode($newName) . '"';
+		$data = preg_replace($htmlSearch, $htmlReplace, $data);
+
+		$htmlWantedSearch = '/(' . $quotedOldName . ')?<a class="wiki wikinew" href="tiki-editpage\.php\?page=' . $quotedOldHtmlName . '"[^<]+<\/a>/i';
+		$data = preg_replace($htmlWantedSearch, '((' . $newName . '))', $data);
+
+		return $data;
+	}
 
 	// Replace hotwords in given line
 	//*

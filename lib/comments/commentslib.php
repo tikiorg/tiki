@@ -2783,14 +2783,10 @@ class Comments extends TikiLib
 		} else {
 			$type = $objectType . ' comment'; // comment types are not used in tiki_objects yet but maybe in future
 		}
-		$pages = TikiLib::lib('parser')->get_pages($data);
-		$linkhandle = "objectlink:$type:$threadId";
-		$this->clear_links($linkhandle);
-		foreach ($pages as $a_page) {
-			$this->replace_link($linkhandle, $a_page);
-		}
 
-				TikiLib::lib('wiki')->update_wikicontent_relations($data, $type, (int)$threadId);
+		$wikilib = TikiLib::lib('wiki');
+		$wikilib->update_wikicontent_relations($data, $type, (int)$threadId);
+		$wikilib->update_wikicontent_links($data, $type, (int)$threadId);
 	}
 
 	/**

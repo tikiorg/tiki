@@ -442,7 +442,13 @@ class ArtLib extends TikiLib
 			}
 		}
 
-		TikiLib::lib('wiki')->update_wikicontent_relations(
+		$wikilib = TikiLib::lib('wiki');
+		$wikilib->update_wikicontent_relations(
+			$heading."\n".$body,            
+			'article',
+			(int)$articleId
+		);
+		$wikilib->update_wikicontent_links(
 			$heading."\n".$body,            
 			'article',
 			(int)$articleId

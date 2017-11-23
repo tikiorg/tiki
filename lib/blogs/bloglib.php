@@ -810,7 +810,7 @@ class BlogLib extends TikiDb_Bridge
 		global $prefs;
 		$tikilib = TikiLib::lib('tiki');
 		$smarty = TikiLib::lib('smarty');
-
+        
 		if ($is_wysiwyg) {
 			$data = TikiFilter::get('purifier')->filter($data);
 			$excerpt = TikiFilter::get('purifier')->filter($excerpt);
@@ -829,7 +829,9 @@ class BlogLib extends TikiDb_Bridge
 		$result = $this->query($query, [(int) $created, (int) $blogId]);
 		$this->add_blog_activity($blogId);
 
-		TikiLib::lib('wiki')->update_wikicontent_relations($data, 'post', $id);
+		$wikilib = TikiLib::lib('wiki');
+		$wikilib->update_wikicontent_relations($data, 'post', $id);
+		$wikilib->update_wikicontent_links($data, 'post', $id);
 
 		if ($prefs['feature_user_watches'] == 'y' or $prefs['feature_group_watches'] == 'y') {
 			$nots = $tikilib->get_event_watches('blog_post', $blogId);
@@ -1134,7 +1136,9 @@ class BlogLib extends TikiDb_Bridge
 			$result = $this->query($query, [$blogId, $data, $excerpt, $user, $title, $priv, $wysiwyg, $postId]);
 		}
         
-		TikiLib::lib('wiki')->update_wikicontent_relations($data, 'post', $postId);
+		$wikilib = TikiLib::lib('wiki');
+		$wikilib->update_wikicontent_relations($data, 'post', $postId);
+		$wikilib->update_wikicontent_links($data, 'post', $postId);
 
 		if ($prefs['feature_actionlog'] == 'y') {
 			$logslib = TikiLib::lib('logs');

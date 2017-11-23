@@ -342,59 +342,57 @@ class WikiLib extends TikiLib
 			if (! $is_wiki_page) {
 				$objectlinkparts = explode(':', $linkOrigin);
 				$type = $objectlinkparts[1];
-				$objectId = $objectlinkparts[2];
+				// $objectId can contain :, so consider the remaining string
+				$objectId = substr($linkOrigin, strlen($type) + 12);
 			}
+
+			$parserlib = TikiLib::lib('parser');
+			
 			if ($is_wiki_page) {
 				$info = $this->get_page_info($linkOrigin);
 				//$data=addslashes(str_replace($oldName,$newName,$info['data']));
-				$data = $info['data'];
-			} elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
-				$comment_info = TikiLib::lib('comments')->get_comment($objectId);
-				$data = $comment_info['data'];
-			}
-
-			$quotedOldName = preg_quote($oldName, '/');
-			$semanticlib = TikiLib::lib('semantic');
-
-			foreach ($semanticlib->getAllTokens() as $sem) {
-				$data = str_replace("($sem($oldName", "($sem($newName", $data);
-			}
-
-			if ($prefs['feature_wikiwords'] == 'y') {
-				if (strstr($newName, ' ')) {
-					$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$quotedOldName(?= |\n|\t|\r|\,|\;|$)/", '((' . $newName . '))', $data);
-				} else {
-					$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$quotedOldName(?= |\n|\t|\r|\,|\;|$)/", $newName, $data);
-				}
-			}
-
-			$data = preg_replace("/(?<=\(\()$quotedOldName(?=\)\)|\|)/i", $newName, $data);
-
-			$quotedOldHtmlName = preg_quote(urlencode($oldName), '/');
-			
-			$htmlSearch = '/<a class="wiki" href="tiki-index\.php\?page=' . $quotedOldHtmlName . '([^"]*)"/i';
-			$htmlReplace = '<a class="wiki" href="tiki-index.php?page=' . urlencode($newName) . '\\1"';
-			$data = preg_replace($htmlSearch, $htmlReplace, $data);
-			
-			$htmlSearch = '/<a class="wiki" href="' . $quotedOldHtmlName . '"/i';
-			$htmlReplace = '<a class="wiki" href="' . urlencode($newName) . '"';
-			$data = preg_replace($htmlSearch, $htmlReplace, $data);
-
-			$htmlWantedSearch = '/(' . $quotedOldName . ')?<a class="wiki wikinew" href="tiki-editpage\.php\?page=' . $quotedOldHtmlName . '"[^<]+<\/a>/i';
-			$data = preg_replace($htmlWantedSearch, '((' . $newName . '))', $data);
-
-			if ($is_wiki_page) {
+				$data = $parserlib->replace_links($info['data'], $oldName, $newName);
 				$query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
 				$this->query($query, [ $data,(int) strlen($data), $linkOrigin]);
+				$this->invalidate_cache($linkOrigin);
 			} elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
+				$comment_info = TikiLib::lib('comments')->get_comment($objectId);
+				$data = $parserlib->replace_links($comment_info['data'], $oldName, $newName);
 				$query = "update `tiki_comments` set `data`=? where `threadId`=?";
 				$this->query($query, [ $data, $objectId]);
-			} else {
-				// TODO check tracker descriptions, tracker field description, tracker item textarea fields
-				// This should be refactored, so that both links and Plugin Include are renamed in every object
-				// that supports wiki syntax.
+			} elseif ($type == 'article') {
+				$info = TikiLib::lib('art')->get_article($objectId);
+				$heading = $parserlib->replace_links($info['heading'], $oldName, $newName);
+				$body = $parserlib->replace_links($info['body'], $oldName, $newName);
+				$query = "update `tiki_articles` set `heading`=?, `body`=? where `articleId`=?";
+				$this->query($query, [ $heading, $body, $objectId]);
+			} elseif ($type == 'post') {
+				$info = TikiLib::lib('blog')->get_post($objectId);
+				$data = $parserlib->replace_links($info['data'], $oldName, $newName);
+				$query = "update `tiki_blog_posts` set `data`=? where `postId`=?";
+				$this->query($query, [ $data, $objectId]);
+			} elseif ($type == 'tracker') {
+				$tracker_info = TikiLib::lib('trk')->get_tracker($objectId);
+				$data = $parserlib->replace_links($tracker_info['description'], $oldName, $newName);
+				$query = "update `tiki_trackers` set `description`=? where `trackerId`=?";
+				$this->query($query, [ $data, $objectId]);
+			} elseif ($type == 'trackerfield') {
+				$field_info = TikiLib::lib('trk')->get_field_info($objectId);
+				$data = $parserlib->replace_links($field_info['description'], $oldName, $newName);
+				$query = "update `tiki_tracker_fields` set `description`=? where `fieldId`=?";
+				$this->query($query, [ $data, $objectId]);
+			} elseif ($type == 'trackeritemfield') {
+				list($itemId, $fieldId) = explode(":", $objectId);
+				$data = TikiLib::lib('trk')->get_item_value(null, (int)$itemId, (int)$fieldId);
+				$data = $parserlib->replace_links($data, $oldName, $newName);
+				$query = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?";
+				$this->query($query, [ $data, $itemId, $fieldId]);
+			} elseif ($type == 'calendar event') {
+				$event_info = TikiLib::lib('calendar')->get_item($objectId);
+				$data = $parserlib->replace_links($event_info['description'], $oldName, $newName);
+				$query = "update `tiki_calendar_items` set `description`=? where `calitemId`=?";
+				$this->query($query, [ $data, $objectId ]);
 			}
-			$this->invalidate_cache($linkOrigin);
 		}
 
 		// correct toPage and fromPage in tiki_links
@@ -623,11 +621,46 @@ class WikiLib extends TikiLib
 			return;
 		}
 
-				$includes = $parserlib->find_plugins($data, 'include');
+		// Now create Plugin Include relations
+		$includes = $parserlib->find_plugins($data, 'include');
 
 		foreach ($includes as $include) {
 			$page = $include['arguments']['page'];
 			$relationlib->add_relation('tiki.wiki.include', $objectType, $itemId, 'wiki page', $page);
+		}
+	}
+
+	/**
+	 * Very similar to update_wikicontent_relations, but for links.
+	 * Both should be merged. The only reason they are not is because
+	 * wiki pages have their own way of updating content links.
+	 *
+	 * @param string $data wiki parsed content
+	 * @param string $objectType
+	 * @param string/int $itemId
+	 * @param boolean $wikiParsed Indicates if content is wiki parsed.
+	 */
+	public function update_wikicontent_links($data, $objectType, $itemId, $wikiParsed = true) {
+		$parserlib = TikiLib::lib('parser');
+		$tikilib = TikiLib::lib('tiki');
+
+		// First get identifier for tiki_links table
+		if ($objectType == 'wiki page') {
+			$linkhandle = $itemId;
+		} else {
+			$linkhandle = "objectlink:$objectType:$itemId";
+		}
+
+		$tikilib->clear_links($linkhandle);
+
+		if (! $wikiParsed) {
+			return;
+		}
+
+		// Create tiki_links entries
+		$pages = $parserlib->get_pages($data);
+		foreach ($pages as $a_page) {
+			$tikilib->replace_link($linkhandle, $a_page);
 		}
 	}
 

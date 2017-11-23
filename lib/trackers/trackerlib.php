@@ -3095,7 +3095,9 @@ class TrackerLib extends TikiLib
 				}
 
 				$wikiParsed = $descriptionIsParsed == 'y';
-				TikiLib::lib('wiki')->update_wikicontent_relations($description, 'tracker', (int)$trackerId, $wikiParsed);
+				$wikilib = TikiLib::lib('wiki');
+				$wikilib->update_wikicontent_relations($description, 'tracker', (int)$trackerId, $wikiParsed);
+				$wikilib->update_wikicontent_links($description, 'tracker', (int)$trackerId, $wikiParsed);
 
 				$optionTable = $this->options();
 				$optionTable->deleteMultiple(['trackerId' => (int) $trackerId]);
@@ -3255,7 +3257,9 @@ class TrackerLib extends TikiLib
 		}
 
 		$wikiParsed = $descriptionIsParsed == 'y';
-		TikiLib::lib('wiki')->update_wikicontent_relations($description, 'trackerfield', (int)$fieldId, $wikiParsed);
+		$wikilib = TikiLib::lib('wiki');
+		$wikilib->update_wikicontent_relations($description, 'trackerfield', (int)$fieldId, $wikiParsed);
+		$wikilib->update_wikicontent_links($description, 'trackerfield', (int)$fieldId, $wikiParsed);
 
 		if ($logOption) {
 			$logslib = TikiLib::lib('logs');
