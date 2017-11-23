@@ -58,6 +58,14 @@ function wikiplugin_include_info()
 				'filter' => 'text',
 				'default' => '',
 			],
+            'pagenotapproved_text' => [
+				'required' => false,
+				'name' => tra('Page Denied Text'),
+				'description' => tra('Text to show when the page exists but no version is approved.'),
+				'since' => '18.0',
+				'filter' => 'text',
+				'default' => '',
+            ],
 			'page_edit_icon' => [
 				'required' => false,
 				'name' => tra('Edit Icon'),
@@ -77,14 +85,19 @@ function wikiplugin_include_info()
 
 function wikiplugin_include($dataIn, $params)
 {
-	global $user, $killtoc;
+	global $user, $killtoc, $prefs;
 	static $included_pages, $data;
 	$userlib = TikiLib::lib('user');
 	$tikilib = TikiLib::lib('tiki');
 
 	$killtoc = true;
 	$max_times = 5;
-	$params = array_merge([ 'nopage_text' => '', 'pagedenied_text' => '', 'page_edit_icon' => 'y' ], $params);
+	$params = array_merge([
+		'nopage_text' => '',
+		'pagedenied_text' => '',
+		'page_edit_icon' => 'y',
+		'pagenotapproved_text' => tra('There are no approved versions of this page.'), 
+	], $params);
 	extract($params, EXTR_SKIP);
 	if (! isset($page)) {
 		return ("<b>missing page for plugin INCLUDE</b><br />");
@@ -110,7 +123,21 @@ function wikiplugin_include($dataIn, $params)
 		$included_pages[$memo] = 1;
 		// only evaluate permission the first time round
 		// evaluate if object or system permissions enables user to see the included page
-		$data[$memo] = $tikilib->get_page_info($page);
+		if ($prefs['flaggedrev_approval'] != 'y') {
+			$data[$memo] = $tikilib->get_page_info($page);
+		} else {
+			$flaggedrevisionlib = TikiLib::lib('flaggedrevision');
+			if ($flaggedrevisionlib->page_requires_approval($page)) {
+				if ($version_info = $flaggedrevisionlib->get_version_with($page, 'moderation', 'OK')) {
+					$data[$memo] = $version_info;
+				} else {
+					$included_pages[$memo] = $max_times;
+					return($pagenotapproved_text);
+				}
+			} else {
+				$data[$memo] = $tikilib->get_page_info($page);
+			}
+		}
 		if (! $data[$memo]) {
 			$text = $nopage_text;
 		}
