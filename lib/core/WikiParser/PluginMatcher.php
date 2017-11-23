@@ -356,7 +356,9 @@ class WikiParser_PluginMatcher_Match
 	private $bodyStart = false;
 	private $bodyEnd = false;
 
+	/** @var WikiParser_PluginMatcher|bool */
 	private $matcher = false;
+
 	private $start = false;
 	private $end = false;
 	private $initialstart = false;
