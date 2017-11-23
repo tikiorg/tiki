@@ -129,7 +129,7 @@ function prefs_print_list()
 		],
 		'print_pdf_mpdf_header' => [
 			'name' => tra('PDF header text'),
-			'description' => tra('Possible values, custom text, {PAGENO},{PAGETITLE},{DATE j-m-Y}'),
+			'description' => tra('Possible values, custom text, {PAGENO},{PAGETITLE},{DATE j-m-Y}, Page {PAGENO} of {NB}'),
 			'tags' => ['basic'],
 			'type' => 'text',
 			'default' => '',
@@ -137,10 +137,11 @@ function prefs_print_list()
 		],
 		'print_pdf_mpdf_footer' => [
 			'name' => tra('PDF footer text'),
-			'description' => tra('Possible values, custom text, {PAGENO}, {DATE j-m-Y} For example:Document Title|Center Text|{PAGENO}'),
+			'description' => tra('Custom text, {PAGENO}, {DATE j-m-Y}, Page {PAGENO} of {NB}.'),
 			'tags' => ['basic'],
 			'type' => 'text',
 			'default' => '',
+			'shorthint' => tr('Left text') . ' |' . tr('Center Text') . '| ' . tr('Right Text')
 		],
 		'print_pdf_mpdf_margin_left' => [
 			'name' => tra('Left margin'),

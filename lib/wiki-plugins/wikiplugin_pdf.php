@@ -112,7 +112,7 @@ function wikiplugin_pdf_info()
 					],
 					'header' => [
 						'name' => tra('PDF header text'),
-						'description' => tra('Format: <code>Left text| Center Text | Right Text</code>. Possible values,<code>custom text</code>, {PAGENO},{PAGETITLE},{DATE j-m-Y}.'),
+						'description' => tra('Format: <code>Left text| Center Text | Right Text</code>. Possible values,<code>custom text</code>, {PAGENO},{PAGETITLE},{DATE j-m-Y}, Page {PAGENO} of {NB}'),
 						'tags' => ['basic'],
 						'type' => 'text',
 						'default' => $prefs['print_pdf_mpdf_header'],
@@ -120,7 +120,7 @@ function wikiplugin_pdf_info()
 					],
 					'footer' => [
 						'name' => tra('PDF footer text'),
-						'description' => tra('Possible values, custom text, {PAGENO}, {DATE j-m-Y} For example:<code>{PAGETITLE}|{DATE j-m-Y}|{PAGENO}</code>'),
+						'description' => tra('Possible values, custom text, {PAGENO}, {DATE j-m-Y},  Page {PAGENO} of {NB}. For example:<code>{PAGETITLE}|{DATE j-m-Y}|{PAGENO}</code>'),
 						'type' => 'text',
 						'default' => $prefs['print_pdf_mpdf_footer'],
 					],
