@@ -23,12 +23,12 @@
                 <th>{tr}Version Required{/tr}</th>
                 <th>{tr}Status{/tr}
                 <th>{tr}Version Installed{/tr}</th>
-                <th>{tr}Remove{/tr}</th>
+                <th>{tr}Action{/tr}</th>
             </tr>
             {foreach item=entry from=$composer_packages_installed}
                 <tr>
                     <td>{$entry.name}</td>
-                    <td>{$entry.required}</td>
+                    <td>{$entry.required} {if $entry.upgradeVersion}<span class="label label-warning">{tr}Update:{/tr} {$entry.requiredVersion}</span>{/if}</td>
                     <td>
                         {if $entry.status == 'installed'}
                             {icon name='success' iclass='tips' ititle="{tr}Status{/tr}:{tr}Installed{/tr}"}
@@ -43,6 +43,9 @@
                             <form action="tiki-admin.php?page=packages&cookietab=1" method="post">
                                 <input type="hidden" name="redirect" value="0">
                                 {ticket}
+                                {if $entry.upgradeVersion}
+                                <button name="auto-update-package" value="{$entry.key}">{tr}Update{/tr}</button>
+                                {/if}
                                 <button name="auto-remove-package" value="{$entry.key}">{tr}Remove{/tr}</button>
                             </form>
                         {else}

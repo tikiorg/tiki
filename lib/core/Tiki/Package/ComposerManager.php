@@ -96,16 +96,19 @@ class ComposerManager
 		$installedPackages = $this->composerWrapper->getListOfPackagesFromConfig();
 		$packageDefinitions = $this->getAvailable(false);
 
-		$keyLookup = [];
+		$packageListLookup = [];
 		foreach ($packageDefinitions as $package) {
 			$packageName = $this->normalizePackageName($package['name']);
-			$keyLookup[$packageName] = $package['key'];
+			$packageListLookup[$packageName] = $package;
 		}
+
 		if ($installedPackages !== false) {
 			foreach ($installedPackages as &$package) {
 				$packageName = $this->normalizePackageName($package['name']);
-				if (isset($keyLookup[$packageName])) {
-					$package['key'] = $keyLookup[$packageName];
+				if (isset($packageListLookup[$packageName])) {
+					$package['key'] = $packageListLookup[$packageName]['key'];
+					$package['requiredVersion'] = $packageListLookup[$packageName]['requiredVersion'];
+					$package['upgradeVersion'] = $package['required'] != $package['requiredVersion'];
 				} else {
 					$package['key'] = '';
 				}
@@ -182,7 +185,6 @@ class ComposerManager
 	 */
 	public function installPackage($packageKey)
 	{
-
 		$externalPackage = $this->manageYaml('search', [], $packageKey);
 
 		if (! $externalPackage) {
@@ -190,6 +192,23 @@ class ComposerManager
 		}
 
 		return $this->composerWrapper->installPackage($externalPackage);
+	}
+
+	/**
+	 * Try to update a packages by the package key (corresponding to the class name)
+	 *
+	 * @param $packageKey
+	 * @return bool|string
+	 */
+	public function updatePackage($packageKey)
+	{
+		$externalPackage = $this->manageYaml('search', [], $packageKey);
+
+		if (! $externalPackage) {
+			return null;
+		}
+
+		return $this->composerWrapper->updatePackage($externalPackage);
 	}
 
 	/**
@@ -228,7 +247,7 @@ class ComposerManager
 	 * @param $packageAction
 	 * @param $installedPackages
 	 * @param $packageKey
-	 * @return ExternalPackage|array
+	 * @return ComposerPackage|array
 	 */
 	protected function manageYaml($packageAction, $installedPackages = [], $packageKey = null)
 	{

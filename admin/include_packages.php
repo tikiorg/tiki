@@ -26,6 +26,9 @@ if ($access->ticketMatch()) {
 		if ($_POST['auto-install-package']) {
 			$smarty->assign('composer_output', $composerManager->installPackage($_POST['auto-install-package']));
 		}
+		if ($_POST['auto-update-package']) {
+			$smarty->assign('composer_output', $composerManager->updatePackage($_POST['auto-update-package']));
+		}
 		if ($_POST['auto-remove-package']) {
 			$smarty->assign('composer_output', $composerManager->removePackage($_POST['auto-remove-package']));
 		}

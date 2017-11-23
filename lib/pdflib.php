@@ -70,25 +70,10 @@ class PdfGenerator
 				}
 			}
 		} elseif ($printMode == self::MPDF) {
-			self::setupMPDFPathConstants();
-			$path = $prefs['print_pdf_mpdf_path'];
-			if (class_exists('mPDF')) { // Autoload will take care of loading the mpdf file
-				if (! is_writable(_MPDF_TEMP_PATH) ||! is_writable(_MPDF_TTFONTDATAPATH)) {
-					$this->error = tr(
-						'mPDF "%0" and "%1" directories must be writable',
-						'tmp',
-						'ttfontdata'
-					);
-				} else {
-					$this->mode = 'mpdf';
-					$this->location = $path;
-				}
+			if (class_exists('\\Mpdf\\Mpdf')) {
+				$this->mode = 'mpdf';
 			} else {
-				if (! empty($path)) {
-					$this->error = tr('mPDF not found in path "%0", and is not installed using packages.', $path);
-				} else {
-					$this->error = tr('The mPDF path has not been set, and is not installed using packages.');
-				}
+				$this->error = tr('The package mPDF is not installed. You can install it using packages.');
 			}
 		}
 		if ($this->error) {
@@ -238,42 +223,6 @@ class PdfGenerator
 	}
 
 	/**
-	 * Setup mPDF Constants related with PATHS in teh filesystem
-	 * It sets the cache locations to a folder (mpdf) inside the filesystem cache
-	 * It sets a extra folder to load fonts
-	 */
-	public static function setupMPDFPathConstants()
-	{
-		// Set custom Fonts path
-		if (! defined('_MPDF_SYSTEM_TTFONTS')) {
-			define('_MPDF_SYSTEM_TTFONTS', TIKI_PATH . '/lib/pdf/fontdata/fontttf/');
-		}
-
-		// set cache paths
-		$cache = new CacheLibFileSystem();
-		$mPDFBaseCachePath = $cache->folder . '/mpdf/';
-		if (! is_dir($mPDFBaseCachePath)) {
-			mkdir($mPDFBaseCachePath);
-			chmod($mPDFBaseCachePath, 0777);
-		}
-
-		$constantsAndDirectories = [
-			'_MPDF_TEMP_PATH'      => 'tmp/',
-			'_MPDF_TTFONTDATAPATH' => 'ttfontdata/',
-		];
-
-		foreach ($constantsAndDirectories as $constant => $directory) {
-			if (! is_dir($mPDFBaseCachePath . $directory)) {
-				mkdir($mPDFBaseCachePath . $directory);
-				chmod($mPDFBaseCachePath . $directory, 0777);
-			}
-			if (! defined($constant)) {
-				define($constant, $mPDFBaseCachePath . $directory);
-			}
-		}
-	}
-
-	/**
 	 * @param $url string - address of the item to print as PDF
 	 * @return string     - contents of the PDF
 	 */
@@ -308,11 +257,23 @@ class PdfGenerator
 		}
 		$this->_getImages($html, $tempImgArr);
 
-			   $this->_parseHTML($html);
+		$this->_parseHTML($html);
 
-		self::setupMPDFPathConstants();
-
-		  $mpdf = new mPDF('utf-8', $pdfSettings['pagesize'], '', '', $pdfSettings['margin_left'], $pdfSettings['margin_right'], $pdfSettings['margin_top'], $pdfSettings['margin_bottom'], $pdfSettings['margin_header'], $pdfSettings['margin_footer'], $pdfSettings['orientation']);
+		$defaults = new \Mpdf\Config\ConfigVariables();
+		$defaultVariables = $defaults->getDefaults();
+		$mpdfConfig = [
+			'fontDir' => array_merge([TIKI_PATH . '/lib/pdf/fontdata/fontttf/'], $defaultVariables['fontDir']),
+			'mode' => 'utf8',
+			'format' => $pdfSettings['pagesize'],
+			'margin_left' => $pdfSettings['margin_left'],
+			'margin_right' => $pdfSettings['margin_right'],
+			'margin_top' => $pdfSettings['margin_top'],
+			'margin_bottom' => $pdfSettings['margin_bottom'],
+			'margin_header' => $pdfSettings['margin_header'],
+			'margin_footer' => $pdfSettings['margin_footer'],
+			'orientation' => $pdfSettings['orientation'],
+		];
+		$mpdf = new \Mpdf\Mpdf($mpdfConfig);
 
 		//custom fonts add, currently fontawesome support is added, more fonts can be added in future
 		$custom_fontdata = [

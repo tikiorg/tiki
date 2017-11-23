@@ -48,16 +48,6 @@ function prefs_print_list()
 			'dependencies' => ['auth_token_access'],
 			'default' => '',
 		],
-		'print_pdf_mpdf_path' => [
-			'name' => tra('mPDF path'),
-			'description' => tra('Path to of the mPDF install.'),
-			'type' => 'text',
-			'size' => 50,
-			'help' => 'mPDF',
-			'dependencies' => ['auth_token_access'],
-			'default' => 'vendor/mpdf/mpdf',
-			'packages_required' => ['mpdf/mpdf' => 'mPDF'],
-		],
 		'print_pdf_mpdf_printfriendly' => [
 			'name' => tra('Print Friendly PDF'),
 			'description' => tra('Useful for dark themes, Enabling this option will change theme background color to white and text / headings color to black. If turned off, theme colors will be retained in pdf'),
@@ -75,6 +65,7 @@ function prefs_print_list()
 				'L' => tra('Landscape'),
 			],
 			'default' => 'P',
+			'packages_required' => array('mpdf/mpdf' => 'Mpdf\\Mpdf'),
 		],
 		'print_pdf_mpdf_size' => [
 			'name' => tra('PDF page size'),

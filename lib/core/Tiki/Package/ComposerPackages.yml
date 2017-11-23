@@ -31,7 +31,7 @@ Mpdf:
   name: mpdf/mpdf
   requiredBy:
     - "Tiki Print"
-  requiredVersion: ^6.1
+  requiredVersion: ^7.0
 PHPSaml:
   licence: MIT
   licenceUrl: "https://github.com/onelogin/php-saml/blob/master/LICENSE"

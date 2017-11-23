@@ -15,10 +15,9 @@
 			{preference name=print_pdf_webservice_url}
 		</div>
 		<div class="adminoptionboxchild print_pdf_from_url_childcontainer mpdf">
-			{preference name=print_pdf_mpdf_path}
-			{preference name=print_pdf_mpdf_printfriendly}
 			{preference name=print_pdf_mpdf_orientation}
 			{preference name=print_pdf_mpdf_size}
+			{preference name=print_pdf_mpdf_printfriendly}
 			{preference name=print_pdf_mpdf_toc}
 			{preference name=print_pdf_mpdf_toclinks}
 			{preference name=print_pdf_mpdf_tocheading}
@@ -44,7 +43,7 @@
 			{preference name=print_pdf_mpdf_background_image}
  			{preference name=print_pdf_mpdf_coverpage_text_settings}
 			{preference name=print_pdf_mpdf_coverpage_image_settings}
-            
+
 
 		</div>
 		{preference name=allocate_memory_print_pdf}

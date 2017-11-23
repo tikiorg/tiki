@@ -7,7 +7,6 @@
 
 namespace Tiki\Package;
 
-use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
 
 /**
@@ -331,7 +330,7 @@ class ComposerCli
 	/**
 	 * Execute the diagnostic command
 	 *
-	 * @return array
+	 * @return array|bool
 	 */
 	public function execDiagnose()
 	{
@@ -372,6 +371,30 @@ class ComposerCli
 		. $fileContent . "\n\n"
 		. tr('= Composer execution output') . ":\n\n"
 		. $commandOutput;
+	}
+
+	/**
+	 * Update a package required version (from the package definition)
+	 *
+	 * @param ComposerPackage $package
+	 * @return bool
+	 */
+	public function updatePackage(ComposerPackage $package) {
+
+		if (!$this->canExecuteComposer() || !$this->checkConfigExists()) {
+			return false;
+		}
+
+		list($commandOutput, $errors) = $this->execComposer(
+			['require', $package->getName() . ':' . $package->getRequiredVersion(), '--update-no-dev', '-d', $this->workingPath, '--no-ansi', '--no-interaction']
+		);
+
+		$fileContent = file_get_contents($this->getComposerConfigFilePath());
+
+		return tr('= New composer.json file content') . ":\n\n"
+			. $fileContent . "\n\n"
+			. tr('= Composer execution output') . ":\n\n"
+			. $commandOutput . "\n" . $errors;
 	}
 
 	/**
