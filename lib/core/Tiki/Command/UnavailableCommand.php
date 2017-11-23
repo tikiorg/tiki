@@ -34,10 +34,10 @@ class UnavailableCommand extends Command
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		$installer = new Installer;
+		$message = "Command not available at this stage. Complete required installation steps.";
 		if ($installer->requiresUpdate()) {
-			$output->writeln('<error>Command not available at this stage. Complete required installation steps. Perhaps your database structure is not up to date? Solved by: php console.php database:update</error>');
-		} else {
-			$output->writeln('<error>Command not available at this stage. Complete required installation steps.</error>');
+			$message .= ' '.'Perhaps your database structure is not up to date? Solved by: php console.php database:update';
 		}
+		$output->writeln('<error>'. $message . '</error>');
 	}
 }
