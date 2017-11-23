@@ -16,6 +16,14 @@ function prefs_global_list($partial = false)
 			'tags' => ['basic'],
 			'public' => true,
 		],
+		'fallbackBaseUrl' => [
+			'name' => tra('Fallback for tiki base URL'),
+			'description' => tra('The full URL to the Tiki base URL including protocol, domain and path (example: https://example.com/tiki/), used when the current URL can not be determined, example, when executing from the command line.'),
+			'type' => 'text',
+			'default' => '',
+			'tags' => array('basic'),
+			'public' => true,
+		],
 		'validateUsers' => [
 			'name' => tra('Validate new user registrations by email'),
 			'description' => tra('Tiki will send an email message to the user. The message contains a link that must be clicked to validate the registration. After clicking the link, the user will be validated. You can use this option to limit false registrations or fake email addresses.'),

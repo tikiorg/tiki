@@ -174,3 +174,5 @@ if (isset($_REQUEST['stay_in_ssl_mode_present']) || isset($_REQUEST['stay_in_ssl
 
 // Show the 'Stay in SSL mode' checkbox only if we are already in HTTPS
 $show_stay_in_ssl_mode = $https_mode || $prefs['https_login'] == 'required' ? 'y' : 'n';
+
+\Tiki\Url::handleFallbackUrl();

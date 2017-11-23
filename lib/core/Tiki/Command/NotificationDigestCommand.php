@@ -22,7 +22,7 @@ class NotificationDigestCommand extends Command
 			->setDescription('Send out email notification digests')
 			->addArgument(
 				'domain',
-				InputArgument::REQUIRED,
+				InputArgument::OPTIONAL,
 				'Domain name to use (cannot be obtained from the URL)'
 			)
 			->addArgument(
@@ -73,6 +73,10 @@ class NotificationDigestCommand extends Command
 		}
 
 		$url_host = $input->getArgument('domain');
+
+		if (empty($url_host) && isset($prefs['fallbackBaseUrl'])) {
+			$url_host = $prefs['fallbackBaseUrl'];
+		}
 
 		$list = \TikiDb::get()->fetchAll("
 			SELECT userId, login, email, IFNULL(p.value, ?) language

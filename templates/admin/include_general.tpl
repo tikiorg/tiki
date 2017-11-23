@@ -37,6 +37,7 @@
 			<fieldset>
 				<legend>{tr}Site identity{/tr}</legend>
 				{preference name=browsertitle}
+				{preference name=fallbackBaseUrl}
 				{preference name=site_title_location}
 				{preference name=site_title_breadcrumb}
 				{remarksbox type="info" title="{tr}Themes{/tr}"}
