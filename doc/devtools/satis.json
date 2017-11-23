@@ -1601,6 +1601,17 @@
 					"type": "zip"
 				}
 			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "zendframework/zendsearch",
+				"version": "dev-tiki",
+				"dist": {
+					"url": "https://github.com/tikiorg/ZendSearch/archive/tiki.zip",
+					"type": "zip"
+				}
+			}
 		}
 	],
 	"require": {
@@ -1805,7 +1816,7 @@
 		"zendframework/zendgdata": "~2.0",
 		"zendframework/zendoauth": "~2.0",
 		"zendframework/zendopenid": "~2.0",
-		"zendframework/zendsearch": "~2.0",
+		"zendframework/zendsearch": "~2.0||dev-tiki",
 		"zendframework/zendservice-akismet": "~2.0",
 		"zendframework/zendservice-recaptcha": ">=2.0",
 		"zendframework/zendservice-twitter": "~2.0",
