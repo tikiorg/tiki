@@ -114,7 +114,7 @@
 		"zendframework/zend-validator": "^2.8",
 		"zendframework/zendgdata": "~2.0",
 		"zendframework/zendoauth": "~2.0",
-		"zendframework/zendsearch": "~2.0.0@RC",
+		"zendframework/zendsearch": "dev-tiki",
 		"zendframework/zendservice-akismet": "~2.0",
 		"zendframework/zendservice-recaptcha": "~3.0",
 		"zendframework/zendservice-twitter": "~2.1",
@@ -162,7 +162,8 @@
 			"Type": "../lib/core/",
 			"WikiParser": "../lib/core/",
 			"WikiPlugin": "../lib/core/",
-			"Text": "vendor/pear/text_wiki_mediawiki/"
+			"Text": "vendor/pear/text_wiki_mediawiki/",
+			"ZendSearch": "vendor/zendframework/zendsearch/library/"
 		},
 		"psr-4": {
 			"Tiki\\": "../lib/core/",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c14a507ed2339cebd699f1667a671726",
+    "content-hash": "bb8c302c62c4ae92054ff1ed953b5e15",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -160,7 +160,7 @@
                 "user agent",
                 "useragent"
             ],
-            "time": "2017-06-06T22:20:56+00:00"
+            "time": "2017-06-06 22:20:56"
         },
         {
             "name": "alxlit/bootstrap-chosen",
@@ -293,7 +293,7 @@
                 "prebind",
                 "xmpp"
             ],
-            "time": "2015-02-26T17:32:01+00:00"
+            "time": "2015-02-26 17:32:01"
         },
         {
             "name": "chartjs/Chart.js",
@@ -5174,39 +5174,14 @@
         },
         {
             "name": "zendframework/zendsearch",
-            "version": "2.0.0rc6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/ZendSearch.git",
-                "reference": "c8de2508d3413bf9d701b40c1092c1ffbdd8fc63"
-            },
+            "version": "dev-tiki",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/zendframework/zendsearch/zendframework-zendsearch-c8de2508d3413bf9d701b40c1092c1ffbdd8fc63-zip-2d79c6.zip",
-                "reference": "c8de2508d3413bf9d701b40c1092c1ffbdd8fc63",
-                "shasum": "a53139fb86236f43d8af05f8c1c2bb6266fee39b"
+                "url": "https://composer.tiki.org/dist/zendframework/zendsearch/zendframework-zendsearch-dev-tiki.zip",
+                "reference": null,
+                "shasum": "8652e57681fd3e00512d47abf49334dd8ca72cda"
             },
-            "require": {
-                "php": ">=5.3.3",
-                "zendframework/zend-stdlib": "2.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "ZendSearch": "library/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "a general purpose text search engine written entirely in PHP 5",
-            "homepage": "http://packages.zendframework.com/",
-            "keywords": [
-                "lucene",
-                "zf2"
-            ],
-            "time": "2015-01-21T16:24:14+00:00"
+            "type": "library"
         },
         {
             "name": "zendframework/zendservice-akismet",
@@ -5517,7 +5492,7 @@
                 "testing",
                 "unit"
             ],
-            "time": "2016-03-14T11:52:02+00:00"
+            "time": "2016-03-14 11:52:02"
         },
         {
             "name": "doctrine/instantiator",
@@ -7006,7 +6981,7 @@
     "stability-flags": {
         "ahand/mobileesp": 20,
         "candy-chat/xmpp-prebind-php": 20,
-        "zendframework/zendsearch": 5,
+        "zendframework/zendsearch": 20,
         "bafs/testify": 20
     },
     "prefer-stable": false,
