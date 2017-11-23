@@ -35,10 +35,14 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  *
  * Note: cdns (google/jquery, not user cdns), files and scripts (strings) willl be handled seperatetly.
  *
- * To add JS the follwoing methods are available. Note: if $skip_minify == true, this file will not be processed for further minification.
+ * To add JS, the following methods are available.
+ * 
+ * 
+ * Methods to add JS files:
+ * If $skip_minify == true, the file will not be processed for further minification.
  * This could be used to avoid screwing up the JS file in the rare case minification on that particular file does not work.
- * It will however be concated to one single JS file.
- * Useful methods to ad JS files:
+ * It will however be concatenated to a single JS file.
+ 
  * add_jsfile_cdn($url) - add a JS File from a CDN
  * add_jsfile_dependancy($filename, $skip_minify) - add a JS File to the section dependancy
  * add_jsfile_external($filename, $skip_minify) - add a JS File to the section external
