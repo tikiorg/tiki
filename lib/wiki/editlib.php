@@ -819,13 +819,14 @@ class EditLib
 	 * @return string			html with wiki plugins
 	 */
 
-	function partialParseWysiwygToWiki($inData)
+	static function partialParseWysiwygToWiki($inData)
 	{
-
 		// de-protect ck_protected comments
 		$ret = preg_replace('/<!--{cke_protected}{C}%3C!%2D%2D%20end%20tiki_plugin%20%2D%2D%3E-->/i', '<!-- end tiki_plugin -->', $inData);
+		
 		// remove the wysiwyg plugin elements leaving the syntax only remaining
 		$ret = preg_replace('/<(?:div|span)[^>]*syntax="(.*)".*end tiki_plugin --><\/(?:div|span)>/Umis', "$1", $ret);
+		
 		// preg_replace blows up here with a PREG_BACKTRACK_LIMIT_ERROR on pages with "corrupted" plugins
 		if (! $ret) {
 			$ret = $inData;
