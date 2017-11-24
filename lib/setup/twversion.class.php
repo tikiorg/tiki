@@ -269,13 +269,13 @@ class TWVersion
 		return $star;
 	}
 
-	// Determines the currently-running version of Tikiwiki.
+	// Determines the currently-running version of Tiki.
 	function getVersion()
 	{
 		return $this->version;
 	}
 
-	// Pulls the list of releases in the current branch of Tikiwiki from
+	// Pulls the list of releases in the current branch of Tiki from
 	// a central site.
 	private function pollVersion()
 	{
