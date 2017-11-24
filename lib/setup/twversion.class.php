@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2017 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -269,13 +269,13 @@ class TWVersion
 		return $star;
 	}
 
-	// Determines the currently-running version of Tikiwiki.
+	// Determines the currently-running version of Tiki.
 	function getVersion()
 	{
 		return $this->version;
 	}
 
-	// Pulls the list of releases in the current branch of Tikiwiki from
+	// Pulls the list of releases in the current branch of Tiki from
 	// a central site.
 	private function pollVersion()
 	{
