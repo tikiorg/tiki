@@ -3394,7 +3394,7 @@ class FileGalLib extends TikiLib
 		if (! $files) {
 			throw new Exception('File not found');
 		}
-		return $files[0];
+		return current($files);
 	}
 
 
