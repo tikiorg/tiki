@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2017 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -24,10 +24,10 @@ class TWVersion
 		//   stable   : Represents stable releases.
 		//   unstable : Represents candidate and test/development releases.
 		//   trunk    : Represents next generation development version.
-		$this->branch 	= 'stable';
+		$this->branch 	= 'trunk';
 
 		// Set everything else, including defaults.
-		$this->version 	= '18.0svn';	// needs to have no spaces for releases
+		$this->version 	= '19.0svn';	// needs to have no spaces for releases
 		$this->star	= '?';
 		$this->releases	= [];
 
