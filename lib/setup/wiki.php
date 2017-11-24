@@ -69,6 +69,7 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php')
 		if (($prefs['feature_wysiwyg'] === 'y') && $prefs['wysiwyg_htmltowiki'] !== 'y') {
 			$is_html = true;
 
+			// FIXME: Still relies on wiki syntax not parsed, in particular if wysiwyg_wiki_parsed is disabled
 			$homePageContent .= '<h1>' . tr('Congratulations') . "</h1>\n";
 			$homePageContent .= tr('This is the default homepage for your Tiki. If you are seeing this page, your installation was successful.') . "\n\n<br>";
 			$homePageContent .= tr('You can change this page after logging in. Please review the [http://doc.tiki.org/wiki+syntax|wiki syntax] for editing details.') . "\n\n\n<br>";
