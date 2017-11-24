@@ -318,7 +318,7 @@ class PdfGenerator
 		}
 
 		$pdfPages = $this->getPDFPages($html, $pdfSettings);
-		$cssStyles = str_replace([".tiki","opacity: 0;"], ["","fill: #fff;opacity:0.3;stroke:black"], '<style>' . $basecss . $themecss . $printcss . $pageCSS . $extcss . $this->bootstrapReplace() . '</style>'); //adding css styles with first page content
+		$cssStyles = str_replace([".tiki","opacity: 0;"], ["","fill: #fff;opacity:0.3;stroke:black"], '<style>' . $basecss . $themecss . $printcss . $pageCSS . $extcss . $this->bootstrapReplace() .$prefs["header_custom_css"]. '</style>'); //adding css styles with first page content
 		//cover page checking
 		if ($pdfSettings['coverpage_text_settings'] != '' || ($pdfSettings['coverpage_image_settings'] != '' && $pdfSettings['coverpage_image_settings'] != 'off')) {
 			$coverPage = explode("|", $pdfSettings['coverpage_text_settings']);
