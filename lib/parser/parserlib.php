@@ -1379,6 +1379,7 @@ if ( \$('#$id') ) {
 		$quotedOldName = preg_quote($oldName, '/');
 		$semanticlib = TikiLib::lib('semantic');
 
+                // FIXME: Affects non-parsed sections
 		foreach ($semanticlib->getAllTokens() as $sem) {
 			$data = str_replace("($sem($oldName", "($sem($newName", $data);
 		}
