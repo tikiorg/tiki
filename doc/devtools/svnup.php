@@ -92,7 +92,20 @@ class SvnUpCommand extends Command
 				'l',
 				InputOption::VALUE_REQUIRED,
 				'Time delay commits by X number of days. Useful for avoiding newly introduced bugs in automated updates.'
-			);
+			)
+			->addOption(
+				'user',
+				'u',
+				InputOption::VALUE_REQUIRED,
+				'User account to run setup.sh with (for file permissions setting).'
+			)
+			->addOption(
+				'group',
+				'g',
+				InputOption::VALUE_REQUIRED,
+				'User group to run setup.sh with (for file permissions setting).'
+			)
+		;
 	}
 
 
@@ -319,7 +332,16 @@ class SvnUpCommand extends Command
 		$progress->setMessage('Updating dependencies & setting file permissions');
 		$progress->advance();
 		$errors = ['', 'Please provide an existing command', 'you are behind a proxy', 'Composer failed', 'Wrong PHP version'];
-		$this->OutputErrors($logger, shell_exec('sh setup.sh -n fix 2>&1'), 'Problem running setup.sh', $errors, ! $input->getOption('no-db'));   // 2>&1 suppresses all terminal output, but allows full capturing for logs & verbiage
+
+		$setupParams = '';
+		if ($input->getOption('user')) {
+			$setupParams .= ' -u ' . $input->getOption('user');
+		}
+		if ($input->getOption('group')) {
+			$setupParams .= ' -g ' . $input->getOption('group');
+		}
+
+		$this->OutputErrors($logger, shell_exec("sh setup.sh $setupParams -n fix 2>&1"), 'Problem running setup.sh', $errors, ! $input->getOption('no-db'));   // 2>&1 suppresses all terminal output, but allows full capturing for logs & verbiage
 
 		if (! $input->getOption('no-db')) {
 			// generate a secbb database so when database:update is run, it also gets updated.
