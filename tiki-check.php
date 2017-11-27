@@ -614,7 +614,7 @@ if ($php_properties['session.save_handler']['setting'] == 'files') {
 		$php_properties['session.save_path'] = [
 			'fitness' => tra('info'),
 			'setting' => $s,
-			'message' => tra('The session.save_path is writable.') . tra('It doesn\'t matter though, since your session.save_handler isn not set to \'files\'') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
+			'message' => tra('The session.save_path is writable.') . tra('It doesn\'t matter though, since your session.save_handler is not set to \'files\'') . ' <a href="#php_conf_info">' . tra('How to change this value') . '</a>'
 		];
 	}
 }
