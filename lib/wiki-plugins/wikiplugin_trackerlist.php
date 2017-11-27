@@ -53,7 +53,7 @@ function wikiplugin_trackerlist_info()
 				 'required' => false,
 				 'name' => tra('Popup'),
 				 'description' => tr('Colon-separated list of fields which will display in a tooltip on mouse over.
-					Example: %06:7%1. Note that this implies %0y%1 value for %0sort%1 param.', '<code>', '</code>'),
+					Example: %06:7%1. Setting this parameter implies %0y%1 value for %0sort%1 param.', '<code>', '</code>'),
 				 'since' => '2.0',
 				 'filter' => 'digits',
 				 'separator' => ':',
