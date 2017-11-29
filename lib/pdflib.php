@@ -341,6 +341,7 @@ class PdfGenerator
 			$mpdf->h2bookmarks = $pdfSettings['autobookmarks'];
 		}
 		$pageNo = 1;
+		$pdfLimit = ini_get('pcre.backtrack_limit');
 		//end of coverpage generation
 		foreach ($pdfPages as $pdfPage) {
 			if (strip_tags(trim($pdfPage['pageContent'])) != '') {
@@ -382,8 +383,12 @@ class PdfGenerator
 				if ($pdfPage['background'] != '') {
 					$bgColor = "background-color:" . $pdfPage['background'];
 				}
-
-				$mpdf->WriteHTML('<html><body style="' . $bgColor . ';margin:0px;padding:0px;">' . $cssStyles . $pdfPage['pageContent'] . '</body></html>');
+				$mpdf->WriteHTML('<html><body style="' . $bgColor . ';margin:0px;padding:0px;">' . $cssStyles);
+				//checking if page content is less than mPDF character limit, otherwise split it and loop to writeHTML
+				for($charLimit=0;$charLimit<=strlen($pdfPage['pageContent']);$charLimit+=$pdfLimit) {
+					 $mpdf->WriteHTML(substr($pdfPage['pageContent'],$charLimit,$pdfLimit));
+				}
+				$mpdf->WriteHTML('</body></html>');
 				$pageNo++;
 				$cssStyles = ''; //set to blank after added with first page
 			}
