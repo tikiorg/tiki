@@ -45,9 +45,10 @@ if (! empty($_POST['string_in_db_search'])) {
 	}
 	$smarty->assign('tableData', $tableData);
 	$smarty->assign('tableName', $table);
+	$smarty->assign('columnName', $column);
 }
 
-/*
+/**
 *	return array (table, attribute, occurrence count)
 */
 function searchAllDB($search)
@@ -88,7 +89,7 @@ function searchAllDB($search)
 	return $result;
 }
 
-/*
+/**
 *	return array (table, occurrence count)
 */
 function tableCount($searchResult)
