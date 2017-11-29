@@ -39,11 +39,11 @@
 	{/if}
 
 	{if isset($tableHeaders)}
-	{remarksbox}{tr}Results for {/tr}<b>{$searchStringAgain|escape}</b> {tr}in table {/tr} <b>{$tableName}</b>:{/remarksbox}
+	{remarksbox}{tr}Results for {/tr}<b>{$searchStringAgain|escape}</b> {tr}in table {/tr} <b>{$tableName}</b>, {tr}column{/tr} <b>{$columnName}</b>:{/remarksbox}
 	<table class="table">
 		<tr>
 		{foreach from=$tableHeaders item=hdr}
-			<th>{$hdr}</th>
+			<th>{if $hdr eq $columnName}<em>{$hdr}</em>{else}{$hdr}{/if}</th>
 		{/foreach}
 		</tr>
 
