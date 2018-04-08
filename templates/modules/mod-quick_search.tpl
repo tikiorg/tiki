@@ -47,7 +47,7 @@ $('.mod_quick_search:not(.done)').addClass('done').submit(function () {
 		var ol = $('<ol/>');
 		results.append(ol);
 
-		$.each(data, function (k, item) {
+		$.each(data.results, function (k, item) {
 			ol.append($('<li/>').append($(item.link)));
 		});
 	});
